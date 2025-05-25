@@ -1,0 +1,57 @@
+name: 构建并发布
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+env:
+  DOTNET_PREVIEW_VERSION: '10.0.100-preview.4.25258.110'
+  SOLUTION_FILE: FFmpegFreeUI.sln
+  PROJECT_PATH: FFmpegFreeUI/FFmpegFreeUI.vbproj
+  BUILD_CONFIGURATION: Release
+  RUNTIME_IDENTIFIER: win-x64
+
+jobs:
+  build:
+    name: 构建并发布
+    runs-on: windows-latest
+
+    steps:
+    - name: 检出代码
+      uses: actions/checkout@v4
+
+    - name: 安装 .NET 10 SDK
+      shell: powershell
+      run: |
+        [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+        Invoke-WebRequest -Uri https://dot.net/v1/dotnet-install.ps1 -OutFile dotnet-install.ps1
+
+        .\dotnet-install.ps1 -Version $env:DOTNET_PREVIEW_VERSION -InstallDir "$env:ProgramFiles\dotnet" -Architecture x64
+
+        $env:PATH = "$env:ProgramFiles\dotnet;" + $env:PATH
+        dotnet --info
+
+    - name: 还原依赖项
+      run: dotnet restore ${{ env.SOLUTION_FILE }}
+
+    - name: 构建并发布
+      shell: pwsh
+      run: |
+        dotnet publish ${{ env.PROJECT_PATH }} `
+          --configuration ${{ env.BUILD_CONFIGURATION }} `
+          --runtime ${{ env.RUNTIME_IDENTIFIER }} `
+          --self-contained true `
+          -p:PublishSingleFile=true `
+          -p:PublishTrimmed=false `
+          -p:IncludeNativeLibrariesForSelfExtract=true `
+          -p:TargetFramework=net10.0-windows
+
+    - name: 上传构建产物
+      uses: actions/upload-artifact@v4
+      with:
+        name: FFmpegFreeUI
+        path: |
+          FFmpegFreeUI/bin/${{ env.BUILD_CONFIGURATION }}/net10.0-windows/${{ env.RUNTIME_IDENTIFIER }}/publish/*
+        if-no-files-found: error
