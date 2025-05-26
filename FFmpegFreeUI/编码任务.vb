@@ -3,6 +3,7 @@ Imports System.Text.RegularExpressions
 
 Public Class 编码任务
     Public Shared Property 队列 As New List(Of 单片任务)
+    Public Shared 保留时间戳 As Boolean = False
 
     Public Shared Sub 检查是否有可以开始的任务()
         If 获取正在处理的任务数量() < 1 Then
@@ -169,6 +170,19 @@ Public Class 编码任务
         Public Sub FFmpegProcessExited(sender As Object, e As EventArgs)
             If FFmpegProcess.ExitCode = 0 Then
                 状态 = 编码状态.已完成
+                ' 保留时间戳功能
+                If 编码任务.保留时间戳 Then
+                    Try
+                        If System.IO.File.Exists(输入文件) AndAlso System.IO.File.Exists(输出文件) Then
+                            Dim srcInfo As New System.IO.FileInfo(输入文件)
+                            System.IO.File.SetCreationTime(输出文件, srcInfo.CreationTime)
+                            System.IO.File.SetLastWriteTime(输出文件, srcInfo.LastWriteTime)
+                            System.IO.File.SetLastAccessTime(输出文件, srcInfo.LastAccessTime)
+                        End If
+                    Catch ex As Exception
+                        MsgBox($"同步时间戳失败：{ex.Message}", MsgBoxStyle.Exclamation, "时间戳同步失败")
+                    End Try
+                End If
             Else
                 状态 = 编码状态.错误
             End If
