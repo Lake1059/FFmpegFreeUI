@@ -114,4 +114,8 @@ Public Class Form1
         Dim psi As New ProcessStartInfo With {.FileName = "https://space.bilibili.com/319785096", .UseShellExecute = True}
         Process.Start(psi)
     End Sub
+
+    Private Sub UiCheckBoxKeepTimestamp_CheckedChanged(sender As Object, e As EventArgs) Handles UiCheckBoxKeepTimestamp.CheckedChanged
+        编码任务.保留时间戳 = UiCheckBoxKeepTimestamp.Checked
+    End Sub
 End Class

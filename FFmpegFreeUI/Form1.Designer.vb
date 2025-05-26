@@ -509,10 +509,22 @@ Partial Class Form1
         ImageList1.ColorDepth = ColorDepth.Depth32Bit
         ImageList1.ImageSize = New Size(1, 30)
         ImageList1.TransparentColor = Color.Transparent
+        '
+        ' UiCheckBoxKeepTimestamp
+        '
+        Me.UiCheckBoxKeepTimestamp = New Sunny.UI.UICheckBox()
+        Me.UiCheckBoxKeepTimestamp.Text = "保留源文件时间戳"
+        Me.UiCheckBoxKeepTimestamp.Checked = False
+        Me.UiCheckBoxKeepTimestamp.Location = New System.Drawing.Point(10, 7)
+        Me.UiCheckBoxKeepTimestamp.Size = New System.Drawing.Size(180, 30)
+        Me.UiCheckBoxKeepTimestamp.ForeColor = System.Drawing.Color.Silver
+        Me.UiCheckBoxKeepTimestamp.CheckBoxColor = System.Drawing.Color.CornflowerBlue
+        Me.UiCheckBoxKeepTimestamp.Font = New System.Drawing.Font("微软雅黑", 10.0!)
         ' 
         ' Panel1
         ' 
         Panel1.BackColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        Panel1.Controls.Add(UiCheckBoxKeepTimestamp)
         Panel1.Controls.Add(Label8)
         Panel1.Controls.Add(Label7)
         Panel1.Controls.Add(Label6)
@@ -4923,5 +4935,6 @@ Partial Class Form1
     Friend WithEvents UiTextBox13 As Sunny.UI.UITextBox
     Friend WithEvents Label101 As Label
     Friend WithEvents Label99 As Label
+    Friend WithEvents UiCheckBoxKeepTimestamp As Sunny.UI.UICheckBox
 
 End Class

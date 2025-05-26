@@ -27,7 +27,10 @@ Public Class 界面控制_添加文件
                     m.自定义输出位置 = Form1.UiComboBox21.Text
             End Select
             Dim i2 As New ListViewItem(IO.Path.GetFileName(item.Text))
-            i2.SubItems.AddRange("未处理", "", "", "", "", "", "")
+            i2.SubItems.Add("未处理")
+            For j = 1 To 6
+                i2.SubItems.Add("")
+            Next
             Form1.ListView1.Items.Add(i2)
             m.列表视图项 = i2
             编码任务.队列.Add(m)
