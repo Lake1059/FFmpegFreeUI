@@ -34,7 +34,7 @@ Public Class 预设管理
             Case "TPE" : Form1.UiComboBox比特率控制方式.SelectedIndex = 5
             Case "CBR" : Form1.UiComboBox比特率控制方式.SelectedIndex = 6
         End Select
-        Form1.UiTextBox硬件加速HQ前瞻分析帧数.Text = a.视频参数_比特率_HQ前瞻分析帧数
+        Form1.UiTextBox硬件加速HQ前瞻分析帧数.Text = a.视频参数_比特率_前瞻分析帧数
         Form1.UiTextBox基础比特率.Text = a.视频参数_比特率_基础
         Form1.UiTextBox最低比特率.Text = a.视频参数_比特率_最低值
         Form1.UiTextBox最高比特率.Text = a.视频参数_比特率_最高值
@@ -187,7 +187,7 @@ Public Class 预设管理
             Case 5 : a.视频参数_比特率_控制方式 = "TPE"
             Case 6 : a.视频参数_比特率_控制方式 = "CBR"
         End Select
-        a.视频参数_比特率_HQ前瞻分析帧数 = Form1.UiTextBox硬件加速HQ前瞻分析帧数.Text
+        a.视频参数_比特率_前瞻分析帧数 = Form1.UiTextBox硬件加速HQ前瞻分析帧数.Text
         a.视频参数_比特率_基础 = Form1.UiTextBox基础比特率.Text
         a.视频参数_比特率_最低值 = Form1.UiTextBox最低比特率.Text
         a.视频参数_比特率_最高值 = Form1.UiTextBox最高比特率.Text
@@ -503,26 +503,44 @@ Public Class 预设管理
         If a.视频参数_启用比特率参数 Then
             Select Case a.视频参数_比特率_控制方式
                 Case "VBR"
-                    视频参数 &= $"-rc vbr "
+                    Select Case a.视频参数_编码器_具体编码
+                        Case "av1_amf", "hevc_amf", "h264_amf"
+                            视频参数 &= $"-rc qvbr "
+                        Case Else
+                            视频参数 &= $"-rc vbr "
+                    End Select
+
                 Case "VBR HQ"
                     Select Case a.视频参数_编码器_具体编码
                         Case "hevc_nvenc", "h264_nvenc"
                             视频参数 &= $"-rc vbr_hq "
-                            If a.视频参数_比特率_HQ前瞻分析帧数 <> "" Then 视频参数 &= $"-rc-lookahead {a.视频参数_比特率_HQ前瞻分析帧数} "
+                        Case "av1_amf"
+                            视频参数 &= $"-rc hqvbr -quality high_quality "
                         Case "hevc_amf", "h264_amf"
-                            视频参数 &= $"-rc vbr_peak -quality quality "
-                        Case "hevc_qsv", "h264_qsv"
+                            视频参数 &= $"-rc hqvbr -quality quality "
+                        Case "av1_qsv", "hevc_qsv", "h264_qsv"
                             视频参数 &= $"-rc la_icq "
-                            If a.视频参数_比特率_HQ前瞻分析帧数 <> "" Then 视频参数 &= $"-look_ahead_depth {a.视频参数_比特率_HQ前瞻分析帧数} "
                     End Select
+
                 Case "CRF" '自动把全局质量控制调整为 第3个：-crf
                 Case "CQP" '自动把全局质量控制调整为 第2个：-qp
+                    Select Case a.视频参数_编码器_具体编码
+                        Case "av1_nvenc", "hevc_nvenc", "h264_nvenc"
+                            视频参数 &= $"-rc constqp "
+                        Case "av1_amf", "hevc_amf", "h264_amf"
+                            视频参数 &= $"-rc cqp "
+                    End Select
+
                 Case "ABR"
-                Case "TPE"
+                Case "TPE" '可能只有 hevc_nvenc 和 h264_nvenc 支持
                     视频参数 &= $"-pass 2 "
                 Case "CBR"
                     视频参数 &= $"-rc cbr "
             End Select
+
+
+
+
             If a.视频参数_比特率_基础 <> "" Then 视频参数 &= $"-b:v {a.视频参数_比特率_基础} "
             If a.视频参数_比特率_最低值 <> "" Then 视频参数 &= $"-minrate {a.视频参数_比特率_最低值} "
             If a.视频参数_比特率_最高值 <> "" Then 视频参数 &= $"-maxrate {a.视频参数_比特率_最高值} "
@@ -537,28 +555,46 @@ Public Class 预设管理
                     Case "crf" : 视频参数 &= $"-crf {a.视频参数_全局质量控制_值} "
                 End Select
             End If
-            If a.视频参数_精细控制_qpmin <> "" Then 视频参数 &= $"-qpmin {a.视频参数_精细控制_qpmin} "
-            If a.视频参数_精细控制_qpmax <> "" Then 视频参数 &= $"-qpmax {a.视频参数_精细控制_qpmax} "
-            If a.视频参数_精细控制_qpstep <> "" Then 视频参数 &= $"-qpstep {a.视频参数_精细控制_qpstep} "
-            If a.视频参数_精细控制_qp_i <> "" Then 视频参数 &= $"-qp_i {a.视频参数_精细控制_qp_i} "
-            If a.视频参数_精细控制_qp_p <> "" Then 视频参数 &= $"-qp_p {a.视频参数_精细控制_qp_p} "
-            If a.视频参数_精细控制_qp_b <> "" Then 视频参数 &= $"-qp_b {a.视频参数_精细控制_qp_b} "
-            If a.视频参数_精细控制_i_qfactor <> "" Then 视频参数 &= $"-i_qfactor {a.视频参数_精细控制_i_qfactor} "
-            If a.视频参数_精细控制_p_qfactor <> "" Then 视频参数 &= $"-p_qfactor {a.视频参数_精细控制_p_qfactor} "
-            If a.视频参数_精细控制_b_qfactor <> "" Then 视频参数 &= $"-b_qfactor {a.视频参数_精细控制_b_qfactor} "
-            If a.视频参数_精细控制_i_qoffset <> "" Then 视频参数 &= $"-i_qoffset {a.视频参数_精细控制_i_qoffset} "
-            If a.视频参数_精细控制_p_qoffset <> "" Then 视频参数 &= $"-p_qoffset {a.视频参数_精细控制_p_qoffset} "
-            If a.视频参数_精细控制_b_qoffset <> "" Then 视频参数 &= $"-b_qoffset {a.视频参数_精细控制_b_qoffset} "
-        End If
+            If a.视频参数_比特率_前瞻分析帧数 <> "" Then '不支持 AMD
+                Select Case a.视频参数_编码器_具体编码
+                    Case "av1_nvenc", "hevc_nvenc", "h264_nvenc", "libx264", "libx265"
+                        视频参数 &= $"-rc-lookahead {a.视频参数_比特率_前瞻分析帧数} "
+                    Case "av1_qsv", "hevc_qsv", "h264_qsv"
+                        视频参数 &= $"-extbrc 1 -look_ahead_depth {a.视频参数_比特率_前瞻分析帧数} "
+                End Select
+            End If
 
-        If a.视频参数_启用帧排列参数 Then
+            If a.视频参数_精细控制_qpmin <> "" Then 视频参数 &= $"-qpmin {a.视频参数_精细控制_qpmin} "
+                If a.视频参数_精细控制_qpmax <> "" Then 视频参数 &= $"-qpmax {a.视频参数_精细控制_qpmax} "
+                If a.视频参数_精细控制_qpstep <> "" Then 视频参数 &= $"-qpstep {a.视频参数_精细控制_qpstep} "
+                If a.视频参数_精细控制_qp_i <> "" Then 视频参数 &= $"-qp_i {a.视频参数_精细控制_qp_i} "
+                If a.视频参数_精细控制_qp_p <> "" Then 视频参数 &= $"-qp_p {a.视频参数_精细控制_qp_p} "
+                If a.视频参数_精细控制_qp_b <> "" Then 视频参数 &= $"-qp_b {a.视频参数_精细控制_qp_b} "
+                If a.视频参数_精细控制_i_qfactor <> "" Then 视频参数 &= $"-i_qfactor {a.视频参数_精细控制_i_qfactor} "
+                If a.视频参数_精细控制_p_qfactor <> "" Then 视频参数 &= $"-p_qfactor {a.视频参数_精细控制_p_qfactor} "
+                If a.视频参数_精细控制_b_qfactor <> "" Then 视频参数 &= $"-b_qfactor {a.视频参数_精细控制_b_qfactor} "
+                If a.视频参数_精细控制_i_qoffset <> "" Then 视频参数 &= $"-i_qoffset {a.视频参数_精细控制_i_qoffset} "
+                If a.视频参数_精细控制_p_qoffset <> "" Then 视频参数 &= $"-p_qoffset {a.视频参数_精细控制_p_qoffset} "
+                If a.视频参数_精细控制_b_qoffset <> "" Then 视频参数 &= $"-b_qoffset {a.视频参数_精细控制_b_qoffset} "
+            End If
+
+            If a.视频参数_启用帧排列参数 Then
             If a.视频参数_帧排列_关键帧间隔 <> "" Then 视频参数 &= $"-g {a.视频参数_帧排列_关键帧间隔} "
             If a.视频参数_帧排列_双向预测帧数量 <> "" Then 视频参数 &= $"-bf {a.视频参数_帧排列_双向预测帧数量} "
         End If
 
         If a.视频参数_启用画面规格参数 Then
             If a.视频参数_画面规格_配置文件 <> "" Then 视频参数 &= $"-profile {a.视频参数_画面规格_配置文件} "
-            If a.视频参数_画面规格_场景优化 <> "" Then 视频参数 &= $"-tune {a.视频参数_画面规格_场景优化} "
+            If a.视频参数_画面规格_场景优化 <> "" Then
+                Select Case a.视频参数_编码器_具体编码
+                    Case "hevc_amf", "h264_amf"
+                        视频参数 &= $"-usage {a.视频参数_画面规格_场景优化} "
+                    Case "libvpx-vp9"
+                        视频参数 &= $"-deadline {a.视频参数_画面规格_场景优化} "
+                    Case Else
+                        视频参数 &= $"-tune {a.视频参数_画面规格_场景优化} "
+                End Select
+            End If
             If a.视频参数_画面视觉_像素格式 <> "" Then 视频参数 &= $"-pix_fmt {a.视频参数_画面视觉_像素格式} "
         End If
 
@@ -569,6 +605,7 @@ Public Class 预设管理
                     视频参数 &= $"-color_primaries {a.视频参数_色彩管理_色域} "
                     视频参数 &= $"-color_trc {a.视频参数_色彩管理_传输特性} "
                     视频参数 &= $"-color_range {a.视频参数_色彩管理_范围} "
+                    '视频滤镜参数集.Add($"setparams=colorspace={a.视频参数_色彩管理_矩阵系数}:color_primaries={a.视频参数_色彩管理_色域}:color_trc={a.视频参数_色彩管理_传输特性}:range={a.视频参数_色彩管理_范围}")
                     Dim zscale As String = $"zscale=matrix={a.视频参数_色彩管理_矩阵系数}:primaries={a.视频参数_色彩管理_色域}:transfer={a.视频参数_色彩管理_传输特性}"
                     Select Case a.视频参数_色彩管理_范围
                         Case "pc" : zscale &= ":range=full"
@@ -581,6 +618,7 @@ Public Class 预设管理
                     视频参数 &= $"-color_primaries {a.视频参数_色彩管理_色域} "
                     视频参数 &= $"-color_trc {a.视频参数_色彩管理_传输特性} "
                     视频参数 &= $"-color_range {a.视频参数_色彩管理_范围} "
+                    '视频滤镜参数集.Add($"setparams=colorspace={a.视频参数_色彩管理_矩阵系数}:color_primaries={a.视频参数_色彩管理_色域}:color_trc={a.视频参数_色彩管理_传输特性}:range={a.视频参数_色彩管理_范围}")
                 Case 2 '仅转换
                     Dim zscale As String = $"zscale=matrix={a.视频参数_色彩管理_矩阵系数}:primaries={a.视频参数_色彩管理_色域}:transfer={a.视频参数_色彩管理_传输特性}"
                     Select Case a.视频参数_色彩管理_范围
@@ -610,9 +648,20 @@ Public Class 预设管理
                 Case 0 : 视频滤镜参数集.Add($"yadif=0:-1:0")
                 Case 1 : 视频滤镜参数集.Add($"yadif=0:0:0")
                 Case 2 : 视频滤镜参数集.Add($"yadif=0:1:0")
-                Case 3 : 视频滤镜参数集.Add($"setfield=tff")
-                Case 4 : 视频滤镜参数集.Add($"setfield=bff")
+                Case 3 : 视频滤镜参数集.Add($"tinterlace=4")
+                Case 4 : 视频滤镜参数集.Add($"tinterlace=6")
             End Select
+        End If
+
+        '别问为什么把图片的缩放参数放在这里，我懒得改逻辑了
+        If a.图片参数_启用分辨率参数 Then
+            If a.图片参数_分辨率_宽度 <> "" AndAlso a.图片参数_分辨率_高度 <> "" Then
+                视频滤镜参数集.Add($"scale={a.图片参数_分辨率_宽度}:{a.图片参数_分辨率_高度}")
+            ElseIf a.图片参数_分辨率_宽度 <> "" AndAlso a.图片参数_分辨率_高度 = "" Then
+                视频滤镜参数集.Add($"scale={a.图片参数_分辨率_宽度}:-2")
+            ElseIf a.图片参数_分辨率_宽度 = "" AndAlso a.图片参数_分辨率_高度 <> "" Then
+                视频滤镜参数集.Add($"scale=-2:{a.图片参数_分辨率_高度}")
+            End If
         End If
 
         If a.视频参数_启用自定义滤镜参数 AndAlso a.视频参数_自定义滤镜 <> "" Then
@@ -696,7 +745,7 @@ Public Class 预设管理
         If a.图片参数_启用编码器参数 Then
             Select Case a.图片参数_编码器_编码名称
                 Case "无损压缩 PNG 已强制最高压缩度"
-                    视频参数 &= $"-c:v png -compression_level 100 "
+                    视频参数 &= $"-c:v png -compression_level 9 "
                 Case "有损压缩 JPEG \ JPG 质量控制越小越高 1~31"
                     视频参数 &= $"-c:v mjpeg -q:v {If(a.图片参数_编码器_参数 <> "", a.图片参数_编码器_参数, 1)} "
                 Case "有损压缩 WEBP 质量控制越大越高 0~100"
@@ -720,15 +769,6 @@ Public Class 预设管理
                 Case "工业光魔 OpenEXR"
                     视频参数 &= $"-c:v exr "
             End Select
-        End If
-        If a.图片参数_启用分辨率参数 Then
-            If a.图片参数_分辨率_宽度 <> "" AndAlso a.图片参数_分辨率_高度 <> "" Then
-                视频滤镜参数集.Add($"scale={a.图片参数_分辨率_宽度}:{a.图片参数_分辨率_高度}")
-            ElseIf a.图片参数_分辨率_宽度 <> "" AndAlso a.图片参数_分辨率_高度 = "" Then
-                视频滤镜参数集.Add($"scale={a.图片参数_分辨率_宽度}:-2")
-            ElseIf a.图片参数_分辨率_宽度 = "" AndAlso a.图片参数_分辨率_高度 <> "" Then
-                视频滤镜参数集.Add($"scale=-2:{a.图片参数_分辨率_高度}")
-            End If
         End If
 
         If a.图片参数_启用自定义参数 Then

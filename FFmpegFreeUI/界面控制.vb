@@ -3,6 +3,8 @@ Public Class 界面控制
 
     Public Shared Sub 初始化()
         Form1.UiComboBox21.SelectedIndex = 0
+        Form1.Panel41.AutoSize = True
+
 
         AddHandler Form1.UiTabControlMenu1.SelectedIndexChanged, AddressOf 界面校准
 
@@ -147,13 +149,12 @@ Public Class 界面控制
         AddHandler Form1.UiButton21.Click, AddressOf 预设管理.从文件读取预设
         AddHandler Form1.UiButton13.Click, AddressOf 预设管理.重置全部包含在预设中的设置
 
-        设置富文本框行高(Form1.RichTextBox1, 400)
+        设置富文本框行高(Form1.RichTextBox1, 350)
 
         Form1.是否初始化 = True
     End Sub
 
     Public Shared Sub 界面校准()
-        Form1.Timer1.Enabled = False
         Dim 选项卡 As TabPage = Form1.UiTabControlMenu1.SelectedTab
         Select Case True
             Case 选项卡.IsEqual(Form1.TabPage编码队列)
@@ -247,8 +248,6 @@ Public Class 界面控制
                 预设管理.储存预设(a)
                 Form1.RichTextBox1.Text = "ffmpeg.exe " & 预设管理.将预设数据转换为命令行(a, "假装这是输入目录\假装这是输入文件", "假装这是输出目录\假装这是输出文件")
 
-            Case 选项卡.IsEqual(Form1.TabPage调试)
-                Form1.Timer1.Enabled = True
         End Select
     End Sub
 

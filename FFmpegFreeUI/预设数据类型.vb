@@ -23,7 +23,7 @@ Public Class 预设数据类型
     Public Property 视频参数_启用比特率参数 As Boolean = False
     Public Property 视频参数_比特率_控制方式 As String = ""
     Public Property 视频参数_比特率_基础 As String = ""
-    Public Property 视频参数_比特率_HQ前瞻分析帧数 As String = ""
+    Public Property 视频参数_比特率_前瞻分析帧数 As String = ""
     Public Property 视频参数_比特率_最低值 As String = ""
     Public Property 视频参数_比特率_最高值 As String = ""
     Public Property 视频参数_比特率_缓冲区 As String = ""
@@ -31,6 +31,9 @@ Public Class 预设数据类型
     Public Property 视频参数_全局质量控制_参数 As String = ""
     Public Property 视频参数_全局质量控制_值 As String = ""
     Public Property 视频参数_展开精细控制 As Boolean = False
+
+
+
     Public Property 视频参数_精细控制_qpmin As String = ""
     Public Property 视频参数_精细控制_qpmax As String = ""
     Public Property 视频参数_精细控制_qpstep As String = ""
@@ -43,6 +46,11 @@ Public Class 预设数据类型
     Public Property 视频参数_精细控制_i_qoffset As String = ""
     Public Property 视频参数_精细控制_p_qoffset As String = ""
     Public Property 视频参数_精细控制_b_qoffset As String = ""
+
+
+
+
+
     Public Property 视频参数_启用帧排列参数 As Boolean = False
     Public Property 视频参数_帧排列_关键帧间隔 As String = ""
     Public Property 视频参数_帧排列_双向预测帧数量 As String = ""

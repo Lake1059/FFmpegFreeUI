@@ -68,5 +68,23 @@ Module Module1
     End Function
 
 
+    <DllImport("kernel32.dll", SetLastError:=True)>
+    Public Function SetThreadExecutionState(esFlags As EXECUTION_STATE) As EXECUTION_STATE
+    End Function
+    <Flags>
+    Public Enum EXECUTION_STATE As UInteger
+        ES_SYSTEM_REQUIRED = &H1
+        ES_DISPLAY_REQUIRED = &H2
+        ES_CONTINUOUS = &H80000000UI
+    End Enum
+
+    Public Function 根据标签宽度计算显示高度(标签控件 As Label) As Integer
+        Dim g As Graphics = Form1.CreateGraphics()
+        Dim size As SizeF = g.MeasureString(标签控件.Text, 标签控件.Font, 标签控件.Width - 标签控件.Padding.Left - 标签控件.Padding.Right)
+        g.Dispose()
+        Return size.Height + 标签控件.Padding.Top + 标签控件.Padding.Bottom
+    End Function
+
+
 
 End Module

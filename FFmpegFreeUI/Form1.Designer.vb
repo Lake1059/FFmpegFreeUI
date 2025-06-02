@@ -26,7 +26,11 @@ Partial Class Form1
         UiTabControlMenu1 = New Sunny.UI.UITabControlMenu()
         TabPage起始页面 = New TabPage()
         Panel44 = New Panel()
-        Label130 = New Label()
+        Label122 = New Label()
+        Label75 = New Label()
+        Label73 = New Label()
+        Label65 = New Label()
+        Label64 = New Label()
         Label129 = New Label()
         LinkLabel6 = New LinkLabel()
         LinkLabel5 = New LinkLabel()
@@ -82,6 +86,11 @@ Partial Class Form1
         UiButton1 = New Sunny.UI.UIButton()
         Label9 = New Label()
         UiButton3 = New Sunny.UI.UIButton()
+        Panel41 = New Panel()
+        Panel47 = New Panel()
+        Label76 = New Label()
+        Label120 = New Label()
+        Label74 = New Label()
         TabPage添加文件 = New TabPage()
         Panel58 = New Panel()
         ListView2 = New ListView()
@@ -158,6 +167,10 @@ Partial Class Form1
         Label52 = New Label()
         UiTextBox质量最小值 = New Sunny.UI.UITextBox()
         Label50 = New Label()
+        Panel硬件加速HQ参数 = New Panel()
+        Label21 = New Label()
+        UiTextBox硬件加速HQ前瞻分析帧数 = New Sunny.UI.UITextBox()
+        Label101 = New Label()
         Panel全局质量 = New Panel()
         UiCheckBox展开精细控制 = New Sunny.UI.UICheckBox()
         Label45 = New Label()
@@ -175,10 +188,6 @@ Partial Class Form1
         Label44 = New Label()
         UiTextBox基础比特率 = New Sunny.UI.UITextBox()
         Label40 = New Label()
-        Panel硬件加速HQ参数 = New Panel()
-        Label21 = New Label()
-        UiTextBox硬件加速HQ前瞻分析帧数 = New Sunny.UI.UITextBox()
-        Label101 = New Label()
         Panel19 = New Panel()
         Label42 = New Label()
         UiComboBox比特率控制方式 = New Sunny.UI.UIComboBox()
@@ -321,6 +330,7 @@ Partial Class Form1
         Panel10 = New Panel()
         Panel16 = New Panel()
         UiTextBox1 = New Sunny.UI.UITextBox()
+        Panel39 = New Panel()
         UiCheckBox1 = New Sunny.UI.UICheckBox()
         Label98 = New Label()
         Panel8 = New Panel()
@@ -371,14 +381,6 @@ Partial Class Form1
         UiButton22 = New Sunny.UI.UIButton()
         Label85 = New Label()
         Label87 = New Label()
-        TabPage调试 = New TabPage()
-        Panel6 = New Panel()
-        Label76 = New Label()
-        Label75 = New Label()
-        Label74 = New Label()
-        Label73 = New Label()
-        Label64 = New Label()
-        Label65 = New Label()
         Timer1 = New Timer(components)
         UiTabControlMenu1.SuspendLayout()
         TabPage起始页面.SuspendLayout()
@@ -387,6 +389,8 @@ Partial Class Form1
         Panel56.SuspendLayout()
         Panel1.SuspendLayout()
         Panel2.SuspendLayout()
+        Panel41.SuspendLayout()
+        Panel47.SuspendLayout()
         TabPage添加文件.SuspendLayout()
         Panel58.SuspendLayout()
         Panel57.SuspendLayout()
@@ -403,9 +407,9 @@ Partial Class Form1
         Panel20.SuspendLayout()
         Panel18.SuspendLayout()
         Panel17.SuspendLayout()
+        Panel硬件加速HQ参数.SuspendLayout()
         Panel全局质量.SuspendLayout()
         Panel比特率参数.SuspendLayout()
-        Panel硬件加速HQ参数.SuspendLayout()
         Panel19.SuspendLayout()
         Panel15.SuspendLayout()
         Panel14.SuspendLayout()
@@ -437,6 +441,7 @@ Partial Class Form1
         TabPage流控制.SuspendLayout()
         Panel10.SuspendLayout()
         Panel16.SuspendLayout()
+        Panel39.SuspendLayout()
         Panel8.SuspendLayout()
         Panel50.SuspendLayout()
         Panel21.SuspendLayout()
@@ -449,8 +454,6 @@ Partial Class Form1
         Panel32.SuspendLayout()
         Panel36.SuspendLayout()
         Panel59.SuspendLayout()
-        TabPage调试.SuspendLayout()
-        Panel6.SuspendLayout()
         SuspendLayout()
         ' 
         ' UiTabControlMenu1
@@ -466,7 +469,6 @@ Partial Class Form1
         UiTabControlMenu1.Controls.Add(TabPage图片参数)
         UiTabControlMenu1.Controls.Add(TabPage流控制)
         UiTabControlMenu1.Controls.Add(TabPage预设管理)
-        UiTabControlMenu1.Controls.Add(TabPage调试)
         UiTabControlMenu1.Dock = DockStyle.Fill
         UiTabControlMenu1.DrawMode = TabDrawMode.OwnerDrawFixed
         UiTabControlMenu1.FillColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
@@ -498,7 +500,11 @@ Partial Class Form1
         ' Panel44
         ' 
         Panel44.BackgroundImageLayout = ImageLayout.Stretch
-        Panel44.Controls.Add(Label130)
+        Panel44.Controls.Add(Label122)
+        Panel44.Controls.Add(Label75)
+        Panel44.Controls.Add(Label73)
+        Panel44.Controls.Add(Label65)
+        Panel44.Controls.Add(Label64)
         Panel44.Controls.Add(Label129)
         Panel44.Controls.Add(LinkLabel6)
         Panel44.Controls.Add(LinkLabel5)
@@ -518,27 +524,80 @@ Partial Class Form1
         Panel44.Size = New Size(1133, 761)
         Panel44.TabIndex = 0
         ' 
-        ' Label130
+        ' Label122
         ' 
-        Label130.Dock = DockStyle.Fill
-        Label130.Font = New Font("Segoe Print", 12F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        Label130.ForeColor = Color.DarkGray
-        Label130.Location = New Point(30, 495)
-        Label130.Name = "Label130"
-        Label130.Padding = New Padding(28, 0, 0, 0)
-        Label130.Size = New Size(1073, 236)
-        Label130.TabIndex = 12
-        Label130.Text = "更新信息"
+        Label122.AutoSize = True
+        Label122.Dock = DockStyle.Top
+        Label122.Font = New Font("微软雅黑 Light", 12F)
+        Label122.ForeColor = Color.Gray
+        Label122.Location = New Point(30, 601)
+        Label122.Name = "Label122"
+        Label122.Padding = New Padding(30, 0, 0, 7)
+        Label122.Size = New Size(104, 28)
+        Label122.TabIndex = 18
+        Label122.Text = "更新信息"
+        ' 
+        ' Label75
+        ' 
+        Label75.AutoSize = True
+        Label75.Dock = DockStyle.Top
+        Label75.Font = New Font("微软雅黑 Light", 12F)
+        Label75.ForeColor = Color.Gray
+        Label75.Location = New Point(30, 573)
+        Label75.Name = "Label75"
+        Label75.Padding = New Padding(30, 0, 0, 7)
+        Label75.Size = New Size(104, 28)
+        Label75.TabIndex = 17
+        Label75.Text = "更新信息"
+        ' 
+        ' Label73
+        ' 
+        Label73.AutoSize = True
+        Label73.Dock = DockStyle.Top
+        Label73.Font = New Font("微软雅黑 Light", 12F)
+        Label73.ForeColor = Color.Gray
+        Label73.Location = New Point(30, 545)
+        Label73.Name = "Label73"
+        Label73.Padding = New Padding(30, 0, 0, 7)
+        Label73.Size = New Size(104, 28)
+        Label73.TabIndex = 16
+        Label73.Text = "更新信息"
+        ' 
+        ' Label65
+        ' 
+        Label65.AutoSize = True
+        Label65.Dock = DockStyle.Top
+        Label65.Font = New Font("微软雅黑 Light", 12F)
+        Label65.ForeColor = Color.Gray
+        Label65.Location = New Point(30, 517)
+        Label65.Name = "Label65"
+        Label65.Padding = New Padding(30, 0, 0, 7)
+        Label65.Size = New Size(104, 28)
+        Label65.TabIndex = 15
+        Label65.Text = "更新信息"
+        ' 
+        ' Label64
+        ' 
+        Label64.AutoSize = True
+        Label64.Dock = DockStyle.Top
+        Label64.Font = New Font("微软雅黑 Light", 12F)
+        Label64.ForeColor = Color.Gray
+        Label64.Location = New Point(30, 489)
+        Label64.Name = "Label64"
+        Label64.Padding = New Padding(30, 0, 0, 7)
+        Label64.Size = New Size(104, 28)
+        Label64.TabIndex = 14
+        Label64.Text = "更新信息"
         ' 
         ' Label129
         ' 
         Label129.AutoSize = True
         Label129.Dock = DockStyle.Top
-        Label129.Font = New Font("Segoe Print", 18F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        Label129.Location = New Point(30, 412)
+        Label129.Font = New Font("微软雅黑", 16F)
+        Label129.Location = New Point(30, 409)
         Label129.Name = "Label129"
-        Label129.Padding = New Padding(0, 30, 0, 10)
-        Label129.Size = New Size(119, 83)
+        Label129.Padding = New Padding(0, 30, 0, 20)
+        Label129.Size = New Size(101, 80)
         Label129.TabIndex = 11
         Label129.Text = "检查更新"
         ' 
@@ -549,7 +608,7 @@ Partial Class Form1
         LinkLabel6.Dock = DockStyle.Top
         LinkLabel6.LinkBehavior = LinkBehavior.HoverUnderline
         LinkLabel6.LinkColor = Color.Orchid
-        LinkLabel6.Location = New Point(30, 385)
+        LinkLabel6.Location = New Point(30, 382)
         LinkLabel6.Name = "LinkLabel6"
         LinkLabel6.Padding = New Padding(30, 7, 0, 0)
         LinkLabel6.Size = New Size(207, 27)
@@ -564,7 +623,7 @@ Partial Class Form1
         LinkLabel5.Dock = DockStyle.Top
         LinkLabel5.LinkBehavior = LinkBehavior.HoverUnderline
         LinkLabel5.LinkColor = Color.MediumPurple
-        LinkLabel5.Location = New Point(30, 345)
+        LinkLabel5.Location = New Point(30, 342)
         LinkLabel5.Name = "LinkLabel5"
         LinkLabel5.Padding = New Padding(30, 20, 0, 0)
         LinkLabel5.Size = New Size(166, 40)
@@ -579,7 +638,7 @@ Partial Class Form1
         LinkLabel4.Dock = DockStyle.Top
         LinkLabel4.LinkBehavior = LinkBehavior.HoverUnderline
         LinkLabel4.LinkColor = Color.OliveDrab
-        LinkLabel4.Location = New Point(30, 318)
+        LinkLabel4.Location = New Point(30, 315)
         LinkLabel4.Name = "LinkLabel4"
         LinkLabel4.Padding = New Padding(30, 7, 0, 0)
         LinkLabel4.Size = New Size(186, 27)
@@ -594,7 +653,7 @@ Partial Class Form1
         LinkLabel3.Dock = DockStyle.Top
         LinkLabel3.LinkBehavior = LinkBehavior.HoverUnderline
         LinkLabel3.LinkColor = Color.OliveDrab
-        LinkLabel3.Location = New Point(30, 291)
+        LinkLabel3.Location = New Point(30, 288)
         LinkLabel3.Name = "LinkLabel3"
         LinkLabel3.Padding = New Padding(30, 7, 0, 0)
         LinkLabel3.Size = New Size(212, 27)
@@ -609,7 +668,7 @@ Partial Class Form1
         LinkLabel2.Dock = DockStyle.Top
         LinkLabel2.LinkBehavior = LinkBehavior.HoverUnderline
         LinkLabel2.LinkColor = Color.OliveDrab
-        LinkLabel2.Location = New Point(30, 264)
+        LinkLabel2.Location = New Point(30, 261)
         LinkLabel2.Name = "LinkLabel2"
         LinkLabel2.Padding = New Padding(30, 7, 0, 0)
         LinkLabel2.Size = New Size(255, 27)
@@ -624,7 +683,7 @@ Partial Class Form1
         LinkLabel7.Dock = DockStyle.Top
         LinkLabel7.LinkBehavior = LinkBehavior.HoverUnderline
         LinkLabel7.LinkColor = Color.OliveDrab
-        LinkLabel7.Location = New Point(30, 244)
+        LinkLabel7.Location = New Point(30, 241)
         LinkLabel7.Name = "LinkLabel7"
         LinkLabel7.Padding = New Padding(30, 0, 0, 0)
         LinkLabel7.Size = New Size(119, 20)
@@ -636,11 +695,11 @@ Partial Class Form1
         ' 
         Label127.AutoSize = True
         Label127.Dock = DockStyle.Top
-        Label127.Font = New Font("Segoe Print", 18F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        Label127.Font = New Font("微软雅黑", 16F)
         Label127.Location = New Point(30, 161)
         Label127.Name = "Label127"
-        Label127.Padding = New Padding(0, 30, 0, 10)
-        Label127.Size = New Size(144, 83)
+        Label127.Padding = New Padding(0, 30, 0, 20)
+        Label127.Size = New Size(123, 80)
         Label127.TabIndex = 3
         Label127.Text = "链接和文档"
         ' 
@@ -690,7 +749,7 @@ Partial Class Form1
         Label124.Padding = New Padding(0, 0, 0, 10)
         Label124.Size = New Size(286, 57)
         Label124.TabIndex = 0
-        Label124.Text = "FFmpegFreeUI v0.4"
+        Label124.Text = "FFmpegFreeUI v0.5"
         ' 
         ' TabPage编码队列
         ' 
@@ -698,6 +757,7 @@ Partial Class Form1
         TabPage编码队列.Controls.Add(Panel56)
         TabPage编码队列.Controls.Add(Panel1)
         TabPage编码队列.Controls.Add(Panel2)
+        TabPage编码队列.Controls.Add(Panel41)
         TabPage编码队列.Location = New Point(151, 0)
         TabPage编码队列.Name = "TabPage编码队列"
         TabPage编码队列.Size = New Size(1133, 761)
@@ -711,7 +771,7 @@ Partial Class Form1
         Panel56.Location = New Point(0, 104)
         Panel56.Name = "Panel56"
         Panel56.Padding = New Padding(10, 10, 0, 10)
-        Panel56.Size = New Size(1133, 657)
+        Panel56.Size = New Size(1133, 497)
         Panel56.TabIndex = 4
         ' 
         ' ListView1
@@ -727,7 +787,7 @@ Partial Class Form1
         ListView1.Name = "ListView1"
         ListView1.OwnerDraw = True
         ListView1.ShowItemToolTips = True
-        ListView1.Size = New Size(1123, 637)
+        ListView1.Size = New Size(1123, 477)
         ListView1.StateImageList = ImageList1
         ListView1.TabIndex = 0
         ListView1.TabStop = False
@@ -761,17 +821,17 @@ Partial Class Form1
         ' Label8
         ' 
         Label8.Dock = DockStyle.Fill
-        Label8.Location = New Point(950, 0)
+        Label8.Location = New Point(915, 0)
         Label8.Name = "Label8"
-        Label8.Size = New Size(183, 44)
+        Label8.Size = New Size(218, 44)
         Label8.TabIndex = 7
-        Label8.Text = "预计剩余"
+        Label8.Text = "预计剩余 && 已用"
         Label8.TextAlign = ContentAlignment.MiddleLeft
         ' 
         ' Label7
         ' 
         Label7.Dock = DockStyle.Left
-        Label7.Location = New Point(830, 0)
+        Label7.Location = New Point(795, 0)
         Label7.Name = "Label7"
         Label7.Size = New Size(120, 44)
         Label7.TabIndex = 6
@@ -781,9 +841,9 @@ Partial Class Form1
         ' Label6
         ' 
         Label6.Dock = DockStyle.Left
-        Label6.Location = New Point(770, 0)
+        Label6.Location = New Point(740, 0)
         Label6.Name = "Label6"
-        Label6.Size = New Size(60, 44)
+        Label6.Size = New Size(55, 44)
         Label6.TabIndex = 5
         Label6.Text = "质量"
         Label6.TextAlign = ContentAlignment.MiddleLeft
@@ -791,17 +851,17 @@ Partial Class Form1
         ' Label5
         ' 
         Label5.Dock = DockStyle.Left
-        Label5.Location = New Point(640, 0)
+        Label5.Location = New Point(590, 0)
         Label5.Name = "Label5"
-        Label5.Size = New Size(130, 44)
+        Label5.Size = New Size(150, 44)
         Label5.TabIndex = 4
-        Label5.Text = "输出大小"
+        Label5.Text = "输出大小 && 预估"
         Label5.TextAlign = ContentAlignment.MiddleLeft
         ' 
         ' Label4
         ' 
         Label4.Dock = DockStyle.Left
-        Label4.Location = New Point(560, 0)
+        Label4.Location = New Point(510, 0)
         Label4.Name = "Label4"
         Label4.Size = New Size(80, 44)
         Label4.TabIndex = 3
@@ -811,9 +871,9 @@ Partial Class Form1
         ' Label3
         ' 
         Label3.Dock = DockStyle.Left
-        Label3.Location = New Point(480, 0)
+        Label3.Location = New Point(440, 0)
         Label3.Name = "Label3"
-        Label3.Size = New Size(80, 44)
+        Label3.Size = New Size(70, 44)
         Label3.TabIndex = 2
         Label3.Text = "进度"
         Label3.TextAlign = ContentAlignment.MiddleLeft
@@ -821,9 +881,9 @@ Partial Class Form1
         ' Label2
         ' 
         Label2.Dock = DockStyle.Left
-        Label2.Location = New Point(380, 0)
+        Label2.Location = New Point(350, 0)
         Label2.Name = "Label2"
-        Label2.Size = New Size(100, 44)
+        Label2.Size = New Size(90, 44)
         Label2.TabIndex = 1
         Label2.Text = "状态"
         Label2.TextAlign = ContentAlignment.MiddleLeft
@@ -833,7 +893,7 @@ Partial Class Form1
         Label1.Dock = DockStyle.Left
         Label1.Location = New Point(10, 0)
         Label1.Name = "Label1"
-        Label1.Size = New Size(370, 44)
+        Label1.Size = New Size(340, 44)
         Label1.TabIndex = 0
         Label1.Text = "输入文件"
         Label1.TextAlign = ContentAlignment.MiddleLeft
@@ -1289,6 +1349,61 @@ Partial Class Form1
         UiButton3.TabIndex = 44
         UiButton3.Text = "开始"
         UiButton3.TipsFont = New Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point, CByte(134))
+        ' 
+        ' Panel41
+        ' 
+        Panel41.BackColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        Panel41.Controls.Add(Panel47)
+        Panel41.Controls.Add(Label120)
+        Panel41.Controls.Add(Label74)
+        Panel41.Dock = DockStyle.Bottom
+        Panel41.Location = New Point(0, 601)
+        Panel41.Name = "Panel41"
+        Panel41.Padding = New Padding(10)
+        Panel41.Size = New Size(1133, 160)
+        Panel41.TabIndex = 5
+        Panel41.Visible = False
+        ' 
+        ' Panel47
+        ' 
+        Panel47.AutoScroll = True
+        Panel47.Controls.Add(Label76)
+        Panel47.Dock = DockStyle.Top
+        Panel47.Location = New Point(10, 41)
+        Panel47.Name = "Panel47"
+        Panel47.Size = New Size(1113, 78)
+        Panel47.TabIndex = 14
+        ' 
+        ' Label76
+        ' 
+        Label76.Dock = DockStyle.Top
+        Label76.Font = New Font("微软雅黑", 12F)
+        Label76.ForeColor = Color.Chocolate
+        Label76.Location = New Point(0, 0)
+        Label76.Name = "Label76"
+        Label76.Size = New Size(1113, 62)
+        Label76.TabIndex = 15
+        Label76.Text = "累计错误信息"
+        ' 
+        ' Label120
+        ' 
+        Label120.Dock = DockStyle.Top
+        Label120.Location = New Point(10, 31)
+        Label120.Name = "Label120"
+        Label120.Size = New Size(1113, 10)
+        Label120.TabIndex = 15
+        ' 
+        ' Label74
+        ' 
+        Label74.AutoSize = True
+        Label74.Dock = DockStyle.Top
+        Label74.Font = New Font("微软雅黑", 12F)
+        Label74.ForeColor = Color.CornflowerBlue
+        Label74.Location = New Point(10, 10)
+        Label74.Name = "Label74"
+        Label74.Size = New Size(135, 21)
+        Label74.TabIndex = 13
+        Label74.Text = "ffmpeg 实时信息"
         ' 
         ' TabPage添加文件
         ' 
@@ -1869,10 +1984,10 @@ Partial Class Form1
         Panel12.Controls.Add(Panel20)
         Panel12.Controls.Add(Panel18)
         Panel12.Controls.Add(Panel17)
+        Panel12.Controls.Add(Panel硬件加速HQ参数)
         Panel12.Controls.Add(Panel全局质量)
         Panel12.Controls.Add(Label30)
         Panel12.Controls.Add(Panel比特率参数)
-        Panel12.Controls.Add(Panel硬件加速HQ参数)
         Panel12.Controls.Add(Panel19)
         Panel12.Controls.Add(Label39)
         Panel12.Controls.Add(Panel15)
@@ -2738,6 +2853,73 @@ Partial Class Form1
         Label50.Text = "质量最小值："
         Label50.TextAlign = ContentAlignment.MiddleLeft
         ' 
+        ' Panel硬件加速HQ参数
+        ' 
+        Panel硬件加速HQ参数.Controls.Add(Label21)
+        Panel硬件加速HQ参数.Controls.Add(UiTextBox硬件加速HQ前瞻分析帧数)
+        Panel硬件加速HQ参数.Controls.Add(Label101)
+        Panel硬件加速HQ参数.Dock = DockStyle.Top
+        Panel硬件加速HQ参数.Location = New Point(30, 381)
+        Panel硬件加速HQ参数.Name = "Panel硬件加速HQ参数"
+        Panel硬件加速HQ参数.Padding = New Padding(155, 0, 0, 10)
+        Panel硬件加速HQ参数.Size = New Size(1073, 42)
+        Panel硬件加速HQ参数.TabIndex = 26
+        Panel硬件加速HQ参数.Visible = False
+        ' 
+        ' Label21
+        ' 
+        Label21.Dock = DockStyle.Fill
+        Label21.Font = New Font("微软雅黑", 8F)
+        Label21.ForeColor = Color.Gray
+        Label21.Location = New Point(565, 0)
+        Label21.Name = "Label21"
+        Label21.Padding = New Padding(10, 0, 0, 0)
+        Label21.Size = New Size(508, 32)
+        Label21.TabIndex = 72
+        Label21.Text = "仅限 NVIDIA 和 INTEL 的硬件加速编码" & vbCrLf & "AMD 的硬件加速不支持此参数，选择 VBR HQ 模式以获得最大质量"
+        Label21.TextAlign = ContentAlignment.MiddleLeft
+        ' 
+        ' UiTextBox硬件加速HQ前瞻分析帧数
+        ' 
+        UiTextBox硬件加速HQ前瞻分析帧数.Dock = DockStyle.Left
+        UiTextBox硬件加速HQ前瞻分析帧数.FillColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiTextBox硬件加速HQ前瞻分析帧数.FillColor2 = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiTextBox硬件加速HQ前瞻分析帧数.FillDisableColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiTextBox硬件加速HQ前瞻分析帧数.FillReadOnlyColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiTextBox硬件加速HQ前瞻分析帧数.Font = New Font("微软雅黑", 9.75F)
+        UiTextBox硬件加速HQ前瞻分析帧数.ForeColor = Color.DarkGray
+        UiTextBox硬件加速HQ前瞻分析帧数.ForeDisableColor = Color.DarkGray
+        UiTextBox硬件加速HQ前瞻分析帧数.ForeReadOnlyColor = Color.DarkGray
+        UiTextBox硬件加速HQ前瞻分析帧数.Location = New Point(465, 0)
+        UiTextBox硬件加速HQ前瞻分析帧数.Margin = New Padding(4, 5, 4, 5)
+        UiTextBox硬件加速HQ前瞻分析帧数.MinimumSize = New Size(1, 16)
+        UiTextBox硬件加速HQ前瞻分析帧数.Name = "UiTextBox硬件加速HQ前瞻分析帧数"
+        UiTextBox硬件加速HQ前瞻分析帧数.Padding = New Padding(5)
+        UiTextBox硬件加速HQ前瞻分析帧数.RadiusSides = Sunny.UI.UICornerRadiusSides.None
+        UiTextBox硬件加速HQ前瞻分析帧数.RectColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        UiTextBox硬件加速HQ前瞻分析帧数.RectDisableColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        UiTextBox硬件加速HQ前瞻分析帧数.RectReadOnlyColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        UiTextBox硬件加速HQ前瞻分析帧数.ScrollBarBackColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        UiTextBox硬件加速HQ前瞻分析帧数.ScrollBarColor = Color.DimGray
+        UiTextBox硬件加速HQ前瞻分析帧数.ScrollBarStyleInherited = False
+        UiTextBox硬件加速HQ前瞻分析帧数.ShowText = False
+        UiTextBox硬件加速HQ前瞻分析帧数.Size = New Size(100, 32)
+        UiTextBox硬件加速HQ前瞻分析帧数.TabIndex = 71
+        UiTextBox硬件加速HQ前瞻分析帧数.TextAlignment = ContentAlignment.MiddleLeft
+        UiTextBox硬件加速HQ前瞻分析帧数.Watermark = "lookahead?"
+        UiTextBox硬件加速HQ前瞻分析帧数.WatermarkActiveColor = Color.DimGray
+        UiTextBox硬件加速HQ前瞻分析帧数.WatermarkColor = Color.DimGray
+        ' 
+        ' Label101
+        ' 
+        Label101.Dock = DockStyle.Left
+        Label101.Location = New Point(155, 0)
+        Label101.Name = "Label101"
+        Label101.Size = New Size(310, 32)
+        Label101.TabIndex = 67
+        Label101.Text = "前瞻分析帧数（推荐为原视频的帧速率）："
+        Label101.TextAlign = ContentAlignment.MiddleLeft
+        ' 
         ' Panel全局质量
         ' 
         Panel全局质量.Controls.Add(UiCheckBox展开精细控制)
@@ -2747,7 +2929,7 @@ Partial Class Form1
         Panel全局质量.Controls.Add(UiComboBox全局质量控制参数)
         Panel全局质量.Controls.Add(UiCheckBox质量控制)
         Panel全局质量.Dock = DockStyle.Top
-        Panel全局质量.Location = New Point(30, 371)
+        Panel全局质量.Location = New Point(30, 329)
         Panel全局质量.Name = "Panel全局质量"
         Panel全局质量.Padding = New Padding(5, 10, 0, 10)
         Panel全局质量.Size = New Size(1073, 52)
@@ -2875,7 +3057,7 @@ Partial Class Form1
         ' 
         Label30.BackColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
         Label30.Dock = DockStyle.Top
-        Label30.Location = New Point(30, 369)
+        Label30.Location = New Point(30, 327)
         Label30.Name = "Label30"
         Label30.Size = New Size(1073, 2)
         Label30.TabIndex = 32
@@ -2892,7 +3074,7 @@ Partial Class Form1
         Panel比特率参数.Controls.Add(UiTextBox基础比特率)
         Panel比特率参数.Controls.Add(Label40)
         Panel比特率参数.Dock = DockStyle.Top
-        Panel比特率参数.Location = New Point(30, 327)
+        Panel比特率参数.Location = New Point(30, 285)
         Panel比特率参数.Name = "Panel比特率参数"
         Panel比特率参数.Padding = New Padding(155, 0, 0, 10)
         Panel比特率参数.Size = New Size(1073, 42)
@@ -3065,73 +3247,6 @@ Partial Class Form1
         Label40.TabIndex = 77
         Label40.Text = "基础比特率："
         Label40.TextAlign = ContentAlignment.MiddleLeft
-        ' 
-        ' Panel硬件加速HQ参数
-        ' 
-        Panel硬件加速HQ参数.Controls.Add(Label21)
-        Panel硬件加速HQ参数.Controls.Add(UiTextBox硬件加速HQ前瞻分析帧数)
-        Panel硬件加速HQ参数.Controls.Add(Label101)
-        Panel硬件加速HQ参数.Dock = DockStyle.Top
-        Panel硬件加速HQ参数.Location = New Point(30, 285)
-        Panel硬件加速HQ参数.Name = "Panel硬件加速HQ参数"
-        Panel硬件加速HQ参数.Padding = New Padding(155, 0, 0, 10)
-        Panel硬件加速HQ参数.Size = New Size(1073, 42)
-        Panel硬件加速HQ参数.TabIndex = 26
-        Panel硬件加速HQ参数.Visible = False
-        ' 
-        ' Label21
-        ' 
-        Label21.Dock = DockStyle.Fill
-        Label21.Font = New Font("微软雅黑", 8F)
-        Label21.ForeColor = Color.Gray
-        Label21.Location = New Point(565, 0)
-        Label21.Name = "Label21"
-        Label21.Padding = New Padding(10, 0, 0, 0)
-        Label21.Size = New Size(508, 32)
-        Label21.TabIndex = 72
-        Label21.Text = "AMD 的硬件加速不要写 HQ" & vbCrLf & "已经预制了最高质量参数"
-        Label21.TextAlign = ContentAlignment.MiddleLeft
-        ' 
-        ' UiTextBox硬件加速HQ前瞻分析帧数
-        ' 
-        UiTextBox硬件加速HQ前瞻分析帧数.Dock = DockStyle.Left
-        UiTextBox硬件加速HQ前瞻分析帧数.FillColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
-        UiTextBox硬件加速HQ前瞻分析帧数.FillColor2 = Color.FromArgb(CByte(36), CByte(36), CByte(36))
-        UiTextBox硬件加速HQ前瞻分析帧数.FillDisableColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
-        UiTextBox硬件加速HQ前瞻分析帧数.FillReadOnlyColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
-        UiTextBox硬件加速HQ前瞻分析帧数.Font = New Font("微软雅黑", 9.75F)
-        UiTextBox硬件加速HQ前瞻分析帧数.ForeColor = Color.DarkGray
-        UiTextBox硬件加速HQ前瞻分析帧数.ForeDisableColor = Color.DarkGray
-        UiTextBox硬件加速HQ前瞻分析帧数.ForeReadOnlyColor = Color.DarkGray
-        UiTextBox硬件加速HQ前瞻分析帧数.Location = New Point(465, 0)
-        UiTextBox硬件加速HQ前瞻分析帧数.Margin = New Padding(4, 5, 4, 5)
-        UiTextBox硬件加速HQ前瞻分析帧数.MinimumSize = New Size(1, 16)
-        UiTextBox硬件加速HQ前瞻分析帧数.Name = "UiTextBox硬件加速HQ前瞻分析帧数"
-        UiTextBox硬件加速HQ前瞻分析帧数.Padding = New Padding(5)
-        UiTextBox硬件加速HQ前瞻分析帧数.RadiusSides = Sunny.UI.UICornerRadiusSides.None
-        UiTextBox硬件加速HQ前瞻分析帧数.RectColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
-        UiTextBox硬件加速HQ前瞻分析帧数.RectDisableColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
-        UiTextBox硬件加速HQ前瞻分析帧数.RectReadOnlyColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
-        UiTextBox硬件加速HQ前瞻分析帧数.ScrollBarBackColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
-        UiTextBox硬件加速HQ前瞻分析帧数.ScrollBarColor = Color.DimGray
-        UiTextBox硬件加速HQ前瞻分析帧数.ScrollBarStyleInherited = False
-        UiTextBox硬件加速HQ前瞻分析帧数.ShowText = False
-        UiTextBox硬件加速HQ前瞻分析帧数.Size = New Size(100, 32)
-        UiTextBox硬件加速HQ前瞻分析帧数.TabIndex = 71
-        UiTextBox硬件加速HQ前瞻分析帧数.TextAlignment = ContentAlignment.MiddleLeft
-        UiTextBox硬件加速HQ前瞻分析帧数.Watermark = "lookahead?"
-        UiTextBox硬件加速HQ前瞻分析帧数.WatermarkActiveColor = Color.DimGray
-        UiTextBox硬件加速HQ前瞻分析帧数.WatermarkColor = Color.DimGray
-        ' 
-        ' Label101
-        ' 
-        Label101.Dock = DockStyle.Left
-        Label101.Location = New Point(155, 0)
-        Label101.Name = "Label101"
-        Label101.Size = New Size(310, 32)
-        Label101.TabIndex = 67
-        Label101.Text = "HQ 专用：前瞻分析帧数（推荐 20 ~ 40）："
-        Label101.TextAlign = ContentAlignment.MiddleLeft
         ' 
         ' Panel19
         ' 
@@ -4589,7 +4704,7 @@ Partial Class Form1
         UiComboBox矩阵系数.ItemHeight = 30
         UiComboBox矩阵系数.ItemHoverColor = Color.FromArgb(CByte(56), CByte(56), CByte(56))
         UiComboBox矩阵系数.ItemRectColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
-        UiComboBox矩阵系数.Items.AddRange(New Object() {"", "bt709", "bt2020-ncl", "bt2020-cl", "rgb", "bt470bg", "smpte170m", "smpte240m", "fcc", "ycgco", "xyz"})
+        UiComboBox矩阵系数.Items.AddRange(New Object() {"", "bt709", "bt2020nc", "bt2020c", "rgb", "bt470bg", "smpte170m", "smpte240m", "fcc", "ycgco", "xyz"})
         UiComboBox矩阵系数.ItemSelectBackColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
         UiComboBox矩阵系数.ItemSelectForeColor = Color.Silver
         UiComboBox矩阵系数.Location = New Point(155, 0)
@@ -5716,7 +5831,7 @@ Partial Class Form1
         ' Panel16
         ' 
         Panel16.Controls.Add(UiTextBox1)
-        Panel16.Controls.Add(UiCheckBox1)
+        Panel16.Controls.Add(Panel39)
         Panel16.Dock = DockStyle.Fill
         Panel16.Location = New Point(30, 516)
         Panel16.Name = "Panel16"
@@ -5756,18 +5871,27 @@ Partial Class Form1
         UiTextBox1.WatermarkActiveColor = Color.DimGray
         UiTextBox1.WatermarkColor = Color.DimGray
         ' 
+        ' Panel39
+        ' 
+        Panel39.Controls.Add(UiCheckBox1)
+        Panel39.Dock = DockStyle.Left
+        Panel39.Location = New Point(5, 10)
+        Panel39.Name = "Panel39"
+        Panel39.Size = New Size(200, 195)
+        Panel39.TabIndex = 80
+        ' 
         ' UiCheckBox1
         ' 
         UiCheckBox1.CheckBoxColor = Color.Silver
         UiCheckBox1.CheckBoxSize = 20
-        UiCheckBox1.Dock = DockStyle.Left
+        UiCheckBox1.Dock = DockStyle.Top
         UiCheckBox1.Font = New Font("微软雅黑", 10F)
         UiCheckBox1.ForeColor = Color.Silver
-        UiCheckBox1.Location = New Point(5, 10)
+        UiCheckBox1.Location = New Point(0, 0)
         UiCheckBox1.MinimumSize = New Size(1, 1)
         UiCheckBox1.Name = "UiCheckBox1"
-        UiCheckBox1.Size = New Size(200, 195)
-        UiCheckBox1.TabIndex = 64
+        UiCheckBox1.Size = New Size(200, 35)
+        UiCheckBox1.TabIndex = 65
         UiCheckBox1.Text = "自定义其他参数"
         ' 
         ' Label98
@@ -5865,7 +5989,7 @@ Partial Class Form1
         Label96.Name = "Label96"
         Label96.Size = New Size(868, 35)
         Label96.TabIndex = 81
-        Label96.Text = "仅混流一个字幕，输入索引为 1，优先级 srt>ass>ssa"
+        Label96.Text = "仅混流一个字幕，输入索引为 1（如果前面没有导入其他文件的话），优先级 srt>ass>ssa"
         Label96.TextAlign = ContentAlignment.MiddleLeft
         ' 
         ' UiCheckBox自动混流同名字幕文件
@@ -6320,7 +6444,7 @@ Partial Class Form1
         RichTextBox1.BackColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
         RichTextBox1.BorderStyle = BorderStyle.None
         RichTextBox1.Dock = DockStyle.Fill
-        RichTextBox1.Font = New Font("微软雅黑", 10F)
+        RichTextBox1.Font = New Font("微软雅黑 Light", 12F, FontStyle.Regular, GraphicsUnit.Point, CByte(134))
         RichTextBox1.ForeColor = Color.Silver
         RichTextBox1.Location = New Point(0, 10)
         RichTextBox1.Name = "RichTextBox1"
@@ -6486,105 +6610,6 @@ Partial Class Form1
         Label87.TabIndex = 7
         Label87.Text = "预设管理"
         ' 
-        ' TabPage调试
-        ' 
-        TabPage调试.BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
-        TabPage调试.Controls.Add(Panel6)
-        TabPage调试.Location = New Point(151, 0)
-        TabPage调试.Name = "TabPage调试"
-        TabPage调试.Size = New Size(1133, 761)
-        TabPage调试.TabIndex = 8
-        TabPage调试.Text = "调试"
-        ' 
-        ' Panel6
-        ' 
-        Panel6.Controls.Add(Label76)
-        Panel6.Controls.Add(Label75)
-        Panel6.Controls.Add(Label74)
-        Panel6.Controls.Add(Label73)
-        Panel6.Controls.Add(Label64)
-        Panel6.Controls.Add(Label65)
-        Panel6.Dock = DockStyle.Fill
-        Panel6.Location = New Point(0, 0)
-        Panel6.Name = "Panel6"
-        Panel6.Padding = New Padding(30)
-        Panel6.Size = New Size(1133, 761)
-        Panel6.TabIndex = 0
-        ' 
-        ' Label76
-        ' 
-        Label76.AutoSize = True
-        Label76.Dock = DockStyle.Top
-        Label76.Font = New Font("微软雅黑", 12F)
-        Label76.ForeColor = Color.Chocolate
-        Label76.Location = New Point(30, 284)
-        Label76.Name = "Label76"
-        Label76.Padding = New Padding(2, 0, 0, 20)
-        Label76.Size = New Size(44, 41)
-        Label76.TabIndex = 14
-        Label76.Text = "信息"
-        ' 
-        ' Label75
-        ' 
-        Label75.AutoSize = True
-        Label75.Dock = DockStyle.Top
-        Label75.Font = New Font("微软雅黑", 12F)
-        Label75.Location = New Point(30, 233)
-        Label75.Name = "Label75"
-        Label75.Padding = New Padding(2, 20, 0, 10)
-        Label75.Size = New Size(108, 51)
-        Label75.TabIndex = 13
-        Label75.Text = "累计错误信息"
-        ' 
-        ' Label74
-        ' 
-        Label74.AutoSize = True
-        Label74.Dock = DockStyle.Top
-        Label74.Font = New Font("微软雅黑", 12F)
-        Label74.ForeColor = Color.CornflowerBlue
-        Label74.Location = New Point(30, 192)
-        Label74.Name = "Label74"
-        Label74.Padding = New Padding(2, 0, 0, 20)
-        Label74.Size = New Size(44, 41)
-        Label74.TabIndex = 12
-        Label74.Text = "信息"
-        ' 
-        ' Label73
-        ' 
-        Label73.AutoSize = True
-        Label73.Dock = DockStyle.Top
-        Label73.Font = New Font("微软雅黑", 12F)
-        Label73.Location = New Point(30, 131)
-        Label73.Name = "Label73"
-        Label73.Padding = New Padding(2, 30, 0, 10)
-        Label73.Size = New Size(108, 61)
-        Label73.TabIndex = 11
-        Label73.Text = "实时信息输出"
-        ' 
-        ' Label64
-        ' 
-        Label64.AutoSize = True
-        Label64.Dock = DockStyle.Top
-        Label64.ForeColor = Color.Goldenrod
-        Label64.Location = New Point(30, 71)
-        Label64.Name = "Label64"
-        Label64.Padding = New Padding(2, 0, 0, 20)
-        Label64.Size = New Size(683, 60)
-        Label64.TabIndex = 10
-        Label64.Text = "这个项目很奇怪，跨线程的操作宕机一大半，所以无法使用传统日志，但我用万能的定时器做了一个替代方案" & vbCrLf & "在编码队列中选中一个任务然后回到这个选项卡来查看信息"
-        ' 
-        ' Label65
-        ' 
-        Label65.AutoSize = True
-        Label65.Dock = DockStyle.Top
-        Label65.Font = New Font("微软雅黑", 18F)
-        Label65.Location = New Point(30, 30)
-        Label65.Name = "Label65"
-        Label65.Padding = New Padding(0, 0, 0, 10)
-        Label65.Size = New Size(110, 41)
-        Label65.TabIndex = 9
-        Label65.Text = "错误捕获"
-        ' 
         ' Timer1
         ' 
         Timer1.Interval = 1000
@@ -6611,6 +6636,9 @@ Partial Class Form1
         Panel56.ResumeLayout(False)
         Panel1.ResumeLayout(False)
         Panel2.ResumeLayout(False)
+        Panel41.ResumeLayout(False)
+        Panel41.PerformLayout()
+        Panel47.ResumeLayout(False)
         TabPage添加文件.ResumeLayout(False)
         Panel58.ResumeLayout(False)
         Panel57.ResumeLayout(False)
@@ -6629,9 +6657,9 @@ Partial Class Form1
         Panel20.ResumeLayout(False)
         Panel18.ResumeLayout(False)
         Panel17.ResumeLayout(False)
+        Panel硬件加速HQ参数.ResumeLayout(False)
         Panel全局质量.ResumeLayout(False)
         Panel比特率参数.ResumeLayout(False)
-        Panel硬件加速HQ参数.ResumeLayout(False)
         Panel19.ResumeLayout(False)
         Panel15.ResumeLayout(False)
         Panel14.ResumeLayout(False)
@@ -6667,6 +6695,7 @@ Partial Class Form1
         Panel10.ResumeLayout(False)
         Panel10.PerformLayout()
         Panel16.ResumeLayout(False)
+        Panel39.ResumeLayout(False)
         Panel8.ResumeLayout(False)
         Panel50.ResumeLayout(False)
         Panel21.ResumeLayout(False)
@@ -6680,9 +6709,6 @@ Partial Class Form1
         Panel32.ResumeLayout(False)
         Panel36.ResumeLayout(False)
         Panel59.ResumeLayout(False)
-        TabPage调试.ResumeLayout(False)
-        Panel6.ResumeLayout(False)
-        Panel6.PerformLayout()
         ResumeLayout(False)
     End Sub
     Friend WithEvents UiTabControlMenu1 As Sunny.UI.UITabControlMenu
@@ -6779,7 +6805,6 @@ Partial Class Form1
     Friend WithEvents Panel48 As Panel
     Friend WithEvents UiTextBox自定义音频参数 As Sunny.UI.UITextBox
     Friend WithEvents UiCheckBox自定义音频参数 As Sunny.UI.UICheckBox
-    Friend WithEvents TabPage调试 As TabPage
     Friend WithEvents Panel55 As Panel
     Friend WithEvents Label85 As Label
     Friend WithEvents Label87 As Label
@@ -6836,13 +6861,6 @@ Partial Class Form1
     Friend WithEvents Label16 As Label
     Friend WithEvents UiButton8 As Sunny.UI.UIButton
     Friend WithEvents Label14 As Label
-    Friend WithEvents Panel6 As Panel
-    Friend WithEvents Label64 As Label
-    Friend WithEvents Label65 As Label
-    Friend WithEvents Label75 As Label
-    Friend WithEvents Label74 As Label
-    Friend WithEvents Label73 As Label
-    Friend WithEvents Label76 As Label
     Friend WithEvents UiButton15 As Sunny.UI.UIButton
     Friend WithEvents Label77 As Label
     Friend WithEvents Timer1 As Timer
@@ -6993,7 +7011,6 @@ Partial Class Form1
     Friend WithEvents LinkLabel5 As LinkLabel
     Friend WithEvents Label129 As Label
     Friend WithEvents LinkLabel7 As LinkLabel
-    Friend WithEvents Label130 As Label
     Friend WithEvents UiTextBox将视频参数用于这些流 As Sunny.UI.UITextBox
     Friend WithEvents Label131 As Label
     Friend WithEvents Panel45 As Panel
@@ -7036,11 +7053,22 @@ Partial Class Form1
     Friend WithEvents Label96 As Label
     Friend WithEvents Panel16 As Panel
     Friend WithEvents UiTextBox1 As Sunny.UI.UITextBox
-    Friend WithEvents UiCheckBox1 As Sunny.UI.UICheckBox
     Friend WithEvents Label98 As Label
     Friend WithEvents RichTextBox1 As RichTextBox
     Friend WithEvents Label102 As Label
     Friend WithEvents Panel32 As Panel
     Friend WithEvents Panel36 As Panel
+    Friend WithEvents Panel41 As Panel
+    Friend WithEvents Panel39 As Panel
+    Friend WithEvents UiCheckBox1 As Sunny.UI.UICheckBox
+    Friend WithEvents Label74 As Label
+    Friend WithEvents Panel47 As Panel
+    Friend WithEvents Label76 As Label
+    Friend WithEvents Label120 As Label
+    Friend WithEvents Label64 As Label
+    Friend WithEvents Label122 As Label
+    Friend WithEvents Label75 As Label
+    Friend WithEvents Label73 As Label
+    Friend WithEvents Label65 As Label
 
 End Class

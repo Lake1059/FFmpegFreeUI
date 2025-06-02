@@ -22,7 +22,7 @@ Public Class 界面控制_视频参数
                 Form1.UiComboBox具体编码.SelectedIndex = 0
             Case 1    'H.266/VVC
                 Form1.UiComboBox具体编码.Items.Add("libx266")
-                Form1.UiComboBox具体编码.Items.Add("vvenc")
+                Form1.UiComboBox具体编码.Items.Add("libvvenc")
                 Form1.UiCheckBox视频编码器.Checked = True
                 Form1.UiComboBox具体编码.SelectedIndex = 0
             Case 2    'AV1
@@ -57,34 +57,28 @@ Public Class 界面控制_视频参数
                 Form1.UiCheckBox视频编码器.Checked = True
                 Form1.UiComboBox具体编码.SelectedIndex = 0
         End Select
+
     End Sub
     Public Shared Sub 视频具体编码改动事件()
         Form1.UiComboBox编码预设.Items.Clear()
         Form1.UiComboBox编码预设.Text = ""
-        Select Case Form1.UiComboBox具体编码.Text
-            Case "libx266", "vvenc"
-                'H.266
-                Form1.UiComboBox编码预设.Items.AddRange("", "slow", "medium", "fast")
-            Case "av1_nvenc", "hevc_nvenc", "h264_nvenc"
-                'NVIDIA NVENC
-                Form1.UiComboBox编码预设.Items.AddRange("", "p7", "p6", "p5", "p4", "p3", "p2", "p1")
-            Case "av1_qsv", "hevc_qsv", "h264_qsv"
-                'Intel QSV
-                Form1.UiComboBox编码预设.Items.AddRange("", "veryslow", "slower", "slow", "medium", "fast", "faster", "veryfast")
-            Case "av1_amf", "hevc_amf", "h264_amf"
-                'AMD AMF
-                Form1.UiComboBox编码预设.Items.AddRange("", "quality", "balanced", "speed")
-            Case "libaom-av1", "rav1e", "libx265", "libx264", "libvpx-vp9"
-                'CPU
-                Form1.UiComboBox编码预设.Items.AddRange("", "veryslow", "slower", "slow", "medium", "fast", "faster", "veryfast", "superfast", "ultrafast")
-            Case "libsvtav1"
-                Form1.UiComboBox编码预设.Items.AddRange("", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13")
-            Case "prores_ks"
-                'ProRes
-                Form1.UiComboBox编码预设.Items.AddRange("", "")
-        End Select
-        If Form1.UiComboBox具体编码.Text <> "" Then
-            Form1.UiComboBox编码预设.SelectedIndex = 1
+        Form1.UiComboBox配置文件.Items.Clear()
+        Form1.UiComboBox配置文件.Text = ""
+        Form1.UiComboBox场景优化.Items.Clear()
+        Form1.UiComboBox场景优化.Text = ""
+        Form1.UiComboBox像素格式.Items.Clear()
+        Form1.UiComboBox像素格式.Text = ""
+
+        If Form1.UiComboBox具体编码.SelectedIndex > -1 Then
+            Form1.UiComboBox编码预设.Items.AddRange(视频编码器数据库.字典(Form1.UiComboBox具体编码.Text).Preset.ToArray)
+            If Form1.UiComboBox具体编码.Text = "libsvtav1" Then
+                Form1.UiComboBox编码预设.SelectedIndex = 3
+            Else
+                Form1.UiComboBox编码预设.SelectedIndex = 0
+            End If
+            Form1.UiComboBox配置文件.Items.AddRange(视频编码器数据库.字典(Form1.UiComboBox具体编码.Text).Profile.ToArray)
+            Form1.UiComboBox场景优化.Items.AddRange(视频编码器数据库.字典(Form1.UiComboBox具体编码.Text).Tune.ToArray)
+            Form1.UiComboBox像素格式.Items.AddRange(视频编码器数据库.字典(Form1.UiComboBox具体编码.Text).Pix_fmt.ToArray)
         End If
     End Sub
 
@@ -155,7 +149,6 @@ Public Class 界面控制_视频参数
             Form1.UiTextBox最高比特率.Text = ""
             Form1.UiTextBox比特率缓冲区.Text = ""
             Form1.UiTextBox硬件加速HQ前瞻分析帧数.Text = ""
-            Form1.Panel硬件加速HQ参数.Visible = False
             Form1.Panel比特率参数.Visible = False
         End If
     End Sub
@@ -163,41 +156,34 @@ Public Class 界面控制_视频参数
     Public Shared Sub 视频比特率控制方式改动事件()
         Select Case Form1.UiComboBox比特率控制方式.SelectedIndex
             Case 0    '动态码率 VBR - 存储首选，硬件加速首选
-                Form1.Panel硬件加速HQ参数.Visible = False
                 Form1.Panel比特率参数.Visible = True
                 Form1.UiCheckBox比特率.Checked = True
                 If Form1.UiComboBox全局质量控制参数.SelectedIndex = 3 Then Form1.UiComboBox全局质量控制参数.SelectedIndex = 0
             Case 1    '动态码率 VBR HQ - 硬件加速专用，极致质量
                 Form1.Panel比特率参数.Visible = True
-                Form1.Panel硬件加速HQ参数.Visible = True
                 Form1.UiCheckBox比特率.Checked = True
                 If Form1.UiComboBox全局质量控制参数.SelectedIndex = 3 Then Form1.UiComboBox全局质量控制参数.SelectedIndex = 0
             Case 2    '恒定质量 CRF - 存储首选，软件编码首选
-                Form1.Panel硬件加速HQ参数.Visible = False
                 Form1.Panel比特率参数.Visible = True
                 Form1.UiCheckBox比特率.Checked = True
 
                 Form1.UiCheckBox质量控制.Checked = True
                 Form1.UiComboBox全局质量控制参数.SelectedIndex = 3
             Case 3    '恒定量化 CQP - 不推荐，主用于研究和特定场景
-                Form1.Panel硬件加速HQ参数.Visible = False
                 Form1.Panel比特率参数.Visible = True
                 Form1.UiCheckBox比特率.Checked = True
 
                 Form1.UiCheckBox质量控制.Checked = True
                 Form1.UiComboBox全局质量控制参数.SelectedIndex = 2
             Case 4    '平均码率 ABR - 折中方案，在一定范围内波动
-                Form1.Panel硬件加速HQ参数.Visible = False
                 Form1.Panel比特率参数.Visible = True
                 Form1.UiCheckBox比特率.Checked = True
                 If Form1.UiComboBox全局质量控制参数.SelectedIndex = 3 Then Form1.UiComboBox全局质量控制参数.SelectedIndex = 0
             Case 5    '二次编码 TPE - 花费时间节省比特率
-                Form1.Panel硬件加速HQ参数.Visible = False
                 Form1.Panel比特率参数.Visible = True
                 Form1.UiCheckBox比特率.Checked = True
                 If Form1.UiComboBox全局质量控制参数.SelectedIndex = 3 Then Form1.UiComboBox全局质量控制参数.SelectedIndex = 0
             Case 6    '恒定速率 CBR - 流媒体常用，不适合存储
-                Form1.Panel硬件加速HQ参数.Visible = False
                 Form1.Panel比特率参数.Visible = True
                 Form1.UiCheckBox比特率.Checked = True
                 If Form1.UiComboBox全局质量控制参数.SelectedIndex = 3 Then Form1.UiComboBox全局质量控制参数.SelectedIndex = 0
@@ -209,6 +195,7 @@ Public Class 界面控制_视频参数
             Form1.UiComboBox全局质量控制参数.Text = ""
             Form1.UiTextBox全局质量控制值.Text = ""
             Form1.UiCheckBox展开精细控制.Checked = False
+            Form1.UiTextBox硬件加速HQ前瞻分析帧数.Text = ""
             Form1.UiTextBox质量最小值.Text = ""
             Form1.UiTextBox质量最大值.Text = ""
             Form1.UiTextBox相邻帧质量变化限制.Text = ""
@@ -234,8 +221,10 @@ Public Class 界面控制_视频参数
                 Form1.Panel20.Visible = True
                 Form1.Panel18.Visible = True
                 Form1.Panel17.Visible = True
+                Form1.Panel硬件加速HQ参数.Visible = True
                 Form1.UiCheckBox质量控制.Checked = True
             Case False
+                Form1.Panel硬件加速HQ参数.Visible = False
                 Form1.Panel17.Visible = False
                 Form1.Panel18.Visible = False
                 Form1.Panel20.Visible = False

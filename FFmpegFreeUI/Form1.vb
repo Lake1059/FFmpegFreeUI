@@ -9,6 +9,7 @@ Public Class Form1
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         界面控制.初始化()
+        视频编码器数据库.初始化()
         上一次窗口状态 = Me.WindowState
     End Sub
 
@@ -17,22 +18,34 @@ Public Class Form1
         重新创建句柄()
         If DPI <> 1 Then DPI变动时校准界面()
 
+        Label64.Text = "正在检查更新版本 ..."
+        Label65.Text = ""
+        Label73.Text = ""
+        Label75.Text = ""
+        Label122.Text = ""
         '检测是否有网络
         If My.Computer.Network.IsAvailable Then
             Dim a As New GitHubAPI.Release
             Dim s1 As String = Await a.获取仓库发布版信息Async("Lake1059/FFmpegFreeUI", "")
             If s1 <> "" Then
-                Label130.Text = s1
+                Label64.Text = "获取更新信息失败"
+                Label65.Text = ""
+                Label73.Text = ""
+                Label75.Text = ""
+                Label122.Text = ""
             Else
-                Label130.Text =
-                    "发布标题：" & a.发布标题 & vbCrLf &
-                    "最新标签：" & a.版本标签 & vbCrLf &
-                    "发布用户：" & a.发布者用户名 & vbCrLf &
-                    "文件数量：" & a.可供下载的文件.Count & vbCrLf &
-                    "发布时间：" & a.发布时间
+                Label64.Text = "发布标题：" & a.发布标题
+                Label65.Text = "最新标签：" & a.版本标签
+                Label73.Text = "发布用户：" & a.发布者用户名
+                Label75.Text = "文件数量：" & a.可供下载的文件.Count
+                Label122.Text = "发布时间：" & a.发布时间
             End If
         Else
-            Label130.Text = "无网络连接！联网后重启应用程序以重试"
+            Label64.Text = "无网络连接！联网后重启应用程序以重试"
+            Label65.Text = ""
+            Label73.Text = ""
+            Label75.Text = ""
+            Label122.Text = ""
         End If
     End Sub
 
@@ -61,16 +74,6 @@ Public Class Form1
         界面控制.界面校准()
     End Sub
 
-    Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
-        If Me.ListView1.SelectedItems.Count = 1 Then
-            Label74.Text = 编码任务.队列(Me.ListView1.SelectedItems(0).Index).实时输出
-            Label76.Text = String.Join(vbCrLf, 编码任务.队列(Me.ListView1.SelectedItems(0).Index).错误列表)
-        Else
-            Label74.Text = ""
-            Label76.Text = ""
-        End If
-    End Sub
-
     Sub DPI变动时校准界面()
         Me.MinimumSize = New Size(0, 0)
         Me.ClientSize = New Size(1300 * DPI, 800 * DPI)
@@ -78,5 +81,55 @@ Public Class Form1
         Me.UiTabControlMenu1.ItemSize = New Size(150 * DPI, 40 * DPI)
         Me.ImageList1.ImageSize = New Size(1, 30 * DPI)
     End Sub
+
+    Private Sub Form1_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
+        If 编码任务.队列.Any(Function(task) task.状态 = 编码任务.编码状态.正在处理) Then
+            Dim result = MsgBox("有任务正在处理，是否强制关闭所有进程？", MsgBoxStyle.Exclamation + MsgBoxStyle.YesNo)
+            If result = MsgBoxResult.No Then
+                e.Cancel = True
+                Exit Sub
+            End If
+        End If
+        For Each task In 编码任务.队列
+            task.清除占用()
+        Next
+        SetThreadExecutionState(EXECUTION_STATE.ES_CONTINUOUS)
+    End Sub
+
+    Private Sub ListView1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ListView1.SelectedIndexChanged
+        If Me.ListView1.SelectedItems.Count = 1 Then
+            Timer1.Enabled = True
+            Panel41.Visible = True
+            刷新调试信息()
+        Else
+            Timer1.Enabled = False
+            Panel41.Visible = False
+        End If
+    End Sub
+
+    Sub 刷新调试信息()
+        Label74.Text = 编码任务.队列(Me.ListView1.SelectedItems(0).Index).实时输出
+        Label76.Text = String.Join(vbCrLf, 编码任务.队列(Me.ListView1.SelectedItems(0).Index).错误列表)
+        If Label76.Text = "" Then
+            Panel47.Visible = False
+            Label120.Visible = False
+        Else
+            Panel47.Visible = True
+            Label120.Visible = True
+            Dim s1 = 根据标签宽度计算显示高度(Label76)
+            Label76.Height = s1
+            If s1 > TabPage编码队列.Width * 0.3 Then
+                Panel47.Height = TabPage编码队列.Width * 0.3
+            Else
+                Panel47.Height = s1
+            End If
+        End If
+    End Sub
+
+    Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
+        刷新调试信息()
+    End Sub
+
+
 
 End Class
