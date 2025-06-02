@@ -31,7 +31,7 @@ FFmpegFreeUI（简称 3FUI）是在 Windows 上的 [FFmpeg](https://ffmpeg.org/)
 - **预估最终输出大小**<br>
 
   ```visual basic
-  最终大小 = 已生成大小 * 进度百分比
+  最终大小 = 已生成大小 / 进度百分比
   ```
 
   当然这肯定是不准的，但有个大概总比没有强
