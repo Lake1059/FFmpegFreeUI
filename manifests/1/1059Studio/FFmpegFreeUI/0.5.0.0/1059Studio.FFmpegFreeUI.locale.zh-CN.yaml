@@ -1,0 +1,23 @@
+# Created using wingetcreate 1.9.4.0
+# yaml-language-server: $schema=https://aka.ms/winget-manifest.defaultLocale.1.9.0.schema.json
+
+PackageIdentifier: 1059Studio.FFmpegFreeUI
+PackageVersion: 0.5.0.0
+PackageLocale: zh-CN
+Publisher: 1059 Studio
+PublisherUrl: https://github.com/Lake1059
+PublisherSupportUrl: https://github.com/Lake1059/FFmpegFreeUI/issues
+PackageName: FFmpegFreeUI
+PackageUrl: https://github.com/Lake1059/FFmpegFreeUI
+License: MIT
+ShortDescription: ffmpeg 在 Windows 上的轻度专业交互外壳
+Tags:
+- ffmpeg
+- ffmpeg-gui
+- ffmpeg-windows
+ReleaseNotesUrl: https://github.com/Lake1059/FFmpegFreeUI/releases/tag/0.5
+Documentations:
+- DocumentLabel: Wiki
+  DocumentUrl: https://github.com/Lake1059/FFmpegFreeUI/wiki
+ManifestType: defaultLocale
+ManifestVersion: 1.9.0
