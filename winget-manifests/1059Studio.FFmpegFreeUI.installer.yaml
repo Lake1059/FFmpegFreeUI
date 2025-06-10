@@ -1,0 +1,19 @@
+# Created using wingetcreate 1.9.4.0
+# yaml-language-server: $schema=https://aka.ms/winget-manifest.installer.1.9.0.schema.json
+
+PackageIdentifier: 1059Studio.FFmpegFreeUI
+PackageVersion: 0.5.0.0
+InstallerType: portable
+Installers:
+- Architecture: x64
+  InstallerUrl: https://github.com/Lake1059/FFmpegFreeUI/releases/download/0.5/FFmpegFreeUI.x64.exe
+  InstallerSha256: 98123C97477F4D7DF3D233BCBE3B8529F8A9AD2A7F2A57128C8F86B822810958
+- Architecture: x86
+  InstallerUrl: https://github.com/Lake1059/FFmpegFreeUI/releases/download/0.5/FFmpegFreeUI.x86.exe
+  InstallerSha256: a5f3b3087367abe523c40529871ad351f909086f91ab3f6837cef85de059a872
+- Architecture: arm64
+  InstallerUrl: https://github.com/Lake1059/FFmpegFreeUI/releases/download/0.5/FFmpegFreeUI.arm64.exe
+  InstallerSha256: 5e7bd968dbcddaf00074c929aecc14699c1a9c74d823e21a0ee5cc40144f489c
+ManifestType: installer
+ManifestVersion: 1.9.0
+ReleaseDate: 2025-06-02
