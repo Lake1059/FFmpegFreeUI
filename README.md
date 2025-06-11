@@ -55,7 +55,7 @@ FFmpegFreeUI（简称 3FUI）是在 Windows 上的 [FFmpeg](https://ffmpeg.org/)
 
 <img src="IMG\mi.png"  />
 
-![](IMG\vp.png)
+<img src="IMG\vp.png"  />
 
 ## 准备步骤
 
@@ -148,7 +148,7 @@ PNG、JPEG\JPG、WEBP、TIFF、AVIF、GIF、BMP、JPEG-LS、DPX、OpenEXR
 
 ## 如何使用画面裁剪可视化交互
 
-![](IMG\sc.png)
+<img src="IMG\sc.png"  />
 
 画面裁剪滤镜 crop 的四个参数值是：<kbd>裁剪宽度:裁剪高度:左上角X:左上角Y</kbd>
 
