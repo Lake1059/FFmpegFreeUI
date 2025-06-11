@@ -7,6 +7,9 @@ Public Class Form1
     Private 上一次窗口状态 As FormWindowState
 
 
+    Public 常规流程参数页面 As New 界面_常规流程参数
+
+
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         界面控制.初始化()
         视频编码器数据库.初始化()
@@ -80,6 +83,7 @@ Public Class Form1
         Me.MinimumSize = Me.Size
         Me.UiTabControlMenu1.ItemSize = New Size(150 * DPI, 40 * DPI)
         Me.ImageList1.ImageSize = New Size(1, 30 * DPI)
+        常规流程参数页面.UiTabControl1.ItemSize = New Size(120 * Form1.DPI, 50 * Form1.DPI)
     End Sub
 
     Private Sub Form1_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
@@ -108,22 +112,26 @@ Public Class Form1
     End Sub
 
     Sub 刷新调试信息()
-        Label74.Text = 编码任务.队列(Me.ListView1.SelectedItems(0).Index).实时输出
-        Label76.Text = String.Join(vbCrLf, 编码任务.队列(Me.ListView1.SelectedItems(0).Index).错误列表)
-        If Label76.Text = "" Then
-            Panel47.Visible = False
-            Label120.Visible = False
-        Else
-            Panel47.Visible = True
-            Label120.Visible = True
-            Dim s1 = 根据标签宽度计算显示高度(Label76)
-            Label76.Height = s1
-            If s1 > TabPage编码队列.Width * 0.3 Then
-                Panel47.Height = TabPage编码队列.Width * 0.3
+        Try
+            Label74.Text = 编码任务.队列(Me.ListView1.SelectedItems(0).Index).实时输出
+            Label76.Text = String.Join(vbCrLf, 编码任务.队列(Me.ListView1.SelectedItems(0).Index).错误列表)
+            If Label76.Text = "" Then
+                Panel47.Visible = False
+                Label120.Visible = False
             Else
-                Panel47.Height = s1
+                Panel47.Visible = True
+                Label120.Visible = True
+                Dim s1 = 根据标签宽度计算显示高度(Label76)
+                Label76.Height = s1
+                If s1 > TabPage编码队列.Width * 0.3 Then
+                    Panel47.Height = TabPage编码队列.Width * 0.3
+                Else
+                    Panel47.Height = s1
+                End If
             End If
-        End If
+        Catch ex As Exception
+            编码任务.队列(Me.ListView1.SelectedItems(0).Index).错误列表.Add($"刷新界面失败 {Now}")
+        End Try
     End Sub
 
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
@@ -132,4 +140,50 @@ Public Class Form1
 
 
 
+    Private Sub UiButton打开文件显示参数_Click(sender As Object, e As EventArgs) Handles UiButton打开文件显示参数.Click
+        Dim openFileDialog As New OpenFileDialog With {.Multiselect = False, .Filter = "所有文件|*.*"}
+        If openFileDialog.ShowDialog() = DialogResult.OK Then
+            显示媒体信息流程(openFileDialog.FileName)
+        End If
+    End Sub
+    Sub 显示媒体信息流程(文件路径 As String)
+        Me.RichTextBox1.Text = ""
+        Dim FFprobeProcess As New Process
+        FFprobeProcess = New Process()
+        FFprobeProcess.StartInfo.FileName = "ffprobe.exe"
+        FFprobeProcess.StartInfo.WorkingDirectory = Application.StartupPath
+        FFprobeProcess.StartInfo.Arguments = $"-hide_banner ""{文件路径}"""
+        FFprobeProcess.StartInfo.RedirectStandardOutput = True
+        FFprobeProcess.StartInfo.RedirectStandardError = True
+        FFprobeProcess.StartInfo.StandardOutputEncoding = System.Text.Encoding.UTF8
+        FFprobeProcess.StartInfo.StandardErrorEncoding = System.Text.Encoding.UTF8
+        FFprobeProcess.StartInfo.CreateNoWindow = True
+        FFprobeProcess.EnableRaisingEvents = True
+        AddHandler FFprobeProcess.OutputDataReceived, AddressOf 显示媒体信息输出事件
+        AddHandler FFprobeProcess.ErrorDataReceived, AddressOf 显示媒体信息输出事件
+        FFprobeProcess.Start()
+        FFprobeProcess.BeginOutputReadLine()
+        FFprobeProcess.BeginErrorReadLine()
+    End Sub
+    Sub 显示媒体信息输出事件(sender As Object, e As DataReceivedEventArgs)
+        If e.Data Is Nothing Then Exit Sub
+        Try
+            Me.重新创建句柄()
+            Me.Invoke(Sub() Me.RichTextBox1.AppendText(e.Data & vbCrLf))
+        Catch ex As Exception
+        End Try
+    End Sub
+    Private Sub UiButton打开文件显示参数_DragDrop(sender As Object, e As DragEventArgs) Handles UiButton打开文件显示参数.DragDrop
+        Dim files() As String = e.Data.GetData(DataFormats.FileDrop)
+        If files.Length > 0 Then
+            显示媒体信息流程(files(0))
+        End If
+    End Sub
+    Private Sub UiButton打开文件显示参数_DragEnter(sender As Object, e As DragEventArgs) Handles UiButton打开文件显示参数.DragEnter
+        If e.Data.GetData(DataFormats.FileDrop) IsNot Nothing Then
+            e.Effect = DragDropEffects.Copy
+        Else
+            e.Effect = DragDropEffects.None
+        End If
+    End Sub
 End Class

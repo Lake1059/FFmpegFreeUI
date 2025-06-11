@@ -1,4 +1,5 @@
-﻿Imports System.Reflection
+﻿Imports System.IO
+Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
 Imports System.Text.Json
@@ -84,6 +85,32 @@ Module Module1
         g.Dispose()
         Return size.Height + 标签控件.Padding.Top + 标签控件.Padding.Bottom
     End Function
+
+    Public Function LoadImageFromFile(File As String) As Image
+        Using fs As New FileStream(File, FileMode.Open, FileAccess.Read)
+            Return Image.FromStream(fs)
+            fs.Dispose()
+        End Using
+    End Function
+
+    Public Sub 显示窗体(哪个窗口 As Form, 以谁为基准显示 As Form)
+        If 哪个窗口.Visible = True Then
+            哪个窗口.Focus()
+            哪个窗口.Left = (以谁为基准显示.Width - 哪个窗口.Width) * 0.5 + 以谁为基准显示.Left
+            哪个窗口.Top = (以谁为基准显示.Height - 哪个窗口.Height) * 0.5 + 以谁为基准显示.Top
+        Else
+            哪个窗口.Left = (以谁为基准显示.Width - 哪个窗口.Width) * 0.5 + 以谁为基准显示.Left
+            哪个窗口.Top = (以谁为基准显示.Height - 哪个窗口.Height) * 0.5 + 以谁为基准显示.Top
+            哪个窗口.Show(以谁为基准显示)
+        End If
+    End Sub
+
+    Public Sub 根据标签宽度计算并设置显示高度(标签控件 As Label)
+        Dim g As Graphics = 标签控件.CreateGraphics()
+        Dim size As SizeF = g.MeasureString(标签控件.Text, 标签控件.Font, 标签控件.Width - 标签控件.Padding.Left - 标签控件.Padding.Right)
+        g.Dispose()
+        标签控件.Height = size.Height + 标签控件.Padding.Top + 标签控件.Padding.Bottom
+    End Sub
 
 
 

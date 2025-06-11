@@ -1,0 +1,5 @@
+LoadPlugin("C:\FFmpeg\LSMASHSource.dll")
+LoadPlugin("C:\FFmpeg\fmtconv.dll")
+LoadPlugin("C:\FFmpeg\knlmeanscl.dll")
+LWLibavVideoSource("<FilePath>")
+KNLMeansCL(d=1,a=1,s=4,h=2,channels="UV",wmode=3)

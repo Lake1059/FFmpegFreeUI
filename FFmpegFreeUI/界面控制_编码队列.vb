@@ -101,6 +101,20 @@ Public Class 界面控制_编码队列
         End If
     End Sub
 
+    Public Shared Sub 重新添加()
+        If Form1.ListView1.SelectedItems.Count <> 1 Then Exit Sub
+
+        For i = 0 To Form1.ListView1.SelectedItems.Count - 1
+            For Each item As ListViewItem In Form1.ListView2.Items
+                If item.Text = 编码任务.队列(Form1.ListView1.SelectedItems(i).Index).输入文件 Then
+                    GoTo jx1
+                End If
+            Next
+            Form1.ListView2.Items.Add(编码任务.队列(Form1.ListView1.SelectedItems(i).Index).输入文件)
+jx1:
+        Next
+    End Sub
+
     Public Shared Sub 导出配置()
         If Form1.ListView1.SelectedItems.Count <> 1 Then Exit Sub
         Dim d As New SaveFileDialog With {.Filter = "Json|*.json"}

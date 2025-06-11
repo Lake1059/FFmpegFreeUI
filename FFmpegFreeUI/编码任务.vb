@@ -1,4 +1,5 @@
-﻿Imports System.Runtime.InteropServices
+﻿Imports System.IO
+Imports System.Runtime.InteropServices
 Imports System.Text.RegularExpressions
 
 Public Class 编码任务
@@ -62,6 +63,17 @@ Public Class 编码任务
 
         Public Sub 开始()
             Try
+
+                If 预设数据.视频参数_降噪_方式 = "avs" Then
+                    If My.Computer.FileSystem.FileExists(Path.Combine(Application.StartupPath, "AviSynth.avs")) Then
+                        Dim avs1 As String = File.ReadAllText(Path.Combine(Application.StartupPath, "AviSynth.avs"))
+                        avs1 = avs1.Replace("<FilePath>", 输入文件)
+                        System.IO.File.WriteAllText(System.IO.Path.Combine(System.IO.Path.GetDirectoryName(输入文件), System.IO.Path.GetFileNameWithoutExtension(输入文件) & ".avs"), avs1, New System.Text.UTF8Encoding(False))
+                    Else
+                        Err.Raise(10001, "", "AviSynth.avs 脚本文件不存在，请检查是否将其放置于程序目录下！")
+                    End If
+                End If
+
                 错误列表.Clear()
                 状态 = 编码状态.正在处理
                 If 自定义输出位置 = "" Then
@@ -70,21 +82,21 @@ Public Class 编码任务
                     输出文件 = 计算输出位置_自定义目录(自定义输出位置, 输入文件, 预设数据.输出容器)
                 End If
                 命令行 = 预设管理.将预设数据转换为命令行(预设数据, 输入文件, 输出文件)
-                If 预设数据.流控制_启用快速剪辑参数 Then
-                    If 预设数据.流控制_快速剪辑_入点 <> "" AndAlso 预设数据.流控制_快速剪辑_出点 <> "" Then
-                        Dim t1 = ParseTimeSpan(预设数据.流控制_快速剪辑_入点)
-                        Dim t2 = ParseTimeSpan(预设数据.流控制_快速剪辑_出点)
-                        获取_总时长 = t2 - t1
-                        已获取到总时长 = True
-                    End If
+                If 预设数据.流控制_快速剪辑_入点 <> "" AndAlso 预设数据.流控制_快速剪辑_出点 <> "" Then
+                    Dim t1 = ParseTimeSpan(预设数据.流控制_快速剪辑_入点)
+                    Dim t2 = ParseTimeSpan(预设数据.流控制_快速剪辑_出点)
+                    获取_总时长 = t2 - t1
+                    已获取到总时长 = True
                 End If
                 FFmpegProcess = New Process()
                 FFmpegProcess.StartInfo.FileName = "ffmpeg.exe"
-                FFmpegProcess.StartInfo.WorkingDirectory = Application.StartupPath
+                'FFmpegProcess.StartInfo.WorkingDirectory = Application.StartupPath
                 FFmpegProcess.StartInfo.Arguments = 命令行
                 FFmpegProcess.StartInfo.UseShellExecute = False
                 FFmpegProcess.StartInfo.RedirectStandardOutput = True
                 FFmpegProcess.StartInfo.RedirectStandardError = True
+                FFmpegProcess.StartInfo.StandardOutputEncoding = System.Text.Encoding.UTF8
+                FFmpegProcess.StartInfo.StandardErrorEncoding = System.Text.Encoding.UTF8
                 FFmpegProcess.StartInfo.CreateNoWindow = True
                 FFmpegProcess.EnableRaisingEvents = True
                 AddHandler FFmpegProcess.OutputDataReceived, AddressOf FFmpegOutputHandler
@@ -97,6 +109,8 @@ Public Class 编码任务
                 计时器.Start()
                 根据状态设置项信息显示()
                 SetThreadExecutionState(EXECUTION_STATE.ES_CONTINUOUS Or EXECUTION_STATE.ES_SYSTEM_REQUIRED)
+
+
             Catch ex As Exception
                 状态 = 编码状态.错误
                 MsgBox(ex.Message, MsgBoxStyle.Critical)
@@ -179,10 +193,10 @@ Public Class 编码任务
                 Form1.Invoke(AddressOf 根据状态设置项信息显示)
             End If
 
-            If e.Data.Contains("Error") OrElse e.Data.Contains("Invalid") OrElse e.Data.Contains("cannot") OrElse e.Data.Contains("failed") Then
+            Dim errorKeywords As String() = {"Error", "Invalid", "cannot", "failed", "not supported", "require", "must be"}
+            If errorKeywords.Any(Function(keyword) e.Data.Contains(keyword, StringComparison.OrdinalIgnoreCase)) Then
                 错误列表.Add(e.Data)
             End If
-
 
         End Sub
 
@@ -193,13 +207,23 @@ Public Class 编码任务
                 状态 = 编码状态.错误
             End If
             计时器.Stop()
-            Form1.重新创建句柄()
-            Form1.Invoke(AddressOf 根据状态设置项信息显示)
+            Try
+                Form1.重新创建句柄()
+                Form1.Invoke(AddressOf 根据状态设置项信息显示)
+            Catch ex As Exception
+                错误列表.Add($"刷新界面失败 {Now}")
+            End Try
             If Not 手动停止不要尝试启动其他任务 Then
                 检查是否有可以开始的任务()
             Else
                 手动停止不要尝试启动其他任务 = True
             End If
+            'If 预设数据.视频参数_降噪_方式 = "avs" Then
+            '    If My.Computer.FileSystem.FileExists(Path.Combine(Path.GetDirectoryName(输入文件), Path.GetFileNameWithoutExtension(输入文件) & ".avs")) Then
+            '        My.Computer.FileSystem.DeleteFile(Path.Combine(Path.GetDirectoryName(输入文件), Path.GetFileNameWithoutExtension(输入文件) & ".avs"))
+            '    End If
+            'End If
+            GC.Collect()
         End Sub
 
         Public Sub 在界面上刷新数据()
@@ -295,22 +319,28 @@ Public Class 编码任务
                          End If
 
                          ' 通过Invoke刷新界面
-                         Form1.重新创建句柄()
-                         Form1.Invoke(Sub()
-                                          列表视图项.SubItems(1).Text = 状态.ToString
-                                          列表视图项.SubItems(2).Text = progressText
-                                          列表视图项.SubItems(3).Text = speedPercent
-                                          列表视图项.SubItems(4).Text = sizeText & estimatedSizeText
-                                          列表视图项.SubItems(5).Text = qText
-                                          列表视图项.SubItems(6).Text = bitrateText
-                                          Dim elapsed = 计时器.Elapsed
-                                          Dim elapsedParts As New List(Of String)
-                                          If elapsed.Hours > 0 Then elapsedParts.Add($"{elapsed.Hours}h")
-                                          If elapsed.Minutes > 0 OrElse elapsedParts.Count > 0 Then elapsedParts.Add($"{elapsed.Minutes}m")
-                                          elapsedParts.Add($"{elapsed.Seconds}s")
-                                          Dim elapsedText = String.Join("", elapsedParts)
-                                          列表视图项.SubItems(7).Text = $"{remainTimeText} - {elapsedText}"
-                                      End Sub)
+                         Try
+                             Form1.重新创建句柄()
+                             Application.DoEvents()
+                             Form1.Invoke(Sub()
+                                              列表视图项.SubItems(1).Text = 状态.ToString
+                                              列表视图项.SubItems(2).Text = progressText
+                                              列表视图项.SubItems(3).Text = speedPercent
+                                              列表视图项.SubItems(4).Text = sizeText & estimatedSizeText
+                                              列表视图项.SubItems(5).Text = qText
+                                              列表视图项.SubItems(6).Text = bitrateText
+                                              Dim elapsed = 计时器.Elapsed
+                                              Dim elapsedParts As New List(Of String)
+                                              If elapsed.Hours > 0 Then elapsedParts.Add($"{elapsed.Hours}h")
+                                              If elapsed.Minutes > 0 OrElse elapsedParts.Count > 0 Then elapsedParts.Add($"{elapsed.Minutes}m")
+                                              elapsedParts.Add($"{elapsed.Seconds}s")
+                                              Dim elapsedText = String.Join("", elapsedParts)
+                                              列表视图项.SubItems(7).Text = $"{remainTimeText} - {elapsedText}"
+                                          End Sub)
+                         Catch ex As Exception
+                             错误列表.Add($"刷新界面失败 {Now}")
+                         End Try
+
                      End Sub)
         End Sub
 
