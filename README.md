@@ -167,22 +167,56 @@ AviSynth 选项在降噪设置里提供，最后一个选项就是。3FUI 只能
 - AviSynth.dll（在发行版中有个名为 filesonly 的那里面找）<br>https://github.com/AviSynth/AviSynthPlus/releases
 - LSMASHSource.dll<br>https://github.com/HomeOfAviSynthPlusEvolution/L-SMASH-Works/releases<br>此文件用于读取视频文件
 - knlmeanscl.dll<br>https://github.com/Khanattila/KNLMeansCL/releases<br>此文件用于降噪
-- fmtconv.dll<br>https://gitlab.com/EleonoreMizo/fmtconv<br>用于色彩空间转换，如果你需要的话
-- ffms2.dll<br>https://github.com/FFMS/ffms2/releases<br>如果你需要在 avs 里处理音频的话，可以用这个，当然是如果你需要的话
+- fmtconv.dll<br>https://gitlab.com/EleonoreMizo/fmtconv<br>用于改变视频位深
 
 将这些文件与 ffmpeg 放在一起！
 
 在 3FUI 的目录下创建 AviSynth.avs 文件，此文件作为模板提供给 3FUI，在其中填写以下内容：
 
 ```vb
-LoadPlugin("C:\FFmpeg\LSMASHSource.dll")
-LoadPlugin("C:\FFmpeg\knlmeanscl.dll")
-LWLibavVideoSource("<FilePath>")
-KNLMeansCL(d=3,a=2,s=4,h=2,channels="UV",wmode=3)
+LoadPlugin("C:\xxxx\LSMASHSource.dll")
+LoadPlugin("C:\xxxx\fmtconv.dll")
+LoadPlugin("C:\xxxx\knlmeanscl.dll")
+LWLibavVideoSource("<FilePath>")#读取文件中的视频流
+fmtc_bitdepth(bits=16,dmode=1)#为KNLMeansCL降噪而提升位深
+KNLMeansCL(d=2,a=3,s=4,h=3,channels="Y",wmode=3)#对亮度平面的降噪强度高于色度平面
+KNLMeansCL(d=2,a=3,s=4,h=2,channels="UV",wmode=3)#对色度平面的降噪强度低于亮度平面
+fmtc_bitdepth(bits=10,dmode=0)#为libsvtav1编码而降低位深
+```
+
+如果需要在avs中读取文件的音视频流可用以下模板
+
+```vb
+LoadPlugin("C:\xxxx\LSMASHSource.dll")
+LoadPlugin("C:\xxxx\fmtconv.dll")
+LoadPlugin("C:\xxxx\knlmeanscl.dll")
+function LibavSource2(string path, int "atrack", 
+\          int "fpsnum", int "fpsden",
+\          string "format", bool "cache") 
+{
+    atrack   = Default(atrack, -1)
+    fpsnum   = Default(fpsnum, 0)
+    fpsden   = Default(fpsden,  1)
+    cache    = Default(cache, true)
+
+    format   = Default(format, "")
+
+    video = LWLibavVideoSource(path, 
+    \               fpsnum=fpsnum, fpsden=fpsden, format=format,
+    \               cache=cache)
+    return (atrack==-2) ? video: AudioDub(video, 
+   \    LWLibavAudioSource(path, stream_index=atrack, cache=cache))
+}
+LibavSource2("<FilePath>")#读取文件中的音视频流。atrack - 音频轨道号，默认为自动，如果为 -2，则忽略音频。cache - 如果为 true（默认值），则创建索引文件
+fmtc_bitdepth(bits=16,dmode=1)#为KNLMeansCL降噪而提升位深
+KNLMeansCL(d=2,a=3,s=4,h=3,channels="Y",wmode=3)#对亮度平面的降噪强度高于色度平面
+KNLMeansCL(d=2,a=3,s=4,h=2,channels="UV",wmode=3)#对色度平面的降噪强度低于亮度平面
+fmtc_bitdepth(bits=10,dmode=0)#为libsvtav1编码而降低位深
 ```
 
 - LoadPlugin 方法用来加载这些 dll，不需要在这里加载 AviSynth.dll<br>dll 的路径请写绝对路径！
-- LWLibavVideoSource 加载视频文件，直接把第三行复制过去，3FUI 会自动替换这个文件路径
+- LWLibavVideoSource 加载视频文件，直接把第四行复制过去，3FUI 会自动替换这个文件路径
+- fmtc_bitdepth 用于先为 KNLMeansCL 的降噪提升位深，而后为视频编码器的编码降低位深
 - KNLMeansCL 就是降噪方法，其参数如下：
 
 原文：https://github.com/Khanattila/KNLMeansCL/wiki/Filter-description
