@@ -186,4 +186,34 @@ Public Class Form1
             e.Effect = DragDropEffects.None
         End If
     End Sub
+
+    Private Sub UiTextBox快捷输入CPU核心_KeyPress(sender As Object, e As KeyPressEventArgs) Handles UiTextBox快捷输入CPU核心.KeyPress
+        Select Case e.KeyChar
+            Case "0"c To "9"c, "~"c, ChrW(Keys.Back)
+            Case ChrW(Keys.Enter)
+                Dim input As String = UiTextBox快捷输入CPU核心.Text.Trim()
+                Dim result As New List(Of Integer)
+                Try
+                    If input.Contains("~"c) Then
+                        Dim parts = input.Split("~"c)
+                        If parts.Length = 2 Then
+                            Dim startNum, endNum As Integer
+                            If Integer.TryParse(parts(0), startNum) AndAlso Integer.TryParse(parts(1), endNum) Then
+                                If startNum <= endNum Then
+                                    For i = startNum To endNum
+                                        result.Add(i)
+                                    Next
+                                    Me.UiTextBox处理器核心.Text = String.Join(",", result)
+                                End If
+                            End If
+                        End If
+                    End If
+                Catch ex As Exception
+                    MsgBox("输入处理异常: " & ex.Message, MsgBoxStyle.Critical)
+                End Try
+                e.Handled = True
+            Case Else
+                Exit Sub
+        End Select
+    End Sub
 End Class

@@ -112,6 +112,21 @@ Module Module1
         标签控件.Height = size.Height + 标签控件.Padding.Top + 标签控件.Padding.Bottom
     End Sub
 
-
+    ''' <summary>
+    ''' 根据核心编号列表生成 ProcessorAffinity 掩码
+    ''' </summary>
+    ''' <param name="cores">逻辑核心编号，从 0 开始</param>
+    ''' <returns>IntPtr 类型的掩码</returns>
+    Function GetAffinityMask(cores As Integer()) As IntPtr
+        Dim mask As Long = 0
+        For Each core In cores
+            If core >= 0 AndAlso core < Environment.ProcessorCount Then
+                mask = mask Or CLng(1) << core
+            Else
+                Throw New ArgumentOutOfRangeException($"核心编号 {core} 无效。系统共有 {Environment.ProcessorCount} 个核心（编号从 0 开始）。")
+            End If
+        Next
+        Return New IntPtr(mask)
+    End Function
 
 End Module

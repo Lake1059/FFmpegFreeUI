@@ -34,7 +34,7 @@ Partial Class 界面_常规流程参数
         Panel9 = New Panel()
         Panel17 = New Panel()
         Label26 = New Label()
-        UiComboBox1 = New Sunny.UI.UIComboBox()
+        UiComboBox解码器 = New Sunny.UI.UIComboBox()
         Label45 = New Label()
         TabPage视频参数 = New TabPage()
         Panel2 = New Panel()
@@ -337,7 +337,6 @@ Partial Class 界面_常规流程参数
         Label122 = New Label()
         UiTextBox关键帧间隔 = New Sunny.UI.UITextBox()
         UiTextBox双向预测帧数量 = New Sunny.UI.UITextBox()
-        UiComboBox解码器 = New Sunny.UI.UIComboBox()
         UiTabControl1.SuspendLayout()
         TabPage解码参数.SuspendLayout()
         Panel1.SuspendLayout()
@@ -593,7 +592,7 @@ Partial Class 界面_常规流程参数
         ' Panel17
         ' 
         Panel17.Controls.Add(Label26)
-        Panel17.Controls.Add(UiComboBox1)
+        Panel17.Controls.Add(UiComboBox解码器)
         Panel17.Dock = DockStyle.Top
         Panel17.Location = New Point(10, 40)
         Panel17.Name = "Panel17"
@@ -614,42 +613,42 @@ Partial Class 界面_常规流程参数
         Label26.Text = "如不设置解码器则 ffmpeg 将自行决定"
         Label26.TextAlign = ContentAlignment.MiddleLeft
         ' 
-        ' UiComboBox1
+        ' UiComboBox解码器
         ' 
-        UiComboBox1.DataSource = Nothing
-        UiComboBox1.Dock = DockStyle.Left
-        UiComboBox1.DropDownStyle = Sunny.UI.UIDropDownStyle.DropDownList
-        UiComboBox1.FillColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiComboBox1.FillColor2 = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiComboBox1.FillDisableColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiComboBox1.Font = New Font("微软雅黑", 9F)
-        UiComboBox1.ForeColor = Color.Silver
-        UiComboBox1.ForeDisableColor = Color.Silver
-        UiComboBox1.ItemFillColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiComboBox1.ItemForeColor = Color.Silver
-        UiComboBox1.ItemHeight = 30
-        UiComboBox1.ItemHoverColor = Color.FromArgb(CByte(56), CByte(56), CByte(56))
-        UiComboBox1.ItemRectColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
-        UiComboBox1.Items.AddRange(New Object() {"auto", "cpu", "d3d11va", "qsv", "cuda", "dxva2", "opencl"})
-        UiComboBox1.ItemSelectBackColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
-        UiComboBox1.ItemSelectForeColor = Color.Silver
-        UiComboBox1.Location = New Point(3, 0)
-        UiComboBox1.Margin = New Padding(4, 5, 4, 5)
-        UiComboBox1.MaxDropDownItems = 17
-        UiComboBox1.MinimumSize = New Size(63, 0)
-        UiComboBox1.Name = "UiComboBox1"
-        UiComboBox1.Padding = New Padding(0, 0, 30, 2)
-        UiComboBox1.RadiusSides = Sunny.UI.UICornerRadiusSides.None
-        UiComboBox1.RectColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
-        UiComboBox1.RectDisableColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
-        UiComboBox1.ScrollBarHandleWidth = 20
-        UiComboBox1.Size = New Size(200, 30)
-        UiComboBox1.Style = Sunny.UI.UIStyle.Custom
-        UiComboBox1.StyleDropDown = Sunny.UI.UIStyle.Black
-        UiComboBox1.SymbolSize = 24
-        UiComboBox1.TabIndex = 86
-        UiComboBox1.TextAlignment = ContentAlignment.MiddleLeft
-        UiComboBox1.Watermark = "-hwaccel"
+        UiComboBox解码器.DataSource = Nothing
+        UiComboBox解码器.Dock = DockStyle.Left
+        UiComboBox解码器.DropDownStyle = Sunny.UI.UIDropDownStyle.DropDownList
+        UiComboBox解码器.FillColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        UiComboBox解码器.FillColor2 = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        UiComboBox解码器.FillDisableColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        UiComboBox解码器.Font = New Font("微软雅黑", 9F)
+        UiComboBox解码器.ForeColor = Color.Silver
+        UiComboBox解码器.ForeDisableColor = Color.Silver
+        UiComboBox解码器.ItemFillColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        UiComboBox解码器.ItemForeColor = Color.Silver
+        UiComboBox解码器.ItemHeight = 30
+        UiComboBox解码器.ItemHoverColor = Color.FromArgb(CByte(56), CByte(56), CByte(56))
+        UiComboBox解码器.ItemRectColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        UiComboBox解码器.Items.AddRange(New Object() {"auto", "cpu", "d3d11va", "qsv", "cuda", "dxva2", "opencl"})
+        UiComboBox解码器.ItemSelectBackColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        UiComboBox解码器.ItemSelectForeColor = Color.Silver
+        UiComboBox解码器.Location = New Point(3, 0)
+        UiComboBox解码器.Margin = New Padding(4, 5, 4, 5)
+        UiComboBox解码器.MaxDropDownItems = 17
+        UiComboBox解码器.MinimumSize = New Size(63, 0)
+        UiComboBox解码器.Name = "UiComboBox解码器"
+        UiComboBox解码器.Padding = New Padding(0, 0, 30, 2)
+        UiComboBox解码器.RadiusSides = Sunny.UI.UICornerRadiusSides.None
+        UiComboBox解码器.RectColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        UiComboBox解码器.RectDisableColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        UiComboBox解码器.ScrollBarHandleWidth = 20
+        UiComboBox解码器.Size = New Size(200, 30)
+        UiComboBox解码器.Style = Sunny.UI.UIStyle.Custom
+        UiComboBox解码器.StyleDropDown = Sunny.UI.UIStyle.Black
+        UiComboBox解码器.SymbolSize = 24
+        UiComboBox解码器.TabIndex = 86
+        UiComboBox解码器.TextAlignment = ContentAlignment.MiddleLeft
+        UiComboBox解码器.Watermark = "-hwaccel"
         ' 
         ' Label45
         ' 
@@ -4746,9 +4745,9 @@ Partial Class 界面_常规流程参数
         ' 
         TabPage流控制.BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         TabPage流控制.Controls.Add(Panel5)
-        TabPage流控制.Location = New Point(0, 50)
+        TabPage流控制.Location = New Point(0, 40)
         TabPage流控制.Name = "TabPage流控制"
-        TabPage流控制.Size = New Size(1100, 650)
+        TabPage流控制.Size = New Size(200, 60)
         TabPage流控制.TabIndex = 4
         TabPage流控制.Text = "流控制"
         ' 
@@ -4763,7 +4762,7 @@ Partial Class 界面_常规流程参数
         Panel5.Location = New Point(0, 0)
         Panel5.Name = "Panel5"
         Panel5.Padding = New Padding(20)
-        Panel5.Size = New Size(1100, 650)
+        Panel5.Size = New Size(200, 60)
         Panel5.TabIndex = 1
         ' 
         ' Panel67
@@ -4776,7 +4775,7 @@ Partial Class 界面_常规流程参数
         Panel67.Location = New Point(20, 350)
         Panel67.Name = "Panel67"
         Panel67.Padding = New Padding(10)
-        Panel67.Size = New Size(1060, 80)
+        Panel67.Size = New Size(160, 80)
         Panel67.TabIndex = 78
         ' 
         ' Panel68
@@ -4786,7 +4785,7 @@ Partial Class 界面_常规流程参数
         Panel68.Location = New Point(10, 40)
         Panel68.Name = "Panel68"
         Panel68.Padding = New Padding(3, 0, 0, 0)
-        Panel68.Size = New Size(1040, 30)
+        Panel68.Size = New Size(140, 30)
         Panel68.TabIndex = 3
         ' 
         ' UiTextBoxfilter_complex
@@ -4813,7 +4812,7 @@ Partial Class 界面_常规流程参数
         UiTextBoxfilter_complex.ScrollBarColor = Color.DimGray
         UiTextBoxfilter_complex.ScrollBarStyleInherited = False
         UiTextBoxfilter_complex.ShowText = False
-        UiTextBoxfilter_complex.Size = New Size(1037, 30)
+        UiTextBoxfilter_complex.Size = New Size(137, 30)
         UiTextBoxfilter_complex.TabIndex = 80
         UiTextBoxfilter_complex.TextAlignment = ContentAlignment.MiddleLeft
         UiTextBoxfilter_complex.Watermark = "这里的参数将作为 -filter_complex 滤镜参数，每个滤镜用英文逗号隔开，3FUI 自身没有使用此参数"
@@ -4837,7 +4836,7 @@ Partial Class 界面_常规流程参数
         Label108.Dock = DockStyle.Top
         Label108.Location = New Point(20, 330)
         Label108.Name = "Label108"
-        Label108.Size = New Size(1060, 20)
+        Label108.Size = New Size(160, 20)
         Label108.TabIndex = 76
         ' 
         ' Panel65
@@ -4850,7 +4849,7 @@ Partial Class 界面_常规流程参数
         Panel65.Location = New Point(20, 250)
         Panel65.Name = "Panel65"
         Panel65.Padding = New Padding(10)
-        Panel65.Size = New Size(1060, 80)
+        Panel65.Size = New Size(160, 80)
         Panel65.TabIndex = 75
         ' 
         ' Panel66
@@ -4863,7 +4862,7 @@ Partial Class 界面_常规流程参数
         Panel66.Location = New Point(10, 40)
         Panel66.Name = "Panel66"
         Panel66.Padding = New Padding(3, 0, 0, 0)
-        Panel66.Size = New Size(1040, 30)
+        Panel66.Size = New Size(140, 30)
         Panel66.TabIndex = 3
         ' 
         ' Label105
@@ -4874,7 +4873,7 @@ Partial Class 界面_常规流程参数
         Label105.Location = New Point(413, 0)
         Label105.Name = "Label105"
         Label105.Padding = New Padding(10, 0, 0, 0)
-        Label105.Size = New Size(627, 30)
+        Label105.Size = New Size(0, 30)
         Label105.TabIndex = 81
         Label105.Text = "定位到最近的关键帧，如果只写一个则任务进度和倒计时是不准的，懒得做这个极少需求的兼容了"
         Label105.TextAlign = ContentAlignment.MiddleLeft
@@ -4966,7 +4965,7 @@ Partial Class 界面_常规流程参数
         Label104.Dock = DockStyle.Top
         Label104.Location = New Point(20, 230)
         Label104.Name = "Label104"
-        Label104.Size = New Size(1060, 20)
+        Label104.Size = New Size(160, 20)
         Label104.TabIndex = 74
         ' 
         ' Panel49
@@ -4982,7 +4981,7 @@ Partial Class 界面_常规流程参数
         Panel49.Location = New Point(20, 20)
         Panel49.Name = "Panel49"
         Panel49.Padding = New Padding(10)
-        Panel49.Size = New Size(1060, 210)
+        Panel49.Size = New Size(160, 210)
         Panel49.TabIndex = 64
         ' 
         ' Panel64
@@ -4993,7 +4992,7 @@ Partial Class 界面_常规流程参数
         Panel64.Dock = DockStyle.Top
         Panel64.Location = New Point(10, 170)
         Panel64.Name = "Panel64"
-        Panel64.Size = New Size(1040, 30)
+        Panel64.Size = New Size(140, 30)
         Panel64.TabIndex = 7
         ' 
         ' UiCheckBox保留章节信息
@@ -5045,7 +5044,7 @@ Partial Class 界面_常规流程参数
         Panel63.Location = New Point(10, 130)
         Panel63.Name = "Panel63"
         Panel63.Padding = New Padding(0, 0, 0, 10)
-        Panel63.Size = New Size(1040, 40)
+        Panel63.Size = New Size(140, 40)
         Panel63.TabIndex = 6
         ' 
         ' Label109
@@ -5055,7 +5054,7 @@ Partial Class 界面_常规流程参数
         Label109.ForeColor = Color.Gray
         Label109.Location = New Point(610, 0)
         Label109.Name = "Label109"
-        Label109.Size = New Size(430, 30)
+        Label109.Size = New Size(0, 30)
         Label109.TabIndex = 98
         Label109.Text = "字幕自动混流优先级 srt>ass>ssa，三种后缀都会扫描"
         Label109.TextAlign = ContentAlignment.MiddleLeft
@@ -5110,7 +5109,7 @@ Partial Class 界面_常规流程参数
         Panel50.Location = New Point(10, 90)
         Panel50.Name = "Panel50"
         Panel50.Padding = New Padding(0, 0, 0, 10)
-        Panel50.Size = New Size(1040, 40)
+        Panel50.Size = New Size(140, 40)
         Panel50.TabIndex = 5
         ' 
         ' Label140
@@ -5120,7 +5119,7 @@ Partial Class 界面_常规流程参数
         Label140.ForeColor = Color.Gray
         Label140.Location = New Point(610, 0)
         Label140.Name = "Label140"
-        Label140.Size = New Size(430, 30)
+        Label140.Size = New Size(0, 30)
         Label140.TabIndex = 100
         Label140.Text = "输入文件索引:a:流索引"
         Label140.TextAlign = ContentAlignment.MiddleLeft
@@ -5200,7 +5199,7 @@ Partial Class 界面_常规流程参数
         Panel62.Location = New Point(10, 50)
         Panel62.Name = "Panel62"
         Panel62.Padding = New Padding(0, 0, 0, 10)
-        Panel62.Size = New Size(1040, 40)
+        Panel62.Size = New Size(140, 40)
         Panel62.TabIndex = 4
         ' 
         ' Label139
@@ -5210,7 +5209,7 @@ Partial Class 界面_常规流程参数
         Label139.ForeColor = Color.Gray
         Label139.Location = New Point(610, 0)
         Label139.Name = "Label139"
-        Label139.Size = New Size(430, 30)
+        Label139.Size = New Size(0, 30)
         Label139.TabIndex = 99
         Label139.Text = "输入文件索引:v:流索引"
         Label139.TextAlign = ContentAlignment.MiddleLeft
@@ -5630,42 +5629,6 @@ Partial Class 界面_常规流程参数
         UiTextBox双向预测帧数量.WatermarkActiveColor = Color.DimGray
         UiTextBox双向预测帧数量.WatermarkColor = Color.DimGray
         ' 
-        ' UiComboBox解码器
-        ' 
-        UiComboBox解码器.DataSource = Nothing
-        UiComboBox解码器.Dock = DockStyle.Left
-        UiComboBox解码器.FillColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiComboBox解码器.FillColor2 = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiComboBox解码器.FillDisableColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiComboBox解码器.Font = New Font("微软雅黑", 9F)
-        UiComboBox解码器.ForeColor = Color.Silver
-        UiComboBox解码器.ForeDisableColor = Color.Silver
-        UiComboBox解码器.ItemFillColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiComboBox解码器.ItemForeColor = Color.Silver
-        UiComboBox解码器.ItemHeight = 30
-        UiComboBox解码器.ItemHoverColor = Color.FromArgb(CByte(56), CByte(56), CByte(56))
-        UiComboBox解码器.ItemRectColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
-        UiComboBox解码器.Items.AddRange(New Object() {"auto", "cpu", "d3d11va", "qsv", "cuda", "dxva2", "opencl"})
-        UiComboBox解码器.ItemSelectBackColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
-        UiComboBox解码器.ItemSelectForeColor = Color.Silver
-        UiComboBox解码器.Location = New Point(0, 0)
-        UiComboBox解码器.Margin = New Padding(4, 5, 4, 5)
-        UiComboBox解码器.MaxDropDownItems = 17
-        UiComboBox解码器.MinimumSize = New Size(63, 0)
-        UiComboBox解码器.Name = "UiComboBox解码器"
-        UiComboBox解码器.Padding = New Padding(0, 0, 30, 2)
-        UiComboBox解码器.RadiusSides = Sunny.UI.UICornerRadiusSides.None
-        UiComboBox解码器.RectColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
-        UiComboBox解码器.RectDisableColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
-        UiComboBox解码器.ScrollBarHandleWidth = 20
-        UiComboBox解码器.Size = New Size(200, 30)
-        UiComboBox解码器.Style = Sunny.UI.UIStyle.Custom
-        UiComboBox解码器.StyleDropDown = Sunny.UI.UIStyle.Black
-        UiComboBox解码器.SymbolSize = 24
-        UiComboBox解码器.TabIndex = 84
-        UiComboBox解码器.TextAlignment = ContentAlignment.MiddleLeft
-        UiComboBox解码器.Watermark = "解码器 -hwaccel"
-        ' 
         ' 界面_常规流程参数
         ' 
         AutoScaleDimensions = New SizeF(96F, 96F)
@@ -5964,7 +5927,6 @@ Partial Class 界面_常规流程参数
     Friend WithEvents Label26 As Label
     Friend WithEvents Label45 As Label
     Friend WithEvents UiComboBox解码器 As Sunny.UI.UIComboBox
-    Friend WithEvents UiComboBox1 As Sunny.UI.UIComboBox
     Friend WithEvents Label61 As Label
     Friend WithEvents Label65 As Label
     Friend WithEvents Label64 As Label

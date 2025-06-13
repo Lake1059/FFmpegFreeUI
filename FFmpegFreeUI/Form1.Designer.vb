@@ -26,6 +26,14 @@ Partial Class Form1
         UiTabControlMenu1 = New Sunny.UI.UITabControlMenu()
         TabPage起始页面 = New TabPage()
         Panel44 = New Panel()
+        Panel10 = New Panel()
+        Panel11 = New Panel()
+        UiTextBox处理器核心 = New Sunny.UI.UITextBox()
+        Label106 = New Label()
+        UiTextBox快捷输入CPU核心 = New Sunny.UI.UITextBox()
+        Label28 = New Label()
+        Label29 = New Label()
+        Label30 = New Label()
         Panel7 = New Panel()
         Panel8 = New Panel()
         Label122 = New Label()
@@ -135,6 +143,8 @@ Partial Class Form1
         UiTabControlMenu1.SuspendLayout()
         TabPage起始页面.SuspendLayout()
         Panel44.SuspendLayout()
+        Panel10.SuspendLayout()
+        Panel11.SuspendLayout()
         Panel7.SuspendLayout()
         Panel8.SuspendLayout()
         Panel5.SuspendLayout()
@@ -197,6 +207,8 @@ Partial Class Form1
         ' Panel44
         ' 
         Panel44.BackgroundImageLayout = ImageLayout.Stretch
+        Panel44.Controls.Add(Panel10)
+        Panel44.Controls.Add(Label30)
         Panel44.Controls.Add(Panel7)
         Panel44.Controls.Add(Label20)
         Panel44.Controls.Add(Panel73)
@@ -207,15 +219,143 @@ Partial Class Form1
         Panel44.Size = New Size(1133, 761)
         Panel44.TabIndex = 0
         ' 
+        ' Panel10
+        ' 
+        Panel10.AutoSize = True
+        Panel10.BackColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        Panel10.Controls.Add(Panel11)
+        Panel10.Controls.Add(Label28)
+        Panel10.Controls.Add(Label29)
+        Panel10.Dock = DockStyle.Top
+        Panel10.Location = New Point(20, 425)
+        Panel10.Name = "Panel10"
+        Panel10.Padding = New Padding(10)
+        Panel10.Size = New Size(1093, 120)
+        Panel10.TabIndex = 84
+        ' 
+        ' Panel11
+        ' 
+        Panel11.Controls.Add(UiTextBox处理器核心)
+        Panel11.Controls.Add(Label106)
+        Panel11.Controls.Add(UiTextBox快捷输入CPU核心)
+        Panel11.Dock = DockStyle.Top
+        Panel11.Location = New Point(10, 80)
+        Panel11.Name = "Panel11"
+        Panel11.Padding = New Padding(7, 0, 7, 0)
+        Panel11.Size = New Size(1073, 30)
+        Panel11.TabIndex = 82
+        ' 
+        ' UiTextBox处理器核心
+        ' 
+        UiTextBox处理器核心.Dock = DockStyle.Fill
+        UiTextBox处理器核心.FillColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiTextBox处理器核心.FillColor2 = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiTextBox处理器核心.FillDisableColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiTextBox处理器核心.FillReadOnlyColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiTextBox处理器核心.Font = New Font("微软雅黑", 10F, FontStyle.Bold)
+        UiTextBox处理器核心.ForeColor = Color.DarkGray
+        UiTextBox处理器核心.ForeDisableColor = Color.DarkGray
+        UiTextBox处理器核心.ForeReadOnlyColor = Color.DarkGray
+        UiTextBox处理器核心.Location = New Point(7, 0)
+        UiTextBox处理器核心.Margin = New Padding(4, 5, 4, 5)
+        UiTextBox处理器核心.MinimumSize = New Size(1, 16)
+        UiTextBox处理器核心.Name = "UiTextBox处理器核心"
+        UiTextBox处理器核心.Padding = New Padding(5)
+        UiTextBox处理器核心.RadiusSides = Sunny.UI.UICornerRadiusSides.None
+        UiTextBox处理器核心.RectColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        UiTextBox处理器核心.RectDisableColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        UiTextBox处理器核心.RectReadOnlyColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        UiTextBox处理器核心.ScrollBarBackColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        UiTextBox处理器核心.ScrollBarColor = Color.DimGray
+        UiTextBox处理器核心.ScrollBarStyleInherited = False
+        UiTextBox处理器核心.ShowText = False
+        UiTextBox处理器核心.Size = New Size(939, 30)
+        UiTextBox处理器核心.TabIndex = 82
+        UiTextBox处理器核心.TextAlignment = ContentAlignment.MiddleLeft
+        UiTextBox处理器核心.Watermark = ""
+        UiTextBox处理器核心.WatermarkActiveColor = Color.DimGray
+        UiTextBox处理器核心.WatermarkColor = Color.DimGray
+        ' 
+        ' Label106
+        ' 
+        Label106.Dock = DockStyle.Right
+        Label106.Location = New Point(946, 0)
+        Label106.Name = "Label106"
+        Label106.Size = New Size(10, 30)
+        Label106.TabIndex = 84
+        ' 
+        ' UiTextBox快捷输入CPU核心
+        ' 
+        UiTextBox快捷输入CPU核心.Dock = DockStyle.Right
+        UiTextBox快捷输入CPU核心.FillColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiTextBox快捷输入CPU核心.FillColor2 = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiTextBox快捷输入CPU核心.FillDisableColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiTextBox快捷输入CPU核心.FillReadOnlyColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiTextBox快捷输入CPU核心.Font = New Font("微软雅黑", 10F, FontStyle.Bold)
+        UiTextBox快捷输入CPU核心.ForeColor = Color.DarkGray
+        UiTextBox快捷输入CPU核心.ForeDisableColor = Color.DarkGray
+        UiTextBox快捷输入CPU核心.ForeReadOnlyColor = Color.DarkGray
+        UiTextBox快捷输入CPU核心.Location = New Point(956, 0)
+        UiTextBox快捷输入CPU核心.Margin = New Padding(4, 5, 4, 5)
+        UiTextBox快捷输入CPU核心.MinimumSize = New Size(1, 16)
+        UiTextBox快捷输入CPU核心.Name = "UiTextBox快捷输入CPU核心"
+        UiTextBox快捷输入CPU核心.Padding = New Padding(5)
+        UiTextBox快捷输入CPU核心.RadiusSides = Sunny.UI.UICornerRadiusSides.None
+        UiTextBox快捷输入CPU核心.RectColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        UiTextBox快捷输入CPU核心.RectDisableColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        UiTextBox快捷输入CPU核心.RectReadOnlyColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        UiTextBox快捷输入CPU核心.ScrollBarBackColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        UiTextBox快捷输入CPU核心.ScrollBarColor = Color.DimGray
+        UiTextBox快捷输入CPU核心.ScrollBarStyleInherited = False
+        UiTextBox快捷输入CPU核心.ShowText = False
+        UiTextBox快捷输入CPU核心.Size = New Size(110, 30)
+        UiTextBox快捷输入CPU核心.TabIndex = 83
+        UiTextBox快捷输入CPU核心.TextAlignment = ContentAlignment.MiddleLeft
+        UiTextBox快捷输入CPU核心.Watermark = "?~?，Enter"
+        UiTextBox快捷输入CPU核心.WatermarkActiveColor = Color.DimGray
+        UiTextBox快捷输入CPU核心.WatermarkColor = Color.DimGray
+        ' 
+        ' Label28
+        ' 
+        Label28.AutoSize = True
+        Label28.Dock = DockStyle.Top
+        Label28.ForeColor = Color.Gray
+        Label28.Location = New Point(10, 50)
+        Label28.Name = "Label28"
+        Label28.Padding = New Padding(2, 0, 0, 10)
+        Label28.Size = New Size(572, 30)
+        Label28.TabIndex = 10
+        Label28.Text = "设置 ffmpeg 能够使用哪些处理器核心，将对所有新的任务生效，每个核心索引用逗号隔开"
+        ' 
+        ' Label29
+        ' 
+        Label29.AutoSize = True
+        Label29.Dock = DockStyle.Top
+        Label29.Font = New Font("微软雅黑", 14F)
+        Label29.Location = New Point(10, 10)
+        Label29.Name = "Label29"
+        Label29.Padding = New Padding(0, 5, 0, 10)
+        Label29.Size = New Size(88, 40)
+        Label29.TabIndex = 9
+        Label29.Text = "性能调度"
+        ' 
+        ' Label30
+        ' 
+        Label30.Dock = DockStyle.Top
+        Label30.Location = New Point(20, 405)
+        Label30.Name = "Label30"
+        Label30.Size = New Size(1093, 20)
+        Label30.TabIndex = 85
+        ' 
         ' Panel7
         ' 
         Panel7.Controls.Add(Panel8)
         Panel7.Controls.Add(Label21)
         Panel7.Controls.Add(Panel5)
         Panel7.Dock = DockStyle.Top
-        Panel7.Location = New Point(20, 170)
+        Panel7.Location = New Point(20, 175)
         Panel7.Name = "Panel7"
-        Panel7.Size = New Size(1093, 250)
+        Panel7.Size = New Size(1093, 230)
         Panel7.TabIndex = 83
         ' 
         ' Panel8
@@ -228,10 +368,10 @@ Partial Class Form1
         Panel8.Controls.Add(Label64)
         Panel8.Controls.Add(Label129)
         Panel8.Dock = DockStyle.Fill
-        Panel8.Location = New Point(439, 0)
+        Panel8.Location = New Point(520, 0)
         Panel8.Name = "Panel8"
         Panel8.Padding = New Padding(10)
-        Panel8.Size = New Size(654, 250)
+        Panel8.Size = New Size(573, 230)
         Panel8.TabIndex = 85
         ' 
         ' Label122
@@ -314,9 +454,9 @@ Partial Class Form1
         ' Label21
         ' 
         Label21.Dock = DockStyle.Left
-        Label21.Location = New Point(419, 0)
+        Label21.Location = New Point(500, 0)
         Label21.Name = "Label21"
-        Label21.Size = New Size(20, 250)
+        Label21.Size = New Size(20, 230)
         Label21.TabIndex = 84
         ' 
         ' Panel5
@@ -333,7 +473,7 @@ Partial Class Form1
         Panel5.Location = New Point(0, 0)
         Panel5.Name = "Panel5"
         Panel5.Padding = New Padding(10)
-        Panel5.Size = New Size(419, 250)
+        Panel5.Size = New Size(500, 230)
         Panel5.TabIndex = 83
         ' 
         ' LinkLabel6
@@ -441,7 +581,7 @@ Partial Class Form1
         ' Label20
         ' 
         Label20.Dock = DockStyle.Top
-        Label20.Location = New Point(20, 150)
+        Label20.Location = New Point(20, 155)
         Label20.Name = "Label20"
         Label20.Size = New Size(1093, 20)
         Label20.TabIndex = 81
@@ -458,7 +598,7 @@ Partial Class Form1
         Panel73.Location = New Point(20, 20)
         Panel73.Name = "Panel73"
         Panel73.Padding = New Padding(10)
-        Panel73.Size = New Size(1093, 130)
+        Panel73.Size = New Size(1093, 135)
         Panel73.TabIndex = 80
         ' 
         ' Label128
@@ -468,8 +608,8 @@ Partial Class Form1
         Label128.ForeColor = Color.CornflowerBlue
         Label128.Location = New Point(10, 95)
         Label128.Name = "Label128"
-        Label128.Padding = New Padding(2, 5, 0, 0)
-        Label128.Size = New Size(411, 25)
+        Label128.Padding = New Padding(2, 5, 0, 5)
+        Label128.Size = New Size(411, 30)
         Label128.TabIndex = 12
         Label128.Text = "将 ffmpeg.exe 加入环境变量或放置于 3FUI 程序目录下即可调用"
         ' 
@@ -505,9 +645,9 @@ Partial Class Form1
         Label124.Location = New Point(10, 10)
         Label124.Name = "Label124"
         Label124.Padding = New Padding(0, 5, 0, 10)
-        Label124.Size = New Size(187, 40)
+        Label124.Size = New Size(332, 40)
         Label124.TabIndex = 9
-        Label124.Text = "FFmpegFreeUI v0.6"
+        Label124.Text = "FFmpegFreeUI v0.6 ~ v0.7 内部试验"
         ' 
         ' TabPage编码队列
         ' 
@@ -1755,6 +1895,9 @@ Partial Class Form1
         TabPage起始页面.ResumeLayout(False)
         Panel44.ResumeLayout(False)
         Panel44.PerformLayout()
+        Panel10.ResumeLayout(False)
+        Panel10.PerformLayout()
+        Panel11.ResumeLayout(False)
         Panel7.ResumeLayout(False)
         Panel8.ResumeLayout(False)
         Panel8.PerformLayout()
@@ -1893,5 +2036,13 @@ Partial Class Form1
     Friend WithEvents Label14 As Label
     Friend WithEvents UiButton9 As Sunny.UI.UIButton
     Friend WithEvents Label25 As Label
+    Friend WithEvents Panel10 As Panel
+    Friend WithEvents Label28 As Label
+    Friend WithEvents Label29 As Label
+    Friend WithEvents Label30 As Label
+    Friend WithEvents Panel11 As Panel
+    Friend WithEvents UiTextBox处理器核心 As Sunny.UI.UITextBox
+    Friend WithEvents UiTextBox快捷输入CPU核心 As Sunny.UI.UITextBox
+    Friend WithEvents Label106 As Label
 
 End Class

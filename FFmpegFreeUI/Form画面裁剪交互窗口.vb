@@ -1,7 +1,5 @@
 ﻿
 Imports System.IO
-Imports System.Windows.Media.TextFormatting
-
 Public Class Form画面裁剪交互窗口
 
     Private Sub Form画面裁剪交互窗口_Load(sender As Object, e As EventArgs) Handles Me.Load

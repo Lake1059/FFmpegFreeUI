@@ -106,10 +106,19 @@ Public Class 编码任务
                 FFmpegProcess.Start()
                 FFmpegProcess.BeginOutputReadLine()
                 FFmpegProcess.BeginErrorReadLine()
-                计时器.Start()
-                根据状态设置项信息显示()
                 SetThreadExecutionState(EXECUTION_STATE.ES_CONTINUOUS Or EXECUTION_STATE.ES_SYSTEM_REQUIRED)
 
+                计时器.Start()
+                根据状态设置项信息显示()
+
+                Try
+                    If Form1.UiTextBox处理器核心.Text <> "" Then
+                        Dim coreList() As Integer = Form1.UiTextBox处理器核心.Text.Split(","c).Select(Function(s) s.Trim()).Where(Function(s) Integer.TryParse(s, Nothing)).Select(Function(s) Integer.Parse(s)).ToArray()
+                        FFmpegProcess.ProcessorAffinity = GetAffinityMask(coreList)
+                    End If
+                Catch ex As Exception
+                    MsgBox(ex.Message, MsgBoxStyle.Critical)
+                End Try
 
             Catch ex As Exception
                 状态 = 编码状态.错误
