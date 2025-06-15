@@ -2,7 +2,13 @@
 
 ## FFmpegFreeUI
 
-![GitHub Downloads](https://img.shields.io/github/downloads/Lake1059/FFmpegFreeUI/total?label=全部下载量)
+![](https://img.shields.io/github/downloads/Lake1059/FFmpegFreeUI/total?label=全部发行版文件总下载量)<br>
+![](https://img.shields.io/github/downloads/Lake1059/FFmpegFreeUI/FFmpegFreeUI.x64.exe)<br>
+![](https://img.shields.io/github/downloads/Lake1059/FFmpegFreeUI/FFmpegFreeUI.x64.SelfContained.zip)<br>
+![](https://img.shields.io/github/downloads/Lake1059/FFmpegFreeUI/FFmpegFreeUI.x86.exe)<br>
+![](https://img.shields.io/github/downloads/Lake1059/FFmpegFreeUI/FFmpegFreeUI.x86.SelfContained.zip)<br>
+![](https://img.shields.io/github/downloads/Lake1059/FFmpegFreeUI/FFmpegFreeUI.arm64.exe)<br>
+![](https://img.shields.io/github/downloads/Lake1059/FFmpegFreeUI/FFmpegFreeUI.arm64.SelfContained.zip)
 
 FFmpegFreeUI（简称 3FUI）是在 Windows 上的 [FFmpeg](https://ffmpeg.org/) 的专业交互外壳，使用 .NET 10 框架，使用纯 WinForm 开发，配合 SunnyUI 和自绘制打造专业高效的暗黑风格界面。
 
