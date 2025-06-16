@@ -517,7 +517,7 @@ Partial Class 界面_常规流程参数
         Label38.Padding = New Padding(10, 0, 0, 0)
         Label38.Size = New Size(837, 30)
         Label38.TabIndex = 74
-        Label38.Text = "如果解码和编码不是相同的硬件加速，设置此格式以便能够正确编码"
+        Label38.Text = "如果解码和编码不是相同的硬件加速，设置此格式以便能够正确编码。新手不要执着于设置这玩意！"
         Label38.TextAlign = ContentAlignment.MiddleLeft
         ' 
         ' UiComboBox解码数据格式
@@ -629,7 +629,7 @@ Partial Class 界面_常规流程参数
         UiComboBox解码器.ItemHeight = 30
         UiComboBox解码器.ItemHoverColor = Color.FromArgb(CByte(56), CByte(56), CByte(56))
         UiComboBox解码器.ItemRectColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
-        UiComboBox解码器.Items.AddRange(New Object() {"auto", "cpu", "d3d11va", "qsv", "cuda", "dxva2", "opencl"})
+        UiComboBox解码器.Items.AddRange(New Object() {"auto", "cpu", "d3d11va", "d3d12va", "cuda", "amf", "qsv", "vaapi", "vulkan", "dxva2", "opencl"})
         UiComboBox解码器.ItemSelectBackColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
         UiComboBox解码器.ItemSelectForeColor = Color.Silver
         UiComboBox解码器.Location = New Point(3, 0)
@@ -2282,7 +2282,7 @@ Partial Class 界面_常规流程参数
         UiComboBox编码类别.ItemHeight = 30
         UiComboBox编码类别.ItemHoverColor = Color.FromArgb(CByte(56), CByte(56), CByte(56))
         UiComboBox编码类别.ItemRectColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
-        UiComboBox编码类别.Items.AddRange(New Object() {"", "复制流", "H.266/VVC", "AV1", "H.265/HEVC", "H.264/AVC", "ProRes", "VP9", "禁用"})
+        UiComboBox编码类别.Items.AddRange(New Object() {"", "复制流", "H.266/VVC", "AV1", "H.265/HEVC", "H.264/AVC", "ProRes", "VP9", "RMVB", "MPEG", "WMV", "禁用"})
         UiComboBox编码类别.ItemSelectBackColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
         UiComboBox编码类别.ItemSelectForeColor = Color.Silver
         UiComboBox编码类别.Location = New Point(3, 0)

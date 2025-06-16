@@ -645,9 +645,9 @@ Partial Class Form1
         Label124.Location = New Point(10, 10)
         Label124.Name = "Label124"
         Label124.Padding = New Padding(0, 5, 0, 10)
-        Label124.Size = New Size(332, 40)
+        Label124.Size = New Size(187, 40)
         Label124.TabIndex = 9
-        Label124.Text = "FFmpegFreeUI v0.6 ~ v0.7 内部试验"
+        Label124.Text = "FFmpegFreeUI v0.7"
         ' 
         ' TabPage编码队列
         ' 
@@ -1462,7 +1462,7 @@ Partial Class Form1
         UiComboBox输出容器.ItemHeight = 30
         UiComboBox输出容器.ItemHoverColor = Color.FromArgb(CByte(56), CByte(56), CByte(56))
         UiComboBox输出容器.ItemRectColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
-        UiComboBox输出容器.Items.AddRange(New Object() {".mp4", ".mkv", ".flv", ".mp3", ".flac", ".wav", ".png", ".jpg", ".jpeg"})
+        UiComboBox输出容器.Items.AddRange(New Object() {".mp4", ".mkv", ".flv", ".mov", ".wmv", ".rmvb", ".mp3", ".flac", ".wav", ".png", ".jpg", ".jpeg", ".gif"})
         UiComboBox输出容器.ItemSelectBackColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
         UiComboBox输出容器.ItemSelectForeColor = Color.Silver
         UiComboBox输出容器.Location = New Point(10, 10)

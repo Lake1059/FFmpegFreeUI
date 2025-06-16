@@ -13,7 +13,7 @@
 	  <PublishSingleFile>true</PublishSingleFile>
 	  <Authors>1059 Studio</Authors>
 	  <Company>1059 Studio</Company>
-	  <Version>0.6</Version>
+	  <Version>0.7</Version>
   </PropertyGroup>
 
   <ItemGroup>

@@ -1,4 +1,6 @@
-﻿Public Class 界面_常规流程参数
+﻿Imports Accessibility
+
+Public Class 界面_常规流程参数
     Private Sub 界面_常规流程参数_Load(sender As Object, e As EventArgs) Handles Me.Load
         AddHandler UiComboBox编码类别.SelectedIndexChanged, AddressOf 视频编码类别改动事件
         AddHandler UiComboBox具体编码.SelectedIndexChanged, AddressOf 视频具体编码改动事件
@@ -42,38 +44,53 @@
                 UiComboBox像素格式.Text = ""
             Case 1
                 UiComboBox具体编码.Items.Add("copy")
-                UiComboBox具体编码.SelectedIndex = 0
             Case 2    'H.266/VVC
                 UiComboBox具体编码.Items.Add("libx266")
                 UiComboBox具体编码.Items.Add("libvvenc")
-                UiComboBox具体编码.SelectedIndex = 0
             Case 3    'AV1
                 UiComboBox具体编码.Items.Add("libaom-av1")
+                UiComboBox具体编码.Items.Add("libsvtav1")
                 UiComboBox具体编码.Items.Add("av1_nvenc")
                 UiComboBox具体编码.Items.Add("av1_qsv")
                 UiComboBox具体编码.Items.Add("av1_amf")
-                UiComboBox具体编码.Items.Add("libsvtav1")
-                UiComboBox具体编码.Items.Add("rav1e")
-                UiComboBox具体编码.SelectedIndex = 0
+                UiComboBox具体编码.Items.Add("librav1e")
+                UiComboBox具体编码.Items.Add("av1_vaapi")
             Case 4    'H.265/HEVC
                 UiComboBox具体编码.Items.Add("libx265")
                 UiComboBox具体编码.Items.Add("hevc_nvenc")
                 UiComboBox具体编码.Items.Add("hevc_qsv")
                 UiComboBox具体编码.Items.Add("hevc_amf")
-                UiComboBox具体编码.SelectedIndex = 0
+                UiComboBox具体编码.Items.Add("hevc_d3d12va")
+                UiComboBox具体编码.Items.Add("hevc_vaapi")
+                UiComboBox具体编码.Items.Add("hevc_vulkan")
             Case 5    'H.264/AVC
                 UiComboBox具体编码.Items.Add("libx264")
                 UiComboBox具体编码.Items.Add("h264_nvenc")
                 UiComboBox具体编码.Items.Add("h264_qsv")
                 UiComboBox具体编码.Items.Add("h264_amf")
-                UiComboBox具体编码.SelectedIndex = 0
+                UiComboBox具体编码.Items.Add("h264_vaapi")
+                UiComboBox具体编码.Items.Add("h264_vulkan")
             Case 6    'ProRes
                 UiComboBox具体编码.Items.Add("prores_ks")
-                UiComboBox具体编码.SelectedIndex = 0
+                UiComboBox具体编码.Items.Add("prores_aw")
             Case 7    'VP9
                 UiComboBox具体编码.Items.Add("libvpx-vp9")
-                UiComboBox具体编码.SelectedIndex = 0
+                UiComboBox具体编码.Items.Add("vp9_vaapi")
+            Case 8    'RMVB
+                UiComboBox具体编码.Items.Add("rv10")
+                UiComboBox具体编码.Items.Add("rv20")
+            Case 9    'MPEG
+                UiComboBox具体编码.Items.Add("mpeg4")
+                UiComboBox具体编码.Items.Add("libxvid")
+                UiComboBox具体编码.Items.Add("libxeve")
+            Case 10    'WMV
+                UiComboBox具体编码.Items.Add("wmv1")
+                UiComboBox具体编码.Items.Add("wmv2")
+            Case 11    '其他
+                UiComboBox具体编码.Items.Add("amv")
+                UiComboBox具体编码.Items.Add("amv")
         End Select
+        If UiComboBox具体编码.Items.Count > 1 Then UiComboBox具体编码.SelectedIndex = 0
     End Sub
     Sub 视频具体编码改动事件()
         UiComboBox编码预设.Items.Clear()
@@ -84,7 +101,7 @@
         UiComboBox场景优化.Text = ""
         UiComboBox像素格式.Items.Clear()
         UiComboBox像素格式.Text = ""
-        If UiComboBox具体编码.SelectedIndex > -1 Then
+        If UiComboBox具体编码.SelectedIndex > -1 AndAlso 视频编码器数据库.字典.ContainsKey(UiComboBox具体编码.Text) Then
             UiComboBox编码预设.Items.AddRange(视频编码器数据库.字典(UiComboBox具体编码.Text).Preset.ToArray)
             If UiComboBox具体编码.Text = "libsvtav1" Then
                 UiComboBox编码预设.SelectedIndex = 3
