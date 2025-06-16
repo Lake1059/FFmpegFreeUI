@@ -97,6 +97,8 @@ Public Class 预设管理
             Case "libvorbis" : Form1.常规流程参数页面.UiComboBox音频编码器.SelectedIndex = 12
             Case "tta" : Form1.常规流程参数页面.UiComboBox音频编码器.SelectedIndex = 13
             Case "-an" : Form1.常规流程参数页面.UiComboBox音频编码器.SelectedIndex = 14
+            Case "libopencore_amrnb" : Form1.常规流程参数页面.UiComboBox音频编码器.SelectedIndex = 15
+            Case "libvo_amrwbenc" : Form1.常规流程参数页面.UiComboBox音频编码器.SelectedIndex = 16
             Case Else : Form1.常规流程参数页面.UiComboBox音频编码器.Text = ""
         End Select
 
@@ -234,7 +236,9 @@ Public Class 预设管理
             Case 11 : a.音频参数_编码器_具体编码 = "libopus"
             Case 12 : a.音频参数_编码器_具体编码 = "libvorbis"
             Case 13 : a.音频参数_编码器_具体编码 = "tta"
-            Case 14 : a.音频参数_编码器_具体编码 = "-an"
+            Case 14 : a.音频参数_编码器_具体编码 = "libopencore_amrnb"
+            Case 15 : a.音频参数_编码器_具体编码 = "libvo_amrwbenc"
+            Case 16 : a.音频参数_编码器_具体编码 = "-an"
             Case Else : a.音频参数_编码器_具体编码 = ""
         End Select
 

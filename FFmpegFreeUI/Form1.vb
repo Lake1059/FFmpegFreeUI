@@ -6,9 +6,8 @@ Public Class Form1
     Public 是否初始化 As Boolean = False
     Private 上一次窗口状态 As FormWindowState
 
-
     Public 常规流程参数页面 As New 界面_常规流程参数
-
+    Public 编码队列右键菜单 As 暗黑上下文菜单
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         界面控制.初始化()
@@ -100,6 +99,13 @@ Public Class Form1
         SetThreadExecutionState(EXECUTION_STATE.ES_CONTINUOUS)
     End Sub
 
+    Private Sub ListView1_KeyDown(sender As Object, e As KeyEventArgs) Handles ListView1.KeyDown
+        Select Case e.KeyCode
+            Case Keys.A : If e.Control Then 界面控制_编码队列.全选任务()
+            Case Keys.Delete : 界面控制_编码队列.移除任务()
+        End Select
+    End Sub
+
     Private Sub ListView1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ListView1.SelectedIndexChanged
         If Me.ListView1.SelectedItems.Count = 1 Then
             Timer1.Enabled = True
@@ -150,7 +156,7 @@ Public Class Form1
         Me.RichTextBox1.Text = ""
         Dim FFprobeProcess As New Process
         FFprobeProcess = New Process()
-        FFprobeProcess.StartInfo.FileName = "ffprobe.exe"
+        FFprobeProcess.StartInfo.FileName = "ffprobe"
         FFprobeProcess.StartInfo.WorkingDirectory = Application.StartupPath
         FFprobeProcess.StartInfo.Arguments = $"-hide_banner ""{文件路径}"""
         FFprobeProcess.StartInfo.RedirectStandardOutput = True
@@ -216,4 +222,6 @@ Public Class Form1
                 Exit Sub
         End Select
     End Sub
+
+
 End Class

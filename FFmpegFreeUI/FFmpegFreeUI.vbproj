@@ -24,7 +24,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft-WindowsAPICodePack-Shell" Version="1.1.5" />
-    <PackageReference Include="SunnyUI" Version="3.8.3" />
+    <PackageReference Include="SunnyUI" Version="3.8.5" />
   </ItemGroup>
 
   <ItemGroup>

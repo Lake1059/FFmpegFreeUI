@@ -2,6 +2,27 @@
 Public Class 界面控制
 
     Public Shared Sub 初始化()
+        Form1.编码队列右键菜单 = New 暗黑上下文菜单 With {.ShowImageMargin = False, .Font = Form1.Font}
+        Form1.ListView1.ContextMenuStrip = Form1.编码队列右键菜单
+        Form1.编码队列右键菜单.Items.AddRange(New ToolStripItem() {
+            New ToolStripSeparator() With {.Tag = "null"},
+            New ToolStripMenuItem("任务状态控制") With {.ForeColor = Color.CornflowerBlue, .Enabled = False},
+            New ToolStripMenuItem("全新开始任务", Nothing, AddressOf 界面控制_编码队列.开始任务) With {.ForeColor = Color.YellowGreen},
+            New ToolStripMenuItem("暂停（挂起进程）", Nothing, AddressOf 界面控制_编码队列.暂停任务) With {.ForeColor = Color.Goldenrod},
+            New ToolStripMenuItem("继续（恢复进程）", Nothing, AddressOf 界面控制_编码队列.恢复任务) With {.ForeColor = Color.YellowGreen},
+            New ToolStripMenuItem("停止（关闭进程）", Nothing, AddressOf 界面控制_编码队列.停止任务) With {.ForeColor = Color.IndianRed},
+            New ToolStripMenuItem("移除", Nothing, AddressOf 界面控制_编码队列.移除任务) With {.ForeColor = Color.IndianRed},
+            New ToolStripMenuItem("重置状态", Nothing, AddressOf 界面控制_编码队列.重置任务),
+            New ToolStripSeparator(),
+            New ToolStripMenuItem("任务管理") With {.ForeColor = Color.CornflowerBlue, .Enabled = False},
+            New ToolStripMenuItem("全选", Nothing, AddressOf 界面控制_编码队列.全选任务),
+            New ToolStripMenuItem("定位输出文件", Nothing, AddressOf 界面控制_编码队列.定位输出) With {.ForeColor = Color.MediumPurple},
+            New ToolStripMenuItem("重新配置", Nothing, AddressOf 界面控制_编码队列.重新配置) With {.ForeColor = Color.CornflowerBlue},
+            New ToolStripMenuItem("重新添加", Nothing, AddressOf 界面控制_编码队列.重新添加) With {.ForeColor = Color.CornflowerBlue},
+            New ToolStripMenuItem("导出配置", Nothing, AddressOf 界面控制_编码队列.导出配置),
+            New ToolStripSeparator() With {.Tag = "null"}
+        })
+
         设置富文本框行高(Form1.RichTextBox1, 350)
         Form1.RichTextBox1.AllowDrop = True
         Form1.Panel6.Controls.Add(Form1.常规流程参数页面)
@@ -32,7 +53,6 @@ Public Class 界面控制
         AddHandler Form1.UiButton5.Click, AddressOf 界面控制_编码队列.停止任务
         AddHandler Form1.UiButton6.Click, AddressOf 界面控制_编码队列.移除任务
         AddHandler Form1.UiButton16.Click, AddressOf 界面控制_编码队列.重置任务
-        AddHandler Form1.UiButton4.Click, AddressOf 界面控制_编码队列.全选任务
         AddHandler Form1.UiButton9.Click, AddressOf 界面控制_编码队列.定位输出
         AddHandler Form1.UiButton8.Click, AddressOf 界面控制_编码队列.重新配置
         AddHandler Form1.UiButton重新添加.Click, AddressOf 界面控制_编码队列.重新添加
@@ -67,6 +87,12 @@ Public Class 界面控制
                 Form1.ListView1.Columns(5).Width = Form1.Label6.Width
                 Form1.ListView1.Columns(6).Width = Form1.Label7.Width
                 Form1.ListView1.Columns(7).Width = Form1.Label8.Width - SystemInformation.VerticalScrollBarWidth * Form1.DPI * 2
+
+                Dim s1 As Integer = 0
+                For Each c As Control In Form1.Panel2.Controls
+                    s1 += c.Width
+                Next
+                Form1.Panel2.Padding = New Padding((Form1.Panel2.Width - s1) * 0.5, Form1.Panel2.Padding.Top, (Form1.Panel2.Width - s1) * 0.5, 0)
 
             Case 选项卡.IsEqual(Form1.TabPage添加文件)
                 Form1.ListView2.Columns(0).Width = Form1.ListView2.Width - SystemInformation.VerticalScrollBarWidth * Form1.DPI * 2

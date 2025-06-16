@@ -1,5 +1,4 @@
-﻿Imports Accessibility
-
+﻿
 Public Class 界面_常规流程参数
     Private Sub 界面_常规流程参数_Load(sender As Object, e As EventArgs) Handles Me.Load
         AddHandler UiComboBox编码类别.SelectedIndexChanged, AddressOf 视频编码类别改动事件
@@ -86,9 +85,8 @@ Public Class 界面_常规流程参数
             Case 10    'WMV
                 UiComboBox具体编码.Items.Add("wmv1")
                 UiComboBox具体编码.Items.Add("wmv2")
-            Case 11    '其他
-                UiComboBox具体编码.Items.Add("amv")
-                UiComboBox具体编码.Items.Add("amv")
+            Case 11    '禁用
+                UiComboBox具体编码.Items.Add("")
         End Select
         If UiComboBox具体编码.Items.Count > 1 Then UiComboBox具体编码.SelectedIndex = 0
     End Sub

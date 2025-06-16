@@ -89,7 +89,7 @@ Public Class 编码任务
                     已获取到总时长 = True
                 End If
                 FFmpegProcess = New Process()
-                FFmpegProcess.StartInfo.FileName = "ffmpeg.exe"
+                FFmpegProcess.StartInfo.FileName = "ffmpeg"
                 'FFmpegProcess.StartInfo.WorkingDirectory = Application.StartupPath
                 FFmpegProcess.StartInfo.Arguments = 命令行
                 FFmpegProcess.StartInfo.UseShellExecute = False
