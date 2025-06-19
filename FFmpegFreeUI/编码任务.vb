@@ -26,7 +26,7 @@ Public Class 编码任务
                 Exit Sub
             End If
         Next
-        SetThreadExecutionState(EXECUTION_STATE.ES_CONTINUOUS)
+        恢复系统状态()
     End Sub
 
     Public Class 单片任务
@@ -58,8 +58,9 @@ Public Class 编码任务
         Public Property 错误列表 As New List(Of String)
 
         Public Property FFmpegProcess As Process
-
         Public Property 计时器 As New Stopwatch
+        Public Property 上次刷新界面的时间戳 As TimeSpan = Now.TimeOfDay
+
 
         Public Sub 开始()
             Try
@@ -106,7 +107,7 @@ Public Class 编码任务
                 FFmpegProcess.Start()
                 FFmpegProcess.BeginOutputReadLine()
                 FFmpegProcess.BeginErrorReadLine()
-                SetThreadExecutionState(EXECUTION_STATE.ES_CONTINUOUS Or EXECUTION_STATE.ES_SYSTEM_REQUIRED)
+                设定系统状态()
 
                 计时器.Start()
                 根据状态设置项信息显示()
@@ -195,11 +196,12 @@ Public Class 编码任务
                 End If
             End If
 
-            If e.Data.Contains("="c) Then
+            If e.Data.Contains("="c) AndAlso (Now.TimeOfDay - 上次刷新界面的时间戳).TotalSeconds >= 1 Then
                 在实时输出中提取数据(e.Data)
                 Form1.重新创建句柄()
                 Form1.Invoke(AddressOf 在界面上刷新数据)
                 Form1.Invoke(AddressOf 根据状态设置项信息显示)
+                上次刷新界面的时间戳 = Now.TimeOfDay
             End If
 
             Dim errorKeywords As String() = {"Error", "Invalid", "cannot", "failed", "not supported", "require", "must be"}
@@ -216,6 +218,7 @@ Public Class 编码任务
                 状态 = 编码状态.错误
             End If
             计时器.Stop()
+            GC.Collect()
             Try
                 Form1.重新创建句柄()
                 Form1.Invoke(AddressOf 根据状态设置项信息显示)
@@ -232,7 +235,7 @@ Public Class 编码任务
             '        My.Computer.FileSystem.DeleteFile(Path.Combine(Path.GetDirectoryName(输入文件), Path.GetFileNameWithoutExtension(输入文件) & ".avs"))
             '    End If
             'End If
-            GC.Collect()
+
         End Sub
 
         Public Sub 在界面上刷新数据()
@@ -329,8 +332,8 @@ Public Class 编码任务
 
                          ' 通过Invoke刷新界面
                          Try
-                             Form1.重新创建句柄()
                              Application.DoEvents()
+                             Form1.重新创建句柄()
                              Form1.Invoke(Sub()
                                               列表视图项.SubItems(1).Text = 状态.ToString
                                               列表视图项.SubItems(2).Text = progressText
@@ -455,10 +458,10 @@ Public Class 编码任务
 
     Public Shared ReadOnly FramePattern As New Regex("frame=\s*(?<value>\d+)", RegexOptions.Compiled)
     Public Shared ReadOnly FpsPattern As New Regex("fps=\s*(?<value>\d+)", RegexOptions.Compiled)
-    Public Shared ReadOnly QPattern As New Regex("q=(?<value>[\d\.]+)", RegexOptions.Compiled)
+    Public Shared ReadOnly QPattern As New Regex("q=\s*(?<value>[\d\.]+)", RegexOptions.Compiled)
     Public Shared ReadOnly SizePattern As New Regex("size=\s*(?<value>\d+)\s*(?<unit>[KMG]iB)", RegexOptions.Compiled)
-    Public Shared ReadOnly TimePattern As New Regex("time=(?<value>\d{2}:\d{2}:\d{2}\.\d{2})", RegexOptions.Compiled)
-    Public Shared ReadOnly BitratePattern As New Regex("bitrate=(?<value>[\d\.]+)\s*kbits/s", RegexOptions.Compiled)
+    Public Shared ReadOnly TimePattern As New Regex("time=\s*(?<value>\d{2}:\d{2}:\d{2}\.\d{2})", RegexOptions.Compiled)
+    Public Shared ReadOnly BitratePattern As New Regex("bitrate=\s*(?<value>[\d\.]+)\s*kbits/s", RegexOptions.Compiled)
     Public Shared ReadOnly SpeedPattern As New Regex("speed=\s*(?<value>[\d\.eE\+\-]+)\s*x", RegexOptions.Compiled)
 
     Shared Function ParseTimeSpan(timeStr As String) As TimeSpan

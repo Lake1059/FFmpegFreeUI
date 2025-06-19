@@ -1,7 +1,35 @@
 ﻿
+Imports System.IO
+
 Public Class 界面控制
 
     Public Shared Sub 初始化()
+        Dim 字体列表 As New List(Of String)
+        For Each 字体 As FontFamily In FontFamily.Families
+            字体列表.Add(字体.Name)
+        Next
+        字体列表.Sort()
+        If My.Computer.FileSystem.FileExists(Path.Combine(Application.StartupPath, "FontName.txt")) Then
+            Form1.UiComboBox1.Text = My.Computer.FileSystem.ReadAllText(Path.Combine(Application.StartupPath, "FontName.txt"))
+            If Form1.UiComboBox1.Text = "" Then Exit Sub
+            SetControlFont(Form1.UiComboBox1.Text, Form1, {Form1.UiComboBox1})
+        End If
+        Form1.UiComboBox1.Items.AddRange(字体列表.ToArray)
+        AddHandler Form1.UiButton4.Click, Sub()
+                                              If Form1.UiComboBox1.Text = "" Then Exit Sub
+                                              SetControlFont(Form1.UiComboBox1.Text, Form1, {Form1.UiComboBox1})
+                                          End Sub
+        AddHandler Form1.UiComboBox1.SelectedIndexChanged, Sub()
+                                                               If Form1.UiComboBox1.Text = "" Then Exit Sub
+                                                               Form1.Label11.Font = New Font(Form1.UiComboBox1.Text, Form1.Label11.Font.Size)
+                                                           End Sub
+        Form1.UiComboBox2.SelectedIndex = 0
+        AddHandler Form1.UiComboBox2.SelectedIndexChanged, Sub()
+                                                               If Form1.UiComboBox2.Text = "" Then Exit Sub
+                                                               If Form1.UiComboBox2.SelectedIndex < 0 Then Exit Sub
+                                                               Form1.系统状态设定 = Form1.UiComboBox2.SelectedIndex
+                                                           End Sub
+
         Form1.编码队列右键菜单 = New 暗黑上下文菜单 With {.ShowImageMargin = False, .Font = Form1.Font}
         Form1.ListView1.ContextMenuStrip = Form1.编码队列右键菜单
         Form1.编码队列右键菜单.Items.AddRange(New ToolStripItem() {
@@ -77,6 +105,10 @@ Public Class 界面控制
     Public Shared Sub 界面校准()
         Dim 选项卡 As TabPage = Form1.UiTabControlMenu1.SelectedTab
         Select Case True
+            Case 选项卡.IsEqual(Form1.TabPage起始页面)
+                Form1.UiComboBox1.ItemHeight = 30 * Form1.DPI
+                Form1.UiComboBox2.ItemHeight = 30 * Form1.DPI
+
             Case 选项卡.IsEqual(Form1.TabPage编码队列)
                 Form1.Label1.Width = Form1.Panel1.Width - Form1.Panel1.Padding.Left - Form1.Label2.Width - Form1.Label3.Width - Form1.Label4.Width - Form1.Label5.Width - Form1.Label6.Width - Form1.Label7.Width - 200 * Form1.DPI
                 Form1.ListView1.Columns(0).Width = Form1.Label1.Width - 5 * Form1.DPI

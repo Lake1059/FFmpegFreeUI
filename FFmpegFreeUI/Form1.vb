@@ -1,10 +1,13 @@
 ﻿Imports System.ComponentModel
+Imports System.IO
 Public Class Form1
     <DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)>
     Public Shared Property DPI As Single = Form1.CreateGraphics.DpiX / 96
 
     Public 是否初始化 As Boolean = False
     Private 上一次窗口状态 As FormWindowState
+
+    Public 系统状态设定 As Integer = 0
 
     Public 常规流程参数页面 As New 界面_常规流程参数
     Public 编码队列右键菜单 As 暗黑上下文菜单
@@ -57,7 +60,10 @@ Public Class Form1
     End Sub
 
     Public Sub 重新创建句柄()
-        If Not Me.IsHandleCreated Then Me.CreateHandle()
+        Try
+            If Not Me.IsHandleCreated Then Me.CreateHandle()
+        Catch ex As Exception
+        End Try
     End Sub
 
     Private Sub Form1_Resize(sender As Object, e As EventArgs) Handles Me.Resize
@@ -96,7 +102,12 @@ Public Class Form1
         For Each task In 编码任务.队列
             task.清除占用()
         Next
-        SetThreadExecutionState(EXECUTION_STATE.ES_CONTINUOUS)
+        恢复系统状态()
+
+        If My.Computer.FileSystem.FileExists(Path.Combine(Application.StartupPath, "FontName.txt")) Then
+            My.Computer.FileSystem.WriteAllText(Path.Combine(Application.StartupPath, "FontName.txt"), Label11.Font.Name, False)
+        End If
+
     End Sub
 
     Private Sub ListView1_KeyDown(sender As Object, e As KeyEventArgs) Handles ListView1.KeyDown
@@ -197,7 +208,7 @@ Public Class Form1
         Select Case e.KeyChar
             Case "0"c To "9"c, "~"c, ChrW(Keys.Back)
             Case ChrW(Keys.Enter)
-                Dim input As String = UiTextBox快捷输入CPU核心.Text.Trim()
+                Dim input = UiTextBox快捷输入CPU核心.Text.Trim
                 Dim result As New List(Of Integer)
                 Try
                     If input.Contains("~"c) Then
@@ -209,7 +220,7 @@ Public Class Form1
                                     For i = startNum To endNum
                                         result.Add(i)
                                     Next
-                                    Me.UiTextBox处理器核心.Text = String.Join(",", result)
+                                    UiTextBox处理器核心.Text = String.Join(",", result)
                                 End If
                             End If
                         End If
@@ -223,5 +234,7 @@ Public Class Form1
         End Select
     End Sub
 
+    Private Sub Label9_Click(sender As Object, e As EventArgs) Handles Label9.Click
 
+    End Sub
 End Class

@@ -47,7 +47,8 @@ Module Module1
         Public wAlignment As Short
         Public cTabCount As Short
         <MarshalAs(UnmanagedType.ByValArray, SizeConst:=32)>
-        Public rgxTabs As Integer()
+        Public rgxTabs() As Integer
+        ' PARAFORMAT2 增量字段
         Public dySpaceBefore As Integer
         Public dySpaceAfter As Integer
         Public dyLineSpacing As Integer
@@ -64,10 +65,10 @@ Module Module1
         Public wBorders As Short
     End Structure
 
-    <DllImport("user32.dll", CharSet:=CharSet.Auto)>
-    Public Function SendMessage(hWnd As HandleRef, msg As Integer, wParam As Integer, ByRef lParam As PARAFORMAT2) As IntPtr
-    End Function
 
+    <DllImport("user32.dll", CharSet:=CharSet.Auto, SetLastError:=True)>
+    Public Function SendMessage(hWnd As HandleRef, msg As Integer, wParam As IntPtr, ByRef lParam As PARAFORMAT2) As IntPtr
+    End Function
 
     <DllImport("kernel32.dll", SetLastError:=True)>
     Public Function SetThreadExecutionState(esFlags As EXECUTION_STATE) As EXECUTION_STATE
@@ -78,6 +79,22 @@ Module Module1
         ES_DISPLAY_REQUIRED = &H2
         ES_CONTINUOUS = &H80000000UI
     End Enum
+
+    Public Sub 设定系统状态()
+        Select Case Form1.系统状态设定
+            Case 0
+                SetThreadExecutionState(EXECUTION_STATE.ES_CONTINUOUS Or EXECUTION_STATE.ES_SYSTEM_REQUIRED)
+
+            Case 1
+                SetThreadExecutionState(EXECUTION_STATE.ES_CONTINUOUS Or EXECUTION_STATE.ES_SYSTEM_REQUIRED Or EXECUTION_STATE.ES_DISPLAY_REQUIRED)
+            Case 2
+                SetThreadExecutionState(EXECUTION_STATE.ES_CONTINUOUS)
+        End Select
+    End Sub
+
+    Public Sub 恢复系统状态()
+        Dim unused = SetThreadExecutionState(EXECUTION_STATE.ES_CONTINUOUS)
+    End Sub
 
     Public Function 根据标签宽度计算显示高度(标签控件 As Label) As Integer
         Dim g As Graphics = Form1.CreateGraphics()
@@ -123,10 +140,23 @@ Module Module1
             If core >= 0 AndAlso core < Environment.ProcessorCount Then
                 mask = mask Or CLng(1) << core
             Else
-                Throw New ArgumentOutOfRangeException($"核心编号 {core} 无效。系统共有 {Environment.ProcessorCount} 个核心（编号从 0 开始）。")
+                Throw New ArgumentOutOfRangeException($"核心编号 {core} 无效。系统共有 {Environment.ProcessorCount} 个核心（从 0 开始）。")
             End If
         Next
         Return New IntPtr(mask)
     End Function
+
+    Public Sub SetControlFont(FontName As String, c As Control, Optional ExcludeContorl As Control() = Nothing)
+        For Each ctrl As Control In c.Controls
+            If ExcludeContorl IsNot Nothing Then
+                If ExcludeContorl.Contains(ctrl) Then Continue For
+            End If
+            Dim controlType As Type = c.GetType()
+            Dim propInfo As PropertyInfo = controlType.GetProperty("Font")
+            If propInfo IsNot Nothing Then ctrl.Font = New Font(FontName, ctrl.Font.Size, ctrl.Font.Style)
+            If ctrl.HasChildren Then SetControlFont(FontName, ctrl, ExcludeContorl)
+        Next
+    End Sub
+
 
 End Module
