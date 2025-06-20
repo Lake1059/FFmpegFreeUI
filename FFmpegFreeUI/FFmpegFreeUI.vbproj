@@ -23,8 +23,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="LibreHardwareMonitorLib" Version="0.9.4" />
     <PackageReference Include="Microsoft-WindowsAPICodePack-Shell" Version="1.1.5" />
     <PackageReference Include="SunnyUI" Version="3.8.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="LibreHardwareMonitorLib">
+      <HintPath>..\DLL\LibreHardwareMonitorLib.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
   <ItemGroup>

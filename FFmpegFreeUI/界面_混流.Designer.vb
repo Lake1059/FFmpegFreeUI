@@ -29,7 +29,27 @@ Partial Class 界面_混流
         Panel2 = New Panel()
         ListView1 = New ListView()
         Panel3 = New Panel()
+        Panel8 = New Panel()
+        UiCheckBox1 = New Sunny.UI.UICheckBox()
+        UiCheckBox保留其他视频流 = New Sunny.UI.UICheckBox()
+        Label21 = New Label()
+        Panel7 = New Panel()
+        UiTextBox7 = New Sunny.UI.UITextBox()
+        Label15 = New Label()
+        UiTextBox8 = New Sunny.UI.UITextBox()
+        Label16 = New Label()
+        UiTextBox9 = New Sunny.UI.UITextBox()
+        Label17 = New Label()
+        Panel6 = New Panel()
+        UiTextBox4 = New Sunny.UI.UITextBox()
+        Label12 = New Label()
+        UiTextBox5 = New Sunny.UI.UITextBox()
+        Label13 = New Label()
+        UiTextBox6 = New Sunny.UI.UITextBox()
+        Label14 = New Label()
         Panel62 = New Panel()
+        UiTextBox3 = New Sunny.UI.UITextBox()
+        Label8 = New Label()
         UiTextBox2 = New Sunny.UI.UITextBox()
         Label7 = New Label()
         UiTextBox1 = New Sunny.UI.UITextBox()
@@ -54,6 +74,9 @@ Partial Class 界面_混流
         Panel1.SuspendLayout()
         Panel2.SuspendLayout()
         Panel3.SuspendLayout()
+        Panel8.SuspendLayout()
+        Panel7.SuspendLayout()
+        Panel6.SuspendLayout()
         Panel62.SuspendLayout()
         Panel4.SuspendLayout()
         Panel5.SuspendLayout()
@@ -116,7 +139,7 @@ Partial Class 界面_混流
         Panel2.Location = New Point(10, 98)
         Panel2.Name = "Panel2"
         Panel2.Padding = New Padding(0, 10, 0, 10)
-        Panel2.Size = New Size(1040, 235)
+        Panel2.Size = New Size(1040, 239)
         Panel2.TabIndex = 5
         ' 
         ' ListView1
@@ -127,31 +150,417 @@ Partial Class 界面_混流
         ListView1.Font = New Font("微软雅黑", 9.75F, FontStyle.Regular, GraphicsUnit.Point, CByte(134))
         ListView1.Location = New Point(0, 10)
         ListView1.Name = "ListView1"
-        ListView1.Size = New Size(1040, 215)
+        ListView1.Size = New Size(1040, 219)
         ListView1.TabIndex = 0
         ListView1.UseCompatibleStateImageBehavior = False
         ' 
         ' Panel3
         ' 
+        Panel3.AutoSize = True
+        Panel3.Controls.Add(Panel8)
+        Panel3.Controls.Add(Panel7)
+        Panel3.Controls.Add(Panel6)
         Panel3.Controls.Add(Panel62)
         Panel3.Dock = DockStyle.Bottom
-        Panel3.Location = New Point(10, 333)
+        Panel3.Location = New Point(10, 337)
         Panel3.Name = "Panel3"
-        Panel3.Size = New Size(1040, 164)
+        Panel3.Padding = New Padding(0, 10, 0, 0)
+        Panel3.Size = New Size(1040, 160)
         Panel3.TabIndex = 6
+        ' 
+        ' Panel8
+        ' 
+        Panel8.Controls.Add(UiCheckBox1)
+        Panel8.Controls.Add(UiCheckBox保留其他视频流)
+        Panel8.Controls.Add(Label21)
+        Panel8.Dock = DockStyle.Top
+        Panel8.Location = New Point(0, 130)
+        Panel8.Name = "Panel8"
+        Panel8.Size = New Size(1040, 30)
+        Panel8.TabIndex = 8
+        ' 
+        ' UiCheckBox1
+        ' 
+        UiCheckBox1.CheckBoxColor = Color.Silver
+        UiCheckBox1.CheckBoxSize = 20
+        UiCheckBox1.Dock = DockStyle.Left
+        UiCheckBox1.Font = New Font("微软雅黑", 9.75F)
+        UiCheckBox1.ForeColor = Color.Silver
+        UiCheckBox1.Location = New Point(325, 0)
+        UiCheckBox1.MinimumSize = New Size(1, 1)
+        UiCheckBox1.Name = "UiCheckBox1"
+        UiCheckBox1.Size = New Size(200, 30)
+        UiCheckBox1.TabIndex = 101
+        UiCheckBox1.Text = "使用此文件的元数据"
+        ' 
+        ' UiCheckBox保留其他视频流
+        ' 
+        UiCheckBox保留其他视频流.CheckBoxColor = Color.Silver
+        UiCheckBox保留其他视频流.CheckBoxSize = 20
+        UiCheckBox保留其他视频流.Dock = DockStyle.Left
+        UiCheckBox保留其他视频流.Font = New Font("微软雅黑", 9.75F)
+        UiCheckBox保留其他视频流.ForeColor = Color.Silver
+        UiCheckBox保留其他视频流.Location = New Point(125, 0)
+        UiCheckBox保留其他视频流.MinimumSize = New Size(1, 1)
+        UiCheckBox保留其他视频流.Name = "UiCheckBox保留其他视频流"
+        UiCheckBox保留其他视频流.Size = New Size(200, 30)
+        UiCheckBox保留其他视频流.TabIndex = 99
+        UiCheckBox保留其他视频流.Text = "使用此文件的章节"
+        ' 
+        ' Label21
+        ' 
+        Label21.Dock = DockStyle.Left
+        Label21.Font = New Font("微软雅黑", 9.75F)
+        Label21.Location = New Point(0, 0)
+        Label21.Name = "Label21"
+        Label21.Size = New Size(125, 30)
+        Label21.TabIndex = 95
+        Label21.Text = "章节和元数据"
+        Label21.TextAlign = ContentAlignment.MiddleLeft
+        ' 
+        ' Panel7
+        ' 
+        Panel7.Controls.Add(UiTextBox7)
+        Panel7.Controls.Add(Label15)
+        Panel7.Controls.Add(UiTextBox8)
+        Panel7.Controls.Add(Label16)
+        Panel7.Controls.Add(UiTextBox9)
+        Panel7.Controls.Add(Label17)
+        Panel7.Dock = DockStyle.Top
+        Panel7.Location = New Point(0, 90)
+        Panel7.Name = "Panel7"
+        Panel7.Padding = New Padding(0, 0, 0, 10)
+        Panel7.Size = New Size(1040, 40)
+        Panel7.TabIndex = 7
+        ' 
+        ' UiTextBox7
+        ' 
+        UiTextBox7.Dock = DockStyle.Fill
+        UiTextBox7.FillColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiTextBox7.FillColor2 = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiTextBox7.FillDisableColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiTextBox7.FillReadOnlyColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiTextBox7.Font = New Font("微软雅黑", 9.75F)
+        UiTextBox7.ForeColor = Color.DarkGray
+        UiTextBox7.ForeDisableColor = Color.DarkGray
+        UiTextBox7.ForeReadOnlyColor = Color.DarkGray
+        UiTextBox7.Location = New Point(625, 0)
+        UiTextBox7.Margin = New Padding(4, 5, 4, 5)
+        UiTextBox7.MinimumSize = New Size(1, 16)
+        UiTextBox7.Name = "UiTextBox7"
+        UiTextBox7.Padding = New Padding(5)
+        UiTextBox7.Radius = 30
+        UiTextBox7.RectColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        UiTextBox7.RectDisableColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        UiTextBox7.RectReadOnlyColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        UiTextBox7.ScrollBarBackColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        UiTextBox7.ScrollBarColor = Color.DimGray
+        UiTextBox7.ScrollBarStyleInherited = False
+        UiTextBox7.ShowText = False
+        UiTextBox7.Size = New Size(415, 30)
+        UiTextBox7.TabIndex = 100
+        UiTextBox7.TextAlignment = ContentAlignment.MiddleLeft
+        UiTextBox7.Watermark = "设置不同的语言和名称请多次添加文件"
+        UiTextBox7.WatermarkActiveColor = Color.DimGray
+        UiTextBox7.WatermarkColor = Color.DimGray
+        ' 
+        ' Label15
+        ' 
+        Label15.Dock = DockStyle.Left
+        Label15.Font = New Font("微软雅黑", 9.75F)
+        Label15.Location = New Point(525, 0)
+        Label15.Name = "Label15"
+        Label15.Padding = New Padding(0, 0, 10, 0)
+        Label15.Size = New Size(100, 30)
+        Label15.TabIndex = 99
+        Label15.Text = "字幕流名称"
+        Label15.TextAlign = ContentAlignment.MiddleRight
+        ' 
+        ' UiTextBox8
+        ' 
+        UiTextBox8.Dock = DockStyle.Left
+        UiTextBox8.FillColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiTextBox8.FillColor2 = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiTextBox8.FillDisableColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiTextBox8.FillReadOnlyColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiTextBox8.Font = New Font("微软雅黑", 9.75F)
+        UiTextBox8.ForeColor = Color.DarkGray
+        UiTextBox8.ForeDisableColor = Color.DarkGray
+        UiTextBox8.ForeReadOnlyColor = Color.DarkGray
+        UiTextBox8.Location = New Point(425, 0)
+        UiTextBox8.Margin = New Padding(4, 5, 4, 5)
+        UiTextBox8.MinimumSize = New Size(1, 16)
+        UiTextBox8.Name = "UiTextBox8"
+        UiTextBox8.Padding = New Padding(5)
+        UiTextBox8.Radius = 30
+        UiTextBox8.RectColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        UiTextBox8.RectDisableColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        UiTextBox8.RectReadOnlyColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        UiTextBox8.ScrollBarBackColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        UiTextBox8.ScrollBarColor = Color.DimGray
+        UiTextBox8.ScrollBarStyleInherited = False
+        UiTextBox8.ShowText = False
+        UiTextBox8.Size = New Size(100, 30)
+        UiTextBox8.TabIndex = 98
+        UiTextBox8.TextAlignment = ContentAlignment.MiddleLeft
+        UiTextBox8.Watermark = ""
+        UiTextBox8.WatermarkActiveColor = Color.DimGray
+        UiTextBox8.WatermarkColor = Color.DimGray
+        ' 
+        ' Label16
+        ' 
+        Label16.Dock = DockStyle.Left
+        Label16.Font = New Font("微软雅黑", 9.75F)
+        Label16.Location = New Point(325, 0)
+        Label16.Name = "Label16"
+        Label16.Padding = New Padding(0, 0, 10, 0)
+        Label16.Size = New Size(100, 30)
+        Label16.TabIndex = 97
+        Label16.Text = "字幕语言"
+        Label16.TextAlign = ContentAlignment.MiddleRight
+        ' 
+        ' UiTextBox9
+        ' 
+        UiTextBox9.Dock = DockStyle.Left
+        UiTextBox9.FillColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiTextBox9.FillColor2 = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiTextBox9.FillDisableColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiTextBox9.FillReadOnlyColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiTextBox9.Font = New Font("微软雅黑", 9.75F)
+        UiTextBox9.ForeColor = Color.DarkGray
+        UiTextBox9.ForeDisableColor = Color.DarkGray
+        UiTextBox9.ForeReadOnlyColor = Color.DarkGray
+        UiTextBox9.Location = New Point(125, 0)
+        UiTextBox9.Margin = New Padding(4, 5, 4, 5)
+        UiTextBox9.MinimumSize = New Size(1, 16)
+        UiTextBox9.Name = "UiTextBox9"
+        UiTextBox9.Padding = New Padding(5)
+        UiTextBox9.Radius = 30
+        UiTextBox9.RectColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        UiTextBox9.RectDisableColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        UiTextBox9.RectReadOnlyColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        UiTextBox9.ScrollBarBackColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        UiTextBox9.ScrollBarColor = Color.DimGray
+        UiTextBox9.ScrollBarStyleInherited = False
+        UiTextBox9.ShowText = False
+        UiTextBox9.Size = New Size(200, 30)
+        UiTextBox9.TabIndex = 96
+        UiTextBox9.TextAlignment = ContentAlignment.MiddleLeft
+        UiTextBox9.Watermark = "多个流用英文逗号隔开"
+        UiTextBox9.WatermarkActiveColor = Color.DimGray
+        UiTextBox9.WatermarkColor = Color.DimGray
+        ' 
+        ' Label17
+        ' 
+        Label17.Dock = DockStyle.Left
+        Label17.Font = New Font("微软雅黑", 9.75F)
+        Label17.Location = New Point(0, 0)
+        Label17.Name = "Label17"
+        Label17.Size = New Size(125, 30)
+        Label17.TabIndex = 95
+        Label17.Text = "字幕流索引号"
+        Label17.TextAlign = ContentAlignment.MiddleLeft
+        ' 
+        ' Panel6
+        ' 
+        Panel6.Controls.Add(UiTextBox4)
+        Panel6.Controls.Add(Label12)
+        Panel6.Controls.Add(UiTextBox5)
+        Panel6.Controls.Add(Label13)
+        Panel6.Controls.Add(UiTextBox6)
+        Panel6.Controls.Add(Label14)
+        Panel6.Dock = DockStyle.Top
+        Panel6.Location = New Point(0, 50)
+        Panel6.Name = "Panel6"
+        Panel6.Padding = New Padding(0, 0, 0, 10)
+        Panel6.Size = New Size(1040, 40)
+        Panel6.TabIndex = 6
+        ' 
+        ' UiTextBox4
+        ' 
+        UiTextBox4.Dock = DockStyle.Fill
+        UiTextBox4.FillColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiTextBox4.FillColor2 = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiTextBox4.FillDisableColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiTextBox4.FillReadOnlyColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiTextBox4.Font = New Font("微软雅黑", 9.75F)
+        UiTextBox4.ForeColor = Color.DarkGray
+        UiTextBox4.ForeDisableColor = Color.DarkGray
+        UiTextBox4.ForeReadOnlyColor = Color.DarkGray
+        UiTextBox4.Location = New Point(625, 0)
+        UiTextBox4.Margin = New Padding(4, 5, 4, 5)
+        UiTextBox4.MinimumSize = New Size(1, 16)
+        UiTextBox4.Name = "UiTextBox4"
+        UiTextBox4.Padding = New Padding(5)
+        UiTextBox4.Radius = 30
+        UiTextBox4.RectColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        UiTextBox4.RectDisableColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        UiTextBox4.RectReadOnlyColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        UiTextBox4.ScrollBarBackColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        UiTextBox4.ScrollBarColor = Color.DimGray
+        UiTextBox4.ScrollBarStyleInherited = False
+        UiTextBox4.ShowText = False
+        UiTextBox4.Size = New Size(415, 30)
+        UiTextBox4.TabIndex = 100
+        UiTextBox4.TextAlignment = ContentAlignment.MiddleLeft
+        UiTextBox4.Watermark = "设置不同的语言和名称请多次添加文件"
+        UiTextBox4.WatermarkActiveColor = Color.DimGray
+        UiTextBox4.WatermarkColor = Color.DimGray
+        ' 
+        ' Label12
+        ' 
+        Label12.Dock = DockStyle.Left
+        Label12.Font = New Font("微软雅黑", 9.75F)
+        Label12.Location = New Point(525, 0)
+        Label12.Name = "Label12"
+        Label12.Padding = New Padding(0, 0, 10, 0)
+        Label12.Size = New Size(100, 30)
+        Label12.TabIndex = 99
+        Label12.Text = "音频流名称"
+        Label12.TextAlign = ContentAlignment.MiddleRight
+        ' 
+        ' UiTextBox5
+        ' 
+        UiTextBox5.Dock = DockStyle.Left
+        UiTextBox5.FillColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiTextBox5.FillColor2 = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiTextBox5.FillDisableColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiTextBox5.FillReadOnlyColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiTextBox5.Font = New Font("微软雅黑", 9.75F)
+        UiTextBox5.ForeColor = Color.DarkGray
+        UiTextBox5.ForeDisableColor = Color.DarkGray
+        UiTextBox5.ForeReadOnlyColor = Color.DarkGray
+        UiTextBox5.Location = New Point(425, 0)
+        UiTextBox5.Margin = New Padding(4, 5, 4, 5)
+        UiTextBox5.MinimumSize = New Size(1, 16)
+        UiTextBox5.Name = "UiTextBox5"
+        UiTextBox5.Padding = New Padding(5)
+        UiTextBox5.Radius = 30
+        UiTextBox5.RectColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        UiTextBox5.RectDisableColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        UiTextBox5.RectReadOnlyColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        UiTextBox5.ScrollBarBackColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        UiTextBox5.ScrollBarColor = Color.DimGray
+        UiTextBox5.ScrollBarStyleInherited = False
+        UiTextBox5.ShowText = False
+        UiTextBox5.Size = New Size(100, 30)
+        UiTextBox5.TabIndex = 98
+        UiTextBox5.TextAlignment = ContentAlignment.MiddleLeft
+        UiTextBox5.Watermark = ""
+        UiTextBox5.WatermarkActiveColor = Color.DimGray
+        UiTextBox5.WatermarkColor = Color.DimGray
+        ' 
+        ' Label13
+        ' 
+        Label13.Dock = DockStyle.Left
+        Label13.Font = New Font("微软雅黑", 9.75F)
+        Label13.Location = New Point(325, 0)
+        Label13.Name = "Label13"
+        Label13.Padding = New Padding(0, 0, 10, 0)
+        Label13.Size = New Size(100, 30)
+        Label13.TabIndex = 97
+        Label13.Text = "音频语言"
+        Label13.TextAlign = ContentAlignment.MiddleRight
+        ' 
+        ' UiTextBox6
+        ' 
+        UiTextBox6.Dock = DockStyle.Left
+        UiTextBox6.FillColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiTextBox6.FillColor2 = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiTextBox6.FillDisableColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiTextBox6.FillReadOnlyColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiTextBox6.Font = New Font("微软雅黑", 9.75F)
+        UiTextBox6.ForeColor = Color.DarkGray
+        UiTextBox6.ForeDisableColor = Color.DarkGray
+        UiTextBox6.ForeReadOnlyColor = Color.DarkGray
+        UiTextBox6.Location = New Point(125, 0)
+        UiTextBox6.Margin = New Padding(4, 5, 4, 5)
+        UiTextBox6.MinimumSize = New Size(1, 16)
+        UiTextBox6.Name = "UiTextBox6"
+        UiTextBox6.Padding = New Padding(5)
+        UiTextBox6.Radius = 30
+        UiTextBox6.RectColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        UiTextBox6.RectDisableColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        UiTextBox6.RectReadOnlyColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        UiTextBox6.ScrollBarBackColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        UiTextBox6.ScrollBarColor = Color.DimGray
+        UiTextBox6.ScrollBarStyleInherited = False
+        UiTextBox6.ShowText = False
+        UiTextBox6.Size = New Size(200, 30)
+        UiTextBox6.TabIndex = 96
+        UiTextBox6.TextAlignment = ContentAlignment.MiddleLeft
+        UiTextBox6.Watermark = "多个流用英文逗号隔开"
+        UiTextBox6.WatermarkActiveColor = Color.DimGray
+        UiTextBox6.WatermarkColor = Color.DimGray
+        ' 
+        ' Label14
+        ' 
+        Label14.Dock = DockStyle.Left
+        Label14.Font = New Font("微软雅黑", 9.75F)
+        Label14.Location = New Point(0, 0)
+        Label14.Name = "Label14"
+        Label14.Size = New Size(125, 30)
+        Label14.TabIndex = 95
+        Label14.Text = "音频流索引号"
+        Label14.TextAlign = ContentAlignment.MiddleLeft
         ' 
         ' Panel62
         ' 
+        Panel62.Controls.Add(UiTextBox3)
+        Panel62.Controls.Add(Label8)
         Panel62.Controls.Add(UiTextBox2)
         Panel62.Controls.Add(Label7)
         Panel62.Controls.Add(UiTextBox1)
         Panel62.Controls.Add(Label101)
         Panel62.Dock = DockStyle.Top
-        Panel62.Location = New Point(0, 0)
+        Panel62.Location = New Point(0, 10)
         Panel62.Name = "Panel62"
         Panel62.Padding = New Padding(0, 0, 0, 10)
         Panel62.Size = New Size(1040, 40)
         Panel62.TabIndex = 5
+        ' 
+        ' UiTextBox3
+        ' 
+        UiTextBox3.Dock = DockStyle.Fill
+        UiTextBox3.FillColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiTextBox3.FillColor2 = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiTextBox3.FillDisableColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiTextBox3.FillReadOnlyColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiTextBox3.Font = New Font("微软雅黑", 9.75F)
+        UiTextBox3.ForeColor = Color.DarkGray
+        UiTextBox3.ForeDisableColor = Color.DarkGray
+        UiTextBox3.ForeReadOnlyColor = Color.DarkGray
+        UiTextBox3.Location = New Point(625, 0)
+        UiTextBox3.Margin = New Padding(4, 5, 4, 5)
+        UiTextBox3.MinimumSize = New Size(1, 16)
+        UiTextBox3.Name = "UiTextBox3"
+        UiTextBox3.Padding = New Padding(5)
+        UiTextBox3.Radius = 30
+        UiTextBox3.RectColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        UiTextBox3.RectDisableColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        UiTextBox3.RectReadOnlyColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        UiTextBox3.ScrollBarBackColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        UiTextBox3.ScrollBarColor = Color.DimGray
+        UiTextBox3.ScrollBarStyleInherited = False
+        UiTextBox3.ShowText = False
+        UiTextBox3.Size = New Size(415, 30)
+        UiTextBox3.TabIndex = 100
+        UiTextBox3.TextAlignment = ContentAlignment.MiddleLeft
+        UiTextBox3.Watermark = "设置不同的语言和名称请多次添加文件"
+        UiTextBox3.WatermarkActiveColor = Color.DimGray
+        UiTextBox3.WatermarkColor = Color.DimGray
+        ' 
+        ' Label8
+        ' 
+        Label8.Dock = DockStyle.Left
+        Label8.Font = New Font("微软雅黑", 9.75F)
+        Label8.Location = New Point(525, 0)
+        Label8.Name = "Label8"
+        Label8.Padding = New Padding(0, 0, 10, 0)
+        Label8.Size = New Size(100, 30)
+        Label8.TabIndex = 99
+        Label8.Text = "视频流名称"
+        Label8.TextAlign = ContentAlignment.MiddleRight
         ' 
         ' UiTextBox2
         ' 
@@ -164,7 +573,7 @@ Partial Class 界面_混流
         UiTextBox2.ForeColor = Color.DarkGray
         UiTextBox2.ForeDisableColor = Color.DarkGray
         UiTextBox2.ForeReadOnlyColor = Color.DarkGray
-        UiTextBox2.Location = New Point(300, 0)
+        UiTextBox2.Location = New Point(425, 0)
         UiTextBox2.Margin = New Padding(4, 5, 4, 5)
         UiTextBox2.MinimumSize = New Size(1, 16)
         UiTextBox2.Name = "UiTextBox2"
@@ -188,13 +597,13 @@ Partial Class 界面_混流
         ' 
         Label7.Dock = DockStyle.Left
         Label7.Font = New Font("微软雅黑", 9.75F)
-        Label7.Location = New Point(200, 0)
+        Label7.Location = New Point(325, 0)
         Label7.Name = "Label7"
-        Label7.Padding = New Padding(10, 0, 0, 0)
+        Label7.Padding = New Padding(0, 0, 10, 0)
         Label7.Size = New Size(100, 30)
         Label7.TabIndex = 97
-        Label7.Text = "语言"
-        Label7.TextAlign = ContentAlignment.MiddleLeft
+        Label7.Text = "视频语言"
+        Label7.TextAlign = ContentAlignment.MiddleRight
         ' 
         ' UiTextBox1
         ' 
@@ -207,7 +616,7 @@ Partial Class 界面_混流
         UiTextBox1.ForeColor = Color.DarkGray
         UiTextBox1.ForeDisableColor = Color.DarkGray
         UiTextBox1.ForeReadOnlyColor = Color.DarkGray
-        UiTextBox1.Location = New Point(100, 0)
+        UiTextBox1.Location = New Point(125, 0)
         UiTextBox1.Margin = New Padding(4, 5, 4, 5)
         UiTextBox1.MinimumSize = New Size(1, 16)
         UiTextBox1.Name = "UiTextBox1"
@@ -220,10 +629,10 @@ Partial Class 界面_混流
         UiTextBox1.ScrollBarColor = Color.DimGray
         UiTextBox1.ScrollBarStyleInherited = False
         UiTextBox1.ShowText = False
-        UiTextBox1.Size = New Size(100, 30)
+        UiTextBox1.Size = New Size(200, 30)
         UiTextBox1.TabIndex = 96
         UiTextBox1.TextAlignment = ContentAlignment.MiddleLeft
-        UiTextBox1.Watermark = ""
+        UiTextBox1.Watermark = "多个流用英文逗号隔开"
         UiTextBox1.WatermarkActiveColor = Color.DimGray
         UiTextBox1.WatermarkColor = Color.DimGray
         ' 
@@ -233,7 +642,7 @@ Partial Class 界面_混流
         Label101.Font = New Font("微软雅黑", 9.75F)
         Label101.Location = New Point(0, 0)
         Label101.Name = "Label101"
-        Label101.Size = New Size(100, 30)
+        Label101.Size = New Size(125, 30)
         Label101.TabIndex = 95
         Label101.Text = "视频流索引号"
         Label101.TextAlign = ContentAlignment.MiddleLeft
@@ -257,18 +666,18 @@ Partial Class 界面_混流
         ' 
         Label5.Dock = DockStyle.Fill
         Label5.Font = New Font("微软雅黑", 10F)
-        Label5.Location = New Point(885, 0)
+        Label5.Location = New Point(850, 0)
         Label5.Name = "Label5"
-        Label5.Size = New Size(155, 40)
+        Label5.Size = New Size(190, 40)
         Label5.TabIndex = 4
-        Label5.Text = "使用章节"
+        Label5.Text = "章节和元数据"
         Label5.TextAlign = ContentAlignment.MiddleLeft
         ' 
         ' Label4
         ' 
         Label4.Dock = DockStyle.Left
         Label4.Font = New Font("微软雅黑", 10F)
-        Label4.Location = New Point(710, 0)
+        Label4.Location = New Point(675, 0)
         Label4.Name = "Label4"
         Label4.Size = New Size(175, 40)
         Label4.TabIndex = 3
@@ -279,7 +688,7 @@ Partial Class 界面_混流
         ' 
         Label3.Dock = DockStyle.Left
         Label3.Font = New Font("微软雅黑", 10F)
-        Label3.Location = New Point(535, 0)
+        Label3.Location = New Point(500, 0)
         Label3.Name = "Label3"
         Label3.Size = New Size(175, 40)
         Label3.TabIndex = 2
@@ -290,7 +699,7 @@ Partial Class 界面_混流
         ' 
         Label9.Dock = DockStyle.Left
         Label9.Font = New Font("微软雅黑", 10F)
-        Label9.Location = New Point(360, 0)
+        Label9.Location = New Point(325, 0)
         Label9.Name = "Label9"
         Label9.Size = New Size(175, 40)
         Label9.TabIndex = 1
@@ -303,7 +712,7 @@ Partial Class 界面_混流
         Label10.Font = New Font("微软雅黑", 10F)
         Label10.Location = New Point(10, 0)
         Label10.Name = "Label10"
-        Label10.Size = New Size(350, 40)
+        Label10.Size = New Size(315, 40)
         Label10.TabIndex = 0
         Label10.Text = "输入文件"
         Label10.TextAlign = ContentAlignment.MiddleLeft
@@ -316,9 +725,9 @@ Partial Class 界面_混流
         Label1.ForeColor = Color.Gray
         Label1.Location = New Point(10, 39)
         Label1.Name = "Label1"
-        Label1.Size = New Size(178, 19)
+        Label1.Size = New Size(471, 19)
         Label1.TabIndex = 4
-        Label1.Text = "然后选中来编辑要使用哪些流"
+        Label1.Text = "然后选中来编辑要使用哪些流，使用键盘 F3 和 F4 来排序，或使用右键菜单操作"
         ' 
         ' Label2
         ' 
@@ -441,7 +850,7 @@ Partial Class 界面_混流
         UiButton1.RectSize = 2
         UiButton1.Size = New Size(120, 35)
         UiButton1.TabIndex = 45
-        UiButton1.Text = "导出位置"
+        UiButton1.Text = "选择位置"
         UiButton1.TipsFont = New Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point, CByte(134))
         ' 
         ' UiButton启动混流
@@ -497,6 +906,9 @@ Partial Class 界面_混流
         Panel1.PerformLayout()
         Panel2.ResumeLayout(False)
         Panel3.ResumeLayout(False)
+        Panel8.ResumeLayout(False)
+        Panel7.ResumeLayout(False)
+        Panel6.ResumeLayout(False)
         Panel62.ResumeLayout(False)
         Panel4.ResumeLayout(False)
         Panel5.ResumeLayout(False)
@@ -533,5 +945,25 @@ Partial Class 界面_混流
     Friend WithEvents Label101 As Label
     Friend WithEvents UiTextBox2 As Sunny.UI.UITextBox
     Friend WithEvents Label7 As Label
+    Friend WithEvents UiTextBox3 As Sunny.UI.UITextBox
+    Friend WithEvents Label8 As Label
+    Friend WithEvents Panel8 As Panel
+    Friend WithEvents Label21 As Label
+    Friend WithEvents Panel7 As Panel
+    Friend WithEvents UiTextBox7 As Sunny.UI.UITextBox
+    Friend WithEvents Label15 As Label
+    Friend WithEvents UiTextBox8 As Sunny.UI.UITextBox
+    Friend WithEvents Label16 As Label
+    Friend WithEvents UiTextBox9 As Sunny.UI.UITextBox
+    Friend WithEvents Label17 As Label
+    Friend WithEvents Panel6 As Panel
+    Friend WithEvents UiTextBox4 As Sunny.UI.UITextBox
+    Friend WithEvents Label12 As Label
+    Friend WithEvents UiTextBox5 As Sunny.UI.UITextBox
+    Friend WithEvents Label13 As Label
+    Friend WithEvents UiTextBox6 As Sunny.UI.UITextBox
+    Friend WithEvents Label14 As Label
+    Friend WithEvents UiCheckBox保留其他视频流 As Sunny.UI.UICheckBox
+    Friend WithEvents UiCheckBox1 As Sunny.UI.UICheckBox
 
 End Class

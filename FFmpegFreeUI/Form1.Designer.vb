@@ -145,7 +145,19 @@ Partial Class Form1
         TabPageEX混流 = New TabPage()
         TabPageEX合并 = New TabPage()
         TabPageEX截取 = New TabPage()
+        TabPage性能监控 = New TabPage()
+        Panel17 = New Panel()
+        Panel20 = New Panel()
+        ListView4 = New ListView()
+        ColumnHeader12 = New ColumnHeader()
+        ColumnHeader13 = New ColumnHeader()
+        Panel19 = New Panel()
+        Panel18 = New Panel()
+        ListView3 = New ListView()
+        ColumnHeader10 = New ColumnHeader()
+        ColumnHeader11 = New ColumnHeader()
         Timer1 = New Timer(components)
+        Timer2 = New Timer(components)
         UiTabControlMenu1.SuspendLayout()
         TabPage起始页面.SuspendLayout()
         Panel44.SuspendLayout()
@@ -176,6 +188,10 @@ Partial Class Form1
         Panel77.SuspendLayout()
         Panel9.SuspendLayout()
         Panel75.SuspendLayout()
+        TabPage性能监控.SuspendLayout()
+        Panel17.SuspendLayout()
+        Panel20.SuspendLayout()
+        Panel18.SuspendLayout()
         SuspendLayout()
         ' 
         ' UiTabControlMenu1
@@ -189,6 +205,7 @@ Partial Class Form1
         UiTabControlMenu1.Controls.Add(TabPageEX混流)
         UiTabControlMenu1.Controls.Add(TabPageEX合并)
         UiTabControlMenu1.Controls.Add(TabPageEX截取)
+        UiTabControlMenu1.Controls.Add(TabPage性能监控)
         UiTabControlMenu1.Dock = DockStyle.Fill
         UiTabControlMenu1.DrawMode = TabDrawMode.OwnerDrawFixed
         UiTabControlMenu1.FillColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
@@ -485,14 +502,13 @@ Partial Class Form1
         ' 
         ' Label122
         ' 
-        Label122.AutoSize = True
-        Label122.Dock = DockStyle.Top
+        Label122.Dock = DockStyle.Fill
         Label122.Font = New Font("微软雅黑", 10F)
         Label122.ForeColor = Color.Gray
         Label122.Location = New Point(10, 153)
         Label122.Name = "Label122"
         Label122.Padding = New Padding(1, 0, 0, 7)
-        Label122.Size = New Size(66, 27)
+        Label122.Size = New Size(383, 67)
         Label122.TabIndex = 24
         Label122.Text = "更新信息"
         ' 
@@ -904,7 +920,7 @@ Partial Class Form1
         Label124.Padding = New Padding(0, 0, 0, 10)
         Label124.Size = New Size(233, 35)
         Label124.TabIndex = 9
-        Label124.Text = "FFmpegFreeUI v0.7 EA 2"
+        Label124.Text = "FFmpegFreeUI v0.7 EA 3"
         ' 
         ' TabPage编码队列
         ' 
@@ -2030,9 +2046,110 @@ Partial Class Form1
         TabPageEX截取.TabIndex = 20
         TabPageEX截取.Text = "EX：截取"
         ' 
+        ' TabPage性能监控
+        ' 
+        TabPage性能监控.BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
+        TabPage性能监控.Controls.Add(Panel17)
+        TabPage性能监控.Location = New Point(151, 0)
+        TabPage性能监控.Name = "TabPage性能监控"
+        TabPage性能监控.Size = New Size(1133, 761)
+        TabPage性能监控.TabIndex = 21
+        TabPage性能监控.Text = "性能监控"
+        ' 
+        ' Panel17
+        ' 
+        Panel17.Controls.Add(Panel20)
+        Panel17.Controls.Add(Panel19)
+        Panel17.Controls.Add(Panel18)
+        Panel17.Dock = DockStyle.Fill
+        Panel17.Font = New Font("微软雅黑", 9.75F)
+        Panel17.Location = New Point(0, 0)
+        Panel17.Name = "Panel17"
+        Panel17.Padding = New Padding(20)
+        Panel17.Size = New Size(1133, 761)
+        Panel17.TabIndex = 0
+        ' 
+        ' Panel20
+        ' 
+        Panel20.BackColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        Panel20.Controls.Add(ListView4)
+        Panel20.Dock = DockStyle.Fill
+        Panel20.Location = New Point(340, 20)
+        Panel20.Name = "Panel20"
+        Panel20.Padding = New Padding(10)
+        Panel20.Size = New Size(773, 721)
+        Panel20.TabIndex = 2
+        ' 
+        ' ListView4
+        ' 
+        ListView4.AllowDrop = True
+        ListView4.BackColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        ListView4.BorderStyle = BorderStyle.None
+        ListView4.Columns.AddRange(New ColumnHeader() {ColumnHeader12, ColumnHeader13})
+        ListView4.Dock = DockStyle.Fill
+        ListView4.Font = New Font("微软雅黑", 10F)
+        ListView4.ForeColor = Color.Silver
+        ListView4.FullRowSelect = True
+        ListView4.HeaderStyle = ColumnHeaderStyle.None
+        ListView4.Location = New Point(10, 10)
+        ListView4.Name = "ListView4"
+        ListView4.OwnerDraw = True
+        ListView4.ShowItemToolTips = True
+        ListView4.Size = New Size(753, 701)
+        ListView4.StateImageList = ImageList1
+        ListView4.TabIndex = 2
+        ListView4.TabStop = False
+        ListView4.UseCompatibleStateImageBehavior = False
+        ListView4.View = View.Details
+        ' 
+        ' Panel19
+        ' 
+        Panel19.Dock = DockStyle.Left
+        Panel19.Location = New Point(320, 20)
+        Panel19.Name = "Panel19"
+        Panel19.Size = New Size(20, 721)
+        Panel19.TabIndex = 1
+        ' 
+        ' Panel18
+        ' 
+        Panel18.BackColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        Panel18.Controls.Add(ListView3)
+        Panel18.Dock = DockStyle.Left
+        Panel18.Location = New Point(20, 20)
+        Panel18.Name = "Panel18"
+        Panel18.Padding = New Padding(10)
+        Panel18.Size = New Size(300, 721)
+        Panel18.TabIndex = 0
+        ' 
+        ' ListView3
+        ' 
+        ListView3.AllowDrop = True
+        ListView3.BackColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        ListView3.BorderStyle = BorderStyle.None
+        ListView3.Columns.AddRange(New ColumnHeader() {ColumnHeader10, ColumnHeader11})
+        ListView3.Dock = DockStyle.Fill
+        ListView3.Font = New Font("微软雅黑", 10F)
+        ListView3.ForeColor = Color.Silver
+        ListView3.FullRowSelect = True
+        ListView3.HeaderStyle = ColumnHeaderStyle.None
+        ListView3.Location = New Point(10, 10)
+        ListView3.Name = "ListView3"
+        ListView3.OwnerDraw = True
+        ListView3.ShowItemToolTips = True
+        ListView3.Size = New Size(280, 701)
+        ListView3.StateImageList = ImageList1
+        ListView3.TabIndex = 1
+        ListView3.TabStop = False
+        ListView3.UseCompatibleStateImageBehavior = False
+        ListView3.View = View.Details
+        ' 
         ' Timer1
         ' 
         Timer1.Interval = 1000
+        ' 
+        ' Timer2
+        ' 
+        Timer2.Interval = 2000
         ' 
         ' Form1
         ' 
@@ -2088,6 +2205,10 @@ Partial Class Form1
         Panel9.ResumeLayout(False)
         Panel9.PerformLayout()
         Panel75.ResumeLayout(False)
+        TabPage性能监控.ResumeLayout(False)
+        Panel17.ResumeLayout(False)
+        Panel20.ResumeLayout(False)
+        Panel18.ResumeLayout(False)
         ResumeLayout(False)
     End Sub
     Friend WithEvents UiTabControlMenu1 As Sunny.UI.UITabControlMenu
@@ -2213,5 +2334,17 @@ Partial Class Form1
     Friend WithEvents UiComboBox2 As Sunny.UI.UIComboBox
     Friend WithEvents Label12 As Label
     Friend WithEvents Label10 As Label
+    Friend WithEvents TabPage性能监控 As TabPage
+    Friend WithEvents Panel17 As Panel
+    Friend WithEvents Panel18 As Panel
+    Friend WithEvents Panel20 As Panel
+    Friend WithEvents Panel19 As Panel
+    Friend WithEvents ListView3 As ListView
+    Friend WithEvents ColumnHeader10 As ColumnHeader
+    Friend WithEvents ColumnHeader11 As ColumnHeader
+    Friend WithEvents ListView4 As ListView
+    Friend WithEvents ColumnHeader12 As ColumnHeader
+    Friend WithEvents ColumnHeader13 As ColumnHeader
+    Friend WithEvents Timer2 As Timer
 
 End Class

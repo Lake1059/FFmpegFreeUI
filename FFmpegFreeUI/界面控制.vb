@@ -1,5 +1,7 @@
 ﻿
 Imports System.IO
+Imports System.Windows.Controls
+Imports Sunny.UI
 
 Public Class 界面控制
 
@@ -55,7 +57,8 @@ Public Class 界面控制
         Form1.RichTextBox1.AllowDrop = True
         Form1.Panel6.Controls.Add(Form1.常规流程参数页面)
         Form1.常规流程参数页面.Dock = DockStyle.Fill
-
+        Form1.TabPageEX混流.Controls.Add(Form1.混流页面)
+        Form1.混流页面.Dock = DockStyle.Fill
 
         Form1.UiComboBox21.SelectedIndex = 0
         Form1.Panel41.AutoSize = True
@@ -73,7 +76,8 @@ Public Class 界面控制
 
         暗黑列表视图自绘制.绑定列表视图事件(Form1.ListView1)
         暗黑列表视图自绘制.绑定列表视图事件(Form1.ListView2)
-
+        暗黑列表视图自绘制.绑定列表视图事件(Form1.ListView3)
+        暗黑列表视图自绘制.绑定列表视图事件(Form1.ListView4)
 
         AddHandler Form1.UiButton3.Click, AddressOf 界面控制_编码队列.开始任务
         AddHandler Form1.UiButton1.Click, AddressOf 界面控制_编码队列.暂停任务
@@ -98,12 +102,12 @@ Public Class 界面控制
 
         '==============================================
 
-
         Form1.是否初始化 = True
     End Sub
 
     Public Shared Sub 界面校准()
         Dim 选项卡 As TabPage = Form1.UiTabControlMenu1.SelectedTab
+        Form1.Timer2.Enabled = False
         Select Case True
             Case 选项卡.IsEqual(Form1.TabPage起始页面)
                 Form1.UiComboBox1.ItemHeight = 30 * Form1.DPI
@@ -121,7 +125,7 @@ Public Class 界面控制
                 Form1.ListView1.Columns(7).Width = Form1.Label8.Width - SystemInformation.VerticalScrollBarWidth * Form1.DPI * 2
 
                 Dim s1 As Integer = 0
-                For Each c As Control In Form1.Panel2.Controls
+                For Each c As UIButton In Form1.Panel2.Controls
                     s1 += c.Width
                 Next
                 Form1.Panel2.Padding = New Padding((Form1.Panel2.Width - s1) * 0.5, Form1.Panel2.Padding.Top, (Form1.Panel2.Width - s1) * 0.5, 0)
@@ -137,6 +141,21 @@ Public Class 界面控制
             Case 选项卡.IsEqual(Form1.TabPage媒体信息)
                 Form1.RichTextBox1.Size = New Size(Form1.RichTextBox1.Parent.Width, Form1.RichTextBox1.Parent.Height - Form1.RichTextBox1.Parent.Padding.Top * 2)
 
+
+            Case 选项卡.IsEqual(Form1.TabPageEX混流)
+
+            Case 选项卡.IsEqual(Form1.TabPageEX合并)
+
+            Case 选项卡.IsEqual(Form1.TabPageEX截取)
+
+
+            Case 选项卡.IsEqual(Form1.TabPage性能监控)
+                Form1.Panel18.Width = Form1.Panel18.Parent.Width * 0.3
+                Form1.ListView3.Columns(0).Width = Form1.ListView3.Width * 0.7 - SystemInformation.VerticalScrollBarWidth * Form1.DPI
+                Form1.ListView3.Columns(1).Width = Form1.ListView3.Width * 0.3
+                Form1.ListView4.Columns(0).Width = Form1.ListView4.Width * 0.8 - SystemInformation.VerticalScrollBarWidth * Form1.DPI
+                Form1.ListView4.Columns(1).Width = Form1.ListView4.Width * 0.2
+                Form1.Timer2.Enabled = True
 
         End Select
     End Sub

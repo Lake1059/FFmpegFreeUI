@@ -10,7 +10,10 @@ Public Class Form1
     Public 系统状态设定 As Integer = 0
 
     Public 常规流程参数页面 As New 界面_常规流程参数
+    Public 混流页面 As New 界面_混流
     Public 编码队列右键菜单 As 暗黑上下文菜单
+
+    Public 性能统计对象 As New 性能统计
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         界面控制.初始化()
@@ -24,33 +27,33 @@ Public Class Form1
         If DPI <> 1 Then DPI变动时校准界面()
 
         Label64.Text = "正在检查更新版本 ..."
-        Label65.Text = ""
-        Label73.Text = ""
-        Label75.Text = ""
-        Label122.Text = ""
+        Label65.Text = "" : Label65.Visible = False
+        Label73.Text = "" : Label73.Visible = False
+        Label75.Text = "" : Label75.Visible = False
+        Label122.Text = "" : Label122.Visible = False
         '检测是否有网络
         If My.Computer.Network.IsAvailable Then
             Dim a As New GitHubAPI.Release
             Dim s1 As String = Await a.获取仓库发布版信息Async("Lake1059/FFmpegFreeUI", "")
             If s1 <> "" Then
                 Label64.Text = "获取更新信息失败"
-                Label65.Text = ""
-                Label73.Text = ""
-                Label75.Text = ""
-                Label122.Text = ""
+                Label65.Text = "" : Label65.Visible = False
+                Label73.Text = "" : Label73.Visible = False
+                Label75.Text = "" : Label75.Visible = False
+                Label122.Text = s1 : Label122.Visible = True
             Else
                 Label64.Text = "发布标题：" & a.发布标题
-                Label65.Text = "最新标签：" & a.版本标签
-                Label73.Text = "发布用户：" & a.发布者用户名
-                Label75.Text = "文件数量：" & a.可供下载的文件.Count
-                Label122.Text = "发布时间：" & a.发布时间
+                Label65.Text = "最新标签：" & a.版本标签 : Label65.Visible = True
+                Label73.Text = "发布用户：" & a.发布者用户名 : Label73.Visible = True
+                Label75.Text = "文件数量：" & a.可供下载的文件.Count : Label75.Visible = True
+                Label122.Text = "发布时间：" & a.发布时间 : Label122.Visible = True
             End If
         Else
             Label64.Text = "无网络连接！联网后重启应用程序以重试"
-            Label65.Text = ""
-            Label73.Text = ""
-            Label75.Text = ""
-            Label122.Text = ""
+            Label65.Text = "" : Label65.Visible = False
+            Label73.Text = "" : Label73.Visible = False
+            Label75.Text = "" : Label75.Visible = False
+            Label122.Text = "" : Label122.Visible = False
         End If
     End Sub
 
@@ -234,7 +237,31 @@ Public Class Form1
         End Select
     End Sub
 
-    Private Sub Label9_Click(sender As Object, e As EventArgs) Handles Label9.Click
+    Private Sub Timer2_Tick(sender As Object, e As EventArgs) Handles Timer2.Tick
+        性能统计对象.Update()
+        Dim cpus = 性能统计对象.处理器信息.Keys.ToList
+        For i = 0 To cpus.Count - 1
+            If i >= Me.ListView3.Items.Count Then
+                Me.ListView3.Items.Add(New ListViewItem)
+                Me.ListView3.Items(i).SubItems.Add("")
+            End If
+            Me.ListView3.Items(i).SubItems(0).Text = cpus(i)
+            Me.ListView3.Items(i).SubItems(1).Text = 性能统计对象.处理器信息(cpus(i))
+        Next
 
+        Dim gpus = 性能统计对象.显卡信息.Keys.ToList
+        gpus.Sort()
+        For i = 0 To gpus.Count - 1
+            If i >= Me.ListView4.Items.Count Then
+                Me.ListView4.Items.Add(New ListViewItem)
+                Me.ListView4.Items(i).SubItems.Add("")
+            End If
+            Me.ListView4.Items(i).SubItems(0).Text = gpus(i)
+            Me.ListView4.Items(i).SubItems(1).Text = 性能统计对象.显卡信息(gpus(i))
+        Next
+        While Me.ListView4.Items.Count > gpus.Count
+            Me.ListView4.Items.RemoveAt(Me.ListView4.Items.Count - 1)
+        End While
     End Sub
+
 End Class
