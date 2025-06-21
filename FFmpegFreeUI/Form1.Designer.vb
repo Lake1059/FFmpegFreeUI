@@ -216,7 +216,7 @@ Partial Class Form1
         UiTabControlMenu1.Multiline = True
         UiTabControlMenu1.Name = "UiTabControlMenu1"
         UiTabControlMenu1.SelectedIndex = 0
-        UiTabControlMenu1.Size = New Size(1284, 761)
+        UiTabControlMenu1.Size = New Size(1284, 711)
         UiTabControlMenu1.SizeMode = TabSizeMode.Fixed
         UiTabControlMenu1.TabIndex = 1
         UiTabControlMenu1.TabSelectedColor = Color.FromArgb(CByte(56), CByte(56), CByte(56))
@@ -231,7 +231,7 @@ Partial Class Form1
         TabPage起始页面.Font = New Font("微软雅黑", 10F)
         TabPage起始页面.Location = New Point(151, 0)
         TabPage起始页面.Name = "TabPage起始页面"
-        TabPage起始页面.Size = New Size(1133, 761)
+        TabPage起始页面.Size = New Size(1133, 711)
         TabPage起始页面.TabIndex = 10
         TabPage起始页面.Text = "3FUI"
         ' 
@@ -247,7 +247,7 @@ Partial Class Form1
         Panel44.Location = New Point(0, 0)
         Panel44.Name = "Panel44"
         Panel44.Padding = New Padding(20)
-        Panel44.Size = New Size(1133, 761)
+        Panel44.Size = New Size(1133, 711)
         Panel44.TabIndex = 0
         ' 
         ' Panel10
@@ -920,7 +920,7 @@ Partial Class Form1
         Label124.Padding = New Padding(0, 0, 0, 10)
         Label124.Size = New Size(233, 35)
         Label124.TabIndex = 9
-        Label124.Text = "FFmpegFreeUI v0.7 EA 3"
+        Label124.Text = "FFmpegFreeUI v0.7 EA 4"
         ' 
         ' TabPage编码队列
         ' 
@@ -932,7 +932,7 @@ Partial Class Form1
         TabPage编码队列.Font = New Font("微软雅黑", 10F)
         TabPage编码队列.Location = New Point(151, 0)
         TabPage编码队列.Name = "TabPage编码队列"
-        TabPage编码队列.Size = New Size(1133, 761)
+        TabPage编码队列.Size = New Size(1133, 711)
         TabPage编码队列.TabIndex = 0
         TabPage编码队列.Text = "编码队列"
         ' 
@@ -943,7 +943,7 @@ Partial Class Form1
         Panel56.Location = New Point(0, 90)
         Panel56.Name = "Panel56"
         Panel56.Padding = New Padding(10, 10, 0, 10)
-        Panel56.Size = New Size(1133, 511)
+        Panel56.Size = New Size(1133, 461)
         Panel56.TabIndex = 4
         ' 
         ' ListView1
@@ -959,7 +959,7 @@ Partial Class Form1
         ListView1.Name = "ListView1"
         ListView1.OwnerDraw = True
         ListView1.ShowItemToolTips = True
-        ListView1.Size = New Size(1123, 491)
+        ListView1.Size = New Size(1123, 441)
         ListView1.StateImageList = ImageList1
         ListView1.TabIndex = 0
         ListView1.TabStop = False
@@ -1077,7 +1077,7 @@ Partial Class Form1
         Panel41.Controls.Add(Label120)
         Panel41.Controls.Add(Label74)
         Panel41.Dock = DockStyle.Bottom
-        Panel41.Location = New Point(0, 601)
+        Panel41.Location = New Point(0, 551)
         Panel41.Name = "Panel41"
         Panel41.Padding = New Padding(10)
         Panel41.Size = New Size(1133, 160)
@@ -1097,7 +1097,7 @@ Partial Class Form1
         ' Label76
         ' 
         Label76.Dock = DockStyle.Top
-        Label76.Font = New Font("微软雅黑", 10F)
+        Label76.Font = New Font("微软雅黑", 9.75F)
         Label76.ForeColor = Color.Chocolate
         Label76.Location = New Point(0, 0)
         Label76.Name = "Label76"
@@ -1117,11 +1117,11 @@ Partial Class Form1
         ' 
         Label74.AutoSize = True
         Label74.Dock = DockStyle.Top
-        Label74.Font = New Font("微软雅黑", 10F)
+        Label74.Font = New Font("微软雅黑", 11F)
         Label74.ForeColor = Color.CornflowerBlue
         Label74.Location = New Point(10, 10)
         Label74.Name = "Label74"
-        Label74.Size = New Size(118, 20)
+        Label74.Size = New Size(126, 20)
         Label74.TabIndex = 13
         Label74.Text = "ffmpeg 实时信息"
         ' 
@@ -1496,7 +1496,7 @@ Partial Class Form1
         TabPage添加文件.Font = New Font("微软雅黑", 10F)
         TabPage添加文件.Location = New Point(151, 0)
         TabPage添加文件.Name = "TabPage添加文件"
-        TabPage添加文件.Size = New Size(1133, 761)
+        TabPage添加文件.Size = New Size(1133, 711)
         TabPage添加文件.TabIndex = 1
         TabPage添加文件.Text = "添加文件"
         ' 
@@ -1507,7 +1507,7 @@ Partial Class Form1
         Panel58.Location = New Point(0, 60)
         Panel58.Name = "Panel58"
         Panel58.Padding = New Padding(10, 10, 0, 10)
-        Panel58.Size = New Size(1133, 646)
+        Panel58.Size = New Size(1133, 596)
         Panel58.TabIndex = 6
         ' 
         ' ListView2
@@ -1524,7 +1524,7 @@ Partial Class Form1
         ListView2.Name = "ListView2"
         ListView2.OwnerDraw = True
         ListView2.ShowItemToolTips = True
-        ListView2.Size = New Size(1123, 626)
+        ListView2.Size = New Size(1123, 576)
         ListView2.StateImageList = ImageList1
         ListView2.TabIndex = 0
         ListView2.TabStop = False
@@ -1538,7 +1538,7 @@ Partial Class Form1
         Panel57.Controls.Add(Label100)
         Panel57.Controls.Add(UiComboBox输出容器)
         Panel57.Dock = DockStyle.Bottom
-        Panel57.Location = New Point(0, 706)
+        Panel57.Location = New Point(0, 656)
         Panel57.Name = "Panel57"
         Panel57.Padding = New Padding(10)
         Panel57.Size = New Size(1133, 55)
@@ -1855,7 +1855,7 @@ Partial Class Form1
         TabPage转码压制.Controls.Add(Panel6)
         TabPage转码压制.Location = New Point(151, 0)
         TabPage转码压制.Name = "TabPage转码压制"
-        TabPage转码压制.Size = New Size(1133, 761)
+        TabPage转码压制.Size = New Size(1133, 711)
         TabPage转码压制.TabIndex = 14
         TabPage转码压制.Text = "参数面板"
         ' 
@@ -1865,7 +1865,7 @@ Partial Class Form1
         Panel6.Font = New Font("微软雅黑", 10F)
         Panel6.Location = New Point(0, 0)
         Panel6.Name = "Panel6"
-        Panel6.Size = New Size(1133, 761)
+        Panel6.Size = New Size(1133, 711)
         Panel6.TabIndex = 0
         ' 
         ' TabPage媒体信息
@@ -1874,7 +1874,7 @@ Partial Class Form1
         TabPage媒体信息.Controls.Add(Panel4)
         TabPage媒体信息.Location = New Point(151, 0)
         TabPage媒体信息.Name = "TabPage媒体信息"
-        TabPage媒体信息.Size = New Size(1133, 761)
+        TabPage媒体信息.Size = New Size(1133, 711)
         TabPage媒体信息.TabIndex = 17
         TabPage媒体信息.Text = "媒体信息"
         ' 
@@ -1888,7 +1888,7 @@ Partial Class Form1
         Panel4.Location = New Point(0, 0)
         Panel4.Name = "Panel4"
         Panel4.Padding = New Padding(20)
-        Panel4.Size = New Size(1133, 761)
+        Panel4.Size = New Size(1133, 711)
         Panel4.TabIndex = 0
         ' 
         ' Panel76
@@ -1900,7 +1900,7 @@ Partial Class Form1
         Panel76.Location = New Point(20, 152)
         Panel76.Name = "Panel76"
         Panel76.Padding = New Padding(10)
-        Panel76.Size = New Size(1093, 589)
+        Panel76.Size = New Size(1093, 539)
         Panel76.TabIndex = 84
         ' 
         ' Panel77
@@ -1911,7 +1911,7 @@ Partial Class Form1
         Panel77.Location = New Point(10, 10)
         Panel77.Name = "Panel77"
         Panel77.Padding = New Padding(0, 10, 0, 10)
-        Panel77.Size = New Size(1073, 569)
+        Panel77.Size = New Size(1073, 519)
         Panel77.TabIndex = 13
         ' 
         ' RichTextBox1
@@ -1926,7 +1926,7 @@ Partial Class Form1
         RichTextBox1.ReadOnly = True
         RichTextBox1.ScrollBars = RichTextBoxScrollBars.Vertical
         RichTextBox1.ShowSelectionMargin = True
-        RichTextBox1.Size = New Size(1073, 549)
+        RichTextBox1.Size = New Size(1073, 499)
         RichTextBox1.TabIndex = 11
         RichTextBox1.Text = ""
         ' 
@@ -2024,27 +2024,27 @@ Partial Class Form1
         TabPageEX混流.BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         TabPageEX混流.Location = New Point(151, 0)
         TabPageEX混流.Name = "TabPageEX混流"
-        TabPageEX混流.Size = New Size(1133, 761)
+        TabPageEX混流.Size = New Size(1133, 711)
         TabPageEX混流.TabIndex = 18
-        TabPageEX混流.Text = "EX：混流"
+        TabPageEX混流.Text = "EX 混流 (施工)"
         ' 
         ' TabPageEX合并
         ' 
         TabPageEX合并.BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         TabPageEX合并.Location = New Point(151, 0)
         TabPageEX合并.Name = "TabPageEX合并"
-        TabPageEX合并.Size = New Size(1133, 761)
+        TabPageEX合并.Size = New Size(1133, 711)
         TabPageEX合并.TabIndex = 19
-        TabPageEX合并.Text = "EX：合并"
+        TabPageEX合并.Text = "EX 合并 (施工)"
         ' 
         ' TabPageEX截取
         ' 
         TabPageEX截取.BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         TabPageEX截取.Location = New Point(151, 0)
         TabPageEX截取.Name = "TabPageEX截取"
-        TabPageEX截取.Size = New Size(1133, 761)
+        TabPageEX截取.Size = New Size(1133, 711)
         TabPageEX截取.TabIndex = 20
-        TabPageEX截取.Text = "EX：截取"
+        TabPageEX截取.Text = "EX 截取 (施工)"
         ' 
         ' TabPage性能监控
         ' 
@@ -2052,7 +2052,7 @@ Partial Class Form1
         TabPage性能监控.Controls.Add(Panel17)
         TabPage性能监控.Location = New Point(151, 0)
         TabPage性能监控.Name = "TabPage性能监控"
-        TabPage性能监控.Size = New Size(1133, 761)
+        TabPage性能监控.Size = New Size(1133, 711)
         TabPage性能监控.TabIndex = 21
         TabPage性能监控.Text = "性能监控"
         ' 
@@ -2066,7 +2066,7 @@ Partial Class Form1
         Panel17.Location = New Point(0, 0)
         Panel17.Name = "Panel17"
         Panel17.Padding = New Padding(20)
-        Panel17.Size = New Size(1133, 761)
+        Panel17.Size = New Size(1133, 711)
         Panel17.TabIndex = 0
         ' 
         ' Panel20
@@ -2077,7 +2077,7 @@ Partial Class Form1
         Panel20.Location = New Point(340, 20)
         Panel20.Name = "Panel20"
         Panel20.Padding = New Padding(10)
-        Panel20.Size = New Size(773, 721)
+        Panel20.Size = New Size(773, 671)
         Panel20.TabIndex = 2
         ' 
         ' ListView4
@@ -2095,7 +2095,7 @@ Partial Class Form1
         ListView4.Name = "ListView4"
         ListView4.OwnerDraw = True
         ListView4.ShowItemToolTips = True
-        ListView4.Size = New Size(753, 701)
+        ListView4.Size = New Size(753, 651)
         ListView4.StateImageList = ImageList1
         ListView4.TabIndex = 2
         ListView4.TabStop = False
@@ -2107,7 +2107,7 @@ Partial Class Form1
         Panel19.Dock = DockStyle.Left
         Panel19.Location = New Point(320, 20)
         Panel19.Name = "Panel19"
-        Panel19.Size = New Size(20, 721)
+        Panel19.Size = New Size(20, 671)
         Panel19.TabIndex = 1
         ' 
         ' Panel18
@@ -2118,7 +2118,7 @@ Partial Class Form1
         Panel18.Location = New Point(20, 20)
         Panel18.Name = "Panel18"
         Panel18.Padding = New Padding(10)
-        Panel18.Size = New Size(300, 721)
+        Panel18.Size = New Size(300, 671)
         Panel18.TabIndex = 0
         ' 
         ' ListView3
@@ -2136,7 +2136,7 @@ Partial Class Form1
         ListView3.Name = "ListView3"
         ListView3.OwnerDraw = True
         ListView3.ShowItemToolTips = True
-        ListView3.Size = New Size(280, 701)
+        ListView3.Size = New Size(280, 651)
         ListView3.StateImageList = ImageList1
         ListView3.TabIndex = 1
         ListView3.TabStop = False
@@ -2156,12 +2156,12 @@ Partial Class Form1
         AutoScaleDimensions = New SizeF(96F, 96F)
         AutoScaleMode = AutoScaleMode.Dpi
         BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
-        ClientSize = New Size(1284, 761)
+        ClientSize = New Size(1284, 711)
         Controls.Add(UiTabControlMenu1)
         DoubleBuffered = True
         Font = New Font("微软雅黑", 10F)
         ForeColor = Color.Silver
-        MinimumSize = New Size(1300, 800)
+        MinimumSize = New Size(1300, 750)
         Name = "Form1"
         StartPosition = FormStartPosition.CenterScreen
         Text = "FFmpegFreeUI"

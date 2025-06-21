@@ -3,10 +3,20 @@ Imports System.Runtime.InteropServices
 Imports System.Text.RegularExpressions
 
 Public Class 编码任务
+    Enum 编码状态
+        未处理 = 0
+        正在处理 = 1
+        已暂停 = 2
+        已完成 = 10
+        已停止 = 20
+        错误 = 99
+    End Enum
+
     Public Shared Property 队列 As New List(Of 单片任务)
 
     Public Shared Sub 检查是否有可以开始的任务()
         If 获取正在处理的任务数量() < 1 Then
+            Form1.重新创建句柄()
             Form1.Invoke(AddressOf 开始排在最前一个未处理的任务)
         End If
     End Sub
@@ -37,6 +47,10 @@ Public Class 编码任务
         Private Shared Function NtResumeProcess(processHandle As IntPtr) As Integer
         End Function
 
+        Public Sub New()
+            AddHandler 界面刷新定时器.Tick, AddressOf 定时器要干的活
+        End Sub
+
         Public Property 预设数据 As 预设数据类型
         Public Property 输入文件 As String = ""
         Public Property 输出文件 As String = ""
@@ -58,7 +72,8 @@ Public Class 编码任务
         Public Property 错误列表 As New List(Of String)
 
         Public Property FFmpegProcess As Process
-        Public Property 计时器 As New Stopwatch
+        Public Property 任务耗时计时器 As New Stopwatch
+        Public Property 界面刷新定时器 As New Timer With {.Interval = 1000, .Enabled = False}
         Public Property 上次刷新界面的时间戳 As TimeSpan = Now.TimeOfDay
 
 
@@ -109,8 +124,8 @@ Public Class 编码任务
                 FFmpegProcess.BeginErrorReadLine()
                 设定系统状态()
 
-                计时器.Start()
-                根据状态设置项信息显示()
+                任务耗时计时器.Start()
+                界面刷新定时器.Enabled = True
 
                 Try
                     If Form1.UiTextBox处理器核心.Text <> "" Then
@@ -132,10 +147,11 @@ Public Class 编码任务
                 If 状态 = 编码状态.正在处理 Then
                     If NtSuspendProcess(FFmpegProcess.Handle) = 0 Then
                         状态 = 编码状态.已暂停
-                        计时器.Stop()
+                        任务耗时计时器.Stop()
+                        界面刷新定时器.Enabled = False
+                        定时器要干的活()
                     End If
                 End If
-                根据状态设置项信息显示()
             Catch ex As Exception
                 MsgBox(ex.Message, MsgBoxStyle.Critical)
             End Try
@@ -146,10 +162,11 @@ Public Class 编码任务
                 If 状态 = 编码状态.已暂停 Then
                     If NtResumeProcess(FFmpegProcess.Handle) = 0 Then
                         状态 = 编码状态.正在处理
-                        计时器.Start()
+                        任务耗时计时器.Start()
+                        界面刷新定时器.Enabled = True
+                        定时器要干的活()
                     End If
                 End If
-                根据状态设置项信息显示()
             Catch ex As Exception
                 MsgBox(ex.Message, MsgBoxStyle.Critical)
             End Try
@@ -164,9 +181,9 @@ Public Class 编码任务
                     FFmpegProcess.Kill()
                     FFmpegProcess.WaitForExit()
                     状态 = 编码状态.已停止
-                    计时器.Stop()
+                    任务耗时计时器.Stop()
+                    定时器要干的活()
                 End If
-                根据状态设置项信息显示()
             Catch ex As Exception
                 MsgBox(ex.Message, MsgBoxStyle.Critical)
             End Try
@@ -180,9 +197,11 @@ Public Class 编码任务
             End If
             FFmpegProcess?.Dispose()
             列表视图项?.Remove()
-            计时器.Stop()
+            任务耗时计时器.Stop()
             GC.Collect()
         End Sub
+
+        Public errorKeywords As String() = {"Error", "Invalid", "cannot", "failed", "not supported", "require", "must be", "Could not", "is experimental", "if you want to use it", "Nothing was written"}
 
         Public Sub FFmpegOutputHandler(sender As Object, e As DataReceivedEventArgs)
             If e.Data Is Nothing Then Exit Sub
@@ -196,19 +215,9 @@ Public Class 编码任务
                 End If
             End If
 
-            If e.Data.Contains("="c) AndAlso (Now.TimeOfDay - 上次刷新界面的时间戳).TotalSeconds >= 1 Then
-                在实时输出中提取数据(e.Data)
-                Form1.重新创建句柄()
-                Form1.Invoke(AddressOf 在界面上刷新数据)
-                Form1.Invoke(AddressOf 根据状态设置项信息显示)
-                上次刷新界面的时间戳 = Now.TimeOfDay
-            End If
-
-            Dim errorKeywords As String() = {"Error", "Invalid", "cannot", "failed", "not supported", "require", "must be"}
             If errorKeywords.Any(Function(keyword) e.Data.Contains(keyword, StringComparison.OrdinalIgnoreCase)) Then
                 错误列表.Add(e.Data)
             End If
-
         End Sub
 
         Public Sub FFmpegProcessExited(sender As Object, e As EventArgs)
@@ -216,20 +225,14 @@ Public Class 编码任务
                 状态 = 编码状态.已完成
             Else
                 状态 = 编码状态.错误
+                If My.Computer.FileSystem.FileExists(输出文件) Then
+                    Select Case Path.GetExtension(输出文件).ToLower.Trim
+                        Case ".mp4" : My.Computer.FileSystem.DeleteFile(输出文件, FileIO.UIOption.AllDialogs, FileIO.RecycleOption.SendToRecycleBin)
+                    End Select
+                End If
             End If
-            计时器.Stop()
+            任务耗时计时器.Stop()
             GC.Collect()
-            Try
-                Form1.重新创建句柄()
-                Form1.Invoke(AddressOf 根据状态设置项信息显示)
-            Catch ex As Exception
-                错误列表.Add($"刷新界面失败 {Now}")
-            End Try
-            If Not 手动停止不要尝试启动其他任务 Then
-                检查是否有可以开始的任务()
-            Else
-                手动停止不要尝试启动其他任务 = True
-            End If
             'If 预设数据.视频参数_降噪_方式 = "avs" Then
             '    If My.Computer.FileSystem.FileExists(Path.Combine(Path.GetDirectoryName(输入文件), Path.GetFileNameWithoutExtension(输入文件) & ".avs")) Then
             '        My.Computer.FileSystem.DeleteFile(Path.Combine(Path.GetDirectoryName(输入文件), Path.GetFileNameWithoutExtension(输入文件) & ".avs"))
@@ -237,168 +240,21 @@ Public Class 编码任务
             'End If
 
         End Sub
-
-        Public Sub 在界面上刷新数据()
-            If 列表视图项 Is Nothing Then Exit Sub
-
-            ' 在新线程中执行主逻辑
-            Task.Run(Sub()
-                         ' 计算进度
-                         Dim progressText As String = "N/A"
-                         Dim progress As Double = 0
-                         If 获取_总时长.TotalSeconds > 0 AndAlso 实时_time.TotalSeconds > 0 Then
-                             progress = Math.Min(实时_time.TotalSeconds / 获取_总时长.TotalSeconds, 1.0)
-                             progressText = $"{progress * 100:F1}%"
-                             If progress = 0 Then progressText = "N/A"
-                         End If
-
-                         ' 计算速度百分比
-                         Dim speedPercent As String = "N/A"
-                         If Not String.IsNullOrWhiteSpace(实时_speed) Then
-                             Dim speedValue As Double
-                             If Double.TryParse(实时_speed.Replace("x", "").Trim(), Globalization.NumberStyles.Any, Globalization.CultureInfo.InvariantCulture, speedValue) AndAlso speedValue > 0 Then
-                                 speedPercent = $"{speedValue * 100:F0}%"
-                             End If
-                         End If
-                         If progress = 1.0 AndAlso speedPercent = "N/A" Then
-                             speedPercent = "" ' 直接去掉回填
-                         End If
-
-                         ' 计算文件大小
-                         Dim sizeText As String = "N/A"
-                         If Not String.IsNullOrWhiteSpace(实时_size) Then
-                             Dim sizeValue As Long
-                             If Long.TryParse(实时_size, sizeValue) AndAlso sizeValue > 0 Then
-                                 If sizeValue >= 1024 * 1024 Then
-                                     sizeText = $"{sizeValue / 1024.0 / 1024.0:F2} GB"
-                                 ElseIf sizeValue >= 1024 Then
-                                     sizeText = $"{sizeValue / 1024.0:F0} MB"
-                                 Else
-                                     sizeText = $"{sizeValue} KB"
-                                 End If
-                             ElseIf 实时_size <> "0" Then
-                                 sizeText = 实时_size
-                             End If
-                         End If
-
-                         ' 估算完成后的大小
-                         Dim estimatedSizeText As String = ""
-                         If progress > 0 AndAlso progress < 1 AndAlso Not String.IsNullOrWhiteSpace(实时_size) Then
-                             Dim sizeValue As Long
-                             If Long.TryParse(实时_size, sizeValue) AndAlso sizeValue > 0 Then
-                                 Dim estimatedSize As Double = sizeValue / progress
-                                 If estimatedSize >= 1024 * 1024 Then
-                                     estimatedSizeText = $" - {estimatedSize / 1024.0 / 1024.0:F1} GB"
-                                 ElseIf estimatedSize >= 1024 Then
-                                     estimatedSizeText = $" - {estimatedSize / 1024.0:F0} MB"
-                                 Else
-                                     estimatedSizeText = $" - {estimatedSize:F0} KB"
-                                 End If
-                             End If
-                         End If
-
-                         ' 计算q
-                         Dim qText As String = If(String.IsNullOrWhiteSpace(实时_q) OrElse 实时_q = "0", "N/A", $"{实时_q:F0}")
-
-                         ' 计算码率
-                         Dim bitrateText As String
-                         If String.IsNullOrWhiteSpace(实时_bitrate) OrElse 实时_bitrate = "0" Then
-                             bitrateText = "N/A"
-                         Else
-                             bitrateText = 实时_bitrate & " kbps"
-                         End If
-                         If progress = 1.0 AndAlso bitrateText = "N/A" Then
-                             bitrateText = "" ' 直接去掉回填
-                         End If
-
-                         ' 计算剩余时间
-                         Dim remainTimeText As String = "N/A"
-                         If 获取_总时长.TotalSeconds > 0 AndAlso 实时_time.TotalSeconds > 0 AndAlso Not String.IsNullOrWhiteSpace(实时_speed) Then
-                             Dim speedValue As Double
-                             If Double.TryParse(实时_speed.Replace("x", "").Trim(), Globalization.NumberStyles.Any, Globalization.CultureInfo.InvariantCulture, speedValue) AndAlso speedValue > 0 Then
-                                 Dim remainSeconds = Math.Max(获取_总时长.TotalSeconds - 实时_time.TotalSeconds, 0) / speedValue
-                                 If remainSeconds > 0 Then
-                                     Dim hours = CInt(remainSeconds \ 3600)
-                                     Dim minutes = CInt((remainSeconds Mod 3600) \ 60)
-                                     Dim seconds = CInt(remainSeconds Mod 60)
-                                     Dim parts As New List(Of String)
-                                     If hours > 0 Then parts.Add($"{hours}h")
-                                     If minutes > 0 OrElse hours > 0 Then parts.Add($"{minutes}m")
-                                     parts.Add($"{seconds}s")
-                                     remainTimeText = String.Join("", parts)
-                                 End If
-                             End If
-                         End If
-
-                         ' 通过Invoke刷新界面
-                         Try
-                             Application.DoEvents()
-                             Form1.重新创建句柄()
-                             Form1.Invoke(Sub()
-                                              列表视图项.SubItems(1).Text = 状态.ToString
-                                              列表视图项.SubItems(2).Text = progressText
-                                              列表视图项.SubItems(3).Text = speedPercent
-                                              列表视图项.SubItems(4).Text = sizeText & estimatedSizeText
-                                              列表视图项.SubItems(5).Text = qText
-                                              列表视图项.SubItems(6).Text = bitrateText
-                                              Dim elapsed = 计时器.Elapsed
-                                              Dim elapsedParts As New List(Of String)
-                                              If elapsed.Hours > 0 Then elapsedParts.Add($"{elapsed.Hours}h")
-                                              If elapsed.Minutes > 0 OrElse elapsedParts.Count > 0 Then elapsedParts.Add($"{elapsed.Minutes}m")
-                                              elapsedParts.Add($"{elapsed.Seconds}s")
-                                              Dim elapsedText = String.Join("", elapsedParts)
-                                              列表视图项.SubItems(7).Text = $"{remainTimeText} - {elapsedText}"
-                                          End Sub)
-                         Catch ex As Exception
-                             错误列表.Add($"刷新界面失败 {Now}")
-                         End Try
-
-                     End Sub)
-        End Sub
-
-        Public Sub 在实时输出中提取数据(line As String)
-            Dim frameStr = ExtractRegexValueAsString(FramePattern, line)
-            If Not String.IsNullOrEmpty(frameStr) Then 实时_frame = frameStr
-
-            Dim fpsStr = ExtractRegexValueAsString(FpsPattern, line)
-            If Not String.IsNullOrEmpty(fpsStr) Then 实时_fps = fpsStr
-
-            Dim qStr = ExtractRegexValueAsString(QPattern, line)
-            If Not String.IsNullOrEmpty(qStr) Then 实时_q = qStr
-
-            Dim sizeMatch = SizePattern.Match(line)
-            If sizeMatch.Success Then
-                Dim valueStr = sizeMatch.Groups("value").Value
-                Dim unit = sizeMatch.Groups("unit").Value
-                Dim sizeValue As Long
-                If Long.TryParse(valueStr, sizeValue) Then
-                    实时_size = ConvertToKB(sizeValue, unit).ToString()
-                Else
-                    实时_size = valueStr
-                End If
-            End If
-
-            Dim timeStr = ExtractRegexValueAsString(TimePattern, line)
-            If Not String.IsNullOrEmpty(timeStr) Then
-                实时_time = ParseTimeSpan(timeStr)
-            End If
-
-            Dim bitrateStr = ExtractRegexValueAsString(BitratePattern, line)
-            If Not String.IsNullOrEmpty(bitrateStr) Then 实时_bitrate = bitrateStr
-
-            Dim speedStr = ExtractRegexValueAsString(SpeedPattern, line)
-            If Not String.IsNullOrEmpty(speedStr) Then 实时_speed = speedStr
-        End Sub
-
-        Public Sub 根据状态设置项信息显示()
+        Public Sub 定时器要干的活()
             If 列表视图项 Is Nothing Then Exit Sub
             Select Case 状态
                 Case 编码状态.未处理
                     列表视图项.ForeColor = Color.Silver
                     列表视图项.SubItems(1).Text = "未处理"
+                    界面刷新定时器.Enabled = False
                 Case 编码状态.正在处理
                     列表视图项.ForeColor = Color.YellowGreen
                     列表视图项.SubItems(1).Text = "正在处理"
+                    If 实时输出.Contains("="c) AndAlso (Now.TimeOfDay - 上次刷新界面的时间戳).TotalSeconds >= 1 Then
+                        在实时输出中提取数据(实时输出)
+                        在任务进行中时刷新实时信息()
+                        上次刷新界面的时间戳 = Now.TimeOfDay
+                    End If
                 Case 编码状态.已完成
                     列表视图项.ForeColor = Color.OliveDrab
                     列表视图项.SubItems(1).Text = "已完成"
@@ -418,15 +274,22 @@ Public Class 编码任务
                     End If
                     列表视图项.SubItems(4).Text = $"{sizeText} ({$"{输出文件信息.Length / 输入文件信息.Length * 100:F0}%"})"
                     列表视图项.SubItems(5).Text = ""
-                    Dim elapsed = 计时器.Elapsed
+                    Dim elapsed = 任务耗时计时器.Elapsed
                     Dim elapsedParts As New List(Of String)
                     If elapsed.Hours > 0 Then elapsedParts.Add($"{elapsed.Hours} 时")
                     If elapsed.Minutes > 0 OrElse elapsedParts.Count > 0 Then elapsedParts.Add($"{elapsed.Minutes} 分")
                     elapsedParts.Add($"{elapsed.Seconds} 秒")
                     列表视图项.SubItems(7).Text = "耗时 " & String.Join(" ", elapsedParts)
+                    If Not 手动停止不要尝试启动其他任务 Then
+                        检查是否有可以开始的任务()
+                    Else
+                        手动停止不要尝试启动其他任务 = True
+                    End If
+                    界面刷新定时器.Enabled = False
                 Case 编码状态.已暂停
                     列表视图项.ForeColor = Color.Goldenrod
                     列表视图项.SubItems(1).Text = "已暂停"
+                    界面刷新定时器.Enabled = False
                 Case 编码状态.已停止
                     列表视图项.ForeColor = Color.IndianRed
                     列表视图项.SubItems(1).Text = "已停止"
@@ -435,26 +298,102 @@ Public Class 编码任务
                     列表视图项.SubItems(5).Text = ""
                     列表视图项.SubItems(6).Text = ""
                     列表视图项.SubItems(7).Text = ""
+                    界面刷新定时器.Enabled = False
                 Case 编码状态.错误
-                    列表视图项.ForeColor = Color.OrangeRed
+                    列表视图项.ForeColor = Color.IndianRed
                     列表视图项.SubItems(1).Text = "错误"
                     列表视图项.SubItems(5).Text = ""
                     列表视图项.SubItems(7).Text = ""
+                    界面刷新定时器.Enabled = False
             End Select
+        End Sub
+        Public Sub 在任务进行中时刷新实时信息()
+            If 列表视图项 Is Nothing Then Exit Sub
+            Dim total = 获取_总时长.TotalSeconds, cur = 实时_time.TotalSeconds, progress = 0.0, progressText = "N/A"
+            If total > 0 AndAlso cur > 0 Then
+                progress = Math.Min(cur / total, 1.0) : progressText = $"{progress * 100:F1}%"
+                If progress = 0 Then progressText = "N/A"
+            End If
+            Dim speedPercent = "N/A", speedVal As Double
+            If Not String.IsNullOrWhiteSpace(实时_speed) AndAlso Double.TryParse(实时_speed.Replace("x", "").Trim(), Globalization.NumberStyles.Any, Globalization.CultureInfo.InvariantCulture, speedVal) AndAlso speedVal > 0 Then
+                speedPercent = $"{speedVal * 100:F0}%"
+            End If
+            If progress = 1 AndAlso speedPercent = "N/A" Then speedPercent = ""
+            Dim sizeText = "N/A", sizeVal As Long
+            If Not String.IsNullOrWhiteSpace(实时_size) AndAlso Long.TryParse(实时_size, sizeVal) AndAlso sizeVal > 0 Then
+                If sizeVal >= 1048576 Then
+                    sizeText = $"{sizeVal / 1048576.0:F2} GB"
+                ElseIf sizeVal >= 1024 Then
+                    sizeText = $"{sizeVal / 1024.0:F0} MB"
+                Else
+                    sizeText = $"{sizeVal} KB"
+                End If
+            ElseIf 实时_size <> "0" Then
+                sizeText = 实时_size
+            End If
+            Dim estimatedSize = ""
+            If progress > 0 AndAlso progress < 1 AndAlso Long.TryParse(实时_size, sizeVal) AndAlso sizeVal > 0 Then
+                Dim es = sizeVal / progress
+                If es >= 1048576 Then
+                    estimatedSize = $" - {es / 1048576.0:F1} GB"
+                ElseIf es >= 1024 Then
+                    estimatedSize = $" - {es / 1024.0:F0} MB"
+                Else
+                    estimatedSize = $" - {es:F0} KB"
+                End If
+            End If
+            Dim qText = If(String.IsNullOrWhiteSpace(实时_q) OrElse 实时_q = "0", "N/A", $"{实时_q:F0}")
+            Dim bitrateText = If(String.IsNullOrWhiteSpace(实时_bitrate) OrElse 实时_bitrate = "0", "N/A", 实时_bitrate & " kbps")
+            If progress = 1 AndAlso bitrateText = "N/A" Then bitrateText = ""
+            Dim remainTime = "N/A", rs As Double
+            If total > 0 AndAlso cur > 0 AndAlso Double.TryParse(实时_speed.Replace("x", "").Trim(), Globalization.NumberStyles.Any, Globalization.CultureInfo.InvariantCulture, rs) AndAlso rs > 0 Then
+                Dim sec = (total - cur) / rs
+                If sec > 0 Then
+                    Dim h = CInt(Math.Floor(sec / 3600.0))
+                    Dim leftover = sec - (h * 3600.0)
+                    Dim m = CInt(Math.Floor(leftover / 60.0))
+                    Dim s = CInt(Math.Floor(leftover - (m * 60.0)))
+                    Dim parts = New List(Of String)
+                    If h > 0 Then parts.Add($"{h}h")
+                    If m > 0 OrElse h > 0 Then parts.Add($"{m}m")
+                    parts.Add($"{s}s")
+                    remainTime = String.Join("", parts)
+                End If
+            End If
+            Try
+                列表视图项.SubItems(1).Text = 状态.ToString
+                列表视图项.SubItems(2).Text = progressText
+                列表视图项.SubItems(3).Text = speedPercent
+                列表视图项.SubItems(4).Text = sizeText & estimatedSize
+                列表视图项.SubItems(5).Text = qText
+                列表视图项.SubItems(6).Text = bitrateText
+                Dim el = 任务耗时计时器.Elapsed, elapsedParts = New List(Of String)
+                If el.Hours > 0 Then elapsedParts.Add($"{el.Hours}h")
+                If el.Minutes > 0 OrElse elapsedParts.Count > 0 Then elapsedParts.Add($"{el.Minutes}m")
+                elapsedParts.Add($"{el.Seconds}s")
+                列表视图项.SubItems(7).Text = $"{remainTime} - {String.Join("", elapsedParts)}"
+            Catch ex As Exception
+                错误列表.Add($"刷新界面失败 {Now}")
+            End Try
+        End Sub
+        Public Sub 在实时输出中提取数据(line As String)
+            If String.IsNullOrEmpty(line) Then Return
+            Dim frameStr = ExtractRegexValueAsString(FramePattern, line) : If frameStr <> "" Then 实时_frame = frameStr
+            Dim fpsStr = ExtractRegexValueAsString(FpsPattern, line) : If fpsStr <> "" Then 实时_fps = fpsStr
+            Dim qStr = ExtractRegexValueAsString(QPattern, line) : If qStr <> "" Then 实时_q = qStr
+            Dim sm = SizePattern.Match(line)
+            If sm.Success Then
+                Dim val = sm.Groups("value").Value, unit = sm.Groups("unit").Value, sz As Long
+                实时_size = If(Long.TryParse(val, sz), ConvertToKB(sz, unit).ToString(), val)
+            End If
+            Dim t = ExtractRegexValueAsString(TimePattern, line) : If t <> "" Then 实时_time = ParseTimeSpan(t)
+            Dim br = ExtractRegexValueAsString(BitratePattern, line) : If br <> "" Then 实时_bitrate = br
+            Dim sp = ExtractRegexValueAsString(SpeedPattern, line) : If sp <> "" Then 实时_speed = sp
         End Sub
 
     End Class
 
-    Enum 编码状态
-        未处理 = 0
-        正在处理 = 1
-        已暂停 = 2
-        已完成 = 10
-        已停止 = 20
-        错误 = 99
-    End Enum
-
-    Public Shared ReadOnly DurationPattern As New Regex("Duration:\s*(\d{2}:\d{2}:\d{2}\.\d{2})")
+    Public Shared ReadOnly DurationPattern As New Regex("Duration:\s*(\d{2}:\d{2}:\d{2}\.\d{2})", RegexOptions.Compiled)
 
     Public Shared ReadOnly FramePattern As New Regex("frame=\s*(?<value>\d+)", RegexOptions.Compiled)
     Public Shared ReadOnly FpsPattern As New Regex("fps=\s*(?<value>\d+)", RegexOptions.Compiled)

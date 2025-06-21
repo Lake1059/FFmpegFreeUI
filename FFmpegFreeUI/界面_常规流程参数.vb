@@ -134,19 +134,22 @@ Public Class 界面_常规流程参数
             Case 0
                 If UiComboBox全局质量控制参数.SelectedIndex = 3 Then UiComboBox全局质量控制参数.SelectedIndex = 0
             Case 1    '动态码率 VBR - 存储首选，硬件加速首选
-                If UiComboBox全局质量控制参数.SelectedIndex = 3 Then UiComboBox全局质量控制参数.SelectedIndex = 0
+                UiComboBox全局质量控制参数.SelectedIndex = 1
             Case 2    '动态码率 VBR HQ - 硬件加速专用，极致质量
-                If UiComboBox全局质量控制参数.SelectedIndex = 3 Then UiComboBox全局质量控制参数.SelectedIndex = 0
+                UiComboBox全局质量控制参数.SelectedIndex = 1
             Case 3    '恒定质量 CRF - 存储首选，软件编码首选
                 UiComboBox全局质量控制参数.SelectedIndex = 3
             Case 4    '恒定量化 CQP - 不推荐，主用于研究和特定场景
                 UiComboBox全局质量控制参数.SelectedIndex = 2
             Case 5    '平均码率 ABR - 折中方案，在一定范围内波动
-                If UiComboBox全局质量控制参数.SelectedIndex = 3 Then UiComboBox全局质量控制参数.SelectedIndex = 0
+                UiComboBox全局质量控制参数.SelectedIndex = 0
+                UiTextBox全局质量控制值.Text = ""
             Case 6    '二次编码 TPE - 花费时间节省比特率
-                If UiComboBox全局质量控制参数.SelectedIndex = 3 Then UiComboBox全局质量控制参数.SelectedIndex = 0
+                UiComboBox全局质量控制参数.SelectedIndex = 0
+                UiTextBox全局质量控制值.Text = ""
             Case 7    '恒定速率 CBR - 流媒体常用，不适合存储
-                If UiComboBox全局质量控制参数.SelectedIndex = 3 Then UiComboBox全局质量控制参数.SelectedIndex = 0
+                UiComboBox全局质量控制参数.SelectedIndex = 0
+                UiTextBox全局质量控制值.Text = ""
         End Select
     End Sub
     Sub 视频降噪方式变动事件()
