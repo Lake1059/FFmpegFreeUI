@@ -1,6 +1,4 @@
-﻿
-Imports System.IO
-Imports Sunny.UI
+﻿Imports Sunny.UI
 
 Public Class 界面控制
 
@@ -32,6 +30,18 @@ Public Class 界面控制
                                                                If Form1.UiComboBox4.Text = "" Then Exit Sub
                                                                If Form1.UiComboBox4.SelectedIndex < 0 Then Exit Sub
                                                                Form1.使用提示音 = Form1.UiComboBox2.SelectedIndex = 0
+                                                           End Sub
+        Form1.UiComboBox5.SelectedIndex = 0
+        AddHandler Form1.UiComboBox5.SelectedIndexChanged, Sub()
+                                                               If Form1.UiComboBox5.Text = "" Then Exit Sub
+                                                               If Form1.UiComboBox5.SelectedIndex < 0 Then Exit Sub
+                                                               Select Case Form1.UiComboBox5.SelectedIndex
+                                                                   Case 0 : Form1.同时运行任务上限 = 1
+                                                                   Case 1 : Form1.同时运行任务上限 = 2
+                                                                   Case 2 : Form1.同时运行任务上限 = 3
+                                                                   Case 3 : Form1.同时运行任务上限 = 5
+                                                                   Case 4 : Form1.同时运行任务上限 = 10
+                                                               End Select
                                                            End Sub
 
         Form1.编码队列右键菜单 = New 暗黑上下文菜单 With {.ShowImageMargin = False, .Font = Form1.Font}
@@ -149,9 +159,6 @@ Public Class 界面控制
 
 
             Case 选项卡.IsEqual(Form1.TabPageEX合并)
-
-            Case 选项卡.IsEqual(Form1.TabPageEX截取)
-
 
             Case 选项卡.IsEqual(Form1.TabPage性能监控)
                 Form1.Panel18.Width = Form1.Panel18.Parent.Width * 0.3

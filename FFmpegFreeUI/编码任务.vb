@@ -15,9 +15,10 @@ Public Class 编码任务
     Public Shared Property 队列 As New List(Of 单片任务)
 
     Public Shared Sub 检查是否有可以开始的任务()
-        If 获取正在处理的任务数量() < 1 Then
+        Dim a As Integer = 获取正在处理的任务数量()
+        If a < Form1.同时运行任务上限 Then
             Form1.重新创建句柄()
-            Form1.Invoke(AddressOf 开始排在最前一个未处理的任务)
+            Form1.Invoke(Sub() 开始还未处理的任务(a))
         End If
     End Sub
     Public Shared Function 获取正在处理的任务数量() As Integer
@@ -29,15 +30,27 @@ Public Class 编码任务
         Next
         Return 任务数量
     End Function
-    Public Shared Sub 开始排在最前一个未处理的任务()
+    Public Shared Sub 开始还未处理的任务(当前正在运行的任务数量 As Integer)
+        Dim 已运行的任务数量 As Integer = 当前正在运行的任务数量
         For Each item As 单片任务 In 队列
             If item.状态 = 编码状态.未处理 Then
                 item.开始()
-                Exit Sub
+                已运行的任务数量 += 1
+                If 已运行的任务数量 >= Form1.同时运行任务上限 Then Exit Sub
             End If
         Next
-        恢复系统状态()
+
+        If 获取正在处理的任务数量() = 0 Then
+            If 全部任务已完成是否有错误 Then
+                If Form1.使用提示音 Then My.Computer.Audio.Play(My.Resources.Resource1.错误, AudioPlayMode.Background)
+                全部任务已完成是否有错误 = False
+            Else
+                If Form1.使用提示音 Then My.Computer.Audio.Play(My.Resources.Resource1.完成, AudioPlayMode.Background)
+            End If
+            恢复系统状态()
+        End If
     End Sub
+    Public Shared Property 全部任务已完成是否有错误 As Boolean = False
 
     Public Class 单片任务
         <DllImport("ntdll.dll", SetLastError:=True)>
@@ -76,22 +89,21 @@ Public Class 编码任务
         Public Property 界面刷新定时器 As New Timer With {.Interval = 1000, .Enabled = False}
         Public Property 上次刷新界面的时间戳 As TimeSpan = Now.TimeOfDay
 
-
         Public Sub 开始()
             Try
+                错误列表.Clear()
+                状态 = 编码状态.正在处理
 
                 If 预设数据.视频参数_降噪_方式 = "avs" Then
                     If My.Computer.FileSystem.FileExists(Path.Combine(Application.StartupPath, "AviSynth.avs")) Then
                         Dim avs1 As String = File.ReadAllText(Path.Combine(Application.StartupPath, "AviSynth.avs"))
                         avs1 = avs1.Replace("<FilePath>", 输入文件)
-                        System.IO.File.WriteAllText(System.IO.Path.Combine(System.IO.Path.GetDirectoryName(输入文件), System.IO.Path.GetFileNameWithoutExtension(输入文件) & ".avs"), avs1, New System.Text.UTF8Encoding(False))
+                        File.WriteAllText(Path.Combine(Path.GetDirectoryName(输入文件), Path.GetFileNameWithoutExtension(输入文件) & ".avs"), avs1, New Text.UTF8Encoding(False))
                     Else
                         Err.Raise(10001, "", "AviSynth.avs 脚本文件不存在，请检查是否将其放置于程序目录下！")
                     End If
                 End If
 
-                错误列表.Clear()
-                状态 = 编码状态.正在处理
                 If 自定义输出位置 = "" Then
                     输出文件 = 计算输出位置_原目录(输入文件, 预设数据.输出容器)
                 Else
@@ -127,14 +139,10 @@ Public Class 编码任务
                 任务耗时计时器.Start()
                 界面刷新定时器.Enabled = True
 
-                Try
-                    If Form1.UiTextBox处理器核心.Text <> "" Then
-                        Dim coreList() As Integer = Form1.UiTextBox处理器核心.Text.Split(","c).Select(Function(s) s.Trim()).Where(Function(s) Integer.TryParse(s, Nothing)).Select(Function(s) Integer.Parse(s)).ToArray()
-                        FFmpegProcess.ProcessorAffinity = GetAffinityMask(coreList)
-                    End If
-                Catch ex As Exception
-                    MsgBox(ex.Message, MsgBoxStyle.Critical)
-                End Try
+                If Form1.UiTextBox处理器核心.Text <> "" Then
+                    Dim coreList() As Integer = Form1.UiTextBox处理器核心.Text.Split(","c).Select(Function(s) s.Trim()).Where(Function(s) Integer.TryParse(s, Nothing)).Select(Function(s) Integer.Parse(s)).ToArray()
+                    FFmpegProcess.ProcessorAffinity = GetAffinityMask(coreList)
+                End If
 
             Catch ex As Exception
                 状态 = 编码状态.错误
@@ -223,7 +231,6 @@ Public Class 编码任务
         Public Sub FFmpegProcessExited(sender As Object, e As EventArgs)
             If FFmpegProcess.ExitCode = 0 Then
                 状态 = 编码状态.已完成
-                If Form1.使用提示音 Then My.Computer.Audio.Play(My.Resources.Resource1.完成, AudioPlayMode.Background)
             Else
                 状态 = 编码状态.错误
                 If My.Computer.FileSystem.FileExists(输出文件) Then
@@ -231,7 +238,7 @@ Public Class 编码任务
                         Case ".mp4" : My.Computer.FileSystem.DeleteFile(输出文件, FileIO.UIOption.AllDialogs, FileIO.RecycleOption.SendToRecycleBin)
                     End Select
                 End If
-                If Form1.使用提示音 Then My.Computer.Audio.Play(My.Resources.Resource1.错误, AudioPlayMode.Background)
+                全部任务已完成是否有错误 = True
             End If
             任务耗时计时器.Stop()
             GC.Collect()

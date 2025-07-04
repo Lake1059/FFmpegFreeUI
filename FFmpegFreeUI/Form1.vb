@@ -9,6 +9,7 @@ Public Class Form1
 
     Public 系统状态设定 As Integer = 0
     Public 使用提示音 As Boolean = True
+    Public 同时运行任务上限 As Integer = 1
 
     Public 常规流程参数页面 As New 界面_常规流程参数
     Public 混流页面 As New 界面_混流
@@ -257,15 +258,17 @@ Public Class Form1
 
     Private Sub Timer2_Tick(sender As Object, e As EventArgs) Handles Timer2.Tick
         性能统计对象.Update()
-        Dim cpus = 性能统计对象.处理器信息.Keys.ToList
-        For i = 0 To cpus.Count - 1
-            If i >= Me.ListView3.Items.Count Then
-                Me.ListView3.Items.Add(New ListViewItem)
-                Me.ListView3.Items(i).SubItems.Add("")
-            End If
-            Me.ListView3.Items(i).SubItems(0).Text = cpus(i)
-            Me.ListView3.Items(i).SubItems(1).Text = 性能统计对象.处理器信息(cpus(i))
-        Next
+        If Panel18.Visible Then
+            Dim cpus = 性能统计对象.处理器信息.Keys.ToList
+            For i = 0 To cpus.Count - 1
+                If i >= Me.ListView3.Items.Count Then
+                    Me.ListView3.Items.Add(New ListViewItem)
+                    Me.ListView3.Items(i).SubItems.Add("")
+                End If
+                Me.ListView3.Items(i).SubItems(0).Text = cpus(i)
+                Me.ListView3.Items(i).SubItems(1).Text = 性能统计对象.处理器信息(cpus(i))
+            Next
+        End If
 
         Dim gpus = 性能统计对象.显卡信息.Keys.ToList
         gpus.Sort()
@@ -282,4 +285,14 @@ Public Class Form1
         End While
     End Sub
 
+    Private Sub UiButton切换处理器占用面板_Click(sender As Object, e As EventArgs) Handles UiButton切换处理器占用面板.Click
+        If Panel18.Visible Then
+            Panel18.Visible = False
+            Panel19.Visible = False
+        Else
+            Panel18.Visible = True
+            Panel19.Visible = True
+        End If
+        界面控制.界面校准()
+    End Sub
 End Class

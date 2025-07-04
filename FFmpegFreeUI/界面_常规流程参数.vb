@@ -45,6 +45,7 @@ Public Class 界面_常规流程参数
                 UiComboBox像素格式.Text = ""
             Case 1
                 UiComboBox具体编码.Items.Add("copy")
+                UiComboBox具体编码.SelectedIndex = 0
             Case 2    'H.266/VVC
                 UiComboBox具体编码.Items.Add("libx266")
                 UiComboBox具体编码.Items.Add("libvvenc")
@@ -75,22 +76,21 @@ Public Class 界面_常规流程参数
                 UiComboBox具体编码.Items.Add("prores_ks")
                 UiComboBox具体编码.Items.Add("prores_aw")
             Case 7    'FFV1
-                UiComboBox具体编码.Items.Add("ffv1 -level 1")
                 UiComboBox具体编码.Items.Add("ffv1 -level 3")
-                UiComboBox具体编码.Items.Add("ffv1 -level 4")
+                UiComboBox具体编码.Items.Add("ffv1 -level 1")
             Case 8    'VP9
                 UiComboBox具体编码.Items.Add("libvpx-vp9")
                 UiComboBox具体编码.Items.Add("vp9_vaapi")
             Case 9    'RMVB
-                UiComboBox具体编码.Items.Add("rv10")
                 UiComboBox具体编码.Items.Add("rv20")
+                UiComboBox具体编码.Items.Add("rv10")
             Case 10    'MPEG
                 UiComboBox具体编码.Items.Add("mpeg4")
                 UiComboBox具体编码.Items.Add("libxvid")
                 UiComboBox具体编码.Items.Add("libxeve")
             Case 11    'WMV
-                UiComboBox具体编码.Items.Add("wmv1")
                 UiComboBox具体编码.Items.Add("wmv2")
+                UiComboBox具体编码.Items.Add("wmv1")
             Case 12    '禁用
                 UiComboBox具体编码.Items.Add("")
         End Select
