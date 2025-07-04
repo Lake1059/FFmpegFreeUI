@@ -1,8 +1,6 @@
 ﻿Imports System.IO
 Imports System.Text.Json
 Imports Sunny.UI
-Imports Sunny.UI.Win32
-
 Public Class 预设管理
 
     Public Shared Sub 显示预设(a As 预设数据类型)
@@ -22,6 +20,48 @@ Public Class 预设管理
         Form1.常规流程参数页面.UiTextBox画面裁剪滤镜参数.Text = a.视频参数_分辨率_裁剪滤镜参数
         Form1.常规流程参数页面.UiComboBox帧速率.Text = a.视频参数_帧速率
         Form1.常规流程参数页面.UiTextBox智能抽帧阈值.Text = a.视频参数_帧速率_智能抽帧阈值
+
+        Form插帧.UiTextBox要补到多少帧.Text = a.视频参数_插帧_目标帧率
+        Select Case a.视频参数_插帧_插帧模式
+            Case "dup" : Form插帧.UiComboBox插帧模式.SelectedIndex = 1
+            Case "blend" : Form插帧.UiComboBox插帧模式.SelectedIndex = 2
+            Case "mci" : Form插帧.UiComboBox插帧模式.SelectedIndex = 3
+        End Select
+        Select Case a.视频参数_插帧_运动估计模式
+            Case "bidir" : Form插帧.UiComboBox运动估计模式.SelectedIndex = 1
+            Case "bilat" : Form插帧.UiComboBox运动估计模式.SelectedIndex = 2
+        End Select
+        Select Case a.视频参数_插帧_运动估计算法
+            Case "esa" : Form插帧.UiComboBox运动估计算法.SelectedIndex = 1
+            Case "tss" : Form插帧.UiComboBox运动估计算法.SelectedIndex = 2
+            Case "tdls" : Form插帧.UiComboBox运动估计算法.SelectedIndex = 3
+            Case "ntss" : Form插帧.UiComboBox运动估计算法.SelectedIndex = 4
+            Case "fss" : Form插帧.UiComboBox运动估计算法.SelectedIndex = 5
+            Case "ds" : Form插帧.UiComboBox运动估计算法.SelectedIndex = 6
+            Case "hexbs" : Form插帧.UiComboBox运动估计算法.SelectedIndex = 7
+            Case "epzs" : Form插帧.UiComboBox运动估计算法.SelectedIndex = 8
+            Case "umh" : Form插帧.UiComboBox运动估计算法.SelectedIndex = 9
+        End Select
+        Select Case a.视频参数_插帧_运动补偿模式
+            Case "obmc" : Form插帧.UiComboBox运动补偿模式.SelectedIndex = 1
+            Case "aobmc" : Form插帧.UiComboBox运动补偿模式.SelectedIndex = 2
+        End Select
+        Form插帧.UiCheckBox可变块大小的运动补偿.Checked = a.视频参数_插帧_可变块大小的运动补偿
+        Form插帧.UiTextBox块大小.Text = a.视频参数_插帧_块大小
+        Form插帧.UiTextBox搜索范围.Text = a.视频参数_插帧_搜索范围
+        Form插帧.UiTextBox场景变化检测强度.Text = a.视频参数_插帧_场景变化检测强度
+
+        Form帧混合.UiTextBox降低帧率.Text = a.视频参数_帧混合_指定帧率
+        Select Case a.视频参数_帧混合_混合模式
+            Case "average" : Form帧混合.UiComboBox混合算法.SelectedIndex = 1
+            Case "difference" : Form帧混合.UiComboBox混合算法.SelectedIndex = 2
+            Case "and" : Form帧混合.UiComboBox混合算法.SelectedIndex = 3
+            Case "or" : Form帧混合.UiComboBox混合算法.SelectedIndex = 4
+            Case "xor" : Form帧混合.UiComboBox混合算法.SelectedIndex = 5
+            Case "add" : Form帧混合.UiComboBox混合算法.SelectedIndex = 6
+            Case "multiply" : Form帧混合.UiComboBox混合算法.SelectedIndex = 7
+        End Select
+        Form帧混合.UiTextBox混合比例.Text = a.视频参数_帧混合_混合比例
 
         Select Case a.视频参数_比特率_控制方式
             Case "VBR" : Form1.常规流程参数页面.UiComboBox比特率控制方式.SelectedIndex = 1
@@ -133,12 +173,13 @@ Public Class 预设管理
         Form1.常规流程参数页面.UiCheckBox保留其他视频流.Checked = a.流控制_启用保留其他视频流
         Form1.常规流程参数页面.UiTextBox将音频参数用于这些流.Text = String.Join(",", a.流控制_将音频参数应用于指定流)
         Form1.常规流程参数页面.UiCheckBox保留其他音频流.Checked = a.流控制_启用保留其他音频流
-        Form1.常规流程参数页面.UiCheckBox保留内嵌字幕流.Checked = a.流控制_启动保留内嵌字幕流
-        Form1.常规流程参数页面.UiCheckBox保留元数据.Checked = a.流控制_启用保留元数据
-        Form1.常规流程参数页面.UiCheckBox保留章节信息.Checked = a.流控制_启用保留章节信息
-        Form1.常规流程参数页面.UiTextBox快速剪辑入点.Text = a.流控制_快速剪辑_入点
-        Form1.常规流程参数页面.UiTextBox快速剪辑出点.Text = a.流控制_快速剪辑_出点
-        Form1.常规流程参数页面.UiCheckBox自动混流同名字幕文件.Checked = a.自动混流同名字幕
+        Form1.常规流程参数页面.UiCheckBox保留内嵌字幕流.Checked = a.流控制_启用保留内嵌字幕流
+        Form1.常规流程参数页面.UiComboBox元数据选项.SelectedIndex = a.流控制_元数据选项
+        Form1.常规流程参数页面.UiComboBox章节选项.SelectedIndex = a.流控制_章节选项
+        Form1.常规流程参数页面.UiComboBox剪辑方法.SelectedIndex = a.流控制_剪辑_方法
+        Form1.常规流程参数页面.UiTextBox快速剪辑入点.Text = a.流控制_剪辑_入点
+        Form1.常规流程参数页面.UiTextBox快速剪辑出点.Text = a.流控制_剪辑_出点
+        Form1.常规流程参数页面.UiCheckBox自动混流同名字幕文件.Checked = a.流控制_启用自动混流同名字幕文件
         Form1.常规流程参数页面.UiTextBoxfilter_complex.Text = a.流控制_filter_complex
 
     End Sub
@@ -162,6 +203,48 @@ Public Class 预设管理
         a.视频参数_分辨率_裁剪滤镜参数 = Form1.常规流程参数页面.UiTextBox画面裁剪滤镜参数.Text
         a.视频参数_帧速率 = Form1.常规流程参数页面.UiComboBox帧速率.Text
         a.视频参数_帧速率_智能抽帧阈值 = Form1.常规流程参数页面.UiTextBox智能抽帧阈值.Text
+
+        a.视频参数_插帧_目标帧率 = Form插帧.UiTextBox要补到多少帧.Text
+        Select Case Form插帧.UiComboBox插帧模式.SelectedIndex
+            Case 1 : a.视频参数_插帧_插帧模式 = "dup"
+            Case 2 : a.视频参数_插帧_插帧模式 = "blend"
+            Case 3 : a.视频参数_插帧_插帧模式 = "mci"
+        End Select
+        Select Case Form插帧.UiComboBox运动估计模式.SelectedIndex
+            Case 1 : a.视频参数_插帧_运动估计模式 = "bidir"
+            Case 2 : a.视频参数_插帧_运动估计模式 = "bilat"
+        End Select
+        Select Case Form插帧.UiComboBox运动估计算法.SelectedIndex
+            Case 1 : a.视频参数_插帧_运动估计算法 = "esa"
+            Case 2 : a.视频参数_插帧_运动估计算法 = "tss"
+            Case 3 : a.视频参数_插帧_运动估计算法 = "tdls"
+            Case 4 : a.视频参数_插帧_运动估计算法 = "ntss"
+            Case 5 : a.视频参数_插帧_运动估计算法 = "fss"
+            Case 6 : a.视频参数_插帧_运动估计算法 = "ds"
+            Case 7 : a.视频参数_插帧_运动估计算法 = "hexbs"
+            Case 8 : a.视频参数_插帧_运动估计算法 = "epzs"
+            Case 9 : a.视频参数_插帧_运动估计算法 = "umh"
+        End Select
+        Select Case Form插帧.UiComboBox运动补偿模式.SelectedIndex
+            Case 1 : a.视频参数_插帧_运动补偿模式 = "obmc"
+            Case 2 : a.视频参数_插帧_运动补偿模式 = "aobmc"
+        End Select
+        a.视频参数_插帧_可变块大小的运动补偿 = Form插帧.UiCheckBox可变块大小的运动补偿.Checked
+        a.视频参数_插帧_块大小 = Form插帧.UiTextBox块大小.Text
+        a.视频参数_插帧_搜索范围 = Form插帧.UiTextBox搜索范围.Text
+        a.视频参数_插帧_场景变化检测强度 = Form插帧.UiTextBox场景变化检测强度.Text
+
+        a.视频参数_帧混合_指定帧率 = Form帧混合.UiTextBox降低帧率.Text
+        Select Case Form帧混合.UiComboBox混合算法.SelectedIndex
+            Case 1 : a.视频参数_帧混合_混合模式 = "average"
+            Case 2 : a.视频参数_帧混合_混合模式 = "difference"
+            Case 3 : a.视频参数_帧混合_混合模式 = "and"
+            Case 4 : a.视频参数_帧混合_混合模式 = "or"
+            Case 5 : a.视频参数_帧混合_混合模式 = "xor"
+            Case 6 : a.视频参数_帧混合_混合模式 = "add"
+            Case 7 : a.视频参数_帧混合_混合模式 = "multiply"
+        End Select
+        a.视频参数_帧混合_混合比例 = Form帧混合.UiTextBox混合比例.Text
 
         Select Case Form1.常规流程参数页面.UiComboBox比特率控制方式.SelectedIndex
             Case 1 : a.视频参数_比特率_控制方式 = "VBR"
@@ -274,12 +357,13 @@ Public Class 预设管理
         a.流控制_启用保留其他视频流 = Form1.常规流程参数页面.UiCheckBox保留其他视频流.Checked
         a.流控制_将音频参数应用于指定流 = Form1.常规流程参数页面.UiTextBox将音频参数用于这些流.Text.Replace("-", "").Split(separator, StringSplitOptions.RemoveEmptyEntries)
         a.流控制_启用保留其他音频流 = Form1.常规流程参数页面.UiCheckBox保留其他音频流.Checked
-        a.流控制_启动保留内嵌字幕流 = Form1.常规流程参数页面.UiCheckBox保留内嵌字幕流.Checked
-        a.流控制_启用保留元数据 = Form1.常规流程参数页面.UiCheckBox保留元数据.Checked
-        a.流控制_启用保留章节信息 = Form1.常规流程参数页面.UiCheckBox保留章节信息.Checked
-        a.流控制_快速剪辑_入点 = Form1.常规流程参数页面.UiTextBox快速剪辑入点.Text
-        a.流控制_快速剪辑_出点 = Form1.常规流程参数页面.UiTextBox快速剪辑出点.Text
-        a.自动混流同名字幕 = Form1.常规流程参数页面.UiCheckBox自动混流同名字幕文件.Checked
+        a.流控制_启用保留内嵌字幕流 = Form1.常规流程参数页面.UiCheckBox保留内嵌字幕流.Checked
+        a.流控制_元数据选项 = Form1.常规流程参数页面.UiComboBox元数据选项.SelectedIndex
+        a.流控制_章节选项 = Form1.常规流程参数页面.UiComboBox章节选项.SelectedIndex
+        a.流控制_剪辑_方法 = Form1.常规流程参数页面.UiComboBox剪辑方法.SelectedIndex
+        a.流控制_剪辑_入点 = Form1.常规流程参数页面.UiTextBox快速剪辑入点.Text
+        a.流控制_剪辑_出点 = Form1.常规流程参数页面.UiTextBox快速剪辑出点.Text
+        a.流控制_启用自动混流同名字幕文件 = Form1.常规流程参数页面.UiCheckBox自动混流同名字幕文件.Checked
         a.流控制_filter_complex = Form1.常规流程参数页面.UiTextBoxfilter_complex.Text
     End Sub
 
@@ -289,6 +373,10 @@ Public Class 预设管理
         If d.FileName = "" Then Exit Sub
         Dim a As New 预设数据类型
         储存预设(a)
+        If Form1.常规流程参数页面.UiCheckBox额外保存信息.Checked Then
+            a.计算机名称 = Environment.MachineName
+            a.输出位置 = Form1.UiComboBox21.Text
+        End If
         File.WriteAllText(d.FileName, JsonSerializer.Serialize(a, JsonSO))
     End Sub
 
@@ -298,7 +386,10 @@ Public Class 预设管理
         If Not File.Exists(d.FileName) Then Exit Sub
         Dim a As 预设数据类型 = JsonSerializer.Deserialize(Of 预设数据类型)(File.ReadAllText(d.FileName))
         显示预设(a)
-        Form1.常规流程参数页面.RichTextBox1.Text = "ffmpeg.exe " & 预设管理.将预设数据转换为命令行(a, "假装这是输入目录\假装这是输入文件", "假装这是输出目录\假装这是输出文件")
+        If a.计算机名称 = Environment.MachineName Then
+            Form1.UiComboBox21.Text = a.输出位置
+        End If
+        Form1.常规流程参数页面.RichTextBox1.Text = "ffmpeg " & 预设管理.将预设数据转换为命令行(a, "输入目录\输入文件.后缀", "输出目录\输出文件.后缀")
     End Sub
 
     Public Shared Sub 重置全部包含在预设中的设置()
@@ -318,6 +409,8 @@ Public Class 预设管理
         Form1.常规流程参数页面.UiTextBox画面裁剪滤镜参数.Text = ""
         Form1.常规流程参数页面.UiComboBox帧速率.Text = ""
         Form1.常规流程参数页面.UiTextBox智能抽帧阈值.Text = ""
+        Form插帧.重置所有选项()
+        Form帧混合.重置所有选项()
         Form1.常规流程参数页面.UiComboBox比特率控制方式.SelectedIndex = -1
         Form1.常规流程参数页面.UiTextBox硬件加速HQ前瞻分析帧数.Text = ""
         Form1.常规流程参数页面.UiTextBox基础比特率.Text = ""
@@ -387,8 +480,9 @@ Public Class 预设管理
         Form1.常规流程参数页面.UiTextBox将音频参数用于这些流.Text = ""
         Form1.常规流程参数页面.UiCheckBox保留其他音频流.Checked = False
         Form1.常规流程参数页面.UiCheckBox保留内嵌字幕流.Checked = False
-        Form1.常规流程参数页面.UiCheckBox保留元数据.Checked = False
-        Form1.常规流程参数页面.UiCheckBox保留章节信息.Checked = False
+        Form1.常规流程参数页面.UiComboBox元数据选项.SelectedIndex = 0
+        Form1.常规流程参数页面.UiComboBox章节选项.SelectedIndex = 0
+        Form1.常规流程参数页面.UiComboBox剪辑方法.SelectedIndex = 0
         Form1.常规流程参数页面.UiTextBox快速剪辑入点.Text = ""
         Form1.常规流程参数页面.UiTextBox快速剪辑出点.Text = ""
         Form1.常规流程参数页面.UiCheckBox自动混流同名字幕文件.Checked = False
@@ -406,13 +500,15 @@ Public Class 预设管理
 
         Dim arg As String = "-hide_banner -nostdin "
 
-        If a.自定义参数_开头参数 <> "" Then arg &= $"{a.自定义参数_开头参数} "
+        If a.自定义参数_开头参数 <> "" Then arg &= $"{处理自定义参数的通配字符串(a.自定义参数_开头参数, 输入文件)} "
 
         If a.解码参数_解码器 <> "" Then arg &= $"-hwaccel {a.解码参数_解码器} "
         If a.解码参数_解码数据格式 <> "" Then arg &= $"-hwaccel_output_format {a.解码参数_解码数据格式} "
 
-        If a.流控制_快速剪辑_入点 <> "" Then arg &= $"-ss {a.流控制_快速剪辑_入点} "
-        If a.流控制_快速剪辑_出点 <> "" Then arg &= $"-to {a.流控制_快速剪辑_出点} "
+        If a.流控制_剪辑_方法 = 1 Then
+            If a.流控制_剪辑_入点 <> "" Then arg &= $"-ss {a.流控制_剪辑_入点} "
+            If a.流控制_剪辑_出点 <> "" Then arg &= $"-to {a.流控制_剪辑_出点} "
+        End If
 
         'avs 文件在启动任务时创建 
         If a.视频参数_降噪_方式 = "avs" Then
@@ -421,7 +517,7 @@ Public Class 预设管理
             arg &= $"-i {""""}{输入文件}{""""} "
         End If
 
-        If a.自定义参数_之前参数 <> "" Then arg &= $"{a.自定义参数_之前参数.Replace("<inputfile>", """" & 输入文件 & """")} "
+        If a.自定义参数_之前参数 <> "" Then arg &= $"{处理自定义参数的通配字符串(a.自定义参数_之前参数, 输入文件)} "
 
         If a.视频参数_编码器_类别 = "禁用" Then 视频参数 &= $"-vn "
         If a.视频参数_编码器_具体编码 <> "" Then 视频参数 &= $"-c:v {a.视频参数_编码器_具体编码} "
@@ -455,6 +551,27 @@ Public Class 预设管理
         If a.视频参数_帧速率_智能抽帧阈值 <> "" Then
             视频滤镜参数集.Add($"select='gt(scene,{a.视频参数_帧速率_智能抽帧阈值})',setpts=N/FRAME_RATE/TB")
             视频参数 &= "-fps_mode vfr "
+        End If
+
+        If a.视频参数_插帧_目标帧率 <> "" AndAlso a.视频参数_插帧_插帧模式 <> "" Then
+            Dim s1 As String = $"minterpolate=fps={a.视频参数_插帧_目标帧率}:mi_mode={a.视频参数_插帧_插帧模式}"
+            If a.视频参数_插帧_插帧模式 = "mci" AndAlso a.视频参数_插帧_运动补偿模式 <> "" Then
+                s1 &= $":mc_mode={a.视频参数_插帧_运动补偿模式}"
+            End If
+            If a.视频参数_插帧_运动估计模式 <> "" Then s1 &= $":me_mode={a.视频参数_插帧_运动估计模式}"
+            If a.视频参数_插帧_运动估计算法 <> "" Then s1 &= $":me={a.视频参数_插帧_运动估计算法}"
+            If a.视频参数_插帧_可变块大小的运动补偿 Then s1 &= $":vsbmc=1"
+            If a.视频参数_插帧_块大小 <> "" Then s1 &= $":mb_size={a.视频参数_插帧_块大小}"
+            If a.视频参数_插帧_搜索范围 <> "" Then s1 &= $":search_param={a.视频参数_插帧_搜索范围}"
+            If a.视频参数_插帧_场景变化检测强度 <> "" Then s1 &= $":scd=fdiff:scd_threshold={a.视频参数_插帧_场景变化检测强度}"
+            视频滤镜参数集.Add(s1)
+        End If
+
+        If a.视频参数_帧混合_混合模式 <> "" Then
+            Dim s1 As String = $"tblend=all_mode={a.视频参数_帧混合_混合模式}"
+            If a.视频参数_帧混合_指定帧率 <> "" Then s1 = $"fps={a.视频参数_帧混合_指定帧率}," & s1
+            If a.视频参数_帧混合_混合比例 <> "" Then s1 &= $":all_opacity={a.视频参数_帧混合_混合比例}"
+            视频滤镜参数集.Add(s1)
         End If
 
         Select Case a.视频参数_比特率_控制方式
@@ -582,13 +699,18 @@ Public Class 预设管理
             视频滤镜参数集.Add($"scale=-2:{a.图片参数_分辨率_高度}")
         End If
 
-        If a.自定义参数_视频滤镜 <> "" Then 视频滤镜参数集.Add(a.自定义参数_视频滤镜)
+        If a.流控制_剪辑_方法 = 2 Then
+            If a.流控制_剪辑_入点 <> "" Then 视频参数 &= $"-ss {a.流控制_剪辑_入点} "
+            If a.流控制_剪辑_出点 <> "" Then 视频参数 &= $"-to {a.流控制_剪辑_出点} "
+        End If
+
+        If a.自定义参数_视频滤镜 <> "" Then 视频滤镜参数集.Add(处理自定义参数的通配字符串(a.自定义参数_视频滤镜, 输入文件))
         If 视频滤镜参数集.Count > 0 Then
             Dim vf As String = String.Join(",", 视频滤镜参数集)
             视频参数 &= $"-vf ""{vf}"" "
         End If
 
-        If a.自定义参数_视频参数 <> "" Then 视频参数 &= a.自定义参数_视频参数 & " "
+        If a.自定义参数_视频参数 <> "" Then 视频参数 &= 处理自定义参数的通配字符串(a.自定义参数_视频参数, 输入文件) & " "
 
         '=============================================================
 
@@ -617,13 +739,13 @@ Public Class 预设管理
             音频滤镜参数集.Add($"loudnorm=I={If(a.音频参数_响度标准化_目标响度 <> "", a.音频参数_响度标准化_目标响度, -16)}:LRA={If(a.音频参数_响度标准化_动态范围 <> "", a.音频参数_响度标准化_动态范围, 1)}:tp={If(a.音频参数_响度标准化_峰值电平 <> "", a.音频参数_响度标准化_峰值电平, -1)}")
         End If
 
-        If a.自定义参数_音频滤镜 <> "" Then 音频滤镜参数集.Add(a.自定义参数_音频滤镜)
+        If a.自定义参数_音频滤镜 <> "" Then 音频滤镜参数集.Add(处理自定义参数的通配字符串(a.自定义参数_音频滤镜, 输入文件))
         If 音频滤镜参数集.Count > 0 Then
             Dim vf As String = String.Join(",", 音频滤镜参数集)
             音频参数 &= $"-af ""{vf}"" "
         End If
 
-        If a.自定义参数_音频参数 <> "" Then arg &= a.自定义参数_音频参数 & " "
+        If a.自定义参数_音频参数 <> "" Then arg &= 处理自定义参数的通配字符串(a.自定义参数_音频参数, 输入文件) & " "
 
         Select Case a.图片参数_编码器_编码名称
             Case "无损压缩 PNG 已强制最高压缩度"
@@ -697,28 +819,22 @@ Public Class 预设管理
         End If
         '=================================================================
 
-        If a.流控制_启动保留内嵌字幕流 Then
+        If a.流控制_启用保留内嵌字幕流 Then
             arg &= $"-map 0:s  -c:s copy "
         End If
 
-        If a.流控制_启用保留元数据 Then
-            arg &= $"-map_metadata 0 "
-        Else
-            If 视频参数 <> "" OrElse 音频参数 <> "" Then
-                arg &= $"-map_metadata -1 "
-            End If
-        End If
+        Select Case a.流控制_元数据选项
+            Case 1 : arg &= $"-map_metadata 0 "
+            Case 2 : arg &= $"-map_metadata -1 "
+        End Select
 
-        If a.流控制_启用保留章节信息 Then
-            arg &= $"-map_chapters 0 "
-        Else
-            If 视频参数 <> "" OrElse 音频参数 <> "" Then
-                arg &= $"-map_chapters -1 "
-            End If
-        End If
+        Select Case a.流控制_章节选项
+            Case 1 : arg &= $"-map_chapters 0 "
+            Case 2 : arg &= $"-map_chapters -1 "
+        End Select
 
         If 滤镜图参数集.Count > 0 Then
-            Dim vf As String = String.Join(",", 滤镜图参数集)
+            Dim vf As String = 处理自定义参数的通配字符串(String.Join(",", 滤镜图参数集), 输入文件)
             arg &= $"-filter_complex ""{vf}"" "
         End If
 
@@ -726,7 +842,7 @@ Public Class 预设管理
         Dim 将自动混流的SRT字幕 As String = Path.Combine(输入文件的文件夹, Path.GetFileNameWithoutExtension(输入文件) & ".srt")
         Dim 将自动混流的ASS字幕 As String = Path.Combine(输入文件的文件夹, Path.GetFileNameWithoutExtension(输入文件) & ".ass")
         Dim 将自动混流的SSA字幕 As String = Path.Combine(输入文件的文件夹, Path.GetFileNameWithoutExtension(输入文件) & ".ssa")
-        If a.自动混流同名字幕 Then
+        If a.流控制_启用自动混流同名字幕文件 Then
             If FileIO.FileSystem.FileExists(将自动混流的SRT字幕) Then
                 arg &= $"-i {""""}{将自动混流的SRT字幕}{""""} "
                 If a.输出容器.Equals(".mp4", StringComparison.CurrentCultureIgnoreCase) Then arg &= $" -c:s mov_text "
@@ -742,14 +858,25 @@ Public Class 预设管理
         End If
 
 
-        If a.自定义参数_之后参数 <> "" Then arg &= $"{a.自定义参数_之后参数} "
+        If a.自定义参数_之后参数 <> "" Then arg &= $"{处理自定义参数的通配字符串(a.自定义参数_之后参数, 输入文件)} "
 
         arg &= $"{""""}{输出文件}{""""} -y "
 
-        If a.自定义参数_最后参数 <> "" Then arg &= $"{a.自定义参数_最后参数} "
+        If a.自定义参数_最后参数 <> "" Then arg &= $"{处理自定义参数的通配字符串(a.自定义参数_最后参数, 输入文件)} "
 
         Return arg
     End Function
 
-
+    Shared Function 处理自定义参数的通配字符串(自定义参数 As String, 输入文件 As String) As String
+        If 自定义参数 = "" Then
+            Return ""
+            Exit Function
+        End If
+        Dim a As String = 自定义参数
+        a = a.Replace("<InputFilePath>", 输入文件)
+        a = a.Replace("<InputFilePathWithOutExtension>", Path.Combine(Path.GetDirectoryName(输入文件), Path.GetFileNameWithoutExtension(输入文件)))
+        a = a.Replace("<InputFileName>", Path.GetFileName(输入文件))
+        a = a.Replace("<InputFileNameWithOutExtension>", Path.GetFileNameWithoutExtension(输入文件))
+        Return a
+    End Function
 End Class

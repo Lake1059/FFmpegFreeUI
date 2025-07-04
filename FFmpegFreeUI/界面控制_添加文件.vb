@@ -36,7 +36,36 @@ Public Class 界面控制_添加文件
         Form1.ListView2.Items.Clear()
         Form1.UiTabControlMenu1.SelectedTab = Form1.TabPage编码队列
     End Sub
-
+    Public Shared Sub 加入编码队列(拖入的文件 As String())
+        If Form1.UiComboBox输出容器.Text = "" Then
+            MsgBox("没有选择或填写输出容器！", MsgBoxStyle.Critical)
+            Exit Sub
+        End If
+        Select Case Form1.UiComboBox21.Text
+            Case "输出到原目录"
+            Case Else
+                If Not FileIO.FileSystem.DirectoryExists(Form1.UiComboBox21.Text) Then
+                    MsgBox("自定义输出目录不存在！", MsgBoxStyle.Critical)
+                    Exit Sub
+                End If
+        End Select
+        Dim a As New 预设数据类型
+        预设管理.储存预设(a)
+        For Each item In 拖入的文件
+            Dim m As New 编码任务.单片任务 With {.输入文件 = item, .预设数据 = a}
+            Select Case Form1.UiComboBox21.Text
+                Case "输出到原目录"
+                Case Else
+                    m.自定义输出位置 = Form1.UiComboBox21.Text
+            End Select
+            Dim i2 As New ListViewItem(IO.Path.GetFileName(item))
+            i2.SubItems.AddRange("未处理", "", "", "", "", "", "")
+            Form1.ListView1.Items.Add(i2)
+            m.列表视图项 = i2
+            编码任务.队列.Add(m)
+        Next
+        编码任务.检查是否有可以开始的任务()
+    End Sub
 
     Public Shared Sub ListView2_DragEnter(sender As Object, e As DragEventArgs)
         If e.Data.GetDataPresent(DataFormats.FileDrop) Then
@@ -110,12 +139,5 @@ Public Class 界面控制_添加文件
             End If
         End If
     End Sub
-
-
-
-
-
-
-
 
 End Class

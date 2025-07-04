@@ -8,6 +8,7 @@ Public Class Form1
     Private 上一次窗口状态 As FormWindowState
 
     Public 系统状态设定 As Integer = 0
+    Public 使用提示音 As Boolean = True
 
     Public 常规流程参数页面 As New 界面_常规流程参数
     Public 混流页面 As New 界面_混流
@@ -23,6 +24,13 @@ Public Class Form1
 
     Private Async Sub Form1_Shown(sender As Object, e As EventArgs) Handles Me.Shown
         界面控制.界面校准()
+
+        If My.Computer.FileSystem.FileExists(Path.Combine(Application.StartupPath, "FontName.txt")) Then
+            UiComboBox1.Text = My.Computer.FileSystem.ReadAllText(Path.Combine(Application.StartupPath, "FontName.txt"))
+            If UiComboBox1.Text = "" Then Exit Sub
+            SetControlFont(UiComboBox1.Text, Me, {UiComboBox1})
+        End If
+
         重新创建句柄()
         If DPI <> 1 Then DPI变动时校准界面()
 
@@ -110,16 +118,26 @@ Public Class Form1
         If My.Computer.FileSystem.FileExists(Path.Combine(Application.StartupPath, "FontName.txt")) Then
             My.Computer.FileSystem.WriteAllText(Path.Combine(Application.StartupPath, "FontName.txt"), Label11.Font.Name, False)
         End If
+        e.Cancel = False
 
     End Sub
 
+    Private Sub ListView1_DragEnter(sender As Object, e As DragEventArgs) Handles ListView1.DragEnter
+        If e.Data.GetDataPresent(DataFormats.FileDrop) Then
+            e.Effect = DragDropEffects.Copy
+        End If
+    End Sub
+    Private Sub ListView1_DragDrop(sender As Object, e As DragEventArgs) Handles ListView1.DragDrop
+        If e.Data.GetDataPresent(DataFormats.FileDrop) Then
+            界面控制_添加文件.加入编码队列(e.Data.GetData(DataFormats.FileDrop))
+        End If
+    End Sub
     Private Sub ListView1_KeyDown(sender As Object, e As KeyEventArgs) Handles ListView1.KeyDown
         Select Case e.KeyCode
             Case Keys.A : If e.Control Then 界面控制_编码队列.全选任务()
             Case Keys.Delete : 界面控制_编码队列.移除任务()
         End Select
     End Sub
-
     Private Sub ListView1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ListView1.SelectedIndexChanged
         If Me.ListView1.SelectedItems.Count = 1 Then
             Timer1.Enabled = True
@@ -143,8 +161,8 @@ Public Class Form1
                 Label120.Visible = True
                 Dim s1 = 根据标签宽度计算显示高度(Label76)
                 Label76.Height = s1
-                If s1 > TabPage编码队列.Width * 0.3 Then
-                    Panel47.Height = TabPage编码队列.Width * 0.3
+                If s1 > TabPage编码队列.Height * 0.3 Then
+                    Panel47.Height = TabPage编码队列.Height * 0.3
                 Else
                     Panel47.Height = s1
                 End If
@@ -162,7 +180,7 @@ Public Class Form1
 
     Private Sub UiButton打开文件显示参数_Click(sender As Object, e As EventArgs) Handles UiButton打开文件显示参数.Click
         Dim openFileDialog As New OpenFileDialog With {.Multiselect = False, .Filter = "所有文件|*.*"}
-        If openFileDialog.ShowDialog() = DialogResult.OK Then
+        If openFileDialog.ShowDialog = DialogResult.OK Then
             显示媒体信息流程(openFileDialog.FileName)
         End If
     End Sub

@@ -1,6 +1,5 @@
 ﻿
 Imports System.IO
-Imports System.Windows.Controls
 Imports Sunny.UI
 
 Public Class 界面控制
@@ -11,11 +10,7 @@ Public Class 界面控制
             字体列表.Add(字体.Name)
         Next
         字体列表.Sort()
-        If My.Computer.FileSystem.FileExists(Path.Combine(Application.StartupPath, "FontName.txt")) Then
-            Form1.UiComboBox1.Text = My.Computer.FileSystem.ReadAllText(Path.Combine(Application.StartupPath, "FontName.txt"))
-            If Form1.UiComboBox1.Text = "" Then Exit Sub
-            SetControlFont(Form1.UiComboBox1.Text, Form1, {Form1.UiComboBox1})
-        End If
+
         Form1.UiComboBox1.Items.AddRange(字体列表.ToArray)
         AddHandler Form1.UiButton4.Click, Sub()
                                               If Form1.UiComboBox1.Text = "" Then Exit Sub
@@ -25,11 +20,18 @@ Public Class 界面控制
                                                                If Form1.UiComboBox1.Text = "" Then Exit Sub
                                                                Form1.Label11.Font = New Font(Form1.UiComboBox1.Text, Form1.Label11.Font.Size)
                                                            End Sub
+
         Form1.UiComboBox2.SelectedIndex = 0
         AddHandler Form1.UiComboBox2.SelectedIndexChanged, Sub()
                                                                If Form1.UiComboBox2.Text = "" Then Exit Sub
                                                                If Form1.UiComboBox2.SelectedIndex < 0 Then Exit Sub
                                                                Form1.系统状态设定 = Form1.UiComboBox2.SelectedIndex
+                                                           End Sub
+        Form1.UiComboBox4.SelectedIndex = 0
+        AddHandler Form1.UiComboBox4.SelectedIndexChanged, Sub()
+                                                               If Form1.UiComboBox4.Text = "" Then Exit Sub
+                                                               If Form1.UiComboBox4.SelectedIndex < 0 Then Exit Sub
+                                                               Form1.使用提示音 = Form1.UiComboBox2.SelectedIndex = 0
                                                            End Sub
 
         Form1.编码队列右键菜单 = New 暗黑上下文菜单 With {.ShowImageMargin = False, .Font = Form1.Font}
@@ -143,6 +145,8 @@ Public Class 界面控制
 
 
             Case 选项卡.IsEqual(Form1.TabPageEX混流)
+                Form1.混流页面.界面校准()
+
 
             Case 选项卡.IsEqual(Form1.TabPageEX合并)
 

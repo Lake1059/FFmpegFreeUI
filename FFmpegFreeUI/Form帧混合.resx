@@ -117,11 +117,4 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="TextBox1.Text" xml:space="preserve">
-    <value>通配字符串区分大小写，请注意填写；不会对路径增加引号，请自行处理
-&lt;InputFilePath&gt; 表示输入文件完整路径
-&lt;InputFilePathWithOutExtension&gt; 表示不包含后缀的输入文件路径，注意点号也是算在后缀里的
-&lt;InputFileName&gt; 表示输入文件名，不包含其路径
-&lt;InputFileNameWithOutExtension&gt; 表示不包含后缀的输入文件名，也不包含其路径</value>
-  </data>
 </root>

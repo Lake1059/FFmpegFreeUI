@@ -37,6 +37,12 @@
 .Tune = New List(Of String) From {"psnr", "ssim", "qmt"},
 .Pix_fmt = Split("yuv420p yuv422p yuv444p gbrp yuv420p10le yuv422p10le yuv444p10le yuv420p12le yuv422p12le yuv444p12le gbrp10le gbrp12le gray gray10le gray12le", " ").ToList
 })
+        字典.Add("libsvtav1", New 视频编码器数据单片结构 With {
+.Preset = New List(Of String) From {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13"},
+.Profile = New List(Of String) From {""},
+.Tune = New List(Of String) From {""},
+.Pix_fmt = Split("yuv420p yuv420p10le", " ").ToList
+})
         字典.Add("av1_nvenc", New 视频编码器数据单片结构 With {
 .Preset = New List(Of String) From {"p7", "p6", "p5", "p4", "p3", "p2", "p1"},
 .Profile = New List(Of String) From {"main", "high", "professional"},
@@ -55,13 +61,7 @@
 .Tune = New List(Of String) From {""},
 .Pix_fmt = Split("nv12 p010le qsv", " ").ToList
 })
-        字典.Add("libsvtav1", New 视频编码器数据单片结构 With {
-.Preset = New List(Of String) From {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13"},
-.Profile = New List(Of String) From {""},
-.Tune = New List(Of String) From {""},
-.Pix_fmt = Split("yuv420p yuv420p10le", " ").ToList
-})
-        字典.Add("rav1e", New 视频编码器数据单片结构 With {
+        字典.Add("librav1e", New 视频编码器数据单片结构 With {
 .Preset = New List(Of String) From {""},
 .Profile = New List(Of String) From {""},
 .Tune = New List(Of String) From {""},
@@ -123,15 +123,18 @@
 })
 
 
-
-
         字典.Add("prores_ks", New 视频编码器数据单片结构 With {
 .Preset = New List(Of String) From {""},
 .Profile = New List(Of String) From {"auto", "proxy", "lt", "standard", "hq", "4444", "4444xq"},
 .Tune = New List(Of String) From {""},
 .Pix_fmt = Split("yuv422p10le yuv444p10le yuva444p10le", " ").ToList
 })
-
+        字典.Add("prores_aw", New 视频编码器数据单片结构 With {
+.Preset = New List(Of String) From {""},
+.Profile = New List(Of String) From {"auto", "proxy", "lt", "standard", "hq", "4444", "4444xq"},
+.Tune = New List(Of String) From {""},
+.Pix_fmt = Split("yuv422p10le yuv444p10le yuva444p10le", " ").ToList
+})
 
 
         字典.Add("libvpx-vp9", New 视频编码器数据单片结构 With {

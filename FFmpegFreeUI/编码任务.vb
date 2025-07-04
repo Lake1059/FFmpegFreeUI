@@ -98,9 +98,9 @@ Public Class 编码任务
                     输出文件 = 计算输出位置_自定义目录(自定义输出位置, 输入文件, 预设数据.输出容器)
                 End If
                 命令行 = 预设管理.将预设数据转换为命令行(预设数据, 输入文件, 输出文件)
-                If 预设数据.流控制_快速剪辑_入点 <> "" AndAlso 预设数据.流控制_快速剪辑_出点 <> "" Then
-                    Dim t1 = ParseTimeSpan(预设数据.流控制_快速剪辑_入点)
-                    Dim t2 = ParseTimeSpan(预设数据.流控制_快速剪辑_出点)
+                If 预设数据.流控制_剪辑_入点 <> "" AndAlso 预设数据.流控制_剪辑_出点 <> "" Then
+                    Dim t1 = ParseTimeSpan(预设数据.流控制_剪辑_入点)
+                    Dim t2 = ParseTimeSpan(预设数据.流控制_剪辑_出点)
                     获取_总时长 = t2 - t1
                     已获取到总时长 = True
                 End If
@@ -223,6 +223,7 @@ Public Class 编码任务
         Public Sub FFmpegProcessExited(sender As Object, e As EventArgs)
             If FFmpegProcess.ExitCode = 0 Then
                 状态 = 编码状态.已完成
+                If Form1.使用提示音 Then My.Computer.Audio.Play(My.Resources.Resource1.完成, AudioPlayMode.Background)
             Else
                 状态 = 编码状态.错误
                 If My.Computer.FileSystem.FileExists(输出文件) Then
@@ -230,6 +231,7 @@ Public Class 编码任务
                         Case ".mp4" : My.Computer.FileSystem.DeleteFile(输出文件, FileIO.UIOption.AllDialogs, FileIO.RecycleOption.SendToRecycleBin)
                     End Select
                 End If
+                If Form1.使用提示音 Then My.Computer.Audio.Play(My.Resources.Resource1.错误, AudioPlayMode.Background)
             End If
             任务耗时计时器.Stop()
             GC.Collect()
@@ -451,7 +453,7 @@ Public Class 编码任务
         If Not 容器.StartsWith("."c) Then
             容器 = "." & 容器
         End If
-        Dim 输出文件名 As String = IO.Path.GetFileNameWithoutExtension(输入文件) & $"_{Now.Year}.{Now.Month}.{Now.Day}-{Now.Hour}.{Now.Minute}.{Now.Second}" & 容器
+        Dim 输出文件名 As String = IO.Path.GetFileNameWithoutExtension(输入文件) & $"_{Now:yyyy.MM.dd-HH.mm.ss}" & 容器
         Return IO.Path.Combine(输出目录, 输出文件名)
     End Function
 
@@ -460,7 +462,7 @@ Public Class 编码任务
         If Not 容器.StartsWith("."c) Then
             容器 = "." & 容器
         End If
-        Dim 输出文件名 As String = IO.Path.GetFileNameWithoutExtension(输入文件) & $"_{Now.Year}.{Now.Month}.{Now.Day}-{Now.Hour}.{Now.Minute}.{Now.Second}" & 容器
+        Dim 输出文件名 As String = IO.Path.GetFileNameWithoutExtension(输入文件) & $"_{Now:yyyy.MM.dd-HH.mm.ss}" & 容器
         Return IO.Path.Combine(输出目录, 输出文件名)
     End Function
 

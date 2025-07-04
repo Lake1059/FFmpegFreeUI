@@ -7,6 +7,10 @@ Public Class 界面_常规流程参数
         AddHandler UiComboBox分辨率.TextChanged, AddressOf 视频分辨率变动事件
         AddHandler UiTextBox分辨率自动计算宽度.TextChanged, AddressOf 视频分辨率自动计算宽度变动事件
         AddHandler UiTextBox分辨率自动计算高度.TextChanged, AddressOf 视频分辨率自动计算高度变动事件
+        AddHandler UiButton1.Click, Sub() 显示窗体(Form画面裁剪交互窗口, Form1)
+        '==============================================
+        AddHandler UiButton打开插帧参数窗口.Click, Sub() 显示窗体(Form插帧, Form1)
+        AddHandler UiButton打开动态模糊参数窗口.Click, Sub() 显示窗体(Form帧混合, Form1)
         '==============================================
         AddHandler UiComboBox比特率控制方式.SelectedIndexChanged, AddressOf 视频比特率控制方式改动事件
         '==============================================
@@ -21,8 +25,6 @@ Public Class 界面_常规流程参数
         AddHandler UiButton22.Click, AddressOf 预设管理.保存预设到文件
         AddHandler UiButton21.Click, AddressOf 预设管理.从文件读取预设
         AddHandler UiButton13.Click, AddressOf 预设管理.重置全部包含在预设中的设置
-
-        AddHandler UiButton1.Click, Sub() 显示窗体(Form画面裁剪交互窗口, Form1)
 
         设置富文本框行高(RichTextBox1, 350)
         界面校准()
@@ -72,20 +74,24 @@ Public Class 界面_常规流程参数
             Case 6    'ProRes
                 UiComboBox具体编码.Items.Add("prores_ks")
                 UiComboBox具体编码.Items.Add("prores_aw")
-            Case 7    'VP9
+            Case 7    'FFV1
+                UiComboBox具体编码.Items.Add("ffv1 -level 1")
+                UiComboBox具体编码.Items.Add("ffv1 -level 3")
+                UiComboBox具体编码.Items.Add("ffv1 -level 4")
+            Case 8    'VP9
                 UiComboBox具体编码.Items.Add("libvpx-vp9")
                 UiComboBox具体编码.Items.Add("vp9_vaapi")
-            Case 8    'RMVB
+            Case 9    'RMVB
                 UiComboBox具体编码.Items.Add("rv10")
                 UiComboBox具体编码.Items.Add("rv20")
-            Case 9    'MPEG
+            Case 10    'MPEG
                 UiComboBox具体编码.Items.Add("mpeg4")
                 UiComboBox具体编码.Items.Add("libxvid")
                 UiComboBox具体编码.Items.Add("libxeve")
-            Case 10    'WMV
+            Case 11    'WMV
                 UiComboBox具体编码.Items.Add("wmv1")
                 UiComboBox具体编码.Items.Add("wmv2")
-            Case 11    '禁用
+            Case 12    '禁用
                 UiComboBox具体编码.Items.Add("")
         End Select
         If UiComboBox具体编码.Items.Count > 1 Then UiComboBox具体编码.SelectedIndex = 0
@@ -207,9 +213,6 @@ Public Class 界面_常规流程参数
                 Panel38.Visible = False
                 Panel39.Visible = False
                 Label129.Visible = True
-                Form1.常规流程参数页面.UiTextBox之前参数.Text = "-i <inputfile>"
-                Form1.常规流程参数页面.UiTextBox将视频参数用于这些流.Text = "0:v:0"
-                Form1.常规流程参数页面.UiTextBox将音频参数用于这些流.Text = "1:a:0"
             Case Else
                 UiTextBox降噪参数1.Text = ""
                 UiTextBox降噪参数2.Text = ""
@@ -280,14 +283,15 @@ Public Class 界面_常规流程参数
                 UiCheckBox保留其他视频流.CheckBoxSize = 20 * Form1.DPI
                 UiCheckBox保留其他音频流.CheckBoxSize = 20 * Form1.DPI
                 UiCheckBox保留内嵌字幕流.CheckBoxSize = 20 * Form1.DPI
-                UiCheckBox保留元数据.CheckBoxSize = 20 * Form1.DPI
-                UiCheckBox保留章节信息.CheckBoxSize = 20 * Form1.DPI
+                UiComboBox元数据选项.ItemHeight = 30 * Form1.DPI
+                UiComboBox章节选项.ItemHeight = 30 * Form1.DPI
                 UiCheckBox自动混流同名字幕文件.CheckBoxSize = 20 * Form1.DPI
             Case 选项卡.IsEqual(TabPage预设管理)
+                UiCheckBox额外保存信息.CheckBoxSize = 20 * Form1.DPI
                 Dim a As New 预设数据类型
                 预设管理.储存预设(a)
                 RichTextBox1.Size = New Size(RichTextBox1.Parent.Width, RichTextBox1.Parent.Height - RichTextBox1.Parent.Padding.Top * 2)
-                RichTextBox1.Text = "ffmpeg.exe " & 预设管理.将预设数据转换为命令行(a, "假装这是输入目录\假装这是输入文件", "假装这是输出目录\假装这是输出文件")
+                RichTextBox1.Text = "ffmpeg " & 预设管理.将预设数据转换为命令行(a, "输入目录\输入文件.后缀", "输出目录\输出文件.后缀")
         End Select
 
     End Sub

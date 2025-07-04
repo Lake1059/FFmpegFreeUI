@@ -158,5 +158,8 @@ Module Module1
         Next
     End Sub
 
+    <DllImport("winmm.dll", CharSet:=CharSet.Auto)>
+    Public Function PlaySound(pszSound As String, hmod As IntPtr, fdwSound As UInteger) As Boolean
+    End Function
 
 End Module
