@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-16"?>
+<MyApplicationData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <MySubMain>true</MySubMain>
+  <MainForm></MainForm>
+  <SingleInstance>false</SingleInstance>
+  <ShutdownMode>0</ShutdownMode>
+  <EnableVisualStyles>true</EnableVisualStyles>
+  <AuthenticationMode>1</AuthenticationMode>
+  <SaveMySettingsOnExit>true</SaveMySettingsOnExit>
+  <HighDpiMode>3</HighDpiMode>
+</MyApplicationData>

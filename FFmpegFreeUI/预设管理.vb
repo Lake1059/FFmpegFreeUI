@@ -585,7 +585,7 @@ Public Class 预设管理
 
             Case "VBR HQ"
                 Select Case a.视频参数_编码器_具体编码
-                    Case "hevc_nvenc", "h264_nvenc"
+                    Case "av1_nvenc", "hevc_nvenc", "h264_nvenc"
                         视频参数 &= $"-rc vbr_hq "
                     Case "av1_amf"
                         视频参数 &= $"-rc hqvbr -quality high_quality "

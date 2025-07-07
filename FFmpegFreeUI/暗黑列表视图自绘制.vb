@@ -38,10 +38,7 @@ Public Class 暗黑列表视图自绘制
             End Using
             TextRenderer.DrawText(e.Graphics, 实际要绘制的文本.Replace("&", "&&"), e.SubItem.Font, 文本绘制区, e.Item.ForeColor, 项背景色, TextFormatFlags.Default)
         Catch ex As Exception
-
         End Try
     End Sub
-
-
 
 End Class

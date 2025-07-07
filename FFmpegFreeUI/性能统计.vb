@@ -1,5 +1,5 @@
-﻿Imports LibreHardwareMonitor.Hardware
-Imports System.ComponentModel
+﻿Imports System.ComponentModel
+Imports LibreHardwareMonitor.Hardware
 
 Public Class 性能统计
     Implements IVisitor, IDisposable

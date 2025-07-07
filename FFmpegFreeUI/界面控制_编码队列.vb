@@ -66,7 +66,7 @@ Public Class 界面控制_编码队列
             Select Case 编码任务.队列(i).状态
                 Case 编码任务.编码状态.已完成, 编码任务.编码状态.错误
                     编码任务.队列(i).状态 = 编码任务.编码状态.未处理
-                    编码任务.队列(i).定时器要干的活()
+                    编码任务.队列(i).状态刷新统一逻辑()
             End Select
         Next
     End Sub
@@ -86,6 +86,10 @@ Public Class 界面控制_编码队列
 
     Public Shared Sub 重新配置()
         If Form1.ListView1.SelectedItems.Count <> 1 Then Exit Sub
+        If 编码任务.队列(Form1.ListView1.SelectedItems(0).Index).预设数据 Is Nothing Then
+            MsgBox("此任务不包含 3FUI 的预设数据，一般是由其他程序添加的，这样不能使用这个功能。", MsgBoxStyle.Exclamation)
+            Exit Sub
+        End If
         If MsgBox("确定将此任务的配置数据用于覆盖几个选项卡中的设置？此操作不可逆！", MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
             预设管理.显示预设(编码任务.队列(Form1.ListView1.SelectedItems(0).Index).预设数据)
 
@@ -105,6 +109,12 @@ Public Class 界面控制_编码队列
         If Form1.ListView1.SelectedItems.Count <> 1 Then Exit Sub
 
         For i = 0 To Form1.ListView1.SelectedItems.Count - 1
+
+            If 编码任务.队列(Form1.ListView1.SelectedItems(i).Index).预设数据 Is Nothing Then
+                MsgBox("此任务不包含 3FUI 的预设数据，一般是由其他程序添加的，这样不能使用这个功能。", MsgBoxStyle.Exclamation)
+                Continue For
+            End If
+
             For Each item As ListViewItem In Form1.ListView2.Items
                 If item.Text = 编码任务.队列(Form1.ListView1.SelectedItems(i).Index).输入文件 Then
                     GoTo jx1
@@ -117,6 +127,10 @@ jx1:
 
     Public Shared Sub 导出配置()
         If Form1.ListView1.SelectedItems.Count <> 1 Then Exit Sub
+        If 编码任务.队列(Form1.ListView1.SelectedItems(0).Index).预设数据 Is Nothing Then
+            MsgBox("此任务不包含 3FUI 的预设数据，一般是由其他程序添加的，这样不能使用这个功能。", MsgBoxStyle.Exclamation)
+            Exit Sub
+        End If
         Dim d As New SaveFileDialog With {.Filter = "Json|*.json"}
         d.ShowDialog(Form1)
         If d.FileName = "" Then Exit Sub

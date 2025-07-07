@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>PluginExample</RootNamespace>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <UseApplicationFramework>True</UseApplicationFramework>
+    <EnableVisualStyles>True</EnableVisualStyles>
+    <HighDpiMode>3</HighDpiMode>
+    <OutputType>WinExe</OutputType>
+    <UseWindowsForms>True</UseWindowsForms>
+    <UseWPF>True</UseWPF>
+    <MyType>WindowsForms</MyType>
+    <StartupObject>PluginExample.My.MyApplication</StartupObject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="sunnyui" Version="3.8.5" />
+  </ItemGroup>
+
+</Project>

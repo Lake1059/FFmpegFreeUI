@@ -28,9 +28,9 @@ Public Class Form画面裁剪交互窗口
         End If
         Dim FFmpegProcess As New Process
         FFmpegProcess = New Process()
-        FFmpegProcess.StartInfo.FileName = "ffmpeg.exe"
-        FFmpegProcess.StartInfo.WorkingDirectory = Application.StartupPath
-        FFmpegProcess.StartInfo.Arguments = $"-ss {If(UiTextBox1.Text <> "", UiTextBox1.Text, "0:0:10")} -i ""{视频文件}"" -frames:v 1 -q:v 0 ""{Path.Combine(Application.StartupPath, "ScreenCropPreview.png")}"" -y"
+        FFmpegProcess.StartInfo.FileName = "ffmpeg"
+        FFmpegProcess.StartInfo.WorkingDirectory = If(Form1.FFmpeg自定义工作目录 <> "", Form1.FFmpeg自定义工作目录, "")
+        FFmpegProcess.StartInfo.Arguments = $"-ss {If(UiTextBox1.Text <> "", UiTextBox1.Text, "0:0:10")} -i ""{视频文件}"" -frames:v 1 -q:v 1 ""{Path.Combine(Application.StartupPath, "ScreenCropPreview.png")}"" -y"
         FFmpegProcess.Start()
         FFmpegProcess.WaitForExit()
         If FFmpegProcess.ExitCode <> 0 Then Exit Sub

@@ -1,5 +1,4 @@
 ﻿Imports System.IO
-Imports System.Runtime.InteropServices
 Imports System.Text.RegularExpressions
 
 Public Class 编码任务
@@ -16,10 +15,7 @@ Public Class 编码任务
 
     Public Shared Sub 检查是否有可以开始的任务()
         Dim a As Integer = 获取正在处理的任务数量()
-        If a < Form1.同时运行任务上限 Then
-            Form1.重新创建句柄()
-            Form1.Invoke(Sub() 开始还未处理的任务(a))
-        End If
+        If a < 同时运行任务上限 Then 开始还未处理的任务(a)
     End Sub
     Public Shared Function 获取正在处理的任务数量() As Integer
         Dim 任务数量 As Integer = 0
@@ -34,35 +30,28 @@ Public Class 编码任务
         Dim 已运行的任务数量 As Integer = 当前正在运行的任务数量
         For Each item As 单片任务 In 队列
             If item.状态 = 编码状态.未处理 Then
-                item.开始()
+                Task.Run(AddressOf item.开始)
                 已运行的任务数量 += 1
-                If 已运行的任务数量 >= Form1.同时运行任务上限 Then Exit Sub
+                If 已运行的任务数量 >= 同时运行任务上限 Then Exit Sub
             End If
         Next
 
-        If 获取正在处理的任务数量() = 0 Then
-            If 全部任务已完成是否有错误 Then
-                If Form1.使用提示音 Then My.Computer.Audio.Play(My.Resources.Resource1.错误, AudioPlayMode.Background)
-                全部任务已完成是否有错误 = False
-            Else
-                If Form1.使用提示音 Then My.Computer.Audio.Play(My.Resources.Resource1.完成, AudioPlayMode.Background)
-            End If
-            恢复系统状态()
-        End If
+        Task.Run(Sub()
+                     If 获取正在处理的任务数量() = 0 Then
+                         If 全部任务已完成是否有错误 Then
+                             If Form1.使用提示音 Then My.Computer.Audio.Play(My.Resources.Resource1.错误, AudioPlayMode.Background)
+                             全部任务已完成是否有错误 = False
+                         Else
+                             If Form1.使用提示音 Then My.Computer.Audio.Play(My.Resources.Resource1.完成, AudioPlayMode.Background)
+                         End If
+                         恢复系统状态()
+                     End If
+                 End Sub)
     End Sub
+
     Public Shared Property 全部任务已完成是否有错误 As Boolean = False
 
     Public Class 单片任务
-        <DllImport("ntdll.dll", SetLastError:=True)>
-        Private Shared Function NtSuspendProcess(processHandle As IntPtr) As Integer
-        End Function
-        <DllImport("ntdll.dll", SetLastError:=True)>
-        Private Shared Function NtResumeProcess(processHandle As IntPtr) As Integer
-        End Function
-
-        Public Sub New()
-            AddHandler 界面刷新定时器.Tick, AddressOf 定时器要干的活
-        End Sub
 
         Public Property 预设数据 As 预设数据类型
         Public Property 输入文件 As String = ""
@@ -86,13 +75,14 @@ Public Class 编码任务
 
         Public Property FFmpegProcess As Process
         Public Property 任务耗时计时器 As New Stopwatch
-        Public Property 界面刷新定时器 As New Timer With {.Interval = 1000, .Enabled = False}
         Public Property 上次刷新界面的时间戳 As TimeSpan = Now.TimeOfDay
 
         Public Sub 开始()
             Try
                 错误列表.Clear()
                 状态 = 编码状态.正在处理
+
+                If 预设数据 Is Nothing Then GoTo jx1
 
                 If 预设数据.视频参数_降噪_方式 = "avs" Then
                     If My.Computer.FileSystem.FileExists(Path.Combine(Application.StartupPath, "AviSynth.avs")) Then
@@ -109,22 +99,33 @@ Public Class 编码任务
                 Else
                     输出文件 = 计算输出位置_自定义目录(自定义输出位置, 输入文件, 预设数据.输出容器)
                 End If
+
                 命令行 = 预设管理.将预设数据转换为命令行(预设数据, 输入文件, 输出文件)
+
                 If 预设数据.流控制_剪辑_入点 <> "" AndAlso 预设数据.流控制_剪辑_出点 <> "" Then
                     Dim t1 = ParseTimeSpan(预设数据.流控制_剪辑_入点)
                     Dim t2 = ParseTimeSpan(预设数据.流控制_剪辑_出点)
                     获取_总时长 = t2 - t1
                     已获取到总时长 = True
+                    GoTo 结束剪辑区间计算
                 End If
+                If 预设数据.流控制_剪辑_入点 = "" AndAlso 预设数据.流控制_剪辑_出点 <> "" Then
+                    获取_总时长 = ParseTimeSpan(预设数据.流控制_剪辑_出点)
+                    已获取到总时长 = True
+                    GoTo 结束剪辑区间计算
+                End If
+
+结束剪辑区间计算:
+jx1:
                 FFmpegProcess = New Process()
                 FFmpegProcess.StartInfo.FileName = "ffmpeg"
-                'FFmpegProcess.StartInfo.WorkingDirectory = Application.StartupPath
+                FFmpegProcess.StartInfo.WorkingDirectory = If(Form1.FFmpeg自定义工作目录 <> "", Form1.FFmpeg自定义工作目录, "")
                 FFmpegProcess.StartInfo.Arguments = 命令行
                 FFmpegProcess.StartInfo.UseShellExecute = False
                 FFmpegProcess.StartInfo.RedirectStandardOutput = True
                 FFmpegProcess.StartInfo.RedirectStandardError = True
-                FFmpegProcess.StartInfo.StandardOutputEncoding = System.Text.Encoding.UTF8
-                FFmpegProcess.StartInfo.StandardErrorEncoding = System.Text.Encoding.UTF8
+                FFmpegProcess.StartInfo.StandardOutputEncoding = Text.Encoding.UTF8
+                FFmpegProcess.StartInfo.StandardErrorEncoding = Text.Encoding.UTF8
                 FFmpegProcess.StartInfo.CreateNoWindow = True
                 FFmpegProcess.EnableRaisingEvents = True
                 AddHandler FFmpegProcess.OutputDataReceived, AddressOf FFmpegOutputHandler
@@ -134,19 +135,18 @@ Public Class 编码任务
                 FFmpegProcess.Start()
                 FFmpegProcess.BeginOutputReadLine()
                 FFmpegProcess.BeginErrorReadLine()
+
                 设定系统状态()
-
                 任务耗时计时器.Start()
-                界面刷新定时器.Enabled = True
 
-                If Form1.UiTextBox处理器核心.Text <> "" Then
-                    Dim coreList() As Integer = Form1.UiTextBox处理器核心.Text.Split(","c).Select(Function(s) s.Trim()).Where(Function(s) Integer.TryParse(s, Nothing)).Select(Function(s) Integer.Parse(s)).ToArray()
+                If Form1.处理器相关性 <> "" Then
+                    Dim coreList() As Integer = Form1.处理器相关性.Split(","c).Select(Function(s) s.Trim()).Where(Function(s) Integer.TryParse(s, Nothing)).Select(Function(s) Integer.Parse(s)).ToArray()
                     FFmpegProcess.ProcessorAffinity = GetAffinityMask(coreList)
                 End If
 
             Catch ex As Exception
                 状态 = 编码状态.错误
-                MsgBox(ex.Message, MsgBoxStyle.Critical)
+                界面线程执行(Sub() MsgBox(ex.Message, MsgBoxStyle.Critical))
             End Try
         End Sub
 
@@ -156,8 +156,7 @@ Public Class 编码任务
                     If NtSuspendProcess(FFmpegProcess.Handle) = 0 Then
                         状态 = 编码状态.已暂停
                         任务耗时计时器.Stop()
-                        界面刷新定时器.Enabled = False
-                        定时器要干的活()
+                        状态刷新统一逻辑()
                     End If
                 End If
             Catch ex As Exception
@@ -171,8 +170,7 @@ Public Class 编码任务
                     If NtResumeProcess(FFmpegProcess.Handle) = 0 Then
                         状态 = 编码状态.正在处理
                         任务耗时计时器.Start()
-                        界面刷新定时器.Enabled = True
-                        定时器要干的活()
+                        状态刷新统一逻辑()
                     End If
                 End If
             Catch ex As Exception
@@ -190,7 +188,7 @@ Public Class 编码任务
                     FFmpegProcess.WaitForExit()
                     状态 = 编码状态.已停止
                     任务耗时计时器.Stop()
-                    定时器要干的活()
+                    状态刷新统一逻辑()
                 End If
             Catch ex As Exception
                 MsgBox(ex.Message, MsgBoxStyle.Critical)
@@ -198,15 +196,19 @@ Public Class 编码任务
         End Sub
 
         Public Sub 清除占用()
-            If FFmpegProcess IsNot Nothing Then
-                If Not FFmpegProcess.HasExited Then
-                    FFmpegProcess.Kill()
+            Try
+                If FFmpegProcess IsNot Nothing Then
+                    If Not FFmpegProcess.HasExited Then
+                        FFmpegProcess.Kill()
+                    End If
                 End If
-            End If
-            FFmpegProcess?.Dispose()
-            列表视图项?.Remove()
-            任务耗时计时器.Stop()
-            GC.Collect()
+                FFmpegProcess?.Dispose()
+                列表视图项?.Remove()
+                任务耗时计时器.Stop()
+                GC.Collect()
+            Catch ex As Exception
+                MsgBox(ex.Message, MsgBoxStyle.Critical)
+            End Try
         End Sub
 
         Public errorKeywords As String() = {"Error", "Invalid", "cannot", "failed", "not supported", "require", "must be", "Could not", "is experimental", "if you want to use it", "Nothing was written"}
@@ -215,13 +217,19 @@ Public Class 编码任务
             If e.Data Is Nothing Then Exit Sub
             实时输出 = e.Data
 
-            If e.Data.Contains("Duration") AndAlso Not 已获取到总时长 Then
+            If Not 已获取到总时长 AndAlso e.Data.Contains("Duration") Then
                 Dim durationMatch = DurationPattern.Match(e.Data)
                 If durationMatch.Success Then
-                    获取_总时长 = ParseTimeSpan(durationMatch.Groups(1).Value)
+                    If 预设数据.流控制_剪辑_入点 <> "" AndAlso 预设数据.流控制_剪辑_出点 = "" Then
+                        获取_总时长 = ParseTimeSpan(durationMatch.Groups(1).Value) - ParseTimeSpan(预设数据.流控制_剪辑_入点)
+                    Else
+                        获取_总时长 = ParseTimeSpan(durationMatch.Groups(1).Value)
+                    End If
                     已获取到总时长 = True
                 End If
             End If
+
+            界面线程执行(AddressOf 状态刷新统一逻辑)
 
             If errorKeywords.Any(Function(keyword) e.Data.Contains(keyword, StringComparison.OrdinalIgnoreCase)) Then
                 错误列表.Add(e.Data)
@@ -231,37 +239,41 @@ Public Class 编码任务
         Public Sub FFmpegProcessExited(sender As Object, e As EventArgs)
             If FFmpegProcess.ExitCode = 0 Then
                 状态 = 编码状态.已完成
+
+                If 预设数据.视频参数_降噪_方式 = "avs" Then
+                    If My.Computer.FileSystem.FileExists(Path.Combine(Path.GetDirectoryName(输入文件), Path.GetFileNameWithoutExtension(输入文件) & ".avs")) Then
+                        My.Computer.FileSystem.DeleteFile(Path.Combine(Path.GetDirectoryName(输入文件), Path.GetFileNameWithoutExtension(输入文件) & ".avs"))
+                    End If
+                End If
+
             Else
                 状态 = 编码状态.错误
                 If My.Computer.FileSystem.FileExists(输出文件) Then
                     Select Case Path.GetExtension(输出文件).ToLower.Trim
-                        Case ".mp4" : My.Computer.FileSystem.DeleteFile(输出文件, FileIO.UIOption.AllDialogs, FileIO.RecycleOption.SendToRecycleBin)
+                        Case ".mp4" : My.Computer.FileSystem.DeleteFile(输出文件)
                     End Select
                 End If
                 全部任务已完成是否有错误 = True
             End If
             任务耗时计时器.Stop()
             GC.Collect()
-            'If 预设数据.视频参数_降噪_方式 = "avs" Then
-            '    If My.Computer.FileSystem.FileExists(Path.Combine(Path.GetDirectoryName(输入文件), Path.GetFileNameWithoutExtension(输入文件) & ".avs")) Then
-            '        My.Computer.FileSystem.DeleteFile(Path.Combine(Path.GetDirectoryName(输入文件), Path.GetFileNameWithoutExtension(输入文件) & ".avs"))
-            '    End If
-            'End If
 
+            界面线程执行(AddressOf 状态刷新统一逻辑)
         End Sub
-        Public Sub 定时器要干的活()
+        Public Sub 状态刷新统一逻辑()
             If 列表视图项 Is Nothing Then Exit Sub
             Select Case 状态
                 Case 编码状态.未处理
                     列表视图项.ForeColor = Color.Silver
                     列表视图项.SubItems(1).Text = "未处理"
-                    界面刷新定时器.Enabled = False
                 Case 编码状态.正在处理
                     列表视图项.ForeColor = Color.YellowGreen
                     列表视图项.SubItems(1).Text = "正在处理"
                     If 实时输出.Contains("="c) AndAlso (Now.TimeOfDay - 上次刷新界面的时间戳).TotalSeconds >= 1 Then
-                        在实时输出中提取数据(实时输出)
-                        在任务进行中时刷新实时信息()
+                        Task.Run(Sub()
+                                     在实时输出中提取数据(实时输出)
+                                     在任务进行中时刷新实时信息()
+                                 End Sub)
                         上次刷新界面的时间戳 = Now.TimeOfDay
                     End If
                 Case 编码状态.已完成
@@ -290,15 +302,13 @@ Public Class 编码任务
                     elapsedParts.Add($"{elapsed.Seconds} 秒")
                     列表视图项.SubItems(7).Text = "耗时 " & String.Join(" ", elapsedParts)
                     If Not 手动停止不要尝试启动其他任务 Then
-                        检查是否有可以开始的任务()
+                        Task.Run(AddressOf 检查是否有可以开始的任务)
                     Else
                         手动停止不要尝试启动其他任务 = True
                     End If
-                    界面刷新定时器.Enabled = False
                 Case 编码状态.已暂停
                     列表视图项.ForeColor = Color.Goldenrod
                     列表视图项.SubItems(1).Text = "已暂停"
-                    界面刷新定时器.Enabled = False
                 Case 编码状态.已停止
                     列表视图项.ForeColor = Color.IndianRed
                     列表视图项.SubItems(1).Text = "已停止"
@@ -307,13 +317,11 @@ Public Class 编码任务
                     列表视图项.SubItems(5).Text = ""
                     列表视图项.SubItems(6).Text = ""
                     列表视图项.SubItems(7).Text = ""
-                    界面刷新定时器.Enabled = False
                 Case 编码状态.错误
                     列表视图项.ForeColor = Color.IndianRed
                     列表视图项.SubItems(1).Text = "错误"
                     列表视图项.SubItems(5).Text = ""
                     列表视图项.SubItems(7).Text = ""
-                    界面刷新定时器.Enabled = False
             End Select
         End Sub
         Public Sub 在任务进行中时刷新实时信息()
@@ -369,21 +377,23 @@ Public Class 编码任务
                     remainTime = String.Join("", parts)
                 End If
             End If
-            Try
-                列表视图项.SubItems(1).Text = 状态.ToString
-                列表视图项.SubItems(2).Text = progressText
-                列表视图项.SubItems(3).Text = speedPercent
-                列表视图项.SubItems(4).Text = sizeText & estimatedSize
-                列表视图项.SubItems(5).Text = qText
-                列表视图项.SubItems(6).Text = bitrateText
-                Dim el = 任务耗时计时器.Elapsed, elapsedParts = New List(Of String)
-                If el.Hours > 0 Then elapsedParts.Add($"{el.Hours}h")
-                If el.Minutes > 0 OrElse elapsedParts.Count > 0 Then elapsedParts.Add($"{el.Minutes}m")
-                elapsedParts.Add($"{el.Seconds}s")
-                列表视图项.SubItems(7).Text = $"{remainTime} - {String.Join("", elapsedParts)}"
-            Catch ex As Exception
-                错误列表.Add($"刷新界面失败 {Now}")
-            End Try
+            界面线程执行(Sub()
+                       Try
+                           列表视图项.SubItems(1).Text = 状态.ToString
+                           列表视图项.SubItems(2).Text = progressText
+                           列表视图项.SubItems(3).Text = speedPercent
+                           列表视图项.SubItems(4).Text = sizeText & estimatedSize
+                           列表视图项.SubItems(5).Text = qText
+                           列表视图项.SubItems(6).Text = bitrateText
+                           Dim el = 任务耗时计时器.Elapsed, elapsedParts = New List(Of String)
+                           If el.Hours > 0 Then elapsedParts.Add($"{el.Hours}h")
+                           If el.Minutes > 0 OrElse elapsedParts.Count > 0 Then elapsedParts.Add($"{el.Minutes}m")
+                           elapsedParts.Add($"{el.Seconds}s")
+                           列表视图项.SubItems(7).Text = $"{remainTime} - {String.Join("", elapsedParts)}"
+                       Catch ex As Exception
+                           错误列表.Add($"刷新界面失败 {Now}")
+                       End Try
+                   End Sub)
         End Sub
         Public Sub 在实时输出中提取数据(line As String)
             If String.IsNullOrEmpty(line) Then Return
@@ -472,8 +482,5 @@ Public Class 编码任务
         Dim 输出文件名 As String = IO.Path.GetFileNameWithoutExtension(输入文件) & $"_{Now:yyyy.MM.dd-HH.mm.ss}" & 容器
         Return IO.Path.Combine(输出目录, 输出文件名)
     End Function
-
-
-
 
 End Class

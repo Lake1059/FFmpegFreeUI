@@ -65,7 +65,7 @@ Partial Class Form画面裁剪交互窗口
         Panel73.Location = New Point(20, 20)
         Panel73.Name = "Panel73"
         Panel73.Padding = New Padding(10)
-        Panel73.Size = New Size(944, 176)
+        Panel73.Size = New Size(844, 180)
         Panel73.TabIndex = 80
         ' 
         ' Panel75
@@ -82,10 +82,10 @@ Partial Class Form画面裁剪交互窗口
         Panel75.Controls.Add(Label127)
         Panel75.Controls.Add(UiButton1)
         Panel75.Dock = DockStyle.Top
-        Panel75.Location = New Point(10, 131)
+        Panel75.Location = New Point(10, 140)
         Panel75.Name = "Panel75"
         Panel75.Padding = New Padding(3, 0, 0, 0)
-        Panel75.Size = New Size(924, 35)
+        Panel75.Size = New Size(824, 30)
         Panel75.TabIndex = 11
         ' 
         ' UiCheckBox居中
@@ -98,7 +98,7 @@ Partial Class Form画面裁剪交互窗口
         UiCheckBox居中.Location = New Point(653, 0)
         UiCheckBox居中.MinimumSize = New Size(1, 1)
         UiCheckBox居中.Name = "UiCheckBox居中"
-        UiCheckBox居中.Size = New Size(100, 35)
+        UiCheckBox居中.Size = New Size(100, 30)
         UiCheckBox居中.TabIndex = 99
         UiCheckBox居中.Text = "居中"
         ' 
@@ -107,7 +107,7 @@ Partial Class Form画面裁剪交互窗口
         Label3.Dock = DockStyle.Left
         Label3.Location = New Point(643, 0)
         Label3.Name = "Label3"
-        Label3.Size = New Size(10, 35)
+        Label3.Size = New Size(10, 30)
         Label3.TabIndex = 84
         ' 
         ' UiComboBox比例
@@ -140,7 +140,7 @@ Partial Class Form画面裁剪交互窗口
         UiComboBox比例.RectColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
         UiComboBox比例.RectDisableColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
         UiComboBox比例.ScrollBarHandleWidth = 20
-        UiComboBox比例.Size = New Size(100, 35)
+        UiComboBox比例.Size = New Size(100, 30)
         UiComboBox比例.Style = Sunny.UI.UIStyle.Custom
         UiComboBox比例.StyleDropDown = Sunny.UI.UIStyle.Black
         UiComboBox比例.SymbolSize = 24
@@ -153,7 +153,7 @@ Partial Class Form画面裁剪交互窗口
         Label2.Dock = DockStyle.Left
         Label2.Location = New Point(533, 0)
         Label2.Name = "Label2"
-        Label2.Size = New Size(10, 35)
+        Label2.Size = New Size(10, 30)
         Label2.TabIndex = 82
         ' 
         ' UiTextBox1
@@ -163,7 +163,7 @@ Partial Class Form画面裁剪交互窗口
         UiTextBox1.FillColor2 = Color.FromArgb(CByte(36), CByte(36), CByte(36))
         UiTextBox1.FillDisableColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
         UiTextBox1.FillReadOnlyColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
-        UiTextBox1.Font = New Font("微软雅黑", 11F, FontStyle.Bold)
+        UiTextBox1.Font = New Font("微软雅黑", 9.75F)
         UiTextBox1.ForeColor = Color.DarkGray
         UiTextBox1.ForeDisableColor = Color.DarkGray
         UiTextBox1.ForeReadOnlyColor = Color.DarkGray
@@ -172,16 +172,15 @@ Partial Class Form画面裁剪交互窗口
         UiTextBox1.MinimumSize = New Size(1, 16)
         UiTextBox1.Name = "UiTextBox1"
         UiTextBox1.Padding = New Padding(5)
-        UiTextBox1.RadiusSides = Sunny.UI.UICornerRadiusSides.None
+        UiTextBox1.Radius = 30
         UiTextBox1.RectColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
         UiTextBox1.RectDisableColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
         UiTextBox1.RectReadOnlyColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
-        UiTextBox1.RectSize = 2
         UiTextBox1.ScrollBarBackColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
         UiTextBox1.ScrollBarColor = Color.DimGray
         UiTextBox1.ScrollBarStyleInherited = False
         UiTextBox1.ShowText = False
-        UiTextBox1.Size = New Size(150, 35)
+        UiTextBox1.Size = New Size(150, 30)
         UiTextBox1.TabIndex = 81
         UiTextBox1.TextAlignment = ContentAlignment.MiddleLeft
         UiTextBox1.Watermark = "指定帧时间戳"
@@ -193,7 +192,7 @@ Partial Class Form画面裁剪交互窗口
         Label1.Dock = DockStyle.Left
         Label1.Location = New Point(373, 0)
         Label1.Name = "Label1"
-        Label1.Size = New Size(10, 35)
+        Label1.Size = New Size(10, 30)
         Label1.TabIndex = 80
         ' 
         ' UiTextBox画面裁剪滤镜参数
@@ -203,7 +202,7 @@ Partial Class Form画面裁剪交互窗口
         UiTextBox画面裁剪滤镜参数.FillColor2 = Color.FromArgb(CByte(36), CByte(36), CByte(36))
         UiTextBox画面裁剪滤镜参数.FillDisableColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
         UiTextBox画面裁剪滤镜参数.FillReadOnlyColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
-        UiTextBox画面裁剪滤镜参数.Font = New Font("微软雅黑", 11F, FontStyle.Bold)
+        UiTextBox画面裁剪滤镜参数.Font = New Font("微软雅黑", 9.75F)
         UiTextBox画面裁剪滤镜参数.ForeColor = Color.DarkGray
         UiTextBox画面裁剪滤镜参数.ForeDisableColor = Color.DarkGray
         UiTextBox画面裁剪滤镜参数.ForeReadOnlyColor = Color.DarkGray
@@ -212,16 +211,15 @@ Partial Class Form画面裁剪交互窗口
         UiTextBox画面裁剪滤镜参数.MinimumSize = New Size(1, 16)
         UiTextBox画面裁剪滤镜参数.Name = "UiTextBox画面裁剪滤镜参数"
         UiTextBox画面裁剪滤镜参数.Padding = New Padding(5)
-        UiTextBox画面裁剪滤镜参数.RadiusSides = Sunny.UI.UICornerRadiusSides.None
+        UiTextBox画面裁剪滤镜参数.Radius = 30
         UiTextBox画面裁剪滤镜参数.RectColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
         UiTextBox画面裁剪滤镜参数.RectDisableColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
         UiTextBox画面裁剪滤镜参数.RectReadOnlyColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
-        UiTextBox画面裁剪滤镜参数.RectSize = 2
         UiTextBox画面裁剪滤镜参数.ScrollBarBackColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
         UiTextBox画面裁剪滤镜参数.ScrollBarColor = Color.DimGray
         UiTextBox画面裁剪滤镜参数.ScrollBarStyleInherited = False
         UiTextBox画面裁剪滤镜参数.ShowText = False
-        UiTextBox画面裁剪滤镜参数.Size = New Size(200, 35)
+        UiTextBox画面裁剪滤镜参数.Size = New Size(200, 30)
         UiTextBox画面裁剪滤镜参数.TabIndex = 79
         UiTextBox画面裁剪滤镜参数.TextAlignment = ContentAlignment.MiddleLeft
         UiTextBox画面裁剪滤镜参数.Watermark = "宽:高:左上X:左上Y"
@@ -233,7 +231,7 @@ Partial Class Form画面裁剪交互窗口
         Label125.Dock = DockStyle.Left
         Label125.Location = New Point(163, 0)
         Label125.Name = "Label125"
-        Label125.Size = New Size(10, 35)
+        Label125.Size = New Size(10, 30)
         Label125.TabIndex = 47
         ' 
         ' UiButton2
@@ -245,7 +243,7 @@ Partial Class Form画面裁剪交互窗口
         UiButton2.FillHoverColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
         UiButton2.FillPressColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
         UiButton2.FillSelectedColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiButton2.Font = New Font("微软雅黑", 10F)
+        UiButton2.Font = New Font("微软雅黑", 9.75F)
         UiButton2.ForeColor = Color.Goldenrod
         UiButton2.ForeDisableColor = Color.Goldenrod
         UiButton2.ForeHoverColor = Color.Goldenrod
@@ -254,15 +252,13 @@ Partial Class Form画面裁剪交互窗口
         UiButton2.Location = New Point(88, 0)
         UiButton2.MinimumSize = New Size(1, 1)
         UiButton2.Name = "UiButton2"
-        UiButton2.Radius = 0
-        UiButton2.RadiusSides = Sunny.UI.UICornerRadiusSides.None
-        UiButton2.RectColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        UiButton2.Radius = 30
+        UiButton2.RectColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
         UiButton2.RectDisableColor = Color.FromArgb(CByte(12), CByte(12), CByte(12))
         UiButton2.RectHoverColor = Color.CornflowerBlue
         UiButton2.RectPressColor = Color.FromArgb(CByte(64), CByte(148), CByte(64))
         UiButton2.RectSelectedColor = Color.CornflowerBlue
-        UiButton2.RectSize = 2
-        UiButton2.Size = New Size(75, 35)
+        UiButton2.Size = New Size(75, 30)
         UiButton2.TabIndex = 46
         UiButton2.Text = "完成"
         UiButton2.TipsFont = New Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point, CByte(134))
@@ -272,7 +268,7 @@ Partial Class Form画面裁剪交互窗口
         Label127.Dock = DockStyle.Left
         Label127.Location = New Point(78, 0)
         Label127.Name = "Label127"
-        Label127.Size = New Size(10, 35)
+        Label127.Size = New Size(10, 30)
         Label127.TabIndex = 45
         ' 
         ' UiButton1
@@ -284,7 +280,7 @@ Partial Class Form画面裁剪交互窗口
         UiButton1.FillHoverColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
         UiButton1.FillPressColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
         UiButton1.FillSelectedColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiButton1.Font = New Font("微软雅黑", 10F)
+        UiButton1.Font = New Font("微软雅黑", 9.75F)
         UiButton1.ForeColor = Color.YellowGreen
         UiButton1.ForeDisableColor = Color.YellowGreen
         UiButton1.ForeHoverColor = Color.YellowGreen
@@ -293,22 +289,19 @@ Partial Class Form画面裁剪交互窗口
         UiButton1.Location = New Point(3, 0)
         UiButton1.MinimumSize = New Size(1, 1)
         UiButton1.Name = "UiButton1"
-        UiButton1.Radius = 0
-        UiButton1.RadiusSides = Sunny.UI.UICornerRadiusSides.None
-        UiButton1.RectColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        UiButton1.Radius = 30
+        UiButton1.RectColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
         UiButton1.RectDisableColor = Color.FromArgb(CByte(12), CByte(12), CByte(12))
         UiButton1.RectHoverColor = Color.CornflowerBlue
         UiButton1.RectPressColor = Color.FromArgb(CByte(64), CByte(148), CByte(64))
         UiButton1.RectSelectedColor = Color.CornflowerBlue
-        UiButton1.RectSize = 2
-        UiButton1.Size = New Size(75, 35)
+        UiButton1.Size = New Size(75, 30)
         UiButton1.TabIndex = 44
         UiButton1.Text = "打开"
         UiButton1.TipsFont = New Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point, CByte(134))
         ' 
         ' Panel3
         ' 
-        Panel3.AutoSize = True
         Panel3.Controls.Add(Label123)
         Panel3.Controls.Add(Label122)
         Panel3.Controls.Add(PictureBox2)
@@ -318,7 +311,7 @@ Partial Class Form画面裁剪交互窗口
         Panel3.Location = New Point(10, 10)
         Panel3.Name = "Panel3"
         Panel3.Padding = New Padding(0, 0, 0, 15)
-        Panel3.Size = New Size(924, 121)
+        Panel3.Size = New Size(824, 130)
         Panel3.TabIndex = 12
         ' 
         ' Label123
@@ -349,9 +342,9 @@ Partial Class Form画面裁剪交互窗口
         ' 
         PictureBox2.BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         PictureBox2.Dock = DockStyle.Right
-        PictureBox2.Location = New Point(702, 0)
+        PictureBox2.Location = New Point(584, 0)
         PictureBox2.Name = "PictureBox2"
-        PictureBox2.Size = New Size(106, 106)
+        PictureBox2.Size = New Size(115, 115)
         PictureBox2.SizeMode = PictureBoxSizeMode.Zoom
         PictureBox2.TabIndex = 6
         PictureBox2.TabStop = False
@@ -359,18 +352,18 @@ Partial Class Form画面裁剪交互窗口
         ' Label4
         ' 
         Label4.Dock = DockStyle.Right
-        Label4.Location = New Point(808, 0)
+        Label4.Location = New Point(699, 0)
         Label4.Name = "Label4"
-        Label4.Size = New Size(10, 106)
+        Label4.Size = New Size(10, 115)
         Label4.TabIndex = 83
         ' 
         ' PictureBox3
         ' 
         PictureBox3.BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         PictureBox3.Dock = DockStyle.Right
-        PictureBox3.Location = New Point(818, 0)
+        PictureBox3.Location = New Point(709, 0)
         PictureBox3.Name = "PictureBox3"
-        PictureBox3.Size = New Size(106, 106)
+        PictureBox3.Size = New Size(115, 115)
         PictureBox3.SizeMode = PictureBoxSizeMode.Zoom
         PictureBox3.TabIndex = 84
         PictureBox3.TabStop = False
@@ -378,9 +371,9 @@ Partial Class Form画面裁剪交互窗口
         ' Label128
         ' 
         Label128.Dock = DockStyle.Top
-        Label128.Location = New Point(20, 196)
+        Label128.Location = New Point(20, 200)
         Label128.Name = "Label128"
-        Label128.Size = New Size(944, 20)
+        Label128.Size = New Size(844, 20)
         Label128.TabIndex = 83
         ' 
         ' Panel1
@@ -389,9 +382,9 @@ Partial Class Form画面裁剪交互窗口
         Panel1.BackColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
         Panel1.Controls.Add(Panel2)
         Panel1.Dock = DockStyle.Fill
-        Panel1.Location = New Point(20, 216)
+        Panel1.Location = New Point(20, 220)
         Panel1.Name = "Panel1"
-        Panel1.Size = New Size(944, 525)
+        Panel1.Size = New Size(844, 371)
         Panel1.TabIndex = 84
         ' 
         ' Panel2
@@ -423,14 +416,14 @@ Partial Class Form画面裁剪交互窗口
         AutoScaleDimensions = New SizeF(96F, 96F)
         AutoScaleMode = AutoScaleMode.Dpi
         BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
-        ClientSize = New Size(984, 761)
+        ClientSize = New Size(884, 611)
         Controls.Add(Panel1)
         Controls.Add(Label128)
         Controls.Add(Panel73)
         DoubleBuffered = True
         Font = New Font("微软雅黑", 10F)
         ForeColor = Color.Silver
-        MinimumSize = New Size(1000, 800)
+        MinimumSize = New Size(900, 650)
         Name = "Form画面裁剪交互窗口"
         Padding = New Padding(20)
         ShowIcon = False
@@ -438,7 +431,6 @@ Partial Class Form画面裁剪交互窗口
         StartPosition = FormStartPosition.Manual
         Text = "画面裁剪交互窗口"
         Panel73.ResumeLayout(False)
-        Panel73.PerformLayout()
         Panel75.ResumeLayout(False)
         Panel3.ResumeLayout(False)
         Panel3.PerformLayout()

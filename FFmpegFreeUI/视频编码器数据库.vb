@@ -20,13 +20,13 @@
 .Preset = New List(Of String) From {"veryslow", "slower", "slow", "medium", "fast", "faster", "veryfast", "superfast", "ultrafast"},
 .Profile = New List(Of String) From {"main", "main10"},
 .Tune = New List(Of String) From {""},
-.Pix_fmt = New List(Of String) From {""}
+.Pix_fmt = Split("yuv420p yuv420p10le", " ").ToList
 })
         字典.Add("libvvenc", New 视频编码器数据单片结构 With {
 .Preset = New List(Of String) From {"slower", "slow", "medium", "fast", "faster", "veryfast", "superfast", "ultrafast"},
 .Profile = New List(Of String) From {"main", "main10"},
 .Tune = New List(Of String) From {""},
-.Pix_fmt = New List(Of String) From {""}
+.Pix_fmt = Split("yuv420p10le", " ").ToList
 })
 
 
@@ -65,7 +65,7 @@
 .Preset = New List(Of String) From {""},
 .Profile = New List(Of String) From {""},
 .Tune = New List(Of String) From {""},
-.Pix_fmt = Split("", " ").ToList
+.Pix_fmt = Split("yuv420p yuvj420p yuv420p10le yuv420p12le yuv422p yuvj422p yuv422p10le yuv422p12le yuv444p yuvj444p yuv444p10le yuv444p12le", " ").ToList
 })
 
 
@@ -94,6 +94,18 @@
 .Tune = New List(Of String) From {""},
 .Pix_fmt = Split("nv12 p010le p012le yuyv422 y210le qsv bgra x2rgb10le vuyx xv30le", " ").ToList
 })
+        字典.Add("hevc_d3d12va", New 视频编码器数据单片结构 With {
+.Preset = New List(Of String) From {""},
+.Profile = New List(Of String) From {"main", "main10"},
+.Tune = New List(Of String) From {""},
+.Pix_fmt = Split("d3d12", " ").ToList
+})
+        字典.Add("hevc_vulkan", New 视频编码器数据单片结构 With {
+.Preset = New List(Of String) From {""},
+.Profile = New List(Of String) From {"main", "main10", "rext"},
+.Tune = New List(Of String) From {"hq", "ll", "ull", "lossless"},
+.Pix_fmt = Split("vulkan", " ").ToList
+})
 
 
 
@@ -121,6 +133,13 @@
 .Tune = New List(Of String) From {""},
 .Pix_fmt = Split("nv12 qsv", " ").ToList
 })
+        字典.Add("h264_vulkan", New 视频编码器数据单片结构 With {
+.Preset = New List(Of String) From {""},
+.Profile = New List(Of String) From {"main", "main10", "rext", "constrained_baseline"},
+.Tune = New List(Of String) From {"hq", "ll", "ull", "lossless"},
+.Pix_fmt = Split("vulkan", " ").ToList
+})
+
 
 
         字典.Add("prores_ks", New 视频编码器数据单片结构 With {
@@ -135,6 +154,16 @@
 .Tune = New List(Of String) From {""},
 .Pix_fmt = Split("yuv422p10le yuv444p10le yuva444p10le", " ").ToList
 })
+
+
+
+        字典.Add("libxeve", New 视频编码器数据单片结构 With {
+.Preset = New List(Of String) From {"default", "slow", "medium", "fast"},
+.Profile = New List(Of String) From {"main", "baseline"},
+.Tune = New List(Of String) From {"psnr", "zerolatency", "none"},
+.Pix_fmt = Split("yuv420p yuv420p10le", " ").ToList
+})
+
 
 
         字典.Add("libvpx-vp9", New 视频编码器数据单片结构 With {

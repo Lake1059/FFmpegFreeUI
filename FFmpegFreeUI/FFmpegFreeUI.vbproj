@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net10.0-windows</TargetFramework>
+    <TargetFramework>net10.0-windows10.0.26100.0</TargetFramework>
     <StartupObject>Sub Main</StartupObject>
     <UseWindowsForms>true</UseWindowsForms>
     <MyType>WindowsForms</MyType>
@@ -10,10 +10,11 @@
 	  <PublishReadyToRun>true</PublishReadyToRun>
 	  <PublishReadyToRunEmitSymbols>true</PublishReadyToRunEmitSymbols>
 	  <SelfContained>true</SelfContained>
-	  <PublishSingleFile>true</PublishSingleFile>
+	  <PublishSingleFile>True</PublishSingleFile>
 	  <Authors>1059 Studio</Authors>
 	  <Company>1059 Studio</Company>
-	  <Version>0.7</Version>
+	  <Version>1.0</Version>
+	  <SupportedOSPlatformVersion>10.0.17763.0</SupportedOSPlatformVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -25,7 +26,7 @@
   <ItemGroup>
     <PackageReference Include="LibreHardwareMonitorLib" Version="0.9.4" />
     <PackageReference Include="Microsoft-WindowsAPICodePack-Shell" Version="1.1.5" />
-    <PackageReference Include="SunnyUI" Version="3.8.5" />
+    <PackageReference Include="SunnyUI" Version="3.8.6" />
   </ItemGroup>
 
   <ItemGroup>

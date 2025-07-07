@@ -1,7 +1,4 @@
-﻿Imports System.Xml
-Imports Microsoft.WindowsAPICodePack.Dialogs
-
-Public Class 界面_混流
+﻿Public Class 界面_混流
 
     Private Sub 界面_混流_Load(sender As Object, e As EventArgs) Handles Me.Load
         暗黑列表视图自绘制.绑定列表视图事件(Me.ListView1)
@@ -163,17 +160,17 @@ Public Class 界面_混流
         End If
     End Sub
 
-    Private Sub UiButton选择位置_Click(sender As Object, e As EventArgs) Handles UiButton选择位置.Click
+    Private Sub UiButton选择位置_Click(sender As Object, e As EventArgs)
         Dim a As New SaveFileDialog With {.Filter = "所有文件|*.*"}
         If a.ShowDialog(Form1) = DialogResult.OK Then
             UiTextBox输出文件.Text = a.FileName
         End If
     End Sub
 
-    Private Sub UiButton启动混流_Click(sender As Object, e As EventArgs) Handles UiButton启动混流.Click
+    Private Sub UiButton启动混流_Click(sender As Object, e As EventArgs)
         If ListView1.Items.Count = 0 Then Exit Sub
         If UiTextBox输出文件.Text = "" Then Exit Sub
-        Dim arg As String = "-hide_banner -nostdin "
+        Dim arg = "-hide_banner -nostdin "
         For Each item As ListViewItem In ListView1.Items
             arg &= $"-i {"""" & item.Text & """"} "
         Next
@@ -214,6 +211,7 @@ Public Class 界面_混流
             Case MsgBoxResult.Yes
                 Dim FFmpegProcess As New Process
                 FFmpegProcess.StartInfo.FileName = "ffmpeg"
+                FFmpegProcess.StartInfo.WorkingDirectory = If(Form1.FFmpeg自定义工作目录 <> "", Form1.FFmpeg自定义工作目录, "")
                 FFmpegProcess.StartInfo.Arguments = arg
                 FFmpegProcess.Start()
             Case MsgBoxResult.No

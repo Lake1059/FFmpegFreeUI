@@ -1,7 +1,7 @@
-﻿Imports Sunny.UI
+﻿Imports Microsoft.WindowsAPICodePack.Dialogs
+Imports Sunny.UI
 
 Public Class 界面控制
-
     Public Shared Sub 初始化()
         Dim 字体列表 As New List(Of String)
         For Each 字体 As FontFamily In FontFamily.Families
@@ -25,45 +25,46 @@ Public Class 界面控制
                                                                If Form1.UiComboBox2.SelectedIndex < 0 Then Exit Sub
                                                                Form1.系统状态设定 = Form1.UiComboBox2.SelectedIndex
                                                            End Sub
+
+        AddHandler Form1.UiTextBox处理器核心.TextChanged, Sub() Form1.处理器相关性 = Form1.UiTextBox处理器核心.Text
+
         Form1.UiComboBox4.SelectedIndex = 0
-        AddHandler Form1.UiComboBox4.SelectedIndexChanged, Sub()
-                                                               If Form1.UiComboBox4.Text = "" Then Exit Sub
-                                                               If Form1.UiComboBox4.SelectedIndex < 0 Then Exit Sub
-                                                               Form1.使用提示音 = Form1.UiComboBox2.SelectedIndex = 0
-                                                           End Sub
+        AddHandler Form1.UiComboBox4.SelectedIndexChanged, Sub() Form1.使用提示音 = Form1.UiComboBox2.SelectedIndex = 0
         Form1.UiComboBox5.SelectedIndex = 0
         AddHandler Form1.UiComboBox5.SelectedIndexChanged, Sub()
-                                                               If Form1.UiComboBox5.Text = "" Then Exit Sub
-                                                               If Form1.UiComboBox5.SelectedIndex < 0 Then Exit Sub
                                                                Select Case Form1.UiComboBox5.SelectedIndex
-                                                                   Case 0 : Form1.同时运行任务上限 = 1
-                                                                   Case 1 : Form1.同时运行任务上限 = 2
-                                                                   Case 2 : Form1.同时运行任务上限 = 3
-                                                                   Case 3 : Form1.同时运行任务上限 = 5
-                                                                   Case 4 : Form1.同时运行任务上限 = 10
+                                                                   Case 0 : 同时运行任务上限 = 1
+                                                                   Case 1 : 同时运行任务上限 = 2
+                                                                   Case 2 : 同时运行任务上限 = 3
+                                                                   Case 3 : 同时运行任务上限 = 5
+                                                                   Case 4 : 同时运行任务上限 = 10
+                                                                   Case Else : 同时运行任务上限 = 1
                                                                End Select
                                                            End Sub
+
+        AddHandler Form1.UiTextBoxFFmpeg自定义工作目录.TextChanged, Sub() Form1.FFmpeg自定义工作目录 = Form1.UiTextBoxFFmpeg自定义工作目录.Text
+        AddHandler Form1.UiButton13.Click, Sub()
+                                               Dim dialog As New CommonOpenFileDialog With {.IsFolderPicker = True}
+                                               If dialog.ShowDialog() = CommonFileDialogResult.Ok Then Form1.UiTextBoxFFmpeg自定义工作目录.Text = dialog.FileName
+                                           End Sub
+
 
         Form1.编码队列右键菜单 = New 暗黑上下文菜单 With {.ShowImageMargin = False, .Font = Form1.Font}
         Form1.ListView1.ContextMenuStrip = Form1.编码队列右键菜单
         Form1.编码队列右键菜单.Items.AddRange(New ToolStripItem() {
-            New ToolStripSeparator() With {.Tag = "null"},
-            New ToolStripMenuItem("任务状态控制") With {.ForeColor = Color.CornflowerBlue, .Enabled = False},
-            New ToolStripMenuItem("全新开始任务", Nothing, AddressOf 界面控制_编码队列.开始任务) With {.ForeColor = Color.YellowGreen},
-            New ToolStripMenuItem("暂停（挂起进程）", Nothing, AddressOf 界面控制_编码队列.暂停任务) With {.ForeColor = Color.Goldenrod},
-            New ToolStripMenuItem("继续（恢复进程）", Nothing, AddressOf 界面控制_编码队列.恢复任务) With {.ForeColor = Color.YellowGreen},
-            New ToolStripMenuItem("停止（关闭进程）", Nothing, AddressOf 界面控制_编码队列.停止任务) With {.ForeColor = Color.IndianRed},
-            New ToolStripMenuItem("移除", Nothing, AddressOf 界面控制_编码队列.移除任务) With {.ForeColor = Color.IndianRed},
-            New ToolStripMenuItem("重置状态", Nothing, AddressOf 界面控制_编码队列.重置任务),
-            New ToolStripSeparator(),
-            New ToolStripMenuItem("任务管理") With {.ForeColor = Color.CornflowerBlue, .Enabled = False},
-            New ToolStripMenuItem("全选", Nothing, AddressOf 界面控制_编码队列.全选任务),
-            New ToolStripMenuItem("定位输出文件", Nothing, AddressOf 界面控制_编码队列.定位输出) With {.ForeColor = Color.MediumPurple},
-            New ToolStripMenuItem("重新配置", Nothing, AddressOf 界面控制_编码队列.重新配置) With {.ForeColor = Color.CornflowerBlue},
-            New ToolStripMenuItem("重新添加", Nothing, AddressOf 界面控制_编码队列.重新添加) With {.ForeColor = Color.CornflowerBlue},
-            New ToolStripMenuItem("导出配置", Nothing, AddressOf 界面控制_编码队列.导出配置),
-            New ToolStripSeparator() With {.Tag = "null"}
-        })
+                                                             New ToolStripSeparator() With {.Tag = "null"},
+                                                             New ToolStripMenuItem("任务状态控制") With {.ForeColor = Color.CornflowerBlue, .Enabled = False},
+                                                             New ToolStripMenuItem("全新开始任务", Nothing, AddressOf 界面控制_编码队列.开始任务) With {.ForeColor = Color.YellowGreen},
+                                                             New ToolStripMenuItem("暂停（挂起进程）", Nothing, AddressOf 界面控制_编码队列.暂停任务) With {.ForeColor = Color.Goldenrod},
+                                                             New ToolStripMenuItem("继续（恢复进程）", Nothing, AddressOf 界面控制_编码队列.恢复任务) With {.ForeColor = Color.YellowGreen},
+                                                             New ToolStripMenuItem("停止（关闭进程）", Nothing, AddressOf 界面控制_编码队列.停止任务) With {.ForeColor = Color.IndianRed},
+                                                             New ToolStripMenuItem("移除", Nothing, AddressOf 界面控制_编码队列.移除任务) With {.ForeColor = Color.IndianRed},
+                                                             New ToolStripMenuItem("重置状态", Nothing, AddressOf 界面控制_编码队列.重置任务),
+                                                             New ToolStripSeparator(),
+                                                             New ToolStripMenuItem("任务管理") With {.ForeColor = Color.CornflowerBlue, .Enabled = False},
+                                                             New ToolStripMenuItem("全选", Nothing, AddressOf 界面控制_编码队列.全选任务),
+                                                             New ToolStripSeparator() With {.Tag = "null"}
+                                                         })
 
         设置富文本框行高(Form1.RichTextBox1, 350)
         Form1.RichTextBox1.AllowDrop = True
@@ -71,10 +72,11 @@ Public Class 界面控制
         Form1.常规流程参数页面.Dock = DockStyle.Fill
         Form1.TabPageEX混流.Controls.Add(Form1.混流页面)
         Form1.混流页面.Dock = DockStyle.Fill
+        Form1.TabPageEX合并.Controls.Add(Form1.合并页面)
+        Form1.合并页面.Dock = DockStyle.Fill
 
         Form1.UiComboBox21.SelectedIndex = 0
         Form1.Panel41.AutoSize = True
-
 
         AddHandler Form1.UiTabControlMenu1.SelectedIndexChanged, AddressOf 界面校准
 
@@ -84,7 +86,6 @@ Public Class 界面控制
         AddHandler Form1.LinkLabel4.LinkClicked, Sub() Process.Start(New ProcessStartInfo With {.FileName = "https://github.com/BtbN/FFmpeg-Builds/releases", .UseShellExecute = True})
         AddHandler Form1.LinkLabel5.LinkClicked, Sub() Process.Start(New ProcessStartInfo With {.FileName = "https://afdian.com/a/1059Studio", .UseShellExecute = True})
         AddHandler Form1.LinkLabel6.LinkClicked, Sub() Process.Start(New ProcessStartInfo With {.FileName = "https://space.bilibili.com/319785096", .UseShellExecute = True})
-
 
         暗黑列表视图自绘制.绑定列表视图事件(Form1.ListView1)
         暗黑列表视图自绘制.绑定列表视图事件(Form1.ListView2)
@@ -111,6 +112,10 @@ Public Class 界面控制
         AddHandler Form1.UiButton11.Click, AddressOf 界面控制_添加文件.批量移除选中项
         AddHandler Form1.UiButton12.Click, AddressOf 界面控制_添加文件.移除全部项
         AddHandler Form1.UiComboBox21.SelectedIndexChanged, AddressOf 界面控制_添加文件.选择输出目录
+
+
+
+
 
         '==============================================
 
@@ -153,12 +158,11 @@ Public Class 界面控制
             Case 选项卡.IsEqual(Form1.TabPage媒体信息)
                 Form1.RichTextBox1.Size = New Size(Form1.RichTextBox1.Parent.Width, Form1.RichTextBox1.Parent.Height - Form1.RichTextBox1.Parent.Padding.Top * 2)
 
-
             Case 选项卡.IsEqual(Form1.TabPageEX混流)
                 Form1.混流页面.界面校准()
 
-
             Case 选项卡.IsEqual(Form1.TabPageEX合并)
+                Form1.合并页面.界面校准()
 
             Case 选项卡.IsEqual(Form1.TabPage性能监控)
                 Form1.Panel18.Width = Form1.Panel18.Parent.Width * 0.3

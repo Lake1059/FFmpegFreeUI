@@ -3,8 +3,24 @@ Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
 Imports System.Text.Json
+Imports System.Threading
 
 Module Module1
+
+    Public Property UI同步上下文 As SynchronizationContext = SynchronizationContext.Current
+
+    Public Sub 界面线程执行(d As SendOrPostCallback)
+        If UI同步上下文 IsNot Nothing Then
+            UI同步上下文.Post(d, Nothing)
+        Else
+            UI同步上下文 = SynchronizationContext.Current
+            If UI同步上下文 Is Nothing Then
+                MsgBox("UI同步上下文丢失且无法恢复，程序即将崩溃，请联系开发者", MsgBoxStyle.Critical)
+            End If
+        End If
+    End Sub
+
+    Public 同时运行任务上限 As Integer = 1
 
     <Extension>
     Public Sub DoubleBuffer(control As Control)
@@ -68,6 +84,13 @@ Module Module1
 
     <DllImport("user32.dll", CharSet:=CharSet.Auto, SetLastError:=True)>
     Public Function SendMessage(hWnd As HandleRef, msg As Integer, wParam As IntPtr, ByRef lParam As PARAFORMAT2) As IntPtr
+    End Function
+
+    <DllImport("ntdll.dll", SetLastError:=True)>
+    Public Function NtSuspendProcess(processHandle As IntPtr) As Integer
+    End Function
+    <DllImport("ntdll.dll", SetLastError:=True)>
+    Public Function NtResumeProcess(processHandle As IntPtr) As Integer
     End Function
 
     <DllImport("kernel32.dll", SetLastError:=True)>
