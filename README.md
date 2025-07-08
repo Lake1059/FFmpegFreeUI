@@ -110,7 +110,7 @@ PluginExample 是我做的示例插件；在程序目录下创建 Plugin 文件�
 | 引用程序集                                                   | 许可证         | 作用                       |
 | ------------------------------------------------------------ | -------------- | -------------------------- |
 | [SunnyUI](https://gitee.com/yhuse/SunnyUI)                   | GPL-3.0-only   | 界面主框架                 |
-| [WindowsAPICodePack](https://github.com/contre/Windows-API-Code-Pack-1.1) | 微软软件许可证 | 忘了，什么时候想起来了再写 |
+| [WindowsAPICodePack](https://github.com/contre/Windows-API-Code-Pack-1.1) | 微软软件许可证 | 提供更舒适的文件夹选择对话框 |
 | [LibreHardwareMonitorLib](https://github.com/LibreHardwareMonitor/LibreHardwareMonitor) | MPL-2.0        | 性能监控                   |
 
 ## 新手入门
