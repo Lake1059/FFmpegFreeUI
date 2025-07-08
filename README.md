@@ -379,7 +379,7 @@ KNLMeansCL(clip, int d, int a, int s, float h, string channels, int wmode, float
 
    - VB 语言如下：
 
-     ```visual basic
+     ```vb
      Public Shared Sub Entry()
      	'初始化的代码都写这里，在 3FUI 启动后执行
      End Sub
@@ -402,7 +402,7 @@ KNLMeansCL(clip, int d, int a, int s, float h, string channels, int wmode, float
 
 VB 语言：
 
-```visual basic
+```vb
 Public Shared Property HostCall_AddCustomWinformPanel As Action(Of String, Control)
 Public Shared Sub SetHost_AddCustomWinformPanel(action As Object)
 	HostCall_AddCustomWinformPanel = CType(action, Action(Of String, Control))
@@ -438,7 +438,7 @@ public static void AddCustomWinformPanel()
 
 VB 语言：
 
-```visual basic
+```vb
 Public Shared Property HostCall_AddCustomWpfPanel As Action(Of String, UIElement)
 Public Shared Sub SetHost_AddCustomWpfPanel(action As Object)
 	HostCall_AddCustomWpfPanel = CType(action, Action(Of String, UIElement))
@@ -468,7 +468,7 @@ public static void AddCustomWpfPanel()
 
 VB 语言：
 
-```visual basic
+```vb
 Public Shared Property HostCall_AddMissionToQueue As Action(Of String, String, String)
 Public Shared Sub SetHost_AddMissionToQueue(action As Object)
 	HostCall_AddMissionToQueue = CType(action, Action(Of String, String, String))
