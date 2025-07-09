@@ -125,7 +125,7 @@ PluginExample 是我做的示例插件；在程序目录下创建 Plugin 文件�
 - 大河李斯特视频工作室 | 视频格式与基础参数科普 | [BV1Ug4y1L7aK](https://www.bilibili.com/video/BV1Ug4y1L7aK)
 - 大河李斯特视频工作室 | 视频压缩、色度半采样、视频中的高低频 | [BV1FM41137MM](https://www.bilibili.com/video/BV1FM41137MM)
 - 大河李斯特视频工作室 | FFmpeg 是什么 | [BV1SjdoY9Erj](https://www.bilibili.com/video/BV1SjdoY9Erj)
-- 终末诗 | 适用于小白的视频压缩教学 | [知乎](https://zhuanlan.zhihu.com/p/1913258114746122747) 此文章包含大量测试结果总结和设置教学
+- 终末诗 | 适用于小白的视频压缩教学 | [知乎](https://zhuanlan.zhihu.com/p/1913258114746122747)   此文章包含大量测试结果总结和设置教学  
   新手把这篇文章看完能学会很多东西，继续往下看之前先把这个打开看！！
 
 另外我仓库 IMG 文件夹里也有部分编码器的测试结果，数据来自群友。
