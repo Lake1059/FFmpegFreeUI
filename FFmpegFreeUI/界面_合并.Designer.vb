@@ -55,7 +55,7 @@ Partial Class 界面_合并
         ' Panel1
         ' 
         Panel1.AutoSize = True
-        Panel1.BackColor = Color.FromArgb(36, 36, 36)
+        Panel1.BackColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
         Panel1.Controls.Add(Panel2)
         Panel1.Controls.Add(Panel4)
         Panel1.Dock = DockStyle.Fill
@@ -67,7 +67,7 @@ Partial Class 界面_合并
         ' 
         ' Panel2
         ' 
-        Panel2.BackColor = Color.FromArgb(24, 24, 24)
+        Panel2.BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         Panel2.Controls.Add(ListView1)
         Panel2.Dock = DockStyle.Fill
         Panel2.Location = New Point(10, 50)
@@ -79,7 +79,7 @@ Partial Class 界面_合并
         ' ListView1
         ' 
         ListView1.AllowDrop = True
-        ListView1.BackColor = Color.FromArgb(24, 24, 24)
+        ListView1.BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         ListView1.BorderStyle = BorderStyle.None
         ListView1.Columns.AddRange(New ColumnHeader() {ColumnHeader1})
         ListView1.Dock = DockStyle.Fill
@@ -96,7 +96,7 @@ Partial Class 界面_合并
         ' 
         ' Panel4
         ' 
-        Panel4.BackColor = Color.FromArgb(36, 36, 36)
+        Panel4.BackColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
         Panel4.Controls.Add(Label1)
         Panel4.Controls.Add(UiButton移除)
         Panel4.Controls.Add(Label3)
@@ -129,12 +129,12 @@ Partial Class 界面_合并
         ' 
         UiButton移除.AllowDrop = True
         UiButton移除.Dock = DockStyle.Left
-        UiButton移除.FillColor = Color.FromArgb(36, 36, 36)
-        UiButton移除.FillColor2 = Color.FromArgb(36, 36, 36)
-        UiButton移除.FillDisableColor = Color.FromArgb(36, 36, 36)
-        UiButton移除.FillHoverColor = Color.FromArgb(48, 48, 48)
-        UiButton移除.FillPressColor = Color.FromArgb(48, 48, 48)
-        UiButton移除.FillSelectedColor = Color.FromArgb(48, 48, 48)
+        UiButton移除.FillColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiButton移除.FillColor2 = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiButton移除.FillDisableColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiButton移除.FillHoverColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        UiButton移除.FillPressColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        UiButton移除.FillSelectedColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
         UiButton移除.Font = New Font("微软雅黑", 9.75F)
         UiButton移除.ForeColor = Color.IndianRed
         UiButton移除.ForeDisableColor = Color.IndianRed
@@ -145,15 +145,15 @@ Partial Class 界面_合并
         UiButton移除.MinimumSize = New Size(1, 1)
         UiButton移除.Name = "UiButton移除"
         UiButton移除.Radius = 30
-        UiButton移除.RectColor = Color.FromArgb(80, 80, 80)
-        UiButton移除.RectDisableColor = Color.FromArgb(12, 12, 12)
+        UiButton移除.RectColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        UiButton移除.RectDisableColor = Color.FromArgb(CByte(12), CByte(12), CByte(12))
         UiButton移除.RectHoverColor = Color.CornflowerBlue
-        UiButton移除.RectPressColor = Color.FromArgb(64, 148, 64)
+        UiButton移除.RectPressColor = Color.FromArgb(CByte(64), CByte(148), CByte(64))
         UiButton移除.RectSelectedColor = Color.CornflowerBlue
         UiButton移除.Size = New Size(75, 30)
         UiButton移除.TabIndex = 104
         UiButton移除.Text = "移除"
-        UiButton移除.TipsFont = New Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point, 134)
+        UiButton移除.TipsFont = New Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point, CByte(134))
         ' 
         ' Label3
         ' 
@@ -167,12 +167,12 @@ Partial Class 界面_合并
         ' 
         UiButton下移.AllowDrop = True
         UiButton下移.Dock = DockStyle.Left
-        UiButton下移.FillColor = Color.FromArgb(36, 36, 36)
-        UiButton下移.FillColor2 = Color.FromArgb(36, 36, 36)
-        UiButton下移.FillDisableColor = Color.FromArgb(36, 36, 36)
-        UiButton下移.FillHoverColor = Color.FromArgb(48, 48, 48)
-        UiButton下移.FillPressColor = Color.FromArgb(48, 48, 48)
-        UiButton下移.FillSelectedColor = Color.FromArgb(48, 48, 48)
+        UiButton下移.FillColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiButton下移.FillColor2 = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiButton下移.FillDisableColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiButton下移.FillHoverColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        UiButton下移.FillPressColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        UiButton下移.FillSelectedColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
         UiButton下移.Font = New Font("微软雅黑", 9.75F)
         UiButton下移.ForeColor = Color.CornflowerBlue
         UiButton下移.ForeDisableColor = Color.CornflowerBlue
@@ -183,15 +183,15 @@ Partial Class 界面_合并
         UiButton下移.MinimumSize = New Size(1, 1)
         UiButton下移.Name = "UiButton下移"
         UiButton下移.Radius = 30
-        UiButton下移.RectColor = Color.FromArgb(80, 80, 80)
-        UiButton下移.RectDisableColor = Color.FromArgb(12, 12, 12)
+        UiButton下移.RectColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        UiButton下移.RectDisableColor = Color.FromArgb(CByte(12), CByte(12), CByte(12))
         UiButton下移.RectHoverColor = Color.CornflowerBlue
-        UiButton下移.RectPressColor = Color.FromArgb(64, 148, 64)
+        UiButton下移.RectPressColor = Color.FromArgb(CByte(64), CByte(148), CByte(64))
         UiButton下移.RectSelectedColor = Color.CornflowerBlue
         UiButton下移.Size = New Size(75, 30)
         UiButton下移.TabIndex = 102
         UiButton下移.Text = "下移"
-        UiButton下移.TipsFont = New Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point, 134)
+        UiButton下移.TipsFont = New Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point, CByte(134))
         ' 
         ' Label10
         ' 
@@ -205,12 +205,12 @@ Partial Class 界面_合并
         ' 
         UiButton上移.AllowDrop = True
         UiButton上移.Dock = DockStyle.Left
-        UiButton上移.FillColor = Color.FromArgb(36, 36, 36)
-        UiButton上移.FillColor2 = Color.FromArgb(36, 36, 36)
-        UiButton上移.FillDisableColor = Color.FromArgb(36, 36, 36)
-        UiButton上移.FillHoverColor = Color.FromArgb(48, 48, 48)
-        UiButton上移.FillPressColor = Color.FromArgb(48, 48, 48)
-        UiButton上移.FillSelectedColor = Color.FromArgb(48, 48, 48)
+        UiButton上移.FillColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiButton上移.FillColor2 = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiButton上移.FillDisableColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiButton上移.FillHoverColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        UiButton上移.FillPressColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        UiButton上移.FillSelectedColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
         UiButton上移.Font = New Font("微软雅黑", 9.75F)
         UiButton上移.ForeColor = Color.CornflowerBlue
         UiButton上移.ForeDisableColor = Color.CornflowerBlue
@@ -221,15 +221,15 @@ Partial Class 界面_合并
         UiButton上移.MinimumSize = New Size(1, 1)
         UiButton上移.Name = "UiButton上移"
         UiButton上移.Radius = 30
-        UiButton上移.RectColor = Color.FromArgb(80, 80, 80)
-        UiButton上移.RectDisableColor = Color.FromArgb(12, 12, 12)
+        UiButton上移.RectColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        UiButton上移.RectDisableColor = Color.FromArgb(CByte(12), CByte(12), CByte(12))
         UiButton上移.RectHoverColor = Color.CornflowerBlue
-        UiButton上移.RectPressColor = Color.FromArgb(64, 148, 64)
+        UiButton上移.RectPressColor = Color.FromArgb(CByte(64), CByte(148), CByte(64))
         UiButton上移.RectSelectedColor = Color.CornflowerBlue
         UiButton上移.Size = New Size(75, 30)
         UiButton上移.TabIndex = 100
         UiButton上移.Text = "上移"
-        UiButton上移.TipsFont = New Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point, 134)
+        UiButton上移.TipsFont = New Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point, CByte(134))
         ' 
         ' Label8
         ' 
@@ -243,12 +243,12 @@ Partial Class 界面_合并
         ' 
         UiButton添加文件.AllowDrop = True
         UiButton添加文件.Dock = DockStyle.Left
-        UiButton添加文件.FillColor = Color.FromArgb(36, 36, 36)
-        UiButton添加文件.FillColor2 = Color.FromArgb(36, 36, 36)
-        UiButton添加文件.FillDisableColor = Color.FromArgb(36, 36, 36)
-        UiButton添加文件.FillHoverColor = Color.FromArgb(48, 48, 48)
-        UiButton添加文件.FillPressColor = Color.FromArgb(48, 48, 48)
-        UiButton添加文件.FillSelectedColor = Color.FromArgb(48, 48, 48)
+        UiButton添加文件.FillColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiButton添加文件.FillColor2 = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiButton添加文件.FillDisableColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiButton添加文件.FillHoverColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        UiButton添加文件.FillPressColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        UiButton添加文件.FillSelectedColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
         UiButton添加文件.Font = New Font("微软雅黑", 9.75F)
         UiButton添加文件.ForeColor = Color.YellowGreen
         UiButton添加文件.ForeDisableColor = Color.YellowGreen
@@ -259,15 +259,15 @@ Partial Class 界面_合并
         UiButton添加文件.MinimumSize = New Size(1, 1)
         UiButton添加文件.Name = "UiButton添加文件"
         UiButton添加文件.Radius = 30
-        UiButton添加文件.RectColor = Color.FromArgb(80, 80, 80)
-        UiButton添加文件.RectDisableColor = Color.FromArgb(12, 12, 12)
+        UiButton添加文件.RectColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        UiButton添加文件.RectDisableColor = Color.FromArgb(CByte(12), CByte(12), CByte(12))
         UiButton添加文件.RectHoverColor = Color.CornflowerBlue
-        UiButton添加文件.RectPressColor = Color.FromArgb(64, 148, 64)
+        UiButton添加文件.RectPressColor = Color.FromArgb(CByte(64), CByte(148), CByte(64))
         UiButton添加文件.RectSelectedColor = Color.CornflowerBlue
         UiButton添加文件.Size = New Size(120, 30)
         UiButton添加文件.TabIndex = 46
         UiButton添加文件.Text = "添加文件"
-        UiButton添加文件.TipsFont = New Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point, 134)
+        UiButton添加文件.TipsFont = New Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point, CByte(134))
         ' 
         ' Label11
         ' 
@@ -288,7 +288,7 @@ Partial Class 界面_合并
         ' Panel73
         ' 
         Panel73.AutoSize = True
-        Panel73.BackColor = Color.FromArgb(36, 36, 36)
+        Panel73.BackColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
         Panel73.Controls.Add(Label123)
         Panel73.Dock = DockStyle.Top
         Panel73.Location = New Point(20, 20)
@@ -307,11 +307,11 @@ Partial Class 界面_合并
         Label123.Name = "Label123"
         Label123.Size = New Size(477, 38)
         Label123.TabIndex = 4
-        Label123.Text = "此功能为扩展，不走编码队列，直接让 ffmpeg 以原样运行" + vbCrLf + "仅提供最基础的合并，仅复制流，要求多个参数一致；高级需求请直接用剪辑软件"
+        Label123.Text = "此功能为扩展，不走编码队列，直接让 ffmpeg 以原样运行" & vbCrLf & "仅提供最基础的合并，仅复制流，要求多个参数一致；高级需求请直接用剪辑软件"
         ' 
         ' Panel5
         ' 
-        Panel5.BackColor = Color.FromArgb(36, 36, 36)
+        Panel5.BackColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
         Panel5.Controls.Add(UiTextBox输出文件)
         Panel5.Controls.Add(Label6)
         Panel5.Controls.Add(Label132)
@@ -327,10 +327,10 @@ Partial Class 界面_合并
         ' UiTextBox输出文件
         ' 
         UiTextBox输出文件.Dock = DockStyle.Fill
-        UiTextBox输出文件.FillColor = Color.FromArgb(36, 36, 36)
-        UiTextBox输出文件.FillColor2 = Color.FromArgb(36, 36, 36)
-        UiTextBox输出文件.FillDisableColor = Color.FromArgb(36, 36, 36)
-        UiTextBox输出文件.FillReadOnlyColor = Color.FromArgb(36, 36, 36)
+        UiTextBox输出文件.FillColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiTextBox输出文件.FillColor2 = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiTextBox输出文件.FillDisableColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiTextBox输出文件.FillReadOnlyColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
         UiTextBox输出文件.Font = New Font("微软雅黑", 9.75F)
         UiTextBox输出文件.ForeColor = Color.DarkGray
         UiTextBox输出文件.ForeDisableColor = Color.DarkGray
@@ -341,10 +341,10 @@ Partial Class 界面_合并
         UiTextBox输出文件.Name = "UiTextBox输出文件"
         UiTextBox输出文件.Padding = New Padding(5)
         UiTextBox输出文件.Radius = 30
-        UiTextBox输出文件.RectColor = Color.FromArgb(80, 80, 80)
-        UiTextBox输出文件.RectDisableColor = Color.FromArgb(80, 80, 80)
-        UiTextBox输出文件.RectReadOnlyColor = Color.FromArgb(80, 80, 80)
-        UiTextBox输出文件.ScrollBarBackColor = Color.FromArgb(64, 64, 64)
+        UiTextBox输出文件.RectColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        UiTextBox输出文件.RectDisableColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        UiTextBox输出文件.RectReadOnlyColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        UiTextBox输出文件.ScrollBarBackColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
         UiTextBox输出文件.ScrollBarColor = Color.DimGray
         UiTextBox输出文件.ScrollBarStyleInherited = False
         UiTextBox输出文件.ShowText = False
@@ -375,12 +375,12 @@ Partial Class 界面_合并
         ' 
         UiButton选择位置.AllowDrop = True
         UiButton选择位置.Dock = DockStyle.Left
-        UiButton选择位置.FillColor = Color.FromArgb(36, 36, 36)
-        UiButton选择位置.FillColor2 = Color.FromArgb(36, 36, 36)
-        UiButton选择位置.FillDisableColor = Color.FromArgb(36, 36, 36)
-        UiButton选择位置.FillHoverColor = Color.FromArgb(48, 48, 48)
-        UiButton选择位置.FillPressColor = Color.FromArgb(48, 48, 48)
-        UiButton选择位置.FillSelectedColor = Color.FromArgb(48, 48, 48)
+        UiButton选择位置.FillColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiButton选择位置.FillColor2 = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiButton选择位置.FillDisableColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiButton选择位置.FillHoverColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        UiButton选择位置.FillPressColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        UiButton选择位置.FillSelectedColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
         UiButton选择位置.Font = New Font("微软雅黑", 9.75F)
         UiButton选择位置.ForeColor = Color.YellowGreen
         UiButton选择位置.ForeDisableColor = Color.YellowGreen
@@ -391,26 +391,26 @@ Partial Class 界面_合并
         UiButton选择位置.MinimumSize = New Size(1, 1)
         UiButton选择位置.Name = "UiButton选择位置"
         UiButton选择位置.Radius = 30
-        UiButton选择位置.RectColor = Color.FromArgb(80, 80, 80)
-        UiButton选择位置.RectDisableColor = Color.FromArgb(12, 12, 12)
+        UiButton选择位置.RectColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        UiButton选择位置.RectDisableColor = Color.FromArgb(CByte(12), CByte(12), CByte(12))
         UiButton选择位置.RectHoverColor = Color.CornflowerBlue
-        UiButton选择位置.RectPressColor = Color.FromArgb(64, 148, 64)
+        UiButton选择位置.RectPressColor = Color.FromArgb(CByte(64), CByte(148), CByte(64))
         UiButton选择位置.RectSelectedColor = Color.CornflowerBlue
         UiButton选择位置.Size = New Size(120, 30)
         UiButton选择位置.TabIndex = 102
         UiButton选择位置.Text = "选择位置"
-        UiButton选择位置.TipsFont = New Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point, 134)
+        UiButton选择位置.TipsFont = New Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point, CByte(134))
         ' 
         ' UiButton启动合并
         ' 
         UiButton启动合并.AllowDrop = True
         UiButton启动合并.Dock = DockStyle.Right
-        UiButton启动合并.FillColor = Color.FromArgb(36, 36, 36)
-        UiButton启动合并.FillColor2 = Color.FromArgb(36, 36, 36)
-        UiButton启动合并.FillDisableColor = Color.FromArgb(36, 36, 36)
-        UiButton启动合并.FillHoverColor = Color.FromArgb(48, 48, 48)
-        UiButton启动合并.FillPressColor = Color.FromArgb(48, 48, 48)
-        UiButton启动合并.FillSelectedColor = Color.FromArgb(48, 48, 48)
+        UiButton启动合并.FillColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiButton启动合并.FillColor2 = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiButton启动合并.FillDisableColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiButton启动合并.FillHoverColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        UiButton启动合并.FillPressColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        UiButton启动合并.FillSelectedColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
         UiButton启动合并.Font = New Font("微软雅黑", 9.75F)
         UiButton启动合并.ForeColor = Color.YellowGreen
         UiButton启动合并.ForeDisableColor = Color.YellowGreen
@@ -421,27 +421,27 @@ Partial Class 界面_合并
         UiButton启动合并.MinimumSize = New Size(1, 1)
         UiButton启动合并.Name = "UiButton启动合并"
         UiButton启动合并.Radius = 30
-        UiButton启动合并.RectColor = Color.FromArgb(80, 80, 80)
-        UiButton启动合并.RectDisableColor = Color.FromArgb(12, 12, 12)
+        UiButton启动合并.RectColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        UiButton启动合并.RectDisableColor = Color.FromArgb(CByte(12), CByte(12), CByte(12))
         UiButton启动合并.RectHoverColor = Color.CornflowerBlue
-        UiButton启动合并.RectPressColor = Color.FromArgb(64, 148, 64)
+        UiButton启动合并.RectPressColor = Color.FromArgb(CByte(64), CByte(148), CByte(64))
         UiButton启动合并.RectSelectedColor = Color.CornflowerBlue
         UiButton启动合并.Size = New Size(120, 30)
         UiButton启动合并.TabIndex = 101
         UiButton启动合并.Text = "启动合并"
-        UiButton启动合并.TipsFont = New Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point, 134)
+        UiButton启动合并.TipsFont = New Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point, CByte(134))
         ' 
         ' 界面_合并
         ' 
         AutoScaleDimensions = New SizeF(96F, 96F)
         AutoScaleMode = AutoScaleMode.Dpi
-        BackColor = Color.FromArgb(24, 24, 24)
+        BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         Controls.Add(Panel1)
         Controls.Add(Label11)
         Controls.Add(Label20)
         Controls.Add(Panel73)
         Controls.Add(Panel5)
-        Font = New Font("微软雅黑", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 134)
+        Font = New Font("微软雅黑", 9.75F, FontStyle.Regular, GraphicsUnit.Point, CByte(134))
         ForeColor = Color.Silver
         Name = "界面_合并"
         Padding = New Padding(20)

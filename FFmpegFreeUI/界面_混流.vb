@@ -160,14 +160,14 @@
         End If
     End Sub
 
-    Private Sub UiButton选择位置_Click(sender As Object, e As EventArgs)
+    Private Sub UiButton选择位置_Click(sender As Object, e As EventArgs) Handles UiButton选择位置.Click
         Dim a As New SaveFileDialog With {.Filter = "所有文件|*.*"}
         If a.ShowDialog(Form1) = DialogResult.OK Then
             UiTextBox输出文件.Text = a.FileName
         End If
     End Sub
 
-    Private Sub UiButton启动混流_Click(sender As Object, e As EventArgs)
+    Private Sub UiButton启动混流_Click(sender As Object, e As EventArgs) Handles UiButton启动混流.Click
         If ListView1.Items.Count = 0 Then Exit Sub
         If UiTextBox输出文件.Text = "" Then Exit Sub
         Dim arg = "-hide_banner -nostdin "
