@@ -6,11 +6,17 @@ Public Class 预设数据类型
     Public Property 解码参数_解码器 As String = ""
     Public Property 解码参数_解码数据格式 As String = ""
 
+    Public Property 解码参数_hwaccel_device As String = ""
+    Public Property 解码参数_init_hw_device As String = ""
+    Public Property 解码参数_qsv_device As String = ""
+
     Public Property 视频参数_编码器_类别 As String = ""
     Public Property 视频参数_编码器_具体编码 As String = ""
     Public Property 视频参数_编码器_质量 As String = ""
     Public Property 视频参数_编码器_配置文件 As String = ""
     Public Property 视频参数_编码器_场景优化 As String = ""
+    Public Property 视频参数_编码器_gpu As String = ""
+
     Public Property 视频参数_分辨率 As String = ""
     Public Property 视频参数_分辨率自动计算_宽度 As String = ""
     Public Property 视频参数_分辨率自动计算_高度 As String = ""
@@ -100,6 +106,7 @@ Public Class 预设数据类型
     Public Property 流控制_启用保留内嵌字幕流 As Boolean = False
     Public Property 流控制_元数据选项 As Integer = 0
     Public Property 流控制_章节选项 As Integer = 0
+    Public Property 流控制_附件选项 As Integer = 0
     Public Property 流控制_剪辑_方法 As Integer = 0
     Public Property 流控制_剪辑_入点 As String = ""
     Public Property 流控制_剪辑_出点 As String = ""

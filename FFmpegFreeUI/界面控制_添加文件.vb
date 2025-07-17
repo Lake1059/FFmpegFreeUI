@@ -21,6 +21,7 @@ Public Class 界面控制_添加文件
 
         For Each item As ListViewItem In Form1.ListView2.Items
             Dim m As New 编码任务.单片任务 With {.输入文件 = item.Text, .预设数据 = a}
+
             Select Case Form1.UiComboBox21.Text
                 Case "输出到原目录"
                 Case Else
@@ -53,6 +54,8 @@ Public Class 界面控制_添加文件
         预设管理.储存预设(a)
         For Each item In 拖入的文件
             Dim m As New 编码任务.单片任务 With {.输入文件 = item, .预设数据 = a}
+            If 用户设置.实例对象.转译模式 Then m.输入文件 = 转译模式处理路径(item)
+
             Select Case Form1.UiComboBox21.Text
                 Case "输出到原目录"
                 Case Else
@@ -79,6 +82,7 @@ Public Class 界面控制_添加文件
         If e.Data.GetDataPresent(DataFormats.FileDrop) Then
             Dim a As String() = e.Data.GetData(DataFormats.FileDrop)
             For Each b As String In a
+                If 用户设置.实例对象.转译模式 Then b = 转译模式处理路径(b)
                 Form1.ListView2.Items.Add(b)
             Next
         End If
@@ -88,6 +92,7 @@ Public Class 界面控制_添加文件
         Dim openFileDialog As New OpenFileDialog With {.Multiselect = True, .Filter = "所有文件|*.*"}
         If openFileDialog.ShowDialog() = DialogResult.OK Then
             For Each filePath As String In openFileDialog.FileNames
+                If 用户设置.实例对象.转译模式 Then filePath = 转译模式处理路径(filePath)
                 Form1.ListView2.Items.Add(filePath)
             Next
         End If
@@ -99,6 +104,7 @@ Public Class 界面控制_添加文件
             Dim folderPath As String = dialog.FileName
             Dim files As List(Of String) = 获取文件夹中的所有文件(folderPath)
             For Each file As String In files
+                If 用户设置.实例对象.转译模式 Then file = 转译模式处理路径(file)
                 Form1.ListView2.Items.Add(file)
             Next
         End If
@@ -133,7 +139,11 @@ Public Class 界面控制_添加文件
         If Form1.UiComboBox21.SelectedIndex = 1 Then
             Dim dialog As New CommonOpenFileDialog With {.IsFolderPicker = True}
             If dialog.ShowDialog() = CommonFileDialogResult.Ok Then
-                Form1.UiComboBox21.Text = dialog.FileName
+                If 用户设置.实例对象.转译模式 Then
+                    Form1.UiComboBox21.Text = 转译模式处理路径(dialog.FileName)
+                Else
+                    Form1.UiComboBox21.Text = dialog.FileName
+                End If
             Else
                 Form1.UiComboBox21.SelectedIndex = 0
             End If

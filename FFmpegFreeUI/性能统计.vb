@@ -127,4 +127,38 @@ Public Class 性能统计
         Return s.ToString("0") & "%"
     End Function
 
+    Public Shared Sub 刷新到界面上()
+        Form1.性能统计对象.Update()
+
+        If Form1.Panel18.Visible Then
+            Dim cpus = Form1.性能统计对象.处理器信息.Keys.ToList
+            For i = 0 To cpus.Count - 1
+                If i >= Form1.ListView3.Items.Count Then
+                    Form1.ListView3.Items.Add(New ListViewItem)
+                    Form1.ListView3.Items(i).SubItems.Add("")
+                End If
+                Form1.ListView3.Items(i).SubItems(0).Text = cpus(i)
+                Form1.ListView3.Items(i).SubItems(1).Text = Form1.性能统计对象.处理器信息(cpus(i))
+            Next
+        End If
+
+        Dim gpus = Form1.性能统计对象.显卡信息.Keys.ToList
+        gpus.Sort()
+
+        For i = 0 To gpus.Count - 1
+            If i >= Form1.ListView4.Items.Count Then
+                Form1.ListView4.Items.Add(New ListViewItem)
+                Form1.ListView4.Items(i).SubItems.Add("")
+            End If
+            Form1.ListView4.Items(i).SubItems(0).Text = gpus(i)
+            Form1.ListView4.Items(i).SubItems(1).Text = Form1.性能统计对象.显卡信息(gpus(i))
+        Next
+        While Form1.ListView4.Items.Count > gpus.Count
+            Form1.ListView4.Items.RemoveAt(Form1.ListView4.Items.Count - 1)
+        End While
+
+    End Sub
+
+
+
 End Class

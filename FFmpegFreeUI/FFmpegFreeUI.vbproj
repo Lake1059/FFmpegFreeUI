@@ -13,9 +13,16 @@
 	  <PublishSingleFile>True</PublishSingleFile>
 	  <Authors>1059 Studio</Authors>
 	  <Company>1059 Studio</Company>
-	  <Version>1.0</Version>
+	  <Version>1.1</Version>
 	  <SupportedOSPlatformVersion>10.0.17763.0</SupportedOSPlatformVersion>
+	  <ApplicationIcon>ico.ico</ApplicationIcon>
+	  <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
+	  <Title>FFmpegFreeUI</Title>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="ico.ico" />
+  </ItemGroup>
 
   <ItemGroup>
     <Import Include="System.Data" />

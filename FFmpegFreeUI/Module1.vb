@@ -4,8 +4,24 @@ Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
 Imports System.Text.Json
 Imports System.Threading
-
 Module Module1
+
+    <DllImport("user32.dll")>
+    Public Function ReleaseCapture() As Boolean
+    End Function
+    <DllImport("user32.dll")>
+    Public Function SendMessage(hWnd As IntPtr, wMsg As Integer, wParam As Integer, lParam As Integer) As Integer
+    End Function
+    Private Const WM_NCLBUTTONDOWN As Integer = &HA1
+    Private Const HTCAPTION As Integer = 2
+    Sub 绑定拖动控件移动窗体(s As Control)
+        AddHandler s.MouseDown, Sub(s1 As Object, e1 As MouseEventArgs)
+                                    If e1.Button = MouseButtons.Left Then
+                                        ReleaseCapture()
+                                        Dim unused = SendMessage(s1.FindForm().Handle, WM_NCLBUTTONDOWN, HTCAPTION, 0)
+                                    End If
+                                End Sub
+    End Sub
 
     Public Property UI同步上下文 As SynchronizationContext = SynchronizationContext.Current
 
@@ -13,10 +29,9 @@ Module Module1
         If UI同步上下文 IsNot Nothing Then
             UI同步上下文.Post(d, Nothing)
         Else
-            UI同步上下文 = SynchronizationContext.Current
-            If UI同步上下文 Is Nothing Then
-                MsgBox("UI同步上下文丢失且无法恢复，程序即将崩溃，请联系开发者", MsgBoxStyle.Critical)
-            End If
+            Form1.重新创建句柄()
+            Form1.Invoke(Sub() UI同步上下文 = SynchronizationContext.Current, Nothing)
+            UI同步上下文.Post(d, Nothing)
         End If
     End Sub
 
@@ -104,10 +119,9 @@ Module Module1
     End Enum
 
     Public Sub 设定系统状态()
-        Select Case Form1.系统状态设定
+        Select Case 用户设置.实例对象.有任务时系统保持状态选项
             Case 0
                 SetThreadExecutionState(EXECUTION_STATE.ES_CONTINUOUS Or EXECUTION_STATE.ES_SYSTEM_REQUIRED)
-
             Case 1
                 SetThreadExecutionState(EXECUTION_STATE.ES_CONTINUOUS Or EXECUTION_STATE.ES_SYSTEM_REQUIRED Or EXECUTION_STATE.ES_DISPLAY_REQUIRED)
             Case 2
@@ -184,5 +198,18 @@ Module Module1
     <DllImport("winmm.dll", CharSet:=CharSet.Auto)>
     Public Function PlaySound(pszSound As String, hmod As IntPtr, fdwSound As UInteger) As Boolean
     End Function
+
+    Public Function 转译模式处理路径(p As String) As String
+        Dim a = p
+        Dim root As String = Path.GetPathRoot(a)
+        If Not String.IsNullOrEmpty(root) Then
+            a = a.Substring(root.Length)
+        End If
+        a = a.Replace("\", "/").Replace("//", "/")
+        If Not a.StartsWith("/"c) Then a = "/" & a
+        Return a
+    End Function
+
+    Public JSON序列化选项 As New JsonSerializerOptions With {.WriteIndented = True}
 
 End Module

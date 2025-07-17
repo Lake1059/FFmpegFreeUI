@@ -26,6 +26,33 @@ Partial Class 界面_常规流程参数
         UiTabControl1 = New Sunny.UI.UITabControl()
         TabPage解码参数 = New TabPage()
         Panel1 = New Panel()
+        Panel73 = New Panel()
+        Panel84 = New Panel()
+        Label154 = New Label()
+        UiTextBox5 = New Sunny.UI.UITextBox()
+        Panel83 = New Panel()
+        Label155 = New Label()
+        UiTextBox4 = New Sunny.UI.UITextBox()
+        Panel81 = New Panel()
+        Label123 = New Label()
+        UiTextBox3 = New Sunny.UI.UITextBox()
+        Panel82 = New Panel()
+        Label124 = New Label()
+        UiComboBox1 = New Sunny.UI.UIComboBox()
+        Label156 = New Label()
+        Label122 = New Label()
+        Panel85 = New Panel()
+        Panel88 = New Panel()
+        Label161 = New Label()
+        UiTextBoxqsv_device = New Sunny.UI.UITextBox()
+        Panel87 = New Panel()
+        Label160 = New Label()
+        UiTextBoxinit_hw_device = New Sunny.UI.UITextBox()
+        Panel86 = New Panel()
+        Label157 = New Label()
+        UiTextBoxhwaccel_device = New Sunny.UI.UITextBox()
+        Label158 = New Label()
+        Label159 = New Label()
         Panel18 = New Panel()
         Panel20 = New Panel()
         Label38 = New Label()
@@ -132,6 +159,9 @@ Partial Class 界面_常规流程参数
         Label6 = New Label()
         Label62 = New Label()
         Panel8 = New Panel()
+        Panel89 = New Panel()
+        Label162 = New Label()
+        UiTextBoxgpu = New Sunny.UI.UITextBox()
         Panel11 = New Panel()
         UiComboBox场景优化 = New Sunny.UI.UIComboBox()
         Label80 = New Label()
@@ -310,6 +340,8 @@ Partial Class 界面_常规流程参数
         Panel49 = New Panel()
         Label147 = New Label()
         Panel64 = New Panel()
+        UiComboBox附件选项 = New Sunny.UI.UIComboBox()
+        Label163 = New Label()
         UiComboBox章节选项 = New Sunny.UI.UIComboBox()
         Label148 = New Label()
         UiComboBox元数据选项 = New Sunny.UI.UIComboBox()
@@ -356,6 +388,15 @@ Partial Class 界面_常规流程参数
         UiTabControl1.SuspendLayout()
         TabPage解码参数.SuspendLayout()
         Panel1.SuspendLayout()
+        Panel73.SuspendLayout()
+        Panel84.SuspendLayout()
+        Panel83.SuspendLayout()
+        Panel81.SuspendLayout()
+        Panel82.SuspendLayout()
+        Panel85.SuspendLayout()
+        Panel88.SuspendLayout()
+        Panel87.SuspendLayout()
+        Panel86.SuspendLayout()
         Panel18.SuspendLayout()
         Panel20.SuspendLayout()
         Panel9.SuspendLayout()
@@ -377,6 +418,7 @@ Partial Class 界面_常规流程参数
         Panel12.SuspendLayout()
         Panel78.SuspendLayout()
         Panel8.SuspendLayout()
+        Panel89.SuspendLayout()
         Panel11.SuspendLayout()
         TabPage高级视频参数.SuspendLayout()
         Panel3.SuspendLayout()
@@ -484,10 +526,14 @@ Partial Class 界面_常规流程参数
         TabPage解码参数.Name = "TabPage解码参数"
         TabPage解码参数.Size = New Size(1100, 650)
         TabPage解码参数.TabIndex = 0
-        TabPage解码参数.Text = "解码参数"
+        TabPage解码参数.Text = "解码和命名"
         ' 
         ' Panel1
         ' 
+        Panel1.Controls.Add(Panel73)
+        Panel1.Controls.Add(Label122)
+        Panel1.Controls.Add(Panel85)
+        Panel1.Controls.Add(Label159)
         Panel1.Controls.Add(Panel18)
         Panel1.Controls.Add(Label61)
         Panel1.Controls.Add(Panel9)
@@ -498,6 +544,467 @@ Partial Class 界面_常规流程参数
         Panel1.Padding = New Padding(20)
         Panel1.Size = New Size(1100, 650)
         Panel1.TabIndex = 0
+        ' 
+        ' Panel73
+        ' 
+        Panel73.AutoSize = True
+        Panel73.BackColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        Panel73.Controls.Add(Panel84)
+        Panel73.Controls.Add(Panel83)
+        Panel73.Controls.Add(Panel81)
+        Panel73.Controls.Add(Panel82)
+        Panel73.Controls.Add(Label156)
+        Panel73.Dock = DockStyle.Top
+        Panel73.Location = New Point(20, 310)
+        Panel73.Name = "Panel73"
+        Panel73.Size = New Size(1060, 170)
+        Panel73.TabIndex = 69
+        Panel73.Visible = False
+        ' 
+        ' Panel84
+        ' 
+        Panel84.Controls.Add(Label154)
+        Panel84.Controls.Add(UiTextBox5)
+        Panel84.Dock = DockStyle.Top
+        Panel84.Location = New Point(100, 130)
+        Panel84.Name = "Panel84"
+        Panel84.Padding = New Padding(10, 0, 10, 10)
+        Panel84.Size = New Size(960, 40)
+        Panel84.TabIndex = 6
+        ' 
+        ' Label154
+        ' 
+        Label154.Dock = DockStyle.Fill
+        Label154.Font = New Font("微软雅黑", 9.75F)
+        Label154.ForeColor = Color.Gray
+        Label154.Location = New Point(310, 0)
+        Label154.Name = "Label154"
+        Label154.Padding = New Padding(10, 0, 0, 0)
+        Label154.Size = New Size(640, 30)
+        Label154.TabIndex = 95
+        Label154.Text = "结尾文本"
+        Label154.TextAlign = ContentAlignment.MiddleLeft
+        ' 
+        ' UiTextBox5
+        ' 
+        UiTextBox5.Dock = DockStyle.Left
+        UiTextBox5.FillColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiTextBox5.FillColor2 = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiTextBox5.FillDisableColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiTextBox5.FillReadOnlyColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiTextBox5.Font = New Font("微软雅黑", 9.75F)
+        UiTextBox5.ForeColor = Color.DarkGray
+        UiTextBox5.ForeDisableColor = Color.DarkGray
+        UiTextBox5.ForeReadOnlyColor = Color.DarkGray
+        UiTextBox5.Location = New Point(10, 0)
+        UiTextBox5.Margin = New Padding(4, 5, 4, 5)
+        UiTextBox5.MinimumSize = New Size(1, 16)
+        UiTextBox5.Name = "UiTextBox5"
+        UiTextBox5.Padding = New Padding(5)
+        UiTextBox5.Radius = 30
+        UiTextBox5.RectColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        UiTextBox5.RectDisableColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        UiTextBox5.RectReadOnlyColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        UiTextBox5.ScrollBarBackColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        UiTextBox5.ScrollBarColor = Color.DimGray
+        UiTextBox5.ScrollBarStyleInherited = False
+        UiTextBox5.ShowText = False
+        UiTextBox5.Size = New Size(300, 30)
+        UiTextBox5.TabIndex = 80
+        UiTextBox5.TextAlignment = ContentAlignment.MiddleLeft
+        UiTextBox5.Watermark = "输出文件强制以什么结尾"
+        UiTextBox5.WatermarkActiveColor = Color.DimGray
+        UiTextBox5.WatermarkColor = Color.DimGray
+        ' 
+        ' Panel83
+        ' 
+        Panel83.Controls.Add(Label155)
+        Panel83.Controls.Add(UiTextBox4)
+        Panel83.Dock = DockStyle.Top
+        Panel83.Location = New Point(100, 90)
+        Panel83.Name = "Panel83"
+        Panel83.Padding = New Padding(10, 0, 10, 10)
+        Panel83.Size = New Size(960, 40)
+        Panel83.TabIndex = 4
+        ' 
+        ' Label155
+        ' 
+        Label155.Dock = DockStyle.Fill
+        Label155.Font = New Font("微软雅黑", 9.75F)
+        Label155.ForeColor = Color.Gray
+        Label155.Location = New Point(310, 0)
+        Label155.Name = "Label155"
+        Label155.Padding = New Padding(10, 0, 0, 0)
+        Label155.Size = New Size(640, 30)
+        Label155.TabIndex = 95
+        Label155.Text = "替代输入文件名"
+        Label155.TextAlign = ContentAlignment.MiddleLeft
+        ' 
+        ' UiTextBox4
+        ' 
+        UiTextBox4.Dock = DockStyle.Left
+        UiTextBox4.FillColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiTextBox4.FillColor2 = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiTextBox4.FillDisableColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiTextBox4.FillReadOnlyColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiTextBox4.Font = New Font("微软雅黑", 9.75F)
+        UiTextBox4.ForeColor = Color.DarkGray
+        UiTextBox4.ForeDisableColor = Color.DarkGray
+        UiTextBox4.ForeReadOnlyColor = Color.DarkGray
+        UiTextBox4.Location = New Point(10, 0)
+        UiTextBox4.Margin = New Padding(4, 5, 4, 5)
+        UiTextBox4.MinimumSize = New Size(1, 16)
+        UiTextBox4.Name = "UiTextBox4"
+        UiTextBox4.Padding = New Padding(5)
+        UiTextBox4.Radius = 30
+        UiTextBox4.RectColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        UiTextBox4.RectDisableColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        UiTextBox4.RectReadOnlyColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        UiTextBox4.ScrollBarBackColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        UiTextBox4.ScrollBarColor = Color.DimGray
+        UiTextBox4.ScrollBarStyleInherited = False
+        UiTextBox4.ShowText = False
+        UiTextBox4.Size = New Size(300, 30)
+        UiTextBox4.TabIndex = 80
+        UiTextBox4.TextAlignment = ContentAlignment.MiddleLeft
+        UiTextBox4.Watermark = "不使用输入文件的名称，而是使用这里的"
+        UiTextBox4.WatermarkActiveColor = Color.DimGray
+        UiTextBox4.WatermarkColor = Color.DimGray
+        ' 
+        ' Panel81
+        ' 
+        Panel81.Controls.Add(Label123)
+        Panel81.Controls.Add(UiTextBox3)
+        Panel81.Dock = DockStyle.Top
+        Panel81.Location = New Point(100, 50)
+        Panel81.Name = "Panel81"
+        Panel81.Padding = New Padding(10, 0, 10, 10)
+        Panel81.Size = New Size(960, 40)
+        Panel81.TabIndex = 3
+        ' 
+        ' Label123
+        ' 
+        Label123.Dock = DockStyle.Fill
+        Label123.Font = New Font("微软雅黑", 9.75F)
+        Label123.ForeColor = Color.Gray
+        Label123.Location = New Point(310, 0)
+        Label123.Name = "Label123"
+        Label123.Padding = New Padding(10, 0, 0, 0)
+        Label123.Size = New Size(640, 30)
+        Label123.TabIndex = 95
+        Label123.Text = "开头文本"
+        Label123.TextAlign = ContentAlignment.MiddleLeft
+        ' 
+        ' UiTextBox3
+        ' 
+        UiTextBox3.Dock = DockStyle.Left
+        UiTextBox3.FillColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiTextBox3.FillColor2 = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiTextBox3.FillDisableColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiTextBox3.FillReadOnlyColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiTextBox3.Font = New Font("微软雅黑", 9.75F)
+        UiTextBox3.ForeColor = Color.DarkGray
+        UiTextBox3.ForeDisableColor = Color.DarkGray
+        UiTextBox3.ForeReadOnlyColor = Color.DarkGray
+        UiTextBox3.Location = New Point(10, 0)
+        UiTextBox3.Margin = New Padding(4, 5, 4, 5)
+        UiTextBox3.MinimumSize = New Size(1, 16)
+        UiTextBox3.Name = "UiTextBox3"
+        UiTextBox3.Padding = New Padding(5)
+        UiTextBox3.Radius = 30
+        UiTextBox3.RectColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        UiTextBox3.RectDisableColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        UiTextBox3.RectReadOnlyColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        UiTextBox3.ScrollBarBackColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        UiTextBox3.ScrollBarColor = Color.DimGray
+        UiTextBox3.ScrollBarStyleInherited = False
+        UiTextBox3.ShowText = False
+        UiTextBox3.Size = New Size(300, 30)
+        UiTextBox3.TabIndex = 80
+        UiTextBox3.TextAlignment = ContentAlignment.MiddleLeft
+        UiTextBox3.Watermark = "输出文件强制以什么开头"
+        UiTextBox3.WatermarkActiveColor = Color.DimGray
+        UiTextBox3.WatermarkColor = Color.DimGray
+        ' 
+        ' Panel82
+        ' 
+        Panel82.Controls.Add(Label124)
+        Panel82.Controls.Add(UiComboBox1)
+        Panel82.Dock = DockStyle.Top
+        Panel82.Location = New Point(100, 0)
+        Panel82.Name = "Panel82"
+        Panel82.Padding = New Padding(10, 10, 0, 10)
+        Panel82.Size = New Size(960, 50)
+        Panel82.TabIndex = 2
+        ' 
+        ' Label124
+        ' 
+        Label124.Dock = DockStyle.Fill
+        Label124.Font = New Font("微软雅黑", 9.75F)
+        Label124.ForeColor = Color.Gray
+        Label124.Location = New Point(210, 10)
+        Label124.Name = "Label124"
+        Label124.Padding = New Padding(10, 0, 0, 0)
+        Label124.Size = New Size(750, 30)
+        Label124.TabIndex = 95
+        Label124.Text = "自动命名，优先级低于结尾文本"
+        Label124.TextAlign = ContentAlignment.MiddleLeft
+        ' 
+        ' UiComboBox1
+        ' 
+        UiComboBox1.DataSource = Nothing
+        UiComboBox1.Dock = DockStyle.Left
+        UiComboBox1.FillColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        UiComboBox1.FillColor2 = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        UiComboBox1.FillDisableColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        UiComboBox1.Font = New Font("微软雅黑", 9.75F)
+        UiComboBox1.ForeColor = Color.Silver
+        UiComboBox1.ForeDisableColor = Color.Silver
+        UiComboBox1.ItemFillColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        UiComboBox1.ItemForeColor = Color.Silver
+        UiComboBox1.ItemHeight = 30
+        UiComboBox1.ItemHoverColor = Color.FromArgb(CByte(56), CByte(56), CByte(56))
+        UiComboBox1.ItemRectColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        UiComboBox1.Items.AddRange(New Object() {"附加时间戳（默认）", "不使用（必须自定义文本）", "附加 ~1", "附加 _3fui", "附加 _conver"})
+        UiComboBox1.ItemSelectBackColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        UiComboBox1.ItemSelectForeColor = Color.Silver
+        UiComboBox1.Location = New Point(10, 10)
+        UiComboBox1.Margin = New Padding(4, 5, 4, 5)
+        UiComboBox1.MaxDropDownItems = 17
+        UiComboBox1.MinimumSize = New Size(63, 0)
+        UiComboBox1.Name = "UiComboBox1"
+        UiComboBox1.Padding = New Padding(0, 0, 30, 2)
+        UiComboBox1.RadiusSides = Sunny.UI.UICornerRadiusSides.None
+        UiComboBox1.RectColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        UiComboBox1.RectDisableColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        UiComboBox1.ScrollBarHandleWidth = 20
+        UiComboBox1.Size = New Size(200, 30)
+        UiComboBox1.Style = Sunny.UI.UIStyle.Custom
+        UiComboBox1.StyleDropDown = Sunny.UI.UIStyle.Black
+        UiComboBox1.SymbolSize = 24
+        UiComboBox1.TabIndex = 96
+        UiComboBox1.TextAlignment = ContentAlignment.MiddleLeft
+        UiComboBox1.Watermark = ""
+        ' 
+        ' Label156
+        ' 
+        Label156.BackColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        Label156.Dock = DockStyle.Left
+        Label156.Font = New Font("微软雅黑", 10F, FontStyle.Bold)
+        Label156.Location = New Point(0, 0)
+        Label156.Name = "Label156"
+        Label156.Size = New Size(100, 170)
+        Label156.TabIndex = 5
+        Label156.Text = "输出命名"
+        Label156.TextAlign = ContentAlignment.MiddleCenter
+        ' 
+        ' Label122
+        ' 
+        Label122.Dock = DockStyle.Top
+        Label122.Location = New Point(20, 290)
+        Label122.Name = "Label122"
+        Label122.Size = New Size(1060, 20)
+        Label122.TabIndex = 65
+        Label122.Visible = False
+        ' 
+        ' Panel85
+        ' 
+        Panel85.AutoSize = True
+        Panel85.BackColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        Panel85.Controls.Add(Panel88)
+        Panel85.Controls.Add(Panel87)
+        Panel85.Controls.Add(Panel86)
+        Panel85.Controls.Add(Label158)
+        Panel85.Dock = DockStyle.Top
+        Panel85.Location = New Point(20, 160)
+        Panel85.Name = "Panel85"
+        Panel85.Size = New Size(1060, 130)
+        Panel85.TabIndex = 70
+        ' 
+        ' Panel88
+        ' 
+        Panel88.Controls.Add(Label161)
+        Panel88.Controls.Add(UiTextBoxqsv_device)
+        Panel88.Dock = DockStyle.Top
+        Panel88.Location = New Point(100, 90)
+        Panel88.Name = "Panel88"
+        Panel88.Padding = New Padding(10, 0, 10, 10)
+        Panel88.Size = New Size(960, 40)
+        Panel88.TabIndex = 4
+        ' 
+        ' Label161
+        ' 
+        Label161.Dock = DockStyle.Fill
+        Label161.Font = New Font("微软雅黑", 9.75F)
+        Label161.ForeColor = Color.Gray
+        Label161.Location = New Point(210, 0)
+        Label161.Name = "Label161"
+        Label161.Padding = New Padding(10, 0, 0, 0)
+        Label161.Size = New Size(740, 30)
+        Label161.TabIndex = 74
+        Label161.Text = "Intel 专用，但不一定可靠"
+        Label161.TextAlign = ContentAlignment.MiddleLeft
+        ' 
+        ' UiTextBoxqsv_device
+        ' 
+        UiTextBoxqsv_device.Dock = DockStyle.Left
+        UiTextBoxqsv_device.FillColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiTextBoxqsv_device.FillColor2 = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiTextBoxqsv_device.FillDisableColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiTextBoxqsv_device.FillReadOnlyColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiTextBoxqsv_device.Font = New Font("微软雅黑", 9.75F)
+        UiTextBoxqsv_device.ForeColor = Color.DarkGray
+        UiTextBoxqsv_device.ForeDisableColor = Color.DarkGray
+        UiTextBoxqsv_device.ForeReadOnlyColor = Color.DarkGray
+        UiTextBoxqsv_device.Location = New Point(10, 0)
+        UiTextBoxqsv_device.Margin = New Padding(4, 5, 4, 5)
+        UiTextBoxqsv_device.MinimumSize = New Size(1, 16)
+        UiTextBoxqsv_device.Name = "UiTextBoxqsv_device"
+        UiTextBoxqsv_device.Padding = New Padding(5)
+        UiTextBoxqsv_device.Radius = 30
+        UiTextBoxqsv_device.RectColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        UiTextBoxqsv_device.RectDisableColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        UiTextBoxqsv_device.RectReadOnlyColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        UiTextBoxqsv_device.ScrollBarBackColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        UiTextBoxqsv_device.ScrollBarColor = Color.DimGray
+        UiTextBoxqsv_device.ScrollBarStyleInherited = False
+        UiTextBoxqsv_device.ShowText = False
+        UiTextBoxqsv_device.Size = New Size(200, 30)
+        UiTextBoxqsv_device.TabIndex = 82
+        UiTextBoxqsv_device.TextAlignment = ContentAlignment.MiddleLeft
+        UiTextBoxqsv_device.Watermark = "-qsv_device"
+        UiTextBoxqsv_device.WatermarkActiveColor = Color.DimGray
+        UiTextBoxqsv_device.WatermarkColor = Color.DimGray
+        ' 
+        ' Panel87
+        ' 
+        Panel87.Controls.Add(Label160)
+        Panel87.Controls.Add(UiTextBoxinit_hw_device)
+        Panel87.Dock = DockStyle.Top
+        Panel87.Location = New Point(100, 50)
+        Panel87.Name = "Panel87"
+        Panel87.Padding = New Padding(10, 0, 10, 10)
+        Panel87.Size = New Size(960, 40)
+        Panel87.TabIndex = 3
+        ' 
+        ' Label160
+        ' 
+        Label160.Dock = DockStyle.Fill
+        Label160.Font = New Font("微软雅黑", 9.75F)
+        Label160.ForeColor = Color.Gray
+        Label160.Location = New Point(210, 0)
+        Label160.Name = "Label160"
+        Label160.Padding = New Padding(10, 0, 0, 0)
+        Label160.Size = New Size(740, 30)
+        Label160.TabIndex = 74
+        Label160.Text = "直接指定硬件，Linux 也用这个，AMD 也用这个；此参数填设备地址，如：vaapi=dec:/dev/dri/card0"
+        Label160.TextAlign = ContentAlignment.MiddleLeft
+        ' 
+        ' UiTextBoxinit_hw_device
+        ' 
+        UiTextBoxinit_hw_device.Dock = DockStyle.Left
+        UiTextBoxinit_hw_device.FillColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiTextBoxinit_hw_device.FillColor2 = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiTextBoxinit_hw_device.FillDisableColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiTextBoxinit_hw_device.FillReadOnlyColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiTextBoxinit_hw_device.Font = New Font("微软雅黑", 9.75F)
+        UiTextBoxinit_hw_device.ForeColor = Color.DarkGray
+        UiTextBoxinit_hw_device.ForeDisableColor = Color.DarkGray
+        UiTextBoxinit_hw_device.ForeReadOnlyColor = Color.DarkGray
+        UiTextBoxinit_hw_device.Location = New Point(10, 0)
+        UiTextBoxinit_hw_device.Margin = New Padding(4, 5, 4, 5)
+        UiTextBoxinit_hw_device.MinimumSize = New Size(1, 16)
+        UiTextBoxinit_hw_device.Name = "UiTextBoxinit_hw_device"
+        UiTextBoxinit_hw_device.Padding = New Padding(5)
+        UiTextBoxinit_hw_device.Radius = 30
+        UiTextBoxinit_hw_device.RectColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        UiTextBoxinit_hw_device.RectDisableColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        UiTextBoxinit_hw_device.RectReadOnlyColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        UiTextBoxinit_hw_device.ScrollBarBackColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        UiTextBoxinit_hw_device.ScrollBarColor = Color.DimGray
+        UiTextBoxinit_hw_device.ScrollBarStyleInherited = False
+        UiTextBoxinit_hw_device.ShowText = False
+        UiTextBoxinit_hw_device.Size = New Size(200, 30)
+        UiTextBoxinit_hw_device.TabIndex = 82
+        UiTextBoxinit_hw_device.TextAlignment = ContentAlignment.MiddleLeft
+        UiTextBoxinit_hw_device.Watermark = "-init_hw_device"
+        UiTextBoxinit_hw_device.WatermarkActiveColor = Color.DimGray
+        UiTextBoxinit_hw_device.WatermarkColor = Color.DimGray
+        ' 
+        ' Panel86
+        ' 
+        Panel86.Controls.Add(Label157)
+        Panel86.Controls.Add(UiTextBoxhwaccel_device)
+        Panel86.Dock = DockStyle.Top
+        Panel86.Location = New Point(100, 0)
+        Panel86.Name = "Panel86"
+        Panel86.Padding = New Padding(10)
+        Panel86.Size = New Size(960, 50)
+        Panel86.TabIndex = 2
+        ' 
+        ' Label157
+        ' 
+        Label157.Dock = DockStyle.Fill
+        Label157.Font = New Font("微软雅黑", 9.75F)
+        Label157.ForeColor = Color.Gray
+        Label157.Location = New Point(210, 10)
+        Label157.Name = "Label157"
+        Label157.Padding = New Padding(10, 0, 0, 0)
+        Label157.Size = New Size(740, 30)
+        Label157.TabIndex = 74
+        Label157.Text = "NVIDIA 用这个，可能适用于 AMD；此参数填显卡索引，看任务管理器填"
+        Label157.TextAlign = ContentAlignment.MiddleLeft
+        ' 
+        ' UiTextBoxhwaccel_device
+        ' 
+        UiTextBoxhwaccel_device.Dock = DockStyle.Left
+        UiTextBoxhwaccel_device.FillColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiTextBoxhwaccel_device.FillColor2 = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiTextBoxhwaccel_device.FillDisableColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiTextBoxhwaccel_device.FillReadOnlyColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiTextBoxhwaccel_device.Font = New Font("微软雅黑", 9.75F)
+        UiTextBoxhwaccel_device.ForeColor = Color.DarkGray
+        UiTextBoxhwaccel_device.ForeDisableColor = Color.DarkGray
+        UiTextBoxhwaccel_device.ForeReadOnlyColor = Color.DarkGray
+        UiTextBoxhwaccel_device.Location = New Point(10, 10)
+        UiTextBoxhwaccel_device.Margin = New Padding(4, 5, 4, 5)
+        UiTextBoxhwaccel_device.MinimumSize = New Size(1, 16)
+        UiTextBoxhwaccel_device.Name = "UiTextBoxhwaccel_device"
+        UiTextBoxhwaccel_device.Padding = New Padding(5)
+        UiTextBoxhwaccel_device.Radius = 30
+        UiTextBoxhwaccel_device.RectColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        UiTextBoxhwaccel_device.RectDisableColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        UiTextBoxhwaccel_device.RectReadOnlyColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        UiTextBoxhwaccel_device.ScrollBarBackColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        UiTextBoxhwaccel_device.ScrollBarColor = Color.DimGray
+        UiTextBoxhwaccel_device.ScrollBarStyleInherited = False
+        UiTextBoxhwaccel_device.ShowText = False
+        UiTextBoxhwaccel_device.Size = New Size(200, 30)
+        UiTextBoxhwaccel_device.TabIndex = 81
+        UiTextBoxhwaccel_device.TextAlignment = ContentAlignment.MiddleLeft
+        UiTextBoxhwaccel_device.Watermark = "-hwaccel_device"
+        UiTextBoxhwaccel_device.WatermarkActiveColor = Color.DimGray
+        UiTextBoxhwaccel_device.WatermarkColor = Color.DimGray
+        ' 
+        ' Label158
+        ' 
+        Label158.BackColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        Label158.Dock = DockStyle.Left
+        Label158.Font = New Font("微软雅黑", 10F, FontStyle.Bold)
+        Label158.Location = New Point(0, 0)
+        Label158.Name = "Label158"
+        Label158.Size = New Size(100, 130)
+        Label158.TabIndex = 0
+        Label158.Text = "硬解设备"
+        Label158.TextAlign = ContentAlignment.MiddleCenter
+        ' 
+        ' Label159
+        ' 
+        Label159.Dock = DockStyle.Top
+        Label159.Location = New Point(20, 140)
+        Label159.Name = "Label159"
+        Label159.Size = New Size(1060, 20)
+        Label159.TabIndex = 71
         ' 
         ' Panel18
         ' 
@@ -610,7 +1117,7 @@ Partial Class 界面_常规流程参数
         Panel17.Dock = DockStyle.Top
         Panel17.Location = New Point(100, 0)
         Panel17.Name = "Panel17"
-        Panel17.Padding = New Padding(10, 10, 0, 10)
+        Panel17.Padding = New Padding(10)
         Panel17.Size = New Size(960, 50)
         Panel17.TabIndex = 2
         ' 
@@ -622,7 +1129,7 @@ Partial Class 界面_常规流程参数
         Label26.Location = New Point(210, 10)
         Label26.Name = "Label26"
         Label26.Padding = New Padding(10, 0, 0, 0)
-        Label26.Size = New Size(750, 30)
+        Label26.Size = New Size(740, 30)
         Label26.TabIndex = 85
         Label26.Text = "如不设置解码器则 ffmpeg 将自行决定"
         Label26.TextAlign = ContentAlignment.MiddleLeft
@@ -679,9 +1186,9 @@ Partial Class 界面_常规流程参数
         ' 
         TabPage视频参数.BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         TabPage视频参数.Controls.Add(Panel2)
-        TabPage视频参数.Location = New Point(0, 50)
+        TabPage视频参数.Location = New Point(0, 40)
         TabPage视频参数.Name = "TabPage视频参数"
-        TabPage视频参数.Size = New Size(1100, 650)
+        TabPage视频参数.Size = New Size(200, 60)
         TabPage视频参数.TabIndex = 1
         TabPage视频参数.Text = "视频参数"
         ' 
@@ -701,7 +1208,7 @@ Partial Class 界面_常规流程参数
         Panel2.Location = New Point(0, 0)
         Panel2.Name = "Panel2"
         Panel2.Padding = New Padding(20)
-        Panel2.Size = New Size(1100, 650)
+        Panel2.Size = New Size(200, 60)
         Panel2.TabIndex = 0
         ' 
         ' Panel14
@@ -713,9 +1220,9 @@ Partial Class 界面_常规流程参数
         Panel14.Controls.Add(Panel15)
         Panel14.Controls.Add(Label4)
         Panel14.Dock = DockStyle.Top
-        Panel14.Location = New Point(20, 390)
+        Panel14.Location = New Point(20, 430)
         Panel14.Name = "Panel14"
-        Panel14.Size = New Size(1060, 150)
+        Panel14.Size = New Size(160, 150)
         Panel14.TabIndex = 65
         ' 
         ' Panel32
@@ -739,7 +1246,7 @@ Partial Class 界面_常规流程参数
         Panel32.Location = New Point(100, 110)
         Panel32.Name = "Panel32"
         Panel32.Padding = New Padding(10, 0, 0, 10)
-        Panel32.Size = New Size(960, 40)
+        Panel32.Size = New Size(60, 40)
         Panel32.TabIndex = 5
         ' 
         ' UiTextBox2
@@ -1060,7 +1567,7 @@ Partial Class 界面_常规流程参数
         Panel31.Location = New Point(100, 70)
         Panel31.Name = "Panel31"
         Panel31.Padding = New Padding(7, 10, 0, 0)
-        Panel31.Size = New Size(960, 40)
+        Panel31.Size = New Size(60, 40)
         Panel31.TabIndex = 4
         ' 
         ' Label36
@@ -1163,7 +1670,7 @@ Partial Class 界面_常规流程参数
         Panel19.Location = New Point(100, 40)
         Panel19.Name = "Panel19"
         Panel19.Padding = New Padding(10, 0, 0, 0)
-        Panel19.Size = New Size(960, 30)
+        Panel19.Size = New Size(60, 30)
         Panel19.TabIndex = 3
         ' 
         ' Label21
@@ -1173,7 +1680,7 @@ Partial Class 界面_常规流程参数
         Label21.Location = New Point(590, 0)
         Label21.Name = "Label21"
         Label21.Padding = New Padding(10, 0, 0, 0)
-        Label21.Size = New Size(370, 30)
+        Label21.Size = New Size(0, 30)
         Label21.TabIndex = 92
         Label21.Text = "仅限 NVIDIA 和 INTEL 的硬件加速编码"
         Label21.TextAlign = ContentAlignment.MiddleLeft
@@ -1305,7 +1812,7 @@ Partial Class 界面_常规流程参数
         Panel15.Location = New Point(100, 0)
         Panel15.Name = "Panel15"
         Panel15.Padding = New Padding(7, 10, 0, 0)
-        Panel15.Size = New Size(960, 40)
+        Panel15.Size = New Size(60, 40)
         Panel15.TabIndex = 2
         ' 
         ' Label15
@@ -1346,9 +1853,9 @@ Partial Class 界面_常规流程参数
         ' Label65
         ' 
         Label65.Dock = DockStyle.Top
-        Label65.Location = New Point(20, 370)
+        Label65.Location = New Point(20, 410)
         Label65.Name = "Label65"
-        Label65.Size = New Size(1060, 20)
+        Label65.Size = New Size(160, 20)
         Label65.TabIndex = 69
         ' 
         ' Panel21
@@ -1358,9 +1865,9 @@ Partial Class 界面_常规流程参数
         Panel21.Controls.Add(Panel30)
         Panel21.Controls.Add(Label3)
         Panel21.Dock = DockStyle.Top
-        Panel21.Location = New Point(20, 290)
+        Panel21.Location = New Point(20, 330)
         Panel21.Name = "Panel21"
-        Panel21.Size = New Size(1060, 80)
+        Panel21.Size = New Size(160, 80)
         Panel21.TabIndex = 64
         ' 
         ' Panel22
@@ -1378,7 +1885,7 @@ Partial Class 界面_常规流程参数
         Panel22.Location = New Point(100, 40)
         Panel22.Name = "Panel22"
         Panel22.Padding = New Padding(10, 0, 10, 10)
-        Panel22.Size = New Size(960, 40)
+        Panel22.Size = New Size(60, 40)
         Panel22.TabIndex = 2
         ' 
         ' UiTextBox比特率缓冲区
@@ -1585,7 +2092,7 @@ Partial Class 界面_常规流程参数
         Panel30.Location = New Point(100, 0)
         Panel30.Name = "Panel30"
         Panel30.Padding = New Padding(7, 10, 10, 0)
-        Panel30.Size = New Size(960, 40)
+        Panel30.Size = New Size(60, 40)
         Panel30.TabIndex = 3
         ' 
         ' Label47
@@ -1659,9 +2166,9 @@ Partial Class 界面_常规流程参数
         ' Label64
         ' 
         Label64.Dock = DockStyle.Top
-        Label64.Location = New Point(20, 270)
+        Label64.Location = New Point(20, 310)
         Label64.Name = "Label64"
-        Label64.Size = New Size(1060, 20)
+        Label64.Size = New Size(160, 20)
         Label64.TabIndex = 68
         ' 
         ' Panel13
@@ -1672,9 +2179,9 @@ Partial Class 界面_常规流程参数
         Panel13.Controls.Add(Panel16)
         Panel13.Controls.Add(Label2)
         Panel13.Dock = DockStyle.Top
-        Panel13.Location = New Point(20, 190)
+        Panel13.Location = New Point(20, 230)
         Panel13.Name = "Panel13"
-        Panel13.Size = New Size(1060, 80)
+        Panel13.Size = New Size(160, 80)
         Panel13.TabIndex = 63
         ' 
         ' Panel80
@@ -1691,7 +2198,7 @@ Partial Class 界面_常规流程参数
         Panel80.Location = New Point(100, 40)
         Panel80.Name = "Panel80"
         Panel80.Padding = New Padding(10, 0, 0, 10)
-        Panel80.Size = New Size(960, 40)
+        Panel80.Size = New Size(60, 40)
         Panel80.TabIndex = 4
         ' 
         ' Label146
@@ -1701,7 +2208,7 @@ Partial Class 界面_常规流程参数
         Label146.Location = New Point(740, 0)
         Label146.Name = "Label146"
         Label146.Padding = New Padding(10, 0, 0, 0)
-        Label146.Size = New Size(220, 30)
+        Label146.Size = New Size(0, 30)
         Label146.TabIndex = 84
         Label146.Text = "四选一，没有一起用的"
         Label146.TextAlign = ContentAlignment.MiddleLeft
@@ -1868,7 +2375,7 @@ Partial Class 界面_常规流程参数
         Panel16.Location = New Point(100, 0)
         Panel16.Name = "Panel16"
         Panel16.Padding = New Padding(10, 10, 10, 0)
-        Panel16.Size = New Size(960, 40)
+        Panel16.Size = New Size(60, 40)
         Panel16.TabIndex = 2
         ' 
         ' Label144
@@ -1930,9 +2437,9 @@ Partial Class 界面_常规流程参数
         ' Label63
         ' 
         Label63.Dock = DockStyle.Top
-        Label63.Location = New Point(20, 170)
+        Label63.Location = New Point(20, 210)
         Label63.Name = "Label63"
-        Label63.Size = New Size(1060, 20)
+        Label63.Size = New Size(160, 20)
         Label63.TabIndex = 67
         ' 
         ' Panel10
@@ -1942,9 +2449,9 @@ Partial Class 界面_常规流程参数
         Panel10.Controls.Add(Panel78)
         Panel10.Controls.Add(Label6)
         Panel10.Dock = DockStyle.Top
-        Panel10.Location = New Point(20, 90)
+        Panel10.Location = New Point(20, 130)
         Panel10.Name = "Panel10"
-        Panel10.Size = New Size(1060, 80)
+        Panel10.Size = New Size(160, 80)
         Panel10.TabIndex = 62
         ' 
         ' Panel12
@@ -1963,7 +2470,7 @@ Partial Class 界面_常规流程参数
         Panel12.Location = New Point(100, 40)
         Panel12.Name = "Panel12"
         Panel12.Padding = New Padding(10, 0, 0, 10)
-        Panel12.Size = New Size(960, 40)
+        Panel12.Size = New Size(60, 40)
         Panel12.TabIndex = 2
         ' 
         ' Label141
@@ -1973,7 +2480,7 @@ Partial Class 界面_常规流程参数
         Label141.Location = New Point(740, 0)
         Label141.Name = "Label141"
         Label141.Padding = New Padding(10, 0, 0, 0)
-        Label141.Size = New Size(220, 30)
+        Label141.Size = New Size(0, 30)
         Label141.TabIndex = 81
         Label141.Text = "三选一，没有一起用的"
         Label141.TextAlign = ContentAlignment.MiddleLeft
@@ -2185,7 +2692,7 @@ Partial Class 界面_常规流程参数
         Panel78.Location = New Point(100, 0)
         Panel78.Name = "Panel78"
         Panel78.Padding = New Padding(7, 10, 0, 0)
-        Panel78.Size = New Size(960, 40)
+        Panel78.Size = New Size(60, 40)
         Panel78.TabIndex = 3
         ' 
         ' Label136
@@ -2236,21 +2743,78 @@ Partial Class 界面_常规流程参数
         ' Label62
         ' 
         Label62.Dock = DockStyle.Top
-        Label62.Location = New Point(20, 70)
+        Label62.Location = New Point(20, 110)
         Label62.Name = "Label62"
-        Label62.Size = New Size(1060, 20)
+        Label62.Size = New Size(160, 20)
         Label62.TabIndex = 66
         ' 
         ' Panel8
         ' 
+        Panel8.AutoSize = True
         Panel8.BackColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        Panel8.Controls.Add(Panel89)
         Panel8.Controls.Add(Panel11)
         Panel8.Controls.Add(Label1)
         Panel8.Dock = DockStyle.Top
         Panel8.Location = New Point(20, 20)
         Panel8.Name = "Panel8"
-        Panel8.Size = New Size(1060, 50)
+        Panel8.Size = New Size(160, 90)
         Panel8.TabIndex = 61
+        ' 
+        ' Panel89
+        ' 
+        Panel89.Controls.Add(Label162)
+        Panel89.Controls.Add(UiTextBoxgpu)
+        Panel89.Dock = DockStyle.Top
+        Panel89.Location = New Point(100, 50)
+        Panel89.Name = "Panel89"
+        Panel89.Padding = New Padding(10, 0, 10, 10)
+        Panel89.Size = New Size(60, 40)
+        Panel89.TabIndex = 5
+        ' 
+        ' Label162
+        ' 
+        Label162.Dock = DockStyle.Left
+        Label162.Font = New Font("微软雅黑", 9.75F)
+        Label162.ForeColor = Color.Gray
+        Label162.Location = New Point(185, 0)
+        Label162.Name = "Label162"
+        Label162.Padding = New Padding(10, 0, 0, 0)
+        Label162.Size = New Size(740, 30)
+        Label162.TabIndex = 74
+        Label162.Text = "此参数仅限指定 NVIDIA 和 AMD，Intel 会使用主显示器上的卡或者与解码相同的卡"
+        Label162.TextAlign = ContentAlignment.MiddleLeft
+        ' 
+        ' UiTextBoxgpu
+        ' 
+        UiTextBoxgpu.Dock = DockStyle.Left
+        UiTextBoxgpu.FillColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiTextBoxgpu.FillColor2 = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiTextBoxgpu.FillDisableColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiTextBoxgpu.FillReadOnlyColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiTextBoxgpu.Font = New Font("微软雅黑", 9.75F)
+        UiTextBoxgpu.ForeColor = Color.DarkGray
+        UiTextBoxgpu.ForeDisableColor = Color.DarkGray
+        UiTextBoxgpu.ForeReadOnlyColor = Color.DarkGray
+        UiTextBoxgpu.Location = New Point(10, 0)
+        UiTextBoxgpu.Margin = New Padding(4, 5, 4, 5)
+        UiTextBoxgpu.MinimumSize = New Size(1, 16)
+        UiTextBoxgpu.Name = "UiTextBoxgpu"
+        UiTextBoxgpu.Padding = New Padding(5)
+        UiTextBoxgpu.Radius = 30
+        UiTextBoxgpu.RectColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        UiTextBoxgpu.RectDisableColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        UiTextBoxgpu.RectReadOnlyColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        UiTextBoxgpu.ScrollBarBackColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        UiTextBoxgpu.ScrollBarColor = Color.DimGray
+        UiTextBoxgpu.ScrollBarStyleInherited = False
+        UiTextBoxgpu.ShowText = False
+        UiTextBoxgpu.Size = New Size(175, 30)
+        UiTextBoxgpu.TabIndex = 82
+        UiTextBoxgpu.TextAlignment = ContentAlignment.MiddleLeft
+        UiTextBoxgpu.Watermark = "-gpu"
+        UiTextBoxgpu.WatermarkActiveColor = Color.DimGray
+        UiTextBoxgpu.WatermarkColor = Color.DimGray
         ' 
         ' Panel11
         ' 
@@ -2263,11 +2827,11 @@ Partial Class 界面_常规流程参数
         Panel11.Controls.Add(UiComboBox具体编码)
         Panel11.Controls.Add(Label32)
         Panel11.Controls.Add(UiComboBox编码类别)
-        Panel11.Dock = DockStyle.Fill
+        Panel11.Dock = DockStyle.Top
         Panel11.Location = New Point(100, 0)
         Panel11.Name = "Panel11"
         Panel11.Padding = New Padding(10, 10, 0, 10)
-        Panel11.Size = New Size(960, 50)
+        Panel11.Size = New Size(60, 50)
         Panel11.TabIndex = 2
         ' 
         ' UiComboBox场景优化
@@ -2487,7 +3051,7 @@ Partial Class 界面_常规流程参数
         Label1.Font = New Font("微软雅黑", 10F, FontStyle.Bold)
         Label1.Location = New Point(0, 0)
         Label1.Name = "Label1"
-        Label1.Size = New Size(100, 50)
+        Label1.Size = New Size(100, 90)
         Label1.TabIndex = 4
         Label1.Text = "编码器"
         Label1.TextAlign = ContentAlignment.MiddleCenter
@@ -4917,9 +5481,9 @@ Partial Class 界面_常规流程参数
         ' 
         TabPage流控制.BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         TabPage流控制.Controls.Add(Panel5)
-        TabPage流控制.Location = New Point(0, 40)
+        TabPage流控制.Location = New Point(0, 50)
         TabPage流控制.Name = "TabPage流控制"
-        TabPage流控制.Size = New Size(200, 60)
+        TabPage流控制.Size = New Size(1100, 650)
         TabPage流控制.TabIndex = 4
         TabPage流控制.Text = "流控制"
         ' 
@@ -4934,7 +5498,7 @@ Partial Class 界面_常规流程参数
         Panel5.Location = New Point(0, 0)
         Panel5.Name = "Panel5"
         Panel5.Padding = New Padding(20)
-        Panel5.Size = New Size(200, 60)
+        Panel5.Size = New Size(1100, 650)
         Panel5.TabIndex = 1
         ' 
         ' Panel67
@@ -4944,10 +5508,10 @@ Partial Class 界面_常规流程参数
         Panel67.Controls.Add(Panel68)
         Panel67.Controls.Add(Label116)
         Panel67.Dock = DockStyle.Top
-        Panel67.Location = New Point(20, 463)
+        Panel67.Location = New Point(20, 444)
         Panel67.Name = "Panel67"
         Panel67.Padding = New Padding(10)
-        Panel67.Size = New Size(160, 79)
+        Panel67.Size = New Size(1060, 79)
         Panel67.TabIndex = 78
         ' 
         ' Panel68
@@ -4957,7 +5521,7 @@ Partial Class 界面_常规流程参数
         Panel68.Location = New Point(10, 39)
         Panel68.Name = "Panel68"
         Panel68.Padding = New Padding(3, 0, 0, 0)
-        Panel68.Size = New Size(140, 30)
+        Panel68.Size = New Size(1040, 30)
         Panel68.TabIndex = 3
         ' 
         ' UiTextBoxfilter_complex
@@ -4984,7 +5548,7 @@ Partial Class 界面_常规流程参数
         UiTextBoxfilter_complex.ScrollBarColor = Color.DimGray
         UiTextBoxfilter_complex.ScrollBarStyleInherited = False
         UiTextBoxfilter_complex.ShowText = False
-        UiTextBoxfilter_complex.Size = New Size(137, 30)
+        UiTextBoxfilter_complex.Size = New Size(1037, 30)
         UiTextBoxfilter_complex.TabIndex = 80
         UiTextBoxfilter_complex.TextAlignment = ContentAlignment.MiddleLeft
         UiTextBoxfilter_complex.Watermark = "这里的参数将作为 -filter_complex 滤镜参数，每个滤镜用英文逗号隔开，3FUI 自身没有使用此参数；这里也可以使用通配字符串"
@@ -5006,9 +5570,9 @@ Partial Class 界面_常规流程参数
         ' Label108
         ' 
         Label108.Dock = DockStyle.Top
-        Label108.Location = New Point(20, 443)
+        Label108.Location = New Point(20, 424)
         Label108.Name = "Label108"
-        Label108.Size = New Size(160, 20)
+        Label108.Size = New Size(1060, 20)
         Label108.TabIndex = 76
         ' 
         ' Panel65
@@ -5019,10 +5583,10 @@ Partial Class 界面_常规流程参数
         Panel65.Controls.Add(Label105)
         Panel65.Controls.Add(Label107)
         Panel65.Dock = DockStyle.Top
-        Panel65.Location = New Point(20, 316)
+        Panel65.Location = New Point(20, 297)
         Panel65.Name = "Panel65"
         Panel65.Padding = New Padding(10)
-        Panel65.Size = New Size(160, 127)
+        Panel65.Size = New Size(1060, 127)
         Panel65.TabIndex = 75
         ' 
         ' Panel66
@@ -5037,7 +5601,7 @@ Partial Class 界面_常规流程参数
         Panel66.Location = New Point(10, 87)
         Panel66.Name = "Panel66"
         Panel66.Padding = New Padding(3, 0, 0, 0)
-        Panel66.Size = New Size(140, 30)
+        Panel66.Size = New Size(1040, 30)
         Panel66.TabIndex = 3
         ' 
         ' Label151
@@ -5048,7 +5612,7 @@ Partial Class 界面_常规流程参数
         Label151.Location = New Point(623, 0)
         Label151.Name = "Label151"
         Label151.Padding = New Padding(10, 0, 0, 0)
-        Label151.Size = New Size(0, 30)
+        Label151.Size = New Size(417, 30)
         Label151.TabIndex = 105
         Label151.Text = "时间戳格式：时:分:秒.毫秒"
         Label151.TextAlign = ContentAlignment.MiddleLeft
@@ -5196,9 +5760,9 @@ Partial Class 界面_常规流程参数
         ' Label104
         ' 
         Label104.Dock = DockStyle.Top
-        Label104.Location = New Point(20, 296)
+        Label104.Location = New Point(20, 277)
         Label104.Name = "Label104"
-        Label104.Size = New Size(160, 20)
+        Label104.Size = New Size(1060, 20)
         Label104.TabIndex = 74
         ' 
         ' Panel49
@@ -5215,7 +5779,7 @@ Partial Class 界面_常规流程参数
         Panel49.Location = New Point(20, 20)
         Panel49.Name = "Panel49"
         Panel49.Padding = New Padding(10)
-        Panel49.Size = New Size(160, 276)
+        Panel49.Size = New Size(1060, 257)
         Panel49.TabIndex = 64
         ' 
         ' Label147
@@ -5226,12 +5790,14 @@ Partial Class 界面_常规流程参数
         Label147.ForeColor = Color.Gray
         Label147.Location = New Point(10, 209)
         Label147.Name = "Label147"
-        Label147.Size = New Size(477, 57)
+        Label147.Size = New Size(399, 38)
         Label147.TabIndex = 100
-        Label147.Text = "当输入文件被替代时（第一个 -i 路径被顶替，例如选择了 avs 脚本进行降噪）" & vbCrLf & "此子版块中的：保留内嵌字幕流、元数据选项、章节选项，这三个功能是不适用的" & vbCrLf & "强行使用会导致故障或根本跑不起来，没有针对这种情况做专门调整"
+        Label147.Text = "此子版块中的：保留内嵌字幕流、元数据选项、章节选项、附件选项" & vbCrLf & "仅应用于首个 -i 的文件，如果被顶替，则请勿使用这些功能"
         ' 
         ' Panel64
         ' 
+        Panel64.Controls.Add(UiComboBox附件选项)
+        Panel64.Controls.Add(Label163)
         Panel64.Controls.Add(UiComboBox章节选项)
         Panel64.Controls.Add(Label148)
         Panel64.Controls.Add(UiComboBox元数据选项)
@@ -5240,8 +5806,53 @@ Partial Class 界面_常规流程参数
         Panel64.Location = New Point(10, 169)
         Panel64.Name = "Panel64"
         Panel64.Padding = New Padding(0, 0, 0, 10)
-        Panel64.Size = New Size(140, 40)
+        Panel64.Size = New Size(1040, 40)
         Panel64.TabIndex = 7
+        ' 
+        ' UiComboBox附件选项
+        ' 
+        UiComboBox附件选项.DataSource = Nothing
+        UiComboBox附件选项.Dock = DockStyle.Left
+        UiComboBox附件选项.DropDownStyle = Sunny.UI.UIDropDownStyle.DropDownList
+        UiComboBox附件选项.FillColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        UiComboBox附件选项.FillColor2 = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        UiComboBox附件选项.FillDisableColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        UiComboBox附件选项.Font = New Font("微软雅黑", 9.75F)
+        UiComboBox附件选项.ForeColor = Color.Silver
+        UiComboBox附件选项.ForeDisableColor = Color.Silver
+        UiComboBox附件选项.ItemFillColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        UiComboBox附件选项.ItemForeColor = Color.Silver
+        UiComboBox附件选项.ItemHeight = 30
+        UiComboBox附件选项.ItemHoverColor = Color.FromArgb(CByte(56), CByte(56), CByte(56))
+        UiComboBox附件选项.ItemRectColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        UiComboBox附件选项.Items.AddRange(New Object() {"", "保留附件"})
+        UiComboBox附件选项.ItemSelectBackColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        UiComboBox附件选项.ItemSelectForeColor = Color.Silver
+        UiComboBox附件选项.Location = New Point(633, 0)
+        UiComboBox附件选项.Margin = New Padding(4, 5, 4, 5)
+        UiComboBox附件选项.MaxDropDownItems = 17
+        UiComboBox附件选项.MinimumSize = New Size(63, 0)
+        UiComboBox附件选项.Name = "UiComboBox附件选项"
+        UiComboBox附件选项.Padding = New Padding(0, 0, 30, 2)
+        UiComboBox附件选项.RadiusSides = Sunny.UI.UICornerRadiusSides.None
+        UiComboBox附件选项.RectColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        UiComboBox附件选项.RectDisableColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        UiComboBox附件选项.ScrollBarHandleWidth = 20
+        UiComboBox附件选项.Size = New Size(200, 30)
+        UiComboBox附件选项.Style = Sunny.UI.UIStyle.Custom
+        UiComboBox附件选项.StyleDropDown = Sunny.UI.UIStyle.Black
+        UiComboBox附件选项.SymbolSize = 24
+        UiComboBox附件选项.TabIndex = 104
+        UiComboBox附件选项.TextAlignment = ContentAlignment.MiddleLeft
+        UiComboBox附件选项.Watermark = "附件选项"
+        ' 
+        ' Label163
+        ' 
+        Label163.Dock = DockStyle.Left
+        Label163.Location = New Point(623, 0)
+        Label163.Name = "Label163"
+        Label163.Size = New Size(10, 30)
+        Label163.TabIndex = 105
         ' 
         ' UiComboBox章节选项
         ' 
@@ -5333,7 +5944,7 @@ Partial Class 界面_常规流程参数
         Label103.Name = "Label103"
         Label103.Size = New Size(213, 30)
         Label103.TabIndex = 95
-        Label103.Text = "元数据和章节信息"
+        Label103.Text = "元数据、章节、附件"
         Label103.TextAlign = ContentAlignment.MiddleLeft
         ' 
         ' Panel63
@@ -5346,7 +5957,7 @@ Partial Class 界面_常规流程参数
         Panel63.Location = New Point(10, 129)
         Panel63.Name = "Panel63"
         Panel63.Padding = New Padding(0, 0, 0, 10)
-        Panel63.Size = New Size(140, 40)
+        Panel63.Size = New Size(1040, 40)
         Panel63.TabIndex = 6
         ' 
         ' Label109
@@ -5356,7 +5967,7 @@ Partial Class 界面_常规流程参数
         Label109.ForeColor = Color.Gray
         Label109.Location = New Point(623, 0)
         Label109.Name = "Label109"
-        Label109.Size = New Size(0, 30)
+        Label109.Size = New Size(417, 30)
         Label109.TabIndex = 98
         Label109.Text = "字幕自动混流优先级 srt>ass>ssa，三种后缀都会扫描"
         Label109.TextAlign = ContentAlignment.MiddleLeft
@@ -5411,7 +6022,7 @@ Partial Class 界面_常规流程参数
         Panel50.Location = New Point(10, 89)
         Panel50.Name = "Panel50"
         Panel50.Padding = New Padding(0, 0, 0, 10)
-        Panel50.Size = New Size(140, 40)
+        Panel50.Size = New Size(1040, 40)
         Panel50.TabIndex = 5
         ' 
         ' Label140
@@ -5421,7 +6032,7 @@ Partial Class 界面_常规流程参数
         Label140.ForeColor = Color.Gray
         Label140.Location = New Point(623, 0)
         Label140.Name = "Label140"
-        Label140.Size = New Size(0, 30)
+        Label140.Size = New Size(417, 30)
         Label140.TabIndex = 100
         Label140.Text = "输入文件索引:a:流索引"
         Label140.TextAlign = ContentAlignment.MiddleLeft
@@ -5501,7 +6112,7 @@ Partial Class 界面_常规流程参数
         Panel62.Location = New Point(10, 49)
         Panel62.Name = "Panel62"
         Panel62.Padding = New Padding(0, 0, 0, 10)
-        Panel62.Size = New Size(140, 40)
+        Panel62.Size = New Size(1040, 40)
         Panel62.TabIndex = 4
         ' 
         ' Label139
@@ -5511,7 +6122,7 @@ Partial Class 界面_常规流程参数
         Label139.ForeColor = Color.Gray
         Label139.Location = New Point(623, 0)
         Label139.Name = "Label139"
-        Label139.Size = New Size(0, 30)
+        Label139.Size = New Size(417, 30)
         Label139.TabIndex = 99
         Label139.Text = "输入文件索引:v:流索引"
         Label139.TextAlign = ContentAlignment.MiddleLeft
@@ -5950,6 +6561,15 @@ Partial Class 界面_常规流程参数
         TabPage解码参数.ResumeLayout(False)
         Panel1.ResumeLayout(False)
         Panel1.PerformLayout()
+        Panel73.ResumeLayout(False)
+        Panel84.ResumeLayout(False)
+        Panel83.ResumeLayout(False)
+        Panel81.ResumeLayout(False)
+        Panel82.ResumeLayout(False)
+        Panel85.ResumeLayout(False)
+        Panel88.ResumeLayout(False)
+        Panel87.ResumeLayout(False)
+        Panel86.ResumeLayout(False)
         Panel18.ResumeLayout(False)
         Panel20.ResumeLayout(False)
         Panel9.ResumeLayout(False)
@@ -5972,6 +6592,7 @@ Partial Class 界面_常规流程参数
         Panel12.ResumeLayout(False)
         Panel78.ResumeLayout(False)
         Panel8.ResumeLayout(False)
+        Panel89.ResumeLayout(False)
         Panel11.ResumeLayout(False)
         TabPage高级视频参数.ResumeLayout(False)
         Panel3.ResumeLayout(False)
@@ -6147,7 +6768,6 @@ Partial Class 界面_常规流程参数
     Friend WithEvents Label5 As Label
     Friend WithEvents Panel18 As Panel
     Friend WithEvents Panel20 As Panel
-    Friend WithEvents Label39 As Label
     Friend WithEvents Panel29 As Panel
     Friend WithEvents Panel33 As Panel
     Friend WithEvents Label41 As Label
@@ -6383,5 +7003,38 @@ Partial Class 界面_常规流程参数
     Friend WithEvents Label151 As Label
     Friend WithEvents Label153 As Label
     Friend WithEvents Label152 As Label
+    Friend WithEvents Panel73 As Panel
+    Friend WithEvents Panel82 As Panel
+    Friend WithEvents UiComboBox1 As Sunny.UI.UIComboBox
+    Friend WithEvents Label124 As Label
+    Friend WithEvents Label122 As Label
+    Friend WithEvents Panel83 As Panel
+    Friend WithEvents UiTextBox4 As Sunny.UI.UITextBox
+    Friend WithEvents Label155 As Label
+    Friend WithEvents Panel81 As Panel
+    Friend WithEvents UiTextBox3 As Sunny.UI.UITextBox
+    Friend WithEvents Label123 As Label
+    Friend WithEvents Label156 As Label
+    Friend WithEvents Label39 As Label
+    Friend WithEvents Panel84 As Panel
+    Friend WithEvents UiTextBox5 As Sunny.UI.UITextBox
+    Friend WithEvents Label154 As Label
+    Friend WithEvents Panel85 As Panel
+    Friend WithEvents Panel87 As Panel
+    Friend WithEvents Label160 As Label
+    Friend WithEvents Panel86 As Panel
+    Friend WithEvents Label157 As Label
+    Friend WithEvents Label158 As Label
+    Friend WithEvents Label159 As Label
+    Friend WithEvents UiTextBoxhwaccel_device As Sunny.UI.UITextBox
+    Friend WithEvents UiTextBoxinit_hw_device As Sunny.UI.UITextBox
+    Friend WithEvents Panel88 As Panel
+    Friend WithEvents Label161 As Label
+    Friend WithEvents UiTextBoxqsv_device As Sunny.UI.UITextBox
+    Friend WithEvents Panel89 As Panel
+    Friend WithEvents Label162 As Label
+    Friend WithEvents UiTextBoxgpu As Sunny.UI.UITextBox
+    Friend WithEvents UiComboBox附件选项 As Sunny.UI.UIComboBox
+    Friend WithEvents Label163 As Label
 
 End Class

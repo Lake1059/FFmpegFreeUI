@@ -3,6 +3,7 @@ Imports System.IO
 Public Class Form画面裁剪交互窗口
 
     Private Sub Form画面裁剪交互窗口_Load(sender As Object, e As EventArgs) Handles Me.Load
+        SetControlFont(Form1.Font.Name, Me)
         UiComboBox比例.ItemHeight = 30 * Form1.DPI
         UiCheckBox居中.CheckBoxSize = 20 * Form1.DPI
         PictureBox2.Width = PictureBox2.Height
@@ -29,7 +30,7 @@ Public Class Form画面裁剪交互窗口
         Dim FFmpegProcess As New Process
         FFmpegProcess = New Process()
         FFmpegProcess.StartInfo.FileName = "ffmpeg"
-        FFmpegProcess.StartInfo.WorkingDirectory = If(Form1.FFmpeg自定义工作目录 <> "", Form1.FFmpeg自定义工作目录, "")
+        FFmpegProcess.StartInfo.WorkingDirectory = If(用户设置.实例对象.工作目录 <> "", 用户设置.实例对象.工作目录, "")
         FFmpegProcess.StartInfo.Arguments = $"-ss {If(UiTextBox1.Text <> "", UiTextBox1.Text, "0:0:10")} -i ""{视频文件}"" -frames:v 1 -q:v 1 ""{Path.Combine(Application.StartupPath, "ScreenCropPreview.png")}"" -y"
         FFmpegProcess.Start()
         FFmpegProcess.WaitForExit()

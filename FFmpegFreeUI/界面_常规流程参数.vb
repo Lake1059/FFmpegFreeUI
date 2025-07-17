@@ -9,8 +9,14 @@ Public Class 界面_常规流程参数
         AddHandler UiTextBox分辨率自动计算高度.TextChanged, AddressOf 视频分辨率自动计算高度变动事件
         AddHandler UiButton1.Click, Sub() 显示窗体(Form画面裁剪交互窗口, Form1)
         '==============================================
-        AddHandler UiButton打开插帧参数窗口.Click, Sub() 显示窗体(Form插帧, Form1)
-        AddHandler UiButton打开动态模糊参数窗口.Click, Sub() 显示窗体(Form帧混合, Form1)
+        AddHandler UiButton打开插帧参数窗口.Click, Sub()
+                                               显示窗体(Form插帧, Form1)
+                                               SetControlFont(Form1.UiComboBox字体名称.Text, Form插帧)
+                                           End Sub
+        AddHandler UiButton打开动态模糊参数窗口.Click, Sub()
+                                                 显示窗体(Form帧混合, Form1)
+                                                 SetControlFont(Form1.UiComboBox字体名称.Text, Form帧混合)
+                                             End Sub
         '==============================================
         AddHandler UiComboBox比特率控制方式.SelectedIndexChanged, AddressOf 视频比特率控制方式改动事件
         '==============================================
@@ -285,6 +291,7 @@ Public Class 界面_常规流程参数
                 UiCheckBox保留内嵌字幕流.CheckBoxSize = 20 * Form1.DPI
                 UiComboBox元数据选项.ItemHeight = 30 * Form1.DPI
                 UiComboBox章节选项.ItemHeight = 30 * Form1.DPI
+                UiComboBox附件选项.ItemHeight = 30 * Form1.DPI
                 UiCheckBox自动混流同名字幕文件.CheckBoxSize = 20 * Form1.DPI
             Case 选项卡.IsEqual(TabPage预设管理)
                 UiCheckBox额外保存信息.CheckBoxSize = 20 * Form1.DPI

@@ -12,19 +12,12 @@ Public Class 编码任务
     End Enum
 
     Public Shared Property 队列 As New List(Of 单片任务)
-
     Public Shared Sub 检查是否有可以开始的任务()
         Dim a As Integer = 获取正在处理的任务数量()
         If a < 同时运行任务上限 Then 开始还未处理的任务(a)
     End Sub
     Public Shared Function 获取正在处理的任务数量() As Integer
-        Dim 任务数量 As Integer = 0
-        For Each item As 单片任务 In 队列
-            If item.状态 = 编码状态.正在处理 Then
-                任务数量 += 1
-            End If
-        Next
-        Return 任务数量
+        Return 队列.Where(Function(item) item.状态 = 编码状态.正在处理).Count()
     End Function
     Public Shared Sub 开始还未处理的任务(当前正在运行的任务数量 As Integer)
         Dim 已运行的任务数量 As Integer = 当前正在运行的任务数量
@@ -35,24 +28,46 @@ Public Class 编码任务
                 If 已运行的任务数量 >= 同时运行任务上限 Then Exit Sub
             End If
         Next
-
         Task.Run(Sub()
                      If 获取正在处理的任务数量() = 0 Then
                          If 全部任务已完成是否有错误 Then
-                             If Form1.使用提示音 Then My.Computer.Audio.Play(My.Resources.Resource1.错误, AudioPlayMode.Background)
+                             If 用户设置.实例对象.提示音选项 Then My.Computer.Audio.Play(My.Resources.Resource1.错误, AudioPlayMode.Background)
                              全部任务已完成是否有错误 = False
                          Else
-                             If Form1.使用提示音 Then My.Computer.Audio.Play(My.Resources.Resource1.完成, AudioPlayMode.Background)
+                             If 用户设置.实例对象.提示音选项 Then My.Computer.Audio.Play(My.Resources.Resource1.完成, AudioPlayMode.Background)
                          End If
                          恢复系统状态()
                      End If
                  End Sub)
     End Sub
-
     Public Shared Property 全部任务已完成是否有错误 As Boolean = False
 
-    Public Class 单片任务
+    Public Shared Property 要刷新的项 As New Dictionary(Of ListViewItem, 刷新到界面数据结构)
+    Public Class 刷新到界面数据结构
+        Public Property 状态 As String = ""
+        Public Property 进度 As String = ""
+        Public Property 效率 As String = ""
+        Public Property 输出大小 As String = ""
+        Public Property 质量 As String = ""
+        Public Property 比特率 As String = ""
+        Public Property 时间 As String = ""
+    End Class
+    Public Shared Sub 用定时器刷新到界面上()
+        If 队列.Count = 0 Then Exit Sub
+        If 要刷新的项.Count = 0 Then Exit Sub
+        Dim 要刷新的项副本 As New Dictionary(Of ListViewItem, 刷新到界面数据结构)(要刷新的项)
+        要刷新的项.Clear()
+        For Each item As ListViewItem In 要刷新的项副本.Keys
+            item.SubItems(2).Text = 要刷新的项副本(item).进度
+            item.SubItems(3).Text = 要刷新的项副本(item).效率
+            item.SubItems(4).Text = 要刷新的项副本(item).输出大小
+            item.SubItems(5).Text = 要刷新的项副本(item).质量
+            item.SubItems(6).Text = 要刷新的项副本(item).比特率
+            item.SubItems(7).Text = 要刷新的项副本(item).时间
+        Next
+    End Sub
 
+    Public Class 单片任务
         Public Property 预设数据 As 预设数据类型
         Public Property 输入文件 As String = ""
         Public Property 输出文件 As String = ""
@@ -68,6 +83,7 @@ Public Class 编码任务
         Public Property 实时_bitrate As String = ""
         Public Property 实时_speed As String = ""
         Public Property 状态 As 编码状态 = 编码状态.未处理
+
         Public Property 列表视图项 As ListViewItem = Nothing
 
         Public Property 实时输出 As String = ""
@@ -83,7 +99,6 @@ Public Class 编码任务
                 状态 = 编码状态.正在处理
 
                 If 预设数据 Is Nothing Then GoTo jx1
-
                 If 预设数据.视频参数_降噪_方式 = "avs" Then
                     If My.Computer.FileSystem.FileExists(Path.Combine(Application.StartupPath, "AviSynth.avs")) Then
                         Dim avs1 As String = File.ReadAllText(Path.Combine(Application.StartupPath, "AviSynth.avs"))
@@ -93,7 +108,6 @@ Public Class 编码任务
                         Err.Raise(10001, "", "AviSynth.avs 脚本文件不存在，请检查是否将其放置于程序目录下！")
                     End If
                 End If
-
                 If 自定义输出位置 = "" Then
                     输出文件 = 计算输出位置_原目录(输入文件, 预设数据.输出容器)
                 Else
@@ -118,9 +132,9 @@ Public Class 编码任务
 结束剪辑区间计算:
 jx1:
                 FFmpegProcess = New Process()
-                FFmpegProcess.StartInfo.FileName = "ffmpeg"
-                FFmpegProcess.StartInfo.WorkingDirectory = If(Form1.FFmpeg自定义工作目录 <> "", Form1.FFmpeg自定义工作目录, "")
-                FFmpegProcess.StartInfo.Arguments = 命令行
+                FFmpegProcess.StartInfo.FileName = If(用户设置.实例对象.替代进程文件名 <> "", 用户设置.实例对象.替代进程文件名, "ffmpeg")
+                FFmpegProcess.StartInfo.WorkingDirectory = If(用户设置.实例对象.工作目录 <> "", 用户设置.实例对象.工作目录, "")
+                FFmpegProcess.StartInfo.Arguments = If(用户设置.实例对象.覆盖参数传递 <> "", 用户设置.实例对象.覆盖参数传递.Replace("<args>", 命令行), 命令行)
                 FFmpegProcess.StartInfo.UseShellExecute = False
                 FFmpegProcess.StartInfo.RedirectStandardOutput = True
                 FFmpegProcess.StartInfo.RedirectStandardError = True
@@ -139,8 +153,8 @@ jx1:
                 设定系统状态()
                 任务耗时计时器.Start()
 
-                If Form1.处理器相关性 <> "" Then
-                    Dim coreList() As Integer = Form1.处理器相关性.Split(","c).Select(Function(s) s.Trim()).Where(Function(s) Integer.TryParse(s, Nothing)).Select(Function(s) Integer.Parse(s)).ToArray()
+                If 用户设置.实例对象.指定处理器核心 <> "" Then
+                    Dim coreList() As Integer = 用户设置.实例对象.指定处理器核心.Split(","c).Select(Function(s) s.Trim()).Where(Function(s) Integer.TryParse(s, Nothing)).Select(Function(s) Integer.Parse(s)).ToArray()
                     FFmpegProcess.ProcessorAffinity = GetAffinityMask(coreList)
                 End If
 
@@ -184,8 +198,7 @@ jx1:
             Try
                 If FFmpegProcess.HasExited = False Then
                     手动停止不要尝试启动其他任务 = True
-                    FFmpegProcess.Kill()
-                    FFmpegProcess.WaitForExit()
+                    FFmpegProcess?.Kill()
                     状态 = 编码状态.已停止
                     任务耗时计时器.Stop()
                     状态刷新统一逻辑()
@@ -247,15 +260,15 @@ jx1:
                 End If
 
             Else
-                状态 = 编码状态.错误
+                If Not 手动停止不要尝试启动其他任务 Then 状态 = 编码状态.错误
                 If My.Computer.FileSystem.FileExists(输出文件) Then
-                    Select Case Path.GetExtension(输出文件).ToLower.Trim
-                        Case ".mp4" : My.Computer.FileSystem.DeleteFile(输出文件)
-                    End Select
+                        Select Case Path.GetExtension(输出文件).ToLower.Trim
+                            Case ".mp4" : My.Computer.FileSystem.DeleteFile(输出文件)
+                        End Select
+                    End If
+                    全部任务已完成是否有错误 = True
                 End If
-                全部任务已完成是否有错误 = True
-            End If
-            任务耗时计时器.Stop()
+                任务耗时计时器.Stop()
             GC.Collect()
 
             界面线程执行(AddressOf 状态刷新统一逻辑)
@@ -312,16 +325,16 @@ jx1:
                 Case 编码状态.已停止
                     列表视图项.ForeColor = Color.IndianRed
                     列表视图项.SubItems(1).Text = "已停止"
-                    列表视图项.SubItems(3).Text = ""
-                    列表视图项.SubItems(4).Text = ""
                     列表视图项.SubItems(5).Text = ""
-                    列表视图项.SubItems(6).Text = ""
-                    列表视图项.SubItems(7).Text = ""
                 Case 编码状态.错误
-                    列表视图项.ForeColor = Color.IndianRed
-                    列表视图项.SubItems(1).Text = "错误"
-                    列表视图项.SubItems(5).Text = ""
-                    列表视图项.SubItems(7).Text = ""
+                    If 手动停止不要尝试启动其他任务 Then
+                        列表视图项.ForeColor = Color.IndianRed
+                        列表视图项.SubItems(5).Text = ""
+                    Else
+                        列表视图项.ForeColor = Color.IndianRed
+                        列表视图项.SubItems(1).Text = "错误"
+                        Task.Run(AddressOf 检查是否有可以开始的任务)
+                    End If
             End Select
         End Sub
         Public Sub 在任务进行中时刷新实时信息()
@@ -377,23 +390,22 @@ jx1:
                     remainTime = String.Join("", parts)
                 End If
             End If
-            界面线程执行(Sub()
-                       Try
-                           列表视图项.SubItems(1).Text = 状态.ToString
-                           列表视图项.SubItems(2).Text = progressText
-                           列表视图项.SubItems(3).Text = speedPercent
-                           列表视图项.SubItems(4).Text = sizeText & estimatedSize
-                           列表视图项.SubItems(5).Text = qText
-                           列表视图项.SubItems(6).Text = bitrateText
-                           Dim el = 任务耗时计时器.Elapsed, elapsedParts = New List(Of String)
-                           If el.Hours > 0 Then elapsedParts.Add($"{el.Hours}h")
-                           If el.Minutes > 0 OrElse elapsedParts.Count > 0 Then elapsedParts.Add($"{el.Minutes}m")
-                           elapsedParts.Add($"{el.Seconds}s")
-                           列表视图项.SubItems(7).Text = $"{remainTime} - {String.Join("", elapsedParts)}"
-                       Catch ex As Exception
-                           错误列表.Add($"刷新界面失败 {Now}")
-                       End Try
-                   End Sub)
+
+            Dim 信息数据 As New 刷新到界面数据结构 With {
+                .状态 = 状态.ToString,
+                .进度 = progressText,
+                .效率 = speedPercent,
+                .输出大小 = sizeText & estimatedSize,
+                .质量 = qText,
+                .比特率 = bitrateText
+            }
+            Dim el = 任务耗时计时器.Elapsed, elapsedParts = New List(Of String)
+            If el.Hours > 0 Then elapsedParts.Add($"{el.Hours}h")
+            If el.Minutes > 0 OrElse elapsedParts.Count > 0 Then elapsedParts.Add($"{el.Minutes}m")
+            elapsedParts.Add($"{el.Seconds}s")
+            信息数据.时间 = $"{remainTime} - {String.Join("", elapsedParts)}"
+            要刷新的项(列表视图项) = 信息数据
+
         End Sub
         Public Sub 在实时输出中提取数据(line As String)
             If String.IsNullOrEmpty(line) Then Return
@@ -412,8 +424,10 @@ jx1:
 
     End Class
 
-    Public Shared ReadOnly DurationPattern As New Regex("Duration:\s*(\d{2}:\d{2}:\d{2}\.\d{2})", RegexOptions.Compiled)
 
+
+
+    Public Shared ReadOnly DurationPattern As New Regex("Duration:\s*(\d{2}:\d{2}:\d{2}\.\d{2})", RegexOptions.Compiled)
     Public Shared ReadOnly FramePattern As New Regex("frame=\s*(?<value>\d+)", RegexOptions.Compiled)
     Public Shared ReadOnly FpsPattern As New Regex("fps=\s*(?<value>\d+)", RegexOptions.Compiled)
     Public Shared ReadOnly QPattern As New Regex("q=\s*(?<value>[\d\.]+)", RegexOptions.Compiled)
@@ -471,7 +485,12 @@ jx1:
             容器 = "." & 容器
         End If
         Dim 输出文件名 As String = IO.Path.GetFileNameWithoutExtension(输入文件) & $"_{Now:yyyy.MM.dd-HH.mm.ss}" & 容器
-        Return IO.Path.Combine(输出目录, 输出文件名)
+
+        If 用户设置.实例对象.转译模式 Then
+            Return 转译模式处理路径(IO.Path.Combine(输出目录, 输出文件名))
+        Else
+            Return IO.Path.Combine(输出目录, 输出文件名)
+        End If
     End Function
 
     Shared Function 计算输出位置_自定义目录(自定义目录 As String, 输入文件 As String, 容器 As String) As String
@@ -480,7 +499,49 @@ jx1:
             容器 = "." & 容器
         End If
         Dim 输出文件名 As String = IO.Path.GetFileNameWithoutExtension(输入文件) & $"_{Now:yyyy.MM.dd-HH.mm.ss}" & 容器
-        Return IO.Path.Combine(输出目录, 输出文件名)
+
+        If 用户设置.实例对象.转译模式 Then
+            Return 转译模式处理路径(IO.Path.Combine(输出目录, 输出文件名))
+        Else
+            Return IO.Path.Combine(输出目录, 输出文件名)
+        End If
     End Function
+
+    Public Shared Sub 选中项刷新信息()
+        Try
+            Form1.Labelffmpeg实时信息.Text = 编码任务.队列(Form1.ListView1.SelectedItems(0).Index).实时输出
+
+            Select Case 编码任务.队列(Form1.ListView1.SelectedItems(0).Index).状态
+                Case 编码状态.正在处理, 编码状态.已暂停
+                    Dim 物理内存 = Format(编码任务.队列(Form1.ListView1.SelectedItems(0).Index).FFmpegProcess.PrivateMemorySize64 / 1024 / 1024, "0")
+                    Dim 虚拟内存 = Format(编码任务.队列(Form1.ListView1.SelectedItems(0).Index).FFmpegProcess.VirtualMemorySize64 / 1024 / 1024, "0")
+                    Dim 线程数 = 编码任务.队列(Form1.ListView1.SelectedItems(0).Index).FFmpegProcess.Threads.Count
+                    Form1.Labelffmpeg进程信息.Text = $"物理内存：{物理内存} MB   虚拟内存：{虚拟内存} MB   线程数：{线程数}"
+                Case Else
+                    Form1.Labelffmpeg进程信息.Text = "任务未进行"
+            End Select
+
+            Form1.Label累计错误信息.Text = String.Join(vbCrLf, 编码任务.队列(Form1.ListView1.SelectedItems(0).Index).错误列表)
+            If Form1.Label累计错误信息.Text = "" Then
+                Form1.Panel错误信息容器.Visible = False
+                Form1.Label错误信息容器之外的间隔.Visible = False
+            Else
+                Form1.Panel错误信息容器.Visible = True
+                Form1.Label错误信息容器之外的间隔.Visible = True
+
+                Dim s1 = 根据标签宽度计算显示高度(Form1.Label累计错误信息)
+                If s1 > Form1.TabPage编码队列.Height * 0.25 Then
+                    Form1.Label累计错误信息.Height = s1 + 10 * Form1.DPI
+                    Form1.Panel错误信息容器.AutoSize = False
+                    Form1.Panel错误信息容器.Height = Form1.TabPage编码队列.Height * 0.25
+                Else
+                    Form1.Label累计错误信息.Height = s1 + 6 * Form1.DPI
+                    Form1.Panel错误信息容器.AutoSize = True
+                End If
+            End If
+        Catch ex As Exception
+            编码任务.队列(Form1.ListView1.SelectedItems(0).Index).错误列表.Add($"刷新界面失败 {Now} {ex.Message}")
+        End Try
+    End Sub
 
 End Class

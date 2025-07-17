@@ -8,12 +8,17 @@ Public Class 预设管理
 
         Form1.常规流程参数页面.UiComboBox解码器.Text = a.解码参数_解码器
         Form1.常规流程参数页面.UiComboBox解码数据格式.Text = a.解码参数_解码数据格式
+        Form1.常规流程参数页面.UiTextBoxhwaccel_device.Text = a.解码参数_hwaccel_device
+        Form1.常规流程参数页面.UiTextBoxinit_hw_device.Text = a.解码参数_init_hw_device
+        Form1.常规流程参数页面.UiTextBoxqsv_device.Text = a.解码参数_qsv_device
 
         Form1.常规流程参数页面.UiComboBox编码类别.Text = a.视频参数_编码器_类别
         Form1.常规流程参数页面.UiComboBox具体编码.Text = a.视频参数_编码器_具体编码
         Form1.常规流程参数页面.UiComboBox编码预设.Text = a.视频参数_编码器_质量
         Form1.常规流程参数页面.UiComboBox配置文件.Text = a.视频参数_编码器_配置文件
         Form1.常规流程参数页面.UiComboBox场景优化.Text = a.视频参数_编码器_场景优化
+        Form1.常规流程参数页面.UiTextBoxgpu.Text = a.视频参数_编码器_gpu
+
         Form1.常规流程参数页面.UiComboBox分辨率.Text = a.视频参数_分辨率
         Form1.常规流程参数页面.UiTextBox分辨率自动计算宽度.Text = a.视频参数_分辨率自动计算_宽度
         Form1.常规流程参数页面.UiTextBox分辨率自动计算高度.Text = a.视频参数_分辨率自动计算_高度
@@ -176,6 +181,7 @@ Public Class 预设管理
         Form1.常规流程参数页面.UiCheckBox保留内嵌字幕流.Checked = a.流控制_启用保留内嵌字幕流
         Form1.常规流程参数页面.UiComboBox元数据选项.SelectedIndex = a.流控制_元数据选项
         Form1.常规流程参数页面.UiComboBox章节选项.SelectedIndex = a.流控制_章节选项
+        Form1.常规流程参数页面.UiComboBox附件选项.SelectedIndex = a.流控制_附件选项
         Form1.常规流程参数页面.UiComboBox剪辑方法.SelectedIndex = a.流控制_剪辑_方法
         Form1.常规流程参数页面.UiTextBox快速剪辑入点.Text = a.流控制_剪辑_入点
         Form1.常规流程参数页面.UiTextBox快速剪辑出点.Text = a.流控制_剪辑_出点
@@ -191,12 +197,17 @@ Public Class 预设管理
 
         a.解码参数_解码器 = Form1.常规流程参数页面.UiComboBox解码器.Text
         a.解码参数_解码数据格式 = Form1.常规流程参数页面.UiComboBox解码数据格式.Text
+        a.解码参数_hwaccel_device = Form1.常规流程参数页面.UiTextBoxhwaccel_device.Text
+        a.解码参数_init_hw_device = Form1.常规流程参数页面.UiTextBoxinit_hw_device.Text
+        a.解码参数_qsv_device = Form1.常规流程参数页面.UiTextBoxqsv_device.Text
 
         a.视频参数_编码器_类别 = Form1.常规流程参数页面.UiComboBox编码类别.Text
         a.视频参数_编码器_具体编码 = Form1.常规流程参数页面.UiComboBox具体编码.Text
         a.视频参数_编码器_质量 = Form1.常规流程参数页面.UiComboBox编码预设.Text
         a.视频参数_编码器_配置文件 = Form1.常规流程参数页面.UiComboBox配置文件.Text
         a.视频参数_编码器_场景优化 = Form1.常规流程参数页面.UiComboBox场景优化.Text
+        a.视频参数_编码器_gpu = Form1.常规流程参数页面.UiTextBoxgpu.Text
+
         a.视频参数_分辨率 = Form1.常规流程参数页面.UiComboBox分辨率.Text
         a.视频参数_分辨率自动计算_宽度 = Form1.常规流程参数页面.UiTextBox分辨率自动计算宽度.Text
         a.视频参数_分辨率自动计算_高度 = Form1.常规流程参数页面.UiTextBox分辨率自动计算高度.Text
@@ -360,6 +371,7 @@ Public Class 预设管理
         a.流控制_启用保留内嵌字幕流 = Form1.常规流程参数页面.UiCheckBox保留内嵌字幕流.Checked
         a.流控制_元数据选项 = Form1.常规流程参数页面.UiComboBox元数据选项.SelectedIndex
         a.流控制_章节选项 = Form1.常规流程参数页面.UiComboBox章节选项.SelectedIndex
+        a.流控制_附件选项 = Form1.常规流程参数页面.UiComboBox附件选项.SelectedIndex
         a.流控制_剪辑_方法 = Form1.常规流程参数页面.UiComboBox剪辑方法.SelectedIndex
         a.流控制_剪辑_入点 = Form1.常规流程参数页面.UiTextBox快速剪辑入点.Text
         a.流控制_剪辑_出点 = Form1.常规流程参数页面.UiTextBox快速剪辑出点.Text
@@ -398,11 +410,14 @@ Public Class 预设管理
         ' 解码参数
         Form1.常规流程参数页面.UiComboBox解码器.Text = ""
         Form1.常规流程参数页面.UiComboBox解码数据格式.Text = ""
+        Form1.常规流程参数页面.UiTextBoxhwaccel_device.Text = ""
+        Form1.常规流程参数页面.UiTextBoxinit_hw_device.Text = ""
+        Form1.常规流程参数页面.UiTextBoxqsv_device.Text = ""
 
         ' 视频参数
         Form1.常规流程参数页面.UiComboBox编码类别.Text = ""
         Form1.常规流程参数页面.UiComboBox具体编码.Text = ""
-        Form1.常规流程参数页面.UiComboBox编码预设.Text = ""
+        Form1.常规流程参数页面.UiTextBoxgpu.Text = ""
         Form1.常规流程参数页面.UiComboBox分辨率.Text = ""
         Form1.常规流程参数页面.UiTextBox分辨率自动计算宽度.Text = ""
         Form1.常规流程参数页面.UiTextBox分辨率自动计算高度.Text = ""
@@ -482,6 +497,7 @@ Public Class 预设管理
         Form1.常规流程参数页面.UiCheckBox保留内嵌字幕流.Checked = False
         Form1.常规流程参数页面.UiComboBox元数据选项.SelectedIndex = 0
         Form1.常规流程参数页面.UiComboBox章节选项.SelectedIndex = 0
+        Form1.常规流程参数页面.UiComboBox附件选项.SelectedIndex = 0
         Form1.常规流程参数页面.UiComboBox剪辑方法.SelectedIndex = 0
         Form1.常规流程参数页面.UiTextBox快速剪辑入点.Text = ""
         Form1.常规流程参数页面.UiTextBox快速剪辑出点.Text = ""
@@ -504,6 +520,9 @@ Public Class 预设管理
 
         If a.解码参数_解码器 <> "" Then arg &= $"-hwaccel {a.解码参数_解码器} "
         If a.解码参数_解码数据格式 <> "" Then arg &= $"-hwaccel_output_format {a.解码参数_解码数据格式} "
+        If a.解码参数_hwaccel_device <> "" Then arg &= $"-hwaccel_device {a.解码参数_hwaccel_device} "
+        If a.解码参数_init_hw_device <> "" Then arg &= $"-init_hw_device {a.解码参数_init_hw_device} "
+        If a.解码参数_qsv_device <> "" Then arg &= $"-qsv_device {a.解码参数_qsv_device} "
 
         If a.流控制_剪辑_方法 = 1 Then
             If a.流控制_剪辑_入点 <> "" Then arg &= $"-ss {a.流控制_剪辑_入点} "
@@ -533,6 +552,7 @@ Public Class 预设管理
                     视频参数 &= $"-tune {a.视频参数_编码器_场景优化} "
             End Select
         End If
+        If a.视频参数_编码器_gpu <> "" Then arg &= $"-gpu {a.视频参数_编码器_gpu} "
 
         If a.视频参数_分辨率 <> "" Then
             视频参数 &= $"-s {a.视频参数_分辨率} "
@@ -820,7 +840,7 @@ Public Class 预设管理
         '=================================================================
 
         If a.流控制_启用保留内嵌字幕流 Then
-            arg &= $"-map 0:s  -c:s copy "
+            arg &= $"{If(arg.Contains("-map"), "-map 0:s", "")}  -c:s copy "
         End If
 
         Select Case a.流控制_元数据选项
@@ -831,6 +851,10 @@ Public Class 预设管理
         Select Case a.流控制_章节选项
             Case 1 : arg &= $"-map_chapters 0 "
             Case 2 : arg &= $"-map_chapters -1 "
+        End Select
+
+        Select Case a.流控制_附件选项
+            Case 1 : arg &= $"{If(arg.Contains("-map"), "-map 0:t", "")}  -c:t copy "
         End Select
 
         If 滤镜图参数集.Count > 0 Then

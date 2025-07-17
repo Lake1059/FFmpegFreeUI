@@ -211,7 +211,7 @@
             Case MsgBoxResult.Yes
                 Dim FFmpegProcess As New Process
                 FFmpegProcess.StartInfo.FileName = "ffmpeg"
-                FFmpegProcess.StartInfo.WorkingDirectory = If(Form1.FFmpeg自定义工作目录 <> "", Form1.FFmpeg自定义工作目录, "")
+                FFmpegProcess.StartInfo.WorkingDirectory = If(用户设置.实例对象.工作目录 <> "", 用户设置.实例对象.工作目录, "")
                 FFmpegProcess.StartInfo.Arguments = arg
                 FFmpegProcess.Start()
             Case MsgBoxResult.No

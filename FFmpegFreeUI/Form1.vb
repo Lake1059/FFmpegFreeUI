@@ -1,16 +1,10 @@
-﻿Imports System.ComponentModel
-Imports System.IO
+﻿Imports System.IO
+
 Public Class Form1
-    <DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)>
     Public Shared Property DPI As Single = Form1.CreateGraphics.DpiX / 96
 
     Public 是否初始化 As Boolean = False
     Private 上一次窗口状态 As FormWindowState
-
-    Public 处理器相关性 As String = ""
-    Public 系统状态设定 As Integer = 0
-    Public 使用提示音 As Boolean = True
-    Public FFmpeg自定义工作目录 As String = ""
 
     Public 常规流程参数页面 As New 界面_常规流程参数
     Public 混流页面 As New 界面_混流
@@ -18,32 +12,38 @@ Public Class Form1
     Public 编码队列右键菜单 As 暗黑上下文菜单
 
     Public 性能统计对象 As New 性能统计
+    Public 性能统计刷新计时器 As New Timer With {.Interval = 2000, .Enabled = False}
+
+    Public 选中项刷新信息计时器 As New Timer With {.Interval = 1000, .Enabled = False}
+    Public 任务进度更新计时器 As New Timer With {.Interval = 1000, .Enabled = False}
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        用户设置.加载()
         界面控制.初始化()
+        UiComboBox字体名称.Text = 用户设置.实例对象.字体
         视频编码器数据库.初始化()
         上一次窗口状态 = Me.WindowState
     End Sub
 
     Private Sub Form1_Shown(sender As Object, e As EventArgs) Handles Me.Shown
+        SetControlFont(用户设置.实例对象.字体, Me, {UiComboBox字体名称})
         界面控制.界面校准()
-
-        If My.Computer.FileSystem.FileExists(Path.Combine(Application.StartupPath, "FontName.txt")) Then
-            UiComboBox1.Text = My.Computer.FileSystem.ReadAllText(Path.Combine(Application.StartupPath, "FontName.txt"))
-            If UiComboBox1.Text = "" Then Exit Sub
-            SetControlFont(UiComboBox1.Text, Me, {UiComboBox1})
-        End If
-
         If DPI <> 1 Then DPI变动时校准界面()
 
-        界面线程执行(AddressOf 插件管理.启动时加载插件)
-
-        If UI同步上下文 Is Nothing Then
-            MsgBox("警告：UI 同步上下文是空的，继续使用软件将导致崩溃，请联系开发者排查问题", MsgBoxStyle.Critical)
+        If FileIO.FileSystem.FileExists(Path.Combine(Application.StartupPath, "icon.png")) Then
+            Me.PictureBox1.Image = LoadImageFromFile(Path.Combine(Application.StartupPath, "icon.png")).GetThumbnailImage(Me.PictureBox1.Width, Me.PictureBox1.Height, Nothing, Nothing)
+            Using bitmap As New Bitmap(Me.PictureBox1.Image)
+                Me.Icon = Icon.FromHandle(bitmap.GetHicon())
+            End Using
+        Else
+            Me.PictureBox1.Width = Me.PictureBox1.Height
+            Me.PictureBox1.Image = My.Resources.Resource1.AppIcon.GetThumbnailImage(Me.PictureBox1.Width, Me.PictureBox1.Height, Nothing, Nothing)
         End If
 
+        界面线程执行(AddressOf 插件管理.启动时加载插件)
+        If UI同步上下文 Is Nothing Then MsgBox("警告：UI 同步上下文是空的，继续使用软件将导致崩溃，请联系开发者排查问题", MsgBoxStyle.Critical)
         界面线程执行(AddressOf 检查更新.检查)
-
+        任务进度更新计时器.Enabled = True
     End Sub
 
     Private Sub Form1_DpiChanged(sender As Object, e As DpiChangedEventArgs) Handles Me.DpiChanged
@@ -94,12 +94,8 @@ Public Class Form1
             task.清除占用()
         Next
         恢复系统状态()
-
-        If My.Computer.FileSystem.FileExists(Path.Combine(Application.StartupPath, "FontName.txt")) Then
-            My.Computer.FileSystem.WriteAllText(Path.Combine(Application.StartupPath, "FontName.txt"), Label11.Font.Name, False)
-        End If
+        用户设置.保存()
         e.Cancel = False
-
     End Sub
 
     Private Sub ListView1_DragEnter(sender As Object, e As DragEventArgs) Handles ListView1.DragEnter
@@ -120,43 +116,14 @@ Public Class Form1
     End Sub
     Private Sub ListView1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ListView1.SelectedIndexChanged
         If Me.ListView1.SelectedItems.Count = 1 Then
-            Timer1.Enabled = True
+            选中项刷新信息计时器.Enabled = True
             Panel41.Visible = True
-            刷新调试信息()
+            编码任务.选中项刷新信息()
         Else
-            Timer1.Enabled = False
+            选中项刷新信息计时器.Enabled = False
             Panel41.Visible = False
         End If
     End Sub
-
-    Sub 刷新调试信息()
-        Try
-            Label74.Text = 编码任务.队列(Me.ListView1.SelectedItems(0).Index).实时输出
-            Label76.Text = String.Join(vbCrLf, 编码任务.队列(Me.ListView1.SelectedItems(0).Index).错误列表)
-            If Label76.Text = "" Then
-                Panel47.Visible = False
-                Label120.Visible = False
-            Else
-                Panel47.Visible = True
-                Label120.Visible = True
-                Dim s1 = 根据标签宽度计算显示高度(Label76)
-                Label76.Height = s1
-                If s1 > TabPage编码队列.Height * 0.3 Then
-                    Panel47.Height = TabPage编码队列.Height * 0.3
-                Else
-                    Panel47.Height = s1
-                End If
-            End If
-        Catch ex As Exception
-            编码任务.队列(Me.ListView1.SelectedItems(0).Index).错误列表.Add($"刷新界面失败 {Now}")
-        End Try
-    End Sub
-
-    Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
-        刷新调试信息()
-    End Sub
-
-
 
     Private Sub UiButton打开文件显示参数_Click(sender As Object, e As EventArgs) Handles UiButton打开文件显示参数.Click
         Dim openFileDialog As New OpenFileDialog With {.Multiselect = False, .Filter = "所有文件|*.*"}
@@ -169,7 +136,7 @@ Public Class Form1
         Dim FFprobeProcess As New Process
         FFprobeProcess = New Process()
         FFprobeProcess.StartInfo.FileName = "ffprobe"
-        FFprobeProcess.StartInfo.WorkingDirectory = If(FFmpeg自定义工作目录 <> "", FFmpeg自定义工作目录, "")
+        FFprobeProcess.StartInfo.WorkingDirectory = If(用户设置.实例对象.工作目录 <> "", 用户设置.实例对象.工作目录, "")
         FFprobeProcess.StartInfo.Arguments = $"-hide_banner ""{文件路径}"""
         FFprobeProcess.StartInfo.RedirectStandardOutput = True
         FFprobeProcess.StartInfo.RedirectStandardError = True
@@ -203,7 +170,7 @@ Public Class Form1
             e.Effect = DragDropEffects.None
         End If
     End Sub
-    Private Sub UiTextBox快捷输入CPU核心_KeyPress(sender As Object, e As KeyPressEventArgs)
+    Private Sub UiTextBox快捷输入CPU核心_KeyPress(sender As Object, e As KeyPressEventArgs) Handles UiTextBox快捷输入CPU核心.KeyPress
         Select Case e.KeyChar
             Case "0"c To "9"c, "~"c, ChrW(Keys.Back)
             Case ChrW(Keys.Enter)
@@ -231,35 +198,6 @@ Public Class Form1
             Case Else
                 Exit Sub
         End Select
-    End Sub
-
-    Private Sub Timer2_Tick(sender As Object, e As EventArgs) Handles Timer2.Tick
-        性能统计对象.Update()
-        If Panel18.Visible Then
-            Dim cpus = 性能统计对象.处理器信息.Keys.ToList
-            For i = 0 To cpus.Count - 1
-                If i >= Me.ListView3.Items.Count Then
-                    Me.ListView3.Items.Add(New ListViewItem)
-                    Me.ListView3.Items(i).SubItems.Add("")
-                End If
-                Me.ListView3.Items(i).SubItems(0).Text = cpus(i)
-                Me.ListView3.Items(i).SubItems(1).Text = 性能统计对象.处理器信息(cpus(i))
-            Next
-        End If
-
-        Dim gpus = 性能统计对象.显卡信息.Keys.ToList
-        gpus.Sort()
-        For i = 0 To gpus.Count - 1
-            If i >= Me.ListView4.Items.Count Then
-                Me.ListView4.Items.Add(New ListViewItem)
-                Me.ListView4.Items(i).SubItems.Add("")
-            End If
-            Me.ListView4.Items(i).SubItems(0).Text = gpus(i)
-            Me.ListView4.Items(i).SubItems(1).Text = 性能统计对象.显卡信息(gpus(i))
-        Next
-        While Me.ListView4.Items.Count > gpus.Count
-            Me.ListView4.Items.RemoveAt(Me.ListView4.Items.Count - 1)
-        End While
     End Sub
 
     Private Sub UiButton切换处理器占用面板_Click(sender As Object, e As EventArgs) Handles UiButton切换处理器占用面板.Click

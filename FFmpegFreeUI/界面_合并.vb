@@ -111,7 +111,7 @@ Public Class 界面_合并
             Case MsgBoxResult.Yes
                 Dim FFmpegProcess As New Process
                 FFmpegProcess.StartInfo.FileName = "ffmpeg"
-                FFmpegProcess.StartInfo.WorkingDirectory = If(Form1.FFmpeg自定义工作目录 <> "", Form1.FFmpeg自定义工作目录, "")
+                FFmpegProcess.StartInfo.WorkingDirectory = If(用户设置.实例对象.工作目录 <> "", 用户设置.实例对象.工作目录, "")
                 FFmpegProcess.StartInfo.Arguments = arg
                 AddHandler FFmpegProcess.Exited, Sub(s1, e1)
                                                      If FFmpegProcess.ExitCode <> 0 Then Exit Sub
