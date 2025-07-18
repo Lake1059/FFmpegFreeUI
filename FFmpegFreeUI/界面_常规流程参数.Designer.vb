@@ -753,6 +753,7 @@ Partial Class 界面_常规流程参数
         ' 
         UiComboBox自动命名选项.DataSource = Nothing
         UiComboBox自动命名选项.Dock = DockStyle.Left
+        UiComboBox自动命名选项.DropDownStyle = Sunny.UI.UIDropDownStyle.DropDownList
         UiComboBox自动命名选项.FillColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
         UiComboBox自动命名选项.FillColor2 = Color.FromArgb(CByte(48), CByte(48), CByte(48))
         UiComboBox自动命名选项.FillDisableColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
