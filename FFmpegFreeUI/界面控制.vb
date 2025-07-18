@@ -126,7 +126,7 @@ Public Class 界面控制
 
         AddHandler Form1.选中项刷新信息计时器.Tick, AddressOf 编码任务.选中项刷新信息
         AddHandler Form1.任务进度更新计时器.Tick, AddressOf 编码任务.用定时器刷新到界面上
-
+        AddHandler Form1.性能统计刷新计时器.Tick, AddressOf 性能统计.刷新到界面上
 
         '==============================================
 

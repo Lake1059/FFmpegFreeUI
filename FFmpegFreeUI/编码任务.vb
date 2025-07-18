@@ -44,7 +44,6 @@ Public Class 编码任务
 
     Public Shared Property 要刷新的项 As New Dictionary(Of ListViewItem, 刷新到界面数据结构)
     Public Class 刷新到界面数据结构
-        Public Property 状态 As String = ""
         Public Property 进度 As String = ""
         Public Property 效率 As String = ""
         Public Property 输出大小 As String = ""
@@ -93,6 +92,11 @@ Public Class 编码任务
         Public Property 任务耗时计时器 As New Stopwatch
         Public Property 上次刷新界面的时间戳 As TimeSpan = Now.TimeOfDay
 
+        Public Property 保留创建时间 As Boolean = False
+        Public Property 保留修改时间 As Boolean = False
+        Public Property 保留访问时间 As Boolean = False
+
+
         Public Sub 开始()
             Try
                 错误列表.Clear()
@@ -108,13 +112,22 @@ Public Class 编码任务
                         Err.Raise(10001, "", "AviSynth.avs 脚本文件不存在，请检查是否将其放置于程序目录下！")
                     End If
                 End If
-                If 自定义输出位置 = "" Then
-                    输出文件 = 计算输出位置_原目录(输入文件, 预设数据.输出容器)
-                Else
-                    输出文件 = 计算输出位置_自定义目录(自定义输出位置, 输入文件, 预设数据.输出容器)
-                End If
 
+                输出文件 = 计算输出位置(输入文件, 预设数据.输出容器, 预设数据, 自定义输出位置)
                 命令行 = 预设管理.将预设数据转换为命令行(预设数据, 输入文件, 输出文件)
+
+                If 命令行.Contains("<KeepCreationTime>") Then
+                    命令行 = 命令行.Replace("<KeepCreationTime>", "")
+                    保留创建时间 = True
+                End If
+                If 命令行.Contains("<KeepWriteTime>") Then
+                    命令行 = 命令行.Replace("<KeepWriteTime>", "")
+                    保留修改时间 = True
+                End If
+                If 命令行.Contains("<KeepAccessTime>") Then
+                    命令行 = 命令行.Replace("<KeepAccessTime>", "")
+                    保留访问时间 = True
+                End If
 
                 If 预设数据.流控制_剪辑_入点 <> "" AndAlso 预设数据.流控制_剪辑_出点 <> "" Then
                     Dim t1 = ParseTimeSpan(预设数据.流控制_剪辑_入点)
@@ -242,11 +255,17 @@ jx1:
                 End If
             End If
 
-            界面线程执行(AddressOf 状态刷新统一逻辑)
+            If 实时输出.Contains("="c) AndAlso (Now.TimeOfDay - 上次刷新界面的时间戳).TotalSeconds >= 1 Then
+                在实时输出中提取数据(实时输出)
+                处理捕获的数据并添加到刷新队列()
+                上次刷新界面的时间戳 = Now.TimeOfDay
+            End If
 
             If errorKeywords.Any(Function(keyword) e.Data.Contains(keyword, StringComparison.OrdinalIgnoreCase)) Then
                 错误列表.Add(e.Data)
             End If
+
+            界面线程执行(AddressOf 状态刷新统一逻辑)
         End Sub
 
         Public Sub FFmpegProcessExited(sender As Object, e As EventArgs)
@@ -259,16 +278,22 @@ jx1:
                     End If
                 End If
 
+                If 输出文件 <> "" AndAlso 输入文件 <> "" Then
+                    If 保留创建时间 Then File.SetCreationTime(输出文件, File.GetCreationTime(输入文件))
+                    If 保留修改时间 Then File.SetLastWriteTime(输出文件, File.GetLastWriteTime(输入文件))
+                    If 保留访问时间 Then File.SetLastAccessTime(输出文件, File.GetLastAccessTime(输入文件))
+                End If
+
             Else
                 If Not 手动停止不要尝试启动其他任务 Then 状态 = 编码状态.错误
                 If My.Computer.FileSystem.FileExists(输出文件) Then
-                        Select Case Path.GetExtension(输出文件).ToLower.Trim
-                            Case ".mp4" : My.Computer.FileSystem.DeleteFile(输出文件)
-                        End Select
-                    End If
-                    全部任务已完成是否有错误 = True
+                    Select Case Path.GetExtension(输出文件).ToLower.Trim
+                        Case ".mp4" : My.Computer.FileSystem.DeleteFile(输出文件)
+                    End Select
                 End If
-                任务耗时计时器.Stop()
+                全部任务已完成是否有错误 = True
+            End If
+            任务耗时计时器.Stop()
             GC.Collect()
 
             界面线程执行(AddressOf 状态刷新统一逻辑)
@@ -282,13 +307,6 @@ jx1:
                 Case 编码状态.正在处理
                     列表视图项.ForeColor = Color.YellowGreen
                     列表视图项.SubItems(1).Text = "正在处理"
-                    If 实时输出.Contains("="c) AndAlso (Now.TimeOfDay - 上次刷新界面的时间戳).TotalSeconds >= 1 Then
-                        Task.Run(Sub()
-                                     在实时输出中提取数据(实时输出)
-                                     在任务进行中时刷新实时信息()
-                                 End Sub)
-                        上次刷新界面的时间戳 = Now.TimeOfDay
-                    End If
                 Case 编码状态.已完成
                     列表视图项.ForeColor = Color.OliveDrab
                     列表视图项.SubItems(1).Text = "已完成"
@@ -337,7 +355,7 @@ jx1:
                     End If
             End Select
         End Sub
-        Public Sub 在任务进行中时刷新实时信息()
+        Public Sub 处理捕获的数据并添加到刷新队列()
             If 列表视图项 Is Nothing Then Exit Sub
             Dim total = 获取_总时长.TotalSeconds, cur = 实时_time.TotalSeconds, progress = 0.0, progressText = "N/A"
             If total > 0 AndAlso cur > 0 Then
@@ -392,7 +410,6 @@ jx1:
             End If
 
             Dim 信息数据 As New 刷新到界面数据结构 With {
-                .状态 = 状态.ToString,
                 .进度 = progressText,
                 .效率 = speedPercent,
                 .输出大小 = sizeText & estimatedSize,
@@ -479,31 +496,44 @@ jx1:
         Return ""
     End Function
 
-    Shared Function 计算输出位置_原目录(输入文件 As String, 容器 As String) As String
-        Dim 输出目录 As String = IO.Path.GetDirectoryName(输入文件)
-        If Not 容器.StartsWith("."c) Then
-            容器 = "." & 容器
+    Shared Function 计算输出位置(输入文件 As String, 容器 As String, 预设数据 As 预设数据类型, 自定义目录 As String) As String
+        Dim 输出目录 As String
+        If 自定义目录 = "" Then
+            输出目录 = Path.GetDirectoryName(输入文件)
+        Else
+            输出目录 = 自定义目录
         End If
-        Dim 输出文件名 As String = IO.Path.GetFileNameWithoutExtension(输入文件) & $"_{Now:yyyy.MM.dd-HH.mm.ss}" & 容器
+
+        If Not 容器.StartsWith("."c) Then 容器 = "." & 容器
+        Dim 文件名不带后缀 As String = Path.GetFileNameWithoutExtension(输入文件)
+
+        Dim 文件名 As String = 预设数据.输出命名_开头文本
+
+        If 预设数据.输出命名_替代文本 = "" Then
+            文件名 &= 文件名不带后缀
+        Else
+            文件名 &= 预设数据.输出命名_替代文本
+        End If
+        文件名 &= 预设数据.输出命名_结尾文本
+        Select Case 预设数据.输出命名_自动命名选项
+            Case 0 : 文件名 &= $"_{Now:yyyy.MM.dd-HH.mm.ss}"
+            Case 1
+                If 预设数据.输出命名_开头文本 = "" AndAlso 预设数据.输出命名_替代文本 = "" AndAlso 预设数据.输出命名_结尾文本 = "" Then
+                    文件名 &= $"_{Now:yyyy.MM.dd-HH.mm.ss}"
+                End If
+            Case 2 : 文件名 &= $"~1"
+            Case 3 : 文件名 &= $"_3fui"
+            Case 4 : 文件名 &= $"_conver"
+            Case Else
+        End Select
+        文件名 &= 容器
+
+        Dim 输出路径 = Path.Combine(输出目录, 文件名)
 
         If 用户设置.实例对象.转译模式 Then
-            Return 转译模式处理路径(IO.Path.Combine(输出目录, 输出文件名))
+            Return 转译模式处理路径(输出路径)
         Else
-            Return IO.Path.Combine(输出目录, 输出文件名)
-        End If
-    End Function
-
-    Shared Function 计算输出位置_自定义目录(自定义目录 As String, 输入文件 As String, 容器 As String) As String
-        Dim 输出目录 As String = 自定义目录
-        If Not 容器.StartsWith("."c) Then
-            容器 = "." & 容器
-        End If
-        Dim 输出文件名 As String = IO.Path.GetFileNameWithoutExtension(输入文件) & $"_{Now:yyyy.MM.dd-HH.mm.ss}" & 容器
-
-        If 用户设置.实例对象.转译模式 Then
-            Return 转译模式处理路径(IO.Path.Combine(输出目录, 输出文件名))
-        Else
-            Return IO.Path.Combine(输出目录, 输出文件名)
+            Return 输出路径
         End If
     End Function
 

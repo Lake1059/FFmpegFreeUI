@@ -12,6 +12,11 @@ Public Class 预设管理
         Form1.常规流程参数页面.UiTextBoxinit_hw_device.Text = a.解码参数_init_hw_device
         Form1.常规流程参数页面.UiTextBoxqsv_device.Text = a.解码参数_qsv_device
 
+        Form1.常规流程参数页面.UiComboBox自动命名选项.SelectedIndex = a.输出命名_自动命名选项
+        Form1.常规流程参数页面.UiTextBox开头文本.Text = a.输出命名_开头文本
+        Form1.常规流程参数页面.UiTextBox替代文本.Text = a.输出命名_替代文本
+        Form1.常规流程参数页面.UiTextBox结尾文本.Text = a.输出命名_结尾文本
+
         Form1.常规流程参数页面.UiComboBox编码类别.Text = a.视频参数_编码器_类别
         Form1.常规流程参数页面.UiComboBox具体编码.Text = a.视频参数_编码器_具体编码
         Form1.常规流程参数页面.UiComboBox编码预设.Text = a.视频参数_编码器_质量
@@ -73,9 +78,7 @@ Public Class 预设管理
             Case "VBR HQ" : Form1.常规流程参数页面.UiComboBox比特率控制方式.SelectedIndex = 2
             Case "CRF" : Form1.常规流程参数页面.UiComboBox比特率控制方式.SelectedIndex = 3
             Case "CQP" : Form1.常规流程参数页面.UiComboBox比特率控制方式.SelectedIndex = 4
-            Case "ABR" : Form1.常规流程参数页面.UiComboBox比特率控制方式.SelectedIndex = 5
-            Case "TPE" : Form1.常规流程参数页面.UiComboBox比特率控制方式.SelectedIndex = 6
-            Case "CBR" : Form1.常规流程参数页面.UiComboBox比特率控制方式.SelectedIndex = 7
+            Case "CBR" : Form1.常规流程参数页面.UiComboBox比特率控制方式.SelectedIndex = 5
         End Select
         Form1.常规流程参数页面.UiTextBox硬件加速HQ前瞻分析帧数.Text = a.视频参数_质量控制_前瞻分析帧数
         Form1.常规流程参数页面.UiTextBox基础比特率.Text = a.视频参数_比特率_基础
@@ -201,6 +204,11 @@ Public Class 预设管理
         a.解码参数_init_hw_device = Form1.常规流程参数页面.UiTextBoxinit_hw_device.Text
         a.解码参数_qsv_device = Form1.常规流程参数页面.UiTextBoxqsv_device.Text
 
+        a.输出命名_自动命名选项 = Form1.常规流程参数页面.UiComboBox自动命名选项.SelectedIndex
+        a.输出命名_开头文本 = Form1.常规流程参数页面.UiTextBox开头文本.Text
+        a.输出命名_替代文本 = Form1.常规流程参数页面.UiTextBox替代文本.Text
+        a.输出命名_结尾文本 = Form1.常规流程参数页面.UiTextBox结尾文本.Text
+
         a.视频参数_编码器_类别 = Form1.常规流程参数页面.UiComboBox编码类别.Text
         a.视频参数_编码器_具体编码 = Form1.常规流程参数页面.UiComboBox具体编码.Text
         a.视频参数_编码器_质量 = Form1.常规流程参数页面.UiComboBox编码预设.Text
@@ -262,9 +270,7 @@ Public Class 预设管理
             Case 2 : a.视频参数_比特率_控制方式 = "VBR HQ"
             Case 3 : a.视频参数_比特率_控制方式 = "CRF"
             Case 4 : a.视频参数_比特率_控制方式 = "CQP"
-            Case 5 : a.视频参数_比特率_控制方式 = "ABR"
-            Case 6 : a.视频参数_比特率_控制方式 = "TPE"
-            Case 7 : a.视频参数_比特率_控制方式 = "CBR"
+            Case 5 : a.视频参数_比特率_控制方式 = "CBR"
         End Select
         a.视频参数_比特率_基础 = Form1.常规流程参数页面.UiTextBox基础比特率.Text
         a.视频参数_比特率_最低值 = Form1.常规流程参数页面.UiTextBox最低比特率.Text
@@ -414,6 +420,12 @@ Public Class 预设管理
         Form1.常规流程参数页面.UiTextBoxinit_hw_device.Text = ""
         Form1.常规流程参数页面.UiTextBoxqsv_device.Text = ""
 
+        ' 输出命名
+        Form1.常规流程参数页面.UiComboBox自动命名选项.SelectedIndex = 0
+        Form1.常规流程参数页面.UiTextBox开头文本.Text = ""
+        Form1.常规流程参数页面.UiTextBox替代文本.Text = ""
+        Form1.常规流程参数页面.UiTextBox结尾文本.Text = ""
+
         ' 视频参数
         Form1.常规流程参数页面.UiComboBox编码类别.Text = ""
         Form1.常规流程参数页面.UiComboBox具体编码.Text = ""
@@ -505,7 +517,7 @@ Public Class 预设管理
         Form1.常规流程参数页面.UiTextBoxfilter_complex.Text = ""
     End Sub
 
-    Public Shared Function 将预设数据转换为命令行(a As 预设数据类型, 输入文件 As String, 输出文件 As String) As String
+    Public Shared Function 将预设数据转换为命令行(a As 预设数据类型, 输入文件 As String, 输出文件 As String, Optional 二次编码轮数 As Integer = 0) As String
         Dim 视频滤镜参数集 As New List(Of String)
         Dim 音频滤镜参数集 As New List(Of String)
         Dim 滤镜图参数集 As New List(Of String)
@@ -625,8 +637,6 @@ Public Class 预设管理
                 End Select
 
             Case "ABR"
-            Case "TPE" '可能只有 hevc_nvenc 和 h264_nvenc 支持，其他编码器可能有专用的参数，但是我懒得写了
-                视频参数 &= $"-pass 2 "
             Case "CBR"
                 视频参数 &= $"-rc cbr "
         End Select
@@ -837,6 +847,7 @@ Public Class 预设管理
         Else
             If 音频参数 <> "" Then arg &= $"{音频参数} "
         End If
+
         '=================================================================
 
         If a.流控制_启用保留内嵌字幕流 Then

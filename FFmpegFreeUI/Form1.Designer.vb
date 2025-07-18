@@ -1304,9 +1304,9 @@ Partial Class Form1
         Label主标题.Location = New Point(76, 20)
         Label主标题.Name = "Label主标题"
         Label主标题.Padding = New Padding(0, 0, 0, 5)
-        Label主标题.Size = New Size(390, 27)
+        Label主标题.Size = New Size(227, 27)
         Label主标题.TabIndex = 9
-        Label主标题.Text = "FFmpegFreeUI Official v1.1 EarlyAccess 2 Gen 2"
+        Label主标题.Text = "FFmpegFreeUI Official v1.1"
         ' 
         ' Label11
         ' 

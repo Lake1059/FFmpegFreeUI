@@ -3,11 +3,13 @@ Imports System.IO
 Public Class Form画面裁剪交互窗口
 
     Private Sub Form画面裁剪交互窗口_Load(sender As Object, e As EventArgs) Handles Me.Load
-        SetControlFont(Form1.Font.Name, Me)
         UiComboBox比例.ItemHeight = 30 * Form1.DPI
         UiCheckBox居中.CheckBoxSize = 20 * Form1.DPI
         PictureBox2.Width = PictureBox2.Height
         PictureBox3.Width = PictureBox3.Height
+    End Sub
+    Private Sub Form画面裁剪交互窗口_Shown(sender As Object, e As EventArgs) Handles Me.Shown
+        SetControlFont(Form1.UiComboBox字体名称.Text, Me)
     End Sub
     Private Sub Form画面裁剪交互窗口_DpiChanged(sender As Object, e As DpiChangedEventArgs) Handles Me.DpiChanged
         UiComboBox比例.ItemHeight = 30 * Form1.DPI
@@ -281,9 +283,6 @@ Public Class Form画面裁剪交互窗口
             Debug.WriteLine("放大镜更新错误: " & ex.ToString())
         End Try
     End Sub
-
-
-
 
 
 End Class

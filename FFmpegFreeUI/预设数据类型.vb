@@ -10,6 +10,12 @@ Public Class 预设数据类型
     Public Property 解码参数_init_hw_device As String = ""
     Public Property 解码参数_qsv_device As String = ""
 
+    Public Property 输出命名_自动命名选项 As Integer = 0
+    Public Property 输出命名_开头文本 As String = ""
+    Public Property 输出命名_替代文本 As String = ""
+    Public Property 输出命名_结尾文本 As String = ""
+
+
     Public Property 视频参数_编码器_类别 As String = ""
     Public Property 视频参数_编码器_具体编码 As String = ""
     Public Property 视频参数_编码器_质量 As String = ""

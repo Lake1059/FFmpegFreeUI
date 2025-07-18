@@ -1,4 +1,6 @@
-﻿Namespace My
+﻿Imports Microsoft.VisualBasic.ApplicationServices
+
+Namespace My
     ' The following events are available for MyApplication:
     ' Startup: Raised when the application starts, before the startup form is created.
     ' Shutdown: Raised after all application forms are closed. This event is not raised if the application terminates abnormally.
@@ -22,6 +24,15 @@
     ' End Sub
 
     Partial Friend Class MyApplication
+        Private Sub MyApplication_Startup(sender As Object, e As StartupEventArgs) Handles Me.Startup
+            If e.CommandLine.Contains("fullscreen") Then
+                Form1.FormBorderStyle = FormBorderStyle.None
+                Form1.WindowState = FormWindowState.Maximized
+            End If
+        End Sub
 
+        Private Sub MyApplication_StartupNextInstance(sender As Object, e As StartupNextInstanceEventArgs) Handles Me.StartupNextInstance
+
+        End Sub
     End Class
 End Namespace

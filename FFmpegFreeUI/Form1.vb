@@ -20,13 +20,15 @@ Public Class Form1
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         用户设置.加载()
         界面控制.初始化()
-        UiComboBox字体名称.Text = 用户设置.实例对象.字体
         视频编码器数据库.初始化()
         上一次窗口状态 = Me.WindowState
     End Sub
 
     Private Sub Form1_Shown(sender As Object, e As EventArgs) Handles Me.Shown
+        UiComboBox字体名称.Text = 用户设置.实例对象.字体
+        If UiComboBox字体名称.Items.Contains("微软雅黑") Then UiComboBox字体名称.Font = New Font("微软雅黑", UiComboBox字体名称.Font.Size)
         SetControlFont(用户设置.实例对象.字体, Me, {UiComboBox字体名称})
+
         界面控制.界面校准()
         If DPI <> 1 Then DPI变动时校准界面()
 

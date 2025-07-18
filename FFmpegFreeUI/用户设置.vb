@@ -34,7 +34,6 @@ Public Class 用户设置
                 '检查系统中是否有指定字体
                 If FontFamily.Families.Any(Function(f) f.Name = "微软雅黑") Then
                     实例对象.字体 = "微软雅黑"
-                    Form1.UiComboBox字体名称.Font = New Font("微软雅黑", Form1.UiComboBox字体名称.Font.Size)
                 End If
                 保存()
             Else

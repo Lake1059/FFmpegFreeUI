@@ -31,6 +31,7 @@ Public Class 界面_常规流程参数
         AddHandler UiButton22.Click, AddressOf 预设管理.保存预设到文件
         AddHandler UiButton21.Click, AddressOf 预设管理.从文件读取预设
         AddHandler UiButton13.Click, AddressOf 预设管理.重置全部包含在预设中的设置
+        UiComboBox自动命名选项.SelectedIndex = 0
 
         设置富文本框行高(RichTextBox1, 350)
         界面校准()
@@ -153,13 +154,7 @@ Public Class 界面_常规流程参数
                 UiComboBox全局质量控制参数.SelectedIndex = 3
             Case 4    '恒定量化 CQP - 不推荐，主用于研究和特定场景
                 UiComboBox全局质量控制参数.SelectedIndex = 2
-            Case 5    '平均码率 ABR - 折中方案，在一定范围内波动
-                UiComboBox全局质量控制参数.SelectedIndex = 0
-                UiTextBox全局质量控制值.Text = ""
-            Case 6    '二次编码 TPE - 花费时间节省比特率
-                UiComboBox全局质量控制参数.SelectedIndex = 0
-                UiTextBox全局质量控制值.Text = ""
-            Case 7    '恒定速率 CBR - 流媒体常用，不适合存储
+            Case 5    '恒定速率 CBR - 流媒体常用，不适合存储
                 UiComboBox全局质量控制参数.SelectedIndex = 0
                 UiTextBox全局质量控制值.Text = ""
         End Select
@@ -257,6 +252,7 @@ Public Class 界面_常规流程参数
             Case 选项卡.IsEqual(TabPage解码参数)
                 UiComboBox解码器.ItemHeight = 30 * Form1.DPI
                 UiComboBox解码数据格式.ItemHeight = 30 * Form1.DPI
+                UiComboBox自动命名选项.ItemHeight = 30 * Form1.DPI
             Case 选项卡.IsEqual(TabPage视频参数)
                 UiComboBox编码类别.ItemHeight = 30 * Form1.DPI
                 UiComboBox具体编码.ItemHeight = 30 * Form1.DPI
