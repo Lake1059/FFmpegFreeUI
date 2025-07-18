@@ -1,5 +1,6 @@
 ﻿Imports System.IO
 Imports System.Text.RegularExpressions
+Imports System.Threading
 
 Public Class 编码任务
     Enum 编码状态
@@ -54,16 +55,18 @@ Public Class 编码任务
     Public Shared Sub 用定时器刷新到界面上()
         If 队列.Count = 0 Then Exit Sub
         If 要刷新的项.Count = 0 Then Exit Sub
-        Dim 要刷新的项副本 As New Dictionary(Of ListViewItem, 刷新到界面数据结构)(要刷新的项)
-        要刷新的项.Clear()
-        For Each item As ListViewItem In 要刷新的项副本.Keys
-            item.SubItems(2).Text = 要刷新的项副本(item).进度
-            item.SubItems(3).Text = 要刷新的项副本(item).效率
-            item.SubItems(4).Text = 要刷新的项副本(item).输出大小
-            item.SubItems(5).Text = 要刷新的项副本(item).质量
-            item.SubItems(6).Text = 要刷新的项副本(item).比特率
-            item.SubItems(7).Text = 要刷新的项副本(item).时间
-        Next
+        SyncLock 要刷新的项
+            Dim 要刷新的项副本 As New Dictionary(Of ListViewItem, 刷新到界面数据结构)(要刷新的项)
+            要刷新的项.Clear()
+            For Each item As ListViewItem In 要刷新的项副本.Keys
+                item.SubItems(2).Text = 要刷新的项副本(item).进度
+                item.SubItems(3).Text = 要刷新的项副本(item).效率
+                item.SubItems(4).Text = 要刷新的项副本(item).输出大小
+                item.SubItems(5).Text = 要刷新的项副本(item).质量
+                item.SubItems(6).Text = 要刷新的项副本(item).比特率
+                item.SubItems(7).Text = 要刷新的项副本(item).时间
+            Next
+        End SyncLock
     End Sub
 
     Public Class 单片任务
@@ -269,6 +272,7 @@ jx1:
         End Sub
 
         Public Sub FFmpegProcessExited(sender As Object, e As EventArgs)
+            If 要刷新的项.ContainsKey(列表视图项) Then 要刷新的项.Remove(列表视图项)
             If FFmpegProcess.ExitCode = 0 Then
                 状态 = 编码状态.已完成
 
@@ -540,17 +544,6 @@ jx1:
     Public Shared Sub 选中项刷新信息()
         Try
             Form1.Labelffmpeg实时信息.Text = 编码任务.队列(Form1.ListView1.SelectedItems(0).Index).实时输出
-
-            Select Case 编码任务.队列(Form1.ListView1.SelectedItems(0).Index).状态
-                Case 编码状态.正在处理, 编码状态.已暂停
-                    Dim 物理内存 = Format(编码任务.队列(Form1.ListView1.SelectedItems(0).Index).FFmpegProcess.PrivateMemorySize64 / 1024 / 1024, "0")
-                    Dim 虚拟内存 = Format(编码任务.队列(Form1.ListView1.SelectedItems(0).Index).FFmpegProcess.VirtualMemorySize64 / 1024 / 1024, "0")
-                    Dim 线程数 = 编码任务.队列(Form1.ListView1.SelectedItems(0).Index).FFmpegProcess.Threads.Count
-                    Form1.Labelffmpeg进程信息.Text = $"物理内存：{物理内存} MB   虚拟内存：{虚拟内存} MB   线程数：{线程数}"
-                Case Else
-                    Form1.Labelffmpeg进程信息.Text = "任务未进行"
-            End Select
-
             Form1.Label累计错误信息.Text = String.Join(vbCrLf, 编码任务.队列(Form1.ListView1.SelectedItems(0).Index).错误列表)
             If Form1.Label累计错误信息.Text = "" Then
                 Form1.Panel错误信息容器.Visible = False
@@ -565,7 +558,7 @@ jx1:
                     Form1.Panel错误信息容器.AutoSize = False
                     Form1.Panel错误信息容器.Height = Form1.TabPage编码队列.Height * 0.25
                 Else
-                    Form1.Label累计错误信息.Height = s1 + 6 * Form1.DPI
+                    Form1.Label累计错误信息.Height = s1 + 5 * Form1.DPI
                     Form1.Panel错误信息容器.AutoSize = True
                 End If
             End If

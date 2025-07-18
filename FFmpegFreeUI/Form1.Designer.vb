@@ -118,7 +118,6 @@ Partial Class Form1
         Panel错误信息容器 = New Panel()
         Label累计错误信息 = New Label()
         Label错误信息容器之外的间隔 = New Label()
-        Labelffmpeg进程信息 = New Label()
         Labelffmpeg实时信息 = New Label()
         Panel2 = New Panel()
         UiButton15 = New Sunny.UI.UIButton()
@@ -1306,7 +1305,7 @@ Partial Class Form1
         Label主标题.Padding = New Padding(0, 0, 0, 5)
         Label主标题.Size = New Size(227, 27)
         Label主标题.TabIndex = 9
-        Label主标题.Text = "FFmpegFreeUI Official v1.1"
+        Label主标题.Text = "FFmpegFreeUI Official v1.2"
         ' 
         ' Label11
         ' 
@@ -1483,7 +1482,6 @@ Partial Class Form1
         Panel41.BackColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
         Panel41.Controls.Add(Panel错误信息容器)
         Panel41.Controls.Add(Label错误信息容器之外的间隔)
-        Panel41.Controls.Add(Labelffmpeg进程信息)
         Panel41.Controls.Add(Labelffmpeg实时信息)
         Panel41.Dock = DockStyle.Bottom
         Panel41.Location = New Point(0, 501)
@@ -1498,7 +1496,7 @@ Partial Class Form1
         Panel错误信息容器.AutoScroll = True
         Panel错误信息容器.Controls.Add(Label累计错误信息)
         Panel错误信息容器.Dock = DockStyle.Top
-        Panel错误信息容器.Location = New Point(10, 60)
+        Panel错误信息容器.Location = New Point(10, 35)
         Panel错误信息容器.Name = "Panel错误信息容器"
         Panel错误信息容器.Size = New Size(1113, 78)
         Panel错误信息容器.TabIndex = 14
@@ -1518,24 +1516,11 @@ Partial Class Form1
         ' 
         Label错误信息容器之外的间隔.Dock = DockStyle.Top
         Label错误信息容器之外的间隔.ForeColor = Color.MediumPurple
-        Label错误信息容器之外的间隔.Location = New Point(10, 55)
+        Label错误信息容器之外的间隔.Location = New Point(10, 30)
         Label错误信息容器之外的间隔.Name = "Label错误信息容器之外的间隔"
         Label错误信息容器之外的间隔.Padding = New Padding(0, 5, 0, 0)
         Label错误信息容器之外的间隔.Size = New Size(1113, 5)
         Label错误信息容器之外的间隔.TabIndex = 16
-        ' 
-        ' Labelffmpeg进程信息
-        ' 
-        Labelffmpeg进程信息.AutoSize = True
-        Labelffmpeg进程信息.Dock = DockStyle.Top
-        Labelffmpeg进程信息.Font = New Font("微软雅黑", 10F)
-        Labelffmpeg进程信息.ForeColor = Color.MediumPurple
-        Labelffmpeg进程信息.Location = New Point(10, 30)
-        Labelffmpeg进程信息.Name = "Labelffmpeg进程信息"
-        Labelffmpeg进程信息.Padding = New Padding(0, 5, 0, 0)
-        Labelffmpeg进程信息.Size = New Size(65, 25)
-        Labelffmpeg进程信息.TabIndex = 15
-        Labelffmpeg进程信息.Text = "进程信息"
         ' 
         ' Labelffmpeg实时信息
         ' 
@@ -2984,7 +2969,6 @@ Partial Class Form1
     Friend WithEvents UiCheckBox转译模式 As Sunny.UI.UICheckBox
     Friend WithEvents Label11 As Label
     Friend WithEvents PictureBox1 As PictureBox
-    Friend WithEvents Labelffmpeg进程信息 As Label
     Friend WithEvents Label30 As Label
     Friend WithEvents Label错误信息容器之外的间隔 As Label
 
