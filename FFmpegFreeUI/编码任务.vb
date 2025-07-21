@@ -1,6 +1,5 @@
 ﻿Imports System.IO
 Imports System.Text.RegularExpressions
-Imports System.Threading
 
 Public Class 编码任务
     Enum 编码状态
@@ -201,6 +200,7 @@ jx1:
                         状态 = 编码状态.正在处理
                         任务耗时计时器.Start()
                         状态刷新统一逻辑()
+                        设定系统状态()
                     End If
                 End If
             Catch ex As Exception
@@ -425,7 +425,10 @@ jx1:
             If el.Minutes > 0 OrElse elapsedParts.Count > 0 Then elapsedParts.Add($"{el.Minutes}m")
             elapsedParts.Add($"{el.Seconds}s")
             信息数据.时间 = $"{remainTime} - {String.Join("", elapsedParts)}"
-            要刷新的项(列表视图项) = 信息数据
+            SyncLock 要刷新的项
+                要刷新的项(列表视图项) = 信息数据
+            End SyncLock
+
 
         End Sub
         Public Sub 在实时输出中提取数据(line As String)
@@ -543,8 +546,8 @@ jx1:
 
     Public Shared Sub 选中项刷新信息()
         Try
-            Form1.Labelffmpeg实时信息.Text = 编码任务.队列(Form1.ListView1.SelectedItems(0).Index).实时输出
-            Form1.Label累计错误信息.Text = String.Join(vbCrLf, 编码任务.队列(Form1.ListView1.SelectedItems(0).Index).错误列表)
+            Form1.Labelffmpeg实时信息.Text = 队列(Form1.ListView1.SelectedItems(0).Index).实时输出
+            Form1.Label累计错误信息.Text = String.Join(vbCrLf, 队列(Form1.ListView1.SelectedItems(0).Index).错误列表)
             If Form1.Label累计错误信息.Text = "" Then
                 Form1.Panel错误信息容器.Visible = False
                 Form1.Label错误信息容器之外的间隔.Visible = False
@@ -554,17 +557,19 @@ jx1:
 
                 Dim s1 = 根据标签宽度计算显示高度(Form1.Label累计错误信息)
                 If s1 > Form1.TabPage编码队列.Height * 0.25 Then
-                    Form1.Label累计错误信息.Height = s1 + 10 * Form1.DPI
+                    Form1.Label累计错误信息.AutoSize = False
+                    Form1.Label累计错误信息.Height = s1 + 16 * Form1.DPI
                     Form1.Panel错误信息容器.AutoSize = False
                     Form1.Panel错误信息容器.Height = Form1.TabPage编码队列.Height * 0.25
                 Else
-                    Form1.Label累计错误信息.Height = s1 + 5 * Form1.DPI
+                    Form1.Label累计错误信息.AutoSize = True
                     Form1.Panel错误信息容器.AutoSize = True
                 End If
             End If
         Catch ex As Exception
-            编码任务.队列(Form1.ListView1.SelectedItems(0).Index).错误列表.Add($"刷新界面失败 {Now} {ex.Message}")
+            队列(Form1.ListView1.SelectedItems(0).Index).错误列表.Add($"刷新界面失败 {Now} {ex.Message}")
         End Try
     End Sub
+
 
 End Class

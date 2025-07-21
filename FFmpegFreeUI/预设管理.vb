@@ -627,8 +627,8 @@ Public Class 预设管理
                         视频参数 &= $"-rc la_icq "
                 End Select
 
-            Case "CRF" '自动把全局质量控制调整为 第3个：-crf
-            Case "CQP" '自动把全局质量控制调整为 第2个：-qp
+            Case "CRF"
+            Case "CQP"
                 Select Case a.视频参数_编码器_具体编码
                     Case "av1_nvenc", "hevc_nvenc", "h264_nvenc"
                         视频参数 &= $"-rc constqp "
@@ -636,7 +636,6 @@ Public Class 预设管理
                         视频参数 &= $"-rc cqp "
                 End Select
 
-            Case "ABR"
             Case "CBR"
                 视频参数 &= $"-rc cbr "
         End Select

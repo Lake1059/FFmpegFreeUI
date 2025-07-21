@@ -194,7 +194,7 @@ Public Class Form1
                         End If
                     End If
                 Catch ex As Exception
-                    MsgBox("输入处理异常: " & ex.Message, MsgBoxStyle.Critical)
+                    MsgBox(ex.Message, MsgBoxStyle.Critical)
                 End Try
                 e.Handled = True
             Case Else

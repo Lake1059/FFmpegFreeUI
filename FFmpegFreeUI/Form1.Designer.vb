@@ -60,9 +60,10 @@ Partial Class Form1
         Label34 = New Label()
         UiComboBox自动开始最大任务数量 = New Sunny.UI.UIComboBox()
         Panel11 = New Panel()
-        UiTextBox处理器核心 = New Sunny.UI.UITextBox()
-        Label106 = New Label()
+        Label33 = New Label()
         UiTextBox快捷输入CPU核心 = New Sunny.UI.UITextBox()
+        Label106 = New Label()
+        UiTextBox处理器核心 = New Sunny.UI.UITextBox()
         Label21 = New Label()
         Label15 = New Label()
         Panel12 = New Panel()
@@ -824,9 +825,10 @@ Partial Class Form1
         ' 
         ' Panel11
         ' 
-        Panel11.Controls.Add(UiTextBox处理器核心)
-        Panel11.Controls.Add(Label106)
+        Panel11.Controls.Add(Label33)
         Panel11.Controls.Add(UiTextBox快捷输入CPU核心)
+        Panel11.Controls.Add(Label106)
+        Panel11.Controls.Add(UiTextBox处理器核心)
         Panel11.Dock = DockStyle.Top
         Panel11.Location = New Point(100, 0)
         Panel11.Name = "Panel11"
@@ -834,9 +836,61 @@ Partial Class Form1
         Panel11.Size = New Size(693, 50)
         Panel11.TabIndex = 108
         ' 
+        ' Label33
+        ' 
+        Label33.Dock = DockStyle.Fill
+        Label33.Font = New Font("微软雅黑", 9.75F)
+        Label33.ForeColor = Color.Gray
+        Label33.Location = New Point(424, 10)
+        Label33.Name = "Label33"
+        Label33.Padding = New Padding(10, 0, 0, 0)
+        Label33.Size = New Size(259, 30)
+        Label33.TabIndex = 88
+        Label33.Text = "指定新任务的处理器相关性"
+        Label33.TextAlign = ContentAlignment.MiddleLeft
+        ' 
+        ' UiTextBox快捷输入CPU核心
+        ' 
+        UiTextBox快捷输入CPU核心.Dock = DockStyle.Left
+        UiTextBox快捷输入CPU核心.FillColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiTextBox快捷输入CPU核心.FillColor2 = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiTextBox快捷输入CPU核心.FillDisableColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiTextBox快捷输入CPU核心.FillReadOnlyColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiTextBox快捷输入CPU核心.Font = New Font("微软雅黑", 9.75F)
+        UiTextBox快捷输入CPU核心.ForeColor = Color.DarkGray
+        UiTextBox快捷输入CPU核心.ForeDisableColor = Color.DarkGray
+        UiTextBox快捷输入CPU核心.ForeReadOnlyColor = Color.DarkGray
+        UiTextBox快捷输入CPU核心.Location = New Point(334, 10)
+        UiTextBox快捷输入CPU核心.Margin = New Padding(4, 5, 4, 5)
+        UiTextBox快捷输入CPU核心.MinimumSize = New Size(1, 16)
+        UiTextBox快捷输入CPU核心.Name = "UiTextBox快捷输入CPU核心"
+        UiTextBox快捷输入CPU核心.Padding = New Padding(5)
+        UiTextBox快捷输入CPU核心.Radius = 30
+        UiTextBox快捷输入CPU核心.RectColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        UiTextBox快捷输入CPU核心.RectDisableColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        UiTextBox快捷输入CPU核心.RectReadOnlyColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        UiTextBox快捷输入CPU核心.ScrollBarBackColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        UiTextBox快捷输入CPU核心.ScrollBarColor = Color.DimGray
+        UiTextBox快捷输入CPU核心.ScrollBarStyleInherited = False
+        UiTextBox快捷输入CPU核心.ShowText = False
+        UiTextBox快捷输入CPU核心.Size = New Size(90, 30)
+        UiTextBox快捷输入CPU核心.TabIndex = 83
+        UiTextBox快捷输入CPU核心.TextAlignment = ContentAlignment.MiddleLeft
+        UiTextBox快捷输入CPU核心.Watermark = "?~?"
+        UiTextBox快捷输入CPU核心.WatermarkActiveColor = Color.DimGray
+        UiTextBox快捷输入CPU核心.WatermarkColor = Color.DimGray
+        ' 
+        ' Label106
+        ' 
+        Label106.Dock = DockStyle.Left
+        Label106.Location = New Point(324, 10)
+        Label106.Name = "Label106"
+        Label106.Size = New Size(10, 30)
+        Label106.TabIndex = 84
+        ' 
         ' UiTextBox处理器核心
         ' 
-        UiTextBox处理器核心.Dock = DockStyle.Fill
+        UiTextBox处理器核心.Dock = DockStyle.Left
         UiTextBox处理器核心.FillColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
         UiTextBox处理器核心.FillColor2 = Color.FromArgb(CByte(36), CByte(36), CByte(36))
         UiTextBox处理器核心.FillDisableColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
@@ -858,51 +912,12 @@ Partial Class Form1
         UiTextBox处理器核心.ScrollBarColor = Color.DimGray
         UiTextBox处理器核心.ScrollBarStyleInherited = False
         UiTextBox处理器核心.ShowText = False
-        UiTextBox处理器核心.Size = New Size(553, 30)
+        UiTextBox处理器核心.Size = New Size(314, 30)
         UiTextBox处理器核心.TabIndex = 82
         UiTextBox处理器核心.TextAlignment = ContentAlignment.MiddleLeft
-        UiTextBox处理器核心.Watermark = "设置 ffmpeg 能够使用哪些处理器核心，将对所有新的任务生效，用逗号隔开"
+        UiTextBox处理器核心.Watermark = "指定处理器核心，用逗号隔开"
         UiTextBox处理器核心.WatermarkActiveColor = Color.DimGray
         UiTextBox处理器核心.WatermarkColor = Color.DimGray
-        ' 
-        ' Label106
-        ' 
-        Label106.Dock = DockStyle.Right
-        Label106.Location = New Point(563, 10)
-        Label106.Name = "Label106"
-        Label106.Size = New Size(10, 30)
-        Label106.TabIndex = 84
-        ' 
-        ' UiTextBox快捷输入CPU核心
-        ' 
-        UiTextBox快捷输入CPU核心.Dock = DockStyle.Right
-        UiTextBox快捷输入CPU核心.FillColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
-        UiTextBox快捷输入CPU核心.FillColor2 = Color.FromArgb(CByte(36), CByte(36), CByte(36))
-        UiTextBox快捷输入CPU核心.FillDisableColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
-        UiTextBox快捷输入CPU核心.FillReadOnlyColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
-        UiTextBox快捷输入CPU核心.Font = New Font("微软雅黑", 9.75F)
-        UiTextBox快捷输入CPU核心.ForeColor = Color.DarkGray
-        UiTextBox快捷输入CPU核心.ForeDisableColor = Color.DarkGray
-        UiTextBox快捷输入CPU核心.ForeReadOnlyColor = Color.DarkGray
-        UiTextBox快捷输入CPU核心.Location = New Point(573, 10)
-        UiTextBox快捷输入CPU核心.Margin = New Padding(4, 5, 4, 5)
-        UiTextBox快捷输入CPU核心.MinimumSize = New Size(1, 16)
-        UiTextBox快捷输入CPU核心.Name = "UiTextBox快捷输入CPU核心"
-        UiTextBox快捷输入CPU核心.Padding = New Padding(5)
-        UiTextBox快捷输入CPU核心.Radius = 30
-        UiTextBox快捷输入CPU核心.RectColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
-        UiTextBox快捷输入CPU核心.RectDisableColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
-        UiTextBox快捷输入CPU核心.RectReadOnlyColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
-        UiTextBox快捷输入CPU核心.ScrollBarBackColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
-        UiTextBox快捷输入CPU核心.ScrollBarColor = Color.DimGray
-        UiTextBox快捷输入CPU核心.ScrollBarStyleInherited = False
-        UiTextBox快捷输入CPU核心.ShowText = False
-        UiTextBox快捷输入CPU核心.Size = New Size(110, 30)
-        UiTextBox快捷输入CPU核心.TabIndex = 83
-        UiTextBox快捷输入CPU核心.TextAlignment = ContentAlignment.MiddleLeft
-        UiTextBox快捷输入CPU核心.Watermark = "?~? Enter"
-        UiTextBox快捷输入CPU核心.WatermarkActiveColor = Color.DimGray
-        UiTextBox快捷输入CPU核心.WatermarkColor = Color.DimGray
         ' 
         ' Label21
         ' 
@@ -1305,7 +1320,7 @@ Partial Class Form1
         Label主标题.Padding = New Padding(0, 0, 0, 5)
         Label主标题.Size = New Size(227, 27)
         Label主标题.TabIndex = 9
-        Label主标题.Text = "FFmpegFreeUI Official v1.2"
+        Label主标题.Text = "FFmpegFreeUI Official v1.3"
         ' 
         ' Label11
         ' 
@@ -2971,5 +2986,6 @@ Partial Class Form1
     Friend WithEvents PictureBox1 As PictureBox
     Friend WithEvents Label30 As Label
     Friend WithEvents Label错误信息容器之外的间隔 As Label
+    Friend WithEvents Label33 As Label
 
 End Class

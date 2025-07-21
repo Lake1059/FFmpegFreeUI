@@ -24,6 +24,7 @@ Public Class 界面_常规流程参数
         '==============================================
         AddHandler UiComboBox降噪方式.TextChanged, AddressOf 视频降噪方式变动事件
         '==========================================
+        AddHandler UiComboBox音频编码器.TextChanged, AddressOf 音频编码参数变动事件
         AddHandler UiComboBox音频比特率控制方式.TextChanged, AddressOf 音频比特率控制方式参数变动事件
         '==========================================
         AddHandler UiComboBox图片编码器.TextChanged, AddressOf 图片编码器参数变动事件
@@ -231,6 +232,21 @@ Public Class 界面_常规流程参数
             UiComboBox色彩范围.Text = ""
         End If
     End Sub
+
+    Sub 音频编码参数变动事件()
+        Select Case UiComboBox音频编码器.Text
+            Case "复制流", "禁用"
+                UiComboBox音频比特率控制方式.SelectedIndex = -1
+                UiTextBox音频基础比特率.Text = ""
+                UiTextBox音频比特率质量值.Text = ""
+                UiComboBox声道布局.Text = ""
+                UiComboBox采样率.Text = ""
+                UiTextBox响度标准化目标响度.Text = ""
+                UiTextBox响度标准化动态范围.Text = ""
+                UiTextBox响度标准化峰值电平.Text = ""
+        End Select
+    End Sub
+
     Sub 音频比特率控制方式参数变动事件()
         If UiComboBox音频比特率控制方式.Text = "" Then
             UiTextBox音频基础比特率.Text = ""

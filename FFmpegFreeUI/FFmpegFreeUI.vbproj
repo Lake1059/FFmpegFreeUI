@@ -13,7 +13,7 @@
 	  <PublishSingleFile>True</PublishSingleFile>
 	  <Authors>1059 Studio</Authors>
 	  <Company>1059 Studio</Company>
-	  <Version>1.2</Version>
+	  <Version>1.3</Version>
 	  <SupportedOSPlatformVersion>10.0.17763.0</SupportedOSPlatformVersion>
 	  <ApplicationIcon>ico.ico</ApplicationIcon>
 	  <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
