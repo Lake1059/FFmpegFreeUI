@@ -217,7 +217,7 @@ FFmpegFreeUI 提供了字体设置选项，目前该设置项位于首页最上�
 
 - 一般情况下，您可使用 `winepath -w /unix/path` 将 Unix 路径转换为 DOS 路径，使用 `winepath -u Z:\dos\path` 将 DOS 路径转换为 Unix 路径。
 
-- 或者，您可以查看 `$WINE_PREFIX/dosdevices` 下的符号链接以确认盘符映射，将 `$WINE_PREFIX` 替换为您实际的 Wine 前缀。`ls -l $WINE_PREFIX/dosdevices` 的结果可能如下：
+- 或者，您可以查看 `$WINEPREFIX/dosdevices` 下的符号链接以确认盘符映射，将 `$WINEPREFIX` 替换为您实际的 Wine 前缀。`ls -l $WINEPREFIX/dosdevices` 的结果可能如下：
 
   ```
   lrwxrwxrwx 1 username username 10 Jan 01 00:00 c: -> ../drive_c
@@ -225,7 +225,7 @@ FFmpegFreeUI 提供了字体设置选项，目前该设置项位于首页最上�
   ...
   ```
 
-  这表示 `C:\` 映射 `$WINE_PREFIX/drive_c/`，`Z:\` 映射 `/`。
+  这表示 `C:\` 映射 `$WINEPREFIX/drive_c/`，`Z:\` 映射 `/`。
 
 > [!NOTE]
 > 一般情况下，Wine 会将 `Z:\` 映射为系统根目录 `/`，此外 Proton 通常还会将 `X:\` 映射为用户家目录 `/home/username/`。但这只是经验规律，建议在实际应用场景中根据上述方法自行确认。
@@ -237,3 +237,9 @@ FFmpegFreeUI 提供了字体设置选项，目前该设置项位于首页最上�
 > 此外，使用兼容层通常意味着您可能会在各种场景下遇到各种问题，有些是操作失误，有些是系统 Bug。由于本文档无法覆盖所有可能遇到的问题，因此充分的耐心和强大的包容心是重要的前置条件之一 :)
 
 持续不断的 Troubleshooting 是使用 GNU/Linux 系统不得不品的一环，尤其是对于本文所述强行兼容运行 WinForms 应用并调用外部二进制的场景。当然无论遇到任何问题或有任何改进建议都欢迎提出，也欢迎进群一起讨论。
+
+### 高分辨率屏幕 界面过小
+
+输入 `WINEPREFIX="/path/to/your/wine/prefix" winecfg` (如果不懂这是什么 那么直接输入 `winecfg`)
+
+在弹出的界面中选择 "显示" 并在 "屏幕分辨率" 中调整 DPI，高分辨率情况下推荐 144。
