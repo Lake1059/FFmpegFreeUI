@@ -20,8 +20,7 @@
 
 1. 下载 Windows 版本的 [ffmpeg 发行版](https://www.gyan.dev/ffmpeg/builds/)；
 2. 将 `ffmpeg.exe` 和 `ffprobe.exe` 放置于 `FFmpegFreeUI.exe` 的同级目录；
-3. 使用兼容层启动 `FFmpegFreeUI.exe`；
-4. 在设置中勾选 `转译模式` 选项。
+3. 使用兼容层启动 `FFmpegFreeUI.exe`。
 
 或者，如果您希望将 Windows 版本的 ffmpeg 保存在其他特定目录，可以在 FFmpegFreeUI 的 `替代 Process 的 FileName` 设置项中填入 `ffmpeg.exe` 的完整 [DOS 路径](https://learn.microsoft.com/zh-cn/dotnet/standard/io/file-path-formats#traditional-dos-paths)（如：`Z:\home\username\Downloads\ffmpeg-win\ffmpeg.exe`）。
 
