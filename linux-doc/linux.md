@@ -148,8 +148,8 @@
        main()
    ```
 
-   > [!NOTE]
-   > 别忘记赋予可执行权限：`chmod +x /path/to/run-ffmpeg.py`
+> [!NOTE]
+> 别忘记赋予可执行权限：`chmod +x /path/to/run-ffmpeg.py`
 
 3. `delay.vbs`：在 `wait-exit.bat` 中实现延时的工具脚本：
 
