@@ -1,5 +1,6 @@
 ﻿Imports System.IO
 Imports System.Text.RegularExpressions
+Imports Sunny.UI
 
 Public Class 编码任务
     Enum 编码状态
@@ -240,6 +241,17 @@ jx1:
             End Try
         End Sub
 
+        Public Sub 发送消息(message As String)
+            Try
+                If FFmpegProcess IsNot Nothing AndAlso Not FFmpegProcess.HasExited Then
+                    FFmpegProcess.StandardInput.WriteLine(message)
+                    FFmpegProcess.StandardInput.Flush()
+                End If
+            Catch ex As Exception
+                错误列表.Add($"发送消息失败: {ex.Message}")
+            End Try
+        End Sub
+
         Public errorKeywords As String() = {"Error", "Invalid", "cannot", "failed", "not supported", "require", "must be", "Could not", "is experimental", "if you want to use it", "Nothing was written"}
 
         Public Sub FFmpegOutputHandler(sender As Object, e As DataReceivedEventArgs)
@@ -292,7 +304,12 @@ jx1:
                 If Not 手动停止不要尝试启动其他任务 Then 状态 = 编码状态.错误
                 If My.Computer.FileSystem.FileExists(输出文件) Then
                     Select Case Path.GetExtension(输出文件).ToLower.Trim
-                        Case ".mp4" : My.Computer.FileSystem.DeleteFile(输出文件)
+                        Case ".mp4"
+                            If 输出文件.Trim.Equals(输入文件.Trim, StringComparison.CurrentCultureIgnoreCase) Then
+                                界面线程执行(Sub() MsgBox("你在干什么？！输出文件等于输入文件？不要搞小聪明！", MsgBoxStyle.Critical))
+                            Else
+                                FileIO.FileSystem.DeleteFile(输出文件, FileIO.UIOption.OnlyErrorDialogs, FileIO.RecycleOption.SendToRecycleBin)
+                            End If
                     End Select
                 End If
                 全部任务已完成是否有错误 = True

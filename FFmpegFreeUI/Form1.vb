@@ -1,4 +1,5 @@
 ﻿Imports System.IO
+Imports Sunny.UI
 
 Public Class Form1
     Public Shared Property DPI As Single = Form1.CreateGraphics.DpiX / 96
@@ -21,14 +22,10 @@ Public Class Form1
         用户设置.加载()
         界面控制.初始化()
         视频编码器数据库.初始化()
-        上一次窗口状态 = Me.WindowState
-    End Sub
 
-    Private Sub Form1_Shown(sender As Object, e As EventArgs) Handles Me.Shown
         UiComboBox字体名称.Text = 用户设置.实例对象.字体
         If UiComboBox字体名称.Items.Contains("微软雅黑") Then UiComboBox字体名称.Font = New Font("微软雅黑", UiComboBox字体名称.Font.Size)
         SetControlFont(用户设置.实例对象.字体, Me, {UiComboBox字体名称})
-
         界面控制.界面校准()
         If DPI <> 1 Then DPI变动时校准界面()
 
@@ -42,6 +39,10 @@ Public Class Form1
             Me.PictureBox1.Image = My.Resources.Resource1.AppIcon.GetThumbnailImage(Me.PictureBox1.Width, Me.PictureBox1.Height, Nothing, Nothing)
         End If
 
+        上一次窗口状态 = Me.WindowState
+    End Sub
+
+    Private Sub Form1_Shown(sender As Object, e As EventArgs) Handles Me.Shown
         界面线程执行(AddressOf 插件管理.启动时加载插件)
         If UI同步上下文 Is Nothing Then MsgBox("警告：UI 同步上下文是空的，继续使用软件将导致崩溃，请联系开发者排查问题", MsgBoxStyle.Critical)
         界面线程执行(AddressOf 检查更新.检查)

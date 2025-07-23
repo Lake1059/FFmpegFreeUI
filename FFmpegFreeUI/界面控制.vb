@@ -76,6 +76,10 @@ Public Class 界面控制
                                                              New ToolStripMenuItem("全选", Nothing, AddressOf 界面控制_编码队列.全选任务),
                                                              New ToolStripSeparator() With {.Tag = "null"}
                                                          })
+        AddHandler Form1.Labelffmpeg实时信息.Click, Sub()
+                                                    Dim a1 As String = InputBox("向 FFmpeg 进程发送消息")
+                                                    If a1 <> "" Then 编码任务.队列(Form1.ListView1.SelectedItems(0).Index).发送消息(a1)
+                                                End Sub
 
         设置富文本框行高(Form1.RichTextBox1, 350)
         Form1.RichTextBox1.AllowDrop = True

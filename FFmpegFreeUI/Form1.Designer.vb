@@ -1320,7 +1320,7 @@ Partial Class Form1
         Label主标题.Padding = New Padding(0, 0, 0, 5)
         Label主标题.Size = New Size(227, 27)
         Label主标题.TabIndex = 9
-        Label主标题.Text = "FFmpegFreeUI Official v1.3"
+        Label主标题.Text = "FFmpegFreeUI Official v1.4"
         ' 
         ' Label11
         ' 
@@ -2873,7 +2873,6 @@ Partial Class Form1
     Friend WithEvents Panel44 As Panel
     Friend WithEvents Label102 As Label
     Friend WithEvents Panel41 As Panel
-    Friend WithEvents Labelffmpeg实时信息 As Label
     Friend WithEvents Panel错误信息容器 As Panel
     Friend WithEvents Label累计错误信息 As Label
     Friend WithEvents TabPage转码压制 As TabPage
@@ -2987,5 +2986,6 @@ Partial Class Form1
     Friend WithEvents Label30 As Label
     Friend WithEvents Label错误信息容器之外的间隔 As Label
     Friend WithEvents Label33 As Label
+    Friend WithEvents Labelffmpeg实时信息 As Label
 
 End Class

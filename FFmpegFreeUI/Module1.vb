@@ -212,4 +212,25 @@ Module Module1
 
     Public JSON序列化选项 As New JsonSerializerOptions With {.WriteIndented = True}
 
+
+    <DllImport("user32.dll", SetLastError:=True, CharSet:=CharSet.Auto)>
+    Public Function MessageBox(hWnd As IntPtr, text As String, caption As String, type As UInteger) As Integer
+    End Function
+
+    ' 使用系统级 MessageBox 常量
+    Public Const MB_OK As UInteger = &H0
+    Public Const MB_ICONINFORMATION As UInteger = &H40
+    Public Const MB_SYSTEMMODAL As UInteger = &H1000  ' 系统模态，全屏遮罩
+    Public Const MB_TOPMOST As UInteger = &H40000     ' 置顶显示
+
+    Public Sub 显示系统模态对话框(标题 As String, 内容 As String)
+        ' 使用系统模态标志，会创建全屏遮罩效果
+        MessageBox(IntPtr.Zero, 内容, 标题, MB_OK Or MB_ICONINFORMATION Or MB_SYSTEMMODAL Or MB_TOPMOST)
+    End Sub
+
+
+
+
+
+
 End Module
