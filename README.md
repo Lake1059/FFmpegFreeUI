@@ -22,6 +22,8 @@ FFmpegFreeUI（简称 3FUI）是在 Windows 上的 [FFmpeg](https://ffmpeg.org) 
 
 关于这部分的内容请进群跟群友讨论，我买不起苹果电脑也用不来 Linux。
 
+关于在 Linux 中使用 Wine 转译运行 3FUI 的方法可参阅 [这篇文档](https://github.com/Lake1059/FFmpegFreeUI/blob/main/linux-doc/linux.md)
+
 ## 下载说明
 
 由于加入了插件支持以及其实现方法，需要保留一些 dll 来确保插件功能可用并稳定运行。仍旧可以把很大的 EXE 文件拿出来单独运行，不过这也就代表放弃插件，在这种情况下加载插件必定卡死崩溃。
@@ -40,11 +42,10 @@ PluginExample 是我做的示例插件；在程序目录下创建 Plugin 文件�
 > **文件为什么这么大？隔壁只有一百多KB**  
 >其实本体也只有几百KB，但我要求自带运行时的发布，你想要的话可以改项目设置自己编译。
 
-> **全都无法运行怎么办？**   
+> **全都无法运行怎么办？**  
 > 依次检查这些项目：
 >
-> 1. 
->    检查 Windows 更新中是否有 **.NET Framework 3.5 和 4.8 的累积更新**，如果有则立即安装
+> 1. 检查 Windows 更新中是否有 **.NET Framework 3.5 和 4.8 的累积更新**，如果有则立即安装
 > 2. 从正式版 1.0 开始，编译为目标最低系统版本是 Win10 1809，更低版本看天意
 > 3. 检查杀毒软件拦截记录
 > 5. 把仓库扒下来自己编译
@@ -125,7 +126,7 @@ PluginExample 是我做的示例插件；在程序目录下创建 Plugin 文件�
 - 大河李斯特视频工作室 | 视频格式与基础参数科普 | [BV1Ug4y1L7aK](https://www.bilibili.com/video/BV1Ug4y1L7aK)
 - 大河李斯特视频工作室 | 视频压缩、色度半采样、视频中的高低频 | [BV1FM41137MM](https://www.bilibili.com/video/BV1FM41137MM)
 - 大河李斯特视频工作室 | FFmpeg 是什么 | [BV1SjdoY9Erj](https://www.bilibili.com/video/BV1SjdoY9Erj)
-- 终末诗 | 适用于小白的视频压缩教学 | [知乎](https://zhuanlan.zhihu.com/p/1913258114746122747)   此文章包含大量测试结果总结和设置教学  
+- 终末诗 | 适用于小白的视频压缩教学 | [知乎](https://zhuanlan.zhihu.com/p/1913258114746122747)  此文章包含大量测试结果总结和设置教学<br>
   新手把这篇文章看完能学会很多东西，继续往下看之前先把这个打开看！！
 
 另外我仓库 IMG 文件夹里也有部分编码器的测试结果，数据来自群友。
@@ -147,7 +148,7 @@ PluginExample 是我做的示例插件；在程序目录下创建 Plugin 文件�
 | WMV        | wmv2<br>wmv1                                                 | Windows 的专用视频编码，已经过时了。                         |
 | 禁用       | -vn                                                          | 啪，没了~                                                    |
 
-> **新手常问：为什么说 FFV1 才是无损编码？**  
+> **新手常问：为什么说 FFV1 才是无损编码？**
 > 答：这里的有损和无损是技术上的，不是视觉上的。生活中看的视频都是有损压缩，它们都在欺骗视觉，人眼的能力是非常局限的，就像你眼睛贴到屏幕上才能细微察觉所有的颜色都是用红绿蓝混合出来的。技术上的无损编码是确保了每个像素的信息正确，而生活中的视频每次重编码都会让像素产生变化，所以都是有损压缩，你也不希望一分钟的视频有1GB吧。
 
 | 区分标记 | 适用的硬件        |
@@ -161,7 +162,7 @@ PluginExample 是我做的示例插件；在程序目录下创建 Plugin 文件�
 
 ### NVIDIA NVENC 规格
 
-有关 N卡 硬件加速的详细规格可以在官方页面上查询  
+有关 N卡 硬件加速的详细规格可以在官方页面上查询<br>
 https://developer.nvidia.com/video-encode-and-decode-gpu-support-matrix-new
 
 所以是的，3090 = 3060
@@ -210,7 +211,7 @@ PNG、JPEG\JPG、WEBP、TIFF、AVIF、GIF、BMP、JPEG-LS、DPX、OpenEXR
 
 质量的默认值是 23，肉眼无损是 16，但仍需根据具体编码器调整<br>实在不知道写什么就直接 23 扔上去看结果再调整，数字越大越模糊<br>不要设置为 0！除非你知道自己在做什么以及需要什么
 
-> **新手常问：要怎么选？什么对应什么？怎样才是最高画质？怎么降低文件大小？**  
+> **新手常问：要怎么选？什么对应什么？怎样才是最高画质？怎么降低文件大小？**
 > 硬件加速选 VBR 或 HQ 跟 -cq 使用，软件编码选 CRF 跟 -crf 使用。
 >
 > 所谓压制是为了让文件变得更小，不要想着设置比特率，去设置质量值，让编码器自己算。但是如果画面有过多噪点则不适用这种方法，噪点是干扰，会导致比特率飙升。
@@ -288,9 +289,9 @@ fmtc_bitdepth(bits=10,dmode=0)#为libsvtav1编码而降低位深
 LoadPlugin("C:\xxxx\LSMASHSource.dll")
 LoadPlugin("C:\xxxx\fmtconv.dll")
 LoadPlugin("C:\xxxx\knlmeanscl.dll")
-function LibavSource2(string path, int "atrack", 
+function LibavSource2(string path, int "atrack",
 \          int "fpsnum", int "fpsden",
-\          string "format", bool "cache") 
+\          string "format", bool "cache")
 {
     atrack   = Default(atrack, -1)
     fpsnum   = Default(fpsnum, 0)
@@ -299,10 +300,10 @@ function LibavSource2(string path, int "atrack",
 
     format   = Default(format, "")
 
-    video = LWLibavVideoSource(path, 
+    video = LWLibavVideoSource(path,
     \               fpsnum=fpsnum, fpsden=fpsden, format=format,
     \               cache=cache)
-    return (atrack==-2) ? video: AudioDub(video, 
+    return (atrack==-2) ? video: AudioDub(video,
    \    LWLibavAudioSource(path, stream_index=atrack, cache=cache))
 }
 LibavSource2("<FilePath>")#读取文件中的音视频流。atrack - 音频轨道号，默认为自动，如果为 -2，则忽略音频。cache - 如果为 true（默认值），则创建索引文件
