@@ -4,7 +4,7 @@
 
 ![](https://img.shields.io/github/downloads/Lake1059/FFmpegFreeUI/total?label=所有文件总下载量)
 
-请认准官网域名：ffmpegfreeui.top 和 3fui.top
+请认准官网域名：https://ffmpegfreeui.top 和 https://3fui.top
 
 FFmpegFreeUI（简称 3FUI）是在 Windows 上的 [FFmpeg](https://ffmpeg.org) 的专业交互外壳，使用 .NET 10 框架，使用纯 WinForm 开发，配合 SunnyUI 和自绘制打造专业高效的暗黑风格界面。为了打破市面上转码软件的臃肿捆绑、广告水印、限制离谱、乱收费、业余糊弄的局面，3FUI 永久保持干净和自由，同时还收录了最新的编码和参数改动，是追求纯净和专业的不二之选。
 
