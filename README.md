@@ -4,6 +4,8 @@
 
 ![](https://img.shields.io/github/downloads/Lake1059/FFmpegFreeUI/total?label=所有文件总下载量)
 
+请认准官网域名：ffmpegfreeui.top 和 3fui.top
+
 FFmpegFreeUI（简称 3FUI）是在 Windows 上的 [FFmpeg](https://ffmpeg.org) 的专业交互外壳，使用 .NET 10 框架，使用纯 WinForm 开发，配合 SunnyUI 和自绘制打造专业高效的暗黑风格界面。为了打破市面上转码软件的臃肿捆绑、广告水印、限制离谱、乱收费、业余糊弄的局面，3FUI 永久保持干净和自由，同时还收录了最新的编码和参数改动，是追求纯净和专业的不二之选。
 
 3FUI 的目标是做一款轻度专业参数调整的转码软件，让普通人能够通过图形化界面接触到较为全面的通用参数来轻松压制和转换格式。3FUI 是纯填参数的，没有内置傻瓜方案，不是让小白一键无脑全自动的，如果没有相关技术参数的概念，请先在本文的新手内容中学习相关技术知识。
@@ -18,11 +20,9 @@ FFmpegFreeUI（简称 3FUI）是在 Windows 上的 [FFmpeg](https://ffmpeg.org) 
 
 [Wine](https://www.winehq.org) 是一个在多种 POSIX-compliant 操作系统上运行 Windows 应用的兼容层，如果能够在 macOS 和 Linux 上安装并正确使用，理论上可以直接在这些操作系统上使用 3FUI。
 
-对于新手来说有个更好的选择：[Steam](https://store.steampowered.com/about) 也自带转译层。
-
 关于这部分的内容请进群跟群友讨论，我买不起苹果电脑也用不来 Linux。
 
-关于在 Linux 中使用 Wine 转译运行 3FUI 的方法可参阅 [这篇文档](https://github.com/Lake1059/FFmpegFreeUI/blob/main/linux-doc/linux.md)
+关于在 Linux 中使用 Wine 转译运行 3FUI 的方法可参阅[这篇文档](https://github.com/Lake1059/FFmpegFreeUI/blob/main/linux-doc/linux.md)
 
 ## 下载说明
 
@@ -521,3 +521,7 @@ public static void AddMissionToQueue()
 - \<KeepCreationTime>
 - \<KeepWriteTime>
 - \<KeepAccessTime>
+
+### 给 ffmpeg 进程发消息
+
+虽然基本上用不上，但是点击底部的实时输出文件可以给 ffmpeg 发消息
