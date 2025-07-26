@@ -1320,7 +1320,7 @@ Partial Class Form1
         Label主标题.Padding = New Padding(0, 0, 0, 5)
         Label主标题.Size = New Size(227, 27)
         Label主标题.TabIndex = 9
-        Label主标题.Text = "FFmpegFreeUI Official v1.4"
+        Label主标题.Text = "FFmpegFreeUI Official v1.5"
         ' 
         ' Label11
         ' 
