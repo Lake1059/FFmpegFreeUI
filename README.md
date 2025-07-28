@@ -1,6 +1,6 @@
 [《如何在 GitHub 下载软件》小白提醒：你的需求是下载这个软件去使用而不是要工程文件，点此去 Releases 下载发行版才是下载软件；上面的 Code 是下载源代码；我都写成这样了如果你在 Releases 里又下成了源代码，那真的是人机，都是手机和短视频害的。](https://github.com/Lake1059/FFmpegFreeUI/releases) 本文已包含新手内容，就看有没有心思学了。
 
-<img src="FFmpegFreeUI\Resources\AppIcon.png" style="zoom: 25%;" />
+<img src="FFmpegFreeUI\Resources\AppIcon.png" width="100" height="100" />
 
 ## FFmpegFreeUI
 
