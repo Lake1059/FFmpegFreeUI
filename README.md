@@ -440,7 +440,3 @@ public static void AddMissionToQueue()
 - \<KeepCreationTime>
 - \<KeepWriteTime>
 - \<KeepAccessTime>
-
-### 给 ffmpeg 进程发消息
-
-虽然基本上用不上，但是点击底部的实时输出文字可以给 ffmpeg 发消息
