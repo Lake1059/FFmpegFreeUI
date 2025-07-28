@@ -120,10 +120,10 @@ Partial Class Form帧混合
         ' UiTextBox降低帧率
         ' 
         UiTextBox降低帧率.Dock = DockStyle.Left
-        UiTextBox降低帧率.FillColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
-        UiTextBox降低帧率.FillColor2 = Color.FromArgb(CByte(36), CByte(36), CByte(36))
-        UiTextBox降低帧率.FillDisableColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
-        UiTextBox降低帧率.FillReadOnlyColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiTextBox降低帧率.FillColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
+        UiTextBox降低帧率.FillColor2 = Color.FromArgb(CByte(24), CByte(24), CByte(24))
+        UiTextBox降低帧率.FillDisableColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
+        UiTextBox降低帧率.FillReadOnlyColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         UiTextBox降低帧率.Font = New Font("微软雅黑", 9.75F)
         UiTextBox降低帧率.ForeColor = Color.DarkGray
         UiTextBox降低帧率.ForeDisableColor = Color.DarkGray
@@ -134,9 +134,9 @@ Partial Class Form帧混合
         UiTextBox降低帧率.Name = "UiTextBox降低帧率"
         UiTextBox降低帧率.Padding = New Padding(5)
         UiTextBox降低帧率.Radius = 30
-        UiTextBox降低帧率.RectColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
-        UiTextBox降低帧率.RectDisableColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
-        UiTextBox降低帧率.RectReadOnlyColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        UiTextBox降低帧率.RectColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
+        UiTextBox降低帧率.RectDisableColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
+        UiTextBox降低帧率.RectReadOnlyColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         UiTextBox降低帧率.ScrollBarBackColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
         UiTextBox降低帧率.ScrollBarColor = Color.DimGray
         UiTextBox降低帧率.ScrollBarStyleInherited = False
@@ -227,13 +227,11 @@ Partial Class Form帧混合
         UiComboBox混合算法.MinimumSize = New Size(63, 0)
         UiComboBox混合算法.Name = "UiComboBox混合算法"
         UiComboBox混合算法.Padding = New Padding(0, 0, 30, 2)
-        UiComboBox混合算法.RadiusSides = Sunny.UI.UICornerRadiusSides.None
         UiComboBox混合算法.RectColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
         UiComboBox混合算法.RectDisableColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
         UiComboBox混合算法.ScrollBarHandleWidth = 20
         UiComboBox混合算法.Size = New Size(175, 30)
         UiComboBox混合算法.Style = Sunny.UI.UIStyle.Custom
-        UiComboBox混合算法.StyleDropDown = Sunny.UI.UIStyle.Black
         UiComboBox混合算法.SymbolSize = 24
         UiComboBox混合算法.TabIndex = 88
         UiComboBox混合算法.TextAlignment = ContentAlignment.MiddleLeft
@@ -296,10 +294,10 @@ Partial Class Form帧混合
         ' UiTextBox混合比例
         ' 
         UiTextBox混合比例.Dock = DockStyle.Left
-        UiTextBox混合比例.FillColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
-        UiTextBox混合比例.FillColor2 = Color.FromArgb(CByte(36), CByte(36), CByte(36))
-        UiTextBox混合比例.FillDisableColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
-        UiTextBox混合比例.FillReadOnlyColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiTextBox混合比例.FillColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
+        UiTextBox混合比例.FillColor2 = Color.FromArgb(CByte(24), CByte(24), CByte(24))
+        UiTextBox混合比例.FillDisableColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
+        UiTextBox混合比例.FillReadOnlyColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         UiTextBox混合比例.Font = New Font("微软雅黑", 9.75F)
         UiTextBox混合比例.ForeColor = Color.DarkGray
         UiTextBox混合比例.ForeDisableColor = Color.DarkGray
@@ -310,9 +308,9 @@ Partial Class Form帧混合
         UiTextBox混合比例.Name = "UiTextBox混合比例"
         UiTextBox混合比例.Padding = New Padding(5)
         UiTextBox混合比例.Radius = 30
-        UiTextBox混合比例.RectColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
-        UiTextBox混合比例.RectDisableColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
-        UiTextBox混合比例.RectReadOnlyColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        UiTextBox混合比例.RectColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
+        UiTextBox混合比例.RectDisableColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
+        UiTextBox混合比例.RectReadOnlyColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         UiTextBox混合比例.ScrollBarBackColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
         UiTextBox混合比例.ScrollBarColor = Color.DimGray
         UiTextBox混合比例.ScrollBarStyleInherited = False

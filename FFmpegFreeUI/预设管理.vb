@@ -4,7 +4,7 @@ Imports Sunny.UI
 Public Class 预设管理
 
     Public Shared Sub 显示预设(a As 预设数据类型)
-        Form1.UiComboBox输出容器.Text = a.输出容器
+        Form1.UiTextBox输出容器.Text = a.输出容器
 
         Form1.常规流程参数页面.UiComboBox解码器.Text = a.解码参数_解码器
         Form1.常规流程参数页面.UiComboBox解码数据格式.Text = a.解码参数_解码数据格式
@@ -29,7 +29,7 @@ Public Class 预设管理
         Form1.常规流程参数页面.UiTextBox分辨率自动计算高度.Text = a.视频参数_分辨率自动计算_高度
         Form1.常规流程参数页面.UiTextBox画面裁剪滤镜参数.Text = a.视频参数_分辨率_裁剪滤镜参数
         Form1.常规流程参数页面.UiComboBox帧速率.Text = a.视频参数_帧速率
-        Form1.常规流程参数页面.UiTextBox智能抽帧阈值.Text = a.视频参数_帧速率_智能抽帧阈值
+        Form1.常规流程参数页面.UiTextBox抽帧最大变化比例.Text = a.视频参数_帧速率_抽帧最大变化比例
 
         Form插帧.UiTextBox要补到多少帧.Text = a.视频参数_插帧_目标帧率
         Select Case a.视频参数_插帧_插帧模式
@@ -196,7 +196,7 @@ Public Class 预设管理
     Shared ReadOnly separator As String() = {","}
 
     Public Shared Sub 储存预设(ByRef a As 预设数据类型)
-        a.输出容器 = Form1.UiComboBox输出容器.Text
+        a.输出容器 = Form1.UiTextBox输出容器.Text
 
         a.解码参数_解码器 = Form1.常规流程参数页面.UiComboBox解码器.Text
         a.解码参数_解码数据格式 = Form1.常规流程参数页面.UiComboBox解码数据格式.Text
@@ -221,7 +221,7 @@ Public Class 预设管理
         a.视频参数_分辨率自动计算_高度 = Form1.常规流程参数页面.UiTextBox分辨率自动计算高度.Text
         a.视频参数_分辨率_裁剪滤镜参数 = Form1.常规流程参数页面.UiTextBox画面裁剪滤镜参数.Text
         a.视频参数_帧速率 = Form1.常规流程参数页面.UiComboBox帧速率.Text
-        a.视频参数_帧速率_智能抽帧阈值 = Form1.常规流程参数页面.UiTextBox智能抽帧阈值.Text
+        a.视频参数_帧速率_抽帧最大变化比例 = Form1.常规流程参数页面.UiTextBox抽帧最大变化比例.Text
 
         a.视频参数_插帧_目标帧率 = Form插帧.UiTextBox要补到多少帧.Text
         Select Case Form插帧.UiComboBox插帧模式.SelectedIndex
@@ -411,7 +411,7 @@ Public Class 预设管理
     End Sub
 
     Public Shared Sub 重置全部包含在预设中的设置()
-        Form1.UiComboBox输出容器.Text = ""
+        Form1.UiTextBox输出容器.Text = ""
 
         ' 解码参数
         Form1.常规流程参数页面.UiComboBox解码器.Text = ""
@@ -435,7 +435,7 @@ Public Class 预设管理
         Form1.常规流程参数页面.UiTextBox分辨率自动计算高度.Text = ""
         Form1.常规流程参数页面.UiTextBox画面裁剪滤镜参数.Text = ""
         Form1.常规流程参数页面.UiComboBox帧速率.Text = ""
-        Form1.常规流程参数页面.UiTextBox智能抽帧阈值.Text = ""
+        Form1.常规流程参数页面.UiTextBox抽帧最大变化比例.Text = ""
         Form插帧.重置所有选项()
         Form帧混合.重置所有选项()
         Form1.常规流程参数页面.UiComboBox比特率控制方式.SelectedIndex = -1
@@ -580,9 +580,9 @@ Public Class 预设管理
         End If
 
         If a.视频参数_帧速率 <> "" Then 视频参数 &= $"-r {a.视频参数_帧速率} "
-        If a.视频参数_帧速率_智能抽帧阈值 <> "" Then
-            视频滤镜参数集.Add($"select='gt(scene,{a.视频参数_帧速率_智能抽帧阈值})',setpts=N/FRAME_RATE/TB")
-            视频参数 &= "-fps_mode vfr "
+        If a.视频参数_帧速率_抽帧最大变化比例 <> "" Then
+            视频滤镜参数集.Add($"mpdecimate=frac={a.视频参数_帧速率_抽帧最大变化比例}")
+            视频参数 &= "-vsync vfr "
         End If
 
         If a.视频参数_插帧_目标帧率 <> "" AndAlso a.视频参数_插帧_插帧模式 <> "" Then

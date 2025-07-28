@@ -121,10 +121,10 @@ Partial Class Form插帧
         ' UiTextBox要补到多少帧
         ' 
         UiTextBox要补到多少帧.Dock = DockStyle.Left
-        UiTextBox要补到多少帧.FillColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
-        UiTextBox要补到多少帧.FillColor2 = Color.FromArgb(CByte(36), CByte(36), CByte(36))
-        UiTextBox要补到多少帧.FillDisableColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
-        UiTextBox要补到多少帧.FillReadOnlyColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiTextBox要补到多少帧.FillColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
+        UiTextBox要补到多少帧.FillColor2 = Color.FromArgb(CByte(24), CByte(24), CByte(24))
+        UiTextBox要补到多少帧.FillDisableColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
+        UiTextBox要补到多少帧.FillReadOnlyColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         UiTextBox要补到多少帧.Font = New Font("微软雅黑", 9.75F)
         UiTextBox要补到多少帧.ForeColor = Color.DarkGray
         UiTextBox要补到多少帧.ForeDisableColor = Color.DarkGray
@@ -135,9 +135,9 @@ Partial Class Form插帧
         UiTextBox要补到多少帧.Name = "UiTextBox要补到多少帧"
         UiTextBox要补到多少帧.Padding = New Padding(5)
         UiTextBox要补到多少帧.Radius = 30
-        UiTextBox要补到多少帧.RectColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
-        UiTextBox要补到多少帧.RectDisableColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
-        UiTextBox要补到多少帧.RectReadOnlyColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        UiTextBox要补到多少帧.RectColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
+        UiTextBox要补到多少帧.RectDisableColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
+        UiTextBox要补到多少帧.RectReadOnlyColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         UiTextBox要补到多少帧.ScrollBarBackColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
         UiTextBox要补到多少帧.ScrollBarColor = Color.DimGray
         UiTextBox要补到多少帧.ScrollBarStyleInherited = False
@@ -251,13 +251,11 @@ Partial Class Form插帧
         UiComboBox运动估计算法.MinimumSize = New Size(63, 0)
         UiComboBox运动估计算法.Name = "UiComboBox运动估计算法"
         UiComboBox运动估计算法.Padding = New Padding(0, 0, 30, 2)
-        UiComboBox运动估计算法.RadiusSides = Sunny.UI.UICornerRadiusSides.None
         UiComboBox运动估计算法.RectColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
         UiComboBox运动估计算法.RectDisableColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
         UiComboBox运动估计算法.ScrollBarHandleWidth = 20
         UiComboBox运动估计算法.Size = New Size(175, 30)
         UiComboBox运动估计算法.Style = Sunny.UI.UIStyle.Custom
-        UiComboBox运动估计算法.StyleDropDown = Sunny.UI.UIStyle.Black
         UiComboBox运动估计算法.SymbolSize = 24
         UiComboBox运动估计算法.TabIndex = 86
         UiComboBox运动估计算法.TextAlignment = ContentAlignment.MiddleLeft
@@ -296,13 +294,11 @@ Partial Class Form插帧
         UiComboBox运动估计模式.MinimumSize = New Size(63, 0)
         UiComboBox运动估计模式.Name = "UiComboBox运动估计模式"
         UiComboBox运动估计模式.Padding = New Padding(0, 0, 30, 2)
-        UiComboBox运动估计模式.RadiusSides = Sunny.UI.UICornerRadiusSides.None
         UiComboBox运动估计模式.RectColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
         UiComboBox运动估计模式.RectDisableColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
         UiComboBox运动估计模式.ScrollBarHandleWidth = 20
         UiComboBox运动估计模式.Size = New Size(175, 30)
         UiComboBox运动估计模式.Style = Sunny.UI.UIStyle.Custom
-        UiComboBox运动估计模式.StyleDropDown = Sunny.UI.UIStyle.Black
         UiComboBox运动估计模式.SymbolSize = 24
         UiComboBox运动估计模式.TabIndex = 84
         UiComboBox运动估计模式.TextAlignment = ContentAlignment.MiddleLeft
@@ -341,13 +337,11 @@ Partial Class Form插帧
         UiComboBox插帧模式.MinimumSize = New Size(63, 0)
         UiComboBox插帧模式.Name = "UiComboBox插帧模式"
         UiComboBox插帧模式.Padding = New Padding(0, 0, 30, 2)
-        UiComboBox插帧模式.RadiusSides = Sunny.UI.UICornerRadiusSides.None
         UiComboBox插帧模式.RectColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
         UiComboBox插帧模式.RectDisableColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
         UiComboBox插帧模式.ScrollBarHandleWidth = 20
         UiComboBox插帧模式.Size = New Size(175, 30)
         UiComboBox插帧模式.Style = Sunny.UI.UIStyle.Custom
-        UiComboBox插帧模式.StyleDropDown = Sunny.UI.UIStyle.Black
         UiComboBox插帧模式.SymbolSize = 24
         UiComboBox插帧模式.TabIndex = 87
         UiComboBox插帧模式.TextAlignment = ContentAlignment.MiddleLeft
@@ -443,13 +437,11 @@ Partial Class Form插帧
         UiComboBox运动补偿模式.MinimumSize = New Size(63, 0)
         UiComboBox运动补偿模式.Name = "UiComboBox运动补偿模式"
         UiComboBox运动补偿模式.Padding = New Padding(0, 0, 30, 2)
-        UiComboBox运动补偿模式.RadiusSides = Sunny.UI.UICornerRadiusSides.None
         UiComboBox运动补偿模式.RectColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
         UiComboBox运动补偿模式.RectDisableColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
         UiComboBox运动补偿模式.ScrollBarHandleWidth = 20
         UiComboBox运动补偿模式.Size = New Size(175, 30)
         UiComboBox运动补偿模式.Style = Sunny.UI.UIStyle.Custom
-        UiComboBox运动补偿模式.StyleDropDown = Sunny.UI.UIStyle.Black
         UiComboBox运动补偿模式.SymbolSize = 24
         UiComboBox运动补偿模式.TabIndex = 82
         UiComboBox运动补偿模式.TextAlignment = ContentAlignment.MiddleLeft
@@ -503,10 +495,10 @@ Partial Class Form插帧
         ' UiTextBox搜索范围
         ' 
         UiTextBox搜索范围.Dock = DockStyle.Left
-        UiTextBox搜索范围.FillColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
-        UiTextBox搜索范围.FillColor2 = Color.FromArgb(CByte(36), CByte(36), CByte(36))
-        UiTextBox搜索范围.FillDisableColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
-        UiTextBox搜索范围.FillReadOnlyColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiTextBox搜索范围.FillColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
+        UiTextBox搜索范围.FillColor2 = Color.FromArgb(CByte(24), CByte(24), CByte(24))
+        UiTextBox搜索范围.FillDisableColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
+        UiTextBox搜索范围.FillReadOnlyColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         UiTextBox搜索范围.Font = New Font("微软雅黑", 9.75F)
         UiTextBox搜索范围.ForeColor = Color.DarkGray
         UiTextBox搜索范围.ForeDisableColor = Color.DarkGray
@@ -517,9 +509,9 @@ Partial Class Form插帧
         UiTextBox搜索范围.Name = "UiTextBox搜索范围"
         UiTextBox搜索范围.Padding = New Padding(5)
         UiTextBox搜索范围.Radius = 30
-        UiTextBox搜索范围.RectColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
-        UiTextBox搜索范围.RectDisableColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
-        UiTextBox搜索范围.RectReadOnlyColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        UiTextBox搜索范围.RectColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
+        UiTextBox搜索范围.RectDisableColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
+        UiTextBox搜索范围.RectReadOnlyColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         UiTextBox搜索范围.ScrollBarBackColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
         UiTextBox搜索范围.ScrollBarColor = Color.DimGray
         UiTextBox搜索范围.ScrollBarStyleInherited = False
@@ -542,10 +534,10 @@ Partial Class Form插帧
         ' UiTextBox块大小
         ' 
         UiTextBox块大小.Dock = DockStyle.Left
-        UiTextBox块大小.FillColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
-        UiTextBox块大小.FillColor2 = Color.FromArgb(CByte(36), CByte(36), CByte(36))
-        UiTextBox块大小.FillDisableColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
-        UiTextBox块大小.FillReadOnlyColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiTextBox块大小.FillColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
+        UiTextBox块大小.FillColor2 = Color.FromArgb(CByte(24), CByte(24), CByte(24))
+        UiTextBox块大小.FillDisableColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
+        UiTextBox块大小.FillReadOnlyColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         UiTextBox块大小.Font = New Font("微软雅黑", 9.75F)
         UiTextBox块大小.ForeColor = Color.DarkGray
         UiTextBox块大小.ForeDisableColor = Color.DarkGray
@@ -556,9 +548,9 @@ Partial Class Form插帧
         UiTextBox块大小.Name = "UiTextBox块大小"
         UiTextBox块大小.Padding = New Padding(5)
         UiTextBox块大小.Radius = 30
-        UiTextBox块大小.RectColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
-        UiTextBox块大小.RectDisableColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
-        UiTextBox块大小.RectReadOnlyColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        UiTextBox块大小.RectColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
+        UiTextBox块大小.RectDisableColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
+        UiTextBox块大小.RectReadOnlyColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         UiTextBox块大小.ScrollBarBackColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
         UiTextBox块大小.ScrollBarColor = Color.DimGray
         UiTextBox块大小.ScrollBarStyleInherited = False
@@ -652,10 +644,10 @@ Partial Class Form插帧
         ' UiTextBox场景变化检测强度
         ' 
         UiTextBox场景变化检测强度.Dock = DockStyle.Left
-        UiTextBox场景变化检测强度.FillColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
-        UiTextBox场景变化检测强度.FillColor2 = Color.FromArgb(CByte(36), CByte(36), CByte(36))
-        UiTextBox场景变化检测强度.FillDisableColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
-        UiTextBox场景变化检测强度.FillReadOnlyColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiTextBox场景变化检测强度.FillColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
+        UiTextBox场景变化检测强度.FillColor2 = Color.FromArgb(CByte(24), CByte(24), CByte(24))
+        UiTextBox场景变化检测强度.FillDisableColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
+        UiTextBox场景变化检测强度.FillReadOnlyColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         UiTextBox场景变化检测强度.Font = New Font("微软雅黑", 9.75F)
         UiTextBox场景变化检测强度.ForeColor = Color.DarkGray
         UiTextBox场景变化检测强度.ForeDisableColor = Color.DarkGray
@@ -666,9 +658,9 @@ Partial Class Form插帧
         UiTextBox场景变化检测强度.Name = "UiTextBox场景变化检测强度"
         UiTextBox场景变化检测强度.Padding = New Padding(5)
         UiTextBox场景变化检测强度.Radius = 30
-        UiTextBox场景变化检测强度.RectColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
-        UiTextBox场景变化检测强度.RectDisableColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
-        UiTextBox场景变化检测强度.RectReadOnlyColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        UiTextBox场景变化检测强度.RectColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
+        UiTextBox场景变化检测强度.RectDisableColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
+        UiTextBox场景变化检测强度.RectReadOnlyColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         UiTextBox场景变化检测强度.ScrollBarBackColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
         UiTextBox场景变化检测强度.ScrollBarColor = Color.DimGray
         UiTextBox场景变化检测强度.ScrollBarStyleInherited = False

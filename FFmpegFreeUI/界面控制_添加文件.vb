@@ -3,12 +3,12 @@ Imports Microsoft.WindowsAPICodePack.Dialogs
 Public Class 界面控制_添加文件
 
     Public Shared Sub 加入编码队列()
-        If Form1.UiComboBox输出容器.Text = "" Then
+        If Form1.UiTextBox输出容器.Text = "" Then
             MsgBox("没有选择或填写输出容器！", MsgBoxStyle.Critical)
             Exit Sub
         End If
-        Select Case Form1.UiComboBox21.Text
-            Case "输出到原目录"
+        Select Case Form1.UiComboBox21.SelectedIndex
+            Case 0
             Case Else
                 If Not FileIO.FileSystem.DirectoryExists(Form1.UiComboBox21.Text) Then
                     MsgBox("自定义输出目录不存在！", MsgBoxStyle.Critical)
@@ -23,7 +23,7 @@ Public Class 界面控制_添加文件
             Dim m As New 编码任务.单片任务 With {.输入文件 = item.Text, .预设数据 = a}
 
             Select Case Form1.UiComboBox21.Text
-                Case "输出到原目录"
+                Case "输出到原目录（点此更改输出位置）"
                 Case Else
                     m.自定义输出位置 = Form1.UiComboBox21.Text
             End Select
@@ -38,12 +38,12 @@ Public Class 界面控制_添加文件
         Task.Run(AddressOf 编码任务.检查是否有可以开始的任务)
     End Sub
     Public Shared Sub 加入编码队列(拖入的文件 As String())
-        If Form1.UiComboBox输出容器.Text = "" Then
+        If Form1.UiTextBox输出容器.Text = "" Then
             MsgBox("没有选择或填写输出容器！", MsgBoxStyle.Critical)
             Exit Sub
         End If
-        Select Case Form1.UiComboBox21.Text
-            Case "输出到原目录"
+        Select Case Form1.UiComboBox21.SelectedIndex
+            Case 0
             Case Else
                 If Not FileIO.FileSystem.DirectoryExists(Form1.UiComboBox21.Text) Then
                     MsgBox("自定义输出目录不存在！", MsgBoxStyle.Critical)
@@ -57,7 +57,7 @@ Public Class 界面控制_添加文件
             If 用户设置.实例对象.转译模式 Then m.输入文件 = 转译模式处理路径(item)
 
             Select Case Form1.UiComboBox21.Text
-                Case "输出到原目录"
+                Case "输出到原目录（点此更改输出位置）"
                 Case Else
                     m.自定义输出位置 = Form1.UiComboBox21.Text
             End Select

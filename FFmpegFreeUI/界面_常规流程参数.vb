@@ -301,10 +301,11 @@ Public Class 界面_常规流程参数
                 UiCheckBox保留其他视频流.CheckBoxSize = 20 * Form1.DPI
                 UiCheckBox保留其他音频流.CheckBoxSize = 20 * Form1.DPI
                 UiCheckBox保留内嵌字幕流.CheckBoxSize = 20 * Form1.DPI
+                UiCheckBox自动混流同名字幕文件.CheckBoxSize = 20 * Form1.DPI
                 UiComboBox元数据选项.ItemHeight = 30 * Form1.DPI
                 UiComboBox章节选项.ItemHeight = 30 * Form1.DPI
                 UiComboBox附件选项.ItemHeight = 30 * Form1.DPI
-                UiCheckBox自动混流同名字幕文件.CheckBoxSize = 20 * Form1.DPI
+                UiComboBox剪辑方法.ItemHeight = 30 * Form1.DPI
             Case 选项卡.IsEqual(TabPage预设管理)
                 UiCheckBox额外保存信息.CheckBoxSize = 20 * Form1.DPI
                 Dim a As New 预设数据类型

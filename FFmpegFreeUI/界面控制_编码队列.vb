@@ -8,7 +8,7 @@ Public Class 界面控制_编码队列
             Dim i = item.Index
             Select Case 编码任务.队列(i).状态
                 Case 编码任务.编码状态.未处理, 编码任务.编码状态.已停止, 编码任务.编码状态.错误
-                    编码任务.队列(i).开始()
+                    Task.Run(AddressOf 编码任务.队列(i).开始)
             End Select
         Next
     End Sub

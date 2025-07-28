@@ -76,10 +76,10 @@ Public Class 界面控制
                                                              New ToolStripMenuItem("全选", Nothing, AddressOf 界面控制_编码队列.全选任务),
                                                              New ToolStripSeparator() With {.Tag = "null"}
                                                          })
-        AddHandler Form1.Labelffmpeg实时信息.Click, Sub()
-                                                    Dim a1 As String = InputBox("向 FFmpeg 进程发送消息")
-                                                    If a1 <> "" Then 编码任务.队列(Form1.ListView1.SelectedItems(0).Index).发送消息(a1)
-                                                End Sub
+        AddHandler Form1.LinkLabel向ffmpeg发送消息.LinkClicked, Sub()
+                                                               Dim a1 As String = InputBox("向 FFmpeg 进程发送消息")
+                                                               If a1 <> "" Then 编码任务.队列(Form1.ListView1.SelectedItems(0).Index).发送消息(a1)
+                                                           End Sub
 
         设置富文本框行高(Form1.RichTextBox1, 350)
         Form1.RichTextBox1.AllowDrop = True
@@ -126,6 +126,8 @@ Public Class 界面控制
         AddHandler Form1.UiButton10.Click, AddressOf 界面控制_添加文件.打开文件夹添加全部文件
         AddHandler Form1.UiButton11.Click, AddressOf 界面控制_添加文件.批量移除选中项
         AddHandler Form1.UiButton12.Click, AddressOf 界面控制_添加文件.移除全部项
+
+        AddHandler Form1.UiButton选择容器.MouseDown, AddressOf 选择输出容器鼠标按下事件
         AddHandler Form1.UiComboBox21.SelectedIndexChanged, AddressOf 界面控制_添加文件.选择输出目录
 
         AddHandler Form1.选中项刷新信息计时器.Tick, AddressOf 编码任务.选中项刷新信息
@@ -166,7 +168,6 @@ Public Class 界面控制
 
             Case 选项卡.IsEqual(Form1.TabPage添加文件)
                 Form1.ListView2.Columns(0).Width = Form1.ListView2.Width - SystemInformation.VerticalScrollBarWidth * Form1.DPI * 2
-                Form1.UiComboBox输出容器.ItemHeight = 30 * Form1.DPI
                 Form1.UiComboBox21.ItemHeight = 30 * Form1.DPI
 
             Case 选项卡.IsEqual(Form1.TabPage转码压制)
@@ -190,6 +191,69 @@ Public Class 界面控制
                 Form1.性能统计刷新计时器.Enabled = True
 
         End Select
+    End Sub
+
+
+    Public Shared Sub 选择输出容器鼠标按下事件(sender As Object, e As MouseEventArgs)
+
+        Dim b As New 暗黑上下文菜单 With {.ShowImageMargin = False, .Font = Form1.Font}
+        b.Items.AddRange(New ToolStripItem() {
+             New ToolStripSeparator() With {.Tag = "null"},
+             New ToolStripMenuItem(".mp4", Nothing, Sub(s1, e1) Form1.UiTextBox输出容器.Text = s1.Text) With {.ForeColor = Color.Silver},
+             New ToolStripMenuItem(".mkv", Nothing, Sub(s1, e1) Form1.UiTextBox输出容器.Text = s1.Text) With {.ForeColor = Color.Silver},
+             New ToolStripMenuItem(".flv", Nothing, Sub(s1, e1) Form1.UiTextBox输出容器.Text = s1.Text) With {.ForeColor = Color.Silver},
+             New ToolStripMenuItem(".mov", Nothing, Sub(s1, e1) Form1.UiTextBox输出容器.Text = s1.Text) With {.ForeColor = Color.Silver},
+             New ToolStripMenuItem(".webm", Nothing, Sub(s1, e1) Form1.UiTextBox输出容器.Text = s1.Text) With {.ForeColor = Color.Silver},
+             New ToolStripMenuItem(".wmv", Nothing, Sub(s1, e1) Form1.UiTextBox输出容器.Text = s1.Text) With {.ForeColor = Color.Silver},
+             New ToolStripMenuItem(".avi", Nothing, Sub(s1, e1) Form1.UiTextBox输出容器.Text = s1.Text) With {.ForeColor = Color.Silver},
+             New ToolStripMenuItem(".rmvb", Nothing, Sub(s1, e1) Form1.UiTextBox输出容器.Text = s1.Text) With {.ForeColor = Color.Silver},
+             New ToolStripMenuItem(".ts", Nothing, Sub(s1, e1) Form1.UiTextBox输出容器.Text = s1.Text) With {.ForeColor = Color.Silver},
+             New ToolStripMenuItem(".3gp", Nothing, Sub(s1, e1) Form1.UiTextBox输出容器.Text = s1.Text) With {.ForeColor = Color.Silver},
+             New ToolStripSeparator() With {.Tag = "null"}})
+
+        Dim c As New 暗黑上下文菜单 With {.ShowImageMargin = False, .Font = Form1.Font}
+        c.Items.AddRange(New ToolStripItem() {
+             New ToolStripSeparator() With {.Tag = "null"},
+             New ToolStripMenuItem(".mp3", Nothing, Sub(s1, e1) Form1.UiTextBox输出容器.Text = s1.Text) With {.ForeColor = Color.Silver},
+             New ToolStripMenuItem(".aac", Nothing, Sub(s1, e1) Form1.UiTextBox输出容器.Text = s1.Text) With {.ForeColor = Color.Silver},
+             New ToolStripMenuItem(".wav", Nothing, Sub(s1, e1) Form1.UiTextBox输出容器.Text = s1.Text) With {.ForeColor = Color.Silver},
+             New ToolStripMenuItem(".flac", Nothing, Sub(s1, e1) Form1.UiTextBox输出容器.Text = s1.Text) With {.ForeColor = Color.Silver},
+             New ToolStripMenuItem(".alac", Nothing, Sub(s1, e1) Form1.UiTextBox输出容器.Text = s1.Text) With {.ForeColor = Color.Silver},
+             New ToolStripMenuItem(".aiff", Nothing, Sub(s1, e1) Form1.UiTextBox输出容器.Text = s1.Text) With {.ForeColor = Color.Silver},
+             New ToolStripMenuItem(".ac3", Nothing, Sub(s1, e1) Form1.UiTextBox输出容器.Text = s1.Text) With {.ForeColor = Color.Silver},
+             New ToolStripMenuItem(".ogg", Nothing, Sub(s1, e1) Form1.UiTextBox输出容器.Text = s1.Text) With {.ForeColor = Color.Silver},
+             New ToolStripMenuItem(".wma", Nothing, Sub(s1, e1) Form1.UiTextBox输出容器.Text = s1.Text) With {.ForeColor = Color.Silver},
+             New ToolStripMenuItem(".amr", Nothing, Sub(s1, e1) Form1.UiTextBox输出容器.Text = s1.Text) With {.ForeColor = Color.Silver},
+             New ToolStripSeparator() With {.Tag = "null"}})
+
+        Dim d As New 暗黑上下文菜单 With {.ShowImageMargin = False, .Font = Form1.Font}
+        d.Items.AddRange(New ToolStripItem() {
+             New ToolStripSeparator() With {.Tag = "null"},
+             New ToolStripMenuItem(".png", Nothing, Sub(s1, e1) Form1.UiTextBox输出容器.Text = s1.Text) With {.ForeColor = Color.Silver},
+             New ToolStripMenuItem(".jpg", Nothing, Sub(s1, e1) Form1.UiTextBox输出容器.Text = s1.Text) With {.ForeColor = Color.Silver},
+             New ToolStripMenuItem(".jpeg", Nothing, Sub(s1, e1) Form1.UiTextBox输出容器.Text = s1.Text) With {.ForeColor = Color.Silver},
+             New ToolStripMenuItem(".bmp", Nothing, Sub(s1, e1) Form1.UiTextBox输出容器.Text = s1.Text) With {.ForeColor = Color.Silver},
+             New ToolStripMenuItem(".heic", Nothing, Sub(s1, e1) Form1.UiTextBox输出容器.Text = s1.Text) With {.ForeColor = Color.Silver},
+             New ToolStripMenuItem(".webp", Nothing, Sub(s1, e1) Form1.UiTextBox输出容器.Text = s1.Text) With {.ForeColor = Color.Silver},
+             New ToolStripMenuItem(".tiff", Nothing, Sub(s1, e1) Form1.UiTextBox输出容器.Text = s1.Text) With {.ForeColor = Color.Silver},
+             New ToolStripMenuItem(".gif", Nothing, Sub(s1, e1) Form1.UiTextBox输出容器.Text = s1.Text) With {.ForeColor = Color.Silver},
+             New ToolStripMenuItem(".ico", Nothing, Sub(s1, e1) Form1.UiTextBox输出容器.Text = s1.Text) With {.ForeColor = Color.Silver},
+             New ToolStripSeparator() With {.Tag = "null"}})
+
+        Dim a As New 暗黑上下文菜单 With {.ShowImageMargin = False, .Font = Form1.Font}
+        a.Items.AddRange(New ToolStripItem() {
+             New ToolStripSeparator() With {.Tag = "null"},
+             New ToolStripMenuItem("常用容器") With {.ForeColor = Color.CornflowerBlue, .Enabled = False},
+             New ToolStripMenuItem(".mp4", Nothing, Sub(s1, e1) Form1.UiTextBox输出容器.Text = s1.Text) With {.ForeColor = Color.Silver},
+             New ToolStripMenuItem(".mkv", Nothing, Sub(s1, e1) Form1.UiTextBox输出容器.Text = s1.Text) With {.ForeColor = Color.Silver},
+             New ToolStripMenuItem("全部分类") With {.ForeColor = Color.CornflowerBlue, .Enabled = False},
+             New ToolStripMenuItem("视频") With {.ForeColor = Color.Silver, .DropDown = b},
+             New ToolStripMenuItem("音频") With {.ForeColor = Color.Silver, .DropDown = c},
+             New ToolStripMenuItem("图片") With {.ForeColor = Color.Silver, .DropDown = d},
+             New ToolStripSeparator() With {.Tag = "null"}})
+
+        a.Show(sender, New Point(0, sender.Height + sender.Parent.Padding.Bottom * 2))
+
     End Sub
 
 

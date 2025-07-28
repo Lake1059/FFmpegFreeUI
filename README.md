@@ -1,10 +1,12 @@
 [《如何在 GitHub 下载软件》小白提醒：你的需求是下载这个软件去使用而不是要工程文件，点此去 Releases 下载发行版才是下载软件；上面的 Code 是下载源代码；我都写成这样了如果你在 Releases 里又下成了源代码，那真的是人机，都是手机和短视频害的。](https://github.com/Lake1059/FFmpegFreeUI/releases) 本文已包含新手内容，就看有没有心思学了。
 
+<img src="FFmpegFreeUI\Resources\AppIcon.png" style="zoom: 25%;" />
+
 ## FFmpegFreeUI
 
-![](https://img.shields.io/github/downloads/Lake1059/FFmpegFreeUI/total?label=所有文件总下载量)
-
 请认准官网域名：https://ffmpegfreeui.top 和 https://3fui.top
+
+![](https://img.shields.io/github/downloads/Lake1059/FFmpegFreeUI/total?label=所有文件总下载量)
 
 FFmpegFreeUI（简称 3FUI）是在 Windows 上的 [FFmpeg](https://ffmpeg.org) 的专业交互外壳，使用 .NET 10 框架，使用纯 WinForm 开发，配合 SunnyUI 和自绘制打造专业高效的暗黑风格界面。为了打破市面上转码软件的臃肿捆绑、广告水印、限制离谱、乱收费、业余糊弄的局面，3FUI 永久保持干净和自由，同时还收录了最新的编码和参数改动，是追求纯净和专业的不二之选。
 
@@ -18,11 +20,9 @@ FFmpegFreeUI（简称 3FUI）是在 Windows 上的 [FFmpeg](https://ffmpeg.org) 
 
 ## Linux & macOS
 
-[Wine](https://www.winehq.org) 是一个在多种 POSIX-compliant 操作系统上运行 Windows 应用的兼容层，如果能够在 macOS 和 Linux 上安装并正确使用，理论上可以直接在这些操作系统上使用 3FUI。
+[Wine](https://www.winehq.org) 是一个在多种 POSIX-compliant 操作系统上运行 Windows 应用的兼容层，如果能够在 macOS 和 Linux 上安装并正确使用，理论上可以直接在这些操作系统上使用 3FUI。关于这部分的内容请进群跟群友讨论，我买不起苹果电脑也用不来 Linux。
 
-关于这部分的内容请进群跟群友讨论，我买不起苹果电脑也用不来 Linux。
-
-关于在 Linux 中使用 Wine 转译运行 3FUI 的方法可参阅[这篇文档](https://github.com/Lake1059/FFmpegFreeUI/blob/main/linux-doc/linux.md)
+关于在 Linux 中使用 Wine 转译运行 3FUI 的方法可参阅 [linux.md](https://github.com/Lake1059/FFmpegFreeUI/blob/main/linux-doc/linux.md)
 
 ## 下载说明
 
@@ -65,6 +65,7 @@ PluginExample 是我做的示例插件；在程序目录下创建 Plugin 文件�
 ## 截图
 
 <img src="IMG\mi.png"  />
+<img src="IMG\fe.png"  />
 <img src="IMG\vp.png"  />
 <img src="IMG\vp2.png"  />
 <img src="IMG\pe.png"  />
@@ -106,7 +107,7 @@ PluginExample 是我做的示例插件；在程序目录下创建 Plugin 文件�
 
 - 3FUI 使用 MIT 开源许可（仅限我的代码），可以自由地使用和分发此软件
 - SunnyUI 是 GPL 且具有商用授权属性，因此可能受到相关限制
-- 仅发布于 GitHub，在其他平台看到的源代码都不是本人！
+- 仅在 GitHub 开源，在其他平台看到的源代码都不是本人！
 
 | 引用程序集                                                   | 许可证         | 作用                       |
 | ------------------------------------------------------------ | -------------- | -------------------------- |
@@ -136,7 +137,7 @@ PluginExample 是我做的示例插件；在程序目录下创建 Plugin 文件�
 | 编码器类别 | 提供的编码                                                   | 备注                                                         |
 | ---------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
 | 复制流     | copy                                                         | 我不想看到有人问能不能不重编码。                             |
-| H.266/VVC  | libx266<br>libvvenc                                          | 截止 2025 年，H.266 还不成熟，需要大量性能，也没几个播放器放得出来，也没有硬件加速可用。如使用请更新到最新版ffmpeg，部分版本可能未实现 x266。 |
+| H.266/VVC  | libx266<br>libvvenc                                          | 截止 2025 年，H.266 还不成熟，需要大量性能，也没几个播放器放得出来，也没有硬件加速可用。可能未实现 x266。 |
 | AV1        | libaom-av1<br>libsvtav1<br>av1_nvenc<br>av1_qsv<br>av1_amf<br>librav1e<br>av1_vaapi | 如果没有新显卡进行硬件加速，强烈建议考虑软件编码 **libsvtav1**，我默认给的 preset 是 4，这是最平衡速度和体积的选择，如果只是为了尝鲜，可以先给个 6。 |
 | H.265/HEVC | libx265<br>hevc_nvenc<br>hevc_qsv<br>hevc_amf<br/>hevc_d3d12va<br/>hevc_vaapi<br/>hevc_vulkan | 目前 265 是非常合适的。d3d12va 要求 Win11 24H2，但其效率并没有比三家硬件加速高出多少。 |
 | H.264/AVC  | libx264<br>h264_nvenc<br>h264_qsv<br>h264_amf<br/>h264_vaapi<br/>h264_vulkan | 只要小参数调的好，libx264 仍旧是非常能打的，但从技术上讲 264 快要无法满足专业需求了。 |
@@ -151,14 +152,15 @@ PluginExample 是我做的示例插件；在程序目录下创建 Plugin 文件�
 > **新手常问：为什么说 FFV1 才是无损编码？**
 > 答：这里的有损和无损是技术上的，不是视觉上的。生活中看的视频都是有损压缩，它们都在欺骗视觉，人眼的能力是非常局限的，就像你眼睛贴到屏幕上才能细微察觉所有的颜色都是用红绿蓝混合出来的。技术上的无损编码是确保了每个像素的信息正确，而生活中的视频每次重编码都会让像素产生变化，所以都是有损压缩，你也不希望一分钟的视频有1GB吧。
 
-| 区分标记 | 适用的硬件        |
-| -------- | ----------------- |
-| lib      | CPU               |
-| nvenc    | NVIDIA            |
-| amf      | AMD               |
-| qsv      | Intel             |
-| vaapi    | Linux API         |
-| 其他名称 | 基本都是 CPU 编码 |
+| 区分标记 | 适用的硬件             |
+| -------- | ---------------------- |
+| lib      | CPU                    |
+| nvenc    | NVIDIA                 |
+| amf      | AMD                    |
+| qsv      | Intel                  |
+| vaapi    | Linux API              |
+| vulkan   | 受支持的显卡           |
+| d3d12va  | 受支持的显卡和操作系统 |
 
 ### NVIDIA NVENC 规格
 
@@ -224,7 +226,7 @@ PNG、JPEG\JPG、WEBP、TIFF、AVIF、GIF、BMP、JPEG-LS、DPX、OpenEXR
 
 - 画面缩放维持比例 scale
 - 画面裁剪 crop
-- 智能抽帧 select='gt(scene,?)',setpts=N/FRAME_RATE/TB
+- 智能抽帧 mpdecimate=frac=? 和 -vsync vfr
 - 插帧 minterpolate，这个补帧效果非常一般，但非常稳定，速度极快，使用 CPU 处理，完全没有果冻，对于要求不高的临时观影可以用一用，仅适用于动静小的视频，不适用于3D游戏录制、动静大的电影等
   - 最佳质量选项：运动补偿插值+加权obmc
 
@@ -234,6 +236,8 @@ PNG、JPEG\JPG、WEBP、TIFF、AVIF、GIF、BMP、JPEG-LS、DPX、OpenEXR
 - 锐化 unsharp
 - 转逐行 yadif
 - 转隔行 tinterlace
+
+关于使用 AviSynth+ 降噪滤镜可参阅 [AviSynth+.md](https://github.com/Lake1059/FFmpegFreeUI/blob/main/linux-doc/AviSynth+.md)
 
 ## 音频滤镜
 
@@ -254,91 +258,6 @@ PNG、JPEG\JPG、WEBP、TIFF、AVIF、GIF、BMP、JPEG-LS、DPX、OpenEXR
 ## 剪辑区间
 
 暂时还没做可视化交互，先用播放器对着写吧，或者直接找剪辑软件。
-
-## AviSynth+ 降噪滤镜
-
-> 本段内容由 hajimanbo 提供内容改进
-
-AviSynth 选项在降噪设置里提供，最后一个选项就是。3FUI 只能使用 avs 文件来加载，在开始前必须明确，3FUI 是设计用于批量处理的转码工具，因此这个加载逻辑也必然是这样设计的。当使用此滤镜时，avs 文件将取代输入文件的位置，3FUI 默认您不会在 avs 里处理音频，为了避免新手直接用发现视频声音没了，因此当选择此降噪时自动覆盖填写自定义参数和流控制参数，请注意检查。
-
-首先下载这些 dll 文件：
-
-- AviSynth.dll（在发行版中有个名为 filesonly 的那里面找）<br>https://github.com/AviSynth/AviSynthPlus/releases
-- LSMASHSource.dll<br>https://github.com/HomeOfAviSynthPlusEvolution/L-SMASH-Works/releases<br>此文件用于读取视频文件
-- knlmeanscl.dll<br>https://github.com/Khanattila/KNLMeansCL/releases<br>此文件用于降噪
-- fmtconv.dll<br>https://gitlab.com/EleonoreMizo/fmtconv<br>用于改变视频位深
-
-将这些文件与 ffmpeg 放在一起！
-
-在 3FUI 的目录下创建 AviSynth.avs 文件，此文件作为模板提供给 3FUI，在其中填写以下内容：
-
-```vb
-LoadPlugin("C:\xxxx\LSMASHSource.dll")
-LoadPlugin("C:\xxxx\fmtconv.dll")
-LoadPlugin("C:\xxxx\knlmeanscl.dll")
-LWLibavVideoSource("<FilePath>")#读取文件中的视频流
-fmtc_bitdepth(bits=16,dmode=1)#为KNLMeansCL降噪而提升位深
-KNLMeansCL(d=2,a=3,s=4,h=3,channels="Y",wmode=3)#对亮度平面的降噪强度高于色度平面
-KNLMeansCL(d=2,a=3,s=4,h=2,channels="UV",wmode=3)#对色度平面的降噪强度低于亮度平面
-fmtc_bitdepth(bits=10,dmode=0)#为libsvtav1编码而降低位深
-```
-
-如果需要在avs中读取文件的音视频流可用以下模板
-
-```vb
-LoadPlugin("C:\xxxx\LSMASHSource.dll")
-LoadPlugin("C:\xxxx\fmtconv.dll")
-LoadPlugin("C:\xxxx\knlmeanscl.dll")
-function LibavSource2(string path, int "atrack",
-\          int "fpsnum", int "fpsden",
-\          string "format", bool "cache")
-{
-    atrack   = Default(atrack, -1)
-    fpsnum   = Default(fpsnum, 0)
-    fpsden   = Default(fpsden,  1)
-    cache    = Default(cache, true)
-
-    format   = Default(format, "")
-
-    video = LWLibavVideoSource(path,
-    \               fpsnum=fpsnum, fpsden=fpsden, format=format,
-    \               cache=cache)
-    return (atrack==-2) ? video: AudioDub(video,
-   \    LWLibavAudioSource(path, stream_index=atrack, cache=cache))
-}
-LibavSource2("<FilePath>")#读取文件中的音视频流。atrack - 音频轨道号，默认为自动，如果为 -2，则忽略音频。cache - 如果为 true（默认值），则创建索引文件
-fmtc_bitdepth(bits=16,dmode=1)#为KNLMeansCL降噪而提升位深
-KNLMeansCL(d=2,a=3,s=4,h=3,channels="Y",wmode=3)#对亮度平面的降噪强度高于色度平面
-KNLMeansCL(d=2,a=3,s=4,h=2,channels="UV",wmode=3)#对色度平面的降噪强度低于亮度平面
-fmtc_bitdepth(bits=10,dmode=0)#为libsvtav1编码而降低位深
-```
-
-- LoadPlugin 方法用来加载这些 dll，不需要在这里加载 AviSynth.dll<br>dll 的路径请写绝对路径！
-- LWLibavVideoSource 加载视频文件，直接把第四行复制过去，3FUI 会自动替换这个文件路径
-- fmtc_bitdepth 用于先为 KNLMeansCL 的降噪提升位深，而后为视频编码器的编码降低位深
-- KNLMeansCL 就是降噪方法，其参数如下：
-
-原文：https://github.com/Khanattila/KNLMeansCL/wiki/Filter-description
-
-```c#
-KNLMeansCL(clip, int d, int a, int s, float h, string channels, int wmode, float wref, clip rclip, string device_type, int device_id, bool lsb_inout, bool info)
-```
-
-| 参数名      | 说明                                                         |
-| ----------- | ------------------------------------------------------------ |
-| clip        | 不写                                                         |
-| d           | 前后参考帧数量，d=0 使用 1 帧，d=1 使用 3 帧，n=2*d+1，以此类推，值越大降噪效果越好 |
-| a           | 搜索像素半径，a=1 使用 9 像素，a=2 使用 25 像素，n=(2*a+1)^2，以此类推，值越大降噪效果越好 |
-| s           | 相似半径，默认 = 4，对性能的影响很小，这取决于噪声的性质     |
-| h           | 过滤强度，默认 = 1.2，值越大，去除的杂色越多                 |
-| channels    | 设置要去噪的颜色通道。可能的值为 YUV、Y、UV                  |
-| wmode       | 0 := Welsch weighting function has a faster decay, but still assigns positive weights to dissimilar blocks. Original Non-local means denoising weighting function.<br/>1 := Modified Bisquare weighting function to be less robust.<br/>2 := Bisquare weighting function use a soft threshold to compare neighbourhoods (the weight is 0 as soon as a given threshold is exceeded).<br/>3 := Modified Bisquare weighting function to be even more robust. |
-| wref        | 默认 =  1，相对于找到的最相似像素的权重，影响滤镜输出的原始像素量 |
-| rclip       | 不写                                                         |
-| device_type | accelerator、cpu、gpu、auto                                  |
-| device_id   | 显卡索引                                                     |
-| lsb_inout   | 没必要                                                       |
-| info        | 输出额外信息                                                 |
 
 ## 插件开发
 

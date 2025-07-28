@@ -136,13 +136,11 @@ Partial Class Form画面裁剪交互窗口
         UiComboBox比例.MinimumSize = New Size(63, 0)
         UiComboBox比例.Name = "UiComboBox比例"
         UiComboBox比例.Padding = New Padding(0, 0, 30, 2)
-        UiComboBox比例.RadiusSides = Sunny.UI.UICornerRadiusSides.None
         UiComboBox比例.RectColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
         UiComboBox比例.RectDisableColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
         UiComboBox比例.ScrollBarHandleWidth = 20
         UiComboBox比例.Size = New Size(100, 30)
         UiComboBox比例.Style = Sunny.UI.UIStyle.Custom
-        UiComboBox比例.StyleDropDown = Sunny.UI.UIStyle.Black
         UiComboBox比例.SymbolSize = 24
         UiComboBox比例.TabIndex = 83
         UiComboBox比例.TextAlignment = ContentAlignment.MiddleLeft
@@ -159,10 +157,10 @@ Partial Class Form画面裁剪交互窗口
         ' UiTextBox1
         ' 
         UiTextBox1.Dock = DockStyle.Left
-        UiTextBox1.FillColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
-        UiTextBox1.FillColor2 = Color.FromArgb(CByte(36), CByte(36), CByte(36))
-        UiTextBox1.FillDisableColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
-        UiTextBox1.FillReadOnlyColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiTextBox1.FillColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
+        UiTextBox1.FillColor2 = Color.FromArgb(CByte(24), CByte(24), CByte(24))
+        UiTextBox1.FillDisableColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
+        UiTextBox1.FillReadOnlyColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         UiTextBox1.Font = New Font("微软雅黑", 9.75F)
         UiTextBox1.ForeColor = Color.DarkGray
         UiTextBox1.ForeDisableColor = Color.DarkGray
@@ -173,9 +171,9 @@ Partial Class Form画面裁剪交互窗口
         UiTextBox1.Name = "UiTextBox1"
         UiTextBox1.Padding = New Padding(5)
         UiTextBox1.Radius = 30
-        UiTextBox1.RectColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
-        UiTextBox1.RectDisableColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
-        UiTextBox1.RectReadOnlyColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        UiTextBox1.RectColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
+        UiTextBox1.RectDisableColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
+        UiTextBox1.RectReadOnlyColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         UiTextBox1.ScrollBarBackColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
         UiTextBox1.ScrollBarColor = Color.DimGray
         UiTextBox1.ScrollBarStyleInherited = False
@@ -198,10 +196,10 @@ Partial Class Form画面裁剪交互窗口
         ' UiTextBox画面裁剪滤镜参数
         ' 
         UiTextBox画面裁剪滤镜参数.Dock = DockStyle.Left
-        UiTextBox画面裁剪滤镜参数.FillColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
-        UiTextBox画面裁剪滤镜参数.FillColor2 = Color.FromArgb(CByte(36), CByte(36), CByte(36))
-        UiTextBox画面裁剪滤镜参数.FillDisableColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
-        UiTextBox画面裁剪滤镜参数.FillReadOnlyColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiTextBox画面裁剪滤镜参数.FillColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
+        UiTextBox画面裁剪滤镜参数.FillColor2 = Color.FromArgb(CByte(24), CByte(24), CByte(24))
+        UiTextBox画面裁剪滤镜参数.FillDisableColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
+        UiTextBox画面裁剪滤镜参数.FillReadOnlyColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         UiTextBox画面裁剪滤镜参数.Font = New Font("微软雅黑", 9.75F)
         UiTextBox画面裁剪滤镜参数.ForeColor = Color.DarkGray
         UiTextBox画面裁剪滤镜参数.ForeDisableColor = Color.DarkGray
@@ -212,9 +210,9 @@ Partial Class Form画面裁剪交互窗口
         UiTextBox画面裁剪滤镜参数.Name = "UiTextBox画面裁剪滤镜参数"
         UiTextBox画面裁剪滤镜参数.Padding = New Padding(5)
         UiTextBox画面裁剪滤镜参数.Radius = 30
-        UiTextBox画面裁剪滤镜参数.RectColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
-        UiTextBox画面裁剪滤镜参数.RectDisableColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
-        UiTextBox画面裁剪滤镜参数.RectReadOnlyColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        UiTextBox画面裁剪滤镜参数.RectColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
+        UiTextBox画面裁剪滤镜参数.RectDisableColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
+        UiTextBox画面裁剪滤镜参数.RectReadOnlyColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         UiTextBox画面裁剪滤镜参数.ScrollBarBackColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
         UiTextBox画面裁剪滤镜参数.ScrollBarColor = Color.DimGray
         UiTextBox画面裁剪滤镜参数.ScrollBarStyleInherited = False
@@ -237,12 +235,12 @@ Partial Class Form画面裁剪交互窗口
         ' UiButton2
         ' 
         UiButton2.Dock = DockStyle.Left
-        UiButton2.FillColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
-        UiButton2.FillColor2 = Color.FromArgb(CByte(36), CByte(36), CByte(36))
-        UiButton2.FillDisableColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
-        UiButton2.FillHoverColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiButton2.FillPressColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiButton2.FillSelectedColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        UiButton2.FillColor = Color.FromArgb(CByte(56), CByte(56), CByte(56))
+        UiButton2.FillColor2 = Color.FromArgb(CByte(56), CByte(56), CByte(56))
+        UiButton2.FillDisableColor = Color.FromArgb(CByte(56), CByte(56), CByte(56))
+        UiButton2.FillHoverColor = Color.FromArgb(CByte(56), CByte(56), CByte(56))
+        UiButton2.FillPressColor = Color.FromArgb(CByte(56), CByte(56), CByte(56))
+        UiButton2.FillSelectedColor = Color.FromArgb(CByte(56), CByte(56), CByte(56))
         UiButton2.Font = New Font("微软雅黑", 9.75F)
         UiButton2.ForeColor = Color.Goldenrod
         UiButton2.ForeDisableColor = Color.Goldenrod
@@ -253,11 +251,11 @@ Partial Class Form画面裁剪交互窗口
         UiButton2.MinimumSize = New Size(1, 1)
         UiButton2.Name = "UiButton2"
         UiButton2.Radius = 30
-        UiButton2.RectColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
-        UiButton2.RectDisableColor = Color.FromArgb(CByte(12), CByte(12), CByte(12))
-        UiButton2.RectHoverColor = Color.CornflowerBlue
+        UiButton2.RectColor = Color.FromArgb(CByte(56), CByte(56), CByte(56))
+        UiButton2.RectDisableColor = Color.FromArgb(CByte(56), CByte(56), CByte(56))
+        UiButton2.RectHoverColor = Color.Goldenrod
         UiButton2.RectPressColor = Color.FromArgb(CByte(64), CByte(148), CByte(64))
-        UiButton2.RectSelectedColor = Color.CornflowerBlue
+        UiButton2.RectSelectedColor = Color.Goldenrod
         UiButton2.Size = New Size(75, 30)
         UiButton2.TabIndex = 46
         UiButton2.Text = "完成"
@@ -274,12 +272,12 @@ Partial Class Form画面裁剪交互窗口
         ' UiButton1
         ' 
         UiButton1.Dock = DockStyle.Left
-        UiButton1.FillColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
-        UiButton1.FillColor2 = Color.FromArgb(CByte(36), CByte(36), CByte(36))
-        UiButton1.FillDisableColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
-        UiButton1.FillHoverColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiButton1.FillPressColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiButton1.FillSelectedColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        UiButton1.FillColor = Color.FromArgb(CByte(56), CByte(56), CByte(56))
+        UiButton1.FillColor2 = Color.FromArgb(CByte(56), CByte(56), CByte(56))
+        UiButton1.FillDisableColor = Color.FromArgb(CByte(56), CByte(56), CByte(56))
+        UiButton1.FillHoverColor = Color.FromArgb(CByte(56), CByte(56), CByte(56))
+        UiButton1.FillPressColor = Color.FromArgb(CByte(56), CByte(56), CByte(56))
+        UiButton1.FillSelectedColor = Color.FromArgb(CByte(56), CByte(56), CByte(56))
         UiButton1.Font = New Font("微软雅黑", 9.75F)
         UiButton1.ForeColor = Color.YellowGreen
         UiButton1.ForeDisableColor = Color.YellowGreen
@@ -290,11 +288,11 @@ Partial Class Form画面裁剪交互窗口
         UiButton1.MinimumSize = New Size(1, 1)
         UiButton1.Name = "UiButton1"
         UiButton1.Radius = 30
-        UiButton1.RectColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
-        UiButton1.RectDisableColor = Color.FromArgb(CByte(12), CByte(12), CByte(12))
-        UiButton1.RectHoverColor = Color.CornflowerBlue
+        UiButton1.RectColor = Color.FromArgb(CByte(56), CByte(56), CByte(56))
+        UiButton1.RectDisableColor = Color.FromArgb(CByte(56), CByte(56), CByte(56))
+        UiButton1.RectHoverColor = Color.YellowGreen
         UiButton1.RectPressColor = Color.FromArgb(CByte(64), CByte(148), CByte(64))
-        UiButton1.RectSelectedColor = Color.CornflowerBlue
+        UiButton1.RectSelectedColor = Color.YellowGreen
         UiButton1.Size = New Size(75, 30)
         UiButton1.TabIndex = 44
         UiButton1.Text = "打开"
