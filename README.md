@@ -22,7 +22,7 @@ FFmpegFreeUI（简称 3FUI）是在 Windows 上的 [FFmpeg](https://ffmpeg.org) 
 
 [Wine](https://www.winehq.org) 是一个在多种 POSIX-compliant 操作系统上运行 Windows 应用的兼容层，如果能够在 macOS 和 Linux 上安装并正确使用，理论上可以直接在这些操作系统上使用 3FUI。关于这部分的内容请进群跟群友讨论，我买不起苹果电脑也用不来 Linux。
 
-关于在 Linux 中使用 Wine 转译运行 3FUI 的方法可参阅 [linux.md](https://github.com/Lake1059/FFmpegFreeUI/blob/main/linux-doc/linux.md)
+关于在 Linux 中使用 Wine 转译运行 3FUI 的方法可参阅 [linux.md](doc/linux.md)
 
 ## 下载说明
 
@@ -237,7 +237,7 @@ PNG、JPEG\JPG、WEBP、TIFF、AVIF、GIF、BMP、JPEG-LS、DPX、OpenEXR
 - 转逐行 yadif
 - 转隔行 tinterlace
 
-关于使用 AviSynth+ 降噪滤镜可参阅 [AviSynth+.md](https://github.com/Lake1059/FFmpegFreeUI/blob/main/linux-doc/AviSynth+.md)
+关于使用 AviSynth+ 降噪滤镜可参阅 [AviSynth+.md](doc/AviSynth+.md)
 
 ## 音频滤镜
 
