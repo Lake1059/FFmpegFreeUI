@@ -25,7 +25,7 @@ Public Class Form1
 
         UiComboBox字体名称.Text = 用户设置.实例对象.字体
         If UiComboBox字体名称.Items.Contains("微软雅黑") Then UiComboBox字体名称.Font = New Font("微软雅黑", UiComboBox字体名称.Font.Size)
-        SetControlFont(用户设置.实例对象.字体, Me, {UiComboBox字体名称})
+        SetControlFont(用户设置.实例对象.字体, Me, {UiComboBox字体名称}, True)
         界面控制.界面校准()
         If DPI <> 1 Then DPI变动时校准界面()
 

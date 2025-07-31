@@ -183,7 +183,8 @@ Module Module1
         Return New IntPtr(mask)
     End Function
 
-    Public Sub SetControlFont(FontName As String, c As Control, Optional ExcludeContorl As Control() = Nothing)
+    Public Sub SetControlFont(FontName As String, c As Control, Optional ExcludeContorl As Control() = Nothing, Optional Self As Boolean = False)
+        If Self Then c.Font = New Font(FontName, c.Font.Size)
         For Each ctrl As Control In c.Controls
             If ExcludeContorl IsNot Nothing Then
                 If ExcludeContorl.Contains(ctrl) Then Continue For
