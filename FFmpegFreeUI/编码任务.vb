@@ -54,19 +54,20 @@ Public Class 编码任务
     End Class
     Public Shared Sub 用定时器刷新到界面上()
         If 队列.Count = 0 Then Exit Sub
-        If 要刷新的项.Count = 0 Then Exit Sub
+        Dim 要刷新的项副本 As New Dictionary(Of ListViewItem, 刷新到界面数据结构)(要刷新的项)
         SyncLock 要刷新的项
-            Dim 要刷新的项副本 As New Dictionary(Of ListViewItem, 刷新到界面数据结构)(要刷新的项)
+            If 要刷新的项.Count = 0 Then Exit Sub
             要刷新的项.Clear()
-            For Each item As ListViewItem In 要刷新的项副本.Keys
-                item.SubItems(2).Text = 要刷新的项副本(item).进度
-                item.SubItems(3).Text = 要刷新的项副本(item).效率
-                item.SubItems(4).Text = 要刷新的项副本(item).输出大小
-                item.SubItems(5).Text = 要刷新的项副本(item).质量
-                item.SubItems(6).Text = 要刷新的项副本(item).比特率
-                item.SubItems(7).Text = 要刷新的项副本(item).时间
-            Next
         End SyncLock
+        For Each item As ListViewItem In 要刷新的项副本.Keys
+            item.SubItems(2).Text = 要刷新的项副本(item).进度
+            item.SubItems(3).Text = 要刷新的项副本(item).效率
+            item.SubItems(4).Text = 要刷新的项副本(item).输出大小
+            item.SubItems(5).Text = 要刷新的项副本(item).质量
+            item.SubItems(6).Text = 要刷新的项副本(item).比特率
+            item.SubItems(7).Text = 要刷新的项副本(item).时间
+        Next
+
     End Sub
 
     Public Class 单片任务
@@ -445,7 +446,6 @@ jx1:
             SyncLock 要刷新的项
                 要刷新的项(列表视图项) = 信息数据
             End SyncLock
-
 
         End Sub
         Public Sub 在实时输出中提取数据(line As String)

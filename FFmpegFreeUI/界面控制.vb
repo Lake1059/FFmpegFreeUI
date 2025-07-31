@@ -8,6 +8,11 @@ Public Class 界面控制
         绑定拖动控件移动窗体(Form1.Label副标题)
         绑定拖动控件移动窗体(Form1.PictureBox1)
         绑定拖动控件移动窗体(Form1.Label11)
+        绑定拖动控件移动窗体(Form1.Label36)
+        绑定拖动控件移动窗体(Form1.Panel2)
+
+
+
 
         Dim 字体列表 As New List(Of String)
         For Each 字体 As FontFamily In FontFamily.Families
@@ -101,6 +106,8 @@ Public Class 界面控制
         AddHandler Form1.LinkLabel4.LinkClicked, Sub() Process.Start(New ProcessStartInfo With {.FileName = "https://github.com/BtbN/FFmpeg-Builds/releases", .UseShellExecute = True})
         AddHandler Form1.LinkLabel5.LinkClicked, Sub() Process.Start(New ProcessStartInfo With {.FileName = "https://afdian.com/a/1059Studio", .UseShellExecute = True})
         AddHandler Form1.LinkLabel6.LinkClicked, Sub() Process.Start(New ProcessStartInfo With {.FileName = "https://space.bilibili.com/319785096", .UseShellExecute = True})
+        AddHandler Form1.LinkLabel1.LinkClicked, Sub() Process.Start(New ProcessStartInfo With {.FileName = "https://ffmpegfreeui.top", .UseShellExecute = True})
+        AddHandler Form1.LinkLabel8.LinkClicked, Sub() Process.Start(New ProcessStartInfo With {.FileName = "https://3fui.top", .UseShellExecute = True})
 
         暗黑列表视图自绘制.绑定列表视图事件(Form1.ListView1)
         暗黑列表视图自绘制.绑定列表视图事件(Form1.ListView2)
@@ -147,11 +154,12 @@ Public Class 界面控制
                 Form1.UiComboBox字体名称.ItemHeight = 30 * Form1.DPI
                 Form1.UiComboBox自动开始最大任务数量.ItemHeight = 30 * Form1.DPI
                 Form1.UiComboBox有任务时系统状态.ItemHeight = 30 * Form1.DPI
+                Form1.UiComboBox提示音.ItemHeight = 30 * Form1.DPI
                 Form1.UiCheckBox转译模式.CheckBoxSize = 20 * Form1.DPI
 
             Case 选项卡.IsEqual(Form1.TabPage编码队列)
                 Form1.Label1.Width = Form1.Panel1.Width - Form1.Panel1.Padding.Left - Form1.Label2.Width - Form1.Label3.Width - Form1.Label4.Width - Form1.Label5.Width - Form1.Label6.Width - Form1.Label7.Width - 200 * Form1.DPI
-                Form1.ListView1.Columns(0).Width = Form1.Label1.Width - 5 * Form1.DPI
+                Form1.ListView1.Columns(0).Width = Form1.Label1.Width - Form1.ListView1.Parent.Padding.Left - 5 * Form1.DPI
                 Form1.ListView1.Columns(1).Width = Form1.Label2.Width
                 Form1.ListView1.Columns(2).Width = Form1.Label3.Width
                 Form1.ListView1.Columns(3).Width = Form1.Label4.Width

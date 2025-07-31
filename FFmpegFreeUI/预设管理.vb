@@ -581,7 +581,7 @@ Public Class 预设管理
 
         If a.视频参数_帧速率 <> "" Then 视频参数 &= $"-r {a.视频参数_帧速率} "
         If a.视频参数_帧速率_抽帧最大变化比例 <> "" Then
-            视频滤镜参数集.Add($"mpdecimate=frac={a.视频参数_帧速率_抽帧最大变化比例}")
+            视频滤镜参数集.Add($"mpdecimate=max={a.视频参数_帧速率_抽帧最大变化比例}")
             视频参数 &= "-vsync vfr "
         End If
 
@@ -850,7 +850,7 @@ Public Class 预设管理
         '=================================================================
 
         If a.流控制_启用保留内嵌字幕流 Then
-            arg &= $"{If(arg.Contains("-map"), "-map 0:s", "")}  -c:s copy "
+            arg &= $"{If(arg.Contains("-map"), "-map 0:s?", "")}  -c:s copy "
         End If
 
         Select Case a.流控制_元数据选项
@@ -864,7 +864,7 @@ Public Class 预设管理
         End Select
 
         Select Case a.流控制_附件选项
-            Case 1 : arg &= $"{If(arg.Contains("-map"), "-map 0:t", "")}  -c:t copy "
+            Case 1 : arg &= $"{If(arg.Contains("-map"), "-map 0:t?", "")}  -c:t copy "
         End Select
 
         If 滤镜图参数集.Count > 0 Then

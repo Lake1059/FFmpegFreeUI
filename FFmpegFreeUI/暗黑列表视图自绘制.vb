@@ -22,10 +22,10 @@ Public Class 暗黑列表视图自绘制
             If Not e.Bounds.IntersectsWith(哪个列表视图控件.ClientRectangle) OrElse e.Bounds.Width = 0 Then Exit Sub
             Dim 项背景色 As Color = If(哪个列表视图控件.SelectedIndices.Contains(e.ItemIndex), 项被选中时的背景颜色, 哪个列表视图控件.BackColor)
             Dim 文本高度修正 As Integer = (e.Bounds.Height - TextRenderer.MeasureText(e.SubItem.Text, e.SubItem.Font).Height) \ 2
-            Dim 文本绘制区 As New Rectangle(e.Bounds.X + 5, e.Bounds.Y + 文本高度修正, e.Bounds.Width - 5, e.Bounds.Height)
+            Dim 文本绘制区 As New Rectangle(e.Bounds.X + 5 * Form1.DPI, e.Bounds.Y + 文本高度修正, e.Bounds.Width, e.Bounds.Height)
             Dim 文字显示所需尺寸 As Size = TextRenderer.MeasureText(e.SubItem.Text, e.SubItem.Font)
             Dim 实际要绘制的文本 As String = e.SubItem.Text
-            If 文字显示所需尺寸.Width > (e.Bounds.Width - 5 * Form1.DPI) Then
+            If 文字显示所需尺寸.Width > (e.Bounds.Width - 3 * Form1.DPI) Then
                 Dim 点号所占用的宽度 As Integer = TextRenderer.MeasureText("...", e.SubItem.Font).Width
                 Dim 实际文本可用宽度 As Integer = e.Bounds.Width - 点号所占用的宽度
                 While TextRenderer.MeasureText(实际要绘制的文本, e.SubItem.Font).Width > 实际文本可用宽度 AndAlso 实际要绘制的文本.Length > 0

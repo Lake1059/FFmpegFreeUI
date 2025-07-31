@@ -82,6 +82,8 @@ Partial Class Form1
         Label64 = New Label()
         Label129 = New Label()
         Panel5 = New Panel()
+        LinkLabel8 = New LinkLabel()
+        LinkLabel1 = New LinkLabel()
         LinkLabel6 = New LinkLabel()
         LinkLabel5 = New LinkLabel()
         LinkLabel4 = New LinkLabel()
@@ -94,6 +96,7 @@ Partial Class Form1
         Label主标题 = New Label()
         Label11 = New Label()
         PictureBox1 = New PictureBox()
+        Label36 = New Label()
         TabPage编码队列 = New TabPage()
         Panel56 = New Panel()
         ListView1 = New ListView()
@@ -1088,10 +1091,10 @@ Partial Class Form1
         Panel8.Controls.Add(Label64)
         Panel8.Controls.Add(Label129)
         Panel8.Dock = DockStyle.Fill
-        Panel8.Location = New Point(0, 220)
+        Panel8.Location = New Point(0, 278)
         Panel8.Name = "Panel8"
         Panel8.Padding = New Padding(20)
-        Panel8.Size = New Size(300, 355)
+        Panel8.Size = New Size(300, 297)
         Panel8.TabIndex = 85
         ' 
         ' Label122
@@ -1101,7 +1104,7 @@ Partial Class Form1
         Label122.Location = New Point(20, 155)
         Label122.Name = "Label122"
         Label122.Padding = New Padding(0, 0, 0, 7)
-        Label122.Size = New Size(260, 180)
+        Label122.Size = New Size(260, 122)
         Label122.TabIndex = 24
         Label122.Text = "更新信息"
         ' 
@@ -1169,6 +1172,8 @@ Partial Class Form1
         ' 
         Panel5.AutoSize = True
         Panel5.BackColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        Panel5.Controls.Add(LinkLabel8)
+        Panel5.Controls.Add(LinkLabel1)
         Panel5.Controls.Add(LinkLabel6)
         Panel5.Controls.Add(LinkLabel5)
         Panel5.Controls.Add(LinkLabel4)
@@ -1180,8 +1185,38 @@ Partial Class Form1
         Panel5.Location = New Point(0, 0)
         Panel5.Name = "Panel5"
         Panel5.Padding = New Padding(20)
-        Panel5.Size = New Size(300, 220)
+        Panel5.Size = New Size(300, 278)
         Panel5.TabIndex = 83
+        ' 
+        ' LinkLabel8
+        ' 
+        LinkLabel8.ActiveLinkColor = Color.CornflowerBlue
+        LinkLabel8.AutoSize = True
+        LinkLabel8.Dock = DockStyle.Top
+        LinkLabel8.LinkBehavior = LinkBehavior.HoverUnderline
+        LinkLabel8.LinkColor = Color.CornflowerBlue
+        LinkLabel8.Location = New Point(20, 234)
+        LinkLabel8.Name = "LinkLabel8"
+        LinkLabel8.Padding = New Padding(0, 5, 0, 0)
+        LinkLabel8.Size = New Size(96, 24)
+        LinkLabel8.TabIndex = 22
+        LinkLabel8.TabStop = True
+        LinkLabel8.Text = "官网：3fui.top"
+        ' 
+        ' LinkLabel1
+        ' 
+        LinkLabel1.ActiveLinkColor = Color.CornflowerBlue
+        LinkLabel1.AutoSize = True
+        LinkLabel1.Dock = DockStyle.Top
+        LinkLabel1.LinkBehavior = LinkBehavior.HoverUnderline
+        LinkLabel1.LinkColor = Color.CornflowerBlue
+        LinkLabel1.Location = New Point(20, 200)
+        LinkLabel1.Name = "LinkLabel1"
+        LinkLabel1.Padding = New Padding(0, 15, 0, 0)
+        LinkLabel1.Size = New Size(152, 34)
+        LinkLabel1.TabIndex = 21
+        LinkLabel1.TabStop = True
+        LinkLabel1.Text = "官网：ffmpegfreeui.top"
         ' 
         ' LinkLabel6
         ' 
@@ -1292,6 +1327,7 @@ Partial Class Form1
         Panel73.Controls.Add(Label主标题)
         Panel73.Controls.Add(Label11)
         Panel73.Controls.Add(PictureBox1)
+        Panel73.Controls.Add(Label36)
         Panel73.Dock = DockStyle.Top
         Panel73.Location = New Point(0, 0)
         Panel73.Name = "Panel73"
@@ -1320,7 +1356,7 @@ Partial Class Form1
         Label主标题.Padding = New Padding(0, 0, 0, 5)
         Label主标题.Size = New Size(227, 27)
         Label主标题.TabIndex = 9
-        Label主标题.Text = "FFmpegFreeUI Official v1.6"
+        Label主标题.Text = "FFmpegFreeUI Official v1.7"
         ' 
         ' Label11
         ' 
@@ -1343,6 +1379,17 @@ Partial Class Form1
         PictureBox1.TabIndex = 13
         PictureBox1.TabStop = False
         ' 
+        ' Label36
+        ' 
+        Label36.Dock = DockStyle.Fill
+        Label36.Font = New Font("微软雅黑", 10F)
+        Label36.Location = New Point(20, 20)
+        Label36.Name = "Label36"
+        Label36.Size = New Size(1093, 46)
+        Label36.TabIndex = 114
+        Label36.Text = "by 1059 Studio" & vbCrLf & "@湖边的稻草"
+        Label36.TextAlign = ContentAlignment.MiddleRight
+        ' 
         ' TabPage编码队列
         ' 
         TabPage编码队列.BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
@@ -1363,7 +1410,7 @@ Partial Class Form1
         Panel56.Dock = DockStyle.Fill
         Panel56.Location = New Point(0, 90)
         Panel56.Name = "Panel56"
-        Panel56.Padding = New Padding(10, 10, 0, 10)
+        Panel56.Padding = New Padding(15, 15, 0, 15)
         Panel56.Size = New Size(1133, 411)
         Panel56.TabIndex = 4
         ' 
@@ -1377,11 +1424,11 @@ Partial Class Form1
         ListView1.ForeColor = Color.Silver
         ListView1.FullRowSelect = True
         ListView1.HeaderStyle = ColumnHeaderStyle.None
-        ListView1.Location = New Point(10, 10)
+        ListView1.Location = New Point(15, 15)
         ListView1.Name = "ListView1"
         ListView1.OwnerDraw = True
         ListView1.ShowItemToolTips = True
-        ListView1.Size = New Size(1123, 391)
+        ListView1.Size = New Size(1118, 381)
         ListView1.StateImageList = ImageList1
         ListView1.TabIndex = 0
         ListView1.TabStop = False
@@ -1408,16 +1455,15 @@ Partial Class Form1
         Panel1.Dock = DockStyle.Top
         Panel1.Location = New Point(0, 50)
         Panel1.Name = "Panel1"
-        Panel1.Padding = New Padding(10, 0, 0, 0)
         Panel1.Size = New Size(1133, 40)
         Panel1.TabIndex = 2
         ' 
         ' Label8
         ' 
         Label8.Dock = DockStyle.Fill
-        Label8.Location = New Point(900, 0)
+        Label8.Location = New Point(890, 0)
         Label8.Name = "Label8"
-        Label8.Size = New Size(233, 40)
+        Label8.Size = New Size(243, 40)
         Label8.TabIndex = 7
         Label8.Text = "预计剩余 && 已用"
         Label8.TextAlign = ContentAlignment.MiddleLeft
@@ -1425,7 +1471,7 @@ Partial Class Form1
         ' Label7
         ' 
         Label7.Dock = DockStyle.Left
-        Label7.Location = New Point(785, 0)
+        Label7.Location = New Point(775, 0)
         Label7.Name = "Label7"
         Label7.Size = New Size(115, 40)
         Label7.TabIndex = 6
@@ -1435,7 +1481,7 @@ Partial Class Form1
         ' Label6
         ' 
         Label6.Dock = DockStyle.Left
-        Label6.Location = New Point(730, 0)
+        Label6.Location = New Point(720, 0)
         Label6.Name = "Label6"
         Label6.Size = New Size(55, 40)
         Label6.TabIndex = 5
@@ -1445,7 +1491,7 @@ Partial Class Form1
         ' Label5
         ' 
         Label5.Dock = DockStyle.Left
-        Label5.Location = New Point(580, 0)
+        Label5.Location = New Point(570, 0)
         Label5.Name = "Label5"
         Label5.Size = New Size(150, 40)
         Label5.TabIndex = 4
@@ -1455,7 +1501,7 @@ Partial Class Form1
         ' Label4
         ' 
         Label4.Dock = DockStyle.Left
-        Label4.Location = New Point(500, 0)
+        Label4.Location = New Point(490, 0)
         Label4.Name = "Label4"
         Label4.Size = New Size(80, 40)
         Label4.TabIndex = 3
@@ -1465,7 +1511,7 @@ Partial Class Form1
         ' Label3
         ' 
         Label3.Dock = DockStyle.Left
-        Label3.Location = New Point(430, 0)
+        Label3.Location = New Point(420, 0)
         Label3.Name = "Label3"
         Label3.Size = New Size(70, 40)
         Label3.TabIndex = 2
@@ -1475,7 +1521,7 @@ Partial Class Form1
         ' Label2
         ' 
         Label2.Dock = DockStyle.Left
-        Label2.Location = New Point(350, 0)
+        Label2.Location = New Point(340, 0)
         Label2.Name = "Label2"
         Label2.Size = New Size(80, 40)
         Label2.TabIndex = 1
@@ -1485,8 +1531,9 @@ Partial Class Form1
         ' Label1
         ' 
         Label1.Dock = DockStyle.Left
-        Label1.Location = New Point(10, 0)
+        Label1.Location = New Point(0, 0)
         Label1.Name = "Label1"
+        Label1.Padding = New Padding(10, 0, 0, 0)
         Label1.Size = New Size(340, 40)
         Label1.TabIndex = 0
         Label1.Text = "输入文件"
@@ -3068,5 +3115,8 @@ Partial Class Form1
     Friend WithEvents UiTextBox输出容器 As Sunny.UI.UITextBox
     Friend WithEvents UiButton选择容器 As Sunny.UI.UIButton
     Friend WithEvents Label35 As Label
+    Friend WithEvents LinkLabel8 As LinkLabel
+    Friend WithEvents LinkLabel1 As LinkLabel
+    Friend WithEvents Label36 As Label
 
 End Class
