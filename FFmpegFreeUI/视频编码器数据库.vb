@@ -16,6 +16,7 @@
 .Tune = New List(Of String) From {""},
 .Pix_fmt = New List(Of String) From {""}
 })
+
         字典.Add("libx266", New 视频编码器数据单片结构 With {
 .Preset = New List(Of String) From {"veryslow", "slower", "slow", "medium", "fast", "faster", "veryfast", "superfast", "ultrafast"},
 .Profile = New List(Of String) From {"main", "main10"},
@@ -26,20 +27,20 @@
 .Preset = New List(Of String) From {"slower", "slow", "medium", "fast", "faster", "veryfast", "superfast", "ultrafast"},
 .Profile = New List(Of String) From {"main", "main10"},
 .Tune = New List(Of String) From {""},
-.Pix_fmt = Split("yuv420p10le", " ").ToList
+.Pix_fmt = Split("yuv420p yuv420p10le", " ").ToList
 })
 
 
 
         字典.Add("libaom-av1", New 视频编码器数据单片结构 With {
-.Preset = New List(Of String) From {"best", "good", "realtime"},
+.Preset = New List(Of String) From {"0", "1", "2", "3", "4", "5", "6", "7", "8"},
 .Profile = New List(Of String) From {"0", "1", "2"},
 .Tune = New List(Of String) From {"psnr", "ssim", "qmt"},
 .Pix_fmt = Split("yuv420p yuv422p yuv444p gbrp yuv420p10le yuv422p10le yuv444p10le yuv420p12le yuv422p12le yuv444p12le gbrp10le gbrp12le gray gray10le gray12le", " ").ToList
 })
         字典.Add("libsvtav1", New 视频编码器数据单片结构 With {
 .Preset = New List(Of String) From {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13"},
-.Profile = New List(Of String) From {""},
+.Profile = New List(Of String) From {"main", "high", "professional"},
 .Tune = New List(Of String) From {""},
 .Pix_fmt = Split("yuv420p yuv420p10le", " ").ToList
 })
@@ -72,25 +73,25 @@
 
         字典.Add("libx265", New 视频编码器数据单片结构 With {
 .Preset = New List(Of String) From {"veryslow", "slower", "slow", "medium", "fast", "faster", "veryfast", "superfast", "ultrafast"},
-.Profile = New List(Of String) From {"main", "main10", "mainstillpicture"},
+.Profile = New List(Of String) From {"main", "mainstillpicture"},
 .Tune = New List(Of String) From {"psnr", "ssim", "grain", "fastdecode", "zerolatency", "animation", "stillimage"},
 .Pix_fmt = Split("yuv420p yuvj420p yuv422p yuvj422p yuv444p yuvj444p gbrp yuv420p10le yuv422p10le yuv444p10le gbrp10le yuv420p12le yuv422p12le yuv444p12le gbrp12le gray gray10le gray12le yuva420p yuva420p10le", " ").ToList
 })
         字典.Add("hevc_nvenc", New 视频编码器数据单片结构 With {
 .Preset = New List(Of String) From {"p7", "p6", "p5", "p4", "p3", "p2", "p1"},
-.Profile = New List(Of String) From {"main", "main10", "rext"},
+.Profile = New List(Of String) From {"main", "rext"},
 .Tune = New List(Of String) From {"hq", "uhq", "ll", "ull", "lossless"},
 .Pix_fmt = Split("yuv420p nv12 p010le yuv444p p016le nv16 p210le p216le yuv444p16le bgr0 bgra rgb0 rgba x2rgb10le x2bgr10le gbrp gbrp16le cuda d3d11", " ").ToList
 })
         字典.Add("hevc_amf", New 视频编码器数据单片结构 With {
 .Preset = New List(Of String) From {"quality", "balanced", "speed"},
-.Profile = New List(Of String) From {"main", "main10"},
-.Tune = New List(Of String) From {"transcoding", "ultralowlatency", "lowlatency", "webcam", "high_quality", "lowlatency_high_quality"}, '-usage
+.Profile = New List(Of String) From {"main"},
+.Tune = New List(Of String) From {"transcoding", "ultralowlatency", "lowlatency", "webcam", "high_quality", "lowlatency_high_quality"},
 .Pix_fmt = Split("nv12 yuv420p d3d11 dxva2_vld p010le amf bgr0 rgb0 bgra argb rgba x2bgr10le rgbaf16le", " ").ToList
 })
         字典.Add("hevc_qsv", New 视频编码器数据单片结构 With {
 .Preset = New List(Of String) From {"veryslow", "slower", "slow", "medium", "fast", "faster", "veryfast"},
-.Profile = New List(Of String) From {"main", "main10", "mainsp", "rext", "scc"},
+.Profile = New List(Of String) From {"main", "mainsp", "rext", "scc"},
 .Tune = New List(Of String) From {""},
 .Pix_fmt = Split("nv12 p010le p012le yuyv422 y210le qsv bgra x2rgb10le vuyx xv30le", " ").ToList
 })
@@ -124,7 +125,7 @@
         字典.Add("h264_amf", New 视频编码器数据单片结构 With {
 .Preset = New List(Of String) From {"quality", "balanced", "speed"},
 .Profile = New List(Of String) From {"main", "high", "constrained_baseline", "constrained_high"},
-.Tune = New List(Of String) From {"transcoding", "ultralowlatency", "lowlatency", "webcam", "high_quality", "lowlatency_high_quality"}, '-usage
+.Tune = New List(Of String) From {"transcoding", "ultralowlatency", "lowlatency", "webcam", "high_quality", "lowlatency_high_quality"},
 .Pix_fmt = Split("nv12 yuv420p d3d11 dxva2_vld p010le amf bgr0 rgb0 bgra argb rgba x2bgr10le rgbaf16le", " ").ToList
 })
         字典.Add("h264_qsv", New 视频编码器数据单片结构 With {
@@ -167,7 +168,7 @@
 
 
         字典.Add("libvpx-vp9", New 视频编码器数据单片结构 With {
-.Preset = New List(Of String) From {"best", "good", "realtime"}, '-deadline
+.Preset = New List(Of String) From {"0", "1", "2", "3", "4", "5"},
 .Profile = New List(Of String) From {""},
 .Tune = New List(Of String) From {"psnr", "ssim"},
 .Pix_fmt = Split("yuv420p yuva420p yuv422p yuv440p yuv444p yuv420p10le yuv422p10le yuv440p10le yuv444p10le yuv420p12le yuv422p12le yuv440p12le yuv444p12le gbrp gbrp10le gbrp12le", " ").ToList

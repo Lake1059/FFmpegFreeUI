@@ -26,6 +26,7 @@ Public Class Form1
         UiComboBox字体名称.Text = 用户设置.实例对象.字体
         If UiComboBox字体名称.Items.Contains("微软雅黑") Then UiComboBox字体名称.Font = New Font("微软雅黑", UiComboBox字体名称.Font.Size)
         SetControlFont(用户设置.实例对象.字体, Me, {UiComboBox字体名称}, True)
+        Me.ListView1.ContextMenuStrip.Font = New Font(Me.UiComboBox字体名称.Text, Me.ListView1.ContextMenuStrip.Font.Size)
         界面控制.界面校准()
         If DPI <> 1 Then DPI变动时校准界面()
 
@@ -222,5 +223,6 @@ Public Class Form1
         If Me.UiComboBox3.SelectedIndex < 0 Then Exit Sub
         Panel24.Controls.Add(插件管理.由插件加载的自定义界面(Me.UiComboBox3.Text))
         插件管理.由插件加载的自定义界面(Me.UiComboBox3.Text).Dock = DockStyle.Fill
+        SetControlFont(用户设置.实例对象.字体, Panel24)
     End Sub
 End Class

@@ -552,7 +552,14 @@ Public Class 预设管理
 
         If a.视频参数_编码器_类别 = "禁用" Then 视频参数 &= $"-vn "
         If a.视频参数_编码器_具体编码 <> "" Then 视频参数 &= $"-c:v {a.视频参数_编码器_具体编码} "
-        If a.视频参数_编码器_质量 <> "" Then 视频参数 &= $"-preset {a.视频参数_编码器_质量} "
+        If a.视频参数_编码器_质量 <> "" Then
+            Select Case a.视频参数_编码器_具体编码
+                Case "libaom-av1", "libvpx-vp9"
+                    视频参数 &= $"-cpu-used {a.视频参数_编码器_质量} "
+                Case Else
+                    视频参数 &= $"-preset {a.视频参数_编码器_质量} "
+            End Select
+        End If
         If a.视频参数_编码器_配置文件 <> "" Then 视频参数 &= $"-profile {a.视频参数_编码器_配置文件} "
         If a.视频参数_编码器_场景优化 <> "" Then
             Select Case a.视频参数_编码器_具体编码
