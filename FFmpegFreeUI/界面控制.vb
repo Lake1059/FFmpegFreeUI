@@ -11,9 +11,6 @@ Public Class 界面控制
         绑定拖动控件移动窗体(Form1.Label36)
         绑定拖动控件移动窗体(Form1.Panel2)
 
-
-
-
         Dim 字体列表 As New List(Of String)
         For Each 字体 As FontFamily In FontFamily.Families
             字体列表.Add(字体.Name)

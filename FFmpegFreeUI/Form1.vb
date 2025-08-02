@@ -1,4 +1,5 @@
 ﻿Imports System.IO
+Imports System.Text.Json
 Imports Sunny.UI
 
 Public Class Form1
@@ -19,9 +20,9 @@ Public Class Form1
     Public 任务进度更新计时器 As New Timer With {.Interval = 1000, .Enabled = False}
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        用户设置.启动时加载设置()
-        界面控制.初始化()
         视频编码器数据库.初始化()
+        界面控制.初始化()
+        用户设置.启动时加载设置()
 
         UiComboBox字体名称.Text = 用户设置.实例对象.字体
         If UiComboBox字体名称.Items.Contains("微软雅黑") Then UiComboBox字体名称.Font = New Font("微软雅黑", UiComboBox字体名称.Font.Size)
@@ -48,6 +49,7 @@ Public Class Form1
         If UI同步上下文 Is Nothing Then MsgBox("警告：UI 同步上下文是空的，继续使用软件将导致崩溃，请联系开发者排查问题", MsgBoxStyle.Critical)
         界面线程执行(AddressOf 检查更新.检查)
         任务进度更新计时器.Enabled = True
+
     End Sub
 
     Private Sub Form1_DpiChanged(sender As Object, e As DpiChangedEventArgs) Handles Me.DpiChanged

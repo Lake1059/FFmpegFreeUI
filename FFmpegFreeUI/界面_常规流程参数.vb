@@ -1,5 +1,6 @@
 ﻿
 Imports System.IO
+Imports System.Text.Json
 
 Public Class 界面_常规流程参数
     Private Sub 界面_常规流程参数_Load(sender As Object, e As EventArgs) Handles Me.Load
@@ -51,8 +52,11 @@ Public Class 界面_常规流程参数
                                                  UiComboBox自动加载预设选项.SelectedIndex = 用户设置.自动加载预设选项枚举.自动加载指定的预设文件
                                              End Sub
         AddHandler UiTextBox自动加载的预设文件路径.TextChanged, Sub()
-                                                         If UiTextBox自动加载的预设文件路径.Text <> "" AndAlso UiComboBox自动加载预设选项.SelectedIndex = 用户设置.自动加载预设选项枚举.自动加载指定的预设文件 Then
-                                                             用户设置.实例对象.自动加载预设文件路径 = UiTextBox自动加载的预设文件路径.Text
+                                                         If UiTextBox自动加载的预设文件路径.Text <> "" Then
+                                                             Select Case UiComboBox自动加载预设选项.SelectedIndex
+                                                                 Case 用户设置.自动加载预设选项枚举.自动加载最后的预设文件, 用户设置.自动加载预设选项枚举.自动加载指定的预设文件
+                                                                     用户设置.实例对象.自动加载预设文件路径 = UiTextBox自动加载的预设文件路径.Text
+                                                             End Select
                                                          Else
                                                              用户设置.实例对象.自动加载预设文件路径 = ""
                                                          End If
@@ -60,6 +64,18 @@ Public Class 界面_常规流程参数
 
         设置富文本框行高(RichTextBox1, 350)
         界面校准()
+
+        Select Case 用户设置.实例对象.自动加载预设选项
+            Case 用户设置.自动加载预设选项枚举.自动加载最后的预设文件, 用户设置.自动加载预设选项枚举.自动加载指定的预设文件
+                If File.Exists(用户设置.实例对象.自动加载预设文件路径) Then
+                    预设管理.显示预设(JsonSerializer.Deserialize(Of 预设数据类型)(File.ReadAllText(用户设置.实例对象.自动加载预设文件路径)))
+                End If
+            Case 用户设置.自动加载预设选项枚举.自动加载上次的全部改动
+                If 用户设置.实例对象.最后的预设数据 IsNot Nothing Then 预设管理.显示预设(用户设置.实例对象.最后的预设数据)
+        End Select
+
+
+
     End Sub
 
     Sub 视频编码类别改动事件()

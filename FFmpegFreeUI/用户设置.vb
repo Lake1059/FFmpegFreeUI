@@ -79,15 +79,14 @@ Public Class 用户设置
                 Case Else : 同时运行任务上限 = 1
             End Select
 
-            Select Case 实例对象.自动加载预设选项
-                Case 自动加载预设选项枚举.自动加载最后的预设文件, 自动加载预设选项枚举.自动加载指定的预设文件
-                    If File.Exists(实例对象.自动加载预设文件路径) Then
-                        Dim a1 As 预设数据类型 = JsonSerializer.Deserialize(Of 预设数据类型)(File.ReadAllText(实例对象.自动加载预设文件路径))
-                        预设管理.显示预设(a1)
-                    End If
-                Case 自动加载预设选项枚举.自动加载上次的全部改动
-                    预设管理.显示预设(实例对象.最后的预设数据)
-            End Select
+            'Select Case 实例对象.自动加载预设选项
+            '    Case 自动加载预设选项枚举.自动加载最后的预设文件, 自动加载预设选项枚举.自动加载指定的预设文件
+            '        If File.Exists(实例对象.自动加载预设文件路径) Then
+            '            预设管理.显示预设(JsonSerializer.Deserialize(Of 预设数据类型)(File.ReadAllText(实例对象.自动加载预设文件路径)))
+            '        End If
+            '    Case 自动加载预设选项枚举.自动加载上次的全部改动
+            '        If 实例对象.最后的预设数据 IsNot Nothing Then 预设管理.显示预设(实例对象.最后的预设数据)
+            'End Select
 
         Catch ex As Exception
             MsgBox($"加载设置失败：{ex.Message}", MsgBoxStyle.Critical)
