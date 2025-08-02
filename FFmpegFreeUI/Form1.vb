@@ -19,7 +19,7 @@ Public Class Form1
     Public 任务进度更新计时器 As New Timer With {.Interval = 1000, .Enabled = False}
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        用户设置.加载()
+        用户设置.启动时加载设置()
         界面控制.初始化()
         视频编码器数据库.初始化()
 
@@ -98,7 +98,7 @@ Public Class Form1
             task.清除占用()
         Next
         恢复系统状态()
-        用户设置.保存()
+        用户设置.退出时保存设置()
         e.Cancel = False
     End Sub
 

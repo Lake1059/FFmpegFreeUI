@@ -16,6 +16,7 @@ Public Class 预设管理
         Form1.常规流程参数页面.UiTextBox开头文本.Text = a.输出命名_开头文本
         Form1.常规流程参数页面.UiTextBox替代文本.Text = a.输出命名_替代文本
         Form1.常规流程参数页面.UiTextBox结尾文本.Text = a.输出命名_结尾文本
+        Form1.常规流程参数页面.UiCheckBox不使用输出文件参数.Checked = a.输出命名_不使用输出文件参数
 
         Form1.常规流程参数页面.UiComboBox编码类别.Text = a.视频参数_编码器_类别
         Form1.常规流程参数页面.UiComboBox具体编码.Text = a.视频参数_编码器_具体编码
@@ -130,6 +131,9 @@ Public Class 预设管理
 
         Form1.常规流程参数页面.UiComboBox逐行与隔行处理方式.SelectedIndex = a.视频参数_逐行与隔行_操作
 
+        Form1.常规流程参数页面.UiComboBox角度翻转.SelectedIndex = a.视频参数_画面翻转_角度翻转
+        Form1.常规流程参数页面.UiComboBox镜像翻转.SelectedIndex = a.视频参数_画面翻转_镜像翻转
+
         Select Case a.音频参数_编码器_具体编码
             Case "copy" : Form1.常规流程参数页面.UiComboBox音频编码器.SelectedIndex = 1
             Case "aac" : Form1.常规流程参数页面.UiComboBox音频编码器.SelectedIndex = 2
@@ -165,8 +169,10 @@ Public Class 预设管理
 
         Form1.常规流程参数页面.UiComboBox图片编码器.Text = a.图片参数_编码器_编码名称
         Form1.常规流程参数页面.UiTextBox图片编码器质量.Text = a.图片参数_编码器_参数
-        Form1.常规流程参数页面.UiTextBox图片分辨率宽度.Text = a.图片参数_分辨率_宽度
-        Form1.常规流程参数页面.UiTextBox图片分辨率高度.Text = a.图片参数_分辨率_高度
+        Form1.常规流程参数页面.UiTextBox图片简易调色亮度.Text = a.图片参数_简易调色_亮度
+        Form1.常规流程参数页面.UiTextBox图片简易调色对比度.Text = a.图片参数_简易调色_对比度
+        Form1.常规流程参数页面.UiTextBox图片简易调色饱和度.Text = a.图片参数_简易调色_饱和度
+        Form1.常规流程参数页面.UiTextBox图片简易调色伽马.Text = a.图片参数_简易调色_伽马
 
         Form1.常规流程参数页面.UiTextBox自定义视频滤镜.Text = a.自定义参数_视频滤镜
         Form1.常规流程参数页面.UiTextBox自定义视频参数.Text = a.自定义参数_视频参数
@@ -208,6 +214,7 @@ Public Class 预设管理
         a.输出命名_开头文本 = Form1.常规流程参数页面.UiTextBox开头文本.Text
         a.输出命名_替代文本 = Form1.常规流程参数页面.UiTextBox替代文本.Text
         a.输出命名_结尾文本 = Form1.常规流程参数页面.UiTextBox结尾文本.Text
+        a.输出命名_不使用输出文件参数 = Form1.常规流程参数页面.UiCheckBox不使用输出文件参数.Checked
 
         a.视频参数_编码器_类别 = Form1.常规流程参数页面.UiComboBox编码类别.Text
         a.视频参数_编码器_具体编码 = Form1.常规流程参数页面.UiComboBox具体编码.Text
@@ -321,6 +328,9 @@ Public Class 预设管理
 
         a.视频参数_逐行与隔行_操作 = Form1.常规流程参数页面.UiComboBox逐行与隔行处理方式.SelectedIndex
 
+        a.视频参数_画面翻转_角度翻转 = Form1.常规流程参数页面.UiComboBox角度翻转.SelectedIndex
+        a.视频参数_画面翻转_镜像翻转 = Form1.常规流程参数页面.UiComboBox镜像翻转.SelectedIndex
+
         a.音频参数_编码器_具体编码 = Form1.常规流程参数页面.UiComboBox音频编码器.Text
         Select Case Form1.常规流程参数页面.UiComboBox音频编码器.SelectedIndex
             Case 1 : a.音频参数_编码器_具体编码 = "copy"
@@ -358,8 +368,10 @@ Public Class 预设管理
 
         a.图片参数_编码器_编码名称 = Form1.常规流程参数页面.UiComboBox图片编码器.Text
         a.图片参数_编码器_参数 = Form1.常规流程参数页面.UiTextBox图片编码器质量.Text
-        a.图片参数_分辨率_宽度 = Form1.常规流程参数页面.UiTextBox图片分辨率宽度.Text
-        a.图片参数_分辨率_高度 = Form1.常规流程参数页面.UiTextBox图片分辨率高度.Text
+        a.图片参数_简易调色_亮度 = Form1.常规流程参数页面.UiTextBox图片简易调色亮度.Text
+        a.图片参数_简易调色_对比度 = Form1.常规流程参数页面.UiTextBox图片简易调色对比度.Text
+        a.图片参数_简易调色_饱和度 = Form1.常规流程参数页面.UiTextBox图片简易调色饱和度.Text
+        a.图片参数_简易调色_伽马 = Form1.常规流程参数页面.UiTextBox图片简易调色伽马.Text
 
         a.自定义参数_视频滤镜 = Form1.常规流程参数页面.UiTextBox自定义视频滤镜.Text
         a.自定义参数_视频参数 = Form1.常规流程参数页面.UiTextBox自定义视频参数.Text
@@ -396,6 +408,11 @@ Public Class 预设管理
             a.输出位置 = Form1.UiComboBox21.Text
         End If
         File.WriteAllText(d.FileName, JsonSerializer.Serialize(a, JsonSO))
+        Select Case 用户设置.实例对象.自动加载预设选项
+            Case 用户设置.自动加载预设选项枚举.自动加载最后的预设文件
+                用户设置.实例对象.自动加载预设文件路径 = d.FileName
+                Form1.常规流程参数页面.UiTextBox自动加载的预设文件路径.Text = d.FileName
+        End Select
     End Sub
 
     Public Shared Sub 从文件读取预设()
@@ -408,6 +425,11 @@ Public Class 预设管理
             Form1.UiComboBox21.Text = a.输出位置
         End If
         Form1.常规流程参数页面.RichTextBox1.Text = "ffmpeg " & 预设管理.将预设数据转换为命令行(a, "输入目录\输入文件.后缀", "输出目录\输出文件.后缀")
+        Select Case 用户设置.实例对象.自动加载预设选项
+            Case 用户设置.自动加载预设选项枚举.自动加载最后的预设文件
+                用户设置.实例对象.自动加载预设文件路径 = d.FileName
+                Form1.常规流程参数页面.UiTextBox自动加载的预设文件路径.Text = d.FileName
+        End Select
     End Sub
 
     Public Shared Sub 重置全部包含在预设中的设置()
@@ -425,6 +447,7 @@ Public Class 预设管理
         Form1.常规流程参数页面.UiTextBox开头文本.Text = ""
         Form1.常规流程参数页面.UiTextBox替代文本.Text = ""
         Form1.常规流程参数页面.UiTextBox结尾文本.Text = ""
+        Form1.常规流程参数页面.UiCheckBox不使用输出文件参数.Checked = False
 
         ' 视频参数
         Form1.常规流程参数页面.UiComboBox编码类别.Text = ""
@@ -471,6 +494,8 @@ Public Class 预设管理
         Form1.常规流程参数页面.UiTextBox锐化垂直尺寸.Text = ""
         Form1.常规流程参数页面.UiTextBox锐化强度.Text = ""
         Form1.常规流程参数页面.UiComboBox逐行与隔行处理方式.SelectedIndex = -1
+        Form1.常规流程参数页面.UiComboBox角度翻转.SelectedIndex = -1
+        Form1.常规流程参数页面.UiComboBox镜像翻转.SelectedIndex = -1
 
         ' 音频参数
         Form1.常规流程参数页面.UiComboBox音频编码器.Text = ""
@@ -488,8 +513,10 @@ Public Class 预设管理
         ' 图片参数
         Form1.常规流程参数页面.UiComboBox图片编码器.Text = ""
         Form1.常规流程参数页面.UiTextBox图片编码器质量.Text = ""
-        Form1.常规流程参数页面.UiTextBox图片分辨率宽度.Text = ""
-        Form1.常规流程参数页面.UiTextBox图片分辨率高度.Text = ""
+        Form1.常规流程参数页面.UiTextBox图片简易调色亮度.Text = ""
+        Form1.常规流程参数页面.UiTextBox图片简易调色对比度.Text = ""
+        Form1.常规流程参数页面.UiTextBox图片简易调色饱和度.Text = ""
+        Form1.常规流程参数页面.UiTextBox图片简易调色伽马.Text = ""
 
         ' 自定义参数
         Form1.常规流程参数页面.UiTextBox自定义视频滤镜.Text = ""
@@ -517,7 +544,7 @@ Public Class 预设管理
         Form1.常规流程参数页面.UiTextBoxfilter_complex.Text = ""
     End Sub
 
-    Public Shared Function 将预设数据转换为命令行(a As 预设数据类型, 输入文件 As String, 输出文件 As String, Optional 二次编码轮数 As Integer = 0) As String
+    Public Shared Function 将预设数据转换为命令行(a As 预设数据类型, 输入文件 As String, 输出文件 As String) As String
         Dim 视频滤镜参数集 As New List(Of String)
         Dim 音频滤镜参数集 As New List(Of String)
         Dim 滤镜图参数集 As New List(Of String)
@@ -589,7 +616,7 @@ Public Class 预设管理
         If a.视频参数_帧速率 <> "" Then 视频参数 &= $"-r {a.视频参数_帧速率} "
         If a.视频参数_帧速率_抽帧最大变化比例 <> "" Then
             视频滤镜参数集.Add($"mpdecimate=max={a.视频参数_帧速率_抽帧最大变化比例}")
-            视频参数 &= "-vsync vfr "
+            视频参数 &= "-fps_mode vfr "
         End If
 
         If a.视频参数_插帧_目标帧率 <> "" AndAlso a.视频参数_插帧_插帧模式 <> "" Then
@@ -726,14 +753,19 @@ Public Class 预设管理
             Case 5 : 视频滤镜参数集.Add($"tinterlace=6")
         End Select
 
-        '别问为什么把图片的缩放参数放在这里，我懒得改逻辑了
-        If a.图片参数_分辨率_宽度 <> "" AndAlso a.图片参数_分辨率_高度 <> "" Then
-            视频滤镜参数集.Add($"scale={a.图片参数_分辨率_宽度}:{a.图片参数_分辨率_高度}")
-        ElseIf a.图片参数_分辨率_宽度 <> "" AndAlso a.图片参数_分辨率_高度 = "" Then
-            视频滤镜参数集.Add($"scale={a.图片参数_分辨率_宽度}:-2")
-        ElseIf a.图片参数_分辨率_宽度 = "" AndAlso a.图片参数_分辨率_高度 <> "" Then
-            视频滤镜参数集.Add($"scale=-2:{a.图片参数_分辨率_高度}")
-        End If
+        Select Case a.视频参数_画面翻转_角度翻转
+            Case 1 : 视频滤镜参数集.AddRange({$"transpose=1"})
+            Case 2 : 视频滤镜参数集.AddRange({$"transpose=1", $"transpose=1"})
+            Case 3 : 视频滤镜参数集.AddRange({$"transpose=1", $"transpose=1", $"transpose=1"})
+            Case 4 : 视频滤镜参数集.AddRange({$"transpose=2"})
+            Case 5 : 视频滤镜参数集.AddRange({$"transpose=2", $"transpose=2"})
+            Case 6 : 视频滤镜参数集.AddRange({$"transpose=2", $"transpose=2", $"transpose=2"})
+        End Select
+
+        Select Case a.视频参数_画面翻转_镜像翻转
+            Case 1 : 视频滤镜参数集.Add($"hflip")
+            Case 2 : 视频滤镜参数集.Add($"vflip")
+        End Select
 
         If a.流控制_剪辑_方法 = 2 Then
             If a.流控制_剪辑_入点 <> "" Then 视频参数 &= $"-ss {a.流控制_剪辑_入点} "
@@ -783,6 +815,8 @@ Public Class 预设管理
 
         If a.自定义参数_音频参数 <> "" Then arg &= 处理自定义参数的通配字符串(a.自定义参数_音频参数, 输入文件) & " "
 
+        '=================================================================
+
         Select Case a.图片参数_编码器_编码名称
             Case "无损压缩 PNG 已强制最高压缩度"
                 视频参数 &= $"-c:v png -compression_level 9 "
@@ -809,6 +843,15 @@ Public Class 预设管理
             Case "工业光魔 OpenEXR"
                 视频参数 &= $"-c:v exr "
         End Select
+
+        If a.图片参数_简易调色_亮度 <> "" AndAlso a.图片参数_简易调色_对比度 <> "" AndAlso a.图片参数_简易调色_饱和度 <> "" AndAlso a.图片参数_简易调色_伽马 <> "" Then
+            Dim eq As New List(Of String)
+            If a.图片参数_简易调色_亮度 <> "" Then eq.Add($"brightness={a.图片参数_简易调色_亮度}")
+            If a.图片参数_简易调色_对比度 <> "" Then eq.Add($"contrast={a.图片参数_简易调色_对比度}")
+            If a.图片参数_简易调色_饱和度 <> "" Then eq.Add($"saturation={a.图片参数_简易调色_饱和度}")
+            If a.图片参数_简易调色_伽马 <> "" Then eq.Add($"gamma={a.图片参数_简易调色_伽马}")
+            视频滤镜参数集.Add($"eq={String.Join(":", eq)}")
+        End If
 
         '=================================================================
 
@@ -901,7 +944,7 @@ Public Class 预设管理
 
         If a.自定义参数_之后参数 <> "" Then arg &= $"{处理自定义参数的通配字符串(a.自定义参数_之后参数, 输入文件)} "
 
-        arg &= $"{""""}{输出文件}{""""} -y "
+        If Not a.输出命名_不使用输出文件参数 Then arg &= $"{""""}{输出文件}{""""} -y "
 
         If a.自定义参数_最后参数 <> "" Then arg &= $"{处理自定义参数的通配字符串(a.自定义参数_最后参数, 输入文件)} "
 

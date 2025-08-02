@@ -14,6 +14,7 @@ Public Class 预设数据类型
     Public Property 输出命名_开头文本 As String = ""
     Public Property 输出命名_替代文本 As String = ""
     Public Property 输出命名_结尾文本 As String = ""
+    Public Property 输出命名_不使用输出文件参数 As Boolean = False
 
 
     Public Property 视频参数_编码器_类别 As String = ""
@@ -81,6 +82,9 @@ Public Class 预设数据类型
 
     Public Property 视频参数_逐行与隔行_操作 As String = ""
 
+    Public Property 视频参数_画面翻转_角度翻转 As Integer = 0
+    Public Property 视频参数_画面翻转_镜像翻转 As Integer = 0
+
     Public Property 音频参数_编码器_具体编码 As String = ""
     Public Property 音频参数_比特率_控制方式 As String = ""
     Public Property 音频参数_比特率_基础 As String = ""
@@ -93,8 +97,10 @@ Public Class 预设数据类型
 
     Public Property 图片参数_编码器_编码名称 As String = ""
     Public Property 图片参数_编码器_参数 As String = ""
-    Public Property 图片参数_分辨率_宽度 As String = ""
-    Public Property 图片参数_分辨率_高度 As String = ""
+    Public Property 图片参数_简易调色_亮度 As String = ""
+    Public Property 图片参数_简易调色_对比度 As String = ""
+    Public Property 图片参数_简易调色_饱和度 As String = ""
+    Public Property 图片参数_简易调色_伽马 As String = ""
 
     Public Property 自定义参数_视频滤镜 As String = ""
     Public Property 自定义参数_音频滤镜 As String = ""

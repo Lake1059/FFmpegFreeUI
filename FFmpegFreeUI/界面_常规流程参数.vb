@@ -1,4 +1,6 @@
 ﻿
+Imports System.IO
+
 Public Class 界面_常规流程参数
     Private Sub 界面_常规流程参数_Load(sender As Object, e As EventArgs) Handles Me.Load
         AddHandler UiComboBox编码类别.SelectedIndexChanged, AddressOf 视频编码类别改动事件
@@ -33,6 +35,28 @@ Public Class 界面_常规流程参数
         AddHandler UiButton21.Click, AddressOf 预设管理.从文件读取预设
         AddHandler UiButton13.Click, AddressOf 预设管理.重置全部包含在预设中的设置
         UiComboBox自动命名选项.SelectedIndex = 0
+
+        AddHandler UiComboBox自动加载预设选项.SelectedIndexChanged, Sub()
+                                                                用户设置.实例对象.自动加载预设选项 = UiComboBox自动加载预设选项.SelectedIndex
+                                                                Select Case UiComboBox自动加载预设选项.SelectedIndex
+                                                                    Case 用户设置.自动加载预设选项枚举.不自动加载预设, 用户设置.自动加载预设选项枚举.自动加载上次的全部改动
+                                                                        UiTextBox自动加载的预设文件路径.Text = ""
+                                                                End Select
+                                                            End Sub
+        AddHandler UiButton选择加载指定预设文件.Click, Sub()
+                                                 Dim d As New OpenFileDialog With {.Filter = "Json|*.json"}
+                                                 d.ShowDialog(Form1)
+                                                 If Not File.Exists(d.FileName) Then Exit Sub
+                                                 UiTextBox自动加载的预设文件路径.Text = d.FileName
+                                                 UiComboBox自动加载预设选项.SelectedIndex = 用户设置.自动加载预设选项枚举.自动加载指定的预设文件
+                                             End Sub
+        AddHandler UiTextBox自动加载的预设文件路径.TextChanged, Sub()
+                                                         If UiTextBox自动加载的预设文件路径.Text <> "" AndAlso UiComboBox自动加载预设选项.SelectedIndex = 用户设置.自动加载预设选项枚举.自动加载指定的预设文件 Then
+                                                             用户设置.实例对象.自动加载预设文件路径 = UiTextBox自动加载的预设文件路径.Text
+                                                         Else
+                                                             用户设置.实例对象.自动加载预设文件路径 = ""
+                                                         End If
+                                                     End Sub
 
         设置富文本框行高(RichTextBox1, 350)
         界面校准()
@@ -269,6 +293,7 @@ Public Class 界面_常规流程参数
                 UiComboBox解码器.ItemHeight = 30 * Form1.DPI
                 UiComboBox解码数据格式.ItemHeight = 30 * Form1.DPI
                 UiComboBox自动命名选项.ItemHeight = 30 * Form1.DPI
+                UiCheckBox不使用输出文件参数.CheckBoxSize = 20 * Form1.DPI
             Case 选项卡.IsEqual(TabPage视频参数)
                 UiComboBox编码类别.ItemHeight = 30 * Form1.DPI
                 UiComboBox具体编码.ItemHeight = 30 * Form1.DPI
@@ -296,7 +321,6 @@ Public Class 界面_常规流程参数
             Case 选项卡.IsEqual(TabPage图片参数)
                 UiComboBox图片编码器.ItemHeight = 30 * Form1.DPI
             Case 选项卡.IsEqual(TabPage自定义参数)
-
             Case 选项卡.IsEqual(TabPage流控制)
                 UiCheckBox保留其他视频流.CheckBoxSize = 20 * Form1.DPI
                 UiCheckBox保留其他音频流.CheckBoxSize = 20 * Form1.DPI
@@ -308,6 +332,7 @@ Public Class 界面_常规流程参数
                 UiComboBox剪辑方法.ItemHeight = 30 * Form1.DPI
             Case 选项卡.IsEqual(TabPage预设管理)
                 UiCheckBox额外保存信息.CheckBoxSize = 20 * Form1.DPI
+                UiComboBox自动加载预设选项.ItemHeight = 30 * Form1.DPI
                 Dim a As New 预设数据类型
                 预设管理.储存预设(a)
                 RichTextBox1.Size = New Size(RichTextBox1.Parent.Width, RichTextBox1.Parent.Height - RichTextBox1.Parent.Padding.Top * 2)
