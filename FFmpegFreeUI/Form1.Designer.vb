@@ -164,7 +164,6 @@ Partial Class Form1
         TabPage媒体信息 = New TabPage()
         Panel4 = New Panel()
         Panel76 = New Panel()
-        Panel77 = New Panel()
         RichTextBox1 = New RichTextBox()
         Label23 = New Label()
         Panel9 = New Panel()
@@ -237,7 +236,6 @@ Partial Class Form1
         TabPage媒体信息.SuspendLayout()
         Panel4.SuspendLayout()
         Panel76.SuspendLayout()
-        Panel77.SuspendLayout()
         Panel9.SuspendLayout()
         Panel75.SuspendLayout()
         TabPage性能监控.SuspendLayout()
@@ -610,7 +608,7 @@ Partial Class Form1
         ' 
         Label12.BackColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
         Label12.Dock = DockStyle.Left
-        Label12.Font = New Font("微软雅黑", 9.75F, FontStyle.Bold)
+        Label12.Font = New Font("微软雅黑", 10F)
         Label12.Location = New Point(0, 0)
         Label12.Name = "Label12"
         Label12.Size = New Size(100, 248)
@@ -737,7 +735,7 @@ Partial Class Form1
         ' 
         Label13.BackColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
         Label13.Dock = DockStyle.Left
-        Label13.Font = New Font("微软雅黑", 10F, FontStyle.Bold)
+        Label13.Font = New Font("微软雅黑", 10F)
         Label13.Location = New Point(0, 0)
         Label13.Name = "Label13"
         Label13.Size = New Size(100, 50)
@@ -927,7 +925,7 @@ Partial Class Form1
         ' 
         Label21.BackColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
         Label21.Dock = DockStyle.Left
-        Label21.Font = New Font("微软雅黑", 10F, FontStyle.Bold)
+        Label21.Font = New Font("微软雅黑", 10F)
         Label21.Location = New Point(0, 0)
         Label21.Name = "Label21"
         Label21.Size = New Size(100, 90)
@@ -1063,7 +1061,7 @@ Partial Class Form1
         ' 
         Label14.BackColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
         Label14.Dock = DockStyle.Left
-        Label14.Font = New Font("微软雅黑", 10F, FontStyle.Bold)
+        Label14.Font = New Font("微软雅黑", 10F)
         Label14.Location = New Point(0, 0)
         Label14.Name = "Label14"
         Label14.Size = New Size(100, 50)
@@ -1354,9 +1352,9 @@ Partial Class Form1
         Label主标题.Location = New Point(76, 20)
         Label主标题.Name = "Label主标题"
         Label主标题.Padding = New Padding(0, 0, 0, 5)
-        Label主标题.Size = New Size(237, 27)
+        Label主标题.Size = New Size(188, 27)
         Label主标题.TabIndex = 9
-        Label主标题.Text = "FFmpegFreeUI Official v1.10"
+        Label主标题.Text = "FFmpegFreeUI Official"
         ' 
         ' Label11
         ' 
@@ -2441,39 +2439,28 @@ Partial Class Form1
         ' 
         Panel76.AutoSize = True
         Panel76.BackColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
-        Panel76.Controls.Add(Panel77)
+        Panel76.Controls.Add(RichTextBox1)
         Panel76.Dock = DockStyle.Fill
         Panel76.Location = New Point(20, 124)
         Panel76.Name = "Panel76"
-        Panel76.Padding = New Padding(10)
+        Panel76.Padding = New Padding(7, 15, 0, 15)
         Panel76.Size = New Size(1093, 517)
         Panel76.TabIndex = 84
         ' 
-        ' Panel77
-        ' 
-        Panel77.BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
-        Panel77.Controls.Add(RichTextBox1)
-        Panel77.Dock = DockStyle.Fill
-        Panel77.Location = New Point(10, 10)
-        Panel77.Name = "Panel77"
-        Panel77.Padding = New Padding(0, 10, 0, 10)
-        Panel77.Size = New Size(1073, 497)
-        Panel77.TabIndex = 13
-        ' 
         ' RichTextBox1
         ' 
-        RichTextBox1.BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
+        RichTextBox1.BackColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
         RichTextBox1.BorderStyle = BorderStyle.None
         RichTextBox1.Dock = DockStyle.Fill
         RichTextBox1.Font = New Font("微软雅黑", 12F, FontStyle.Regular, GraphicsUnit.Point, CByte(134))
         RichTextBox1.ForeColor = Color.Silver
-        RichTextBox1.Location = New Point(0, 10)
+        RichTextBox1.Location = New Point(7, 15)
         RichTextBox1.Name = "RichTextBox1"
         RichTextBox1.ReadOnly = True
         RichTextBox1.ScrollBars = RichTextBoxScrollBars.Vertical
         RichTextBox1.ShowSelectionMargin = True
-        RichTextBox1.Size = New Size(1073, 477)
-        RichTextBox1.TabIndex = 11
+        RichTextBox1.Size = New Size(1086, 487)
+        RichTextBox1.TabIndex = 12
         RichTextBox1.Text = ""
         ' 
         ' Label23
@@ -2928,7 +2915,6 @@ Partial Class Form1
         Panel4.ResumeLayout(False)
         Panel4.PerformLayout()
         Panel76.ResumeLayout(False)
-        Panel77.ResumeLayout(False)
         Panel9.ResumeLayout(False)
         Panel9.PerformLayout()
         Panel75.ResumeLayout(False)
@@ -3026,8 +3012,6 @@ Partial Class Form1
     Friend WithEvents UiButton打开文件显示参数 As Sunny.UI.UIButton
     Friend WithEvents Label23 As Label
     Friend WithEvents Panel76 As Panel
-    Friend WithEvents Panel77 As Panel
-    Friend WithEvents RichTextBox1 As RichTextBox
     Friend WithEvents UiButton15 As Sunny.UI.UIButton
     Friend WithEvents UiButton7 As Sunny.UI.UIButton
     Friend WithEvents UiButton重新添加 As Sunny.UI.UIButton
@@ -3118,5 +3102,6 @@ Partial Class Form1
     Friend WithEvents LinkLabel8 As LinkLabel
     Friend WithEvents LinkLabel1 As LinkLabel
     Friend WithEvents Label36 As Label
+    Friend WithEvents RichTextBox1 As RichTextBox
 
 End Class

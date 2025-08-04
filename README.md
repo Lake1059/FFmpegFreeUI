@@ -1,18 +1,27 @@
 [《如何在 GitHub 下载软件》小白提醒：你的需求是下载这个软件去使用而不是要工程文件，点此去 Releases 下载发行版才是下载软件；上面的 Code 是下载源代码；我都写成这样了如果你在 Releases 里又下成了源代码，那真的是人机，都是手机和短视频害的。](https://github.com/Lake1059/FFmpegFreeUI/releases) 本文已包含新手内容，就看有没有心思学了。
 
-<img src="FFmpegFreeUI\Resources\AppIcon.png" width="100" height="100" />
+<img src="FFmpegFreeUI\Resources\AppIcon.png" width="100" />
 
 ## FFmpegFreeUI
 
-请认准官网域名：https://ffmpegfreeui.top 和 https://3fui.top
+请认准官网域名：https://ffmpegfreeui.top 和 https://3fui.top<br>群友的暂用域名：https://3fui.frostlynx.work<br>三个域名都是正确的，都会解析到同一个地方
 
 ![](https://img.shields.io/github/downloads/Lake1059/FFmpegFreeUI/total?label=所有文件总下载量)
 
-FFmpegFreeUI（简称 3FUI）是在 Windows 上的 [FFmpeg](https://ffmpeg.org) 的专业交互外壳，使用 .NET 10 框架，使用纯 WinForm 开发，配合 SunnyUI 和自绘制打造专业高效的暗黑风格界面。为了打破市面上转码软件的臃肿捆绑、广告水印、限制离谱、乱收费、业余糊弄的局面，3FUI 永久保持干净和自由，同时还收录了最新的编码和参数改动，是追求纯净和专业的不二之选。
+FFmpegFreeUI（简称 3FUI）是在 Windows 上的 [FFmpeg](https://ffmpeg.org) 的专业交互外壳，使用 .NET 10 框架，使用纯 WinForm 开发，配合 SunnyUI 和自绘制打造专业高效的暗黑风格界面。目标做一款轻度专业参数调整的转码软件，让普通人能够通过图形化界面接触到较为全面的通用参数来轻松压制和转换格式。
 
-3FUI 的目标是做一款轻度专业参数调整的转码软件，让普通人能够通过图形化界面接触到较为全面的通用参数来轻松压制和转换格式。3FUI 是纯填参数的，没有内置傻瓜方案，不是让小白一键无脑全自动的，如果没有相关技术参数的概念，请先在本文的新手内容中学习相关技术知识。
+3FUI 是纯填参数的，没有内置傻瓜方案，不是让小白一键无脑全自动的，如果没有相关技术参数的概念，请先在本文的新手内容中学习相关技术知识。
 
-3FUI 的底层逻辑就是基于预设的，可以很方便地与他人分享方案，导出的预设自行管理；多数地方直接标出参数名以及准确显示 ffmpeg 输出的信息，更易于上手和尝试新方案；实时计算剩余时间、预估最终大小、可暂停任务、最多自动同时开始 10 个任务；不会向输出文件里写入软件信息；缓存自动收拾，不碰注册表，不在任何地方扔垃圾（崩溃转储除外，这不是我能控制的），也不会收集任何信息。
+> **有些人：说着给普通人用结果还要自己学参数？**<br>人类进化的时候你干什么去了！
+
+- 底层逻辑基于预设，可以很方便地与他人分享方案，导出的预设自行管理
+- 多数地方直接标出参数名、准确显示 ffmpeg 输出的信息，更易于上手和尝试新方案
+- 实时计算剩余时间、预估最终大小、可暂停任务
+- 最多自动同时开始 10 个任务，手动开始无限制
+- 不会向输出文件里写入软件信息
+- 缓存自动收拾、不碰注册表
+- 不在任何地方扔垃圾（崩溃转储除外，这不是我能控制的）
+- 不会收集任何信息
 
 支持开发插件来扩展功能，可接入编码队列。VB 和 C# 都可以写，还额外支持 WPF 界面。
 
@@ -244,6 +253,9 @@ PNG、JPEG\JPG、WEBP、TIFF、AVIF、GIF、BMP、JPEG-LS、DPX、OpenEXR
 - 锐化 unsharp
 - 转逐行 yadif
 - 转隔行 tinterlace
+- 角度翻转 transpose
+- 镜像翻转 hflip、vflip
+- 基本调色 eq
 
 关于使用 AviSynth+ 降噪滤镜可参阅 [AviSynth+.md](doc/AviSynth+.md)
 
@@ -266,6 +278,37 @@ PNG、JPEG\JPG、WEBP、TIFF、AVIF、GIF、BMP、JPEG-LS、DPX、OpenEXR
 ## 剪辑区间
 
 暂时还没做可视化交互，先用播放器对着写吧，或者直接找剪辑软件。
+
+## 烧录字幕不会做！
+
+真的还不如手写参数来得灵活稳定
+
+- SRT 字幕
+
+  ```bash
+  // 视频滤镜
+  
+  subtitles='字幕文件路径':force_style='FontName=字体名称,FontSize=字号,PrimaryColour=HTML颜色值,MarginV=距离底部的像素距离'
+  
+  // 字幕文件路径配合我的通配字符串去写
+  ```
+
+  - stream_index 可直接指定已混流在文件中的字幕流索引
+  - charenc 可指定字符编码
+  - fontsdir 可指定字体文件目录
+
+- ASS/SSA 特效字幕
+
+  ```bash
+  // 视频滤镜
+  
+  subtitles='字幕文件路径'
+  
+  // 特效字幕都内置了字体样式和其他属性，当然也可以使用 force_style 进行覆盖
+  ```
+
+- SUP 位图字幕
+  最好还是用专门的 sup 工具，ffmpeg 这里必须先把 sup 转成逐帧图像，然后再用 overlay 叠加到视频上，无法一次性处理好。
 
 ## 插件开发
 

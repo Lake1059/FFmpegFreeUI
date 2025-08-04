@@ -573,7 +573,7 @@ jx1:
                 Form1.Label错误信息容器之外的间隔.Visible = True
 
                 Dim s1 = 根据标签宽度计算显示高度(Form1.Label累计错误信息)
-                If s1 > Form1.TabPage编码队列.Height * 0.25 Then
+                If s1 > Form1.Height * 0.25 Then
                     Form1.Label累计错误信息.AutoSize = False
                     Form1.Label累计错误信息.Height = s1 + 16 * Form1.DPI
                     Form1.Panel错误信息容器.AutoSize = False

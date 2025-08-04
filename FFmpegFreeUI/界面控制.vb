@@ -179,7 +179,7 @@ Public Class 界面控制
                 Form1.常规流程参数页面.界面校准()
 
             Case 选项卡.IsEqual(Form1.TabPage媒体信息)
-                Form1.RichTextBox1.Size = New Size(Form1.RichTextBox1.Parent.Width, Form1.RichTextBox1.Parent.Height - Form1.RichTextBox1.Parent.Padding.Top * 2)
+                Form1.RichTextBox1.Size = New Size(Form1.RichTextBox1.Parent.Width - Form1.RichTextBox1.Parent.Padding.Left, Form1.RichTextBox1.Parent.Height - Form1.RichTextBox1.Parent.Padding.Top * 2)
 
             Case 选项卡.IsEqual(Form1.TabPageEX混流)
                 Form1.混流页面.界面校准()

@@ -1,5 +1,4 @@
 ﻿Imports System.IO
-Imports System.Text.Json
 Imports Sunny.UI
 
 Public Class Form1
@@ -20,6 +19,9 @@ Public Class Form1
     Public 任务进度更新计时器 As New Timer With {.Interval = 1000, .Enabled = False}
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Dim 版本号 = String.Join(".", Application.ProductVersion.Split("."c).Take(3)).Split("+"c)(0)
+        Me.Text = $"FFmpegFreeUI {版本号}"
+        Label主标题.Text = $"FFmpegFreeUI Official v{版本号}"
         视频编码器数据库.初始化()
         界面控制.初始化()
         用户设置.启动时加载设置()
