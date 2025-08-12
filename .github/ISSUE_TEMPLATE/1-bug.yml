@@ -1,0 +1,96 @@
+name: Bug 反馈
+description: 遇到了 Bug？请以此模板提交反馈, 便于我们更快地定位和修复问题。
+title: "[Bug]: "
+labels: ['bug']
+body:
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: 检查清单
+      description: 在反馈此问题之前, 请先确认以下事项是否满足
+      options:
+        - label: 我已将 FFmpegFreeUI 更新到 [最新版本](https://github.com/Lake1059/FFmpegFreeUI/releases/latest)
+          required: true
+        - label: 我已仔细阅读过 [README](https://github.com/Lake1059/FFmpegFreeUI/blob/main/README.md) 并理解其中的内容
+          required: true
+        - label: 我已在 [Issues](https://github.com/Lake1059/FFmpegFreeUI/issues?q=is%3Aissue) 中检索，确认这一 Bug 未被提交过
+          required: true
+        - label: 我已知晓此处仅用于汇报 FFmpegFreeUI 程序中存在的问题（关于其他非程序本身的问题应当在 Discussion 板块提出）
+          required: true
+
+  - type: markdown
+    attributes:
+      value: |
+        ## Bug 信息
+
+        描述您遇到的 Bug。您可以附上截图、录屏、堆栈跟踪、日志等材料，便于我们追踪问题。
+
+        > [!TIP]
+        > 若您要上传材料，请等待材料文件上传完成后再发布 Issue。
+        >
+        > 若显示为 `<!-- Uploading 文件名... -->` 即为上传中，请等待链接变动后再提交。
+
+  - type: dropdown
+    id: where-happened
+    attributes:
+      label: Bug 发生的位置
+      options:
+        - 启动
+        - 编码任务
+        - 编码参数
+        - 预设管理
+        - EX 混流
+        - EX 合并
+        - 媒体信息
+        - 性能监控
+        - 插件相关
+        - 转译运行
+        - 其他
+      description: 选择 Bug 发生的位置，以便于我们更好地发现并解决问题。
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Bug 的具体描述
+      description: 请详细描述您遇到的 Bug，内容包括但不限于：
+        期望发生的行为 /
+        实际发生的行为 /
+        如何触发这个 Bug /
+        可包含截图、录屏等附件
+    validations:
+      required: true
+
+  - type: textarea
+    id: stacktrace
+    attributes:
+      label: FFmpeg 输出
+      description: 请将 FFmpeg 的输出粘贴到此处（可在‘编码队列’界面点击任务后查看，或点击‘复制命令行’后手动在终端执行查看。如反馈内容与编码任务无关请留空）
+      render: log
+    validations:
+      required: false
+
+  - type: input
+    id: app_version
+    attributes:
+      label: FFmpegFreeUI 版本
+      description: 您当前使用的 FFmpegFreeUI 版本号，可以在软件内首页查看。
+      placeholder: 如：1.11
+    validations:
+      required: false
+
+  - type: input
+    id: ffmpeg_version
+    attributes:
+      label: FFmpeg 版本
+      description: 您当前使用的 FFmpeg 版本号，可运行 `ffmpeg -version` 查看。
+      placeholder: 如：2025-08-11-git-3542260376-full_build-www.gyan.dev
+    validations:
+      required: false
+
+  - type: input
+    id: os_version
+    attributes:
+      label: 操作系统版本
+      placeholder: 如：Windows 11

@@ -1,0 +1,72 @@
+name: 功能申请
+description: 有新的功能想法？请使用此模板提交功能申请，帮助我们了解您的需求并优化产品。
+title: "[Feature]: "
+labels: ['enhancement']
+body:
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: 检查清单
+      description: 在提交功能申请之前，请先确认以下事项是否满足
+      options:
+        - label: 我已将 FFmpegFreeUI 更新到 [最新版本](https://github.com/Lake1059/FFmpegFreeUI/releases/latest)
+          required: true
+        - label: 我已在 [Issues](https://github.com/Lake1059/FFmpegFreeUI/issues?q=is%3Aissue) 中检索，确认此功能未被申请过
+          required: true
+        - label: 我认为此功能能广泛改善 FFmpegFreeUI 用户的使用体验，且未超出 FFmpegFreeUI 原定的开发目标
+          required: true
+
+  - type: markdown
+    attributes:
+      value: |
+        ## 功能申请信息
+
+        详细描述您希望添加的功能。您可以附上参考图片、示例文件、原型设计等材料，便于我们理解您的需求。
+
+        > [!TIP]
+        > 若您要上传材料，请等待材料文件上传完成后再发布 Issue。
+        >
+        > 若显示为 `<!-- Uploading 文件名... -->` 即为上传中，请等待链接变动后再提交。
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: 功能优先级
+      options:
+        - 高（严重影响使用体验）
+        - 中（能够改善使用体验）
+        - 低（锦上添花的功能）
+      description: 请评估此功能对您使用体验的重要程度。
+    validations:
+      required: true
+
+  - type: textarea
+    id: feature-description
+    attributes:
+      label: 功能详细描述
+      description: |
+        请详细描述您希望添加的功能，内容包括但不限于：
+        功能的具体作用 /
+        期望的操作方式 /
+        预期的效果展示 /
+        可包含截图、示例等附件 /
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternative-solution
+    attributes:
+      label: 目前的替代方案
+      description: |
+        如果有的话，请描述您目前是如何解决这个需求的，或者有什么替代方案。
+    validations:
+      required: false
+
+  - type: textarea
+    id: reference
+    attributes:
+      label: 参考资料
+      description: |
+        如果您有参考的软件、网站、文档等，请在此处提供链接或描述。
+    validations:
+      required: false
