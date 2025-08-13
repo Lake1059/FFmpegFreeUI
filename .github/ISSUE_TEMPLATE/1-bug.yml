@@ -1,5 +1,5 @@
 name: Bug 反馈
-description: 遇到了 Bug？请以此模板提交反馈, 便于我们更快地定位和修复问题。
+description: 遇到了 Bug？请以此模板提交反馈, 便于更快定位和修复问题。
 title: "[Bug]: "
 labels: ['bug']
 body:
@@ -25,17 +25,17 @@ body:
       value: |
         ## Bug 信息
 
-        描述您遇到的 Bug。您可以附上截图、录屏、堆栈跟踪、日志等材料，便于我们追踪问题。
+        描述遇到的问题。可以附上截图、录屏、堆栈跟踪、日志等材料，以便于追踪问题
 
         > [!TIP]
-        > 若您要上传材料，请等待材料文件上传完成后再发布 Issue。
+        > 若要上传材料，请等待材料文件上传完成后再发布 Issue
         >
-        > 若显示为 `<!-- Uploading 文件名... -->` 即为上传中，请等待链接变动后再提交。
+        > 若显示为 `<!-- Uploading 文件名... -->` 即为上传中，请等待链接变动后再提交
 
   - type: dropdown
     id: where-happened
     attributes:
-      label: Bug 发生的位置
+      label: 发生的位置
       options:
         - 启动
         - 编码任务
@@ -48,15 +48,15 @@ body:
         - 插件相关
         - 转译运行
         - 其他
-      description: 选择 Bug 发生的位置，以便于我们更好地发现并解决问题。
+      description: 选择问题发生的位置
     validations:
       required: true
 
   - type: textarea
     id: description
     attributes:
-      label: Bug 的具体描述
-      description: 请详细描述您遇到的 Bug，内容包括但不限于：
+      label: 具体描述
+      description: 请详细描您遇到的问题，内容包括但不限于：
         期望发生的行为 /
         实际发生的行为 /
         如何触发这个 Bug /
@@ -86,8 +86,8 @@ body:
     id: app_version
     attributes:
       label: FFmpegFreeUI 软件版本
-      description: 您当前使用的 FFmpegFreeUI 版本号，可以在软件内首页查看。
-      placeholder: 如：1.11
+      description: 当前使用的 FFmpegFreeUI 版本号，可以在软件内首页查看
+      placeholder: 例如像这样：1.12.0
     validations:
       required: false
 
@@ -95,8 +95,8 @@ body:
     id: ffmpeg_version
     attributes:
       label: FFmpeg 版本
-      description: 您当前使用的 FFmpeg 版本号，可运行 `ffmpeg -version` 查看。
-      placeholder: 如：2025-08-11-git-3542260376-full_build-www.gyan.dev
+      description: 当前使用的 FFmpeg 版本号，可运行 `ffmpeg -version` 查看
+      placeholder: 例如像这样：2025-08-11-git-3542260376-full_build-www.gyan.dev
     validations:
       required: false
 
@@ -121,6 +121,6 @@ body:
         - Windows 10 1803 以及更低版本
         - 更低版本请在详情中描述
         - 转译运行请详细描述环境信息
-      description: 选择详细的 Windows 版本
+      description: 选择详细的 Windows 版本，在 Window 设置中查看
     validations:
       required: true
