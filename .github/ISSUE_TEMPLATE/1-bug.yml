@@ -65,7 +65,7 @@ body:
       required: true
 
   - type: textarea
-    id: stacktrace
+    id: ffmpeg_args
     attributes:
       label: FFmpeg 参数
       description: 在预设管理选项卡中直接复制（如无关则留空）
@@ -74,7 +74,7 @@ body:
       required: false
 
   - type: textarea
-    id: stacktrace
+    id: ffmpeg_outputs
     attributes:
       label: FFmpeg 输出
       description: 在编码队列选中一个任务后查看底部区域，或点击‘复制命令行’后手动在终端执行查看（如无关则留空）
@@ -85,7 +85,7 @@ body:
   - type: input
     id: app_version
     attributes:
-      label: FFmpegFreeUI 版本
+      label: FFmpegFreeUI 软件版本
       description: 您当前使用的 FFmpegFreeUI 版本号，可以在软件内首页查看。
       placeholder: 如：1.11
     validations:
