@@ -243,7 +243,7 @@ PNG、JPEG\JPG、WEBP、TIFF、AVIF、GIF、BMP、JPEG-LS、DPX、OpenEXR
 
 - 画面缩放维持比例 scale
 - 画面裁剪 crop
-- 智能抽帧 mpdecimate=frac=? 和 -vsync vfr
+- 智能抽帧 mpdecimate=max=? 和 -vsync vfr
 - 插帧 minterpolate，这个补帧效果非常一般，但非常稳定，速度极快，使用 CPU 处理，完全没有果冻，对于要求不高的临时观影可以用一用，仅适用于动静小的视频，不适用于3D游戏录制、动静大的电影等
   - 最佳质量选项：运动补偿插值+加权obmc
 
