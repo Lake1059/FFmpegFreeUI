@@ -38,8 +38,13 @@ Public Class 界面控制
                                                                             Case 0 : 同时运行任务上限 = 1
                                                                             Case 1 : 同时运行任务上限 = 2
                                                                             Case 2 : 同时运行任务上限 = 3
-                                                                            Case 3 : 同时运行任务上限 = 5
-                                                                            Case 4 : 同时运行任务上限 = 10
+                                                                            Case 3 : 同时运行任务上限 = 4
+                                                                            Case 4 : 同时运行任务上限 = 5
+                                                                            Case 5 : 同时运行任务上限 = 6
+                                                                            Case 6 : 同时运行任务上限 = 7
+                                                                            Case 7 : 同时运行任务上限 = 8
+                                                                            Case 8 : 同时运行任务上限 = 9
+                                                                            Case 9 : 同时运行任务上限 = 10
                                                                             Case Else : 同时运行任务上限 = 1
                                                                         End Select
                                                                     End Sub
@@ -92,7 +97,7 @@ Public Class 界面控制
         Form1.TabPageEX合并.Controls.Add(Form1.合并页面)
         Form1.合并页面.Dock = DockStyle.Fill
 
-        Form1.UiComboBox21.SelectedIndex = 0
+        Form1.UiComboBox输出目录.SelectedIndex = 0
         Form1.Panel41.AutoSize = True
 
         AddHandler Form1.UiTabControlMenu1.SelectedIndexChanged, AddressOf 界面校准
@@ -132,7 +137,7 @@ Public Class 界面控制
         AddHandler Form1.UiButton12.Click, AddressOf 界面控制_添加文件.移除全部项
 
         AddHandler Form1.UiButton选择容器.MouseDown, AddressOf 选择输出容器鼠标按下事件
-        AddHandler Form1.UiComboBox21.SelectedIndexChanged, AddressOf 界面控制_添加文件.选择输出目录
+        AddHandler Form1.UiComboBox输出目录.SelectedIndexChanged, AddressOf 界面控制_添加文件.选择输出目录
 
         AddHandler Form1.选中项刷新信息计时器.Tick, AddressOf 编码任务.选中项刷新信息
         AddHandler Form1.任务进度更新计时器.Tick, AddressOf 编码任务.用定时器刷新到界面上
@@ -173,7 +178,7 @@ Public Class 界面控制
 
             Case 选项卡.IsEqual(Form1.TabPage添加文件)
                 Form1.ListView2.Columns(0).Width = Form1.ListView2.Width - SystemInformation.VerticalScrollBarWidth * Form1.DPI * 2
-                Form1.UiComboBox21.ItemHeight = 30 * Form1.DPI
+                Form1.UiComboBox输出目录.ItemHeight = 30 * Form1.DPI
 
             Case 选项卡.IsEqual(Form1.TabPage转码压制)
                 Form1.常规流程参数页面.界面校准()
@@ -227,6 +232,7 @@ Public Class 界面控制
              New ToolStripMenuItem(".aiff", Nothing, Sub(s1, e1) Form1.UiTextBox输出容器.Text = s1.Text) With {.ForeColor = Color.Silver},
              New ToolStripMenuItem(".ac3", Nothing, Sub(s1, e1) Form1.UiTextBox输出容器.Text = s1.Text) With {.ForeColor = Color.Silver},
              New ToolStripMenuItem(".ogg", Nothing, Sub(s1, e1) Form1.UiTextBox输出容器.Text = s1.Text) With {.ForeColor = Color.Silver},
+             New ToolStripMenuItem(".opus", Nothing, Sub(s1, e1) Form1.UiTextBox输出容器.Text = s1.Text) With {.ForeColor = Color.Silver},
              New ToolStripMenuItem(".wma", Nothing, Sub(s1, e1) Form1.UiTextBox输出容器.Text = s1.Text) With {.ForeColor = Color.Silver},
              New ToolStripMenuItem(".amr", Nothing, Sub(s1, e1) Form1.UiTextBox输出容器.Text = s1.Text) With {.ForeColor = Color.Silver},
              New ToolStripSeparator() With {.Tag = "null"}})

@@ -32,10 +32,16 @@ Public Class 编码任务
         Task.Run(Sub()
                      If 获取正在处理的任务数量() = 0 Then
                          If 全部任务已完成是否有错误 Then
-                             If 用户设置.实例对象.提示音选项 Then My.Computer.Audio.Play(My.Resources.Resource1.错误, AudioPlayMode.Background)
+                             If 用户设置.实例对象.提示音选项 = 0 Then
+                                 Sound_Error.Position = 0
+                                 My.Computer.Audio.Play(Sound_Error, AudioPlayMode.Background)
+                             End If
                              全部任务已完成是否有错误 = False
                          Else
-                             If 用户设置.实例对象.提示音选项 Then My.Computer.Audio.Play(My.Resources.Resource1.完成, AudioPlayMode.Background)
+                             If 用户设置.实例对象.提示音选项 = 0 Then
+                                 Sound_Finish.Position = 0
+                                 My.Computer.Audio.Play(Sound_Finish, AudioPlayMode.Background)
+                             End If
                          End If
                          恢复系统状态()
                      End If

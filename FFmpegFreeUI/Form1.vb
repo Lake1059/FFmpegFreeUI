@@ -21,7 +21,39 @@ Public Class Form1
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Dim 版本号 = String.Join(".", Application.ProductVersion.Split("."c).Take(3)).Split("+"c)(0)
         Me.Text = $"FFmpegFreeUI {版本号}"
-        Label主标题.Text = $"FFmpegFreeUI Official v{版本号}"
+        Label主标题.Text = $"FFmpegFreeUI 正式版 v{版本号}"
+
+        ' 加载完成音效
+        If FileIO.FileSystem.FileExists(Path.Combine(Application.StartupPath, "Sound_Finish.wav")) Then
+            Try
+                Using fileStream As New FileStream(Path.Combine(Application.StartupPath, "Sound_Finish.wav"), FileMode.Open, FileAccess.Read)
+                    Dim soundStream As New MemoryStream()
+                    fileStream.CopyTo(soundStream)
+                    soundStream.Position = 0
+                    Sound_Finish = soundStream
+                End Using
+            Catch ex As Exception
+                ' 如果加载失败，保持使用默认的资源文件
+                Sound_Finish = My.Resources.Resource1.完成
+            End Try
+        End If
+
+        ' 加载错误音效
+        If FileIO.FileSystem.FileExists(Path.Combine(Application.StartupPath, "Sound_Error.wav")) Then
+            Try
+                Using fileStream As New FileStream(Path.Combine(Application.StartupPath, "Sound_Error.wav"), FileMode.Open, FileAccess.Read)
+                    Dim soundStream As New MemoryStream()
+                    fileStream.CopyTo(soundStream)
+                    soundStream.Position = 0
+                    Sound_Error = soundStream
+                End Using
+            Catch ex As Exception
+                ' 如果加载失败，保持使用默认的资源文件
+                Sound_Error = My.Resources.Resource1.错误
+            End Try
+        End If
+
+
         视频编码器数据库.初始化()
         界面控制.初始化()
         用户设置.启动时加载设置()
@@ -42,7 +74,7 @@ Public Class Form1
             Me.PictureBox1.Width = Me.PictureBox1.Height
             Me.PictureBox1.Image = My.Resources.Resource1.AppIcon.GetThumbnailImage(Me.PictureBox1.Width, Me.PictureBox1.Height, Nothing, Nothing)
         End If
-
+        本地教学.初始化()
         上一次窗口状态 = Me.WindowState
     End Sub
 
@@ -52,7 +84,23 @@ Public Class Form1
         界面线程执行(AddressOf 检查更新.检查)
         任务进度更新计时器.Enabled = True
 
+        If 用户设置.实例对象.TipsTriggeringTeachingContentAtStartup Then
+            T99 = New Timer With {.Enabled = False, .Interval = 3000}
+            AddHandler T99.Tick, AddressOf 显示教学信息
+            T99.Start()
+        End If
     End Sub
+    Public T99 As Timer
+    Sub 显示教学信息()
+        Dim 选项字典 As New Dictionary(Of String, Action)
+        选项字典("了解") = Nothing
+        选项字典("永久关闭这个提示") = Sub() 用户设置.实例对象.TipsTriggeringTeachingContentAtStartup = False
+        软件内对话框.显示对话框("基本提示信息可用", $"现在很多功能都有了内置的新手教学，触发方式如下：{vbCrLf & vbCrLf}对于文本框，按下 F1 或者动一下鼠标滚轮来触发{vbCrLf}对于下拉框，双击或者动一下鼠标滚轮来触发{vbCrLf & vbCrLf}如不想在启动时看到这个提示，请手动编辑设置文件，将 TipsTriggeringTeachingContentAtStartup 设置为 false 即可", 选项字典, 软件内对话框.主题类型.常规)
+        T99.Enabled = False
+        T99.Dispose()
+        T99 = Nothing
+    End Sub
+
 
     Private Sub Form1_DpiChanged(sender As Object, e As DpiChangedEventArgs) Handles Me.DpiChanged
         DPI = e.DeviceDpiNew / 96

@@ -7,6 +7,8 @@ Public Class 预设管理
         Form1.UiTextBox输出容器.Text = a.输出容器
 
         Form1.常规流程参数页面.UiComboBox解码器.Text = a.解码参数_解码器
+        Form1.常规流程参数页面.UiTextBoxCPU解码线程数.Text = a.解码参数_threads
+
         Form1.常规流程参数页面.UiComboBox解码数据格式.Text = a.解码参数_解码数据格式
         Form1.常规流程参数页面.UiTextBoxhwaccel_device.Text = a.解码参数_hwaccel_device
         Form1.常规流程参数页面.UiTextBoxinit_hw_device.Text = a.解码参数_init_hw_device
@@ -24,6 +26,7 @@ Public Class 预设管理
         Form1.常规流程参数页面.UiComboBox配置文件.Text = a.视频参数_编码器_配置文件
         Form1.常规流程参数页面.UiComboBox场景优化.Text = a.视频参数_编码器_场景优化
         Form1.常规流程参数页面.UiTextBoxgpu.Text = a.视频参数_编码器_gpu
+        Form1.常规流程参数页面.UiTextBoxthreads.Text = a.视频参数_编码器_threads
 
         Form1.常规流程参数页面.UiComboBox分辨率.Text = a.视频参数_分辨率
         Form1.常规流程参数页面.UiTextBox分辨率自动计算宽度.Text = a.视频参数_分辨率自动计算_宽度
@@ -205,6 +208,7 @@ Public Class 预设管理
         a.输出容器 = Form1.UiTextBox输出容器.Text
 
         a.解码参数_解码器 = Form1.常规流程参数页面.UiComboBox解码器.Text
+        a.解码参数_threads = Form1.常规流程参数页面.UiTextBoxCPU解码线程数.Text
         a.解码参数_解码数据格式 = Form1.常规流程参数页面.UiComboBox解码数据格式.Text
         a.解码参数_hwaccel_device = Form1.常规流程参数页面.UiTextBoxhwaccel_device.Text
         a.解码参数_init_hw_device = Form1.常规流程参数页面.UiTextBoxinit_hw_device.Text
@@ -222,6 +226,7 @@ Public Class 预设管理
         a.视频参数_编码器_配置文件 = Form1.常规流程参数页面.UiComboBox配置文件.Text
         a.视频参数_编码器_场景优化 = Form1.常规流程参数页面.UiComboBox场景优化.Text
         a.视频参数_编码器_gpu = Form1.常规流程参数页面.UiTextBoxgpu.Text
+        a.视频参数_编码器_threads = Form1.常规流程参数页面.UiTextBoxthreads.Text
 
         a.视频参数_分辨率 = Form1.常规流程参数页面.UiComboBox分辨率.Text
         a.视频参数_分辨率自动计算_宽度 = Form1.常规流程参数页面.UiTextBox分辨率自动计算宽度.Text
@@ -405,7 +410,7 @@ Public Class 预设管理
         储存预设(a)
         If Form1.常规流程参数页面.UiCheckBox额外保存信息.Checked Then
             a.计算机名称 = Environment.MachineName
-            a.输出位置 = Form1.UiComboBox21.Text
+            a.输出位置 = Form1.UiComboBox输出目录.Text
         End If
         File.WriteAllText(d.FileName, JsonSerializer.Serialize(a, JsonSO))
         Select Case 用户设置.实例对象.自动加载预设选项
@@ -422,7 +427,7 @@ Public Class 预设管理
         Dim a As 预设数据类型 = JsonSerializer.Deserialize(Of 预设数据类型)(File.ReadAllText(d.FileName))
         显示预设(a)
         If a.计算机名称 = Environment.MachineName Then
-            Form1.UiComboBox21.Text = a.输出位置
+            Form1.UiComboBox输出目录.Text = a.输出位置
         End If
         Form1.常规流程参数页面.RichTextBox1.Text = "ffmpeg " & 预设管理.将预设数据转换为命令行(a, "输入目录\输入文件.后缀", "输出目录\输出文件.后缀")
         Select Case 用户设置.实例对象.自动加载预设选项
@@ -437,6 +442,7 @@ Public Class 预设管理
 
         ' 解码参数
         Form1.常规流程参数页面.UiComboBox解码器.Text = ""
+        Form1.常规流程参数页面.UiTextBoxCPU解码线程数.Text = ""
         Form1.常规流程参数页面.UiComboBox解码数据格式.Text = ""
         Form1.常规流程参数页面.UiTextBoxhwaccel_device.Text = ""
         Form1.常规流程参数页面.UiTextBoxinit_hw_device.Text = ""
@@ -453,6 +459,7 @@ Public Class 预设管理
         Form1.常规流程参数页面.UiComboBox编码类别.Text = ""
         Form1.常规流程参数页面.UiComboBox具体编码.Text = ""
         Form1.常规流程参数页面.UiTextBoxgpu.Text = ""
+        Form1.常规流程参数页面.UiTextBoxthreads.Text = ""
         Form1.常规流程参数页面.UiComboBox分辨率.Text = ""
         Form1.常规流程参数页面.UiTextBox分辨率自动计算宽度.Text = ""
         Form1.常规流程参数页面.UiTextBox分辨率自动计算高度.Text = ""
@@ -558,6 +565,7 @@ Public Class 预设管理
         If a.自定义参数_开头参数 <> "" Then arg &= $"{处理自定义参数的通配字符串(a.自定义参数_开头参数, 输入文件)} "
 
         If a.解码参数_解码器 <> "" Then arg &= $"-hwaccel {a.解码参数_解码器} "
+        If a.解码参数_threads <> "" Then arg &= $"-threads {a.解码参数_threads} "
         If a.解码参数_解码数据格式 <> "" Then arg &= $"-hwaccel_output_format {a.解码参数_解码数据格式} "
         If a.解码参数_hwaccel_device <> "" Then arg &= $"-hwaccel_device {a.解码参数_hwaccel_device} "
         If a.解码参数_init_hw_device <> "" Then arg &= $"-init_hw_device {a.解码参数_init_hw_device} "
@@ -579,6 +587,7 @@ Public Class 预设管理
 
         If a.视频参数_编码器_类别 = "禁用" Then 视频参数 &= $"-vn "
         If a.视频参数_编码器_具体编码 <> "" Then 视频参数 &= $"-c:v {a.视频参数_编码器_具体编码} "
+        If a.视频参数_编码器_threads <> "" Then 视频参数 &= $"-threads {a.视频参数_编码器_threads} "
         If a.视频参数_编码器_质量 <> "" Then
             Select Case a.视频参数_编码器_具体编码
                 Case "libaom-av1", "libvpx-vp9"

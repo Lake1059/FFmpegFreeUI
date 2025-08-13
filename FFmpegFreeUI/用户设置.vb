@@ -19,6 +19,7 @@ Public Class 用户设置
         Public Property 自动加载预设选项 As 自动加载预设选项枚举 = 自动加载预设选项枚举.不自动加载预设
         Public Property 自动加载预设文件路径 As String = ""
         Public Property 最后的预设数据 As New 预设数据类型
+        Public Property TipsTriggeringTeachingContentAtStartup As Boolean = True
     End Class
 
     Enum 自动加载预设选项枚举
@@ -27,7 +28,6 @@ Public Class 用户设置
         自动加载指定的预设文件 = 2
         自动加载上次的全部改动 = 3
     End Enum
-
 
     Public Shared Sub 退出时保存设置()
         Try
@@ -74,8 +74,13 @@ Public Class 用户设置
                 Case 0 : 同时运行任务上限 = 1
                 Case 1 : 同时运行任务上限 = 2
                 Case 2 : 同时运行任务上限 = 3
-                Case 3 : 同时运行任务上限 = 5
-                Case 4 : 同时运行任务上限 = 10
+                Case 3 : 同时运行任务上限 = 4
+                Case 4 : 同时运行任务上限 = 5
+                Case 5 : 同时运行任务上限 = 6
+                Case 6 : 同时运行任务上限 = 7
+                Case 7 : 同时运行任务上限 = 8
+                Case 8 : 同时运行任务上限 = 9
+                Case 9 : 同时运行任务上限 = 10
                 Case Else : 同时运行任务上限 = 1
             End Select
 

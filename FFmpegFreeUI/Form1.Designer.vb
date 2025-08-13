@@ -143,7 +143,7 @@ Partial Class Form1
         ListView2 = New ListView()
         ColumnHeader9 = New ColumnHeader()
         Panel57 = New Panel()
-        UiComboBox21 = New Sunny.UI.UIComboBox()
+        UiComboBox输出目录 = New Sunny.UI.UIComboBox()
         Label35 = New Label()
         Label100 = New Label()
         UiTextBox输出容器 = New Sunny.UI.UITextBox()
@@ -806,7 +806,7 @@ Partial Class Form1
         UiComboBox自动开始最大任务数量.ItemHeight = 30
         UiComboBox自动开始最大任务数量.ItemHoverColor = Color.FromArgb(CByte(56), CByte(56), CByte(56))
         UiComboBox自动开始最大任务数量.ItemRectColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
-        UiComboBox自动开始最大任务数量.Items.AddRange(New Object() {"同时运行 1 个任务     ", "同时运行 2 个任务     ", "同时运行 3 个任务     ", "同时运行 5 个任务     ", "同时运行 10 个任务     "})
+        UiComboBox自动开始最大任务数量.Items.AddRange(New Object() {"同时运行 1 个任务     ", "同时运行 2 个任务     ", "同时运行 3 个任务     ", "同时运行 4 个任务    ", "同时运行 5 个任务     ", "同时运行 6 个任务     ", "同时运行 7 个任务     ", "同时运行 8 个任务     ", "同时运行 9 个任务     ", "同时运行 10 个任务     "})
         UiComboBox自动开始最大任务数量.ItemSelectBackColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
         UiComboBox自动开始最大任务数量.ItemSelectForeColor = Color.Silver
         UiComboBox自动开始最大任务数量.Location = New Point(10, 0)
@@ -862,7 +862,7 @@ Partial Class Form1
         UiTextBox快捷输入CPU核心.ForeColor = Color.DarkGray
         UiTextBox快捷输入CPU核心.ForeDisableColor = Color.DarkGray
         UiTextBox快捷输入CPU核心.ForeReadOnlyColor = Color.DarkGray
-        UiTextBox快捷输入CPU核心.Location = New Point(334, 10)
+        UiTextBox快捷输入CPU核心.Location = New Point(284, 10)
         UiTextBox快捷输入CPU核心.Margin = New Padding(4, 5, 4, 5)
         UiTextBox快捷输入CPU核心.MinimumSize = New Size(1, 16)
         UiTextBox快捷输入CPU核心.Name = "UiTextBox快捷输入CPU核心"
@@ -875,17 +875,17 @@ Partial Class Form1
         UiTextBox快捷输入CPU核心.ScrollBarColor = Color.DimGray
         UiTextBox快捷输入CPU核心.ScrollBarStyleInherited = False
         UiTextBox快捷输入CPU核心.ShowText = False
-        UiTextBox快捷输入CPU核心.Size = New Size(90, 30)
+        UiTextBox快捷输入CPU核心.Size = New Size(140, 30)
         UiTextBox快捷输入CPU核心.TabIndex = 83
         UiTextBox快捷输入CPU核心.TextAlignment = ContentAlignment.MiddleLeft
-        UiTextBox快捷输入CPU核心.Watermark = "?~?"
+        UiTextBox快捷输入CPU核心.Watermark = "?~?,Enter"
         UiTextBox快捷输入CPU核心.WatermarkActiveColor = Color.DimGray
         UiTextBox快捷输入CPU核心.WatermarkColor = Color.DimGray
         ' 
         ' Label106
         ' 
         Label106.Dock = DockStyle.Left
-        Label106.Location = New Point(324, 10)
+        Label106.Location = New Point(274, 10)
         Label106.Name = "Label106"
         Label106.Size = New Size(10, 30)
         Label106.TabIndex = 84
@@ -914,7 +914,7 @@ Partial Class Form1
         UiTextBox处理器核心.ScrollBarColor = Color.DimGray
         UiTextBox处理器核心.ScrollBarStyleInherited = False
         UiTextBox处理器核心.ShowText = False
-        UiTextBox处理器核心.Size = New Size(314, 30)
+        UiTextBox处理器核心.Size = New Size(264, 30)
         UiTextBox处理器核心.TabIndex = 82
         UiTextBox处理器核心.TextAlignment = ContentAlignment.MiddleLeft
         UiTextBox处理器核心.Watermark = "指定处理器核心，用逗号隔开"
@@ -2038,7 +2038,7 @@ Partial Class Form1
         ' Panel57
         ' 
         Panel57.BackColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        Panel57.Controls.Add(UiComboBox21)
+        Panel57.Controls.Add(UiComboBox输出目录)
         Panel57.Controls.Add(Label35)
         Panel57.Controls.Add(Label100)
         Panel57.Controls.Add(UiTextBox输出容器)
@@ -2050,45 +2050,45 @@ Partial Class Form1
         Panel57.Size = New Size(1133, 50)
         Panel57.TabIndex = 5
         ' 
-        ' UiComboBox21
+        ' UiComboBox输出目录
         ' 
-        UiComboBox21.DataSource = Nothing
-        UiComboBox21.Dock = DockStyle.Fill
-        UiComboBox21.DropDownStyle = Sunny.UI.UIDropDownStyle.DropDownList
-        UiComboBox21.FillColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
-        UiComboBox21.FillColor2 = Color.FromArgb(CByte(36), CByte(36), CByte(36))
-        UiComboBox21.FillDisableColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiComboBox21.Font = New Font("微软雅黑", 10F)
-        UiComboBox21.ForeColor = Color.Silver
-        UiComboBox21.ForeDisableColor = Color.Silver
-        UiComboBox21.ItemFillColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiComboBox21.ItemForeColor = Color.Silver
-        UiComboBox21.ItemHeight = 30
-        UiComboBox21.ItemHoverColor = Color.FromArgb(CByte(56), CByte(56), CByte(56))
-        UiComboBox21.ItemRectColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
-        UiComboBox21.Items.AddRange(New Object() {"输出到原目录（点此更改输出位置）", "浏览 ..."})
-        UiComboBox21.ItemSelectBackColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
-        UiComboBox21.ItemSelectForeColor = Color.Silver
-        UiComboBox21.Location = New Point(280, 0)
-        UiComboBox21.Margin = New Padding(4, 5, 4, 5)
-        UiComboBox21.MaxDropDownItems = 17
-        UiComboBox21.MinimumSize = New Size(63, 0)
-        UiComboBox21.Name = "UiComboBox21"
-        UiComboBox21.Padding = New Padding(0, 0, 30, 2)
-        UiComboBox21.RadiusSides = Sunny.UI.UICornerRadiusSides.None
-        UiComboBox21.RectColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
-        UiComboBox21.RectDisableColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
-        UiComboBox21.RectSize = 2
-        UiComboBox21.ScrollBarBackColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiComboBox21.ScrollBarColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
-        UiComboBox21.ScrollBarHandleWidth = 20
-        UiComboBox21.ScrollBarStyleInherited = False
-        UiComboBox21.Size = New Size(842, 40)
-        UiComboBox21.Style = Sunny.UI.UIStyle.Custom
-        UiComboBox21.SymbolSize = 24
-        UiComboBox21.TabIndex = 75
-        UiComboBox21.TextAlignment = ContentAlignment.MiddleCenter
-        UiComboBox21.Watermark = "选择输出目录"
+        UiComboBox输出目录.DataSource = Nothing
+        UiComboBox输出目录.Dock = DockStyle.Fill
+        UiComboBox输出目录.DropDownStyle = Sunny.UI.UIDropDownStyle.DropDownList
+        UiComboBox输出目录.FillColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiComboBox输出目录.FillColor2 = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiComboBox输出目录.FillDisableColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        UiComboBox输出目录.Font = New Font("微软雅黑", 10F)
+        UiComboBox输出目录.ForeColor = Color.Silver
+        UiComboBox输出目录.ForeDisableColor = Color.Silver
+        UiComboBox输出目录.ItemFillColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        UiComboBox输出目录.ItemForeColor = Color.Silver
+        UiComboBox输出目录.ItemHeight = 30
+        UiComboBox输出目录.ItemHoverColor = Color.FromArgb(CByte(56), CByte(56), CByte(56))
+        UiComboBox输出目录.ItemRectColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        UiComboBox输出目录.Items.AddRange(New Object() {"输出到原目录（点此更改输出位置）", "浏览 ..."})
+        UiComboBox输出目录.ItemSelectBackColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        UiComboBox输出目录.ItemSelectForeColor = Color.Silver
+        UiComboBox输出目录.Location = New Point(280, 0)
+        UiComboBox输出目录.Margin = New Padding(4, 5, 4, 5)
+        UiComboBox输出目录.MaxDropDownItems = 17
+        UiComboBox输出目录.MinimumSize = New Size(63, 0)
+        UiComboBox输出目录.Name = "UiComboBox输出目录"
+        UiComboBox输出目录.Padding = New Padding(0, 0, 30, 2)
+        UiComboBox输出目录.RadiusSides = Sunny.UI.UICornerRadiusSides.None
+        UiComboBox输出目录.RectColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        UiComboBox输出目录.RectDisableColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        UiComboBox输出目录.RectSize = 2
+        UiComboBox输出目录.ScrollBarBackColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        UiComboBox输出目录.ScrollBarColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        UiComboBox输出目录.ScrollBarHandleWidth = 20
+        UiComboBox输出目录.ScrollBarStyleInherited = False
+        UiComboBox输出目录.Size = New Size(842, 40)
+        UiComboBox输出目录.Style = Sunny.UI.UIStyle.Custom
+        UiComboBox输出目录.SymbolSize = 24
+        UiComboBox输出目录.TabIndex = 75
+        UiComboBox输出目录.TextAlignment = ContentAlignment.MiddleCenter
+        UiComboBox输出目录.Watermark = "选择输出目录"
         ' 
         ' Label35
         ' 
@@ -2975,7 +2975,7 @@ Partial Class Form1
     Friend WithEvents Label100 As Label
     Friend WithEvents Label19 As Label
     Friend WithEvents UiButton14 As Sunny.UI.UIButton
-    Friend WithEvents UiComboBox21 As Sunny.UI.UIComboBox
+    Friend WithEvents UiComboBox输出目录 As Sunny.UI.UIComboBox
     Friend WithEvents UiButton16 As Sunny.UI.UIButton
     Friend WithEvents TabPage起始页面 As TabPage
     Friend WithEvents Panel44 As Panel
