@@ -307,8 +307,7 @@ PNG、JPEG\JPG、WEBP、TIFF、AVIF、GIF、BMP、JPEG-LS、DPX、OpenEXR
   // 特效字幕都内置了字体样式和其他属性，当然也可以使用 force_style 进行覆盖
   ```
 
-- SUP 位图字幕
-  最好还是用专门的 sup 工具，ffmpeg 这里必须先把 sup 转成逐帧图像，然后再用 overlay 叠加到视频上，无法一次性处理好。
+- SUP 位图字幕<br>最好还是用专门的 sup 工具，ffmpeg 这里必须先把 sup 转成逐帧图像，然后再用 overlay 叠加到视频上，无法一次性处理好。
 
 ## 插件开发
 
