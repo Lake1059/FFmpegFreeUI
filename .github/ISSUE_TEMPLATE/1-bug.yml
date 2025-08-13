@@ -67,8 +67,17 @@ body:
   - type: textarea
     id: stacktrace
     attributes:
+      label: FFmpeg 参数
+      description: 在预设管理选项卡中直接复制（如无关则留空）
+      render: log
+    validations:
+      required: false
+
+  - type: textarea
+    id: stacktrace
+    attributes:
       label: FFmpeg 输出
-      description: 请将 FFmpeg 的输出粘贴到此处（可在‘编码队列’界面点击任务后查看，或点击‘复制命令行’后手动在终端执行查看。如反馈内容与编码任务无关请留空）
+      description: 在编码队列选中一个任务后查看底部区域，或点击‘复制命令行’后手动在终端执行查看（如无关则留空）
       render: log
     validations:
       required: false
@@ -104,8 +113,8 @@ body:
         - Windows 10 22H2
         - Windows 10 21H2
         - Windows 10 20H2
-        - Windows 10 2004
         - Windows 10 2009
+        - Windows 10 2004
         - Windows 10 1909
         - Windows 10 1903
         - Windows 10 1809
