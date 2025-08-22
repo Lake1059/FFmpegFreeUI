@@ -6,7 +6,7 @@
 
 请认准官网域名：https://ffmpegfreeui.top 和 https://3fui.top<br>群友的暂用域名：https://3fui.frostlynx.work<br>三个域名都是正确的，都会解析到同一个地方
 
-![](https://img.shields.io/github/downloads/Lake1059/FFmpegFreeUI/total?label=所有文件总下载量)
+![](https://img.shields.io/github/downloads/Lake1059/FFmpegFreeUI/total?label=所有文件总下载量)&nbsp;&nbsp;[![](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2F3fui.top%2Fapi%2Fgithub-downloads&label=准确数量（延迟刷新）含镜像站&query=$.totalDownloads)](https://github.com/Lake1059/FFmpegFreeUI)
 
 FFmpegFreeUI（简称 3FUI）是在 Windows 上的 [FFmpeg](https://ffmpeg.org) 的专业交互外壳，使用 .NET 10 框架，使用纯 WinForm 开发，配合 SunnyUI 和自绘制打造专业高效的暗黑风格界面。目标做一款轻度专业参数调整的转码软件，让普通人能够通过图形化界面接触到较为全面的通用参数来轻松压制和转换格式。
 
@@ -243,7 +243,7 @@ PNG、JPEG\JPG、WEBP、TIFF、AVIF、GIF、BMP、JPEG-LS、DPX、OpenEXR
 
 - 画面缩放维持比例 scale
 - 画面裁剪 crop
-- 智能抽帧 mpdecimate=frac=? 和 -vsync vfr
+- 智能抽帧 mpdecimate=max=? 和 -vsync vfr
 - 插帧 minterpolate，这个补帧效果非常一般，但非常稳定，速度极快，使用 CPU 处理，完全没有果冻，对于要求不高的临时观影可以用一用，仅适用于动静小的视频，不适用于3D游戏录制、动静大的电影等
   - 最佳质量选项：运动补偿插值+加权obmc
 
