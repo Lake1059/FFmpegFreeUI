@@ -40,7 +40,7 @@ Public Class 用户设置
             End Select
 
             Dim a = Path.Combine(Application.StartupPath, "Settings.json")
-            WriteAllText(a, JsonSerializer.Serialize(实例对象, JSON序列化选项), False)
+            WriteAllText(a, JsonSerializer.Serialize(实例对象, JsonSO), False)
         Catch ex As Exception
             MsgBox($"保存设置失败：{ex.Message}", MsgBoxStyle.Critical)
         End Try

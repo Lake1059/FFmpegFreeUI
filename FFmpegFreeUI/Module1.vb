@@ -53,8 +53,12 @@ Module Module1
     End Function
 
 
-    Public JsonSO As New JsonSerializerOptions With {.WriteIndented = True}
-
+    Public JsonSO As New JsonSerializerOptions With {
+        .WriteIndented = True,
+        .PropertyNamingPolicy = Nothing,
+        .DictionaryKeyPolicy = Nothing,
+        .Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping
+    }
     Public Sub 设置富文本框行高(RichTextBoxObject As Control, LineHeight As Integer)
         Dim fmt As New PARAFORMAT2()
         fmt.cbSize = Marshal.SizeOf(fmt)
@@ -213,8 +217,6 @@ Module Module1
         If Not a.StartsWith("/"c) Then a = "/" & a
         Return a
     End Function
-
-    Public JSON序列化选项 As New JsonSerializerOptions With {.WriteIndented = True}
 
     Public Function 截取画面_对话框背景专用() As Bitmap
         Try

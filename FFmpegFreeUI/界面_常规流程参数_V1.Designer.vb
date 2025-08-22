@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class 界面_常规流程参数
+Partial Class 界面_常规流程参数_V1
     Inherits System.Windows.Forms.UserControl
 
     'UserControl 重写释放以清理组件列表。
@@ -22,7 +22,7 @@ Partial Class 界面_常规流程参数
     '不要使用代码编辑器修改它。
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(界面_常规流程参数))
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(界面_常规流程参数_V1))
         UiTabControl1 = New Sunny.UI.UITabControl()
         TabPage解码参数 = New TabPage()
         Panel1 = New Panel()
@@ -1314,9 +1314,9 @@ Partial Class 界面_常规流程参数
         ' 
         TabPage视频参数.BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         TabPage视频参数.Controls.Add(Panel2)
-        TabPage视频参数.Location = New Point(0, 50)
+        TabPage视频参数.Location = New Point(0, 40)
         TabPage视频参数.Name = "TabPage视频参数"
-        TabPage视频参数.Size = New Size(1100, 650)
+        TabPage视频参数.Size = New Size(200, 60)
         TabPage视频参数.TabIndex = 1
         TabPage视频参数.Text = "视频参数"
         ' 
@@ -1337,7 +1337,7 @@ Partial Class 界面_常规流程参数
         Panel2.Location = New Point(0, 0)
         Panel2.Name = "Panel2"
         Panel2.Padding = New Padding(15)
-        Panel2.Size = New Size(1100, 650)
+        Panel2.Size = New Size(200, 60)
         Panel2.TabIndex = 0
         ' 
         ' Label186
@@ -1346,7 +1346,7 @@ Partial Class 界面_常规流程参数
         Label186.Dock = DockStyle.Bottom
         Label186.Font = New Font("微软雅黑", 9F)
         Label186.ForeColor = Color.Gray
-        Label186.Location = New Point(15, 618)
+        Label186.Location = New Point(15, -40)
         Label186.Name = "Label186"
         Label186.Size = New Size(740, 17)
         Label186.TabIndex = 86
@@ -1363,7 +1363,7 @@ Partial Class 界面_常规流程参数
         Panel14.Dock = DockStyle.Top
         Panel14.Location = New Point(15, 415)
         Panel14.Name = "Panel14"
-        Panel14.Size = New Size(1070, 150)
+        Panel14.Size = New Size(170, 150)
         Panel14.TabIndex = 65
         ' 
         ' Panel32
@@ -1387,7 +1387,7 @@ Partial Class 界面_常规流程参数
         Panel32.Location = New Point(100, 110)
         Panel32.Name = "Panel32"
         Panel32.Padding = New Padding(10, 0, 0, 10)
-        Panel32.Size = New Size(970, 40)
+        Panel32.Size = New Size(70, 40)
         Panel32.TabIndex = 5
         ' 
         ' UiTextBox双向预测帧数量
@@ -1708,7 +1708,7 @@ Partial Class 界面_常规流程参数
         Panel31.Location = New Point(100, 70)
         Panel31.Name = "Panel31"
         Panel31.Padding = New Padding(7, 5, 0, 5)
-        Panel31.Size = New Size(970, 40)
+        Panel31.Size = New Size(70, 40)
         Panel31.TabIndex = 4
         ' 
         ' Label36
@@ -1811,7 +1811,7 @@ Partial Class 界面_常规流程参数
         Panel19.Location = New Point(100, 40)
         Panel19.Name = "Panel19"
         Panel19.Padding = New Padding(10, 0, 0, 0)
-        Panel19.Size = New Size(970, 30)
+        Panel19.Size = New Size(70, 30)
         Panel19.TabIndex = 3
         ' 
         ' Label21
@@ -1821,7 +1821,7 @@ Partial Class 界面_常规流程参数
         Label21.Location = New Point(590, 0)
         Label21.Name = "Label21"
         Label21.Padding = New Padding(10, 0, 0, 0)
-        Label21.Size = New Size(380, 30)
+        Label21.Size = New Size(0, 30)
         Label21.TabIndex = 92
         Label21.Text = "仅限 NVIDIA 和 INTEL 的硬件加速编码"
         Label21.TextAlign = ContentAlignment.MiddleLeft
@@ -1951,7 +1951,7 @@ Partial Class 界面_常规流程参数
         Panel15.Location = New Point(100, 0)
         Panel15.Name = "Panel15"
         Panel15.Padding = New Padding(7, 5, 0, 5)
-        Panel15.Size = New Size(970, 40)
+        Panel15.Size = New Size(70, 40)
         Panel15.TabIndex = 2
         ' 
         ' Label15
@@ -1994,7 +1994,7 @@ Partial Class 界面_常规流程参数
         Label65.Dock = DockStyle.Top
         Label65.Location = New Point(15, 405)
         Label65.Name = "Label65"
-        Label65.Size = New Size(1070, 10)
+        Label65.Size = New Size(170, 10)
         Label65.TabIndex = 69
         ' 
         ' Panel21
@@ -2006,7 +2006,7 @@ Partial Class 界面_常规流程参数
         Panel21.Dock = DockStyle.Top
         Panel21.Location = New Point(15, 325)
         Panel21.Name = "Panel21"
-        Panel21.Size = New Size(1070, 80)
+        Panel21.Size = New Size(170, 80)
         Panel21.TabIndex = 64
         ' 
         ' Panel22
@@ -2024,7 +2024,7 @@ Partial Class 界面_常规流程参数
         Panel22.Location = New Point(100, 40)
         Panel22.Name = "Panel22"
         Panel22.Padding = New Padding(10, 0, 10, 10)
-        Panel22.Size = New Size(970, 40)
+        Panel22.Size = New Size(70, 40)
         Panel22.TabIndex = 2
         ' 
         ' UiTextBox比特率缓冲区
@@ -2229,7 +2229,7 @@ Partial Class 界面_常规流程参数
         Panel30.Location = New Point(100, 0)
         Panel30.Name = "Panel30"
         Panel30.Padding = New Padding(7, 5, 10, 5)
-        Panel30.Size = New Size(970, 40)
+        Panel30.Size = New Size(70, 40)
         Panel30.TabIndex = 3
         ' 
         ' Label47
@@ -2305,7 +2305,7 @@ Partial Class 界面_常规流程参数
         Label64.Dock = DockStyle.Top
         Label64.Location = New Point(15, 315)
         Label64.Name = "Label64"
-        Label64.Size = New Size(1070, 10)
+        Label64.Size = New Size(170, 10)
         Label64.TabIndex = 68
         ' 
         ' Panel13
@@ -2318,7 +2318,7 @@ Partial Class 界面_常规流程参数
         Panel13.Dock = DockStyle.Top
         Panel13.Location = New Point(15, 235)
         Panel13.Name = "Panel13"
-        Panel13.Size = New Size(1070, 80)
+        Panel13.Size = New Size(170, 80)
         Panel13.TabIndex = 63
         ' 
         ' Panel80
@@ -2335,7 +2335,7 @@ Partial Class 界面_常规流程参数
         Panel80.Location = New Point(100, 40)
         Panel80.Name = "Panel80"
         Panel80.Padding = New Padding(10, 0, 0, 10)
-        Panel80.Size = New Size(970, 40)
+        Panel80.Size = New Size(70, 40)
         Panel80.TabIndex = 4
         ' 
         ' Label146
@@ -2345,7 +2345,7 @@ Partial Class 界面_常规流程参数
         Label146.Location = New Point(740, 0)
         Label146.Name = "Label146"
         Label146.Padding = New Padding(10, 0, 0, 0)
-        Label146.Size = New Size(230, 30)
+        Label146.Size = New Size(0, 30)
         Label146.TabIndex = 84
         Label146.Text = "四选一，没有一起用的"
         Label146.TextAlign = ContentAlignment.MiddleLeft
@@ -2510,7 +2510,7 @@ Partial Class 界面_常规流程参数
         Panel16.Location = New Point(100, 0)
         Panel16.Name = "Panel16"
         Panel16.Padding = New Padding(10, 5, 10, 5)
-        Panel16.Size = New Size(970, 40)
+        Panel16.Size = New Size(70, 40)
         Panel16.TabIndex = 2
         ' 
         ' Label144
@@ -2574,7 +2574,7 @@ Partial Class 界面_常规流程参数
         Label63.Dock = DockStyle.Top
         Label63.Location = New Point(15, 225)
         Label63.Name = "Label63"
-        Label63.Size = New Size(1070, 10)
+        Label63.Size = New Size(170, 10)
         Label63.TabIndex = 67
         ' 
         ' Panel10
@@ -2586,7 +2586,7 @@ Partial Class 界面_常规流程参数
         Panel10.Dock = DockStyle.Top
         Panel10.Location = New Point(15, 145)
         Panel10.Name = "Panel10"
-        Panel10.Size = New Size(1070, 80)
+        Panel10.Size = New Size(170, 80)
         Panel10.TabIndex = 62
         ' 
         ' Panel12
@@ -2605,7 +2605,7 @@ Partial Class 界面_常规流程参数
         Panel12.Location = New Point(100, 40)
         Panel12.Name = "Panel12"
         Panel12.Padding = New Padding(10, 0, 0, 10)
-        Panel12.Size = New Size(970, 40)
+        Panel12.Size = New Size(70, 40)
         Panel12.TabIndex = 2
         ' 
         ' Label141
@@ -2615,7 +2615,7 @@ Partial Class 界面_常规流程参数
         Label141.Location = New Point(740, 0)
         Label141.Name = "Label141"
         Label141.Padding = New Padding(10, 0, 0, 0)
-        Label141.Size = New Size(230, 30)
+        Label141.Size = New Size(0, 30)
         Label141.TabIndex = 81
         Label141.Text = "三选一，没有一起用的"
         Label141.TextAlign = ContentAlignment.MiddleLeft
@@ -2825,7 +2825,7 @@ Partial Class 界面_常规流程参数
         Panel78.Location = New Point(100, 0)
         Panel78.Name = "Panel78"
         Panel78.Padding = New Padding(7, 5, 0, 5)
-        Panel78.Size = New Size(970, 40)
+        Panel78.Size = New Size(70, 40)
         Panel78.TabIndex = 3
         ' 
         ' Label136
@@ -2878,7 +2878,7 @@ Partial Class 界面_常规流程参数
         Label62.Dock = DockStyle.Top
         Label62.Location = New Point(15, 135)
         Label62.Name = "Label62"
-        Label62.Size = New Size(1070, 10)
+        Label62.Size = New Size(170, 10)
         Label62.TabIndex = 66
         ' 
         ' Panel8
@@ -2892,7 +2892,7 @@ Partial Class 界面_常规流程参数
         Panel8.Dock = DockStyle.Top
         Panel8.Location = New Point(15, 15)
         Panel8.Name = "Panel8"
-        Panel8.Size = New Size(1070, 120)
+        Panel8.Size = New Size(170, 120)
         Panel8.TabIndex = 61
         ' 
         ' Panel89
@@ -2906,7 +2906,7 @@ Partial Class 界面_常规流程参数
         Panel89.Location = New Point(100, 80)
         Panel89.Name = "Panel89"
         Panel89.Padding = New Padding(7, 0, 10, 10)
-        Panel89.Size = New Size(970, 40)
+        Panel89.Size = New Size(70, 40)
         Panel89.TabIndex = 5
         ' 
         ' UiTextBoxthreads
@@ -3018,7 +3018,7 @@ Partial Class 界面_常规流程参数
         Panel11.Location = New Point(100, 40)
         Panel11.Name = "Panel11"
         Panel11.Padding = New Padding(10, 0, 0, 10)
-        Panel11.Size = New Size(970, 40)
+        Panel11.Size = New Size(70, 40)
         Panel11.TabIndex = 2
         ' 
         ' UiComboBox场景优化
@@ -3232,7 +3232,7 @@ Partial Class 界面_常规流程参数
         Panel90.Location = New Point(100, 0)
         Panel90.Name = "Panel90"
         Panel90.Padding = New Padding(7, 5, 0, 5)
-        Panel90.Size = New Size(970, 40)
+        Panel90.Size = New Size(70, 40)
         Panel90.TabIndex = 6
         ' 
         ' Label169
@@ -4844,26 +4844,23 @@ Partial Class 界面_常规流程参数
         ' UiTextBox音频比特率质量值
         ' 
         UiTextBox音频比特率质量值.Dock = DockStyle.Left
-        UiTextBox音频比特率质量值.FillColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
-        UiTextBox音频比特率质量值.FillColor2 = Color.FromArgb(CByte(24), CByte(24), CByte(24))
-        UiTextBox音频比特率质量值.FillDisableColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
-        UiTextBox音频比特率质量值.FillReadOnlyColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
-        UiTextBox音频比特率质量值.Font = New Font("微软雅黑", 9.75F)
-        UiTextBox音频比特率质量值.ForeColor = Color.DarkGray
-        UiTextBox音频比特率质量值.ForeDisableColor = Color.DarkGray
-        UiTextBox音频比特率质量值.ForeReadOnlyColor = Color.DarkGray
+        UiTextBox音频比特率质量值.FillColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        UiTextBox音频比特率质量值.FillColor2 = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        UiTextBox音频比特率质量值.FillDisableColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        UiTextBox音频比特率质量值.FillReadOnlyColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        UiTextBox音频比特率质量值.Font = New Font("微软雅黑", 10F)
+        UiTextBox音频比特率质量值.ForeColor = Color.Silver
+        UiTextBox音频比特率质量值.ForeDisableColor = Color.Silver
+        UiTextBox音频比特率质量值.ForeReadOnlyColor = Color.Silver
         UiTextBox音频比特率质量值.Location = New Point(480, 10)
         UiTextBox音频比特率质量值.Margin = New Padding(4, 5, 4, 5)
         UiTextBox音频比特率质量值.MinimumSize = New Size(1, 16)
         UiTextBox音频比特率质量值.Name = "UiTextBox音频比特率质量值"
         UiTextBox音频比特率质量值.Padding = New Padding(5)
         UiTextBox音频比特率质量值.Radius = 30
-        UiTextBox音频比特率质量值.RectColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
-        UiTextBox音频比特率质量值.RectDisableColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
-        UiTextBox音频比特率质量值.RectReadOnlyColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
-        UiTextBox音频比特率质量值.ScrollBarBackColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
-        UiTextBox音频比特率质量值.ScrollBarColor = Color.DimGray
-        UiTextBox音频比特率质量值.ScrollBarStyleInherited = False
+        UiTextBox音频比特率质量值.RectColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        UiTextBox音频比特率质量值.RectDisableColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        UiTextBox音频比特率质量值.RectReadOnlyColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
         UiTextBox音频比特率质量值.ShowText = False
         UiTextBox音频比特率质量值.Size = New Size(100, 30)
         UiTextBox音频比特率质量值.TabIndex = 81
@@ -5452,9 +5449,9 @@ Partial Class 界面_常规流程参数
         ' 
         TabPage自定义参数.BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         TabPage自定义参数.Controls.Add(Panel6)
-        TabPage自定义参数.Location = New Point(0, 40)
+        TabPage自定义参数.Location = New Point(0, 50)
         TabPage自定义参数.Name = "TabPage自定义参数"
-        TabPage自定义参数.Size = New Size(200, 60)
+        TabPage自定义参数.Size = New Size(1100, 650)
         TabPage自定义参数.TabIndex = 5
         TabPage自定义参数.Text = "自定义参数"
         ' 
@@ -5471,7 +5468,7 @@ Partial Class 界面_常规流程参数
         Panel6.Location = New Point(0, 0)
         Panel6.Name = "Panel6"
         Panel6.Padding = New Padding(15)
-        Panel6.Size = New Size(200, 60)
+        Panel6.Size = New Size(1100, 650)
         Panel6.TabIndex = 1
         ' 
         ' TextBox1
@@ -5484,7 +5481,7 @@ Partial Class 界面_常规流程参数
         TextBox1.Multiline = True
         TextBox1.Name = "TextBox1"
         TextBox1.ReadOnly = True
-        TextBox1.Size = New Size(170, 0)
+        TextBox1.Size = New Size(1070, 180)
         TextBox1.TabIndex = 78
         TextBox1.Text = resources.GetString("TextBox1.Text")
         ' 
@@ -5493,7 +5490,7 @@ Partial Class 界面_常规流程参数
         Label119.Dock = DockStyle.Top
         Label119.Location = New Point(15, 445)
         Label119.Name = "Label119"
-        Label119.Size = New Size(170, 10)
+        Label119.Size = New Size(1070, 10)
         Label119.TabIndex = 79
         ' 
         ' Panel69
@@ -5508,7 +5505,7 @@ Partial Class 界面_常规流程参数
         Panel69.Location = New Point(15, 275)
         Panel69.Name = "Panel69"
         Panel69.Padding = New Padding(10)
-        Panel69.Size = New Size(170, 170)
+        Panel69.Size = New Size(1070, 170)
         Panel69.TabIndex = 76
         ' 
         ' Panel72
@@ -5518,7 +5515,7 @@ Partial Class 界面_常规流程参数
         Panel72.Dock = DockStyle.Top
         Panel72.Location = New Point(10, 130)
         Panel72.Name = "Panel72"
-        Panel72.Size = New Size(150, 30)
+        Panel72.Size = New Size(1050, 30)
         Panel72.TabIndex = 6
         ' 
         ' UiTextBox最后参数
@@ -5545,7 +5542,7 @@ Partial Class 界面_常规流程参数
         UiTextBox最后参数.ScrollBarColor = Color.DimGray
         UiTextBox最后参数.ScrollBarStyleInherited = False
         UiTextBox最后参数.ShowText = False
-        UiTextBox最后参数.Size = New Size(50, 30)
+        UiTextBox最后参数.Size = New Size(950, 30)
         UiTextBox最后参数.TabIndex = 98
         UiTextBox最后参数.TextAlignment = ContentAlignment.MiddleLeft
         UiTextBox最后参数.Watermark = "这里的参数将拼接在所有参数之后（在输出文件之后，也就是最末尾的位置）"
@@ -5571,7 +5568,7 @@ Partial Class 界面_常规流程参数
         Panel70.Location = New Point(10, 90)
         Panel70.Name = "Panel70"
         Panel70.Padding = New Padding(0, 0, 0, 10)
-        Panel70.Size = New Size(150, 40)
+        Panel70.Size = New Size(1050, 40)
         Panel70.TabIndex = 5
         ' 
         ' UiTextBox之后参数
@@ -5598,7 +5595,7 @@ Partial Class 界面_常规流程参数
         UiTextBox之后参数.ScrollBarColor = Color.DimGray
         UiTextBox之后参数.ScrollBarStyleInherited = False
         UiTextBox之后参数.ShowText = False
-        UiTextBox之后参数.Size = New Size(50, 30)
+        UiTextBox之后参数.Size = New Size(950, 30)
         UiTextBox之后参数.TabIndex = 98
         UiTextBox之后参数.TextAlignment = ContentAlignment.MiddleLeft
         UiTextBox之后参数.Watermark = "这里的参数将拼接在前面所有参数的后面，但在输出文件之前"
@@ -5624,7 +5621,7 @@ Partial Class 界面_常规流程参数
         Panel79.Location = New Point(10, 50)
         Panel79.Name = "Panel79"
         Panel79.Padding = New Padding(0, 0, 0, 10)
-        Panel79.Size = New Size(150, 40)
+        Panel79.Size = New Size(1050, 40)
         Panel79.TabIndex = 7
         ' 
         ' UiTextBox之前参数
@@ -5651,7 +5648,7 @@ Partial Class 界面_常规流程参数
         UiTextBox之前参数.ScrollBarColor = Color.DimGray
         UiTextBox之前参数.ScrollBarStyleInherited = False
         UiTextBox之前参数.ShowText = False
-        UiTextBox之前参数.Size = New Size(50, 30)
+        UiTextBox之前参数.Size = New Size(950, 30)
         UiTextBox之前参数.TabIndex = 96
         UiTextBox之前参数.TextAlignment = ContentAlignment.MiddleLeft
         UiTextBox之前参数.Watermark = "这里的参数将拼接在主输入文件之后（用于导入更多文件）"
@@ -5677,7 +5674,7 @@ Partial Class 界面_常规流程参数
         Panel71.Location = New Point(10, 10)
         Panel71.Name = "Panel71"
         Panel71.Padding = New Padding(0, 0, 0, 10)
-        Panel71.Size = New Size(150, 40)
+        Panel71.Size = New Size(1050, 40)
         Panel71.TabIndex = 4
         ' 
         ' UiTextBox开头参数
@@ -5704,7 +5701,7 @@ Partial Class 界面_常规流程参数
         UiTextBox开头参数.ScrollBarColor = Color.DimGray
         UiTextBox开头参数.ScrollBarStyleInherited = False
         UiTextBox开头参数.ShowText = False
-        UiTextBox开头参数.Size = New Size(50, 30)
+        UiTextBox开头参数.Size = New Size(950, 30)
         UiTextBox开头参数.TabIndex = 96
         UiTextBox开头参数.TextAlignment = ContentAlignment.MiddleLeft
         UiTextBox开头参数.Watermark = "这里的参数将拼接在输入文件之前（ffmpeg 之后，-i 之前）"
@@ -5727,7 +5724,7 @@ Partial Class 界面_常规流程参数
         Label120.Dock = DockStyle.Top
         Label120.Location = New Point(15, 265)
         Label120.Name = "Label120"
-        Label120.Size = New Size(170, 10)
+        Label120.Size = New Size(1070, 10)
         Label120.TabIndex = 75
         ' 
         ' Panel59
@@ -5741,7 +5738,7 @@ Partial Class 界面_常规流程参数
         Panel59.Location = New Point(15, 145)
         Panel59.Name = "Panel59"
         Panel59.Padding = New Padding(10)
-        Panel59.Size = New Size(170, 120)
+        Panel59.Size = New Size(1070, 120)
         Panel59.TabIndex = 74
         ' 
         ' Panel60
@@ -5751,7 +5748,7 @@ Partial Class 界面_常规流程参数
         Panel60.Dock = DockStyle.Top
         Panel60.Location = New Point(10, 80)
         Panel60.Name = "Panel60"
-        Panel60.Size = New Size(150, 30)
+        Panel60.Size = New Size(1050, 30)
         Panel60.TabIndex = 5
         ' 
         ' UiTextBox自定义音频参数
@@ -5778,7 +5775,7 @@ Partial Class 界面_常规流程参数
         UiTextBox自定义音频参数.ScrollBarColor = Color.DimGray
         UiTextBox自定义音频参数.ScrollBarStyleInherited = False
         UiTextBox自定义音频参数.ShowText = False
-        UiTextBox自定义音频参数.Size = New Size(50, 30)
+        UiTextBox自定义音频参数.Size = New Size(950, 30)
         UiTextBox自定义音频参数.TabIndex = 98
         UiTextBox自定义音频参数.TextAlignment = ContentAlignment.MiddleLeft
         UiTextBox自定义音频参数.Watermark = "这里的参数将拼接在所有音频参数的末尾"
@@ -5804,7 +5801,7 @@ Partial Class 界面_常规流程参数
         Panel61.Location = New Point(10, 40)
         Panel61.Name = "Panel61"
         Panel61.Padding = New Padding(0, 0, 0, 10)
-        Panel61.Size = New Size(150, 40)
+        Panel61.Size = New Size(1050, 40)
         Panel61.TabIndex = 4
         ' 
         ' UiTextBox自定义视频参数
@@ -5831,7 +5828,7 @@ Partial Class 界面_常规流程参数
         UiTextBox自定义视频参数.ScrollBarColor = Color.DimGray
         UiTextBox自定义视频参数.ScrollBarStyleInherited = False
         UiTextBox自定义视频参数.ShowText = False
-        UiTextBox自定义视频参数.Size = New Size(50, 30)
+        UiTextBox自定义视频参数.Size = New Size(950, 30)
         UiTextBox自定义视频参数.TabIndex = 96
         UiTextBox自定义视频参数.TextAlignment = ContentAlignment.MiddleLeft
         UiTextBox自定义视频参数.Watermark = "这里的参数将拼接在所有视频参数的末尾（音频参数之前）图片参数也是这个"
@@ -5866,7 +5863,7 @@ Partial Class 界面_常规流程参数
         Label95.Dock = DockStyle.Top
         Label95.Location = New Point(15, 135)
         Label95.Name = "Label95"
-        Label95.Size = New Size(170, 10)
+        Label95.Size = New Size(1070, 10)
         Label95.TabIndex = 73
         ' 
         ' Panel55
@@ -5880,7 +5877,7 @@ Partial Class 界面_常规流程参数
         Panel55.Location = New Point(15, 15)
         Panel55.Name = "Panel55"
         Panel55.Padding = New Padding(10)
-        Panel55.Size = New Size(170, 120)
+        Panel55.Size = New Size(1070, 120)
         Panel55.TabIndex = 68
         ' 
         ' Panel58
@@ -5890,7 +5887,7 @@ Partial Class 界面_常规流程参数
         Panel58.Dock = DockStyle.Top
         Panel58.Location = New Point(10, 80)
         Panel58.Name = "Panel58"
-        Panel58.Size = New Size(150, 30)
+        Panel58.Size = New Size(1050, 30)
         Panel58.TabIndex = 3
         ' 
         ' UiTextBox自定义音频滤镜
@@ -5917,7 +5914,7 @@ Partial Class 界面_常规流程参数
         UiTextBox自定义音频滤镜.ScrollBarColor = Color.DimGray
         UiTextBox自定义音频滤镜.ScrollBarStyleInherited = False
         UiTextBox自定义音频滤镜.ShowText = False
-        UiTextBox自定义音频滤镜.Size = New Size(50, 30)
+        UiTextBox自定义音频滤镜.Size = New Size(950, 30)
         UiTextBox自定义音频滤镜.TabIndex = 98
         UiTextBox自定义音频滤镜.TextAlignment = ContentAlignment.MiddleLeft
         UiTextBox自定义音频滤镜.Watermark = "这里的参数将作为 -af 的参数拼接在已生成部分的末尾，每个滤镜用英文逗号隔开"
@@ -5943,7 +5940,7 @@ Partial Class 界面_常规流程参数
         Panel56.Location = New Point(10, 40)
         Panel56.Name = "Panel56"
         Panel56.Padding = New Padding(0, 0, 0, 10)
-        Panel56.Size = New Size(150, 40)
+        Panel56.Size = New Size(1050, 40)
         Panel56.TabIndex = 2
         ' 
         ' UiTextBox自定义视频滤镜
@@ -5970,7 +5967,7 @@ Partial Class 界面_常规流程参数
         UiTextBox自定义视频滤镜.ScrollBarColor = Color.DimGray
         UiTextBox自定义视频滤镜.ScrollBarStyleInherited = False
         UiTextBox自定义视频滤镜.ShowText = False
-        UiTextBox自定义视频滤镜.Size = New Size(50, 30)
+        UiTextBox自定义视频滤镜.Size = New Size(950, 30)
         UiTextBox自定义视频滤镜.TabIndex = 80
         UiTextBox自定义视频滤镜.TextAlignment = ContentAlignment.MiddleLeft
         UiTextBox自定义视频滤镜.Watermark = "这里的参数将作为 -vf 的参数拼接在已生成部分的末尾，每个滤镜用英文逗号隔开，图片的也是用这个"
@@ -6004,9 +6001,9 @@ Partial Class 界面_常规流程参数
         ' 
         TabPage流控制.BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         TabPage流控制.Controls.Add(Panel5)
-        TabPage流控制.Location = New Point(0, 40)
+        TabPage流控制.Location = New Point(0, 50)
         TabPage流控制.Name = "TabPage流控制"
-        TabPage流控制.Size = New Size(200, 60)
+        TabPage流控制.Size = New Size(1100, 650)
         TabPage流控制.TabIndex = 4
         TabPage流控制.Text = "流控制"
         ' 
@@ -6021,7 +6018,7 @@ Partial Class 界面_常规流程参数
         Panel5.Location = New Point(0, 0)
         Panel5.Name = "Panel5"
         Panel5.Padding = New Padding(15)
-        Panel5.Size = New Size(200, 60)
+        Panel5.Size = New Size(1100, 650)
         Panel5.TabIndex = 1
         ' 
         ' Panel67
@@ -6034,7 +6031,7 @@ Partial Class 界面_常规流程参数
         Panel67.Location = New Point(15, 421)
         Panel67.Name = "Panel67"
         Panel67.Padding = New Padding(10)
-        Panel67.Size = New Size(170, 80)
+        Panel67.Size = New Size(1070, 80)
         Panel67.TabIndex = 78
         ' 
         ' Panel68
@@ -6044,7 +6041,7 @@ Partial Class 界面_常规流程参数
         Panel68.Location = New Point(10, 40)
         Panel68.Name = "Panel68"
         Panel68.Padding = New Padding(3, 0, 0, 0)
-        Panel68.Size = New Size(150, 30)
+        Panel68.Size = New Size(1050, 30)
         Panel68.TabIndex = 3
         ' 
         ' UiTextBoxfilter_complex
@@ -6071,7 +6068,7 @@ Partial Class 界面_常规流程参数
         UiTextBoxfilter_complex.ScrollBarColor = Color.DimGray
         UiTextBoxfilter_complex.ScrollBarStyleInherited = False
         UiTextBoxfilter_complex.ShowText = False
-        UiTextBoxfilter_complex.Size = New Size(147, 30)
+        UiTextBoxfilter_complex.Size = New Size(1047, 30)
         UiTextBoxfilter_complex.TabIndex = 80
         UiTextBoxfilter_complex.TextAlignment = ContentAlignment.MiddleLeft
         UiTextBoxfilter_complex.Watermark = "这里的参数将作为 -filter_complex 滤镜参数，每个滤镜用英文逗号隔开，3FUI 自身没有使用此参数；这里也可以使用通配字符串"
@@ -6095,7 +6092,7 @@ Partial Class 界面_常规流程参数
         Label108.Dock = DockStyle.Top
         Label108.Location = New Point(15, 411)
         Label108.Name = "Label108"
-        Label108.Size = New Size(170, 10)
+        Label108.Size = New Size(1070, 10)
         Label108.TabIndex = 76
         ' 
         ' Panel65
@@ -6109,7 +6106,7 @@ Partial Class 界面_常规流程参数
         Panel65.Location = New Point(15, 283)
         Panel65.Name = "Panel65"
         Panel65.Padding = New Padding(10)
-        Panel65.Size = New Size(170, 128)
+        Panel65.Size = New Size(1070, 128)
         Panel65.TabIndex = 75
         ' 
         ' Panel66
@@ -6124,7 +6121,7 @@ Partial Class 界面_常规流程参数
         Panel66.Location = New Point(10, 88)
         Panel66.Name = "Panel66"
         Panel66.Padding = New Padding(3, 0, 0, 0)
-        Panel66.Size = New Size(150, 30)
+        Panel66.Size = New Size(1050, 30)
         Panel66.TabIndex = 3
         ' 
         ' Label151
@@ -6135,7 +6132,7 @@ Partial Class 界面_常规流程参数
         Label151.Location = New Point(623, 0)
         Label151.Name = "Label151"
         Label151.Padding = New Padding(10, 0, 0, 0)
-        Label151.Size = New Size(0, 30)
+        Label151.Size = New Size(427, 30)
         Label151.TabIndex = 105
         Label151.Text = "时间戳格式：时:分:秒.毫秒"
         Label151.TextAlign = ContentAlignment.MiddleLeft
@@ -6283,7 +6280,7 @@ Partial Class 界面_常规流程参数
         Label104.Dock = DockStyle.Top
         Label104.Location = New Point(15, 273)
         Label104.Name = "Label104"
-        Label104.Size = New Size(170, 10)
+        Label104.Size = New Size(1070, 10)
         Label104.TabIndex = 74
         ' 
         ' Panel49
@@ -6300,7 +6297,7 @@ Partial Class 界面_常规流程参数
         Panel49.Location = New Point(15, 15)
         Panel49.Name = "Panel49"
         Panel49.Padding = New Padding(10)
-        Panel49.Size = New Size(170, 258)
+        Panel49.Size = New Size(1070, 258)
         Panel49.TabIndex = 64
         ' 
         ' Label147
@@ -6327,7 +6324,7 @@ Partial Class 界面_常规流程参数
         Panel64.Location = New Point(10, 170)
         Panel64.Name = "Panel64"
         Panel64.Padding = New Padding(0, 0, 0, 10)
-        Panel64.Size = New Size(150, 40)
+        Panel64.Size = New Size(1050, 40)
         Panel64.TabIndex = 7
         ' 
         ' UiComboBox附件选项
@@ -6472,7 +6469,7 @@ Partial Class 界面_常规流程参数
         Panel63.Location = New Point(10, 130)
         Panel63.Name = "Panel63"
         Panel63.Padding = New Padding(0, 0, 0, 10)
-        Panel63.Size = New Size(150, 40)
+        Panel63.Size = New Size(1050, 40)
         Panel63.TabIndex = 6
         ' 
         ' Label109
@@ -6482,7 +6479,7 @@ Partial Class 界面_常规流程参数
         Label109.ForeColor = Color.Gray
         Label109.Location = New Point(633, 0)
         Label109.Name = "Label109"
-        Label109.Size = New Size(0, 30)
+        Label109.Size = New Size(417, 30)
         Label109.TabIndex = 98
         Label109.Text = "字幕自动混流优先级 srt>ass>ssa，三种后缀都会扫描"
         Label109.TextAlign = ContentAlignment.MiddleLeft
@@ -6537,7 +6534,7 @@ Partial Class 界面_常规流程参数
         Panel50.Location = New Point(10, 90)
         Panel50.Name = "Panel50"
         Panel50.Padding = New Padding(0, 0, 0, 10)
-        Panel50.Size = New Size(150, 40)
+        Panel50.Size = New Size(1050, 40)
         Panel50.TabIndex = 5
         ' 
         ' Label140
@@ -6547,7 +6544,7 @@ Partial Class 界面_常规流程参数
         Label140.ForeColor = Color.Gray
         Label140.Location = New Point(633, 0)
         Label140.Name = "Label140"
-        Label140.Size = New Size(0, 30)
+        Label140.Size = New Size(417, 30)
         Label140.TabIndex = 100
         Label140.Text = "输入文件索引:a:流索引"
         Label140.TextAlign = ContentAlignment.MiddleLeft
@@ -6627,7 +6624,7 @@ Partial Class 界面_常规流程参数
         Panel62.Location = New Point(10, 50)
         Panel62.Name = "Panel62"
         Panel62.Padding = New Padding(0, 0, 0, 10)
-        Panel62.Size = New Size(150, 40)
+        Panel62.Size = New Size(1050, 40)
         Panel62.TabIndex = 4
         ' 
         ' Label139
@@ -6637,7 +6634,7 @@ Partial Class 界面_常规流程参数
         Label139.ForeColor = Color.Gray
         Label139.Location = New Point(633, 0)
         Label139.Name = "Label139"
-        Label139.Size = New Size(0, 30)
+        Label139.Size = New Size(417, 30)
         Label139.TabIndex = 99
         Label139.Text = "输入文件索引:v:流索引"
         Label139.TextAlign = ContentAlignment.MiddleLeft
@@ -6722,9 +6719,9 @@ Partial Class 界面_常规流程参数
         ' 
         TabPage预设管理.BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         TabPage预设管理.Controls.Add(Panel7)
-        TabPage预设管理.Location = New Point(0, 40)
+        TabPage预设管理.Location = New Point(0, 50)
         TabPage预设管理.Name = "TabPage预设管理"
-        TabPage预设管理.Size = New Size(200, 60)
+        TabPage预设管理.Size = New Size(1100, 650)
         TabPage预设管理.TabIndex = 6
         TabPage预设管理.Text = "预设管理"
         ' 
@@ -6737,7 +6734,7 @@ Partial Class 界面_常规流程参数
         Panel7.Location = New Point(0, 0)
         Panel7.Name = "Panel7"
         Panel7.Padding = New Padding(15)
-        Panel7.Size = New Size(200, 60)
+        Panel7.Size = New Size(1100, 650)
         Panel7.TabIndex = 1
         ' 
         ' Panel76
@@ -6751,7 +6748,7 @@ Partial Class 界面_常规流程参数
         Panel76.Location = New Point(15, 203)
         Panel76.Name = "Panel76"
         Panel76.Padding = New Padding(10)
-        Panel76.Size = New Size(170, 0)
+        Panel76.Size = New Size(1070, 432)
         Panel76.TabIndex = 83
         ' 
         ' Panel77
@@ -6761,7 +6758,7 @@ Partial Class 界面_常规流程参数
         Panel77.Location = New Point(10, 69)
         Panel77.Name = "Panel77"
         Panel77.Padding = New Padding(0, 10, 0, 10)
-        Panel77.Size = New Size(150, 0)
+        Panel77.Size = New Size(1050, 353)
         Panel77.TabIndex = 13
         ' 
         ' RichTextBox1
@@ -6776,7 +6773,7 @@ Partial Class 界面_常规流程参数
         RichTextBox1.ReadOnly = True
         RichTextBox1.ScrollBars = RichTextBoxScrollBars.Vertical
         RichTextBox1.ShowSelectionMargin = True
-        RichTextBox1.Size = New Size(150, 0)
+        RichTextBox1.Size = New Size(1050, 333)
         RichTextBox1.TabIndex = 11
         RichTextBox1.Text = ""
         ' 
@@ -6810,7 +6807,7 @@ Partial Class 界面_常规流程参数
         Label128.Dock = DockStyle.Top
         Label128.Location = New Point(15, 193)
         Label128.Name = "Label128"
-        Label128.Size = New Size(170, 10)
+        Label128.Size = New Size(1070, 10)
         Label128.TabIndex = 82
         ' 
         ' Panel74
@@ -6825,7 +6822,7 @@ Partial Class 界面_常规流程参数
         Panel74.Location = New Point(15, 15)
         Panel74.Name = "Panel74"
         Panel74.Padding = New Padding(10)
-        Panel74.Size = New Size(170, 178)
+        Panel74.Size = New Size(1070, 178)
         Panel74.TabIndex = 81
         ' 
         ' Panel92
@@ -6838,7 +6835,7 @@ Partial Class 界面_常规流程参数
         Panel92.Location = New Point(10, 123)
         Panel92.Name = "Panel92"
         Panel92.Padding = New Padding(3, 10, 0, 0)
-        Panel92.Size = New Size(150, 45)
+        Panel92.Size = New Size(1050, 45)
         Panel92.TabIndex = 12
         ' 
         ' UiTextBox自动加载的预设文件路径
@@ -6868,7 +6865,7 @@ Partial Class 界面_常规流程参数
         UiTextBox自动加载的预设文件路径.ScrollBarColor = Color.DimGray
         UiTextBox自动加载的预设文件路径.ScrollBarStyleInherited = False
         UiTextBox自动加载的预设文件路径.ShowText = False
-        UiTextBox自动加载的预设文件路径.Size = New Size(1, 35)
+        UiTextBox自动加载的预设文件路径.Size = New Size(727, 35)
         UiTextBox自动加载的预设文件路径.TabIndex = 104
         UiTextBox自动加载的预设文件路径.TextAlignment = ContentAlignment.MiddleLeft
         UiTextBox自动加载的预设文件路径.Watermark = "加载指定的预设文件"
@@ -6962,7 +6959,7 @@ Partial Class 界面_常规流程参数
         Panel75.Location = New Point(10, 88)
         Panel75.Name = "Panel75"
         Panel75.Padding = New Padding(3, 0, 0, 0)
-        Panel75.Size = New Size(150, 35)
+        Panel75.Size = New Size(1050, 35)
         Panel75.TabIndex = 10
         ' 
         ' UiCheckBox额外保存信息
@@ -6975,7 +6972,7 @@ Partial Class 界面_常规流程参数
         UiCheckBox额外保存信息.Location = New Point(333, 0)
         UiCheckBox额外保存信息.MinimumSize = New Size(1, 1)
         UiCheckBox额外保存信息.Name = "UiCheckBox额外保存信息"
-        UiCheckBox额外保存信息.Size = New Size(1, 35)
+        UiCheckBox额外保存信息.Size = New Size(717, 35)
         UiCheckBox额外保存信息.TabIndex = 99
         UiCheckBox额外保存信息.Text = "额外保存输出位置（导入时仅对当前计算机名称生效）"
         ' 

@@ -7,7 +7,7 @@ Public Class Form1
     Public 是否初始化 As Boolean = False
     Private 上一次窗口状态 As FormWindowState
 
-    Public 常规流程参数页面 As New 界面_常规流程参数
+    Public 常规流程参数页面 As New 界面_常规流程参数_V2
     Public 混流页面 As New 界面_混流
     Public 合并页面 As New 界面_合并
     Public 编码队列右键菜单 As 暗黑上下文菜单
@@ -21,39 +21,10 @@ Public Class Form1
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Dim 版本号 = String.Join(".", Application.ProductVersion.Split("."c).Take(3)).Split("+"c)(0)
         Me.Text = $"FFmpegFreeUI {版本号}"
-        Label主标题.Text = $"FFmpegFreeUI 正式版 v{版本号}"
+        Label主标题.Text = $"FFmpegFreeUI New Experience {版本号}"
 
-        ' 加载完成音效
-        If FileIO.FileSystem.FileExists(Path.Combine(Application.StartupPath, "Sound_Finish.wav")) Then
-            Try
-                Using fileStream As New FileStream(Path.Combine(Application.StartupPath, "Sound_Finish.wav"), FileMode.Open, FileAccess.Read)
-                    Dim soundStream As New MemoryStream()
-                    fileStream.CopyTo(soundStream)
-                    soundStream.Position = 0
-                    Sound_Finish = soundStream
-                End Using
-            Catch ex As Exception
-                ' 如果加载失败，保持使用默认的资源文件
-                Sound_Finish = My.Resources.Resource1.完成
-            End Try
-        End If
-
-        ' 加载错误音效
-        If FileIO.FileSystem.FileExists(Path.Combine(Application.StartupPath, "Sound_Error.wav")) Then
-            Try
-                Using fileStream As New FileStream(Path.Combine(Application.StartupPath, "Sound_Error.wav"), FileMode.Open, FileAccess.Read)
-                    Dim soundStream As New MemoryStream()
-                    fileStream.CopyTo(soundStream)
-                    soundStream.Position = 0
-                    Sound_Error = soundStream
-                End Using
-            Catch ex As Exception
-                ' 如果加载失败，保持使用默认的资源文件
-                Sound_Error = My.Resources.Resource1.错误
-            End Try
-        End If
-
-
+        加载自定义音效()
+        加载自定义图标()
         视频编码器数据库.初始化()
         界面控制.初始化()
         用户设置.启动时加载设置()
@@ -65,17 +36,12 @@ Public Class Form1
         界面控制.界面校准()
         If DPI <> 1 Then DPI变动时校准界面()
 
-        If FileIO.FileSystem.FileExists(Path.Combine(Application.StartupPath, "icon.png")) Then
-            Me.PictureBox1.Image = LoadImageFromFile(Path.Combine(Application.StartupPath, "icon.png")).GetThumbnailImage(Me.PictureBox1.Width, Me.PictureBox1.Height, Nothing, Nothing)
-            Using bitmap As New Bitmap(Me.PictureBox1.Image)
-                Me.Icon = Icon.FromHandle(bitmap.GetHicon())
-            End Using
-        Else
-            Me.PictureBox1.Width = Me.PictureBox1.Height
-            Me.PictureBox1.Image = My.Resources.Resource1.AppIcon.GetThumbnailImage(Me.PictureBox1.Width, Me.PictureBox1.Height, Nothing, Nothing)
-        End If
-        本地教学.初始化()
         上一次窗口状态 = Me.WindowState
+    End Sub
+
+    Private Sub Form1_DpiChanged(sender As Object, e As DpiChangedEventArgs) Handles Me.DpiChanged
+        DPI = e.DeviceDpiNew / 96
+        DPI变动时校准界面()
     End Sub
 
     Private Sub Form1_Shown(sender As Object, e As EventArgs) Handles Me.Shown
@@ -90,21 +56,16 @@ Public Class Form1
             T99.Start()
         End If
     End Sub
+
     Public T99 As Timer
     Sub 显示教学信息()
         Dim 选项字典 As New Dictionary(Of String, Action)
         选项字典("了解") = Nothing
         选项字典("永久关闭这个提示") = Sub() 用户设置.实例对象.TipsTriggeringTeachingContentAtStartup = False
-        软件内对话框.显示对话框("基本提示信息可用", $"现在很多功能都有了内置的新手教学，触发方式如下：{vbCrLf & vbCrLf}对于文本框，按下 F1 或者动一下鼠标滚轮来触发{vbCrLf}对于下拉框，双击或者动一下鼠标滚轮来触发{vbCrLf & vbCrLf}如不想在启动时看到这个提示，请手动编辑设置文件，将 TipsTriggeringTeachingContentAtStartup 设置为 false 即可", 选项字典, 软件内对话框.主题类型.常规)
+        软件内对话框.显示对话框("2.0 全新视觉", $"参数面板已完全重做，原来的内置提示信息已全部移除，现在可以在下拉框上使用鼠标滚轮来快速切换", 选项字典, 软件内对话框.主题类型.常规)
         T99.Enabled = False
         T99.Dispose()
         T99 = Nothing
-    End Sub
-
-
-    Private Sub Form1_DpiChanged(sender As Object, e As DpiChangedEventArgs) Handles Me.DpiChanged
-        DPI = e.DeviceDpiNew / 96
-        DPI变动时校准界面()
     End Sub
 
     Public Sub 重新创建句柄()
@@ -172,14 +133,19 @@ Public Class Form1
     End Sub
     Private Sub ListView1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ListView1.SelectedIndexChanged
         If Me.ListView1.SelectedItems.Count = 1 Then
-            选中项刷新信息计时器.Enabled = True
             Panel41.Visible = True
+            If 是否打开了输出面板 Then Panel输出面板.Visible = True
+            界面控制.校准输出面板的宽度()
             编码任务.选中项刷新信息()
+            选中项刷新信息计时器.Enabled = True
         Else
             选中项刷新信息计时器.Enabled = False
             Panel41.Visible = False
+            Panel输出面板.Visible = False
         End If
     End Sub
+
+    Public 是否打开了输出面板 As Boolean = False
 
     Private Sub UiButton打开文件显示参数_Click(sender As Object, e As EventArgs) Handles UiButton打开文件显示参数.Click
         Dim openFileDialog As New OpenFileDialog With {.Multiselect = False, .Filter = "所有文件|*.*"}
@@ -277,4 +243,46 @@ Public Class Form1
         插件管理.由插件加载的自定义界面(Me.UiComboBox3.Text).Dock = DockStyle.Fill
         SetControlFont(用户设置.实例对象.字体, Panel24)
     End Sub
+
+    Private Sub 加载自定义音效()
+        If FileIO.FileSystem.FileExists(Path.Combine(Application.StartupPath, "Sound_Finish.wav")) Then
+            Try
+                Using fileStream As New FileStream(Path.Combine(Application.StartupPath, "Sound_Finish.wav"), FileMode.Open, FileAccess.Read)
+                    Dim soundStream As New MemoryStream()
+                    fileStream.CopyTo(soundStream)
+                    soundStream.Position = 0
+                    Sound_Finish = soundStream
+                End Using
+            Catch ex As Exception
+                Sound_Finish = My.Resources.Resource1.完成
+                MsgBox(ex.Message, MsgBoxStyle.Critical)
+            End Try
+        End If
+        If FileIO.FileSystem.FileExists(Path.Combine(Application.StartupPath, "Sound_Error.wav")) Then
+            Try
+                Using fileStream As New FileStream(Path.Combine(Application.StartupPath, "Sound_Error.wav"), FileMode.Open, FileAccess.Read)
+                    Dim soundStream As New MemoryStream()
+                    fileStream.CopyTo(soundStream)
+                    soundStream.Position = 0
+                    Sound_Error = soundStream
+                End Using
+            Catch ex As Exception
+                Sound_Error = My.Resources.Resource1.错误
+                MsgBox(ex.Message, MsgBoxStyle.Critical)
+            End Try
+        End If
+    End Sub
+
+    Private Sub 加载自定义图标()
+        If FileIO.FileSystem.FileExists(Path.Combine(Application.StartupPath, "icon.png")) Then
+            Me.PictureBox1.Image = LoadImageFromFile(Path.Combine(Application.StartupPath, "icon.png")).GetThumbnailImage(Me.PictureBox1.Width, Me.PictureBox1.Height, Nothing, Nothing)
+            Using bitmap As New Bitmap(Me.PictureBox1.Image)
+                Me.Icon = Icon.FromHandle(bitmap.GetHicon())
+            End Using
+        Else
+            Me.PictureBox1.Width = Me.PictureBox1.Height
+            Me.PictureBox1.Image = My.Resources.Resource1.AppIcon.GetThumbnailImage(Me.PictureBox1.Width, Me.PictureBox1.Height, Nothing, Nothing)
+        End If
+    End Sub
+
 End Class

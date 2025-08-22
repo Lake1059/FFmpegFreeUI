@@ -59,6 +59,7 @@ Public Class 编码任务
         Public Property 时间 As String = ""
     End Class
     Public Shared Sub 用定时器刷新到界面上()
+        On Error Resume Next
         If 队列.Count = 0 Then Exit Sub
         Dim 要刷新的项副本 As New Dictionary(Of ListViewItem, 刷新到界面数据结构)(要刷新的项)
         SyncLock 要刷新的项
@@ -73,7 +74,6 @@ Public Class 编码任务
             item.SubItems(6).Text = 要刷新的项副本(item).比特率
             item.SubItems(7).Text = 要刷新的项副本(item).时间
         Next
-
     End Sub
 
     Public Class 单片任务
@@ -97,6 +97,7 @@ Public Class 编码任务
 
         Public Property 实时输出 As String = ""
         Public Property 错误列表 As New List(Of String)
+        Public Property 非进度输出列表 As New List(Of String)
 
         Public Property FFmpegProcess As Process
         Public Property 任务耗时计时器 As New Stopwatch
@@ -110,6 +111,7 @@ Public Class 编码任务
         Public Sub 开始()
             Try
                 错误列表.Clear()
+                非进度输出列表.Clear()
                 状态 = 编码状态.正在处理
 
                 If 预设数据 Is Nothing Then GoTo jx1
@@ -277,10 +279,14 @@ jx1:
                 End If
             End If
 
-            If 实时输出.Contains("="c) AndAlso (Now.TimeOfDay - 上次刷新界面的时间戳).TotalSeconds >= 1 Then
-                在实时输出中提取数据(实时输出)
-                处理捕获的数据并添加到刷新队列()
-                上次刷新界面的时间戳 = Now.TimeOfDay
+            If e.Data.Contains("="c) Then
+                If (Now.TimeOfDay - 上次刷新界面的时间戳).TotalSeconds >= 1 Then
+                    在实时输出中提取数据(e.Data)
+                    处理捕获的数据并添加到刷新队列()
+                    上次刷新界面的时间戳 = Now.TimeOfDay
+                End If
+            Else
+                非进度输出列表.Add(e.Data)
             End If
 
             If errorKeywords.Any(Function(keyword) e.Data.Contains(keyword, StringComparison.OrdinalIgnoreCase)) Then
@@ -527,18 +533,20 @@ jx1:
     End Function
 
     Shared Function 计算输出位置(输入文件 As String, 容器 As String, 预设数据 As 预设数据类型, 自定义目录 As String) As String
+        If 预设数据.输出命名_不使用输出文件参数 Then
+            Return ""
+            Exit Function
+        End If
+
         Dim 输出目录 As String
         If 自定义目录 = "" Then
             输出目录 = Path.GetDirectoryName(输入文件)
         Else
             输出目录 = 自定义目录
         End If
-
         If Not 容器.StartsWith("."c) Then 容器 = "." & 容器
         Dim 文件名不带后缀 As String = Path.GetFileNameWithoutExtension(输入文件)
-
         Dim 文件名 As String = 预设数据.输出命名_开头文本
-
         If 预设数据.输出命名_替代文本 = "" Then
             文件名 &= 文件名不带后缀
         Else
@@ -547,19 +555,13 @@ jx1:
         文件名 &= 预设数据.输出命名_结尾文本
         Select Case 预设数据.输出命名_自动命名选项
             Case 0 : 文件名 &= $"_{Now:yyyy.MM.dd-HH.mm.ss}"
-            Case 1
-                If 预设数据.输出命名_开头文本 = "" AndAlso 预设数据.输出命名_替代文本 = "" AndAlso 预设数据.输出命名_结尾文本 = "" Then
-                    文件名 &= $"_{Now:yyyy.MM.dd-HH.mm.ss}"
-                End If
-            Case 2 : 文件名 &= $"~1"
-            Case 3 : 文件名 &= $"_3fui"
-            Case 4 : 文件名 &= $"_conver"
+            Case 1 : 文件名 &= $"~1"
+            Case 2 : 文件名 &= $"_3fui"
+            Case 3 : 文件名 &= $"_conver"
             Case Else
         End Select
         文件名 &= 容器
-
         Dim 输出路径 = Path.Combine(输出目录, 文件名)
-
         If 用户设置.实例对象.转译模式 Then
             Return 转译模式处理路径(输出路径)
         Else
@@ -568,27 +570,30 @@ jx1:
     End Function
 
     Public Shared Sub 选中项刷新信息()
+        Select Case 队列(Form1.ListView1.SelectedItems(0).Index).状态
+            Case 编码状态.正在处理, 编码状态.已暂停
+            Case Else : Exit Sub
+        End Select
         Try
+            Dim errorCount As Integer = 队列(Form1.ListView1.SelectedItems(0).Index).错误列表.Count
+            Select Case errorCount
+                Case > 0
+                    Form1.LinkLabel切换显示输出面板.Text = $"捕获 {errorCount} 个错误"
+                    Form1.LinkLabel切换显示输出面板.LinkColor = Color.IndianRed
+                Case 0
+                    Form1.LinkLabel切换显示输出面板.Text = $"切换输出显示"
+                    Form1.LinkLabel切换显示输出面板.LinkColor = Color.YellowGreen
+            End Select
+            Select Case Form1.UiComboBox输出显示类型.SelectedIndex
+                Case 0
+                    Form1.TextBox输出显示.Text = String.Join(vbCrLf, 队列(Form1.ListView1.SelectedItems(0).Index).非进度输出列表)
+                    Form1.TextBox输出显示.ForeColor = Color.Silver
+                Case 1
+                    Form1.TextBox输出显示.Text = String.Join(vbCrLf, 队列(Form1.ListView1.SelectedItems(0).Index).错误列表)
+                    Form1.TextBox输出显示.ForeColor = Color.IndianRed
+            End Select
+            'Form1.Label输出显示.Height = 根据标签宽度计算显示高度(Form1.Label输出显示)
             Form1.Labelffmpeg实时信息.Text = 队列(Form1.ListView1.SelectedItems(0).Index).实时输出
-            Form1.Label累计错误信息.Text = String.Join(vbCrLf, 队列(Form1.ListView1.SelectedItems(0).Index).错误列表)
-            If Form1.Label累计错误信息.Text = "" Then
-                Form1.Panel错误信息容器.Visible = False
-                Form1.Label错误信息容器之外的间隔.Visible = False
-            Else
-                Form1.Panel错误信息容器.Visible = True
-                Form1.Label错误信息容器之外的间隔.Visible = True
-
-                Dim s1 = 根据标签宽度计算显示高度(Form1.Label累计错误信息)
-                If s1 > Form1.Height * 0.25 Then
-                    Form1.Label累计错误信息.AutoSize = False
-                    Form1.Label累计错误信息.Height = s1 + 16 * Form1.DPI
-                    Form1.Panel错误信息容器.AutoSize = False
-                    Form1.Panel错误信息容器.Height = Form1.TabPage编码队列.Height * 0.25
-                Else
-                    Form1.Label累计错误信息.AutoSize = True
-                    Form1.Panel错误信息容器.AutoSize = True
-                End If
-            End If
         Catch ex As Exception
             队列(Form1.ListView1.SelectedItems(0).Index).错误列表.Add($"刷新界面失败 {Now} {ex.Message}")
         End Try

@@ -128,6 +128,18 @@ Public Class 界面控制
         AddHandler Form1.UiButton7.Click, AddressOf 界面控制_编码队列.导出配置
         AddHandler Form1.UiButton15.Click, AddressOf 界面控制_编码队列.复制命令行
 
+        Form1.UiComboBox输出显示类型.SelectedIndex = 0
+        AddHandler Form1.LinkLabel切换显示输出面板.LinkClicked, Sub()
+                                                            If Form1.Panel输出面板.Visible Then
+                                                                Form1.Panel输出面板.Visible = False
+                                                                Form1.是否打开了输出面板 = False
+                                                            Else
+                                                                Form1.Panel输出面板.Visible = True
+                                                                Form1.是否打开了输出面板 = True
+                                                            End If
+                                                        End Sub
+        AddHandler Form1.UiButton添加进阶质量控制预制项.Click, Sub() Clipboard.SetText(Form1.TextBox输出显示.Text)
+
         AddHandler Form1.UiButton14.Click, AddressOf 界面控制_添加文件.加入编码队列
         AddHandler Form1.ListView2.DragEnter, AddressOf 界面控制_添加文件.ListView2_DragEnter
         AddHandler Form1.ListView2.DragDrop, AddressOf 界面控制_添加文件.ListView2_DragDrop
@@ -169,6 +181,7 @@ Public Class 界面控制
                 Form1.ListView1.Columns(5).Width = Form1.Label6.Width
                 Form1.ListView1.Columns(6).Width = Form1.Label7.Width
                 Form1.ListView1.Columns(7).Width = Form1.Label8.Width - SystemInformation.VerticalScrollBarWidth * Form1.DPI * 2
+                校准输出面板的宽度()
 
                 Dim s1 As Integer = 0
                 For Each c As UIButton In Form1.Panel2.Controls
@@ -180,8 +193,8 @@ Public Class 界面控制
                 Form1.ListView2.Columns(0).Width = Form1.ListView2.Width - SystemInformation.VerticalScrollBarWidth * Form1.DPI * 2
                 Form1.UiComboBox输出目录.ItemHeight = 30 * Form1.DPI
 
-            Case 选项卡.IsEqual(Form1.TabPage转码压制)
-                Form1.常规流程参数页面.界面校准()
+            Case 选项卡.IsEqual(Form1.TabPage参数面板)
+
 
             Case 选项卡.IsEqual(Form1.TabPage媒体信息)
                 Form1.RichTextBox1.Size = New Size(Form1.RichTextBox1.Parent.Width - Form1.RichTextBox1.Parent.Padding.Left, Form1.RichTextBox1.Parent.Height - Form1.RichTextBox1.Parent.Padding.Top * 2)
@@ -265,6 +278,12 @@ Public Class 界面控制
 
         a.Show(sender, New Point(0, sender.Height + sender.Parent.Padding.Bottom * 2))
 
+    End Sub
+
+    Public Shared Sub 校准输出面板的宽度()
+        If Form1.Panel输出面板.Visible Then
+            Form1.Panel输出面板.Width = Form1.Label8.Width + Form1.Label7.Width + Form1.Label6.Width + Form1.Label5.Width + Form1.Label4.Width
+        End If
     End Sub
 
 

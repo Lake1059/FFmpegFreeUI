@@ -2,7 +2,7 @@
 Imports System.IO
 Imports System.Text.Json
 
-Public Class 界面_常规流程参数
+Public Class 界面_常规流程参数_V1
     Private Sub 界面_常规流程参数_Load(sender As Object, e As EventArgs) Handles Me.Load
         AddHandler UiComboBox编码类别.SelectedIndexChanged, AddressOf 视频编码类别改动事件
         AddHandler UiComboBox具体编码.SelectedIndexChanged, AddressOf 视频具体编码改动事件
