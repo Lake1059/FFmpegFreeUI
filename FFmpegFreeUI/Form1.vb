@@ -20,7 +20,7 @@ Public Class Form1
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Dim 版本号 = String.Join(".", Application.ProductVersion.Split("."c).Take(3)).Split("+"c)(0)
-        Me.Text = $"FFmpegFreeUI {版本号}"
+        Me.Text = $"FFmpegFreeUI {版本号} EA2 Gen1"
         Label主标题.Text = $"FFmpegFreeUI New Experience {版本号}"
 
         加载自定义音效()
@@ -55,6 +55,8 @@ Public Class Form1
             AddHandler T99.Tick, AddressOf 显示教学信息
             T99.Start()
         End If
+
+        新闻列表.获取新闻()
     End Sub
 
     Public T99 As Timer

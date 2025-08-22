@@ -26,7 +26,13 @@ Partial Class Form1
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form1))
         UiTabControlMenu1 = New Sunny.UI.UITabControlMenu()
         TabPage起始页面 = New TabPage()
+        Panel5 = New Panel()
+        Label29 = New Label()
         Panel44 = New Panel()
+        Label37 = New Label()
+        Label28 = New Label()
+        Label26 = New Label()
+        Label21 = New Label()
         Label14 = New Label()
         Label13 = New Label()
         Label12 = New Label()
@@ -195,11 +201,6 @@ Partial Class Form1
         Label137 = New Label()
         UiComboBox字体名称 = New Sunny.UI.UIComboBox()
         Label130 = New Label()
-        Label21 = New Label()
-        Label26 = New Label()
-        Label28 = New Label()
-        Label29 = New Label()
-        Panel5 = New Panel()
         UiTabControlMenu1.SuspendLayout()
         TabPage起始页面.SuspendLayout()
         Panel44.SuspendLayout()
@@ -293,9 +294,31 @@ Partial Class Form1
         TabPage起始页面.TabIndex = 10
         TabPage起始页面.Text = "3FUI"
         ' 
+        ' Panel5
+        ' 
+        Panel5.Dock = DockStyle.Fill
+        Panel5.Location = New Point(600, 149)
+        Panel5.Name = "Panel5"
+        Panel5.Padding = New Padding(11, 0, 20, 20)
+        Panel5.Size = New Size(533, 512)
+        Panel5.TabIndex = 86
+        ' 
+        ' Label29
+        ' 
+        Label29.AutoSize = True
+        Label29.Dock = DockStyle.Top
+        Label29.Font = New Font("微软雅黑", 13F)
+        Label29.Location = New Point(600, 90)
+        Label29.Name = "Label29"
+        Label29.Padding = New Padding(20, 20, 0, 15)
+        Label29.Size = New Size(102, 59)
+        Label29.TabIndex = 85
+        Label29.Text = "新闻列表"
+        ' 
         ' Panel44
         ' 
         Panel44.BackgroundImageLayout = ImageLayout.Stretch
+        Panel44.Controls.Add(Label37)
         Panel44.Controls.Add(Label28)
         Panel44.Controls.Add(Label26)
         Panel44.Controls.Add(Label21)
@@ -311,6 +334,58 @@ Partial Class Form1
         Panel44.Name = "Panel44"
         Panel44.Size = New Size(300, 571)
         Panel44.TabIndex = 0
+        ' 
+        ' Label37
+        ' 
+        Label37.AutoSize = True
+        Label37.Dock = DockStyle.Top
+        Label37.Font = New Font("微软雅黑", 10F)
+        Label37.ForeColor = Color.Gray
+        Label37.Location = New Point(0, 283)
+        Label37.Name = "Label37"
+        Label37.Padding = New Padding(20, 5, 0, 0)
+        Label37.Size = New Size(187, 25)
+        Label37.TabIndex = 43
+        Label37.Text = "④ 可选：汇报源文件参数"
+        ' 
+        ' Label28
+        ' 
+        Label28.AutoSize = True
+        Label28.Dock = DockStyle.Top
+        Label28.Font = New Font("微软雅黑", 10F)
+        Label28.ForeColor = Color.Gray
+        Label28.Location = New Point(0, 258)
+        Label28.Name = "Label28"
+        Label28.Padding = New Padding(20, 5, 0, 0)
+        Label28.Size = New Size(187, 25)
+        Label28.TabIndex = 42
+        Label28.Text = "③ 发送到群内或频道求助"
+        ' 
+        ' Label26
+        ' 
+        Label26.AutoSize = True
+        Label26.Dock = DockStyle.Top
+        Label26.Font = New Font("微软雅黑", 10F)
+        Label26.ForeColor = Color.Gray
+        Label26.Location = New Point(0, 233)
+        Label26.Name = "Label26"
+        Label26.Padding = New Padding(20, 5, 0, 0)
+        Label26.Size = New Size(187, 25)
+        Label26.TabIndex = 41
+        Label26.Text = "② 复制全部或仅错误输出"
+        ' 
+        ' Label21
+        ' 
+        Label21.AutoSize = True
+        Label21.Dock = DockStyle.Top
+        Label21.Font = New Font("微软雅黑", 10F)
+        Label21.ForeColor = Color.Gray
+        Label21.Location = New Point(0, 208)
+        Label21.Name = "Label21"
+        Label21.Padding = New Padding(20, 5, 0, 0)
+        Label21.Size = New Size(173, 25)
+        Label21.TabIndex = 40
+        Label21.Text = "① 选中一个错误的任务"
         ' 
         ' Label14
         ' 
@@ -2892,66 +2967,6 @@ Partial Class Form1
         Label130.TabIndex = 11
         Label130.Text = "全局字体"
         ' 
-        ' Label21
-        ' 
-        Label21.AutoSize = True
-        Label21.Dock = DockStyle.Top
-        Label21.Font = New Font("微软雅黑", 10F)
-        Label21.ForeColor = Color.Gray
-        Label21.Location = New Point(0, 208)
-        Label21.Name = "Label21"
-        Label21.Padding = New Padding(20, 5, 0, 0)
-        Label21.Size = New Size(173, 25)
-        Label21.TabIndex = 40
-        Label21.Text = "① 选中一个错误的任务"
-        ' 
-        ' Label26
-        ' 
-        Label26.AutoSize = True
-        Label26.Dock = DockStyle.Top
-        Label26.Font = New Font("微软雅黑", 10F)
-        Label26.ForeColor = Color.Gray
-        Label26.Location = New Point(0, 233)
-        Label26.Name = "Label26"
-        Label26.Padding = New Padding(20, 5, 0, 0)
-        Label26.Size = New Size(187, 25)
-        Label26.TabIndex = 41
-        Label26.Text = "② 复制全部或仅错误输出"
-        ' 
-        ' Label28
-        ' 
-        Label28.AutoSize = True
-        Label28.Dock = DockStyle.Top
-        Label28.Font = New Font("微软雅黑", 10F)
-        Label28.ForeColor = Color.Gray
-        Label28.Location = New Point(0, 258)
-        Label28.Name = "Label28"
-        Label28.Padding = New Padding(20, 5, 0, 0)
-        Label28.Size = New Size(187, 25)
-        Label28.TabIndex = 42
-        Label28.Text = "③ 可选：汇报源文件参数"
-        ' 
-        ' Label29
-        ' 
-        Label29.AutoSize = True
-        Label29.Dock = DockStyle.Top
-        Label29.Font = New Font("微软雅黑", 13F)
-        Label29.Location = New Point(600, 90)
-        Label29.Name = "Label29"
-        Label29.Padding = New Padding(20, 20, 0, 15)
-        Label29.Size = New Size(102, 59)
-        Label29.TabIndex = 85
-        Label29.Text = "新闻列表"
-        ' 
-        ' Panel5
-        ' 
-        Panel5.Dock = DockStyle.Fill
-        Panel5.Location = New Point(600, 149)
-        Panel5.Name = "Panel5"
-        Panel5.Padding = New Padding(20, 0, 20, 20)
-        Panel5.Size = New Size(533, 512)
-        Panel5.TabIndex = 86
-        ' 
         ' Form1
         ' 
         AutoScaleDimensions = New SizeF(96F, 96F)
@@ -3204,5 +3219,6 @@ Partial Class Form1
     Friend WithEvents Label21 As Label
     Friend WithEvents Panel5 As Panel
     Friend WithEvents Label29 As Label
+    Friend WithEvents Label37 As Label
 
 End Class

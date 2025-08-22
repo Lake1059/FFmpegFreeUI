@@ -8,7 +8,7 @@ Public Class 新闻列表
         GC.Collect()
 
         For i = 0 To 列表数据.Count - 1
-            Dim c1 As New Label With {.AutoSize = False, .Dock = DockStyle.Top, .Height = 30 * Form1.DPI, .TextAlign = ContentAlignment.MiddleLeft, .Padding = New Padding(5, 0, 0, 0), .BackColor = Color.Transparent, .Text = 列表数据(i).Key, .Tag = i}
+            Dim c1 As New Label With {.AutoSize = False, .Dock = DockStyle.Top, .Height = 40 * Form1.DPI, .TextAlign = ContentAlignment.MiddleLeft, .Padding = New Padding(10, 0, 0, 0), .BackColor = Color.Transparent, .Text = 列表数据(i).Key, .Tag = i, .Font = New Font(用户设置.实例对象.字体, 11)}
             AddHandler c1.MouseEnter, Sub(sender, e) sender.BackColor = ColorTranslator.FromWin32(RGB(56, 56, 56))
             AddHandler c1.MouseDown, Sub(sender, e) sender.BackColor = ColorTranslator.FromWin32(RGB(64, 64, 64))
             AddHandler c1.MouseLeave, Sub(sender, e) sender.BackColor = Color.Transparent
@@ -17,7 +17,7 @@ Public Class 新闻列表
                                          Case "msgbox"
                                              Dim 选项字典 As New Dictionary(Of String, Action)
                                              选项字典("了解") = Nothing
-                                             软件内对话框.显示对话框("新闻公告", 列表数据(sender.Tag).Value.Split("|")(1).Replace("{vbCrLf}", vbCrLf), 选项字典, 软件内对话框.主题类型.常规)
+                                             软件内对话框.显示对话框(sender.Text, 列表数据(sender.Tag).Value.Split("|")(1).Replace("{vbCrLf}", vbCrLf), 选项字典, 软件内对话框.主题类型.常规)
                                          Case "link"
                                              Process.Start(New ProcessStartInfo With {.FileName = 列表数据(sender.Tag).Value.Split("|")(1), .UseShellExecute = True})
                                      End Select
