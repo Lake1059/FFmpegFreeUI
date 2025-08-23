@@ -1,4 +1,5 @@
 ﻿Imports System.IO
+Imports System.Runtime.InteropServices
 Imports System.Text.RegularExpressions
 Imports Sunny.UI
 
@@ -287,6 +288,9 @@ jx1:
                 End If
             Else
                 非进度输出列表.Add(e.Data)
+                If 非进度输出列表.Count > 1000 Then
+                    非进度输出列表.RemoveRange(0, 非进度输出列表.Count - 100)
+                End If
             End If
 
             If errorKeywords.Any(Function(keyword) e.Data.Contains(keyword, StringComparison.OrdinalIgnoreCase)) Then
@@ -553,13 +557,14 @@ jx1:
             文件名 &= 预设数据.输出命名_替代文本
         End If
         文件名 &= 预设数据.输出命名_结尾文本
-        Select Case 预设数据.输出命名_自动命名选项
-            Case 0 : 文件名 &= $"_{Now:yyyy.MM.dd-HH.mm.ss}"
-            Case 1 : 文件名 &= $"~1"
-            Case 2 : 文件名 &= $"_3fui"
-            Case 3 : 文件名 &= $"_conver"
-            Case Else
-        End Select
+        If 预设数据.输出命名_使用自动命名 Then
+            Select Case 预设数据.输出命名_自动命名选项
+                Case 0 : 文件名 &= $"_{Now:yyyy.MM.dd-HH.mm.ss}"
+                Case 1 : 文件名 &= $"~1"
+                Case 2 : 文件名 &= $"_3fui"
+                Case 3 : 文件名 &= $"_conver"
+            End Select
+        End If
         文件名 &= 容器
         Dim 输出路径 = Path.Combine(输出目录, 文件名)
         If 用户设置.实例对象.转译模式 Then
@@ -570,10 +575,6 @@ jx1:
     End Function
 
     Public Shared Sub 选中项刷新信息()
-        Select Case 队列(Form1.ListView1.SelectedItems(0).Index).状态
-            Case 编码状态.正在处理, 编码状态.已暂停
-            Case Else : Exit Sub
-        End Select
         Try
             Dim errorCount As Integer = 队列(Form1.ListView1.SelectedItems(0).Index).错误列表.Count
             Select Case errorCount
@@ -584,20 +585,64 @@ jx1:
                     Form1.LinkLabel切换显示输出面板.Text = $"切换输出显示"
                     Form1.LinkLabel切换显示输出面板.LinkColor = Color.YellowGreen
             End Select
+
             Select Case Form1.UiComboBox输出显示类型.SelectedIndex
                 Case 0
-                    Form1.TextBox输出显示.Text = String.Join(vbCrLf, 队列(Form1.ListView1.SelectedItems(0).Index).非进度输出列表)
-                    Form1.TextBox输出显示.ForeColor = Color.Silver
+                    Dim pretext = String.Join(vbCrLf, 队列(Form1.ListView1.SelectedItems(0).Index).非进度输出列表)
+                    If IsRichTextBoxTextDifferent(pretext, Form1.RichTextBox2) Then
+                        Form1.RichTextBox2.Text = pretext
+                        Form1.RichTextBox2.ForeColor = Color.Silver
+                    End If
                 Case 1
-                    Form1.TextBox输出显示.Text = String.Join(vbCrLf, 队列(Form1.ListView1.SelectedItems(0).Index).错误列表)
-                    Form1.TextBox输出显示.ForeColor = Color.IndianRed
+                    Dim pretext = String.Join(vbCrLf, 队列(Form1.ListView1.SelectedItems(0).Index).错误列表)
+                    If IsRichTextBoxTextDifferent(pretext, Form1.RichTextBox2) Then
+                        Form1.RichTextBox2.Text = pretext
+                        Form1.RichTextBox2.ForeColor = Color.IndianRed
+                    End If
             End Select
-            'Form1.Label输出显示.Height = 根据标签宽度计算显示高度(Form1.Label输出显示)
+
+            If Form1.UiCheckBox强制滚动到最后.Checked Then
+                Module2.SendMessage(Form1.RichTextBox2.Handle, &H115, 7, 0)
+            End If
+
             Form1.Labelffmpeg实时信息.Text = 队列(Form1.ListView1.SelectedItems(0).Index).实时输出
         Catch ex As Exception
-            队列(Form1.ListView1.SelectedItems(0).Index).错误列表.Add($"刷新界面失败 {Now} {ex.Message}")
+            队列(Form1.ListView1.SelectedItems(0).Index).错误列表.Add($"刷新选中项实时信息时失败 {Now} {ex.Message}")
+        Finally
+            Select Case 队列(Form1.ListView1.SelectedItems(0).Index).状态
+                Case 编码状态.已停止, 编码状态.已完成, 编码状态.已暂停, 编码状态.未处理, 编码状态.错误
+                    Form1.选中项刷新信息计时器.Enabled = False
+            End Select
         End Try
     End Sub
 
+    Public Shared Sub 切换输出类型时单独刷新()
+        Try
+            If Form1.ListView1.SelectedItems.Count <> 1 Then Exit Sub
+            Select Case Form1.UiComboBox输出显示类型.SelectedIndex
+                Case 0
+                    Dim pretext = String.Join(vbCrLf, 队列(Form1.ListView1.SelectedItems(0).Index).非进度输出列表)
+                    If pretext <> Form1.RichTextBox2.Text Then
+                        Form1.RichTextBox2.Text = pretext
+                        Form1.RichTextBox2.ForeColor = Color.Silver
+                    End If
+                Case 1
+                    Dim pretext = String.Join(vbCrLf, 队列(Form1.ListView1.SelectedItems(0).Index).错误列表)
+                    If pretext <> Form1.RichTextBox2.Text Then
+                        Form1.RichTextBox2.Text = pretext
+                        Form1.RichTextBox2.ForeColor = Color.IndianRed
+                    End If
+            End Select
+        Catch ex As Exception
+            队列(Form1.ListView1.SelectedItems(0).Index).错误列表.Add($"切换输出类型时单独刷新时失败 {Now} {ex.Message}")
+        End Try
+    End Sub
+
+    Shared Function IsRichTextBoxTextDifferent(newText As String, richTextBox As RichTextBox) As Boolean
+        Dim currentPlainText As String = richTextBox.Text
+        Dim normalizedNewText As String = newText.Replace(vbCrLf, vbLf).Replace(vbCr, vbLf)
+        Dim normalizedCurrentText As String = currentPlainText.Replace(vbCrLf, vbLf).Replace(vbCr, vbLf)
+        Return Not String.Equals(normalizedNewText, normalizedCurrentText, StringComparison.Ordinal)
+    End Function
 
 End Class

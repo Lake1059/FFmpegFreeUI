@@ -20,7 +20,7 @@ Public Class Form1
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Dim 版本号 = String.Join(".", Application.ProductVersion.Split("."c).Take(3)).Split("+"c)(0)
-        Me.Text = $"FFmpegFreeUI {版本号} EA2 Gen1"
+        Me.Text = $"FFmpegFreeUI {版本号} EA3 Gen1"
         Label主标题.Text = $"FFmpegFreeUI New Experience {版本号}"
 
         加载自定义音效()
@@ -50,7 +50,7 @@ Public Class Form1
         界面线程执行(AddressOf 检查更新.检查)
         任务进度更新计时器.Enabled = True
 
-        If 用户设置.实例对象.TipsTriggeringTeachingContentAtStartup Then
+        If 用户设置.实例对象.V2Tips Then
             T99 = New Timer With {.Enabled = False, .Interval = 3000}
             AddHandler T99.Tick, AddressOf 显示教学信息
             T99.Start()
@@ -63,7 +63,7 @@ Public Class Form1
     Sub 显示教学信息()
         Dim 选项字典 As New Dictionary(Of String, Action)
         选项字典("了解") = Nothing
-        选项字典("永久关闭这个提示") = Sub() 用户设置.实例对象.TipsTriggeringTeachingContentAtStartup = False
+        选项字典("永久关闭这个提示") = Sub() 用户设置.实例对象.V2Tips = False
         软件内对话框.显示对话框("2.0 全新视觉", $"参数面板已完全重做，原来的内置提示信息已全部移除，现在可以在下拉框上使用鼠标滚轮来快速切换", 选项字典, 软件内对话框.主题类型.常规)
         T99.Enabled = False
         T99.Dispose()

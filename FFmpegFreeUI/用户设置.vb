@@ -19,7 +19,7 @@ Public Class 用户设置
         Public Property 自动加载预设选项 As 自动加载预设选项枚举 = 自动加载预设选项枚举.不自动加载预设
         Public Property 自动加载预设文件路径 As String = ""
         Public Property 最后的预设数据 As New 预设数据类型
-        Public Property TipsTriggeringTeachingContentAtStartup As Boolean = True
+        Public Property V2Tips As Boolean = True
     End Class
 
     Enum 自动加载预设选项枚举

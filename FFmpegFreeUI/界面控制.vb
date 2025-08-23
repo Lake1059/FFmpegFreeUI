@@ -89,6 +89,7 @@ Public Class 界面控制
                                                            End Sub
 
         设置富文本框行高(Form1.RichTextBox1, 350)
+        设置富文本框行高(Form1.RichTextBox2, 350)
         Form1.RichTextBox1.AllowDrop = True
         Form1.Panel6.Controls.Add(Form1.常规流程参数页面)
         Form1.常规流程参数页面.Dock = DockStyle.Fill
@@ -136,9 +137,12 @@ Public Class 界面控制
                                                             Else
                                                                 Form1.Panel输出面板.Visible = True
                                                                 Form1.是否打开了输出面板 = True
+                                                                校准输出面板的宽度()
                                                             End If
                                                         End Sub
-        AddHandler Form1.UiButton添加进阶质量控制预制项.Click, Sub() Clipboard.SetText(Form1.TextBox输出显示.Text)
+        AddHandler Form1.UiButton添加进阶质量控制预制项.Click, Sub() Clipboard.SetText(Form1.RichTextBox2.Text)
+        AddHandler Form1.UiComboBox输出显示类型.SelectedIndexChanged, AddressOf 编码任务.切换输出类型时单独刷新
+
 
         AddHandler Form1.UiButton14.Click, AddressOf 界面控制_添加文件.加入编码队列
         AddHandler Form1.ListView2.DragEnter, AddressOf 界面控制_添加文件.ListView2_DragEnter
@@ -182,12 +186,13 @@ Public Class 界面控制
                 Form1.ListView1.Columns(6).Width = Form1.Label7.Width
                 Form1.ListView1.Columns(7).Width = Form1.Label8.Width - SystemInformation.VerticalScrollBarWidth * Form1.DPI * 2
                 校准输出面板的宽度()
-
                 Dim s1 As Integer = 0
                 For Each c As UIButton In Form1.Panel2.Controls
                     s1 += c.Width
                 Next
                 Form1.Panel2.Padding = New Padding((Form1.Panel2.Width - s1) * 0.5, Form1.Panel2.Padding.Top, (Form1.Panel2.Width - s1) * 0.5, 0)
+                Form1.UiComboBox输出显示类型.ItemHeight = 30 * Form1.DPI
+                Form1.UiCheckBox强制滚动到最后.CheckBoxSize = 20 * Form1.DPI
 
             Case 选项卡.IsEqual(Form1.TabPage添加文件)
                 Form1.ListView2.Columns(0).Width = Form1.ListView2.Width - SystemInformation.VerticalScrollBarWidth * Form1.DPI * 2
@@ -282,7 +287,7 @@ Public Class 界面控制
 
     Public Shared Sub 校准输出面板的宽度()
         If Form1.Panel输出面板.Visible Then
-            Form1.Panel输出面板.Width = Form1.Label8.Width + Form1.Label7.Width + Form1.Label6.Width + Form1.Label5.Width + Form1.Label4.Width
+            Form1.Panel输出面板.Width = Form1.Panel输出面板.Parent.Width * 0.5
         End If
     End Sub
 

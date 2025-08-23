@@ -234,4 +234,5 @@ Module Module1
             Return New Bitmap(Form1.Width, Form1.Height)
         End Try
     End Function
+
 End Module

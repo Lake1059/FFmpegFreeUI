@@ -193,6 +193,7 @@ Public Class 界面_常规流程参数_V2
             Case 7    'FFV1
                 UiComboBox具体编码.Items.Add("ffv1 -level 3")
                 UiComboBox具体编码.Items.Add("ffv1 -level 1")
+                UiComboBox具体编码.Items.Add("ffv1_vulkan")
             Case 8    'VP9
                 UiComboBox具体编码.Items.Add("libvpx-vp9")
                 UiComboBox具体编码.Items.Add("vp9_vaapi")
