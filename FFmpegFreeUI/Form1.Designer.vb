@@ -301,10 +301,10 @@ Partial Class Form1
         ' Panel5
         ' 
         Panel5.Dock = DockStyle.Fill
-        Panel5.Location = New Point(600, 149)
+        Panel5.Location = New Point(620, 144)
         Panel5.Name = "Panel5"
-        Panel5.Padding = New Padding(11, 0, 20, 20)
-        Panel5.Size = New Size(433, 512)
+        Panel5.Padding = New Padding(1, 0, 20, 20)
+        Panel5.Size = New Size(413, 517)
         Panel5.TabIndex = 86
         ' 
         ' Label29
@@ -312,10 +312,10 @@ Partial Class Form1
         Label29.AutoSize = True
         Label29.Dock = DockStyle.Top
         Label29.Font = New Font("微软雅黑", 13F)
-        Label29.Location = New Point(600, 90)
+        Label29.Location = New Point(620, 90)
         Label29.Name = "Label29"
-        Label29.Padding = New Padding(20, 20, 0, 15)
-        Label29.Size = New Size(102, 59)
+        Label29.Padding = New Padding(0, 20, 0, 10)
+        Label29.Size = New Size(82, 54)
         Label29.TabIndex = 85
         Label29.Text = "新闻列表"
         ' 
@@ -337,7 +337,7 @@ Partial Class Form1
         Panel44.Font = New Font("微软雅黑", 9.75F)
         Panel44.Location = New Point(300, 90)
         Panel44.Name = "Panel44"
-        Panel44.Size = New Size(300, 571)
+        Panel44.Size = New Size(320, 571)
         Panel44.TabIndex = 0
         ' 
         ' Label42
@@ -346,7 +346,7 @@ Partial Class Form1
         Label42.Dock = DockStyle.Top
         Label42.Font = New Font("微软雅黑", 10F)
         Label42.ForeColor = Color.Gray
-        Label42.Location = New Point(0, 308)
+        Label42.Location = New Point(0, 298)
         Label42.Name = "Label42"
         Label42.Padding = New Padding(20, 5, 0, 0)
         Label42.Size = New Size(187, 25)
@@ -359,7 +359,7 @@ Partial Class Form1
         Label37.Dock = DockStyle.Top
         Label37.Font = New Font("微软雅黑", 10F)
         Label37.ForeColor = Color.Gray
-        Label37.Location = New Point(0, 283)
+        Label37.Location = New Point(0, 273)
         Label37.Name = "Label37"
         Label37.Padding = New Padding(20, 5, 0, 0)
         Label37.Size = New Size(103, 25)
@@ -372,7 +372,7 @@ Partial Class Form1
         Label28.Dock = DockStyle.Top
         Label28.Font = New Font("微软雅黑", 10F)
         Label28.ForeColor = Color.Gray
-        Label28.Location = New Point(0, 258)
+        Label28.Location = New Point(0, 248)
         Label28.Name = "Label28"
         Label28.Padding = New Padding(20, 5, 0, 0)
         Label28.Size = New Size(201, 25)
@@ -385,7 +385,7 @@ Partial Class Form1
         Label26.Dock = DockStyle.Top
         Label26.Font = New Font("微软雅黑", 10F)
         Label26.ForeColor = Color.Gray
-        Label26.Location = New Point(0, 233)
+        Label26.Location = New Point(0, 223)
         Label26.Name = "Label26"
         Label26.Padding = New Padding(20, 5, 0, 0)
         Label26.Size = New Size(187, 25)
@@ -398,7 +398,7 @@ Partial Class Form1
         Label21.Dock = DockStyle.Top
         Label21.Font = New Font("微软雅黑", 10F)
         Label21.ForeColor = Color.Gray
-        Label21.Location = New Point(0, 208)
+        Label21.Location = New Point(0, 198)
         Label21.Name = "Label21"
         Label21.Padding = New Padding(20, 5, 0, 0)
         Label21.Size = New Size(173, 25)
@@ -410,10 +410,10 @@ Partial Class Form1
         Label14.AutoSize = True
         Label14.Dock = DockStyle.Top
         Label14.Font = New Font("微软雅黑", 13F)
-        Label14.Location = New Point(0, 154)
+        Label14.Location = New Point(0, 149)
         Label14.Name = "Label14"
-        Label14.Padding = New Padding(20, 20, 0, 10)
-        Label14.Size = New Size(138, 54)
+        Label14.Padding = New Padding(20, 20, 0, 5)
+        Label14.Size = New Size(138, 49)
         Label14.TabIndex = 39
         Label14.Text = "编码求助流程"
         ' 
@@ -423,7 +423,7 @@ Partial Class Form1
         Label13.Dock = DockStyle.Top
         Label13.Font = New Font("微软雅黑", 10F)
         Label13.ForeColor = Color.Gray
-        Label13.Location = New Point(0, 129)
+        Label13.Location = New Point(0, 124)
         Label13.Name = "Label13"
         Label13.Padding = New Padding(20, 5, 0, 0)
         Label13.Size = New Size(187, 25)
@@ -436,7 +436,7 @@ Partial Class Form1
         Label12.Dock = DockStyle.Top
         Label12.Font = New Font("微软雅黑", 10F)
         Label12.ForeColor = Color.Gray
-        Label12.Location = New Point(0, 104)
+        Label12.Location = New Point(0, 99)
         Label12.Name = "Label12"
         Label12.Padding = New Padding(20, 5, 0, 0)
         Label12.Size = New Size(131, 25)
@@ -449,7 +449,7 @@ Partial Class Form1
         Label10.Dock = DockStyle.Top
         Label10.Font = New Font("微软雅黑", 10F)
         Label10.ForeColor = Color.Gray
-        Label10.Location = New Point(0, 79)
+        Label10.Location = New Point(0, 74)
         Label10.Name = "Label10"
         Label10.Padding = New Padding(20, 5, 0, 0)
         Label10.Size = New Size(159, 25)
@@ -462,7 +462,7 @@ Partial Class Form1
         Label126.Dock = DockStyle.Top
         Label126.Font = New Font("微软雅黑", 10F)
         Label126.ForeColor = Color.Gray
-        Label126.Location = New Point(0, 54)
+        Label126.Location = New Point(0, 49)
         Label126.Name = "Label126"
         Label126.Padding = New Padding(20, 5, 0, 0)
         Label126.Size = New Size(173, 25)
@@ -476,8 +476,8 @@ Partial Class Form1
         Label9.Font = New Font("微软雅黑", 13F)
         Label9.Location = New Point(0, 0)
         Label9.Name = "Label9"
-        Label9.Padding = New Padding(20, 20, 0, 10)
-        Label9.Size = New Size(102, 54)
+        Label9.Padding = New Padding(20, 20, 0, 5)
+        Label9.Size = New Size(102, 49)
         Label9.TabIndex = 24
         Label9.Text = "基本流程"
         ' 

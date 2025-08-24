@@ -8,10 +8,7 @@ Public Class 新闻列表
         GC.Collect()
 
         For i = 0 To 列表数据.Count - 1
-            Dim c1 As New Label With {.AutoSize = False, .Dock = DockStyle.Top, .TextAlign = ContentAlignment.MiddleLeft, .Padding = New Padding(10, 0, 0, 0), .BackColor = Color.Transparent, .Text = 列表数据(i).Key, .Tag = i, .Font = New Font(用户设置.实例对象.字体, 11)}
-            AddHandler c1.MouseEnter, Sub(sender, e) sender.BackColor = ColorTranslator.FromWin32(RGB(56, 56, 56))
-            AddHandler c1.MouseDown, Sub(sender, e) sender.BackColor = ColorTranslator.FromWin32(RGB(64, 64, 64))
-            AddHandler c1.MouseLeave, Sub(sender, e) sender.BackColor = Color.Transparent
+            Dim c1 As New LinkLabel With {.AutoSize = True, .Dock = DockStyle.Top, .TextAlign = ContentAlignment.MiddleLeft, .Padding = New Padding(0, 0, 0, 10 * Form1.DPI), .BackColor = Color.Transparent, .ActiveLinkColor = Color.Violet, .Text = 列表数据(i).Key, .Tag = i, .Font = New Font(用户设置.实例对象.字体, 11), .LinkBehavior = LinkBehavior.HoverUnderline, .Cursor = Cursors.Hand}
             AddHandler c1.Click, Sub(sender, e)
                                      Select Case 列表数据(sender.Tag).Value.Split("|")(0)
                                          Case "msgbox"
@@ -25,23 +22,19 @@ Public Class 新闻列表
             If 列表数据(i).Value.Split("|").Length >= 3 Then
                 Select Case 列表数据(i).Value.Split("|")(2)
                     Case "red"
-                        c1.ForeColor = Color.IndianRed
+                        c1.LinkColor = Color.IndianRed
                     Case "orange"
-                        c1.ForeColor = Color.Orange
+                        c1.LinkColor = Color.Orange
                     Case "yellow"
-                        c1.ForeColor = Color.GreenYellow
+                        c1.LinkColor = Color.GreenYellow
                     Case "green"
-                        c1.ForeColor = Color.YellowGreen
+                        c1.LinkColor = Color.YellowGreen
                     Case "blue"
-                        c1.ForeColor = Color.CornflowerBlue
-                    Case "purple"
-                        c1.ForeColor = Color.Violet
+                        c1.LinkColor = Color.CornflowerBlue
                 End Select
             End If
 
             Form1.Panel5.Controls.Add(c1)
-            c1.Cursor = Cursors.Hand
-            c1.Height = TextRenderer.MeasureText(c1.Text, c1.Font).Height * 1.5
             c1.BringToFront()
         Next
     End Sub

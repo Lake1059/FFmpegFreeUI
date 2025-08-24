@@ -162,8 +162,8 @@ Public Class 界面_常规流程参数_V2
                 UiComboBox具体编码.Items.Add("copy")
                 UiComboBox具体编码.SelectedIndex = 0
             Case 2    'H.266/VVC
-                UiComboBox具体编码.Items.Add("libx266")
                 UiComboBox具体编码.Items.Add("libvvenc")
+                UiComboBox具体编码.Items.Add("libx266")
             Case 3    'AV1
                 UiComboBox具体编码.Items.Add("libaom-av1")
                 UiComboBox具体编码.Items.Add("libsvtav1")
@@ -187,27 +187,29 @@ Public Class 界面_常规流程参数_V2
                 UiComboBox具体编码.Items.Add("h264_amf")
                 UiComboBox具体编码.Items.Add("h264_vaapi")
                 UiComboBox具体编码.Items.Add("h264_vulkan")
-            Case 6    'ProRes
+            Case 6    '来自 Apple
                 UiComboBox具体编码.Items.Add("prores_ks")
                 UiComboBox具体编码.Items.Add("prores_aw")
-            Case 7    'FFV1
+            Case 7    '来自 Google
+                UiComboBox具体编码.Items.Add("libvpx-vp9")
+                UiComboBox具体编码.Items.Add("vp9_vaapi")
+                UiComboBox具体编码.Items.Add("libvpx")
+                UiComboBox具体编码.Items.Add("vp8_vaapi")
+            Case 8    'FFv1
                 UiComboBox具体编码.Items.Add("ffv1 -level 3")
                 UiComboBox具体编码.Items.Add("ffv1 -level 1")
                 UiComboBox具体编码.Items.Add("ffv1_vulkan")
-            Case 8    'VP9
-                UiComboBox具体编码.Items.Add("libvpx-vp9")
-                UiComboBox具体编码.Items.Add("vp9_vaapi")
-            Case 9    'RMVB
-                UiComboBox具体编码.Items.Add("rv20")
-                UiComboBox具体编码.Items.Add("rv10")
-            Case 10    'MPEG
+            Case 9    '其他现代编码
+                UiComboBox具体编码.Items.Add("libxeve")
+                UiComboBox具体编码.Items.Add("libxavs2")
+            Case 10    '老旧格式
                 UiComboBox具体编码.Items.Add("mpeg4")
                 UiComboBox具体编码.Items.Add("libxvid")
-                UiComboBox具体编码.Items.Add("libxeve")
-            Case 11    'WMV
+                UiComboBox具体编码.Items.Add("rv20")
+                UiComboBox具体编码.Items.Add("rv10")
                 UiComboBox具体编码.Items.Add("wmv2")
                 UiComboBox具体编码.Items.Add("wmv1")
-            Case 12    '禁用
+            Case 11    '禁用
                 UiComboBox具体编码.Items.Add("")
         End Select
         If UiComboBox具体编码.Items.Count > 1 Then UiComboBox具体编码.SelectedIndex = 0
@@ -225,11 +227,14 @@ Public Class 界面_常规流程参数_V2
         Dim value As 视频编码器数据库.视频编码器数据单片结构 = Nothing
         If UiComboBox具体编码.SelectedIndex > -1 AndAlso 视频编码器数据库.字典.TryGetValue(UiComboBox具体编码.Text, value) Then
             UiComboBox编码预设.Items.AddRange(value.Preset.ToArray)
-            If UiComboBox具体编码.Text = "libsvtav1" Then
-                UiComboBox编码预设.SelectedIndex = 3
-            Else
-                UiComboBox编码预设.SelectedIndex = 0
-            End If
+            Select Case UiComboBox具体编码.Text
+                Case "libvvenc" : UiComboBox编码预设.Text = "faster"
+                Case "libaom-av1" : UiComboBox编码预设.Text = "4"
+                Case "libsvtav1" : UiComboBox编码预设.Text = "6"
+                Case "libx265" : UiComboBox编码预设.Text = "medium"
+                Case "libx264" : UiComboBox编码预设.Text = "slow"
+                Case Else : UiComboBox编码预设.SelectedIndex = 0
+            End Select
             UiComboBox配置文件.Items.AddRange(value.Profile.ToArray)
             UiComboBox场景优化.Items.AddRange(value.Tune.ToArray)
             UiComboBox像素格式.Items.AddRange(value.Pix_fmt.ToArray)
@@ -481,6 +486,20 @@ Public Class 界面_常规流程参数_V2
                                                 sender.ButtonSymbolSize = 24 * Form1.DPI
                                             End Sub
         AddHandler a.ButtonClick, Sub() a.Dispose()
+        AddHandler a.KeyDown, Sub(sender, e)
+                                  Select Case e.KeyCode
+                                      Case Keys.F3
+                                          Dim idx As Integer = sender.Parent.Controls.GetChildIndex(sender)
+                                          If idx > 0 Then
+                                              sender.Parent.Controls.SetChildIndex(sender, idx - 1)
+                                          End If
+                                      Case Keys.F4
+                                          Dim idx As Integer = sender.Parent.Controls.GetChildIndex(sender)
+                                          If idx <> sender.Parent.Controls.Count - 1 Then
+                                              sender.Parent.Controls.SetChildIndex(sender, idx + 1)
+                                          End If
+                                  End Select
+                              End Sub
         Me.FlowLayoutPanel1.Controls.Add(a)
     End Sub
 

@@ -129,7 +129,6 @@ Partial Class 界面_常规流程参数_V2
         TabPage视频参数质量 = New TabPage()
         FlowLayoutPanel1 = New FlowLayoutPanel()
         Panel26 = New Panel()
-        UiButton5 = New Sunny.UI.UIButton()
         Label56 = New Label()
         UiButton清除全部进阶质量控制 = New Sunny.UI.UIButton()
         Label18 = New Label()
@@ -1672,7 +1671,7 @@ Partial Class 界面_常规流程参数_V2
         UiComboBox编码类别.ItemHeight = 30
         UiComboBox编码类别.ItemHoverColor = Color.FromArgb(CByte(56), CByte(56), CByte(56))
         UiComboBox编码类别.ItemRectColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
-        UiComboBox编码类别.Items.AddRange(New Object() {"", "复制流", "H.266/VVC", "AV1", "H.265/HEVC", "H.264/AVC", "ProRes", "FFV1", "VP9", "RMVB", "MPEG", "WMV", "禁用"})
+        UiComboBox编码类别.Items.AddRange(New Object() {"", "复制流", "H.266/VVC", "AV1", "H.265/HEVC", "H.264/AVC", "来自 Apple", "来自 Google", "FFV1", "其他现代编码", "老旧编码", "禁用"})
         UiComboBox编码类别.ItemSelectBackColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
         UiComboBox编码类别.ItemSelectForeColor = Color.Silver
         UiComboBox编码类别.Location = New Point(21, 10)
@@ -2244,7 +2243,6 @@ Partial Class 界面_常规流程参数_V2
         ' 
         ' Panel26
         ' 
-        Panel26.Controls.Add(UiButton5)
         Panel26.Controls.Add(Label56)
         Panel26.Controls.Add(UiButton清除全部进阶质量控制)
         Panel26.Controls.Add(Label18)
@@ -2258,42 +2256,18 @@ Partial Class 界面_常规流程参数_V2
         Panel26.Size = New Size(899, 40)
         Panel26.TabIndex = 24
         ' 
-        ' UiButton5
-        ' 
-        UiButton5.Dock = DockStyle.Left
-        UiButton5.FillColor = Color.FromArgb(CByte(56), CByte(56), CByte(56))
-        UiButton5.FillColor2 = Color.FromArgb(CByte(56), CByte(56), CByte(56))
-        UiButton5.FillDisableColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
-        UiButton5.FillHoverColor = Color.FromArgb(CByte(56), CByte(56), CByte(56))
-        UiButton5.FillPressColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
-        UiButton5.FillSelectedColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiButton5.Font = New Font("微软雅黑", 10F)
-        UiButton5.ForeColor = Color.Silver
-        UiButton5.ForeDisableColor = Color.Silver
-        UiButton5.ForeHoverColor = Color.Silver
-        UiButton5.ForePressColor = Color.Silver
-        UiButton5.ForeSelectedColor = Color.Silver
-        UiButton5.Location = New Point(441, 10)
-        UiButton5.MinimumSize = New Size(1, 1)
-        UiButton5.Name = "UiButton5"
-        UiButton5.Radius = 30
-        UiButton5.RectColor = Color.FromArgb(CByte(56), CByte(56), CByte(56))
-        UiButton5.RectDisableColor = Color.FromArgb(CByte(56), CByte(56), CByte(56))
-        UiButton5.RectHoverColor = Color.DarkGray
-        UiButton5.RectPressColor = Color.FromArgb(CByte(64), CByte(148), CByte(64))
-        UiButton5.RectSelectedColor = Color.DarkGray
-        UiButton5.Size = New Size(130, 30)
-        UiButton5.TabIndex = 98
-        UiButton5.Text = "排序窗口"
-        UiButton5.TipsFont = New Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point, CByte(134))
-        ' 
         ' Label56
         ' 
-        Label56.Dock = DockStyle.Left
+        Label56.Dock = DockStyle.Fill
+        Label56.Font = New Font("微软雅黑", 10F)
+        Label56.ForeColor = Color.Gray
         Label56.Location = New Point(431, 10)
         Label56.Name = "Label56"
-        Label56.Size = New Size(10, 30)
+        Label56.Padding = New Padding(10, 0, 0, 0)
+        Label56.Size = New Size(448, 30)
         Label56.TabIndex = 97
+        Label56.Text = "使用 F3 和 F4 来快速调整顺序"
+        Label56.TextAlign = ContentAlignment.MiddleLeft
         ' 
         ' UiButton清除全部进阶质量控制
         ' 
@@ -2407,9 +2381,9 @@ Partial Class 界面_常规流程参数_V2
         Label49.Location = New Point(0, 287)
         Label49.Name = "Label49"
         Label49.Padding = New Padding(16, 5, 0, 0)
-        Label49.Size = New Size(473, 25)
+        Label49.Size = New Size(445, 25)
         Label49.TabIndex = 23
-        Label49.Text = "在下拉框中选择然后添加到列表中；编码器内部小参请在自定义参数里写"
+        Label49.Text = "添加预制或空项然后编辑参数；编码器内部小参请在自定义参数里写"
         ' 
         ' Label54
         ' 
@@ -2682,7 +2656,7 @@ Partial Class 界面_常规流程参数_V2
         UiTextBox全局质量控制值.ForeColor = Color.Silver
         UiTextBox全局质量控制值.ForeDisableColor = Color.Silver
         UiTextBox全局质量控制值.ForeReadOnlyColor = Color.Silver
-        UiTextBox全局质量控制值.Location = New Point(441, 10)
+        UiTextBox全局质量控制值.Location = New Point(471, 10)
         UiTextBox全局质量控制值.Margin = New Padding(4, 5, 4, 5)
         UiTextBox全局质量控制值.MinimumSize = New Size(1, 16)
         UiTextBox全局质量控制值.Name = "UiTextBox全局质量控制值"
@@ -2692,7 +2666,7 @@ Partial Class 界面_常规流程参数_V2
         UiTextBox全局质量控制值.RectDisableColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
         UiTextBox全局质量控制值.RectReadOnlyColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
         UiTextBox全局质量控制值.ShowText = False
-        UiTextBox全局质量控制值.Size = New Size(130, 30)
+        UiTextBox全局质量控制值.Size = New Size(100, 30)
         UiTextBox全局质量控制值.TabIndex = 92
         UiTextBox全局质量控制值.TextAlignment = ContentAlignment.MiddleLeft
         UiTextBox全局质量控制值.Watermark = "23"
@@ -2702,7 +2676,7 @@ Partial Class 界面_常规流程参数_V2
         ' Label42
         ' 
         Label42.Dock = DockStyle.Left
-        Label42.Location = New Point(431, 10)
+        Label42.Location = New Point(461, 10)
         Label42.Name = "Label42"
         Label42.Size = New Size(10, 30)
         Label42.TabIndex = 91
@@ -2724,7 +2698,7 @@ Partial Class 界面_常规流程参数_V2
         UiComboBox全局质量控制参数.ItemHeight = 30
         UiComboBox全局质量控制参数.ItemHoverColor = Color.FromArgb(CByte(56), CByte(56), CByte(56))
         UiComboBox全局质量控制参数.ItemRectColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
-        UiComboBox全局质量控制参数.Items.AddRange(New Object() {"", "-crf", "-cq", "-qp"})
+        UiComboBox全局质量控制参数.Items.AddRange(New Object() {"", "-crf", "-cq", "-qp", "-global_quality"})
         UiComboBox全局质量控制参数.ItemSelectBackColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
         UiComboBox全局质量控制参数.ItemSelectForeColor = Color.Silver
         UiComboBox全局质量控制参数.Location = New Point(301, 10)
@@ -2736,7 +2710,7 @@ Partial Class 界面_常规流程参数_V2
         UiComboBox全局质量控制参数.RectColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
         UiComboBox全局质量控制参数.RectDisableColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
         UiComboBox全局质量控制参数.ScrollBarHandleWidth = 20
-        UiComboBox全局质量控制参数.Size = New Size(130, 30)
+        UiComboBox全局质量控制参数.Size = New Size(160, 30)
         UiComboBox全局质量控制参数.Style = Sunny.UI.UIStyle.Custom
         UiComboBox全局质量控制参数.SymbolSize = 24
         UiComboBox全局质量控制参数.TabIndex = 90
@@ -4614,24 +4588,27 @@ Partial Class 界面_常规流程参数_V2
         UiComboBox音频编码器.ItemHeight = 30
         UiComboBox音频编码器.ItemHoverColor = Color.FromArgb(CByte(56), CByte(56), CByte(56))
         UiComboBox音频编码器.ItemRectColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
-        UiComboBox音频编码器.Items.AddRange(New Object() {"", "复制流", "AAC", "LAME MP3", "FLAC", "ALAC", "WAV 16bit", "WAV 24bit", "WAV 32bit Float", "Dolby Digital AC3", "DTS Coherent Acoustics", "Opus", "Vorbis", "True Audio", "AMR-NB", "AMR-WB", "禁用"})
+        UiComboBox音频编码器.Items.AddRange(New Object() {"", "复制流", "禁用", "AAC", "LAME MP3", "Opus", "FLAC", "ALAC", "WAV 16bit", "WAV 24bit", "WAV 32bit", "WAV 64bit", "ATSC A/52A (AC-3)", "ATSC A/52 E-AC-3", "DTS Coherent Acoustics", "TrueHD", "True Audio", "Vorbis (OGG)", "RealAudio 1.0 (14.4K)", "WavPack", "LAME MP2", "AMR-NB", "AMR-WB"})
         UiComboBox音频编码器.ItemSelectBackColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
         UiComboBox音频编码器.ItemSelectForeColor = Color.Silver
         UiComboBox音频编码器.Location = New Point(21, 10)
         UiComboBox音频编码器.Margin = New Padding(4, 5, 4, 5)
-        UiComboBox音频编码器.MaxDropDownItems = 17
+        UiComboBox音频编码器.MaxDropDownItems = 15
         UiComboBox音频编码器.MinimumSize = New Size(63, 0)
         UiComboBox音频编码器.Name = "UiComboBox音频编码器"
         UiComboBox音频编码器.Padding = New Padding(0, 0, 30, 2)
         UiComboBox音频编码器.RectColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
         UiComboBox音频编码器.RectDisableColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        UiComboBox音频编码器.ScrollBarBackColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        UiComboBox音频编码器.ScrollBarColor = SystemColors.WindowFrame
         UiComboBox音频编码器.ScrollBarHandleWidth = 20
+        UiComboBox音频编码器.ScrollBarStyleInherited = False
         UiComboBox音频编码器.Size = New Size(200, 30)
         UiComboBox音频编码器.Style = Sunny.UI.UIStyle.Custom
         UiComboBox音频编码器.SymbolSize = 24
         UiComboBox音频编码器.TabIndex = 74
         UiComboBox音频编码器.TextAlignment = ContentAlignment.MiddleLeft
-        UiComboBox音频编码器.Watermark = "选择编码名称"
+        UiComboBox音频编码器.Watermark = "选择音频编码"
         ' 
         ' Label85
         ' 
@@ -6710,8 +6687,6 @@ Partial Class 界面_常规流程参数_V2
     Friend WithEvents Label18 As Label
     Friend WithEvents FlowLayoutPanel1 As FlowLayoutPanel
     Friend WithEvents UiButton添加进阶质量控制空项 As Sunny.UI.UIButton
-    Friend WithEvents UiButton5 As Sunny.UI.UIButton
-    Friend WithEvents Label56 As Label
     Friend WithEvents UiButton清除全部进阶质量控制 As Sunny.UI.UIButton
     Friend WithEvents Label57 As Label
     Friend WithEvents Label58 As Label
@@ -6925,5 +6900,6 @@ Partial Class 界面_常规流程参数_V2
     Friend WithEvents Panel72 As Panel
     Friend WithEvents Panel73 As Panel
     Friend WithEvents RichTextBox2 As RichTextBox
+    Friend WithEvents Label56 As Label
 
 End Class

@@ -24,7 +24,7 @@
 .Pix_fmt = Split("yuv420p yuv420p10le", " ").ToList
 })
         字典.Add("libvvenc", New 视频编码器数据单片结构 With {
-.Preset = New List(Of String) From {"slower", "slow", "medium", "fast", "faster", "veryfast", "superfast", "ultrafast"},
+.Preset = New List(Of String) From {"slower", "slow", "medium", "fast", "faster"},
 .Profile = New List(Of String) From {"main", "main10"},
 .Tune = New List(Of String) From {""},
 .Pix_fmt = Split("yuv420p yuv420p10le", " ").ToList

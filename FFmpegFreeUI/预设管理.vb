@@ -86,6 +86,7 @@ Public Class 预设管理
             Case "crf" : Form1.常规流程参数页面.UiComboBox全局质量控制参数.SelectedIndex = 1
             Case "cq" : Form1.常规流程参数页面.UiComboBox全局质量控制参数.SelectedIndex = 2
             Case "qp" : Form1.常规流程参数页面.UiComboBox全局质量控制参数.SelectedIndex = 3
+            Case "global_quality" : Form1.常规流程参数页面.UiComboBox全局质量控制参数.SelectedIndex = 4
         End Select
         Form1.常规流程参数页面.UiTextBox全局质量控制值.Text = a.视频参数_质量控制_值
         Form1.常规流程参数页面.UiTextBox基础比特率.Text = a.视频参数_比特率_基础
@@ -132,21 +133,27 @@ Public Class 预设管理
 
         Select Case a.音频参数_编码器_具体编码
             Case "copy" : Form1.常规流程参数页面.UiComboBox音频编码器.SelectedIndex = 1
-            Case "aac" : Form1.常规流程参数页面.UiComboBox音频编码器.SelectedIndex = 2
-            Case "libmp3lame" : Form1.常规流程参数页面.UiComboBox音频编码器.SelectedIndex = 3
-            Case "flac" : Form1.常规流程参数页面.UiComboBox音频编码器.SelectedIndex = 4
-            Case "alac" : Form1.常规流程参数页面.UiComboBox音频编码器.SelectedIndex = 5
-            Case "pcm_s16le" : Form1.常规流程参数页面.UiComboBox音频编码器.SelectedIndex = 6
-            Case "pcm_s24le" : Form1.常规流程参数页面.UiComboBox音频编码器.SelectedIndex = 7
-            Case "pcm_f32le" : Form1.常规流程参数页面.UiComboBox音频编码器.SelectedIndex = 8
-            Case "ac3" : Form1.常规流程参数页面.UiComboBox音频编码器.SelectedIndex = 9
-            Case "dca" : Form1.常规流程参数页面.UiComboBox音频编码器.SelectedIndex = 10
-            Case "libopus" : Form1.常规流程参数页面.UiComboBox音频编码器.SelectedIndex = 11
-            Case "libvorbis" : Form1.常规流程参数页面.UiComboBox音频编码器.SelectedIndex = 12
-            Case "tta" : Form1.常规流程参数页面.UiComboBox音频编码器.SelectedIndex = 13
-            Case "-an" : Form1.常规流程参数页面.UiComboBox音频编码器.SelectedIndex = 14
-            Case "libopencore_amrnb" : Form1.常规流程参数页面.UiComboBox音频编码器.SelectedIndex = 15
-            Case "libvo_amrwbenc" : Form1.常规流程参数页面.UiComboBox音频编码器.SelectedIndex = 16
+            Case "-an" : Form1.常规流程参数页面.UiComboBox音频编码器.SelectedIndex = 2
+            Case "aac" : Form1.常规流程参数页面.UiComboBox音频编码器.SelectedIndex = 3
+            Case "libmp3lame" : Form1.常规流程参数页面.UiComboBox音频编码器.SelectedIndex = 4
+            Case "libopus" : Form1.常规流程参数页面.UiComboBox音频编码器.SelectedIndex = 5
+            Case "flac" : Form1.常规流程参数页面.UiComboBox音频编码器.SelectedIndex = 6
+            Case "alac" : Form1.常规流程参数页面.UiComboBox音频编码器.SelectedIndex = 7
+            Case "pcm_s16le" : Form1.常规流程参数页面.UiComboBox音频编码器.SelectedIndex = 8
+            Case "pcm_s24le" : Form1.常规流程参数页面.UiComboBox音频编码器.SelectedIndex = 9
+            Case "pcm_s32le" : Form1.常规流程参数页面.UiComboBox音频编码器.SelectedIndex = 10
+            Case "pcm_s64le" : Form1.常规流程参数页面.UiComboBox音频编码器.SelectedIndex = 11
+            Case "ac3" : Form1.常规流程参数页面.UiComboBox音频编码器.SelectedIndex = 12
+            Case "eac3" : Form1.常规流程参数页面.UiComboBox音频编码器.SelectedIndex = 13
+            Case "dca" : Form1.常规流程参数页面.UiComboBox音频编码器.SelectedIndex = 14
+            Case "truehd" : Form1.常规流程参数页面.UiComboBox音频编码器.SelectedIndex = 15
+            Case "tta" : Form1.常规流程参数页面.UiComboBox音频编码器.SelectedIndex = 16
+            Case "libvorbis" : Form1.常规流程参数页面.UiComboBox音频编码器.SelectedIndex = 17
+            Case "real_144" : Form1.常规流程参数页面.UiComboBox音频编码器.SelectedIndex = 18
+            Case "wavpack" : Form1.常规流程参数页面.UiComboBox音频编码器.SelectedIndex = 19
+            Case "libtwolame" : Form1.常规流程参数页面.UiComboBox音频编码器.SelectedIndex = 20
+            Case "libopencore_amrnb" : Form1.常规流程参数页面.UiComboBox音频编码器.SelectedIndex = 21
+            Case "libvo_amrwbenc" : Form1.常规流程参数页面.UiComboBox音频编码器.SelectedIndex = 22
             Case Else : Form1.常规流程参数页面.UiComboBox音频编码器.Text = ""
         End Select
         Form1.常规流程参数页面.UiComboBox音频比特率.Text = a.音频参数_比特率
@@ -272,6 +279,7 @@ Public Class 预设管理
             Case 1 : a.视频参数_质量控制_参数名 = "crf"
             Case 2 : a.视频参数_质量控制_参数名 = "cq"
             Case 3 : a.视频参数_质量控制_参数名 = "qp"
+            Case 4 : a.视频参数_质量控制_参数名 = "global_quality"
         End Select
         a.视频参数_质量控制_值 = Form1.常规流程参数页面.UiTextBox全局质量控制值.Text
         a.视频参数_比特率_基础 = Form1.常规流程参数页面.UiTextBox基础比特率.Text
@@ -315,24 +323,29 @@ Public Class 预设管理
         a.视频参数_画面翻转_角度翻转 = Form1.常规流程参数页面.UiComboBox角度翻转.SelectedIndex
         a.视频参数_画面翻转_镜像翻转 = Form1.常规流程参数页面.UiComboBox镜像翻转.SelectedIndex
 
-        a.音频参数_编码器_具体编码 = Form1.常规流程参数页面.UiComboBox音频编码器.Text
         Select Case Form1.常规流程参数页面.UiComboBox音频编码器.SelectedIndex
             Case 1 : a.音频参数_编码器_具体编码 = "copy"
-            Case 2 : a.音频参数_编码器_具体编码 = "aac"
-            Case 3 : a.音频参数_编码器_具体编码 = "libmp3lame"
-            Case 4 : a.音频参数_编码器_具体编码 = "flac"
-            Case 5 : a.音频参数_编码器_具体编码 = "alac"
-            Case 6 : a.音频参数_编码器_具体编码 = "pcm_s16le"
-            Case 7 : a.音频参数_编码器_具体编码 = "pcm_s24le"
-            Case 8 : a.音频参数_编码器_具体编码 = "pcm_f32le"
-            Case 9 : a.音频参数_编码器_具体编码 = "ac3"
-            Case 10 : a.音频参数_编码器_具体编码 = "dca"
-            Case 11 : a.音频参数_编码器_具体编码 = "libopus"
-            Case 12 : a.音频参数_编码器_具体编码 = "libvorbis"
-            Case 13 : a.音频参数_编码器_具体编码 = "tta"
-            Case 14 : a.音频参数_编码器_具体编码 = "libopencore_amrnb"
-            Case 15 : a.音频参数_编码器_具体编码 = "libvo_amrwbenc"
-            Case 16 : a.音频参数_编码器_具体编码 = "-an"
+            Case 2 : a.音频参数_编码器_具体编码 = "-an"
+            Case 3 : a.音频参数_编码器_具体编码 = "aac"
+            Case 4 : a.音频参数_编码器_具体编码 = "libmp3lame"
+            Case 5 : a.音频参数_编码器_具体编码 = "libopus"
+            Case 6 : a.音频参数_编码器_具体编码 = "flac"
+            Case 7 : a.音频参数_编码器_具体编码 = "alac"
+            Case 8 : a.音频参数_编码器_具体编码 = "pcm_s16le"
+            Case 9 : a.音频参数_编码器_具体编码 = "pcm_s24le"
+            Case 10 : a.音频参数_编码器_具体编码 = "pcm_s32le"
+            Case 11 : a.音频参数_编码器_具体编码 = "pcm_s64le"
+            Case 12 : a.音频参数_编码器_具体编码 = "ac3"
+            Case 13 : a.音频参数_编码器_具体编码 = "eac3"
+            Case 14 : a.音频参数_编码器_具体编码 = "dca"
+            Case 15 : a.音频参数_编码器_具体编码 = "truehd"
+            Case 16 : a.音频参数_编码器_具体编码 = "tta"
+            Case 17 : a.音频参数_编码器_具体编码 = "libvorbis"
+            Case 18 : a.音频参数_编码器_具体编码 = "real_144"
+            Case 19 : a.音频参数_编码器_具体编码 = "wavpack"
+            Case 20 : a.音频参数_编码器_具体编码 = "libtwolame"
+            Case 21 : a.音频参数_编码器_具体编码 = "libopencore_amrnb"
+            Case 22 : a.音频参数_编码器_具体编码 = "libvo_amrwbenc"
             Case Else : a.音频参数_编码器_具体编码 = ""
         End Select
 
@@ -686,6 +699,7 @@ Public Class 预设管理
                 Case "crf" : 视频参数 &= $"-crf {a.视频参数_质量控制_值} "
                 Case "cq" : 视频参数 &= $"-cq {a.视频参数_质量控制_值} "
                 Case "qp" : 视频参数 &= $"-qp {a.视频参数_质量控制_值} "
+                Case "global_quality" : 视频参数 &= $"-global_quality {a.视频参数_质量控制_值} "
             End Select
         End If
 
