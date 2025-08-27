@@ -20,8 +20,8 @@ Public Class Form1
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Dim 版本号 = String.Join(".", Application.ProductVersion.Split("."c).Take(3)).Split("+"c)(0)
-        Me.Text = $"FFmpegFreeUI {版本号} EA4 Gen1"
-        Label主标题.Text = $"FFmpegFreeUI {版本号} EA4 Gen1"
+        Me.Text = $"FFmpegFreeUI {版本号}"
+        Label主标题.Text = $"FFmpegFreeU Official {版本号}"
 
         加载自定义音效()
         加载自定义图标()
@@ -95,7 +95,8 @@ Public Class Form1
 
     Sub DPI变动时校准界面()
         Me.MinimumSize = New Size(0, 0)
-        Me.Size = New Size(1300 * DPI, 700 * DPI)
+        Me.Size = New Size(1200 * DPI, 700 * DPI)
+        Me.MinimumSize = New Size(1200 * DPI, 700 * DPI)
         Me.UiTabControlMenu1.ItemSize = New Size(150 * DPI, 40 * DPI)
         Me.ImageList1.ImageSize = New Size(1, 30 * DPI)
         常规流程参数页面.UiTabControl1.ItemSize = New Size(120 * Form1.DPI, 50 * Form1.DPI)
@@ -227,10 +228,8 @@ Public Class Form1
     Private Sub UiButton切换处理器占用面板_Click(sender As Object, e As EventArgs) Handles UiButton切换处理器占用面板.Click
         If Panel18.Visible Then
             Panel18.Visible = False
-            Panel19.Visible = False
         Else
             Panel18.Visible = True
-            Panel19.Visible = True
         End If
         界面控制.界面校准()
     End Sub

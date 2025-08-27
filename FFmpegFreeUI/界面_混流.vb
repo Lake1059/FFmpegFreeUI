@@ -207,17 +207,9 @@
 
         arg &= """" & UiTextBox输出文件.Text & """" & " -y"
 
-        Select Case MsgBox("确认启动混流？选择 取消 来复制命令行" & vbCrLf & vbCrLf & "ffmpeg " & arg, MsgBoxStyle.YesNoCancel)
-            Case MsgBoxResult.Yes
-                Dim FFmpegProcess As New Process
-                FFmpegProcess.StartInfo.FileName = "ffmpeg"
-                FFmpegProcess.StartInfo.WorkingDirectory = If(用户设置.实例对象.工作目录 <> "", 用户设置.实例对象.工作目录, "")
-                FFmpegProcess.StartInfo.Arguments = arg
-                FFmpegProcess.Start()
-            Case MsgBoxResult.No
-            Case MsgBoxResult.Cancel
-                Clipboard.SetText("ffmpeg " & arg)
-        End Select
+        插件管理.使用命令行添加任务到编码队列(arg, $"混流任务 {Now:HHmmss}", UiTextBox输出文件.Text)
+        Form1.UiTabControlMenu1.SelectedTab = Form1.TabPage编码队列
+        Task.Run(AddressOf 编码任务.检查是否有可以开始的任务)
 
     End Sub
 

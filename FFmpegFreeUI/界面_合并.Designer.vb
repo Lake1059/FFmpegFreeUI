@@ -59,10 +59,10 @@ Partial Class 界面_合并
         Panel1.Controls.Add(Panel2)
         Panel1.Controls.Add(Panel4)
         Panel1.Dock = DockStyle.Fill
-        Panel1.Location = New Point(20, 98)
+        Panel1.Location = New Point(10, 59)
         Panel1.Name = "Panel1"
         Panel1.Padding = New Padding(10)
-        Panel1.Size = New Size(1060, 512)
+        Panel1.Size = New Size(1080, 571)
         Panel1.TabIndex = 88
         ' 
         ' Panel2
@@ -73,7 +73,7 @@ Partial Class 界面_合并
         Panel2.Location = New Point(10, 50)
         Panel2.Name = "Panel2"
         Panel2.Padding = New Padding(10, 10, 0, 10)
-        Panel2.Size = New Size(1040, 452)
+        Panel2.Size = New Size(1060, 511)
         Panel2.TabIndex = 5
         ' 
         ' ListView1
@@ -89,7 +89,7 @@ Partial Class 界面_合并
         ListView1.Location = New Point(10, 10)
         ListView1.Name = "ListView1"
         ListView1.OwnerDraw = True
-        ListView1.Size = New Size(1030, 432)
+        ListView1.Size = New Size(1050, 491)
         ListView1.TabIndex = 0
         ListView1.UseCompatibleStateImageBehavior = False
         ListView1.View = View.Details
@@ -109,7 +109,7 @@ Partial Class 界面_合并
         Panel4.Location = New Point(10, 10)
         Panel4.Name = "Panel4"
         Panel4.Padding = New Padding(0, 0, 0, 10)
-        Panel4.Size = New Size(1040, 40)
+        Panel4.Size = New Size(1060, 40)
         Panel4.TabIndex = 7
         ' 
         ' Label1
@@ -120,7 +120,7 @@ Partial Class 界面_合并
         Label1.Location = New Point(375, 0)
         Label1.Name = "Label1"
         Label1.Padding = New Padding(10, 0, 0, 0)
-        Label1.Size = New Size(665, 30)
+        Label1.Size = New Size(685, 30)
         Label1.TabIndex = 105
         Label1.Text = "使用键盘 F3 和 F4 来排序，Delete 来移除"
         Label1.TextAlign = ContentAlignment.MiddleLeft
@@ -272,17 +272,17 @@ Partial Class 界面_合并
         ' Label11
         ' 
         Label11.Dock = DockStyle.Bottom
-        Label11.Location = New Point(20, 610)
+        Label11.Location = New Point(10, 630)
         Label11.Name = "Label11"
-        Label11.Size = New Size(1060, 20)
+        Label11.Size = New Size(1080, 10)
         Label11.TabIndex = 89
         ' 
         ' Label20
         ' 
         Label20.Dock = DockStyle.Top
-        Label20.Location = New Point(20, 78)
+        Label20.Location = New Point(10, 49)
         Label20.Name = "Label20"
-        Label20.Size = New Size(1060, 20)
+        Label20.Size = New Size(1080, 10)
         Label20.TabIndex = 87
         ' 
         ' Panel73
@@ -291,10 +291,10 @@ Partial Class 界面_合并
         Panel73.BackColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
         Panel73.Controls.Add(Label123)
         Panel73.Dock = DockStyle.Top
-        Panel73.Location = New Point(20, 20)
+        Panel73.Location = New Point(10, 10)
         Panel73.Name = "Panel73"
         Panel73.Padding = New Padding(10)
-        Panel73.Size = New Size(1060, 58)
+        Panel73.Size = New Size(1080, 39)
         Panel73.TabIndex = 86
         ' 
         ' Label123
@@ -305,9 +305,9 @@ Partial Class 界面_合并
         Label123.ForeColor = Color.Gray
         Label123.Location = New Point(10, 10)
         Label123.Name = "Label123"
-        Label123.Size = New Size(477, 38)
+        Label123.Size = New Size(477, 19)
         Label123.TabIndex = 4
-        Label123.Text = "此功能为扩展，不走编码队列，直接让 ffmpeg 以原样运行" & vbCrLf & "仅提供最基础的合并，仅复制流，要求多个参数一致；高级需求请直接用剪辑软件"
+        Label123.Text = "仅提供最基础的合并，仅复制流，要求多个参数一致；高级需求请直接用剪辑软件"
         ' 
         ' Panel5
         ' 
@@ -318,10 +318,10 @@ Partial Class 界面_合并
         Panel5.Controls.Add(UiButton选择位置)
         Panel5.Controls.Add(UiButton启动合并)
         Panel5.Dock = DockStyle.Bottom
-        Panel5.Location = New Point(20, 630)
+        Panel5.Location = New Point(10, 640)
         Panel5.Name = "Panel5"
         Panel5.Padding = New Padding(10)
-        Panel5.Size = New Size(1060, 50)
+        Panel5.Size = New Size(1080, 50)
         Panel5.TabIndex = 90
         ' 
         ' UiTextBox输出文件
@@ -348,7 +348,7 @@ Partial Class 界面_合并
         UiTextBox输出文件.ScrollBarColor = Color.DimGray
         UiTextBox输出文件.ScrollBarStyleInherited = False
         UiTextBox输出文件.ShowText = False
-        UiTextBox输出文件.Size = New Size(780, 30)
+        UiTextBox输出文件.Size = New Size(800, 30)
         UiTextBox输出文件.TabIndex = 105
         UiTextBox输出文件.TextAlignment = ContentAlignment.MiddleLeft
         UiTextBox输出文件.Watermark = "输出到目标位置"
@@ -358,7 +358,7 @@ Partial Class 界面_合并
         ' Label6
         ' 
         Label6.Dock = DockStyle.Right
-        Label6.Location = New Point(920, 10)
+        Label6.Location = New Point(940, 10)
         Label6.Name = "Label6"
         Label6.Size = New Size(10, 30)
         Label6.TabIndex = 104
@@ -417,7 +417,7 @@ Partial Class 界面_合并
         UiButton启动合并.ForeHoverColor = Color.YellowGreen
         UiButton启动合并.ForePressColor = Color.YellowGreen
         UiButton启动合并.ForeSelectedColor = Color.YellowGreen
-        UiButton启动合并.Location = New Point(930, 10)
+        UiButton启动合并.Location = New Point(950, 10)
         UiButton启动合并.MinimumSize = New Size(1, 1)
         UiButton启动合并.Name = "UiButton启动合并"
         UiButton启动合并.Radius = 30
@@ -444,7 +444,7 @@ Partial Class 界面_合并
         Font = New Font("微软雅黑", 9.75F, FontStyle.Regular, GraphicsUnit.Point, CByte(134))
         ForeColor = Color.Silver
         Name = "界面_合并"
-        Padding = New Padding(20)
+        Padding = New Padding(10)
         Size = New Size(1100, 700)
         Panel1.ResumeLayout(False)
         Panel2.ResumeLayout(False)

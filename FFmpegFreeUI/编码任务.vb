@@ -1,5 +1,4 @@
 ﻿Imports System.IO
-Imports System.Runtime.InteropServices
 Imports System.Text.RegularExpressions
 Imports Sunny.UI
 
@@ -270,7 +269,7 @@ jx1:
 
             If Not 已获取到总时长 AndAlso e.Data.Contains("Duration") Then
                 Dim durationMatch = DurationPattern.Match(e.Data)
-                If durationMatch.Success Then
+                If durationMatch.Success AndAlso 预设数据 IsNot Nothing Then
                     If 预设数据.流控制_剪辑_入点 <> "" AndAlso 预设数据.流控制_剪辑_出点 = "" Then
                         获取_总时长 = ParseTimeSpan(durationMatch.Groups(1).Value) - ParseTimeSpan(预设数据.流控制_剪辑_入点)
                     Else
@@ -305,10 +304,15 @@ jx1:
             If FFmpegProcess.ExitCode = 0 Then
                 状态 = 编码状态.已完成
 
-                If 预设数据.视频参数_降噪_方式 = "avs" Then
+                If 预设数据 IsNot Nothing AndAlso 预设数据.视频参数_降噪_方式 = "avs" Then
                     If My.Computer.FileSystem.FileExists(Path.Combine(Path.GetDirectoryName(输入文件), Path.GetFileNameWithoutExtension(输入文件) & ".avs")) Then
                         My.Computer.FileSystem.DeleteFile(Path.Combine(Path.GetDirectoryName(输入文件), Path.GetFileNameWithoutExtension(输入文件) & ".avs"))
                     End If
+                End If
+
+                Dim concat_demuxer = Path.Combine(Application.StartupPath, "ffmpeg_concat_demuxer.txt")
+                If FileIO.FileSystem.FileExists(concat_demuxer) Then
+                    FileIO.FileSystem.DeleteFile(concat_demuxer)
                 End If
 
                 If 输出文件 <> "" AndAlso 输入文件 <> "" Then
@@ -318,8 +322,9 @@ jx1:
                 End If
 
             Else
+                全部任务已完成是否有错误 = True
                 If Not 手动停止不要尝试启动其他任务 Then 状态 = 编码状态.错误
-                If My.Computer.FileSystem.FileExists(输出文件) Then
+                If FileIO.FileSystem.FileExists(输出文件) Then
                     Select Case Path.GetExtension(输出文件).ToLower.Trim
                         Case ".mp4"
                             If 输出文件.Trim.Equals(输入文件.Trim, StringComparison.CurrentCultureIgnoreCase) Then
@@ -329,7 +334,7 @@ jx1:
                             End If
                     End Select
                 End If
-                全部任务已完成是否有错误 = True
+
             End If
             任务耗时计时器.Stop()
             GC.Collect()
@@ -349,10 +354,10 @@ jx1:
                     列表视图项.ForeColor = Color.OliveDrab
                     列表视图项.SubItems(1).Text = "已完成"
                     列表视图项.SubItems(2).Text = "100%"
-                    Dim 输入文件信息 As New IO.FileInfo(输入文件)
-                    Dim 输出文件信息 As New IO.FileInfo(输出文件)
-                    Dim sizeText As String = ""
-                    If 输出文件信息.Exists Then
+                    If FileIO.FileSystem.FileExists(输入文件) And FileIO.FileSystem.FileExists(输出文件) Then
+                        Dim 输入文件信息 As New IO.FileInfo(输入文件)
+                        Dim 输出文件信息 As New IO.FileInfo(输出文件)
+                        Dim sizeText As String = ""
                         Dim sizeValue As Long = 输出文件信息.Length / 1024
                         If sizeValue >= 1024 * 1024 Then
                             sizeText = $"{sizeValue / 1024.0 / 1024.0:F2} GB"
@@ -361,8 +366,28 @@ jx1:
                         Else
                             sizeText = $"{sizeValue} KB"
                         End If
+                        列表视图项.SubItems(4).Text = $"{sizeText} ({$"{输出文件信息.Length / 输入文件信息.Length * 100:F0}%"})"
+                        GoTo 结束前后文件大小显示计算
                     End If
-                    列表视图项.SubItems(4).Text = $"{sizeText} ({$"{输出文件信息.Length / 输入文件信息.Length * 100:F0}%"})"
+                    If Not FileIO.FileSystem.FileExists(输入文件) And FileIO.FileSystem.FileExists(输出文件) Then
+                        Dim 输出文件信息 As New IO.FileInfo(输出文件)
+                        Dim sizeText As String = ""
+                        Dim sizeValue As Long = 输出文件信息.Length / 1024
+                        If sizeValue >= 1024 * 1024 Then
+                            sizeText = $"{sizeValue / 1024.0 / 1024.0:F2} GB"
+                        ElseIf sizeValue >= 1024 Then
+                            sizeText = $"{sizeValue / 1024.0:F0} MB"
+                        Else
+                            sizeText = $"{sizeValue} KB"
+                        End If
+                        列表视图项.SubItems(4).Text = $"{sizeText}"
+                        GoTo 结束前后文件大小显示计算
+                    End If
+                    If FileIO.FileSystem.FileExists(输入文件) And Not FileIO.FileSystem.FileExists(输出文件) Then
+                        列表视图项.SubItems(4).Text = $"N/A"
+                        GoTo 结束前后文件大小显示计算
+                    End If
+结束前后文件大小显示计算:
                     列表视图项.SubItems(5).Text = ""
                     Dim elapsed = 任务耗时计时器.Elapsed
                     Dim elapsedParts As New List(Of String)

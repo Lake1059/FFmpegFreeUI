@@ -1,5 +1,6 @@
 ﻿Imports System.IO
 Imports System.Reflection
+Imports System.Text.Json
 Public Class 插件管理
 
     Public Shared Property 由插件加载的自定义界面 As New Dictionary(Of String, Control)
@@ -28,9 +29,14 @@ Public Class 插件管理
                 Entry类.GetMethod("SetHost_AddCustomWpfPanel").Invoke(Entry类的实例, New Object() {myCallback})
             End If
 
-            If Entry类.GetMethod("SetHost_AddMissionToQueue") IsNot Nothing Then
-                Dim myCallback As Action(Of String, String, String) = AddressOf 添加任务到编码队列
-                Entry类.GetMethod("SetHost_AddMissionToQueue").Invoke(Entry类的实例, New Object() {myCallback})
+            If Entry类.GetMethod("SetHost_AddMissionToQueueWithArgs") IsNot Nothing Then
+                Dim myCallback As Action(Of String, String, String, String) = AddressOf 使用命令行添加任务到编码队列
+                Entry类.GetMethod("SetHost_AddMissionToQueueWithArgs").Invoke(Entry类的实例, New Object() {myCallback})
+            End If
+
+            If Entry类.GetMethod("SetHost_AddMissionToQueueWith3fuiFile") IsNot Nothing Then
+                Dim myCallback As Action(Of String, String, String, String) = AddressOf 使用预设文件添加任务到编码队列
+                Entry类.GetMethod("SetHost_AddMissionToQueueWith3fuiFile").Invoke(Entry类的实例, New Object() {myCallback})
             End If
 
             Dim Entry方法 As MethodInfo = Entry类.GetMethod("Entry")
@@ -53,13 +59,30 @@ Public Class 插件管理
         由插件加载的自定义界面(Name) = host
     End Sub
 
-    Public Shared Sub 添加任务到编码队列(FFmpegArg As String, FileName As String, OutputPath As String)
+    Public Shared Sub 使用命令行添加任务到编码队列(FFmpegArg As String, FileName As String, OutputPath As String, Optional InputPath As String = "")
         Dim m As New 编码任务.单片任务 With {.命令行 = FFmpegArg, .输出文件 = OutputPath}
+        If InputPath <> "" Then m.输入文件 = InputPath
         Dim i2 As New ListViewItem(FileName)
         i2.SubItems.AddRange("未处理", "", "", "", "", "", "")
         Form1.ListView1.Items.Add(i2)
         m.列表视图项 = i2
         编码任务.队列.Add(m)
+        Task.Run(AddressOf 编码任务.检查是否有可以开始的任务)
+    End Sub
+
+    Public Shared Sub 使用预设文件添加任务到编码队列(File_3FUI_JsonPath As String, FileName As String, OutputPath As String, Optional InputPath As String = "")
+        If Not FileIO.FileSystem.FileExists(File_3FUI_JsonPath) Then
+            MsgBox("指定的预设文件不存在", MsgBoxStyle.Critical)
+            Exit Sub
+        End If
+        Dim m As New 编码任务.单片任务 With {.预设数据 = JsonSerializer.Deserialize(Of 预设数据类型)(File.ReadAllText(File_3FUI_JsonPath)), .输出文件 = OutputPath}
+        If InputPath <> "" Then m.输入文件 = InputPath
+        Dim i2 As New ListViewItem(FileName)
+        i2.SubItems.AddRange("未处理", "", "", "", "", "", "")
+        Form1.ListView1.Items.Add(i2)
+        m.列表视图项 = i2
+        编码任务.队列.Add(m)
+        Task.Run(AddressOf 编码任务.检查是否有可以开始的任务)
     End Sub
 
     Shared Sub 将自定义界面名称刷新到下拉框中()

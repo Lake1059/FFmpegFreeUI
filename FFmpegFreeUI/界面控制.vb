@@ -89,7 +89,7 @@ Public Class 界面控制
                                                            End Sub
 
         设置富文本框行高(Form1.RichTextBox1, 350)
-        设置富文本框行高(Form1.RichTextBox2, 350)
+        设置富文本框行高(Form1.RichTextBox2, 300)
         Form1.RichTextBox1.AllowDrop = True
         Form1.Panel6.Controls.Add(Form1.常规流程参数页面)
         Form1.常规流程参数页面.Dock = DockStyle.Fill
@@ -197,6 +197,7 @@ Public Class 界面控制
             Case 选项卡.IsEqual(Form1.TabPage添加文件)
                 Form1.ListView2.Columns(0).Width = Form1.ListView2.Width - SystemInformation.VerticalScrollBarWidth * Form1.DPI * 2
                 Form1.UiComboBox输出目录.ItemHeight = 30 * Form1.DPI
+                Form1.Label那个神奇的视觉标签.Width = 1
 
             Case 选项卡.IsEqual(Form1.TabPage参数面板)
 

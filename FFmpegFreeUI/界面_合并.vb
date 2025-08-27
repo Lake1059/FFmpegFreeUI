@@ -107,23 +107,10 @@ Public Class 界面_合并
 
         arg &= "-c copy """ & UiTextBox输出文件.Text & """" & " -y"
 
-        Select Case MsgBox("确认启动合并？选择 取消 来复制命令行" & vbCrLf & vbCrLf & "ffmpeg " & arg & vbCrLf & vbCrLf & "文件列表写在 ffmpeg_concat_demuxer.txt 中，如果正常运行则自动删除该文件", MsgBoxStyle.YesNoCancel)
-            Case MsgBoxResult.Yes
-                Dim FFmpegProcess As New Process
-                FFmpegProcess.StartInfo.FileName = "ffmpeg"
-                FFmpegProcess.StartInfo.WorkingDirectory = If(用户设置.实例对象.工作目录 <> "", 用户设置.实例对象.工作目录, "")
-                FFmpegProcess.StartInfo.Arguments = arg
-                AddHandler FFmpegProcess.Exited, Sub(s1, e1)
-                                                     If FFmpegProcess.ExitCode <> 0 Then Exit Sub
-                                                     If FileIO.FileSystem.FileExists(Path.Combine(Application.StartupPath, "ffmpeg_concat_demuxer.txt")) Then
-                                                         FileIO.FileSystem.DeleteFile(Path.Combine(Application.StartupPath, "ffmpeg_concat_demuxer.txt"))
-                                                     End If
-                                                 End Sub
-                FFmpegProcess.Start()
-            Case MsgBoxResult.No
-            Case MsgBoxResult.Cancel
-                Clipboard.SetText("ffmpeg " & arg)
-        End Select
+        插件管理.使用命令行添加任务到编码队列(arg, $"合并任务 {Now:HHmmss}", UiTextBox输出文件.Text)
+        Form1.UiTabControlMenu1.SelectedTab = Form1.TabPage编码队列
+        Task.Run(AddressOf 编码任务.检查是否有可以开始的任务)
+
     End Sub
 
 End Class

@@ -18,11 +18,20 @@ Module Module1
     Private Const WM_NCLBUTTONDOWN As Integer = &HA1
     Private Const HTCAPTION As Integer = 2
     Sub 绑定拖动控件移动窗体(s As Control)
-        AddHandler s.MouseDown, Sub(s1 As Object, e1 As MouseEventArgs)
-                                    If e1.Button = MouseButtons.Left Then
-                                        ReleaseCapture()
-                                        Dim unused = SendMessage(s1.FindForm().Handle, WM_NCLBUTTONDOWN, HTCAPTION, 0)
-                                    End If
+        AddHandler s.MouseDown, Sub(s1, e1)
+                                    Select Case e1.Button
+                                        Case MouseButtons.Left
+                                            ReleaseCapture()
+                                            Dim unused = SendMessage(s1.FindForm().Handle, WM_NCLBUTTONDOWN, HTCAPTION, 0)
+                                        Case MouseButtons.Right
+                                            If Form1.FormBorderStyle <> FormBorderStyle.None Then Exit Sub
+                                            Select Case Form1.WindowState
+                                                Case FormWindowState.Maximized
+                                                    Form1.WindowState = FormWindowState.Normal
+                                                Case FormWindowState.Normal
+                                                    Form1.WindowState = FormWindowState.Maximized
+                                            End Select
+                                    End Select
                                 End Sub
     End Sub
 

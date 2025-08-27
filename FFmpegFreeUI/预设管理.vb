@@ -93,7 +93,7 @@ Public Class 预设管理
         Form1.常规流程参数页面.UiTextBox最低比特率.Text = a.视频参数_比特率_最低值
         Form1.常规流程参数页面.UiTextBox最高比特率.Text = a.视频参数_比特率_最高值
         Form1.常规流程参数页面.UiTextBox比特率缓冲区.Text = a.视频参数_比特率_缓冲区
-        Form1.常规流程参数页面.UiButton清除全部进阶质量控制.PerformClick()
+        Form1.常规流程参数页面.清除全部进阶质量控制()
         For Each c In a.视频参数_质量控制_进阶参数集
             Form1.常规流程参数页面.创建进阶质量控制项(c)
         Next
@@ -375,15 +375,16 @@ Public Class 预设管理
         End Select
         a.图片参数_编码器_质量值 = Form1.常规流程参数页面.UiTextBox图片编码器质量.Text
 
-        a.自定义参数_视频滤镜 = Form1.常规流程参数页面.UiTextBox自定义视频滤镜.Text
-        a.自定义参数_音频滤镜 = Form1.常规流程参数页面.UiTextBox自定义音频滤镜.Text
-        a.自定义参数_filter_complex = Form1.常规流程参数页面.UiTextBoxfilter_complex.Text
-        a.自定义参数_视频参数 = Form1.常规流程参数页面.UiTextBox自定义视频参数.Text
-        a.自定义参数_音频参数 = Form1.常规流程参数页面.UiTextBox自定义音频参数.Text
-        a.自定义参数_开头参数 = Form1.常规流程参数页面.UiTextBox开头参数.Text
-        a.自定义参数_之前参数 = Form1.常规流程参数页面.UiTextBox之前参数.Text
-        a.自定义参数_之后参数 = Form1.常规流程参数页面.UiTextBox之后参数.Text
-        a.自定义参数_最后参数 = Form1.常规流程参数页面.UiTextBox最后参数.Text
+        a.自定义参数_视频滤镜 = Form1.常规流程参数页面.UiTextBox自定义视频滤镜.Text.Replace(vbCrLf, " ").Replace(vbLf, " ").Replace(vbCr, " ")
+        a.自定义参数_音频滤镜 = Form1.常规流程参数页面.UiTextBox自定义音频滤镜.Text.Replace(vbCrLf, " ").Replace(vbLf, " ").Replace(vbCr, " ")
+        a.自定义参数_filter_complex = Form1.常规流程参数页面.UiTextBoxfilter_complex.Text.Replace(vbCrLf, " ").Replace(vbLf, " ").Replace(vbCr, " ")
+        a.自定义参数_视频参数 = Form1.常规流程参数页面.UiTextBox自定义视频参数.Text.Replace(vbCrLf, " ").Replace(vbLf, " ").Replace(vbCr, " ")
+        a.自定义参数_音频参数 = Form1.常规流程参数页面.UiTextBox自定义音频参数.Text.Replace(vbCrLf, " ").Replace(vbLf, " ").Replace(vbCr, " ")
+        a.自定义参数_开头参数 = Form1.常规流程参数页面.UiTextBox开头参数.Text.Replace(vbCrLf, " ").Replace(vbLf, " ").Replace(vbCr, " ")
+        a.自定义参数_之前参数 = Form1.常规流程参数页面.UiTextBox之前参数.Text.Replace(vbCrLf, " ").Replace(vbLf, " ").Replace(vbCr, " ")
+        a.自定义参数_之后参数 = Form1.常规流程参数页面.UiTextBox之后参数.Text.Replace(vbCrLf, " ").Replace(vbLf, " ").Replace(vbCr, " ")
+        a.自定义参数_最后参数 = Form1.常规流程参数页面.UiTextBox最后参数.Text.Replace(vbCrLf, " ").Replace(vbLf, " ").Replace(vbCr, " ")
+        a.自定义参数_完全自己写 = Form1.常规流程参数页面.UiTextBox完全自己写参数.Text.Replace(vbCrLf, " ").Replace(vbLf, " ").Replace(vbCr, " ")
 
         a.流控制_将视频参数应用于指定流 = Form1.常规流程参数页面.UiTextBox将视频参数用于这些流.Text.Replace("-", "").Split(separator, StringSplitOptions.RemoveEmptyEntries)
         a.流控制_启用保留其他视频流 = Form1.常规流程参数页面.UiCheckBox保留其他视频流.Checked
@@ -427,7 +428,7 @@ Public Class 预设管理
         If a.计算机名称 = Environment.MachineName Then
             Form1.UiComboBox输出目录.Text = a.输出位置
         End If
-        Form1.常规流程参数页面.RichTextBox1.Text = "ffmpeg " & 预设管理.将预设数据转换为命令行(a, "输入目录\输入文件.后缀", "输出目录\输出文件.后缀")
+        Form1.常规流程参数页面.RichTextBox1.Text = "ffmpeg " & 预设管理.将预设数据转换为命令行(a, "<输入文件>", "<输出文件>")
         Select Case 用户设置.实例对象.自动加载预设选项
             Case 用户设置.自动加载预设选项枚举.自动加载最后的预设文件
                 用户设置.实例对象.自动加载预设文件路径 = d.FileName
@@ -476,7 +477,7 @@ Public Class 预设管理
         Form1.常规流程参数页面.UiTextBox最低比特率.Text = ""
         Form1.常规流程参数页面.UiTextBox最高比特率.Text = ""
         Form1.常规流程参数页面.UiTextBox比特率缓冲区.Text = ""
-        Form1.常规流程参数页面.UiButton清除全部进阶质量控制.PerformClick()
+        Form1.常规流程参数页面.清除全部进阶质量控制()
 
         Form1.常规流程参数页面.UiComboBox像素格式.Text = ""
         Form1.常规流程参数页面.UiComboBox矩阵系数.Text = ""
@@ -523,6 +524,7 @@ Public Class 预设管理
         Form1.常规流程参数页面.UiTextBox之前参数.Text = ""
         Form1.常规流程参数页面.UiTextBox之后参数.Text = ""
         Form1.常规流程参数页面.UiTextBox最后参数.Text = ""
+        Form1.常规流程参数页面.UiTextBox完全自己写参数.Text = ""
 
         Form1.常规流程参数页面.UiTextBox将视频参数用于这些流.Text = ""
         Form1.常规流程参数页面.UiCheckBox保留其他视频流.Checked = False
@@ -689,11 +691,6 @@ Public Class 预设管理
             Case "CBR"
                 视频参数 &= $"-rc cbr "
         End Select
-        If a.视频参数_比特率_基础 <> "" Then 视频参数 &= $"-b:v {a.视频参数_比特率_基础} "
-        If a.视频参数_比特率_最低值 <> "" Then 视频参数 &= $"-minrate {a.视频参数_比特率_最低值} "
-        If a.视频参数_比特率_最高值 <> "" Then 视频参数 &= $"-maxrate {a.视频参数_比特率_最高值} "
-        If a.视频参数_比特率_缓冲区 <> "" Then 视频参数 &= $"-bufsize {a.视频参数_比特率_缓冲区} "
-
         If a.视频参数_质量控制_值 <> "" Then
             Select Case a.视频参数_质量控制_参数名
                 Case "crf" : 视频参数 &= $"-crf {a.视频参数_质量控制_值} "
@@ -702,6 +699,13 @@ Public Class 预设管理
                 Case "global_quality" : 视频参数 &= $"-global_quality {a.视频参数_质量控制_值} "
             End Select
         End If
+        If a.视频参数_比特率_基础 <> "" Then 视频参数 &= $"-b:v {a.视频参数_比特率_基础} "
+        If a.视频参数_比特率_最低值 <> "" Then 视频参数 &= $"-minrate {a.视频参数_比特率_最低值} "
+        If a.视频参数_比特率_最高值 <> "" Then 视频参数 &= $"-maxrate {a.视频参数_比特率_最高值} "
+        If a.视频参数_比特率_缓冲区 <> "" Then 视频参数 &= $"-bufsize {a.视频参数_比特率_缓冲区} "
+        For Each c In a.视频参数_质量控制_进阶参数集
+            视频参数 &= $"{c} "
+        Next
 
         If a.视频参数_色彩管理_像素格式 <> "" Then 视频参数 &= $"-pix_fmt {a.视频参数_色彩管理_像素格式} "
         Select Case a.视频参数_色彩管理_处理方式

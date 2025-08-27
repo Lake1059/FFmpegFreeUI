@@ -40,6 +40,7 @@ Partial Class 界面_常规流程参数_V2
         Panel5 = New Panel()
         UiTextBox开头文本 = New Sunny.UI.UITextBox()
         Label4 = New Label()
+        Label95 = New Label()
         Label3 = New Label()
         Panel3 = New Panel()
         Label2 = New Label()
@@ -356,7 +357,7 @@ Partial Class 界面_常规流程参数_V2
         Panel77 = New Panel()
         RichTextBox1 = New RichTextBox()
         Panel70 = New Panel()
-        UiButton9 = New Sunny.UI.UIButton()
+        UiButton复制即时命令行显示 = New Sunny.UI.UIButton()
         Label126 = New Label()
         Label128 = New Label()
         Panel69 = New Panel()
@@ -572,9 +573,9 @@ Partial Class 界面_常规流程参数_V2
         Label130.Location = New Point(0, 0)
         Label130.Name = "Label130"
         Label130.Padding = New Padding(16, 20, 0, 0)
-        Label130.Size = New Size(172, 44)
+        Label130.Size = New Size(98, 44)
         Label130.TabIndex = 9
-        Label130.Text = "参数总览（Beta）"
+        Label130.Text = "参数总览"
         ' 
         ' TabPage输出命名方式
         ' 
@@ -582,6 +583,7 @@ Partial Class 界面_常规流程参数_V2
         TabPage输出命名方式.Controls.Add(Panel7)
         TabPage输出命名方式.Controls.Add(Panel6)
         TabPage输出命名方式.Controls.Add(Panel5)
+        TabPage输出命名方式.Controls.Add(Label95)
         TabPage输出命名方式.Controls.Add(Label3)
         TabPage输出命名方式.Controls.Add(Panel3)
         TabPage输出命名方式.Controls.Add(Panel8)
@@ -597,7 +599,7 @@ Partial Class 界面_常规流程参数_V2
         Panel7.Controls.Add(UiTextBox结尾文本)
         Panel7.Controls.Add(Label6)
         Panel7.Dock = DockStyle.Top
-        Panel7.Location = New Point(0, 284)
+        Panel7.Location = New Point(0, 309)
         Panel7.Name = "Panel7"
         Panel7.Padding = New Padding(20, 10, 20, 0)
         Panel7.Size = New Size(899, 40)
@@ -630,7 +632,7 @@ Partial Class 界面_常规流程参数_V2
         UiTextBox结尾文本.Size = New Size(350, 30)
         UiTextBox结尾文本.TabIndex = 81
         UiTextBox结尾文本.TextAlignment = ContentAlignment.MiddleLeft
-        UiTextBox结尾文本.Watermark = "输出文件强制以什么结尾"
+        UiTextBox结尾文本.Watermark = "输出文件以什么结尾"
         ' 
         ' Label6
         ' 
@@ -648,7 +650,7 @@ Partial Class 界面_常规流程参数_V2
         Panel6.Controls.Add(UiTextBox替代文本)
         Panel6.Controls.Add(Label5)
         Panel6.Dock = DockStyle.Top
-        Panel6.Location = New Point(0, 244)
+        Panel6.Location = New Point(0, 269)
         Panel6.Name = "Panel6"
         Panel6.Padding = New Padding(20, 10, 20, 0)
         Panel6.Size = New Size(899, 40)
@@ -699,7 +701,7 @@ Partial Class 界面_常规流程参数_V2
         Panel5.Controls.Add(UiTextBox开头文本)
         Panel5.Controls.Add(Label4)
         Panel5.Dock = DockStyle.Top
-        Panel5.Location = New Point(0, 204)
+        Panel5.Location = New Point(0, 229)
         Panel5.Name = "Panel5"
         Panel5.Padding = New Padding(20, 10, 20, 0)
         Panel5.Size = New Size(899, 40)
@@ -732,7 +734,7 @@ Partial Class 界面_常规流程参数_V2
         UiTextBox开头文本.Size = New Size(350, 30)
         UiTextBox开头文本.TabIndex = 81
         UiTextBox开头文本.TextAlignment = ContentAlignment.MiddleLeft
-        UiTextBox开头文本.Watermark = "输出文件强制以什么开头"
+        UiTextBox开头文本.Watermark = "输出文件以什么开头"
         ' 
         ' Label4
         ' 
@@ -744,6 +746,19 @@ Partial Class 界面_常规流程参数_V2
         Label4.TabIndex = 0
         Label4.Text = "开头字符"
         Label4.TextAlign = ContentAlignment.MiddleLeft
+        ' 
+        ' Label95
+        ' 
+        Label95.AutoSize = True
+        Label95.Dock = DockStyle.Top
+        Label95.Font = New Font("微软雅黑", 10F)
+        Label95.ForeColor = Color.Gray
+        Label95.Location = New Point(0, 204)
+        Label95.Name = "Label95"
+        Label95.Padding = New Padding(20, 5, 0, 0)
+        Label95.Size = New Size(239, 25)
+        Label95.TabIndex = 9
+        Label95.Text = "自动命名的优先级在自由命名之上"
         ' 
         ' Label3
         ' 
@@ -1324,7 +1339,7 @@ Partial Class 界面_常规流程参数_V2
         Label167.Padding = New Padding(10, 0, 0, 0)
         Label167.Size = New Size(738, 30)
         Label167.TabIndex = 88
-        Label167.Text = "多张同品牌显卡时指定卡"
+        Label167.Text = "多张同品牌显卡时指定卡，如无效可尝试 Windows 硬件加速设置或显卡驱动设置"
         Label167.TextAlign = ContentAlignment.MiddleLeft
         ' 
         ' UiTextBoxgpu
@@ -6070,7 +6085,7 @@ Partial Class 界面_常规流程参数_V2
         ' 
         ' Panel70
         ' 
-        Panel70.Controls.Add(UiButton9)
+        Panel70.Controls.Add(UiButton复制即时命令行显示)
         Panel70.Dock = DockStyle.Top
         Panel70.Location = New Point(0, 248)
         Panel70.Name = "Panel70"
@@ -6078,34 +6093,34 @@ Partial Class 界面_常规流程参数_V2
         Panel70.Size = New Size(899, 40)
         Panel70.TabIndex = 35
         ' 
-        ' UiButton9
+        ' UiButton复制即时命令行显示
         ' 
-        UiButton9.Dock = DockStyle.Left
-        UiButton9.FillColor = Color.FromArgb(CByte(56), CByte(56), CByte(56))
-        UiButton9.FillColor2 = Color.FromArgb(CByte(56), CByte(56), CByte(56))
-        UiButton9.FillDisableColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
-        UiButton9.FillHoverColor = Color.FromArgb(CByte(56), CByte(56), CByte(56))
-        UiButton9.FillPressColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
-        UiButton9.FillSelectedColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiButton9.Font = New Font("微软雅黑", 10F)
-        UiButton9.ForeColor = Color.Silver
-        UiButton9.ForeDisableColor = Color.Silver
-        UiButton9.ForeHoverColor = Color.Silver
-        UiButton9.ForePressColor = Color.Silver
-        UiButton9.ForeSelectedColor = Color.Silver
-        UiButton9.Location = New Point(21, 10)
-        UiButton9.MinimumSize = New Size(1, 1)
-        UiButton9.Name = "UiButton9"
-        UiButton9.Radius = 30
-        UiButton9.RectColor = Color.FromArgb(CByte(56), CByte(56), CByte(56))
-        UiButton9.RectDisableColor = Color.FromArgb(CByte(56), CByte(56), CByte(56))
-        UiButton9.RectHoverColor = Color.DarkGray
-        UiButton9.RectPressColor = Color.FromArgb(CByte(64), CByte(148), CByte(64))
-        UiButton9.RectSelectedColor = Color.DarkGray
-        UiButton9.Size = New Size(130, 30)
-        UiButton9.TabIndex = 84
-        UiButton9.Text = "复制全部"
-        UiButton9.TipsFont = New Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point, CByte(134))
+        UiButton复制即时命令行显示.Dock = DockStyle.Left
+        UiButton复制即时命令行显示.FillColor = Color.FromArgb(CByte(56), CByte(56), CByte(56))
+        UiButton复制即时命令行显示.FillColor2 = Color.FromArgb(CByte(56), CByte(56), CByte(56))
+        UiButton复制即时命令行显示.FillDisableColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiButton复制即时命令行显示.FillHoverColor = Color.FromArgb(CByte(56), CByte(56), CByte(56))
+        UiButton复制即时命令行显示.FillPressColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        UiButton复制即时命令行显示.FillSelectedColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        UiButton复制即时命令行显示.Font = New Font("微软雅黑", 10F)
+        UiButton复制即时命令行显示.ForeColor = Color.Silver
+        UiButton复制即时命令行显示.ForeDisableColor = Color.Silver
+        UiButton复制即时命令行显示.ForeHoverColor = Color.Silver
+        UiButton复制即时命令行显示.ForePressColor = Color.Silver
+        UiButton复制即时命令行显示.ForeSelectedColor = Color.Silver
+        UiButton复制即时命令行显示.Location = New Point(21, 10)
+        UiButton复制即时命令行显示.MinimumSize = New Size(1, 1)
+        UiButton复制即时命令行显示.Name = "UiButton复制即时命令行显示"
+        UiButton复制即时命令行显示.Radius = 30
+        UiButton复制即时命令行显示.RectColor = Color.FromArgb(CByte(56), CByte(56), CByte(56))
+        UiButton复制即时命令行显示.RectDisableColor = Color.FromArgb(CByte(56), CByte(56), CByte(56))
+        UiButton复制即时命令行显示.RectHoverColor = Color.DarkGray
+        UiButton复制即时命令行显示.RectPressColor = Color.FromArgb(CByte(64), CByte(148), CByte(64))
+        UiButton复制即时命令行显示.RectSelectedColor = Color.DarkGray
+        UiButton复制即时命令行显示.Size = New Size(130, 30)
+        UiButton复制即时命令行显示.TabIndex = 84
+        UiButton复制即时命令行显示.Text = "复制全部"
+        UiButton复制即时命令行显示.TipsFont = New Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point, CByte(134))
         ' 
         ' Label126
         ' 
@@ -6887,7 +6902,7 @@ Partial Class 界面_常规流程参数_V2
     Friend WithEvents Label175 As Label
     Friend WithEvents UiComboBox自动加载预设选项 As Sunny.UI.UIComboBox
     Friend WithEvents Panel70 As Panel
-    Friend WithEvents UiButton9 As Sunny.UI.UIButton
+    Friend WithEvents UiButton复制即时命令行显示 As Sunny.UI.UIButton
     Friend WithEvents Panel77 As Panel
     Friend WithEvents RichTextBox1 As RichTextBox
     Friend WithEvents Label129 As Label
@@ -6901,5 +6916,6 @@ Partial Class 界面_常规流程参数_V2
     Friend WithEvents Panel73 As Panel
     Friend WithEvents RichTextBox2 As RichTextBox
     Friend WithEvents Label56 As Label
+    Friend WithEvents Label95 As Label
 
 End Class

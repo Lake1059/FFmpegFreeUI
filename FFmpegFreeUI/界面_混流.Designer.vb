@@ -83,10 +83,10 @@ Partial Class 界面_混流
         Panel73.BackColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
         Panel73.Controls.Add(Label123)
         Panel73.Dock = DockStyle.Top
-        Panel73.Location = New Point(20, 20)
+        Panel73.Location = New Point(10, 10)
         Panel73.Name = "Panel73"
         Panel73.Padding = New Padding(10)
-        Panel73.Size = New Size(1060, 58)
+        Panel73.Size = New Size(1080, 39)
         Panel73.TabIndex = 80
         ' 
         ' Label123
@@ -97,16 +97,16 @@ Partial Class 界面_混流
         Label123.ForeColor = Color.Gray
         Label123.Location = New Point(10, 10)
         Label123.Name = "Label123"
-        Label123.Size = New Size(509, 38)
+        Label123.Size = New Size(509, 19)
         Label123.TabIndex = 4
-        Label123.Text = "此功能为扩展，不走编码队列，直接让 ffmpeg 以原样运行" & vbCrLf & "仅提供最基础的混流，高级功能请移步 MKVToolNix GUI；分离请用 MKVExtract GUI"
+        Label123.Text = "仅提供最基础的混流，高级功能请移步 MKVToolNix GUI；分离请用 MKVExtract GUI"
         ' 
         ' Label20
         ' 
         Label20.Dock = DockStyle.Top
-        Label20.Location = New Point(20, 78)
+        Label20.Location = New Point(10, 49)
         Label20.Name = "Label20"
-        Label20.Size = New Size(1060, 20)
+        Label20.Size = New Size(1080, 10)
         Label20.TabIndex = 82
         ' 
         ' Panel1
@@ -118,10 +118,10 @@ Partial Class 界面_混流
         Panel1.Controls.Add(Panel4)
         Panel1.Controls.Add(Label1)
         Panel1.Dock = DockStyle.Fill
-        Panel1.Location = New Point(20, 98)
+        Panel1.Location = New Point(10, 59)
         Panel1.Name = "Panel1"
         Panel1.Padding = New Padding(10)
-        Panel1.Size = New Size(1060, 512)
+        Panel1.Size = New Size(1080, 571)
         Panel1.TabIndex = 83
         ' 
         ' Panel2
@@ -132,7 +132,7 @@ Partial Class 界面_混流
         Panel2.Location = New Point(10, 79)
         Panel2.Name = "Panel2"
         Panel2.Padding = New Padding(10, 10, 0, 10)
-        Panel2.Size = New Size(1040, 343)
+        Panel2.Size = New Size(1060, 402)
         Panel2.TabIndex = 5
         ' 
         ' ListView1
@@ -148,7 +148,7 @@ Partial Class 界面_混流
         ListView1.Location = New Point(10, 10)
         ListView1.Name = "ListView1"
         ListView1.OwnerDraw = True
-        ListView1.Size = New Size(1030, 323)
+        ListView1.Size = New Size(1050, 382)
         ListView1.TabIndex = 0
         ListView1.UseCompatibleStateImageBehavior = False
         ListView1.View = View.Details
@@ -159,10 +159,10 @@ Partial Class 界面_混流
         Panel3.Controls.Add(Panel8)
         Panel3.Controls.Add(Panel62)
         Panel3.Dock = DockStyle.Bottom
-        Panel3.Location = New Point(10, 422)
+        Panel3.Location = New Point(10, 481)
         Panel3.Name = "Panel3"
         Panel3.Padding = New Padding(0, 10, 0, 0)
-        Panel3.Size = New Size(1040, 80)
+        Panel3.Size = New Size(1060, 80)
         Panel3.TabIndex = 6
         ' 
         ' Panel8
@@ -173,7 +173,7 @@ Partial Class 界面_混流
         Panel8.Dock = DockStyle.Top
         Panel8.Location = New Point(0, 50)
         Panel8.Name = "Panel8"
-        Panel8.Size = New Size(1040, 30)
+        Panel8.Size = New Size(1060, 30)
         Panel8.TabIndex = 8
         ' 
         ' UiCheckBox2
@@ -227,7 +227,7 @@ Partial Class 界面_混流
         Panel62.Location = New Point(0, 10)
         Panel62.Name = "Panel62"
         Panel62.Padding = New Padding(0, 0, 0, 10)
-        Panel62.Size = New Size(1040, 40)
+        Panel62.Size = New Size(1060, 40)
         Panel62.TabIndex = 5
         ' 
         ' UiTextBox3
@@ -375,7 +375,7 @@ Partial Class 界面_混流
         Panel4.Location = New Point(10, 29)
         Panel4.Name = "Panel4"
         Panel4.Padding = New Padding(0, 10, 0, 10)
-        Panel4.Size = New Size(1040, 50)
+        Panel4.Size = New Size(1060, 50)
         Panel4.TabIndex = 7
         ' 
         ' UiButton移除
@@ -526,7 +526,7 @@ Partial Class 界面_混流
         ' 
         Label视频.Dock = DockStyle.Right
         Label视频.Font = New Font("微软雅黑", 10F)
-        Label视频.Location = New Point(590, 10)
+        Label视频.Location = New Point(610, 10)
         Label视频.Name = "Label视频"
         Label视频.Size = New Size(75, 30)
         Label视频.TabIndex = 1
@@ -537,7 +537,7 @@ Partial Class 界面_混流
         ' 
         Label音频.Dock = DockStyle.Right
         Label音频.Font = New Font("微软雅黑", 10F)
-        Label音频.Location = New Point(665, 10)
+        Label音频.Location = New Point(685, 10)
         Label音频.Name = "Label音频"
         Label音频.Size = New Size(75, 30)
         Label音频.TabIndex = 2
@@ -548,7 +548,7 @@ Partial Class 界面_混流
         ' 
         Label字幕.Dock = DockStyle.Right
         Label字幕.Font = New Font("微软雅黑", 10F)
-        Label字幕.Location = New Point(740, 10)
+        Label字幕.Location = New Point(760, 10)
         Label字幕.Name = "Label字幕"
         Label字幕.Size = New Size(75, 30)
         Label字幕.TabIndex = 5
@@ -559,7 +559,7 @@ Partial Class 界面_混流
         ' 
         Label章节.Dock = DockStyle.Right
         Label章节.Font = New Font("微软雅黑", 10F)
-        Label章节.Location = New Point(815, 10)
+        Label章节.Location = New Point(835, 10)
         Label章节.Name = "Label章节"
         Label章节.Size = New Size(75, 30)
         Label章节.TabIndex = 3
@@ -570,7 +570,7 @@ Partial Class 界面_混流
         ' 
         Label元数据.Dock = DockStyle.Right
         Label元数据.Font = New Font("微软雅黑", 10F)
-        Label元数据.Location = New Point(890, 10)
+        Label元数据.Location = New Point(910, 10)
         Label元数据.Name = "Label元数据"
         Label元数据.Size = New Size(150, 30)
         Label元数据.TabIndex = 4
@@ -592,9 +592,9 @@ Partial Class 界面_混流
         ' Label11
         ' 
         Label11.Dock = DockStyle.Bottom
-        Label11.Location = New Point(20, 610)
+        Label11.Location = New Point(10, 630)
         Label11.Name = "Label11"
-        Label11.Size = New Size(1060, 20)
+        Label11.Size = New Size(1080, 10)
         Label11.TabIndex = 84
         ' 
         ' Panel5
@@ -606,10 +606,10 @@ Partial Class 界面_混流
         Panel5.Controls.Add(UiButton选择位置)
         Panel5.Controls.Add(UiButton启动混流)
         Panel5.Dock = DockStyle.Bottom
-        Panel5.Location = New Point(20, 630)
+        Panel5.Location = New Point(10, 640)
         Panel5.Name = "Panel5"
         Panel5.Padding = New Padding(10)
-        Panel5.Size = New Size(1060, 50)
+        Panel5.Size = New Size(1080, 50)
         Panel5.TabIndex = 85
         ' 
         ' UiTextBox输出文件
@@ -636,7 +636,7 @@ Partial Class 界面_混流
         UiTextBox输出文件.ScrollBarColor = Color.DimGray
         UiTextBox输出文件.ScrollBarStyleInherited = False
         UiTextBox输出文件.ShowText = False
-        UiTextBox输出文件.Size = New Size(780, 30)
+        UiTextBox输出文件.Size = New Size(800, 30)
         UiTextBox输出文件.TabIndex = 105
         UiTextBox输出文件.TextAlignment = ContentAlignment.MiddleLeft
         UiTextBox输出文件.Watermark = "输出到目标位置"
@@ -646,7 +646,7 @@ Partial Class 界面_混流
         ' Label6
         ' 
         Label6.Dock = DockStyle.Right
-        Label6.Location = New Point(920, 10)
+        Label6.Location = New Point(940, 10)
         Label6.Name = "Label6"
         Label6.Size = New Size(10, 30)
         Label6.TabIndex = 104
@@ -705,7 +705,7 @@ Partial Class 界面_混流
         UiButton启动混流.ForeHoverColor = Color.YellowGreen
         UiButton启动混流.ForePressColor = Color.YellowGreen
         UiButton启动混流.ForeSelectedColor = Color.YellowGreen
-        UiButton启动混流.Location = New Point(930, 10)
+        UiButton启动混流.Location = New Point(950, 10)
         UiButton启动混流.MinimumSize = New Size(1, 1)
         UiButton启动混流.Name = "UiButton启动混流"
         UiButton启动混流.Radius = 30
@@ -732,7 +732,7 @@ Partial Class 界面_混流
         Font = New Font("微软雅黑", 9.75F, FontStyle.Regular, GraphicsUnit.Point, CByte(134))
         ForeColor = Color.Silver
         Name = "界面_混流"
-        Padding = New Padding(20)
+        Padding = New Padding(10)
         Size = New Size(1100, 700)
         Panel73.ResumeLayout(False)
         Panel73.PerformLayout()

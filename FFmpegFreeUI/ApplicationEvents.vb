@@ -32,7 +32,9 @@ Namespace My
         End Sub
 
         Private Sub MyApplication_StartupNextInstance(sender As Object, e As StartupNextInstanceEventArgs) Handles Me.StartupNextInstance
+            'For Each cmd In e.CommandLine
 
+            'Next
         End Sub
     End Class
 End Namespace

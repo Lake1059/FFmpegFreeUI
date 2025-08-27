@@ -8,7 +8,7 @@ Public Class 界面_常规流程参数_V2
         If Form1.DPI <> 1 Then UiTabControlMenu1.ItemSize = New Size(200 * Form1.DPI, 40 * Form1.DPI)
         初始化进阶质量控制预制菜单项()
         设置富文本框行高(RichTextBox1, 350)
-        设置富文本框行高(RichTextBox2, 400)
+        设置富文本框行高(RichTextBox2, 350)
 
         AddHandler UiComboBox编码类别.SelectedIndexChanged, AddressOf 视频编码类别改动事件
         AddHandler UiComboBox具体编码.SelectedIndexChanged, AddressOf 视频具体编码改动事件
@@ -33,13 +33,7 @@ Public Class 界面_常规流程参数_V2
                                                   进阶质量控制预制菜单项.Show(TabPage视频参数质量, New Point(20 * Form1.DPI, 20 * Form1.DPI))
                                               End Sub
         AddHandler UiButton添加进阶质量控制空项.Click, Sub() 创建进阶质量控制项("")
-        AddHandler UiButton清除全部进阶质量控制.Click, Sub()
-                                                 For Each c In Me.FlowLayoutPanel1.Controls
-                                                     c.Dispose()
-                                                 Next
-                                                 Me.FlowLayoutPanel1.Controls.Clear()
-                                                 GC.Collect()
-                                             End Sub
+        AddHandler UiButton清除全部进阶质量控制.Click, AddressOf 清除全部进阶质量控制
         '==============================================
         AddHandler UiComboBox色彩管理处理方式.TextChanged, AddressOf 色彩管理处理方式变动事件
         '==============================================
@@ -131,6 +125,7 @@ Public Class 界面_常规流程参数_V2
             Case 用户设置.自动加载预设选项枚举.自动加载上次的全部改动
                 If 用户设置.实例对象.最后的预设数据 IsNot Nothing Then 预设管理.显示预设(用户设置.实例对象.最后的预设数据)
         End Select
+        AddHandler UiButton复制即时命令行显示.Click, Sub() Clipboard.SetText(RichTextBox1.Text)
         界面校准()
     End Sub
 
@@ -447,6 +442,15 @@ Public Class 界面_常规流程参数_V2
 
     End Sub
 
+    Sub 清除全部进阶质量控制()
+        For Each c In Me.FlowLayoutPanel1.Controls
+            c.Dispose()
+        Next
+        Me.FlowLayoutPanel1.Controls.Clear()
+        GC.Collect()
+    End Sub
+
+
     Sub 创建进阶质量控制项(text As String)
         Dim a As New UITextBox With {
             .FillColor = Color.FromArgb(48, 48, 48),
@@ -508,7 +512,7 @@ Public Class 界面_常规流程参数_V2
     Sub 初始化进阶质量控制预制菜单项()
         进阶质量控制预制菜单项.Items.AddRange(New ToolStripItem() {
         New ToolStripSeparator() With {.Tag = "null"},
-        New ToolStripMenuItem("-rc-lookahead 前向参考帧数 适用于 Nvidia\libx264\libx265", Nothing, Sub(s1, e1) 创建进阶质量控制项("-rc-lookahead ")) With {.ForeColor = Color.YellowGreen},
+        New ToolStripMenuItem("-rc-lookahead 前向参考帧数 适用于 Nvidia\libx264", Nothing, Sub(s1, e1) 创建进阶质量控制项("-rc-lookahead ")) With {.ForeColor = Color.YellowGreen},
         New ToolStripMenuItem("-look_ahead_depth 前向参考帧数 适用于 Intel", Nothing, Sub(s1, e1) 创建进阶质量控制项("-look_ahead_depth ")) With {.ForeColor = Color.CornflowerBlue},
         New ToolStripMenuItem("-extbrc=1 启用激进比特率分配 适用于 Intel", Nothing, Sub(s1, e1) 创建进阶质量控制项("-extbrc 1")) With {.ForeColor = Color.CornflowerBlue},
         New ToolStripMenuItem("-g 关键帧 (i) 间隔", Nothing, Sub(s1, e1) 创建进阶质量控制项("-g ")) With {.ForeColor = Color.Silver},
@@ -675,16 +679,16 @@ Public Class 界面_常规流程参数_V2
         If a.自定义参数_最后参数 <> "" Then 在参数总览输出文本("自定义最后参数：" & a.自定义参数_最后参数, Color.Gray)
 
         '---------------- 流控制 ----------------
-        If a.流控制_启用保留其他视频流 Then 在参数总览输出文本("保留其他视频流：是", Color.Silver)
+        If a.流控制_启用保留其他视频流 Then 在参数总览输出文本("已选择保留其他视频流", Color.Silver)
         If a.流控制_将视频参数应用于指定流 IsNot Nothing AndAlso a.流控制_将视频参数应用于指定流.Length > 0 Then
             在参数总览输出文本("应用视频参数到流：" & String.Join(",", a.流控制_将视频参数应用于指定流), Color.Silver)
         End If
-        If a.流控制_启用保留其他音频流 Then 在参数总览输出文本("保留其他音频流：是", Color.Silver)
+        If a.流控制_启用保留其他音频流 Then 在参数总览输出文本("已选择保留其他音频流", Color.Silver)
         If a.流控制_将音频参数应用于指定流 IsNot Nothing AndAlso a.流控制_将音频参数应用于指定流.Length > 0 Then
             在参数总览输出文本("应用音频参数到流：" & String.Join(",", a.流控制_将音频参数应用于指定流), Color.Silver)
         End If
-        If a.流控制_启用保留内嵌字幕流 Then 在参数总览输出文本("保留内嵌字幕流：是", Color.Silver)
-        If a.流控制_启用自动混流同名字幕文件 Then 在参数总览输出文本("自动混流同名字幕文件：启用", Color.Silver)
+        If a.流控制_启用保留内嵌字幕流 Then 在参数总览输出文本("已选择保留内嵌字幕流", Color.Silver)
+        If a.流控制_启用自动混流同名字幕文件 Then 在参数总览输出文本("已选择自动混流同名字幕文件", Color.Silver)
         Select Case a.流控制_元数据选项
             Case 1 : 在参数总览输出文本("保留元数据", Color.Silver)
             Case 2 : 在参数总览输出文本("清除元数据", Color.Silver)

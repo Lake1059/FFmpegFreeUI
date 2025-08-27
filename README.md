@@ -1,18 +1,38 @@
 [《如何在 GitHub 下载软件》小白提醒：你的需求是下载这个软件去使用而不是要工程文件，点此去 Releases 下载发行版才是下载软件；上面的 Code 是下载源代码；我都写成这样了如果你在 Releases 里又下成了源代码，那真的是人机，都是手机和短视频害的。](https://github.com/Lake1059/FFmpegFreeUI/releases) 本文已包含新手内容，就看有没有心思学了。
 
-<img src="FFmpegFreeUI\Resources\AppIcon.png" width="100" />
+<img src="FFmpegFreeUI\Resources\AppIcon.png" width="100" /> 
 
 ## FFmpegFreeUI
 
 请认准官网域名：https://ffmpegfreeui.top 和 https://3fui.top<br>群友的暂用域名：https://3fui.frostlynx.work<br>三个域名都是正确的，都会解析到同一个地方
 
+如果我的设计对你有帮助，请帮我宣传或者考虑资金支持
+
 ![](https://img.shields.io/github/downloads/Lake1059/FFmpegFreeUI/total?label=所有文件总下载量)&nbsp;&nbsp;[![](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2F3fui.top%2Fapi%2Fgithub-downloads&label=准确数量（延迟刷新）含镜像站&query=$.totalDownloads)](https://github.com/Lake1059/FFmpegFreeUI)
 
-FFmpegFreeUI（简称 3FUI）是在 Windows 上的 [FFmpeg](https://ffmpeg.org) 的专业交互外壳，使用 .NET 10 框架，使用纯 WinForm 开发，配合 SunnyUI 和自绘制打造专业高效的暗黑风格界面。目标做一款轻度专业参数调整的转码软件，让普通人能够通过图形化界面接触到较为全面的通用参数来轻松压制和转换格式。
+### 软件简介
 
-3FUI 是纯填参数的，没有内置傻瓜方案，不是让小白一键无脑全自动的，如果没有相关技术参数的概念，请先在本文的新手内容中学习相关技术知识。
+FFmpegFreeUI（简称 3FUI）是在 Windows 上的 [FFmpeg](https://ffmpeg.org) 的专业交互外壳，使用 .NET 10 运行时以纯 WinForm 框架开发，配合 SunnyUI 和自绘制打造专业高效的暗黑风格界面。目标做一款轻度专业参数调整的转码软件，让普通人能够通过图形化界面接触到较为全面的通用参数来轻松压制和转换格式。不仅如此，3FUI 具备极高的自由和扩展性，因此也适合任何深度专业人士，即便只是用上一个低消耗的进度条。
 
-> **有些人：说着给普通人用结果还要自己学参数？**<br>人类进化的时候你干什么去了！
+3FUI 目前收录了 40 种视频编码器、21 种音频编码器、10 种图片编码器，如果这还不够还可以自定义参数；不要问什么能不能实现什么有没有，完全自己写参数解君愁。
+
+### 开发思路
+
+市面上各家外壳作者对 FFmpeg 都有自己的理解和交互设计，它们都有各自擅长的需求类型，如 HandBrake、ShanaEncoder 等等专业级软件；3FUI 也不例外，我选择了最折中的方案，同时满足参数自由透明、批量处理、功能扩展的需求，如果你在其他软件上觉得某些需求体验不佳，不妨来尝试 3FUI。
+
+### 设计定位
+
+作为一款定位专业级的转码软件，我不会在 3FUI 程序中内置任何傻瓜方案，因为这样就会变成我的想法强加于用户，最后变成用户表达的刻板印象；3FUI 具有充分的自由，如果你对参数很了解，那么你当然知道要设置什么内容，如果不了解，也可以在本文中了解到非常多的知识和闻所未闻的细节。
+
+### 学习成本
+
+会用格式工厂吗？那你已经会用 3FUI 了。所有转码软件的最终逻辑和基本参数都一样，没有谁能自己造一个概念出来，它们内部都是 ffmpeg 在干活，这可是古希腊掌管音视频编解码的神。当然现在有人说给普通人用结果还要自己学参数，那我只能说人类进化的时候可能把这类人落下了。如果你连解压都不会、分不清内存条和硬盘，那还是洗洗睡吧，该吃吃该喝喝，我这里都是三体人的科技。
+
+### 数据更新
+
+我没有那个精力去照顾所有编码器的参数更新，如果发现了某个参数无效，请直接提交反馈，告诉我什么不能用以及正确的是什么，不要因为这个就说 3FUI 的不好，我拿了几个钱啊这么拼命，生产队的驴都还要吃饭呢。
+
+## 特点
 
 - 底层逻辑基于预设，可以很方便地与他人分享方案，导出的预设自行管理
 - 多数地方直接标出参数名、准确显示 ffmpeg 输出的信息，更易于上手和尝试新方案
@@ -25,11 +45,11 @@ FFmpegFreeUI（简称 3FUI）是在 Windows 上的 [FFmpeg](https://ffmpeg.org) 
 
 支持开发插件来扩展功能，可接入编码队列。VB 和 C# 都可以写，还额外支持 WPF 界面。
 
-如果我的设计对你有帮助，请帮我宣传或者考虑资金支持。
-
 ## Linux & macOS
 
 [Wine](https://www.winehq.org) 是一个在多种 POSIX-compliant 操作系统上运行 Windows 应用的兼容层，如果能够在 macOS 和 Linux 上安装并正确使用，理论上可以直接在这些操作系统上使用 3FUI。关于这部分的内容请进群跟群友讨论，我买不起苹果电脑也用不来 Linux。
+
+### 群友倾情贡献
 
 关于在 Linux 中使用 Wine 转译运行 3FUI 的方法可参阅 [linux.md](doc/linux.md)
 
@@ -54,8 +74,8 @@ PluginExample 是我做的示例插件；在程序目录下创建 Plugin 文件�
 > **全都无法运行怎么办？**  
 > 依次检查这些项目：
 >
-> 1. 检查 Windows 更新中是否有 **.NET Framework 3.5 和 4.8 的累积更新**，如果有则立即安装
-> 2. 从正式版 1.0 开始，编译为目标最低系统版本是 Win10 1809，更低版本看天意
+> 1. 检查 Windows 更新中是否有 **.NET Framework 3.5 和 4.8 的累积更新**，如果有则立即安装，不要怀疑这个名，这就是微软懒得改名，你系统差了相关补丁，装上立马就好
+> 2. 从正式版 1.0 开始，编译为目标最低系统版本是 Win10 1809，更低版本看天意；实际上 Win7 还能跑，只要补丁打齐依旧能用，但也仅仅能用，bug 是满天飞的
 > 3. 检查杀毒软件拦截记录
 > 5. 把仓库扒下来自己编译
 > 6. 没救了，重装系统吧
@@ -68,16 +88,15 @@ PluginExample 是我做的示例插件；在程序目录下创建 Plugin 文件�
 > 4. 然后直接打开 **.sln** 文件，剩下的依赖会自动补齐（需联网下载）
 > 5. 什么都不用调直接运行**全部重新生成**就行了
 
-> **长时间使用的崩溃问题解决了吗？**  
-> 已彻底解决，可放心拿去跑重要任务；甚至能抗住资源管理器爆炸了。当然不是保证所有人的电脑都这样，反正我自己的电脑都没问题。如果长时间运行依旧崩溃，到群里发 Windows 事件查看器记录的错误，不方便加群就写 issues，错误信息提供完整，各种代码信息全都要。
-
 ## 截图
 
-<img src="IMG\mi.png"  />
-<img src="IMG\fe.png"  />
-<img src="IMG\vp.png"  />
-<img src="IMG\vp2.png"  />
-<img src="IMG\pe.png"  />
+<img src="IMG\img1.png"  />
+<img src="IMG\img2.png"  />
+<img src="IMG\img3.png"  />
+<img src="IMG\img4.png"  />
+<img src="IMG\img5.png"  />
+
+注意：字体是可以自由选择的，不要来抱怨字难看<br>图中演示用的字体是思源黑体加上 MacType 的效果
 
 ## 准备步骤
 
@@ -93,11 +112,12 @@ PluginExample 是我做的示例插件；在程序目录下创建 Plugin 文件�
 
 ## 软件机制 & 使用提示
 
-- 编码队列里每个任务都有自己的预设数据快照，而命令行是开始任务的时候当场根据这个快照生成的，而不是再读取参数面板，也就是说任务一旦添加，其参数就已经等于锁死了，不能再更改，因此要注意如果要更改参数必须重新添加任务
-- 编码队列的列表视图也可以直接拖文件的，会直接用当前参数面板生成快照并尝试立即开始
-- 性能监控里显卡的占用只要有显示就说明那个核心在工作，0% 是占用太小四舍五入没了，不是没在干活，没干活的核心会自动移除显示
-- 很多跨线程的界面刷新是基于 SynchronizationContext 实现的，但是这东西可能有自己的想法，为了避免这玩意自行销毁，我在旁边放了个监控，一旦软件报错UI同步上下文丢失请立即停止操作并重启软件；其实这就像薛定谔的猫一样，只要有东西观察就不会坍缩，反正我是没有遇到突然丢失的情况
-- 开始任务有延迟是正常的，这部分代码是交给后台线程的，状态已经改变了只是没有刷新到界面上，当然你点了多次开始也不会出事，写了判断的
+- 编码队列里每个任务都有自己的预设数据快照，而命令行是开始任务的时候当场根据这个快照生成的，而不是再读取参数面板，也就是说任务一旦添加，其参数就已经等于锁死了，不能再更改，因此要注意如果要更改参数必须重新添加任务。
+- 编码队列的列表视图也可以直接拖文件的，会直接用当前参数面板生成快照并尝试立即开始。
+- 性能监控里显卡的占用只要有显示就说明那个核心在工作，0% 是占用太小四舍五入没了，不是没在干活，没干活的核心会自动移除显示。
+- 开始任务有延迟是正常的，这部分代码是交给后台线程的，状态已经改变了只是没有刷新到界面上，当然你点了多次开始也不会出事，写了判断的。
+- 启动时有个 sys 的驱动文件生成？应该是性能监控的库要用的，反正我代码里没这玩意，正常情况下应该生成出来后就自动删除了，没自动删除我也不清楚怎么回事。什么你说担心安全问题？都是开源组件你觉得能干什么坏事。
+- 如果电脑没有插显示器，请设置阻止显示器关闭来防止进度刷新卡住（然后就恢复不了了，除非重启软件）
 
 ## 反馈
 
@@ -108,14 +128,20 @@ PluginExample 是我做的示例插件；在程序目录下创建 Plugin 文件�
 
 ### 新手必看：如何寻求帮助
 
-选中一个错误的任务 然后将调试信息完整地截图 然后发给技术人员！<br>最好带上命令行，如果你不想让别人看到你的文件名，可以手动抹掉或在预设管理中复制！<br>如果有条件，请提供输入文件的详细参数，很多播放器都可以查看！
+选中一个错误的任务，然后将调试信息完整地截图 然后发给技术人员！<br>最好带上命令行，如果你不想让别人看到你的文件名，可以手动抹掉或在预设管理中复制！<br>如果有条件，请提供输入文件的详细参数，很多播放器都可以查看！
 
 > 请勿让 **我** 或 **群友** 或 **专业人士** 或 **外行人士** 进行包括但不限于这些行为：算卦、猜谜、托梦、占卜、人脑推理、强行传教、交流物理学、灵能飞升、虚空扰动、尝试进入量子隧道等等，如有以上行为或类似行为的，造成的全部后果由用户全责承担。
+
+重要的事情再说三遍：不要算卦！尽快提供完整信息！  
+重要的事情再说三遍：不要算卦！尽快提供完整信息！  
+重要的事情再说三遍：不要算卦！尽快提供完整信息！
+
+你说这种人是不是生活不能自理啊，他不是来求助的，是来求心理安慰的！
 
 ## 许可和引用
 
 - 3FUI 使用 MIT 开源许可（仅限我的代码），可以自由地使用和分发此软件
-- SunnyUI 是 GPL 且具有商用授权属性，因此可能受到相关限制
+- SunnyUI 是 GPL 且具有商用授权（老夫有）属性，因此可能受到相关限制
 - 仅在 GitHub 开源，在其他平台看到的源代码都不是本人！
 
 | 引用程序集                                                   | 许可证         | 作用                       |
@@ -123,6 +149,8 @@ PluginExample 是我做的示例插件；在程序目录下创建 Plugin 文件�
 | [SunnyUI](https://gitee.com/yhuse/SunnyUI)                   | GPL-3.0-only   | 界面主框架                 |
 | [WindowsAPICodePack](https://github.com/contre/Windows-API-Code-Pack-1.1) | 微软软件许可证 | 提供更舒适的文件夹选择对话框 |
 | [LibreHardwareMonitorLib](https://github.com/LibreHardwareMonitor/LibreHardwareMonitor) | MPL-2.0        | 性能监控                   |
+
+是的，三方库就这么点，连 Json.NET 都没用，你就说够不够轻量吧
 
 ## 新手入门
 
@@ -138,38 +166,76 @@ PluginExample 是我做的示例插件；在程序目录下创建 Plugin 文件�
 - 大河李斯特视频工作室 | FFmpeg 是什么 | [BV1SjdoY9Erj](https://www.bilibili.com/video/BV1SjdoY9Erj)
 - 终末诗 | 适用于小白的视频压缩教学 | [知乎](https://zhuanlan.zhihu.com/p/1913258114746122747)  此文章包含大量测试结果总结和设置教学<br>
   新手把这篇文章看完能学会很多东西，继续往下看之前先把这个打开看！！
+- 终末诗 | 3FUI 入门教程 | [知乎](https://zhuanlan.zhihu.com/p/1943079795341623993)
 
 另外我仓库 IMG 文件夹里也有部分编码器的测试结果，数据来自群友。
 
 ## 视频编码器
 
-| 编码器类别 | 提供的编码                                                   | 备注                                                         |
-| ---------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| 复制流     | copy                                                         | 我不想看到有人问能不能不重编码。                             |
-| H.266/VVC  | libx266<br>libvvenc                                          | 截止 2025 年，H.266 还不成熟，需要大量性能，也没几个播放器放得出来，也没有硬件加速可用。可能未实现 x266。 |
-| AV1        | libaom-av1<br>libsvtav1<br>av1_nvenc<br>av1_qsv<br>av1_amf<br>librav1e<br>av1_vaapi | 如果没有新显卡进行硬件加速，强烈建议考虑软件编码 **libsvtav1**，我默认给的 preset 是 4，这是最平衡速度和体积的选择，如果只是为了尝鲜，可以先给个 6。 |
-| H.265/HEVC | libx265<br>hevc_nvenc<br>hevc_qsv<br>hevc_amf<br/>hevc_d3d12va<br/>hevc_vaapi<br/>hevc_vulkan | 目前 265 是非常合适的。d3d12va 要求 Win11 24H2，但其效率并没有比三家硬件加速高出多少。 |
-| H.264/AVC  | libx264<br>h264_nvenc<br>h264_qsv<br>h264_amf<br/>h264_vaapi<br/>h264_vulkan | 只要小参数调的好，libx264 仍旧是非常能打的，但从技术上讲 264 快要无法满足专业需求了。 |
-| ProRes     | prores_ks<br>prores_aw                                       | aw 是 macOS 上用的，Windows 和 Linux 要用 ks                 |
-| FFV1       | ffv1 -level 3<br>ffv1 -level 1                               | FFV1 是无损编码，这种编码常用于博物馆级别的存档，不适合个人存储，与其他编码的用途不同。对于个人而言可以作为中转来使用。 |
-| VP9        | libvpx-vp9<br/>vp9_vaapi                                     | VP9 是谷歌的格式，在油管上大量使用，其压缩度高于 264。       |
-| RMVB       | rv20<br>rv10                                                 | RMVB 是早些年的高压缩格式，但后来缺乏维护已被淘汰。          |
-| MPEG       | mpeg4<br>libxvid<br>libxeve                                  | mpeg4 和 libxvid 都是早些年的主流编码，就像现在的 264 一样。<br>libxeve 是 MPEG-5，高通、华为、三星参与制定，介绍是比 265 更先进，但直到 2025 年也没有看到大规模使用，至于效率，跟 266 坐一桌。 |
-| WMV        | wmv2<br>wmv1                                                 | Windows 的专用视频编码，已经过时了。                         |
-| 禁用       | -vn                                                          | 啪，没了~                                                    |
+- 复制流
+  - copy（我不想看到有人问能不能不重编码）
+- H.266/VVC
+  - libvvenc（跑分的神，faster 即可吊打全场）
+  - libx266（未实现，先放这，哪天突然实现了我也不用更新）
+- AV1
+  - libaom-av1（官方实现，偏商用，适合单线程跑）
+  - libsvtav1（Intel主导，适合民用，轻松吃满 CPU）
+  - av1_nvenc
+  - av1_qsv
+  - av1_amf
+  - librav1e
+  - av1_vaapi
+- H.265/HEVC
+  - libx265
+  - hevc_nvenc
+  - hevc_qsv
+  - hevc_amf
+  - hevc_d3d12va
+  - hevc_vaapi
+  - hevc_vulkan
+- H.264/AVC
+  - libx264
+  - h264_nvenc
+  - h264_qsv
+  - h264_amf
+  - h264_vaapi
+  - h264_vulkan
+- 来自 Apple
+  - prores_ks
+  - prores_aw
+- 来自 Google
+  - libvpx-vp9
+  - vp9_vaapi
+  - libvpx（这个就是 VP8）
+  - vp8_vaapi
+- FFv1（博物馆级别无损编码）
+  - ffv1 -level 3（用新不用旧）
+  - ffv1 -level 1
+  - ffv1_vulkan
+- 其他现代编码
+  - libxeve（这是 MPEG5，目前并不好用）
+  - libxavs2（国产编码，用于电视节目）
+- 老旧格式
+  - mpeg4
+  - libxvid
+  - rv20（RMVB 2.0）
+  - rv10（RMVB 1.0）
+  - wmv2
+  - wmv1
+- 禁用
 
 > **新手常问：为什么说 FFV1 才是无损编码？**
 > 答：这里的有损和无损是技术上的，不是视觉上的。生活中看的视频都是有损压缩，它们都在欺骗视觉，人眼的能力是非常局限的，就像你眼睛贴到屏幕上才能细微察觉所有的颜色都是用红绿蓝混合出来的。技术上的无损编码是确保了每个像素的信息正确，而生活中的视频每次重编码都会让像素产生变化，所以都是有损压缩，你也不希望一分钟的视频有1GB吧。
 
-| 区分标记 | 适用的硬件             |
-| -------- | ---------------------- |
-| lib      | CPU                    |
-| nvenc    | NVIDIA                 |
-| amf      | AMD                    |
-| qsv      | Intel                  |
-| vaapi    | Linux API              |
-| vulkan   | 受支持的显卡           |
-| d3d12va  | 受支持的显卡和操作系统 |
+| 区分标记 | 适用的硬件             | 人话     |
+| -------- | ---------------------- | -------- |
+| lib      | CPU                    |          |
+| nvenc    | NVIDIA                 | 你的老黄 |
+| amf      | AMD                    | 你的苏妈 |
+| qsv      | Intel                  | 你的老陈 |
+| vaapi    | Linux API              |          |
+| vulkan   | 受支持的显卡           |          |
+| d3d12va  | 受支持的显卡和操作系统 |          |
 
 ### NVIDIA NVENC 规格
 
@@ -196,7 +262,7 @@ https://developer.nvidia.com/video-encode-and-decode-gpu-support-matrix-new
 
 ## 音频编码器
 
-复制流、AAC、LAME MP3、FLAC、ALAC、WAV 16bit、WAV 24bit、WAV 32bit Float、Dolby Digital AC3、DTS Coherent Acoustics、Opus、Vorbis、True Audio、禁用
+复制流、禁用、AAC、LAME MP3、Opus、FLAC、ALAC、WAV 16bit、WAV 24bit、WAV 32bit、WAV 64bit、AC3、EAC3、DTS Coherent Acoustics、TrueHD、True Audio、Vorbis、RealAudio、WavPack、LAME MP2、AMR-NB、AMR-WB
 
 ## 图片编码器
 
@@ -204,36 +270,36 @@ PNG、JPEG\JPG、WEBP、TIFF、AVIF、GIF、BMP、JPEG-LS、DPX、OpenEXR
 
 ## 比特率控制方式
 
-| 方式            | 说明                                                         |
-| --------------- | ------------------------------------------------------------ |
-| 动态码率 VBR    | 存储首选，硬件加速首选<br/>配合 -cq 或 -qp 使用，VBR HQ 同理 |
-| 动态码率 VBR HQ | 硬件加速专用，但其实并不会比 VBR 提升太多<br>仅限 NVIDIA、INTEL、AMD 的 AV1、HEVC、H264 硬件加速编码器使用<br>其他编码器选这个等同于 ABR |
-| 恒定质量 CRF    | 存储首选，软件编码首选<br>-rc 并没有 crf 这个值，而是使用 -crf <?>，你需要在质量控制里填写它 |
-| 恒定量化 CQP    | 不推荐，主用于研究和特定场景<br/>仅向 NVIDIA 和 AMD 的 AV1、HEVC、H264 硬件加速编码传递对应的参数<br/>其他编码器选这个等同于 ABR<br/>*其实并没有 CQP 这玩意* |
-| *平均码率 ABR*  | 已在 1.1 版本中移除，其实不选控制方式就是这个                |
-| *二次编码 TPE*  | 已在 1.1 版本中移除，本身就跑不起来，就这点钱很难办的        |
-| 恒定速率 CBR    | 应该没什么人用这玩意，我知道还有个 CBR HQ<br/>但恒定速率对于普通人来说真没什么意义 |
+其实这东西不选也行的，直接去设置质量参数和值，这东西就是对特定编码器加上对应 rc
 
-## 前瞻分析帧数
+- **恒定质量 CRF**：软件编码首选，-rc 并没有 crf 这个值，而是使用 -crf <?>，你需要在质量控制里填写它
+- **动态码率 VBR**：硬件加速首选，配合 -cq 或 -qp 使用，VBR HQ 同理
 
-建议搭配 VBR HQ 使用，通常考虑为原视频的帧率<br>AMD 的硬件加速编码器不要写这个参数，写了也不会传递，已经预置高质量参数了
+注意我写的是首选，某些编码器不走寻常路，比如 vvenc 根本不支持 crf。
 
-## 质量设定 -crf / -cq / -qp
+- **动态码率 VBR HQ**：硬件加速专用，一般没必要选，并不会有太多肉眼可见的提升，反而时间爆涨
+- **恒定量化 CQP**：较少使用，主用于研究和特定场景，并没有 CQP 这个玩意，但是个别编码器的 rc 是真的有这个值，反正日常别用就对了
+- **恒定速率 CBR**：到底是什么人这么浪费还用这玩意
+
+做不了一点
+
+- **平均码率 ABR**：哪有 ABR，不就是传统转码，直接写比特率不就完了
+- **二次编码 TPE**：没钱，给我转一个W就做，不然我先饿死了
+- **三次编码？**富哥V我一个小目标看看实力
+
+## 质量设定 -crf / -cq / -qp / -global_quality
 
 ### 硬件加速用 cq，软件编码用 crf
 除非你要用的编码器不支持或者有特殊需求，否则不应选择 qp
 
 ### 一个质量值不能吃遍天下
-质量的默认值是 23，肉眼无损是 16，注意这是一个均衡标准<br>
-23 不一定是糊的，但 16 一定是清晰的，还很可能清晰过度了！<br>
-每种编码器的质量度量都不一样，还会受到片源自身清晰度和内容的影响<br>
-如果片源本身就是糊的或者有大量噪点，那实时输出的质量值必定是起飞的<br>
-所以要根据每种不同的情况慢慢尝试，不要指望一步到位！<br>
-通常情况下硬件加速要设定更大一些的质量值
+质量的默认值是 23，肉眼无损是 16，注意这是一个均衡标准（实时输出的质量值，就是 ffmpeg 进度信息里的 q= 那个），实际使用起来不同的编码器要设定的值差得非常远；23 不一定是糊的，但 16 一定是清晰的，还很可能清晰过度了！每种编码器的质量度量都不一样，还会受到片源自身清晰度和内容的影响，如果片源本身就是糊的或者有大量噪点，那实时输出的质量值必定是起飞的。
+
+所以要根据每种不同的情况慢慢尝试，不要指望一步到位！通常情况下硬件加速要设定更大一些的质量值
 
 ### 已经被压过的视频几乎不可能再压得更小
-例如流媒体平台上扒下来的和压制组发布的动漫资源<br>
-在维持视觉质量的前提下即便是 264 转 AV1 也基本不可能有好的结果<br>
+例如流媒体平台上扒下来的和压制组发布的动漫资源，在维持视觉质量的前提下即便是 264 转 AV1 也基本不可能有好的结果（266 除外，再往上就是纯挂逼了），编码器会利用人眼的各种局限性，诸如视觉暂留等。
+
 请牢记：不要用这点参数去挑战压制组的实力！除非你开挂，否则你不可能干得过他们！
 
 ### 鱼和熊掌不可兼得
@@ -263,18 +329,6 @@ PNG、JPEG\JPG、WEBP、TIFF、AVIF、GIF、BMP、JPEG-LS、DPX、OpenEXR
 
 - 响度标准化 loudnorm
 
-## 画面裁剪可视化交互
-
-<img src="IMG\sc.png"  />
-
-画面裁剪滤镜 crop 的四个参数值是：**裁剪宽度:裁剪高度:左上角X:左上角Y**
-
-在分辨率板块中打开此窗口，此界面独立，仅向主窗口上的那个文本框传递最终值，与已添加的文件无关。首先需要打开一个视频文件用于获取一帧预览图用来裁剪，在此之前可以设定时间戳来指定某个位置的帧，如果不设置默认获取第10秒的第一帧。此功能需要 ffmpeg 才能获取到视频帧。
-
-获取到视频帧后，图片将以原分辨率显示，在图片上使用鼠标左右键来调整红框的尺寸，红框就是要裁剪的目标区域。左键控制左上角坐标，右键控制右下角坐标，如果按错了或者在越界的位置按下并拖动鼠标，则会自动互换功能。可以手动更改参数文本框的值然后按 Enter 键来微调红框，也就是可以反向操作。如果需要让红框保持固定比例或居中，也提供了相应的功能。在窗口右上角还有红框定位的放大镜视图，更方便精确定位。
-
-我都写成这样了，软件里又写一遍，再不会用就去紫砂。
-
 ## 剪辑区间
 
 暂时还没做可视化交互，先用播放器对着写吧，或者直接找剪辑软件。
@@ -283,7 +337,7 @@ PNG、JPEG\JPG、WEBP、TIFF、AVIF、GIF、BMP、JPEG-LS、DPX、OpenEXR
 
 真的还不如手写参数来得灵活稳定
 
-- SRT 字幕
+- SRT/ASS/SSA
 
   ```bash
   // 视频滤镜
@@ -291,21 +345,12 @@ PNG、JPEG\JPG、WEBP、TIFF、AVIF、GIF、BMP、JPEG-LS、DPX、OpenEXR
   subtitles='字幕文件路径':force_style='FontName=字体名称,FontSize=字号,PrimaryColour=HTML颜色值,MarginV=距离底部的像素距离'
   
   // 字幕文件路径配合我的通配字符串去写
+  // 特效字幕都内置了字体样式和其他属性，当然也可以使用 force_style 进行覆盖
   ```
 
   - stream_index 可直接指定已混流在文件中的字幕流索引
   - charenc 可指定字符编码
   - fontsdir 可指定字体文件目录
-
-- ASS/SSA 特效字幕
-
-  ```bash
-  // 视频滤镜
-  
-  subtitles='字幕文件路径'
-  
-  // 特效字幕都内置了字体样式和其他属性，当然也可以使用 force_style 进行覆盖
-  ```
 
 - SUP 位图字幕<br>最好还是用专门的 sup 工具，ffmpeg 这里必须先把 sup 转成逐帧图像，然后再用 overlay 叠加到视频上，无法一次性处理好。
 
@@ -313,9 +358,7 @@ PNG、JPEG\JPG、WEBP、TIFF、AVIF、GIF、BMP、JPEG-LS、DPX、OpenEXR
 
 通过插件，你可以给 3FUI 添加各种功能来满足自己的需求，只需要像我那样把可视化摆上来然后生成对应的参数即可，还可以选择接入我的编码队列，而不用自己做进度显示。
 
-<img src="IMG\vs_pe.png" />
-
-考虑到 ReadyToRun 生成的 exe 无法被添加引用，插件使用 反射 + 特性 + 动态调用 来实现，你在开发插件的时候不需要引用 3FUI，只需要按照我制定的接口标准写代码即可。目前总共只有 3 个接口功能，非常简单，通常情况下你只需要用其中 2 个，所以不要担心要硬啃代码。
+考虑到 ReadyToRun 生成的 exe 无法被添加引用，插件使用 反射 + 特性 + 动态调用 来实现，你在开发插件的时候不需要引用 3FUI，只需要按照我制定的接口标准写代码即可。目前总共只有 4 个接口功能，非常简单，通常情况下你只需要用其中 2 个，所以不要担心要硬啃代码。
 
 首先你需要有与我开发 3FUI 相同的集成开发环境：
 
@@ -377,9 +420,9 @@ Public Shared Property HostCall_AddCustomWinformPanel As Action(Of String, Contr
 Public Shared Sub SetHost_AddCustomWinformPanel(action As Object)
 	HostCall_AddCustomWinformPanel = CType(action, Action(Of String, Control))
 End Sub
-Public Shared Sub AddCustomWinformPanel()
-	HostCall_AddCustomWinformPanel.Invoke("在下拉框中显示的名称", New 自定义控件)
-End Sub
+
+'调用
+HostCall_AddCustomWinformPanel.Invoke("在下拉框中显示的名称", New 自定义控件)
 ```
 
 C# 语言：
@@ -390,10 +433,9 @@ public static void SetHost_AddCustomWinformPanel(object action)
 {
 	HostCall_AddCustomWinformPanel = (Action<string, Control>)action;
 }
-public static void AddCustomWinformPanel()
-{
-	HostCall_AddCustomWinformPanel?.Invoke("在下拉框中显示的名称", new 自定义控件());
-}
+
+//调用
+HostCall_AddCustomWinformPanel?.Invoke("在下拉框中显示的名称", new 自定义控件());
 ```
 
 - 不可以更改 HostCall 定义和 SetHost 方法，否则 3FUI 无法正确调用
@@ -413,9 +455,9 @@ Public Shared Property HostCall_AddCustomWpfPanel As Action(Of String, UIElement
 Public Shared Sub SetHost_AddCustomWpfPanel(action As Object)
 	HostCall_AddCustomWpfPanel = CType(action, Action(Of String, UIElement))
 End Sub
-Public Shared Sub AddCustomWpfPanel()
-	HostCall_AddCustomWpfPanel.Invoke("在下拉框中显示的名称", New 自定义控件)
-End Sub
+    
+'调用
+HostCall_AddCustomWpfPanel.Invoke("在下拉框中显示的名称", New 自定义控件)
 ```
 
 C# 语言：
@@ -426,47 +468,63 @@ public static void SetHost_AddCustomWpfPanel(object action)
 {
 	HostCall_AddCustomWpfPanel = (Action<string, UIElement>)action;
 }
-public static void AddCustomWpfPanel()
-{
-	HostCall_AddCustomWpfPanel?.Invoke("在下拉框中显示的名称", new 自定义控件());
-}
+
+//调用
+HostCall_AddCustomWpfPanel?.Invoke("在下拉框中显示的名称", new 自定义控件());
 ```
 
 ### 将编码任务添加到队列中
 
-同样简单的方式即可将你的编码任务添加到 3FUI 的编码队列中。
+同样简单的方式即可将你的编码任务添加到 3FUI 的编码队列中。从 2.0 版本开始有两种添加的方式，一个是用命令行添加，这样添加的任务不包含预设数据，无法使用重配置相关功能；另一个是用 3FUI 的预设文件来添加，这样添加的任务可以使用完整功能，但是注意每添加一个任务都会读取一遍预设文件，这个方法不是专门设计给批量添加需求的。
 
 VB 语言：
 
 ```vb
-Public Shared Property HostCall_AddMissionToQueue As Action(Of String, String, String)
-Public Shared Sub SetHost_AddMissionToQueue(action As Object)
-	HostCall_AddMissionToQueue = CType(action, Action(Of String, String, String))
+'使用 FFmpeg 命令行添加
+Public Shared Property HostCall_AddMissionToQueueWithArgs As Action(Of String, String, String, String)
+Public Shared Sub SetHost_AddMissionToQueueWithArgs(action As Object)
+	HostCall_AddMissionToQueueWithArgs = CType(action, Action(Of String, String, String, String))
 End Sub
-Public Shared Sub AddMissionToQueue()
-	HostCall_AddMissionToQueue.Invoke(
-            "给 ffmpeg 的参数，不要以 ffmpeg 开始",
-            "在编码队列里显示的文件名，也可以用来显示其他信息",
-            "输出文件的路径在哪，用于编码队列中的定位输出功能")
+
+'调用
+HostCall_AddMissionToQueueWithArgs.Invoke("给 ffmpeg 的参数，不要以 ffmpeg 开始", "在编码队列里显示的文件名，也可以用来显示其他信息", "输出文件的路径在哪，用于编码队列中的定位输出功能", "输入文件在哪，可以不写")
+```
+
+```visual basic
+'使用 3FUI 预设文件添加
+Public Shared Property HostCall_AddMissionToQueueWith3fuiFile As Action(Of String, String, String, String)
+Public Shared Sub SetHost_AddMissionToQueueWith3fuiFile(action As Object)
+	HostCall_AddMissionToQueueWith3fuiFile = CType(action, Action(Of String, String, String, String))
 End Sub
+
+'调用
+HostCall_AddMissionToQueueWith3fuiFile.Invoke("3FUI 预设文件的路径", "在编码队列里显示的文件名，也可以用来显示其他信息", "输出文件的路径在哪，用于编码队列中的定位输出功能", "输入文件在哪，可以不写")
 ```
 
 C# 语言：
 
 ```c#
-public static Action<string, string, string> HostCall_AddMissionToQueue { get; set; }
-public static void SetHost_AddMissionToQueue(object action)
+//使用 FFmpeg 命令行添加
+public static Action<string, string, string, string> HostCall_AddMissionToQueueWithArgs { get; set; }
+public static void SetHost_AddMissionToQueueWithArgs(object action)
 {
-	HostCall_AddMissionToQueue = (Action<string, string, string>)action;
+	HostCall_AddMissionToQueueWithArgs = (Action<string, string, string, string>)action;
 }
-public static void AddMissionToQueue()
+
+//调用
+HostCall_AddMissionToQueueWithArgs?.Invoke("给 ffmpeg 的参数，不要以 ffmpeg 开始", "在编码队列里显示的文件名，也可以用来显示其他信息", "输出文件的路径在哪，用于编码队列中的定位输出功能", "输入文件在哪，可以不写");
+```
+
+```c#
+//使用 3FUI 预设文件添加
+public static Action<string, string, string, string> HostCall_AddMissionToQueueWith3fuiFile { get; set; }
+public static void SetHost_AddMissionToQueueWith3fuiFile(object action)
 {
-	HostCall_AddMissionToQueue?.Invoke(
-    	"给 ffmpeg 的参数，不要以 ffmpeg 开始",
-    	"在编码队列里显示的文件名，也可以用来显示其他信息",
-    	"输出文件的路径在哪，用于编码队列中的定位输出功能"
-	);
+	HostCall_AddMissionToQueueWith3fuiFile = (Action<string, string, string, string>)action;
 }
+
+//调用
+HostCall_AddMissionToQueueWith3fuiFile?.Invoke("3FUI 预设文件的路径", "在编码队列里显示的文件名，也可以用来显示其他信息", "输出文件的路径在哪，用于编码队列中的定位输出功能", "输入文件在哪，可以不写");
 ```
 
 ### 发布你的插件
@@ -481,7 +539,7 @@ public static void AddMissionToQueue()
 
 ### 全屏无边框
 
-在 3FUI 的启动参数中加入 fullscreen 即可变为全屏无边框
+在 3FUI 的启动参数中加入 fullscreen 即可变为全屏无边框，在该模式下，右键主页顶部区域可以切换全屏，你应该知道那部分区域是可以用来拖动窗口的，全屏下拖一下就变回原来的尺寸了
 
 ### 保留创建、修改、访问时间
 
