@@ -407,7 +407,7 @@ PNG、JPEG\JPG、WEBP、TIFF、AVIF、GIF、BMP、JPEG-LS、DPX、OpenEXR
      }
      ```
 
-现在，你就完成了插件初始化的方法，确认一下：是名为 Entry 的 Class 里有名为 Entry 的方法。接下来就是三个接口来实现关键的功能，直接把下面的代码复制过去自己改就行了。
+现在，你就完成了插件初始化的方法，确认一下：是名为 Entry 的 Class 里有名为 Entry 的方法。接下来就是接口来实现关键的功能，直接把下面的代码复制过去自己改就行了。
 
 ### 添加自定义 WinForm 界面
 
