@@ -588,6 +588,12 @@ jx1:
                 Case 1 : 文件名 &= $"~1"
                 Case 2 : 文件名 &= $"_3fui"
                 Case 3 : 文件名 &= $"_conver"
+                Case 4 : 文件名 &= $"_{随机字符串生成(8, True, False, False)}"
+                Case 5 : 文件名 &= $"_{随机字符串生成(16, True, False, False)}"
+                Case 6 : 文件名 &= $"_{随机字符串生成(8, False, False, True)}"
+                Case 7 : 文件名 &= $"_{随机字符串生成(16, False, False, True)}"
+                Case 8 : 文件名 &= $"_{随机字符串生成(8, True, False, True)}"
+                Case 9 : 文件名 &= $"_{随机字符串生成(16, True, False, True)}"
             End Select
         End If
         文件名 &= 容器

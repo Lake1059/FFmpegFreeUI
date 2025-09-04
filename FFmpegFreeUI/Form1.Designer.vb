@@ -29,9 +29,11 @@ Partial Class Form1
         Panel5 = New Panel()
         Label29 = New Label()
         Panel44 = New Panel()
+        Label35 = New Label()
+        Label28 = New Label()
+        Label23 = New Label()
         Label42 = New Label()
         Label37 = New Label()
-        Label28 = New Label()
         Label26 = New Label()
         Label21 = New Label()
         Label14 = New Label()
@@ -183,6 +185,8 @@ Partial Class Form1
         Label53 = New Label()
         Label41 = New Label()
         Panel42 = New Panel()
+        UiComboBox自动开始任务 = New Sunny.UI.UIComboBox()
+        Label32 = New Label()
         UiComboBox提示音 = New Sunny.UI.UIComboBox()
         Label20 = New Label()
         UiComboBox有任务时系统状态 = New Sunny.UI.UIComboBox()
@@ -297,10 +301,10 @@ Partial Class Form1
         ' Panel5
         ' 
         Panel5.Dock = DockStyle.Fill
-        Panel5.Location = New Point(620, 144)
+        Panel5.Location = New Point(640, 144)
         Panel5.Name = "Panel5"
         Panel5.Padding = New Padding(1, 0, 20, 20)
-        Panel5.Size = New Size(413, 517)
+        Panel5.Size = New Size(393, 517)
         Panel5.TabIndex = 86
         ' 
         ' Label29
@@ -308,7 +312,7 @@ Partial Class Form1
         Label29.AutoSize = True
         Label29.Dock = DockStyle.Top
         Label29.Font = New Font("微软雅黑", 13F)
-        Label29.Location = New Point(620, 90)
+        Label29.Location = New Point(640, 90)
         Label29.Name = "Label29"
         Label29.Padding = New Padding(0, 20, 0, 10)
         Label29.Size = New Size(82, 54)
@@ -318,9 +322,11 @@ Partial Class Form1
         ' Panel44
         ' 
         Panel44.BackgroundImageLayout = ImageLayout.Stretch
+        Panel44.Controls.Add(Label35)
+        Panel44.Controls.Add(Label28)
+        Panel44.Controls.Add(Label23)
         Panel44.Controls.Add(Label42)
         Panel44.Controls.Add(Label37)
-        Panel44.Controls.Add(Label28)
         Panel44.Controls.Add(Label26)
         Panel44.Controls.Add(Label21)
         Panel44.Controls.Add(Label14)
@@ -333,8 +339,46 @@ Partial Class Form1
         Panel44.Font = New Font("微软雅黑", 9.75F)
         Panel44.Location = New Point(300, 90)
         Panel44.Name = "Panel44"
-        Panel44.Size = New Size(320, 571)
+        Panel44.Padding = New Padding(0, 0, 20, 0)
+        Panel44.Size = New Size(340, 571)
         Panel44.TabIndex = 0
+        ' 
+        ' Label35
+        ' 
+        Label35.Dock = DockStyle.Fill
+        Label35.Font = New Font("微软雅黑", 10F)
+        Label35.ForeColor = Color.Gray
+        Label35.Location = New Point(0, 372)
+        Label35.Name = "Label35"
+        Label35.Padding = New Padding(20, 5, 0, 0)
+        Label35.Size = New Size(320, 199)
+        Label35.TabIndex = 47
+        Label35.Text = "请尽可能只在主显示器上使用；在不同缩放的显示器之间移动很容易导致 SunnyUI 出现字体过大的问题，其内部支持很有限；如果在主显示器上出现问题请直接汇报。"
+        ' 
+        ' Label28
+        ' 
+        Label28.AutoSize = True
+        Label28.Dock = DockStyle.Top
+        Label28.Font = New Font("微软雅黑", 13F)
+        Label28.Location = New Point(0, 323)
+        Label28.Name = "Label28"
+        Label28.Padding = New Padding(20, 20, 0, 5)
+        Label28.Size = New Size(124, 49)
+        Label28.TabIndex = 46
+        Label28.Text = "高 DPI 兼容"
+        ' 
+        ' Label23
+        ' 
+        Label23.AutoSize = True
+        Label23.Dock = DockStyle.Top
+        Label23.Font = New Font("微软雅黑", 10F)
+        Label23.ForeColor = Color.DimGray
+        Label23.Location = New Point(0, 298)
+        Label23.Name = "Label23"
+        Label23.Padding = New Padding(20, 5, 0, 0)
+        Label23.Size = New Size(183, 25)
+        Label23.TabIndex = 45
+        Label23.Text = "不要半天什么都不提供！"
         ' 
         ' Label42
         ' 
@@ -342,12 +386,12 @@ Partial Class Form1
         Label42.Dock = DockStyle.Top
         Label42.Font = New Font("微软雅黑", 10F)
         Label42.ForeColor = Color.Gray
-        Label42.Location = New Point(0, 298)
+        Label42.Location = New Point(0, 273)
         Label42.Name = "Label42"
         Label42.Padding = New Padding(20, 5, 0, 0)
-        Label42.Size = New Size(187, 25)
+        Label42.Size = New Size(229, 25)
         Label42.TabIndex = 44
-        Label42.Text = "⑤ 可选：汇报源文件参数"
+        Label42.Text = "④ 及时跟进汇报讨论要求的信息"
         ' 
         ' Label37
         ' 
@@ -355,25 +399,12 @@ Partial Class Form1
         Label37.Dock = DockStyle.Top
         Label37.Font = New Font("微软雅黑", 10F)
         Label37.ForeColor = Color.Gray
-        Label37.Location = New Point(0, 273)
+        Label37.Location = New Point(0, 248)
         Label37.Name = "Label37"
         Label37.Padding = New Padding(20, 5, 0, 0)
-        Label37.Size = New Size(103, 25)
+        Label37.Size = New Size(173, 25)
         Label37.TabIndex = 43
-        Label37.Text = "④ 发送求助"
-        ' 
-        ' Label28
-        ' 
-        Label28.AutoSize = True
-        Label28.Dock = DockStyle.Top
-        Label28.Font = New Font("微软雅黑", 10F)
-        Label28.ForeColor = Color.Gray
-        Label28.Location = New Point(0, 248)
-        Label28.Name = "Label28"
-        Label28.Padding = New Padding(20, 5, 0, 0)
-        Label28.Size = New Size(201, 25)
-        Label28.TabIndex = 42
-        Label28.Text = "③ 复制参数总览或即时显示"
+        Label37.Text = "③ 向专业人士发送求助"
         ' 
         ' Label26
         ' 
@@ -384,9 +415,9 @@ Partial Class Form1
         Label26.Location = New Point(0, 223)
         Label26.Name = "Label26"
         Label26.Padding = New Padding(20, 5, 0, 0)
-        Label26.Size = New Size(187, 25)
+        Label26.Size = New Size(173, 25)
         Label26.TabIndex = 41
-        Label26.Text = "② 复制全部或仅错误输出"
+        Label26.Text = "② 复制其输出和命令行"
         ' 
         ' Label21
         ' 
@@ -409,9 +440,9 @@ Partial Class Form1
         Label14.Location = New Point(0, 149)
         Label14.Name = "Label14"
         Label14.Padding = New Padding(20, 20, 0, 5)
-        Label14.Size = New Size(138, 49)
+        Label14.Size = New Size(102, 49)
         Label14.TabIndex = 39
-        Label14.Text = "编码求助流程"
+        Label14.Text = "求助流程"
         ' 
         ' Label13
         ' 
@@ -812,10 +843,10 @@ Partial Class Form1
         Panel输出面板.Controls.Add(Label45)
         Panel输出面板.Controls.Add(Panel13)
         Panel输出面板.Dock = DockStyle.Right
-        Panel输出面板.Location = New Point(390, 90)
+        Panel输出面板.Location = New Point(440, 90)
         Panel输出面板.Name = "Panel输出面板"
         Panel输出面板.Padding = New Padding(10, 10, 10, 0)
-        Panel输出面板.Size = New Size(643, 531)
+        Panel输出面板.Size = New Size(593, 531)
         Panel输出面板.TabIndex = 37
         Panel输出面板.Visible = False
         ' 
@@ -827,7 +858,7 @@ Partial Class Form1
         Panel77.Location = New Point(10, 80)
         Panel77.Name = "Panel77"
         Panel77.Padding = New Padding(10, 10, 0, 10)
-        Panel77.Size = New Size(623, 451)
+        Panel77.Size = New Size(573, 451)
         Panel77.TabIndex = 37
         ' 
         ' RichTextBox2
@@ -842,7 +873,7 @@ Partial Class Form1
         RichTextBox2.Name = "RichTextBox2"
         RichTextBox2.ReadOnly = True
         RichTextBox2.ScrollBars = RichTextBoxScrollBars.Vertical
-        RichTextBox2.Size = New Size(611, 429)
+        RichTextBox2.Size = New Size(561, 429)
         RichTextBox2.TabIndex = 11
         RichTextBox2.Text = ""
         ' 
@@ -871,7 +902,7 @@ Partial Class Form1
         Panel13.Location = New Point(10, 10)
         Panel13.Name = "Panel13"
         Panel13.Padding = New Padding(0, 0, 0, 10)
-        Panel13.Size = New Size(623, 40)
+        Panel13.Size = New Size(573, 40)
         Panel13.TabIndex = 12
         ' 
         ' UiCheckBox强制滚动到最后
@@ -884,7 +915,7 @@ Partial Class Form1
         UiCheckBox强制滚动到最后.Location = New Point(300, 0)
         UiCheckBox强制滚动到最后.MinimumSize = New Size(1, 1)
         UiCheckBox强制滚动到最后.Name = "UiCheckBox强制滚动到最后"
-        UiCheckBox强制滚动到最后.Size = New Size(323, 30)
+        UiCheckBox强制滚动到最后.Size = New Size(273, 30)
         UiCheckBox强制滚动到最后.TabIndex = 99
         UiCheckBox强制滚动到最后.Text = "强制滚动到最后"
         ' 
@@ -1024,9 +1055,9 @@ Partial Class Form1
         ' Label8
         ' 
         Label8.Dock = DockStyle.Fill
-        Label8.Location = New Point(890, 0)
+        Label8.Location = New Point(850, 0)
         Label8.Name = "Label8"
-        Label8.Size = New Size(143, 40)
+        Label8.Size = New Size(183, 40)
         Label8.TabIndex = 7
         Label8.Text = "预计剩余 && 已用"
         Label8.TextAlign = ContentAlignment.MiddleLeft
@@ -1034,7 +1065,7 @@ Partial Class Form1
         ' Label7
         ' 
         Label7.Dock = DockStyle.Left
-        Label7.Location = New Point(775, 0)
+        Label7.Location = New Point(735, 0)
         Label7.Name = "Label7"
         Label7.Size = New Size(115, 40)
         Label7.TabIndex = 6
@@ -1044,7 +1075,7 @@ Partial Class Form1
         ' Label6
         ' 
         Label6.Dock = DockStyle.Left
-        Label6.Location = New Point(720, 0)
+        Label6.Location = New Point(680, 0)
         Label6.Name = "Label6"
         Label6.Size = New Size(55, 40)
         Label6.TabIndex = 5
@@ -1054,7 +1085,7 @@ Partial Class Form1
         ' Label5
         ' 
         Label5.Dock = DockStyle.Left
-        Label5.Location = New Point(570, 0)
+        Label5.Location = New Point(530, 0)
         Label5.Name = "Label5"
         Label5.Size = New Size(150, 40)
         Label5.TabIndex = 4
@@ -1064,7 +1095,7 @@ Partial Class Form1
         ' Label4
         ' 
         Label4.Dock = DockStyle.Left
-        Label4.Location = New Point(490, 0)
+        Label4.Location = New Point(450, 0)
         Label4.Name = "Label4"
         Label4.Size = New Size(80, 40)
         Label4.TabIndex = 3
@@ -1074,7 +1105,7 @@ Partial Class Form1
         ' Label3
         ' 
         Label3.Dock = DockStyle.Left
-        Label3.Location = New Point(420, 0)
+        Label3.Location = New Point(380, 0)
         Label3.Name = "Label3"
         Label3.Size = New Size(70, 40)
         Label3.TabIndex = 2
@@ -1084,7 +1115,7 @@ Partial Class Form1
         ' Label2
         ' 
         Label2.Dock = DockStyle.Left
-        Label2.Location = New Point(340, 0)
+        Label2.Location = New Point(300, 0)
         Label2.Name = "Label2"
         Label2.Size = New Size(80, 40)
         Label2.TabIndex = 1
@@ -1097,7 +1128,7 @@ Partial Class Form1
         Label1.Location = New Point(0, 0)
         Label1.Name = "Label1"
         Label1.Padding = New Padding(10, 0, 0, 0)
-        Label1.Size = New Size(340, 40)
+        Label1.Size = New Size(300, 40)
         Label1.TabIndex = 0
         Label1.Text = "输入文件"
         Label1.TextAlign = ContentAlignment.MiddleLeft
@@ -2623,6 +2654,8 @@ Partial Class Form1
         ' 
         ' Panel42
         ' 
+        Panel42.Controls.Add(UiComboBox自动开始任务)
+        Panel42.Controls.Add(Label32)
         Panel42.Controls.Add(UiComboBox提示音)
         Panel42.Controls.Add(Label20)
         Panel42.Controls.Add(UiComboBox有任务时系统状态)
@@ -2632,6 +2665,52 @@ Partial Class Form1
         Panel42.Padding = New Padding(21, 10, 20, 0)
         Panel42.Size = New Size(1033, 40)
         Panel42.TabIndex = 17
+        ' 
+        ' UiComboBox自动开始任务
+        ' 
+        UiComboBox自动开始任务.DataSource = Nothing
+        UiComboBox自动开始任务.Dock = DockStyle.Left
+        UiComboBox自动开始任务.DropDownStyle = Sunny.UI.UIDropDownStyle.DropDownList
+        UiComboBox自动开始任务.FillColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        UiComboBox自动开始任务.FillColor2 = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        UiComboBox自动开始任务.FillDisableColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        UiComboBox自动开始任务.Font = New Font("微软雅黑", 10F)
+        UiComboBox自动开始任务.ForeColor = Color.Silver
+        UiComboBox自动开始任务.ForeDisableColor = Color.Silver
+        UiComboBox自动开始任务.ItemFillColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        UiComboBox自动开始任务.ItemForeColor = Color.Silver
+        UiComboBox自动开始任务.ItemHeight = 30
+        UiComboBox自动开始任务.ItemHoverColor = Color.FromArgb(CByte(56), CByte(56), CByte(56))
+        UiComboBox自动开始任务.ItemRectColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        UiComboBox自动开始任务.Items.AddRange(New Object() {"自动开始任务", "手动开始任务"})
+        UiComboBox自动开始任务.ItemSelectBackColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        UiComboBox自动开始任务.ItemSelectForeColor = Color.Silver
+        UiComboBox自动开始任务.Location = New Point(445, 10)
+        UiComboBox自动开始任务.Margin = New Padding(4, 5, 4, 5)
+        UiComboBox自动开始任务.MaxDropDownItems = 17
+        UiComboBox自动开始任务.MinimumSize = New Size(63, 0)
+        UiComboBox自动开始任务.Name = "UiComboBox自动开始任务"
+        UiComboBox自动开始任务.Padding = New Padding(0, 0, 30, 2)
+        UiComboBox自动开始任务.RectColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        UiComboBox自动开始任务.RectDisableColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        UiComboBox自动开始任务.ScrollBarHandleWidth = 20
+        UiComboBox自动开始任务.Size = New Size(140, 30)
+        UiComboBox自动开始任务.Style = Sunny.UI.UIStyle.Custom
+        UiComboBox自动开始任务.SymbolSize = 24
+        UiComboBox自动开始任务.TabIndex = 94
+        UiComboBox自动开始任务.TextAlignment = ContentAlignment.MiddleLeft
+        UiComboBox自动开始任务.Watermark = "自动开始任务"
+        ' 
+        ' Label32
+        ' 
+        Label32.Dock = DockStyle.Left
+        Label32.ForeColor = Color.Gray
+        Label32.Location = New Point(435, 10)
+        Label32.Name = "Label32"
+        Label32.Padding = New Padding(10, 0, 0, 0)
+        Label32.Size = New Size(10, 30)
+        Label32.TabIndex = 93
+        Label32.TextAlign = ContentAlignment.MiddleLeft
         ' 
         ' UiComboBox提示音
         ' 
@@ -3239,7 +3318,6 @@ Partial Class Form1
     Friend WithEvents UiComboBox输出显示类型 As Sunny.UI.UIComboBox
     Friend WithEvents Label15 As Label
     Friend WithEvents UiButton添加进阶质量控制预制项 As Sunny.UI.UIButton
-    Friend WithEvents Label28 As Label
     Friend WithEvents Label26 As Label
     Friend WithEvents Label21 As Label
     Friend WithEvents Panel5 As Panel
@@ -3251,5 +3329,10 @@ Partial Class Form1
     Friend WithEvents Panel77 As Panel
     Friend WithEvents RichTextBox2 As RichTextBox
     Friend WithEvents Label45 As Label
+    Friend WithEvents Label28 As Label
+    Friend WithEvents Label23 As Label
+    Friend WithEvents UiComboBox自动开始任务 As Sunny.UI.UIComboBox
+    Friend WithEvents Label32 As Label
+    Friend WithEvents Label35 As Label
 
 End Class

@@ -67,7 +67,9 @@ Public Class 插件管理
         Form1.ListView1.Items.Add(i2)
         m.列表视图项 = i2
         编码任务.队列.Add(m)
-        Task.Run(AddressOf 编码任务.检查是否有可以开始的任务)
+        If 用户设置.实例对象.自动开始任务选项 = 0 Then
+            Task.Run(AddressOf 编码任务.检查是否有可以开始的任务)
+        End If
     End Sub
 
     Public Shared Sub 使用预设文件添加任务到编码队列(File_3FUI_JsonPath As String, FileName As String, OutputPath As String, Optional InputPath As String = "")
@@ -82,7 +84,9 @@ Public Class 插件管理
         Form1.ListView1.Items.Add(i2)
         m.列表视图项 = i2
         编码任务.队列.Add(m)
-        Task.Run(AddressOf 编码任务.检查是否有可以开始的任务)
+        If 用户设置.实例对象.自动开始任务选项 = 0 Then
+            Task.Run(AddressOf 编码任务.检查是否有可以开始的任务)
+        End If
     End Sub
 
     Shared Sub 将自定义界面名称刷新到下拉框中()

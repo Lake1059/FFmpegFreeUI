@@ -55,6 +55,7 @@ Public Class 界面控制
                                                                       用户设置.实例对象.有任务时系统保持状态选项 = Form1.UiComboBox有任务时系统状态.SelectedIndex
                                                                   End Sub
         AddHandler Form1.UiComboBox提示音.SelectedIndexChanged, Sub() 用户设置.实例对象.提示音选项 = Form1.UiComboBox提示音.SelectedIndex
+        AddHandler Form1.UiComboBox自动开始任务.SelectedIndexChanged, Sub() 用户设置.实例对象.自动开始任务选项 = Form1.UiComboBox自动开始任务.SelectedIndex
 
         AddHandler Form1.UiTextBoxFFmpeg自定义工作目录.TextChanged, Sub() 用户设置.实例对象.工作目录 = Form1.UiTextBoxFFmpeg自定义工作目录.Text
         AddHandler Form1.UiButton13.Click, Sub()
@@ -169,11 +170,7 @@ Public Class 界面控制
         Form1.性能统计刷新计时器.Enabled = False
         Select Case True
             Case 选项卡.IsEqual(Form1.TabPage起始页面)
-                Form1.UiComboBox字体名称.ItemHeight = 30 * Form1.DPI
-                Form1.UiComboBox自动开始最大任务数量.ItemHeight = 30 * Form1.DPI
-                Form1.UiComboBox有任务时系统状态.ItemHeight = 30 * Form1.DPI
-                Form1.UiComboBox提示音.ItemHeight = 30 * Form1.DPI
-                Form1.UiCheckBox转译模式.CheckBoxSize = 20 * Form1.DPI
+
 
             Case 选项卡.IsEqual(Form1.TabPage编码队列)
                 Form1.Label1.Width = Form1.Panel1.Width - Form1.Panel1.Padding.Left - Form1.Label2.Width - Form1.Label3.Width - Form1.Label4.Width - Form1.Label5.Width - Form1.Label6.Width - Form1.Label7.Width - 200 * Form1.DPI
@@ -218,6 +215,14 @@ Public Class 界面控制
                 Form1.ListView4.Columns(0).Width = Form1.ListView4.Width * 0.8 - SystemInformation.VerticalScrollBarWidth * Form1.DPI
                 Form1.ListView4.Columns(1).Width = Form1.ListView4.Width * 0.2
                 Form1.性能统计刷新计时器.Enabled = True
+
+            Case 选项卡.IsEqual(Form1.TabPage软件设置)
+                Form1.UiComboBox字体名称.ItemHeight = 30 * Form1.DPI
+                Form1.UiComboBox自动开始最大任务数量.ItemHeight = 30 * Form1.DPI
+                Form1.UiComboBox有任务时系统状态.ItemHeight = 30 * Form1.DPI
+                Form1.UiComboBox提示音.ItemHeight = 30 * Form1.DPI
+                Form1.UiComboBox自动开始任务.ItemHeight = 30 * Form1.DPI
+                Form1.UiCheckBox转译模式.CheckBoxSize = 20 * Form1.DPI
 
         End Select
     End Sub

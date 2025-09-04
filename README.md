@@ -51,7 +51,7 @@ FFmpegFreeUI（简称 3FUI）是在 Windows 上的 [FFmpeg](https://ffmpeg.org) 
 
 ### 群友倾情贡献
 
-关于在 Linux 中使用 Wine 转译运行 3FUI 的方法可参阅 [linux.md](doc/linux.md)
+关于在 Linux 中使用 Wine 转译运行 3FUI 的方法：[linux.md](doc/linux.md)
 
 ## 下载说明
 

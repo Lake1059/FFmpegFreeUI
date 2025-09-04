@@ -24,13 +24,15 @@ Public Class 新闻列表
                     Case "red"
                         c1.LinkColor = Color.IndianRed
                     Case "orange"
-                        c1.LinkColor = Color.Orange
+                        c1.LinkColor = Color.Peru
                     Case "yellow"
                         c1.LinkColor = Color.GreenYellow
                     Case "green"
-                        c1.LinkColor = Color.YellowGreen
+                        c1.LinkColor = Color.OliveDrab
                     Case "blue"
                         c1.LinkColor = Color.CornflowerBlue
+                    Case “purple”
+                        c1.LinkColor = Color.MediumPurple
                 End Select
             End If
 
@@ -63,7 +65,7 @@ jx1:
                 If e.Result = "" Then
                     显示新闻列表()
                 Else
-                    Form1.Panel5.Controls.Add(New Label With {.Text = "获取新闻内容失败" & vbCrLf & vbCrLf & e.Result, .Dock = DockStyle.Fill, .AutoSize = False, .Padding = New Padding(10, 0, 0, 0), .Font = New Font(用户设置.实例对象.字体, 11), .ForeColor = Color.Gray})
+                    Form1.Panel5.Controls.Add(New Label With {.Text = "获取新闻内容失败" & vbCrLf & vbCrLf & e.Result, .Dock = DockStyle.Fill, .AutoSize = False, .Font = New Font(用户设置.实例对象.字体, 11), .ForeColor = Color.Gray})
                 End If
             End Sub
         服务器获取_新闻.RunWorkerAsync()

@@ -50,25 +50,25 @@ Public Class Form1
         界面线程执行(AddressOf 检查更新.检查)
         任务进度更新计时器.Enabled = True
 
-        If 用户设置.实例对象.V2Tips Then
-            T99 = New Timer With {.Enabled = False, .Interval = 3000}
-            AddHandler T99.Tick, AddressOf 显示教学信息
-            T99.Start()
-        End If
+        'If 用户设置.实例对象.V2Tips Then
+        '    T99 = New Timer With {.Enabled = False, .Interval = 3000}
+        '    AddHandler T99.Tick, AddressOf 显示教学信息
+        '    T99.Start()
+        'End If
 
         新闻列表.获取新闻()
     End Sub
 
-    Public T99 As Timer
-    Sub 显示教学信息()
-        Dim 选项字典 As New Dictionary(Of String, Action)
-        选项字典("了解") = Nothing
-        选项字典("永久关闭这个提示") = Sub() 用户设置.实例对象.V2Tips = False
-        软件内对话框.显示对话框("2.0 全新视觉", $"参数面板已完全重做，原来的内置提示信息已全部移除，现在可以在下拉框上使用鼠标滚轮来快速切换", 选项字典, 软件内对话框.主题类型.常规)
-        T99.Enabled = False
-        T99.Dispose()
-        T99 = Nothing
-    End Sub
+    'Public T99 As Timer
+    'Sub 显示教学信息()
+    '    Dim 选项字典 As New Dictionary(Of String, Action)
+    '    选项字典("了解") = Nothing
+    '    选项字典("永久关闭这个提示") = Sub() 用户设置.实例对象.V2Tips = False
+    '    软件内对话框.显示对话框("2.0 全新视觉", $"参数面板已完全重做，原来的内置提示信息已全部移除，现在可以在下拉框上使用鼠标滚轮来快速切换", 选项字典, 软件内对话框.主题类型.常规)
+    '    T99.Enabled = False
+    '    T99.Dispose()
+    '    T99 = Nothing
+    'End Sub
 
     Public Sub 重新创建句柄()
         Try

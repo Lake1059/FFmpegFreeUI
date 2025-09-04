@@ -36,7 +36,26 @@ Public Class 暗黑列表视图自绘制
             Using brush As New SolidBrush(项背景色)
                 e.Graphics.FillRectangle(brush, e.Bounds)
             End Using
-            TextRenderer.DrawText(e.Graphics, 实际要绘制的文本.Replace("&", "&&"), e.SubItem.Font, 文本绘制区, e.Item.ForeColor, 项背景色, TextFormatFlags.Default)
+            Select Case e.ColumnIndex
+                Case 2
+                    Dim 进度文本 As String = e.SubItem.Text
+                    Dim 进度值 As Double = 0
+                    If 进度文本.EndsWith("%"c) Then
+                        Dim unused = Double.TryParse(进度文本.AsSpan(0, 进度文本.Length - 1), 进度值)
+                        进度值 = Math.Max(0, Math.Min(100, 进度值))
+                    Else
+                        Exit Select
+                    End If
+                    Dim 边距 As Integer = 3 * Form1.DPI
+                    Dim 高度 As Integer = Math.Max(8 * Form1.DPI, e.Bounds.Height - 6 * Form1.DPI)
+                    Dim 区域 As New Rectangle(e.Bounds.X + 边距, e.Bounds.Y + (e.Bounds.Height - 高度) \ 2, e.Bounds.Width - 2 * 边距, 高度)
+                    If 进度值 > 0 Then
+                        Using 填充画刷 As New SolidBrush(Color.FromArgb(64, 64, 64))
+                            e.Graphics.FillRectangle(填充画刷, New Rectangle(区域.X, 区域.Y, 区域.Width * (进度值 / 100), 区域.Height))
+                        End Using
+                    End If
+            End Select
+            TextRenderer.DrawText(e.Graphics, 实际要绘制的文本.Replace("&", "&&"), e.SubItem.Font, 文本绘制区, e.Item.ForeColor, Color.Transparent, TextFormatFlags.Default)
         Catch ex As Exception
         End Try
     End Sub

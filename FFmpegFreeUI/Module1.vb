@@ -2,6 +2,7 @@
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
+Imports System.Text
 Imports System.Text.Json
 Imports System.Threading
 Module Module1
@@ -243,5 +244,35 @@ Module Module1
             Return New Bitmap(Form1.Width, Form1.Height)
         End Try
     End Function
+
+    Public Function 随机字符串生成(长度 As Integer, Optional 包含数字 As Boolean = True, Optional 包含大写字母 As Boolean = True, Optional 包含小写字母 As Boolean = True) As String
+        If 长度 <= 0 Then
+            Return ""
+            Exit Function
+        End If
+        If Not 包含数字 AndAlso Not 包含大写字母 AndAlso Not 包含小写字母 Then
+            Return ""
+            Exit Function
+        End If
+        Dim numbers As String = "0123456789"
+        Dim upperCase As String = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        Dim lowerCase As String = "abcdefghijklmnopqrstuvwxyz"
+        Dim validChars As New StringBuilder()
+        If 包含数字 Then validChars.Append(numbers)
+        If 包含大写字母 Then validChars.Append(upperCase)
+        If 包含小写字母 Then validChars.Append(lowerCase)
+        If validChars.Length = 0 Then
+            Return "无效的字符集"
+        End If
+        Dim rnd As New Random()
+        Dim result As New StringBuilder(长度)
+        For i As Integer = 1 To 长度
+            Dim randomIndex As Integer = rnd.Next(0, validChars.Length)
+            result.Append(validChars(randomIndex))
+        Next
+        Return result.ToString()
+    End Function
+
+
 
 End Module
