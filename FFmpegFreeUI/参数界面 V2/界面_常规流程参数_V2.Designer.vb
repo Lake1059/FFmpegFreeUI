@@ -320,6 +320,7 @@ Partial Class 界面_常规流程参数_V2
         UiTextBox完全自己写参数 = New Sunny.UI.UITextBox()
         Label106 = New Label()
         TabPage流控制 = New TabPage()
+        Label143 = New Label()
         Panel66 = New Panel()
         Label151 = New Label()
         UiTextBox快速剪辑出点 = New Sunny.UI.UITextBox()
@@ -380,7 +381,6 @@ Partial Class 界面_常规流程参数_V2
         UiButton22 = New Sunny.UI.UIButton()
         Label123 = New Label()
         Label124 = New Label()
-        Label143 = New Label()
         UiTabControlMenu1.SuspendLayout()
         TabPage参数总览.SuspendLayout()
         Panel72.SuspendLayout()
@@ -5515,6 +5515,19 @@ Partial Class 界面_常规流程参数_V2
         TabPage流控制.TabIndex = 10
         TabPage流控制.Text = "流控制"
         ' 
+        ' Label143
+        ' 
+        Label143.AutoSize = True
+        Label143.Dock = DockStyle.Top
+        Label143.Font = New Font("微软雅黑", 9.75F)
+        Label143.ForeColor = Color.Gray
+        Label143.Location = New Point(0, 541)
+        Label143.Name = "Label143"
+        Label143.Padding = New Padding(16, 5, 0, 0)
+        Label143.Size = New Size(408, 24)
+        Label143.TabIndex = 102
+        Label143.Text = "1秒 = 1000 毫秒，将 1000 除以 帧率 得到的毫秒值即可精确到帧"
+        ' 
         ' Panel66
         ' 
         Panel66.Controls.Add(Label151)
@@ -6514,19 +6527,6 @@ Partial Class 界面_常规流程参数_V2
         Label124.Size = New Size(98, 44)
         Label124.TabIndex = 29
         Label124.Text = "预设管理"
-        ' 
-        ' Label143
-        ' 
-        Label143.AutoSize = True
-        Label143.Dock = DockStyle.Top
-        Label143.Font = New Font("微软雅黑", 9.75F)
-        Label143.ForeColor = Color.Gray
-        Label143.Location = New Point(0, 541)
-        Label143.Name = "Label143"
-        Label143.Padding = New Padding(16, 5, 0, 0)
-        Label143.Size = New Size(408, 24)
-        Label143.TabIndex = 102
-        Label143.Text = "1秒 = 1000 毫秒，将 1000 除以 帧率 得到的毫秒值即可精确到帧"
         ' 
         ' 界面_常规流程参数_V2
         ' 

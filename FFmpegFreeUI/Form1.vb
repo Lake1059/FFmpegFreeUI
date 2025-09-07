@@ -228,8 +228,10 @@ Public Class Form1
     Private Sub UiButton切换处理器占用面板_Click(sender As Object, e As EventArgs) Handles UiButton切换处理器占用面板.Click
         If Panel18.Visible Then
             Panel18.Visible = False
+            Label46.Visible = False
         Else
             Panel18.Visible = True
+            Label46.Visible = True
         End If
         界面控制.界面校准()
     End Sub

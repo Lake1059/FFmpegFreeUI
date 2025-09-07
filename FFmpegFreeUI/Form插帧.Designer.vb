@@ -79,9 +79,9 @@ Partial Class Form插帧
         ' Label62
         ' 
         Label62.Dock = DockStyle.Top
-        Label62.Location = New Point(20, 148)
+        Label62.Location = New Point(10, 128)
         Label62.Name = "Label62"
-        Label62.Size = New Size(694, 20)
+        Label62.Size = New Size(714, 10)
         Label62.TabIndex = 68
         ' 
         ' Panel8
@@ -90,9 +90,9 @@ Partial Class Form插帧
         Panel8.Controls.Add(Panel11)
         Panel8.Controls.Add(Label1)
         Panel8.Dock = DockStyle.Top
-        Panel8.Location = New Point(20, 98)
+        Panel8.Location = New Point(10, 78)
         Panel8.Name = "Panel8"
-        Panel8.Size = New Size(694, 50)
+        Panel8.Size = New Size(714, 50)
         Panel8.TabIndex = 67
         ' 
         ' Panel11
@@ -103,7 +103,7 @@ Partial Class Form插帧
         Panel11.Location = New Point(100, 0)
         Panel11.Name = "Panel11"
         Panel11.Padding = New Padding(10, 10, 0, 10)
-        Panel11.Size = New Size(594, 50)
+        Panel11.Size = New Size(614, 50)
         Panel11.TabIndex = 2
         ' 
         ' Label13
@@ -113,7 +113,7 @@ Partial Class Form插帧
         Label13.Location = New Point(185, 10)
         Label13.Name = "Label13"
         Label13.Padding = New Padding(10, 0, 0, 0)
-        Label13.Size = New Size(409, 30)
+        Label13.Size = New Size(429, 30)
         Label13.TabIndex = 98
         Label13.Text = "目标帧率 或 插帧模式 留空以取消使用此滤镜"
         Label13.TextAlign = ContentAlignment.MiddleLeft
@@ -164,9 +164,9 @@ Partial Class Form插帧
         ' Label124
         ' 
         Label124.Dock = DockStyle.Top
-        Label124.Location = New Point(20, 78)
+        Label124.Location = New Point(10, 68)
         Label124.Name = "Label124"
-        Label124.Size = New Size(694, 20)
+        Label124.Size = New Size(714, 10)
         Label124.TabIndex = 82
         ' 
         ' Panel73
@@ -175,10 +175,10 @@ Partial Class Form插帧
         Panel73.BackColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
         Panel73.Controls.Add(Label123)
         Panel73.Dock = DockStyle.Top
-        Panel73.Location = New Point(20, 20)
+        Panel73.Location = New Point(10, 10)
         Panel73.Name = "Panel73"
         Panel73.Padding = New Padding(10)
-        Panel73.Size = New Size(694, 58)
+        Panel73.Size = New Size(714, 58)
         Panel73.TabIndex = 81
         ' 
         ' Label123
@@ -196,9 +196,9 @@ Partial Class Form插帧
         ' Label2
         ' 
         Label2.Dock = DockStyle.Top
-        Label2.Location = New Point(20, 218)
+        Label2.Location = New Point(10, 188)
         Label2.Name = "Label2"
-        Label2.Size = New Size(694, 20)
+        Label2.Size = New Size(714, 10)
         Label2.TabIndex = 84
         ' 
         ' Panel1
@@ -207,9 +207,9 @@ Partial Class Form插帧
         Panel1.Controls.Add(Panel2)
         Panel1.Controls.Add(Label5)
         Panel1.Dock = DockStyle.Top
-        Panel1.Location = New Point(20, 168)
+        Panel1.Location = New Point(10, 138)
         Panel1.Name = "Panel1"
-        Panel1.Size = New Size(694, 50)
+        Panel1.Size = New Size(714, 50)
         Panel1.TabIndex = 83
         ' 
         ' Panel2
@@ -223,7 +223,7 @@ Partial Class Form插帧
         Panel2.Location = New Point(100, 0)
         Panel2.Name = "Panel2"
         Panel2.Padding = New Padding(10, 10, 0, 10)
-        Panel2.Size = New Size(594, 50)
+        Panel2.Size = New Size(614, 50)
         Panel2.TabIndex = 2
         ' 
         ' UiComboBox运动估计算法
@@ -362,9 +362,9 @@ Partial Class Form插帧
         ' Label6
         ' 
         Label6.Dock = DockStyle.Top
-        Label6.Location = New Point(20, 288)
+        Label6.Location = New Point(10, 248)
         Label6.Name = "Label6"
-        Label6.Size = New Size(694, 20)
+        Label6.Size = New Size(714, 10)
         Label6.TabIndex = 86
         ' 
         ' Panel3
@@ -373,9 +373,9 @@ Partial Class Form插帧
         Panel3.Controls.Add(Panel4)
         Panel3.Controls.Add(Label9)
         Panel3.Dock = DockStyle.Top
-        Panel3.Location = New Point(20, 238)
+        Panel3.Location = New Point(10, 198)
         Panel3.Name = "Panel3"
-        Panel3.Size = New Size(694, 50)
+        Panel3.Size = New Size(714, 50)
         Panel3.TabIndex = 85
         ' 
         ' Panel4
@@ -387,7 +387,7 @@ Partial Class Form插帧
         Panel4.Location = New Point(100, 0)
         Panel4.Name = "Panel4"
         Panel4.Padding = New Padding(10, 10, 0, 10)
-        Panel4.Size = New Size(594, 50)
+        Panel4.Size = New Size(614, 50)
         Panel4.TabIndex = 2
         ' 
         ' UiCheckBox可变块大小的运动补偿
@@ -462,9 +462,9 @@ Partial Class Form插帧
         ' Label7
         ' 
         Label7.Dock = DockStyle.Top
-        Label7.Location = New Point(20, 383)
+        Label7.Location = New Point(10, 333)
         Label7.Name = "Label7"
-        Label7.Size = New Size(694, 20)
+        Label7.Size = New Size(714, 10)
         Label7.TabIndex = 88
         ' 
         ' Panel5
@@ -475,9 +475,9 @@ Partial Class Form插帧
         Panel5.Controls.Add(Panel78)
         Panel5.Controls.Add(Label8)
         Panel5.Dock = DockStyle.Top
-        Panel5.Location = New Point(20, 308)
+        Panel5.Location = New Point(10, 258)
         Panel5.Name = "Panel5"
-        Panel5.Size = New Size(694, 75)
+        Panel5.Size = New Size(714, 75)
         Panel5.TabIndex = 87
         ' 
         ' Panel6
@@ -489,7 +489,7 @@ Partial Class Form插帧
         Panel6.Location = New Point(100, 35)
         Panel6.Name = "Panel6"
         Panel6.Padding = New Padding(10, 0, 0, 10)
-        Panel6.Size = New Size(594, 40)
+        Panel6.Size = New Size(614, 40)
         Panel6.TabIndex = 2
         ' 
         ' UiTextBox搜索范围
@@ -570,7 +570,7 @@ Partial Class Form插帧
         Panel78.Location = New Point(100, 0)
         Panel78.Name = "Panel78"
         Panel78.Padding = New Padding(7, 0, 0, 0)
-        Panel78.Size = New Size(594, 35)
+        Panel78.Size = New Size(614, 35)
         Panel78.TabIndex = 5
         ' 
         ' Label134
@@ -613,9 +613,9 @@ Partial Class Form插帧
         Panel7.Controls.Add(Panel9)
         Panel7.Controls.Add(Label11)
         Panel7.Dock = DockStyle.Top
-        Panel7.Location = New Point(20, 403)
+        Panel7.Location = New Point(10, 343)
         Panel7.Name = "Panel7"
-        Panel7.Size = New Size(694, 50)
+        Panel7.Size = New Size(714, 50)
         Panel7.TabIndex = 89
         ' 
         ' Panel9
@@ -626,7 +626,7 @@ Partial Class Form插帧
         Panel9.Location = New Point(100, 0)
         Panel9.Name = "Panel9"
         Panel9.Padding = New Padding(10, 10, 0, 10)
-        Panel9.Size = New Size(594, 50)
+        Panel9.Size = New Size(614, 50)
         Panel9.TabIndex = 2
         ' 
         ' Label15
@@ -636,7 +636,7 @@ Partial Class Form插帧
         Label15.Location = New Point(185, 10)
         Label15.Name = "Label15"
         Label15.Padding = New Padding(10, 0, 0, 0)
-        Label15.Size = New Size(409, 30)
+        Label15.Size = New Size(429, 30)
         Label15.TabIndex = 105
         Label15.Text = "留空以取消使用此参数"
         Label15.TextAlign = ContentAlignment.MiddleLeft
@@ -689,7 +689,7 @@ Partial Class Form插帧
         AutoScaleDimensions = New SizeF(96F, 96F)
         AutoScaleMode = AutoScaleMode.Dpi
         BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
-        ClientSize = New Size(734, 476)
+        ClientSize = New Size(734, 401)
         Controls.Add(Panel7)
         Controls.Add(Label7)
         Controls.Add(Panel5)
@@ -705,9 +705,9 @@ Partial Class Form插帧
         ForeColor = Color.Silver
         MaximizeBox = False
         MinimizeBox = False
-        MinimumSize = New Size(750, 515)
+        MinimumSize = New Size(750, 440)
         Name = "Form插帧"
-        Padding = New Padding(20)
+        Padding = New Padding(10)
         ShowIcon = False
         ShowInTaskbar = False
         StartPosition = FormStartPosition.Manual

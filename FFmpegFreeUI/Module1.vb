@@ -5,6 +5,7 @@ Imports System.Runtime.InteropServices
 Imports System.Text
 Imports System.Text.Json
 Imports System.Threading
+Imports Sunny.UI
 Module Module1
 
     Public Sound_Finish As Stream = My.Resources.Resource1.完成
@@ -273,6 +274,10 @@ Module Module1
         Return result.ToString()
     End Function
 
+    Public Sub 校准UiComboBox高DPI(c As UIComboBox)
+        c.ItemHeight = 30 * Form1.DPI
+        c.SymbolSize = 24 * Form1.DPI
+    End Sub
 
 
 End Module

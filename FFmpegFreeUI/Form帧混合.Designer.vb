@@ -57,10 +57,10 @@ Partial Class Form帧混合
         Panel73.BackColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
         Panel73.Controls.Add(Label123)
         Panel73.Dock = DockStyle.Top
-        Panel73.Location = New Point(20, 20)
+        Panel73.Location = New Point(10, 10)
         Panel73.Name = "Panel73"
         Panel73.Padding = New Padding(10)
-        Panel73.Size = New Size(494, 58)
+        Panel73.Size = New Size(514, 58)
         Panel73.TabIndex = 82
         ' 
         ' Label123
@@ -78,9 +78,9 @@ Partial Class Form帧混合
         ' Label124
         ' 
         Label124.Dock = DockStyle.Top
-        Label124.Location = New Point(20, 78)
+        Label124.Location = New Point(10, 68)
         Label124.Name = "Label124"
-        Label124.Size = New Size(494, 20)
+        Label124.Size = New Size(514, 10)
         Label124.TabIndex = 83
         ' 
         ' Panel8
@@ -89,9 +89,9 @@ Partial Class Form帧混合
         Panel8.Controls.Add(Panel11)
         Panel8.Controls.Add(Label1)
         Panel8.Dock = DockStyle.Top
-        Panel8.Location = New Point(20, 98)
+        Panel8.Location = New Point(10, 78)
         Panel8.Name = "Panel8"
-        Panel8.Size = New Size(494, 50)
+        Panel8.Size = New Size(514, 50)
         Panel8.TabIndex = 84
         ' 
         ' Panel11
@@ -102,7 +102,7 @@ Partial Class Form帧混合
         Panel11.Location = New Point(100, 0)
         Panel11.Name = "Panel11"
         Panel11.Padding = New Padding(10, 10, 0, 10)
-        Panel11.Size = New Size(394, 50)
+        Panel11.Size = New Size(414, 50)
         Panel11.TabIndex = 2
         ' 
         ' Label13
@@ -112,7 +112,7 @@ Partial Class Form帧混合
         Label13.Location = New Point(185, 10)
         Label13.Name = "Label13"
         Label13.Padding = New Padding(10, 0, 0, 0)
-        Label13.Size = New Size(209, 30)
+        Label13.Size = New Size(229, 30)
         Label13.TabIndex = 98
         Label13.Text = "可选"
         Label13.TextAlign = ContentAlignment.MiddleLeft
@@ -163,9 +163,9 @@ Partial Class Form帧混合
         ' Label2
         ' 
         Label2.Dock = DockStyle.Top
-        Label2.Location = New Point(20, 148)
+        Label2.Location = New Point(10, 128)
         Label2.Name = "Label2"
-        Label2.Size = New Size(494, 20)
+        Label2.Size = New Size(514, 10)
         Label2.TabIndex = 85
         ' 
         ' Panel1
@@ -174,9 +174,9 @@ Partial Class Form帧混合
         Panel1.Controls.Add(Panel2)
         Panel1.Controls.Add(Label4)
         Panel1.Dock = DockStyle.Top
-        Panel1.Location = New Point(20, 168)
+        Panel1.Location = New Point(10, 138)
         Panel1.Name = "Panel1"
-        Panel1.Size = New Size(494, 50)
+        Panel1.Size = New Size(514, 50)
         Panel1.TabIndex = 86
         ' 
         ' Panel2
@@ -187,7 +187,7 @@ Partial Class Form帧混合
         Panel2.Location = New Point(100, 0)
         Panel2.Name = "Panel2"
         Panel2.Padding = New Padding(10, 10, 0, 10)
-        Panel2.Size = New Size(394, 50)
+        Panel2.Size = New Size(414, 50)
         Panel2.TabIndex = 2
         ' 
         ' Label3
@@ -197,7 +197,7 @@ Partial Class Form帧混合
         Label3.Location = New Point(185, 10)
         Label3.Name = "Label3"
         Label3.Padding = New Padding(10, 0, 0, 0)
-        Label3.Size = New Size(209, 30)
+        Label3.Size = New Size(229, 30)
         Label3.TabIndex = 99
         Label3.Text = "留空以取消使用此滤镜"
         Label3.TextAlign = ContentAlignment.MiddleLeft
@@ -252,9 +252,9 @@ Partial Class Form帧混合
         ' Label5
         ' 
         Label5.Dock = DockStyle.Top
-        Label5.Location = New Point(20, 218)
+        Label5.Location = New Point(10, 188)
         Label5.Name = "Label5"
-        Label5.Size = New Size(494, 20)
+        Label5.Size = New Size(514, 10)
         Label5.TabIndex = 87
         ' 
         ' Panel3
@@ -263,9 +263,9 @@ Partial Class Form帧混合
         Panel3.Controls.Add(Panel4)
         Panel3.Controls.Add(Label7)
         Panel3.Dock = DockStyle.Top
-        Panel3.Location = New Point(20, 238)
+        Panel3.Location = New Point(10, 198)
         Panel3.Name = "Panel3"
-        Panel3.Size = New Size(494, 50)
+        Panel3.Size = New Size(514, 50)
         Panel3.TabIndex = 88
         ' 
         ' Panel4
@@ -276,7 +276,7 @@ Partial Class Form帧混合
         Panel4.Location = New Point(100, 0)
         Panel4.Name = "Panel4"
         Panel4.Padding = New Padding(10, 10, 0, 10)
-        Panel4.Size = New Size(394, 50)
+        Panel4.Size = New Size(414, 50)
         Panel4.TabIndex = 2
         ' 
         ' Label6
@@ -286,7 +286,7 @@ Partial Class Form帧混合
         Label6.Location = New Point(185, 10)
         Label6.Name = "Label6"
         Label6.Padding = New Padding(10, 0, 0, 0)
-        Label6.Size = New Size(209, 30)
+        Label6.Size = New Size(229, 30)
         Label6.TabIndex = 100
         Label6.Text = "不一定有效"
         Label6.TextAlign = ContentAlignment.MiddleLeft
@@ -339,7 +339,7 @@ Partial Class Form帧混合
         AutoScaleDimensions = New SizeF(8F, 19F)
         AutoScaleMode = AutoScaleMode.Font
         BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
-        ClientSize = New Size(534, 311)
+        ClientSize = New Size(534, 261)
         Controls.Add(Panel3)
         Controls.Add(Label5)
         Controls.Add(Panel1)
@@ -351,9 +351,9 @@ Partial Class Form帧混合
         ForeColor = Color.Silver
         MaximizeBox = False
         MinimizeBox = False
-        MinimumSize = New Size(550, 350)
+        MinimumSize = New Size(550, 300)
         Name = "Form帧混合"
-        Padding = New Padding(20)
+        Padding = New Padding(10)
         ShowIcon = False
         ShowInTaskbar = False
         StartPosition = FormStartPosition.Manual

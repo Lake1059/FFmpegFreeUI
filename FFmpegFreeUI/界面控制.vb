@@ -115,8 +115,8 @@ Public Class 界面控制
 
         暗黑列表视图自绘制.绑定列表视图事件(Form1.ListView1)
         暗黑列表视图自绘制.绑定列表视图事件(Form1.ListView2)
-        暗黑列表视图自绘制.绑定列表视图事件(Form1.ListView3)
-        暗黑列表视图自绘制.绑定列表视图事件(Form1.ListView4)
+        性能统计.绑定性能统计处理器列表视图事件()
+        性能统计.绑定性能统计显卡列表视图事件()
 
         AddHandler Form1.UiButton3.Click, AddressOf 界面控制_编码队列.开始任务
         AddHandler Form1.UiButton1.Click, AddressOf 界面控制_编码队列.暂停任务
@@ -141,7 +141,7 @@ Public Class 界面控制
                                                                 校准输出面板的宽度()
                                                             End If
                                                         End Sub
-        AddHandler Form1.UiButton添加进阶质量控制预制项.Click, Sub() Clipboard.SetText(Form1.RichTextBox2.Text)
+        AddHandler Form1.UiButton复制输出.Click, Sub() Clipboard.SetText(Form1.RichTextBox2.Text)
         AddHandler Form1.UiComboBox输出显示类型.SelectedIndexChanged, AddressOf 编码任务.切换输出类型时单独刷新
 
 
@@ -188,12 +188,12 @@ Public Class 界面控制
                     s1 += c.Width
                 Next
                 Form1.Panel2.Padding = New Padding((Form1.Panel2.Width - s1) * 0.5, Form1.Panel2.Padding.Top, (Form1.Panel2.Width - s1) * 0.5, 0)
-                Form1.UiComboBox输出显示类型.ItemHeight = 30 * Form1.DPI
+                校准UiComboBox高DPI(Form1.UiComboBox输出显示类型)
                 Form1.UiCheckBox强制滚动到最后.CheckBoxSize = 20 * Form1.DPI
 
             Case 选项卡.IsEqual(Form1.TabPage添加文件)
                 Form1.ListView2.Columns(0).Width = Form1.ListView2.Width - SystemInformation.VerticalScrollBarWidth * Form1.DPI * 2
-                Form1.UiComboBox输出目录.ItemHeight = 30 * Form1.DPI
+                校准UiComboBox高DPI(Form1.UiComboBox输出目录)
                 Form1.Label那个神奇的视觉标签.Width = 1
 
             Case 选项卡.IsEqual(Form1.TabPage参数面板)
@@ -210,18 +210,16 @@ Public Class 界面控制
 
             Case 选项卡.IsEqual(Form1.TabPage性能监控)
                 Form1.Panel18.Width = Form1.Panel18.Parent.Width * 0.3
-                Form1.ListView3.Columns(0).Width = Form1.ListView3.Width * 0.7 - SystemInformation.VerticalScrollBarWidth * Form1.DPI
-                Form1.ListView3.Columns(1).Width = Form1.ListView3.Width * 0.3
-                Form1.ListView4.Columns(0).Width = Form1.ListView4.Width * 0.8 - SystemInformation.VerticalScrollBarWidth * Form1.DPI
-                Form1.ListView4.Columns(1).Width = Form1.ListView4.Width * 0.2
+                Form1.ListView3.Columns(0).Width = Form1.ListView3.Parent.Width - Form1.ListView3.Parent.Padding.Left - SystemInformation.VerticalScrollBarWidth * Form1.DPI * 2
+                Form1.ListView4.Columns(0).Width = Form1.ListView4.Parent.Width - Form1.ListView4.Parent.Padding.Left - SystemInformation.VerticalScrollBarWidth * Form1.DPI * 2
                 Form1.性能统计刷新计时器.Enabled = True
 
             Case 选项卡.IsEqual(Form1.TabPage软件设置)
-                Form1.UiComboBox字体名称.ItemHeight = 30 * Form1.DPI
-                Form1.UiComboBox自动开始最大任务数量.ItemHeight = 30 * Form1.DPI
-                Form1.UiComboBox有任务时系统状态.ItemHeight = 30 * Form1.DPI
-                Form1.UiComboBox提示音.ItemHeight = 30 * Form1.DPI
-                Form1.UiComboBox自动开始任务.ItemHeight = 30 * Form1.DPI
+                校准UiComboBox高DPI(Form1.UiComboBox字体名称)
+                校准UiComboBox高DPI(Form1.UiComboBox自动开始最大任务数量)
+                校准UiComboBox高DPI(Form1.UiComboBox有任务时系统状态)
+                校准UiComboBox高DPI(Form1.UiComboBox提示音)
+                校准UiComboBox高DPI(Form1.UiComboBox自动开始任务)
                 Form1.UiCheckBox转译模式.CheckBoxSize = 20 * Form1.DPI
 
         End Select
