@@ -23,8 +23,7 @@ Public Class 性能统计
         Try
             computer.Open()
         Catch ex As Exception
-        Finally
-
+            Exit Sub
         End Try
     End Sub
 
@@ -32,6 +31,7 @@ Public Class 性能统计
         Try
             computer.Accept(Me)
         Catch ex As Exception
+            Exit Sub
         End Try
     End Sub
 
@@ -40,63 +40,61 @@ Public Class 性能统计
     End Sub
 
     Public Sub VisitComputer(computer As IComputer) Implements IVisitor.VisitComputer
-        For Each hardware In computer.Hardware
-            Try
+        Try
+            For Each hardware In computer.Hardware
                 hardware.Accept(Me)
-            Catch ex As UnauthorizedAccessException
-            Catch ex As Win32Exception
-            End Try
-        Next
+            Next
+        Catch ex As Exception
+            Exit Sub
+        End Try
     End Sub
 
     Public Sub VisitHardware(hardware As IHardware) Implements IVisitor.VisitHardware
         Try
             hardware.Update()
-        Catch ex As UnauthorizedAccessException
-            Exit Sub
-        Catch ex As Win32Exception
+        Catch ex As Exception
             Exit Sub
         End Try
 
-        Select Case hardware.HardwareType
-            Case HardwareType.Cpu
-                Dim cpuUsages As New Dictionary(Of String, Object)
-                For Each sensor In hardware.Sensors
-                    Select Case sensor.SensorType
-                        Case SensorType.Load
-                            Select Case sensor.Name
-                                Case "CPU Total"
-                                Case Else
-                                    If sensor.Name.Contains("CPU Core #") Then
+        Try
+            Select Case hardware.HardwareType
+                Case HardwareType.Cpu
+                    Dim cpuUsages As New Dictionary(Of String, Object)
+                    For Each sensor In hardware.Sensors
+                        Select Case sensor.SensorType
+                            Case SensorType.Load
+                                Select Case sensor.Name
+                                    Case "CPU Total"
+                                    Case Else
+                                        If sensor.Name.Contains("CPU Core #") Then
+                                            Dim v1 = 转换最大值100的百分数(sensor.Value.GetValueOrDefault())
+                                            cpuUsages($"逻辑核心 {sensor.Name.Replace("CPU Core ", "")} | {v1}") = v1
+                                        End If
+                                End Select
+                        End Select
+                    Next
+                    If cpuUsages.Count > 0 Then 处理器信息 = cpuUsages
+                Case HardwareType.GpuNvidia, HardwareType.GpuAmd, HardwareType.GpuIntel
+                    Dim gpuUsages As New Dictionary(Of String, Object)
+                    For Each sensor In hardware.Sensors
+                        Select Case sensor.SensorType
+                            Case SensorType.Load
+                                Select Case sensor.Name
+                                    'Case "GPU Memory Controller", "GPU Bus", "GPU Power", "GPU Board Power"
+                                    'Case "GPU Core"
+                                    'Case "GPU Video Engine"
+                                    Case Else
+                                        If sensor.Value.GetValueOrDefault() = 0 Then Continue For
                                         Dim v1 = 转换最大值100的百分数(sensor.Value.GetValueOrDefault())
-                                        cpuUsages($"逻辑核心 {sensor.Name.Replace("CPU Core ", "")} | {v1}") = v1
-                                    End If
-                            End Select
-                    End Select
-                Next
-                If cpuUsages.Count > 0 Then 处理器信息 = cpuUsages
-
-            Case HardwareType.GpuNvidia, HardwareType.GpuAmd, HardwareType.GpuIntel
-                Dim gpuUsages As New Dictionary(Of String, Object)
-                For Each sensor In hardware.Sensors
-                    Select Case sensor.SensorType
-                        Case SensorType.Load
-                            Select Case sensor.Name
-                                'Case "GPU Memory Controller", "GPU Bus", "GPU Power", "GPU Board Power"
-                                'Case "GPU Core"
-                                'Case "GPU Video Engine"
-                                Case Else
-                                    If sensor.Value.GetValueOrDefault() = 0 Then Continue For
-                                    Dim v1 = 转换最大值100的百分数(sensor.Value.GetValueOrDefault())
-                                    gpuUsages($"{hardware.Name} | {sensor.Name} | {v1}") = v1
-                            End Select
-                    End Select
-                Next
-                If gpuUsages.Count > 0 Then 显卡信息 = gpuUsages
-
-        End Select
-
-
+                                        gpuUsages($"{hardware.Name} | {sensor.Name} | {v1}") = v1
+                                End Select
+                        End Select
+                    Next
+                    If gpuUsages.Count > 0 Then 显卡信息 = gpuUsages
+            End Select
+        Catch ex As Exception
+            Exit Sub
+        End Try
 
         'For Each sensor In hardware.Sensors
         '    If sensor.SensorType = SensorType.Power OrElse
