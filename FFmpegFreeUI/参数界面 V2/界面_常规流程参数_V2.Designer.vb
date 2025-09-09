@@ -2294,6 +2294,7 @@ Partial Class 界面_常规流程参数_V2
         ' 
         ' FlowLayoutPanel1
         ' 
+        FlowLayoutPanel1.AutoScroll = True
         FlowLayoutPanel1.Dock = DockStyle.Fill
         FlowLayoutPanel1.Location = New Point(0, 352)
         FlowLayoutPanel1.Name = "FlowLayoutPanel1"
@@ -2729,7 +2730,7 @@ Partial Class 界面_常规流程参数_V2
         UiTextBox全局质量控制值.Size = New Size(100, 30)
         UiTextBox全局质量控制值.TabIndex = 92
         UiTextBox全局质量控制值.TextAlignment = ContentAlignment.MiddleLeft
-        UiTextBox全局质量控制值.Watermark = "23"
+        UiTextBox全局质量控制值.Watermark = ""
         UiTextBox全局质量控制值.WatermarkActiveColor = Color.DimGray
         UiTextBox全局质量控制值.WatermarkColor = Color.DimGray
         ' 
@@ -2829,9 +2830,9 @@ Partial Class 界面_常规流程参数_V2
         Label40.Location = New Point(0, 44)
         Label40.Name = "Label40"
         Label40.Padding = New Padding(16, 5, 0, 0)
-        Label40.Size = New Size(584, 25)
+        Label40.Size = New Size(612, 25)
         Label40.TabIndex = 14
-        Label40.Text = "软件编码用 crf，硬件加速用 cq 或 qp；如果编码器不支持任何 rc，直接设置质量参数也可"
+        Label40.Text = "软件编码用 crf，硬件加速用 cq 或 qp；如果编码器不支持任何 rc，直接设置质量参数和值也可"
         ' 
         ' Label41
         ' 
@@ -4756,7 +4757,7 @@ Partial Class 界面_常规流程参数_V2
         UiComboBox图片编码器.ItemHeight = 30
         UiComboBox图片编码器.ItemHoverColor = Color.FromArgb(CByte(56), CByte(56), CByte(56))
         UiComboBox图片编码器.ItemRectColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
-        UiComboBox图片编码器.Items.AddRange(New Object() {"", "无损压缩 PNG 已强制最高压缩度", "有损压缩 JPEG\JPG 值越小质量越高 1~31", "有损压缩 WEBP 值越大质量越高 0~100", "无损压缩 WEBP", "无损压缩 TIFF", "有损压缩 AVIF 值越大质量越高 0~100", "无损压缩 AVIF", "传统动画 GIF", "原画位图 BMP", "医学影像 JPEG-LS", "电影扫描 DPX", "工业光魔 OpenEXR"})
+        UiComboBox图片编码器.Items.AddRange(New Object() {"", "PNG | 1 最快 ~ 最慢 9", "APNG 动图 | 1 最快 ~ 最慢 9", "JPEG\JPG | 1 清晰 ~ 模糊 31", "WEBP | 0 模糊 ~ 清晰 100", "WEBP 动图", "AVIF 静图 | 0 无损 ~ 全损 63", "AVIF 动图 | 0 无损 ~ 全损 63", "GIF 动图 | 写 1 来启用调色板生成", "BMP", "OpenJPEG | 0.0 全损 ~ 无损 1.0", "JPEG-LS", "HDR (Radiance RGBE format)", "TIFF", "DPX", "OpenEXR"})
         UiComboBox图片编码器.ItemSelectBackColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
         UiComboBox图片编码器.ItemSelectForeColor = Color.Silver
         UiComboBox图片编码器.Location = New Point(21, 10)
@@ -4767,7 +4768,10 @@ Partial Class 界面_常规流程参数_V2
         UiComboBox图片编码器.Padding = New Padding(0, 0, 30, 2)
         UiComboBox图片编码器.RectColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
         UiComboBox图片编码器.RectDisableColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        UiComboBox图片编码器.ScrollBarBackColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        UiComboBox图片编码器.ScrollBarColor = SystemColors.WindowFrame
         UiComboBox图片编码器.ScrollBarHandleWidth = 20
+        UiComboBox图片编码器.ScrollBarStyleInherited = False
         UiComboBox图片编码器.Size = New Size(300, 30)
         UiComboBox图片编码器.Style = Sunny.UI.UIStyle.Custom
         UiComboBox图片编码器.SymbolSize = 24
@@ -5524,9 +5528,9 @@ Partial Class 界面_常规流程参数_V2
         Label143.Location = New Point(0, 541)
         Label143.Name = "Label143"
         Label143.Padding = New Padding(16, 5, 0, 0)
-        Label143.Size = New Size(408, 24)
+        Label143.Size = New Size(574, 24)
         Label143.TabIndex = 102
-        Label143.Text = "1秒 = 1000 毫秒，将 1000 除以 帧率 得到的毫秒值即可精确到帧"
+        Label143.Text = "1秒 = 1000 毫秒，将 1000 除以 帧率 得到的毫秒值即可精确到帧；或者建议使用 LosslessCut"
         ' 
         ' Panel66
         ' 

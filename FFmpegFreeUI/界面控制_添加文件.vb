@@ -34,10 +34,8 @@ Public Class 界面控制_添加文件
             编码任务.队列.Add(m)
         Next
         Form1.ListView2.Items.Clear()
-        If 用户设置.实例对象.自动开始任务选项 = 0 Then
-            Form1.UiTabControlMenu1.SelectedTab = Form1.TabPage编码队列
-            Task.Run(AddressOf 编码任务.检查是否有可以开始的任务)
-        End If
+        Form1.UiTabControlMenu1.SelectedTab = Form1.TabPage编码队列
+        Task.Run(AddressOf 编码任务.检查是否有可以开始的任务)
     End Sub
     Public Shared Sub 加入编码队列(拖入的文件 As String())
         If Form1.UiTextBox输出容器.Text = "" Then
@@ -69,9 +67,7 @@ Public Class 界面控制_添加文件
             m.列表视图项 = i2
             编码任务.队列.Add(m)
         Next
-        If 用户设置.实例对象.自动开始任务选项 = 0 Then
-            Task.Run(AddressOf 编码任务.检查是否有可以开始的任务)
-        End If
+        Task.Run(AddressOf 编码任务.检查是否有可以开始的任务)
     End Sub
 
     Public Shared Sub ListView2_DragEnter(sender As Object, e As DragEventArgs)

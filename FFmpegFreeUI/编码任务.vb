@@ -14,6 +14,7 @@ Public Class 编码任务
 
     Public Shared Property 队列 As New List(Of 单片任务)
     Public Shared Sub 检查是否有可以开始的任务()
+        If 用户设置.实例对象.自动开始任务选项 <> 0 Then Exit Sub
         Dim a As Integer = 获取正在处理的任务数量()
         If a < 同时运行任务上限 Then 开始还未处理的任务(a)
     End Sub

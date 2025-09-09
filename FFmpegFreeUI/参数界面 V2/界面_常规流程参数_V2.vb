@@ -197,6 +197,7 @@ Public Class 界面_常规流程参数_V2
             Case 9    '其他现代编码
                 UiComboBox具体编码.Items.Add("libxeve")
                 UiComboBox具体编码.Items.Add("libxavs2")
+                UiComboBox具体编码.Items.Add("cfhd")
             Case 10    '老旧格式
                 UiComboBox具体编码.Items.Add("mpeg4")
                 UiComboBox具体编码.Items.Add("libxvid")

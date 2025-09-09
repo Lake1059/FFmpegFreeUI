@@ -13,11 +13,19 @@
 	  <PublishSingleFile>True</PublishSingleFile>
 	  <Authors>1059 Studio</Authors>
 	  <Company>1059 Studio</Company>
-	  <Version>2.2.0</Version>
+	  <Version>2.3.0</Version>
 	  <SupportedOSPlatformVersion>10.0.17763.0</SupportedOSPlatformVersion>
 	  <ApplicationIcon>ico.ico</ApplicationIcon>
 	  <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
 	  <Title>FFmpegFreeUI</Title>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
 
   <ItemGroup>

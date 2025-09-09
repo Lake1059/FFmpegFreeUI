@@ -118,17 +118,17 @@ Public Class 界面控制
         性能统计.绑定性能统计处理器列表视图事件()
         性能统计.绑定性能统计显卡列表视图事件()
 
-        AddHandler Form1.UiButton3.Click, AddressOf 界面控制_编码队列.开始任务
-        AddHandler Form1.UiButton1.Click, AddressOf 界面控制_编码队列.暂停任务
-        AddHandler Form1.UiButton2.Click, AddressOf 界面控制_编码队列.恢复任务
-        AddHandler Form1.UiButton5.Click, AddressOf 界面控制_编码队列.停止任务
-        AddHandler Form1.UiButton6.Click, AddressOf 界面控制_编码队列.移除任务
-        AddHandler Form1.UiButton16.Click, AddressOf 界面控制_编码队列.重置任务
-        AddHandler Form1.UiButton9.Click, AddressOf 界面控制_编码队列.定位输出
-        AddHandler Form1.UiButton8.Click, AddressOf 界面控制_编码队列.重新配置
+        AddHandler Form1.UiButton开始任务.Click, AddressOf 界面控制_编码队列.开始任务
+        AddHandler Form1.UiButton暂停任务.Click, AddressOf 界面控制_编码队列.暂停任务
+        AddHandler Form1.UiButton恢复任务.Click, AddressOf 界面控制_编码队列.恢复任务
+        AddHandler Form1.UiButton停止任务.Click, AddressOf 界面控制_编码队列.停止任务
+        AddHandler Form1.UiButton移除任务.Click, AddressOf 界面控制_编码队列.移除任务
+        AddHandler Form1.UiButton重置任务.Click, AddressOf 界面控制_编码队列.重置任务
+        AddHandler Form1.UiButton定位输出.Click, AddressOf 界面控制_编码队列.定位输出
+        AddHandler Form1.UiButton重新配置.Click, AddressOf 界面控制_编码队列.重新配置
         AddHandler Form1.UiButton重新添加.Click, AddressOf 界面控制_编码队列.重新添加
-        AddHandler Form1.UiButton7.Click, AddressOf 界面控制_编码队列.导出配置
-        AddHandler Form1.UiButton15.Click, AddressOf 界面控制_编码队列.复制命令行
+        AddHandler Form1.UiButton导出配置.Click, AddressOf 界面控制_编码队列.导出配置
+        AddHandler Form1.UiButton复制命令行.Click, AddressOf 界面控制_编码队列.复制命令行
 
         Form1.UiComboBox输出显示类型.SelectedIndex = 0
         AddHandler Form1.LinkLabel切换显示输出面板.LinkClicked, Sub()
@@ -265,10 +265,9 @@ Public Class 界面控制
              New ToolStripMenuItem(".png", Nothing, Sub(s1, e1) Form1.UiTextBox输出容器.Text = s1.Text) With {.ForeColor = Color.Silver},
              New ToolStripMenuItem(".jpg", Nothing, Sub(s1, e1) Form1.UiTextBox输出容器.Text = s1.Text) With {.ForeColor = Color.Silver},
              New ToolStripMenuItem(".jpeg", Nothing, Sub(s1, e1) Form1.UiTextBox输出容器.Text = s1.Text) With {.ForeColor = Color.Silver},
-             New ToolStripMenuItem(".bmp", Nothing, Sub(s1, e1) Form1.UiTextBox输出容器.Text = s1.Text) With {.ForeColor = Color.Silver},
-             New ToolStripMenuItem(".heic", Nothing, Sub(s1, e1) Form1.UiTextBox输出容器.Text = s1.Text) With {.ForeColor = Color.Silver},
              New ToolStripMenuItem(".webp", Nothing, Sub(s1, e1) Form1.UiTextBox输出容器.Text = s1.Text) With {.ForeColor = Color.Silver},
-             New ToolStripMenuItem(".tiff", Nothing, Sub(s1, e1) Form1.UiTextBox输出容器.Text = s1.Text) With {.ForeColor = Color.Silver},
+             New ToolStripMenuItem(".avif", Nothing, Sub(s1, e1) Form1.UiTextBox输出容器.Text = s1.Text) With {.ForeColor = Color.Silver},
+             New ToolStripMenuItem(".bmp", Nothing, Sub(s1, e1) Form1.UiTextBox输出容器.Text = s1.Text) With {.ForeColor = Color.Silver},
              New ToolStripMenuItem(".gif", Nothing, Sub(s1, e1) Form1.UiTextBox输出容器.Text = s1.Text) With {.ForeColor = Color.Silver},
              New ToolStripMenuItem(".ico", Nothing, Sub(s1, e1) Form1.UiTextBox输出容器.Text = s1.Text) With {.ForeColor = Color.Silver},
              New ToolStripSeparator() With {.Tag = "null"}})

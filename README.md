@@ -14,7 +14,7 @@
 
 FFmpegFreeUI（简称 3FUI）是在 Windows 上的 [FFmpeg](https://ffmpeg.org) 的专业交互外壳，使用 .NET 10 运行时以纯 WinForm 框架开发，配合 SunnyUI 和自绘制打造专业高效的暗黑风格界面。目标做一款轻度专业参数调整的转码软件，让普通人能够通过图形化界面接触到较为全面的通用参数来轻松压制和转换格式。不仅如此，3FUI 具备极高的自由和扩展性，因此也适合任何深度专业人士，即便只是用上一个低消耗的进度条。
 
-3FUI 目前收录了 40 种视频编码器、21 种音频编码器、10 种图片编码器，如果这还不够还可以自定义参数；不要问什么能不能实现什么有没有，完全自己写参数解君愁。
+3FUI 目前收录了 42 种视频编码器、21 种音频编码器、13 种图片编码器，如果这还不够还可以自定义参数，提供各种形式的自写参数，所以不要问什么能不能实现什么有没有。
 
 ### 开发思路
 
@@ -42,6 +42,8 @@ FFmpegFreeUI（简称 3FUI）是在 Windows 上的 [FFmpeg](https://ffmpeg.org) 
 - 缓存自动收拾、不碰注册表
 - 不在任何地方扔垃圾（崩溃转储除外，这不是我能控制的）
 - 不会收集任何信息
+- 附带简易混流和合并功能
+- 附带轻量性能监控，可以看处理器和显卡的每个核心占用
 
 支持开发插件来扩展功能，可接入编码队列。VB 和 C# 都可以写，还额外支持 WPF 界面。
 
@@ -140,8 +142,8 @@ PluginExample 是我做的示例插件；在程序目录下创建 Plugin 文件�
 
 ## 许可和引用
 
-- 3FUI 使用 MIT 开源许可（仅限我的代码），可以自由地使用和分发此软件
-- SunnyUI 是 GPL 且具有商用授权（老夫有）属性，因此可能受到相关限制
+- 3FUI 使用 MIT 开源许可，可以自由地使用和分发此软件
+- SunnyUI 商用授权证书编号：PVIP2023080201
 - 仅在 GitHub 开源，在其他平台看到的源代码都不是本人！
 
 | 引用程序集                                                   | 许可证         | 作用                       |
@@ -215,6 +217,7 @@ PluginExample 是我做的示例插件；在程序目录下创建 Plugin 文件�
 - 其他现代编码
   - libxeve（这是 MPEG5，目前并不好用）
   - libxavs2（国产编码，用于电视节目）
+  - cfhd（GoPro CineForm HD）
 - 老旧格式
   - mpeg4
   - libxvid
@@ -222,6 +225,7 @@ PluginExample 是我做的示例插件；在程序目录下创建 Plugin 文件�
   - rv10（RMVB 1.0）
   - wmv2
   - wmv1
+  - h263
 - 禁用
 
 > **新手常问：为什么说 FFV1 才是无损编码？**
@@ -266,7 +270,7 @@ https://developer.nvidia.com/video-encode-and-decode-gpu-support-matrix-new
 
 ## 图片编码器
 
-PNG、JPEG\JPG、WEBP、TIFF、AVIF、GIF、BMP、JPEG-LS、DPX、OpenEXR
+PNG、APNG、JPEG\JPG、WEBP、AVIF、GIF、BMP、JPEG 2000、JPEG-LS、HDR、TIFF、DPX、OpenEXR
 
 ## 比特率控制方式
 
@@ -285,7 +289,7 @@ PNG、JPEG\JPG、WEBP、TIFF、AVIF、GIF、BMP、JPEG-LS、DPX、OpenEXR
 
 - **平均码率 ABR**：哪有 ABR，不就是传统转码，直接写比特率不就完了
 - **二次编码 TPE**：没钱，给我转一个W就做，不然我先饿死了
-- **三次编码？**富哥V我一个小目标看看实力
+- **三次编码？** 富哥V我一个小目标看看实力
 
 ## 质量设定 -crf / -cq / -qp / -global_quality
 
@@ -548,3 +552,19 @@ HostCall_AddMissionToQueueWith3fuiFile?.Invoke("3FUI 预设文件的路径", "�
 - \<KeepCreationTime>
 - \<KeepWriteTime>
 - \<KeepAccessTime>
+
+### 自定义音效
+
+放在程序目录下
+
+- Sound_Finish.wav
+- Sound_Error.wav
+
+### 自定义图标
+
+icon.png 放在程序目录下
+
+## 你已获得成就
+
+- 看完了这个 md 文件，击败了全球 99% 的用户
+- 或者你直接滑到底，击败了全球 50% 的用户
