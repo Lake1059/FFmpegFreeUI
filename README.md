@@ -217,7 +217,6 @@ PluginExample 是我做的示例插件；在程序目录下创建 Plugin 文件�
 - 其他现代编码
   - libxeve（这是 MPEG5，目前并不好用）
   - libxavs2（国产编码，用于电视节目）
-  - cfhd（GoPro CineForm HD）
 - 老旧格式
   - mpeg4
   - libxvid
@@ -225,7 +224,6 @@ PluginExample 是我做的示例插件；在程序目录下创建 Plugin 文件�
   - rv10（RMVB 1.0）
   - wmv2
   - wmv1
-  - h263
 - 禁用
 
 > **新手常问：为什么说 FFV1 才是无损编码？**
