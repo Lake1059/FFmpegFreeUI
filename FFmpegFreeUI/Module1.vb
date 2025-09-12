@@ -279,5 +279,61 @@ Module Module1
         c.SymbolSize = 24 * Form1.DPI
     End Sub
 
+    Public Function 将时间字符串转换为时间类型(timeStr As String) As TimeSpan
+        Try
+            If String.IsNullOrWhiteSpace(timeStr) Then Return TimeSpan.Zero
+            Dim numericValue As Double
+            If Double.TryParse(timeStr.Trim(), numericValue) Then
+                Return TimeSpan.FromSeconds(numericValue)
+            End If
+            Dim hours As Integer = 0
+            Dim minutes As Integer = 0
+            Dim seconds As Integer = 0
+            Dim milliseconds As Integer = 0
+            Dim timeParts = timeStr.Split(":"c)
+            Select Case timeParts.Length
+                Case 1 ' 只有秒数，可能包含小数点
+                    Dim secValue As Double
+                    If Double.TryParse(timeParts(0), secValue) Then
+                        Return TimeSpan.FromSeconds(secValue)
+                    End If
+                Case 2 ' MM:SS 格式
+                    If Integer.TryParse(timeParts(0), minutes) And
+                   Double.TryParse(timeParts(1), numericValue) Then
+                        seconds = CInt(Math.Floor(numericValue))
+                        milliseconds = CInt((numericValue - seconds) * 1000)
+                    End If
+                Case 3 ' HH:MM:SS 格式
+                    Integer.TryParse(timeParts(0), hours)
+                    Integer.TryParse(timeParts(1), minutes)
+                    Dim secPart = timeParts(2)
+                    If secPart.Contains("."c) Then
+                        Dim secMs = secPart.Split("."c)
+                        Integer.TryParse(secMs(0), seconds)
+                        Dim msStr = secMs(1).PadRight(3, "0"c)
+                        If msStr.Length >= 3 Then
+                            Integer.TryParse(msStr.AsSpan(0, 3), milliseconds)
+                        End If
+                    Else
+                        Integer.TryParse(secPart, seconds)
+                    End If
+                Case Else
+                    Return TimeSpan.Zero
+            End Select
+            Return New TimeSpan(0, hours, minutes, seconds, milliseconds)
+        Catch
+            Return TimeSpan.Zero
+        End Try
+    End Function
+
+    Public Function 将时间类型转换为时间字符串(timespan As TimeSpan) As String
+        If timespan < TimeSpan.Zero Then timespan = TimeSpan.Zero
+        Return String.Format("{0:D2}:{1:D2}:{2:D2}.{3:D3}",
+                            CInt(Math.Floor(timespan.TotalHours)),
+                            timespan.Minutes,
+                            timespan.Seconds,
+                            timespan.Milliseconds)
+    End Function
+
 
 End Module

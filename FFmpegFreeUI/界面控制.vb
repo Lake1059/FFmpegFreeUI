@@ -56,6 +56,7 @@ Public Class 界面控制
                                                                   End Sub
         AddHandler Form1.UiComboBox提示音.SelectedIndexChanged, Sub() 用户设置.实例对象.提示音选项 = Form1.UiComboBox提示音.SelectedIndex
         AddHandler Form1.UiComboBox自动开始任务.SelectedIndexChanged, Sub() 用户设置.实例对象.自动开始任务选项 = Form1.UiComboBox自动开始任务.SelectedIndex
+        AddHandler Form1.UiComboBox自动重置参数面板的页面选择.SelectedIndexChanged, Sub() 用户设置.实例对象.自动重置参数面板的页面选择 = Form1.UiComboBox自动重置参数面板的页面选择.SelectedIndex
 
         AddHandler Form1.UiTextBoxFFmpeg自定义工作目录.TextChanged, Sub() 用户设置.实例对象.工作目录 = Form1.UiTextBoxFFmpeg自定义工作目录.Text
         AddHandler Form1.UiButton13.Click, Sub()
@@ -220,6 +221,7 @@ Public Class 界面控制
                 校准UiComboBox高DPI(Form1.UiComboBox有任务时系统状态)
                 校准UiComboBox高DPI(Form1.UiComboBox提示音)
                 校准UiComboBox高DPI(Form1.UiComboBox自动开始任务)
+                校准UiComboBox高DPI(Form1.UiComboBox自动重置参数面板的页面选择)
                 Form1.UiCheckBox转译模式.CheckBoxSize = 20 * Form1.DPI
 
         End Select
@@ -255,8 +257,7 @@ Public Class 界面控制
              New ToolStripMenuItem(".ac3", Nothing, Sub(s1, e1) Form1.UiTextBox输出容器.Text = s1.Text) With {.ForeColor = Color.Silver},
              New ToolStripMenuItem(".ogg", Nothing, Sub(s1, e1) Form1.UiTextBox输出容器.Text = s1.Text) With {.ForeColor = Color.Silver},
              New ToolStripMenuItem(".opus", Nothing, Sub(s1, e1) Form1.UiTextBox输出容器.Text = s1.Text) With {.ForeColor = Color.Silver},
-             New ToolStripMenuItem(".wma", Nothing, Sub(s1, e1) Form1.UiTextBox输出容器.Text = s1.Text) With {.ForeColor = Color.Silver},
-             New ToolStripMenuItem(".amr", Nothing, Sub(s1, e1) Form1.UiTextBox输出容器.Text = s1.Text) With {.ForeColor = Color.Silver},
+             New ToolStripMenuItem(".m4a", Nothing, Sub(s1, e1) Form1.UiTextBox输出容器.Text = s1.Text) With {.ForeColor = Color.Silver},
              New ToolStripSeparator() With {.Tag = "null"}})
 
         Dim d As New 暗黑上下文菜单 With {.ShowImageMargin = False, .Font = Form1.Font}

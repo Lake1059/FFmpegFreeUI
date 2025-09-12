@@ -415,6 +415,7 @@ Public Class 界面_常规流程参数_V2
 
             Case 选项卡.IsEqual(TabPage音频参数)
                 校准UiComboBox高DPI(UiComboBox音频编码器)
+                校准UiComboBox高DPI(UiComboBox音频比特率)
                 校准UiComboBox高DPI(UiComboBox音频质量参数)
                 校准UiComboBox高DPI(UiComboBox声道布局)
                 校准UiComboBox高DPI(UiComboBox采样率)
@@ -423,6 +424,10 @@ Public Class 界面_常规流程参数_V2
                 校准UiComboBox高DPI(UiComboBox图片编码器)
 
             Case 选项卡.IsEqual(TabPage自定义参数)
+            Case 选项卡.IsEqual(TabPage剪辑区间)
+                校准UiComboBox高DPI(UiComboBox剪辑方法)
+                校准UiComboBox高DPI(UiComboBox剪辑向前解码多久秒)
+
             Case 选项卡.IsEqual(TabPage流控制)
                 UiCheckBox保留其他视频流.CheckBoxSize = 20 * Form1.DPI
                 UiCheckBox保留其他音频流.CheckBoxSize = 20 * Form1.DPI
@@ -431,7 +436,6 @@ Public Class 界面_常规流程参数_V2
                 校准UiComboBox高DPI(UiComboBox元数据选项)
                 校准UiComboBox高DPI(UiComboBox章节选项)
                 校准UiComboBox高DPI(UiComboBox附件选项)
-                校准UiComboBox高DPI(UiComboBox剪辑方法)
 
             Case 选项卡.IsEqual(TabPage方案管理)
                 UiCheckBox额外保存信息.CheckBoxSize = 20 * Form1.DPI
@@ -699,17 +703,17 @@ Public Class 界面_常规流程参数_V2
             Case 2 : 在参数总览输出文本("清除章节", Color.Silver)
         End Select
         If a.流控制_附件选项 = 1 Then 在参数总览输出文本("保留附件", Color.Silver)
-        Select Case a.流控制_剪辑_方法
+        Select Case a.剪辑区间_方法
             Case 1
                 在参数总览输出文本("粗剪", Color.Silver)
-                在参数总览输出文本("剪辑入点：" & a.流控制_剪辑_入点, Color.Silver)
-                在参数总览输出文本("剪辑出点：" & a.流控制_剪辑_出点, Color.Silver)
+                在参数总览输出文本("剪辑入点：" & a.剪辑区间_入点, Color.Silver)
+                在参数总览输出文本("剪辑出点：" & a.剪辑区间_出点, Color.Silver)
             Case 2
                 在参数总览输出文本("精剪", Color.Silver)
-                在参数总览输出文本("剪辑入点：" & a.流控制_剪辑_入点, Color.Silver)
-                在参数总览输出文本("剪辑出点：" & a.流控制_剪辑_出点, Color.Silver)
+                在参数总览输出文本("剪辑入点：" & a.剪辑区间_入点, Color.Silver)
+                在参数总览输出文本("剪辑出点：" & a.剪辑区间_出点, Color.Silver)
             Case Else
-                If a.流控制_剪辑_入点 <> "" OrElse a.流控制_剪辑_出点 <> "" Then
+                If a.剪辑区间_入点 <> "" OrElse a.剪辑区间_出点 <> "" Then
                     在参数总览输出文本("警告：指定了剪辑范围却没有指定剪辑方法，不会进行剪辑", Color.IndianRed)
                 End If
         End Select

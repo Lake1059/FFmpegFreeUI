@@ -102,6 +102,11 @@ Public Class 预设数据类型
     Public Property 自定义参数_最后参数 As String = ""
     Public Property 自定义参数_完全自己写 As String = ""
 
+    Public Property 剪辑区间_方法 As Integer = 0
+    Public Property 剪辑区间_入点 As String = ""
+    Public Property 剪辑区间_出点 As String = ""
+    Public Property 剪辑区间_向前解码多久秒 As String = ""
+
     Public Property 流控制_启用保留其他视频流 As Boolean = False
     Public Property 流控制_将视频参数应用于指定流 As String() = Array.Empty(Of String)()
     Public Property 流控制_启用保留其他音频流 As Boolean = False
@@ -110,9 +115,6 @@ Public Class 预设数据类型
     Public Property 流控制_元数据选项 As Integer = 0
     Public Property 流控制_章节选项 As Integer = 0
     Public Property 流控制_附件选项 As Integer = 0
-    Public Property 流控制_剪辑_方法 As Integer = 0
-    Public Property 流控制_剪辑_入点 As String = ""
-    Public Property 流控制_剪辑_出点 As String = ""
     Public Property 流控制_启用自动混流同名字幕文件 As Boolean = False
 
     Public Property 计算机名称 As String = ""

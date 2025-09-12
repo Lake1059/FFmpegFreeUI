@@ -194,6 +194,11 @@ Public Class 预设管理
         Form1.常规流程参数页面.UiTextBox之后参数.Text = a.自定义参数_之后参数
         Form1.常规流程参数页面.UiTextBox最后参数.Text = a.自定义参数_最后参数
 
+        Form1.常规流程参数页面.UiComboBox剪辑方法.SelectedIndex = a.剪辑区间_方法
+        Form1.常规流程参数页面.UiTextBox快速剪辑入点.Text = a.剪辑区间_入点
+        Form1.常规流程参数页面.UiTextBox快速剪辑出点.Text = a.剪辑区间_出点
+        Form1.常规流程参数页面.UiComboBox剪辑向前解码多久秒.Text = a.剪辑区间_向前解码多久秒
+
         Form1.常规流程参数页面.UiTextBox将视频参数用于这些流.Text = String.Join(",", a.流控制_将视频参数应用于指定流)
         Form1.常规流程参数页面.UiCheckBox保留其他视频流.Checked = a.流控制_启用保留其他视频流
         Form1.常规流程参数页面.UiTextBox将音频参数用于这些流.Text = String.Join(",", a.流控制_将音频参数应用于指定流)
@@ -202,9 +207,6 @@ Public Class 预设管理
         Form1.常规流程参数页面.UiComboBox元数据选项.SelectedIndex = a.流控制_元数据选项
         Form1.常规流程参数页面.UiComboBox章节选项.SelectedIndex = a.流控制_章节选项
         Form1.常规流程参数页面.UiComboBox附件选项.SelectedIndex = a.流控制_附件选项
-        Form1.常规流程参数页面.UiComboBox剪辑方法.SelectedIndex = a.流控制_剪辑_方法
-        Form1.常规流程参数页面.UiTextBox快速剪辑入点.Text = a.流控制_剪辑_入点
-        Form1.常规流程参数页面.UiTextBox快速剪辑出点.Text = a.流控制_剪辑_出点
         Form1.常规流程参数页面.UiCheckBox自动混流同名字幕文件.Checked = a.流控制_启用自动混流同名字幕文件
 
     End Sub
@@ -405,6 +407,11 @@ Public Class 预设管理
         a.自定义参数_最后参数 = Form1.常规流程参数页面.UiTextBox最后参数.Text.Replace(vbCrLf, " ").Replace(vbLf, " ").Replace(vbCr, " ")
         a.自定义参数_完全自己写 = Form1.常规流程参数页面.UiTextBox完全自己写参数.Text.Replace(vbCrLf, " ").Replace(vbLf, " ").Replace(vbCr, " ")
 
+        a.剪辑区间_方法 = Form1.常规流程参数页面.UiComboBox剪辑方法.SelectedIndex
+        a.剪辑区间_入点 = Form1.常规流程参数页面.UiTextBox快速剪辑入点.Text
+        a.剪辑区间_出点 = Form1.常规流程参数页面.UiTextBox快速剪辑出点.Text
+        a.剪辑区间_向前解码多久秒 = Form1.常规流程参数页面.UiComboBox剪辑向前解码多久秒.Text
+
         a.流控制_将视频参数应用于指定流 = Form1.常规流程参数页面.UiTextBox将视频参数用于这些流.Text.Replace("-", "").Split(separator, StringSplitOptions.RemoveEmptyEntries)
         a.流控制_启用保留其他视频流 = Form1.常规流程参数页面.UiCheckBox保留其他视频流.Checked
         a.流控制_将音频参数应用于指定流 = Form1.常规流程参数页面.UiTextBox将音频参数用于这些流.Text.Replace("-", "").Split(separator, StringSplitOptions.RemoveEmptyEntries)
@@ -413,11 +420,7 @@ Public Class 预设管理
         a.流控制_元数据选项 = Form1.常规流程参数页面.UiComboBox元数据选项.SelectedIndex
         a.流控制_章节选项 = Form1.常规流程参数页面.UiComboBox章节选项.SelectedIndex
         a.流控制_附件选项 = Form1.常规流程参数页面.UiComboBox附件选项.SelectedIndex
-        a.流控制_剪辑_方法 = Form1.常规流程参数页面.UiComboBox剪辑方法.SelectedIndex
-        a.流控制_剪辑_入点 = Form1.常规流程参数页面.UiTextBox快速剪辑入点.Text
-        a.流控制_剪辑_出点 = Form1.常规流程参数页面.UiTextBox快速剪辑出点.Text
         a.流控制_启用自动混流同名字幕文件 = Form1.常规流程参数页面.UiCheckBox自动混流同名字幕文件.Checked
-
     End Sub
 
     Public Shared Sub 保存预设到文件()
@@ -545,6 +548,11 @@ Public Class 预设管理
         Form1.常规流程参数页面.UiTextBox最后参数.Text = ""
         Form1.常规流程参数页面.UiTextBox完全自己写参数.Text = ""
 
+        Form1.常规流程参数页面.UiComboBox剪辑方法.SelectedIndex = 0
+        Form1.常规流程参数页面.UiTextBox快速剪辑入点.Text = ""
+        Form1.常规流程参数页面.UiTextBox快速剪辑出点.Text = ""
+        Form1.常规流程参数页面.UiComboBox剪辑向前解码多久秒.Text = ""
+
         Form1.常规流程参数页面.UiTextBox将视频参数用于这些流.Text = ""
         Form1.常规流程参数页面.UiCheckBox保留其他视频流.Checked = False
         Form1.常规流程参数页面.UiTextBox将音频参数用于这些流.Text = ""
@@ -553,11 +561,7 @@ Public Class 预设管理
         Form1.常规流程参数页面.UiComboBox元数据选项.SelectedIndex = 0
         Form1.常规流程参数页面.UiComboBox章节选项.SelectedIndex = 0
         Form1.常规流程参数页面.UiComboBox附件选项.SelectedIndex = 0
-        Form1.常规流程参数页面.UiComboBox剪辑方法.SelectedIndex = 0
-        Form1.常规流程参数页面.UiTextBox快速剪辑入点.Text = ""
-        Form1.常规流程参数页面.UiTextBox快速剪辑出点.Text = ""
         Form1.常规流程参数页面.UiCheckBox自动混流同名字幕文件.Checked = False
-
     End Sub
 
     Public Shared Function 将预设数据转换为命令行(a As 预设数据类型, 输入文件 As String, 输出文件 As String) As String
@@ -587,10 +591,18 @@ Public Class 预设管理
             arg &= $"{a.解码参数_指定硬件的参数名} {a.解码参数_指定硬件的参数} "
         End If
 
-        If a.流控制_剪辑_方法 = 1 Then
-            If a.流控制_剪辑_入点 <> "" Then arg &= $"-ss {a.流控制_剪辑_入点} "
-            If a.流控制_剪辑_出点 <> "" Then arg &= $"-to {a.流控制_剪辑_出点} "
-        End If
+        Select Case a.剪辑区间_方法
+            Case 1
+                If a.剪辑区间_入点 <> "" Then arg &= $"-ss {a.剪辑区间_入点} "
+                If a.剪辑区间_出点 <> "" Then arg &= $"-to {a.剪辑区间_出点} "
+            Case 3
+                If a.剪辑区间_向前解码多久秒 = "" Then Exit Select
+                Dim 向前解码的时间 = 将时间字符串转换为时间类型(a.剪辑区间_向前解码多久秒)
+                Dim 入点时间 = 将时间字符串转换为时间类型(a.剪辑区间_入点)
+                Dim 计算后的入点时间 = 入点时间 - 向前解码的时间
+                If 计算后的入点时间 < TimeSpan.Zero Then 计算后的入点时间 = TimeSpan.Zero
+                arg &= $"-ss {将时间类型转换为时间字符串(计算后的入点时间)} "
+        End Select
 
         'avs 文件在启动任务时创建 
         If a.视频参数_降噪_方式 = "avs" Then
@@ -794,10 +806,18 @@ Public Class 预设管理
             Case 2 : 视频滤镜参数集.Add($"vflip")
         End Select
 
-        If a.流控制_剪辑_方法 = 2 Then
-            If a.流控制_剪辑_入点 <> "" Then 视频参数 &= $"-ss {a.流控制_剪辑_入点} "
-            If a.流控制_剪辑_出点 <> "" Then 视频参数 &= $"-to {a.流控制_剪辑_出点} "
-        End If
+        Select Case a.剪辑区间_方法
+            Case 2
+                If a.剪辑区间_入点 <> "" Then 视频参数 &= $"-ss {a.剪辑区间_入点} "
+                If a.剪辑区间_出点 <> "" Then 视频参数 &= $"-to {a.剪辑区间_出点} "
+            Case 3
+                If a.剪辑区间_向前解码多久秒 = "" Then Exit Select
+                Dim 向前解码的时间 = 将时间字符串转换为时间类型(a.剪辑区间_向前解码多久秒)
+                视频参数 &= $"-ss {将时间类型转换为时间字符串(向前解码的时间)} "
+                If a.剪辑区间_出点 = "" Then Exit Select
+                Dim 持续时间 = 将时间字符串转换为时间类型(a.剪辑区间_出点) - 将时间字符串转换为时间类型(a.剪辑区间_入点)
+                视频参数 &= $"-t {将时间类型转换为时间字符串(持续时间)} "
+        End Select
 
         If a.自定义参数_视频滤镜 <> "" Then 视频滤镜参数集.Add(处理自定义参数的通配字符串(a.自定义参数_视频滤镜, 输入文件))
         If 视频滤镜参数集.Count > 0 Then

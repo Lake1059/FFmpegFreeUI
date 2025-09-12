@@ -142,15 +142,15 @@ Public Class 编码任务
                     保留访问时间 = True
                 End If
 
-                If 预设数据.流控制_剪辑_入点 <> "" AndAlso 预设数据.流控制_剪辑_出点 <> "" Then
-                    Dim t1 = ParseTimeSpan(预设数据.流控制_剪辑_入点)
-                    Dim t2 = ParseTimeSpan(预设数据.流控制_剪辑_出点)
+                If 预设数据.剪辑区间_入点 <> "" AndAlso 预设数据.剪辑区间_出点 <> "" Then
+                    Dim t1 = 将时间字符串转换为时间类型(预设数据.剪辑区间_入点)
+                    Dim t2 = 将时间字符串转换为时间类型(预设数据.剪辑区间_出点)
                     获取_总时长 = t2 - t1
                     已获取到总时长 = True
                     GoTo 结束剪辑区间计算
                 End If
-                If 预设数据.流控制_剪辑_入点 = "" AndAlso 预设数据.流控制_剪辑_出点 <> "" Then
-                    获取_总时长 = ParseTimeSpan(预设数据.流控制_剪辑_出点)
+                If 预设数据.剪辑区间_入点 = "" AndAlso 预设数据.剪辑区间_出点 <> "" Then
+                    获取_总时长 = 将时间字符串转换为时间类型(预设数据.剪辑区间_出点)
                     已获取到总时长 = True
                     GoTo 结束剪辑区间计算
                 End If
@@ -271,10 +271,10 @@ jx1:
             If Not 已获取到总时长 AndAlso e.Data.Contains("Duration") Then
                 Dim durationMatch = DurationPattern.Match(e.Data)
                 If durationMatch.Success AndAlso 预设数据 IsNot Nothing Then
-                    If 预设数据.流控制_剪辑_入点 <> "" AndAlso 预设数据.流控制_剪辑_出点 = "" Then
-                        获取_总时长 = ParseTimeSpan(durationMatch.Groups(1).Value) - ParseTimeSpan(预设数据.流控制_剪辑_入点)
+                    If 预设数据.剪辑区间_入点 <> "" AndAlso 预设数据.剪辑区间_出点 = "" Then
+                        获取_总时长 = 将时间字符串转换为时间类型(durationMatch.Groups(1).Value) - 将时间字符串转换为时间类型(预设数据.剪辑区间_入点)
                     Else
-                        获取_总时长 = ParseTimeSpan(durationMatch.Groups(1).Value)
+                        获取_总时长 = 将时间字符串转换为时间类型(durationMatch.Groups(1).Value)
                     End If
                     已获取到总时长 = True
                 End If
@@ -488,7 +488,6 @@ jx1:
             SyncLock 要刷新的项
                 要刷新的项(列表视图项) = 信息数据
             End SyncLock
-
         End Sub
         Public Sub 在实时输出中提取数据(line As String)
             If String.IsNullOrEmpty(line) Then Return
@@ -500,14 +499,11 @@ jx1:
                 Dim val = sm.Groups("value").Value, unit = sm.Groups("unit").Value, sz As Long
                 实时_size = If(Long.TryParse(val, sz), ConvertToKB(sz, unit).ToString(), val)
             End If
-            Dim t = ExtractRegexValueAsString(TimePattern, line) : If t <> "" Then 实时_time = ParseTimeSpan(t)
+            Dim t = ExtractRegexValueAsString(TimePattern, line) : If t <> "" Then 实时_time = 将时间字符串转换为时间类型(t)
             Dim br = ExtractRegexValueAsString(BitratePattern, line) : If br <> "" Then 实时_bitrate = br
             Dim sp = ExtractRegexValueAsString(SpeedPattern, line) : If sp <> "" Then 实时_speed = sp
         End Sub
-
     End Class
-
-
 
 
     Public Shared ReadOnly DurationPattern As New Regex("Duration:\s*(\d{2}:\d{2}:\d{2}\.\d{2})", RegexOptions.Compiled)
@@ -518,32 +514,6 @@ jx1:
     Public Shared ReadOnly TimePattern As New Regex("time=\s*(?<value>\d{2}:\d{2}:\d{2}\.\d{2})", RegexOptions.Compiled)
     Public Shared ReadOnly BitratePattern As New Regex("bitrate=\s*(?<value>[\d\.]+)\s*kbits/s", RegexOptions.Compiled)
     Public Shared ReadOnly SpeedPattern As New Regex("speed=\s*(?<value>[\d\.eE\+\-]+)\s*x", RegexOptions.Compiled)
-
-    Shared Function ParseTimeSpan(timeStr As String) As TimeSpan
-        Try
-            Dim hours As Integer = 0
-            Dim minutes As Integer = 0
-            Dim seconds As Integer = 0
-            Dim milliseconds As Integer = 0
-            Dim timeParts = timeStr.Split(":"c)
-            If timeParts.Length < 3 Then Return TimeSpan.Zero
-            hours = Integer.Parse(timeParts(0))
-            minutes = Integer.Parse(timeParts(1))
-            Dim secPart = timeParts(2)
-            If secPart.Contains("."c) Then
-                Dim secMs = secPart.Split("."c)
-                seconds = Integer.Parse(secMs(0))
-                Dim msStr = secMs(1).PadRight(3, "0"c)
-                milliseconds = Integer.Parse(msStr.Substring(0, 3))
-            Else
-                seconds = Integer.Parse(secPart)
-                milliseconds = 0
-            End If
-            Return New TimeSpan(0, hours, minutes, seconds, milliseconds)
-        Catch
-            Return TimeSpan.Zero
-        End Try
-    End Function
 
     Shared Function ConvertToKB(value As Long, unit As String) As Long
         Select Case unit.ToUpper()
@@ -567,7 +537,6 @@ jx1:
             Return ""
             Exit Function
         End If
-
         Dim 输出目录 As String
         If 自定义目录 = "" Then
             输出目录 = Path.GetDirectoryName(输入文件)
@@ -669,7 +638,6 @@ jx1:
             队列(Form1.ListView1.SelectedItems(0).Index).错误列表.Add($"切换输出类型时单独刷新时失败 {Now} {ex.Message}")
         End Try
     End Sub
-
     Shared Function IsRichTextBoxTextDifferent(newText As String, richTextBox As RichTextBox) As Boolean
         Dim currentPlainText As String = richTextBox.Text
         Dim normalizedNewText As String = newText.Replace(vbCrLf, vbLf).Replace(vbCr, vbLf)

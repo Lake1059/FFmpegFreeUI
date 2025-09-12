@@ -6,7 +6,9 @@
 
 请认准官网域名：https://ffmpegfreeui.top 和 https://3fui.top<br>群友的暂用域名：https://3fui.frostlynx.work<br>三个域名都是正确的，都会解析到同一个地方
 
-如果我的设计对你有帮助，请帮我宣传或者考虑资金支持
+> [!NOTE]  
+>
+> 如果我的设计对你有帮助，请帮我宣传或者考虑资金支持
 
 ![](https://img.shields.io/github/downloads/Lake1059/FFmpegFreeUI/total?label=所有文件总下载量)&nbsp;&nbsp;[![](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2F3fui.top%2Fapi%2Fgithub-downloads&label=准确数量（延迟刷新）含镜像站&query=$.totalDownloads)](https://github.com/Lake1059/FFmpegFreeUI)
 
@@ -85,10 +87,13 @@ PluginExample 是我做的示例插件；在程序目录下创建 Plugin 文件�
 > **如何自行编译这个项目？**  
 >
 > 1. 下载并安装 **Visual Studio 2022**（目前 .NET 10 是预览版，所以需要预览版的 VS）
-> 2. 工作负载只需要 **.NET 桌面开发**，可选组件全都可以扔掉（看自己需求）
-> 3. 手动去下载并安装 **.NET 10 SDK**
-> 4. 然后直接打开 **.sln** 文件，剩下的依赖会自动补齐（需联网下载）
-> 5. 什么都不用调直接运行**全部重新生成**就行了
+> 2. > [!IMPORTANT]  
+>    > 从 2.4 版本开始 3FUI 已经转移到 Visual Studio 2026 上开发，尚不清楚回去用 VS 2022 编译是否会有意外情况，但理论上应该没问题。
+>
+> 3. 工作负载只需要 **.NET 桌面开发**，可选组件全都可以扔掉（看自己需求）
+> 4. 手动去下载并安装 **.NET 10 SDK**（VS 2026 已经可以在安装程序中选择）
+> 5. 然后直接打开 **.sln** 文件，剩下的依赖会自动补齐（需联网下载）
+> 6. 什么都不用调直接运行**全部重新生成**就行了
 
 ## 截图
 
@@ -360,6 +365,9 @@ PNG、APNG、JPEG\JPG、WEBP、AVIF、GIF、BMP、JPEG 2000、JPEG-LS、HDR、TI
 
 ## 插件开发
 
+> [!WARNING]  
+> 从 2.4 版本开始 3FUI 已经转移到 Visual Studio 2026 上开发，尚不清楚继续用 VS 2022 继续开发插件是否会有问题，但从理论上讲应该是没有问题的，毕竟没有引用 3FUI。
+
 通过插件，你可以给 3FUI 添加各种功能来满足自己的需求，只需要像我那样把可视化摆上来然后生成对应的参数即可，还可以选择接入我的编码队列，而不用自己做进度显示。
 
 考虑到 ReadyToRun 生成的 exe 无法被添加引用，插件使用 反射 + 特性 + 动态调用 来实现，你在开发插件的时候不需要引用 3FUI，只需要按照我制定的接口标准写代码即可。目前总共只有 4 个接口功能，非常简单，通常情况下你只需要用其中 2 个，所以不要担心要硬啃代码。
@@ -371,7 +379,7 @@ PNG、APNG、JPEG\JPG、WEBP、AVIF、GIF、BMP、JPEG 2000、JPEG-LS、HDR、TI
    - 可选组件看自己需求，可以能不要就都不要的
    - 但是我仍旧推荐这些组件：IntelliCode、.NET 可移植库目标包、.NET 分析工具
 3. 完成 VS2022 的安装
-4. 手动下载并安装 [.NET 10 SDK](https://dotnet.microsoft.com/zh-cn/download/dotnet/10.0)
+4. 手动下载并安装 [.NET 10 SDK](https://dotnet.microsoft.com/zh-cn/download/dotnet/10.0)（VS 2026 已经可以在安装程序中选择）
    - 截止目前 .NET 10 还是预览版，没有包含在 VS 的安装程序中
    - 等到正式版的时候就可以在可选组件里勾选了，到时候也不需要预览版的 VS 了
 

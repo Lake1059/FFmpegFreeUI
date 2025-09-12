@@ -1,0 +1,4 @@
+﻿[*.vb]
+
+# CA1806: 不要忽略方法结果
+dotnet_diagnostic.CA1806.severity = none
