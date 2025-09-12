@@ -2735,7 +2735,7 @@ Partial Class Form1
         UiComboBox自动重置参数面板的页面选择.ItemHeight = 30
         UiComboBox自动重置参数面板的页面选择.ItemHoverColor = Color.FromArgb(CByte(56), CByte(56), CByte(56))
         UiComboBox自动重置参数面板的页面选择.ItemRectColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
-        UiComboBox自动重置参数面板的页面选择.Items.AddRange(New Object() {"不要重置参数面板的页面 (建议)", "自动重置 (选项卡自身的机制) (反人类)"})
+        UiComboBox自动重置参数面板的页面选择.Items.AddRange(New Object() {"不要重置参数面板的页面 (建议)", "自动重置 (反人类，至少在我看来)"})
         UiComboBox自动重置参数面板的页面选择.ItemSelectBackColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
         UiComboBox自动重置参数面板的页面选择.ItemSelectForeColor = Color.Silver
         UiComboBox自动重置参数面板的页面选择.Location = New Point(21, 10)
@@ -2763,9 +2763,9 @@ Partial Class Form1
         Label50.Location = New Point(0, 249)
         Label50.Name = "Label50"
         Label50.Padding = New Padding(16, 10, 0, 0)
-        Label50.Size = New Size(529, 30)
+        Label50.Size = New Size(445, 30)
         Label50.TabIndex = 133
-        Label50.Text = "从主选项卡切回参数面板这个次级选项卡时是否要重置到第一个页面（需要重启）"
+        Label50.Text = "从主选项卡切回参数面板这个次级选项卡时是否要重置到第一个页面"
         ' 
         ' Panel10
         ' 
