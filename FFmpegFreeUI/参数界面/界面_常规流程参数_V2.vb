@@ -5,7 +5,7 @@ Imports Windows.Devices.Radios
 Public Class 界面_常规流程参数_V2
 
     Private Sub 界面_常规流程参数_Load(sender As Object, e As EventArgs) Handles Me.Load
-        If Form1.DPI <> 1 Then UiTabControlMenu1.ItemSize = New Size(200 * Form1.DPI, 40 * Form1.DPI)
+        If Form1.DPI <> 1 Then UiTabControlMenu1.ItemSize = New Size(200 * Form1.DPI, 36 * Form1.DPI)
         初始化进阶质量控制预制菜单项()
         设置富文本框行高(RichTextBox1, 350)
         设置富文本框行高(RichTextBox2, 350)
@@ -110,10 +110,12 @@ Public Class 界面_常规流程参数_V2
         '==================================================
         AddHandler UiComboBox图片编码器.MouseWheel, AddressOf 下拉框鼠标滚轮事件
         '==================================================
+        AddHandler UiComboBox剪辑方法.MouseWheel, AddressOf 下拉框鼠标滚轮事件
+        AddHandler UiComboBox剪辑向前解码多久秒.MouseWheel, AddressOf 下拉框鼠标滚轮事件
+        '==================================================
         AddHandler UiComboBox元数据选项.MouseWheel, AddressOf 下拉框鼠标滚轮事件
         AddHandler UiComboBox章节选项.MouseWheel, AddressOf 下拉框鼠标滚轮事件
         AddHandler UiComboBox附件选项.MouseWheel, AddressOf 下拉框鼠标滚轮事件
-        AddHandler UiComboBox剪辑方法.MouseWheel, AddressOf 下拉框鼠标滚轮事件
         '==================================================
         AddHandler UiComboBox自动加载预设选项.MouseWheel, AddressOf 下拉框鼠标滚轮事件
         '==================================================
@@ -379,10 +381,13 @@ Public Class 界面_常规流程参数_V2
         Select Case True
             Case 选项卡.IsEqual(TabPage参数总览) : 显示参数总览()
 
+            Case 选项卡.IsEqual(TabPage输出命名方式)
+                校准UiComboBox高DPI(UiComboBox自动命名选项)
+
             Case 选项卡.IsEqual(TabPage解码设置)
                 校准UiComboBox高DPI(UiComboBox解码器)
                 校准UiComboBox高DPI(UiComboBox解码数据格式)
-                校准UiComboBox高DPI(UiComboBox自动命名选项)
+                校准UiComboBox高DPI(UiComboBox硬件加速解码参数名)
 
             Case 选项卡.IsEqual(TabPage视频参数编码器)
                 校准UiComboBox高DPI(UiComboBox编码类别)
@@ -424,6 +429,8 @@ Public Class 界面_常规流程参数_V2
                 校准UiComboBox高DPI(UiComboBox图片编码器)
 
             Case 选项卡.IsEqual(TabPage自定义参数)
+                UiTabControl1.ItemSize = New Size(150 * Form1.DPI, 50 * Form1.DPI)
+
             Case 选项卡.IsEqual(TabPage剪辑区间)
                 校准UiComboBox高DPI(UiComboBox剪辑方法)
                 校准UiComboBox高DPI(UiComboBox剪辑向前解码多久秒)
@@ -555,7 +562,7 @@ Public Class 界面_常规流程参数_V2
         预设管理.储存预设(a)
         RichTextBox2.Clear()
         If a.自定义参数_完全自己写 <> "" Then
-            在参数总览输出文本("正在使用完全自己写参数模式，绝大多数参数均不会生效", Color.IndianRed)
+            在参数总览输出文本("正在使用完全自己写参数模式，所有参数均不会生效", Color.IndianRed)
             Exit Sub
         End If
 
@@ -627,7 +634,6 @@ Public Class 界面_常规流程参数_V2
         End If
 
         '---------------- 色彩管理 ----------------
-
         If a.视频参数_色彩管理_矩阵系数 <> "" Then 在参数总览输出文本("矩阵系数：" & a.视频参数_色彩管理_矩阵系数, Color.Silver)
         If a.视频参数_色彩管理_色域 <> "" Then 在参数总览输出文本("色域：" & a.视频参数_色彩管理_色域, Color.Silver)
         If a.视频参数_色彩管理_像素格式 <> "" Then 在参数总览输出文本("像素格式：" & a.视频参数_色彩管理_像素格式, Color.Silver)
@@ -672,7 +678,6 @@ Public Class 界面_常规流程参数_V2
         If a.图片参数_编码器_质量值 <> "" Then 在参数总览输出文本("图片质量：" & a.图片参数_编码器_质量值, Color.Silver)
 
         '---------------- 自定义参数 ----------------
-
         If a.自定义参数_开头参数 <> "" Then 在参数总览输出文本("自定义开头参数：" & a.自定义参数_开头参数, Color.Gray)
         If a.自定义参数_之前参数 <> "" Then 在参数总览输出文本("自定义之前参数：" & a.自定义参数_之前参数, Color.Gray)
         If a.自定义参数_视频滤镜 <> "" Then 在参数总览输出文本("自定义视频滤镜：" & a.自定义参数_视频滤镜, Color.Gray)
@@ -682,6 +687,17 @@ Public Class 界面_常规流程参数_V2
         If a.自定义参数_音频参数 <> "" Then 在参数总览输出文本("自定义音频参数：" & a.自定义参数_音频参数, Color.Gray)
         If a.自定义参数_之后参数 <> "" Then 在参数总览输出文本("自定义之后参数：" & a.自定义参数_之后参数, Color.Gray)
         If a.自定义参数_最后参数 <> "" Then 在参数总览输出文本("自定义最后参数：" & a.自定义参数_最后参数, Color.Gray)
+
+        '---------------- 剪辑区间 ----------------
+        Select Case a.剪辑区间_方法
+            Case 1 : 在参数总览输出文本("剪辑区间方法：粗剪", Color.Silver)
+            Case 2 : 在参数总览输出文本("剪辑区间方法：精剪 (从头解码)", Color.Silver)
+            Case 3 : 在参数总览输出文本("剪辑区间方法：精剪 (快速响应)", Color.Silver)
+            Case Else : If a.剪辑区间_入点 <> "" OrElse a.剪辑区间_出点 <> "" Then 在参数总览输出文本("警告：指定了剪辑范围却没有指定剪辑方法，不会进行剪辑", Color.IndianRed)
+        End Select
+        If a.剪辑区间_入点 <> "" Then 在参数总览输出文本("剪辑入点：" & a.剪辑区间_入点, Color.Silver)
+        If a.剪辑区间_出点 <> "" Then 在参数总览输出文本("剪辑出点：" & a.剪辑区间_出点, Color.Silver)
+        If a.剪辑区间_向前解码多久秒 <> "" Then 在参数总览输出文本("快速响应的精剪向前解码 " & a.剪辑区间_出点 & " 秒", Color.Silver)
 
         '---------------- 流控制 ----------------
         If a.流控制_启用保留其他视频流 Then 在参数总览输出文本("已选择保留其他视频流", Color.Silver)
@@ -703,22 +719,9 @@ Public Class 界面_常规流程参数_V2
             Case 2 : 在参数总览输出文本("清除章节", Color.Silver)
         End Select
         If a.流控制_附件选项 = 1 Then 在参数总览输出文本("保留附件", Color.Silver)
-        Select Case a.剪辑区间_方法
-            Case 1
-                在参数总览输出文本("粗剪", Color.Silver)
-                在参数总览输出文本("剪辑入点：" & a.剪辑区间_入点, Color.Silver)
-                在参数总览输出文本("剪辑出点：" & a.剪辑区间_出点, Color.Silver)
-            Case 2
-                在参数总览输出文本("精剪", Color.Silver)
-                在参数总览输出文本("剪辑入点：" & a.剪辑区间_入点, Color.Silver)
-                在参数总览输出文本("剪辑出点：" & a.剪辑区间_出点, Color.Silver)
-            Case Else
-                If a.剪辑区间_入点 <> "" OrElse a.剪辑区间_出点 <> "" Then
-                    在参数总览输出文本("警告：指定了剪辑范围却没有指定剪辑方法，不会进行剪辑", Color.IndianRed)
-                End If
-        End Select
 
         '---------------- 其他 ----------------
+
         If a.输出位置 <> "" Then 在参数总览输出文本("输出位置：" & a.输出位置, Color.Gray)
     End Sub
 

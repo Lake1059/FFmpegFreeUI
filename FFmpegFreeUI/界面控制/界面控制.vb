@@ -11,80 +11,11 @@ Public Class 界面控制
         绑定拖动控件移动窗体(Form1.Label36)
         绑定拖动控件移动窗体(Form1.Panel2)
 
-        Dim 字体列表 As New List(Of String)
-        For Each 字体 As FontFamily In FontFamily.Families
-            字体列表.Add(字体.Name)
-        Next
-        字体列表.Sort()
+        初始化设置操作响应()
 
-        Form1.UiComboBox字体名称.Font = New Font(SystemFonts.DefaultFont.FontFamily.Name, 9.75)
-        Form1.UiComboBox字体名称.Items.AddRange(字体列表.ToArray)
-        AddHandler Form1.UiButton4.Click, Sub()
-                                              If Form1.UiComboBox字体名称.Text = "" Then Exit Sub
-                                              SetControlFont(Form1.UiComboBox字体名称.Text, Form1, {Form1.UiComboBox字体名称})
-                                              Form1.ListView1.ContextMenuStrip.Font = New Font(Form1.UiComboBox字体名称.Text, Form1.ListView1.ContextMenuStrip.Font.Size)
-                                              用户设置.实例对象.字体 = Form1.UiComboBox字体名称.Text
-                                          End Sub
-        AddHandler Form1.UiComboBox字体名称.TextChanged, Sub()
-                                                         If Form1.UiComboBox字体名称.Text = "" Then Exit Sub
-                                                         If Not Form1.UiComboBox字体名称.Items.Contains(Form1.UiComboBox字体名称.Text) Then Exit Sub
-                                                         Form1.Label字体预览文本.Font = New Font(Form1.UiComboBox字体名称.Text, Form1.Label字体预览文本.Font.Size)
-                                                     End Sub
+        编码队列右键菜单.初始化()
+        编码队列管理选项.初始化()
 
-        AddHandler Form1.UiTextBox处理器核心.TextChanged, Sub() 用户设置.实例对象.指定处理器核心 = Form1.UiTextBox处理器核心.Text
-        AddHandler Form1.UiComboBox自动开始最大任务数量.SelectedIndexChanged, Sub()
-                                                                        用户设置.实例对象.自动同时运行任务数量选项 = Form1.UiComboBox自动开始最大任务数量.SelectedIndex
-                                                                        Select Case Form1.UiComboBox自动开始最大任务数量.SelectedIndex
-                                                                            Case 0 : 同时运行任务上限 = 1
-                                                                            Case 1 : 同时运行任务上限 = 2
-                                                                            Case 2 : 同时运行任务上限 = 3
-                                                                            Case 3 : 同时运行任务上限 = 4
-                                                                            Case 4 : 同时运行任务上限 = 5
-                                                                            Case 5 : 同时运行任务上限 = 6
-                                                                            Case 6 : 同时运行任务上限 = 7
-                                                                            Case 7 : 同时运行任务上限 = 8
-                                                                            Case 8 : 同时运行任务上限 = 9
-                                                                            Case 9 : 同时运行任务上限 = 10
-                                                                            Case Else : 同时运行任务上限 = 1
-                                                                        End Select
-                                                                    End Sub
-
-        AddHandler Form1.UiComboBox有任务时系统状态.SelectedIndexChanged, Sub()
-                                                                      If Form1.UiComboBox有任务时系统状态.Text = "" Then Exit Sub
-                                                                      If Form1.UiComboBox有任务时系统状态.SelectedIndex < 0 Then Exit Sub
-                                                                      用户设置.实例对象.有任务时系统保持状态选项 = Form1.UiComboBox有任务时系统状态.SelectedIndex
-                                                                  End Sub
-        AddHandler Form1.UiComboBox提示音.SelectedIndexChanged, Sub() 用户设置.实例对象.提示音选项 = Form1.UiComboBox提示音.SelectedIndex
-        AddHandler Form1.UiComboBox自动开始任务.SelectedIndexChanged, Sub() 用户设置.实例对象.自动开始任务选项 = Form1.UiComboBox自动开始任务.SelectedIndex
-        AddHandler Form1.UiComboBox自动重置参数面板的页面选择.SelectedIndexChanged, Sub() 用户设置.实例对象.自动重置参数面板的页面选择 = Form1.UiComboBox自动重置参数面板的页面选择.SelectedIndex
-
-        AddHandler Form1.UiTextBoxFFmpeg自定义工作目录.TextChanged, Sub() 用户设置.实例对象.工作目录 = Form1.UiTextBoxFFmpeg自定义工作目录.Text
-        AddHandler Form1.UiButton13.Click, Sub()
-                                               Dim dialog As New CommonOpenFileDialog With {.IsFolderPicker = True}
-                                               If dialog.ShowDialog() = CommonFileDialogResult.Ok Then Form1.UiTextBoxFFmpeg自定义工作目录.Text = dialog.FileName
-                                           End Sub
-        AddHandler Form1.UiTextBox替代进程的文件名.TextChanged, Sub() 用户设置.实例对象.替代进程文件名 = Form1.UiTextBox替代进程的文件名.Text
-        AddHandler Form1.UiTextBox覆盖参数传递.TextChanged, Sub() 用户设置.实例对象.覆盖参数传递 = Form1.UiTextBox覆盖参数传递.Text
-        AddHandler Form1.UiCheckBox转译模式.Click, Sub() 用户设置.实例对象.转译模式 = Form1.UiCheckBox转译模式.Checked = True
-
-
-
-        Form1.编码队列右键菜单 = New 暗黑上下文菜单 With {.ShowImageMargin = False, .Font = Form1.Font}
-        Form1.ListView1.ContextMenuStrip = Form1.编码队列右键菜单
-        Form1.编码队列右键菜单.Items.AddRange(New ToolStripItem() {
-                                                             New ToolStripSeparator() With {.Tag = "null"},
-                                                             New ToolStripMenuItem("任务状态控制") With {.ForeColor = Color.CornflowerBlue, .Enabled = False},
-                                                             New ToolStripMenuItem("全新开始任务", Nothing, AddressOf 界面控制_编码队列.开始任务) With {.ForeColor = Color.YellowGreen},
-                                                             New ToolStripMenuItem("暂停（挂起进程）", Nothing, AddressOf 界面控制_编码队列.暂停任务) With {.ForeColor = Color.Goldenrod},
-                                                             New ToolStripMenuItem("继续（恢复进程）", Nothing, AddressOf 界面控制_编码队列.恢复任务) With {.ForeColor = Color.YellowGreen},
-                                                             New ToolStripMenuItem("停止（关闭进程）", Nothing, AddressOf 界面控制_编码队列.停止任务) With {.ForeColor = Color.IndianRed},
-                                                             New ToolStripMenuItem("移除", Nothing, AddressOf 界面控制_编码队列.移除任务) With {.ForeColor = Color.IndianRed},
-                                                             New ToolStripMenuItem("重置状态", Nothing, AddressOf 界面控制_编码队列.重置任务),
-                                                             New ToolStripSeparator(),
-                                                             New ToolStripMenuItem("任务管理") With {.ForeColor = Color.CornflowerBlue, .Enabled = False},
-                                                             New ToolStripMenuItem("全选", Nothing, AddressOf 界面控制_编码队列.全选任务),
-                                                             New ToolStripSeparator() With {.Tag = "null"}
-                                                         })
         AddHandler Form1.LinkLabel向ffmpeg发送消息.LinkClicked, Sub()
                                                                Dim a1 As String = InputBox("向 FFmpeg 进程发送消息")
                                                                If a1 <> "" Then 编码任务.队列(Form1.ListView1.SelectedItems(0).Index).发送消息(a1)
@@ -104,6 +35,8 @@ Public Class 界面控制
         Form1.Panel41.AutoSize = True
 
         AddHandler Form1.UiTabControlMenu1.SelectedIndexChanged, AddressOf 界面校准
+
+        AddHandler Form1.LinkLabel清理内存.LinkClicked, AddressOf 回收自身内存占用
 
         AddHandler Form1.LinkLabel7.LinkClicked, Sub() Process.Start(New ProcessStartInfo With {.FileName = "https://github.com/Lake1059/FFmpegFreeUI", .UseShellExecute = True})
         AddHandler Form1.LinkLabel2.LinkClicked, Sub() Process.Start(New ProcessStartInfo With {.FileName = "https://ffmpeg.org/documentation.html", .UseShellExecute = True})
@@ -126,10 +59,6 @@ Public Class 界面控制
         AddHandler Form1.UiButton移除任务.Click, AddressOf 界面控制_编码队列.移除任务
         AddHandler Form1.UiButton重置任务.Click, AddressOf 界面控制_编码队列.重置任务
         AddHandler Form1.UiButton定位输出.Click, AddressOf 界面控制_编码队列.定位输出
-        AddHandler Form1.UiButton重新配置.Click, AddressOf 界面控制_编码队列.重新配置
-        AddHandler Form1.UiButton重新添加.Click, AddressOf 界面控制_编码队列.重新添加
-        AddHandler Form1.UiButton导出配置.Click, AddressOf 界面控制_编码队列.导出配置
-        AddHandler Form1.UiButton复制命令行.Click, AddressOf 界面控制_编码队列.复制命令行
 
         Form1.UiComboBox输出显示类型.SelectedIndex = 0
         AddHandler Form1.LinkLabel切换显示输出面板.LinkClicked, Sub()
@@ -174,15 +103,15 @@ Public Class 界面控制
 
 
             Case 选项卡.IsEqual(Form1.TabPage编码队列)
-                Form1.Label1.Width = Form1.Panel1.Width - Form1.Panel1.Padding.Left - Form1.Label2.Width - Form1.Label3.Width - Form1.Label4.Width - Form1.Label5.Width - Form1.Label6.Width - Form1.Label7.Width - 200 * Form1.DPI
-                Form1.ListView1.Columns(0).Width = Form1.Label1.Width - Form1.ListView1.Parent.Padding.Left - 5 * Form1.DPI
-                Form1.ListView1.Columns(1).Width = Form1.Label2.Width
-                Form1.ListView1.Columns(2).Width = Form1.Label3.Width
-                Form1.ListView1.Columns(3).Width = Form1.Label4.Width
-                Form1.ListView1.Columns(4).Width = Form1.Label5.Width
-                Form1.ListView1.Columns(5).Width = Form1.Label6.Width
-                Form1.ListView1.Columns(6).Width = Form1.Label7.Width
-                Form1.ListView1.Columns(7).Width = Form1.Label8.Width - SystemInformation.VerticalScrollBarWidth * Form1.DPI * 2
+                'Form1.Label1.Width = Form1.Panel1.Width - Form1.Panel1.Padding.Left - Form1.Label状态.Width - Form1.Label进度.Width - Form1.Label效率.Width - Form1.Label输出大小.Width - Form1.Label质量.Width - Form1.Label比特率.Width - 200 * Form1.DPI
+                Form1.ListView1.Columns(0).Width = Form1.Panel15.Width - Form1.ListView1.Parent.Padding.Left - 5 * Form1.DPI
+                Form1.ListView1.Columns(1).Width = Form1.Label状态.Width
+                Form1.ListView1.Columns(2).Width = Form1.Label进度.Width
+                Form1.ListView1.Columns(3).Width = Form1.Label效率.Width
+                Form1.ListView1.Columns(4).Width = Form1.Label输出大小.Width
+                Form1.ListView1.Columns(5).Width = Form1.Label质量.Width
+                Form1.ListView1.Columns(6).Width = Form1.Label比特率.Width
+                Form1.ListView1.Columns(7).Width = Form1.Label预计剩余.Width - SystemInformation.VerticalScrollBarWidth * Form1.DPI * 2
                 校准输出面板的宽度()
                 Dim s1 As Integer = 0
                 For Each c As UIButton In Form1.Panel2.Controls
@@ -200,6 +129,9 @@ Public Class 界面控制
             Case 选项卡.IsEqual(Form1.TabPage参数面板)
                 If 用户设置.实例对象.自动重置参数面板的页面选择 = 1 Then
                     Form1.常规流程参数页面.UiTabControlMenu1.SelectedTab = Form1.常规流程参数页面.TabPage参数总览
+                End If
+                If Form1.常规流程参数页面.UiTabControlMenu1.SelectedTab.IsEqual(Form1.常规流程参数页面.TabPage参数总览) Then
+                    Form1.常规流程参数页面.显示参数总览()
                 End If
 
             Case 选项卡.IsEqual(Form1.TabPage媒体信息)
@@ -229,6 +161,90 @@ Public Class 界面控制
         End Select
     End Sub
 
+    Public Shared Sub 初始化设置操作响应()
+        Dim 字体列表 As New List(Of String)
+        For Each 字体 As FontFamily In FontFamily.Families
+            字体列表.Add(字体.Name)
+        Next
+        字体列表.Sort()
+        Form1.UiComboBox字体名称.Font = New Font(SystemFonts.DefaultFont.FontFamily.Name, 9.75)
+        Form1.UiComboBox字体名称.Items.AddRange(字体列表.ToArray)
+        AddHandler Form1.UiButton4.Click, Sub()
+                                              If Form1.UiComboBox字体名称.Text = "" Then Exit Sub
+                                              SetControlFont(Form1.UiComboBox字体名称.Text, Form1, {Form1.UiComboBox字体名称})
+                                              用户设置.实例对象.字体 = Form1.UiComboBox字体名称.Text
+                                              编码队列右键菜单.重设字体()
+                                              编码队列管理选项.重设字体()
+                                          End Sub
+        AddHandler Form1.UiComboBox字体名称.TextChanged, Sub()
+                                                         If Form1.UiComboBox字体名称.Text = "" Then Exit Sub
+                                                         If Not Form1.UiComboBox字体名称.Items.Contains(Form1.UiComboBox字体名称.Text) Then Exit Sub
+                                                         Form1.Label字体预览文本.Font = New Font(Form1.UiComboBox字体名称.Text, Form1.Label字体预览文本.Font.Size)
+                                                     End Sub
+        AddHandler Form1.UiTextBox处理器核心.TextChanged, Sub() 用户设置.实例对象.指定处理器核心 = Form1.UiTextBox处理器核心.Text
+        AddHandler Form1.UiTextBox快捷输入CPU核心.KeyPress, Sub(sender, e)
+                                                          Select Case e.KeyChar
+                                                              Case "0"c To "9"c, "~"c, ChrW(Keys.Back)
+                                                              Case ChrW(Keys.Enter)
+                                                                  Dim input = Form1.UiTextBox快捷输入CPU核心.Text.Trim
+                                                                  Dim result As New List(Of Integer)
+                                                                  Try
+                                                                      If input.Contains("~"c) Then
+                                                                          Dim parts = input.Split("~"c)
+                                                                          If parts.Length = 2 Then
+                                                                              Dim startNum, endNum As Integer
+                                                                              If Integer.TryParse(parts(0), startNum) AndAlso Integer.TryParse(parts(1), endNum) Then
+                                                                                  If startNum <= endNum Then
+                                                                                      For i = startNum To endNum
+                                                                                          result.Add(i)
+                                                                                      Next
+                                                                                      Form1.UiTextBox处理器核心.Text = String.Join(",", result)
+                                                                                  End If
+                                                                              End If
+                                                                          End If
+                                                                      End If
+                                                                  Catch ex As Exception
+                                                                      MsgBox(ex.Message, MsgBoxStyle.Critical)
+                                                                  End Try
+                                                                  e.Handled = True
+                                                              Case Else
+                                                                  Exit Sub
+                                                          End Select
+                                                      End Sub
+        AddHandler Form1.UiComboBox自动开始最大任务数量.SelectedIndexChanged, Sub()
+                                                                        用户设置.实例对象.自动同时运行任务数量选项 = Form1.UiComboBox自动开始最大任务数量.SelectedIndex
+                                                                        Select Case Form1.UiComboBox自动开始最大任务数量.SelectedIndex
+                                                                            Case 0 : 同时运行任务上限 = 1
+                                                                            Case 1 : 同时运行任务上限 = 2
+                                                                            Case 2 : 同时运行任务上限 = 3
+                                                                            Case 3 : 同时运行任务上限 = 4
+                                                                            Case 4 : 同时运行任务上限 = 5
+                                                                            Case 5 : 同时运行任务上限 = 6
+                                                                            Case 6 : 同时运行任务上限 = 7
+                                                                            Case 7 : 同时运行任务上限 = 8
+                                                                            Case 8 : 同时运行任务上限 = 9
+                                                                            Case 9 : 同时运行任务上限 = 10
+                                                                            Case Else : 同时运行任务上限 = 1
+                                                                        End Select
+                                                                    End Sub
+        AddHandler Form1.UiComboBox有任务时系统状态.SelectedIndexChanged, Sub()
+                                                                      If Form1.UiComboBox有任务时系统状态.Text = "" Then Exit Sub
+                                                                      If Form1.UiComboBox有任务时系统状态.SelectedIndex < 0 Then Exit Sub
+                                                                      用户设置.实例对象.有任务时系统保持状态选项 = Form1.UiComboBox有任务时系统状态.SelectedIndex
+                                                                  End Sub
+        AddHandler Form1.UiComboBox提示音.SelectedIndexChanged, Sub() 用户设置.实例对象.提示音选项 = Form1.UiComboBox提示音.SelectedIndex
+        AddHandler Form1.UiComboBox自动开始任务.SelectedIndexChanged, Sub() 用户设置.实例对象.自动开始任务选项 = Form1.UiComboBox自动开始任务.SelectedIndex
+        AddHandler Form1.UiComboBox自动重置参数面板的页面选择.SelectedIndexChanged, Sub() 用户设置.实例对象.自动重置参数面板的页面选择 = Form1.UiComboBox自动重置参数面板的页面选择.SelectedIndex
+
+        AddHandler Form1.UiTextBoxFFmpeg自定义工作目录.TextChanged, Sub() 用户设置.实例对象.工作目录 = Form1.UiTextBoxFFmpeg自定义工作目录.Text
+        AddHandler Form1.UiButton13.Click, Sub()
+                                               Dim dialog As New CommonOpenFileDialog With {.IsFolderPicker = True}
+                                               If dialog.ShowDialog() = CommonFileDialogResult.Ok Then Form1.UiTextBoxFFmpeg自定义工作目录.Text = dialog.FileName
+                                           End Sub
+        AddHandler Form1.UiTextBox替代进程的文件名.TextChanged, Sub() 用户设置.实例对象.替代进程文件名 = Form1.UiTextBox替代进程的文件名.Text
+        AddHandler Form1.UiTextBox覆盖参数传递.TextChanged, Sub() 用户设置.实例对象.覆盖参数传递 = Form1.UiTextBox覆盖参数传递.Text
+        AddHandler Form1.UiCheckBox转译模式.Click, Sub() 用户设置.实例对象.转译模式 = Form1.UiCheckBox转译模式.Checked = True
+    End Sub
 
     Public Shared Sub 选择输出容器鼠标按下事件(sender As Object, e As MouseEventArgs)
 

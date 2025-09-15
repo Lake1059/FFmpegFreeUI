@@ -332,9 +332,9 @@ Partial Class 界面_常规流程参数_V2
         UiTextBox快速剪辑入点 = New Sunny.UI.UITextBox()
         Label115 = New Label()
         Label152 = New Label()
+        Label143 = New Label()
         Panel66 = New Panel()
         UiComboBox剪辑方法 = New Sunny.UI.UIComboBox()
-        Label143 = New Label()
         Label109 = New Label()
         Label146 = New Label()
         TabPage流控制 = New TabPage()
@@ -509,7 +509,8 @@ Partial Class 界面_常规流程参数_V2
         UiTabControlMenu1.Dock = DockStyle.Fill
         UiTabControlMenu1.DrawMode = TabDrawMode.OwnerDrawFixed
         UiTabControlMenu1.FillColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
-        UiTabControlMenu1.Font = New Font("微软雅黑", 11F)
+        UiTabControlMenu1.Font = New Font("微软雅黑", 10F)
+        UiTabControlMenu1.ItemSize = New Size(200, 36)
         UiTabControlMenu1.Location = New Point(0, 0)
         UiTabControlMenu1.MenuStyle = Sunny.UI.UIMenuStyle.Custom
         UiTabControlMenu1.Multiline = True
@@ -519,7 +520,8 @@ Partial Class 界面_常规流程参数_V2
         UiTabControlMenu1.SizeMode = TabSizeMode.Fixed
         UiTabControlMenu1.TabBackColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
         UiTabControlMenu1.TabIndex = 0
-        UiTabControlMenu1.TabSelectedColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        UiTabControlMenu1.TabSelectedForeColor = Color.CornflowerBlue
+        UiTabControlMenu1.TabSelectedHighColor = Color.CornflowerBlue
         UiTabControlMenu1.TextAlignment = HorizontalAlignment.Left
         ' 
         ' TabPage参数总览
@@ -4846,7 +4848,7 @@ Partial Class 界面_常规流程参数_V2
         UiTabControl1.Dock = DockStyle.Fill
         UiTabControl1.DrawMode = TabDrawMode.OwnerDrawFixed
         UiTabControl1.FillColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
-        UiTabControl1.Font = New Font("微软雅黑", 11F)
+        UiTabControl1.Font = New Font("微软雅黑", 10F)
         UiTabControl1.ItemSize = New Size(150, 50)
         UiTabControl1.Location = New Point(20, 10)
         UiTabControl1.MainPage = ""
@@ -5459,7 +5461,7 @@ Partial Class 界面_常规流程参数_V2
         ' 
         Panel60.Controls.Add(UiTextBox完全自己写参数)
         Panel60.Dock = DockStyle.Fill
-        Panel60.Location = New Point(0, 93)
+        Panel60.Location = New Point(0, 90)
         Panel60.Name = "Panel60"
         Panel60.Padding = New Padding(4, 0, 4, 0)
         Panel60.Size = New Size(200, 0)
@@ -5498,12 +5500,12 @@ Partial Class 界面_常规流程参数_V2
         ' 
         Label106.AutoSize = True
         Label106.Dock = DockStyle.Top
-        Label106.Font = New Font("微软雅黑", 12F)
+        Label106.Font = New Font("微软雅黑", 10F)
         Label106.ForeColor = Color.DarkGray
         Label106.Location = New Point(0, 0)
         Label106.Name = "Label106"
         Label106.Padding = New Padding(0, 10, 0, 20)
-        Label106.Size = New Size(690, 93)
+        Label106.Size = New Size(601, 90)
         Label106.TabIndex = 43
         Label106.Text = "完全自己写时，其他所有参数全都不会生效" & vbCrLf & "不要包含开头的 ffmpeg，这里是直接给其的参数" & vbCrLf & "用 <InputFile> 表示输入文件，用 <OutputFile> 表示输出文件，不会自动写引号，区分大小写"
         ' 
@@ -5517,8 +5519,8 @@ Partial Class 界面_常规流程参数_V2
         TabPage剪辑区间.Controls.Add(Panel76)
         TabPage剪辑区间.Controls.Add(Label115)
         TabPage剪辑区间.Controls.Add(Label152)
-        TabPage剪辑区间.Controls.Add(Panel66)
         TabPage剪辑区间.Controls.Add(Label143)
+        TabPage剪辑区间.Controls.Add(Panel66)
         TabPage剪辑区间.Controls.Add(Label109)
         TabPage剪辑区间.Controls.Add(Label146)
         TabPage剪辑区间.Location = New Point(201, 0)
@@ -5533,7 +5535,7 @@ Partial Class 界面_常规流程参数_V2
         Label153.Dock = DockStyle.Top
         Label153.Font = New Font("微软雅黑", 10F)
         Label153.ForeColor = Color.Gray
-        Label153.Location = New Point(0, 452)
+        Label153.Location = New Point(0, 457)
         Label153.Name = "Label153"
         Label153.Padding = New Padding(16, 5, 0, 0)
         Label153.Size = New Size(613, 25)
@@ -5545,7 +5547,7 @@ Partial Class 界面_常规流程参数_V2
         Panel75.Controls.Add(Label144)
         Panel75.Controls.Add(UiComboBox剪辑向前解码多久秒)
         Panel75.Dock = DockStyle.Top
-        Panel75.Location = New Point(0, 412)
+        Panel75.Location = New Point(0, 417)
         Panel75.Name = "Panel75"
         Panel75.Padding = New Padding(21, 10, 20, 0)
         Panel75.Size = New Size(899, 40)
@@ -5604,7 +5606,7 @@ Partial Class 界面_常规流程参数_V2
         Label151.Dock = DockStyle.Top
         Label151.Font = New Font("微软雅黑", 10F)
         Label151.ForeColor = Color.Gray
-        Label151.Location = New Point(0, 367)
+        Label151.Location = New Point(0, 372)
         Label151.Name = "Label151"
         Label151.Padding = New Padding(16, 5, 0, 0)
         Label151.Size = New Size(487, 45)
@@ -5616,7 +5618,7 @@ Partial Class 界面_常规流程参数_V2
         Label150.AutoSize = True
         Label150.Dock = DockStyle.Top
         Label150.Font = New Font("微软雅黑", 13F)
-        Label150.Location = New Point(0, 323)
+        Label150.Location = New Point(0, 328)
         Label150.Name = "Label150"
         Label150.Padding = New Padding(16, 20, 0, 0)
         Label150.Size = New Size(152, 44)
@@ -5629,7 +5631,7 @@ Partial Class 界面_常规流程参数_V2
         Panel76.Controls.Add(Label116)
         Panel76.Controls.Add(UiTextBox快速剪辑入点)
         Panel76.Dock = DockStyle.Top
-        Panel76.Location = New Point(0, 283)
+        Panel76.Location = New Point(0, 288)
         Panel76.Name = "Panel76"
         Panel76.Padding = New Padding(21, 10, 20, 0)
         Panel76.Size = New Size(899, 40)
@@ -5701,7 +5703,7 @@ Partial Class 界面_常规流程参数_V2
         Label115.Dock = DockStyle.Top
         Label115.Font = New Font("微软雅黑", 10F)
         Label115.ForeColor = Color.Gray
-        Label115.Location = New Point(0, 238)
+        Label115.Location = New Point(0, 243)
         Label115.Name = "Label115"
         Label115.Padding = New Padding(16, 5, 0, 0)
         Label115.Size = New Size(429, 45)
@@ -5713,18 +5715,31 @@ Partial Class 界面_常规流程参数_V2
         Label152.AutoSize = True
         Label152.Dock = DockStyle.Top
         Label152.Font = New Font("微软雅黑", 13F)
-        Label152.Location = New Point(0, 194)
+        Label152.Location = New Point(0, 199)
         Label152.Name = "Label152"
         Label152.Padding = New Padding(16, 20, 0, 0)
         Label152.Size = New Size(116, 44)
         Label152.TabIndex = 110
         Label152.Text = "入点和出点"
         ' 
+        ' Label143
+        ' 
+        Label143.AutoSize = True
+        Label143.Dock = DockStyle.Top
+        Label143.Font = New Font("微软雅黑", 10F)
+        Label143.ForeColor = Color.Gray
+        Label143.Location = New Point(0, 149)
+        Label143.Name = "Label143"
+        Label143.Padding = New Padding(16, 10, 0, 0)
+        Label143.Size = New Size(498, 50)
+        Label143.TabIndex = 107
+        Label143.Text = "精剪必须重编码才能精确到帧！ffmpeg 做不到在不重编码的情况下精确到帧" & vbCrLf & "如果复制流则下一个关键帧之前的帧都是卡住的！" & vbCrLf
+        ' 
         ' Panel66
         ' 
         Panel66.Controls.Add(UiComboBox剪辑方法)
         Panel66.Dock = DockStyle.Top
-        Panel66.Location = New Point(0, 154)
+        Panel66.Location = New Point(0, 109)
         Panel66.Name = "Panel66"
         Panel66.Padding = New Padding(21, 10, 20, 0)
         Panel66.Size = New Size(899, 40)
@@ -5764,19 +5779,6 @@ Partial Class 界面_常规流程参数_V2
         UiComboBox剪辑方法.TabIndex = 103
         UiComboBox剪辑方法.TextAlignment = ContentAlignment.MiddleLeft
         UiComboBox剪辑方法.Watermark = "方式"
-        ' 
-        ' Label143
-        ' 
-        Label143.AutoSize = True
-        Label143.Dock = DockStyle.Top
-        Label143.Font = New Font("微软雅黑", 10F)
-        Label143.ForeColor = Color.Gray
-        Label143.Location = New Point(0, 109)
-        Label143.Name = "Label143"
-        Label143.Padding = New Padding(16, 5, 0, 0)
-        Label143.Size = New Size(498, 45)
-        Label143.TabIndex = 107
-        Label143.Text = "精剪必须重编码才能精确到帧！ffmpeg 做不到在不重编码的情况下精确到帧" & vbCrLf & "如果复制流则下一个关键帧之前的帧都是卡住的！" & vbCrLf
         ' 
         ' Label109
         ' 
@@ -5952,7 +5954,7 @@ Partial Class 界面_常规流程参数_V2
         UiComboBox元数据选项.ItemHeight = 30
         UiComboBox元数据选项.ItemHoverColor = Color.FromArgb(CByte(56), CByte(56), CByte(56))
         UiComboBox元数据选项.ItemRectColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
-        UiComboBox元数据选项.Items.AddRange(New Object() {"", "保留元数据", "清除元数据"})
+        UiComboBox元数据选项.Items.AddRange(New Object() {"", "保留元数据", "清除元数据", "保留更多元数据"})
         UiComboBox元数据选项.ItemSelectBackColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
         UiComboBox元数据选项.ItemSelectForeColor = Color.Silver
         UiComboBox元数据选项.Location = New Point(21, 10)

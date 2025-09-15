@@ -80,6 +80,7 @@ Public Class 编码任务
     Public Class 单片任务
         Public Property 预设数据 As 预设数据类型
         Public Property 输入文件 As String = ""
+        Public Property 输入文件的大小 As Long = 0
         Public Property 输出文件 As String = ""
         Public Property 自定义输出位置 As String = ""
         Public Property 命令行 As String = ""
@@ -89,6 +90,7 @@ Public Class 编码任务
         Public Property 实时_fps As String = ""
         Public Property 实时_q As String = ""
         Public Property 实时_size As String = ""
+        Public Property 实时_size_数字 As Long = 0
         Public Property 实时_time As TimeSpan = TimeSpan.Zero
         Public Property 实时_bitrate As String = ""
         Public Property 实时_speed As String = ""
@@ -157,6 +159,12 @@ Public Class 编码任务
 
 结束剪辑区间计算:
 jx1:
+                If FileIO.FileSystem.FileExists(输入文件) Then
+                    Try
+                        输入文件的大小 = FileIO.FileSystem.GetFileInfo(输入文件).Length
+                    Catch ex As Exception
+                    End Try
+                End If
                 FFmpegProcess = New Process()
                 FFmpegProcess.StartInfo.FileName = If(用户设置.实例对象.替代进程文件名 <> "", 用户设置.实例对象.替代进程文件名, "ffmpeg")
                 FFmpegProcess.StartInfo.WorkingDirectory = If(用户设置.实例对象.工作目录 <> "", 用户设置.实例对象.工作目录, "")
@@ -338,7 +346,6 @@ jx1:
 
             End If
             任务耗时计时器.Stop()
-            GC.Collect()
 
             界面线程执行(AddressOf 状态刷新统一逻辑)
         End Sub
@@ -348,18 +355,25 @@ jx1:
                 Case 编码状态.未处理
                     列表视图项.ForeColor = Color.Silver
                     列表视图项.SubItems(1).Text = "未处理"
+                    列表视图项.SubItems(4).ForeColor = 列表视图项.ForeColor
                 Case 编码状态.正在处理
                     列表视图项.ForeColor = Color.YellowGreen
                     列表视图项.SubItems(1).Text = "正在处理"
+                    If 输入文件的大小 > 0 AndAlso 实时_size_数字 > 0 Then
+                        Dim 实时大小比值 = 实时_size_数字 / (输入文件的大小 / 1024)
+                        Select Case 实时大小比值
+                            Case < 1 : 列表视图项.SubItems(4).ForeColor = 列表视图项.ForeColor
+                            Case >= 1 : 列表视图项.SubItems(4).ForeColor = Color.IndianRed
+                        End Select
+                    End If
                 Case 编码状态.已完成
                     列表视图项.ForeColor = Color.OliveDrab
                     列表视图项.SubItems(1).Text = "已完成"
                     列表视图项.SubItems(2).Text = "100%"
                     If FileIO.FileSystem.FileExists(输入文件) And FileIO.FileSystem.FileExists(输出文件) Then
-                        Dim 输入文件信息 As New IO.FileInfo(输入文件)
-                        Dim 输出文件信息 As New IO.FileInfo(输出文件)
+                        Dim 输出文件的大小 As Long = FileIO.FileSystem.GetFileInfo(输出文件).Length
                         Dim sizeText As String = ""
-                        Dim sizeValue As Long = 输出文件信息.Length / 1024
+                        Dim sizeValue As Long = 输出文件的大小 / 1024
                         If sizeValue >= 1024 * 1024 Then
                             sizeText = $"{sizeValue / 1024.0 / 1024.0:F2} GB"
                         ElseIf sizeValue >= 1024 Then
@@ -367,13 +381,18 @@ jx1:
                         Else
                             sizeText = $"{sizeValue} KB"
                         End If
-                        列表视图项.SubItems(4).Text = $"{sizeText} ({$"{输出文件信息.Length / 输入文件信息.Length * 100:F0}%"})"
+                        Dim 前后大小比值 = 输出文件的大小 / 输入文件的大小
+                        列表视图项.SubItems(4).Text = $"{sizeText} ({$"{前后大小比值 * 100:F0}%"})"
+                        Select Case 前后大小比值
+                            Case >= 1 : 列表视图项.SubItems(4).ForeColor = Color.IndianRed
+                            Case < 1 : 列表视图项.SubItems(4).ForeColor = 列表视图项.ForeColor
+                        End Select
                         GoTo 结束前后文件大小显示计算
                     End If
                     If Not FileIO.FileSystem.FileExists(输入文件) And FileIO.FileSystem.FileExists(输出文件) Then
-                        Dim 输出文件信息 As New IO.FileInfo(输出文件)
+                        Dim 输出文件的大小 As Long = FileIO.FileSystem.GetFileInfo(输出文件).Length
                         Dim sizeText As String = ""
-                        Dim sizeValue As Long = 输出文件信息.Length / 1024
+                        Dim sizeValue As Long = 输出文件的大小 / 1024
                         If sizeValue >= 1024 * 1024 Then
                             sizeText = $"{sizeValue / 1024.0 / 1024.0:F2} GB"
                         ElseIf sizeValue >= 1024 Then
@@ -384,7 +403,7 @@ jx1:
                         列表视图项.SubItems(4).Text = $"{sizeText}"
                         GoTo 结束前后文件大小显示计算
                     End If
-                    If FileIO.FileSystem.FileExists(输入文件) And Not FileIO.FileSystem.FileExists(输出文件) Then
+                    If Not FileIO.FileSystem.FileExists(输出文件) Then
                         列表视图项.SubItems(4).Text = $"N/A"
                         GoTo 结束前后文件大小显示计算
                     End If
@@ -404,11 +423,14 @@ jx1:
                 Case 编码状态.已暂停
                     列表视图项.ForeColor = Color.Goldenrod
                     列表视图项.SubItems(1).Text = "已暂停"
+                    If 列表视图项.SubItems(4).ForeColor <> Color.IndianRed Then 列表视图项.SubItems(4).ForeColor = 列表视图项.ForeColor
                 Case 编码状态.已停止
                     列表视图项.ForeColor = Color.IndianRed
                     列表视图项.SubItems(1).Text = "已停止"
                     列表视图项.SubItems(5).Text = ""
+                    列表视图项.SubItems(4).ForeColor = 列表视图项.ForeColor
                 Case 编码状态.错误
+                    列表视图项.SubItems(4).ForeColor = 列表视图项.ForeColor
                     If 手动停止不要尝试启动其他任务 Then
                         列表视图项.ForeColor = Color.IndianRed
                         列表视图项.SubItems(5).Text = ""
@@ -498,6 +520,7 @@ jx1:
             If sm.Success Then
                 Dim val = sm.Groups("value").Value, unit = sm.Groups("unit").Value, sz As Long
                 实时_size = If(Long.TryParse(val, sz), ConvertToKB(sz, unit).ToString(), val)
+                实时_size_数字 = sz
             End If
             Dim t = ExtractRegexValueAsString(TimePattern, line) : If t <> "" Then 实时_time = 将时间字符串转换为时间类型(t)
             Dim br = ExtractRegexValueAsString(BitratePattern, line) : If br <> "" Then 实时_bitrate = br

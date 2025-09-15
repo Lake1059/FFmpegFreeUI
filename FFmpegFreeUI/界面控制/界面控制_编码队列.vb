@@ -4,10 +4,22 @@ Imports System.Text.Json
 Public Class 界面控制_编码队列
 
     Public Shared Sub 开始任务()
+        If Form1.ListView1.SelectedItems.Count = 0 Then Exit Sub
+        If 编码任务.获取正在处理的任务数量 >= 10 Then
+            Dim 选项字典 As New Dictionary(Of String, Action)
+            选项字典("了解") = Nothing
+            选项字典("确认开始更多的任务") = AddressOf 真的开始任务
+            软件内对话框.显示对话框("同时进行的任务过多", "正在进行的任务已经超过 10 个，确定要继续开始新任务吗？ffmpeg 使用的资源过多可能导致系统运行缓慢甚至 3FUI 崩溃!", 选项字典, 软件内对话框.主题类型.错误)
+        Else
+            真的开始任务()
+        End If
+    End Sub
+
+    Private Shared Sub 真的开始任务()
         For Each item As ListViewItem In Form1.ListView1.SelectedItems
             Dim i = item.Index
             Select Case 编码任务.队列(i).状态
-                Case 编码任务.编码状态.未处理, 编码任务.编码状态.已停止, 编码任务.编码状态.错误
+                Case 编码任务.编码状态.未处理
                     Task.Run(AddressOf 编码任务.队列(i).开始)
             End Select
         Next
@@ -78,6 +90,12 @@ Public Class 界面控制_编码队列
         Next
     End Sub
 
+    Public Shared Sub 反选任务()
+        For Each item As ListViewItem In Form1.ListView1.Items
+            item.Selected = Not item.Selected
+        Next
+    End Sub
+
     Public Shared Sub 定位输出()
         If Form1.ListView1.SelectedItems.Count <> 1 Then Exit Sub
         Dim 输出文件 = 编码任务.队列(Form1.ListView1.SelectedItems(0).Index).输出文件
@@ -85,7 +103,33 @@ Public Class 界面控制_编码队列
         Process.Start("explorer", "/select,""" & 输出文件 & """")
     End Sub
 
-    Public Shared Sub 重新配置()
+    Public Shared Sub 复制多个任务的命令行()
+        If Form1.ListView1.SelectedItems.Count = 0 Then Exit Sub
+        Dim 每个任务的命令行 As New List(Of String)
+        For Each item As ListViewItem In Form1.ListView1.SelectedItems
+            If 编码任务.队列(item.Index).命令行 <> "" Then
+                每个任务的命令行.Add("ffmpeg " & 编码任务.队列(item.Index).命令行)
+            Else
+                If 编码任务.队列(item.Index).预设数据 IsNot Nothing Then
+                    每个任务的命令行.Add("ffmpeg " & 预设管理.将预设数据转换为命令行(编码任务.队列(item.Index).预设数据, 编码任务.队列(item.Index).输入文件, 编码任务.队列(item.Index).输出文件))
+                Else
+                    每个任务的命令行.Add("没有可用的命令行")
+                End If
+            End If
+        Next
+        Clipboard.SetText(String.Join(vbCrLf, 每个任务的命令行))
+    End Sub
+
+    Public Shared Sub 将参数面板数据覆盖到任务()
+        If Form1.ListView1.SelectedItems.Count = 0 Then Exit Sub
+        Dim a As New 预设数据类型
+        预设管理.储存预设(a)
+        For Each item As ListViewItem In Form1.ListView1.SelectedItems
+            编码任务.队列(item.Index).预设数据 = a
+        Next
+    End Sub
+
+    Public Shared Sub 将任务参数覆盖到参数面板()
         If Form1.ListView1.SelectedItems.Count <> 1 Then Exit Sub
         If 编码任务.队列(Form1.ListView1.SelectedItems(0).Index).预设数据 Is Nothing Then
             MsgBox("此任务不包含 3FUI 的预设数据，一般是由其他程序添加的，这样不能使用这个功能。", MsgBoxStyle.Exclamation)
@@ -93,54 +137,32 @@ Public Class 界面控制_编码队列
         End If
         If MsgBox("确定将此任务的配置数据用于覆盖几个选项卡中的设置？此操作不可逆！", MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
             预设管理.显示预设(编码任务.队列(Form1.ListView1.SelectedItems(0).Index).预设数据)
-            Dim 输入文件 = 编码任务.队列(Form1.ListView1.SelectedItems(0).Index).输入文件
-            Dim 已存在 As Boolean = False
-            For Each item As ListViewItem In Form1.ListView2.Items
-                If item.Text = 输入文件 Then
-                    已存在 = True
-                    Exit For
-                End If
-            Next
-            If Not 已存在 Then Form1.ListView2.Items.Add(输入文件)
         End If
     End Sub
 
-    Public Shared Sub 重新添加()
-        If Form1.ListView1.SelectedItems.Count <> 1 Then Exit Sub
-        For i = 0 To Form1.ListView1.SelectedItems.Count - 1
-            If 编码任务.队列(Form1.ListView1.SelectedItems(i).Index).预设数据 Is Nothing Then
-                MsgBox("此任务不包含 3FUI 的预设数据，一般是由其他程序添加的，这样不能使用这个功能。", MsgBoxStyle.Exclamation)
-                Continue For
+    Public Shared Sub 将任务放到添加文件选项卡()
+        If Form1.ListView1.SelectedItems.Count = 0 Then Exit Sub
+        Dim 已有的文件 As New List(Of String)
+        For Each item As ListViewItem In Form1.ListView2.Items
+            已有的文件.Add(item.Text)
+        Next
+        For Each item As ListViewItem In Form1.ListView1.SelectedItems
+            If Not 已有的文件.Contains(编码任务.队列(item.Index).输入文件) Then
+                Form1.ListView2.Items.Add(编码任务.队列(item.Index).输入文件)
             End If
-            For Each item As ListViewItem In Form1.ListView2.Items
-                If item.Text = 编码任务.队列(Form1.ListView1.SelectedItems(i).Index).输入文件 Then
-                    GoTo jx1
-                End If
-            Next
-            Form1.ListView2.Items.Add(编码任务.队列(Form1.ListView1.SelectedItems(i).Index).输入文件)
-jx1:
         Next
     End Sub
 
-    Public Shared Sub 导出配置()
+    Public Shared Sub 导出任务参数数据到预设文件()
         If Form1.ListView1.SelectedItems.Count <> 1 Then Exit Sub
         If 编码任务.队列(Form1.ListView1.SelectedItems(0).Index).预设数据 Is Nothing Then
-            MsgBox("此任务不包含 3FUI 的预设数据，一般是由其他程序添加的，这样不能使用这个功能。", MsgBoxStyle.Exclamation)
+            MsgBox("此任务不包含 3FUI 的预设数据，不能使用这个功能。", MsgBoxStyle.Exclamation)
             Exit Sub
         End If
         Dim d As New SaveFileDialog With {.Filter = "Json|*.json"}
         d.ShowDialog(Form1)
         If d.FileName = "" Then Exit Sub
         File.WriteAllText(d.FileName, JsonSerializer.Serialize(编码任务.队列(Form1.ListView1.SelectedItems(0).Index).预设数据, JsonSO))
-    End Sub
-
-    Public Shared Sub 复制命令行()
-        If Form1.ListView1.SelectedItems.Count <> 1 Then Exit Sub
-        If 编码任务.队列(Form1.ListView1.SelectedItems(0).Index).命令行 = "" Then
-            Clipboard.SetText("ffmpeg " & 预设管理.将预设数据转换为命令行(编码任务.队列(Form1.ListView1.SelectedItems(0).Index).预设数据, 编码任务.队列(Form1.ListView1.SelectedItems(0).Index).输入文件, 编码任务.队列(Form1.ListView1.SelectedItems(0).Index).输出文件))
-        Else
-            Clipboard.SetText("ffmpeg " & 编码任务.队列(Form1.ListView1.SelectedItems(0).Index).命令行)
-        End If
     End Sub
 
 End Class

@@ -50,12 +50,12 @@ Public Class 暗黑列表视图自绘制
                     Dim 高度 As Integer = Math.Max(8 * Form1.DPI, e.Bounds.Height - 6 * Form1.DPI)
                     Dim 区域 As New Rectangle(e.Bounds.X + 边距, e.Bounds.Y + (e.Bounds.Height - 高度) \ 2, e.Bounds.Width - 2 * 边距, 高度)
                     If 进度值 > 0 Then
-                        Using 填充画刷 As New SolidBrush(Color.FromArgb(64, 64, 64))
+                        Using 填充画刷 As New SolidBrush(If(e.Item.Selected, Color.FromArgb(64, 64, 64), Color.FromArgb(56, 56, 56)))
                             e.Graphics.FillRectangle(填充画刷, New Rectangle(区域.X, 区域.Y, 区域.Width * (进度值 / 100), 区域.Height))
                         End Using
                     End If
             End Select
-            TextRenderer.DrawText(e.Graphics, 实际要绘制的文本.Replace("&", "&&"), e.SubItem.Font, 文本绘制区, e.Item.ForeColor, Color.Transparent, TextFormatFlags.Default)
+            TextRenderer.DrawText(e.Graphics, 实际要绘制的文本.Replace("&", "&&"), e.SubItem.Font, 文本绘制区, If(e.SubItem.ForeColor = 哪个列表视图控件.ForeColor, e.Item.ForeColor, e.SubItem.ForeColor), Color.Transparent, TextFormatFlags.Default)
         Catch ex As Exception
         End Try
     End Sub

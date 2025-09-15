@@ -9,7 +9,7 @@
         '检测是否有网络
         If My.Computer.Network.IsAvailable Then
             Dim a As New GitHubAPI.Release
-            Dim s1 As String = Await a.获取仓库发布版信息Async("Lake1059/FFmpegFreeUI", "")
+            Dim s1 As String = Await a.获取仓库发布版信息Async("Lake1059/FFmpegFreeUI")
             If s1 <> "" Then
                 Form1.Label64.Text = "获取更新信息失败"
                 Form1.Label65.Text = "" : Form1.Label65.Visible = False

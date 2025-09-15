@@ -335,5 +335,13 @@ Module Module1
                             timespan.Milliseconds)
     End Function
 
+    <DllImport("psapi.dll")>
+    Private Function EmptyWorkingSet(hProcess As IntPtr) As Boolean
+    End Function
+    Public Sub 回收自身内存占用()
+        GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced, True, True)
+        GC.WaitForPendingFinalizers()
+        EmptyWorkingSet(Process.GetCurrentProcess.Handle)
+    End Sub
 
 End Module

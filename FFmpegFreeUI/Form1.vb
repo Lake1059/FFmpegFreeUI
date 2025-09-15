@@ -10,7 +10,6 @@ Public Class Form1
     Public 常规流程参数页面 As New 界面_常规流程参数_V2
     Public 混流页面 As New 界面_混流
     Public 合并页面 As New 界面_合并
-    Public 编码队列右键菜单 As 暗黑上下文菜单
 
     Public 性能统计对象 As New 性能统计
     Public 性能统计刷新计时器 As New Timer With {.Interval = 2000, .Enabled = False}
@@ -32,7 +31,10 @@ Public Class Form1
         UiComboBox字体名称.Text = 用户设置.实例对象.字体
         If UiComboBox字体名称.Items.Contains("微软雅黑") Then UiComboBox字体名称.Font = New Font("微软雅黑", UiComboBox字体名称.Font.Size)
         SetControlFont(用户设置.实例对象.字体, Me, {UiComboBox字体名称}, True)
-        Me.ListView1.ContextMenuStrip.Font = New Font(Me.UiComboBox字体名称.Text, Me.ListView1.ContextMenuStrip.Font.Size)
+
+        编码队列右键菜单.重设字体()
+        编码队列管理选项.重设字体()
+
         界面控制.界面校准()
         If DPI <> 1 Then DPI变动时校准界面()
 
@@ -45,30 +47,16 @@ Public Class Form1
     End Sub
 
     Private Sub Form1_Shown(sender As Object, e As EventArgs) Handles Me.Shown
-        界面线程执行(AddressOf 插件管理.启动时加载插件)
+        'bro薛定谔的猫知道吧
         If UI同步上下文 Is Nothing Then MsgBox("警告：UI 同步上下文是空的，继续使用软件将导致崩溃，请联系开发者排查问题", MsgBoxStyle.Critical)
-        界面线程执行(AddressOf 检查更新.检查)
-        任务进度更新计时器.Enabled = True
 
-        'If 用户设置.实例对象.V2Tips Then
-        '    T99 = New Timer With {.Enabled = False, .Interval = 3000}
-        '    AddHandler T99.Tick, AddressOf 显示教学信息
-        '    T99.Start()
-        'End If
+        任务进度更新计时器.Enabled = True
+        界面线程执行(AddressOf 插件管理.启动时加载插件)
+        界面线程执行(AddressOf 检查更新.检查)
+        回收自身内存占用()
 
         新闻列表.获取新闻()
     End Sub
-
-    'Public T99 As Timer
-    'Sub 显示教学信息()
-    '    Dim 选项字典 As New Dictionary(Of String, Action)
-    '    选项字典("了解") = Nothing
-    '    选项字典("永久关闭这个提示") = Sub() 用户设置.实例对象.V2Tips = False
-    '    软件内对话框.显示对话框("2.0 全新视觉", $"参数面板已完全重做，原来的内置提示信息已全部移除，现在可以在下拉框上使用鼠标滚轮来快速切换", 选项字典, 软件内对话框.主题类型.常规)
-    '    T99.Enabled = False
-    '    T99.Dispose()
-    '    T99 = Nothing
-    'End Sub
 
     Public Sub 重新创建句柄()
         Try
@@ -99,7 +87,6 @@ Public Class Form1
         Me.MinimumSize = New Size(1200 * DPI, 700 * DPI)
         Me.UiTabControlMenu1.ItemSize = New Size(150 * DPI, 40 * DPI)
         Me.ImageList1.ImageSize = New Size(1, 30 * DPI)
-        常规流程参数页面.UiTabControl1.ItemSize = New Size(120 * Form1.DPI, 50 * Form1.DPI)
     End Sub
 
     Private Sub Form1_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
@@ -194,35 +181,6 @@ Public Class Form1
         Else
             e.Effect = DragDropEffects.None
         End If
-    End Sub
-    Private Sub UiTextBox快捷输入CPU核心_KeyPress(sender As Object, e As KeyPressEventArgs) Handles UiTextBox快捷输入CPU核心.KeyPress
-        Select Case e.KeyChar
-            Case "0"c To "9"c, "~"c, ChrW(Keys.Back)
-            Case ChrW(Keys.Enter)
-                Dim input = UiTextBox快捷输入CPU核心.Text.Trim
-                Dim result As New List(Of Integer)
-                Try
-                    If input.Contains("~"c) Then
-                        Dim parts = input.Split("~"c)
-                        If parts.Length = 2 Then
-                            Dim startNum, endNum As Integer
-                            If Integer.TryParse(parts(0), startNum) AndAlso Integer.TryParse(parts(1), endNum) Then
-                                If startNum <= endNum Then
-                                    For i = startNum To endNum
-                                        result.Add(i)
-                                    Next
-                                    UiTextBox处理器核心.Text = String.Join(",", result)
-                                End If
-                            End If
-                        End If
-                    End If
-                Catch ex As Exception
-                    MsgBox(ex.Message, MsgBoxStyle.Critical)
-                End Try
-                e.Handled = True
-            Case Else
-                Exit Sub
-        End Select
     End Sub
 
     Private Sub UiButton切换处理器占用面板_Click(sender As Object, e As EventArgs) Handles UiButton切换处理器占用面板.Click

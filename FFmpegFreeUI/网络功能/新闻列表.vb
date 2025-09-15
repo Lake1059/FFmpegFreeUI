@@ -5,7 +5,6 @@ Public Class 新闻列表
 
     Public Shared Sub 显示新闻列表()
         Form1.Panel5.Controls.Clear()
-        GC.Collect()
 
         For i = 0 To 列表数据.Count - 1
             Dim c1 As New LinkLabel With {.AutoSize = True, .Dock = DockStyle.Top, .TextAlign = ContentAlignment.MiddleLeft, .Padding = New Padding(0, 0, 0, 10 * Form1.DPI), .BackColor = Color.Transparent, .ActiveLinkColor = Color.Violet, .Text = 列表数据(i).Key, .Tag = i, .Font = New Font(用户设置.实例对象.字体, 11), .LinkBehavior = LinkBehavior.HoverUnderline, .Cursor = Cursors.Hand}

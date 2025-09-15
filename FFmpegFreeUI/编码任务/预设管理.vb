@@ -912,12 +912,13 @@ Public Class 预设管理
         '=================================================================
 
         If a.流控制_启用保留内嵌字幕流 Then
-            arg &= $"{If(arg.Contains("-map"), "-map 0:s?", "")}  -c:s copy "
+            arg &= $"{If(arg.Contains("-map"), "-map 0:s?", "")} -c:s copy "
         End If
 
         Select Case a.流控制_元数据选项
             Case 1 : arg &= $"-map_metadata 0 "
             Case 2 : arg &= $"-map_metadata -1 "
+            Case 3 : arg &= $"-movflags +use_metadata_tags "
         End Select
 
         Select Case a.流控制_章节选项
@@ -926,7 +927,7 @@ Public Class 预设管理
         End Select
 
         Select Case a.流控制_附件选项
-            Case 1 : arg &= $"{If(arg.Contains("-map"), "-map 0:t?", "")}  -c:t copy "
+            Case 1 : arg &= $"{If(arg.Contains("-map"), "-map 0:t?", "")} -c:t copy "
         End Select
 
         If 滤镜图参数集.Count > 0 Then
