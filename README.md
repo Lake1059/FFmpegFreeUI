@@ -63,7 +63,7 @@ FFmpegFreeUI（简称 3FUI）是在 Windows 上的 [FFmpeg](https://ffmpeg.org) 
 
 [ReadyToRun](https://learn.microsoft.com/zh-cn/dotnet/core/deploying/ready-to-run) 就是原来的单文件版编译，不过现在保留了一些 dll 还是叫专业术语比较好；[SelfContained](https://learn.microsoft.com/zh-cn/dotnet/core/deploying/#publish-self-contained) 是备选项，如果 ReadyToRun 无法在你的电脑上运行，那么尝试 SelfContained。我还额外提供了一个 Debug 版本，这是开发的时候调试用的那一份，也许有人会需要。
 
-从 2.5 版本开始 ReadyToRun 生成启用了 EnableCompressionInSingleFile（？微软你的文档呢？），其文件大小相比原来减小了超过 50%，但由于已经被压缩过了，所以压缩包大小会比 SelfContained 的更大，建议继续首选下载 ReadyToRun 以获得最佳体验。
+从 2.5 版本开始 ReadyToRun 生成启用了 EnableCompressionInSingleFile，其文件大小相比原来减小了超过 50%，但由于已经被压缩过了，所以压缩包大小会比 SelfContained 的更大，建议继续首选下载 ReadyToRun 以获得最佳体验。
 
 PluginExample 是我做的示例插件；在程序目录下创建 Plugin 文件夹，然后把插件放进去重启 3FUI 就可以加载了，插件也要注意架构；插件的后缀是 **.3fui.dll**，看不见后缀的自己去面壁。
 
