@@ -1590,7 +1590,7 @@ Partial Class Form1
         UiComboBox输出目录.ItemHeight = 30
         UiComboBox输出目录.ItemHoverColor = Color.FromArgb(CByte(56), CByte(56), CByte(56))
         UiComboBox输出目录.ItemRectColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
-        UiComboBox输出目录.Items.AddRange(New Object() {"输出到原目录（点此更改输出位置）", "浏览 ..."})
+        UiComboBox输出目录.Items.AddRange(New Object() {"  输出到原目录", "  浏览 ..."})
         UiComboBox输出目录.ItemSelectBackColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
         UiComboBox输出目录.ItemSelectForeColor = Color.Silver
         UiComboBox输出目录.Location = New Point(280, 0)
@@ -1611,7 +1611,7 @@ Partial Class Form1
         UiComboBox输出目录.Style = Sunny.UI.UIStyle.Custom
         UiComboBox输出目录.SymbolSize = 24
         UiComboBox输出目录.TabIndex = 75
-        UiComboBox输出目录.TextAlignment = ContentAlignment.MiddleCenter
+        UiComboBox输出目录.TextAlignment = ContentAlignment.MiddleLeft
         UiComboBox输出目录.Watermark = "选择输出目录"
         ' 
         ' Label那个神奇的视觉标签

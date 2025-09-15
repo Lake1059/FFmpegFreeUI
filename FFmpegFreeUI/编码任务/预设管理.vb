@@ -4,6 +4,11 @@ Imports Sunny.UI
 Public Class 预设管理
     Public Shared Sub 显示预设(a As 预设数据类型)
         Form1.UiTextBox输出容器.Text = a.输出容器
+        If a.计算机名称 = Environment.MachineName AndAlso FileIO.FileSystem.DirectoryExists(a.输出位置) Then
+            Form1.UiComboBox输出目录.Text = "  " & a.输出位置
+        Else
+            Form1.UiComboBox输出目录.SelectedIndex = 0
+        End If
 
         Form1.常规流程参数页面.UiSwitch使用自动命名.Active = a.输出命名_使用自动命名
         Form1.常规流程参数页面.UiComboBox自动命名选项.SelectedIndex = a.输出命名_自动命名选项
@@ -215,6 +220,10 @@ Public Class 预设管理
 
     Public Shared Sub 储存预设(ByRef a As 预设数据类型)
         a.输出容器 = Form1.UiTextBox输出容器.Text
+        If Form1.常规流程参数页面.UiCheckBox额外保存信息.Checked AndAlso FileIO.FileSystem.DirectoryExists(Form1.UiComboBox输出目录.Text.Trim) Then
+            a.计算机名称 = Environment.MachineName
+            a.输出位置 = Form1.UiComboBox输出目录.Text.Trim
+        End If
 
         a.输出命名_使用自动命名 = Form1.常规流程参数页面.UiSwitch使用自动命名.Active
         a.输出命名_自动命名选项 = Form1.常规流程参数页面.UiComboBox自动命名选项.SelectedIndex
@@ -429,10 +438,6 @@ Public Class 预设管理
         If d.FileName = "" Then Exit Sub
         Dim a As New 预设数据类型
         储存预设(a)
-        If Form1.常规流程参数页面.UiCheckBox额外保存信息.Checked Then
-            a.计算机名称 = Environment.MachineName
-            a.输出位置 = Form1.UiComboBox输出目录.Text
-        End If
         File.WriteAllText(d.FileName, JsonSerializer.Serialize(a, JsonSO))
         Select Case 用户设置.实例对象.自动加载预设选项
             Case 用户设置.自动加载预设选项枚举.自动加载最后的预设文件
@@ -447,9 +452,6 @@ Public Class 预设管理
         If Not File.Exists(d.FileName) Then Exit Sub
         Dim a As 预设数据类型 = JsonSerializer.Deserialize(Of 预设数据类型)(File.ReadAllText(d.FileName))
         显示预设(a)
-        If a.计算机名称 = Environment.MachineName Then
-            Form1.UiComboBox输出目录.Text = a.输出位置
-        End If
         Form1.常规流程参数页面.RichTextBox1.Text = "ffmpeg " & 预设管理.将预设数据转换为命令行(a, "<输入文件>", "<输出文件>")
         Select Case 用户设置.实例对象.自动加载预设选项
             Case 用户设置.自动加载预设选项枚举.自动加载最后的预设文件
@@ -460,6 +462,7 @@ Public Class 预设管理
 
     Public Shared Sub 重置全部包含在预设中的设置()
         Form1.UiTextBox输出容器.Text = ""
+        Form1.UiComboBox输出目录.SelectedIndex = 0
 
         Form1.常规流程参数页面.UiSwitch使用自动命名.Active = True
         Form1.常规流程参数页面.UiComboBox自动命名选项.SelectedIndex = 0

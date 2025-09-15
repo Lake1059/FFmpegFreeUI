@@ -1,4 +1,5 @@
 ﻿Imports System.IO
+Imports System.Runtime.Serialization
 Imports System.Text.RegularExpressions
 Imports Sunny.UI
 
@@ -31,21 +32,24 @@ Public Class 编码任务
             End If
         Next
         Task.Run(Sub()
-                     If 获取正在处理的任务数量() = 0 Then
-                         If 全部任务已完成是否有错误 Then
-                             If 用户设置.实例对象.提示音选项 = 0 Then
-                                 Sound_Error.Position = 0
-                                 My.Computer.Audio.Play(Sound_Error, AudioPlayMode.Background)
+                     Try
+                         If 获取正在处理的任务数量() = 0 Then
+                             If 全部任务已完成是否有错误 Then
+                                 If 用户设置.实例对象.提示音选项 = 0 Then
+                                     Sound_Error.Position = 0
+                                     My.Computer.Audio.Play(Sound_Error, AudioPlayMode.Background)
+                                 End If
+                                 全部任务已完成是否有错误 = False
+                             Else
+                                 If 用户设置.实例对象.提示音选项 = 0 Then
+                                     Sound_Finish.Position = 0
+                                     My.Computer.Audio.Play(Sound_Finish, AudioPlayMode.Background)
+                                 End If
                              End If
-                             全部任务已完成是否有错误 = False
-                         Else
-                             If 用户设置.实例对象.提示音选项 = 0 Then
-                                 Sound_Finish.Position = 0
-                                 My.Computer.Audio.Play(Sound_Finish, AudioPlayMode.Background)
-                             End If
+                             恢复系统状态()
                          End If
-                         恢复系统状态()
-                     End If
+                     Catch ex As Exception
+                     End Try
                  End Sub)
     End Sub
     Public Shared Property 全部任务已完成是否有错误 As Boolean = False

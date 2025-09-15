@@ -62,10 +62,10 @@ Partial Class Form画面裁剪交互窗口
         Panel73.Controls.Add(Panel75)
         Panel73.Controls.Add(Panel3)
         Panel73.Dock = DockStyle.Top
-        Panel73.Location = New Point(20, 20)
+        Panel73.Location = New Point(10, 10)
         Panel73.Name = "Panel73"
         Panel73.Padding = New Padding(10)
-        Panel73.Size = New Size(844, 180)
+        Panel73.Size = New Size(864, 180)
         Panel73.TabIndex = 80
         ' 
         ' Panel75
@@ -85,7 +85,7 @@ Partial Class Form画面裁剪交互窗口
         Panel75.Location = New Point(10, 140)
         Panel75.Name = "Panel75"
         Panel75.Padding = New Padding(3, 0, 0, 0)
-        Panel75.Size = New Size(824, 30)
+        Panel75.Size = New Size(844, 30)
         Panel75.TabIndex = 11
         ' 
         ' UiCheckBox居中
@@ -309,7 +309,7 @@ Partial Class Form画面裁剪交互窗口
         Panel3.Location = New Point(10, 10)
         Panel3.Name = "Panel3"
         Panel3.Padding = New Padding(0, 0, 0, 15)
-        Panel3.Size = New Size(824, 130)
+        Panel3.Size = New Size(844, 130)
         Panel3.TabIndex = 12
         ' 
         ' Label123
@@ -340,7 +340,7 @@ Partial Class Form画面裁剪交互窗口
         ' 
         PictureBox2.BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         PictureBox2.Dock = DockStyle.Right
-        PictureBox2.Location = New Point(584, 0)
+        PictureBox2.Location = New Point(604, 0)
         PictureBox2.Name = "PictureBox2"
         PictureBox2.Size = New Size(115, 115)
         PictureBox2.SizeMode = PictureBoxSizeMode.Zoom
@@ -350,7 +350,7 @@ Partial Class Form画面裁剪交互窗口
         ' Label4
         ' 
         Label4.Dock = DockStyle.Right
-        Label4.Location = New Point(699, 0)
+        Label4.Location = New Point(719, 0)
         Label4.Name = "Label4"
         Label4.Size = New Size(10, 115)
         Label4.TabIndex = 83
@@ -359,7 +359,7 @@ Partial Class Form画面裁剪交互窗口
         ' 
         PictureBox3.BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         PictureBox3.Dock = DockStyle.Right
-        PictureBox3.Location = New Point(709, 0)
+        PictureBox3.Location = New Point(729, 0)
         PictureBox3.Name = "PictureBox3"
         PictureBox3.Size = New Size(115, 115)
         PictureBox3.SizeMode = PictureBoxSizeMode.Zoom
@@ -369,9 +369,9 @@ Partial Class Form画面裁剪交互窗口
         ' Label128
         ' 
         Label128.Dock = DockStyle.Top
-        Label128.Location = New Point(20, 200)
+        Label128.Location = New Point(10, 190)
         Label128.Name = "Label128"
-        Label128.Size = New Size(844, 20)
+        Label128.Size = New Size(864, 10)
         Label128.TabIndex = 83
         ' 
         ' Panel1
@@ -380,9 +380,9 @@ Partial Class Form画面裁剪交互窗口
         Panel1.BackColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
         Panel1.Controls.Add(Panel2)
         Panel1.Dock = DockStyle.Fill
-        Panel1.Location = New Point(20, 220)
+        Panel1.Location = New Point(10, 200)
         Panel1.Name = "Panel1"
-        Panel1.Size = New Size(844, 371)
+        Panel1.Size = New Size(864, 401)
         Panel1.TabIndex = 84
         ' 
         ' Panel2
@@ -423,7 +423,7 @@ Partial Class Form画面裁剪交互窗口
         ForeColor = Color.Silver
         MinimumSize = New Size(900, 650)
         Name = "Form画面裁剪交互窗口"
-        Padding = New Padding(20)
+        Padding = New Padding(10)
         ShowIcon = False
         ShowInTaskbar = False
         StartPosition = FormStartPosition.Manual

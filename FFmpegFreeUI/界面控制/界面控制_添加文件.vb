@@ -10,7 +10,7 @@ Public Class 界面控制_添加文件
         Select Case Form1.UiComboBox输出目录.SelectedIndex
             Case 0
             Case Else
-                If Not FileIO.FileSystem.DirectoryExists(Form1.UiComboBox输出目录.Text) Then
+                If Not FileIO.FileSystem.DirectoryExists(Form1.UiComboBox输出目录.Text.Trim) Then
                     软件内对话框.显示对话框("输出位置错误", $"自定义输出目录不存在！", New Dictionary(Of String, Action) From {{"了解", Nothing}}, 软件内对话框.主题类型.错误)
                     Exit Sub
                 End If
@@ -22,10 +22,10 @@ Public Class 界面控制_添加文件
         For Each item As ListViewItem In Form1.ListView2.Items
             Dim m As New 编码任务.单片任务 With {.输入文件 = item.Text, .预设数据 = a}
 
-            Select Case Form1.UiComboBox输出目录.Text
-                Case "输出到原目录（点此更改输出位置）"
+            Select Case Form1.UiComboBox输出目录.Text.Trim
+                Case Form1.UiComboBox输出目录.Items(0).Trim
                 Case Else
-                    m.自定义输出位置 = Form1.UiComboBox输出目录.Text
+                    m.自定义输出位置 = Form1.UiComboBox输出目录.Text.Trim
             End Select
             Dim i2 As New ListViewItem(IO.Path.GetFileName(item.Text))
             i2.SubItems.AddRange("未处理", "", "", "", "", "", "")
@@ -45,7 +45,7 @@ Public Class 界面控制_添加文件
         Select Case Form1.UiComboBox输出目录.SelectedIndex
             Case 0
             Case Else
-                If Not FileIO.FileSystem.DirectoryExists(Form1.UiComboBox输出目录.Text) Then
+                If Not FileIO.FileSystem.DirectoryExists(Form1.UiComboBox输出目录.Text.Trim) Then
                     软件内对话框.显示对话框("输出位置错误", $"自定义输出目录不存在！", New Dictionary(Of String, Action) From {{"了解", Nothing}}, 软件内对话框.主题类型.错误)
                     Exit Sub
                 End If
@@ -56,10 +56,10 @@ Public Class 界面控制_添加文件
             Dim m As New 编码任务.单片任务 With {.输入文件 = item, .预设数据 = a}
             If 用户设置.实例对象.转译模式 Then m.输入文件 = 转译模式处理路径(item)
 
-            Select Case Form1.UiComboBox输出目录.Text
-                Case "输出到原目录（点此更改输出位置）"
+            Select Case Form1.UiComboBox输出目录.Text.Trim
+                Case Form1.UiComboBox输出目录.Items(0).Trim
                 Case Else
-                    m.自定义输出位置 = Form1.UiComboBox输出目录.Text
+                    m.自定义输出位置 = Form1.UiComboBox输出目录.Text.Trim
             End Select
             Dim i2 As New ListViewItem(IO.Path.GetFileName(item))
             i2.SubItems.AddRange("未处理", "", "", "", "", "", "")
@@ -140,9 +140,9 @@ Public Class 界面控制_添加文件
             Dim dialog As New CommonOpenFileDialog With {.IsFolderPicker = True}
             If dialog.ShowDialog() = CommonFileDialogResult.Ok Then
                 If 用户设置.实例对象.转译模式 Then
-                    Form1.UiComboBox输出目录.Text = 转译模式处理路径(dialog.FileName)
+                    Form1.UiComboBox输出目录.Text = "  " & 转译模式处理路径(dialog.FileName)
                 Else
-                    Form1.UiComboBox输出目录.Text = dialog.FileName
+                    Form1.UiComboBox输出目录.Text = "  " & dialog.FileName
                 End If
             Else
                 Form1.UiComboBox输出目录.SelectedIndex = 0
