@@ -338,7 +338,7 @@ PNG、APNG、JPEG\JPG、WEBP、AVIF、GIF、BMP、JPEG 2000、JPEG-LS、HDR、TI
 
 ## 剪辑区间
 
-暂时还没做可视化交互，先用播放器对着写吧，或者直接找剪辑软件。
+使用此配套工具来进行剪辑区间可视化：https://github.com/Lake1059/3fuiVideoHelper
 
 ## 烧录字幕不会做！
 
