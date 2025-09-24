@@ -1,10 +1,14 @@
 [《如何在 GitHub 下载软件》小白提醒：你的需求是下载这个软件去使用而不是要工程文件，点此去 Releases 下载发行版才是下载软件；上面的 Code 是下载源代码；我都写成这样了如果你在 Releases 里又下成了源代码，那真的是人机，都是手机和短视频害的。](https://github.com/Lake1059/FFmpegFreeUI/releases) 本文已包含新手内容，就看有没有心思学了。
 
+【极致扫盲】这不是按照大众思维设计的普通转码软件，这是参数的真理，做这个的目的就是没必要天天敲命令行。小白不要给我讲什么拿那些一键全自动无脑工具转一下就行，还有拿剪辑软件压视频的，也不要说让流媒体平台帮压，我们不是手机上看看就完事，我们屯屯鼠是要盯帧级别的视觉无损，我们存的视频会无限增加，但是不能无限买硬盘，钱不是大风刮来的也不是梦里拿出来的。
+
 <img src="FFmpegFreeUI\Resources\AppIcon.png" width="100" /> 
 
 ## FFmpegFreeUI
 
 请认准官网域名：https://ffmpegfreeui.top 和 https://3fui.top<br>群友的暂用域名：https://3fui.frostlynx.work<br>三个域名都是正确的，都会解析到同一个地方
+
+B站视频：https://www.bilibili.com/video/BV1eeH9zLED5
 
 > [!NOTE]  
 >
