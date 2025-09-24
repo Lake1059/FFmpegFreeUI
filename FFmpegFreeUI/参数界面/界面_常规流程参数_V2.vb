@@ -533,7 +533,7 @@ Public Class 界面_常规流程参数_V2
         New ToolStripMenuItem("-qmin 量化最小值（最高画质）", Nothing, Sub(s1, e1) 创建进阶质量控制项("-qmin ")) With {.ForeColor = Color.Silver},
         New ToolStripMenuItem("-qpmin 量化最小值（最高画质）", Nothing, Sub(s1, e1) 创建进阶质量控制项("-qpmin ")) With {.ForeColor = Color.Silver},
         New ToolStripMenuItem("-qmax 量化最大值（最低画质）", Nothing, Sub(s1, e1) 创建进阶质量控制项("-qmax ")) With {.ForeColor = Color.Silver},
-        New ToolStripMenuItem("-qpmax 量化最小值（最高画质）", Nothing, Sub(s1, e1) 创建进阶质量控制项("-qpmax ")) With {.ForeColor = Color.Silver},
+        New ToolStripMenuItem("-qpmax 量化最大值（最低画质）", Nothing, Sub(s1, e1) 创建进阶质量控制项("-qpmax ")) With {.ForeColor = Color.Silver},
         New ToolStripMenuItem("-qcomp 量化系数非线性压缩因子 0.0~1.0", Nothing, Sub(s1, e1) 创建进阶质量控制项("-qcomp ")) With {.ForeColor = Color.Silver},
         New ToolStripMenuItem("-aq-mode 自适应量化模式 适用于 libaom-av1", Nothing, Sub(s1, e1) 创建进阶质量控制项("-aq-mode ")) With {.ForeColor = Color.Silver},
         New ToolStripMenuItem("-arnr-strength 自适应降噪强度 0~6 适用于 libaom-av1", Nothing, Sub(s1, e1) 创建进阶质量控制项("-arnr-strength ")) With {.ForeColor = Color.Silver},
