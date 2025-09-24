@@ -578,7 +578,6 @@ Public Class 预设管理
 
         Dim 视频滤镜参数集 As New List(Of String)
         Dim 音频滤镜参数集 As New List(Of String)
-        Dim 滤镜图参数集 As New List(Of String)
         Dim 视频参数 As String = ""
         Dim 音频参数 As String = ""
         Dim 输入文件的文件夹 As String = Path.GetDirectoryName(输入文件)
@@ -708,7 +707,7 @@ Public Class 预设管理
 
             Case "VBR HQ"
                 Select Case a.视频参数_编码器_具体编码
-                    Case "av1_nvenc", "hevc_nvenc", "h264_nvenc"
+                    Case "hevc_nvenc", "h264_nvenc"
                         视频参数 &= $"-rc vbr_hq "
                     Case "av1_amf"
                         视频参数 &= $"-rc hqvbr -quality high_quality "
@@ -933,9 +932,8 @@ Public Class 预设管理
             Case 1 : arg &= $"{If(arg.Contains("-map"), "-map 0:t?", "")} -c:t copy "
         End Select
 
-        If 滤镜图参数集.Count > 0 Then
-            Dim vf As String = 处理自定义参数的通配字符串(String.Join(",", 滤镜图参数集), 输入文件)
-            arg &= $"-filter_complex ""{vf}"" "
+        If a.自定义参数_filter_complex <> "" Then
+            arg &= $"-filter_complex ""{a.自定义参数_filter_complex}"" "
         End If
 
         '=================================================================
