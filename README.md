@@ -6,7 +6,7 @@
 
 请认准官网域名：https://ffmpegfreeui.top 和 https://3fui.top<br>群友的暂用域名：https://3fui.frostlynx.work<br>三个域名都是正确的，都会解析到同一个地方
 
-B站视频：https://www.bilibili.com/video/BV1eeH9zLED5
+B站视频：https://www.bilibili.com/video/BV1eeH9zLED5  
 来自终末诗的教程：https://zhuanlan.zhihu.com/p/1943079795341623993
 
 > [!NOTE]  
