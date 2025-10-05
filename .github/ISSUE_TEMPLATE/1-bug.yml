@@ -17,7 +17,9 @@ body:
           required: true
         - label: 我已知晓此处仅用于汇报 3FUI 的问题，而不是 ffmpeg 的问题
           required: true
-        - label: 如果是无法启动 3FUI 的问题，我确认 Windows 更新中已经没有 .NET Framework 字样的更新或补丁
+        - label: 如果是无法启动 3FUI 的问题，我确认 Windows 更新中已经没有 .NET 字样的更新或补丁
+          required: true
+        - label: 如果被杀软报毒，我已知晓所有杀毒软件的基本原理是不认识或没交钱就杀，应该不予理会并放行程序而不是继续汇报拦截问题
           required: true
 
   - type: markdown
