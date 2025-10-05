@@ -184,6 +184,9 @@ Partial Class Form1
         Label32 = New Label()
         Label41 = New Label()
         Panel11 = New Panel()
+        Panel19 = New Panel()
+        UiComboBox混淆任务名称 = New Sunny.UI.UIComboBox()
+        Label1 = New Label()
         Panel12 = New Panel()
         UiComboBox自动重置参数面板的页面选择 = New Sunny.UI.UIComboBox()
         Label50 = New Label()
@@ -257,6 +260,7 @@ Partial Class Form1
         Panel48.SuspendLayout()
         Panel43.SuspendLayout()
         Panel11.SuspendLayout()
+        Panel19.SuspendLayout()
         Panel12.SuspendLayout()
         Panel10.SuspendLayout()
         Panel8.SuspendLayout()
@@ -1062,6 +1066,7 @@ Partial Class Form1
         ListView1.ForeColor = Color.Silver
         ListView1.FullRowSelect = True
         ListView1.HeaderStyle = ColumnHeaderStyle.None
+        ListView1.LabelEdit = True
         ListView1.Location = New Point(15, 15)
         ListView1.Name = "ListView1"
         ListView1.OwnerDraw = True
@@ -2375,7 +2380,7 @@ Partial Class Form1
         Label30.Dock = DockStyle.Top
         Label30.Font = New Font("微软雅黑", 10F)
         Label30.ForeColor = Color.Gray
-        Label30.Location = New Point(0, 911)
+        Label30.Location = New Point(0, 981)
         Label30.Name = "Label30"
         Label30.Padding = New Padding(16, 20, 20, 20)
         Label30.Size = New Size(484, 60)
@@ -2395,7 +2400,7 @@ Partial Class Form1
         Panel14.Controls.Add(Label32)
         Panel14.Controls.Add(Label41)
         Panel14.Dock = DockStyle.Top
-        Panel14.Location = New Point(0, 617)
+        Panel14.Location = New Point(0, 687)
         Panel14.Name = "Panel14"
         Panel14.Size = New Size(1016, 294)
         Panel14.TabIndex = 128
@@ -2625,6 +2630,8 @@ Partial Class Form1
         ' Panel11
         ' 
         Panel11.AutoSize = True
+        Panel11.Controls.Add(Panel19)
+        Panel11.Controls.Add(Label1)
         Panel11.Controls.Add(Panel12)
         Panel11.Controls.Add(Label50)
         Panel11.Controls.Add(Panel10)
@@ -2637,8 +2644,67 @@ Partial Class Form1
         Panel11.Dock = DockStyle.Top
         Panel11.Location = New Point(0, 298)
         Panel11.Name = "Panel11"
-        Panel11.Size = New Size(1016, 319)
+        Panel11.Size = New Size(1016, 389)
         Panel11.TabIndex = 127
+        ' 
+        ' Panel19
+        ' 
+        Panel19.Controls.Add(UiComboBox混淆任务名称)
+        Panel19.Dock = DockStyle.Top
+        Panel19.Location = New Point(0, 349)
+        Panel19.Name = "Panel19"
+        Panel19.Padding = New Padding(21, 10, 20, 0)
+        Panel19.Size = New Size(1016, 40)
+        Panel19.TabIndex = 136
+        ' 
+        ' UiComboBox混淆任务名称
+        ' 
+        UiComboBox混淆任务名称.DataSource = Nothing
+        UiComboBox混淆任务名称.Dock = DockStyle.Left
+        UiComboBox混淆任务名称.DropDownAutoWidth = True
+        UiComboBox混淆任务名称.DropDownStyle = Sunny.UI.UIDropDownStyle.DropDownList
+        UiComboBox混淆任务名称.FillColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        UiComboBox混淆任务名称.FillColor2 = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        UiComboBox混淆任务名称.FillDisableColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        UiComboBox混淆任务名称.Font = New Font("微软雅黑", 10F)
+        UiComboBox混淆任务名称.ForeColor = Color.Silver
+        UiComboBox混淆任务名称.ForeDisableColor = Color.Silver
+        UiComboBox混淆任务名称.ItemFillColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        UiComboBox混淆任务名称.ItemForeColor = Color.Silver
+        UiComboBox混淆任务名称.ItemHeight = 30
+        UiComboBox混淆任务名称.ItemHoverColor = Color.FromArgb(CByte(56), CByte(56), CByte(56))
+        UiComboBox混淆任务名称.ItemRectColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        UiComboBox混淆任务名称.Items.AddRange(New Object() {"不要混淆任务名称", "我请来了喵喵星神"})
+        UiComboBox混淆任务名称.ItemSelectBackColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        UiComboBox混淆任务名称.ItemSelectForeColor = Color.Silver
+        UiComboBox混淆任务名称.Location = New Point(21, 10)
+        UiComboBox混淆任务名称.Margin = New Padding(4, 5, 4, 5)
+        UiComboBox混淆任务名称.MaxDropDownItems = 17
+        UiComboBox混淆任务名称.MinimumSize = New Size(63, 0)
+        UiComboBox混淆任务名称.Name = "UiComboBox混淆任务名称"
+        UiComboBox混淆任务名称.Padding = New Padding(0, 0, 30, 2)
+        UiComboBox混淆任务名称.RectColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        UiComboBox混淆任务名称.RectDisableColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        UiComboBox混淆任务名称.ScrollBarHandleWidth = 20
+        UiComboBox混淆任务名称.Size = New Size(264, 30)
+        UiComboBox混淆任务名称.Style = Sunny.UI.UIStyle.Custom
+        UiComboBox混淆任务名称.SymbolSize = 24
+        UiComboBox混淆任务名称.TabIndex = 95
+        UiComboBox混淆任务名称.TextAlignment = ContentAlignment.MiddleLeft
+        UiComboBox混淆任务名称.Watermark = "混淆任务名称"
+        ' 
+        ' Label1
+        ' 
+        Label1.AutoSize = True
+        Label1.Dock = DockStyle.Top
+        Label1.Font = New Font("微软雅黑", 10F)
+        Label1.ForeColor = Color.Gray
+        Label1.Location = New Point(0, 319)
+        Label1.Name = "Label1"
+        Label1.Padding = New Padding(16, 10, 0, 0)
+        Label1.Size = New Size(137, 30)
+        Label1.TabIndex = 135
+        Label1.Text = "你这任务正经嘛？"
         ' 
         ' Panel12
         ' 
@@ -3247,6 +3313,7 @@ Partial Class Form1
         Panel43.ResumeLayout(False)
         Panel11.ResumeLayout(False)
         Panel11.PerformLayout()
+        Panel19.ResumeLayout(False)
         Panel12.ResumeLayout(False)
         Panel10.ResumeLayout(False)
         Panel8.ResumeLayout(False)
@@ -3445,5 +3512,8 @@ Partial Class Form1
     Friend WithEvents Panel16 As Panel
     Friend WithEvents Label36 As Label
     Friend WithEvents LinkLabel清理内存 As LinkLabel
+    Friend WithEvents Panel19 As Panel
+    Friend WithEvents UiComboBox混淆任务名称 As Sunny.UI.UIComboBox
+    Friend WithEvents Label1 As Label
 
 End Class

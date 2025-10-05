@@ -118,12 +118,12 @@ Public Class 界面控制
                     s1 += c.Width
                 Next
                 Form1.Panel2.Padding = New Padding((Form1.Panel2.Width - s1) * 0.5, Form1.Panel2.Padding.Top, (Form1.Panel2.Width - s1) * 0.5, 0)
-                校准UiComboBox高DPI(Form1.UiComboBox输出显示类型)
+                校准UiComboBox视觉(Form1.UiComboBox输出显示类型)
                 Form1.UiCheckBox强制滚动到最后.CheckBoxSize = 20 * Form1.DPI
 
             Case 选项卡.IsEqual(Form1.TabPage添加文件)
                 Form1.ListView2.Columns(0).Width = Form1.ListView2.Width - SystemInformation.VerticalScrollBarWidth * Form1.DPI * 2
-                校准UiComboBox高DPI(Form1.UiComboBox输出目录)
+                校准UiComboBox视觉(Form1.UiComboBox输出目录)
                 Form1.Label那个神奇的视觉标签.Width = 1
 
             Case 选项卡.IsEqual(Form1.TabPage参数面板)
@@ -150,12 +150,13 @@ Public Class 界面控制
                 Form1.性能统计刷新计时器.Enabled = True
 
             Case 选项卡.IsEqual(Form1.TabPage软件设置)
-                校准UiComboBox高DPI(Form1.UiComboBox字体名称)
-                校准UiComboBox高DPI(Form1.UiComboBox自动开始最大任务数量)
-                校准UiComboBox高DPI(Form1.UiComboBox有任务时系统状态)
-                校准UiComboBox高DPI(Form1.UiComboBox提示音)
-                校准UiComboBox高DPI(Form1.UiComboBox自动开始任务)
-                校准UiComboBox高DPI(Form1.UiComboBox自动重置参数面板的页面选择)
+                校准UiComboBox视觉(Form1.UiComboBox字体名称)
+                校准UiComboBox视觉(Form1.UiComboBox自动开始最大任务数量)
+                校准UiComboBox视觉(Form1.UiComboBox有任务时系统状态)
+                校准UiComboBox视觉(Form1.UiComboBox提示音)
+                校准UiComboBox视觉(Form1.UiComboBox自动开始任务)
+                校准UiComboBox视觉(Form1.UiComboBox自动重置参数面板的页面选择)
+                校准UiComboBox视觉(Form1.UiComboBox混淆任务名称)
                 Form1.UiCheckBox转译模式.CheckBoxSize = 20 * Form1.DPI
 
         End Select
@@ -235,6 +236,7 @@ Public Class 界面控制
         AddHandler Form1.UiComboBox提示音.SelectedIndexChanged, Sub() 用户设置.实例对象.提示音选项 = Form1.UiComboBox提示音.SelectedIndex
         AddHandler Form1.UiComboBox自动开始任务.SelectedIndexChanged, Sub() 用户设置.实例对象.自动开始任务选项 = Form1.UiComboBox自动开始任务.SelectedIndex
         AddHandler Form1.UiComboBox自动重置参数面板的页面选择.SelectedIndexChanged, Sub() 用户设置.实例对象.自动重置参数面板的页面选择 = Form1.UiComboBox自动重置参数面板的页面选择.SelectedIndex
+        AddHandler Form1.UiComboBox混淆任务名称.SelectedIndexChanged, Sub() 用户设置.实例对象.混淆任务名称 = Form1.UiComboBox混淆任务名称.SelectedIndex
 
         AddHandler Form1.UiTextBoxFFmpeg自定义工作目录.TextChanged, Sub() 用户设置.实例对象.工作目录 = Form1.UiTextBoxFFmpeg自定义工作目录.Text
         AddHandler Form1.UiButton13.Click, Sub()

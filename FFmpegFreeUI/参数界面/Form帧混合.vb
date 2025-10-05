@@ -5,7 +5,7 @@ Public Class Form帧混合
     End Sub
 
     Private Sub Form帧混合_Shown(sender As Object, e As EventArgs) Handles Me.Shown
-        校准UiComboBox高DPI(UiComboBox混合算法)
+        校准UiComboBox视觉(UiComboBox混合算法)
     End Sub
 
     Private Sub Form帧混合_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing

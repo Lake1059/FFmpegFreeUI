@@ -1747,7 +1747,7 @@ Partial Class 界面_常规流程参数_V2
         UiComboBox编码类别.ItemHeight = 30
         UiComboBox编码类别.ItemHoverColor = Color.FromArgb(CByte(56), CByte(56), CByte(56))
         UiComboBox编码类别.ItemRectColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
-        UiComboBox编码类别.Items.AddRange(New Object() {"", "复制流", "H.266/VVC", "AV1", "H.265/HEVC", "H.264/AVC", "来自 Apple", "来自 Google", "FFV1", "其他现代编码", "老旧编码", "禁用"})
+        UiComboBox编码类别.Items.AddRange(New Object() {"", "复制流", "H.266/VVC", "AV1", "H.265/HEVC", "H.264/AVC", "来自 Apple", "来自 Google", "FFV1", "其他现代编码", "老旧编码", "禁用", "自定义的项"})
         UiComboBox编码类别.ItemSelectBackColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
         UiComboBox编码类别.ItemSelectForeColor = Color.Silver
         UiComboBox编码类别.Location = New Point(21, 10)
@@ -3162,7 +3162,10 @@ Partial Class 界面_常规流程参数_V2
         UiComboBox色彩管理处理方式.Padding = New Padding(0, 0, 30, 2)
         UiComboBox色彩管理处理方式.RectColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
         UiComboBox色彩管理处理方式.RectDisableColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        UiComboBox色彩管理处理方式.ScrollBarBackColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        UiComboBox色彩管理处理方式.ScrollBarColor = Color.FromArgb(CByte(120), CByte(120), CByte(120))
         UiComboBox色彩管理处理方式.ScrollBarHandleWidth = 20
+        UiComboBox色彩管理处理方式.ScrollBarStyleInherited = False
         UiComboBox色彩管理处理方式.Size = New Size(200, 30)
         UiComboBox色彩管理处理方式.Style = Sunny.UI.UIStyle.Custom
         UiComboBox色彩管理处理方式.SymbolSize = 24
@@ -3480,6 +3483,10 @@ Partial Class 界面_常规流程参数_V2
         UiComboBox像素格式.Padding = New Padding(0, 0, 30, 2)
         UiComboBox像素格式.RectColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
         UiComboBox像素格式.RectDisableColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        UiComboBox像素格式.ScrollBarBackColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        UiComboBox像素格式.ScrollBarColor = Color.FromArgb(CByte(120), CByte(120), CByte(120))
+        UiComboBox像素格式.ScrollBarHandleWidth = 20
+        UiComboBox像素格式.ScrollBarStyleInherited = False
         UiComboBox像素格式.Size = New Size(200, 30)
         UiComboBox像素格式.Style = Sunny.UI.UIStyle.Custom
         UiComboBox像素格式.SymbolSize = 24
@@ -3857,9 +3864,9 @@ Partial Class 界面_常规流程参数_V2
         Label72.Location = New Point(0, 288)
         Label72.Name = "Label72"
         Label72.Padding = New Padding(16, 5, 0, 0)
-        Label72.Size = New Size(221, 25)
+        Label72.Size = New Size(445, 25)
         Label72.TabIndex = 34
-        Label72.Text = "强调物体边缘，适当增加清晰度"
+        Label72.Text = "强调物体边缘，适当增加清晰度；注意水印文字不是默认填写的值！" & vbCrLf
         ' 
         ' Label73
         ' 
@@ -4144,9 +4151,9 @@ Partial Class 界面_常规流程参数_V2
         Label66.Location = New Point(0, 44)
         Label66.Name = "Label66"
         Label66.Padding = New Padding(16, 5, 0, 0)
-        Label66.Size = New Size(333, 25)
+        Label66.Size = New Size(557, 25)
         Label66.TabIndex = 18
-        Label66.Text = "去除画面中的噪点，过度去除会导致纹理细节损坏"
+        Label66.Text = "去除画面中的噪点，过度去除会导致纹理细节损坏；注意水印文字不是默认填写的值！"
         ' 
         ' Label67
         ' 

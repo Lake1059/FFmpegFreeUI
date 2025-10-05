@@ -274,9 +274,12 @@ Module Module1
         Return result.ToString()
     End Function
 
-    Public Sub 校准UiComboBox高DPI(c As UIComboBox)
+    Public Sub 校准UiComboBox视觉(c As UIComboBox)
         c.ItemHeight = 30 * Form1.DPI
         c.SymbolSize = 24 * Form1.DPI
+        c.ScrollBarHandleWidth = 30 * Form1.DPI
+        c.ScrollBarBackColor = Color.FromArgb(64, 64, 64)
+        c.ScrollBarColor = SystemColors.WindowFrame
     End Sub
 
     Public Function 将时间字符串转换为时间类型(timeStr As String) As TimeSpan
@@ -343,5 +346,9 @@ Module Module1
         GC.WaitForPendingFinalizers()
         EmptyWorkingSet(Process.GetCurrentProcess.Handle)
     End Sub
+
+    Public Function 混淆字符_喵(input As String) As String
+        Return New String("喵", input.Length)
+    End Function
 
 End Module

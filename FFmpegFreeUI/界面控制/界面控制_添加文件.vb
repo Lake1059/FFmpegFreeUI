@@ -16,6 +16,11 @@ Public Class 界面控制_添加文件
                 End If
         End Select
 
+        If Not Form1.常规流程参数页面.是否已初始化 Then
+            软件内对话框.显示对话框("启动后请切到参数面板一次", $"参数面板未初始化，这是选项卡控件的底层机制问题。", New Dictionary(Of String, Action) From {{"了解", Nothing}}, 软件内对话框.主题类型.错误)
+            Exit Sub
+        End If
+
         Dim a As New 预设数据类型
         预设管理.储存预设(a)
 
@@ -28,6 +33,7 @@ Public Class 界面控制_添加文件
                     m.自定义输出位置 = Form1.UiComboBox输出目录.Text.Trim
             End Select
             Dim i2 As New ListViewItem(IO.Path.GetFileName(item.Text))
+            If 用户设置.实例对象.混淆任务名称 = 1 Then i2.Text = 混淆字符_喵(i2.Text)
             i2.SubItems.AddRange("未处理", "", "", "", "", "", "")
             Form1.ListView1.Items.Add(i2)
             m.列表视图项 = i2
@@ -50,6 +56,10 @@ Public Class 界面控制_添加文件
                     Exit Sub
                 End If
         End Select
+        If Not Form1.常规流程参数页面.是否已初始化 Then
+            软件内对话框.显示对话框("启动后请切到参数面板一次", $"参数面板未初始化，这是选项卡控件的底层机制问题。", New Dictionary(Of String, Action) From {{"了解", Nothing}}, 软件内对话框.主题类型.错误)
+            Exit Sub
+        End If
         Dim a As New 预设数据类型
         预设管理.储存预设(a)
         For Each item In 拖入的文件
@@ -62,6 +72,7 @@ Public Class 界面控制_添加文件
                     m.自定义输出位置 = Form1.UiComboBox输出目录.Text.Trim
             End Select
             Dim i2 As New ListViewItem(IO.Path.GetFileName(item))
+            If 用户设置.实例对象.混淆任务名称 = 1 Then i2.Text = 混淆字符_喵(i2.Text)
             i2.SubItems.AddRange("未处理", "", "", "", "", "", "")
             Form1.ListView1.Items.Add(i2)
             m.列表视图项 = i2

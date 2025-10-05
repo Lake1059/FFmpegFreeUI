@@ -1,8 +1,8 @@
 ﻿Imports System.Text.Json
 Imports Sunny.UI
-Imports Windows.Devices.Radios
-
 Public Class 界面_常规流程参数_V2
+
+    Public 是否已初始化 As Boolean = False
 
     Private Sub 界面_常规流程参数_Load(sender As Object, e As EventArgs) Handles Me.Load
         If Form1.DPI <> 1 Then UiTabControlMenu1.ItemSize = New Size(200 * Form1.DPI, 36 * Form1.DPI)
@@ -129,6 +129,8 @@ Public Class 界面_常规流程参数_V2
         End Select
         AddHandler UiButton复制即时命令行显示.Click, Sub() Clipboard.SetText(RichTextBox1.Text)
         界面校准()
+
+        是否已初始化 = True
     End Sub
 
     Private Sub 界面_常规流程参数_V2_DpiChangedAfterParent(sender As Object, e As EventArgs) Handles Me.DpiChangedAfterParent
@@ -162,11 +164,11 @@ Public Class 界面_常规流程参数_V2
                 UiComboBox具体编码.Items.Add("libvvenc")
                 UiComboBox具体编码.Items.Add("libx266")
             Case 3    'AV1
-                UiComboBox具体编码.Items.Add("libaom-av1")
                 UiComboBox具体编码.Items.Add("libsvtav1")
                 UiComboBox具体编码.Items.Add("av1_nvenc")
                 UiComboBox具体编码.Items.Add("av1_qsv")
                 UiComboBox具体编码.Items.Add("av1_amf")
+                UiComboBox具体编码.Items.Add("libaom-av1")
                 UiComboBox具体编码.Items.Add("librav1e")
                 UiComboBox具体编码.Items.Add("av1_vaapi")
             Case 4    'H.265/HEVC
@@ -209,6 +211,10 @@ Public Class 界面_常规流程参数_V2
                 UiComboBox具体编码.Items.Add("wmv1")
             Case 11    '禁用
                 UiComboBox具体编码.Items.Add("")
+            Case 12
+                For Each item In 用户设置.实例对象.自定义视频编码器列表
+                    UiComboBox具体编码.Items.Add(item)
+                Next
         End Select
         If UiComboBox具体编码.Items.Count > 1 Then UiComboBox具体编码.SelectedIndex = 0
     End Sub
@@ -382,71 +388,71 @@ Public Class 界面_常规流程参数_V2
             Case 选项卡.IsEqual(TabPage参数总览) : 显示参数总览()
 
             Case 选项卡.IsEqual(TabPage输出命名方式)
-                校准UiComboBox高DPI(UiComboBox自动命名选项)
+                校准UiComboBox视觉(UiComboBox自动命名选项)
 
             Case 选项卡.IsEqual(TabPage解码设置)
-                校准UiComboBox高DPI(UiComboBox解码器)
-                校准UiComboBox高DPI(UiComboBox解码数据格式)
-                校准UiComboBox高DPI(UiComboBox硬件加速解码参数名)
+                校准UiComboBox视觉(UiComboBox解码器)
+                校准UiComboBox视觉(UiComboBox解码数据格式)
+                校准UiComboBox视觉(UiComboBox硬件加速解码参数名)
 
             Case 选项卡.IsEqual(TabPage视频参数编码器)
-                校准UiComboBox高DPI(UiComboBox编码类别)
-                校准UiComboBox高DPI(UiComboBox具体编码)
-                校准UiComboBox高DPI(UiComboBox编码预设)
-                校准UiComboBox高DPI(UiComboBox配置文件)
-                校准UiComboBox高DPI(UiComboBox场景优化)
+                校准UiComboBox视觉(UiComboBox编码类别)
+                校准UiComboBox视觉(UiComboBox具体编码)
+                校准UiComboBox视觉(UiComboBox编码预设)
+                校准UiComboBox视觉(UiComboBox配置文件)
+                校准UiComboBox视觉(UiComboBox场景优化)
 
             Case 选项卡.IsEqual(TabPage视频参数画面帧)
-                校准UiComboBox高DPI(UiComboBox分辨率)
-                校准UiComboBox高DPI(UiComboBox帧速率)
+                校准UiComboBox视觉(UiComboBox分辨率)
+                校准UiComboBox视觉(UiComboBox帧速率)
 
             Case 选项卡.IsEqual(TabPage视频参数质量)
-                校准UiComboBox高DPI(UiComboBox全局质量控制方式)
-                校准UiComboBox高DPI(UiComboBox全局质量控制参数)
+                校准UiComboBox视觉(UiComboBox全局质量控制方式)
+                校准UiComboBox视觉(UiComboBox全局质量控制参数)
 
             Case 选项卡.IsEqual(TabPage视频参数色彩管理)
-                校准UiComboBox高DPI(UiComboBox像素格式)
-                校准UiComboBox高DPI(UiComboBox矩阵系数)
-                校准UiComboBox高DPI(UiComboBox色域)
-                校准UiComboBox高DPI(UiComboBox传输特性)
-                校准UiComboBox高DPI(UiComboBox色彩范围)
-                校准UiComboBox高DPI(UiComboBox色彩管理处理方式)
+                校准UiComboBox视觉(UiComboBox像素格式)
+                校准UiComboBox视觉(UiComboBox矩阵系数)
+                校准UiComboBox视觉(UiComboBox色域)
+                校准UiComboBox视觉(UiComboBox传输特性)
+                校准UiComboBox视觉(UiComboBox色彩范围)
+                校准UiComboBox视觉(UiComboBox色彩管理处理方式)
 
             Case 选项卡.IsEqual(TabPage视频参数常见滤镜)
-                校准UiComboBox高DPI(UiComboBox降噪方式)
-                校准UiComboBox高DPI(UiComboBox逐行与隔行处理方式)
-                校准UiComboBox高DPI(UiComboBox角度翻转)
-                校准UiComboBox高DPI(UiComboBox镜像翻转)
+                校准UiComboBox视觉(UiComboBox降噪方式)
+                校准UiComboBox视觉(UiComboBox逐行与隔行处理方式)
+                校准UiComboBox视觉(UiComboBox角度翻转)
+                校准UiComboBox视觉(UiComboBox镜像翻转)
 
             Case 选项卡.IsEqual(TabPage音频参数)
-                校准UiComboBox高DPI(UiComboBox音频编码器)
-                校准UiComboBox高DPI(UiComboBox音频比特率)
-                校准UiComboBox高DPI(UiComboBox音频质量参数)
-                校准UiComboBox高DPI(UiComboBox声道布局)
-                校准UiComboBox高DPI(UiComboBox采样率)
+                校准UiComboBox视觉(UiComboBox音频编码器)
+                校准UiComboBox视觉(UiComboBox音频比特率)
+                校准UiComboBox视觉(UiComboBox音频质量参数)
+                校准UiComboBox视觉(UiComboBox声道布局)
+                校准UiComboBox视觉(UiComboBox采样率)
 
             Case 选项卡.IsEqual(TabPage图片参数)
-                校准UiComboBox高DPI(UiComboBox图片编码器)
+                校准UiComboBox视觉(UiComboBox图片编码器)
 
             Case 选项卡.IsEqual(TabPage自定义参数)
                 UiTabControl1.ItemSize = New Size(150 * Form1.DPI, 50 * Form1.DPI)
 
             Case 选项卡.IsEqual(TabPage剪辑区间)
-                校准UiComboBox高DPI(UiComboBox剪辑方法)
-                校准UiComboBox高DPI(UiComboBox剪辑向前解码多久秒)
+                校准UiComboBox视觉(UiComboBox剪辑方法)
+                校准UiComboBox视觉(UiComboBox剪辑向前解码多久秒)
 
             Case 选项卡.IsEqual(TabPage流控制)
                 UiCheckBox保留其他视频流.CheckBoxSize = 20 * Form1.DPI
                 UiCheckBox保留其他音频流.CheckBoxSize = 20 * Form1.DPI
                 UiCheckBox保留内嵌字幕流.CheckBoxSize = 20 * Form1.DPI
                 UiCheckBox自动混流同名字幕文件.CheckBoxSize = 20 * Form1.DPI
-                校准UiComboBox高DPI(UiComboBox元数据选项)
-                校准UiComboBox高DPI(UiComboBox章节选项)
-                校准UiComboBox高DPI(UiComboBox附件选项)
+                校准UiComboBox视觉(UiComboBox元数据选项)
+                校准UiComboBox视觉(UiComboBox章节选项)
+                校准UiComboBox视觉(UiComboBox附件选项)
 
             Case 选项卡.IsEqual(TabPage方案管理)
                 UiCheckBox额外保存信息.CheckBoxSize = 20 * Form1.DPI
-                校准UiComboBox高DPI(UiComboBox自动加载预设选项)
+                校准UiComboBox视觉(UiComboBox自动加载预设选项)
                 Dim a As New 预设数据类型
                 预设管理.储存预设(a)
                 RichTextBox1.Text = "ffmpeg " & 预设管理.将预设数据转换为命令行(a, "<输入文件>", "<输出文件>")

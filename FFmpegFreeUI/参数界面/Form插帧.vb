@@ -4,10 +4,10 @@
     End Sub
 
     Private Sub Form插帧_Shown(sender As Object, e As EventArgs) Handles Me.Shown
-        校准UiComboBox高DPI(UiComboBox插帧模式)
-        校准UiComboBox高DPI(UiComboBox运动估计模式)
-        校准UiComboBox高DPI(UiComboBox运动估计算法)
-        校准UiComboBox高DPI(UiComboBox运动补偿模式)
+        校准UiComboBox视觉(UiComboBox插帧模式)
+        校准UiComboBox视觉(UiComboBox运动估计模式)
+        校准UiComboBox视觉(UiComboBox运动估计算法)
+        校准UiComboBox视觉(UiComboBox运动补偿模式)
         UiCheckBox可变块大小的运动补偿.CheckBoxSize = 20 * Form1.DPI
     End Sub
 

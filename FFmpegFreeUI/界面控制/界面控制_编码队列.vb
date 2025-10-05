@@ -144,7 +144,7 @@ Public Class 界面控制_编码队列
             MsgBox("此任务不包含 3FUI 的预设数据，一般是由其他程序添加的，这样不能使用这个功能。", MsgBoxStyle.Exclamation)
             Exit Sub
         End If
-        If MsgBox("确定将此任务的配置数据用于覆盖几个选项卡中的设置？此操作不可逆！", MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
+        If MsgBox("确定将此任务的配置数据用于覆盖参数面板中的设置？此操作不可逆！", MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
             预设管理.显示预设(编码任务.队列(Form1.ListView1.SelectedItems(0).Index).预设数据)
         End If
     End Sub
