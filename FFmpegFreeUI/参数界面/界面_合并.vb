@@ -98,7 +98,11 @@ Public Class 界面_合并
 
         Dim fs As New List(Of String)
         For Each item As ListViewItem In ListView1.Items
-            fs.Add("file '" & item.Text.Replace("\", "\\") & "'")
+            Dim processedText As String = item.Text.Replace("\", "\\")
+            If processedText.StartsWith("\\\\") Then
+                processedText = "\\" & processedText.Substring(4)
+            End If
+            fs.Add("file '" & processedText & "'")
         Next
 
         File.WriteAllText(Path.Combine(Application.StartupPath, "ffmpeg_concat_demuxer.txt"), String.Join(vbCrLf, fs), New Text.UTF8Encoding(False))
