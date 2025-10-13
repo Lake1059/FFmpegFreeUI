@@ -187,9 +187,6 @@ PluginExample 是我做的示例插件；在程序目录下创建 Plugin 文件�
 - 影视飓风 | 视频的封装与编码 | [BV1ws41157f8](https://www.bilibili.com/video/BV1ws41157f8)
 - 影视飓风 | 色深和色度采样 | [BV1ds411T7F4](https://www.bilibili.com/video/BV1ds411T7F4)
 - 影视飓风 | 帧率的旧事 | [BV1hp4y1f7B5](https://www.bilibili.com/video/BV1hp4y1f7B5)
-- 大河李斯特视频工作室 | 视频格式与基础参数科普 | [BV1Ug4y1L7aK](https://www.bilibili.com/video/BV1Ug4y1L7aK)
-- 大河李斯特视频工作室 | 视频压缩、色度半采样、视频中的高低频 | [BV1FM41137MM](https://www.bilibili.com/video/BV1FM41137MM)
-- 大河李斯特视频工作室 | FFmpeg 是什么 | [BV1SjdoY9Erj](https://www.bilibili.com/video/BV1SjdoY9Erj)
 - 终末诗 | 适用于小白的视频压缩教学 | [知乎](https://zhuanlan.zhihu.com/p/1913258114746122747)  此文章包含大量测试结果总结和设置教学<br>
   新手把这篇文章看完能学会很多东西，继续往下看之前先把这个打开看！！
 - 终末诗 | 3FUI 入门教程 | [知乎](https://zhuanlan.zhihu.com/p/1943079795341623993)
