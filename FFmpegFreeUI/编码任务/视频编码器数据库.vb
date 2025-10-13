@@ -48,7 +48,7 @@
 .Preset = New List(Of String) From {"p7", "p6", "p5", "p4", "p3", "p2", "p1"},
 .Profile = New List(Of String) From {"main", "high", "professional"},
 .Tune = New List(Of String) From {"hq", "uhq", "ll", "ull", "lossless"},
-.Pix_fmt = Split("yuv420p yuv420p10le nv12 p010le yuv444p p016le nv16 p210le p216le yuv444p10msble yuv444p16le bgr0 bgra rgb0 rgba x2rgb10le x2bgr10le gbrp gbrp10msble gbrp16le cuda d3d11", " ").ToList
+.Pix_fmt = Split("yuv420p nv12 p010le yuv444p p016le nv16 p210le p216le yuv444p10msble yuv444p16le bgr0 bgra rgb0 rgba x2rgb10le x2bgr10le gbrp gbrp10msble gbrp16le cuda d3d11", " ").ToList
 })
         字典.Add("av1_amf", New 视频编码器数据单片结构 With {
 .Preset = New List(Of String) From {"high_quality", "quality", "balanced", "speed"},

@@ -103,6 +103,7 @@ Partial Class 界面_常规流程参数_V2
         Label16 = New Label()
         Label17 = New Label()
         TabPage视频参数画面帧 = New TabPage()
+        Label15 = New Label()
         Panel23 = New Panel()
         UiButton打开动态模糊参数窗口 = New Sunny.UI.UIButton()
         Label145 = New Label()
@@ -991,7 +992,7 @@ Partial Class 界面_常规流程参数_V2
         ' 
         Panel78.Controls.Add(UiTextBox硬件加速解码参数)
         Panel78.Dock = DockStyle.Top
-        Panel78.Location = New Point(0, 436)
+        Panel78.Location = New Point(0, 456)
         Panel78.Name = "Panel78"
         Panel78.Padding = New Padding(21, 10, 20, 0)
         Panel78.Size = New Size(899, 40)
@@ -1027,7 +1028,7 @@ Partial Class 界面_常规流程参数_V2
         ' 
         Panel12.Controls.Add(UiComboBox硬件加速解码参数名)
         Panel12.Dock = DockStyle.Top
-        Panel12.Location = New Point(0, 396)
+        Panel12.Location = New Point(0, 416)
         Panel12.Name = "Panel12"
         Panel12.Padding = New Padding(21, 10, 20, 0)
         Panel12.Size = New Size(899, 40)
@@ -1074,7 +1075,7 @@ Partial Class 界面_常规流程参数_V2
         Label13.Dock = DockStyle.Top
         Label13.Font = New Font("微软雅黑", 10F)
         Label13.ForeColor = Color.Gray
-        Label13.Location = New Point(0, 371)
+        Label13.Location = New Point(0, 391)
         Label13.Name = "Label13"
         Label13.Padding = New Padding(16, 5, 0, 0)
         Label13.Size = New Size(403, 25)
@@ -1086,7 +1087,7 @@ Partial Class 界面_常规流程参数_V2
         Label14.AutoSize = True
         Label14.Dock = DockStyle.Top
         Label14.Font = New Font("微软雅黑", 13F)
-        Label14.Location = New Point(0, 327)
+        Label14.Location = New Point(0, 347)
         Label14.Name = "Label14"
         Label14.Padding = New Padding(16, 20, 0, 0)
         Label14.Size = New Size(170, 44)
@@ -1097,7 +1098,7 @@ Partial Class 界面_常规流程参数_V2
         ' 
         Panel11.Controls.Add(UiComboBox解码数据格式)
         Panel11.Dock = DockStyle.Top
-        Panel11.Location = New Point(0, 287)
+        Panel11.Location = New Point(0, 307)
         Panel11.Name = "Panel11"
         Panel11.Padding = New Padding(21, 10, 20, 0)
         Panel11.Size = New Size(899, 40)
@@ -1146,9 +1147,9 @@ Partial Class 界面_常规流程参数_V2
         Label11.Location = New Point(0, 262)
         Label11.Name = "Label11"
         Label11.Padding = New Padding(16, 5, 0, 0)
-        Label11.Size = New Size(403, 25)
+        Label11.Size = New Size(510, 45)
         Label11.TabIndex = 13
-        Label11.Text = "如果解码和编码不是相同的硬件加速，则可能需要设置此参数"
+        Label11.Text = "如果解码和编码不是相同的硬件加速，则可能需要设置此参数" & vbCrLf & "比如 I卡解码+N卡编码 这样的情况，CPU 编码不要考虑这个。出问题再考虑！"
         ' 
         ' Label12
         ' 
@@ -1207,9 +1208,9 @@ Partial Class 界面_常规流程参数_V2
         Label9.Location = New Point(0, 153)
         Label9.Name = "Label9"
         Label9.Padding = New Padding(16, 5, 0, 0)
-        Label9.Size = New Size(453, 25)
+        Label9.Size = New Size(425, 25)
         Label9.TabIndex = 10
-        Label9.Text = "如果正在使用 CPU 解码，可以指定解码线程数，通常是不需要指定的"
+        Label9.Text = "如果正在使用 CPU 解码，可以指定解码线程数，通常不需要指定"
         ' 
         ' Label10
         ' 
@@ -1276,9 +1277,9 @@ Partial Class 界面_常规流程参数_V2
         Label8.Location = New Point(0, 44)
         Label8.Name = "Label8"
         Label8.Padding = New Padding(16, 5, 0, 0)
-        Label8.Size = New Size(291, 25)
+        Label8.Size = New Size(445, 25)
         Label8.TabIndex = 8
-        Label8.Text = "如果你不知道要设置成什么，就不要设置！"
+        Label8.Text = "如果你不知道要设置成什么，就不要设置！本页所有设置都是如此！"
         ' 
         ' Label7
         ' 
@@ -1794,6 +1795,7 @@ Partial Class 界面_常规流程参数_V2
         ' TabPage视频参数画面帧
         ' 
         TabPage视频参数画面帧.BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
+        TabPage视频参数画面帧.Controls.Add(Label15)
         TabPage视频参数画面帧.Controls.Add(Panel23)
         TabPage视频参数画面帧.Controls.Add(Label37)
         TabPage视频参数画面帧.Controls.Add(Label38)
@@ -1811,6 +1813,19 @@ Partial Class 界面_常规流程参数_V2
         TabPage视频参数画面帧.Size = New Size(899, 700)
         TabPage视频参数画面帧.TabIndex = 4
         TabPage视频参数画面帧.Text = "视频参数 | 画面帧"
+        ' 
+        ' Label15
+        ' 
+        Label15.Dock = DockStyle.Fill
+        Label15.Font = New Font("微软雅黑", 10F)
+        Label15.ForeColor = Color.Gray
+        Label15.Location = New Point(0, 436)
+        Label15.Name = "Label15"
+        Label15.Padding = New Padding(16, 0, 0, 20)
+        Label15.Size = New Size(899, 264)
+        Label15.TabIndex = 23
+        Label15.Text = "关于抽帧：对于帧变化很小的视频，尤其是动漫，使用抽帧可以大幅降低文件大小。" & vbCrLf & "但也会抽掉时间轴，导致播放器无法正确渲染外挂字幕，所以请谨慎使用！" & vbCrLf & "同时还会导致关键帧间隔大幅增大，从而导致拖进度条时定位非常不准。"
+        Label15.TextAlign = ContentAlignment.BottomLeft
         ' 
         ' Panel23
         ' 
@@ -1900,9 +1915,9 @@ Partial Class 界面_常规流程参数_V2
         Label37.Location = New Point(0, 371)
         Label37.Name = "Label37"
         Label37.Padding = New Padding(16, 5, 0, 0)
-        Label37.Size = New Size(347, 25)
+        Label37.Size = New Size(417, 25)
         Label37.TabIndex = 21
-        Label37.Text = "简单补帧和模拟动态模糊，效果一般，可临时应急用"
+        Label37.Text = "简单补帧和模拟动态模糊，效果非常一般，仅建议临时场景使用"
         ' 
         ' Label38
         ' 
@@ -1939,7 +1954,7 @@ Partial Class 界面_常规流程参数_V2
         Label39.Padding = New Padding(10, 0, 0, 0)
         Label39.Size = New Size(398, 30)
         Label39.TabIndex = 93
-        Label39.Text = "0~1，0.01 = 1%"
+        Label39.Text = "0~1，0.01 = 1%，最低 0.01"
         Label39.TextAlign = ContentAlignment.MiddleLeft
         ' 
         ' UiTextBox抽帧最大变化比例
@@ -1977,7 +1992,7 @@ Partial Class 界面_常规流程参数_V2
         Label36.Name = "Label36"
         Label36.Size = New Size(200, 30)
         Label36.TabIndex = 91
-        Label36.Text = "抽帧最大变化比例："
+        Label36.Text = "变化低于此值则抽帧："
         Label36.TextAlign = ContentAlignment.MiddleRight
         ' 
         ' UiComboBox帧速率
@@ -2023,9 +2038,9 @@ Partial Class 界面_常规流程参数_V2
         Label33.Location = New Point(0, 262)
         Label33.Name = "Label33"
         Label33.Padding = New Padding(16, 5, 0, 0)
-        Label33.Size = New Size(375, 25)
+        Label33.Size = New Size(319, 25)
         Label33.TabIndex = 18
-        Label33.Text = "指定每秒钟有多少张画面，如果需要抽帧也可以直接设置"
+        Label33.Text = "指定每秒钟有多少张画面，与抽帧不能同时使用" & vbCrLf
         ' 
         ' Label34
         ' 
@@ -5840,7 +5855,7 @@ Partial Class 界面_常规流程参数_V2
         Label147.Dock = DockStyle.Top
         Label147.Font = New Font("微软雅黑", 9.75F)
         Label147.ForeColor = Color.Gray
-        Label147.Location = New Point(0, 369)
+        Label147.Location = New Point(0, 389)
         Label147.Name = "Label147"
         Label147.Padding = New Padding(16, 5, 0, 0)
         Label147.Size = New Size(363, 43)
@@ -5855,7 +5870,7 @@ Partial Class 界面_常规流程参数_V2
         Panel64.Controls.Add(Label148)
         Panel64.Controls.Add(UiComboBox元数据选项)
         Panel64.Dock = DockStyle.Top
-        Panel64.Location = New Point(0, 329)
+        Panel64.Location = New Point(0, 349)
         Panel64.Name = "Panel64"
         Panel64.Padding = New Padding(21, 10, 20, 0)
         Panel64.Size = New Size(899, 40)
@@ -5987,7 +6002,7 @@ Partial Class 界面_常规流程参数_V2
         Label111.AutoSize = True
         Label111.Dock = DockStyle.Top
         Label111.Font = New Font("微软雅黑", 10F)
-        Label111.Location = New Point(0, 299)
+        Label111.Location = New Point(0, 319)
         Label111.Name = "Label111"
         Label111.Padding = New Padding(16, 10, 0, 0)
         Label111.Size = New Size(151, 30)
@@ -6000,7 +6015,7 @@ Partial Class 界面_常规流程参数_V2
         Panel63.Controls.Add(UiCheckBox自动混流同名字幕文件)
         Panel63.Controls.Add(UiCheckBox保留内嵌字幕流)
         Panel63.Dock = DockStyle.Top
-        Panel63.Location = New Point(0, 259)
+        Panel63.Location = New Point(0, 279)
         Panel63.Name = "Panel63"
         Panel63.Padding = New Padding(21, 10, 20, 0)
         Panel63.Size = New Size(899, 40)
@@ -6051,7 +6066,7 @@ Partial Class 界面_常规流程参数_V2
         Label112.AutoSize = True
         Label112.Dock = DockStyle.Top
         Label112.Font = New Font("微软雅黑", 10F)
-        Label112.Location = New Point(0, 229)
+        Label112.Location = New Point(0, 249)
         Label112.Name = "Label112"
         Label112.Padding = New Padding(16, 10, 0, 0)
         Label112.Size = New Size(67, 30)
@@ -6065,7 +6080,7 @@ Partial Class 界面_常规流程参数_V2
         Panel61.Controls.Add(Label133)
         Panel61.Controls.Add(UiTextBox将音频参数用于这些流)
         Panel61.Dock = DockStyle.Top
-        Panel61.Location = New Point(0, 189)
+        Panel61.Location = New Point(0, 209)
         Panel61.Name = "Panel61"
         Panel61.Padding = New Padding(21, 10, 20, 0)
         Panel61.Size = New Size(899, 40)
@@ -6136,7 +6151,7 @@ Partial Class 界面_常规流程参数_V2
         Label113.AutoSize = True
         Label113.Dock = DockStyle.Top
         Label113.Font = New Font("微软雅黑", 10F)
-        Label113.Location = New Point(0, 159)
+        Label113.Location = New Point(0, 179)
         Label113.Name = "Label113"
         Label113.Padding = New Padding(16, 10, 0, 0)
         Label113.Size = New Size(221, 30)
@@ -6150,7 +6165,7 @@ Partial Class 界面_常规流程参数_V2
         Panel62.Controls.Add(Label132)
         Panel62.Controls.Add(UiTextBox将视频参数用于这些流)
         Panel62.Dock = DockStyle.Top
-        Panel62.Location = New Point(0, 119)
+        Panel62.Location = New Point(0, 139)
         Panel62.Name = "Panel62"
         Panel62.Padding = New Padding(21, 10, 20, 0)
         Panel62.Size = New Size(899, 40)
@@ -6221,7 +6236,7 @@ Partial Class 界面_常规流程参数_V2
         Label114.AutoSize = True
         Label114.Dock = DockStyle.Top
         Label114.Font = New Font("微软雅黑", 10F)
-        Label114.Location = New Point(0, 89)
+        Label114.Location = New Point(0, 109)
         Label114.Name = "Label114"
         Label114.Padding = New Padding(16, 10, 0, 0)
         Label114.Size = New Size(221, 30)
@@ -6237,9 +6252,9 @@ Partial Class 界面_常规流程参数_V2
         Label107.Location = New Point(0, 44)
         Label107.Name = "Label107"
         Label107.Padding = New Padding(16, 5, 0, 0)
-        Label107.Size = New Size(430, 45)
+        Label107.Size = New Size(624, 65)
         Label107.TabIndex = 18
-        Label107.Text = "ffmpeg 的 -map 参数具有很高的优先级，当使用其指定流参数时" & vbCrLf & "其他类型的流也必须带上 -map，否则 ffmpeg 默认可能会丢弃流"
+        Label107.Text = "ffmpeg 的 -map 参数具有很高的优先级，当使用其指定流参数时其他类型的流也必须带上 -map" & vbCrLf & "否则 ffmpeg 可能会丢弃流，ffmpeg 默认的逻辑是视频和音频分别只保留一个" & vbCrLf & "必须指定了具体的流才可以使用" & ChrW(8220) & "然后保留其他流" & ChrW(8221) & "，否则会发生意外情况"
         ' 
         ' Label108
         ' 
@@ -7176,5 +7191,6 @@ Partial Class 界面_常规流程参数_V2
     Friend WithEvents Label153 As Label
     Friend WithEvents Panel78 As Panel
     Friend WithEvents UiTextBox硬件加速解码参数 As Sunny.UI.UITextBox
+    Friend WithEvents Label15 As Label
 
 End Class

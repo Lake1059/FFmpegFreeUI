@@ -351,4 +351,14 @@ Module Module1
         Return New String("喵", input.Length)
     End Function
 
+    <DllImport("dwmapi.dll")>
+    Function DwmSetWindowAttribute(hwnd As IntPtr, attr As Integer, <MarshalAs(UnmanagedType.Bool)> ByRef attrValue As Boolean, attrSize As Integer) As Integer
+    End Function
+    Const DWMWA_USE_IMMERSIVE_DARK_MODE As Integer = 20
+    Public Sub 启用Win32API深色模式(窗口句柄 As IntPtr)
+        Try
+            Dim unused = DwmSetWindowAttribute(窗口句柄, DWMWA_USE_IMMERSIVE_DARK_MODE, True, Marshal.SizeOf(Of Boolean)())
+        Catch ex As Exception
+        End Try
+    End Sub
 End Module

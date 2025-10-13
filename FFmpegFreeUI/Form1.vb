@@ -18,6 +18,7 @@ Public Class Form1
     Public 任务进度更新计时器 As New Timer With {.Interval = 1000, .Enabled = False}
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        启用Win32API深色模式(Me.Handle)
         Dim 版本号 = String.Join(".", Application.ProductVersion.Split("."c).Take(3)).Split("+"c)(0)
         Me.Text = $"FFmpegFreeUI {版本号}"
         Label主标题.Text = $"FFmpegFreeUI Official {版本号}"
