@@ -992,7 +992,8 @@ Partial Class Form1
         UiButton复制输出.Location = New Point(210, 0)
         UiButton复制输出.MinimumSize = New Size(1, 1)
         UiButton复制输出.Name = "UiButton复制输出"
-        UiButton复制输出.Radius = 30
+        UiButton复制输出.Radius = 0
+        UiButton复制输出.RadiusSides = Sunny.UI.UICornerRadiusSides.None
         UiButton复制输出.RectColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
         UiButton复制输出.RectDisableColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
         UiButton复制输出.RectHoverColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
@@ -1036,6 +1037,8 @@ Partial Class Form1
         UiComboBox输出显示类型.MinimumSize = New Size(63, 0)
         UiComboBox输出显示类型.Name = "UiComboBox输出显示类型"
         UiComboBox输出显示类型.Padding = New Padding(0, 0, 30, 2)
+        UiComboBox输出显示类型.Radius = 0
+        UiComboBox输出显示类型.RadiusSides = Sunny.UI.UICornerRadiusSides.None
         UiComboBox输出显示类型.RectColor = SystemColors.WindowFrame
         UiComboBox输出显示类型.RectDisableColor = SystemColors.WindowFrame
         UiComboBox输出显示类型.ScrollBarHandleWidth = 20
@@ -2263,9 +2266,9 @@ Partial Class Form1
         Label31.Location = New Point(10, 10)
         Label31.Name = "Label31"
         Label31.Padding = New Padding(0, 0, 0, 10)
-        Label31.Size = New Size(457, 30)
+        Label31.Size = New Size(345, 30)
         Label31.TabIndex = 0
-        Label31.Text = "追踪每个处理器核心和所有显卡正在工作中的核心占用（刷新间隔：2s）"
+        Label31.Text = "追踪每个处理器核心和所有显卡正在工作中的核心占用"
         ' 
         ' TabPage插件扩展
         ' 
@@ -2380,7 +2383,7 @@ Partial Class Form1
         Label30.Dock = DockStyle.Top
         Label30.Font = New Font("微软雅黑", 10F)
         Label30.ForeColor = Color.Gray
-        Label30.Location = New Point(0, 981)
+        Label30.Location = New Point(0, 1011)
         Label30.Name = "Label30"
         Label30.Padding = New Padding(16, 20, 20, 20)
         Label30.Size = New Size(484, 60)
@@ -2400,7 +2403,7 @@ Partial Class Form1
         Panel14.Controls.Add(Label32)
         Panel14.Controls.Add(Label41)
         Panel14.Dock = DockStyle.Top
-        Panel14.Location = New Point(0, 687)
+        Panel14.Location = New Point(0, 717)
         Panel14.Name = "Panel14"
         Panel14.Size = New Size(1016, 294)
         Panel14.TabIndex = 128
@@ -2644,14 +2647,14 @@ Partial Class Form1
         Panel11.Dock = DockStyle.Top
         Panel11.Location = New Point(0, 298)
         Panel11.Name = "Panel11"
-        Panel11.Size = New Size(1016, 389)
+        Panel11.Size = New Size(1016, 419)
         Panel11.TabIndex = 127
         ' 
         ' Panel19
         ' 
         Panel19.Controls.Add(UiComboBox混淆任务名称)
         Panel19.Dock = DockStyle.Top
-        Panel19.Location = New Point(0, 349)
+        Panel19.Location = New Point(0, 379)
         Panel19.Name = "Panel19"
         Panel19.Padding = New Padding(21, 10, 20, 0)
         Panel19.Size = New Size(1016, 40)
@@ -2699,10 +2702,10 @@ Partial Class Form1
         Label1.Dock = DockStyle.Top
         Label1.Font = New Font("微软雅黑", 10F)
         Label1.ForeColor = Color.Gray
-        Label1.Location = New Point(0, 319)
+        Label1.Location = New Point(0, 344)
         Label1.Name = "Label1"
-        Label1.Padding = New Padding(16, 10, 0, 0)
-        Label1.Size = New Size(137, 30)
+        Label1.Padding = New Padding(16, 15, 0, 0)
+        Label1.Size = New Size(137, 35)
         Label1.TabIndex = 135
         Label1.Text = "你这任务正经嘛？"
         ' 
@@ -2710,7 +2713,7 @@ Partial Class Form1
         ' 
         Panel12.Controls.Add(UiComboBox自动重置参数面板的页面选择)
         Panel12.Dock = DockStyle.Top
-        Panel12.Location = New Point(0, 279)
+        Panel12.Location = New Point(0, 304)
         Panel12.Name = "Panel12"
         Panel12.Padding = New Padding(21, 10, 20, 0)
         Panel12.Size = New Size(1016, 40)
@@ -2758,10 +2761,10 @@ Partial Class Form1
         Label50.Dock = DockStyle.Top
         Label50.Font = New Font("微软雅黑", 10F)
         Label50.ForeColor = Color.Gray
-        Label50.Location = New Point(0, 249)
+        Label50.Location = New Point(0, 269)
         Label50.Name = "Label50"
-        Label50.Padding = New Padding(16, 10, 0, 0)
-        Label50.Size = New Size(445, 30)
+        Label50.Padding = New Padding(16, 15, 0, 0)
+        Label50.Size = New Size(445, 35)
         Label50.TabIndex = 133
         Label50.Text = "从主选项卡切回参数面板这个次级选项卡时是否要重置到第一个页面"
         ' 
@@ -2769,7 +2772,7 @@ Partial Class Form1
         ' 
         Panel10.Controls.Add(UiComboBox自动开始任务)
         Panel10.Dock = DockStyle.Top
-        Panel10.Location = New Point(0, 209)
+        Panel10.Location = New Point(0, 229)
         Panel10.Name = "Panel10"
         Panel10.Padding = New Padding(21, 10, 20, 0)
         Panel10.Size = New Size(1016, 40)
@@ -2817,10 +2820,10 @@ Partial Class Form1
         Label20.Dock = DockStyle.Top
         Label20.Font = New Font("微软雅黑", 10F)
         Label20.ForeColor = Color.Gray
-        Label20.Location = New Point(0, 179)
+        Label20.Location = New Point(0, 194)
         Label20.Name = "Label20"
-        Label20.Padding = New Padding(16, 10, 0, 0)
-        Label20.Size = New Size(473, 30)
+        Label20.Padding = New Padding(16, 15, 0, 0)
+        Label20.Size = New Size(473, 35)
         Label20.TabIndex = 131
         Label20.Text = "是否自动开始任务（关闭后任务只能手动开始，也不会自动进行下一个）"
         ' 
@@ -2828,7 +2831,7 @@ Partial Class Form1
         ' 
         Panel8.Controls.Add(UiComboBox提示音)
         Panel8.Dock = DockStyle.Top
-        Panel8.Location = New Point(0, 139)
+        Panel8.Location = New Point(0, 154)
         Panel8.Name = "Panel8"
         Panel8.Padding = New Padding(21, 10, 20, 0)
         Panel8.Size = New Size(1016, 40)
@@ -2876,10 +2879,10 @@ Partial Class Form1
         Label49.Dock = DockStyle.Top
         Label49.Font = New Font("微软雅黑", 10F)
         Label49.ForeColor = Color.Gray
-        Label49.Location = New Point(0, 109)
+        Label49.Location = New Point(0, 119)
         Label49.Name = "Label49"
-        Label49.Padding = New Padding(16, 10, 0, 0)
-        Label49.Size = New Size(403, 30)
+        Label49.Padding = New Padding(16, 15, 0, 0)
+        Label49.Size = New Size(403, 35)
         Label49.TabIndex = 129
         Label49.Text = "是否启用提示音（概率乱放，如介意可关闭，可自定义音源）"
         ' 
@@ -2887,7 +2890,7 @@ Partial Class Form1
         ' 
         Panel42.Controls.Add(UiComboBox有任务时系统状态)
         Panel42.Dock = DockStyle.Top
-        Panel42.Location = New Point(0, 69)
+        Panel42.Location = New Point(0, 79)
         Panel42.Name = "Panel42"
         Panel42.Padding = New Padding(21, 10, 20, 0)
         Panel42.Size = New Size(1016, 40)
@@ -2936,8 +2939,8 @@ Partial Class Form1
         Label33.ForeColor = Color.Gray
         Label33.Location = New Point(0, 44)
         Label33.Name = "Label33"
-        Label33.Padding = New Padding(16, 5, 0, 0)
-        Label33.Size = New Size(529, 25)
+        Label33.Padding = New Padding(16, 15, 0, 0)
+        Label33.Size = New Size(529, 35)
         Label33.TabIndex = 128
         Label33.Text = "有任务时系统要保持什么状态（如果没接显示器，强烈建议设置阻止显示器关闭）"
         ' 

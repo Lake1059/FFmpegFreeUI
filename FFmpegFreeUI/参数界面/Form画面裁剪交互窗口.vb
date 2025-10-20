@@ -2,65 +2,18 @@
 Imports System.IO
 Public Class Form画面裁剪交互窗口
 
-    Private Sub Form画面裁剪交互窗口_Load(sender As Object, e As EventArgs) Handles Me.Load
-        UiComboBox比例.ItemHeight = 30 * Form1.DPI
-        UiCheckBox居中.CheckBoxSize = 20 * Form1.DPI
-        PictureBox2.Width = PictureBox2.Height
-        PictureBox3.Width = PictureBox3.Height
-    End Sub
-    Private Sub Form画面裁剪交互窗口_Shown(sender As Object, e As EventArgs) Handles Me.Shown
-        SetControlFont(Form1.UiComboBox字体名称.Text, Me)
-    End Sub
-    Private Sub Form画面裁剪交互窗口_DpiChanged(sender As Object, e As DpiChangedEventArgs) Handles Me.DpiChanged
-        UiComboBox比例.ItemHeight = 30 * Form1.DPI
-        UiCheckBox居中.CheckBoxSize = 20 * Form1.DPI
-        PictureBox2.Width = PictureBox2.Height
-        PictureBox3.Width = PictureBox3.Height
-    End Sub
-
-
-    Public FFmpegProcess As Process
-
-    Private Sub UiButton1_Click(sender As Object, e As EventArgs) Handles UiButton1.Click
-        Dim 视频文件 As String
-        Dim openFileDialog As New OpenFileDialog With {.Multiselect = False, .Filter = "所有文件|*.*"}
-        If openFileDialog.ShowDialog() = DialogResult.OK Then
-            视频文件 = openFileDialog.FileName
-        Else
-            Exit Sub
-        End If
-        Dim FFmpegProcess As New Process
-        FFmpegProcess = New Process()
-        FFmpegProcess.StartInfo.FileName = "ffmpeg"
-        FFmpegProcess.StartInfo.WorkingDirectory = If(用户设置.实例对象.工作目录 <> "", 用户设置.实例对象.工作目录, "")
-        FFmpegProcess.StartInfo.Arguments = $"-ss {If(UiTextBox1.Text <> "", UiTextBox1.Text, "0:0:10")} -i ""{视频文件}"" -frames:v 1 -q:v 1 ""{Path.Combine(Application.StartupPath, "ScreenCropPreview.png")}"" -y"
-        FFmpegProcess.Start()
-        FFmpegProcess.WaitForExit()
-        If FFmpegProcess.ExitCode <> 0 Then Exit Sub
-        If Not FileIO.FileSystem.FileExists(Path.Combine(Application.StartupPath, "ScreenCropPreview.png")) Then Exit Sub
-        Me.PictureBox1.Image = LoadImageFromFile(Path.Combine(Application.StartupPath, "ScreenCropPreview.png"))
-        My.Computer.FileSystem.DeleteFile(Path.Combine(Application.StartupPath, "ScreenCropPreview.png"))
-        Panel2.Visible = True
-    End Sub
-
-    Private Sub UiButton2_Click(sender As Object, e As EventArgs) Handles UiButton2.Click
-        If UiTextBox画面裁剪滤镜参数.Text <> "" Then
-            Form1.常规流程参数页面.UiTextBox画面裁剪滤镜参数.Text = UiTextBox画面裁剪滤镜参数.Text
-            GC.Collect()
-            Me.Dispose()
-        End If
-    End Sub
-
-    Private Sub Form画面裁剪交互窗口_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
-        GC.Collect()
-    End Sub
-
+    ' 私有字段
     Private cropRect As New Rectangle(0, 0, 200, 100)
     Private isDraggingLeftTop As Boolean = False
     Private isDraggingRightBottom As Boolean = False
     Private fixedAspectRatio As Double = 0
-    Private magnifierZoom As Integer = 10
-    Private magnifierSize As Integer = 5
+    Private ReadOnly magnifierSize As Integer = 5
+
+    ' 缓存的图像尺寸，避免重复访问
+    Private cachedImageWidth As Integer = 0
+    Private cachedImageHeight As Integer = 0
+
+    Public FFmpegProcess As Process
 
     Protected Overrides ReadOnly Property CreateParams() As CreateParams
         Get
@@ -70,11 +23,77 @@ Public Class Form画面裁剪交互窗口
         End Get
     End Property
 
-    Private Sub PictureBox1_Paint(sender As Object, e As PaintEventArgs) Handles PictureBox1.Paint
-        If cropRect.Width > 0 AndAlso cropRect.Height > 0 Then
-            e.Graphics.DrawRectangle(Pens.Red, cropRect)
+#Region "窗体事件"
+
+    Private Sub Form画面裁剪交互窗口_Load(sender As Object, e As EventArgs) Handles Me.Load
+        InitializeDpiSettings()
+    End Sub
+
+    Private Sub Form画面裁剪交互窗口_Shown(sender As Object, e As EventArgs) Handles Me.Shown
+        SetControlFont(Form1.UiComboBox字体名称.Text, Me)
+    End Sub
+
+    Private Sub Form画面裁剪交互窗口_DpiChanged(sender As Object, e As DpiChangedEventArgs) Handles Me.DpiChanged
+        InitializeDpiSettings()
+    End Sub
+
+    Private Sub Form画面裁剪交互窗口_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
+        ' 释放图像资源
+        If PictureBox1.Image IsNot Nothing Then
+            PictureBox1.Image.Dispose()
+            PictureBox1.Image = Nothing
+        End If
+        If PictureBox2.Image IsNot Nothing Then
+            PictureBox2.Image.Dispose()
+            PictureBox2.Image = Nothing
+        End If
+        If PictureBox3.Image IsNot Nothing Then
+            PictureBox3.Image.Dispose()
+            PictureBox3.Image = Nothing
+        End If
+        GC.Collect()
+    End Sub
+
+#End Region
+
+#Region "按钮事件"
+
+    Private Sub UiButton1_Click(sender As Object, e As EventArgs) Handles UiButton1.Click
+        Dim 视频文件 As String = ShowFileOpenDialog()
+        If String.IsNullOrEmpty(视频文件) Then Exit Sub
+
+        If Not ExtractFrameFromVideo(视频文件) Then Exit Sub
+
+        Dim previewPath As String = Path.Combine(Application.StartupPath, "ScreenCropPreview.png")
+        If Not File.Exists(previewPath) Then Exit Sub
+
+        ' 释放旧图像
+        If PictureBox1.Image IsNot Nothing Then
+            PictureBox1.Image.Dispose()
+        End If
+
+        ' 加载新图像并缓存尺寸
+        PictureBox1.Image = LoadImageFromFile(previewPath)
+        If PictureBox1.Image IsNot Nothing Then
+            cachedImageWidth = PictureBox1.Image.Width
+            cachedImageHeight = PictureBox1.Image.Height
+        End If
+
+        File.Delete(previewPath)
+        Panel2.Visible = True
+        UpdateMagnifiers()
+    End Sub
+
+    Private Sub UiButton2_Click(sender As Object, e As EventArgs) Handles UiButton2.Click
+        If Not String.IsNullOrEmpty(UiTextBox画面裁剪滤镜参数.Text) Then
+            Form1.常规流程参数页面.UiTextBox画面裁剪滤镜参数.Text = UiTextBox画面裁剪滤镜参数.Text
+            Me.Close()
         End If
     End Sub
+
+#End Region
+
+#Region "鼠标交互事件"
 
     Private Sub PictureBox1_MouseDown(sender As Object, e As MouseEventArgs) Handles PictureBox1.MouseDown
         If e.Button = MouseButtons.Left Then
@@ -85,63 +104,16 @@ Public Class Form画面裁剪交互窗口
     End Sub
 
     Private Sub PictureBox1_MouseMove(sender As Object, e As MouseEventArgs) Handles PictureBox1.MouseMove
-        If PictureBox1.Image Is Nothing Then Return
+        If Not (isDraggingLeftTop OrElse isDraggingRightBottom) Then Return
+        If cachedImageWidth = 0 OrElse cachedImageHeight = 0 Then Return
 
-        Dim imgW = PictureBox1.Width
-        Dim imgH = PictureBox1.Height
-
-        ' 检查是否需要交换拖动模式
         If isDraggingLeftTop Then
-            If e.X > cropRect.Right OrElse e.Y > cropRect.Bottom Then
-                ' 交换拖动模式
-                isDraggingLeftTop = False
-                isDraggingRightBottom = True
-                ' 交换矩形的角落
-                Dim tmp = New Rectangle(cropRect.Left, cropRect.Top, cropRect.Width, cropRect.Height)
-                cropRect = New Rectangle(tmp.Left, tmp.Top, Math.Max(1, e.X - tmp.Left), Math.Max(1, e.Y - tmp.Top))
-            Else
-                ' 正常左上角拖动
-                Dim newX = Math.Max(0, Math.Min(e.X, cropRect.Right - 1))
-                Dim newY = Math.Max(0, Math.Min(e.Y, cropRect.Bottom - 1))
-                Dim newWidth = cropRect.Right - newX
-                Dim newHeight = cropRect.Bottom - newY
-                If fixedAspectRatio > 0 Then
-                    newHeight = CInt(newWidth / fixedAspectRatio)
-                End If
-                If newX + newWidth > imgW Then newWidth = imgW - newX
-                If newY + newHeight > imgH Then newHeight = imgH - newY
-
-                cropRect = New Rectangle(newX, newY, newWidth, newHeight)
-            End If
+            HandleLeftTopDrag(e.X, e.Y)
         ElseIf isDraggingRightBottom Then
-            If e.X < cropRect.Left OrElse e.Y < cropRect.Top Then
-                ' 交换拖动模式
-                isDraggingRightBottom = False
-                isDraggingLeftTop = True
-                ' 交换矩形的角落
-                Dim tmp = New Rectangle(cropRect.Left, cropRect.Top, cropRect.Width, cropRect.Height)
-                cropRect = New Rectangle(e.X, e.Y, tmp.Right - e.X, tmp.Bottom - e.Y)
-            Else
-                ' 正常右下角拖动
-                Dim maxX = imgW - 1
-                Dim maxY = imgH - 1
-                Dim newRight = Math.Max(cropRect.Left + 1, Math.Min(e.X, maxX))
-                Dim newBottom = Math.Max(cropRect.Top + 1, Math.Min(e.Y, maxY))
-                Dim newWidth = newRight - cropRect.Left
-                Dim newHeight = newBottom - cropRect.Top
-                If fixedAspectRatio > 0 Then
-                    newHeight = CInt(newWidth / fixedAspectRatio)
-                    If cropRect.Top + newHeight > imgH Then
-                        newHeight = imgH - cropRect.Top
-                        newWidth = CInt(newHeight * fixedAspectRatio)
-                    End If
-                End If
-
-                cropRect = New Rectangle(cropRect.Left, cropRect.Top, newWidth, newHeight)
-            End If
+            HandleRightBottomDrag(e.X, e.Y)
         End If
 
-        ' 在任何情况下都应用居中模式并更新文本框
+        ' 应用居中模式并更新界面
         ApplyAlignMode()
         UpdateCropTextBox()
         PictureBox1.Invalidate()
@@ -152,137 +124,304 @@ Public Class Form画面裁剪交互窗口
         isDraggingRightBottom = False
     End Sub
 
-    Private Sub ApplyAlignMode()
-        If UiCheckBox居中.Checked AndAlso PictureBox1.Image IsNot Nothing Then
-            Dim imgW = PictureBox1.Image.Width
-            Dim imgH = PictureBox1.Image.Height
-            cropRect.X = (imgW - cropRect.Width) \ 2
-            cropRect.Y = (imgH - cropRect.Height) \ 2
+    Private Sub PictureBox1_Paint(sender As Object, e As PaintEventArgs) Handles PictureBox1.Paint
+        If cropRect.Width <= 0 OrElse cropRect.Height <= 0 OrElse cachedImageWidth = 0 Then Return
+
+        ' 绘制时向内收缩，确保边框不被父容器遮挡
+        Dim drawRect As Rectangle = cropRect
+        If cropRect.Right >= cachedImageWidth Then
+            drawRect.Width -= 1
         End If
+        If cropRect.Bottom >= cachedImageHeight Then
+            drawRect.Height -= 1
+        End If
+
+        e.Graphics.DrawRectangle(Pens.Red, drawRect)
     End Sub
 
-    Private Sub UpdateCropTextBox()
-        UiTextBox画面裁剪滤镜参数.Text = $"{cropRect.Width}:{cropRect.Height}:{cropRect.X}:{cropRect.Y}"
-    End Sub
+#End Region
+
+#Region "文本框和下拉框事件"
 
     Private Sub UiTextBox画面裁剪滤镜参数_KeyDown(sender As Object, e As KeyEventArgs) Handles UiTextBox画面裁剪滤镜参数.KeyDown
-        If e.KeyCode = Keys.Enter Then
-            Dim txt = UiTextBox画面裁剪滤镜参数.Text.Trim()
-            Dim parts = txt.Split(":"c)
-            If parts.Length = 4 Then
-                Dim w, h, x, y As Integer
-                If Integer.TryParse(parts(0), w) AndAlso Integer.TryParse(parts(1), h) AndAlso Integer.TryParse(parts(2), x) AndAlso Integer.TryParse(parts(3), y) Then
-                    cropRect = New Rectangle(x, y, w, h)
-                    ApplyAlignMode()
-                    PictureBox1.Invalidate()
-                End If
-            End If
+        If e.KeyCode <> Keys.Enter Then Return
+
+        If ParseCropParameters(UiTextBox画面裁剪滤镜参数.Text.Trim()) Then
+            ApplyAlignMode()
+            PictureBox1.Invalidate()
+            UpdateMagnifiers()
         End If
     End Sub
 
     Private Sub UiComboBox比例_SelectedIndexChanged(sender As Object, e As EventArgs) Handles UiComboBox比例.SelectedIndexChanged
-        Select Case UiComboBox比例.SelectedIndex
-            Case 0 : fixedAspectRatio = 0
-            Case 1 : fixedAspectRatio = 21 / 9
-            Case 2 : fixedAspectRatio = 16 / 9
-            Case 3 : fixedAspectRatio = 3 / 2
-            Case 4 : fixedAspectRatio = 2 / 1
-            Case 5 : fixedAspectRatio = 4 / 3
-            Case 6 : fixedAspectRatio = 1
-        End Select
+        fixedAspectRatio = GetAspectRatioFromIndex(UiComboBox比例.SelectedIndex)
     End Sub
 
-    Sub UpdateMagnifiers()
-        If PictureBox1.Image Is Nothing Then Return
+#End Region
 
+#Region "辅助方法"
+
+    ''' <summary>
+    ''' 初始化DPI相关设置
+    ''' </summary>
+    Private Sub InitializeDpiSettings()
+        Dim dpi As Single = Form1.DPI
+        UiComboBox比例.ItemHeight = CInt(30 * dpi)
+        UiCheckBox居中.CheckBoxSize = CInt(20 * dpi)
+        PictureBox2.Width = PictureBox2.Height
+        PictureBox3.Width = PictureBox3.Height
+    End Sub
+
+    ''' <summary>
+    ''' 显示文件选择对话框
+    ''' </summary>
+    Private Function ShowFileOpenDialog() As String
+        Using openFileDialog As New OpenFileDialog With {.Multiselect = False, .Filter = "所有文件|*.*"}
+            If openFileDialog.ShowDialog() = DialogResult.OK Then
+                Return openFileDialog.FileName
+            End If
+        End Using
+        Return String.Empty
+    End Function
+
+    ''' <summary>
+    ''' 从视频提取帧
+    ''' </summary>
+    Private Function ExtractFrameFromVideo(videoPath As String) As Boolean
         Try
-            ' 更新左上角放大镜
-            Using bmp1 As New Bitmap(Math.Max(1, PictureBox2.Width), Math.Max(1, PictureBox2.Height))
-                Using g As Graphics = Graphics.FromImage(bmp1)
-                    g.Clear(Color.Black)
-                    g.InterpolationMode = Drawing2D.InterpolationMode.NearestNeighbor
-                    g.PixelOffsetMode = Drawing2D.PixelOffsetMode.Half
-
-                    Dim imgW = PictureBox1.Image.Width
-                    Dim imgH = PictureBox1.Image.Height
-                    Dim centerX As Integer = Math.Max(0, Math.Min(cropRect.Left, imgW - 1))
-                    Dim centerY As Integer = Math.Max(0, Math.Min(cropRect.Top, imgH - 1))
-
-                    Dim sourceX As Integer = Math.Max(0, centerX - magnifierSize)
-                    Dim sourceY As Integer = Math.Max(0, centerY - magnifierSize)
-                    Dim sourceWidth As Integer = Math.Min(magnifierSize * 2, imgW - sourceX)
-                    Dim sourceHeight As Integer = Math.Min(magnifierSize * 2, imgH - sourceY)
-
-                    If sourceWidth <= 0 OrElse sourceHeight <= 0 Then
-                        g.DrawString("边界外", New Font("Arial", 10), Brushes.White, 5, 5)
-                    Else
-                        Dim sourceRect As New Rectangle(sourceX, sourceY, sourceWidth, sourceHeight)
-                        g.DrawImage(PictureBox1.Image,
-                        New Rectangle(0, 0, bmp1.Width, bmp1.Height),
-                        sourceRect,
-                        GraphicsUnit.Pixel)
-
-                        Dim crossX As Integer = ((centerX - sourceX) * bmp1.Width) \ sourceWidth
-                        Dim crossY As Integer = ((centerY - sourceY) * bmp1.Height) \ sourceHeight
-
-                        If crossX >= 0 AndAlso crossX < bmp1.Width AndAlso crossY >= 0 AndAlso crossY < bmp1.Height Then
-                            g.DrawLine(Pens.Red, crossX, 0, crossX, bmp1.Height)
-                            g.DrawLine(Pens.Red, 0, crossY, bmp1.Width, crossY)
-                        End If
-
-                        'Dim textSize As SizeF = g.MeasureString(Text, Me.Font)
-                        'g.FillRectangle(New SolidBrush(Color.FromArgb(128, 0, 0, 0)), 0, 0, textSize.Width, textSize.Height)
-                        'g.DrawString($"({centerX},{centerY})", Me.Font, Brushes.YellowGreen, 0, 0)
-                    End If
-                End Using
-                PictureBox2.Image = bmp1.Clone()
-            End Using
-
-            ' 更新右下角放大镜
-            Using bmp2 As New Bitmap(Math.Max(1, PictureBox3.Width), Math.Max(1, PictureBox3.Height))
-                Using g As Graphics = Graphics.FromImage(bmp2)
-                    g.Clear(Color.Black)
-                    g.InterpolationMode = Drawing2D.InterpolationMode.NearestNeighbor
-                    g.PixelOffsetMode = Drawing2D.PixelOffsetMode.Half
-
-                    Dim imgW = PictureBox1.Image.Width
-                    Dim imgH = PictureBox1.Image.Height
-                    Dim centerX As Integer = Math.Max(0, Math.Min(cropRect.Right, imgW - 1))
-                    Dim centerY As Integer = Math.Max(0, Math.Min(cropRect.Bottom, imgH - 1))
-
-                    Dim sourceX As Integer = Math.Max(0, centerX - magnifierSize)
-                    Dim sourceY As Integer = Math.Max(0, centerY - magnifierSize)
-                    Dim sourceWidth As Integer = Math.Min(magnifierSize * 2, imgW - sourceX)
-                    Dim sourceHeight As Integer = Math.Min(magnifierSize * 2, imgH - sourceY)
-
-                    If sourceWidth <= 0 OrElse sourceHeight <= 0 Then
-                        g.DrawString("边界外", New Font("Arial", 10), Brushes.White, 5, 5)
-                    Else
-                        Dim sourceRect As New Rectangle(sourceX, sourceY, sourceWidth, sourceHeight)
-                        g.DrawImage(PictureBox1.Image,
-                        New Rectangle(0, 0, bmp2.Width, bmp2.Height),
-                        sourceRect,
-                        GraphicsUnit.Pixel)
-
-                        Dim crossX As Integer = ((centerX - sourceX) * bmp2.Width) \ sourceWidth
-                        Dim crossY As Integer = ((centerY - sourceY) * bmp2.Height) \ sourceHeight
-
-                        If crossX >= 0 AndAlso crossX < bmp2.Width AndAlso crossY >= 0 AndAlso crossY < bmp2.Height Then
-                            g.DrawLine(Pens.Red, crossX, 0, crossX, bmp2.Height)
-                            g.DrawLine(Pens.Red, 0, crossY, bmp2.Width, crossY)
-                        End If
-
-                        'Dim textSize As SizeF = g.MeasureString(Text, Me.Font)
-                        'g.FillRectangle(New SolidBrush(Color.FromArgb(128, 0, 0, 0)), 0, 0, textSize.Width, textSize.Height)
-                        'g.DrawString($"({centerX},{centerY})", Me.Font, Brushes.YellowGreen, 0, 0)
-                    End If
-                End Using
-                PictureBox3.Image = bmp2.Clone()
+            Using process As New Process()
+                process.StartInfo.FileName = "ffmpeg"
+                process.StartInfo.WorkingDirectory = If(用户设置.实例对象.工作目录 <> "", 用户设置.实例对象.工作目录, "")
+                Dim timestamp As String = If(Not String.IsNullOrEmpty(UiTextBox1.Text), UiTextBox1.Text, "0:0:10")
+                Dim outputPath As String = Path.Combine(Application.StartupPath, "ScreenCropPreview.png")
+                process.StartInfo.Arguments = $"-ss {timestamp} -i ""{videoPath}"" -frames:v 1 -q:v 1 ""{outputPath}"" -y"
+                process.Start()
+                process.WaitForExit()
+                Return process.ExitCode = 0
             End Using
         Catch ex As Exception
-            Debug.WriteLine("放大镜更新错误: " & ex.ToString())
+            Debug.WriteLine($"提取视频帧错误: {ex.Message}")
+            Return False
+        End Try
+    End Function
+
+    ''' <summary>
+    ''' 初始化裁剪矩形为图像的合理默认值
+    ''' </summary>
+    Private Sub InitializeCropRect()
+        Dim defaultWidth As Integer = Math.Min(cachedImageWidth, 800)
+        Dim defaultHeight As Integer = Math.Min(cachedImageHeight, 450)
+        cropRect = New Rectangle(
+            (cachedImageWidth - defaultWidth) \ 2,
+            (cachedImageHeight - defaultHeight) \ 2,
+            defaultWidth,
+            defaultHeight
+        )
+        UpdateCropTextBox()
+    End Sub
+
+    ''' <summary>
+    ''' 处理左上角拖动
+    ''' </summary>
+    Private Sub HandleLeftTopDrag(mouseX As Integer, mouseY As Integer)
+        If mouseX > cropRect.Right OrElse mouseY > cropRect.Bottom Then
+            ' 交换拖动模式
+            isDraggingLeftTop = False
+            isDraggingRightBottom = True
+            Dim oldRect As Rectangle = cropRect
+            cropRect = New Rectangle(oldRect.Left, oldRect.Top,
+                                    Math.Max(1, mouseX - oldRect.Left),
+                                    Math.Max(1, mouseY - oldRect.Top))
+        Else
+            ' 正常左上角拖动
+            Dim newX As Integer = Math.Max(0, Math.Min(mouseX, cropRect.Right - 1))
+            Dim newY As Integer = Math.Max(0, Math.Min(mouseY, cropRect.Bottom - 1))
+            Dim newWidth As Integer = cropRect.Right - newX
+            Dim newHeight As Integer = cropRect.Bottom - newY
+
+            If fixedAspectRatio > 0 Then
+                newHeight = CInt(newWidth / fixedAspectRatio)
+            End If
+
+            ' 边界检查
+            newWidth = Math.Min(newWidth, cachedImageWidth - newX)
+            newHeight = Math.Min(newHeight, cachedImageHeight - newY)
+
+            cropRect = New Rectangle(newX, newY, newWidth, newHeight)
+        End If
+    End Sub
+
+    ''' <summary>
+    ''' 处理右下角拖动
+    ''' </summary>
+    Private Sub HandleRightBottomDrag(mouseX As Integer, mouseY As Integer)
+        If mouseX < cropRect.Left OrElse mouseY < cropRect.Top Then
+            ' 交换拖动模式
+            isDraggingRightBottom = False
+            isDraggingLeftTop = True
+            Dim oldRect As Rectangle = cropRect
+            cropRect = New Rectangle(mouseX, mouseY, oldRect.Right - mouseX, oldRect.Bottom - mouseY)
+        Else
+            ' 正常右下角拖动
+            Dim newRight As Integer = Math.Max(cropRect.Left + 1, Math.Min(mouseX, cachedImageWidth))
+            Dim newBottom As Integer = Math.Max(cropRect.Top + 1, Math.Min(mouseY, cachedImageHeight))
+            Dim newWidth As Integer = newRight - cropRect.Left
+            Dim newHeight As Integer = newBottom - cropRect.Top
+
+            If fixedAspectRatio > 0 Then
+                newHeight = CInt(newWidth / fixedAspectRatio)
+                If cropRect.Top + newHeight > cachedImageHeight Then
+                    newHeight = cachedImageHeight - cropRect.Top
+                    newWidth = CInt(newHeight * fixedAspectRatio)
+                End If
+            End If
+
+            cropRect = New Rectangle(cropRect.Left, cropRect.Top, newWidth, newHeight)
+        End If
+    End Sub
+
+    ''' <summary>
+    ''' 应用居中对齐模式
+    ''' </summary>
+    Private Sub ApplyAlignMode()
+        If UiCheckBox居中.Checked AndAlso cachedImageWidth > 0 AndAlso cachedImageHeight > 0 Then
+            cropRect.X = (cachedImageWidth - cropRect.Width) \ 2
+            cropRect.Y = (cachedImageHeight - cropRect.Height) \ 2
+        End If
+    End Sub
+
+    ''' <summary>
+    ''' 更新裁剪参数文本框
+    ''' </summary>
+    Private Sub UpdateCropTextBox()
+        UiTextBox画面裁剪滤镜参数.Text = $"{cropRect.Width}:{cropRect.Height}:{cropRect.X}:{cropRect.Y}"
+    End Sub
+
+    ''' <summary>
+    ''' 解析裁剪参数
+    ''' </summary>
+    Private Function ParseCropParameters(text As String) As Boolean
+        Dim parts As String() = text.Split(":"c)
+        If parts.Length <> 4 Then Return False
+
+        Dim w, h, x, y As Integer
+        If Integer.TryParse(parts(0), w) AndAlso
+           Integer.TryParse(parts(1), h) AndAlso
+           Integer.TryParse(parts(2), x) AndAlso
+           Integer.TryParse(parts(3), y) AndAlso
+           w > 0 AndAlso h > 0 Then
+            cropRect = New Rectangle(x, y, w, h)
+            Return True
+        End If
+        Return False
+    End Function
+
+    ''' <summary>
+    ''' 根据索引获取宽高比
+    ''' </summary>
+    Private Function GetAspectRatioFromIndex(index As Integer) As Double
+        Select Case index
+            Case 0 : Return 0           ' 自由
+            Case 1 : Return 21.0 / 9.0  ' 21:9
+            Case 2 : Return 16.0 / 9.0  ' 16:9
+            Case 3 : Return 3.0 / 2.0   ' 3:2
+            Case 4 : Return 2.0 / 1.0   ' 2:1
+            Case 5 : Return 4.0 / 3.0   ' 4:3
+            Case 6 : Return 1.0         ' 1:1
+            Case Else : Return 0
+        End Select
+    End Function
+
+#End Region
+
+#Region "放大镜更新"
+
+    ''' <summary>
+    ''' 更新放大镜显示
+    ''' </summary>
+    Private Sub UpdateMagnifiers()
+        If PictureBox1.Image Is Nothing OrElse cachedImageWidth = 0 Then Return
+
+        Try
+            ' 左上角放大镜：显示裁剪矩形的左上角点（cropRect 的起始像素）
+            UpdateSingleMagnifier(PictureBox2, cropRect.Left, cropRect.Top)
+
+            ' 右下角放大镜：显示裁剪矩形的右下角点
+            ' Rectangle 的 Right/Bottom 是边界外的第一个坐标
+            ' 例如：Rectangle(0, 0, 1920, 1080) 的 Right=1920, Bottom=1080
+            ' 但实际包含的像素是 [0, 1919] 和 [0, 1079]
+            ' 所以右下角的实际像素坐标是 (Right-1, Bottom-1)
+            Dim rightPixel As Integer = cropRect.Right - 1
+            Dim bottomPixel As Integer = cropRect.Bottom - 1
+            UpdateSingleMagnifier(PictureBox3, rightPixel, bottomPixel)
+        Catch ex As Exception
+            Debug.WriteLine($"放大镜更新错误: {ex.Message}")
         End Try
     End Sub
 
+    ''' <summary>
+    ''' 更新单个放大镜
+    ''' </summary>
+    Private Sub UpdateSingleMagnifier(pictureBox As PictureBox, centerX As Integer, centerY As Integer)
+        Dim magnifierWidth As Integer = Math.Max(1, pictureBox.Width)
+        Dim magnifierHeight As Integer = Math.Max(1, pictureBox.Height)
+
+        Using bmp As New Bitmap(magnifierWidth, magnifierHeight)
+            Using g As Graphics = Graphics.FromImage(bmp)
+                g.Clear(Color.Black)
+                g.InterpolationMode = Drawing2D.InterpolationMode.NearestNeighbor
+                g.PixelOffsetMode = Drawing2D.PixelOffsetMode.Half
+
+                ' 限制中心点在图像范围内
+                centerX = Math.Max(0, Math.Min(centerX, cachedImageWidth - 1))
+                centerY = Math.Max(0, Math.Min(centerY, cachedImageHeight - 1))
+
+                ' 计算源矩形：以 centerX, centerY 为中心，取周围 magnifierSize*2 的区域
+                Dim sourceX As Integer = Math.Max(0, centerX - magnifierSize)
+                Dim sourceY As Integer = Math.Max(0, centerY - magnifierSize)
+                Dim sourceWidth As Integer = Math.Min(magnifierSize * 2, cachedImageWidth - sourceX)
+                Dim sourceHeight As Integer = Math.Min(magnifierSize * 2, cachedImageHeight - sourceY)
+
+                If sourceWidth <= 0 OrElse sourceHeight <= 0 Then
+                    g.DrawString("边界外", New Font("Arial", 10), Brushes.White, 5, 5)
+                Else
+                    ' 绘制放大的图像区域
+                    Dim sourceRect As New Rectangle(sourceX, sourceY, sourceWidth, sourceHeight)
+                    g.DrawImage(PictureBox1.Image,
+                               New Rectangle(0, 0, magnifierWidth, magnifierHeight),
+                               sourceRect,
+                               GraphicsUnit.Pixel)
+
+                    ' 计算十字准线的位置
+                    ' centerX/Y 是在原始图像中的像素坐标 [0, cachedImageWidth-1]
+                    ' sourceX/Y 是源区域的起始坐标
+                    ' 需要将 centerX/Y 映射到放大镜的坐标系统中
+                    Dim offsetX As Double = (centerX - sourceX + 0.5) / sourceWidth
+                    Dim offsetY As Double = (centerY - sourceY + 0.5) / sourceHeight
+                    Dim crossX As Integer = CInt(offsetX * magnifierWidth)
+                    Dim crossY As Integer = CInt(offsetY * magnifierHeight)
+
+                    ' 限制十字准线在有效范围内，并确保线条不会被边界遮挡
+                    ' DrawLine 从 (x1,y1) 画到 (x2,y2)，线宽为1像素
+                    ' 如果 x 或 y 坐标为 0 或 max-1，线条会完全在范围内
+                    ' 如果坐标为 max，线条会被遮挡
+                    crossX = Math.Max(0, Math.Min(crossX, magnifierWidth - 1))
+                    crossY = Math.Max(0, Math.Min(crossY, magnifierHeight - 1))
+
+                    ' 绘制十字准线，确保不超出边界
+                    g.DrawLine(Pens.Red, crossX, 0, crossX, magnifierHeight - 1)
+                    g.DrawLine(Pens.Red, 0, crossY, magnifierWidth - 1, crossY)
+                End If
+            End Using
+
+            ' 释放旧图像并设置新图像
+            If pictureBox.Image IsNot Nothing Then
+                pictureBox.Image.Dispose()
+            End If
+            pictureBox.Image = bmp.Clone()
+        End Using
+    End Sub
+
+#End Region
 
 End Class

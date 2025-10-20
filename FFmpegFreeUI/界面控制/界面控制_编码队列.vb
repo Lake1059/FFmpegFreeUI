@@ -76,7 +76,7 @@ Public Class 界面控制_编码队列
         For Each item As ListViewItem In Form1.ListView1.SelectedItems
             Dim i = item.Index
             Select Case 编码任务.队列(i).状态
-                Case 编码任务.编码状态.已完成, 编码任务.编码状态.错误, 编码任务.编码状态.已停止
+                Case 编码任务.编码状态.已完成, 编码任务.编码状态.错误, 编码任务.编码状态.已停止, 编码任务.编码状态.压制失败
                     编码任务.队列(i).状态 = 编码任务.编码状态.未处理
                     编码任务.队列(i).状态刷新统一逻辑()
                     编码任务.队列(i).任务耗时计时器.Reset()

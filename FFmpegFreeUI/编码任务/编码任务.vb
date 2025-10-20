@@ -1,6 +1,6 @@
 ﻿Imports System.IO
-Imports System.Runtime.Serialization
 Imports System.Text.RegularExpressions
+Imports Mono.Unix.Native
 Imports Sunny.UI
 
 Public Class 编码任务
@@ -10,6 +10,7 @@ Public Class 编码任务
         已暂停 = 2
         已完成 = 10
         已停止 = 20
+        压制失败 = 51
         错误 = 99
     End Enum
 
@@ -247,6 +248,19 @@ jx1:
             End Try
         End Sub
 
+        Public Sub 让压制任务失败()
+            Try
+                If FFmpegProcess.HasExited = False Then
+                    FFmpegProcess?.Kill()
+                    状态 = 编码状态.压制失败
+                    任务耗时计时器.Stop()
+                    状态刷新统一逻辑()
+                End If
+            Catch ex As Exception
+                MsgBox(ex.Message, MsgBoxStyle.Critical)
+            End Try
+        End Sub
+
         Public Sub 清除占用()
             Try
                 If FFmpegProcess IsNot Nothing Then
@@ -370,6 +384,7 @@ jx1:
                             Case >= 1 : 列表视图项.SubItems(4).ForeColor = Color.IndianRed
                         End Select
                     End If
+
                 Case 编码状态.已完成
                     列表视图项.ForeColor = Color.OliveDrab
                     列表视图项.SubItems(1).Text = "已完成"
@@ -443,6 +458,10 @@ jx1:
                         列表视图项.SubItems(1).Text = "错误"
                         Task.Run(AddressOf 检查是否有可以开始的任务)
                     End If
+                Case 编码状态.压制失败
+                    列表视图项.ForeColor = Color.IndianRed
+                    列表视图项.SubItems(1).Text = "压制失败"
+                    列表视图项.SubItems(5).Text = ""
             End Select
         End Sub
         Public Sub 处理捕获的数据并添加到刷新队列()
