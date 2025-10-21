@@ -376,6 +376,7 @@ Partial Class Form画面裁剪交互窗口
         ' 
         ' Panel1
         ' 
+        Panel1.AllowDrop = True
         Panel1.AutoScroll = True
         Panel1.BackColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
         Panel1.Controls.Add(Panel2)
@@ -387,6 +388,7 @@ Partial Class Form画面裁剪交互窗口
         ' 
         ' Panel2
         ' 
+        Panel2.AllowDrop = True
         Panel2.AutoSize = True
         Panel2.BackColor = Color.YellowGreen
         Panel2.Controls.Add(PictureBox1)

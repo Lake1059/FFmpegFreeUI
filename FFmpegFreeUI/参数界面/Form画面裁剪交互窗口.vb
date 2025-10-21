@@ -1,5 +1,4 @@
-﻿
-Imports System.IO
+﻿Imports System.IO
 Public Class Form画面裁剪交互窗口
 
     ' 私有字段
@@ -59,29 +58,7 @@ Public Class Form画面裁剪交互窗口
 #Region "按钮事件"
 
     Private Sub UiButton1_Click(sender As Object, e As EventArgs) Handles UiButton1.Click
-        Dim 视频文件 As String = ShowFileOpenDialog()
-        If String.IsNullOrEmpty(视频文件) Then Exit Sub
-
-        If Not ExtractFrameFromVideo(视频文件) Then Exit Sub
-
-        Dim previewPath As String = Path.Combine(Application.StartupPath, "ScreenCropPreview.png")
-        If Not File.Exists(previewPath) Then Exit Sub
-
-        ' 释放旧图像
-        If PictureBox1.Image IsNot Nothing Then
-            PictureBox1.Image.Dispose()
-        End If
-
-        ' 加载新图像并缓存尺寸
-        PictureBox1.Image = LoadImageFromFile(previewPath)
-        If PictureBox1.Image IsNot Nothing Then
-            cachedImageWidth = PictureBox1.Image.Width
-            cachedImageHeight = PictureBox1.Image.Height
-        End If
-
-        File.Delete(previewPath)
-        Panel2.Visible = True
-        UpdateMagnifiers()
+        打开视频获取画面(ShowFileOpenDialog())
     End Sub
 
     Private Sub UiButton2_Click(sender As Object, e As EventArgs) Handles UiButton2.Click
@@ -393,35 +370,99 @@ Public Class Form画面裁剪交互窗口
                                GraphicsUnit.Pixel)
 
                     ' 计算十字准线的位置
-                    ' centerX/Y 是在原始图像中的像素坐标 [0, cachedImageWidth-1]
-                    ' sourceX/Y 是源区域的起始坐标
-                    ' 需要将 centerX/Y 映射到放大镜的坐标系统中
-                    Dim offsetX As Double = (centerX - sourceX + 0.5) / sourceWidth
-                    Dim offsetY As Double = (centerY - sourceY + 0.5) / sourceHeight
-                    Dim crossX As Integer = CInt(offsetX * magnifierWidth)
-                    Dim crossY As Integer = CInt(offsetY * magnifierHeight)
+                    ' 判断目标像素是否在源区域的边界上
+                    Dim isAtLeftEdge As Boolean = (centerX = sourceX)
+                    Dim isAtRightEdge As Boolean = (centerX = sourceX + sourceWidth - 1)
+                    Dim isAtTopEdge As Boolean = (centerY = sourceY)
+                    Dim isAtBottomEdge As Boolean = (centerY = sourceY + sourceHeight - 1)
 
-                    ' 限制十字准线在有效范围内，并确保线条不会被边界遮挡
-                    ' DrawLine 从 (x1,y1) 画到 (x2,y2)，线宽为1像素
-                    ' 如果 x 或 y 坐标为 0 或 max-1，线条会完全在范围内
-                    ' 如果坐标为 max，线条会被遮挡
-                    crossX = Math.Max(0, Math.Min(crossX, magnifierWidth - 1))
-                    crossY = Math.Max(0, Math.Min(crossY, magnifierHeight - 1))
+                    Dim crossX As Integer
+                    Dim crossY As Integer
 
-                    ' 绘制十字准线，确保不超出边界
+                    ' X 坐标计算
+                    If isAtLeftEdge Then
+                        crossX = 1 ' 左边界，向内偏移
+                    ElseIf isAtRightEdge Then
+                        crossX = magnifierWidth - 2 ' 右边界，向内偏移
+                    Else
+                        ' 中间位置，精确映射
+                        Dim offsetX As Double = CDbl(centerX - sourceX) / sourceWidth
+                        crossX = CInt(offsetX * magnifierWidth)
+                    End If
+
+                    ' Y 坐标计算
+                    If isAtTopEdge Then
+                        crossY = 1 ' 上边界，向内偏移
+                    ElseIf isAtBottomEdge Then
+                        crossY = magnifierHeight - 2 ' 下边界，向内偏移
+                    Else
+                        ' 中间位置，精确映射
+                        Dim offsetY As Double = CDbl(centerY - sourceY) / sourceHeight
+                        crossY = CInt(offsetY * magnifierHeight)
+                    End If
+
+                    ' 绘制十字准线
                     g.DrawLine(Pens.Red, crossX, 0, crossX, magnifierHeight - 1)
                     g.DrawLine(Pens.Red, 0, crossY, magnifierWidth - 1, crossY)
                 End If
             End Using
 
             ' 释放旧图像并设置新图像
-            If pictureBox.Image IsNot Nothing Then
-                pictureBox.Image.Dispose()
-            End If
+            pictureBox.Image?.Dispose()
             pictureBox.Image = bmp.Clone()
         End Using
     End Sub
 
 #End Region
+
+
+    Private Sub Panel1_DragEnter(sender As Object, e As DragEventArgs) Handles Panel1.DragEnter
+        If e.Data.GetDataPresent(DataFormats.FileDrop) Then
+            e.Effect = DragDropEffects.Copy
+        End If
+    End Sub
+
+    Private Sub Panel1_DragDrop(sender As Object, e As DragEventArgs) Handles Panel1.DragDrop
+        打开视频获取画面(e.Data.GetData(DataFormats.FileDrop)(0))
+    End Sub
+
+    Private Sub Panel2_DragEnter(sender As Object, e As DragEventArgs) Handles Panel2.DragEnter
+        If e.Data.GetDataPresent(DataFormats.FileDrop) Then
+            e.Effect = DragDropEffects.Copy
+        End If
+    End Sub
+
+    Private Sub Panel2_DragDrop(sender As Object, e As DragEventArgs) Handles Panel2.DragDrop
+        打开视频获取画面(e.Data.GetData(DataFormats.FileDrop)(0))
+    End Sub
+
+    Private Sub PictureBox1_DragEnter(sender As Object, e As DragEventArgs) Handles PictureBox1.DragEnter
+        If e.Data.GetDataPresent(DataFormats.FileDrop) Then
+            e.Effect = DragDropEffects.Copy
+        End If
+    End Sub
+
+    Private Sub PictureBox1_DragDrop(sender As Object, e As DragEventArgs) Handles PictureBox1.DragDrop
+        打开视频获取画面(e.Data.GetData(DataFormats.FileDrop)(0))
+    End Sub
+
+    Sub 打开视频获取画面(视频文件 As String)
+        If String.IsNullOrEmpty(视频文件) Then Exit Sub
+        If Not ExtractFrameFromVideo(视频文件) Then Exit Sub
+        Dim previewPath As String = Path.Combine(Application.StartupPath, "ScreenCropPreview.png")
+        If Not File.Exists(previewPath) Then Exit Sub
+        PictureBox1.Image?.Dispose()
+        PictureBox1.Image = LoadImageFromFile(previewPath)
+        If PictureBox1.Image IsNot Nothing Then
+            cachedImageWidth = PictureBox1.Image.Width
+            cachedImageHeight = PictureBox1.Image.Height
+        End If
+        File.Delete(previewPath)
+        Panel2.Visible = True
+        UpdateMagnifiers()
+    End Sub
+
+
+
 
 End Class
