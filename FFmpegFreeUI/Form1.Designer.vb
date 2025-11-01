@@ -112,16 +112,11 @@ Partial Class Form1
         UiButton恢复任务 = New Sunny.UI.UIButton()
         UiButton暂停任务 = New Sunny.UI.UIButton()
         UiButton开始任务 = New Sunny.UI.UIButton()
-        TabPage添加文件 = New TabPage()
+        TabPage准备文件 = New TabPage()
         Panel58 = New Panel()
         ListView2 = New ListView()
         ColumnHeader9 = New ColumnHeader()
-        Panel57 = New Panel()
-        UiComboBox输出目录 = New Sunny.UI.UIComboBox()
-        Label那个神奇的视觉标签 = New Label()
-        Label100 = New Label()
-        UiTextBox输出容器 = New Sunny.UI.UITextBox()
-        UiButton选择容器 = New Sunny.UI.UIButton()
+        Label2 = New Label()
         Panel3 = New Panel()
         Label102 = New Label()
         UiButton12 = New Sunny.UI.UIButton()
@@ -234,9 +229,8 @@ Partial Class Form1
         Panel35.SuspendLayout()
         Panel36.SuspendLayout()
         Panel2.SuspendLayout()
-        TabPage添加文件.SuspendLayout()
+        TabPage准备文件.SuspendLayout()
         Panel58.SuspendLayout()
-        Panel57.SuspendLayout()
         Panel3.SuspendLayout()
         TabPage参数面板.SuspendLayout()
         TabPage媒体信息.SuspendLayout()
@@ -275,7 +269,7 @@ Partial Class Form1
         UiTabControlMenu1.Alignment = TabAlignment.Left
         UiTabControlMenu1.Controls.Add(TabPage起始页面)
         UiTabControlMenu1.Controls.Add(TabPage编码队列)
-        UiTabControlMenu1.Controls.Add(TabPage添加文件)
+        UiTabControlMenu1.Controls.Add(TabPage准备文件)
         UiTabControlMenu1.Controls.Add(TabPage参数面板)
         UiTabControlMenu1.Controls.Add(TabPage媒体信息)
         UiTabControlMenu1.Controls.Add(TabPageEX混流)
@@ -1522,27 +1516,27 @@ Partial Class Form1
         UiButton开始任务.Text = "开始"
         UiButton开始任务.TipsFont = New Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point, CByte(134))
         ' 
-        ' TabPage添加文件
+        ' TabPage准备文件
         ' 
-        TabPage添加文件.BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
-        TabPage添加文件.Controls.Add(Panel58)
-        TabPage添加文件.Controls.Add(Panel57)
-        TabPage添加文件.Controls.Add(Panel3)
-        TabPage添加文件.Font = New Font("微软雅黑", 10F)
-        TabPage添加文件.Location = New Point(151, 0)
-        TabPage添加文件.Name = "TabPage添加文件"
-        TabPage添加文件.Size = New Size(1033, 661)
-        TabPage添加文件.TabIndex = 1
-        TabPage添加文件.Text = "添加文件"
+        TabPage准备文件.BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
+        TabPage准备文件.Controls.Add(Panel58)
+        TabPage准备文件.Controls.Add(Panel3)
+        TabPage准备文件.Font = New Font("微软雅黑", 10F)
+        TabPage准备文件.Location = New Point(151, 0)
+        TabPage准备文件.Name = "TabPage准备文件"
+        TabPage准备文件.Size = New Size(1033, 661)
+        TabPage准备文件.TabIndex = 1
+        TabPage准备文件.Text = "准备文件"
         ' 
         ' Panel58
         ' 
         Panel58.Controls.Add(ListView2)
+        Panel58.Controls.Add(Label2)
         Panel58.Dock = DockStyle.Fill
-        Panel58.Location = New Point(0, 105)
+        Panel58.Location = New Point(0, 60)
         Panel58.Name = "Panel58"
         Panel58.Padding = New Padding(10, 10, 0, 10)
-        Panel58.Size = New Size(1033, 556)
+        Panel58.Size = New Size(1033, 601)
         Panel58.TabIndex = 6
         ' 
         ' ListView2
@@ -1560,150 +1554,24 @@ Partial Class Form1
         ListView2.Name = "ListView2"
         ListView2.OwnerDraw = True
         ListView2.ShowItemToolTips = True
-        ListView2.Size = New Size(1023, 536)
+        ListView2.Size = New Size(1023, 551)
         ListView2.StateImageList = ImageList1
         ListView2.TabIndex = 0
         ListView2.TabStop = False
         ListView2.UseCompatibleStateImageBehavior = False
         ListView2.View = View.Details
         ' 
-        ' Panel57
+        ' Label2
         ' 
-        Panel57.BackColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        Panel57.Controls.Add(UiComboBox输出目录)
-        Panel57.Controls.Add(Label那个神奇的视觉标签)
-        Panel57.Controls.Add(Label100)
-        Panel57.Controls.Add(UiTextBox输出容器)
-        Panel57.Controls.Add(UiButton选择容器)
-        Panel57.Dock = DockStyle.Top
-        Panel57.Location = New Point(0, 60)
-        Panel57.Name = "Panel57"
-        Panel57.Padding = New Padding(10, 0, 10, 10)
-        Panel57.Size = New Size(1033, 45)
-        Panel57.TabIndex = 5
-        ' 
-        ' UiComboBox输出目录
-        ' 
-        UiComboBox输出目录.DataSource = Nothing
-        UiComboBox输出目录.Dock = DockStyle.Fill
-        UiComboBox输出目录.DropDownStyle = Sunny.UI.UIDropDownStyle.DropDownList
-        UiComboBox输出目录.FillColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
-        UiComboBox输出目录.FillColor2 = Color.FromArgb(CByte(36), CByte(36), CByte(36))
-        UiComboBox输出目录.FillDisableColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiComboBox输出目录.Font = New Font("微软雅黑", 10F)
-        UiComboBox输出目录.ForeColor = Color.Silver
-        UiComboBox输出目录.ForeDisableColor = Color.Silver
-        UiComboBox输出目录.ItemFillColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiComboBox输出目录.ItemForeColor = Color.Silver
-        UiComboBox输出目录.ItemHeight = 30
-        UiComboBox输出目录.ItemHoverColor = Color.FromArgb(CByte(56), CByte(56), CByte(56))
-        UiComboBox输出目录.ItemRectColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
-        UiComboBox输出目录.Items.AddRange(New Object() {"  输出到原目录", "  浏览 ..."})
-        UiComboBox输出目录.ItemSelectBackColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
-        UiComboBox输出目录.ItemSelectForeColor = Color.Silver
-        UiComboBox输出目录.Location = New Point(280, 0)
-        UiComboBox输出目录.Margin = New Padding(4, 5, 4, 5)
-        UiComboBox输出目录.MaxDropDownItems = 17
-        UiComboBox输出目录.MinimumSize = New Size(63, 0)
-        UiComboBox输出目录.Name = "UiComboBox输出目录"
-        UiComboBox输出目录.Padding = New Padding(0, 0, 30, 2)
-        UiComboBox输出目录.RadiusSides = Sunny.UI.UICornerRadiusSides.None
-        UiComboBox输出目录.RectColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
-        UiComboBox输出目录.RectDisableColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
-        UiComboBox输出目录.RectSize = 2
-        UiComboBox输出目录.ScrollBarBackColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiComboBox输出目录.ScrollBarColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
-        UiComboBox输出目录.ScrollBarHandleWidth = 20
-        UiComboBox输出目录.ScrollBarStyleInherited = False
-        UiComboBox输出目录.Size = New Size(742, 35)
-        UiComboBox输出目录.Style = Sunny.UI.UIStyle.Custom
-        UiComboBox输出目录.SymbolSize = 24
-        UiComboBox输出目录.TabIndex = 75
-        UiComboBox输出目录.TextAlignment = ContentAlignment.MiddleLeft
-        UiComboBox输出目录.Watermark = "选择输出目录"
-        ' 
-        ' Label那个神奇的视觉标签
-        ' 
-        Label那个神奇的视觉标签.BackColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
-        Label那个神奇的视觉标签.Dock = DockStyle.Right
-        Label那个神奇的视觉标签.Location = New Point(1022, 0)
-        Label那个神奇的视觉标签.Name = "Label那个神奇的视觉标签"
-        Label那个神奇的视觉标签.Size = New Size(1, 35)
-        Label那个神奇的视觉标签.TabIndex = 92
-        Label那个神奇的视觉标签.Text = "Label35"
-        ' 
-        ' Label100
-        ' 
-        Label100.Dock = DockStyle.Left
-        Label100.Location = New Point(270, 0)
-        Label100.Name = "Label100"
-        Label100.Size = New Size(10, 35)
-        Label100.TabIndex = 74
-        ' 
-        ' UiTextBox输出容器
-        ' 
-        UiTextBox输出容器.Dock = DockStyle.Left
-        UiTextBox输出容器.FillColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
-        UiTextBox输出容器.FillColor2 = Color.FromArgb(CByte(36), CByte(36), CByte(36))
-        UiTextBox输出容器.FillDisableColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
-        UiTextBox输出容器.FillReadOnlyColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
-        UiTextBox输出容器.Font = New Font("微软雅黑", 10F)
-        UiTextBox输出容器.ForeColor = Color.DarkGray
-        UiTextBox输出容器.ForeDisableColor = Color.DarkGray
-        UiTextBox输出容器.ForeReadOnlyColor = Color.DarkGray
-        UiTextBox输出容器.Location = New Point(90, 0)
-        UiTextBox输出容器.Margin = New Padding(4, 5, 4, 5)
-        UiTextBox输出容器.MinimumSize = New Size(1, 16)
-        UiTextBox输出容器.Name = "UiTextBox输出容器"
-        UiTextBox输出容器.Padding = New Padding(10, 5, 5, 5)
-        UiTextBox输出容器.Radius = 0
-        UiTextBox输出容器.RadiusSides = Sunny.UI.UICornerRadiusSides.None
-        UiTextBox输出容器.RectColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
-        UiTextBox输出容器.RectDisableColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
-        UiTextBox输出容器.RectReadOnlyColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
-        UiTextBox输出容器.RectSides = ToolStripStatusLabelBorderSides.Top Or ToolStripStatusLabelBorderSides.Right Or ToolStripStatusLabelBorderSides.Bottom
-        UiTextBox输出容器.RectSize = 2
-        UiTextBox输出容器.ScrollBarBackColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
-        UiTextBox输出容器.ScrollBarColor = Color.DimGray
-        UiTextBox输出容器.ScrollBarStyleInherited = False
-        UiTextBox输出容器.ShowText = False
-        UiTextBox输出容器.Size = New Size(180, 35)
-        UiTextBox输出容器.TabIndex = 90
-        UiTextBox输出容器.TextAlignment = ContentAlignment.MiddleLeft
-        UiTextBox输出容器.Watermark = "填写输出容器（后缀）"
-        UiTextBox输出容器.WatermarkActiveColor = Color.DimGray
-        UiTextBox输出容器.WatermarkColor = Color.DimGray
-        ' 
-        ' UiButton选择容器
-        ' 
-        UiButton选择容器.Dock = DockStyle.Left
-        UiButton选择容器.FillColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
-        UiButton选择容器.FillColor2 = Color.FromArgb(CByte(36), CByte(36), CByte(36))
-        UiButton选择容器.FillDisableColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
-        UiButton选择容器.FillHoverColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiButton选择容器.FillPressColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiButton选择容器.FillSelectedColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiButton选择容器.Font = New Font("微软雅黑", 10F)
-        UiButton选择容器.ForeColor = Color.CornflowerBlue
-        UiButton选择容器.ForeDisableColor = Color.CornflowerBlue
-        UiButton选择容器.ForeHoverColor = Color.CornflowerBlue
-        UiButton选择容器.ForePressColor = Color.CornflowerBlue
-        UiButton选择容器.ForeSelectedColor = Color.CornflowerBlue
-        UiButton选择容器.Location = New Point(10, 0)
-        UiButton选择容器.MinimumSize = New Size(1, 1)
-        UiButton选择容器.Name = "UiButton选择容器"
-        UiButton选择容器.Radius = 0
-        UiButton选择容器.RadiusSides = Sunny.UI.UICornerRadiusSides.None
-        UiButton选择容器.RectColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
-        UiButton选择容器.RectDisableColor = Color.FromArgb(CByte(12), CByte(12), CByte(12))
-        UiButton选择容器.RectHoverColor = Color.CornflowerBlue
-        UiButton选择容器.RectPressColor = Color.FromArgb(CByte(64), CByte(148), CByte(64))
-        UiButton选择容器.RectSelectedColor = Color.CornflowerBlue
-        UiButton选择容器.RectSize = 2
-        UiButton选择容器.Size = New Size(80, 35)
-        UiButton选择容器.TabIndex = 91
-        UiButton选择容器.Text = "选择"
-        UiButton选择容器.TipsFont = New Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point, CByte(134))
+        Label2.AutoSize = True
+        Label2.Dock = DockStyle.Bottom
+        Label2.ForeColor = Color.Gray
+        Label2.Location = New Point(10, 561)
+        Label2.Name = "Label2"
+        Label2.Padding = New Padding(0, 10, 0, 0)
+        Label2.Size = New Size(513, 30)
+        Label2.TabIndex = 1
+        Label2.Text = "可以直接把文件拖进编码队列来开始，如果文件很多或者有其他需求再用这个页面"
         ' 
         ' Panel3
         ' 
@@ -3283,9 +3151,9 @@ Partial Class Form1
         Panel36.ResumeLayout(False)
         Panel36.PerformLayout()
         Panel2.ResumeLayout(False)
-        TabPage添加文件.ResumeLayout(False)
+        TabPage准备文件.ResumeLayout(False)
         Panel58.ResumeLayout(False)
-        Panel57.ResumeLayout(False)
+        Panel58.PerformLayout()
         Panel3.ResumeLayout(False)
         TabPage参数面板.ResumeLayout(False)
         TabPage媒体信息.ResumeLayout(False)
@@ -3328,7 +3196,7 @@ Partial Class Form1
     End Sub
     Friend WithEvents UiTabControlMenu1 As Sunny.UI.UITabControlMenu
     Friend WithEvents TabPage编码队列 As TabPage
-    Friend WithEvents TabPage添加文件 As TabPage
+    Friend WithEvents TabPage准备文件 As TabPage
     Friend WithEvents Panel1 As Panel
     Friend WithEvents Label预计剩余 As Label
     Friend WithEvents Label比特率 As Label
@@ -3365,11 +3233,8 @@ Partial Class Form1
     Friend WithEvents Panel58 As Panel
     Friend WithEvents ListView2 As ListView
     Friend WithEvents ColumnHeader9 As ColumnHeader
-    Friend WithEvents Panel57 As Panel
-    Friend WithEvents Label100 As Label
     Friend WithEvents Label19 As Label
     Friend WithEvents UiButton14 As Sunny.UI.UIButton
-    Friend WithEvents UiComboBox输出目录 As Sunny.UI.UIComboBox
     Friend WithEvents UiButton重置任务 As Sunny.UI.UIButton
     Friend WithEvents TabPage起始页面 As TabPage
     Friend WithEvents Panel44 As Panel
@@ -3411,9 +3276,6 @@ Partial Class Form1
     Friend WithEvents Labelffmpeg实时信息 As Label
     Friend WithEvents Panel36 As Panel
     Friend WithEvents LinkLabel向ffmpeg发送消息 As LinkLabel
-    Friend WithEvents UiTextBox输出容器 As Sunny.UI.UITextBox
-    Friend WithEvents UiButton选择容器 As Sunny.UI.UIButton
-    Friend WithEvents Label那个神奇的视觉标签 As Label
     Friend WithEvents RichTextBox1 As RichTextBox
     Friend WithEvents TabPage软件设置 As TabPage
     Friend WithEvents Label130 As Label
@@ -3518,5 +3380,6 @@ Partial Class Form1
     Friend WithEvents Panel19 As Panel
     Friend WithEvents UiComboBox混淆任务名称 As Sunny.UI.UIComboBox
     Friend WithEvents Label1 As Label
+    Friend WithEvents Label2 As Label
 
 End Class

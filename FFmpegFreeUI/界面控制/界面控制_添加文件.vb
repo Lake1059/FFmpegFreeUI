@@ -3,14 +3,14 @@ Imports Microsoft.WindowsAPICodePack.Dialogs
 Public Class 界面控制_添加文件
 
     Public Shared Sub 加入编码队列()
-        If Form1.UiTextBox输出容器.Text = "" Then
+        If Form1.常规流程参数页面.UiTextBox输出容器.Text = "" Then
             软件内对话框.显示对话框("输出容器未填写", $"没有选择或填写输出容器！{vbCrLf & vbCrLf}如果设定了自动加载预设请先点开参数页面检查", New Dictionary(Of String, Action) From {{"了解", Nothing}}, 软件内对话框.主题类型.错误)
             Exit Sub
         End If
-        Select Case Form1.UiComboBox输出目录.SelectedIndex
+        Select Case Form1.常规流程参数页面.UiComboBox输出目录.SelectedIndex
             Case 0
             Case Else
-                If Not FileIO.FileSystem.DirectoryExists(Form1.UiComboBox输出目录.Text.Trim) Then
+                If Not FileIO.FileSystem.DirectoryExists(Form1.常规流程参数页面.UiComboBox输出目录.Text.Trim) Then
                     软件内对话框.显示对话框("输出位置错误", $"自定义输出目录不存在！", New Dictionary(Of String, Action) From {{"了解", Nothing}}, 软件内对话框.主题类型.错误)
                     Exit Sub
                 End If
@@ -27,10 +27,10 @@ Public Class 界面控制_添加文件
         For Each item As ListViewItem In Form1.ListView2.Items
             Dim m As New 编码任务.单片任务 With {.输入文件 = item.Text, .预设数据 = a}
 
-            Select Case Form1.UiComboBox输出目录.Text.Trim
-                Case Form1.UiComboBox输出目录.Items(0).Trim
+            Select Case Form1.常规流程参数页面.UiComboBox输出目录.Text.Trim
+                Case Form1.常规流程参数页面.UiComboBox输出目录.Items(0).Trim
                 Case Else
-                    m.自定义输出位置 = Form1.UiComboBox输出目录.Text.Trim
+                    m.自定义输出位置 = Form1.常规流程参数页面.UiComboBox输出目录.Text.Trim
             End Select
             Dim i2 As New ListViewItem(IO.Path.GetFileName(item.Text))
             If 用户设置.实例对象.混淆任务名称 = 1 Then i2.Text = 混淆字符_喵(i2.Text)
@@ -44,14 +44,14 @@ Public Class 界面控制_添加文件
         Task.Run(AddressOf 编码任务.检查是否有可以开始的任务)
     End Sub
     Public Shared Sub 加入编码队列(拖入的文件 As String())
-        If Form1.UiTextBox输出容器.Text = "" Then
+        If Form1.常规流程参数页面.UiTextBox输出容器.Text = "" Then
             软件内对话框.显示对话框("输出容器未填写", $"没有选择或填写输出容器！{vbCrLf & vbCrLf}如果设定了自动加载预设请先点开参数页面检查", New Dictionary(Of String, Action) From {{"了解", Nothing}}, 软件内对话框.主题类型.错误)
             Exit Sub
         End If
-        Select Case Form1.UiComboBox输出目录.SelectedIndex
+        Select Case Form1.常规流程参数页面.UiComboBox输出目录.SelectedIndex
             Case 0
             Case Else
-                If Not FileIO.FileSystem.DirectoryExists(Form1.UiComboBox输出目录.Text.Trim) Then
+                If Not FileIO.FileSystem.DirectoryExists(Form1.常规流程参数页面.UiComboBox输出目录.Text.Trim) Then
                     软件内对话框.显示对话框("输出位置错误", $"自定义输出目录不存在！", New Dictionary(Of String, Action) From {{"了解", Nothing}}, 软件内对话框.主题类型.错误)
                     Exit Sub
                 End If
@@ -66,10 +66,10 @@ Public Class 界面控制_添加文件
             Dim m As New 编码任务.单片任务 With {.输入文件 = item, .预设数据 = a}
             If 用户设置.实例对象.转译模式 Then m.输入文件 = 转译模式处理路径(item)
 
-            Select Case Form1.UiComboBox输出目录.Text.Trim
-                Case Form1.UiComboBox输出目录.Items(0).Trim
+            Select Case Form1.常规流程参数页面.UiComboBox输出目录.Text.Trim
+                Case Form1.常规流程参数页面.UiComboBox输出目录.Items(0).Trim
                 Case Else
-                    m.自定义输出位置 = Form1.UiComboBox输出目录.Text.Trim
+                    m.自定义输出位置 = Form1.常规流程参数页面.UiComboBox输出目录.Text.Trim
             End Select
             Dim i2 As New ListViewItem(IO.Path.GetFileName(item))
             If 用户设置.实例对象.混淆任务名称 = 1 Then i2.Text = 混淆字符_喵(i2.Text)
@@ -146,19 +146,6 @@ Public Class 界面控制_添加文件
         Form1.ListView2.Items.Clear()
     End Sub
 
-    Public Shared Sub 选择输出目录()
-        If Form1.UiComboBox输出目录.SelectedIndex = 1 Then
-            Dim dialog As New CommonOpenFileDialog With {.IsFolderPicker = True}
-            If dialog.ShowDialog() = CommonFileDialogResult.Ok Then
-                If 用户设置.实例对象.转译模式 Then
-                    Form1.UiComboBox输出目录.Text = "  " & 转译模式处理路径(dialog.FileName)
-                Else
-                    Form1.UiComboBox输出目录.Text = "  " & dialog.FileName
-                End If
-            Else
-                Form1.UiComboBox输出目录.SelectedIndex = 0
-            End If
-        End If
-    End Sub
+
 
 End Class

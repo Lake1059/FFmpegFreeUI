@@ -3,11 +3,11 @@ Imports System.Text.Json
 Imports Sunny.UI
 Public Class 预设管理
     Public Shared Sub 显示预设(a As 预设数据类型)
-        Form1.UiTextBox输出容器.Text = a.输出容器
+        Form1.常规流程参数页面.UiTextBox输出容器.Text = a.输出容器
         If a.计算机名称 = Environment.MachineName AndAlso FileIO.FileSystem.DirectoryExists(a.输出位置) Then
-            Form1.UiComboBox输出目录.Text = "  " & a.输出位置
+            Form1.常规流程参数页面.UiComboBox输出目录.Text = "  " & a.输出位置
         Else
-            Form1.UiComboBox输出目录.SelectedIndex = 0
+            Form1.常规流程参数页面.UiComboBox输出目录.SelectedIndex = 0
         End If
 
         Form1.常规流程参数页面.UiSwitch使用自动命名.Active = a.输出命名_使用自动命名
@@ -219,10 +219,10 @@ Public Class 预设管理
     Shared ReadOnly separator As String() = {","}
 
     Public Shared Sub 储存预设(ByRef a As 预设数据类型)
-        a.输出容器 = Form1.UiTextBox输出容器.Text
-        If Form1.常规流程参数页面.UiCheckBox额外保存信息.Checked AndAlso FileIO.FileSystem.DirectoryExists(Form1.UiComboBox输出目录.Text.Trim) Then
+        a.输出容器 = Form1.常规流程参数页面.UiTextBox输出容器.Text
+        If Form1.常规流程参数页面.UiCheckBox额外保存信息.Checked AndAlso FileIO.FileSystem.DirectoryExists(Form1.常规流程参数页面.UiComboBox输出目录.Text.Trim) Then
             a.计算机名称 = Environment.MachineName
-            a.输出位置 = Form1.UiComboBox输出目录.Text.Trim
+            a.输出位置 = Form1.常规流程参数页面.UiComboBox输出目录.Text.Trim
         End If
 
         a.输出命名_使用自动命名 = Form1.常规流程参数页面.UiSwitch使用自动命名.Active
@@ -461,8 +461,8 @@ Public Class 预设管理
     End Sub
 
     Public Shared Sub 重置全部包含在预设中的设置()
-        Form1.UiTextBox输出容器.Text = ""
-        Form1.UiComboBox输出目录.SelectedIndex = 0
+        Form1.常规流程参数页面.UiTextBox输出容器.Text = ""
+        Form1.常规流程参数页面.UiComboBox输出目录.SelectedIndex = 0
 
         Form1.常规流程参数页面.UiSwitch使用自动命名.Active = True
         Form1.常规流程参数页面.UiComboBox自动命名选项.SelectedIndex = 0

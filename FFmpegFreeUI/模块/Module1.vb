@@ -275,7 +275,7 @@ Module Module1
     End Function
 
     Public Sub 校准UiComboBox视觉(c As UIComboBox)
-        c.ItemHeight = 30 * Form1.DPI
+        c.ItemHeight = 28 * Form1.DPI
         c.SymbolSize = 24 * Form1.DPI
         c.ScrollBarHandleWidth = 30 * Form1.DPI
         c.ScrollBarBackColor = Color.FromArgb(64, 64, 64)
