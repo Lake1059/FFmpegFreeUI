@@ -361,4 +361,21 @@ Module Module1
         Catch ex As Exception
         End Try
     End Sub
+
+    Public Sub 设置开机自启动(启用 As Boolean)
+        Try
+            Using key = Microsoft.Win32.Registry.CurrentUser.OpenSubKey("Software\Microsoft\Windows\CurrentVersion\Run", True)
+                If 启用 Then
+                    Dim exePath As String = Application.ExecutablePath
+                    key.SetValue("FFmpegFreeUI", exePath)
+                Else
+                    If key.GetValue("FFmpegFreeUI") IsNot Nothing Then
+                        key.DeleteValue("FFmpegFreeUI", False)
+                    End If
+                End If
+            End Using
+        Catch ex As Exception
+            MsgBox($"设置开机自启动失败：{ex.Message}", MsgBoxStyle.Critical)
+        End Try
+    End Sub
 End Module

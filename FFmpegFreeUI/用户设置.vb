@@ -24,6 +24,7 @@ Public Class 用户设置
         Public Property 最后的预设数据 As New 预设数据类型
         Public Property V2Tips As Boolean = True
         Public Property 自定义视频编码器列表 As New List(Of String)
+        Public Property 开机自启动 As Boolean = False
     End Class
 
     Enum 自动加载预设选项枚举
@@ -70,6 +71,7 @@ Public Class 用户设置
             Form1.UiComboBox自动开始任务.SelectedIndex = 实例对象.自动开始任务选项
             Form1.UiComboBox自动重置参数面板的页面选择.SelectedIndex = 实例对象.自动重置参数面板的页面选择
             Form1.UiComboBox混淆任务名称.SelectedIndex = 实例对象.混淆任务名称
+            Form1.UiCheckBox开机自启动.Checked = 实例对象.开机自启动
 
             Form1.UiTextBoxFFmpeg自定义工作目录.Text = 实例对象.工作目录
             Form1.UiTextBox替代进程的文件名.Text = 实例对象.替代进程文件名

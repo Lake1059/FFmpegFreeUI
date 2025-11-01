@@ -203,6 +203,9 @@ Partial Class Form1
         Panel40 = New Panel()
         Label34 = New Label()
         UiComboBox自动开始最大任务数量 = New Sunny.UI.UIComboBox()
+        Panel47 = New Panel()
+        UiCheckBox开机自启动 = New Sunny.UI.UICheckBox()
+        Label51 = New Label()
         Panel39 = New Panel()
         UiTextBox快捷输入CPU核心 = New Sunny.UI.UITextBox()
         Label106 = New Label()
@@ -2365,6 +2368,8 @@ Partial Class Form1
         TabPage软件设置.Controls.Add(Panel14)
         TabPage软件设置.Controls.Add(Panel11)
         TabPage软件设置.Controls.Add(Panel40)
+        TabPage软件设置.Controls.Add(Panel47)
+        TabPage软件设置.Controls.Add(Label51)
         TabPage软件设置.Controls.Add(Panel39)
         TabPage软件设置.Controls.Add(Label48)
         TabPage软件设置.Controls.Add(Label39)
@@ -3015,13 +3020,50 @@ Partial Class Form1
         UiComboBox自动开始最大任务数量.TextAlignment = ContentAlignment.MiddleLeft
         UiComboBox自动开始最大任务数量.Watermark = ""
         ' 
+        ' Panel47
+        ' 
+        Panel47.Controls.Add(UiCheckBox开机自启动)
+        Panel47.Dock = DockStyle.Top
+        Panel47.Location = New Point(0, 178)
+        Panel47.Name = "Panel47"
+        Panel47.Padding = New Padding(17, 10, 20, 0)
+        Panel47.Size = New Size(1016, 40)
+        Panel47.TabIndex = 17
+        ' 
+        ' UiCheckBox开机自启动
+        ' 
+        UiCheckBox开机自启动.CheckBoxColor = Color.Silver
+        UiCheckBox开机自启动.CheckBoxSize = 20
+        UiCheckBox开机自启动.Dock = DockStyle.Top
+        UiCheckBox开机自启动.Font = New Font("微软雅黑", 10F)
+        UiCheckBox开机自启动.ForeColor = Color.Silver
+        UiCheckBox开机自启动.Location = New Point(17, 10)
+        UiCheckBox开机自启动.MinimumSize = New Size(1, 1)
+        UiCheckBox开机自启动.Name = "UiCheckBox开机自启动"
+        UiCheckBox开机自启动.Size = New Size(979, 30)
+        UiCheckBox开机自启动.TabIndex = 115
+        UiCheckBox开机自启动.Text = "开机自启动"
+        ' 
+        ' Label51
+        ' 
+        Label51.AutoSize = True
+        Label51.Dock = DockStyle.Top
+        Label51.Font = New Font("微软雅黑", 10F)
+        Label51.ForeColor = Color.Gray
+        Label51.Location = New Point(0, 148)
+        Label51.Name = "Label51"
+        Label51.Padding = New Padding(16, 10, 0, 0)
+        Label51.Size = New Size(165, 30)
+        Label51.TabIndex = 135
+        Label51.Text = "开机时自动启动此程序"
+        ' 
         ' Panel39
         ' 
         Panel39.Controls.Add(UiTextBox快捷输入CPU核心)
         Panel39.Controls.Add(Label106)
         Panel39.Controls.Add(UiTextBox处理器核心)
         Panel39.Dock = DockStyle.Top
-        Panel39.Location = New Point(0, 218)
+        Panel39.Location = New Point(0, 108)
         Panel39.Name = "Panel39"
         Panel39.Padding = New Padding(21, 10, 20, 0)
         Panel39.Size = New Size(1016, 40)
@@ -3418,6 +3460,9 @@ Partial Class Form1
     Friend WithEvents TabPage软件设置 As TabPage
     Friend WithEvents Label130 As Label
     Friend WithEvents Panel40 As Panel
+    Friend WithEvents Panel47 As Panel
+    Friend WithEvents UiCheckBox开机自启动 As Sunny.UI.UICheckBox
+    Friend WithEvents Label51 As Label
     Friend WithEvents Panel39 As Panel
     Friend WithEvents UiTextBox快捷输入CPU核心 As Sunny.UI.UITextBox
     Friend WithEvents Label106 As Label

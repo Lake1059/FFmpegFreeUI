@@ -158,6 +158,7 @@ Public Class 界面控制
                 校准UiComboBox视觉(Form1.UiComboBox自动重置参数面板的页面选择)
                 校准UiComboBox视觉(Form1.UiComboBox混淆任务名称)
                 Form1.UiCheckBox转译模式.CheckBoxSize = 20 * Form1.DPI
+                Form1.UiCheckBox开机自启动.CheckBoxSize = 20 * Form1.DPI
 
         End Select
     End Sub
@@ -237,6 +238,10 @@ Public Class 界面控制
         AddHandler Form1.UiComboBox自动开始任务.SelectedIndexChanged, Sub() 用户设置.实例对象.自动开始任务选项 = Form1.UiComboBox自动开始任务.SelectedIndex
         AddHandler Form1.UiComboBox自动重置参数面板的页面选择.SelectedIndexChanged, Sub() 用户设置.实例对象.自动重置参数面板的页面选择 = Form1.UiComboBox自动重置参数面板的页面选择.SelectedIndex
         AddHandler Form1.UiComboBox混淆任务名称.SelectedIndexChanged, Sub() 用户设置.实例对象.混淆任务名称 = Form1.UiComboBox混淆任务名称.SelectedIndex
+        AddHandler Form1.UiCheckBox开机自启动.Click, Sub()
+                                                        用户设置.实例对象.开机自启动 = Form1.UiCheckBox开机自启动.Checked
+                                                        设置开机自启动(Form1.UiCheckBox开机自启动.Checked)
+                                                    End Sub
 
         AddHandler Form1.UiTextBoxFFmpeg自定义工作目录.TextChanged, Sub() 用户设置.实例对象.工作目录 = Form1.UiTextBoxFFmpeg自定义工作目录.Text
         AddHandler Form1.UiButton13.Click, Sub()
