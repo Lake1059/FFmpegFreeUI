@@ -361,4 +361,31 @@ Module Module1
         Catch ex As Exception
         End Try
     End Sub
+
+    Public Function 扫描单层文件(文件夹路径 As String, 扩展名 As String) As List(Of String)
+        Dim a As New List(Of String)
+        Dim mFileInfo As System.IO.FileInfo
+        Dim mDirInfo As New System.IO.DirectoryInfo(文件夹路径)
+        For Each mFileInfo In mDirInfo.GetFiles(扩展名)
+            a.Add(mFileInfo.FullName)
+        Next
+        Return a
+    End Function
+
+    Public Sub 在RTF输出文本(RTF As System.Windows.Forms.RichTextBox, 文本 As String, 颜色 As Color)
+        If String.IsNullOrEmpty(文本) Then Exit Sub
+        Dim 文本长度 = Len(文本)
+        If RTF.TextLength > 0 Then
+            RTF.AppendText(vbCrLf & 文本)
+        Else
+            RTF.AppendText(文本)
+        End If
+        Dim 添加起始位 As Integer = RTF.TextLength - 文本长度
+        RTF.Select(添加起始位, 文本长度)
+        RTF.SelectionColor = 颜色
+        RTF.Select(RTF.TextLength, 0)
+    End Sub
+
+
+
 End Module

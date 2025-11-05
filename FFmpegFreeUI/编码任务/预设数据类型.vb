@@ -9,6 +9,9 @@ Public Class 预设数据类型
     Public Property 输出命名_开头文本 As String = ""
     Public Property 输出命名_替代文本 As String = ""
     Public Property 输出命名_结尾文本 As String = ""
+    Public Property 输出命名_保留创建时间 As Boolean = False
+    Public Property 输出命名_保留修改时间 As Boolean = False
+    Public Property 输出命名_保留访问时间 As Boolean = False
 
     Public Property 解码参数_解码器 As String = ""
     Public Property 解码参数_CPU解码线程数 As String = ""

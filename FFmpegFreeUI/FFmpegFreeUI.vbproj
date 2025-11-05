@@ -14,7 +14,7 @@
 	  <EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
 	  <Authors>1059 Studio</Authors>
 	  <Company>1059 Studio</Company>
-	  <Version>3.0.0-beta1</Version>
+	  <Version>3.0.0-beta2</Version>
 	  <SupportedOSPlatformVersion>10.0.17763.0</SupportedOSPlatformVersion>
 	  <ApplicationIcon>ico.ico</ApplicationIcon>
 	  <ApplicationManifest>My Project\app.manifest</ApplicationManifest>

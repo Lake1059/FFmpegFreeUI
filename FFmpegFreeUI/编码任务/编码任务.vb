@@ -343,12 +343,12 @@ jx1:
                 End If
 
                 If 输出文件 <> "" AndAlso 输入文件 <> "" Then
-                    If 保留创建时间 Then File.SetCreationTime(输出文件, File.GetCreationTime(输入文件))
-                    If 保留修改时间 Then File.SetLastWriteTime(输出文件, File.GetLastWriteTime(输入文件))
-                    If 保留访问时间 Then File.SetLastAccessTime(输出文件, File.GetLastAccessTime(输入文件))
+                    If 保留创建时间 OrElse 预设数据.输出命名_保留创建时间 Then File.SetCreationTime(输出文件, File.GetCreationTime(输入文件))
+                    If 保留修改时间 OrElse 预设数据.输出命名_保留修改时间 Then File.SetLastWriteTime(输出文件, File.GetLastWriteTime(输入文件))
+                    If 保留访问时间 OrElse 预设数据.输出命名_保留访问时间 Then File.SetLastAccessTime(输出文件, File.GetLastAccessTime(输入文件))
                 End If
 
-            Else
+                Else
                 全部任务已完成是否有错误 = True
                 If Not 手动停止不要尝试启动其他任务 Then 状态 = 编码状态.错误
                 If FileIO.FileSystem.FileExists(输出文件) Then
@@ -603,14 +603,7 @@ jx1:
                 Case 0 : 文件名 &= $"_{Now:yyyy.MM.dd-HH.mm.ss}"
                 Case 1 : 文件名 &= $"~1"
                 Case 2 : 文件名 &= $"_3fui"
-                Case 3 : 文件名 &= $"_conver"
-                Case 4 : 文件名 &= $"_{随机字符串生成(8, True, False, False)}"
-                Case 5 : 文件名 &= $"_{随机字符串生成(16, True, False, False)}"
-                Case 6 : 文件名 &= $"_{随机字符串生成(8, False, False, True)}"
-                Case 7 : 文件名 &= $"_{随机字符串生成(16, False, False, True)}"
-                Case 8 : 文件名 &= $"_{随机字符串生成(8, True, False, True)}"
-                Case 9 : 文件名 &= $"_{随机字符串生成(16, True, False, True)}"
-                Case 10
+                Case 3
                     If 预设数据.视频参数_编码器_具体编码 <> "" Then 文件名 &= $".{预设数据.视频参数_编码器_具体编码}"
                     If 预设数据.视频参数_编码器_编码预设 <> "" Then 文件名 &= $".{预设数据.视频参数_编码器_编码预设}"
                     If 预设数据.视频参数_质量控制_参数名 <> "" AndAlso 预设数据.视频参数_质量控制_值 <> "" Then
@@ -621,6 +614,12 @@ jx1:
                     If 预设数据.视频参数_比特率_最低值 <> "" Then 文件名 &= $".L{预设数据.视频参数_比特率_最低值}"
                     If 预设数据.视频参数_比特率_最高值 <> "" Then 文件名 &= $".H{预设数据.视频参数_比特率_最高值}"
                     If 预设数据.视频参数_比特率_缓冲区 <> "" Then 文件名 &= $".BF{预设数据.视频参数_比特率_缓冲区}"
+                Case 4 : 文件名 &= $"_{随机字符串生成(8, True, False, False)}"
+                Case 5 : 文件名 &= $"_{随机字符串生成(16, True, False, False)}"
+                Case 6 : 文件名 &= $"_{随机字符串生成(8, False, False, True)}"
+                Case 7 : 文件名 &= $"_{随机字符串生成(16, False, False, True)}"
+                Case 8 : 文件名 &= $"_{随机字符串生成(8, True, False, True)}"
+                Case 9 : 文件名 &= $"_{随机字符串生成(16, True, False, True)}"
             End Select
         End If
         文件名 &= 容器

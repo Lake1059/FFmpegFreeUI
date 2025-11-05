@@ -1,269 +1,274 @@
 ﻿Imports System.IO
-Imports System.Text.Json
 Imports Sunny.UI
 Public Class 预设管理
-    Public Shared Sub 显示预设(a As 预设数据类型)
-        Form1.常规流程参数页面.UiTextBox输出容器.Text = a.输出容器
+    Public Shared Sub 显示预设(a As 预设数据类型, ui As 界面_常规流程参数_V2)
+        ui.UiTextBox输出容器.Text = a.输出容器
         If a.计算机名称 = Environment.MachineName AndAlso FileIO.FileSystem.DirectoryExists(a.输出位置) Then
-            Form1.常规流程参数页面.UiComboBox输出目录.Text = "  " & a.输出位置
+            ui.UiComboBox输出目录.Text = "  " & a.输出位置
         Else
-            Form1.常规流程参数页面.UiComboBox输出目录.SelectedIndex = 0
+            ui.UiComboBox输出目录.SelectedIndex = 0
         End If
 
-        Form1.常规流程参数页面.UiSwitch使用自动命名.Active = a.输出命名_使用自动命名
-        Form1.常规流程参数页面.UiComboBox自动命名选项.SelectedIndex = a.输出命名_自动命名选项
-        Form1.常规流程参数页面.UiSwitch不使用输出文件参数.Active = a.输出命名_不使用输出文件参数
-        Form1.常规流程参数页面.UiTextBox开头文本.Text = a.输出命名_开头文本
-        Form1.常规流程参数页面.UiTextBox替代文本.Text = a.输出命名_替代文本
-        Form1.常规流程参数页面.UiTextBox结尾文本.Text = a.输出命名_结尾文本
+        ui.UiSwitch使用自动命名.Active = a.输出命名_使用自动命名
+        ui.UiComboBox自动命名选项.SelectedIndex = a.输出命名_自动命名选项
+        ui.UiSwitch不使用输出文件参数.Active = a.输出命名_不使用输出文件参数
+        ui.UiTextBox开头文本.Text = a.输出命名_开头文本
+        ui.UiTextBox替代文本.Text = a.输出命名_替代文本
+        ui.UiTextBox结尾文本.Text = a.输出命名_结尾文本
+        ui.UiCheckBox保留创建时间.Checked = a.输出命名_保留创建时间
+        ui.UiCheckBox保留修改时间.Checked = a.输出命名_保留修改时间
+        ui.UiCheckBox保留访问时间.Checked = a.输出命名_保留访问时间
 
-        Form1.常规流程参数页面.UiComboBox解码器.Text = a.解码参数_解码器
-        Form1.常规流程参数页面.UiTextBoxCPU解码线程数.Text = a.解码参数_CPU解码线程数
-        Form1.常规流程参数页面.UiComboBox解码数据格式.Text = a.解码参数_解码数据格式
-        Form1.常规流程参数页面.UiComboBox硬件加速解码参数名.Text = a.解码参数_指定硬件的参数名
-        Form1.常规流程参数页面.UiTextBox硬件加速解码参数.Text = a.解码参数_指定硬件的参数
+        ui.UiComboBox解码器.Text = a.解码参数_解码器
+        ui.UiTextBoxCPU解码线程数.Text = a.解码参数_CPU解码线程数
+        ui.UiComboBox解码数据格式.Text = a.解码参数_解码数据格式
+        ui.UiComboBox硬件加速解码参数名.Text = a.解码参数_指定硬件的参数名
+        ui.UiTextBox硬件加速解码参数.Text = a.解码参数_指定硬件的参数
 
-        Form1.常规流程参数页面.UiComboBox编码类别.Text = a.视频参数_编码器_类别
-        Form1.常规流程参数页面.UiComboBox具体编码.Text = a.视频参数_编码器_具体编码
-        Form1.常规流程参数页面.UiComboBox编码预设.Text = a.视频参数_编码器_编码预设
-        Form1.常规流程参数页面.UiComboBox配置文件.Text = a.视频参数_编码器_配置文件
-        Form1.常规流程参数页面.UiComboBox场景优化.Text = a.视频参数_编码器_场景优化
-        Form1.常规流程参数页面.UiTextBoxgpu.Text = a.视频参数_编码器_gpu
-        Form1.常规流程参数页面.UiTextBoxthreads.Text = a.视频参数_编码器_threads
+        ui.UiComboBox编码类别.Text = a.视频参数_编码器_类别
+        ui.UiComboBox具体编码.Text = a.视频参数_编码器_具体编码
+        ui.UiComboBox编码预设.Text = a.视频参数_编码器_编码预设
+        ui.UiComboBox配置文件.Text = a.视频参数_编码器_配置文件
+        ui.UiComboBox场景优化.Text = a.视频参数_编码器_场景优化
+        ui.UiTextBoxgpu.Text = a.视频参数_编码器_gpu
+        ui.UiTextBoxthreads.Text = a.视频参数_编码器_threads
 
-        Form1.常规流程参数页面.UiComboBox分辨率.Text = a.视频参数_分辨率
-        Form1.常规流程参数页面.UiTextBox分辨率自动计算宽度.Text = a.视频参数_分辨率自动计算_宽度
-        Form1.常规流程参数页面.UiTextBox分辨率自动计算高度.Text = a.视频参数_分辨率自动计算_高度
-        Form1.常规流程参数页面.UiTextBox画面裁剪滤镜参数.Text = a.视频参数_分辨率_裁剪滤镜参数
-        Form1.常规流程参数页面.UiComboBox帧速率.Text = a.视频参数_帧速率
-        Form1.常规流程参数页面.UiTextBox抽帧最大变化比例.Text = a.视频参数_帧速率_抽帧最大变化比例
+        ui.UiComboBox分辨率.Text = a.视频参数_分辨率
+        ui.UiTextBox分辨率自动计算宽度.Text = a.视频参数_分辨率自动计算_宽度
+        ui.UiTextBox分辨率自动计算高度.Text = a.视频参数_分辨率自动计算_高度
+        ui.UiTextBox画面裁剪滤镜参数.Text = a.视频参数_分辨率_裁剪滤镜参数
+        ui.UiComboBox帧速率.Text = a.视频参数_帧速率
+        ui.UiTextBox抽帧最大变化比例.Text = a.视频参数_帧速率_抽帧最大变化比例
 
-        Form插帧.UiTextBox要补到多少帧.Text = a.视频参数_插帧_目标帧率
+        ui.插帧页面.UiTextBox要补到多少帧.Text = a.视频参数_插帧_目标帧率
         Select Case a.视频参数_插帧_插帧模式
-            Case "dup" : Form插帧.UiComboBox插帧模式.SelectedIndex = 1
-            Case "blend" : Form插帧.UiComboBox插帧模式.SelectedIndex = 2
-            Case "mci" : Form插帧.UiComboBox插帧模式.SelectedIndex = 3
+            Case "dup" : ui.插帧页面.UiComboBox插帧模式.SelectedIndex = 1
+            Case "blend" : ui.插帧页面.UiComboBox插帧模式.SelectedIndex = 2
+            Case "mci" : ui.插帧页面.UiComboBox插帧模式.SelectedIndex = 3
         End Select
         Select Case a.视频参数_插帧_运动估计模式
-            Case "bidir" : Form插帧.UiComboBox运动估计模式.SelectedIndex = 1
-            Case "bilat" : Form插帧.UiComboBox运动估计模式.SelectedIndex = 2
+            Case "bidir" : ui.插帧页面.UiComboBox运动估计模式.SelectedIndex = 1
+            Case "bilat" : ui.插帧页面.UiComboBox运动估计模式.SelectedIndex = 2
         End Select
         Select Case a.视频参数_插帧_运动估计算法
-            Case "esa" : Form插帧.UiComboBox运动估计算法.SelectedIndex = 1
-            Case "tss" : Form插帧.UiComboBox运动估计算法.SelectedIndex = 2
-            Case "tdls" : Form插帧.UiComboBox运动估计算法.SelectedIndex = 3
-            Case "ntss" : Form插帧.UiComboBox运动估计算法.SelectedIndex = 4
-            Case "fss" : Form插帧.UiComboBox运动估计算法.SelectedIndex = 5
-            Case "ds" : Form插帧.UiComboBox运动估计算法.SelectedIndex = 6
-            Case "hexbs" : Form插帧.UiComboBox运动估计算法.SelectedIndex = 7
-            Case "epzs" : Form插帧.UiComboBox运动估计算法.SelectedIndex = 8
-            Case "umh" : Form插帧.UiComboBox运动估计算法.SelectedIndex = 9
+            Case "esa" : ui.插帧页面.UiComboBox运动估计算法.SelectedIndex = 1
+            Case "tss" : ui.插帧页面.UiComboBox运动估计算法.SelectedIndex = 2
+            Case "tdls" : ui.插帧页面.UiComboBox运动估计算法.SelectedIndex = 3
+            Case "ntss" : ui.插帧页面.UiComboBox运动估计算法.SelectedIndex = 4
+            Case "fss" : ui.插帧页面.UiComboBox运动估计算法.SelectedIndex = 5
+            Case "ds" : ui.插帧页面.UiComboBox运动估计算法.SelectedIndex = 6
+            Case "hexbs" : ui.插帧页面.UiComboBox运动估计算法.SelectedIndex = 7
+            Case "epzs" : ui.插帧页面.UiComboBox运动估计算法.SelectedIndex = 8
+            Case "umh" : ui.插帧页面.UiComboBox运动估计算法.SelectedIndex = 9
         End Select
         Select Case a.视频参数_插帧_运动补偿模式
-            Case "obmc" : Form插帧.UiComboBox运动补偿模式.SelectedIndex = 1
-            Case "aobmc" : Form插帧.UiComboBox运动补偿模式.SelectedIndex = 2
+            Case "obmc" : ui.插帧页面.UiComboBox运动补偿模式.SelectedIndex = 1
+            Case "aobmc" : ui.插帧页面.UiComboBox运动补偿模式.SelectedIndex = 2
         End Select
-        Form插帧.UiCheckBox可变块大小的运动补偿.Checked = a.视频参数_插帧_可变块大小的运动补偿
-        Form插帧.UiTextBox块大小.Text = a.视频参数_插帧_块大小
-        Form插帧.UiTextBox搜索范围.Text = a.视频参数_插帧_搜索范围
-        Form插帧.UiTextBox场景变化检测强度.Text = a.视频参数_插帧_场景变化检测强度
+        ui.插帧页面.UiCheckBox可变块大小的运动补偿.Checked = a.视频参数_插帧_可变块大小的运动补偿
+        ui.插帧页面.UiTextBox块大小.Text = a.视频参数_插帧_块大小
+        ui.插帧页面.UiTextBox搜索范围.Text = a.视频参数_插帧_搜索范围
+        ui.插帧页面.UiTextBox场景变化检测强度.Text = a.视频参数_插帧_场景变化检测强度
 
-        Form帧混合.UiTextBox降低帧率.Text = a.视频参数_帧混合_指定帧率
+        ui.动态模糊页面.UiTextBox降低帧率.Text = a.视频参数_帧混合_指定帧率
         Select Case a.视频参数_帧混合_混合模式
-            Case "average" : Form帧混合.UiComboBox混合算法.SelectedIndex = 1
-            Case "difference" : Form帧混合.UiComboBox混合算法.SelectedIndex = 2
-            Case "and" : Form帧混合.UiComboBox混合算法.SelectedIndex = 3
-            Case "or" : Form帧混合.UiComboBox混合算法.SelectedIndex = 4
-            Case "xor" : Form帧混合.UiComboBox混合算法.SelectedIndex = 5
-            Case "add" : Form帧混合.UiComboBox混合算法.SelectedIndex = 6
-            Case "multiply" : Form帧混合.UiComboBox混合算法.SelectedIndex = 7
+            Case "average" : ui.动态模糊页面.UiComboBox混合算法.SelectedIndex = 1
+            Case "difference" : ui.动态模糊页面.UiComboBox混合算法.SelectedIndex = 2
+            Case "and" : ui.动态模糊页面.UiComboBox混合算法.SelectedIndex = 3
+            Case "or" : ui.动态模糊页面.UiComboBox混合算法.SelectedIndex = 4
+            Case "xor" : ui.动态模糊页面.UiComboBox混合算法.SelectedIndex = 5
+            Case "add" : ui.动态模糊页面.UiComboBox混合算法.SelectedIndex = 6
+            Case "multiply" : ui.动态模糊页面.UiComboBox混合算法.SelectedIndex = 7
         End Select
-        Form帧混合.UiTextBox混合比例.Text = a.视频参数_帧混合_混合比例
+        ui.动态模糊页面.UiTextBox混合比例.Text = a.视频参数_帧混合_混合比例
 
         Select Case a.视频参数_比特率_控制方式
-            Case "CRF" : Form1.常规流程参数页面.UiComboBox全局质量控制方式.SelectedIndex = 1
-            Case "VBR" : Form1.常规流程参数页面.UiComboBox全局质量控制方式.SelectedIndex = 2
-            Case "VBR HQ" : Form1.常规流程参数页面.UiComboBox全局质量控制方式.SelectedIndex = 3
-            Case "CQP" : Form1.常规流程参数页面.UiComboBox全局质量控制方式.SelectedIndex = 4
-            Case "CBR" : Form1.常规流程参数页面.UiComboBox全局质量控制方式.SelectedIndex = 5
+            Case "CRF" : ui.UiComboBox全局质量控制方式.SelectedIndex = 1
+            Case "VBR" : ui.UiComboBox全局质量控制方式.SelectedIndex = 2
+            Case "VBR HQ" : ui.UiComboBox全局质量控制方式.SelectedIndex = 3
+            Case "CQP" : ui.UiComboBox全局质量控制方式.SelectedIndex = 4
+            Case "CBR" : ui.UiComboBox全局质量控制方式.SelectedIndex = 5
         End Select
         Select Case a.视频参数_质量控制_参数名
-            Case "crf" : Form1.常规流程参数页面.UiComboBox全局质量控制参数.SelectedIndex = 1
-            Case "cq" : Form1.常规流程参数页面.UiComboBox全局质量控制参数.SelectedIndex = 2
-            Case "qp" : Form1.常规流程参数页面.UiComboBox全局质量控制参数.SelectedIndex = 3
-            Case "global_quality" : Form1.常规流程参数页面.UiComboBox全局质量控制参数.SelectedIndex = 4
+            Case "crf" : ui.UiComboBox全局质量控制参数.SelectedIndex = 1
+            Case "cq" : ui.UiComboBox全局质量控制参数.SelectedIndex = 2
+            Case "qp" : ui.UiComboBox全局质量控制参数.SelectedIndex = 3
+            Case "global_quality" : ui.UiComboBox全局质量控制参数.SelectedIndex = 4
         End Select
-        Form1.常规流程参数页面.UiTextBox全局质量控制值.Text = a.视频参数_质量控制_值
-        Form1.常规流程参数页面.UiTextBox基础比特率.Text = a.视频参数_比特率_基础
-        Form1.常规流程参数页面.UiTextBox最低比特率.Text = a.视频参数_比特率_最低值
-        Form1.常规流程参数页面.UiTextBox最高比特率.Text = a.视频参数_比特率_最高值
-        Form1.常规流程参数页面.UiTextBox比特率缓冲区.Text = a.视频参数_比特率_缓冲区
-        Form1.常规流程参数页面.清除全部进阶质量控制()
+        ui.UiTextBox全局质量控制值.Text = a.视频参数_质量控制_值
+        ui.UiTextBox基础比特率.Text = a.视频参数_比特率_基础
+        ui.UiTextBox最低比特率.Text = a.视频参数_比特率_最低值
+        ui.UiTextBox最高比特率.Text = a.视频参数_比特率_最高值
+        ui.UiTextBox比特率缓冲区.Text = a.视频参数_比特率_缓冲区
+        ui.清除全部进阶质量控制()
         For Each c In a.视频参数_质量控制_进阶参数集
-            Form1.常规流程参数页面.创建进阶质量控制项(c)
+            ui.创建进阶质量控制项(c)
         Next
 
-        Form1.常规流程参数页面.UiComboBox像素格式.Text = a.视频参数_色彩管理_像素格式
-        Form1.常规流程参数页面.UiComboBox矩阵系数.Text = a.视频参数_色彩管理_矩阵系数
-        Form1.常规流程参数页面.UiComboBox色域.Text = a.视频参数_色彩管理_色域
-        Form1.常规流程参数页面.UiComboBox传输特性.Text = a.视频参数_色彩管理_传输特性
+        ui.UiComboBox像素格式.Text = a.视频参数_色彩管理_像素格式
+        ui.UiComboBox矩阵系数.Text = a.视频参数_色彩管理_矩阵系数
+        ui.UiComboBox色域.Text = a.视频参数_色彩管理_色域
+        ui.UiComboBox传输特性.Text = a.视频参数_色彩管理_传输特性
         Select Case a.视频参数_色彩管理_范围
-            Case "tv" : Form1.常规流程参数页面.UiComboBox色彩范围.SelectedIndex = 1
-            Case "pc" : Form1.常规流程参数页面.UiComboBox色彩范围.SelectedIndex = 2
+            Case "tv" : ui.UiComboBox色彩范围.SelectedIndex = 1
+            Case "pc" : ui.UiComboBox色彩范围.SelectedIndex = 2
         End Select
-        Form1.常规流程参数页面.UiComboBox色彩管理处理方式.SelectedIndex = a.视频参数_色彩管理_处理方式
-        Form1.常规流程参数页面.UiTextBox简易调色亮度.Text = a.视频参数_色彩管理_亮度
-        Form1.常规流程参数页面.UiTextBox简易调色对比度.Text = a.视频参数_色彩管理_对比度
-        Form1.常规流程参数页面.UiTextBox简易调色饱和度.Text = a.视频参数_色彩管理_饱和度
-        Form1.常规流程参数页面.UiTextBox简易调色伽马.Text = a.视频参数_色彩管理_伽马
+        ui.UiComboBox色彩管理处理方式.SelectedIndex = a.视频参数_色彩管理_处理方式
+        ui.UiTextBox简易调色亮度.Text = a.视频参数_色彩管理_亮度
+        ui.UiTextBox简易调色对比度.Text = a.视频参数_色彩管理_对比度
+        ui.UiTextBox简易调色饱和度.Text = a.视频参数_色彩管理_饱和度
+        ui.UiTextBox简易调色伽马.Text = a.视频参数_色彩管理_伽马
 
         Select Case a.视频参数_降噪_方式
-            Case "hqdn3d" : Form1.常规流程参数页面.UiComboBox降噪方式.SelectedIndex = 1
-            Case "nlmeans" : Form1.常规流程参数页面.UiComboBox降噪方式.SelectedIndex = 2
-            Case "atadenoise" : Form1.常规流程参数页面.UiComboBox降噪方式.SelectedIndex = 3
-            Case "bm3d" : Form1.常规流程参数页面.UiComboBox降噪方式.SelectedIndex = 4
-            Case "avs" : Form1.常规流程参数页面.UiComboBox降噪方式.SelectedIndex = 5
-            Case Else : Form1.常规流程参数页面.UiComboBox降噪方式.Text = ""
+            Case "hqdn3d" : ui.UiComboBox降噪方式.SelectedIndex = 1
+            Case "nlmeans" : ui.UiComboBox降噪方式.SelectedIndex = 2
+            Case "atadenoise" : ui.UiComboBox降噪方式.SelectedIndex = 3
+            Case "bm3d" : ui.UiComboBox降噪方式.SelectedIndex = 4
+            Case "avs" : ui.UiComboBox降噪方式.SelectedIndex = 5
+            Case Else : ui.UiComboBox降噪方式.Text = ""
         End Select
-        Form1.常规流程参数页面.UiTextBox降噪参数1.Text = a.视频参数_降噪_参数1
-        Form1.常规流程参数页面.UiTextBox降噪参数2.Text = a.视频参数_降噪_参数2
-        Form1.常规流程参数页面.UiTextBox降噪参数3.Text = a.视频参数_降噪_参数3
-        Form1.常规流程参数页面.UiTextBox降噪参数4.Text = a.视频参数_降噪_参数4
-        Form1.常规流程参数页面.UiTextBox锐化水平尺寸.Text = a.视频参数_锐化_水平尺寸
-        Form1.常规流程参数页面.UiTextBox锐化垂直尺寸.Text = a.视频参数_锐化_垂直尺寸
-        Form1.常规流程参数页面.UiTextBox锐化强度.Text = a.视频参数_锐化_锐化强度
-        Form1.常规流程参数页面.UiComboBox逐行与隔行处理方式.SelectedIndex = a.视频参数_逐行与隔行_操作
-        Form1.常规流程参数页面.UiComboBox角度翻转.SelectedIndex = a.视频参数_画面翻转_角度翻转
-        Form1.常规流程参数页面.UiComboBox镜像翻转.SelectedIndex = a.视频参数_画面翻转_镜像翻转
+        ui.UiTextBox降噪参数1.Text = a.视频参数_降噪_参数1
+        ui.UiTextBox降噪参数2.Text = a.视频参数_降噪_参数2
+        ui.UiTextBox降噪参数3.Text = a.视频参数_降噪_参数3
+        ui.UiTextBox降噪参数4.Text = a.视频参数_降噪_参数4
+        ui.UiTextBox锐化水平尺寸.Text = a.视频参数_锐化_水平尺寸
+        ui.UiTextBox锐化垂直尺寸.Text = a.视频参数_锐化_垂直尺寸
+        ui.UiTextBox锐化强度.Text = a.视频参数_锐化_锐化强度
+        ui.UiComboBox逐行与隔行处理方式.SelectedIndex = a.视频参数_逐行与隔行_操作
+        ui.UiComboBox角度翻转.SelectedIndex = a.视频参数_画面翻转_角度翻转
+        ui.UiComboBox镜像翻转.SelectedIndex = a.视频参数_画面翻转_镜像翻转
 
         Select Case a.音频参数_编码器_具体编码
-            Case "copy" : Form1.常规流程参数页面.UiComboBox音频编码器.SelectedIndex = 1
-            Case "-an" : Form1.常规流程参数页面.UiComboBox音频编码器.SelectedIndex = 2
-            Case "aac" : Form1.常规流程参数页面.UiComboBox音频编码器.SelectedIndex = 3
-            Case "libmp3lame" : Form1.常规流程参数页面.UiComboBox音频编码器.SelectedIndex = 4
-            Case "libopus" : Form1.常规流程参数页面.UiComboBox音频编码器.SelectedIndex = 5
-            Case "flac" : Form1.常规流程参数页面.UiComboBox音频编码器.SelectedIndex = 6
-            Case "alac" : Form1.常规流程参数页面.UiComboBox音频编码器.SelectedIndex = 7
-            Case "pcm_s16le" : Form1.常规流程参数页面.UiComboBox音频编码器.SelectedIndex = 8
-            Case "pcm_s24le" : Form1.常规流程参数页面.UiComboBox音频编码器.SelectedIndex = 9
-            Case "pcm_s32le" : Form1.常规流程参数页面.UiComboBox音频编码器.SelectedIndex = 10
-            Case "pcm_s64le" : Form1.常规流程参数页面.UiComboBox音频编码器.SelectedIndex = 11
-            Case "ac3" : Form1.常规流程参数页面.UiComboBox音频编码器.SelectedIndex = 12
-            Case "eac3" : Form1.常规流程参数页面.UiComboBox音频编码器.SelectedIndex = 13
-            Case "dca" : Form1.常规流程参数页面.UiComboBox音频编码器.SelectedIndex = 14
-            Case "truehd" : Form1.常规流程参数页面.UiComboBox音频编码器.SelectedIndex = 15
-            Case "tta" : Form1.常规流程参数页面.UiComboBox音频编码器.SelectedIndex = 16
-            Case "libvorbis" : Form1.常规流程参数页面.UiComboBox音频编码器.SelectedIndex = 17
-            Case "real_144" : Form1.常规流程参数页面.UiComboBox音频编码器.SelectedIndex = 18
-            Case "wavpack" : Form1.常规流程参数页面.UiComboBox音频编码器.SelectedIndex = 19
-            Case "libtwolame" : Form1.常规流程参数页面.UiComboBox音频编码器.SelectedIndex = 20
-            Case "libopencore_amrnb" : Form1.常规流程参数页面.UiComboBox音频编码器.SelectedIndex = 21
-            Case "libvo_amrwbenc" : Form1.常规流程参数页面.UiComboBox音频编码器.SelectedIndex = 22
-            Case Else : Form1.常规流程参数页面.UiComboBox音频编码器.Text = ""
+            Case "copy" : ui.UiComboBox音频编码器.SelectedIndex = 1
+            Case "-an" : ui.UiComboBox音频编码器.SelectedIndex = 2
+            Case "aac" : ui.UiComboBox音频编码器.SelectedIndex = 3
+            Case "libmp3lame" : ui.UiComboBox音频编码器.SelectedIndex = 4
+            Case "libopus" : ui.UiComboBox音频编码器.SelectedIndex = 5
+            Case "flac" : ui.UiComboBox音频编码器.SelectedIndex = 6
+            Case "alac" : ui.UiComboBox音频编码器.SelectedIndex = 7
+            Case "pcm_s16le" : ui.UiComboBox音频编码器.SelectedIndex = 8
+            Case "pcm_s24le" : ui.UiComboBox音频编码器.SelectedIndex = 9
+            Case "pcm_s32le" : ui.UiComboBox音频编码器.SelectedIndex = 10
+            Case "pcm_s64le" : ui.UiComboBox音频编码器.SelectedIndex = 11
+            Case "ac3" : ui.UiComboBox音频编码器.SelectedIndex = 12
+            Case "eac3" : ui.UiComboBox音频编码器.SelectedIndex = 13
+            Case "dca" : ui.UiComboBox音频编码器.SelectedIndex = 14
+            Case "truehd" : ui.UiComboBox音频编码器.SelectedIndex = 15
+            Case "tta" : ui.UiComboBox音频编码器.SelectedIndex = 16
+            Case "libvorbis" : ui.UiComboBox音频编码器.SelectedIndex = 17
+            Case "real_144" : ui.UiComboBox音频编码器.SelectedIndex = 18
+            Case "wavpack" : ui.UiComboBox音频编码器.SelectedIndex = 19
+            Case "libtwolame" : ui.UiComboBox音频编码器.SelectedIndex = 20
+            Case "libopencore_amrnb" : ui.UiComboBox音频编码器.SelectedIndex = 21
+            Case "libvo_amrwbenc" : ui.UiComboBox音频编码器.SelectedIndex = 22
+            Case Else : ui.UiComboBox音频编码器.Text = ""
         End Select
-        Form1.常规流程参数页面.UiComboBox音频比特率.Text = a.音频参数_比特率
-        Form1.常规流程参数页面.UiComboBox音频质量参数.Text = a.音频参数_质量参数名
-        Form1.常规流程参数页面.UiTextBox音频质量值.Text = a.音频参数_质量值
-        Form1.常规流程参数页面.UiComboBox声道布局.Text = a.音频参数_声道数
-        Form1.常规流程参数页面.UiComboBox采样率.Text = a.音频参数_采样率
-        Form1.常规流程参数页面.UiTextBox响度标准化目标响度.Text = a.音频参数_响度标准化_目标响度
-        Form1.常规流程参数页面.UiTextBox响度标准化动态范围.Text = a.音频参数_响度标准化_动态范围
-        Form1.常规流程参数页面.UiTextBox响度标准化峰值电平.Text = a.音频参数_响度标准化_峰值电平
+        ui.UiComboBox音频比特率.Text = a.音频参数_比特率
+        ui.UiComboBox音频质量参数.Text = a.音频参数_质量参数名
+        ui.UiTextBox音频质量值.Text = a.音频参数_质量值
+        ui.UiComboBox声道布局.Text = a.音频参数_声道数
+        ui.UiComboBox采样率.Text = a.音频参数_采样率
+        ui.UiTextBox响度标准化目标响度.Text = a.音频参数_响度标准化_目标响度
+        ui.UiTextBox响度标准化动态范围.Text = a.音频参数_响度标准化_动态范围
+        ui.UiTextBox响度标准化峰值电平.Text = a.音频参数_响度标准化_峰值电平
 
         Select Case a.图片参数_编码器_编码名称
-            Case "PNG" : Form1.常规流程参数页面.UiComboBox图片编码器.SelectedIndex = 1
-            Case "APNG" : Form1.常规流程参数页面.UiComboBox图片编码器.SelectedIndex = 2
-            Case "JPEG" : Form1.常规流程参数页面.UiComboBox图片编码器.SelectedIndex = 3
-            Case "WEBP有损" : Form1.常规流程参数页面.UiComboBox图片编码器.SelectedIndex = 4
-            Case "WEBP动图" : Form1.常规流程参数页面.UiComboBox图片编码器.SelectedIndex = 5
-            Case "AVIF静图" : Form1.常规流程参数页面.UiComboBox图片编码器.SelectedIndex = 6
-            Case "AVIF动图" : Form1.常规流程参数页面.UiComboBox图片编码器.SelectedIndex = 7
-            Case "GIF" : Form1.常规流程参数页面.UiComboBox图片编码器.SelectedIndex = 8
-            Case "BMP" : Form1.常规流程参数页面.UiComboBox图片编码器.SelectedIndex = 9
-            Case "OpenJPEG" : Form1.常规流程参数页面.UiComboBox图片编码器.SelectedIndex = 10
-            Case "JPEGLS" : Form1.常规流程参数页面.UiComboBox图片编码器.SelectedIndex = 11
-            Case "HDR" : Form1.常规流程参数页面.UiComboBox图片编码器.SelectedIndex = 12
-            Case "TIFF" : Form1.常规流程参数页面.UiComboBox图片编码器.SelectedIndex = 13
-            Case "DPX" : Form1.常规流程参数页面.UiComboBox图片编码器.SelectedIndex = 14
-            Case "OpenEXR" : Form1.常规流程参数页面.UiComboBox图片编码器.SelectedIndex = 15
+            Case "PNG" : ui.UiComboBox图片编码器.SelectedIndex = 1
+            Case "APNG" : ui.UiComboBox图片编码器.SelectedIndex = 2
+            Case "JPEG" : ui.UiComboBox图片编码器.SelectedIndex = 3
+            Case "WEBP有损" : ui.UiComboBox图片编码器.SelectedIndex = 4
+            Case "WEBP动图" : ui.UiComboBox图片编码器.SelectedIndex = 5
+            Case "AVIF静图" : ui.UiComboBox图片编码器.SelectedIndex = 6
+            Case "AVIF动图" : ui.UiComboBox图片编码器.SelectedIndex = 7
+            Case "GIF" : ui.UiComboBox图片编码器.SelectedIndex = 8
+            Case "BMP" : ui.UiComboBox图片编码器.SelectedIndex = 9
+            Case "OpenJPEG" : ui.UiComboBox图片编码器.SelectedIndex = 10
+            Case "JPEGLS" : ui.UiComboBox图片编码器.SelectedIndex = 11
+            Case "HDR" : ui.UiComboBox图片编码器.SelectedIndex = 12
+            Case "TIFF" : ui.UiComboBox图片编码器.SelectedIndex = 13
+            Case "DPX" : ui.UiComboBox图片编码器.SelectedIndex = 14
+            Case "OpenEXR" : ui.UiComboBox图片编码器.SelectedIndex = 15
         End Select
-        Form1.常规流程参数页面.UiTextBox图片编码器质量.Text = a.图片参数_编码器_质量值
+        ui.UiTextBox图片编码器质量.Text = a.图片参数_编码器_质量值
 
-        Form1.常规流程参数页面.UiTextBox自定义视频滤镜.Text = a.自定义参数_视频滤镜
-        Form1.常规流程参数页面.UiTextBox自定义音频滤镜.Text = a.自定义参数_音频滤镜
-        Form1.常规流程参数页面.UiTextBoxfilter_complex.Text = a.自定义参数_filter_complex
-        Form1.常规流程参数页面.UiTextBox自定义视频参数.Text = a.自定义参数_视频参数
-        Form1.常规流程参数页面.UiTextBox自定义音频参数.Text = a.自定义参数_音频参数
-        Form1.常规流程参数页面.UiTextBox开头参数.Text = a.自定义参数_开头参数
-        Form1.常规流程参数页面.UiTextBox之前参数.Text = a.自定义参数_之前参数
-        Form1.常规流程参数页面.UiTextBox之后参数.Text = a.自定义参数_之后参数
-        Form1.常规流程参数页面.UiTextBox最后参数.Text = a.自定义参数_最后参数
+        ui.UiTextBox自定义视频滤镜.Text = a.自定义参数_视频滤镜
+        ui.UiTextBox自定义音频滤镜.Text = a.自定义参数_音频滤镜
+        ui.UiTextBoxfilter_complex.Text = a.自定义参数_filter_complex
+        ui.UiTextBox自定义视频参数.Text = a.自定义参数_视频参数
+        ui.UiTextBox自定义音频参数.Text = a.自定义参数_音频参数
+        ui.UiTextBox开头参数.Text = a.自定义参数_开头参数
+        ui.UiTextBox之前参数.Text = a.自定义参数_之前参数
+        ui.UiTextBox之后参数.Text = a.自定义参数_之后参数
+        ui.UiTextBox最后参数.Text = a.自定义参数_最后参数
 
-        Form1.常规流程参数页面.UiComboBox剪辑方法.SelectedIndex = a.剪辑区间_方法
-        Form1.常规流程参数页面.UiTextBox快速剪辑入点.Text = a.剪辑区间_入点
-        Form1.常规流程参数页面.UiTextBox快速剪辑出点.Text = a.剪辑区间_出点
-        Form1.常规流程参数页面.UiComboBox剪辑向前解码多久秒.Text = a.剪辑区间_向前解码多久秒
+        ui.UiComboBox剪辑方法.SelectedIndex = a.剪辑区间_方法
+        ui.UiTextBox快速剪辑入点.Text = a.剪辑区间_入点
+        ui.UiTextBox快速剪辑出点.Text = a.剪辑区间_出点
+        ui.UiComboBox剪辑向前解码多久秒.Text = a.剪辑区间_向前解码多久秒
 
-        Form1.常规流程参数页面.UiTextBox将视频参数用于这些流.Text = String.Join(",", a.流控制_将视频参数应用于指定流)
-        Form1.常规流程参数页面.UiCheckBox保留其他视频流.Checked = a.流控制_启用保留其他视频流
-        Form1.常规流程参数页面.UiTextBox将音频参数用于这些流.Text = String.Join(",", a.流控制_将音频参数应用于指定流)
-        Form1.常规流程参数页面.UiCheckBox保留其他音频流.Checked = a.流控制_启用保留其他音频流
-        Form1.常规流程参数页面.UiCheckBox保留内嵌字幕流.Checked = a.流控制_启用保留内嵌字幕流
-        Form1.常规流程参数页面.UiComboBox元数据选项.SelectedIndex = a.流控制_元数据选项
-        Form1.常规流程参数页面.UiComboBox章节选项.SelectedIndex = a.流控制_章节选项
-        Form1.常规流程参数页面.UiComboBox附件选项.SelectedIndex = a.流控制_附件选项
-        Form1.常规流程参数页面.UiCheckBox自动混流同名字幕文件.Checked = a.流控制_启用自动混流同名字幕文件
+        ui.UiTextBox将视频参数用于这些流.Text = String.Join(",", a.流控制_将视频参数应用于指定流)
+        ui.UiCheckBox保留其他视频流.Checked = a.流控制_启用保留其他视频流
+        ui.UiTextBox将音频参数用于这些流.Text = String.Join(",", a.流控制_将音频参数应用于指定流)
+        ui.UiCheckBox保留其他音频流.Checked = a.流控制_启用保留其他音频流
+        ui.UiCheckBox保留内嵌字幕流.Checked = a.流控制_启用保留内嵌字幕流
+        ui.UiComboBox元数据选项.SelectedIndex = a.流控制_元数据选项
+        ui.UiComboBox章节选项.SelectedIndex = a.流控制_章节选项
+        ui.UiComboBox附件选项.SelectedIndex = a.流控制_附件选项
+        ui.UiCheckBox自动混流同名字幕文件.Checked = a.流控制_启用自动混流同名字幕文件
 
     End Sub
 
     Shared ReadOnly separator As String() = {","}
 
-    Public Shared Sub 储存预设(ByRef a As 预设数据类型)
-        a.输出容器 = Form1.常规流程参数页面.UiTextBox输出容器.Text
-        If Form1.常规流程参数页面.UiCheckBox额外保存信息.Checked AndAlso FileIO.FileSystem.DirectoryExists(Form1.常规流程参数页面.UiComboBox输出目录.Text.Trim) Then
+    Public Shared Sub 储存预设(ByRef a As 预设数据类型, ui As 界面_常规流程参数_V2)
+        a.输出容器 = ui.UiTextBox输出容器.Text
+        If ui.UiCheckBox额外保存信息.Checked AndAlso FileIO.FileSystem.DirectoryExists(ui.UiComboBox输出目录.Text.Trim) Then
             a.计算机名称 = Environment.MachineName
-            a.输出位置 = Form1.常规流程参数页面.UiComboBox输出目录.Text.Trim
+            a.输出位置 = ui.UiComboBox输出目录.Text.Trim
         End If
 
-        a.输出命名_使用自动命名 = Form1.常规流程参数页面.UiSwitch使用自动命名.Active
-        a.输出命名_自动命名选项 = Form1.常规流程参数页面.UiComboBox自动命名选项.SelectedIndex
-        a.输出命名_不使用输出文件参数 = Form1.常规流程参数页面.UiSwitch不使用输出文件参数.Active
-        a.输出命名_开头文本 = Form1.常规流程参数页面.UiTextBox开头文本.Text
-        a.输出命名_替代文本 = Form1.常规流程参数页面.UiTextBox替代文本.Text
-        a.输出命名_结尾文本 = Form1.常规流程参数页面.UiTextBox结尾文本.Text
+        a.输出命名_使用自动命名 = ui.UiSwitch使用自动命名.Active
+        a.输出命名_自动命名选项 = ui.UiComboBox自动命名选项.SelectedIndex
+        a.输出命名_不使用输出文件参数 = ui.UiSwitch不使用输出文件参数.Active
+        a.输出命名_开头文本 = ui.UiTextBox开头文本.Text
+        a.输出命名_替代文本 = ui.UiTextBox替代文本.Text
+        a.输出命名_结尾文本 = ui.UiTextBox结尾文本.Text
+        a.输出命名_保留创建时间 = ui.UiCheckBox保留创建时间.Checked
+        a.输出命名_保留修改时间 = ui.UiCheckBox保留修改时间.Checked
+        a.输出命名_保留访问时间 = ui.UiCheckBox保留访问时间.Checked
 
-        a.解码参数_解码器 = Form1.常规流程参数页面.UiComboBox解码器.Text
-        a.解码参数_CPU解码线程数 = Form1.常规流程参数页面.UiTextBoxCPU解码线程数.Text
-        a.解码参数_解码数据格式 = Form1.常规流程参数页面.UiComboBox解码数据格式.Text
-        a.解码参数_指定硬件的参数名 = Form1.常规流程参数页面.UiComboBox硬件加速解码参数名.Text
-        a.解码参数_指定硬件的参数 = Form1.常规流程参数页面.UiTextBox硬件加速解码参数.Text
+        a.解码参数_解码器 = ui.UiComboBox解码器.Text
+        a.解码参数_CPU解码线程数 = ui.UiTextBoxCPU解码线程数.Text
+        a.解码参数_解码数据格式 = ui.UiComboBox解码数据格式.Text
+        a.解码参数_指定硬件的参数名 = ui.UiComboBox硬件加速解码参数名.Text
+        a.解码参数_指定硬件的参数 = ui.UiTextBox硬件加速解码参数.Text
 
-        a.视频参数_编码器_类别 = Form1.常规流程参数页面.UiComboBox编码类别.Text
-        a.视频参数_编码器_具体编码 = Form1.常规流程参数页面.UiComboBox具体编码.Text
-        a.视频参数_编码器_编码预设 = Form1.常规流程参数页面.UiComboBox编码预设.Text
-        a.视频参数_编码器_配置文件 = Form1.常规流程参数页面.UiComboBox配置文件.Text
-        a.视频参数_编码器_场景优化 = Form1.常规流程参数页面.UiComboBox场景优化.Text
-        a.视频参数_编码器_gpu = Form1.常规流程参数页面.UiTextBoxgpu.Text
-        a.视频参数_编码器_threads = Form1.常规流程参数页面.UiTextBoxthreads.Text
+        a.视频参数_编码器_类别 = ui.UiComboBox编码类别.Text
+        a.视频参数_编码器_具体编码 = ui.UiComboBox具体编码.Text
+        a.视频参数_编码器_编码预设 = ui.UiComboBox编码预设.Text
+        a.视频参数_编码器_配置文件 = ui.UiComboBox配置文件.Text
+        a.视频参数_编码器_场景优化 = ui.UiComboBox场景优化.Text
+        a.视频参数_编码器_gpu = ui.UiTextBoxgpu.Text
+        a.视频参数_编码器_threads = ui.UiTextBoxthreads.Text
 
-        a.视频参数_分辨率 = Form1.常规流程参数页面.UiComboBox分辨率.Text
-        a.视频参数_分辨率自动计算_宽度 = Form1.常规流程参数页面.UiTextBox分辨率自动计算宽度.Text
-        a.视频参数_分辨率自动计算_高度 = Form1.常规流程参数页面.UiTextBox分辨率自动计算高度.Text
-        a.视频参数_分辨率_裁剪滤镜参数 = Form1.常规流程参数页面.UiTextBox画面裁剪滤镜参数.Text
-        a.视频参数_帧速率 = Form1.常规流程参数页面.UiComboBox帧速率.Text
-        a.视频参数_帧速率_抽帧最大变化比例 = Form1.常规流程参数页面.UiTextBox抽帧最大变化比例.Text
+        a.视频参数_分辨率 = ui.UiComboBox分辨率.Text
+        a.视频参数_分辨率自动计算_宽度 = ui.UiTextBox分辨率自动计算宽度.Text
+        a.视频参数_分辨率自动计算_高度 = ui.UiTextBox分辨率自动计算高度.Text
+        a.视频参数_分辨率_裁剪滤镜参数 = ui.UiTextBox画面裁剪滤镜参数.Text
+        a.视频参数_帧速率 = ui.UiComboBox帧速率.Text
+        a.视频参数_帧速率_抽帧最大变化比例 = ui.UiTextBox抽帧最大变化比例.Text
 
-        a.视频参数_插帧_目标帧率 = Form插帧.UiTextBox要补到多少帧.Text
-        Select Case Form插帧.UiComboBox插帧模式.SelectedIndex
+        a.视频参数_插帧_目标帧率 = ui.插帧页面.UiTextBox要补到多少帧.Text
+        Select Case ui.插帧页面.UiComboBox插帧模式.SelectedIndex
             Case 1 : a.视频参数_插帧_插帧模式 = "dup"
             Case 2 : a.视频参数_插帧_插帧模式 = "blend"
             Case 3 : a.视频参数_插帧_插帧模式 = "mci"
         End Select
-        Select Case Form插帧.UiComboBox运动估计模式.SelectedIndex
+        Select Case ui.插帧页面.UiComboBox运动估计模式.SelectedIndex
             Case 1 : a.视频参数_插帧_运动估计模式 = "bidir"
             Case 2 : a.视频参数_插帧_运动估计模式 = "bilat"
         End Select
-        Select Case Form插帧.UiComboBox运动估计算法.SelectedIndex
+        Select Case ui.插帧页面.UiComboBox运动估计算法.SelectedIndex
             Case 1 : a.视频参数_插帧_运动估计算法 = "esa"
             Case 2 : a.视频参数_插帧_运动估计算法 = "tss"
             Case 3 : a.视频参数_插帧_运动估计算法 = "tdls"
@@ -274,17 +279,17 @@ Public Class 预设管理
             Case 8 : a.视频参数_插帧_运动估计算法 = "epzs"
             Case 9 : a.视频参数_插帧_运动估计算法 = "umh"
         End Select
-        Select Case Form插帧.UiComboBox运动补偿模式.SelectedIndex
+        Select Case ui.插帧页面.UiComboBox运动补偿模式.SelectedIndex
             Case 1 : a.视频参数_插帧_运动补偿模式 = "obmc"
             Case 2 : a.视频参数_插帧_运动补偿模式 = "aobmc"
         End Select
-        a.视频参数_插帧_可变块大小的运动补偿 = Form插帧.UiCheckBox可变块大小的运动补偿.Checked
-        a.视频参数_插帧_块大小 = Form插帧.UiTextBox块大小.Text
-        a.视频参数_插帧_搜索范围 = Form插帧.UiTextBox搜索范围.Text
-        a.视频参数_插帧_场景变化检测强度 = Form插帧.UiTextBox场景变化检测强度.Text
+        a.视频参数_插帧_可变块大小的运动补偿 = ui.插帧页面.UiCheckBox可变块大小的运动补偿.Checked
+        a.视频参数_插帧_块大小 = ui.插帧页面.UiTextBox块大小.Text
+        a.视频参数_插帧_搜索范围 = ui.插帧页面.UiTextBox搜索范围.Text
+        a.视频参数_插帧_场景变化检测强度 = ui.插帧页面.UiTextBox场景变化检测强度.Text
 
-        a.视频参数_帧混合_指定帧率 = Form帧混合.UiTextBox降低帧率.Text
-        Select Case Form帧混合.UiComboBox混合算法.SelectedIndex
+        a.视频参数_帧混合_指定帧率 = ui.动态模糊页面.UiTextBox降低帧率.Text
+        Select Case ui.动态模糊页面.UiComboBox混合算法.SelectedIndex
             Case 1 : a.视频参数_帧混合_混合模式 = "average"
             Case 2 : a.视频参数_帧混合_混合模式 = "difference"
             Case 3 : a.视频参数_帧混合_混合模式 = "and"
@@ -293,64 +298,64 @@ Public Class 预设管理
             Case 6 : a.视频参数_帧混合_混合模式 = "add"
             Case 7 : a.视频参数_帧混合_混合模式 = "multiply"
         End Select
-        a.视频参数_帧混合_混合比例 = Form帧混合.UiTextBox混合比例.Text
+        a.视频参数_帧混合_混合比例 = ui.动态模糊页面.UiTextBox混合比例.Text
 
-        Select Case Form1.常规流程参数页面.UiComboBox全局质量控制方式.SelectedIndex
+        Select Case ui.UiComboBox全局质量控制方式.SelectedIndex
             Case 1 : a.视频参数_比特率_控制方式 = "CRF"
             Case 2 : a.视频参数_比特率_控制方式 = "VBR"
             Case 3 : a.视频参数_比特率_控制方式 = "VBR HQ"
             Case 4 : a.视频参数_比特率_控制方式 = "CQP"
             Case 5 : a.视频参数_比特率_控制方式 = "CBR"
         End Select
-        Select Case Form1.常规流程参数页面.UiComboBox全局质量控制参数.SelectedIndex
+        Select Case ui.UiComboBox全局质量控制参数.SelectedIndex
             Case 1 : a.视频参数_质量控制_参数名 = "crf"
             Case 2 : a.视频参数_质量控制_参数名 = "cq"
             Case 3 : a.视频参数_质量控制_参数名 = "qp"
             Case 4 : a.视频参数_质量控制_参数名 = "global_quality"
         End Select
-        a.视频参数_质量控制_值 = Form1.常规流程参数页面.UiTextBox全局质量控制值.Text
-        a.视频参数_比特率_基础 = Form1.常规流程参数页面.UiTextBox基础比特率.Text
-        a.视频参数_比特率_最低值 = Form1.常规流程参数页面.UiTextBox最低比特率.Text
-        a.视频参数_比特率_最高值 = Form1.常规流程参数页面.UiTextBox最高比特率.Text
-        a.视频参数_比特率_缓冲区 = Form1.常规流程参数页面.UiTextBox比特率缓冲区.Text
-        For Each c In Form1.常规流程参数页面.FlowLayoutPanel1.Controls
+        a.视频参数_质量控制_值 = ui.UiTextBox全局质量控制值.Text
+        a.视频参数_比特率_基础 = ui.UiTextBox基础比特率.Text
+        a.视频参数_比特率_最低值 = ui.UiTextBox最低比特率.Text
+        a.视频参数_比特率_最高值 = ui.UiTextBox最高比特率.Text
+        a.视频参数_比特率_缓冲区 = ui.UiTextBox比特率缓冲区.Text
+        For Each c In ui.FlowLayoutPanel1.Controls
             If c.GetType IsNot GetType(UITextBox) Then Continue For
             a.视频参数_质量控制_进阶参数集.Add(c.Text)
         Next
 
-        a.视频参数_色彩管理_像素格式 = Form1.常规流程参数页面.UiComboBox像素格式.Text
-        a.视频参数_色彩管理_矩阵系数 = Form1.常规流程参数页面.UiComboBox矩阵系数.Text
-        a.视频参数_色彩管理_色域 = Form1.常规流程参数页面.UiComboBox色域.Text
-        a.视频参数_色彩管理_传输特性 = Form1.常规流程参数页面.UiComboBox传输特性.Text
-        Select Case Form1.常规流程参数页面.UiComboBox色彩范围.SelectedIndex
+        a.视频参数_色彩管理_像素格式 = ui.UiComboBox像素格式.Text
+        a.视频参数_色彩管理_矩阵系数 = ui.UiComboBox矩阵系数.Text
+        a.视频参数_色彩管理_色域 = ui.UiComboBox色域.Text
+        a.视频参数_色彩管理_传输特性 = ui.UiComboBox传输特性.Text
+        Select Case ui.UiComboBox色彩范围.SelectedIndex
             Case 1 : a.视频参数_色彩管理_范围 = "tv"
             Case 2 : a.视频参数_色彩管理_范围 = "pc"
         End Select
-        a.视频参数_色彩管理_处理方式 = Form1.常规流程参数页面.UiComboBox色彩管理处理方式.SelectedIndex
-        a.视频参数_色彩管理_亮度 = Form1.常规流程参数页面.UiTextBox简易调色亮度.Text
-        a.视频参数_色彩管理_对比度 = Form1.常规流程参数页面.UiTextBox简易调色对比度.Text
-        a.视频参数_色彩管理_饱和度 = Form1.常规流程参数页面.UiTextBox简易调色饱和度.Text
-        a.视频参数_色彩管理_伽马 = Form1.常规流程参数页面.UiTextBox简易调色伽马.Text
+        a.视频参数_色彩管理_处理方式 = ui.UiComboBox色彩管理处理方式.SelectedIndex
+        a.视频参数_色彩管理_亮度 = ui.UiTextBox简易调色亮度.Text
+        a.视频参数_色彩管理_对比度 = ui.UiTextBox简易调色对比度.Text
+        a.视频参数_色彩管理_饱和度 = ui.UiTextBox简易调色饱和度.Text
+        a.视频参数_色彩管理_伽马 = ui.UiTextBox简易调色伽马.Text
 
-        Select Case Form1.常规流程参数页面.UiComboBox降噪方式.SelectedIndex
+        Select Case ui.UiComboBox降噪方式.SelectedIndex
             Case 1 : a.视频参数_降噪_方式 = "hqdn3d"
             Case 2 : a.视频参数_降噪_方式 = "nlmeans"
             Case 3 : a.视频参数_降噪_方式 = "atadenoise"
             Case 4 : a.视频参数_降噪_方式 = "bm3d"
             Case 5 : a.视频参数_降噪_方式 = "avs"
         End Select
-        a.视频参数_降噪_参数1 = Form1.常规流程参数页面.UiTextBox降噪参数1.Text
-        a.视频参数_降噪_参数2 = Form1.常规流程参数页面.UiTextBox降噪参数2.Text
-        a.视频参数_降噪_参数3 = Form1.常规流程参数页面.UiTextBox降噪参数3.Text
-        a.视频参数_降噪_参数4 = Form1.常规流程参数页面.UiTextBox降噪参数4.Text
-        a.视频参数_锐化_水平尺寸 = Form1.常规流程参数页面.UiTextBox锐化水平尺寸.Text
-        a.视频参数_锐化_垂直尺寸 = Form1.常规流程参数页面.UiTextBox锐化垂直尺寸.Text
-        a.视频参数_锐化_锐化强度 = Form1.常规流程参数页面.UiTextBox锐化强度.Text
-        a.视频参数_逐行与隔行_操作 = Form1.常规流程参数页面.UiComboBox逐行与隔行处理方式.SelectedIndex
-        a.视频参数_画面翻转_角度翻转 = Form1.常规流程参数页面.UiComboBox角度翻转.SelectedIndex
-        a.视频参数_画面翻转_镜像翻转 = Form1.常规流程参数页面.UiComboBox镜像翻转.SelectedIndex
+        a.视频参数_降噪_参数1 = ui.UiTextBox降噪参数1.Text
+        a.视频参数_降噪_参数2 = ui.UiTextBox降噪参数2.Text
+        a.视频参数_降噪_参数3 = ui.UiTextBox降噪参数3.Text
+        a.视频参数_降噪_参数4 = ui.UiTextBox降噪参数4.Text
+        a.视频参数_锐化_水平尺寸 = ui.UiTextBox锐化水平尺寸.Text
+        a.视频参数_锐化_垂直尺寸 = ui.UiTextBox锐化垂直尺寸.Text
+        a.视频参数_锐化_锐化强度 = ui.UiTextBox锐化强度.Text
+        a.视频参数_逐行与隔行_操作 = ui.UiComboBox逐行与隔行处理方式.SelectedIndex
+        a.视频参数_画面翻转_角度翻转 = ui.UiComboBox角度翻转.SelectedIndex
+        a.视频参数_画面翻转_镜像翻转 = ui.UiComboBox镜像翻转.SelectedIndex
 
-        Select Case Form1.常规流程参数页面.UiComboBox音频编码器.SelectedIndex
+        Select Case ui.UiComboBox音频编码器.SelectedIndex
             Case 1 : a.音频参数_编码器_具体编码 = "copy"
             Case 2 : a.音频参数_编码器_具体编码 = "-an"
             Case 3 : a.音频参数_编码器_具体编码 = "aac"
@@ -376,17 +381,17 @@ Public Class 预设管理
             Case Else : a.音频参数_编码器_具体编码 = ""
         End Select
 
-        a.音频参数_比特率 = Form1.常规流程参数页面.UiComboBox音频比特率.Text
-        a.音频参数_质量参数名 = Form1.常规流程参数页面.UiComboBox音频质量参数.Text
-        a.音频参数_质量值 = Form1.常规流程参数页面.UiTextBox音频质量值.Text
-        a.音频参数_声道数 = Form1.常规流程参数页面.UiComboBox声道布局.Text
-        a.音频参数_采样率 = Form1.常规流程参数页面.UiComboBox采样率.Text
-        a.音频参数_响度标准化_目标响度 = Form1.常规流程参数页面.UiTextBox响度标准化目标响度.Text
-        a.音频参数_响度标准化_动态范围 = Form1.常规流程参数页面.UiTextBox响度标准化动态范围.Text
-        a.音频参数_响度标准化_峰值电平 = Form1.常规流程参数页面.UiTextBox响度标准化峰值电平.Text
+        a.音频参数_比特率 = ui.UiComboBox音频比特率.Text
+        a.音频参数_质量参数名 = ui.UiComboBox音频质量参数.Text
+        a.音频参数_质量值 = ui.UiTextBox音频质量值.Text
+        a.音频参数_声道数 = ui.UiComboBox声道布局.Text
+        a.音频参数_采样率 = ui.UiComboBox采样率.Text
+        a.音频参数_响度标准化_目标响度 = ui.UiTextBox响度标准化目标响度.Text
+        a.音频参数_响度标准化_动态范围 = ui.UiTextBox响度标准化动态范围.Text
+        a.音频参数_响度标准化_峰值电平 = ui.UiTextBox响度标准化峰值电平.Text
 
-        a.图片参数_编码器_编码名称 = Form1.常规流程参数页面.UiComboBox图片编码器.Text
-        Select Case Form1.常规流程参数页面.UiComboBox图片编码器.SelectedIndex
+        a.图片参数_编码器_编码名称 = ui.UiComboBox图片编码器.Text
+        Select Case ui.UiComboBox图片编码器.SelectedIndex
             Case 1 : a.图片参数_编码器_编码名称 = "PNG"
             Case 2 : a.图片参数_编码器_编码名称 = "APNG"
             Case 3 : a.图片参数_编码器_编码名称 = "JPEG"
@@ -403,168 +408,143 @@ Public Class 预设管理
             Case 14 : a.图片参数_编码器_编码名称 = "DPX"
             Case 15 : a.图片参数_编码器_编码名称 = "OpenEXR"
         End Select
-        a.图片参数_编码器_质量值 = Form1.常规流程参数页面.UiTextBox图片编码器质量.Text
+        a.图片参数_编码器_质量值 = ui.UiTextBox图片编码器质量.Text
 
-        a.自定义参数_视频滤镜 = Form1.常规流程参数页面.UiTextBox自定义视频滤镜.Text.Replace(vbCrLf, " ").Replace(vbLf, " ").Replace(vbCr, " ")
-        a.自定义参数_音频滤镜 = Form1.常规流程参数页面.UiTextBox自定义音频滤镜.Text.Replace(vbCrLf, " ").Replace(vbLf, " ").Replace(vbCr, " ")
-        a.自定义参数_filter_complex = Form1.常规流程参数页面.UiTextBoxfilter_complex.Text.Replace(vbCrLf, " ").Replace(vbLf, " ").Replace(vbCr, " ")
-        a.自定义参数_视频参数 = Form1.常规流程参数页面.UiTextBox自定义视频参数.Text.Replace(vbCrLf, " ").Replace(vbLf, " ").Replace(vbCr, " ")
-        a.自定义参数_音频参数 = Form1.常规流程参数页面.UiTextBox自定义音频参数.Text.Replace(vbCrLf, " ").Replace(vbLf, " ").Replace(vbCr, " ")
-        a.自定义参数_开头参数 = Form1.常规流程参数页面.UiTextBox开头参数.Text.Replace(vbCrLf, " ").Replace(vbLf, " ").Replace(vbCr, " ")
-        a.自定义参数_之前参数 = Form1.常规流程参数页面.UiTextBox之前参数.Text.Replace(vbCrLf, " ").Replace(vbLf, " ").Replace(vbCr, " ")
-        a.自定义参数_之后参数 = Form1.常规流程参数页面.UiTextBox之后参数.Text.Replace(vbCrLf, " ").Replace(vbLf, " ").Replace(vbCr, " ")
-        a.自定义参数_最后参数 = Form1.常规流程参数页面.UiTextBox最后参数.Text.Replace(vbCrLf, " ").Replace(vbLf, " ").Replace(vbCr, " ")
-        a.自定义参数_完全自己写 = Form1.常规流程参数页面.UiTextBox完全自己写参数.Text.Replace(vbCrLf, " ").Replace(vbLf, " ").Replace(vbCr, " ")
+        a.自定义参数_视频滤镜 = ui.UiTextBox自定义视频滤镜.Text.Replace(vbCrLf, " ").Replace(vbLf, " ").Replace(vbCr, " ")
+        a.自定义参数_音频滤镜 = ui.UiTextBox自定义音频滤镜.Text.Replace(vbCrLf, " ").Replace(vbLf, " ").Replace(vbCr, " ")
+        a.自定义参数_filter_complex = ui.UiTextBoxfilter_complex.Text.Replace(vbCrLf, " ").Replace(vbLf, " ").Replace(vbCr, " ")
+        a.自定义参数_视频参数 = ui.UiTextBox自定义视频参数.Text.Replace(vbCrLf, " ").Replace(vbLf, " ").Replace(vbCr, " ")
+        a.自定义参数_音频参数 = ui.UiTextBox自定义音频参数.Text.Replace(vbCrLf, " ").Replace(vbLf, " ").Replace(vbCr, " ")
+        a.自定义参数_开头参数 = ui.UiTextBox开头参数.Text.Replace(vbCrLf, " ").Replace(vbLf, " ").Replace(vbCr, " ")
+        a.自定义参数_之前参数 = ui.UiTextBox之前参数.Text.Replace(vbCrLf, " ").Replace(vbLf, " ").Replace(vbCr, " ")
+        a.自定义参数_之后参数 = ui.UiTextBox之后参数.Text.Replace(vbCrLf, " ").Replace(vbLf, " ").Replace(vbCr, " ")
+        a.自定义参数_最后参数 = ui.UiTextBox最后参数.Text.Replace(vbCrLf, " ").Replace(vbLf, " ").Replace(vbCr, " ")
+        a.自定义参数_完全自己写 = ui.UiTextBox完全自己写参数.Text.Replace(vbCrLf, " ").Replace(vbLf, " ").Replace(vbCr, " ")
 
-        a.剪辑区间_方法 = Form1.常规流程参数页面.UiComboBox剪辑方法.SelectedIndex
-        a.剪辑区间_入点 = Form1.常规流程参数页面.UiTextBox快速剪辑入点.Text
-        a.剪辑区间_出点 = Form1.常规流程参数页面.UiTextBox快速剪辑出点.Text
-        a.剪辑区间_向前解码多久秒 = Form1.常规流程参数页面.UiComboBox剪辑向前解码多久秒.Text
+        a.剪辑区间_方法 = ui.UiComboBox剪辑方法.SelectedIndex
+        a.剪辑区间_入点 = ui.UiTextBox快速剪辑入点.Text
+        a.剪辑区间_出点 = ui.UiTextBox快速剪辑出点.Text
+        a.剪辑区间_向前解码多久秒 = ui.UiComboBox剪辑向前解码多久秒.Text
 
-        a.流控制_将视频参数应用于指定流 = Form1.常规流程参数页面.UiTextBox将视频参数用于这些流.Text.Replace("-", "").Split(separator, StringSplitOptions.RemoveEmptyEntries)
-        a.流控制_启用保留其他视频流 = Form1.常规流程参数页面.UiCheckBox保留其他视频流.Checked
-        a.流控制_将音频参数应用于指定流 = Form1.常规流程参数页面.UiTextBox将音频参数用于这些流.Text.Replace("-", "").Split(separator, StringSplitOptions.RemoveEmptyEntries)
-        a.流控制_启用保留其他音频流 = Form1.常规流程参数页面.UiCheckBox保留其他音频流.Checked
-        a.流控制_启用保留内嵌字幕流 = Form1.常规流程参数页面.UiCheckBox保留内嵌字幕流.Checked
-        a.流控制_元数据选项 = Form1.常规流程参数页面.UiComboBox元数据选项.SelectedIndex
-        a.流控制_章节选项 = Form1.常规流程参数页面.UiComboBox章节选项.SelectedIndex
-        a.流控制_附件选项 = Form1.常规流程参数页面.UiComboBox附件选项.SelectedIndex
-        a.流控制_启用自动混流同名字幕文件 = Form1.常规流程参数页面.UiCheckBox自动混流同名字幕文件.Checked
+        a.流控制_将视频参数应用于指定流 = ui.UiTextBox将视频参数用于这些流.Text.Replace("-", "").Split(separator, StringSplitOptions.RemoveEmptyEntries)
+        a.流控制_启用保留其他视频流 = ui.UiCheckBox保留其他视频流.Checked
+        a.流控制_将音频参数应用于指定流 = ui.UiTextBox将音频参数用于这些流.Text.Replace("-", "").Split(separator, StringSplitOptions.RemoveEmptyEntries)
+        a.流控制_启用保留其他音频流 = ui.UiCheckBox保留其他音频流.Checked
+        a.流控制_启用保留内嵌字幕流 = ui.UiCheckBox保留内嵌字幕流.Checked
+        a.流控制_元数据选项 = ui.UiComboBox元数据选项.SelectedIndex
+        a.流控制_章节选项 = ui.UiComboBox章节选项.SelectedIndex
+        a.流控制_附件选项 = ui.UiComboBox附件选项.SelectedIndex
+        a.流控制_启用自动混流同名字幕文件 = ui.UiCheckBox自动混流同名字幕文件.Checked
     End Sub
 
-    Public Shared Sub 保存预设到文件()
-        Dim d As New SaveFileDialog With {.Filter = "Json|*.json"}
-        d.ShowDialog(Form1)
-        If d.FileName = "" Then Exit Sub
-        Dim a As New 预设数据类型
-        储存预设(a)
-        File.WriteAllText(d.FileName, JsonSerializer.Serialize(a, JsonSO))
-        Select Case 用户设置.实例对象.自动加载预设选项
-            Case 用户设置.自动加载预设选项枚举.自动加载最后的预设文件
-                用户设置.实例对象.自动加载预设文件路径 = d.FileName
-                Form1.常规流程参数页面.UiTextBox自动加载的预设文件路径.Text = d.FileName
-        End Select
-    End Sub
+    Public Shared Sub 重置全部包含在预设中的设置(ui As 界面_常规流程参数_V2)
+        ui.UiTextBox输出容器.Text = ""
+        ui.UiComboBox输出目录.SelectedIndex = 0
 
-    Public Shared Sub 从文件读取预设()
-        Dim d As New OpenFileDialog With {.Filter = "Json|*.json"}
-        d.ShowDialog(Form1)
-        If Not File.Exists(d.FileName) Then Exit Sub
-        Dim a As 预设数据类型 = JsonSerializer.Deserialize(Of 预设数据类型)(File.ReadAllText(d.FileName))
-        显示预设(a)
-        Form1.常规流程参数页面.RichTextBox1.Text = "ffmpeg " & 预设管理.将预设数据转换为命令行(a, "<输入文件>", "<输出文件>")
-        Select Case 用户设置.实例对象.自动加载预设选项
-            Case 用户设置.自动加载预设选项枚举.自动加载最后的预设文件
-                用户设置.实例对象.自动加载预设文件路径 = d.FileName
-                Form1.常规流程参数页面.UiTextBox自动加载的预设文件路径.Text = d.FileName
-        End Select
-    End Sub
+        ui.UiSwitch使用自动命名.Active = True
+        ui.UiComboBox自动命名选项.SelectedIndex = 0
+        ui.UiSwitch不使用输出文件参数.Active = False
+        ui.UiTextBox开头文本.Text = ""
+        ui.UiTextBox替代文本.Text = ""
+        ui.UiTextBox结尾文本.Text = ""
+        ui.UiCheckBox保留创建时间.Checked = False
+        ui.UiCheckBox保留修改时间.Checked = False
+        ui.UiCheckBox保留访问时间.Checked = False
 
-    Public Shared Sub 重置全部包含在预设中的设置()
-        Form1.常规流程参数页面.UiTextBox输出容器.Text = ""
-        Form1.常规流程参数页面.UiComboBox输出目录.SelectedIndex = 0
+        ui.UiComboBox解码器.Text = ""
+        ui.UiTextBoxCPU解码线程数.Text = ""
+        ui.UiComboBox解码数据格式.Text = ""
+        ui.UiComboBox硬件加速解码参数名.Text = ""
+        ui.UiTextBox硬件加速解码参数.Text = ""
 
-        Form1.常规流程参数页面.UiSwitch使用自动命名.Active = True
-        Form1.常规流程参数页面.UiComboBox自动命名选项.SelectedIndex = 0
-        Form1.常规流程参数页面.UiSwitch不使用输出文件参数.Active = False
-        Form1.常规流程参数页面.UiTextBox开头文本.Text = ""
-        Form1.常规流程参数页面.UiTextBox替代文本.Text = ""
-        Form1.常规流程参数页面.UiTextBox结尾文本.Text = ""
+        ui.UiComboBox编码类别.Text = ""
+        ui.UiComboBox具体编码.Text = ""
+        ui.UiComboBox编码预设.Text = ""
+        ui.UiComboBox配置文件.Text = ""
+        ui.UiComboBox场景优化.Text = ""
+        ui.UiTextBoxgpu.Text = ""
+        ui.UiTextBoxthreads.Text = ""
 
-        Form1.常规流程参数页面.UiComboBox解码器.Text = ""
-        Form1.常规流程参数页面.UiTextBoxCPU解码线程数.Text = ""
-        Form1.常规流程参数页面.UiComboBox解码数据格式.Text = ""
-        Form1.常规流程参数页面.UiComboBox硬件加速解码参数名.Text = ""
-        Form1.常规流程参数页面.UiTextBox硬件加速解码参数.Text = ""
+        ui.UiComboBox分辨率.Text = ""
+        ui.UiTextBox分辨率自动计算宽度.Text = ""
+        ui.UiTextBox分辨率自动计算高度.Text = ""
+        ui.UiTextBox画面裁剪滤镜参数.Text = ""
+        ui.UiComboBox帧速率.Text = ""
+        ui.UiTextBox抽帧最大变化比例.Text = ""
 
-        Form1.常规流程参数页面.UiComboBox编码类别.Text = ""
-        Form1.常规流程参数页面.UiComboBox具体编码.Text = ""
-        Form1.常规流程参数页面.UiComboBox编码预设.Text = ""
-        Form1.常规流程参数页面.UiComboBox配置文件.Text = ""
-        Form1.常规流程参数页面.UiComboBox场景优化.Text = ""
-        Form1.常规流程参数页面.UiTextBoxgpu.Text = ""
-        Form1.常规流程参数页面.UiTextBoxthreads.Text = ""
+        ui.插帧页面.重置所有选项()
+        ui.动态模糊页面.重置所有选项()
 
-        Form1.常规流程参数页面.UiComboBox分辨率.Text = ""
-        Form1.常规流程参数页面.UiTextBox分辨率自动计算宽度.Text = ""
-        Form1.常规流程参数页面.UiTextBox分辨率自动计算高度.Text = ""
-        Form1.常规流程参数页面.UiTextBox画面裁剪滤镜参数.Text = ""
-        Form1.常规流程参数页面.UiComboBox帧速率.Text = ""
-        Form1.常规流程参数页面.UiTextBox抽帧最大变化比例.Text = ""
+        ui.UiComboBox全局质量控制方式.SelectedIndex = -1
+        ui.UiComboBox全局质量控制参数.SelectedIndex = -1
+        ui.UiTextBox全局质量控制值.Text = ""
+        ui.UiTextBox基础比特率.Text = ""
+        ui.UiTextBox最低比特率.Text = ""
+        ui.UiTextBox最高比特率.Text = ""
+        ui.UiTextBox比特率缓冲区.Text = ""
+        ui.清除全部进阶质量控制()
 
-        Form插帧.重置所有选项()
-        Form帧混合.重置所有选项()
+        ui.UiComboBox像素格式.Text = ""
+        ui.UiComboBox矩阵系数.Text = ""
+        ui.UiComboBox色域.Text = ""
+        ui.UiComboBox传输特性.Text = ""
+        ui.UiComboBox色彩范围.SelectedIndex = -1
+        ui.UiComboBox色彩管理处理方式.SelectedIndex = -1
+        ui.UiComboBox降噪方式.SelectedIndex = -1
+        ui.UiTextBox简易调色亮度.Text = ""
+        ui.UiTextBox简易调色对比度.Text = ""
+        ui.UiTextBox简易调色饱和度.Text = ""
+        ui.UiTextBox简易调色伽马.Text = ""
 
-        Form1.常规流程参数页面.UiComboBox全局质量控制方式.SelectedIndex = -1
-        Form1.常规流程参数页面.UiComboBox全局质量控制参数.SelectedIndex = -1
-        Form1.常规流程参数页面.UiTextBox全局质量控制值.Text = ""
-        Form1.常规流程参数页面.UiTextBox基础比特率.Text = ""
-        Form1.常规流程参数页面.UiTextBox最低比特率.Text = ""
-        Form1.常规流程参数页面.UiTextBox最高比特率.Text = ""
-        Form1.常规流程参数页面.UiTextBox比特率缓冲区.Text = ""
-        Form1.常规流程参数页面.清除全部进阶质量控制()
+        ui.UiTextBox降噪参数1.Text = ""
+        ui.UiTextBox降噪参数2.Text = ""
+        ui.UiTextBox降噪参数3.Text = ""
+        ui.UiTextBox降噪参数4.Text = ""
+        ui.UiTextBox锐化水平尺寸.Text = ""
+        ui.UiTextBox锐化垂直尺寸.Text = ""
+        ui.UiTextBox锐化强度.Text = ""
+        ui.UiComboBox逐行与隔行处理方式.SelectedIndex = -1
+        ui.UiComboBox角度翻转.SelectedIndex = -1
+        ui.UiComboBox镜像翻转.SelectedIndex = -1
 
-        Form1.常规流程参数页面.UiComboBox像素格式.Text = ""
-        Form1.常规流程参数页面.UiComboBox矩阵系数.Text = ""
-        Form1.常规流程参数页面.UiComboBox色域.Text = ""
-        Form1.常规流程参数页面.UiComboBox传输特性.Text = ""
-        Form1.常规流程参数页面.UiComboBox色彩范围.SelectedIndex = -1
-        Form1.常规流程参数页面.UiComboBox色彩管理处理方式.SelectedIndex = -1
-        Form1.常规流程参数页面.UiComboBox降噪方式.SelectedIndex = -1
-        Form1.常规流程参数页面.UiTextBox简易调色亮度.Text = ""
-        Form1.常规流程参数页面.UiTextBox简易调色对比度.Text = ""
-        Form1.常规流程参数页面.UiTextBox简易调色饱和度.Text = ""
-        Form1.常规流程参数页面.UiTextBox简易调色伽马.Text = ""
+        ui.UiComboBox音频编码器.Text = ""
+        ui.UiComboBox音频比特率.Text = ""
+        ui.UiComboBox音频质量参数.Text = ""
+        ui.UiTextBox音频质量值.Text = ""
+        ui.UiComboBox声道布局.Text = ""
+        ui.UiComboBox采样率.Text = ""
+        ui.UiTextBox响度标准化目标响度.Text = ""
+        ui.UiTextBox响度标准化动态范围.Text = ""
+        ui.UiTextBox响度标准化峰值电平.Text = ""
 
-        Form1.常规流程参数页面.UiTextBox降噪参数1.Text = ""
-        Form1.常规流程参数页面.UiTextBox降噪参数2.Text = ""
-        Form1.常规流程参数页面.UiTextBox降噪参数3.Text = ""
-        Form1.常规流程参数页面.UiTextBox降噪参数4.Text = ""
-        Form1.常规流程参数页面.UiTextBox锐化水平尺寸.Text = ""
-        Form1.常规流程参数页面.UiTextBox锐化垂直尺寸.Text = ""
-        Form1.常规流程参数页面.UiTextBox锐化强度.Text = ""
-        Form1.常规流程参数页面.UiComboBox逐行与隔行处理方式.SelectedIndex = -1
-        Form1.常规流程参数页面.UiComboBox角度翻转.SelectedIndex = -1
-        Form1.常规流程参数页面.UiComboBox镜像翻转.SelectedIndex = -1
+        ui.UiComboBox图片编码器.Text = ""
+        ui.UiTextBox图片编码器质量.Text = ""
 
-        Form1.常规流程参数页面.UiComboBox音频编码器.Text = ""
-        Form1.常规流程参数页面.UiComboBox音频比特率.Text = ""
-        Form1.常规流程参数页面.UiComboBox音频质量参数.Text = ""
-        Form1.常规流程参数页面.UiTextBox音频质量值.Text = ""
-        Form1.常规流程参数页面.UiComboBox声道布局.Text = ""
-        Form1.常规流程参数页面.UiComboBox采样率.Text = ""
-        Form1.常规流程参数页面.UiTextBox响度标准化目标响度.Text = ""
-        Form1.常规流程参数页面.UiTextBox响度标准化动态范围.Text = ""
-        Form1.常规流程参数页面.UiTextBox响度标准化峰值电平.Text = ""
+        ui.UiTextBox自定义视频滤镜.Text = ""
+        ui.UiTextBox自定义音频滤镜.Text = ""
+        ui.UiTextBoxfilter_complex.Text = ""
+        ui.UiTextBox自定义视频参数.Text = ""
+        ui.UiTextBox自定义音频参数.Text = ""
+        ui.UiTextBox开头参数.Text = ""
+        ui.UiTextBox之前参数.Text = ""
+        ui.UiTextBox之后参数.Text = ""
+        ui.UiTextBox最后参数.Text = ""
+        ui.UiTextBox完全自己写参数.Text = ""
 
-        Form1.常规流程参数页面.UiComboBox图片编码器.Text = ""
-        Form1.常规流程参数页面.UiTextBox图片编码器质量.Text = ""
+        ui.UiComboBox剪辑方法.SelectedIndex = 0
+        ui.UiTextBox快速剪辑入点.Text = ""
+        ui.UiTextBox快速剪辑出点.Text = ""
+        ui.UiComboBox剪辑向前解码多久秒.Text = ""
 
-        Form1.常规流程参数页面.UiTextBox自定义视频滤镜.Text = ""
-        Form1.常规流程参数页面.UiTextBox自定义音频滤镜.Text = ""
-        Form1.常规流程参数页面.UiTextBoxfilter_complex.Text = ""
-        Form1.常规流程参数页面.UiTextBox自定义视频参数.Text = ""
-        Form1.常规流程参数页面.UiTextBox自定义音频参数.Text = ""
-        Form1.常规流程参数页面.UiTextBox开头参数.Text = ""
-        Form1.常规流程参数页面.UiTextBox之前参数.Text = ""
-        Form1.常规流程参数页面.UiTextBox之后参数.Text = ""
-        Form1.常规流程参数页面.UiTextBox最后参数.Text = ""
-        Form1.常规流程参数页面.UiTextBox完全自己写参数.Text = ""
-
-        Form1.常规流程参数页面.UiComboBox剪辑方法.SelectedIndex = 0
-        Form1.常规流程参数页面.UiTextBox快速剪辑入点.Text = ""
-        Form1.常规流程参数页面.UiTextBox快速剪辑出点.Text = ""
-        Form1.常规流程参数页面.UiComboBox剪辑向前解码多久秒.Text = ""
-
-        Form1.常规流程参数页面.UiTextBox将视频参数用于这些流.Text = ""
-        Form1.常规流程参数页面.UiCheckBox保留其他视频流.Checked = False
-        Form1.常规流程参数页面.UiTextBox将音频参数用于这些流.Text = ""
-        Form1.常规流程参数页面.UiCheckBox保留其他音频流.Checked = False
-        Form1.常规流程参数页面.UiCheckBox保留内嵌字幕流.Checked = False
-        Form1.常规流程参数页面.UiComboBox元数据选项.SelectedIndex = 0
-        Form1.常规流程参数页面.UiComboBox章节选项.SelectedIndex = 0
-        Form1.常规流程参数页面.UiComboBox附件选项.SelectedIndex = 0
-        Form1.常规流程参数页面.UiCheckBox自动混流同名字幕文件.Checked = False
+        ui.UiTextBox将视频参数用于这些流.Text = ""
+        ui.UiCheckBox保留其他视频流.Checked = False
+        ui.UiTextBox将音频参数用于这些流.Text = ""
+        ui.UiCheckBox保留其他音频流.Checked = False
+        ui.UiCheckBox保留内嵌字幕流.Checked = False
+        ui.UiComboBox元数据选项.SelectedIndex = 0
+        ui.UiComboBox章节选项.SelectedIndex = 0
+        ui.UiComboBox附件选项.SelectedIndex = 0
+        ui.UiCheckBox自动混流同名字幕文件.Checked = False
     End Sub
 
     Public Shared Function 将预设数据转换为命令行(a As 预设数据类型, 输入文件 As String, 输出文件 As String) As String
@@ -977,4 +957,174 @@ Public Class 预设管理
         a = a.Replace("<InputFileNameWithOutExtension>", Path.GetFileNameWithoutExtension(输入文件))
         Return a
     End Function
+
+    Shared Sub 显示参数总览(RTF As System.Windows.Forms.RichTextBox, a As 预设数据类型)
+        RTF.Clear()
+        If a.自定义参数_完全自己写 <> "" Then
+            在RTF输出文本(RTF, "正在使用完全自己写参数模式，所有参数均不会生效", Color.IndianRed)
+            Exit Sub
+        End If
+
+        If a.输出容器 <> "" Then
+            在RTF输出文本(RTF, "输出容器：" & a.输出容器, Color.Gray)
+        Else
+            在RTF输出文本(RTF, "没有指定输出容器", Color.IndianRed)
+        End If
+        If a.输出命名_使用自动命名 And a.输出命名_自动命名选项 = 0 Then
+            在RTF输出文本(RTF, "正在使用默认的附加时间戳", Color.Gray)
+        ElseIf a.输出命名_使用自动命名 And a.输出命名_自动命名选项 <> 0 Then
+            在RTF输出文本(RTF, "正在使用其他自动命名", Color.Gray)
+        End If
+        If a.输出命名_不使用输出文件参数 Then 在RTF输出文本(RTF, "警告：已启用不使用输出文件参数，仅用于特殊需求，未指定自定义参数必报错", Color.IndianRed)
+        If a.输出命名_开头文本 <> "" Then 在RTF输出文本(RTF, "输出文件开头文本：" & a.输出命名_开头文本, Color.Gray)
+        If a.输出命名_替代文本 <> "" Then 在RTF输出文本(RTF, "输出文件替代文本：" & a.输出命名_替代文本, Color.Gray)
+        If a.输出命名_结尾文本 <> "" Then 在RTF输出文本(RTF, "输出文件结尾文本：" & a.输出命名_结尾文本, Color.Gray)
+
+        If a.解码参数_解码器 <> "" Then 在RTF输出文本(RTF, "解码器：" & a.解码参数_解码器, Color.Silver)
+        If a.解码参数_CPU解码线程数 <> "" Then 在RTF输出文本(RTF, "CPU 解码线程数：" & a.解码参数_CPU解码线程数, Color.Silver)
+        If a.解码参数_解码数据格式 <> "" Then 在RTF输出文本(RTF, "解码数据格式：" & a.解码参数_解码数据格式, Color.Silver)
+        If a.解码参数_指定硬件的参数名 <> "" Then
+            If a.解码参数_指定硬件的参数 <> "" Then
+                在RTF输出文本(RTF, "指定解码硬件参数：-" & a.解码参数_指定硬件的参数名 & " " & a.解码参数_指定硬件的参数, Color.Silver)
+            Else
+                在RTF输出文本(RTF, "必须指定解码硬件的参数，那不是选了就能用的", Color.IndianRed)
+            End If
+        End If
+
+        If a.视频参数_编码器_类别 <> "" Then 在RTF输出文本(RTF, "视频编码类别：" & a.视频参数_编码器_类别, Color.Silver)
+        If a.视频参数_编码器_具体编码 <> "" Then 在RTF输出文本(RTF, "视频编码器：" & a.视频参数_编码器_具体编码, Color.Silver)
+        If a.视频参数_编码器_编码预设 <> "" Then 在RTF输出文本(RTF, "视频编码预设：" & a.视频参数_编码器_编码预设, Color.Silver)
+        If a.视频参数_编码器_配置文件 <> "" Then 在RTF输出文本(RTF, "视频编码配置文件：" & a.视频参数_编码器_配置文件, Color.Silver)
+        If a.视频参数_编码器_场景优化 <> "" Then 在RTF输出文本(RTF, "视频编码场景优化：" & a.视频参数_编码器_场景优化, Color.Silver)
+
+        '---------------- 视频尺寸 / 帧率 ----------------
+        If a.视频参数_分辨率 <> "" Then 在RTF输出文本(RTF, "视频分辨率：" & a.视频参数_分辨率, Color.Silver)
+        If a.视频参数_分辨率自动计算_宽度 <> "" Then
+            在RTF输出文本(RTF, "视频分辨率自动计算：宽 = " & a.视频参数_分辨率自动计算_宽度, Color.Silver)
+        End If
+        If a.视频参数_分辨率自动计算_高度 <> "" Then
+            在RTF输出文本(RTF, "视频分辨率自动计算：高 = " & a.视频参数_分辨率自动计算_高度, Color.Silver)
+        End If
+
+        If a.视频参数_分辨率_裁剪滤镜参数 <> "" Then 在RTF输出文本(RTF, "画面裁剪：" & a.视频参数_分辨率_裁剪滤镜参数, Color.Silver)
+        If a.视频参数_帧速率 <> "" Then 在RTF输出文本(RTF, "输出帧率：" & a.视频参数_帧速率, Color.Silver)
+        If a.视频参数_帧速率_抽帧最大变化比例 <> "" Then 在RTF输出文本(RTF, "抽帧最大变化比例：" & a.视频参数_帧速率_抽帧最大变化比例, Color.Silver)
+
+        '---------------- 插帧 ----------------
+        If a.视频参数_插帧_目标帧率 <> "" Then 在RTF输出文本(RTF, "插帧目标帧率：" & a.视频参数_插帧_目标帧率, Color.Silver)
+        If a.视频参数_插帧_插帧模式 <> "" Then 在RTF输出文本(RTF, "插帧模式：" & a.视频参数_插帧_插帧模式, Color.Silver)
+        If a.视频参数_插帧_运动估计模式 <> "" Then 在RTF输出文本(RTF, "运动估计模式：" & a.视频参数_插帧_运动估计模式, Color.Silver)
+        If a.视频参数_插帧_运动估计算法 <> "" Then 在RTF输出文本(RTF, "运动估计算法：" & a.视频参数_插帧_运动估计算法, Color.Silver)
+        If a.视频参数_插帧_运动补偿模式 <> "" Then 在RTF输出文本(RTF, "运动补偿模式：" & a.视频参数_插帧_运动补偿模式, Color.Silver)
+        If a.视频参数_插帧_可变块大小的运动补偿 Then 在RTF输出文本(RTF, "插帧：已启用可变块大小运动补偿", Color.Silver)
+        If a.视频参数_插帧_块大小 <> "" Then 在RTF输出文本(RTF, "插帧块大小：" & a.视频参数_插帧_块大小, Color.Silver)
+        If a.视频参数_插帧_搜索范围 <> "" Then 在RTF输出文本(RTF, "插帧搜索范围：" & a.视频参数_插帧_搜索范围, Color.Silver)
+        If a.视频参数_插帧_场景变化检测强度 <> "" Then 在RTF输出文本(RTF, "场景变化检测强度：" & a.视频参数_插帧_场景变化检测强度, Color.Silver)
+
+        '---------------- 帧混合 ----------------
+        If a.视频参数_帧混合_指定帧率 <> "" Then 在RTF输出文本(RTF, "帧混合指定帧率：" & a.视频参数_帧混合_指定帧率, Color.Silver)
+        If a.视频参数_帧混合_混合模式 <> "" Then 在RTF输出文本(RTF, "帧混合模式：" & a.视频参数_帧混合_混合模式, Color.Silver)
+        If a.视频参数_帧混合_混合比例 <> "" Then 在RTF输出文本(RTF, "帧混合比例：" & a.视频参数_帧混合_混合比例, Color.Silver)
+
+        '---------------- 码率 / 质量控制 ----------------
+        If a.视频参数_质量控制_参数名 <> "" Then 在RTF输出文本(RTF, "质量控制参数：" & a.视频参数_质量控制_参数名 & " = " & a.视频参数_质量控制_值, Color.Silver)
+        If a.视频参数_比特率_基础 <> "" Then 在RTF输出文本(RTF, "基础码率：" & a.视频参数_比特率_基础, Color.Silver)
+        If a.视频参数_比特率_最低值 <> "" Then 在RTF输出文本(RTF, "最低码率：" & a.视频参数_比特率_最低值, Color.Silver)
+        If a.视频参数_比特率_最高值 <> "" Then 在RTF输出文本(RTF, "最高码率：" & a.视频参数_比特率_最高值, Color.Silver)
+        If a.视频参数_比特率_缓冲区 <> "" Then 在RTF输出文本(RTF, "缓冲区大小：" & a.视频参数_比特率_缓冲区, Color.Silver)
+        If a.视频参数_质量控制_进阶参数集 IsNot Nothing AndAlso a.视频参数_质量控制_进阶参数集.Count > 0 Then
+            在RTF输出文本(RTF, "进阶质量控制：" & String.Join(" ", a.视频参数_质量控制_进阶参数集), Color.Silver)
+        End If
+
+        '---------------- 色彩管理 ----------------
+        If a.视频参数_色彩管理_矩阵系数 <> "" Then 在RTF输出文本(RTF, "矩阵系数：" & a.视频参数_色彩管理_矩阵系数, Color.Silver)
+        If a.视频参数_色彩管理_色域 <> "" Then 在RTF输出文本(RTF, "色域：" & a.视频参数_色彩管理_色域, Color.Silver)
+        If a.视频参数_色彩管理_像素格式 <> "" Then 在RTF输出文本(RTF, "像素格式：" & a.视频参数_色彩管理_像素格式, Color.Silver)
+        If a.视频参数_色彩管理_传输特性 <> "" Then 在RTF输出文本(RTF, "传输特性：" & a.视频参数_色彩管理_传输特性, Color.Silver)
+        If a.视频参数_色彩管理_范围 <> "" Then 在RTF输出文本(RTF, "色彩范围：" & a.视频参数_色彩管理_范围, Color.Silver)
+        Select Case a.视频参数_色彩管理_处理方式
+            Case 1 : 在RTF输出文本(RTF, "色彩管理写入元数据并转换", Color.Silver)
+            Case 2 : 在RTF输出文本(RTF, "色彩管理只写入元数据不转换", Color.Silver)
+            Case 3 : 在RTF输出文本(RTF, "色彩管理只转换不写元数据", Color.Silver)
+        End Select
+
+        If a.视频参数_色彩管理_亮度 <> "" Then 在RTF输出文本(RTF, "亮度调整：" & a.视频参数_色彩管理_亮度, Color.Silver)
+        If a.视频参数_色彩管理_对比度 <> "" Then 在RTF输出文本(RTF, "对比度调整：" & a.视频参数_色彩管理_对比度, Color.Silver)
+        If a.视频参数_色彩管理_饱和度 <> "" Then 在RTF输出文本(RTF, "饱和度调整：" & a.视频参数_色彩管理_饱和度, Color.Silver)
+        If a.视频参数_色彩管理_伽马 <> "" Then 在RTF输出文本(RTF, "伽马调整：" & a.视频参数_色彩管理_伽马, Color.Silver)
+
+        '---------------- 常见滤镜 ----------------
+        If a.视频参数_降噪_方式 <> "" Then 在RTF输出文本(RTF, "降噪方式：" & a.视频参数_降噪_方式, Color.Silver)
+        If a.视频参数_降噪_参数1 <> "" Then 在RTF输出文本(RTF, "降噪参数1：" & a.视频参数_降噪_参数1, Color.Silver)
+        If a.视频参数_降噪_参数2 <> "" Then 在RTF输出文本(RTF, "降噪参数2：" & a.视频参数_降噪_参数2, Color.Silver)
+        If a.视频参数_降噪_参数3 <> "" Then 在RTF输出文本(RTF, "降噪参数3：" & a.视频参数_降噪_参数3, Color.Silver)
+        If a.视频参数_降噪_参数4 <> "" Then 在RTF输出文本(RTF, "降噪参数4：" & a.视频参数_降噪_参数4, Color.Silver)
+        If a.视频参数_锐化_水平尺寸 <> "" OrElse a.视频参数_锐化_垂直尺寸 <> "" OrElse a.视频参数_锐化_锐化强度 <> "" Then
+            在RTF输出文本(RTF, "锐化：水平 = " & a.视频参数_锐化_水平尺寸 & " 垂直 = " & a.视频参数_锐化_垂直尺寸 & " 强度 = " & a.视频参数_锐化_锐化强度, Color.Silver)
+        End If
+        If a.视频参数_逐行与隔行_操作 > 0 Then 在RTF输出文本(RTF, a.视频参数_逐行与隔行_操作, Color.Silver)
+        If a.视频参数_画面翻转_角度翻转 > 0 Then 在RTF输出文本(RTF, a.视频参数_画面翻转_角度翻转, Color.Silver)
+        If a.视频参数_画面翻转_镜像翻转 > 0 Then 在RTF输出文本(RTF, a.视频参数_画面翻转_镜像翻转, Color.Silver)
+
+        '---------------- 音频参数 ----------------
+        If a.音频参数_编码器_具体编码 <> "" Then 在RTF输出文本(RTF, "音频编码器：" & a.音频参数_编码器_具体编码, Color.Silver)
+        If a.音频参数_比特率 <> "" Then 在RTF输出文本(RTF, "音频比特率：" & a.音频参数_比特率, Color.Silver)
+        If a.音频参数_质量参数名 <> "" Then 在RTF输出文本(RTF, "音频质量控制：" & a.音频参数_质量参数名 & "=" & a.音频参数_质量值, Color.Silver)
+        If a.音频参数_声道数 <> "" Then 在RTF输出文本(RTF, "声道布局：" & a.音频参数_声道数, Color.Silver)
+        If a.音频参数_采样率 <> "" Then 在RTF输出文本(RTF, "采样率：" & a.音频参数_采样率, Color.Silver)
+        If a.音频参数_响度标准化_目标响度 <> "" Then 在RTF输出文本(RTF, "响度标准化目标：" & a.音频参数_响度标准化_目标响度, Color.Silver)
+        If a.音频参数_响度标准化_动态范围 <> "" Then 在RTF输出文本(RTF, "响度动态范围：" & a.音频参数_响度标准化_动态范围, Color.Silver)
+        If a.音频参数_响度标准化_峰值电平 <> "" Then 在RTF输出文本(RTF, "响度峰值电平：" & a.音频参数_响度标准化_峰值电平, Color.Silver)
+
+        '---------------- 图片参数 ----------------
+        If a.图片参数_编码器_编码名称 <> "" Then 在RTF输出文本(RTF, "图片编码器：" & a.图片参数_编码器_编码名称, Color.Silver)
+        If a.图片参数_编码器_质量值 <> "" Then 在RTF输出文本(RTF, "图片质量：" & a.图片参数_编码器_质量值, Color.Silver)
+
+        '---------------- 自定义参数 ----------------
+        If a.自定义参数_开头参数 <> "" Then 在RTF输出文本(RTF, "自定义开头参数：" & a.自定义参数_开头参数, Color.Gray)
+        If a.自定义参数_之前参数 <> "" Then 在RTF输出文本(RTF, "自定义之前参数：" & a.自定义参数_之前参数, Color.Gray)
+        If a.自定义参数_视频滤镜 <> "" Then 在RTF输出文本(RTF, "自定义视频滤镜：" & a.自定义参数_视频滤镜, Color.Gray)
+        If a.自定义参数_音频滤镜 <> "" Then 在RTF输出文本(RTF, "自定义音频滤镜：" & a.自定义参数_音频滤镜, Color.Gray)
+        If a.自定义参数_filter_complex <> "" Then 在RTF输出文本(RTF, "自定义 filter_complex：" & a.自定义参数_filter_complex, Color.Gray)
+        If a.自定义参数_视频参数 <> "" Then 在RTF输出文本(RTF, "自定义视频参数：" & a.自定义参数_视频参数, Color.Gray)
+        If a.自定义参数_音频参数 <> "" Then 在RTF输出文本(RTF, "自定义音频参数：" & a.自定义参数_音频参数, Color.Gray)
+        If a.自定义参数_之后参数 <> "" Then 在RTF输出文本(RTF, "自定义之后参数：" & a.自定义参数_之后参数, Color.Gray)
+        If a.自定义参数_最后参数 <> "" Then 在RTF输出文本(RTF, "自定义最后参数：" & a.自定义参数_最后参数, Color.Gray)
+
+        '---------------- 剪辑区间 ----------------
+        Select Case a.剪辑区间_方法
+            Case 1 : 在RTF输出文本(RTF, "剪辑区间方法：粗剪", Color.Silver)
+            Case 2 : 在RTF输出文本(RTF, "剪辑区间方法：精剪 (从头解码)", Color.Silver)
+            Case 3 : 在RTF输出文本(RTF, "剪辑区间方法：精剪 (快速响应)", Color.Silver)
+            Case Else : If a.剪辑区间_入点 <> "" OrElse a.剪辑区间_出点 <> "" Then 在RTF输出文本(RTF, "警告：指定了剪辑范围却没有指定剪辑方法，不会进行剪辑", Color.IndianRed)
+        End Select
+        If a.剪辑区间_入点 <> "" Then 在RTF输出文本(RTF, "剪辑入点：" & a.剪辑区间_入点, Color.Silver)
+        If a.剪辑区间_出点 <> "" Then 在RTF输出文本(RTF, "剪辑出点：" & a.剪辑区间_出点, Color.Silver)
+        If a.剪辑区间_向前解码多久秒 <> "" Then 在RTF输出文本(RTF, "快速响应的精剪向前解码 " & a.剪辑区间_向前解码多久秒 & " 秒", Color.Silver)
+
+        '---------------- 流控制 ----------------
+        If a.流控制_启用保留其他视频流 Then 在RTF输出文本(RTF, "已选择保留其他视频流", Color.Silver)
+        If a.流控制_将视频参数应用于指定流 IsNot Nothing AndAlso a.流控制_将视频参数应用于指定流.Length > 0 Then
+            在RTF输出文本(RTF, "应用视频参数到流：" & String.Join(",", a.流控制_将视频参数应用于指定流), Color.Silver)
+        End If
+        If a.流控制_启用保留其他音频流 Then 在RTF输出文本(RTF, "已选择保留其他音频流", Color.Silver)
+        If a.流控制_将音频参数应用于指定流 IsNot Nothing AndAlso a.流控制_将音频参数应用于指定流.Length > 0 Then
+            在RTF输出文本(RTF, "应用音频参数到流：" & String.Join(",", a.流控制_将音频参数应用于指定流), Color.Silver)
+        End If
+        If a.流控制_启用保留内嵌字幕流 Then 在RTF输出文本(RTF, "已选择保留内嵌字幕流", Color.Silver)
+        If a.流控制_启用自动混流同名字幕文件 Then 在RTF输出文本(RTF, "已选择自动混流同名字幕文件", Color.Silver)
+        Select Case a.流控制_元数据选项
+            Case 1 : 在RTF输出文本(RTF, "保留元数据", Color.Silver)
+            Case 2 : 在RTF输出文本(RTF, "清除元数据", Color.Silver)
+        End Select
+        Select Case a.流控制_章节选项
+            Case 1 : 在RTF输出文本(RTF, "保留章节", Color.Silver)
+            Case 2 : 在RTF输出文本(RTF, "清除章节", Color.Silver)
+        End Select
+        If a.流控制_附件选项 = 1 Then 在RTF输出文本(RTF, "保留附件", Color.Silver)
+
+        '---------------- 其他 ----------------
+
+        If a.输出位置 <> "" Then 在RTF输出文本(RTF, "输出位置：" & a.输出位置, Color.Gray)
+    End Sub
 End Class

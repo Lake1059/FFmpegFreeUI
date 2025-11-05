@@ -124,9 +124,9 @@ Public Class 界面控制
                 If 用户设置.实例对象.自动重置参数面板的页面选择 = 1 Then
                     Form1.常规流程参数页面.UiTabControlMenu1.SelectedTab = Form1.常规流程参数页面.TabPage参数总览
                 End If
-                If Form1.常规流程参数页面.UiTabControlMenu1.SelectedTab.IsEqual(Form1.常规流程参数页面.TabPage参数总览) Then
-                    Form1.常规流程参数页面.显示参数总览()
-                End If
+                'If Form1.常规流程参数页面.UiTabControlMenu1.SelectedTab.IsEqual(Form1.常规流程参数页面.TabPage参数总览) Then
+                '    Form1.常规流程参数页面.显示参数总览(Form1.常规流程参数页面.RichTextBox2)
+                'End If
 
             Case 选项卡.IsEqual(Form1.TabPage媒体信息)
                 Form1.RichTextBox1.Size = New Size(Form1.RichTextBox1.Parent.Width - Form1.RichTextBox1.Parent.Padding.Left, Form1.RichTextBox1.Parent.Height - Form1.RichTextBox1.Parent.Padding.Top * 2)

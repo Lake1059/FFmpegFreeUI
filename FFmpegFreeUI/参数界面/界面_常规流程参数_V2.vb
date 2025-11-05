@@ -1,20 +1,32 @@
-﻿Imports System.Text.Json
+﻿Imports System.IO
+Imports System.Text.Json
 Imports Microsoft.WindowsAPICodePack.Dialogs
 Imports Sunny.UI
 Public Class 界面_常规流程参数_V2
 
     Public 是否已初始化 As Boolean = False
 
+    Public 插帧页面 As New Form插帧
+    Public 动态模糊页面 As New Form帧混合
+    Public 画面裁剪页面 As New Form画面裁剪交互窗口
+
     Private Sub 界面_常规流程参数_Load(sender As Object, e As EventArgs) Handles Me.Load
         If Form1.DPI <> 1 Then UiTabControlMenu1.ItemSize = New Size(200 * Form1.DPI, 36 * Form1.DPI)
+
+        暗黑列表视图自绘制.绑定列表视图事件2(ListView2)
+        ListView2.SmallImageList = Form1.ImageList1
         初始化进阶质量控制预制菜单项()
         设置富文本框行高(RichTextBox1, 350)
         设置富文本框行高(RichTextBox2, 350)
+        设置富文本框行高(RichTextBox3, 300)
+        设置富文本框行高(RichTextBox4, 300)
 
+        AddHandler UiButton复制即时命令行显示.Click, Sub() Clipboard.SetText(RichTextBox1.Text)
+        '==============================================
         AddHandler UiButton选择容器.MouseDown, AddressOf 选择输出容器鼠标按下事件
         AddHandler UiComboBox输出目录.SelectedIndexChanged, AddressOf 选择输出目录
         UiComboBox输出目录.SelectedIndex = 0
-
+        '==============================================
         AddHandler UiComboBox编码类别.SelectedIndexChanged, AddressOf 视频编码类别改动事件
         AddHandler UiComboBox具体编码.SelectedIndexChanged, AddressOf 视频具体编码改动事件
         '==============================================
@@ -24,12 +36,12 @@ Public Class 界面_常规流程参数_V2
         AddHandler UiButton裁剪交互窗口.Click, Sub() 显示窗体(Form画面裁剪交互窗口, Form1)
         '==============================================
         AddHandler UiButton打开插帧参数窗口.Click, Sub()
-                                               显示窗体(Form插帧, Form1)
-                                               SetControlFont(Form1.UiComboBox字体名称.Text, Form插帧)
+                                               显示窗体(插帧页面, Form1)
+                                               SetControlFont(Form1.UiComboBox字体名称.Text, 插帧页面)
                                            End Sub
         AddHandler UiButton打开动态模糊参数窗口.Click, Sub()
-                                                 显示窗体(Form帧混合, Form1)
-                                                 SetControlFont(Form1.UiComboBox字体名称.Text, Form帧混合)
+                                                 显示窗体(动态模糊页面, Form1)
+                                                 SetControlFont(Form1.UiComboBox字体名称.Text, 动态模糊页面)
                                              End Sub
         '==============================================
         AddHandler UiComboBox全局质量控制方式.SelectedIndexChanged, AddressOf 视频比特率控制方式改动事件
@@ -49,35 +61,58 @@ Public Class 界面_常规流程参数_V2
         '==========================================
         AddHandler UiComboBox图片编码器.TextChanged, AddressOf 图片编码器参数变动事件
         '==============================================
-        AddHandler UiButton22.Click, AddressOf 预设管理.保存预设到文件
-        AddHandler UiButton21.Click, AddressOf 预设管理.从文件读取预设
-        AddHandler UiButton13.Click, AddressOf 预设管理.重置全部包含在预设中的设置
-        UiComboBox自动命名选项.SelectedIndex = 0
+        AddHandler UiButton刷新预设列表.Click, AddressOf 刷新预设列表
+        AddHandler UiButton保存预设.Click, AddressOf 保存到预设
+        AddHandler UiButton读取预设.Click, AddressOf 加载选中预设
+        AddHandler UiButton导出预设.Click, AddressOf 保存预设到文件
+        AddHandler UiButton导入预设.Click, AddressOf 从文件读取预设
 
-        AddHandler UiComboBox自动加载预设选项.SelectedIndexChanged, Sub()
-                                                                用户设置.实例对象.自动加载预设选项 = UiComboBox自动加载预设选项.SelectedIndex
-                                                                Select Case UiComboBox自动加载预设选项.SelectedIndex
-                                                                    Case 用户设置.自动加载预设选项枚举.不自动加载预设, 用户设置.自动加载预设选项枚举.自动加载上次的全部改动
-                                                                        UiTextBox自动加载的预设文件路径.Text = ""
-                                                                End Select
-                                                            End Sub
-        AddHandler UiButton选择加载指定预设文件.Click, Sub()
-                                                 Dim d As New OpenFileDialog With {.Filter = "Json|*.json"}
-                                                 d.ShowDialog(Form1)
-                                                 If Not FileIO.FileSystem.FileExists(d.FileName) Then Exit Sub
-                                                 UiTextBox自动加载的预设文件路径.Text = d.FileName
-                                                 UiComboBox自动加载预设选项.SelectedIndex = 用户设置.自动加载预设选项枚举.自动加载指定的预设文件
-                                             End Sub
-        AddHandler UiTextBox自动加载的预设文件路径.TextChanged, Sub()
-                                                         If UiTextBox自动加载的预设文件路径.Text <> "" Then
-                                                             Select Case UiComboBox自动加载预设选项.SelectedIndex
-                                                                 Case 用户设置.自动加载预设选项枚举.自动加载最后的预设文件, 用户设置.自动加载预设选项枚举.自动加载指定的预设文件
-                                                                     用户设置.实例对象.自动加载预设文件路径 = UiTextBox自动加载的预设文件路径.Text
-                                                             End Select
-                                                         Else
-                                                             用户设置.实例对象.自动加载预设文件路径 = ""
-                                                         End If
-                                                     End Sub
+        AddHandler ListView2.SelectedIndexChanged, AddressOf 预设列表视图选中变化事件
+        AddHandler ListView2.DoubleClick, AddressOf 加载选中预设
+        AddHandler ListView2.BeforeLabelEdit, AddressOf 预设列表视图项文本更改前事件
+        AddHandler ListView2.AfterLabelEdit, AddressOf 预设列表视图项文本更改后事件
+        AddHandler ListView2.SizeChanged, Sub() ListView2.Columns(0).Width = ListView2.Parent.Width - ListView2.Parent.Padding.Left - SystemInformation.VerticalScrollBarWidth * Form1.DPI
+        AddHandler UiButton重置参数面板.Click, Sub() 预设管理.重置全部包含在预设中的设置(Me)
+        '==============================================
+        UiComboBox自动命名选项.SelectedIndex = 0
+        '==============================================
+        If Me IsNot Form1.常规流程参数页面 Then
+            Panel69.Visible = False
+        Else
+            AddHandler UiComboBox自动加载预设选项.SelectedIndexChanged, Sub()
+                                                                    用户设置.实例对象.自动加载预设选项 = UiComboBox自动加载预设选项.SelectedIndex
+                                                                    Select Case UiComboBox自动加载预设选项.SelectedIndex
+                                                                        Case 用户设置.自动加载预设选项枚举.不自动加载预设, 用户设置.自动加载预设选项枚举.自动加载上次的全部改动
+                                                                            UiTextBox自动加载的预设文件路径.Text = ""
+                                                                    End Select
+                                                                End Sub
+            AddHandler UiButton选择加载指定预设文件.Click, Sub()
+                                                     Dim d As New OpenFileDialog With {.Filter = "Json|*.json"}
+                                                     d.ShowDialog(Form1)
+                                                     If Not FileIO.FileSystem.FileExists(d.FileName) Then Exit Sub
+                                                     UiTextBox自动加载的预设文件路径.Text = d.FileName
+                                                     UiComboBox自动加载预设选项.SelectedIndex = 用户设置.自动加载预设选项枚举.自动加载指定的预设文件
+                                                 End Sub
+            AddHandler UiTextBox自动加载的预设文件路径.TextChanged, Sub()
+                                                             If UiTextBox自动加载的预设文件路径.Text <> "" Then
+                                                                 Select Case UiComboBox自动加载预设选项.SelectedIndex
+                                                                     Case 用户设置.自动加载预设选项枚举.自动加载最后的预设文件, 用户设置.自动加载预设选项枚举.自动加载指定的预设文件
+                                                                         用户设置.实例对象.自动加载预设文件路径 = UiTextBox自动加载的预设文件路径.Text
+                                                                 End Select
+                                                             Else
+                                                                 用户设置.实例对象.自动加载预设文件路径 = ""
+                                                             End If
+                                                         End Sub
+            Select Case 用户设置.实例对象.自动加载预设选项
+                Case 用户设置.自动加载预设选项枚举.自动加载最后的预设文件, 用户设置.自动加载预设选项枚举.自动加载指定的预设文件
+                    If FileIO.FileSystem.FileExists(用户设置.实例对象.自动加载预设文件路径) Then
+                        预设管理.显示预设(JsonSerializer.Deserialize(Of 预设数据类型)(FileIO.FileSystem.ReadAllText(用户设置.实例对象.自动加载预设文件路径)), Me)
+                    End If
+                Case 用户设置.自动加载预设选项枚举.自动加载上次的全部改动
+                    If 用户设置.实例对象.最后的预设数据 IsNot Nothing Then 预设管理.显示预设(用户设置.实例对象.最后的预设数据, Me)
+            End Select
+        End If
+
         '==================================================
         AddHandler UiComboBox自动命名选项.MouseWheel, AddressOf 下拉框鼠标滚轮事件
         '==================================================
@@ -124,17 +159,10 @@ Public Class 界面_常规流程参数_V2
         '==================================================
         AddHandler UiComboBox自动加载预设选项.MouseWheel, AddressOf 下拉框鼠标滚轮事件
         '==================================================
-        Select Case 用户设置.实例对象.自动加载预设选项
-            Case 用户设置.自动加载预设选项枚举.自动加载最后的预设文件, 用户设置.自动加载预设选项枚举.自动加载指定的预设文件
-                If FileIO.FileSystem.FileExists(用户设置.实例对象.自动加载预设文件路径) Then
-                    预设管理.显示预设(JsonSerializer.Deserialize(Of 预设数据类型)(FileIO.FileSystem.ReadAllText(用户设置.实例对象.自动加载预设文件路径)))
-                End If
-            Case 用户设置.自动加载预设选项枚举.自动加载上次的全部改动
-                If 用户设置.实例对象.最后的预设数据 IsNot Nothing Then 预设管理.显示预设(用户设置.实例对象.最后的预设数据)
-        End Select
-        AddHandler UiButton复制即时命令行显示.Click, Sub() Clipboard.SetText(RichTextBox1.Text)
-        界面校准()
 
+
+
+        界面校准()
         是否已初始化 = True
     End Sub
 
@@ -390,11 +418,19 @@ Public Class 界面_常规流程参数_V2
     Sub 界面校准()
         Dim 选项卡 As TabPage = UiTabControlMenu1.SelectedTab
         Select Case True
-            Case 选项卡.IsEqual(TabPage参数总览) : 显示参数总览()
+            Case 选项卡.IsEqual(TabPage参数总览)
+                Panel72.Width = Panel72.Parent.Width * 0.5
+                Dim a As New 预设数据类型
+                预设管理.储存预设(a, Me)
+                预设管理.显示参数总览(RichTextBox2, a)
+                RichTextBox1.Text = "ffmpeg " & 预设管理.将预设数据转换为命令行(a, "<输入文件>", "<输出文件>")
 
             Case 选项卡.IsEqual(TabPage输出文件设置)
                 校准UiComboBox视觉(UiComboBox自动命名选项)
                 校准UiComboBox视觉(UiComboBox输出目录)
+                UiCheckBox保留创建时间.CheckBoxSize = 20 * Form1.DPI
+                UiCheckBox保留修改时间.CheckBoxSize = 20 * Form1.DPI
+                UiCheckBox保留访问时间.CheckBoxSize = 20 * Form1.DPI
 
             Case 选项卡.IsEqual(TabPage解码设置)
                 校准UiComboBox视觉(UiComboBox解码器)
@@ -459,11 +495,93 @@ Public Class 界面_常规流程参数_V2
             Case 选项卡.IsEqual(TabPage方案管理)
                 UiCheckBox额外保存信息.CheckBoxSize = 20 * Form1.DPI
                 校准UiComboBox视觉(UiComboBox自动加载预设选项)
-                Dim a As New 预设数据类型
-                预设管理.储存预设(a)
-                RichTextBox1.Text = "ffmpeg " & 预设管理.将预设数据转换为命令行(a, "<输入文件>", "<输出文件>")
+                If ListView2.Items.Count = 0 Then 刷新预设列表()
         End Select
 
+    End Sub
+
+    Sub 刷新预设列表()
+        Me.RichTextBox3.Text = ""
+        Me.RichTextBox4.Text = ""
+        Dim s1 = (Panel77.Width - Panel77.Padding.Left - Panel77.Padding.Right - Label157.Width * 2) / 3
+        Panel82.Width = s1
+        Panel83.Width = s1
+        ListView2.Items.Clear()
+        For Each p As String In 扫描单层文件(Path.Combine(Application.StartupPath, "Preset"), "*.json")
+            ListView2.Items.Add(Path.GetFileNameWithoutExtension(p))
+        Next
+    End Sub
+    Sub 预设列表视图选中变化事件()
+        Select Case ListView2.SelectedItems.Count
+            Case 1
+                Dim a As 预设数据类型 = JsonSerializer.Deserialize(Of 预设数据类型)(FileIO.FileSystem.ReadAllText(Path.Combine(Application.StartupPath, "Preset", ListView2.SelectedItems(0).Text & ".json")))
+                预设管理.显示参数总览(Me.RichTextBox3, a)
+                RichTextBox4.Text = "ffmpeg " & 预设管理.将预设数据转换为命令行(a, "<输入文件>", "<输出文件>")
+            Case Else
+                Me.RichTextBox3.Text = ""
+                Me.RichTextBox4.Text = ""
+        End Select
+    End Sub
+    Sub 保存到预设()
+        Select Case ListView2.SelectedItems.Count
+            Case 1
+                Dim a As New 预设数据类型
+                预设管理.储存预设(a, Me)
+                File.WriteAllText(Path.Combine(Application.StartupPath, "Preset", ListView2.SelectedItems(0).Text & ".json"), JsonSerializer.Serialize(a, JsonSO))
+                Sunny.UI.UIMessageTip.ShowOk($"已保存：{ListView2.SelectedItems(0).Text}", 1500, False)
+            Case 0
+                Dim a As New 预设数据类型
+                预设管理.储存预设(a, Me)
+                Dim 名称 As String = $"预设-{Now:yyyyMMdd-HHmmss}"
+                File.WriteAllText(Path.Combine(Application.StartupPath, "Preset", 名称 & ".json"), JsonSerializer.Serialize(a, JsonSO))
+                ListView2.Items.Add(名称)
+                Sunny.UI.UIMessageTip.ShowOk($"已保存：{名称}", 1500, False)
+        End Select
+    End Sub
+    Sub 加载选中预设()
+        Select Case ListView2.SelectedItems.Count
+            Case 1
+                预设管理.显示预设(JsonSerializer.Deserialize(Of 预设数据类型)(FileIO.FileSystem.ReadAllText(Path.Combine(Application.StartupPath, "Preset", ListView2.SelectedItems(0).Text & ".json"))), Me)
+                Sunny.UI.UIMessageTip.ShowOk($"已加载：{ ListView2.SelectedItems(0).Text}", 1500, False)
+        End Select
+    End Sub
+    Sub 预设列表视图项文本更改前事件(sender As Object, e As LabelEditEventArgs)
+        预设列表重命名之前的文本 = ListView2.Items(e.Item).Text
+    End Sub
+    Dim 预设列表重命名之前的文本 As String
+    Sub 预设列表视图项文本更改后事件(sender As Object, e As LabelEditEventArgs)
+        If 预设列表重命名之前的文本 = e.Label Then Exit Sub
+        If Not FileIO.FileSystem.FileExists(Path.Combine(Application.StartupPath, "Preset", e.Label & ".json")) AndAlso e.Label <> "" AndAlso e.CancelEdit = False Then
+            FileIO.FileSystem.RenameFile(Path.Combine(Application.StartupPath, "Preset", 预设列表重命名之前的文本 & ".json"), e.Label & ".json")
+        Else
+            e.CancelEdit = True
+        End If
+    End Sub
+    Public Sub 保存预设到文件()
+        Dim d As New SaveFileDialog With {.Filter = "Json|*.json"}
+        d.ShowDialog(Form1)
+        If d.FileName = "" Then Exit Sub
+        Dim a As New 预设数据类型
+        预设管理.储存预设(a, Me)
+        File.WriteAllText(d.FileName, JsonSerializer.Serialize(a, JsonSO))
+        Select Case 用户设置.实例对象.自动加载预设选项
+            Case 用户设置.自动加载预设选项枚举.自动加载最后的预设文件
+                用户设置.实例对象.自动加载预设文件路径 = d.FileName
+                Me.UiTextBox自动加载的预设文件路径.Text = d.FileName
+        End Select
+    End Sub
+    Public Sub 从文件读取预设()
+        Dim d As New OpenFileDialog With {.Filter = "Json|*.json"}
+        d.ShowDialog(Form1)
+        If Not File.Exists(d.FileName) Then Exit Sub
+        Dim a As 预设数据类型 = JsonSerializer.Deserialize(Of 预设数据类型)(File.ReadAllText(d.FileName))
+        预设管理.显示预设(a, Me)
+        Me.RichTextBox1.Text = "ffmpeg " & 预设管理.将预设数据转换为命令行(a, "<输入文件>", "<输出文件>")
+        Select Case 用户设置.实例对象.自动加载预设选项
+            Case 用户设置.自动加载预设选项枚举.自动加载最后的预设文件
+                用户设置.实例对象.自动加载预设文件路径 = d.FileName
+                Form1.常规流程参数页面.UiTextBox自动加载的预设文件路径.Text = d.FileName
+        End Select
     End Sub
 
     Sub 清除全部进阶质量控制()
@@ -473,7 +591,6 @@ Public Class 界面_常规流程参数_V2
         Me.FlowLayoutPanel1.Controls.Clear()
         GC.Collect()
     End Sub
-
 
     Sub 创建进阶质量控制项(text As String)
         Dim a As New UITextBox With {
@@ -532,7 +649,6 @@ Public Class 界面_常规流程参数_V2
     End Sub
 
     Public 进阶质量控制预制菜单项 As New 暗黑上下文菜单 With {.ShowImageMargin = False, .Font = New Font(用户设置.实例对象.字体, 10)}
-
     Sub 初始化进阶质量控制预制菜单项()
         进阶质量控制预制菜单项.Items.AddRange(New ToolStripItem() {
         New ToolStripSeparator() With {.Tag = "null"},
@@ -554,187 +670,6 @@ Public Class 界面_常规流程参数_V2
         New ToolStripMenuItem("-qp_p 前向参考帧质量", Nothing, Sub(s1, e1) 创建进阶质量控制项("-qp_p ")) With {.ForeColor = Color.Silver},
         New ToolStripMenuItem("-qp_b 双向参考帧质量", Nothing, Sub(s1, e1) 创建进阶质量控制项("-qp_b ")) With {.ForeColor = Color.Silver},
         New ToolStripSeparator() With {.Tag = "null"}})
-    End Sub
-
-    Sub 在参数总览输出文本(文本 As String, 颜色 As Color)
-        If String.IsNullOrEmpty(文本) Then Exit Sub
-        Dim 文本长度 = Len(文本)
-        If RichTextBox2.TextLength > 0 Then
-            RichTextBox2.AppendText(vbCrLf & 文本)
-        Else
-            RichTextBox2.AppendText(文本)
-        End If
-        Dim 添加起始位 As Integer = RichTextBox2.TextLength - 文本长度
-        RichTextBox2.Select(添加起始位, 文本长度)
-        RichTextBox2.SelectionColor = 颜色
-        RichTextBox2.Select(RichTextBox2.TextLength, 0)
-    End Sub
-    Sub 显示参数总览()
-        Dim a As New 预设数据类型
-        预设管理.储存预设(a)
-        RichTextBox2.Clear()
-        If a.自定义参数_完全自己写 <> "" Then
-            在参数总览输出文本("正在使用完全自己写参数模式，所有参数均不会生效", Color.IndianRed)
-            Exit Sub
-        End If
-
-        If a.输出容器 <> "" Then 在参数总览输出文本("输出容器：" & a.输出容器, Color.Gray)
-        If a.输出命名_使用自动命名 And a.输出命名_自动命名选项 = 0 Then
-            在参数总览输出文本("正在使用自动命名：附加时间戳", Color.Gray)
-        ElseIf a.输出命名_使用自动命名 And a.输出命名_自动命名选项 <> 0 Then
-            在参数总览输出文本("正在使用其他自动命名", Color.Gray)
-        End If
-        If a.输出命名_不使用输出文件参数 Then 在参数总览输出文本("警告：已设置不使用输出文件参数，仅用于特殊需求，未指定自定义参数必报错", Color.IndianRed)
-        If a.输出命名_开头文本 <> "" Then 在参数总览输出文本("输出文件开头文本：" & a.输出命名_开头文本, Color.Gray)
-        If a.输出命名_替代文本 <> "" Then 在参数总览输出文本("输出文件替代文本：" & a.输出命名_替代文本, Color.Gray)
-        If a.输出命名_结尾文本 <> "" Then 在参数总览输出文本("输出文件结尾文本：" & a.输出命名_结尾文本, Color.Gray)
-
-        If a.解码参数_解码器 <> "" Then 在参数总览输出文本("解码器：" & a.解码参数_解码器, Color.Silver)
-        If a.解码参数_CPU解码线程数 <> "" Then 在参数总览输出文本("CPU 解码线程数：" & a.解码参数_CPU解码线程数, Color.Silver)
-        If a.解码参数_解码数据格式 <> "" Then 在参数总览输出文本("解码数据格式：" & a.解码参数_解码数据格式, Color.Silver)
-        If a.解码参数_指定硬件的参数名 <> "" Then
-            If a.解码参数_指定硬件的参数 <> "" Then
-                在参数总览输出文本("指定加速解码硬件：-" & a.解码参数_指定硬件的参数名 & " " & a.解码参数_指定硬件的参数, Color.Silver)
-            Else
-                在参数总览输出文本("未指定硬件加速解码的参数，将被忽略", Color.IndianRed)
-            End If
-        End If
-
-        If a.视频参数_编码器_类别 <> "" Then 在参数总览输出文本("视频编码类别：" & a.视频参数_编码器_类别, Color.Silver)
-        If a.视频参数_编码器_具体编码 <> "" Then 在参数总览输出文本("视频具体编码器：" & a.视频参数_编码器_具体编码, Color.Silver)
-        If a.视频参数_编码器_编码预设 <> "" Then 在参数总览输出文本("视频编码预设：" & a.视频参数_编码器_编码预设, Color.Silver)
-        If a.视频参数_编码器_配置文件 <> "" Then 在参数总览输出文本("视频编码配置文件：" & a.视频参数_编码器_配置文件, Color.Silver)
-        If a.视频参数_编码器_场景优化 <> "" Then 在参数总览输出文本("视频编码场景优化：" & a.视频参数_编码器_场景优化, Color.Silver)
-
-        '---------------- 视频尺寸 / 帧率 ----------------
-        If a.视频参数_分辨率 <> "" Then 在参数总览输出文本("视频分辨率：" & a.视频参数_分辨率, Color.Silver)
-        If a.视频参数_分辨率自动计算_宽度 <> "" Then
-            在参数总览输出文本("视频分辨率自动计算：宽 = " & a.视频参数_分辨率自动计算_宽度, Color.Silver)
-        End If
-        If a.视频参数_分辨率自动计算_高度 <> "" Then
-            在参数总览输出文本("视频分辨率自动计算：高 = " & a.视频参数_分辨率自动计算_高度, Color.Silver)
-        End If
-
-        If a.视频参数_分辨率_裁剪滤镜参数 <> "" Then 在参数总览输出文本("画面裁剪：" & a.视频参数_分辨率_裁剪滤镜参数, Color.Silver)
-        If a.视频参数_帧速率 <> "" Then 在参数总览输出文本("输出帧率：" & a.视频参数_帧速率, Color.Silver)
-        If a.视频参数_帧速率_抽帧最大变化比例 <> "" Then 在参数总览输出文本("抽帧最大变化比例：" & a.视频参数_帧速率_抽帧最大变化比例, Color.Silver)
-
-        '---------------- 插帧 ----------------
-        If a.视频参数_插帧_目标帧率 <> "" Then 在参数总览输出文本("插帧目标帧率：" & a.视频参数_插帧_目标帧率, Color.Silver)
-        If a.视频参数_插帧_插帧模式 <> "" Then 在参数总览输出文本("插帧模式：" & a.视频参数_插帧_插帧模式, Color.Silver)
-        If a.视频参数_插帧_运动估计模式 <> "" Then 在参数总览输出文本("运动估计模式：" & a.视频参数_插帧_运动估计模式, Color.Silver)
-        If a.视频参数_插帧_运动估计算法 <> "" Then 在参数总览输出文本("运动估计算法：" & a.视频参数_插帧_运动估计算法, Color.Silver)
-        If a.视频参数_插帧_运动补偿模式 <> "" Then 在参数总览输出文本("运动补偿模式：" & a.视频参数_插帧_运动补偿模式, Color.Silver)
-        If a.视频参数_插帧_可变块大小的运动补偿 Then 在参数总览输出文本("插帧：可变块大小运动补偿 已启用", Color.Silver)
-        If a.视频参数_插帧_块大小 <> "" Then 在参数总览输出文本("插帧块大小：" & a.视频参数_插帧_块大小, Color.Silver)
-        If a.视频参数_插帧_搜索范围 <> "" Then 在参数总览输出文本("插帧搜索范围：" & a.视频参数_插帧_搜索范围, Color.Silver)
-        If a.视频参数_插帧_场景变化检测强度 <> "" Then 在参数总览输出文本("场景变化检测强度：" & a.视频参数_插帧_场景变化检测强度, Color.Silver)
-
-        '---------------- 帧混合 ----------------
-        If a.视频参数_帧混合_指定帧率 <> "" Then 在参数总览输出文本("帧混合指定帧率：" & a.视频参数_帧混合_指定帧率, Color.Silver)
-        If a.视频参数_帧混合_混合模式 <> "" Then 在参数总览输出文本("帧混合模式：" & a.视频参数_帧混合_混合模式, Color.Silver)
-        If a.视频参数_帧混合_混合比例 <> "" Then 在参数总览输出文本("帧混合比例：" & a.视频参数_帧混合_混合比例, Color.Silver)
-
-        '---------------- 码率 / 质量控制 ----------------
-        If a.视频参数_质量控制_参数名 <> "" Then 在参数总览输出文本("质量控制参数：" & a.视频参数_质量控制_参数名 & " = " & a.视频参数_质量控制_值, Color.Silver)
-        If a.视频参数_比特率_基础 <> "" Then 在参数总览输出文本("基础码率：" & a.视频参数_比特率_基础, Color.Silver)
-        If a.视频参数_比特率_最低值 <> "" Then 在参数总览输出文本("最低码率：" & a.视频参数_比特率_最低值, Color.Silver)
-        If a.视频参数_比特率_最高值 <> "" Then 在参数总览输出文本("最高码率：" & a.视频参数_比特率_最高值, Color.Silver)
-        If a.视频参数_比特率_缓冲区 <> "" Then 在参数总览输出文本("缓冲区大小：" & a.视频参数_比特率_缓冲区, Color.Silver)
-        If a.视频参数_质量控制_进阶参数集 IsNot Nothing AndAlso a.视频参数_质量控制_进阶参数集.Count > 0 Then
-            在参数总览输出文本("进阶质量控制：" & String.Join(" ", a.视频参数_质量控制_进阶参数集), Color.Silver)
-        End If
-
-        '---------------- 色彩管理 ----------------
-        If a.视频参数_色彩管理_矩阵系数 <> "" Then 在参数总览输出文本("矩阵系数：" & a.视频参数_色彩管理_矩阵系数, Color.Silver)
-        If a.视频参数_色彩管理_色域 <> "" Then 在参数总览输出文本("色域：" & a.视频参数_色彩管理_色域, Color.Silver)
-        If a.视频参数_色彩管理_像素格式 <> "" Then 在参数总览输出文本("像素格式：" & a.视频参数_色彩管理_像素格式, Color.Silver)
-        If a.视频参数_色彩管理_传输特性 <> "" Then 在参数总览输出文本("传输特性：" & a.视频参数_色彩管理_传输特性, Color.Silver)
-        If a.视频参数_色彩管理_范围 <> "" Then 在参数总览输出文本("色彩范围：" & a.视频参数_色彩管理_范围, Color.Silver)
-        Select Case a.视频参数_色彩管理_处理方式
-            Case 1 : 在参数总览输出文本("色彩管理写入元数据并转换", Color.Silver)
-            Case 2 : 在参数总览输出文本("色彩管理只写入元数据不转换", Color.Silver)
-            Case 3 : 在参数总览输出文本("色彩管理只转换不写元数据", Color.Silver)
-        End Select
-
-        If a.视频参数_色彩管理_亮度 <> "" Then 在参数总览输出文本("亮度调整：" & a.视频参数_色彩管理_亮度, Color.Silver)
-        If a.视频参数_色彩管理_对比度 <> "" Then 在参数总览输出文本("对比度调整：" & a.视频参数_色彩管理_对比度, Color.Silver)
-        If a.视频参数_色彩管理_饱和度 <> "" Then 在参数总览输出文本("饱和度调整：" & a.视频参数_色彩管理_饱和度, Color.Silver)
-        If a.视频参数_色彩管理_伽马 <> "" Then 在参数总览输出文本("伽马调整：" & a.视频参数_色彩管理_伽马, Color.Silver)
-
-        '---------------- 常见滤镜 ----------------
-        If a.视频参数_降噪_方式 <> "" Then 在参数总览输出文本("降噪方式：" & a.视频参数_降噪_方式, Color.Silver)
-        If a.视频参数_降噪_参数1 <> "" Then 在参数总览输出文本("降噪参数1：" & a.视频参数_降噪_参数1, Color.Silver)
-        If a.视频参数_降噪_参数2 <> "" Then 在参数总览输出文本("降噪参数2：" & a.视频参数_降噪_参数2, Color.Silver)
-        If a.视频参数_降噪_参数3 <> "" Then 在参数总览输出文本("降噪参数3：" & a.视频参数_降噪_参数3, Color.Silver)
-        If a.视频参数_降噪_参数4 <> "" Then 在参数总览输出文本("降噪参数4：" & a.视频参数_降噪_参数4, Color.Silver)
-        If a.视频参数_锐化_水平尺寸 <> "" OrElse a.视频参数_锐化_垂直尺寸 <> "" OrElse a.视频参数_锐化_锐化强度 <> "" Then
-            在参数总览输出文本("锐化：水平 = " & a.视频参数_锐化_水平尺寸 & " 垂直 = " & a.视频参数_锐化_垂直尺寸 & " 强度 = " & a.视频参数_锐化_锐化强度, Color.Silver)
-        End If
-        If a.视频参数_逐行与隔行_操作 > 0 Then 在参数总览输出文本(UiComboBox逐行与隔行处理方式.Items(a.视频参数_逐行与隔行_操作), Color.Silver)
-        If a.视频参数_画面翻转_角度翻转 > 0 Then 在参数总览输出文本(UiComboBox角度翻转.Items(a.视频参数_画面翻转_角度翻转), Color.Silver)
-        If a.视频参数_画面翻转_镜像翻转 > 0 Then 在参数总览输出文本(UiComboBox镜像翻转.Items(a.视频参数_画面翻转_镜像翻转), Color.Silver)
-
-        '---------------- 音频参数 ----------------
-        If a.音频参数_编码器_具体编码 <> "" Then 在参数总览输出文本("音频编码器：" & a.音频参数_编码器_具体编码, Color.Silver)
-        If a.音频参数_比特率 <> "" Then 在参数总览输出文本("音频比特率：" & a.音频参数_比特率, Color.Silver)
-        If a.音频参数_质量参数名 <> "" Then 在参数总览输出文本("音频质量控制：" & a.音频参数_质量参数名 & "=" & a.音频参数_质量值, Color.Silver)
-        If a.音频参数_声道数 <> "" Then 在参数总览输出文本("声道布局：" & a.音频参数_声道数, Color.Silver)
-        If a.音频参数_采样率 <> "" Then 在参数总览输出文本("采样率：" & a.音频参数_采样率, Color.Silver)
-        If a.音频参数_响度标准化_目标响度 <> "" Then 在参数总览输出文本("响度标准化目标：" & a.音频参数_响度标准化_目标响度, Color.Silver)
-        If a.音频参数_响度标准化_动态范围 <> "" Then 在参数总览输出文本("响度动态范围：" & a.音频参数_响度标准化_动态范围, Color.Silver)
-        If a.音频参数_响度标准化_峰值电平 <> "" Then 在参数总览输出文本("响度峰值电平：" & a.音频参数_响度标准化_峰值电平, Color.Silver)
-
-        '---------------- 图片参数 ----------------
-        If a.图片参数_编码器_编码名称 <> "" Then 在参数总览输出文本("图片编码器：" & a.图片参数_编码器_编码名称, Color.Silver)
-        If a.图片参数_编码器_质量值 <> "" Then 在参数总览输出文本("图片质量：" & a.图片参数_编码器_质量值, Color.Silver)
-
-        '---------------- 自定义参数 ----------------
-        If a.自定义参数_开头参数 <> "" Then 在参数总览输出文本("自定义开头参数：" & a.自定义参数_开头参数, Color.Gray)
-        If a.自定义参数_之前参数 <> "" Then 在参数总览输出文本("自定义之前参数：" & a.自定义参数_之前参数, Color.Gray)
-        If a.自定义参数_视频滤镜 <> "" Then 在参数总览输出文本("自定义视频滤镜：" & a.自定义参数_视频滤镜, Color.Gray)
-        If a.自定义参数_音频滤镜 <> "" Then 在参数总览输出文本("自定义音频滤镜：" & a.自定义参数_音频滤镜, Color.Gray)
-        If a.自定义参数_filter_complex <> "" Then 在参数总览输出文本("自定义 filter_complex：" & a.自定义参数_filter_complex, Color.Gray)
-        If a.自定义参数_视频参数 <> "" Then 在参数总览输出文本("自定义视频参数：" & a.自定义参数_视频参数, Color.Gray)
-        If a.自定义参数_音频参数 <> "" Then 在参数总览输出文本("自定义音频参数：" & a.自定义参数_音频参数, Color.Gray)
-        If a.自定义参数_之后参数 <> "" Then 在参数总览输出文本("自定义之后参数：" & a.自定义参数_之后参数, Color.Gray)
-        If a.自定义参数_最后参数 <> "" Then 在参数总览输出文本("自定义最后参数：" & a.自定义参数_最后参数, Color.Gray)
-
-        '---------------- 剪辑区间 ----------------
-        Select Case a.剪辑区间_方法
-            Case 1 : 在参数总览输出文本("剪辑区间方法：粗剪", Color.Silver)
-            Case 2 : 在参数总览输出文本("剪辑区间方法：精剪 (从头解码)", Color.Silver)
-            Case 3 : 在参数总览输出文本("剪辑区间方法：精剪 (快速响应)", Color.Silver)
-            Case Else : If a.剪辑区间_入点 <> "" OrElse a.剪辑区间_出点 <> "" Then 在参数总览输出文本("警告：指定了剪辑范围却没有指定剪辑方法，不会进行剪辑", Color.IndianRed)
-        End Select
-        If a.剪辑区间_入点 <> "" Then 在参数总览输出文本("剪辑入点：" & a.剪辑区间_入点, Color.Silver)
-        If a.剪辑区间_出点 <> "" Then 在参数总览输出文本("剪辑出点：" & a.剪辑区间_出点, Color.Silver)
-        If a.剪辑区间_向前解码多久秒 <> "" Then 在参数总览输出文本("快速响应的精剪向前解码 " & a.剪辑区间_向前解码多久秒 & " 秒", Color.Silver)
-
-        '---------------- 流控制 ----------------
-        If a.流控制_启用保留其他视频流 Then 在参数总览输出文本("已选择保留其他视频流", Color.Silver)
-        If a.流控制_将视频参数应用于指定流 IsNot Nothing AndAlso a.流控制_将视频参数应用于指定流.Length > 0 Then
-            在参数总览输出文本("应用视频参数到流：" & String.Join(",", a.流控制_将视频参数应用于指定流), Color.Silver)
-        End If
-        If a.流控制_启用保留其他音频流 Then 在参数总览输出文本("已选择保留其他音频流", Color.Silver)
-        If a.流控制_将音频参数应用于指定流 IsNot Nothing AndAlso a.流控制_将音频参数应用于指定流.Length > 0 Then
-            在参数总览输出文本("应用音频参数到流：" & String.Join(",", a.流控制_将音频参数应用于指定流), Color.Silver)
-        End If
-        If a.流控制_启用保留内嵌字幕流 Then 在参数总览输出文本("已选择保留内嵌字幕流", Color.Silver)
-        If a.流控制_启用自动混流同名字幕文件 Then 在参数总览输出文本("已选择自动混流同名字幕文件", Color.Silver)
-        Select Case a.流控制_元数据选项
-            Case 1 : 在参数总览输出文本("保留元数据", Color.Silver)
-            Case 2 : 在参数总览输出文本("清除元数据", Color.Silver)
-        End Select
-        Select Case a.流控制_章节选项
-            Case 1 : 在参数总览输出文本("保留章节", Color.Silver)
-            Case 2 : 在参数总览输出文本("清除章节", Color.Silver)
-        End Select
-        If a.流控制_附件选项 = 1 Then 在参数总览输出文本("保留附件", Color.Silver)
-
-        '---------------- 其他 ----------------
-
-        If a.输出位置 <> "" Then 在参数总览输出文本("输出位置：" & a.输出位置, Color.Gray)
     End Sub
 
     Sub 选择输出容器鼠标按下事件(sender As Object, e As MouseEventArgs)
@@ -812,5 +747,7 @@ Public Class 界面_常规流程参数_V2
             End If
         End If
     End Sub
+
+
 
 End Class

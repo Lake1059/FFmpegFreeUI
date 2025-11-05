@@ -19,8 +19,13 @@ Public Class Form1
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         启用Win32API深色模式(Me.Handle)
+
+        If Not FileIO.FileSystem.DirectoryExists(Path.Combine(Application.StartupPath, "Preset")) Then
+            FileIO.FileSystem.CreateDirectory(Path.Combine(Application.StartupPath, "Preset"))
+        End If
+
         Dim 版本号 = String.Join(".", Application.ProductVersion.Split("."c).Take(3)).Split("+"c)(0)
-        Me.Text = $"FFmpegFreeUI {版本号}"
+        Me.Text = $"FFmpegFreeUI EA {版本号}"
         Label主标题.Text = $"FFmpegFreeUI EA {版本号}"
 
         加载自定义音效()

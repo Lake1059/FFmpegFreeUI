@@ -22,7 +22,7 @@ Public Class 界面控制_添加文件
         End If
 
         Dim a As New 预设数据类型
-        预设管理.储存预设(a)
+        预设管理.储存预设(a, Form1.常规流程参数页面)
 
         For Each item As ListViewItem In Form1.ListView2.Items
             Dim m As New 编码任务.单片任务 With {.输入文件 = item.Text, .预设数据 = a}
@@ -61,7 +61,7 @@ Public Class 界面控制_添加文件
             Exit Sub
         End If
         Dim a As New 预设数据类型
-        预设管理.储存预设(a)
+        预设管理.储存预设(a, Form1.常规流程参数页面)
         For Each item In 拖入的文件
             Dim m As New 编码任务.单片任务 With {.输入文件 = item, .预设数据 = a}
             If 用户设置.实例对象.转译模式 Then m.输入文件 = 转译模式处理路径(item)

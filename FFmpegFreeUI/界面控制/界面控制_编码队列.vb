@@ -132,7 +132,7 @@ Public Class 界面控制_编码队列
     Public Shared Sub 将参数面板数据覆盖到任务()
         If Form1.ListView1.SelectedItems.Count = 0 Then Exit Sub
         Dim a As New 预设数据类型
-        预设管理.储存预设(a)
+        预设管理.储存预设(a, Form1.常规流程参数页面)
         For Each item As ListViewItem In Form1.ListView1.SelectedItems
             编码任务.队列(item.Index).预设数据 = a
         Next
@@ -145,7 +145,7 @@ Public Class 界面控制_编码队列
             Exit Sub
         End If
         If MsgBox("确定将此任务的配置数据用于覆盖参数面板中的设置？此操作不可逆！", MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
-            预设管理.显示预设(编码任务.队列(Form1.ListView1.SelectedItems(0).Index).预设数据)
+            预设管理.显示预设(编码任务.队列(Form1.ListView1.SelectedItems(0).Index).预设数据, Form1.常规流程参数页面)
         End If
     End Sub
 
