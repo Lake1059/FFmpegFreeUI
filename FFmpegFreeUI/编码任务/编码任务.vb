@@ -111,11 +111,6 @@ Public Class 编码任务
         Public Property 任务耗时计时器 As New Stopwatch
         Public Property 上次刷新界面的时间戳 As TimeSpan = Now.TimeOfDay
 
-        Public Property 保留创建时间 As Boolean = False
-        Public Property 保留修改时间 As Boolean = False
-        Public Property 保留访问时间 As Boolean = False
-
-
         Public Sub 开始()
             Try
                 错误列表.Clear()
@@ -135,19 +130,6 @@ Public Class 编码任务
 
                 输出文件 = 计算输出位置(输入文件, 预设数据.输出容器, 预设数据, 自定义输出位置)
                 命令行 = 预设管理.将预设数据转换为命令行(预设数据, 输入文件, 输出文件)
-
-                If 命令行.Contains("<KeepCreationTime>") Then
-                    命令行 = 命令行.Replace("<KeepCreationTime>", "")
-                    保留创建时间 = True
-                End If
-                If 命令行.Contains("<KeepWriteTime>") Then
-                    命令行 = 命令行.Replace("<KeepWriteTime>", "")
-                    保留修改时间 = True
-                End If
-                If 命令行.Contains("<KeepAccessTime>") Then
-                    命令行 = 命令行.Replace("<KeepAccessTime>", "")
-                    保留访问时间 = True
-                End If
 
                 If 预设数据.剪辑区间_入点 <> "" AndAlso 预设数据.剪辑区间_出点 <> "" Then
                     Dim t1 = 将时间字符串转换为时间类型(预设数据.剪辑区间_入点)
@@ -332,8 +314,8 @@ jx1:
                 状态 = 编码状态.已完成
 
                 If 预设数据 IsNot Nothing AndAlso 预设数据.视频参数_降噪_方式 = "avs" Then
-                    If My.Computer.FileSystem.FileExists(Path.Combine(Path.GetDirectoryName(输入文件), Path.GetFileNameWithoutExtension(输入文件) & ".avs")) Then
-                        My.Computer.FileSystem.DeleteFile(Path.Combine(Path.GetDirectoryName(输入文件), Path.GetFileNameWithoutExtension(输入文件) & ".avs"))
+                    If FileIO.FileSystem.FileExists(Path.Combine(Path.GetDirectoryName(输入文件), Path.GetFileNameWithoutExtension(输入文件) & ".avs")) Then
+                        FileIO.FileSystem.DeleteFile(Path.Combine(Path.GetDirectoryName(输入文件), Path.GetFileNameWithoutExtension(输入文件) & ".avs"))
                     End If
                 End If
 
@@ -342,20 +324,20 @@ jx1:
                     FileIO.FileSystem.DeleteFile(concat_demuxer)
                 End If
 
-                If 输出文件 <> "" AndAlso 输入文件 <> "" Then
-                    If 保留创建时间 OrElse 预设数据.输出命名_保留创建时间 Then File.SetCreationTime(输出文件, File.GetCreationTime(输入文件))
-                    If 保留修改时间 OrElse 预设数据.输出命名_保留修改时间 Then File.SetLastWriteTime(输出文件, File.GetLastWriteTime(输入文件))
-                    If 保留访问时间 OrElse 预设数据.输出命名_保留访问时间 Then File.SetLastAccessTime(输出文件, File.GetLastAccessTime(输入文件))
+                If FileIO.FileSystem.FileExists(输出文件) AndAlso FileIO.FileSystem.FileExists(输入文件) Then
+                    If 预设数据.输出命名_保留创建时间 Then File.SetCreationTime(输出文件, File.GetCreationTime(输入文件))
+                    If 预设数据.输出命名_保留修改时间 Then File.SetLastWriteTime(输出文件, File.GetLastWriteTime(输入文件))
+                    If 预设数据.输出命名_保留访问时间 Then File.SetLastAccessTime(输出文件, File.GetLastAccessTime(输入文件))
                 End If
 
-                Else
+            Else
                 全部任务已完成是否有错误 = True
                 If Not 手动停止不要尝试启动其他任务 Then 状态 = 编码状态.错误
                 If FileIO.FileSystem.FileExists(输出文件) Then
                     Select Case Path.GetExtension(输出文件).ToLower.Trim
                         Case ".mp4"
                             If 输出文件.Trim.Equals(输入文件.Trim, StringComparison.CurrentCultureIgnoreCase) Then
-                                界面线程执行(Sub() MsgBox("你在干什么？！输出文件等于输入文件？不要搞小聪明！", MsgBoxStyle.Critical))
+                                界面线程执行(Sub() MsgBox("你在干什么？！输出文件等于输入文件？", MsgBoxStyle.Critical))
                             Else
                                 FileIO.FileSystem.DeleteFile(输出文件, FileIO.UIOption.OnlyErrorDialogs, FileIO.RecycleOption.SendToRecycleBin)
                             End If

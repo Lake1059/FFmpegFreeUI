@@ -82,6 +82,16 @@ Public Class 预设管理
         End Select
         ui.动态模糊页面.UiTextBox混合比例.Text = a.视频参数_帧混合_混合比例
 
+        ui.超分页面.UiTextBox超分宽度.Text = a.视频参数_超分_目标宽度
+        ui.超分页面.UiTextBox超分高度.Text = a.视频参数_超分_目标高度
+        ui.超分页面.UiComboBox上采样算法.Text = a.视频参数_超分_上采样算法
+        ui.超分页面.UiComboBox下采样算法.Text = a.视频参数_超分_下采样算法
+        ui.超分页面.UiTextBox抗振铃强度.Text = a.视频参数_超分_抗振铃强度
+        ui.超分页面.ListView1.Items.Clear()
+        For Each c In a.视频参数_超分_着色器列表
+            ui.超分页面.ListView1.Items.Add(c)
+        Next
+
         Select Case a.视频参数_比特率_控制方式
             Case "CRF" : ui.UiComboBox全局质量控制方式.SelectedIndex = 1
             Case "VBR" : ui.UiComboBox全局质量控制方式.SelectedIndex = 2
@@ -106,6 +116,7 @@ Public Class 预设管理
         Next
 
         ui.UiComboBox像素格式.Text = a.视频参数_色彩管理_像素格式
+        ui.UiComboBox色彩空间滤镜选择.Text = a.视频参数_色彩管理_滤镜选择
         ui.UiComboBox矩阵系数.Text = a.视频参数_色彩管理_矩阵系数
         ui.UiComboBox色域.Text = a.视频参数_色彩管理_色域
         ui.UiComboBox传输特性.Text = a.视频参数_色彩管理_传输特性
@@ -113,6 +124,7 @@ Public Class 预设管理
             Case "tv" : ui.UiComboBox色彩范围.SelectedIndex = 1
             Case "pc" : ui.UiComboBox色彩范围.SelectedIndex = 2
         End Select
+        ui.UiComboBox色调映射算法.Text = a.视频参数_色彩管理_色调映射算法
         ui.UiComboBox色彩管理处理方式.SelectedIndex = a.视频参数_色彩管理_处理方式
         ui.UiTextBox简易调色亮度.Text = a.视频参数_色彩管理_亮度
         ui.UiTextBox简易调色对比度.Text = a.视频参数_色彩管理_对比度
@@ -300,6 +312,16 @@ Public Class 预设管理
         End Select
         a.视频参数_帧混合_混合比例 = ui.动态模糊页面.UiTextBox混合比例.Text
 
+        a.视频参数_超分_目标宽度 = ui.超分页面.UiTextBox超分宽度.Text
+        a.视频参数_超分_目标高度 = ui.超分页面.UiTextBox超分高度.Text
+        a.视频参数_超分_上采样算法 = ui.超分页面.UiComboBox上采样算法.Text
+        a.视频参数_超分_下采样算法 = ui.超分页面.UiComboBox下采样算法.Text
+        a.视频参数_超分_抗振铃强度 = ui.超分页面.UiTextBox抗振铃强度.Text
+        a.视频参数_超分_着色器列表.Clear()
+        For Each c As ListViewItem In ui.超分页面.ListView1.Items
+            a.视频参数_超分_着色器列表.Add(c.Text)
+        Next
+
         Select Case ui.UiComboBox全局质量控制方式.SelectedIndex
             Case 1 : a.视频参数_比特率_控制方式 = "CRF"
             Case 2 : a.视频参数_比特率_控制方式 = "VBR"
@@ -324,6 +346,7 @@ Public Class 预设管理
         Next
 
         a.视频参数_色彩管理_像素格式 = ui.UiComboBox像素格式.Text
+        a.视频参数_色彩管理_滤镜选择 = ui.UiComboBox色彩空间滤镜选择.Text
         a.视频参数_色彩管理_矩阵系数 = ui.UiComboBox矩阵系数.Text
         a.视频参数_色彩管理_色域 = ui.UiComboBox色域.Text
         a.视频参数_色彩管理_传输特性 = ui.UiComboBox传输特性.Text
@@ -331,6 +354,7 @@ Public Class 预设管理
             Case 1 : a.视频参数_色彩管理_范围 = "tv"
             Case 2 : a.视频参数_色彩管理_范围 = "pc"
         End Select
+        a.视频参数_色彩管理_色调映射算法 = ui.UiComboBox色调映射算法.Text
         a.视频参数_色彩管理_处理方式 = ui.UiComboBox色彩管理处理方式.SelectedIndex
         a.视频参数_色彩管理_亮度 = ui.UiTextBox简易调色亮度.Text
         a.视频参数_色彩管理_对比度 = ui.UiTextBox简易调色对比度.Text
@@ -474,6 +498,7 @@ Public Class 预设管理
 
         ui.插帧页面.重置所有选项()
         ui.动态模糊页面.重置所有选项()
+        ui.超分页面.重置所有选项()
 
         ui.UiComboBox全局质量控制方式.SelectedIndex = -1
         ui.UiComboBox全局质量控制参数.SelectedIndex = -1
@@ -485,10 +510,12 @@ Public Class 预设管理
         ui.清除全部进阶质量控制()
 
         ui.UiComboBox像素格式.Text = ""
+        ui.UiComboBox色彩空间滤镜选择.Text = ""
         ui.UiComboBox矩阵系数.Text = ""
         ui.UiComboBox色域.Text = ""
         ui.UiComboBox传输特性.Text = ""
         ui.UiComboBox色彩范围.SelectedIndex = -1
+        ui.UiComboBox色调映射算法.Text = ""
         ui.UiComboBox色彩管理处理方式.SelectedIndex = -1
         ui.UiComboBox降噪方式.SelectedIndex = -1
         ui.UiTextBox简易调色亮度.Text = ""
@@ -676,6 +703,17 @@ Public Class 预设管理
             视频滤镜参数集.Add(s1)
         End If
 
+        If a.视频参数_超分_目标宽度 <> "" AndAlso a.视频参数_超分_目标高度 <> "" Then
+            Dim s1 As String = $"libplacebo=w={a.视频参数_超分_目标宽度}:h={a.视频参数_超分_目标高度}"
+            If a.视频参数_超分_上采样算法 <> "" Then s1 &= $":upscaler={a.视频参数_超分_上采样算法}"
+            If a.视频参数_超分_下采样算法 <> "" Then s1 &= $":downscaler={a.视频参数_超分_下采样算法}"
+            If a.视频参数_超分_抗振铃强度 <> "" Then s1 &= $":antiringing={a.视频参数_超分_抗振铃强度}"
+            For Each shader In a.视频参数_超分_着色器列表
+                s1 &= $":custom_shader_path='{将路径转换为FFmpeg滤镜接受的格式(shader)}'"
+            Next
+            视频滤镜参数集.Add(s1)
+        End If
+
         Select Case a.视频参数_比特率_控制方式
             Case "VBR"
                 Select Case a.视频参数_编码器_具体编码
@@ -684,7 +722,6 @@ Public Class 预设管理
                     Case Else
                         视频参数 &= $"-rc vbr "
                 End Select
-
             Case "VBR HQ"
                 Select Case a.视频参数_编码器_具体编码
                     Case "hevc_nvenc", "h264_nvenc"
@@ -696,7 +733,6 @@ Public Class 预设管理
                     Case "av1_qsv", "hevc_qsv", "h264_qsv"
                         视频参数 &= $"-rc la_icq "
                 End Select
-
             Case "CRF"
             Case "CQP"
                 Select Case a.视频参数_编码器_具体编码
@@ -705,10 +741,10 @@ Public Class 预设管理
                     Case "av1_amf", "hevc_amf", "h264_amf"
                         视频参数 &= $"-rc cqp "
                 End Select
-
             Case "CBR"
                 视频参数 &= $"-rc cbr "
         End Select
+
         If a.视频参数_质量控制_值 <> "" Then
             Select Case a.视频参数_质量控制_参数名
                 Case "crf" : 视频参数 &= $"-crf {a.视频参数_质量控制_值} "
@@ -732,26 +768,46 @@ Public Class 预设管理
                 视频参数 &= $"-color_primaries {a.视频参数_色彩管理_色域} "
                 视频参数 &= $"-color_trc {a.视频参数_色彩管理_传输特性} "
                 视频参数 &= $"-color_range {a.视频参数_色彩管理_范围} "
-                Dim zscale As String = $"zscale=matrix={a.视频参数_色彩管理_矩阵系数}:primaries={a.视频参数_色彩管理_色域}:transfer={a.视频参数_色彩管理_传输特性}"
-                Select Case a.视频参数_色彩管理_范围
-                    Case "pc" : zscale &= ":range=full"
-                    Case "tv" : zscale &= ":range=limited"
+                Dim vf As String = ""
+                Select Case a.视频参数_色彩管理_滤镜选择
+                    Case "zscale"
+                        vf = $"zscale=matrix={a.视频参数_色彩管理_矩阵系数}:primaries={a.视频参数_色彩管理_色域}:transfer={a.视频参数_色彩管理_传输特性}"
+                    Case "libplacebo"
+                        vf = $"libplacebo=colorspace={a.视频参数_色彩管理_矩阵系数}:color_primaries={a.视频参数_色彩管理_色域}:color_trc={a.视频参数_色彩管理_传输特性}"
                 End Select
-                If a.视频参数_色彩管理_像素格式 <> "" Then zscale &= $",format={a.视频参数_色彩管理_像素格式}"
-                视频滤镜参数集.Add(zscale)
+                Select Case a.视频参数_色彩管理_范围
+                    Case "pc" : vf &= ":range=full"
+                    Case "tv" : vf &= ":range=limited"
+                End Select
+                Select Case a.视频参数_色彩管理_滤镜选择
+                    Case "libplacebo"
+                        If a.视频参数_色彩管理_色调映射算法 <> "" Then vf &= $":tonemapping={a.视频参数_色彩管理_色调映射算法}"
+                End Select
+                If a.视频参数_色彩管理_像素格式 <> "" Then vf &= $",format={a.视频参数_色彩管理_像素格式}"
+                视频滤镜参数集.Add(vf)
             Case 2 '仅写入元数据
                 视频参数 &= $"-colorspace {a.视频参数_色彩管理_矩阵系数} "
                 视频参数 &= $"-color_primaries {a.视频参数_色彩管理_色域} "
                 视频参数 &= $"-color_trc {a.视频参数_色彩管理_传输特性} "
                 视频参数 &= $"-color_range {a.视频参数_色彩管理_范围} "
             Case 3 '仅转换
-                Dim zscale As String = $"zscale=matrix={a.视频参数_色彩管理_矩阵系数}:primaries={a.视频参数_色彩管理_色域}:transfer={a.视频参数_色彩管理_传输特性}"
-                Select Case a.视频参数_色彩管理_范围
-                    Case "tv" : zscale &= ":range=limited"
-                    Case "pc" : zscale &= ":range=full"
+                Dim vf As String = ""
+                Select Case a.视频参数_色彩管理_滤镜选择
+                    Case "zscale"
+                        vf = $"zscale=matrix={a.视频参数_色彩管理_矩阵系数}:primaries={a.视频参数_色彩管理_色域}:transfer={a.视频参数_色彩管理_传输特性}"
+                    Case "libplacebo"
+                        vf = $"libplacebo=colorspace={a.视频参数_色彩管理_矩阵系数}:color_primaries={a.视频参数_色彩管理_色域}:color_trc={a.视频参数_色彩管理_传输特性}"
                 End Select
-                If a.视频参数_色彩管理_像素格式 <> "" Then zscale &= $",format={a.视频参数_色彩管理_像素格式}"
-                视频滤镜参数集.Add(zscale)
+                Select Case a.视频参数_色彩管理_范围
+                    Case "pc" : vf &= ":range=full"
+                    Case "tv" : vf &= ":range=limited"
+                End Select
+                Select Case a.视频参数_色彩管理_滤镜选择
+                    Case "libplacebo"
+                        If a.视频参数_色彩管理_色调映射算法 <> "" Then vf &= $":tonemapping={a.视频参数_色彩管理_色调映射算法}"
+                End Select
+                If a.视频参数_色彩管理_像素格式 <> "" Then vf &= $",format={a.视频参数_色彩管理_像素格式}"
+                视频滤镜参数集.Add(vf)
         End Select
 
         Select Case a.视频参数_降噪_方式
@@ -974,6 +1030,8 @@ Public Class 预设管理
             在RTF输出文本(RTF, "正在使用默认的附加时间戳", Color.Gray)
         ElseIf a.输出命名_使用自动命名 And a.输出命名_自动命名选项 <> 0 Then
             在RTF输出文本(RTF, "正在使用其他自动命名", Color.Gray)
+        ElseIf Not a.输出命名_使用自动命名 Then
+            在RTF输出文本(RTF, "注意没有使用自动命名", Color.IndianRed)
         End If
         If a.输出命名_不使用输出文件参数 Then 在RTF输出文本(RTF, "警告：已启用不使用输出文件参数，仅用于特殊需求，未指定自定义参数必报错", Color.IndianRed)
         If a.输出命名_开头文本 <> "" Then 在RTF输出文本(RTF, "输出文件开头文本：" & a.输出命名_开头文本, Color.Gray)
@@ -1026,6 +1084,13 @@ Public Class 预设管理
         If a.视频参数_帧混合_混合模式 <> "" Then 在RTF输出文本(RTF, "帧混合模式：" & a.视频参数_帧混合_混合模式, Color.Silver)
         If a.视频参数_帧混合_混合比例 <> "" Then 在RTF输出文本(RTF, "帧混合比例：" & a.视频参数_帧混合_混合比例, Color.Silver)
 
+        '---------------- 超分 ----------------
+        If a.视频参数_超分_目标宽度 <> "" Then 在RTF输出文本(RTF, $"超分目标分辨率：{a.视频参数_超分_目标宽度} x {a.视频参数_超分_目标高度}", Color.Silver)
+        If a.视频参数_超分_上采样算法 <> "" Then 在RTF输出文本(RTF, $"超分上采样算法：{a.视频参数_超分_上采样算法}", Color.Silver)
+        If a.视频参数_超分_下采样算法 <> "" Then 在RTF输出文本(RTF, $"超分下采样算法：{a.视频参数_超分_下采样算法}", Color.Silver)
+        If a.视频参数_超分_抗振铃强度 <> "" Then 在RTF输出文本(RTF, $"超分抗振铃强度：{a.视频参数_超分_抗振铃强度}", Color.Silver)
+        If a.视频参数_超分_着色器列表.Count > 0 Then 在RTF输出文本(RTF, $"超分正在使用 {a.视频参数_超分_着色器列表.Count} 个自定义着色器", Color.Silver)
+
         '---------------- 码率 / 质量控制 ----------------
         If a.视频参数_质量控制_参数名 <> "" Then 在RTF输出文本(RTF, "质量控制参数：" & a.视频参数_质量控制_参数名 & " = " & a.视频参数_质量控制_值, Color.Silver)
         If a.视频参数_比特率_基础 <> "" Then 在RTF输出文本(RTF, "基础码率：" & a.视频参数_比特率_基础, Color.Silver)
@@ -1037,11 +1102,14 @@ Public Class 预设管理
         End If
 
         '---------------- 色彩管理 ----------------
-        If a.视频参数_色彩管理_矩阵系数 <> "" Then 在RTF输出文本(RTF, "矩阵系数：" & a.视频参数_色彩管理_矩阵系数, Color.Silver)
-        If a.视频参数_色彩管理_色域 <> "" Then 在RTF输出文本(RTF, "色域：" & a.视频参数_色彩管理_色域, Color.Silver)
         If a.视频参数_色彩管理_像素格式 <> "" Then 在RTF输出文本(RTF, "像素格式：" & a.视频参数_色彩管理_像素格式, Color.Silver)
+
+        If a.视频参数_色彩管理_滤镜选择 <> "" Then 在RTF输出文本(RTF, "色彩转换滤镜：" & a.视频参数_色彩管理_滤镜选择, Color.Silver)
+        If a.视频参数_色彩管理_矩阵系数 <> "" Then 在RTF输出文本(RTF, "矩阵系数 & 颜色格式：" & a.视频参数_色彩管理_矩阵系数, Color.Silver)
+        If a.视频参数_色彩管理_色域 <> "" Then 在RTF输出文本(RTF, "色域：" & a.视频参数_色彩管理_色域, Color.Silver)
         If a.视频参数_色彩管理_传输特性 <> "" Then 在RTF输出文本(RTF, "传输特性：" & a.视频参数_色彩管理_传输特性, Color.Silver)
         If a.视频参数_色彩管理_范围 <> "" Then 在RTF输出文本(RTF, "色彩范围：" & a.视频参数_色彩管理_范围, Color.Silver)
+        If a.视频参数_色彩管理_色调映射算法 <> "" Then 在RTF输出文本(RTF, "色调映射算法：" & a.视频参数_色彩管理_色调映射算法, Color.Silver)
         Select Case a.视频参数_色彩管理_处理方式
             Case 1 : 在RTF输出文本(RTF, "色彩管理写入元数据并转换", Color.Silver)
             Case 2 : 在RTF输出文本(RTF, "色彩管理只写入元数据不转换", Color.Silver)
@@ -1124,7 +1192,6 @@ Public Class 预设管理
         If a.流控制_附件选项 = 1 Then 在RTF输出文本(RTF, "保留附件", Color.Silver)
 
         '---------------- 其他 ----------------
-
         If a.输出位置 <> "" Then 在RTF输出文本(RTF, "输出位置：" & a.输出位置, Color.Gray)
     End Sub
 End Class

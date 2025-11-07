@@ -71,9 +71,9 @@ Partial Class Form帧混合
         Label123.ForeColor = Color.Gray
         Label123.Location = New Point(10, 10)
         Label123.Name = "Label123"
-        Label123.Size = New Size(419, 38)
+        Label123.Size = New Size(347, 38)
         Label123.TabIndex = 4
-        Label123.Text = "Time Blend 是 ffmpeg 内置的的滤镜，通过某种算法将相邻帧进行混合" & vbCrLf & "但注意算法算出来的动态模糊不可能比得过真实录制的效果"
+        Label123.Text = "Time Blend 将相邻帧进行混合以模拟相机的效果" & vbCrLf & "但注意算法算出来的动态模糊不可能比得过真实录制的效果"
         ' 
         ' Label124
         ' 
@@ -134,9 +134,9 @@ Partial Class Form帧混合
         UiTextBox降低帧率.Name = "UiTextBox降低帧率"
         UiTextBox降低帧率.Padding = New Padding(5)
         UiTextBox降低帧率.Radius = 30
-        UiTextBox降低帧率.RectColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
-        UiTextBox降低帧率.RectDisableColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
-        UiTextBox降低帧率.RectReadOnlyColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
+        UiTextBox降低帧率.RectColor = Color.DimGray
+        UiTextBox降低帧率.RectDisableColor = Color.DimGray
+        UiTextBox降低帧率.RectReadOnlyColor = Color.DimGray
         UiTextBox降低帧率.ScrollBarBackColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
         UiTextBox降低帧率.ScrollBarColor = Color.DimGray
         UiTextBox降低帧率.ScrollBarStyleInherited = False
@@ -227,6 +227,7 @@ Partial Class Form帧混合
         UiComboBox混合算法.MinimumSize = New Size(63, 0)
         UiComboBox混合算法.Name = "UiComboBox混合算法"
         UiComboBox混合算法.Padding = New Padding(0, 0, 30, 2)
+        UiComboBox混合算法.RadiusSides = Sunny.UI.UICornerRadiusSides.None
         UiComboBox混合算法.RectColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
         UiComboBox混合算法.RectDisableColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
         UiComboBox混合算法.ScrollBarHandleWidth = 20
@@ -308,9 +309,9 @@ Partial Class Form帧混合
         UiTextBox混合比例.Name = "UiTextBox混合比例"
         UiTextBox混合比例.Padding = New Padding(5)
         UiTextBox混合比例.Radius = 30
-        UiTextBox混合比例.RectColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
-        UiTextBox混合比例.RectDisableColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
-        UiTextBox混合比例.RectReadOnlyColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
+        UiTextBox混合比例.RectColor = Color.DimGray
+        UiTextBox混合比例.RectDisableColor = Color.DimGray
+        UiTextBox混合比例.RectReadOnlyColor = Color.DimGray
         UiTextBox混合比例.ScrollBarBackColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
         UiTextBox混合比例.ScrollBarColor = Color.DimGray
         UiTextBox混合比例.ScrollBarStyleInherited = False
@@ -336,8 +337,8 @@ Partial Class Form帧混合
         ' 
         ' Form帧混合
         ' 
-        AutoScaleDimensions = New SizeF(8F, 19F)
-        AutoScaleMode = AutoScaleMode.Font
+        AutoScaleDimensions = New SizeF(96F, 96F)
+        AutoScaleMode = AutoScaleMode.Dpi
         BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         ClientSize = New Size(534, 261)
         Controls.Add(Panel3)

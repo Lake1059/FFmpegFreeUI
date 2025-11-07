@@ -49,6 +49,13 @@ Public Class 预设数据类型
     Public Property 视频参数_帧混合_混合模式 As String = ""
     Public Property 视频参数_帧混合_混合比例 As String = ""
 
+    Public Property 视频参数_超分_目标宽度 As String = ""
+    Public Property 视频参数_超分_目标高度 As String = ""
+    Public Property 视频参数_超分_上采样算法 As String = ""
+    Public Property 视频参数_超分_下采样算法 As String = ""
+    Public Property 视频参数_超分_抗振铃强度 As String = ""
+    Public Property 视频参数_超分_着色器列表 As New List(Of String)
+
     Public Property 视频参数_比特率_控制方式 As String = ""
     Public Property 视频参数_质量控制_参数名 As String = ""
     Public Property 视频参数_质量控制_值 As String = ""
@@ -59,10 +66,12 @@ Public Class 预设数据类型
     Public Property 视频参数_质量控制_进阶参数集 As New List(Of String)
 
     Public Property 视频参数_色彩管理_像素格式 As String = ""
+    Public Property 视频参数_色彩管理_滤镜选择 As String = ""
     Public Property 视频参数_色彩管理_矩阵系数 As String = ""
     Public Property 视频参数_色彩管理_色域 As String = ""
     Public Property 视频参数_色彩管理_传输特性 As String = ""
     Public Property 视频参数_色彩管理_范围 As String = ""
+    Public Property 视频参数_色彩管理_色调映射算法 As String = ""
     Public Property 视频参数_色彩管理_处理方式 As String = ""
     Public Property 视频参数_色彩管理_亮度 As String = ""
     Public Property 视频参数_色彩管理_对比度 As String = ""

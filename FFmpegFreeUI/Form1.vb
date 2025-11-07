@@ -10,6 +10,7 @@ Public Class Form1
     Public 常规流程参数页面 As New 界面_常规流程参数_V2
     Public 混流页面 As New 界面_混流
     Public 合并页面 As New 界面_合并
+    Public 设置页面 As New 界面_设置
 
     Public 性能统计对象 As New 性能统计
     Public 性能统计刷新计时器 As New Timer With {.Interval = 2000, .Enabled = False}
@@ -25,22 +26,15 @@ Public Class Form1
         End If
 
         Dim 版本号 = String.Join(".", Application.ProductVersion.Split("."c).Take(3)).Split("+"c)(0)
-        Me.Text = $"FFmpegFreeUI EA {版本号}"
-        Label主标题.Text = $"FFmpegFreeUI EA {版本号}"
+        Me.Text = $"FFmpegFreeUI {版本号}"
+        Label主标题.Text = $"FFmpegFreeUI Official {版本号}"
 
-        加载自定义音效()
-        加载自定义图标()
         视频编码器数据库.初始化()
         界面控制.初始化()
         用户设置.启动时加载设置()
-
-        UiComboBox字体名称.Text = 用户设置.实例对象.字体
-        If UiComboBox字体名称.Items.Contains("微软雅黑") Then UiComboBox字体名称.Font = New Font("微软雅黑", UiComboBox字体名称.Font.Size)
-        SetControlFont(用户设置.实例对象.字体, Me, {UiComboBox字体名称}, True)
-
+        插件管理.启动时读取个性化功能解锁器()
         编码队列右键菜单.重设字体()
         编码队列管理选项.重设字体()
-
         界面控制.界面校准()
         If DPI <> 1 Then DPI变动时校准界面()
 
@@ -82,10 +76,10 @@ Public Class Form1
         End If
     End Sub
 
-    Private Sub Form1_Move(sender As Object, e As EventArgs) Handles Me.Move
-        If 是否初始化 = False Then Exit Sub
-        界面控制.界面校准()
-    End Sub
+    'Private Sub Form1_Move(sender As Object, e As EventArgs) Handles Me.Move
+    '    If 是否初始化 = False Then Exit Sub
+    '    界面控制.界面校准()
+    'End Sub
 
     Sub DPI变动时校准界面()
         Me.MinimumSize = New Size(0, 0)
@@ -117,9 +111,19 @@ Public Class Form1
         End If
     End Sub
     Private Sub ListView1_DragDrop(sender As Object, e As DragEventArgs) Handles ListView1.DragDrop
-        If e.Data.GetDataPresent(DataFormats.FileDrop) Then
-            界面控制_添加文件.加入编码队列(e.Data.GetData(DataFormats.FileDrop))
-        End If
+        Dim files() As String = e.Data.GetData(DataFormats.FileDrop)
+        Select Case e.KeyState
+            Case 4, 8, 32
+                If files.Length > 0 Then
+                    Dim a As New Form独立参数面板 With {.文件列表 = files}
+                    a.Label1.Text = $"为 {files.Length} 个文件使用单独的参数方案{vbCrLf}{files(0)}"
+                    显示窗体(a, Me)
+                End If
+            Case Else
+                If files.Length > 0 Then
+                    界面控制_添加文件.加入编码队列(files, 常规流程参数页面)
+                End If
+        End Select
     End Sub
     Private Sub ListView1_KeyDown(sender As Object, e As KeyEventArgs) Handles ListView1.KeyDown
         Select Case e.KeyCode
@@ -211,10 +215,10 @@ Public Class Form1
         SetControlFont(用户设置.实例对象.字体, Panel24)
     End Sub
 
-    Private Sub 加载自定义音效()
-        If FileIO.FileSystem.FileExists(Path.Combine(Application.StartupPath, "Sound_Finish.wav")) Then
+    Public Shared Sub 加载自定义任务完成音效(file As String)
+        If FileIO.FileSystem.FileExists(file) Then
             Try
-                Using fileStream As New FileStream(Path.Combine(Application.StartupPath, "Sound_Finish.wav"), FileMode.Open, FileAccess.Read)
+                Using fileStream As New FileStream(file, FileMode.Open, FileAccess.Read)
                     Dim soundStream As New MemoryStream()
                     fileStream.CopyTo(soundStream)
                     soundStream.Position = 0
@@ -225,9 +229,11 @@ Public Class Form1
                 MsgBox(ex.Message, MsgBoxStyle.Critical)
             End Try
         End If
-        If FileIO.FileSystem.FileExists(Path.Combine(Application.StartupPath, "Sound_Error.wav")) Then
+    End Sub
+    Public Shared Sub 加载自定义任务失败音效(file As String)
+        If FileIO.FileSystem.FileExists(file) Then
             Try
-                Using fileStream As New FileStream(Path.Combine(Application.StartupPath, "Sound_Error.wav"), FileMode.Open, FileAccess.Read)
+                Using fileStream As New FileStream(file, FileMode.Open, FileAccess.Read)
                     Dim soundStream As New MemoryStream()
                     fileStream.CopyTo(soundStream)
                     soundStream.Position = 0
@@ -239,17 +245,19 @@ Public Class Form1
             End Try
         End If
     End Sub
-
-    Private Sub 加载自定义图标()
-        If FileIO.FileSystem.FileExists(Path.Combine(Application.StartupPath, "icon.png")) Then
-            Me.PictureBox1.Image = LoadImageFromFile(Path.Combine(Application.StartupPath, "icon.png")).GetThumbnailImage(Me.PictureBox1.Width, Me.PictureBox1.Height, Nothing, Nothing)
-            Using bitmap As New Bitmap(Me.PictureBox1.Image)
-                Me.Icon = Icon.FromHandle(bitmap.GetHicon())
-            End Using
-        Else
+    Public Sub 加载自定义图标(img As String)
+        Try
             Me.PictureBox1.Width = Me.PictureBox1.Height
-            Me.PictureBox1.Image = My.Resources.Resource1.AppIcon.GetThumbnailImage(Me.PictureBox1.Width, Me.PictureBox1.Height, Nothing, Nothing)
-        End If
+            If FileIO.FileSystem.FileExists(img) AndAlso img IsNot Nothing AndAlso img <> "" Then
+                Me.PictureBox1.Image = LoadImageFromFile(img).GetThumbnailImage(Me.PictureBox1.Width, Me.PictureBox1.Height, Nothing, Nothing)
+                Using bitmap As New Bitmap(Me.PictureBox1.Image)
+                    Me.Icon = Icon.FromHandle(bitmap.GetHicon())
+                End Using
+            Else
+                Me.PictureBox1.Image = My.Resources.Resource1.AppIcon.GetThumbnailImage(Me.PictureBox1.Width, Me.PictureBox1.Height, Nothing, Nothing)
+            End If
+        Catch ex As Exception
+        End Try
     End Sub
 
 End Class

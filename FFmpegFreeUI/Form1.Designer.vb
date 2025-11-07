@@ -27,6 +27,7 @@ Partial Class Form1
         UiTabControlMenu1 = New Sunny.UI.UITabControlMenu()
         TabPage起始页面 = New TabPage()
         Panel5 = New Panel()
+        Panel新闻列表面板 = New Panel()
         Label29 = New Label()
         Panel44 = New Panel()
         Label35 = New Label()
@@ -162,57 +163,9 @@ Partial Class Form1
         Label16 = New Label()
         UiComboBox3 = New Sunny.UI.UIComboBox()
         TabPage软件设置 = New TabPage()
-        Label30 = New Label()
-        Panel14 = New Panel()
-        Panel46 = New Panel()
-        UiCheckBox转译模式 = New Sunny.UI.UICheckBox()
-        Panel45 = New Panel()
-        UiTextBox覆盖参数传递 = New Sunny.UI.UITextBox()
-        Label40 = New Label()
-        Panel48 = New Panel()
-        UiTextBox替代进程的文件名 = New Sunny.UI.UITextBox()
-        Label43 = New Label()
-        Panel43 = New Panel()
-        UiTextBoxFFmpeg自定义工作目录 = New Sunny.UI.UITextBox()
-        Label25 = New Label()
-        UiButton13 = New Sunny.UI.UIButton()
-        Label32 = New Label()
-        Label41 = New Label()
-        Panel11 = New Panel()
-        Panel19 = New Panel()
-        UiComboBox混淆任务名称 = New Sunny.UI.UIComboBox()
-        Label1 = New Label()
-        Panel12 = New Panel()
-        UiComboBox自动重置参数面板的页面选择 = New Sunny.UI.UIComboBox()
-        Label50 = New Label()
-        Panel10 = New Panel()
-        UiComboBox自动开始任务 = New Sunny.UI.UIComboBox()
-        Label20 = New Label()
-        Panel8 = New Panel()
-        UiComboBox提示音 = New Sunny.UI.UIComboBox()
-        Label49 = New Label()
-        Panel42 = New Panel()
-        UiComboBox有任务时系统状态 = New Sunny.UI.UIComboBox()
-        Label33 = New Label()
-        Label38 = New Label()
-        Panel40 = New Panel()
-        Label34 = New Label()
-        UiComboBox自动开始最大任务数量 = New Sunny.UI.UIComboBox()
-        Panel39 = New Panel()
-        UiTextBox快捷输入CPU核心 = New Sunny.UI.UITextBox()
-        Label106 = New Label()
-        UiTextBox处理器核心 = New Sunny.UI.UITextBox()
-        Label48 = New Label()
-        Label39 = New Label()
-        Panel38 = New Panel()
-        Label字体预览文本 = New Label()
-        UiButton4 = New Sunny.UI.UIButton()
-        Label137 = New Label()
-        UiComboBox字体名称 = New Sunny.UI.UIComboBox()
-        Label47 = New Label()
-        Label130 = New Label()
         UiTabControlMenu1.SuspendLayout()
         TabPage起始页面.SuspendLayout()
+        Panel5.SuspendLayout()
         Panel44.SuspendLayout()
         Panel7.SuspendLayout()
         Panel73.SuspendLayout()
@@ -247,21 +200,6 @@ Partial Class Form1
         TabPage插件扩展.SuspendLayout()
         Panel21.SuspendLayout()
         Panel22.SuspendLayout()
-        TabPage软件设置.SuspendLayout()
-        Panel14.SuspendLayout()
-        Panel46.SuspendLayout()
-        Panel45.SuspendLayout()
-        Panel48.SuspendLayout()
-        Panel43.SuspendLayout()
-        Panel11.SuspendLayout()
-        Panel19.SuspendLayout()
-        Panel12.SuspendLayout()
-        Panel10.SuspendLayout()
-        Panel8.SuspendLayout()
-        Panel42.SuspendLayout()
-        Panel40.SuspendLayout()
-        Panel39.SuspendLayout()
-        Panel38.SuspendLayout()
         SuspendLayout()
         ' 
         ' UiTabControlMenu1
@@ -299,9 +237,6 @@ Partial Class Form1
         ' 
         TabPage起始页面.BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         TabPage起始页面.Controls.Add(Panel5)
-        TabPage起始页面.Controls.Add(Label29)
-        TabPage起始页面.Controls.Add(Panel44)
-        TabPage起始页面.Controls.Add(Panel7)
         TabPage起始页面.Controls.Add(Panel73)
         TabPage起始页面.Font = New Font("微软雅黑", 10F)
         TabPage起始页面.Location = New Point(151, 0)
@@ -312,19 +247,34 @@ Partial Class Form1
         ' 
         ' Panel5
         ' 
+        Panel5.BackgroundImageLayout = ImageLayout.Zoom
+        Panel5.Controls.Add(Panel新闻列表面板)
+        Panel5.Controls.Add(Label29)
+        Panel5.Controls.Add(Panel44)
+        Panel5.Controls.Add(Panel7)
         Panel5.Dock = DockStyle.Fill
-        Panel5.Location = New Point(640, 144)
+        Panel5.Location = New Point(0, 90)
         Panel5.Name = "Panel5"
-        Panel5.Padding = New Padding(1, 0, 20, 20)
-        Panel5.Size = New Size(393, 517)
-        Panel5.TabIndex = 86
+        Panel5.Size = New Size(1033, 571)
+        Panel5.TabIndex = 87
+        ' 
+        ' Panel新闻列表面板
+        ' 
+        Panel新闻列表面板.BackColor = Color.Transparent
+        Panel新闻列表面板.Dock = DockStyle.Fill
+        Panel新闻列表面板.Location = New Point(640, 54)
+        Panel新闻列表面板.Name = "Panel新闻列表面板"
+        Panel新闻列表面板.Padding = New Padding(1, 0, 20, 20)
+        Panel新闻列表面板.Size = New Size(393, 517)
+        Panel新闻列表面板.TabIndex = 86
         ' 
         ' Label29
         ' 
         Label29.AutoSize = True
+        Label29.BackColor = Color.Transparent
         Label29.Dock = DockStyle.Top
         Label29.Font = New Font("微软雅黑", 13F)
-        Label29.Location = New Point(640, 90)
+        Label29.Location = New Point(640, 0)
         Label29.Name = "Label29"
         Label29.Padding = New Padding(0, 20, 0, 10)
         Label29.Size = New Size(82, 54)
@@ -333,6 +283,7 @@ Partial Class Form1
         ' 
         ' Panel44
         ' 
+        Panel44.BackColor = Color.Transparent
         Panel44.BackgroundImageLayout = ImageLayout.Stretch
         Panel44.Controls.Add(Label35)
         Panel44.Controls.Add(Label28)
@@ -349,7 +300,7 @@ Partial Class Form1
         Panel44.Controls.Add(Label9)
         Panel44.Dock = DockStyle.Left
         Panel44.Font = New Font("微软雅黑", 9.75F)
-        Panel44.Location = New Point(300, 90)
+        Panel44.Location = New Point(300, 0)
         Panel44.Name = "Panel44"
         Panel44.Padding = New Padding(0, 0, 20, 0)
         Panel44.Size = New Size(340, 571)
@@ -522,7 +473,7 @@ Partial Class Form1
         ' 
         ' Panel7
         ' 
-        Panel7.BackColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        Panel7.BackColor = Color.Transparent
         Panel7.Controls.Add(Label122)
         Panel7.Controls.Add(Label75)
         Panel7.Controls.Add(Label73)
@@ -539,7 +490,7 @@ Partial Class Form1
         Panel7.Controls.Add(LinkLabel7)
         Panel7.Controls.Add(Label127)
         Panel7.Dock = DockStyle.Left
-        Panel7.Location = New Point(0, 90)
+        Panel7.Location = New Point(0, 0)
         Panel7.Name = "Panel7"
         Panel7.Size = New Size(300, 571)
         Panel7.TabIndex = 84
@@ -2229,883 +2180,11 @@ Partial Class Form1
         ' 
         TabPage软件设置.AutoScroll = True
         TabPage软件设置.BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
-        TabPage软件设置.Controls.Add(Label30)
-        TabPage软件设置.Controls.Add(Panel14)
-        TabPage软件设置.Controls.Add(Panel11)
-        TabPage软件设置.Controls.Add(Panel40)
-        TabPage软件设置.Controls.Add(Panel39)
-        TabPage软件设置.Controls.Add(Label48)
-        TabPage软件设置.Controls.Add(Label39)
-        TabPage软件设置.Controls.Add(Panel38)
-        TabPage软件设置.Controls.Add(Label47)
-        TabPage软件设置.Controls.Add(Label130)
         TabPage软件设置.Location = New Point(151, 0)
         TabPage软件设置.Name = "TabPage软件设置"
         TabPage软件设置.Size = New Size(1033, 661)
         TabPage软件设置.TabIndex = 24
         TabPage软件设置.Text = "设置"
-        ' 
-        ' Label30
-        ' 
-        Label30.AutoSize = True
-        Label30.Dock = DockStyle.Top
-        Label30.Font = New Font("微软雅黑", 10F)
-        Label30.ForeColor = Color.Gray
-        Label30.Location = New Point(0, 1011)
-        Label30.Name = "Label30"
-        Label30.Padding = New Padding(16, 20, 20, 20)
-        Label30.Size = New Size(484, 60)
-        Label30.TabIndex = 118
-        Label30.Text = "此处的设置在正常退出时自动保存，位于程序目录下的 Settings.json。"
-        Label30.TextAlign = ContentAlignment.BottomLeft
-        ' 
-        ' Panel14
-        ' 
-        Panel14.AutoSize = True
-        Panel14.Controls.Add(Panel46)
-        Panel14.Controls.Add(Panel45)
-        Panel14.Controls.Add(Label40)
-        Panel14.Controls.Add(Panel48)
-        Panel14.Controls.Add(Label43)
-        Panel14.Controls.Add(Panel43)
-        Panel14.Controls.Add(Label32)
-        Panel14.Controls.Add(Label41)
-        Panel14.Dock = DockStyle.Top
-        Panel14.Location = New Point(0, 717)
-        Panel14.Name = "Panel14"
-        Panel14.Size = New Size(1016, 294)
-        Panel14.TabIndex = 128
-        ' 
-        ' Panel46
-        ' 
-        Panel46.Controls.Add(UiCheckBox转译模式)
-        Panel46.Dock = DockStyle.Top
-        Panel46.Location = New Point(0, 254)
-        Panel46.Name = "Panel46"
-        Panel46.Padding = New Padding(17, 10, 20, 0)
-        Panel46.Size = New Size(1016, 40)
-        Panel46.TabIndex = 133
-        ' 
-        ' UiCheckBox转译模式
-        ' 
-        UiCheckBox转译模式.CheckBoxColor = Color.Silver
-        UiCheckBox转译模式.CheckBoxSize = 20
-        UiCheckBox转译模式.Dock = DockStyle.Top
-        UiCheckBox转译模式.Font = New Font("微软雅黑", 10F)
-        UiCheckBox转译模式.ForeColor = Color.Silver
-        UiCheckBox转译模式.Location = New Point(17, 10)
-        UiCheckBox转译模式.MinimumSize = New Size(1, 1)
-        UiCheckBox转译模式.Name = "UiCheckBox转译模式"
-        UiCheckBox转译模式.Size = New Size(979, 30)
-        UiCheckBox转译模式.TabIndex = 114
-        UiCheckBox转译模式.Text = "转译模式（去除盘符、斜杠改为除号）"
-        ' 
-        ' Panel45
-        ' 
-        Panel45.Controls.Add(UiTextBox覆盖参数传递)
-        Panel45.Dock = DockStyle.Top
-        Panel45.Location = New Point(0, 214)
-        Panel45.Name = "Panel45"
-        Panel45.Padding = New Padding(17, 10, 20, 0)
-        Panel45.Size = New Size(1016, 40)
-        Panel45.TabIndex = 132
-        ' 
-        ' UiTextBox覆盖参数传递
-        ' 
-        UiTextBox覆盖参数传递.Dock = DockStyle.Left
-        UiTextBox覆盖参数传递.FillColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiTextBox覆盖参数传递.FillColor2 = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiTextBox覆盖参数传递.FillDisableColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiTextBox覆盖参数传递.FillReadOnlyColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiTextBox覆盖参数传递.Font = New Font("微软雅黑", 10F)
-        UiTextBox覆盖参数传递.ForeColor = Color.Silver
-        UiTextBox覆盖参数传递.ForeDisableColor = Color.Silver
-        UiTextBox覆盖参数传递.ForeReadOnlyColor = Color.Silver
-        UiTextBox覆盖参数传递.Location = New Point(17, 10)
-        UiTextBox覆盖参数传递.Margin = New Padding(4, 5, 4, 5)
-        UiTextBox覆盖参数传递.MinimumSize = New Size(1, 16)
-        UiTextBox覆盖参数传递.Name = "UiTextBox覆盖参数传递"
-        UiTextBox覆盖参数传递.Padding = New Padding(5)
-        UiTextBox覆盖参数传递.Radius = 30
-        UiTextBox覆盖参数传递.RectColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiTextBox覆盖参数传递.RectDisableColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiTextBox覆盖参数传递.RectReadOnlyColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiTextBox覆盖参数传递.ShowText = False
-        UiTextBox覆盖参数传递.Size = New Size(600, 30)
-        UiTextBox覆盖参数传递.TabIndex = 90
-        UiTextBox覆盖参数传递.TextAlignment = ContentAlignment.MiddleLeft
-        UiTextBox覆盖参数传递.Watermark = "通常此功能在 Linux 和 macOS 中使用转译运行时可能需要"
-        ' 
-        ' Label40
-        ' 
-        Label40.AutoSize = True
-        Label40.Dock = DockStyle.Top
-        Label40.Font = New Font("微软雅黑", 10F)
-        Label40.ForeColor = Color.Gray
-        Label40.Location = New Point(0, 184)
-        Label40.Name = "Label40"
-        Label40.Padding = New Padding(16, 10, 0, 0)
-        Label40.Size = New Size(446, 30)
-        Label40.TabIndex = 131
-        Label40.Text = "覆盖 Process 的 参数传递，用 <args> 来表示 3FUI 生成的参数部分"
-        ' 
-        ' Panel48
-        ' 
-        Panel48.Controls.Add(UiTextBox替代进程的文件名)
-        Panel48.Dock = DockStyle.Top
-        Panel48.Location = New Point(0, 144)
-        Panel48.Name = "Panel48"
-        Panel48.Padding = New Padding(17, 10, 20, 0)
-        Panel48.Size = New Size(1016, 40)
-        Panel48.TabIndex = 129
-        ' 
-        ' UiTextBox替代进程的文件名
-        ' 
-        UiTextBox替代进程的文件名.Dock = DockStyle.Left
-        UiTextBox替代进程的文件名.FillColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiTextBox替代进程的文件名.FillColor2 = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiTextBox替代进程的文件名.FillDisableColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiTextBox替代进程的文件名.FillReadOnlyColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiTextBox替代进程的文件名.Font = New Font("微软雅黑", 10F)
-        UiTextBox替代进程的文件名.ForeColor = Color.Silver
-        UiTextBox替代进程的文件名.ForeDisableColor = Color.Silver
-        UiTextBox替代进程的文件名.ForeReadOnlyColor = Color.Silver
-        UiTextBox替代进程的文件名.Location = New Point(17, 10)
-        UiTextBox替代进程的文件名.Margin = New Padding(4, 5, 4, 5)
-        UiTextBox替代进程的文件名.MinimumSize = New Size(1, 16)
-        UiTextBox替代进程的文件名.Name = "UiTextBox替代进程的文件名"
-        UiTextBox替代进程的文件名.Padding = New Padding(5)
-        UiTextBox替代进程的文件名.Radius = 30
-        UiTextBox替代进程的文件名.RectColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiTextBox替代进程的文件名.RectDisableColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiTextBox替代进程的文件名.RectReadOnlyColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiTextBox替代进程的文件名.ShowText = False
-        UiTextBox替代进程的文件名.Size = New Size(600, 30)
-        UiTextBox替代进程的文件名.TabIndex = 90
-        UiTextBox替代进程的文件名.TextAlignment = ContentAlignment.MiddleLeft
-        UiTextBox替代进程的文件名.Watermark = "通常此功能在 Linux 和 macOS 中使用转译运行时可能需要"
-        ' 
-        ' Label43
-        ' 
-        Label43.AutoSize = True
-        Label43.Dock = DockStyle.Top
-        Label43.Font = New Font("微软雅黑", 10F)
-        Label43.ForeColor = Color.Gray
-        Label43.Location = New Point(0, 114)
-        Label43.Name = "Label43"
-        Label43.Padding = New Padding(16, 10, 0, 0)
-        Label43.Size = New Size(192, 30)
-        Label43.TabIndex = 130
-        Label43.Text = "替代 Process 的 FileName"
-        ' 
-        ' Panel43
-        ' 
-        Panel43.Controls.Add(UiTextBoxFFmpeg自定义工作目录)
-        Panel43.Controls.Add(Label25)
-        Panel43.Controls.Add(UiButton13)
-        Panel43.Dock = DockStyle.Top
-        Panel43.Location = New Point(0, 74)
-        Panel43.Name = "Panel43"
-        Panel43.Padding = New Padding(17, 10, 20, 0)
-        Panel43.Size = New Size(1016, 40)
-        Panel43.TabIndex = 127
-        ' 
-        ' UiTextBoxFFmpeg自定义工作目录
-        ' 
-        UiTextBoxFFmpeg自定义工作目录.Dock = DockStyle.Left
-        UiTextBoxFFmpeg自定义工作目录.FillColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiTextBoxFFmpeg自定义工作目录.FillColor2 = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiTextBoxFFmpeg自定义工作目录.FillDisableColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiTextBoxFFmpeg自定义工作目录.FillReadOnlyColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiTextBoxFFmpeg自定义工作目录.Font = New Font("微软雅黑", 10F)
-        UiTextBoxFFmpeg自定义工作目录.ForeColor = Color.Silver
-        UiTextBoxFFmpeg自定义工作目录.ForeDisableColor = Color.Silver
-        UiTextBoxFFmpeg自定义工作目录.ForeReadOnlyColor = Color.Silver
-        UiTextBoxFFmpeg自定义工作目录.Location = New Point(107, 10)
-        UiTextBoxFFmpeg自定义工作目录.Margin = New Padding(4, 5, 4, 5)
-        UiTextBoxFFmpeg自定义工作目录.MinimumSize = New Size(1, 16)
-        UiTextBoxFFmpeg自定义工作目录.Name = "UiTextBoxFFmpeg自定义工作目录"
-        UiTextBoxFFmpeg自定义工作目录.Padding = New Padding(5)
-        UiTextBoxFFmpeg自定义工作目录.Radius = 30
-        UiTextBoxFFmpeg自定义工作目录.RectColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiTextBoxFFmpeg自定义工作目录.RectDisableColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiTextBoxFFmpeg自定义工作目录.RectReadOnlyColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiTextBoxFFmpeg自定义工作目录.ShowText = False
-        UiTextBoxFFmpeg自定义工作目录.Size = New Size(510, 30)
-        UiTextBoxFFmpeg自定义工作目录.TabIndex = 92
-        UiTextBoxFFmpeg自定义工作目录.TextAlignment = ContentAlignment.MiddleLeft
-        UiTextBoxFFmpeg自定义工作目录.Watermark = ""
-        ' 
-        ' Label25
-        ' 
-        Label25.Dock = DockStyle.Left
-        Label25.Location = New Point(97, 10)
-        Label25.Name = "Label25"
-        Label25.Size = New Size(10, 30)
-        Label25.TabIndex = 93
-        ' 
-        ' UiButton13
-        ' 
-        UiButton13.Dock = DockStyle.Left
-        UiButton13.FillColor = Color.FromArgb(CByte(56), CByte(56), CByte(56))
-        UiButton13.FillColor2 = Color.FromArgb(CByte(56), CByte(56), CByte(56))
-        UiButton13.FillDisableColor = Color.FromArgb(CByte(56), CByte(56), CByte(56))
-        UiButton13.FillHoverColor = Color.FromArgb(CByte(56), CByte(56), CByte(56))
-        UiButton13.FillPressColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
-        UiButton13.FillSelectedColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiButton13.Font = New Font("微软雅黑", 10F)
-        UiButton13.ForeColor = Color.Silver
-        UiButton13.ForeDisableColor = Color.Silver
-        UiButton13.ForeHoverColor = Color.Silver
-        UiButton13.ForePressColor = Color.Silver
-        UiButton13.ForeSelectedColor = Color.Silver
-        UiButton13.Location = New Point(17, 10)
-        UiButton13.MinimumSize = New Size(1, 1)
-        UiButton13.Name = "UiButton13"
-        UiButton13.Radius = 30
-        UiButton13.RectColor = Color.FromArgb(CByte(56), CByte(56), CByte(56))
-        UiButton13.RectDisableColor = Color.FromArgb(CByte(56), CByte(56), CByte(56))
-        UiButton13.RectHoverColor = Color.Gainsboro
-        UiButton13.RectPressColor = Color.FromArgb(CByte(64), CByte(148), CByte(64))
-        UiButton13.RectSelectedColor = Color.Gainsboro
-        UiButton13.Size = New Size(80, 30)
-        UiButton13.TabIndex = 94
-        UiButton13.Text = "浏览"
-        UiButton13.TipsFont = New Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point, CByte(134))
-        ' 
-        ' Label32
-        ' 
-        Label32.AutoSize = True
-        Label32.Dock = DockStyle.Top
-        Label32.Font = New Font("微软雅黑", 10F)
-        Label32.ForeColor = Color.Gray
-        Label32.Location = New Point(0, 44)
-        Label32.Name = "Label32"
-        Label32.Padding = New Padding(16, 10, 0, 0)
-        Label32.Size = New Size(109, 30)
-        Label32.TabIndex = 134
-        Label32.Text = "设置工作目录"
-        ' 
-        ' Label41
-        ' 
-        Label41.AutoSize = True
-        Label41.Dock = DockStyle.Top
-        Label41.Font = New Font("微软雅黑", 13F)
-        Label41.Location = New Point(0, 0)
-        Label41.Name = "Label41"
-        Label41.Padding = New Padding(16, 20, 0, 0)
-        Label41.Size = New Size(196, 44)
-        Label41.TabIndex = 128
-        Label41.Text = "进程启动 && 转译辅助"
-        ' 
-        ' Panel11
-        ' 
-        Panel11.AutoSize = True
-        Panel11.Controls.Add(Panel19)
-        Panel11.Controls.Add(Label1)
-        Panel11.Controls.Add(Panel12)
-        Panel11.Controls.Add(Label50)
-        Panel11.Controls.Add(Panel10)
-        Panel11.Controls.Add(Label20)
-        Panel11.Controls.Add(Panel8)
-        Panel11.Controls.Add(Label49)
-        Panel11.Controls.Add(Panel42)
-        Panel11.Controls.Add(Label33)
-        Panel11.Controls.Add(Label38)
-        Panel11.Dock = DockStyle.Top
-        Panel11.Location = New Point(0, 298)
-        Panel11.Name = "Panel11"
-        Panel11.Size = New Size(1016, 419)
-        Panel11.TabIndex = 127
-        ' 
-        ' Panel19
-        ' 
-        Panel19.Controls.Add(UiComboBox混淆任务名称)
-        Panel19.Dock = DockStyle.Top
-        Panel19.Location = New Point(0, 379)
-        Panel19.Name = "Panel19"
-        Panel19.Padding = New Padding(21, 10, 20, 0)
-        Panel19.Size = New Size(1016, 40)
-        Panel19.TabIndex = 136
-        ' 
-        ' UiComboBox混淆任务名称
-        ' 
-        UiComboBox混淆任务名称.DataSource = Nothing
-        UiComboBox混淆任务名称.Dock = DockStyle.Left
-        UiComboBox混淆任务名称.DropDownAutoWidth = True
-        UiComboBox混淆任务名称.DropDownStyle = Sunny.UI.UIDropDownStyle.DropDownList
-        UiComboBox混淆任务名称.FillColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiComboBox混淆任务名称.FillColor2 = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiComboBox混淆任务名称.FillDisableColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiComboBox混淆任务名称.Font = New Font("微软雅黑", 10F)
-        UiComboBox混淆任务名称.ForeColor = Color.Silver
-        UiComboBox混淆任务名称.ForeDisableColor = Color.Silver
-        UiComboBox混淆任务名称.ItemFillColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiComboBox混淆任务名称.ItemForeColor = Color.Silver
-        UiComboBox混淆任务名称.ItemHeight = 30
-        UiComboBox混淆任务名称.ItemHoverColor = Color.FromArgb(CByte(56), CByte(56), CByte(56))
-        UiComboBox混淆任务名称.ItemRectColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
-        UiComboBox混淆任务名称.Items.AddRange(New Object() {"不要混淆任务名称", "我请来了喵喵星神"})
-        UiComboBox混淆任务名称.ItemSelectBackColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
-        UiComboBox混淆任务名称.ItemSelectForeColor = Color.Silver
-        UiComboBox混淆任务名称.Location = New Point(21, 10)
-        UiComboBox混淆任务名称.Margin = New Padding(4, 5, 4, 5)
-        UiComboBox混淆任务名称.MaxDropDownItems = 17
-        UiComboBox混淆任务名称.MinimumSize = New Size(63, 0)
-        UiComboBox混淆任务名称.Name = "UiComboBox混淆任务名称"
-        UiComboBox混淆任务名称.Padding = New Padding(0, 0, 30, 2)
-        UiComboBox混淆任务名称.RectColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
-        UiComboBox混淆任务名称.RectDisableColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
-        UiComboBox混淆任务名称.ScrollBarHandleWidth = 20
-        UiComboBox混淆任务名称.Size = New Size(264, 30)
-        UiComboBox混淆任务名称.Style = Sunny.UI.UIStyle.Custom
-        UiComboBox混淆任务名称.SymbolSize = 24
-        UiComboBox混淆任务名称.TabIndex = 95
-        UiComboBox混淆任务名称.TextAlignment = ContentAlignment.MiddleLeft
-        UiComboBox混淆任务名称.Watermark = "混淆任务名称"
-        ' 
-        ' Label1
-        ' 
-        Label1.AutoSize = True
-        Label1.Dock = DockStyle.Top
-        Label1.Font = New Font("微软雅黑", 10F)
-        Label1.ForeColor = Color.Gray
-        Label1.Location = New Point(0, 344)
-        Label1.Name = "Label1"
-        Label1.Padding = New Padding(16, 15, 0, 0)
-        Label1.Size = New Size(137, 35)
-        Label1.TabIndex = 135
-        Label1.Text = "你这任务正经嘛？"
-        ' 
-        ' Panel12
-        ' 
-        Panel12.Controls.Add(UiComboBox自动重置参数面板的页面选择)
-        Panel12.Dock = DockStyle.Top
-        Panel12.Location = New Point(0, 304)
-        Panel12.Name = "Panel12"
-        Panel12.Padding = New Padding(21, 10, 20, 0)
-        Panel12.Size = New Size(1016, 40)
-        Panel12.TabIndex = 134
-        ' 
-        ' UiComboBox自动重置参数面板的页面选择
-        ' 
-        UiComboBox自动重置参数面板的页面选择.DataSource = Nothing
-        UiComboBox自动重置参数面板的页面选择.Dock = DockStyle.Left
-        UiComboBox自动重置参数面板的页面选择.DropDownAutoWidth = True
-        UiComboBox自动重置参数面板的页面选择.DropDownStyle = Sunny.UI.UIDropDownStyle.DropDownList
-        UiComboBox自动重置参数面板的页面选择.FillColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiComboBox自动重置参数面板的页面选择.FillColor2 = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiComboBox自动重置参数面板的页面选择.FillDisableColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiComboBox自动重置参数面板的页面选择.Font = New Font("微软雅黑", 10F)
-        UiComboBox自动重置参数面板的页面选择.ForeColor = Color.Silver
-        UiComboBox自动重置参数面板的页面选择.ForeDisableColor = Color.Silver
-        UiComboBox自动重置参数面板的页面选择.ItemFillColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiComboBox自动重置参数面板的页面选择.ItemForeColor = Color.Silver
-        UiComboBox自动重置参数面板的页面选择.ItemHeight = 30
-        UiComboBox自动重置参数面板的页面选择.ItemHoverColor = Color.FromArgb(CByte(56), CByte(56), CByte(56))
-        UiComboBox自动重置参数面板的页面选择.ItemRectColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
-        UiComboBox自动重置参数面板的页面选择.Items.AddRange(New Object() {"不要重置参数面板的页面 (建议)", "自动重置 (反人类，至少在我看来)"})
-        UiComboBox自动重置参数面板的页面选择.ItemSelectBackColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
-        UiComboBox自动重置参数面板的页面选择.ItemSelectForeColor = Color.Silver
-        UiComboBox自动重置参数面板的页面选择.Location = New Point(21, 10)
-        UiComboBox自动重置参数面板的页面选择.Margin = New Padding(4, 5, 4, 5)
-        UiComboBox自动重置参数面板的页面选择.MaxDropDownItems = 17
-        UiComboBox自动重置参数面板的页面选择.MinimumSize = New Size(63, 0)
-        UiComboBox自动重置参数面板的页面选择.Name = "UiComboBox自动重置参数面板的页面选择"
-        UiComboBox自动重置参数面板的页面选择.Padding = New Padding(0, 0, 30, 2)
-        UiComboBox自动重置参数面板的页面选择.RectColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
-        UiComboBox自动重置参数面板的页面选择.RectDisableColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
-        UiComboBox自动重置参数面板的页面选择.ScrollBarHandleWidth = 20
-        UiComboBox自动重置参数面板的页面选择.Size = New Size(264, 30)
-        UiComboBox自动重置参数面板的页面选择.Style = Sunny.UI.UIStyle.Custom
-        UiComboBox自动重置参数面板的页面选择.SymbolSize = 24
-        UiComboBox自动重置参数面板的页面选择.TabIndex = 95
-        UiComboBox自动重置参数面板的页面选择.TextAlignment = ContentAlignment.MiddleLeft
-        UiComboBox自动重置参数面板的页面选择.Watermark = "自动重置参数面板页面"
-        ' 
-        ' Label50
-        ' 
-        Label50.AutoSize = True
-        Label50.Dock = DockStyle.Top
-        Label50.Font = New Font("微软雅黑", 10F)
-        Label50.ForeColor = Color.Gray
-        Label50.Location = New Point(0, 269)
-        Label50.Name = "Label50"
-        Label50.Padding = New Padding(16, 15, 0, 0)
-        Label50.Size = New Size(445, 35)
-        Label50.TabIndex = 133
-        Label50.Text = "从主选项卡切回参数面板这个次级选项卡时是否要重置到第一个页面"
-        ' 
-        ' Panel10
-        ' 
-        Panel10.Controls.Add(UiComboBox自动开始任务)
-        Panel10.Dock = DockStyle.Top
-        Panel10.Location = New Point(0, 229)
-        Panel10.Name = "Panel10"
-        Panel10.Padding = New Padding(21, 10, 20, 0)
-        Panel10.Size = New Size(1016, 40)
-        Panel10.TabIndex = 132
-        ' 
-        ' UiComboBox自动开始任务
-        ' 
-        UiComboBox自动开始任务.DataSource = Nothing
-        UiComboBox自动开始任务.Dock = DockStyle.Left
-        UiComboBox自动开始任务.DropDownAutoWidth = True
-        UiComboBox自动开始任务.DropDownStyle = Sunny.UI.UIDropDownStyle.DropDownList
-        UiComboBox自动开始任务.FillColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiComboBox自动开始任务.FillColor2 = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiComboBox自动开始任务.FillDisableColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiComboBox自动开始任务.Font = New Font("微软雅黑", 10F)
-        UiComboBox自动开始任务.ForeColor = Color.Silver
-        UiComboBox自动开始任务.ForeDisableColor = Color.Silver
-        UiComboBox自动开始任务.ItemFillColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiComboBox自动开始任务.ItemForeColor = Color.Silver
-        UiComboBox自动开始任务.ItemHeight = 30
-        UiComboBox自动开始任务.ItemHoverColor = Color.FromArgb(CByte(56), CByte(56), CByte(56))
-        UiComboBox自动开始任务.ItemRectColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
-        UiComboBox自动开始任务.Items.AddRange(New Object() {"自动开始任务", "手动开始任务"})
-        UiComboBox自动开始任务.ItemSelectBackColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
-        UiComboBox自动开始任务.ItemSelectForeColor = Color.Silver
-        UiComboBox自动开始任务.Location = New Point(21, 10)
-        UiComboBox自动开始任务.Margin = New Padding(4, 5, 4, 5)
-        UiComboBox自动开始任务.MaxDropDownItems = 17
-        UiComboBox自动开始任务.MinimumSize = New Size(63, 0)
-        UiComboBox自动开始任务.Name = "UiComboBox自动开始任务"
-        UiComboBox自动开始任务.Padding = New Padding(0, 0, 30, 2)
-        UiComboBox自动开始任务.RectColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
-        UiComboBox自动开始任务.RectDisableColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
-        UiComboBox自动开始任务.ScrollBarHandleWidth = 20
-        UiComboBox自动开始任务.Size = New Size(140, 30)
-        UiComboBox自动开始任务.Style = Sunny.UI.UIStyle.Custom
-        UiComboBox自动开始任务.SymbolSize = 24
-        UiComboBox自动开始任务.TabIndex = 95
-        UiComboBox自动开始任务.TextAlignment = ContentAlignment.MiddleLeft
-        UiComboBox自动开始任务.Watermark = "自动开始任务"
-        ' 
-        ' Label20
-        ' 
-        Label20.AutoSize = True
-        Label20.Dock = DockStyle.Top
-        Label20.Font = New Font("微软雅黑", 10F)
-        Label20.ForeColor = Color.Gray
-        Label20.Location = New Point(0, 194)
-        Label20.Name = "Label20"
-        Label20.Padding = New Padding(16, 15, 0, 0)
-        Label20.Size = New Size(473, 35)
-        Label20.TabIndex = 131
-        Label20.Text = "是否自动开始任务（关闭后任务只能手动开始，也不会自动进行下一个）"
-        ' 
-        ' Panel8
-        ' 
-        Panel8.Controls.Add(UiComboBox提示音)
-        Panel8.Dock = DockStyle.Top
-        Panel8.Location = New Point(0, 154)
-        Panel8.Name = "Panel8"
-        Panel8.Padding = New Padding(21, 10, 20, 0)
-        Panel8.Size = New Size(1016, 40)
-        Panel8.TabIndex = 130
-        ' 
-        ' UiComboBox提示音
-        ' 
-        UiComboBox提示音.DataSource = Nothing
-        UiComboBox提示音.Dock = DockStyle.Left
-        UiComboBox提示音.DropDownAutoWidth = True
-        UiComboBox提示音.DropDownStyle = Sunny.UI.UIDropDownStyle.DropDownList
-        UiComboBox提示音.FillColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiComboBox提示音.FillColor2 = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiComboBox提示音.FillDisableColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiComboBox提示音.Font = New Font("微软雅黑", 10F)
-        UiComboBox提示音.ForeColor = Color.Silver
-        UiComboBox提示音.ForeDisableColor = Color.Silver
-        UiComboBox提示音.ItemFillColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiComboBox提示音.ItemForeColor = Color.Silver
-        UiComboBox提示音.ItemHeight = 30
-        UiComboBox提示音.ItemHoverColor = Color.FromArgb(CByte(56), CByte(56), CByte(56))
-        UiComboBox提示音.ItemRectColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
-        UiComboBox提示音.Items.AddRange(New Object() {"启用提示音", "禁用提示音"})
-        UiComboBox提示音.ItemSelectBackColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
-        UiComboBox提示音.ItemSelectForeColor = Color.Silver
-        UiComboBox提示音.Location = New Point(21, 10)
-        UiComboBox提示音.Margin = New Padding(4, 5, 4, 5)
-        UiComboBox提示音.MaxDropDownItems = 17
-        UiComboBox提示音.MinimumSize = New Size(63, 0)
-        UiComboBox提示音.Name = "UiComboBox提示音"
-        UiComboBox提示音.Padding = New Padding(0, 0, 30, 2)
-        UiComboBox提示音.RectColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
-        UiComboBox提示音.RectDisableColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
-        UiComboBox提示音.ScrollBarHandleWidth = 20
-        UiComboBox提示音.Size = New Size(140, 30)
-        UiComboBox提示音.Style = Sunny.UI.UIStyle.Custom
-        UiComboBox提示音.SymbolSize = 24
-        UiComboBox提示音.TabIndex = 93
-        UiComboBox提示音.TextAlignment = ContentAlignment.MiddleLeft
-        UiComboBox提示音.Watermark = "提示音设置"
-        ' 
-        ' Label49
-        ' 
-        Label49.AutoSize = True
-        Label49.Dock = DockStyle.Top
-        Label49.Font = New Font("微软雅黑", 10F)
-        Label49.ForeColor = Color.Gray
-        Label49.Location = New Point(0, 119)
-        Label49.Name = "Label49"
-        Label49.Padding = New Padding(16, 15, 0, 0)
-        Label49.Size = New Size(403, 35)
-        Label49.TabIndex = 129
-        Label49.Text = "是否启用提示音（概率乱放，如介意可关闭，可自定义音源）"
-        ' 
-        ' Panel42
-        ' 
-        Panel42.Controls.Add(UiComboBox有任务时系统状态)
-        Panel42.Dock = DockStyle.Top
-        Panel42.Location = New Point(0, 79)
-        Panel42.Name = "Panel42"
-        Panel42.Padding = New Padding(21, 10, 20, 0)
-        Panel42.Size = New Size(1016, 40)
-        Panel42.TabIndex = 126
-        ' 
-        ' UiComboBox有任务时系统状态
-        ' 
-        UiComboBox有任务时系统状态.DataSource = Nothing
-        UiComboBox有任务时系统状态.Dock = DockStyle.Left
-        UiComboBox有任务时系统状态.DropDownStyle = Sunny.UI.UIDropDownStyle.DropDownList
-        UiComboBox有任务时系统状态.FillColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiComboBox有任务时系统状态.FillColor2 = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiComboBox有任务时系统状态.FillDisableColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiComboBox有任务时系统状态.Font = New Font("微软雅黑", 10F)
-        UiComboBox有任务时系统状态.ForeColor = Color.Silver
-        UiComboBox有任务时系统状态.ForeDisableColor = Color.Silver
-        UiComboBox有任务时系统状态.ItemFillColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiComboBox有任务时系统状态.ItemForeColor = Color.Silver
-        UiComboBox有任务时系统状态.ItemHeight = 30
-        UiComboBox有任务时系统状态.ItemHoverColor = Color.FromArgb(CByte(56), CByte(56), CByte(56))
-        UiComboBox有任务时系统状态.ItemRectColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
-        UiComboBox有任务时系统状态.Items.AddRange(New Object() {"阻止休眠但允许显示器超时关闭", "阻止显示器超时关闭", "默认状态（不推荐）"})
-        UiComboBox有任务时系统状态.ItemSelectBackColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
-        UiComboBox有任务时系统状态.ItemSelectForeColor = Color.Silver
-        UiComboBox有任务时系统状态.Location = New Point(21, 10)
-        UiComboBox有任务时系统状态.Margin = New Padding(4, 5, 4, 5)
-        UiComboBox有任务时系统状态.MaxDropDownItems = 17
-        UiComboBox有任务时系统状态.MinimumSize = New Size(63, 0)
-        UiComboBox有任务时系统状态.Name = "UiComboBox有任务时系统状态"
-        UiComboBox有任务时系统状态.Padding = New Padding(0, 0, 30, 2)
-        UiComboBox有任务时系统状态.RectColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
-        UiComboBox有任务时系统状态.RectDisableColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
-        UiComboBox有任务时系统状态.ScrollBarHandleWidth = 20
-        UiComboBox有任务时系统状态.Size = New Size(264, 30)
-        UiComboBox有任务时系统状态.Style = Sunny.UI.UIStyle.Custom
-        UiComboBox有任务时系统状态.SymbolSize = 24
-        UiComboBox有任务时系统状态.TabIndex = 90
-        UiComboBox有任务时系统状态.TextAlignment = ContentAlignment.MiddleLeft
-        UiComboBox有任务时系统状态.Watermark = "有任务时系统要保持什么状态"
-        ' 
-        ' Label33
-        ' 
-        Label33.AutoSize = True
-        Label33.Dock = DockStyle.Top
-        Label33.Font = New Font("微软雅黑", 10F)
-        Label33.ForeColor = Color.Gray
-        Label33.Location = New Point(0, 44)
-        Label33.Name = "Label33"
-        Label33.Padding = New Padding(16, 15, 0, 0)
-        Label33.Size = New Size(529, 35)
-        Label33.TabIndex = 128
-        Label33.Text = "有任务时系统要保持什么状态（如果没接显示器，强烈建议设置阻止显示器关闭）"
-        ' 
-        ' Label38
-        ' 
-        Label38.AutoSize = True
-        Label38.Dock = DockStyle.Top
-        Label38.Font = New Font("微软雅黑", 13F)
-        Label38.Location = New Point(0, 0)
-        Label38.Name = "Label38"
-        Label38.Padding = New Padding(16, 20, 0, 0)
-        Label38.Size = New Size(98, 44)
-        Label38.TabIndex = 127
-        Label38.Text = "功能设定"
-        ' 
-        ' Panel40
-        ' 
-        Panel40.Controls.Add(Label34)
-        Panel40.Controls.Add(UiComboBox自动开始最大任务数量)
-        Panel40.Dock = DockStyle.Top
-        Panel40.Location = New Point(0, 258)
-        Panel40.Name = "Panel40"
-        Panel40.Padding = New Padding(21, 10, 20, 0)
-        Panel40.Size = New Size(1016, 40)
-        Panel40.TabIndex = 16
-        ' 
-        ' Label34
-        ' 
-        Label34.Dock = DockStyle.Fill
-        Label34.Font = New Font("微软雅黑", 10F)
-        Label34.ForeColor = Color.Gray
-        Label34.Location = New Point(285, 10)
-        Label34.Name = "Label34"
-        Label34.Padding = New Padding(10, 0, 0, 0)
-        Label34.Size = New Size(711, 30)
-        Label34.TabIndex = 89
-        Label34.Text = "指定自动开始任务时最大同时运行多少个任务"
-        Label34.TextAlign = ContentAlignment.MiddleLeft
-        ' 
-        ' UiComboBox自动开始最大任务数量
-        ' 
-        UiComboBox自动开始最大任务数量.DataSource = Nothing
-        UiComboBox自动开始最大任务数量.Dock = DockStyle.Left
-        UiComboBox自动开始最大任务数量.DropDownStyle = Sunny.UI.UIDropDownStyle.DropDownList
-        UiComboBox自动开始最大任务数量.FillColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiComboBox自动开始最大任务数量.FillColor2 = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiComboBox自动开始最大任务数量.FillDisableColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiComboBox自动开始最大任务数量.Font = New Font("微软雅黑", 10F)
-        UiComboBox自动开始最大任务数量.ForeColor = Color.Silver
-        UiComboBox自动开始最大任务数量.ForeDisableColor = Color.Silver
-        UiComboBox自动开始最大任务数量.ItemFillColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiComboBox自动开始最大任务数量.ItemForeColor = Color.Silver
-        UiComboBox自动开始最大任务数量.ItemHeight = 30
-        UiComboBox自动开始最大任务数量.ItemHoverColor = Color.FromArgb(CByte(56), CByte(56), CByte(56))
-        UiComboBox自动开始最大任务数量.ItemRectColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
-        UiComboBox自动开始最大任务数量.Items.AddRange(New Object() {"同时运行 1 个任务", "同时运行 2 个任务", "同时运行 3 个任务", "同时运行 4 个任务", "同时运行 5 个任务", "同时运行 6 个任务", "同时运行 7 个任务", "同时运行 8 个任务", "同时运行 9 个任务", "同时运行 10 个任务"})
-        UiComboBox自动开始最大任务数量.ItemSelectBackColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
-        UiComboBox自动开始最大任务数量.ItemSelectForeColor = Color.Silver
-        UiComboBox自动开始最大任务数量.Location = New Point(21, 10)
-        UiComboBox自动开始最大任务数量.Margin = New Padding(4, 5, 4, 5)
-        UiComboBox自动开始最大任务数量.MaxDropDownItems = 17
-        UiComboBox自动开始最大任务数量.MinimumSize = New Size(63, 0)
-        UiComboBox自动开始最大任务数量.Name = "UiComboBox自动开始最大任务数量"
-        UiComboBox自动开始最大任务数量.Padding = New Padding(0, 0, 30, 2)
-        UiComboBox自动开始最大任务数量.RectColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
-        UiComboBox自动开始最大任务数量.RectDisableColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
-        UiComboBox自动开始最大任务数量.ScrollBarHandleWidth = 20
-        UiComboBox自动开始最大任务数量.Size = New Size(264, 30)
-        UiComboBox自动开始最大任务数量.Style = Sunny.UI.UIStyle.Custom
-        UiComboBox自动开始最大任务数量.SymbolSize = 24
-        UiComboBox自动开始最大任务数量.TabIndex = 88
-        UiComboBox自动开始最大任务数量.TextAlignment = ContentAlignment.MiddleLeft
-        UiComboBox自动开始最大任务数量.Watermark = ""
-        ' 
-        ' Panel39
-        ' 
-        Panel39.Controls.Add(UiTextBox快捷输入CPU核心)
-        Panel39.Controls.Add(Label106)
-        Panel39.Controls.Add(UiTextBox处理器核心)
-        Panel39.Dock = DockStyle.Top
-        Panel39.Location = New Point(0, 218)
-        Panel39.Name = "Panel39"
-        Panel39.Padding = New Padding(21, 10, 20, 0)
-        Panel39.Size = New Size(1016, 40)
-        Panel39.TabIndex = 15
-        ' 
-        ' UiTextBox快捷输入CPU核心
-        ' 
-        UiTextBox快捷输入CPU核心.Dock = DockStyle.Left
-        UiTextBox快捷输入CPU核心.FillColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiTextBox快捷输入CPU核心.FillColor2 = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiTextBox快捷输入CPU核心.FillDisableColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiTextBox快捷输入CPU核心.FillReadOnlyColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiTextBox快捷输入CPU核心.Font = New Font("微软雅黑", 10F)
-        UiTextBox快捷输入CPU核心.ForeColor = Color.Silver
-        UiTextBox快捷输入CPU核心.ForeDisableColor = Color.Silver
-        UiTextBox快捷输入CPU核心.ForeReadOnlyColor = Color.Silver
-        UiTextBox快捷输入CPU核心.Location = New Point(295, 10)
-        UiTextBox快捷输入CPU核心.Margin = New Padding(4, 5, 4, 5)
-        UiTextBox快捷输入CPU核心.MinimumSize = New Size(1, 16)
-        UiTextBox快捷输入CPU核心.Name = "UiTextBox快捷输入CPU核心"
-        UiTextBox快捷输入CPU核心.Padding = New Padding(5)
-        UiTextBox快捷输入CPU核心.Radius = 30
-        UiTextBox快捷输入CPU核心.RectColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiTextBox快捷输入CPU核心.RectDisableColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiTextBox快捷输入CPU核心.RectReadOnlyColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiTextBox快捷输入CPU核心.ShowText = False
-        UiTextBox快捷输入CPU核心.Size = New Size(140, 30)
-        UiTextBox快捷输入CPU核心.TabIndex = 90
-        UiTextBox快捷输入CPU核心.TextAlignment = ContentAlignment.MiddleLeft
-        UiTextBox快捷输入CPU核心.Watermark = "?~?,Enter"
-        ' 
-        ' Label106
-        ' 
-        Label106.Dock = DockStyle.Left
-        Label106.Location = New Point(285, 10)
-        Label106.Name = "Label106"
-        Label106.Size = New Size(10, 30)
-        Label106.TabIndex = 91
-        ' 
-        ' UiTextBox处理器核心
-        ' 
-        UiTextBox处理器核心.Dock = DockStyle.Left
-        UiTextBox处理器核心.FillColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiTextBox处理器核心.FillColor2 = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiTextBox处理器核心.FillDisableColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiTextBox处理器核心.FillReadOnlyColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiTextBox处理器核心.Font = New Font("微软雅黑", 10F)
-        UiTextBox处理器核心.ForeColor = Color.Silver
-        UiTextBox处理器核心.ForeDisableColor = Color.Silver
-        UiTextBox处理器核心.ForeReadOnlyColor = Color.Silver
-        UiTextBox处理器核心.Location = New Point(21, 10)
-        UiTextBox处理器核心.Margin = New Padding(4, 5, 4, 5)
-        UiTextBox处理器核心.MinimumSize = New Size(1, 16)
-        UiTextBox处理器核心.Name = "UiTextBox处理器核心"
-        UiTextBox处理器核心.Padding = New Padding(5)
-        UiTextBox处理器核心.Radius = 30
-        UiTextBox处理器核心.RectColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiTextBox处理器核心.RectDisableColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiTextBox处理器核心.RectReadOnlyColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiTextBox处理器核心.ShowText = False
-        UiTextBox处理器核心.Size = New Size(264, 30)
-        UiTextBox处理器核心.TabIndex = 89
-        UiTextBox处理器核心.TextAlignment = ContentAlignment.MiddleLeft
-        UiTextBox处理器核心.Watermark = "指定处理器核心，用逗号隔开"
-        ' 
-        ' Label48
-        ' 
-        Label48.AutoSize = True
-        Label48.Dock = DockStyle.Top
-        Label48.Font = New Font("微软雅黑", 10F)
-        Label48.ForeColor = Color.Gray
-        Label48.Location = New Point(0, 173)
-        Label48.Name = "Label48"
-        Label48.Padding = New Padding(16, 5, 0, 0)
-        Label48.Size = New Size(501, 45)
-        Label48.TabIndex = 120
-        Label48.Text = "设置新开始的任务固定使用哪些处理器核心（任务管理器里的处理器相关性）" & vbCrLf & "除非你需要腾出性能去干其他事，否则这是不需要考虑的"
-        ' 
-        ' Label39
-        ' 
-        Label39.AutoSize = True
-        Label39.Dock = DockStyle.Top
-        Label39.Font = New Font("微软雅黑", 13F)
-        Label39.Location = New Point(0, 129)
-        Label39.Name = "Label39"
-        Label39.Padding = New Padding(16, 20, 0, 0)
-        Label39.Size = New Size(98, 44)
-        Label39.TabIndex = 14
-        Label39.Text = "性能调度"
-        ' 
-        ' Panel38
-        ' 
-        Panel38.Controls.Add(Label字体预览文本)
-        Panel38.Controls.Add(UiButton4)
-        Panel38.Controls.Add(Label137)
-        Panel38.Controls.Add(UiComboBox字体名称)
-        Panel38.Dock = DockStyle.Top
-        Panel38.Location = New Point(0, 89)
-        Panel38.Name = "Panel38"
-        Panel38.Padding = New Padding(21, 10, 20, 0)
-        Panel38.Size = New Size(1016, 40)
-        Panel38.TabIndex = 13
-        ' 
-        ' Label字体预览文本
-        ' 
-        Label字体预览文本.Dock = DockStyle.Fill
-        Label字体预览文本.Font = New Font("微软雅黑", 10F)
-        Label字体预览文本.ForeColor = Color.Gray
-        Label字体预览文本.Location = New Point(435, 10)
-        Label字体预览文本.Name = "Label字体预览文本"
-        Label字体预览文本.Padding = New Padding(10, 0, 0, 0)
-        Label字体预览文本.Size = New Size(561, 30)
-        Label字体预览文本.TabIndex = 114
-        Label字体预览文本.Text = "敏捷的棕色狐狸跳过了懒惰的狗。"
-        Label字体预览文本.TextAlign = ContentAlignment.MiddleLeft
-        ' 
-        ' UiButton4
-        ' 
-        UiButton4.Dock = DockStyle.Left
-        UiButton4.FillColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiButton4.FillColor2 = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiButton4.FillDisableColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
-        UiButton4.FillHoverColor = Color.FromArgb(CByte(56), CByte(56), CByte(56))
-        UiButton4.FillPressColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
-        UiButton4.FillSelectedColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiButton4.Font = New Font("微软雅黑", 10F)
-        UiButton4.ForeColor = Color.Silver
-        UiButton4.ForeDisableColor = Color.Silver
-        UiButton4.ForeHoverColor = Color.Silver
-        UiButton4.ForePressColor = Color.Silver
-        UiButton4.ForeSelectedColor = Color.Silver
-        UiButton4.Location = New Point(295, 10)
-        UiButton4.MinimumSize = New Size(1, 1)
-        UiButton4.Name = "UiButton4"
-        UiButton4.RectColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
-        UiButton4.RectDisableColor = Color.FromArgb(CByte(12), CByte(12), CByte(12))
-        UiButton4.RectHoverColor = Color.CornflowerBlue
-        UiButton4.RectPressColor = Color.FromArgb(CByte(64), CByte(148), CByte(64))
-        UiButton4.RectSelectedColor = Color.CornflowerBlue
-        UiButton4.Size = New Size(140, 30)
-        UiButton4.TabIndex = 117
-        UiButton4.Text = "确认效果并设置"
-        UiButton4.TipsFont = New Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point, CByte(134))
-        ' 
-        ' Label137
-        ' 
-        Label137.Dock = DockStyle.Left
-        Label137.ForeColor = Color.Gray
-        Label137.Location = New Point(285, 10)
-        Label137.Name = "Label137"
-        Label137.Padding = New Padding(10, 0, 0, 0)
-        Label137.Size = New Size(10, 30)
-        Label137.TabIndex = 116
-        Label137.TextAlign = ContentAlignment.MiddleLeft
-        ' 
-        ' UiComboBox字体名称
-        ' 
-        UiComboBox字体名称.DataSource = Nothing
-        UiComboBox字体名称.Dock = DockStyle.Left
-        UiComboBox字体名称.DropDownStyle = Sunny.UI.UIDropDownStyle.DropDownList
-        UiComboBox字体名称.FillColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiComboBox字体名称.FillColor2 = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiComboBox字体名称.FillDisableColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiComboBox字体名称.Font = New Font("微软雅黑", 10F)
-        UiComboBox字体名称.ForeColor = Color.Silver
-        UiComboBox字体名称.ForeDisableColor = Color.Silver
-        UiComboBox字体名称.ItemFillColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiComboBox字体名称.ItemForeColor = Color.Silver
-        UiComboBox字体名称.ItemHeight = 30
-        UiComboBox字体名称.ItemHoverColor = Color.FromArgb(CByte(56), CByte(56), CByte(56))
-        UiComboBox字体名称.ItemRectColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
-        UiComboBox字体名称.ItemSelectBackColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
-        UiComboBox字体名称.ItemSelectForeColor = Color.Silver
-        UiComboBox字体名称.Location = New Point(21, 10)
-        UiComboBox字体名称.Margin = New Padding(4, 5, 4, 5)
-        UiComboBox字体名称.MaxDropDownItems = 17
-        UiComboBox字体名称.MinimumSize = New Size(63, 0)
-        UiComboBox字体名称.Name = "UiComboBox字体名称"
-        UiComboBox字体名称.Padding = New Padding(0, 0, 30, 2)
-        UiComboBox字体名称.RectColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
-        UiComboBox字体名称.RectDisableColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
-        UiComboBox字体名称.ScrollBarBackColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiComboBox字体名称.ScrollBarColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
-        UiComboBox字体名称.ScrollBarHandleWidth = 20
-        UiComboBox字体名称.ScrollBarStyleInherited = False
-        UiComboBox字体名称.Size = New Size(264, 30)
-        UiComboBox字体名称.Style = Sunny.UI.UIStyle.Custom
-        UiComboBox字体名称.SymbolSize = 24
-        UiComboBox字体名称.TabIndex = 115
-        UiComboBox字体名称.TextAlignment = ContentAlignment.MiddleLeft
-        UiComboBox字体名称.Watermark = ""
-        ' 
-        ' Label47
-        ' 
-        Label47.AutoSize = True
-        Label47.Dock = DockStyle.Top
-        Label47.Font = New Font("微软雅黑", 10F)
-        Label47.ForeColor = Color.Gray
-        Label47.Location = New Point(0, 44)
-        Label47.Name = "Label47"
-        Label47.Padding = New Padding(16, 5, 0, 0)
-        Label47.Size = New Size(390, 45)
-        Label47.TabIndex = 119
-        Label47.Text = "可以使用系统中已安装的全部字体，可观察右侧文字的变化" & vbCrLf & "如系统缩放小于 150% 推荐使用 MacType 来获得最佳观感"
-        ' 
-        ' Label130
-        ' 
-        Label130.AutoSize = True
-        Label130.Dock = DockStyle.Top
-        Label130.Font = New Font("微软雅黑", 13F)
-        Label130.Location = New Point(0, 0)
-        Label130.Name = "Label130"
-        Label130.Padding = New Padding(16, 20, 0, 0)
-        Label130.Size = New Size(98, 44)
-        Label130.TabIndex = 11
-        Label130.Text = "全局字体"
         ' 
         ' Form1
         ' 
@@ -3126,6 +2205,8 @@ Partial Class Form1
         UiTabControlMenu1.ResumeLayout(False)
         TabPage起始页面.ResumeLayout(False)
         TabPage起始页面.PerformLayout()
+        Panel5.ResumeLayout(False)
+        Panel5.PerformLayout()
         Panel44.ResumeLayout(False)
         Panel44.PerformLayout()
         Panel7.ResumeLayout(False)
@@ -3174,24 +2255,6 @@ Partial Class Form1
         TabPage插件扩展.ResumeLayout(False)
         Panel21.ResumeLayout(False)
         Panel22.ResumeLayout(False)
-        TabPage软件设置.ResumeLayout(False)
-        TabPage软件设置.PerformLayout()
-        Panel14.ResumeLayout(False)
-        Panel14.PerformLayout()
-        Panel46.ResumeLayout(False)
-        Panel45.ResumeLayout(False)
-        Panel48.ResumeLayout(False)
-        Panel43.ResumeLayout(False)
-        Panel11.ResumeLayout(False)
-        Panel11.PerformLayout()
-        Panel19.ResumeLayout(False)
-        Panel12.ResumeLayout(False)
-        Panel10.ResumeLayout(False)
-        Panel8.ResumeLayout(False)
-        Panel42.ResumeLayout(False)
-        Panel40.ResumeLayout(False)
-        Panel39.ResumeLayout(False)
-        Panel38.ResumeLayout(False)
         ResumeLayout(False)
     End Sub
     Friend WithEvents UiTabControlMenu1 As Sunny.UI.UITabControlMenu
@@ -3278,21 +2341,6 @@ Partial Class Form1
     Friend WithEvents LinkLabel向ffmpeg发送消息 As LinkLabel
     Friend WithEvents RichTextBox1 As RichTextBox
     Friend WithEvents TabPage软件设置 As TabPage
-    Friend WithEvents Label130 As Label
-    Friend WithEvents Panel40 As Panel
-    Friend WithEvents Panel39 As Panel
-    Friend WithEvents UiTextBox快捷输入CPU核心 As Sunny.UI.UITextBox
-    Friend WithEvents Label106 As Label
-    Friend WithEvents UiTextBox处理器核心 As Sunny.UI.UITextBox
-    Friend WithEvents Label39 As Label
-    Friend WithEvents Panel38 As Panel
-    Friend WithEvents Label字体预览文本 As Label
-    Friend WithEvents UiButton4 As Sunny.UI.UIButton
-    Friend WithEvents Label137 As Label
-    Friend WithEvents UiComboBox字体名称 As Sunny.UI.UIComboBox
-    Friend WithEvents Label34 As Label
-    Friend WithEvents UiComboBox自动开始最大任务数量 As Sunny.UI.UIComboBox
-    Friend WithEvents Label30 As Label
     Friend WithEvents Panel7 As Panel
     Friend WithEvents Panel73 As Panel
     Friend WithEvents Label副标题 As Label
@@ -3328,7 +2376,7 @@ Partial Class Form1
     Friend WithEvents UiButton复制输出 As Sunny.UI.UIButton
     Friend WithEvents Label26 As Label
     Friend WithEvents Label21 As Label
-    Friend WithEvents Panel5 As Panel
+    Friend WithEvents Panel新闻列表面板 As Panel
     Friend WithEvents Label29 As Label
     Friend WithEvents Label37 As Label
     Friend WithEvents Label42 As Label
@@ -3341,45 +2389,12 @@ Partial Class Form1
     Friend WithEvents Label23 As Label
     Friend WithEvents Label35 As Label
     Friend WithEvents Label46 As Label
-    Friend WithEvents Label47 As Label
-    Friend WithEvents Label48 As Label
-    Friend WithEvents Panel11 As Panel
-    Friend WithEvents Panel12 As Panel
-    Friend WithEvents UiComboBox自动重置参数面板的页面选择 As Sunny.UI.UIComboBox
-    Friend WithEvents Label50 As Label
-    Friend WithEvents Panel10 As Panel
-    Friend WithEvents UiComboBox自动开始任务 As Sunny.UI.UIComboBox
-    Friend WithEvents Label20 As Label
-    Friend WithEvents Panel8 As Panel
-    Friend WithEvents UiComboBox提示音 As Sunny.UI.UIComboBox
-    Friend WithEvents Label49 As Label
-    Friend WithEvents Panel42 As Panel
-    Friend WithEvents UiComboBox有任务时系统状态 As Sunny.UI.UIComboBox
-    Friend WithEvents Label33 As Label
-    Friend WithEvents Label38 As Label
-    Friend WithEvents Panel14 As Panel
-    Friend WithEvents Panel46 As Panel
-    Friend WithEvents UiCheckBox转译模式 As Sunny.UI.UICheckBox
-    Friend WithEvents Panel45 As Panel
-    Friend WithEvents UiTextBox覆盖参数传递 As Sunny.UI.UITextBox
-    Friend WithEvents Label40 As Label
-    Friend WithEvents Panel48 As Panel
-    Friend WithEvents UiTextBox替代进程的文件名 As Sunny.UI.UITextBox
-    Friend WithEvents Label43 As Label
-    Friend WithEvents Panel43 As Panel
-    Friend WithEvents UiTextBoxFFmpeg自定义工作目录 As Sunny.UI.UITextBox
-    Friend WithEvents Label25 As Label
-    Friend WithEvents UiButton13 As Sunny.UI.UIButton
-    Friend WithEvents Label32 As Label
-    Friend WithEvents Label41 As Label
     Friend WithEvents Panel15 As Panel
     Friend WithEvents UiButton任务管理菜单 As Sunny.UI.UIButton
     Friend WithEvents Panel16 As Panel
     Friend WithEvents Label36 As Label
     Friend WithEvents LinkLabel清理内存 As LinkLabel
-    Friend WithEvents Panel19 As Panel
-    Friend WithEvents UiComboBox混淆任务名称 As Sunny.UI.UIComboBox
-    Friend WithEvents Label1 As Label
     Friend WithEvents Label2 As Label
+    Friend WithEvents Panel5 As Panel
 
 End Class

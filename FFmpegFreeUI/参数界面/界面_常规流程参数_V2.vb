@@ -9,9 +9,10 @@ Public Class 界面_常规流程参数_V2
     Public 插帧页面 As New Form插帧
     Public 动态模糊页面 As New Form帧混合
     Public 画面裁剪页面 As New Form画面裁剪交互窗口
+    Public 超分页面 As New Form超分
 
     Private Sub 界面_常规流程参数_Load(sender As Object, e As EventArgs) Handles Me.Load
-        If Form1.DPI <> 1 Then UiTabControlMenu1.ItemSize = New Size(200 * Form1.DPI, 36 * Form1.DPI)
+        UiTabControlMenu1.ItemSize = New Size(200 * Form1.DPI, 36 * Form1.DPI)
 
         暗黑列表视图自绘制.绑定列表视图事件2(ListView2)
         ListView2.SmallImageList = Form1.ImageList1
@@ -36,13 +37,17 @@ Public Class 界面_常规流程参数_V2
         AddHandler UiButton裁剪交互窗口.Click, Sub() 显示窗体(Form画面裁剪交互窗口, Form1)
         '==============================================
         AddHandler UiButton打开插帧参数窗口.Click, Sub()
-                                               显示窗体(插帧页面, Form1)
-                                               SetControlFont(Form1.UiComboBox字体名称.Text, 插帧页面)
+                                               显示窗体(插帧页面, Me.ParentForm)
+                                               SetControlFont(用户设置.实例对象.字体, 插帧页面)
                                            End Sub
         AddHandler UiButton打开动态模糊参数窗口.Click, Sub()
-                                                 显示窗体(动态模糊页面, Form1)
-                                                 SetControlFont(Form1.UiComboBox字体名称.Text, 动态模糊页面)
+                                                 显示窗体(动态模糊页面, Me.ParentForm)
+                                                 SetControlFont(用户设置.实例对象.字体, 动态模糊页面)
                                              End Sub
+        AddHandler UiButton打开超分参数窗口.Click, Sub()
+                                               显示窗体(超分页面, Me.ParentForm)
+                                               SetControlFont(用户设置.实例对象.字体, 超分页面)
+                                           End Sub
         '==============================================
         AddHandler UiComboBox全局质量控制方式.SelectedIndexChanged, AddressOf 视频比特率控制方式改动事件
         AddHandler UiButton添加进阶质量控制预制项.Click, Sub()
@@ -57,6 +62,7 @@ Public Class 界面_常规流程参数_V2
         AddHandler UiComboBox降噪方式.TextChanged, AddressOf 视频降噪方式变动事件
         '==========================================
         AddHandler UiComboBox音频编码器.TextChanged, AddressOf 音频编码参数变动事件
+        AddHandler UiComboBox音频比特率.TextChanged, AddressOf 音频比特率参数变动事件
         AddHandler UiComboBox音频质量参数.TextChanged, AddressOf 音频质量参数变动事件
         '==========================================
         AddHandler UiComboBox图片编码器.TextChanged, AddressOf 图片编码器参数变动事件
@@ -180,7 +186,7 @@ Public Class 界面_常规流程参数_V2
     Sub 视频编码类别改动事件()
         UiComboBox具体编码.Items.Clear()
         UiComboBox具体编码.Text = ""
-        Select Case Form1.常规流程参数页面.UiComboBox编码类别.SelectedIndex
+        Select Case UiComboBox编码类别.SelectedIndex
             Case 0
                 UiComboBox编码预设.Items.Clear()
                 UiComboBox编码预设.Text = ""
@@ -400,9 +406,15 @@ Public Class 界面_常规流程参数_V2
         End Select
     End Sub
 
+    Sub 音频比特率参数变动事件()
+        If UiComboBox音频比特率.Text = "" Then
+            UiComboBox音频质量参数.Text = ""
+            UiTextBox音频质量值.Text = ""
+        End If
+    End Sub
+
     Sub 音频质量参数变动事件()
         If UiComboBox音频质量参数.Text = "" Then
-            UiComboBox音频比特率.Text = ""
             UiTextBox音频质量值.Text = ""
         End If
     End Sub
@@ -454,10 +466,12 @@ Public Class 界面_常规流程参数_V2
 
             Case 选项卡.IsEqual(TabPage视频参数色彩管理)
                 校准UiComboBox视觉(UiComboBox像素格式)
+                校准UiComboBox视觉(UiComboBox色彩空间滤镜选择)
                 校准UiComboBox视觉(UiComboBox矩阵系数)
                 校准UiComboBox视觉(UiComboBox色域)
                 校准UiComboBox视觉(UiComboBox传输特性)
                 校准UiComboBox视觉(UiComboBox色彩范围)
+                校准UiComboBox视觉(UiComboBox色调映射算法)
                 校准UiComboBox视觉(UiComboBox色彩管理处理方式)
 
             Case 选项卡.IsEqual(TabPage视频参数常见滤镜)
@@ -558,7 +572,8 @@ Public Class 界面_常规流程参数_V2
         End If
     End Sub
     Public Sub 保存预设到文件()
-        Dim d As New SaveFileDialog With {.Filter = "Json|*.json"}
+        Dim d As New SaveFileDialog With {.Filter = "Json|*.json", .Title = "将方案保存到单独文件（要加入列表请放到 Preset 文件夹）"}
+        If ListView2.SelectedItems.Count > 0 Then Sunny.UI.UIMessageTip.ShowWarning($"注意这不是保存到列表中", 1500, False)
         d.ShowDialog(Form1)
         If d.FileName = "" Then Exit Sub
         Dim a As New 预设数据类型
@@ -571,7 +586,7 @@ Public Class 界面_常规流程参数_V2
         End Select
     End Sub
     Public Sub 从文件读取预设()
-        Dim d As New OpenFileDialog With {.Filter = "Json|*.json"}
+        Dim d As New OpenFileDialog With {.Filter = "Json|*.json", .Title = "加载外部预设方案文件（此操作不会将其加入列表）"}
         d.ShowDialog(Form1)
         If Not File.Exists(d.FileName) Then Exit Sub
         Dim a As 预设数据类型 = JsonSerializer.Deserialize(Of 预设数据类型)(File.ReadAllText(d.FileName))
@@ -720,16 +735,16 @@ Public Class 界面_常规流程参数_V2
         Dim a As New 暗黑上下文菜单 With {.ShowImageMargin = False, .Font = Form1.Font}
         a.Items.AddRange(New ToolStripItem() {
              New ToolStripSeparator() With {.Tag = "null"},
-             New ToolStripMenuItem("常用容器") With {.ForeColor = Color.CornflowerBlue, .Enabled = False},
-             New ToolStripMenuItem(".mp4", Nothing, Sub(s1, e1) UiTextBox输出容器.Text = s1.Text) With {.ForeColor = Color.Silver},
-             New ToolStripMenuItem(".mkv", Nothing, Sub(s1, e1) UiTextBox输出容器.Text = s1.Text) With {.ForeColor = Color.Silver},
              New ToolStripMenuItem("全部分类") With {.ForeColor = Color.CornflowerBlue, .Enabled = False},
              New ToolStripMenuItem("视频") With {.ForeColor = Color.Silver, .DropDown = b},
              New ToolStripMenuItem("音频") With {.ForeColor = Color.Silver, .DropDown = c},
              New ToolStripMenuItem("图片") With {.ForeColor = Color.Silver, .DropDown = d},
+             New ToolStripMenuItem("常用容器") With {.ForeColor = Color.CornflowerBlue, .Enabled = False},
+             New ToolStripMenuItem(".mp4", Nothing, Sub(s1, e1) UiTextBox输出容器.Text = s1.Text) With {.ForeColor = Color.Silver},
+             New ToolStripMenuItem(".mkv", Nothing, Sub(s1, e1) UiTextBox输出容器.Text = s1.Text) With {.ForeColor = Color.Silver},
              New ToolStripSeparator() With {.Tag = "null"}})
 
-        a.Show(sender, New Point(0, sender.Height + sender.Parent.Padding.Bottom * 2))
+        a.Show(sender, New Point(0, sender.Height))
 
     End Sub
 

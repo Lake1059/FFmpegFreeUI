@@ -1,6 +1,6 @@
 ﻿Public Class Form插帧
     Private Sub Form插帧_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        SetControlFont(Form1.Font.Name, Me)
+
     End Sub
 
     Private Sub Form插帧_Shown(sender As Object, e As EventArgs) Handles Me.Shown

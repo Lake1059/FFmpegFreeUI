@@ -1,7 +1,7 @@
 ﻿
 Public Class Form帧混合
     Private Sub Form帧混合_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        SetControlFont(Form1.Font.Name, Me)
+
     End Sub
 
     Private Sub Form帧混合_Shown(sender As Object, e As EventArgs) Handles Me.Shown

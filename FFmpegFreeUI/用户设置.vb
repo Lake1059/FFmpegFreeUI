@@ -24,6 +24,14 @@ Public Class 用户设置
         Public Property 最后的预设数据 As New 预设数据类型
         Public Property V2Tips As Boolean = True
         Public Property 自定义视频编码器列表 As New List(Of String)
+
+        Public Property 个性化_软件图标 As String = ""
+        Public Property 个性化_任务完成音效 As String = ""
+        Public Property 个性化_任务失败音效 As String = ""
+        Public Property 个性化_起始页标题 As String = ""
+        Public Property 个性化_起始页副标题 As String = ""
+        Public Property 个性化_窗口标题栏 As String = ""
+        Public Property 个性化_起始页背景图 As String = ""
     End Class
 
     Enum 自动加载预设选项枚举
@@ -62,22 +70,22 @@ Public Class 用户设置
                 实例对象 = JsonSerializer.Deserialize(Of 用户设置数据结构)(ReadAllText(a))
             End If
 
-            Form1.UiComboBox字体名称.Text = 实例对象.字体
-            Form1.UiTextBox处理器核心.Text = 实例对象.指定处理器核心
-            Form1.UiComboBox自动开始最大任务数量.SelectedIndex = 实例对象.自动同时运行任务数量选项
-            Form1.UiComboBox有任务时系统状态.SelectedIndex = 实例对象.有任务时系统保持状态选项
-            Form1.UiComboBox提示音.SelectedIndex = 实例对象.提示音选项
-            Form1.UiComboBox自动开始任务.SelectedIndex = 实例对象.自动开始任务选项
-            Form1.UiComboBox自动重置参数面板的页面选择.SelectedIndex = 实例对象.自动重置参数面板的页面选择
-            Form1.UiComboBox混淆任务名称.SelectedIndex = 实例对象.混淆任务名称
+            Form1.设置页面.UiComboBox字体名称.Text = 实例对象.字体
+            Form1.设置页面.UiTextBox处理器核心.Text = 实例对象.指定处理器核心
+            Form1.设置页面.UiComboBox自动开始最大任务数量.SelectedIndex = 实例对象.自动同时运行任务数量选项
+            Form1.设置页面.UiComboBox有任务时系统状态.SelectedIndex = 实例对象.有任务时系统保持状态选项
+            Form1.设置页面.UiComboBox提示音.SelectedIndex = 实例对象.提示音选项
+            Form1.设置页面.UiComboBox自动开始任务.SelectedIndex = 实例对象.自动开始任务选项
+            Form1.设置页面.UiComboBox自动重置参数面板的页面选择.SelectedIndex = 实例对象.自动重置参数面板的页面选择
+            Form1.设置页面.UiComboBox混淆任务名称.SelectedIndex = 实例对象.混淆任务名称
 
-            Form1.UiTextBoxFFmpeg自定义工作目录.Text = 实例对象.工作目录
-            Form1.UiTextBox替代进程的文件名.Text = 实例对象.替代进程文件名
-            Form1.UiTextBox覆盖参数传递.Text = 实例对象.覆盖参数传递
-            Form1.UiCheckBox转译模式.Checked = 实例对象.转译模式
+            Form1.设置页面.UiTextBoxFFmpeg自定义工作目录.Text = 实例对象.工作目录
+            Form1.设置页面.UiTextBox替代进程的文件名.Text = 实例对象.替代进程文件名
+            Form1.设置页面.UiTextBox覆盖参数传递.Text = 实例对象.覆盖参数传递
+            Form1.设置页面.UiCheckBox转译模式.Checked = 实例对象.转译模式
             Form1.常规流程参数页面.UiComboBox自动加载预设选项.SelectedIndex = 实例对象.自动加载预设选项
             Form1.常规流程参数页面.UiTextBox自动加载的预设文件路径.Text = 实例对象.自动加载预设文件路径
-            Select Case Form1.UiComboBox自动开始最大任务数量.SelectedIndex
+            Select Case Form1.设置页面.UiComboBox自动开始最大任务数量.SelectedIndex
                 Case 0 : 同时运行任务上限 = 1
                 Case 1 : 同时运行任务上限 = 2
                 Case 2 : 同时运行任务上限 = 3
@@ -90,6 +98,10 @@ Public Class 用户设置
                 Case 9 : 同时运行任务上限 = 10
                 Case Else : 同时运行任务上限 = 1
             End Select
+
+            Form1.设置页面.UiComboBox字体名称.Text = 实例对象.字体
+            If Form1.设置页面.UiComboBox字体名称.Items.Contains("微软雅黑") Then Form1.设置页面.UiComboBox字体名称.Font = New Font("微软雅黑", Form1.设置页面.UiComboBox字体名称.Font.Size)
+            SetControlFont(用户设置.实例对象.字体, Form1, {Form1.设置页面.UiComboBox字体名称}, True)
 
         Catch ex As Exception
             MsgBox($"加载设置失败：{ex.Message}", MsgBoxStyle.Critical)

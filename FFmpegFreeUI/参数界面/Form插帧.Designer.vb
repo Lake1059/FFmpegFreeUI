@@ -135,9 +135,9 @@ Partial Class Form插帧
         UiTextBox要补到多少帧.Name = "UiTextBox要补到多少帧"
         UiTextBox要补到多少帧.Padding = New Padding(5)
         UiTextBox要补到多少帧.Radius = 30
-        UiTextBox要补到多少帧.RectColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
-        UiTextBox要补到多少帧.RectDisableColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
-        UiTextBox要补到多少帧.RectReadOnlyColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
+        UiTextBox要补到多少帧.RectColor = Color.DimGray
+        UiTextBox要补到多少帧.RectDisableColor = Color.DimGray
+        UiTextBox要补到多少帧.RectReadOnlyColor = Color.DimGray
         UiTextBox要补到多少帧.ScrollBarBackColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
         UiTextBox要补到多少帧.ScrollBarColor = Color.DimGray
         UiTextBox要补到多少帧.ScrollBarStyleInherited = False
@@ -189,9 +189,9 @@ Partial Class Form插帧
         Label123.ForeColor = Color.Gray
         Label123.Location = New Point(10, 10)
         Label123.Name = "Label123"
-        Label123.Size = New Size(534, 38)
+        Label123.Size = New Size(468, 38)
         Label123.TabIndex = 4
-        Label123.Text = "minterpolate 是 ffmpeg 内置的滤镜，效果一般，只能用 CPU，高质量的补帧请用 AI 处理" & vbCrLf & "考虑使用 SVP 或者 SVFI；如需非常稳定的补帧，请用 Topaz Video AI"
+        Label123.Text = "minterpolate 效果非常一般但是足够快且质量稳定；另外抽帧也是用的这个滤镜" & vbCrLf & "考虑使用 AI 软件：SVP、SVFI、Topaz Video AI"
         ' 
         ' Label2
         ' 
@@ -239,7 +239,7 @@ Partial Class Form插帧
         UiComboBox运动估计算法.ForeDisableColor = Color.Silver
         UiComboBox运动估计算法.ItemFillColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
         UiComboBox运动估计算法.ItemForeColor = Color.Silver
-        UiComboBox运动估计算法.ItemHeight = 30
+        UiComboBox运动估计算法.ItemHeight = 28
         UiComboBox运动估计算法.ItemHoverColor = Color.FromArgb(CByte(56), CByte(56), CByte(56))
         UiComboBox运动估计算法.ItemRectColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
         UiComboBox运动估计算法.Items.AddRange(New Object() {"", "穷举搜索", "三步搜索", "二维对数搜索", "新三步搜索", "四步搜索", "菱形搜索", "基于 Hexagon", "增强的预测区域", "不均匀多六边形"})
@@ -251,6 +251,7 @@ Partial Class Form插帧
         UiComboBox运动估计算法.MinimumSize = New Size(63, 0)
         UiComboBox运动估计算法.Name = "UiComboBox运动估计算法"
         UiComboBox运动估计算法.Padding = New Padding(0, 0, 30, 2)
+        UiComboBox运动估计算法.RadiusSides = Sunny.UI.UICornerRadiusSides.None
         UiComboBox运动估计算法.RectColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
         UiComboBox运动估计算法.RectDisableColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
         UiComboBox运动估计算法.ScrollBarHandleWidth = 20
@@ -282,7 +283,7 @@ Partial Class Form插帧
         UiComboBox运动估计模式.ForeDisableColor = Color.Silver
         UiComboBox运动估计模式.ItemFillColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
         UiComboBox运动估计模式.ItemForeColor = Color.Silver
-        UiComboBox运动估计模式.ItemHeight = 30
+        UiComboBox运动估计模式.ItemHeight = 28
         UiComboBox运动估计模式.ItemHoverColor = Color.FromArgb(CByte(56), CByte(56), CByte(56))
         UiComboBox运动估计模式.ItemRectColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
         UiComboBox运动估计模式.Items.AddRange(New Object() {"", "双向运动估计", "双侧运动估计"})
@@ -294,6 +295,7 @@ Partial Class Form插帧
         UiComboBox运动估计模式.MinimumSize = New Size(63, 0)
         UiComboBox运动估计模式.Name = "UiComboBox运动估计模式"
         UiComboBox运动估计模式.Padding = New Padding(0, 0, 30, 2)
+        UiComboBox运动估计模式.RadiusSides = Sunny.UI.UICornerRadiusSides.None
         UiComboBox运动估计模式.RectColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
         UiComboBox运动估计模式.RectDisableColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
         UiComboBox运动估计模式.ScrollBarHandleWidth = 20
@@ -325,7 +327,7 @@ Partial Class Form插帧
         UiComboBox插帧模式.ForeDisableColor = Color.Silver
         UiComboBox插帧模式.ItemFillColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
         UiComboBox插帧模式.ItemForeColor = Color.Silver
-        UiComboBox插帧模式.ItemHeight = 30
+        UiComboBox插帧模式.ItemHeight = 28
         UiComboBox插帧模式.ItemHoverColor = Color.FromArgb(CByte(56), CByte(56), CByte(56))
         UiComboBox插帧模式.ItemRectColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
         UiComboBox插帧模式.Items.AddRange(New Object() {"", "两帧加权平均", "运动补偿插值"})
@@ -337,6 +339,7 @@ Partial Class Form插帧
         UiComboBox插帧模式.MinimumSize = New Size(63, 0)
         UiComboBox插帧模式.Name = "UiComboBox插帧模式"
         UiComboBox插帧模式.Padding = New Padding(0, 0, 30, 2)
+        UiComboBox插帧模式.RadiusSides = Sunny.UI.UICornerRadiusSides.None
         UiComboBox插帧模式.RectColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
         UiComboBox插帧模式.RectDisableColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
         UiComboBox插帧模式.ScrollBarHandleWidth = 20
@@ -425,7 +428,7 @@ Partial Class Form插帧
         UiComboBox运动补偿模式.ForeDisableColor = Color.Silver
         UiComboBox运动补偿模式.ItemFillColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
         UiComboBox运动补偿模式.ItemForeColor = Color.Silver
-        UiComboBox运动补偿模式.ItemHeight = 30
+        UiComboBox运动补偿模式.ItemHeight = 28
         UiComboBox运动补偿模式.ItemHoverColor = Color.FromArgb(CByte(56), CByte(56), CByte(56))
         UiComboBox运动补偿模式.ItemRectColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
         UiComboBox运动补偿模式.Items.AddRange(New Object() {"", "重叠块运动补偿", "加权 obmc"})
@@ -437,6 +440,7 @@ Partial Class Form插帧
         UiComboBox运动补偿模式.MinimumSize = New Size(63, 0)
         UiComboBox运动补偿模式.Name = "UiComboBox运动补偿模式"
         UiComboBox运动补偿模式.Padding = New Padding(0, 0, 30, 2)
+        UiComboBox运动补偿模式.RadiusSides = Sunny.UI.UICornerRadiusSides.None
         UiComboBox运动补偿模式.RectColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
         UiComboBox运动补偿模式.RectDisableColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
         UiComboBox运动补偿模式.ScrollBarHandleWidth = 20
@@ -509,9 +513,9 @@ Partial Class Form插帧
         UiTextBox搜索范围.Name = "UiTextBox搜索范围"
         UiTextBox搜索范围.Padding = New Padding(5)
         UiTextBox搜索范围.Radius = 30
-        UiTextBox搜索范围.RectColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
-        UiTextBox搜索范围.RectDisableColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
-        UiTextBox搜索范围.RectReadOnlyColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
+        UiTextBox搜索范围.RectColor = Color.DimGray
+        UiTextBox搜索范围.RectDisableColor = Color.DimGray
+        UiTextBox搜索范围.RectReadOnlyColor = Color.DimGray
         UiTextBox搜索范围.ScrollBarBackColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
         UiTextBox搜索范围.ScrollBarColor = Color.DimGray
         UiTextBox搜索范围.ScrollBarStyleInherited = False
@@ -548,9 +552,9 @@ Partial Class Form插帧
         UiTextBox块大小.Name = "UiTextBox块大小"
         UiTextBox块大小.Padding = New Padding(5)
         UiTextBox块大小.Radius = 30
-        UiTextBox块大小.RectColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
-        UiTextBox块大小.RectDisableColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
-        UiTextBox块大小.RectReadOnlyColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
+        UiTextBox块大小.RectColor = Color.DimGray
+        UiTextBox块大小.RectDisableColor = Color.DimGray
+        UiTextBox块大小.RectReadOnlyColor = Color.DimGray
         UiTextBox块大小.ScrollBarBackColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
         UiTextBox块大小.ScrollBarColor = Color.DimGray
         UiTextBox块大小.ScrollBarStyleInherited = False
@@ -658,9 +662,9 @@ Partial Class Form插帧
         UiTextBox场景变化检测强度.Name = "UiTextBox场景变化检测强度"
         UiTextBox场景变化检测强度.Padding = New Padding(5)
         UiTextBox场景变化检测强度.Radius = 30
-        UiTextBox场景变化检测强度.RectColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
-        UiTextBox场景变化检测强度.RectDisableColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
-        UiTextBox场景变化检测强度.RectReadOnlyColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
+        UiTextBox场景变化检测强度.RectColor = Color.DimGray
+        UiTextBox场景变化检测强度.RectDisableColor = Color.DimGray
+        UiTextBox场景变化检测强度.RectReadOnlyColor = Color.DimGray
         UiTextBox场景变化检测强度.ScrollBarBackColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
         UiTextBox场景变化检测强度.ScrollBarColor = Color.DimGray
         UiTextBox场景变化检测强度.ScrollBarStyleInherited = False
@@ -711,7 +715,7 @@ Partial Class Form插帧
         ShowIcon = False
         ShowInTaskbar = False
         StartPosition = FormStartPosition.Manual
-        Text = "minterpolate 插帧滤镜"
+        Text = "minterpolate 插帧"
         Panel8.ResumeLayout(False)
         Panel11.ResumeLayout(False)
         Panel73.ResumeLayout(False)

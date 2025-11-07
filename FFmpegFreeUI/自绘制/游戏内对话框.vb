@@ -1,14 +1,16 @@
 ﻿
 Public Class 软件内对话框
 
-    Public Shared Sub 显示对话框(标题 As String, 内容 As String, 按钮列表和程序 As Dictionary(Of String, Action), 对话框主题 As 主题类型, Optional 宽度比例 As Single = 0.5, Optional 高度比例 As Single = 0.5)
+    Public Shared Sub 显示对话框(窗口 As Form, 标题 As String, 内容 As String, 按钮列表和程序 As Dictionary(Of String, Action), 对话框主题 As 主题类型, Optional 宽度比例 As Single = 0.5, Optional 高度比例 As Single = 0.5)
         Dim 主面板 As New Panel With {
             .Dock = DockStyle.Fill,
             .BackColor = Color.FromArgb(0, 0, 0),
             .BackgroundImageLayout = ImageLayout.None
         }
-        Dim 背景图 As Image = 截取画面_对话框背景专用()
-        AddHandler 主面板.Paint, Sub(sender As Object, e As PaintEventArgs) If 背景图 IsNot Nothing Then e.Graphics.DrawImage(背景图, 主面板.ClientRectangle)
+        If 窗口 Is Form1 Then
+            Dim 背景图 As Image = 截取画面_对话框背景专用()
+            AddHandler 主面板.Paint, Sub(sender As Object, e As PaintEventArgs) If 背景图 IsNot Nothing Then e.Graphics.DrawImage(背景图, 主面板.ClientRectangle)
+        End If
 
         Dim 对话框区域 As New Panel With {.Dock = DockStyle.Fill, .Padding = New Padding(20 * Form1.DPI)}
         主面板.Controls.Add(对话框区域)
@@ -76,7 +78,7 @@ Public Class 软件内对话框
         }
         对话框区域.Controls.Add(描述文字)
         描述文字.BringToFront()
-        Form1.Controls.Add(主面板)
+        窗口.Controls.Add(主面板)
         主面板.BringToFront()
     End Sub
 

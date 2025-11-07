@@ -1,7 +1,89 @@
 ﻿Imports System.IO
 Imports System.Reflection
 Imports System.Text.Json
+Imports Sunny.UI
 Public Class 插件管理
+
+    Public Shared Property 是否已解锁个性化功能 As Boolean = False
+
+    Public Shared Sub 启动时读取个性化功能解锁器()
+        Dim a As String = Path.Combine(Application.StartupPath, "FFmpegFreeUISupporter.dll")
+        If Not FileIO.FileSystem.FileExists(a) Then
+            Form1.加载自定义图标(Nothing)
+            Form1.设置页面.Panel1.Visible = True
+            Form1.设置页面.Panel3.Visible = False
+            Exit Sub
+        End If
+        Dim 程序集 As Assembly = Assembly.LoadFile(a)
+        Dim 获取类型 As Type = 程序集.GetType(程序集.GetName.Name & ".Entry")
+        Dim 创建实例 As Object = Activator.CreateInstance(获取类型)
+        Dim 实现方法 As MethodInfo = 获取类型.GetMethod("Entry")
+        实现方法.Invoke(创建实例, Array.Empty(Of Object)())
+        If 是否已解锁个性化功能 Then
+            Form1.设置页面.Panel1.Visible = False
+            Form1.设置页面.Panel3.Visible = True
+
+            If FileIO.FileSystem.FileExists(用户设置.实例对象.个性化_软件图标) Then
+                Form1.设置页面.Label9.Text = 用户设置.实例对象.个性化_软件图标
+                Form1.加载自定义图标(用户设置.实例对象.个性化_软件图标)
+            Else
+                Form1.设置页面.Label9.Text = ""
+                Form1.加载自定义图标(Nothing)
+                用户设置.实例对象.个性化_软件图标 = ""
+            End If
+
+
+            If FileIO.FileSystem.FileExists(用户设置.实例对象.个性化_任务完成音效) Then
+                Form1.设置页面.Label11.Text = 用户设置.实例对象.个性化_任务完成音效
+                Form1.加载自定义任务完成音效(用户设置.实例对象.个性化_任务完成音效)
+            Else
+                Form1.设置页面.Label11.Text = ""
+                用户设置.实例对象.个性化_任务完成音效 = ""
+            End If
+
+            If FileIO.FileSystem.FileExists(用户设置.实例对象.个性化_任务失败音效) Then
+                Form1.设置页面.Label10.Text = 用户设置.实例对象.个性化_任务失败音效
+                Form1.加载自定义任务失败音效(用户设置.实例对象.个性化_任务失败音效)
+            Else
+                Form1.设置页面.Label10.Text = ""
+                用户设置.实例对象.个性化_任务失败音效 = ""
+            End If
+
+            If 用户设置.实例对象.个性化_起始页标题 <> "" Then
+                Form1.设置页面.UiTextBox1.Text = 用户设置.实例对象.个性化_起始页标题
+                Form1.Label主标题.Text = 用户设置.实例对象.个性化_起始页标题
+            Else
+                Form1.设置页面.UiTextBox1.Text = ""
+            End If
+
+            If 用户设置.实例对象.个性化_起始页副标题 <> "" Then
+                Form1.设置页面.UiTextBox2.Text = 用户设置.实例对象.个性化_起始页副标题
+                Form1.Label副标题.Text = 用户设置.实例对象.个性化_起始页副标题
+            Else
+                Form1.设置页面.UiTextBox2.Text = ""
+            End If
+
+            If 用户设置.实例对象.个性化_窗口标题栏 <> "" Then
+                Form1.设置页面.UiTextBox3.Text = 用户设置.实例对象.个性化_窗口标题栏
+                Form1.Text = 用户设置.实例对象.个性化_窗口标题栏
+            Else
+                Form1.设置页面.UiTextBox3.Text = ""
+            End If
+
+            If FileIO.FileSystem.FileExists(用户设置.实例对象.个性化_起始页背景图) Then
+                Form1.设置页面.Label14.Text = 用户设置.实例对象.个性化_起始页背景图
+                Form1.Panel5.BackgroundImage = LoadImageFromFile(用户设置.实例对象.个性化_起始页背景图)
+            Else
+                Form1.设置页面.Label14.Text = ""
+                用户设置.实例对象.个性化_起始页背景图 = ""
+            End If
+
+        Else
+            Form1.加载自定义图标(Nothing)
+            Form1.设置页面.Panel1.Visible = True
+            Form1.设置页面.Panel3.Visible = False
+        End If
+    End Sub
 
     Public Shared Property 由插件加载的自定义界面 As New Dictionary(Of String, Control)
 
@@ -90,6 +172,7 @@ Public Class 插件管理
             Form1.UiComboBox3.Items.Add(item.Key)
         Next
     End Sub
+
 
 
 

@@ -29,7 +29,7 @@ Public Class Form画面裁剪交互窗口
     End Sub
 
     Private Sub Form画面裁剪交互窗口_Shown(sender As Object, e As EventArgs) Handles Me.Shown
-        SetControlFont(Form1.UiComboBox字体名称.Text, Me)
+        SetControlFont(用户设置.实例对象.字体, Me)
     End Sub
 
     Private Sub Form画面裁剪交互窗口_DpiChanged(sender As Object, e As DpiChangedEventArgs) Handles Me.DpiChanged

@@ -4,20 +4,20 @@ Public Class 界面控制_添加文件
 
     Public Shared Sub 加入编码队列()
         If Form1.常规流程参数页面.UiTextBox输出容器.Text = "" Then
-            软件内对话框.显示对话框("输出容器未填写", $"没有选择或填写输出容器！{vbCrLf & vbCrLf}如果设定了自动加载预设请先点开参数页面检查", New Dictionary(Of String, Action) From {{"了解", Nothing}}, 软件内对话框.主题类型.错误)
+            软件内对话框.显示对话框(Form1, "输出容器未填写", $"没有选择或填写输出容器！{vbCrLf & vbCrLf}如果设定了自动加载预设请先点开参数页面检查", New Dictionary(Of String, Action) From {{"了解", Nothing}}, 软件内对话框.主题类型.错误)
             Exit Sub
         End If
         Select Case Form1.常规流程参数页面.UiComboBox输出目录.SelectedIndex
             Case 0
             Case Else
                 If Not FileIO.FileSystem.DirectoryExists(Form1.常规流程参数页面.UiComboBox输出目录.Text.Trim) Then
-                    软件内对话框.显示对话框("输出位置错误", $"自定义输出目录不存在！", New Dictionary(Of String, Action) From {{"了解", Nothing}}, 软件内对话框.主题类型.错误)
+                    软件内对话框.显示对话框(Form1, "输出位置错误", $"自定义输出目录不存在！", New Dictionary(Of String, Action) From {{"了解", Nothing}}, 软件内对话框.主题类型.错误)
                     Exit Sub
                 End If
         End Select
 
         If Not Form1.常规流程参数页面.是否已初始化 Then
-            软件内对话框.显示对话框("启动后请切到参数面板一次", $"参数面板未初始化，这是选项卡控件的底层机制问题。", New Dictionary(Of String, Action) From {{"了解", Nothing}}, 软件内对话框.主题类型.错误)
+            软件内对话框.显示对话框(Form1, "启动后请切到参数面板一次", $"参数面板未初始化，这是选项卡控件的底层机制问题。", New Dictionary(Of String, Action) From {{"了解", Nothing}}, 软件内对话框.主题类型.错误)
             Exit Sub
         End If
 
@@ -43,33 +43,36 @@ Public Class 界面控制_添加文件
         Form1.UiTabControlMenu1.SelectedTab = Form1.TabPage编码队列
         Task.Run(AddressOf 编码任务.检查是否有可以开始的任务)
     End Sub
-    Public Shared Sub 加入编码队列(拖入的文件 As String())
-        If Form1.常规流程参数页面.UiTextBox输出容器.Text = "" Then
-            软件内对话框.显示对话框("输出容器未填写", $"没有选择或填写输出容器！{vbCrLf & vbCrLf}如果设定了自动加载预设请先点开参数页面检查", New Dictionary(Of String, Action) From {{"了解", Nothing}}, 软件内对话框.主题类型.错误)
-            Exit Sub
+    Public Shared Function 加入编码队列(拖入的文件 As String(), 参数面板 As 界面_常规流程参数_V2) As Boolean
+        If 参数面板.UiTextBox输出容器.Text = "" Then
+            软件内对话框.显示对话框(参数面板.ParentForm, "输出容器未填写", $"没有选择或填写输出容器！{vbCrLf & vbCrLf}如果设定了自动加载预设请先点开参数页面检查", New Dictionary(Of String, Action) From {{"了解", Nothing}}, 软件内对话框.主题类型.错误)
+            Return False
+            Exit Function
         End If
-        Select Case Form1.常规流程参数页面.UiComboBox输出目录.SelectedIndex
+        Select Case 参数面板.UiComboBox输出目录.SelectedIndex
             Case 0
             Case Else
-                If Not FileIO.FileSystem.DirectoryExists(Form1.常规流程参数页面.UiComboBox输出目录.Text.Trim) Then
-                    软件内对话框.显示对话框("输出位置错误", $"自定义输出目录不存在！", New Dictionary(Of String, Action) From {{"了解", Nothing}}, 软件内对话框.主题类型.错误)
-                    Exit Sub
+                If Not FileIO.FileSystem.DirectoryExists(参数面板.UiComboBox输出目录.Text.Trim) Then
+                    软件内对话框.显示对话框(参数面板.ParentForm, "输出位置错误", $"自定义输出目录不存在！", New Dictionary(Of String, Action) From {{"了解", Nothing}}, 软件内对话框.主题类型.错误)
+                    Return False
+                    Exit Function
                 End If
         End Select
-        If Not Form1.常规流程参数页面.是否已初始化 Then
-            软件内对话框.显示对话框("启动后请切到参数面板一次", $"参数面板未初始化，这是选项卡控件的底层机制问题。", New Dictionary(Of String, Action) From {{"了解", Nothing}}, 软件内对话框.主题类型.错误)
-            Exit Sub
+        If Not 参数面板.是否已初始化 Then
+            软件内对话框.显示对话框(参数面板.ParentForm, "启动后请切到参数面板一次", $"参数面板未初始化，这是选项卡控件的底层机制问题。", New Dictionary(Of String, Action) From {{"了解", Nothing}}, 软件内对话框.主题类型.错误)
+            Return False
+            Exit Function
         End If
         Dim a As New 预设数据类型
-        预设管理.储存预设(a, Form1.常规流程参数页面)
+        预设管理.储存预设(a, 参数面板)
         For Each item In 拖入的文件
             Dim m As New 编码任务.单片任务 With {.输入文件 = item, .预设数据 = a}
             If 用户设置.实例对象.转译模式 Then m.输入文件 = 转译模式处理路径(item)
 
-            Select Case Form1.常规流程参数页面.UiComboBox输出目录.Text.Trim
-                Case Form1.常规流程参数页面.UiComboBox输出目录.Items(0).Trim
+            Select Case 参数面板.UiComboBox输出目录.Text.Trim
+                Case 参数面板.UiComboBox输出目录.Items(0).Trim
                 Case Else
-                    m.自定义输出位置 = Form1.常规流程参数页面.UiComboBox输出目录.Text.Trim
+                    m.自定义输出位置 = 参数面板.UiComboBox输出目录.Text.Trim
             End Select
             Dim i2 As New ListViewItem(IO.Path.GetFileName(item))
             If 用户设置.实例对象.混淆任务名称 = 1 Then i2.Text = 混淆字符_喵(i2.Text)
@@ -79,7 +82,8 @@ Public Class 界面控制_添加文件
             编码任务.队列.Add(m)
         Next
         Task.Run(AddressOf 编码任务.检查是否有可以开始的任务)
-    End Sub
+        Return True
+    End Function
 
     Public Shared Sub ListView2_DragEnter(sender As Object, e As DragEventArgs)
         If e.Data.GetDataPresent(DataFormats.FileDrop) Then

@@ -9,7 +9,7 @@ Public Class 界面控制_编码队列
             Dim 选项字典 As New Dictionary(Of String, Action)
             选项字典("了解") = Nothing
             选项字典("确认开始更多的任务") = AddressOf 真的开始任务
-            软件内对话框.显示对话框("同时进行的任务过多", "正在进行的任务已经 ≥ 10 个，确定要继续开始新任务吗？ffmpeg 使用的资源过多可能导致系统运行缓慢甚至各种崩溃!", 选项字典, 软件内对话框.主题类型.错误)
+            软件内对话框.显示对话框(Form1, "同时进行的任务过多", "正在进行的任务已经 ≥ 10 个，确定要继续开始新任务吗？ffmpeg 使用的资源过多可能导致系统运行缓慢甚至各种崩溃!", 选项字典, 软件内对话框.主题类型.错误)
         Else
             真的开始任务()
         End If
@@ -105,7 +105,7 @@ Public Class 界面控制_编码队列
                 Dim 选项字典 As New Dictionary(Of String, Action)
                 选项字典("不是") = Nothing
                 选项字典("当然") = Sub() Process.Start("explorer", "/select,""" & 编码任务.队列(Form1.ListView1.SelectedItems(0).Index).输入文件 & """")
-                软件内对话框.显示对话框("你指的是定位输入文件吗？", "因为此任务还未开始。", 选项字典, 软件内对话框.主题类型.常规)
+                软件内对话框.显示对话框(Form1, "你指的是定位输入文件吗？", "因为此任务还未开始。", 选项字典, 软件内对话框.主题类型.常规)
             Case Else
                 If Not FileIO.FileSystem.FileExists(编码任务.队列(Form1.ListView1.SelectedItems(0).Index).输出文件) Then Exit Sub
                 Process.Start("explorer", "/select,""" & 编码任务.队列(Form1.ListView1.SelectedItems(0).Index).输出文件 & """")
