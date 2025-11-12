@@ -420,6 +420,10 @@ Partial Class 界面_常规流程参数_V2
         UiButton刷新预设列表 = New Sunny.UI.UIButton()
         Label123 = New Label()
         Label124 = New Label()
+        Label15 = New Label()
+        Label154 = New Label()
+        Label161 = New Label()
+        Label162 = New Label()
         UiTabControlMenu1.SuspendLayout()
         TabPage参数总览.SuspendLayout()
         Panel74.SuspendLayout()
@@ -5224,6 +5228,10 @@ Partial Class 界面_常规流程参数_V2
         ' TabPage图片参数
         ' 
         TabPage图片参数.BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
+        TabPage图片参数.Controls.Add(Label15)
+        TabPage图片参数.Controls.Add(Label154)
+        TabPage图片参数.Controls.Add(Label161)
+        TabPage图片参数.Controls.Add(Label162)
         TabPage图片参数.Controls.Add(Panel67)
         TabPage图片参数.Controls.Add(Label121)
         TabPage图片参数.Controls.Add(Label120)
@@ -5295,7 +5303,7 @@ Partial Class 界面_常规流程参数_V2
         UiComboBox图片编码器.ItemHeight = 30
         UiComboBox图片编码器.ItemHoverColor = Color.FromArgb(CByte(56), CByte(56), CByte(56))
         UiComboBox图片编码器.ItemRectColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
-        UiComboBox图片编码器.Items.AddRange(New Object() {"", "PNG | 1 最快 ~ 最慢 9", "APNG 动图 | 1 最快 ~ 最慢 9", "JPEG\JPG | 1 清晰 ~ 模糊 31", "WEBP | 0 模糊 ~ 清晰 100", "WEBP 动图", "AVIF 静图 | 0 无损 ~ 全损 63", "AVIF 动图 | 0 无损 ~ 全损 63", "GIF 动图 | 写 1 来启用调色板生成", "BMP", "OpenJPEG | 0.0 全损 ~ 无损 1.0", "JPEG-LS", "HDR (Radiance RGBE format)", "TIFF", "DPX", "OpenEXR"})
+        UiComboBox图片编码器.Items.AddRange(New Object() {"", "PNG | 1 最快 ~ 最慢 9", "APNG 动图 | 1 最快 ~ 最慢 9", "JPEG\JPG | 1 清晰 ~ 模糊 31", "WEBP | 0 模糊 ~ 清晰 100", "WEBP 动图", "GIF 动图 | 写 1 来启用调色板生成", "BMP", "OpenJPEG | 0.0 全损 ~ 无损 1.0", "JPEG-LS", "HDR (Radiance RGBE format)", "TIFF", "DPX", "OpenEXR"})
         UiComboBox图片编码器.ItemSelectBackColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
         UiComboBox图片编码器.ItemSelectForeColor = Color.Silver
         UiComboBox图片编码器.Location = New Point(21, 10)
@@ -7327,6 +7335,56 @@ Partial Class 界面_常规流程参数_V2
         Label124.TabIndex = 29
         Label124.Text = "预设管理"
         ' 
+        ' Label15
+        ' 
+        Label15.AutoSize = True
+        Label15.Dock = DockStyle.Bottom
+        Label15.Font = New Font("微软雅黑", 13F)
+        Label15.Location = New Point(0, 482)
+        Label15.Name = "Label15"
+        Label15.Padding = New Padding(16, 0, 0, 10)
+        Label15.Size = New Size(169, 34)
+        Label15.TabIndex = 20
+        Label15.Text = "已从列表移除 avif"
+        ' 
+        ' Label154
+        ' 
+        Label154.AutoSize = True
+        Label154.Dock = DockStyle.Bottom
+        Label154.Font = New Font("微软雅黑", 10F)
+        Label154.ForeColor = Color.Gray
+        Label154.Location = New Point(0, 516)
+        Label154.Name = "Label154"
+        Label154.Padding = New Padding(16, 0, 0, 20)
+        Label154.Size = New Size(508, 60)
+        Label154.TabIndex = 21
+        Label154.Text = "强烈不推荐将 avif 用于生产环境，因为无法从 ffmpeg 关闭它的细节涂抹" & vbCrLf & "如何使用：视频编码 libaom-av1 输出到 .avif 文件，预设和质量正常设定即可"
+        ' 
+        ' Label161
+        ' 
+        Label161.AutoSize = True
+        Label161.Dock = DockStyle.Bottom
+        Label161.Font = New Font("微软雅黑", 13F)
+        Label161.Location = New Point(0, 576)
+        Label161.Name = "Label161"
+        Label161.Padding = New Padding(16, 0, 0, 10)
+        Label161.Size = New Size(241, 34)
+        Label161.TabIndex = 22
+        Label161.Text = "ffmpeg 不支持 HEIC/HEIF"
+        ' 
+        ' Label162
+        ' 
+        Label162.AutoSize = True
+        Label162.Dock = DockStyle.Bottom
+        Label162.Font = New Font("微软雅黑", 10F)
+        Label162.ForeColor = Color.Gray
+        Label162.Location = New Point(0, 610)
+        Label162.Name = "Label162"
+        Label162.Padding = New Padding(16, 0, 0, 20)
+        Label162.Size = New Size(417, 40)
+        Label162.TabIndex = 23
+        Label162.Text = "如果想要批量转到此格式，建议找三方软件或单独开发这个需求"
+        ' 
         ' 界面_常规流程参数_V2
         ' 
         AutoScaleDimensions = New SizeF(96F, 96F)
@@ -7868,5 +7926,9 @@ Partial Class 界面_常规流程参数_V2
     Friend WithEvents UiComboBox矩阵系数 As Sunny.UI.UIComboBox
     Friend WithEvents UiButton打开超分参数窗口 As Sunny.UI.UIButton
     Friend WithEvents Label82 As Label
+    Friend WithEvents Label161 As Label
+    Friend WithEvents Label162 As Label
+    Friend WithEvents Label15 As Label
+    Friend WithEvents Label154 As Label
 
 End Class

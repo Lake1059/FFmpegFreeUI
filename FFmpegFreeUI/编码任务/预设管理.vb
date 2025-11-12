@@ -185,21 +185,20 @@ Public Class 预设管理
         ui.UiTextBox响度标准化峰值电平.Text = a.音频参数_响度标准化_峰值电平
 
         Select Case a.图片参数_编码器_编码名称
-            Case "PNG" : ui.UiComboBox图片编码器.SelectedIndex = 1
-            Case "APNG" : ui.UiComboBox图片编码器.SelectedIndex = 2
-            Case "JPEG" : ui.UiComboBox图片编码器.SelectedIndex = 3
-            Case "WEBP有损" : ui.UiComboBox图片编码器.SelectedIndex = 4
-            Case "WEBP动图" : ui.UiComboBox图片编码器.SelectedIndex = 5
-            Case "AVIF静图" : ui.UiComboBox图片编码器.SelectedIndex = 6
-            Case "AVIF动图" : ui.UiComboBox图片编码器.SelectedIndex = 7
-            Case "GIF" : ui.UiComboBox图片编码器.SelectedIndex = 8
-            Case "BMP" : ui.UiComboBox图片编码器.SelectedIndex = 9
-            Case "OpenJPEG" : ui.UiComboBox图片编码器.SelectedIndex = 10
-            Case "JPEGLS" : ui.UiComboBox图片编码器.SelectedIndex = 11
-            Case "HDR" : ui.UiComboBox图片编码器.SelectedIndex = 12
-            Case "TIFF" : ui.UiComboBox图片编码器.SelectedIndex = 13
-            Case "DPX" : ui.UiComboBox图片编码器.SelectedIndex = 14
-            Case "OpenEXR" : ui.UiComboBox图片编码器.SelectedIndex = 15
+            Case "png" : ui.UiComboBox图片编码器.SelectedIndex = 1
+            Case "apng" : ui.UiComboBox图片编码器.SelectedIndex = 2
+            Case "mjpeg" : ui.UiComboBox图片编码器.SelectedIndex = 3
+            Case "libwebp" : ui.UiComboBox图片编码器.SelectedIndex = 4
+            Case "libwebp_anim" : ui.UiComboBox图片编码器.SelectedIndex = 5
+            Case "gif" : ui.UiComboBox图片编码器.SelectedIndex = 6
+            Case "bmp" : ui.UiComboBox图片编码器.SelectedIndex = 7
+            Case "libopenjpeg" : ui.UiComboBox图片编码器.SelectedIndex = 8
+            Case "jpegls" : ui.UiComboBox图片编码器.SelectedIndex = 9
+            Case "hdr" : ui.UiComboBox图片编码器.SelectedIndex = 10
+            Case "tiff" : ui.UiComboBox图片编码器.SelectedIndex = 11
+            Case "dpx" : ui.UiComboBox图片编码器.SelectedIndex = 12
+            Case "exr" : ui.UiComboBox图片编码器.SelectedIndex = 13
+            Case Else : ui.UiComboBox图片编码器.SelectedIndex = 0
         End Select
         ui.UiTextBox图片编码器质量.Text = a.图片参数_编码器_质量值
 
@@ -402,7 +401,6 @@ Public Class 预设管理
             Case 20 : a.音频参数_编码器_具体编码 = "libtwolame"
             Case 21 : a.音频参数_编码器_具体编码 = "libopencore_amrnb"
             Case 22 : a.音频参数_编码器_具体编码 = "libvo_amrwbenc"
-            Case Else : a.音频参数_编码器_具体编码 = ""
         End Select
 
         a.音频参数_比特率 = ui.UiComboBox音频比特率.Text
@@ -414,23 +412,20 @@ Public Class 预设管理
         a.音频参数_响度标准化_动态范围 = ui.UiTextBox响度标准化动态范围.Text
         a.音频参数_响度标准化_峰值电平 = ui.UiTextBox响度标准化峰值电平.Text
 
-        a.图片参数_编码器_编码名称 = ui.UiComboBox图片编码器.Text
         Select Case ui.UiComboBox图片编码器.SelectedIndex
-            Case 1 : a.图片参数_编码器_编码名称 = "PNG"
-            Case 2 : a.图片参数_编码器_编码名称 = "APNG"
-            Case 3 : a.图片参数_编码器_编码名称 = "JPEG"
-            Case 4 : a.图片参数_编码器_编码名称 = "WEBP有损"
-            Case 5 : a.图片参数_编码器_编码名称 = "WEBP动图"
-            Case 6 : a.图片参数_编码器_编码名称 = "AVIF静图"
-            Case 7 : a.图片参数_编码器_编码名称 = "AVIF动图"
-            Case 8 : a.图片参数_编码器_编码名称 = "GIF"
-            Case 9 : a.图片参数_编码器_编码名称 = "BMP"
-            Case 10 : a.图片参数_编码器_编码名称 = "OpenJPEG"
-            Case 11 : a.图片参数_编码器_编码名称 = "JPEGLS"
-            Case 12 : a.图片参数_编码器_编码名称 = "HDR"
-            Case 13 : a.图片参数_编码器_编码名称 = "TIFF"
-            Case 14 : a.图片参数_编码器_编码名称 = "DPX"
-            Case 15 : a.图片参数_编码器_编码名称 = "OpenEXR"
+            Case 1 : a.图片参数_编码器_编码名称 = "png"
+            Case 2 : a.图片参数_编码器_编码名称 = "apng"
+            Case 3 : a.图片参数_编码器_编码名称 = "mjpeg"
+            Case 4 : a.图片参数_编码器_编码名称 = "libwebp"
+            Case 5 : a.图片参数_编码器_编码名称 = "libwebp_anim"
+            Case 6 : a.图片参数_编码器_编码名称 = "gif"
+            Case 7 : a.图片参数_编码器_编码名称 = "bmp"
+            Case 8 : a.图片参数_编码器_编码名称 = "libopenjpeg"
+            Case 9 : a.图片参数_编码器_编码名称 = "jpegls"
+            Case 10 : a.图片参数_编码器_编码名称 = "hdr"
+            Case 11 : a.图片参数_编码器_编码名称 = "tiff"
+            Case 12 : a.图片参数_编码器_编码名称 = "dpx"
+            Case 13 : a.图片参数_编码器_编码名称 = "exr"
         End Select
         a.图片参数_编码器_质量值 = ui.UiTextBox图片编码器质量.Text
 
@@ -625,23 +620,21 @@ Public Class 预设管理
         If a.视频参数_编码器_类别 = "禁用" Then 视频参数 &= $"-vn "
         If a.视频参数_编码器_具体编码 <> "" Then 视频参数 &= $"-c:v {a.视频参数_编码器_具体编码} "
         Select Case a.图片参数_编码器_编码名称
-            Case "PNG" : 视频参数 &= $"-c:v png {If(a.图片参数_编码器_质量值 <> "", "-compression_level " & a.图片参数_编码器_质量值, "")} "
-            Case "APNG" : 视频参数 &= $"-c:v apng {If(a.图片参数_编码器_质量值 <> "", "-compression_level " & a.图片参数_编码器_质量值, "")} "
-            Case "JPEG" : 视频参数 &= $"-c:v mjpeg {If(a.图片参数_编码器_质量值 <> "", "-q:v " & a.图片参数_编码器_质量值, "")} "
-            Case "WEBP有损" : 视频参数 &= $"-c:v libwebp {If(a.图片参数_编码器_质量值 <> "", "-q:v " & a.图片参数_编码器_质量值, "")} "
-            Case "WEBP动图" : 视频参数 &= $"-c:v libwebp_anim {If(a.图片参数_编码器_质量值 <> "", "-q:v " & a.图片参数_编码器_质量值, "")} "
-            Case "AVIF静图" : 视频参数 &= $"-c:v libaom-av1 -still-picture 1 -f avif {If(a.图片参数_编码器_质量值 <> "", "-q:v " & a.图片参数_编码器_质量值, "")} "
-            Case "AVIF动图" : 视频参数 &= $"-c:v libaom-av1 -f avif {If(a.图片参数_编码器_质量值 <> "", "-q:v " & a.图片参数_编码器_质量值, "")} "
-            Case "GIF"
+            Case "png" : 视频参数 &= $"-c:v png {If(a.图片参数_编码器_质量值 <> "", "-compression_level " & a.图片参数_编码器_质量值, "")} "
+            Case "apng" : 视频参数 &= $"-c:v apng {If(a.图片参数_编码器_质量值 <> "", "-compression_level " & a.图片参数_编码器_质量值, "")} "
+            Case "mjpeg" : 视频参数 &= $"-c:v mjpeg {If(a.图片参数_编码器_质量值 <> "", "-q:v " & a.图片参数_编码器_质量值, "")} "
+            Case "libwebp" : 视频参数 &= $"-c:v libwebp {If(a.图片参数_编码器_质量值 <> "", "-q:v " & a.图片参数_编码器_质量值, "")} "
+            Case "libwebp_anim" : 视频参数 &= $"-c:v libwebp_anim {If(a.图片参数_编码器_质量值 <> "", "-q:v " & a.图片参数_编码器_质量值, "")} "
+            Case "gif"
                 视频参数 &= $"-c:v gif "
                 If a.图片参数_编码器_质量值 = "1" Then 视频滤镜参数集.Add("split [a][b];[a] palettegen [p];[b][p] paletteuse=dither=floyd_steinberg")
-            Case "BMP" : 视频参数 &= $"-c:v bmp "
-            Case "OpenJPEG" : 视频参数 &= $"-c:v libopenjpeg {If(a.图片参数_编码器_质量值 <> "", "-q:v " & a.图片参数_编码器_质量值, "")} "
-            Case "JPEGLS" : 视频参数 &= $"-c:v jpegls "
-            Case "HDR" : 视频参数 &= $"-c:v hdr "
-            Case "TIFF" : 视频参数 &= $"-c:v tiff "
-            Case "DPX" : 视频参数 &= $"-c:v dpx "
-            Case "OpenEXR" : 视频参数 &= $"-c:v exr "
+            Case "bmp" : 视频参数 &= $"-c:v bmp "
+            Case "libopenjpeg" : 视频参数 &= $"-c:v libopenjpeg {If(a.图片参数_编码器_质量值 <> "", "-q:v " & a.图片参数_编码器_质量值, "")} "
+            Case "jpegls" : 视频参数 &= $"-c:v jpegls "
+            Case "hdr" : 视频参数 &= $"-c:v hdr "
+            Case "tiff" : 视频参数 &= $"-c:v tiff "
+            Case "dpx" : 视频参数 &= $"-c:v dpx "
+            Case "exr" : 视频参数 &= $"-c:v exr "
         End Select
         If a.视频参数_编码器_编码预设 <> "" Then
             Select Case a.视频参数_编码器_具体编码

@@ -4,6 +4,8 @@
 
 ## FFmpegFreeUI
 
+**本 README 文件内容很多，请耐心看完！！**
+
 请认准官网域名：https://ffmpegfreeui.top 和 https://3fui.top<br>群友的暂用域名：https://3fui.frostlynx.work<br>三个域名都是正确的，都会解析到同一个地方
 
 哔哩哔哩宣传视频：https://www.bilibili.com/video/BV1eeH9zLED5  
@@ -51,24 +53,24 @@ FFmpegFreeUI（简称 3FUI）是在 Windows 上的 [FFmpeg](https://ffmpeg.org) 
 
 ## 下载说明
 
-由于加入了插件支持以及其实现方法，需要保留一些 dll 来确保插件功能可用并稳定运行。仍旧可以把很大的 EXE 文件拿出来单独运行，不过这也就代表放弃插件，在这种情况下加载插件必定卡死崩溃。
+| 生成名称      | 运行库 | 启动性能 | 运行性能 | 文件数量 | 单文件执行    | 大小 |
+| ------------- | ------ | -------- | -------- | -------- | ------------- | ---- |
+| ReadyToRun    | 集成   | 相对慢   | 理论最佳 | 几个     | 可以 (仅本体) | 中等 |
+| SelfContained | 集成   | 正常     | 正常     | 一堆     | 不能          | 最大 |
+| SingleFile    | 不包含 | 正常     | 正常     | 一个     | 当然          | 最小 |
 
-[ReadyToRun](https://learn.microsoft.com/zh-cn/dotnet/core/deploying/ready-to-run) 就是原来的单文件版编译，不过现在保留了一些 dll 还是叫专业术语比较好；[SelfContained](https://learn.microsoft.com/zh-cn/dotnet/core/deploying/#publish-self-contained) 是备选项，如果 ReadyToRun 无法在你的电脑上运行，那么尝试 SelfContained。我还额外提供了一个 Debug 版本，这是开发的时候调试用的那一份，也许有人会需要。
+- ReadyToRun 如果把 exe 单独拿出来执行则无法加载插件，也有可能无法解锁 SP
+- SelfContained 不建议在机械硬盘上使用，因为包含大量文件
+- SingleFile 需要另外安装 [.NET 10 桌面运行时](https://dotnet.microsoft.com/zh-cn/download/dotnet/thank-you/runtime-desktop-10.0.0-windows-x64-installer)
+- ReadyToRun 启用了压缩，因此在启动时需要 SelfContained 启动时内存占用的两到三倍，但不要担心，这只会持续一瞬间，启动完成后会强制调用内核级清理
 
-从 2.5 版本开始 ReadyToRun 生成启用了 EnableCompressionInSingleFile，其文件大小相比原来减小了超过 50%，但由于已经被压缩过了，所以压缩包大小会比 SelfContained 的更大，建议继续首选下载 ReadyToRun 以获得最佳体验。
+> [!IMPORTANT]  
+>
+> 埋伏一手：来问 SingleFile 运行库的来一个刀一个，我说的<br>老夫早已料到有人选择性失明
 
 PluginExample 是我做的示例插件；在程序目录下创建 Plugin 文件夹，然后把插件放进去重启 3FUI 就可以加载了，插件也要注意架构；插件的后缀是 **.3fui.dll**，看不见后缀的自己去面壁。
 
 ## 猜你想问
-
-> **为什么不提供需要安装运行库的最小体积版本？**  
-> 让用户去安装一个还未发布正式版的运行库不是一个好的选择，压根没人会记得去更新。等到什么时候微软把这东西集成到 Windows 里了我就发布最小体积版本。
-
-> **文件为什么这么大？隔壁只有一百多KB**  
-> 其实本体也只有几百KB，但我要求自带运行时的发布，你想要的话可以改项目设置自己编译。
-
-> **用低版本会死？**
-> 会死。我需要最新的特性和bug修复，保持最新的代码规范。
 
 > [!IMPORTANT]  
 >
@@ -84,17 +86,14 @@ PluginExample 是我做的示例插件；在程序目录下创建 Plugin 文件�
 
 > **如何自行编译这个项目？**  
 >
-> 1. 下载并安装 **Visual Studio 2022**（目前 .NET 10 是预览版，所以需要预览版的 VS）
->
->    *从 2.4 版本开始 3FUI 已经转移到 **Visual Studio 2026** 上开发，尚不清楚回去用 VS 2022 编译是否会有意外情况，但理论上应该没问题。*
+> 1. 下载并安装 **Visual Studio 2026**
 >
 > 2. 工作负载只需要 **.NET 桌面开发**，可选组件全都可以扔掉（看自己需求）
->
-> 3. 手动去下载并安装 **.NET 10 SDK**（VS 2026 已经可以在安装程序中选择）
->
-> 4. 然后直接打开 **.sln** 文件，剩下的依赖会自动补齐（需联网下载）
->
-> 6. 什么都不用调直接运行**全部重新生成**就行了
+>3. 直接打开 **.sln** 文件，剩下的依赖会自动补齐（需联网下载）
+> 4. 直接运行**全部重新生成**就行了
+
+> **用低版本会死？**
+> 会死。我需要最新的特性和bug修复，保持最新的代码规范。
 
 ## 截图
 
@@ -114,8 +113,10 @@ PluginExample 是我做的示例插件；在程序目录下创建 Plugin 文件�
    - 若选择 gyan.dev 的发行版，下载 ffmpeg-git-full.7z
    - 若选择 BtbN 的发行版，下载 ffmpeg-master-latest-win64-gpl.zip
    - 不要选带 lgpl 名称的，不然你又要来问怎么连 libx264 都跑不起来
+   - 也不建议选带 shared 名称的，我掐指一算就料到你没放完整文件
 3. 将压缩包中的 ffmpeg.exe 和我的 FFmpegFreeUI 放在同一个文件夹中<br>或者将其加入环境变量中也可以，推荐是加环境变量
 4. 然后就可以开始使用了
+5. ffprobe.exe 也建议放上，查看信息需要的
 
 ## 软件机制 & 使用提示
 
@@ -273,7 +274,7 @@ https://developer.nvidia.com/video-encode-and-decode-gpu-support-matrix-new
 
 ## 图片编码器
 
-PNG、APNG、JPEG\JPG、WEBP、AVIF、GIF、BMP、JPEG 2000、JPEG-LS、HDR、TIFF、DPX、OpenEXR
+PNG、APNG、JPEG\JPG、WEBP、GIF、BMP、JPEG 2000、JPEG-LS、HDR、TIFF、DPX、OpenEXR
 
 ## 比特率控制方式
 
@@ -343,7 +344,7 @@ PNG、APNG、JPEG\JPG、WEBP、AVIF、GIF、BMP、JPEG 2000、JPEG-LS、HDR、TI
 
 ## 烧录字幕不会做！
 
-真的还不如手写参数来得灵活稳定
+真的还不如手写参数来得灵活稳定，而且目前这样的设计是可以实现批量烧录的
 
 - SRT/ASS/SSA
 
@@ -364,23 +365,18 @@ PNG、APNG、JPEG\JPG、WEBP、AVIF、GIF、BMP、JPEG 2000、JPEG-LS、HDR、TI
 
 ## 插件开发
 
-> [!WARNING]  
-> 从 2.4 版本开始 3FUI 已经转移到 Visual Studio 2026 上开发，尚不清楚继续用 VS 2022 继续开发插件是否会有问题，但从理论上讲应该是没有问题的，毕竟没有引用 3FUI。
-
 通过插件，你可以给 3FUI 添加各种功能来满足自己的需求，只需要像我那样把可视化摆上来然后生成对应的参数即可，还可以选择接入我的编码队列，而不用自己做进度显示。
 
 考虑到 ReadyToRun 生成的 exe 无法被添加引用，插件使用 反射 + 特性 + 动态调用 来实现，你在开发插件的时候不需要引用 3FUI，只需要按照我制定的接口标准写代码即可。目前总共只有 4 个接口功能，非常简单，通常情况下你只需要用其中 2 个，所以不要担心要硬啃代码。
 
 首先你需要有与我开发 3FUI 相同的集成开发环境：
 
-1. 下载并安装 [Visual Studio 2022](https://visualstudio.microsoft.com/zh-hans/vs/)（注意在安装程序里选择预览版）
+1. 下载并安装 [Visual Studio Community 2026](https://visualstudio.microsoft.com/zh-hans/vs/)（注意在安装程序里选择预览版）
 2. 工作负载勾选：.NET 桌面开发
    - 可选组件看自己需求，可以能不要就都不要的
    - 但是我仍旧推荐这些组件：IntelliCode、.NET 可移植库目标包、.NET 分析工具
-3. 完成 VS2022 的安装
-4. 手动下载并安装 [.NET 10 SDK](https://dotnet.microsoft.com/zh-cn/download/dotnet/10.0)（VS 2026 已经可以在安装程序中选择）
-   - 截止目前 .NET 10 还是预览版，没有包含在 VS 的安装程序中
-   - 等到正式版的时候就可以在可选组件里勾选了，到时候也不需要预览版的 VS 了
+   - 按理说会强制安装 .NET 10 SDK，记得检查
+3. 完成 VS2026 的安装
 
 然后就可以开始开发了，从新建工程开始：
 
