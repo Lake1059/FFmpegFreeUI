@@ -112,7 +112,7 @@ Public Class 编码任务
         Public Property 上次刷新界面的时间戳 As TimeSpan = Now.TimeOfDay
 
         Private Property IsStarted As Boolean = False
-        Private ReadOnly _lockObj As New Object() ' 锁对象（必须是引用类型
+        Private ReadOnly _lockObj As New Object()
 
         Public Sub 开始()
             SyncLock _lockObj
@@ -176,11 +176,10 @@ jx1:
                 FFmpegProcess.EnableRaisingEvents = True
                 AddHandler FFmpegProcess.OutputDataReceived, AddressOf FFmpegOutputHandler
                 AddHandler FFmpegProcess.ErrorDataReceived, AddressOf FFmpegOutputHandler
-                AddHandler FFmpegProcess.Exited, New EventHandler(AddressOf FFmpegProcessExited)
+                AddHandler FFmpegProcess.Exited, AddressOf FFmpegProcessExited
 
-
-                Debug.WriteLine($"Process Start {FFmpegProcess.Start()} {FFmpegProcess}")
-                Debug.WriteLine($"Process Start {FFmpegProcess}")
+                FFmpegProcess.Start()
+                Debug.WriteLine($"Process Start {FFmpegProcess.Id}")
                 FFmpegProcess.BeginOutputReadLine()
                 FFmpegProcess.BeginErrorReadLine()
 
@@ -380,6 +379,7 @@ jx1:
                             Case >= 1 : 列表视图项.SubItems(4).ForeColor = Color.IndianRed
                         End Select
                     End If
+
                 Case 编码状态.已完成
                     列表视图项.ForeColor = Color.OliveDrab
                     列表视图项.SubItems(1).Text = "已完成"
