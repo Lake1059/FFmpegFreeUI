@@ -111,7 +111,18 @@ Public Class 编码任务
         Public Property 任务耗时计时器 As New Stopwatch
         Public Property 上次刷新界面的时间戳 As TimeSpan = Now.TimeOfDay
 
+        Private Property IsStarted As Boolean = False
+        Private ReadOnly _lockObj As New Object()
+
         Public Sub 开始()
+            SyncLock _lockObj
+                If IsStarted Then
+                    Debug.WriteLine($"Task already started: {输入文件}")
+                    Return
+                End If
+                IsStarted = True
+            End SyncLock
+            Debug.WriteLine($"Start Task: {输入文件}")
             Try
                 错误列表.Clear()
                 非进度输出列表.Clear()
@@ -168,6 +179,7 @@ jx1:
                 AddHandler FFmpegProcess.Exited, AddressOf FFmpegProcessExited
 
                 FFmpegProcess.Start()
+                Debug.WriteLine($"Process Start {FFmpegProcess.Id}")
                 FFmpegProcess.BeginOutputReadLine()
                 FFmpegProcess.BeginErrorReadLine()
 
@@ -178,8 +190,8 @@ jx1:
                     Dim coreList() As Integer = 用户设置.实例对象.指定处理器核心.Split(","c).Select(Function(s) s.Trim()).Where(Function(s) Integer.TryParse(s, Nothing)).Select(Function(s) Integer.Parse(s)).ToArray()
                     FFmpegProcess.ProcessorAffinity = GetAffinityMask(coreList)
                 End If
-
             Catch ex As Exception
+                Debug.WriteLine($"Error in 开始 {ex}")
                 状态 = 编码状态.错误
                 界面线程执行(Sub() MsgBox(ex.Message, MsgBoxStyle.Critical))
             End Try
@@ -310,6 +322,7 @@ jx1:
 
         Public Sub FFmpegProcessExited(sender As Object, e As EventArgs)
             If 要刷新的项.ContainsKey(列表视图项) Then 要刷新的项.Remove(列表视图项)
+            Debug.WriteLine($"Process End {FFmpegProcess.Id} {FFmpegProcess.HasExited}")
             If FFmpegProcess.ExitCode = 0 Then
                 状态 = 编码状态.已完成
 
@@ -530,6 +543,14 @@ jx1:
             Dim t = ExtractRegexValueAsString(TimePattern, line) : If t <> "" Then 实时_time = 将时间字符串转换为时间类型(t)
             Dim br = ExtractRegexValueAsString(BitratePattern, line) : If br <> "" Then 实时_bitrate = br
             Dim sp = ExtractRegexValueAsString(SpeedPattern, line) : If sp <> "" Then 实时_speed = sp
+        End Sub
+
+        Friend Sub Reset()
+            SyncLock _lockObj
+                IsStarted = False
+                状态 = 编码任务.编码状态.未处理
+                任务耗时计时器.Reset()
+            End SyncLock
         End Sub
     End Class
 
