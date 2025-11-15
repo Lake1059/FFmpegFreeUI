@@ -47,6 +47,11 @@ Public Class Form1
     End Sub
 
     Private Sub Form1_Shown(sender As Object, e As EventArgs) Handles Me.Shown
+        根据标签宽度设置显示高度(Label126)
+        根据标签宽度设置显示高度(Label21)
+        根据标签宽度设置显示高度(Label1)
+        根据标签宽度设置显示高度(Label35)
+
         'bro薛定谔的猫知道吧，你不搞个监控这玩意就是随机态
         If UI同步上下文 Is Nothing Then MsgBox("警告：UI 同步上下文是空的，继续使用软件将导致崩溃，请联系开发者排查问题", MsgBoxStyle.Critical)
 

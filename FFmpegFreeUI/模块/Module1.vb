@@ -151,12 +151,13 @@ Module Module1
         Dim unused = SetThreadExecutionState(EXECUTION_STATE.ES_CONTINUOUS)
     End Sub
 
-    Public Function 根据标签宽度计算显示高度(标签控件 As Label) As Integer
-        Dim g As Graphics = Form1.CreateGraphics()
-        Dim size As SizeF = g.MeasureString(标签控件.Text, 标签控件.Font, 标签控件.Width - 标签控件.Padding.Left - 标签控件.Padding.Right)
-        g.Dispose()
-        Return size.Height + 标签控件.Padding.Top + 标签控件.Padding.Bottom
-    End Function
+    Public Sub 根据标签宽度设置显示高度(标签控件 As Label)
+        Using g As Graphics = 标签控件.CreateGraphics()
+            Dim availableWidth As Integer = 标签控件.Width - 标签控件.Padding.Left - 标签控件.Padding.Right
+            Dim size As SizeF = g.MeasureString(标签控件.Text, 标签控件.Font, availableWidth)
+            标签控件.Height = CInt(Math.Ceiling(size.Height)) + 标签控件.Padding.Top + 标签控件.Padding.Bottom
+        End Using
+    End Sub
 
     Public Function LoadImageFromFile(File As String) As Image
         Using fs As New FileStream(File, FileMode.Open, FileAccess.Read)

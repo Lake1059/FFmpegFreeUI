@@ -12,6 +12,6 @@
     End Sub
 
     Private Sub UiButton1_Click(sender As Object, e As EventArgs) Handles UiButton1.Click
-        Entry.HostCall_AddMissionToQueue.Invoke("", "假装这是一个任务，其实没法运行的", "")
+        Entry.HostCall_AddMissionToQueueWithArgs.Invoke("", "假装这是一个任务，其实没法运行的", "", "")
     End Sub
 End Class

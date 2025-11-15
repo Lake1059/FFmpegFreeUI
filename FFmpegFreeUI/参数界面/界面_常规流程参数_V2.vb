@@ -60,12 +60,31 @@ Public Class 界面_常规流程参数_V2
         AddHandler UiComboBox色彩管理处理方式.TextChanged, AddressOf 色彩管理处理方式变动事件
         '==============================================
         AddHandler UiComboBox降噪方式.TextChanged, AddressOf 视频降噪方式变动事件
-        '==========================================
+        '==============================================
         AddHandler UiComboBox音频编码器.TextChanged, AddressOf 音频编码参数变动事件
         AddHandler UiComboBox音频比特率.TextChanged, AddressOf 音频比特率参数变动事件
         AddHandler UiComboBox音频质量参数.TextChanged, AddressOf 音频质量参数变动事件
-        '==========================================
+        '==============================================
         AddHandler UiComboBox图片编码器.TextChanged, AddressOf 图片编码器参数变动事件
+        '==============================================
+        AddHandler UiTextBox将视频参数用于这些流.TextBox.MouseWheel, Sub(s1, e1)
+                                                               Select Case e1.Delta
+                                                                   Case > 0 : UiTextBox将视频参数用于这些流.Text = "0:v"
+                                                                   Case < 0 : UiTextBox将视频参数用于这些流.Text = "0:v:0"
+                                                               End Select
+                                                           End Sub
+        AddHandler UiTextBox将音频参数用于这些流.TextBox.MouseWheel, Sub(s1, e1)
+                                                               Select Case e1.Delta
+                                                                   Case > 0 : UiTextBox将音频参数用于这些流.Text = "0:a"
+                                                                   Case < 0 : UiTextBox将音频参数用于这些流.Text = "0:a:0"
+                                                               End Select
+                                                           End Sub
+        AddHandler UiTextBox使用哪些文件的哪些内嵌字幕.TextBox.MouseWheel, Sub(s1, e1)
+                                                                  Select Case e1.Delta
+                                                                      Case > 0 : UiTextBox使用哪些文件的哪些内嵌字幕.Text = "0:s"
+                                                                      Case < 0 : UiTextBox使用哪些文件的哪些内嵌字幕.Text = "0:s:0"
+                                                                  End Select
+                                                              End Sub
         '==============================================
         AddHandler UiButton刷新预设列表.Click, AddressOf 刷新预设列表
         AddHandler UiButton保存预设.Click, AddressOf 保存到预设
@@ -159,6 +178,7 @@ Public Class 界面_常规流程参数_V2
         AddHandler UiComboBox剪辑方法.MouseWheel, AddressOf 下拉框鼠标滚轮事件
         AddHandler UiComboBox剪辑向前解码多久秒.MouseWheel, AddressOf 下拉框鼠标滚轮事件
         '==================================================
+        AddHandler UiComboBox使用哪些文件的哪些内嵌字幕_如何操作.MouseWheel, AddressOf 下拉框鼠标滚轮事件
         AddHandler UiComboBox元数据选项.MouseWheel, AddressOf 下拉框鼠标滚轮事件
         AddHandler UiComboBox章节选项.MouseWheel, AddressOf 下拉框鼠标滚轮事件
         AddHandler UiComboBox附件选项.MouseWheel, AddressOf 下拉框鼠标滚轮事件
@@ -330,18 +350,18 @@ Public Class 界面_常规流程参数_V2
                 Label降噪参数3.Text = "亮度时间强度" & vbCrLf & "luma_tmp"
                 UiTextBox降噪参数3.Watermark = "默认 6"
                 Label降噪参数4.Text = "色度时间强度" & vbCrLf & "chroma_tmp"
-                UiTextBox降噪参数4.Watermark = "默认 1"
+                UiTextBox降噪参数4.Watermark = "默认 4.5"
                 Panel36.Visible = True
                 Panel35.Visible = True
             Case 2    'nlmeans - 高级降噪，效果更好且计算量更大
-                Label降噪参数1.Text = "降噪强度" & vbCrLf & "范围 1~10"
-                UiTextBox降噪参数1.Watermark = "默认 1"
-                Label降噪参数2.Text = "参考像素块大小" & vbCrLf & "必须是奇数"
+                Label降噪参数1.Text = "降噪强度" & vbCrLf & "s (strength)"
+                UiTextBox降噪参数1.Watermark = "默认 1.0"
+                Label降噪参数2.Text = "参考像素块大小" & vbCrLf & "p (patch size) 须奇数"
                 UiTextBox降噪参数2.Watermark = "默认 7"
-                Label降噪参数3.Text = "色度降噪" & vbCrLf & "启用 = 1 禁用 = 0"
-                UiTextBox降噪参数3.Watermark = ""
-                Label降噪参数4.Text = "搜索半径" & vbCrLf & "越大越慢"
-                UiTextBox降噪参数4.Watermark = "默认 7"
+                Label降噪参数3.Text = "平面配置" & vbCrLf & "pc (plane config)"
+                UiTextBox降噪参数3.Watermark = "默认 0"
+                Label降噪参数4.Text = "搜索半径" & vbCrLf & "r (research size)"
+                UiTextBox降噪参数4.Watermark = "默认 15"
                 Panel36.Visible = True
                 Panel35.Visible = True
             Case 3  'atadenoise - 轻量级时间域降噪
@@ -357,11 +377,11 @@ Public Class 界面_常规流程参数_V2
                 Panel35.Visible = True
             Case 4    'bm3d - 高质量降噪，适合严重噪声且消耗大量性能
                 Label降噪参数1.Text = "噪声强度" & vbCrLf & "sigma"
-                UiTextBox降噪参数1.Watermark = "默认 1"
-                Label降噪参数2.Text = "块大小 建议 4~8" & vbCrLf & "block"
-                UiTextBox降噪参数2.Watermark = "默认 4"
+                UiTextBox降噪参数1.Watermark = "默认 10"
+                Label降噪参数2.Text = "块大小" & vbCrLf & "block"
+                UiTextBox降噪参数2.Watermark = "默认 16"
                 Label降噪参数3.Text = "块步长" & vbCrLf & "bstep"
-                UiTextBox降噪参数3.Watermark = "block/2"
+                UiTextBox降噪参数3.Watermark = "默认 4"
                 Label降噪参数4.Text = "相似块数量" & vbCrLf & "group"
                 UiTextBox降噪参数4.Watermark = "默认 1"
                 Panel36.Visible = True
@@ -500,8 +520,11 @@ Public Class 界面_常规流程参数_V2
             Case 选项卡.IsEqual(TabPage流控制)
                 UiCheckBox保留其他视频流.CheckBoxSize = 20 * Form1.DPI
                 UiCheckBox保留其他音频流.CheckBoxSize = 20 * Form1.DPI
-                UiCheckBox保留内嵌字幕流.CheckBoxSize = 20 * Form1.DPI
-                UiCheckBox自动混流同名字幕文件.CheckBoxSize = 20 * Form1.DPI
+                校准UiComboBox视觉(UiComboBox使用哪些文件的哪些内嵌字幕_如何操作)
+                UiCheckBox自动混流SRT.CheckBoxSize = 20 * Form1.DPI
+                UiCheckBox自动混流ASS.CheckBoxSize = 20 * Form1.DPI
+                UiCheckBox自动混流SSA.CheckBoxSize = 20 * Form1.DPI
+                UiCheckBox自动混流字幕转为movtext.CheckBoxSize = 20 * Form1.DPI
                 校准UiComboBox视觉(UiComboBox元数据选项)
                 校准UiComboBox视觉(UiComboBox章节选项)
                 校准UiComboBox视觉(UiComboBox附件选项)

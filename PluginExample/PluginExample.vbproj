@@ -11,6 +11,7 @@
     <UseWPF>True</UseWPF>
     <MyType>WindowsForms</MyType>
     <StartupObject>PluginExample.My.MyApplication</StartupObject>
+	<ForceDesignerDpiUnaware>true</ForceDesignerDpiUnaware>
   </PropertyGroup>
 
   <ItemGroup>

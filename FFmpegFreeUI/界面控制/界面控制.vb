@@ -75,7 +75,6 @@ Public Class 界面控制
         AddHandler Form1.UiButton复制输出.Click, Sub() Clipboard.SetText(Form1.RichTextBox2.Text)
         AddHandler Form1.UiComboBox输出显示类型.SelectedIndexChanged, AddressOf 编码任务.切换输出类型时单独刷新
 
-
         AddHandler Form1.UiButton14.Click, AddressOf 界面控制_添加文件.加入编码队列
         AddHandler Form1.ListView2.DragEnter, AddressOf 界面控制_添加文件.ListView2_DragEnter
         AddHandler Form1.ListView2.DragDrop, AddressOf 界面控制_添加文件.ListView2_DragDrop

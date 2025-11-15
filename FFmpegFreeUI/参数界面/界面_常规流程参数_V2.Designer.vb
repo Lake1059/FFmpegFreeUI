@@ -203,6 +203,7 @@ Partial Class 界面_常规流程参数_V2
         UiComboBox矩阵系数 = New Sunny.UI.UIComboBox()
         Label81 = New Label()
         Panel41 = New Panel()
+        Label147 = New Label()
         UiComboBox色彩空间滤镜选择 = New Sunny.UI.UIComboBox()
         Label80 = New Label()
         Label60 = New Label()
@@ -292,6 +293,10 @@ Partial Class 界面_常规流程参数_V2
         UiComboBox音频编码器 = New Sunny.UI.UIComboBox()
         Label85 = New Label()
         TabPage图片参数 = New TabPage()
+        Label15 = New Label()
+        Label154 = New Label()
+        Label161 = New Label()
+        Label162 = New Label()
         Panel67 = New Panel()
         UiTextBox图片编码器质量 = New Sunny.UI.UITextBox()
         Label122 = New Label()
@@ -360,18 +365,28 @@ Partial Class 界面_常规流程参数_V2
         Label109 = New Label()
         Label146 = New Label()
         TabPage流控制 = New TabPage()
-        Label147 = New Label()
         Panel64 = New Panel()
+        Label108 = New Label()
         UiComboBox附件选项 = New Sunny.UI.UIComboBox()
         Label163 = New Label()
         UiComboBox章节选项 = New Sunny.UI.UIComboBox()
         Label148 = New Label()
         UiComboBox元数据选项 = New Sunny.UI.UIComboBox()
         Label111 = New Label()
-        Panel63 = New Panel()
+        Label165 = New Label()
+        Panel91 = New Panel()
         Label110 = New Label()
-        UiCheckBox自动混流同名字幕文件 = New Sunny.UI.UICheckBox()
-        UiCheckBox保留内嵌字幕流 = New Sunny.UI.UICheckBox()
+        UiCheckBox自动混流字幕转为movtext = New Sunny.UI.UICheckBox()
+        UiCheckBox自动混流SSA = New Sunny.UI.UICheckBox()
+        UiCheckBox自动混流ASS = New Sunny.UI.UICheckBox()
+        UiCheckBox自动混流SRT = New Sunny.UI.UICheckBox()
+        Label164 = New Label()
+        Panel63 = New Panel()
+        Label166 = New Label()
+        Label169 = New Label()
+        UiComboBox使用哪些文件的哪些内嵌字幕_如何操作 = New Sunny.UI.UIComboBox()
+        Label168 = New Label()
+        UiTextBox使用哪些文件的哪些内嵌字幕 = New Sunny.UI.UITextBox()
         Label112 = New Label()
         Panel61 = New Panel()
         Label140 = New Label()
@@ -386,7 +401,6 @@ Partial Class 界面_常规流程参数_V2
         UiTextBox将视频参数用于这些流 = New Sunny.UI.UITextBox()
         Label114 = New Label()
         Label107 = New Label()
-        Label108 = New Label()
         TabPage方案管理 = New TabPage()
         Panel77 = New Panel()
         Panel84 = New Panel()
@@ -420,10 +434,6 @@ Partial Class 界面_常规流程参数_V2
         UiButton刷新预设列表 = New Sunny.UI.UIButton()
         Label123 = New Label()
         Label124 = New Label()
-        Label15 = New Label()
-        Label154 = New Label()
-        Label161 = New Label()
-        Label162 = New Label()
         UiTabControlMenu1.SuspendLayout()
         TabPage参数总览.SuspendLayout()
         Panel74.SuspendLayout()
@@ -525,6 +535,7 @@ Partial Class 界面_常规流程参数_V2
         Panel66.SuspendLayout()
         TabPage流控制.SuspendLayout()
         Panel64.SuspendLayout()
+        Panel91.SuspendLayout()
         Panel63.SuspendLayout()
         Panel61.SuspendLayout()
         Panel62.SuspendLayout()
@@ -3668,6 +3679,7 @@ Partial Class 界面_常规流程参数_V2
         ' 
         ' Panel41
         ' 
+        Panel41.Controls.Add(Label147)
         Panel41.Controls.Add(UiComboBox色彩空间滤镜选择)
         Panel41.Dock = DockStyle.Top
         Panel41.Location = New Point(0, 69)
@@ -3675,6 +3687,19 @@ Partial Class 界面_常规流程参数_V2
         Panel41.Padding = New Padding(21, 10, 20, 0)
         Panel41.Size = New Size(699, 40)
         Panel41.TabIndex = 21
+        ' 
+        ' Label147
+        ' 
+        Label147.Dock = DockStyle.Fill
+        Label147.Font = New Font("微软雅黑", 10F)
+        Label147.ForeColor = Color.Gray
+        Label147.Location = New Point(221, 10)
+        Label147.Name = "Label147"
+        Label147.Padding = New Padding(10, 0, 0, 0)
+        Label147.Size = New Size(458, 30)
+        Label147.TabIndex = 90
+        Label147.Text = "如果不使用就不要挂着选择，滤镜有自己的默认逻辑"
+        Label147.TextAlign = ContentAlignment.MiddleLeft
         ' 
         ' UiComboBox色彩空间滤镜选择
         ' 
@@ -3835,7 +3860,7 @@ Partial Class 界面_常规流程参数_V2
         ' 
         Panel89.Controls.Add(UiTextBox简易调色伽马)
         Panel89.Dock = DockStyle.Top
-        Panel89.Location = New Point(0, 299)
+        Panel89.Location = New Point(0, 319)
         Panel89.Name = "Panel89"
         Panel89.Padding = New Padding(21, 0, 20, 0)
         Panel89.Size = New Size(200, 30)
@@ -3872,7 +3897,7 @@ Partial Class 界面_常规流程参数_V2
         Label156.AutoSize = True
         Label156.Dock = DockStyle.Top
         Label156.Font = New Font("微软雅黑", 9.75F)
-        Label156.Location = New Point(0, 264)
+        Label156.Location = New Point(0, 284)
         Label156.Name = "Label156"
         Label156.Padding = New Padding(16, 10, 0, 6)
         Label156.Size = New Size(101, 35)
@@ -3884,7 +3909,7 @@ Partial Class 界面_常规流程参数_V2
         ' 
         Panel88.Controls.Add(UiTextBox简易调色饱和度)
         Panel88.Dock = DockStyle.Top
-        Panel88.Location = New Point(0, 234)
+        Panel88.Location = New Point(0, 254)
         Panel88.Name = "Panel88"
         Panel88.Padding = New Padding(21, 0, 20, 0)
         Panel88.Size = New Size(200, 30)
@@ -3921,7 +3946,7 @@ Partial Class 界面_常规流程参数_V2
         Label130.AutoSize = True
         Label130.Dock = DockStyle.Top
         Label130.Font = New Font("微软雅黑", 9.75F)
-        Label130.Location = New Point(0, 199)
+        Label130.Location = New Point(0, 219)
         Label130.Name = "Label130"
         Label130.Padding = New Padding(16, 10, 0, 6)
         Label130.Size = New Size(130, 35)
@@ -3933,7 +3958,7 @@ Partial Class 界面_常规流程参数_V2
         ' 
         Panel87.Controls.Add(UiTextBox简易调色对比度)
         Panel87.Dock = DockStyle.Top
-        Panel87.Location = New Point(0, 169)
+        Panel87.Location = New Point(0, 189)
         Panel87.Name = "Panel87"
         Panel87.Padding = New Padding(21, 0, 20, 0)
         Panel87.Size = New Size(200, 30)
@@ -3970,7 +3995,7 @@ Partial Class 界面_常规流程参数_V2
         Label78.AutoSize = True
         Label78.Dock = DockStyle.Top
         Label78.Font = New Font("微软雅黑", 9.75F)
-        Label78.Location = New Point(0, 134)
+        Label78.Location = New Point(0, 154)
         Label78.Name = "Label78"
         Label78.Padding = New Padding(16, 10, 0, 6)
         Label78.Size = New Size(119, 35)
@@ -3982,7 +4007,7 @@ Partial Class 界面_常规流程参数_V2
         ' 
         Panel86.Controls.Add(UiTextBox简易调色亮度)
         Panel86.Dock = DockStyle.Top
-        Panel86.Location = New Point(0, 104)
+        Panel86.Location = New Point(0, 124)
         Panel86.Name = "Panel86"
         Panel86.Padding = New Padding(21, 0, 20, 0)
         Panel86.Size = New Size(200, 30)
@@ -4019,7 +4044,7 @@ Partial Class 界面_常规流程参数_V2
         Label83.AutoSize = True
         Label83.Dock = DockStyle.Top
         Label83.Font = New Font("微软雅黑", 9.75F)
-        Label83.Location = New Point(0, 69)
+        Label83.Location = New Point(0, 89)
         Label83.Name = "Label83"
         Label83.Padding = New Padding(16, 10, 0, 6)
         Label83.Size = New Size(119, 35)
@@ -4036,9 +4061,9 @@ Partial Class 界面_常规流程参数_V2
         Label160.Location = New Point(0, 44)
         Label160.Name = "Label160"
         Label160.Padding = New Padding(16, 5, 0, 0)
-        Label160.Size = New Size(151, 25)
+        Label160.Size = New Size(151, 45)
         Label160.TabIndex = 86
-        Label160.Text = "高级调色去用达芬奇"
+        Label160.Text = "高级调色去用达芬奇" & vbCrLf & "这里可以不全部设置"
         ' 
         ' Label79
         ' 
@@ -5241,6 +5266,56 @@ Partial Class 界面_常规流程参数_V2
         TabPage图片参数.TabIndex = 11
         TabPage图片参数.Text = "图片参数"
         ' 
+        ' Label15
+        ' 
+        Label15.AutoSize = True
+        Label15.Dock = DockStyle.Bottom
+        Label15.Font = New Font("微软雅黑", 13F)
+        Label15.Location = New Point(0, 482)
+        Label15.Name = "Label15"
+        Label15.Padding = New Padding(16, 0, 0, 10)
+        Label15.Size = New Size(169, 34)
+        Label15.TabIndex = 20
+        Label15.Text = "已从列表移除 avif"
+        ' 
+        ' Label154
+        ' 
+        Label154.AutoSize = True
+        Label154.Dock = DockStyle.Bottom
+        Label154.Font = New Font("微软雅黑", 10F)
+        Label154.ForeColor = Color.Gray
+        Label154.Location = New Point(0, 516)
+        Label154.Name = "Label154"
+        Label154.Padding = New Padding(16, 0, 0, 20)
+        Label154.Size = New Size(508, 60)
+        Label154.TabIndex = 21
+        Label154.Text = "强烈不推荐将 avif 用于生产环境，因为无法从 ffmpeg 关闭它的细节涂抹" & vbCrLf & "如何使用：视频编码 libaom-av1 输出到 .avif 文件，预设和质量正常设定即可"
+        ' 
+        ' Label161
+        ' 
+        Label161.AutoSize = True
+        Label161.Dock = DockStyle.Bottom
+        Label161.Font = New Font("微软雅黑", 13F)
+        Label161.Location = New Point(0, 576)
+        Label161.Name = "Label161"
+        Label161.Padding = New Padding(16, 0, 0, 10)
+        Label161.Size = New Size(241, 34)
+        Label161.TabIndex = 22
+        Label161.Text = "ffmpeg 不支持 HEIC/HEIF"
+        ' 
+        ' Label162
+        ' 
+        Label162.AutoSize = True
+        Label162.Dock = DockStyle.Bottom
+        Label162.Font = New Font("微软雅黑", 10F)
+        Label162.ForeColor = Color.Gray
+        Label162.Location = New Point(0, 610)
+        Label162.Name = "Label162"
+        Label162.Padding = New Padding(16, 0, 0, 20)
+        Label162.Size = New Size(417, 40)
+        Label162.TabIndex = 23
+        Label162.Text = "如果想要批量转到此格式，建议找三方软件或单独开发这个需求"
+        ' 
         ' Panel67
         ' 
         Panel67.Controls.Add(UiTextBox图片编码器质量)
@@ -6343,9 +6418,11 @@ Partial Class 界面_常规流程参数_V2
         ' TabPage流控制
         ' 
         TabPage流控制.BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
-        TabPage流控制.Controls.Add(Label147)
         TabPage流控制.Controls.Add(Panel64)
         TabPage流控制.Controls.Add(Label111)
+        TabPage流控制.Controls.Add(Label165)
+        TabPage流控制.Controls.Add(Panel91)
+        TabPage流控制.Controls.Add(Label164)
         TabPage流控制.Controls.Add(Panel63)
         TabPage流控制.Controls.Add(Label112)
         TabPage流控制.Controls.Add(Panel61)
@@ -6353,39 +6430,39 @@ Partial Class 界面_常规流程参数_V2
         TabPage流控制.Controls.Add(Panel62)
         TabPage流控制.Controls.Add(Label114)
         TabPage流控制.Controls.Add(Label107)
-        TabPage流控制.Controls.Add(Label108)
         TabPage流控制.Location = New Point(201, 0)
         TabPage流控制.Name = "TabPage流控制"
         TabPage流控制.Size = New Size(899, 650)
         TabPage流控制.TabIndex = 10
         TabPage流控制.Text = "流控制"
         ' 
-        ' Label147
-        ' 
-        Label147.AutoSize = True
-        Label147.Dock = DockStyle.Top
-        Label147.Font = New Font("微软雅黑", 9.75F)
-        Label147.ForeColor = Color.Gray
-        Label147.Location = New Point(0, 389)
-        Label147.Name = "Label147"
-        Label147.Padding = New Padding(16, 5, 0, 0)
-        Label147.Size = New Size(363, 43)
-        Label147.TabIndex = 101
-        Label147.Text = "注意：保留内嵌字幕流、元数据选项、章节选项、附件选项" & vbCrLf & "仅应用于首个 -i 的文件，如果被顶替则请勿使用这些功能"
-        ' 
         ' Panel64
         ' 
+        Panel64.Controls.Add(Label108)
         Panel64.Controls.Add(UiComboBox附件选项)
         Panel64.Controls.Add(Label163)
         Panel64.Controls.Add(UiComboBox章节选项)
         Panel64.Controls.Add(Label148)
         Panel64.Controls.Add(UiComboBox元数据选项)
         Panel64.Dock = DockStyle.Top
-        Panel64.Location = New Point(0, 349)
+        Panel64.Location = New Point(0, 456)
         Panel64.Name = "Panel64"
         Panel64.Padding = New Padding(21, 10, 20, 0)
         Panel64.Size = New Size(899, 40)
         Panel64.TabIndex = 22
+        ' 
+        ' Label108
+        ' 
+        Label108.Dock = DockStyle.Fill
+        Label108.Font = New Font("微软雅黑", 10F)
+        Label108.ForeColor = Color.Gray
+        Label108.Location = New Point(491, 10)
+        Label108.Name = "Label108"
+        Label108.Padding = New Padding(10, 0, 0, 0)
+        Label108.Size = New Size(388, 30)
+        Label108.TabIndex = 106
+        Label108.Text = "这些功能仅应用于首个 -i 的文件"
+        Label108.TextAlign = ContentAlignment.MiddleLeft
         ' 
         ' UiComboBox附件选项
         ' 
@@ -6515,25 +6592,40 @@ Partial Class 界面_常规流程参数_V2
         ' 
         Label111.AutoSize = True
         Label111.Dock = DockStyle.Top
-        Label111.Font = New Font("微软雅黑", 10F)
-        Label111.Location = New Point(0, 319)
+        Label111.Font = New Font("微软雅黑", 11F)
+        Label111.Location = New Point(0, 421)
         Label111.Name = "Label111"
-        Label111.Padding = New Padding(16, 10, 0, 0)
-        Label111.Size = New Size(151, 30)
+        Label111.Padding = New Padding(16, 15, 0, 0)
+        Label111.Size = New Size(172, 35)
         Label111.TabIndex = 26
-        Label111.Text = "元数据、章节、附件"
+        Label111.Text = "元数据 && 章节 && 附件"
         ' 
-        ' Panel63
+        ' Label165
         ' 
-        Panel63.Controls.Add(Label110)
-        Panel63.Controls.Add(UiCheckBox自动混流同名字幕文件)
-        Panel63.Controls.Add(UiCheckBox保留内嵌字幕流)
-        Panel63.Dock = DockStyle.Top
-        Panel63.Location = New Point(0, 279)
-        Panel63.Name = "Panel63"
-        Panel63.Padding = New Padding(21, 10, 20, 0)
-        Panel63.Size = New Size(899, 40)
-        Panel63.TabIndex = 21
+        Label165.AutoSize = True
+        Label165.Dock = DockStyle.Top
+        Label165.Font = New Font("微软雅黑", 10F)
+        Label165.ForeColor = Color.Gray
+        Label165.Location = New Point(0, 376)
+        Label165.Name = "Label165"
+        Label165.Padding = New Padding(16, 5, 0, 0)
+        Label165.Size = New Size(415, 45)
+        Label165.TabIndex = 115
+        Label165.Text = "这些功能强制使用 -map，因为无法在一般情况下处理这些需求" & vbCrLf & "就像最上方所说的一样，注意对其他类型的流使用 -map 参数"
+        ' 
+        ' Panel91
+        ' 
+        Panel91.Controls.Add(Label110)
+        Panel91.Controls.Add(UiCheckBox自动混流字幕转为movtext)
+        Panel91.Controls.Add(UiCheckBox自动混流SSA)
+        Panel91.Controls.Add(UiCheckBox自动混流ASS)
+        Panel91.Controls.Add(UiCheckBox自动混流SRT)
+        Panel91.Dock = DockStyle.Top
+        Panel91.Location = New Point(0, 336)
+        Panel91.Name = "Panel91"
+        Panel91.Padding = New Padding(18, 10, 20, 0)
+        Panel91.Size = New Size(899, 40)
+        Panel91.TabIndex = 103
         ' 
         ' Label110
         ' 
@@ -6543,49 +6635,193 @@ Partial Class 界面_常规流程参数_V2
         Label110.Location = New Point(441, 10)
         Label110.Name = "Label110"
         Label110.Size = New Size(438, 30)
-        Label110.TabIndex = 98
-        Label110.Text = "字幕自动混流优先级 srt>ass>ssa，三种后缀都会扫描"
+        Label110.TabIndex = 107
+        Label110.Text = "mp4 仅支持 mov_text 字幕"
         Label110.TextAlign = ContentAlignment.MiddleLeft
         ' 
-        ' UiCheckBox自动混流同名字幕文件
+        ' UiCheckBox自动混流字幕转为movtext
         ' 
-        UiCheckBox自动混流同名字幕文件.CheckBoxColor = Color.Silver
-        UiCheckBox自动混流同名字幕文件.CheckBoxSize = 20
-        UiCheckBox自动混流同名字幕文件.Dock = DockStyle.Left
-        UiCheckBox自动混流同名字幕文件.Font = New Font("微软雅黑", 10F)
-        UiCheckBox自动混流同名字幕文件.ForeColor = Color.DarkGray
-        UiCheckBox自动混流同名字幕文件.Location = New Point(231, 10)
-        UiCheckBox自动混流同名字幕文件.MinimumSize = New Size(1, 1)
-        UiCheckBox自动混流同名字幕文件.Name = "UiCheckBox自动混流同名字幕文件"
-        UiCheckBox自动混流同名字幕文件.Size = New Size(210, 30)
-        UiCheckBox自动混流同名字幕文件.TabIndex = 97
-        UiCheckBox自动混流同名字幕文件.Text = "自动混流同名字幕文件"
+        UiCheckBox自动混流字幕转为movtext.CheckBoxColor = Color.Silver
+        UiCheckBox自动混流字幕转为movtext.CheckBoxSize = 20
+        UiCheckBox自动混流字幕转为movtext.Dock = DockStyle.Left
+        UiCheckBox自动混流字幕转为movtext.Font = New Font("微软雅黑", 10F)
+        UiCheckBox自动混流字幕转为movtext.ForeColor = Color.DarkGray
+        UiCheckBox自动混流字幕转为movtext.Location = New Point(258, 10)
+        UiCheckBox自动混流字幕转为movtext.MinimumSize = New Size(1, 1)
+        UiCheckBox自动混流字幕转为movtext.Name = "UiCheckBox自动混流字幕转为movtext"
+        UiCheckBox自动混流字幕转为movtext.Size = New Size(183, 30)
+        UiCheckBox自动混流字幕转为movtext.TabIndex = 102
+        UiCheckBox自动混流字幕转为movtext.Text = "转为 mov_text"
         ' 
-        ' UiCheckBox保留内嵌字幕流
+        ' UiCheckBox自动混流SSA
         ' 
-        UiCheckBox保留内嵌字幕流.CheckBoxColor = Color.Silver
-        UiCheckBox保留内嵌字幕流.CheckBoxSize = 20
-        UiCheckBox保留内嵌字幕流.Dock = DockStyle.Left
-        UiCheckBox保留内嵌字幕流.Font = New Font("微软雅黑", 10F)
-        UiCheckBox保留内嵌字幕流.ForeColor = Color.DarkGray
-        UiCheckBox保留内嵌字幕流.Location = New Point(21, 10)
-        UiCheckBox保留内嵌字幕流.MinimumSize = New Size(1, 1)
-        UiCheckBox保留内嵌字幕流.Name = "UiCheckBox保留内嵌字幕流"
-        UiCheckBox保留内嵌字幕流.Size = New Size(210, 30)
-        UiCheckBox保留内嵌字幕流.TabIndex = 96
-        UiCheckBox保留内嵌字幕流.Text = "保留内嵌字幕流"
+        UiCheckBox自动混流SSA.CheckBoxColor = Color.Silver
+        UiCheckBox自动混流SSA.CheckBoxSize = 20
+        UiCheckBox自动混流SSA.Dock = DockStyle.Left
+        UiCheckBox自动混流SSA.Font = New Font("微软雅黑", 10F)
+        UiCheckBox自动混流SSA.ForeColor = Color.DarkGray
+        UiCheckBox自动混流SSA.Location = New Point(178, 10)
+        UiCheckBox自动混流SSA.MinimumSize = New Size(1, 1)
+        UiCheckBox自动混流SSA.Name = "UiCheckBox自动混流SSA"
+        UiCheckBox自动混流SSA.Size = New Size(80, 30)
+        UiCheckBox自动混流SSA.TabIndex = 101
+        UiCheckBox自动混流SSA.Text = "SSA"
+        ' 
+        ' UiCheckBox自动混流ASS
+        ' 
+        UiCheckBox自动混流ASS.CheckBoxColor = Color.Silver
+        UiCheckBox自动混流ASS.CheckBoxSize = 20
+        UiCheckBox自动混流ASS.Dock = DockStyle.Left
+        UiCheckBox自动混流ASS.Font = New Font("微软雅黑", 10F)
+        UiCheckBox自动混流ASS.ForeColor = Color.DarkGray
+        UiCheckBox自动混流ASS.Location = New Point(98, 10)
+        UiCheckBox自动混流ASS.MinimumSize = New Size(1, 1)
+        UiCheckBox自动混流ASS.Name = "UiCheckBox自动混流ASS"
+        UiCheckBox自动混流ASS.Size = New Size(80, 30)
+        UiCheckBox自动混流ASS.TabIndex = 100
+        UiCheckBox自动混流ASS.Text = "ASS"
+        ' 
+        ' UiCheckBox自动混流SRT
+        ' 
+        UiCheckBox自动混流SRT.CheckBoxColor = Color.Silver
+        UiCheckBox自动混流SRT.CheckBoxSize = 20
+        UiCheckBox自动混流SRT.Dock = DockStyle.Left
+        UiCheckBox自动混流SRT.Font = New Font("微软雅黑", 10F)
+        UiCheckBox自动混流SRT.ForeColor = Color.DarkGray
+        UiCheckBox自动混流SRT.Location = New Point(18, 10)
+        UiCheckBox自动混流SRT.MinimumSize = New Size(1, 1)
+        UiCheckBox自动混流SRT.Name = "UiCheckBox自动混流SRT"
+        UiCheckBox自动混流SRT.Size = New Size(80, 30)
+        UiCheckBox自动混流SRT.TabIndex = 98
+        UiCheckBox自动混流SRT.Text = "SRT"
+        ' 
+        ' Label164
+        ' 
+        Label164.AutoSize = True
+        Label164.Dock = DockStyle.Top
+        Label164.Font = New Font("微软雅黑", 11F)
+        Label164.Location = New Point(0, 301)
+        Label164.Name = "Label164"
+        Label164.Padding = New Padding(16, 15, 0, 0)
+        Label164.Size = New Size(115, 35)
+        Label164.TabIndex = 102
+        Label164.Text = "混流同名字幕"
+        ' 
+        ' Panel63
+        ' 
+        Panel63.Controls.Add(Label166)
+        Panel63.Controls.Add(Label169)
+        Panel63.Controls.Add(UiComboBox使用哪些文件的哪些内嵌字幕_如何操作)
+        Panel63.Controls.Add(Label168)
+        Panel63.Controls.Add(UiTextBox使用哪些文件的哪些内嵌字幕)
+        Panel63.Dock = DockStyle.Top
+        Panel63.Location = New Point(0, 261)
+        Panel63.Name = "Panel63"
+        Panel63.Padding = New Padding(21, 10, 20, 0)
+        Panel63.Size = New Size(899, 40)
+        Panel63.TabIndex = 21
+        ' 
+        ' Label166
+        ' 
+        Label166.Dock = DockStyle.Fill
+        Label166.Font = New Font("微软雅黑", 10F)
+        Label166.ForeColor = Color.Gray
+        Label166.Location = New Point(441, 10)
+        Label166.Name = "Label166"
+        Label166.Size = New Size(438, 30)
+        Label166.TabIndex = 111
+        Label166.Text = "文件索引:s:流索引；0:s 表示第一个文件的全部字幕流"
+        Label166.TextAlign = ContentAlignment.MiddleLeft
+        ' 
+        ' Label169
+        ' 
+        Label169.Dock = DockStyle.Left
+        Label169.Location = New Point(384, 10)
+        Label169.Name = "Label169"
+        Label169.Size = New Size(57, 30)
+        Label169.TabIndex = 112
+        ' 
+        ' UiComboBox使用哪些文件的哪些内嵌字幕_如何操作
+        ' 
+        UiComboBox使用哪些文件的哪些内嵌字幕_如何操作.DataSource = Nothing
+        UiComboBox使用哪些文件的哪些内嵌字幕_如何操作.Dock = DockStyle.Left
+        UiComboBox使用哪些文件的哪些内嵌字幕_如何操作.DropDownStyle = Sunny.UI.UIDropDownStyle.DropDownList
+        UiComboBox使用哪些文件的哪些内嵌字幕_如何操作.FillColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        UiComboBox使用哪些文件的哪些内嵌字幕_如何操作.FillColor2 = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        UiComboBox使用哪些文件的哪些内嵌字幕_如何操作.FillDisableColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        UiComboBox使用哪些文件的哪些内嵌字幕_如何操作.Font = New Font("微软雅黑", 10F)
+        UiComboBox使用哪些文件的哪些内嵌字幕_如何操作.ForeColor = Color.Silver
+        UiComboBox使用哪些文件的哪些内嵌字幕_如何操作.ForeDisableColor = Color.Silver
+        UiComboBox使用哪些文件的哪些内嵌字幕_如何操作.ItemFillColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        UiComboBox使用哪些文件的哪些内嵌字幕_如何操作.ItemForeColor = Color.Silver
+        UiComboBox使用哪些文件的哪些内嵌字幕_如何操作.ItemHeight = 30
+        UiComboBox使用哪些文件的哪些内嵌字幕_如何操作.ItemHoverColor = Color.FromArgb(CByte(56), CByte(56), CByte(56))
+        UiComboBox使用哪些文件的哪些内嵌字幕_如何操作.ItemRectColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        UiComboBox使用哪些文件的哪些内嵌字幕_如何操作.Items.AddRange(New Object() {"", "复制流", "转为 mov_text"})
+        UiComboBox使用哪些文件的哪些内嵌字幕_如何操作.ItemSelectBackColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        UiComboBox使用哪些文件的哪些内嵌字幕_如何操作.ItemSelectForeColor = Color.Silver
+        UiComboBox使用哪些文件的哪些内嵌字幕_如何操作.Location = New Point(234, 10)
+        UiComboBox使用哪些文件的哪些内嵌字幕_如何操作.Margin = New Padding(4, 5, 4, 5)
+        UiComboBox使用哪些文件的哪些内嵌字幕_如何操作.MaxDropDownItems = 17
+        UiComboBox使用哪些文件的哪些内嵌字幕_如何操作.MinimumSize = New Size(63, 0)
+        UiComboBox使用哪些文件的哪些内嵌字幕_如何操作.Name = "UiComboBox使用哪些文件的哪些内嵌字幕_如何操作"
+        UiComboBox使用哪些文件的哪些内嵌字幕_如何操作.Padding = New Padding(0, 0, 30, 2)
+        UiComboBox使用哪些文件的哪些内嵌字幕_如何操作.RadiusSides = Sunny.UI.UICornerRadiusSides.None
+        UiComboBox使用哪些文件的哪些内嵌字幕_如何操作.RectColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        UiComboBox使用哪些文件的哪些内嵌字幕_如何操作.RectDisableColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        UiComboBox使用哪些文件的哪些内嵌字幕_如何操作.ScrollBarHandleWidth = 20
+        UiComboBox使用哪些文件的哪些内嵌字幕_如何操作.Size = New Size(150, 30)
+        UiComboBox使用哪些文件的哪些内嵌字幕_如何操作.Style = Sunny.UI.UIStyle.Custom
+        UiComboBox使用哪些文件的哪些内嵌字幕_如何操作.SymbolSize = 24
+        UiComboBox使用哪些文件的哪些内嵌字幕_如何操作.TabIndex = 110
+        UiComboBox使用哪些文件的哪些内嵌字幕_如何操作.TextAlignment = ContentAlignment.MiddleLeft
+        UiComboBox使用哪些文件的哪些内嵌字幕_如何操作.Watermark = "如何操作"
+        ' 
+        ' Label168
+        ' 
+        Label168.Dock = DockStyle.Left
+        Label168.Location = New Point(221, 10)
+        Label168.Name = "Label168"
+        Label168.Size = New Size(13, 30)
+        Label168.TabIndex = 109
+        ' 
+        ' UiTextBox使用哪些文件的哪些内嵌字幕
+        ' 
+        UiTextBox使用哪些文件的哪些内嵌字幕.Dock = DockStyle.Left
+        UiTextBox使用哪些文件的哪些内嵌字幕.FillColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        UiTextBox使用哪些文件的哪些内嵌字幕.FillColor2 = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        UiTextBox使用哪些文件的哪些内嵌字幕.FillDisableColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        UiTextBox使用哪些文件的哪些内嵌字幕.FillReadOnlyColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        UiTextBox使用哪些文件的哪些内嵌字幕.Font = New Font("微软雅黑", 10F)
+        UiTextBox使用哪些文件的哪些内嵌字幕.ForeColor = Color.Silver
+        UiTextBox使用哪些文件的哪些内嵌字幕.ForeDisableColor = Color.Silver
+        UiTextBox使用哪些文件的哪些内嵌字幕.ForeReadOnlyColor = Color.Silver
+        UiTextBox使用哪些文件的哪些内嵌字幕.Location = New Point(21, 10)
+        UiTextBox使用哪些文件的哪些内嵌字幕.Margin = New Padding(4, 5, 4, 5)
+        UiTextBox使用哪些文件的哪些内嵌字幕.MinimumSize = New Size(1, 16)
+        UiTextBox使用哪些文件的哪些内嵌字幕.Name = "UiTextBox使用哪些文件的哪些内嵌字幕"
+        UiTextBox使用哪些文件的哪些内嵌字幕.Padding = New Padding(5)
+        UiTextBox使用哪些文件的哪些内嵌字幕.Radius = 30
+        UiTextBox使用哪些文件的哪些内嵌字幕.RectColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        UiTextBox使用哪些文件的哪些内嵌字幕.RectDisableColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        UiTextBox使用哪些文件的哪些内嵌字幕.RectReadOnlyColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        UiTextBox使用哪些文件的哪些内嵌字幕.ShowText = False
+        UiTextBox使用哪些文件的哪些内嵌字幕.Size = New Size(200, 30)
+        UiTextBox使用哪些文件的哪些内嵌字幕.TabIndex = 108
+        UiTextBox使用哪些文件的哪些内嵌字幕.TextAlignment = ContentAlignment.MiddleLeft
+        UiTextBox使用哪些文件的哪些内嵌字幕.Watermark = "多个用逗号隔开"
         ' 
         ' Label112
         ' 
         Label112.AutoSize = True
         Label112.Dock = DockStyle.Top
-        Label112.Font = New Font("微软雅黑", 10F)
-        Label112.Location = New Point(0, 249)
+        Label112.Font = New Font("微软雅黑", 11F)
+        Label112.Location = New Point(0, 226)
         Label112.Name = "Label112"
-        Label112.Padding = New Padding(16, 10, 0, 0)
-        Label112.Size = New Size(67, 30)
+        Label112.Padding = New Padding(16, 15, 0, 0)
+        Label112.Size = New Size(211, 35)
         Label112.TabIndex = 25
-        Label112.Text = "字幕流"
+        Label112.Text = "使用哪些文件的哪些字幕 (s)"
         ' 
         ' Panel61
         ' 
@@ -6594,7 +6830,7 @@ Partial Class 界面_常规流程参数_V2
         Panel61.Controls.Add(Label133)
         Panel61.Controls.Add(UiTextBox将音频参数用于这些流)
         Panel61.Dock = DockStyle.Top
-        Panel61.Location = New Point(0, 209)
+        Panel61.Location = New Point(0, 186)
         Panel61.Name = "Panel61"
         Panel61.Padding = New Padding(21, 10, 20, 0)
         Panel61.Size = New Size(899, 40)
@@ -6609,7 +6845,7 @@ Partial Class 界面_常规流程参数_V2
         Label140.Name = "Label140"
         Label140.Size = New Size(438, 30)
         Label140.TabIndex = 100
-        Label140.Text = "输入文件索引:a:流索引；写 0:a 即可应用至全部音频流"
+        Label140.Text = "文件索引:a:流索引；0:a 表示第一个文件的全部音频流"
         Label140.TextAlign = ContentAlignment.MiddleLeft
         ' 
         ' UiCheckBox保留其他音频流
@@ -6658,19 +6894,19 @@ Partial Class 界面_常规流程参数_V2
         UiTextBox将音频参数用于这些流.Size = New Size(200, 30)
         UiTextBox将音频参数用于这些流.TabIndex = 96
         UiTextBox将音频参数用于这些流.TextAlignment = ContentAlignment.MiddleLeft
-        UiTextBox将音频参数用于这些流.Watermark = "用逗号隔开"
+        UiTextBox将音频参数用于这些流.Watermark = "多个用逗号隔开"
         ' 
         ' Label113
         ' 
         Label113.AutoSize = True
         Label113.Dock = DockStyle.Top
-        Label113.Font = New Font("微软雅黑", 10F)
-        Label113.Location = New Point(0, 179)
+        Label113.Font = New Font("微软雅黑", 11F)
+        Label113.Location = New Point(0, 151)
         Label113.Name = "Label113"
-        Label113.Padding = New Padding(16, 10, 0, 0)
-        Label113.Size = New Size(221, 30)
+        Label113.Padding = New Padding(16, 15, 0, 0)
+        Label113.Size = New Size(257, 35)
         Label113.TabIndex = 24
-        Label113.Text = "将音频参数应用于哪些文件和流"
+        Label113.Text = "将音频参数应用于哪些文件和流 (a)"
         ' 
         ' Panel62
         ' 
@@ -6679,7 +6915,7 @@ Partial Class 界面_常规流程参数_V2
         Panel62.Controls.Add(Label132)
         Panel62.Controls.Add(UiTextBox将视频参数用于这些流)
         Panel62.Dock = DockStyle.Top
-        Panel62.Location = New Point(0, 139)
+        Panel62.Location = New Point(0, 111)
         Panel62.Name = "Panel62"
         Panel62.Padding = New Padding(21, 10, 20, 0)
         Panel62.Size = New Size(899, 40)
@@ -6694,7 +6930,7 @@ Partial Class 界面_常规流程参数_V2
         Label139.Name = "Label139"
         Label139.Size = New Size(438, 30)
         Label139.TabIndex = 99
-        Label139.Text = "输入文件索引:v:流索引；写 0:v 即可应用至全部视频流"
+        Label139.Text = "文件索引:v:流索引；0:v 表示第一个文件的全部视频流"
         Label139.TextAlign = ContentAlignment.MiddleLeft
         ' 
         ' UiCheckBox保留其他视频流
@@ -6743,19 +6979,19 @@ Partial Class 界面_常规流程参数_V2
         UiTextBox将视频参数用于这些流.Size = New Size(200, 30)
         UiTextBox将视频参数用于这些流.TabIndex = 96
         UiTextBox将视频参数用于这些流.TextAlignment = ContentAlignment.MiddleLeft
-        UiTextBox将视频参数用于这些流.Watermark = "用逗号隔开"
+        UiTextBox将视频参数用于这些流.Watermark = "多个用逗号隔开"
         ' 
         ' Label114
         ' 
         Label114.AutoSize = True
         Label114.Dock = DockStyle.Top
-        Label114.Font = New Font("微软雅黑", 10F)
-        Label114.Location = New Point(0, 109)
+        Label114.Font = New Font("微软雅黑", 11F)
+        Label114.Location = New Point(0, 76)
         Label114.Name = "Label114"
-        Label114.Padding = New Padding(16, 10, 0, 0)
-        Label114.Size = New Size(221, 30)
+        Label114.Padding = New Padding(16, 15, 0, 0)
+        Label114.Size = New Size(257, 35)
         Label114.TabIndex = 23
-        Label114.Text = "将视频参数应用于哪些文件和流"
+        Label114.Text = "将视频参数应用于哪些文件和流 (v)"
         ' 
         ' Label107
         ' 
@@ -6763,24 +6999,12 @@ Partial Class 界面_常规流程参数_V2
         Label107.Dock = DockStyle.Top
         Label107.Font = New Font("微软雅黑", 10F)
         Label107.ForeColor = Color.Gray
-        Label107.Location = New Point(0, 44)
+        Label107.Location = New Point(0, 0)
         Label107.Name = "Label107"
-        Label107.Padding = New Padding(16, 5, 0, 0)
-        Label107.Size = New Size(624, 65)
+        Label107.Padding = New Padding(16, 16, 0, 0)
+        Label107.Size = New Size(624, 76)
         Label107.TabIndex = 18
         Label107.Text = "ffmpeg 的 -map 参数具有很高的优先级，当使用其指定流参数时其他类型的流也必须带上 -map" & vbCrLf & "否则 ffmpeg 可能会丢弃流，ffmpeg 默认的逻辑是视频和音频分别只保留一个" & vbCrLf & "必须指定了具体的流才可以使用" & ChrW(8220) & "然后保留其他流" & ChrW(8221) & "，否则会发生意外情况"
-        ' 
-        ' Label108
-        ' 
-        Label108.AutoSize = True
-        Label108.Dock = DockStyle.Top
-        Label108.Font = New Font("微软雅黑", 13F)
-        Label108.Location = New Point(0, 0)
-        Label108.Name = "Label108"
-        Label108.Padding = New Padding(16, 20, 0, 0)
-        Label108.Size = New Size(80, 44)
-        Label108.TabIndex = 17
-        Label108.Text = "流控制"
         ' 
         ' TabPage方案管理
         ' 
@@ -7335,56 +7559,6 @@ Partial Class 界面_常规流程参数_V2
         Label124.TabIndex = 29
         Label124.Text = "预设管理"
         ' 
-        ' Label15
-        ' 
-        Label15.AutoSize = True
-        Label15.Dock = DockStyle.Bottom
-        Label15.Font = New Font("微软雅黑", 13F)
-        Label15.Location = New Point(0, 482)
-        Label15.Name = "Label15"
-        Label15.Padding = New Padding(16, 0, 0, 10)
-        Label15.Size = New Size(169, 34)
-        Label15.TabIndex = 20
-        Label15.Text = "已从列表移除 avif"
-        ' 
-        ' Label154
-        ' 
-        Label154.AutoSize = True
-        Label154.Dock = DockStyle.Bottom
-        Label154.Font = New Font("微软雅黑", 10F)
-        Label154.ForeColor = Color.Gray
-        Label154.Location = New Point(0, 516)
-        Label154.Name = "Label154"
-        Label154.Padding = New Padding(16, 0, 0, 20)
-        Label154.Size = New Size(508, 60)
-        Label154.TabIndex = 21
-        Label154.Text = "强烈不推荐将 avif 用于生产环境，因为无法从 ffmpeg 关闭它的细节涂抹" & vbCrLf & "如何使用：视频编码 libaom-av1 输出到 .avif 文件，预设和质量正常设定即可"
-        ' 
-        ' Label161
-        ' 
-        Label161.AutoSize = True
-        Label161.Dock = DockStyle.Bottom
-        Label161.Font = New Font("微软雅黑", 13F)
-        Label161.Location = New Point(0, 576)
-        Label161.Name = "Label161"
-        Label161.Padding = New Padding(16, 0, 0, 10)
-        Label161.Size = New Size(241, 34)
-        Label161.TabIndex = 22
-        Label161.Text = "ffmpeg 不支持 HEIC/HEIF"
-        ' 
-        ' Label162
-        ' 
-        Label162.AutoSize = True
-        Label162.Dock = DockStyle.Bottom
-        Label162.Font = New Font("微软雅黑", 10F)
-        Label162.ForeColor = Color.Gray
-        Label162.Location = New Point(0, 610)
-        Label162.Name = "Label162"
-        Label162.Padding = New Padding(16, 0, 0, 20)
-        Label162.Size = New Size(417, 40)
-        Label162.TabIndex = 23
-        Label162.Text = "如果想要批量转到此格式，建议找三方软件或单独开发这个需求"
-        ' 
         ' 界面_常规流程参数_V2
         ' 
         AutoScaleDimensions = New SizeF(96F, 96F)
@@ -7515,6 +7689,7 @@ Partial Class 界面_常规流程参数_V2
         TabPage流控制.ResumeLayout(False)
         TabPage流控制.PerformLayout()
         Panel64.ResumeLayout(False)
+        Panel91.ResumeLayout(False)
         Panel63.ResumeLayout(False)
         Panel61.ResumeLayout(False)
         Panel62.ResumeLayout(False)
@@ -7767,7 +7942,6 @@ Partial Class 界面_常规流程参数_V2
     Friend WithEvents Panel52 As Panel
     Friend WithEvents UiTextBox自定义视频滤镜 As Sunny.UI.UITextBox
     Friend WithEvents Label107 As Label
-    Friend WithEvents Label108 As Label
     Friend WithEvents Panel64 As Panel
     Friend WithEvents UiComboBox附件选项 As Sunny.UI.UIComboBox
     Friend WithEvents Label163 As Label
@@ -7775,9 +7949,6 @@ Partial Class 界面_常规流程参数_V2
     Friend WithEvents Label148 As Label
     Friend WithEvents UiComboBox元数据选项 As Sunny.UI.UIComboBox
     Friend WithEvents Panel63 As Panel
-    Friend WithEvents Label110 As Label
-    Friend WithEvents UiCheckBox自动混流同名字幕文件 As Sunny.UI.UICheckBox
-    Friend WithEvents UiCheckBox保留内嵌字幕流 As Sunny.UI.UICheckBox
     Friend WithEvents Panel61 As Panel
     Friend WithEvents Label140 As Label
     Friend WithEvents UiCheckBox保留其他音频流 As Sunny.UI.UICheckBox
@@ -7798,7 +7969,6 @@ Partial Class 界面_常规流程参数_V2
     Friend WithEvents Panel67 As Panel
     Friend WithEvents Label121 As Label
     Friend WithEvents Label120 As Label
-    Friend WithEvents Label147 As Label
     Friend WithEvents UiTextBox图片编码器质量 As Sunny.UI.UITextBox
     Friend WithEvents Label122 As Label
     Friend WithEvents UiComboBox图片编码器 As Sunny.UI.UIComboBox
@@ -7930,5 +8100,20 @@ Partial Class 界面_常规流程参数_V2
     Friend WithEvents Label162 As Label
     Friend WithEvents Label15 As Label
     Friend WithEvents Label154 As Label
+    Friend WithEvents Label108 As Label
+    Friend WithEvents Panel91 As Panel
+    Friend WithEvents UiCheckBox自动混流SRT As Sunny.UI.UICheckBox
+    Friend WithEvents Label164 As Label
+    Friend WithEvents UiCheckBox自动混流SSA As Sunny.UI.UICheckBox
+    Friend WithEvents UiCheckBox自动混流ASS As Sunny.UI.UICheckBox
+    Friend WithEvents Label110 As Label
+    Friend WithEvents UiCheckBox自动混流字幕转为movtext As Sunny.UI.UICheckBox
+    Friend WithEvents Label147 As Label
+    Friend WithEvents Label165 As Label
+    Friend WithEvents UiComboBox使用哪些文件的哪些内嵌字幕_如何操作 As Sunny.UI.UIComboBox
+    Friend WithEvents Label168 As Label
+    Friend WithEvents UiTextBox使用哪些文件的哪些内嵌字幕 As Sunny.UI.UITextBox
+    Friend WithEvents Label166 As Label
+    Friend WithEvents Label169 As Label
 
 End Class

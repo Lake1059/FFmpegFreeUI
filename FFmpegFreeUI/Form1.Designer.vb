@@ -32,15 +32,9 @@ Partial Class Form1
         Panel44 = New Panel()
         Label35 = New Label()
         Label28 = New Label()
-        Label23 = New Label()
-        Label42 = New Label()
-        Label37 = New Label()
-        Label26 = New Label()
+        Label1 = New Label()
         Label21 = New Label()
         Label14 = New Label()
-        Label13 = New Label()
-        Label12 = New Label()
-        Label10 = New Label()
         Label126 = New Label()
         Label9 = New Label()
         Panel7 = New Panel()
@@ -262,10 +256,10 @@ Partial Class Form1
         ' 
         Panel新闻列表面板.BackColor = Color.Transparent
         Panel新闻列表面板.Dock = DockStyle.Fill
-        Panel新闻列表面板.Location = New Point(640, 54)
+        Panel新闻列表面板.Location = New Point(650, 54)
         Panel新闻列表面板.Name = "Panel新闻列表面板"
         Panel新闻列表面板.Padding = New Padding(1, 0, 20, 20)
-        Panel新闻列表面板.Size = New Size(393, 517)
+        Panel新闻列表面板.Size = New Size(383, 517)
         Panel新闻列表面板.TabIndex = 86
         ' 
         ' Label29
@@ -274,7 +268,7 @@ Partial Class Form1
         Label29.BackColor = Color.Transparent
         Label29.Dock = DockStyle.Top
         Label29.Font = New Font("微软雅黑", 13F)
-        Label29.Location = New Point(640, 0)
+        Label29.Location = New Point(650, 0)
         Label29.Name = "Label29"
         Label29.Padding = New Padding(0, 20, 0, 10)
         Label29.Size = New Size(82, 54)
@@ -287,23 +281,17 @@ Partial Class Form1
         Panel44.BackgroundImageLayout = ImageLayout.Stretch
         Panel44.Controls.Add(Label35)
         Panel44.Controls.Add(Label28)
-        Panel44.Controls.Add(Label23)
-        Panel44.Controls.Add(Label42)
-        Panel44.Controls.Add(Label37)
-        Panel44.Controls.Add(Label26)
+        Panel44.Controls.Add(Label1)
         Panel44.Controls.Add(Label21)
         Panel44.Controls.Add(Label14)
-        Panel44.Controls.Add(Label13)
-        Panel44.Controls.Add(Label12)
-        Panel44.Controls.Add(Label10)
         Panel44.Controls.Add(Label126)
         Panel44.Controls.Add(Label9)
         Panel44.Dock = DockStyle.Left
         Panel44.Font = New Font("微软雅黑", 9.75F)
         Panel44.Location = New Point(300, 0)
         Panel44.Name = "Panel44"
-        Panel44.Padding = New Padding(0, 0, 20, 0)
-        Panel44.Size = New Size(340, 571)
+        Panel44.Padding = New Padding(0, 0, 18, 0)
+        Panel44.Size = New Size(350, 571)
         Panel44.TabIndex = 0
         ' 
         ' Label35
@@ -311,10 +299,10 @@ Partial Class Form1
         Label35.Dock = DockStyle.Fill
         Label35.Font = New Font("微软雅黑", 10F)
         Label35.ForeColor = Color.Gray
-        Label35.Location = New Point(0, 372)
+        Label35.Location = New Point(0, 379)
         Label35.Name = "Label35"
-        Label35.Padding = New Padding(20, 5, 0, 0)
-        Label35.Size = New Size(320, 199)
+        Label35.Padding = New Padding(0, 5, 0, 0)
+        Label35.Size = New Size(332, 192)
         Label35.TabIndex = 47
         Label35.Text = "请尽可能只在主显示器上使用；在不同缩放的显示器之间移动很容易导致 SunnyUI 出现字体过大的问题，其内部支持很有限；如果在主显示器上出现问题请直接汇报。"
         ' 
@@ -323,141 +311,60 @@ Partial Class Form1
         Label28.AutoSize = True
         Label28.Dock = DockStyle.Top
         Label28.Font = New Font("微软雅黑", 13F)
-        Label28.Location = New Point(0, 323)
+        Label28.Location = New Point(0, 330)
         Label28.Name = "Label28"
-        Label28.Padding = New Padding(20, 20, 0, 5)
-        Label28.Size = New Size(124, 49)
+        Label28.Padding = New Padding(0, 20, 0, 5)
+        Label28.Size = New Size(104, 49)
         Label28.TabIndex = 46
-        Label28.Text = "高 DPI 兼容"
+        Label28.Text = "高 DPI 支持"
         ' 
-        ' Label23
+        ' Label1
         ' 
-        Label23.AutoSize = True
-        Label23.Dock = DockStyle.Top
-        Label23.Font = New Font("微软雅黑", 10F)
-        Label23.ForeColor = Color.DimGray
-        Label23.Location = New Point(0, 298)
-        Label23.Name = "Label23"
-        Label23.Padding = New Padding(20, 5, 0, 0)
-        Label23.Size = New Size(183, 25)
-        Label23.TabIndex = 45
-        Label23.Text = "不要半天什么都不提供！"
-        ' 
-        ' Label42
-        ' 
-        Label42.AutoSize = True
-        Label42.Dock = DockStyle.Top
-        Label42.Font = New Font("微软雅黑", 10F)
-        Label42.ForeColor = Color.Gray
-        Label42.Location = New Point(0, 273)
-        Label42.Name = "Label42"
-        Label42.Padding = New Padding(20, 5, 0, 0)
-        Label42.Size = New Size(229, 25)
-        Label42.TabIndex = 44
-        Label42.Text = "④ 及时跟进汇报讨论要求的信息"
-        ' 
-        ' Label37
-        ' 
-        Label37.AutoSize = True
-        Label37.Dock = DockStyle.Top
-        Label37.Font = New Font("微软雅黑", 10F)
-        Label37.ForeColor = Color.Gray
-        Label37.Location = New Point(0, 248)
-        Label37.Name = "Label37"
-        Label37.Padding = New Padding(20, 5, 0, 0)
-        Label37.Size = New Size(173, 25)
-        Label37.TabIndex = 43
-        Label37.Text = "③ 向专业人士发送求助"
-        ' 
-        ' Label26
-        ' 
-        Label26.AutoSize = True
-        Label26.Dock = DockStyle.Top
-        Label26.Font = New Font("微软雅黑", 10F)
-        Label26.ForeColor = Color.Gray
-        Label26.Location = New Point(0, 223)
-        Label26.Name = "Label26"
-        Label26.Padding = New Padding(20, 5, 0, 0)
-        Label26.Size = New Size(173, 25)
-        Label26.TabIndex = 41
-        Label26.Text = "② 复制其输出和命令行"
+        Label1.Dock = DockStyle.Top
+        Label1.Font = New Font("微软雅黑", 10F)
+        Label1.ForeColor = Color.Gray
+        Label1.Location = New Point(0, 249)
+        Label1.Name = "Label1"
+        Label1.Padding = New Padding(0, 10, 0, 0)
+        Label1.Size = New Size(332, 81)
+        Label1.TabIndex = 48
+        Label1.Text = "求助时请第一时间提供报错信息、任务命令行和参数总览，保持专注和成熟，不要发泄情绪，抱怨和算卦不会解决任何问题。"
         ' 
         ' Label21
         ' 
-        Label21.AutoSize = True
         Label21.Dock = DockStyle.Top
         Label21.Font = New Font("微软雅黑", 10F)
         Label21.ForeColor = Color.Gray
-        Label21.Location = New Point(0, 198)
+        Label21.Location = New Point(0, 173)
         Label21.Name = "Label21"
-        Label21.Padding = New Padding(20, 5, 0, 0)
-        Label21.Size = New Size(173, 25)
+        Label21.Padding = New Padding(0, 5, 0, 0)
+        Label21.Size = New Size(332, 76)
         Label21.TabIndex = 40
-        Label21.Text = "① 选中一个错误的任务"
+        Label21.Text = "3FUI 的主要逻辑是先去参数面板设定好选项，再把文件拖进编码队列自动开始。遇到任何不懂的概念可直接问 AI，这些都是写在维基百科里的词汇。"
         ' 
         ' Label14
         ' 
         Label14.AutoSize = True
         Label14.Dock = DockStyle.Top
         Label14.Font = New Font("微软雅黑", 13F)
-        Label14.Location = New Point(0, 149)
+        Label14.Location = New Point(0, 124)
         Label14.Name = "Label14"
-        Label14.Padding = New Padding(20, 20, 0, 5)
-        Label14.Size = New Size(102, 49)
+        Label14.Padding = New Padding(0, 20, 0, 5)
+        Label14.Size = New Size(82, 49)
         Label14.TabIndex = 39
-        Label14.Text = "求助流程"
-        ' 
-        ' Label13
-        ' 
-        Label13.AutoSize = True
-        Label13.Dock = DockStyle.Top
-        Label13.Font = New Font("微软雅黑", 10F)
-        Label13.ForeColor = Color.Gray
-        Label13.Location = New Point(0, 124)
-        Label13.Name = "Label13"
-        Label13.Padding = New Padding(20, 5, 0, 0)
-        Label13.Size = New Size(187, 25)
-        Label13.TabIndex = 38
-        Label13.Text = "④ 加入编码队列自动开始"
-        ' 
-        ' Label12
-        ' 
-        Label12.AutoSize = True
-        Label12.Dock = DockStyle.Top
-        Label12.Font = New Font("微软雅黑", 10F)
-        Label12.ForeColor = Color.Gray
-        Label12.Location = New Point(0, 99)
-        Label12.Name = "Label12"
-        Label12.Padding = New Padding(20, 5, 0, 0)
-        Label12.Size = New Size(131, 25)
-        Label12.TabIndex = 37
-        Label12.Text = "③ 选择输出容器"
-        ' 
-        ' Label10
-        ' 
-        Label10.AutoSize = True
-        Label10.Dock = DockStyle.Top
-        Label10.Font = New Font("微软雅黑", 10F)
-        Label10.ForeColor = Color.Gray
-        Label10.Location = New Point(0, 74)
-        Label10.Name = "Label10"
-        Label10.Padding = New Padding(20, 5, 0, 0)
-        Label10.Size = New Size(159, 25)
-        Label10.TabIndex = 36
-        Label10.Text = "② 将文件添加到列表"
+        Label14.Text = "帮助信息"
         ' 
         ' Label126
         ' 
-        Label126.AutoSize = True
         Label126.Dock = DockStyle.Top
         Label126.Font = New Font("微软雅黑", 10F)
         Label126.ForeColor = Color.Gray
         Label126.Location = New Point(0, 49)
         Label126.Name = "Label126"
-        Label126.Padding = New Padding(20, 5, 0, 0)
-        Label126.Size = New Size(173, 25)
+        Label126.Padding = New Padding(0, 5, 0, 0)
+        Label126.Size = New Size(332, 75)
         Label126.TabIndex = 35
-        Label126.Text = "① 在参数面板设置参数"
+        Label126.Text = "即便已经是正式版，3FUI 还有大量可改进的地方和需要修复的问题，欢迎积极提出建议和提交修改，很多问题一直存在却一直没人上报。"
         ' 
         ' Label9
         ' 
@@ -466,10 +373,10 @@ Partial Class Form1
         Label9.Font = New Font("微软雅黑", 13F)
         Label9.Location = New Point(0, 0)
         Label9.Name = "Label9"
-        Label9.Padding = New Padding(20, 20, 0, 5)
-        Label9.Size = New Size(102, 49)
+        Label9.Padding = New Padding(0, 20, 0, 5)
+        Label9.Size = New Size(82, 49)
         Label9.TabIndex = 24
-        Label9.Text = "基本流程"
+        Label9.Text = "参与开发"
         ' 
         ' Panel7
         ' 
@@ -2363,9 +2270,6 @@ Partial Class Form1
     Friend WithEvents LinkLabel7 As LinkLabel
     Friend WithEvents Label127 As Label
     Friend WithEvents Label9 As Label
-    Friend WithEvents Label13 As Label
-    Friend WithEvents Label12 As Label
-    Friend WithEvents Label10 As Label
     Friend WithEvents Label126 As Label
     Friend WithEvents Label14 As Label
     Friend WithEvents Panel输出面板 As Panel
@@ -2374,19 +2278,15 @@ Partial Class Form1
     Friend WithEvents UiComboBox输出显示类型 As Sunny.UI.UIComboBox
     Friend WithEvents Label15 As Label
     Friend WithEvents UiButton复制输出 As Sunny.UI.UIButton
-    Friend WithEvents Label26 As Label
     Friend WithEvents Label21 As Label
     Friend WithEvents Panel新闻列表面板 As Panel
     Friend WithEvents Label29 As Label
-    Friend WithEvents Label37 As Label
-    Friend WithEvents Label42 As Label
     Friend WithEvents UiCheckBox强制滚动到最后 As Sunny.UI.UICheckBox
     Friend WithEvents Label44 As Label
     Friend WithEvents Panel77 As Panel
     Friend WithEvents RichTextBox2 As RichTextBox
     Friend WithEvents Label45 As Label
     Friend WithEvents Label28 As Label
-    Friend WithEvents Label23 As Label
     Friend WithEvents Label35 As Label
     Friend WithEvents Label46 As Label
     Friend WithEvents Panel15 As Panel
@@ -2396,5 +2296,6 @@ Partial Class Form1
     Friend WithEvents LinkLabel清理内存 As LinkLabel
     Friend WithEvents Label2 As Label
     Friend WithEvents Panel5 As Panel
+    Friend WithEvents Label1 As Label
 
 End Class

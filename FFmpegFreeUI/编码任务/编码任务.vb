@@ -10,7 +10,6 @@ Public Class 编码任务
         已暂停 = 2
         已完成 = 10
         已停止 = 20
-        压制失败 = 51
         错误 = 99
     End Enum
 
@@ -111,18 +110,7 @@ Public Class 编码任务
         Public Property 任务耗时计时器 As New Stopwatch
         Public Property 上次刷新界面的时间戳 As TimeSpan = Now.TimeOfDay
 
-        Private Property IsStarted As Boolean = False
-        Private ReadOnly _lockObj As New Object()
-
         Public Sub 开始()
-            SyncLock _lockObj
-                If IsStarted Then
-                    Debug.WriteLine($"Task already started: {输入文件}")
-                    Return
-                End If
-                IsStarted = True
-            End SyncLock
-            Debug.WriteLine($"Start Task: {输入文件}")
             Try
                 错误列表.Clear()
                 非进度输出列表.Clear()
@@ -130,7 +118,7 @@ Public Class 编码任务
 
                 If 预设数据 Is Nothing Then GoTo jx1
                 If 预设数据.视频参数_降噪_方式 = "avs" Then
-                    If My.Computer.FileSystem.FileExists(Path.Combine(Application.StartupPath, "AviSynth.avs")) Then
+                    If FileIO.FileSystem.FileExists(Path.Combine(Application.StartupPath, "AviSynth.avs")) Then
                         Dim avs1 As String = File.ReadAllText(Path.Combine(Application.StartupPath, "AviSynth.avs"))
                         avs1 = avs1.Replace("<FilePath>", 输入文件)
                         File.WriteAllText(Path.Combine(Path.GetDirectoryName(输入文件), Path.GetFileNameWithoutExtension(输入文件) & ".avs"), avs1, New Text.UTF8Encoding(False))
@@ -179,21 +167,22 @@ jx1:
                 AddHandler FFmpegProcess.Exited, AddressOf FFmpegProcessExited
 
                 FFmpegProcess.Start()
-                Debug.WriteLine($"Process Start {FFmpegProcess.Id}")
                 FFmpegProcess.BeginOutputReadLine()
                 FFmpegProcess.BeginErrorReadLine()
-
-                设定系统状态()
-                任务耗时计时器.Start()
 
                 If 用户设置.实例对象.指定处理器核心 <> "" Then
                     Dim coreList() As Integer = 用户设置.实例对象.指定处理器核心.Split(","c).Select(Function(s) s.Trim()).Where(Function(s) Integer.TryParse(s, Nothing)).Select(Function(s) Integer.Parse(s)).ToArray()
                     FFmpegProcess.ProcessorAffinity = GetAffinityMask(coreList)
                 End If
+
+                设定系统状态()
+                任务耗时计时器.Start()
+
             Catch ex As Exception
-                Debug.WriteLine($"Error in 开始 {ex}")
                 状态 = 编码状态.错误
-                界面线程执行(Sub() MsgBox(ex.Message, MsgBoxStyle.Critical))
+                实时输出 = $"[3FUI] {ex.Message}"
+                错误列表.Add($"[3FUI] {ex.Message}")
+                '界面线程执行(Sub() MsgBox(ex.Message, MsgBoxStyle.Critical))
             End Try
         End Sub
 
@@ -234,19 +223,6 @@ jx1:
                     手动停止不要尝试启动其他任务 = True
                     FFmpegProcess?.Kill()
                     状态 = 编码状态.已停止
-                    任务耗时计时器.Stop()
-                    状态刷新统一逻辑()
-                End If
-            Catch ex As Exception
-                MsgBox(ex.Message, MsgBoxStyle.Critical)
-            End Try
-        End Sub
-
-        Public Sub 让压制任务失败()
-            Try
-                If FFmpegProcess.HasExited = False Then
-                    FFmpegProcess?.Kill()
-                    状态 = 编码状态.压制失败
                     任务耗时计时器.Stop()
                     状态刷新统一逻辑()
                 End If
@@ -322,7 +298,6 @@ jx1:
 
         Public Sub FFmpegProcessExited(sender As Object, e As EventArgs)
             If 要刷新的项.ContainsKey(列表视图项) Then 要刷新的项.Remove(列表视图项)
-            Debug.WriteLine($"Process End {FFmpegProcess.Id} {FFmpegProcess.HasExited}")
             If FFmpegProcess.ExitCode = 0 Then
                 状态 = 编码状态.已完成
 
@@ -453,10 +428,6 @@ jx1:
                         列表视图项.SubItems(1).Text = "错误"
                         Task.Run(AddressOf 检查是否有可以开始的任务)
                     End If
-                Case 编码状态.压制失败
-                    列表视图项.ForeColor = Color.IndianRed
-                    列表视图项.SubItems(1).Text = "压制失败"
-                    列表视图项.SubItems(5).Text = ""
             End Select
         End Sub
         Public Sub 处理捕获的数据并添加到刷新队列()
@@ -545,13 +516,6 @@ jx1:
             Dim sp = ExtractRegexValueAsString(SpeedPattern, line) : If sp <> "" Then 实时_speed = sp
         End Sub
 
-        Friend Sub Reset()
-            SyncLock _lockObj
-                IsStarted = False
-                状态 = 编码任务.编码状态.未处理
-                任务耗时计时器.Reset()
-            End SyncLock
-        End Sub
     End Class
 
 

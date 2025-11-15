@@ -221,12 +221,15 @@ Public Class 预设管理
         ui.UiCheckBox保留其他视频流.Checked = a.流控制_启用保留其他视频流
         ui.UiTextBox将音频参数用于这些流.Text = String.Join(",", a.流控制_将音频参数应用于指定流)
         ui.UiCheckBox保留其他音频流.Checked = a.流控制_启用保留其他音频流
-        ui.UiCheckBox保留内嵌字幕流.Checked = a.流控制_启用保留内嵌字幕流
+        ui.UiTextBox使用哪些文件的哪些内嵌字幕.Text = String.Join(",", a.流控制_使用哪些文件的哪些内嵌字幕)
+        ui.UiComboBox使用哪些文件的哪些内嵌字幕_如何操作.SelectedIndex = a.流控制_使用哪些文件的哪些内嵌字幕_如何操作
+        ui.UiCheckBox自动混流SRT.Checked = a.流控制_自动混流SRT
+        ui.UiCheckBox自动混流ASS.Checked = a.流控制_自动混流ASS
+        ui.UiCheckBox自动混流SSA.Checked = a.流控制_自动混流SSA
+        ui.UiCheckBox自动混流字幕转为movtext.Checked = a.流控制_自动混流的字幕转为MOVTEXT
         ui.UiComboBox元数据选项.SelectedIndex = a.流控制_元数据选项
         ui.UiComboBox章节选项.SelectedIndex = a.流控制_章节选项
         ui.UiComboBox附件选项.SelectedIndex = a.流控制_附件选项
-        ui.UiCheckBox自动混流同名字幕文件.Checked = a.流控制_启用自动混流同名字幕文件
-
     End Sub
 
     Shared ReadOnly separator As String() = {","}
@@ -449,11 +452,17 @@ Public Class 预设管理
         a.流控制_启用保留其他视频流 = ui.UiCheckBox保留其他视频流.Checked
         a.流控制_将音频参数应用于指定流 = ui.UiTextBox将音频参数用于这些流.Text.Replace("-", "").Split(separator, StringSplitOptions.RemoveEmptyEntries)
         a.流控制_启用保留其他音频流 = ui.UiCheckBox保留其他音频流.Checked
-        a.流控制_启用保留内嵌字幕流 = ui.UiCheckBox保留内嵌字幕流.Checked
+        a.流控制_使用哪些文件的哪些内嵌字幕 = ui.UiTextBox使用哪些文件的哪些内嵌字幕.Text.Replace("-", "").Split(separator, StringSplitOptions.RemoveEmptyEntries)
+        a.流控制_使用哪些文件的哪些内嵌字幕_如何操作 = ui.UiComboBox使用哪些文件的哪些内嵌字幕_如何操作.SelectedIndex
+
+        a.流控制_自动混流SRT = ui.UiCheckBox自动混流SRT.Checked
+        a.流控制_自动混流ASS = ui.UiCheckBox自动混流ASS.Checked
+        a.流控制_自动混流SSA = ui.UiCheckBox自动混流SSA.Checked
+        a.流控制_自动混流的字幕转为MOVTEXT = ui.UiCheckBox自动混流字幕转为movtext.Checked
         a.流控制_元数据选项 = ui.UiComboBox元数据选项.SelectedIndex
         a.流控制_章节选项 = ui.UiComboBox章节选项.SelectedIndex
         a.流控制_附件选项 = ui.UiComboBox附件选项.SelectedIndex
-        a.流控制_启用自动混流同名字幕文件 = ui.UiCheckBox自动混流同名字幕文件.Checked
+
     End Sub
 
     Public Shared Sub 重置全部包含在预设中的设置(ui As 界面_常规流程参数_V2)
@@ -562,11 +571,15 @@ Public Class 预设管理
         ui.UiCheckBox保留其他视频流.Checked = False
         ui.UiTextBox将音频参数用于这些流.Text = ""
         ui.UiCheckBox保留其他音频流.Checked = False
-        ui.UiCheckBox保留内嵌字幕流.Checked = False
+        ui.UiTextBox使用哪些文件的哪些内嵌字幕.Text = ""
+        ui.UiComboBox使用哪些文件的哪些内嵌字幕_如何操作.SelectedIndex = 0
+        ui.UiCheckBox自动混流SRT.Checked = False
+        ui.UiCheckBox自动混流ASS.Checked = False
+        ui.UiCheckBox自动混流SSA.Checked = False
+        ui.UiCheckBox自动混流字幕转为movtext.Checked = False
         ui.UiComboBox元数据选项.SelectedIndex = 0
         ui.UiComboBox章节选项.SelectedIndex = 0
         ui.UiComboBox附件选项.SelectedIndex = 0
-        ui.UiCheckBox自动混流同名字幕文件.Checked = False
     End Sub
 
     Public Shared Function 将预设数据转换为命令行(a As 预设数据类型, 输入文件 As String, 输出文件 As String) As String
@@ -583,6 +596,12 @@ Public Class 预设管理
         Dim 视频参数 As String = ""
         Dim 音频参数 As String = ""
         Dim 输入文件的文件夹 As String = Path.GetDirectoryName(输入文件)
+
+        Dim 将自动混流的SRT字幕 As String = Path.Combine(输入文件的文件夹, Path.GetFileNameWithoutExtension(输入文件) & ".srt")
+        Dim 将自动混流的ASS字幕 As String = Path.Combine(输入文件的文件夹, Path.GetFileNameWithoutExtension(输入文件) & ".ass")
+        Dim 将自动混流的SSA字幕 As String = Path.Combine(输入文件的文件夹, Path.GetFileNameWithoutExtension(输入文件) & ".ssa")
+        Dim 自动混流字幕个数 As Integer = 0
+
         Dim arg As String = "-hide_banner -nostdin "
 
         If a.自定义参数_开头参数 <> "" Then arg &= $"{处理自定义参数的通配字符串(a.自定义参数_开头参数, 输入文件)} "
@@ -590,7 +609,6 @@ Public Class 预设管理
         If a.解码参数_解码器 <> "" Then arg &= $"-hwaccel {a.解码参数_解码器} "
         If a.解码参数_CPU解码线程数 <> "" Then arg &= $"-threads {a.解码参数_CPU解码线程数} "
         If a.解码参数_解码数据格式 <> "" Then arg &= $"-hwaccel_output_format {a.解码参数_解码数据格式} "
-
         If a.解码参数_指定硬件的参数名 <> "" AndAlso a.解码参数_指定硬件的参数 <> "" Then
             arg &= $"{a.解码参数_指定硬件的参数名} {a.解码参数_指定硬件的参数} "
         End If
@@ -615,26 +633,36 @@ Public Class 预设管理
             arg &= $"-i {""""}{输入文件}{""""} "
         End If
 
+        If a.流控制_自动混流SRT AndAlso FileIO.FileSystem.FileExists(将自动混流的SRT字幕) Then
+            arg &= $"-i {""""}{将自动混流的SRT字幕}{""""} " : 自动混流字幕个数 += 1
+        End If
+        If a.流控制_自动混流ASS AndAlso FileIO.FileSystem.FileExists(将自动混流的ASS字幕) Then
+            arg &= $"-i {""""}{将自动混流的ASS字幕}{""""} " : 自动混流字幕个数 += 1
+        End If
+        If a.流控制_自动混流SSA AndAlso FileIO.FileSystem.FileExists(将自动混流的SSA字幕) Then
+            arg &= $"-i {""""}{将自动混流的SSA字幕}{""""} " : 自动混流字幕个数 += 1
+        End If
+
         If a.自定义参数_之前参数 <> "" Then arg &= $"{处理自定义参数的通配字符串(a.自定义参数_之前参数, 输入文件)} "
 
         If a.视频参数_编码器_类别 = "禁用" Then 视频参数 &= $"-vn "
         If a.视频参数_编码器_具体编码 <> "" Then 视频参数 &= $"-c:v {a.视频参数_编码器_具体编码} "
         Select Case a.图片参数_编码器_编码名称
-            Case "png" : 视频参数 &= $"-c:v png {If(a.图片参数_编码器_质量值 <> "", "-compression_level " & a.图片参数_编码器_质量值, "")} "
-            Case "apng" : 视频参数 &= $"-c:v apng {If(a.图片参数_编码器_质量值 <> "", "-compression_level " & a.图片参数_编码器_质量值, "")} "
-            Case "mjpeg" : 视频参数 &= $"-c:v mjpeg {If(a.图片参数_编码器_质量值 <> "", "-q:v " & a.图片参数_编码器_质量值, "")} "
-            Case "libwebp" : 视频参数 &= $"-c:v libwebp {If(a.图片参数_编码器_质量值 <> "", "-q:v " & a.图片参数_编码器_质量值, "")} "
-            Case "libwebp_anim" : 视频参数 &= $"-c:v libwebp_anim {If(a.图片参数_编码器_质量值 <> "", "-q:v " & a.图片参数_编码器_质量值, "")} "
+            Case "png" : 视频参数 &= $"-c: v png {If(a.图片参数_编码器_质量值 <> "", "-compression_level " & a.图片参数_编码器_质量值, "")} "
+            Case "apng" : 视频参数 &= $"-cv apng {If(a.图片参数_编码器_质量值 <> "", "-compression_level " & a.图片参数_编码器_质量值, "")} "
+            Case "mjpeg" : 视频参数 &= $"-cv mjpeg {If(a.图片参数_编码器_质量值 <> "", "-q:v " & a.图片参数_编码器_质量值, "")} "
+            Case "libwebp" : 视频参数 &= $"-cv libwebp {If(a.图片参数_编码器_质量值 <> "", "-q:v " & a.图片参数_编码器_质量值, "")} "
+            Case "libwebp_anim" : 视频参数 &= $"-cv libwebp_anim {If(a.图片参数_编码器_质量值 <> "", "-q:v " & a.图片参数_编码器_质量值, "")} "
             Case "gif"
-                视频参数 &= $"-c:v gif "
+                视频参数 &= $"-cv Gif "
                 If a.图片参数_编码器_质量值 = "1" Then 视频滤镜参数集.Add("split [a][b];[a] palettegen [p];[b][p] paletteuse=dither=floyd_steinberg")
-            Case "bmp" : 视频参数 &= $"-c:v bmp "
-            Case "libopenjpeg" : 视频参数 &= $"-c:v libopenjpeg {If(a.图片参数_编码器_质量值 <> "", "-q:v " & a.图片参数_编码器_质量值, "")} "
-            Case "jpegls" : 视频参数 &= $"-c:v jpegls "
-            Case "hdr" : 视频参数 &= $"-c:v hdr "
-            Case "tiff" : 视频参数 &= $"-c:v tiff "
-            Case "dpx" : 视频参数 &= $"-c:v dpx "
-            Case "exr" : 视频参数 &= $"-c:v exr "
+            Case "bmp" : 视频参数 &= $"-c: v bmp "
+            Case "libopenjpeg" : 视频参数 &= $"-c: v libopenjpeg {If(a.图片参数_编码器_质量值 <> "", "-q:v " & a.图片参数_编码器_质量值, "")} "
+            Case "jpegls" : 视频参数 &= $"-cv jpegls "
+            Case "hdr" : 视频参数 &= $"-c: v hdr "
+            Case "tiff" : 视频参数 &= $"-c: v tiff "
+            Case "dpx" : 视频参数 &= $"-c: v dpx "
+            Case "exr" : 视频参数 &= $"-c: v exr "
         End Select
         If a.视频参数_编码器_编码预设 <> "" Then
             Select Case a.视频参数_编码器_具体编码
@@ -662,9 +690,9 @@ Public Class 预设管理
             视频参数 &= $"-s {a.视频参数_分辨率} "
         Else
             If a.视频参数_分辨率自动计算_宽度 <> "" Then
-                视频滤镜参数集.Add($"scale={a.视频参数_分辨率自动计算_宽度}:-2")
+                视频滤镜参数集.Add($"scale={a.视频参数_分辨率自动计算_宽度}: -2")
             ElseIf a.视频参数_分辨率自动计算_高度 <> "" Then
-                视频滤镜参数集.Add($"scale=-2:{a.视频参数_分辨率自动计算_高度}")
+                视频滤镜参数集.Add($"scale=-2{a.视频参数_分辨率自动计算_高度}")
             End If
         End If
         If a.视频参数_分辨率_裁剪滤镜参数 <> "" Then 视频滤镜参数集.Add($"crop={a.视频参数_分辨率_裁剪滤镜参数}")
@@ -676,38 +704,38 @@ Public Class 预设管理
         End If
 
         If a.视频参数_插帧_目标帧率 <> "" AndAlso a.视频参数_插帧_插帧模式 <> "" Then
-            Dim s1 As String = $"minterpolate=fps={a.视频参数_插帧_目标帧率}:mi_mode={a.视频参数_插帧_插帧模式}"
+            Dim s1 As String = $"minterpolate=fps={a.视频参数_插帧_目标帧率}mi_mode = {a.视频参数_插帧_插帧模式}"
             If a.视频参数_插帧_插帧模式 = "mci" AndAlso a.视频参数_插帧_运动补偿模式 <> "" Then
-                s1 &= $":mc_mode={a.视频参数_插帧_运动补偿模式}"
+                s1 &= $"mc_mode = {a.视频参数_插帧_运动补偿模式}"
             End If
-            If a.视频参数_插帧_运动估计模式 <> "" Then s1 &= $":me_mode={a.视频参数_插帧_运动估计模式}"
-            If a.视频参数_插帧_运动估计算法 <> "" Then s1 &= $":me={a.视频参数_插帧_运动估计算法}"
-            If a.视频参数_插帧_可变块大小的运动补偿 Then s1 &= $":vsbmc=1"
-            If a.视频参数_插帧_块大小 <> "" Then s1 &= $":mb_size={a.视频参数_插帧_块大小}"
-            If a.视频参数_插帧_搜索范围 <> "" Then s1 &= $":search_param={a.视频参数_插帧_搜索范围}"
-            If a.视频参数_插帧_场景变化检测强度 <> "" Then s1 &= $":scd=fdiff:scd_threshold={a.视频参数_插帧_场景变化检测强度}"
+            If a.视频参数_插帧_运动估计模式 <> "" Then s1 &= $"me_mode = {a.视频参数_插帧_运动估计模式}"
+            If a.视频参数_插帧_运动估计算法 <> "" Then s1 &= $"Me = {a.视频参数_插帧_运动估计算法}"
+            If a.视频参数_插帧_可变块大小的运动补偿 Then s1 &= $"vsbmc = 1"
+            If a.视频参数_插帧_块大小 <> "" Then s1 &= $"mb_size = {a.视频参数_插帧_块大小}"
+            If a.视频参数_插帧_搜索范围 <> "" Then s1 &= $"search_param = {a.视频参数_插帧_搜索范围}"
+            If a.视频参数_插帧_场景变化检测强度 <> "" Then s1 &= $"scd = fdiff : scd_threshold = {a.视频参数_插帧_场景变化检测强度}"
             视频滤镜参数集.Add(s1)
         End If
 
         If a.视频参数_帧混合_混合模式 <> "" Then
             Dim s1 As String = $"tblend=all_mode={a.视频参数_帧混合_混合模式}"
             If a.视频参数_帧混合_指定帧率 <> "" Then s1 = $"fps={a.视频参数_帧混合_指定帧率}," & s1
-            If a.视频参数_帧混合_混合比例 <> "" Then s1 &= $":all_opacity={a.视频参数_帧混合_混合比例}"
+            If a.视频参数_帧混合_混合比例 <> "" Then s1 &= $"all_opacity = {a.视频参数_帧混合_混合比例}"
             视频滤镜参数集.Add(s1)
         End If
 
         If a.视频参数_超分_目标宽度 <> "" AndAlso a.视频参数_超分_目标高度 <> "" Then
-            Dim s1 As String = $"libplacebo=w={a.视频参数_超分_目标宽度}:h={a.视频参数_超分_目标高度}"
-            If a.视频参数_超分_上采样算法 <> "" Then s1 &= $":upscaler={a.视频参数_超分_上采样算法}"
-            If a.视频参数_超分_下采样算法 <> "" Then s1 &= $":downscaler={a.视频参数_超分_下采样算法}"
-            If a.视频参数_超分_抗振铃强度 <> "" Then s1 &= $":antiringing={a.视频参数_超分_抗振铃强度}"
+            Dim s1 As String = $"libplacebo=w={a.视频参数_超分_目标宽度}h = {a.视频参数_超分_目标高度}"
+            If a.视频参数_超分_上采样算法 <> "" Then s1 &= $"upscaler = {a.视频参数_超分_上采样算法}"
+            If a.视频参数_超分_下采样算法 <> "" Then s1 &= $"downscaler = {a.视频参数_超分_下采样算法}"
+            If a.视频参数_超分_抗振铃强度 <> "" Then s1 &= $"antiringing = {a.视频参数_超分_抗振铃强度}"
             For Each shader In a.视频参数_超分_着色器列表
-                s1 &= $":custom_shader_path='{将路径转换为FFmpeg滤镜接受的格式(shader)}'"
-            Next
-            视频滤镜参数集.Add(s1)
-        End If
+                s1 &= $"custom_shader_path ='{将路径转换为FFmpeg滤镜接受的格式(shader)}'"
+                Next
+                视频滤镜参数集.Add(s1)
+            End If
 
-        Select Case a.视频参数_比特率_控制方式
+            Select Case a.视频参数_比特率_控制方式
             Case "VBR"
                 Select Case a.视频参数_编码器_具体编码
                     Case "av1_amf", "hevc_amf", "h264_amf"
@@ -755,6 +783,7 @@ Public Class 预设管理
         Next
 
         If a.视频参数_色彩管理_像素格式 <> "" Then 视频参数 &= $"-pix_fmt {a.视频参数_色彩管理_像素格式} "
+
         Select Case a.视频参数_色彩管理_处理方式
             Case 1 '写入元数据并转换
                 视频参数 &= $"-colorspace {a.视频参数_色彩管理_矩阵系数} "
@@ -923,8 +952,8 @@ Public Class 预设管理
         If a.流控制_启用保留其他音频流 AndAlso 音频参数 <> "" Then
             arg &= $"-map 0:a? -c:a copy "
             If a.流控制_将音频参数应用于指定流.Length > 0 Then
-                For Each vi In a.流控制_将音频参数应用于指定流
-                    arg &= $"-map -{vi}? "
+                For Each ai In a.流控制_将音频参数应用于指定流
+                    arg &= $"-map -{ai}? "
                 Next
             Else
                 If 音频参数 <> "" Then arg &= $"-map -0:a:0? "
@@ -932,8 +961,8 @@ Public Class 预设管理
         End If
         If a.流控制_将音频参数应用于指定流.Length > 0 Then
             If 音频参数 <> "" Then
-                For Each vi In a.流控制_将音频参数应用于指定流
-                    arg &= $"-map {vi}? {音频参数} "
+                For Each ai In a.流控制_将音频参数应用于指定流
+                    arg &= $"-map {ai}? {音频参数} "
                 Next
             End If
         Else
@@ -942,9 +971,26 @@ Public Class 预设管理
 
         '=================================================================
 
-        If a.流控制_启用保留内嵌字幕流 Then
-            arg &= $"{If(arg.Contains("-map"), "-map 0:s?", "")} -c:s copy "
+        If a.流控制_使用哪些文件的哪些内嵌字幕.Length > 0 AndAlso a.流控制_使用哪些文件的哪些内嵌字幕_如何操作 > 0 Then
+            For Each si In a.流控制_使用哪些文件的哪些内嵌字幕
+                Select Case a.流控制_使用哪些文件的哪些内嵌字幕_如何操作
+                    Case 1
+                        arg &= $"-map {si}? -c:s copy "
+                    Case 2
+                        arg &= $"-map {si}? -c:s mov_text "
+                End Select
+            Next
         End If
+
+        '=================================================================
+
+        If 自动混流字幕个数 > 0 Then
+            For i = 1 To 自动混流字幕个数
+                arg &= $"-map {i}:s? -c:s {If(a.流控制_自动混流的字幕转为MOVTEXT, "mov_text", "copy")} "
+            Next
+        End If
+
+        '=================================================================
 
         Select Case a.流控制_元数据选项
             Case 1 : arg &= $"-map_metadata 0 "
@@ -958,31 +1004,13 @@ Public Class 预设管理
         End Select
 
         Select Case a.流控制_附件选项
-            Case 1 : arg &= $"{If(arg.Contains("-map"), "-map 0:t?", "")} -c:t copy "
+            Case 1 : arg &= $"{If(arg.Contains("-map"), "-map 0:t? ", "")}-c:t copy "
         End Select
 
         If a.自定义参数_filter_complex <> "" Then
             arg &= $"-filter_complex ""{a.自定义参数_filter_complex}"" "
         End If
 
-        '=================================================================
-        Dim 将自动混流的SRT字幕 As String = Path.Combine(输入文件的文件夹, Path.GetFileNameWithoutExtension(输入文件) & ".srt")
-        Dim 将自动混流的ASS字幕 As String = Path.Combine(输入文件的文件夹, Path.GetFileNameWithoutExtension(输入文件) & ".ass")
-        Dim 将自动混流的SSA字幕 As String = Path.Combine(输入文件的文件夹, Path.GetFileNameWithoutExtension(输入文件) & ".ssa")
-        If a.流控制_启用自动混流同名字幕文件 Then
-            If FileIO.FileSystem.FileExists(将自动混流的SRT字幕) Then
-                arg &= $"-i {""""}{将自动混流的SRT字幕}{""""} "
-                If a.输出容器.Equals(".mp4", StringComparison.CurrentCultureIgnoreCase) Then arg &= $" -c:s mov_text "
-            End If
-            If FileIO.FileSystem.FileExists(将自动混流的ASS字幕) Then
-                arg &= $"-i {""""}{将自动混流的ASS字幕}{""""} "
-                If a.输出容器.Equals(".mp4", StringComparison.CurrentCultureIgnoreCase) Then arg &= $" -c:s mov_text "
-            End If
-            If FileIO.FileSystem.FileExists(将自动混流的SSA字幕) Then
-                arg &= $"-i {""""}{将自动混流的SSA字幕}{""""} "
-                If a.输出容器.Equals(".mp4", StringComparison.CurrentCultureIgnoreCase) Then arg &= $" -c:s mov_text "
-            End If
-        End If
         '=================================================================
 
         If a.自定义参数_之后参数 <> "" Then arg &= $"{处理自定义参数的通配字符串(a.自定义参数_之后参数, 输入文件)} "
@@ -1172,8 +1200,16 @@ Public Class 预设管理
         If a.流控制_将音频参数应用于指定流 IsNot Nothing AndAlso a.流控制_将音频参数应用于指定流.Length > 0 Then
             在RTF输出文本(RTF, "应用音频参数到流：" & String.Join(",", a.流控制_将音频参数应用于指定流), Color.Silver)
         End If
-        If a.流控制_启用保留内嵌字幕流 Then 在RTF输出文本(RTF, "已选择保留内嵌字幕流", Color.Silver)
-        If a.流控制_启用自动混流同名字幕文件 Then 在RTF输出文本(RTF, "已选择自动混流同名字幕文件", Color.Silver)
+        If a.流控制_使用哪些文件的哪些内嵌字幕 IsNot Nothing AndAlso a.流控制_使用哪些文件的哪些内嵌字幕.Length > 0 Then
+            在RTF输出文本(RTF, "使用这些文件的这些字幕：" & String.Join(",", a.流控制_使用哪些文件的哪些内嵌字幕), Color.Silver)
+            Select Case a.流控制_使用哪些文件的哪些内嵌字幕_如何操作
+                Case 1 : 在RTF输出文本(RTF, "字幕操作：复制流", Color.Silver)
+                Case 2 : 在RTF输出文本(RTF, "字幕操作：转为 mov_text 编码", Color.Silver)
+            End Select
+        End If
+        If a.流控制_自动混流SRT Then 在RTF输出文本(RTF, "已选择自动混流同名 SRT 字幕文件", Color.Silver)
+        If a.流控制_自动混流ASS Then 在RTF输出文本(RTF, "已选择自动混流同名 ASS 字幕文件", Color.Silver)
+        If a.流控制_自动混流SSA Then 在RTF输出文本(RTF, "已选择自动混流同名 SSA 字幕文件", Color.Silver)
         Select Case a.流控制_元数据选项
             Case 1 : 在RTF输出文本(RTF, "保留元数据", Color.Silver)
             Case 2 : 在RTF输出文本(RTF, "清除元数据", Color.Silver)
