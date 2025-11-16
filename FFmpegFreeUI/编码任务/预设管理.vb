@@ -648,21 +648,21 @@ Public Class 预设管理
         If a.视频参数_编码器_类别 = "禁用" Then 视频参数 &= $"-vn "
         If a.视频参数_编码器_具体编码 <> "" Then 视频参数 &= $"-c:v {a.视频参数_编码器_具体编码} "
         Select Case a.图片参数_编码器_编码名称
-            Case "png" : 视频参数 &= $"-c: v png {If(a.图片参数_编码器_质量值 <> "", "-compression_level " & a.图片参数_编码器_质量值, "")} "
-            Case "apng" : 视频参数 &= $"-cv apng {If(a.图片参数_编码器_质量值 <> "", "-compression_level " & a.图片参数_编码器_质量值, "")} "
-            Case "mjpeg" : 视频参数 &= $"-cv mjpeg {If(a.图片参数_编码器_质量值 <> "", "-q:v " & a.图片参数_编码器_质量值, "")} "
-            Case "libwebp" : 视频参数 &= $"-cv libwebp {If(a.图片参数_编码器_质量值 <> "", "-q:v " & a.图片参数_编码器_质量值, "")} "
-            Case "libwebp_anim" : 视频参数 &= $"-cv libwebp_anim {If(a.图片参数_编码器_质量值 <> "", "-q:v " & a.图片参数_编码器_质量值, "")} "
+            Case "png" : 视频参数 &= $"-c:v png {If(a.图片参数_编码器_质量值 <> "", "-compression_level " & a.图片参数_编码器_质量值, "")} "
+            Case "apng" : 视频参数 &= $"-c:v apng {If(a.图片参数_编码器_质量值 <> "", "-compression_level " & a.图片参数_编码器_质量值, "")} "
+            Case "mjpeg" : 视频参数 &= $"-c:v mjpeg {If(a.图片参数_编码器_质量值 <> "", "-q:v " & a.图片参数_编码器_质量值, "")} "
+            Case "libwebp" : 视频参数 &= $"-c:v libwebp {If(a.图片参数_编码器_质量值 <> "", "-q:v " & a.图片参数_编码器_质量值, "")} "
+            Case "libwebp_anim" : 视频参数 &= $"-c:v libwebp_anim {If(a.图片参数_编码器_质量值 <> "", "-q:v " & a.图片参数_编码器_质量值, "")} "
             Case "gif"
-                视频参数 &= $"-cv Gif "
+                视频参数 &= $"-c:v gif "
                 If a.图片参数_编码器_质量值 = "1" Then 视频滤镜参数集.Add("split [a][b];[a] palettegen [p];[b][p] paletteuse=dither=floyd_steinberg")
-            Case "bmp" : 视频参数 &= $"-c: v bmp "
-            Case "libopenjpeg" : 视频参数 &= $"-c: v libopenjpeg {If(a.图片参数_编码器_质量值 <> "", "-q:v " & a.图片参数_编码器_质量值, "")} "
-            Case "jpegls" : 视频参数 &= $"-cv jpegls "
-            Case "hdr" : 视频参数 &= $"-c: v hdr "
-            Case "tiff" : 视频参数 &= $"-c: v tiff "
-            Case "dpx" : 视频参数 &= $"-c: v dpx "
-            Case "exr" : 视频参数 &= $"-c: v exr "
+            Case "bmp" : 视频参数 &= $"-c:v bmp "
+            Case "libopenjpeg" : 视频参数 &= $"-c:v libopenjpeg {If(a.图片参数_编码器_质量值 <> "", "-q:v " & a.图片参数_编码器_质量值, "")} "
+            Case "jpegls" : 视频参数 &= $"-c:v jpegls "
+            Case "hdr" : 视频参数 &= $"-c:v hdr "
+            Case "tiff" : 视频参数 &= $"-c:v tiff "
+            Case "dpx" : 视频参数 &= $"-c:v dpx "
+            Case "exr" : 视频参数 &= $"-c:v exr "
         End Select
         If a.视频参数_编码器_编码预设 <> "" Then
             Select Case a.视频参数_编码器_具体编码
@@ -690,9 +690,9 @@ Public Class 预设管理
             视频参数 &= $"-s {a.视频参数_分辨率} "
         Else
             If a.视频参数_分辨率自动计算_宽度 <> "" Then
-                视频滤镜参数集.Add($"scale={a.视频参数_分辨率自动计算_宽度}: -2")
+                视频滤镜参数集.Add($"scale={a.视频参数_分辨率自动计算_宽度}:-2")
             ElseIf a.视频参数_分辨率自动计算_高度 <> "" Then
-                视频滤镜参数集.Add($"scale=-2{a.视频参数_分辨率自动计算_高度}")
+                视频滤镜参数集.Add($"scale=-2:{a.视频参数_分辨率自动计算_高度}")
             End If
         End If
         If a.视频参数_分辨率_裁剪滤镜参数 <> "" Then 视频滤镜参数集.Add($"crop={a.视频参数_分辨率_裁剪滤镜参数}")
@@ -704,34 +704,34 @@ Public Class 预设管理
         End If
 
         If a.视频参数_插帧_目标帧率 <> "" AndAlso a.视频参数_插帧_插帧模式 <> "" Then
-            Dim s1 As String = $"minterpolate=fps={a.视频参数_插帧_目标帧率}mi_mode = {a.视频参数_插帧_插帧模式}"
+            Dim s1 As String = $"minterpolate=fps={a.视频参数_插帧_目标帧率}:mi_mode={a.视频参数_插帧_插帧模式}"
             If a.视频参数_插帧_插帧模式 = "mci" AndAlso a.视频参数_插帧_运动补偿模式 <> "" Then
-                s1 &= $"mc_mode = {a.视频参数_插帧_运动补偿模式}"
+                s1 &= $":mc_mode={a.视频参数_插帧_运动补偿模式}"
             End If
-            If a.视频参数_插帧_运动估计模式 <> "" Then s1 &= $"me_mode = {a.视频参数_插帧_运动估计模式}"
-            If a.视频参数_插帧_运动估计算法 <> "" Then s1 &= $"Me = {a.视频参数_插帧_运动估计算法}"
-            If a.视频参数_插帧_可变块大小的运动补偿 Then s1 &= $"vsbmc = 1"
-            If a.视频参数_插帧_块大小 <> "" Then s1 &= $"mb_size = {a.视频参数_插帧_块大小}"
-            If a.视频参数_插帧_搜索范围 <> "" Then s1 &= $"search_param = {a.视频参数_插帧_搜索范围}"
-            If a.视频参数_插帧_场景变化检测强度 <> "" Then s1 &= $"scd = fdiff : scd_threshold = {a.视频参数_插帧_场景变化检测强度}"
+            If a.视频参数_插帧_运动估计模式 <> "" Then s1 &= $":me_mode={a.视频参数_插帧_运动估计模式}"
+            If a.视频参数_插帧_运动估计算法 <> "" Then s1 &= $":me={a.视频参数_插帧_运动估计算法}"
+            If a.视频参数_插帧_可变块大小的运动补偿 Then s1 &= $":vsbmc=1"
+            If a.视频参数_插帧_块大小 <> "" Then s1 &= $":mb_size={a.视频参数_插帧_块大小}"
+            If a.视频参数_插帧_搜索范围 <> "" Then s1 &= $":search_param={a.视频参数_插帧_搜索范围}"
+            If a.视频参数_插帧_场景变化检测强度 <> "" Then s1 &= $":scd=fdiff:scd_threshold={a.视频参数_插帧_场景变化检测强度}"
             视频滤镜参数集.Add(s1)
         End If
 
         If a.视频参数_帧混合_混合模式 <> "" Then
             Dim s1 As String = $"tblend=all_mode={a.视频参数_帧混合_混合模式}"
-            If a.视频参数_帧混合_指定帧率 <> "" Then s1 = $"fps={a.视频参数_帧混合_指定帧率}," & s1
-            If a.视频参数_帧混合_混合比例 <> "" Then s1 &= $"all_opacity = {a.视频参数_帧混合_混合比例}"
+            If a.视频参数_帧混合_指定帧率 <> "" Then s1 = $":fps={a.视频参数_帧混合_指定帧率}," & s1
+            If a.视频参数_帧混合_混合比例 <> "" Then s1 &= $":all_opacity={a.视频参数_帧混合_混合比例}"
             视频滤镜参数集.Add(s1)
         End If
 
         If a.视频参数_超分_目标宽度 <> "" AndAlso a.视频参数_超分_目标高度 <> "" Then
-            Dim s1 As String = $"libplacebo=w={a.视频参数_超分_目标宽度}h = {a.视频参数_超分_目标高度}"
-            If a.视频参数_超分_上采样算法 <> "" Then s1 &= $"upscaler = {a.视频参数_超分_上采样算法}"
-            If a.视频参数_超分_下采样算法 <> "" Then s1 &= $"downscaler = {a.视频参数_超分_下采样算法}"
-            If a.视频参数_超分_抗振铃强度 <> "" Then s1 &= $"antiringing = {a.视频参数_超分_抗振铃强度}"
+            Dim s1 As String = $"libplacebo=w={a.视频参数_超分_目标宽度}:h={a.视频参数_超分_目标高度}"
+            If a.视频参数_超分_上采样算法 <> "" Then s1 &= $":upscaler={a.视频参数_超分_上采样算法}"
+            If a.视频参数_超分_下采样算法 <> "" Then s1 &= $":downscaler={a.视频参数_超分_下采样算法}"
+            If a.视频参数_超分_抗振铃强度 <> "" Then s1 &= $":antiringing={a.视频参数_超分_抗振铃强度}"
             For Each shader In a.视频参数_超分_着色器列表
-                s1 &= $"custom_shader_path ='{将路径转换为FFmpeg滤镜接受的格式(shader)}'"
-                Next
+                s1 &= $":custom_shader_path='{将路径转换为FFmpeg滤镜接受的格式(shader)}'"
+            Next
                 视频滤镜参数集.Add(s1)
             End If
 
@@ -1207,9 +1207,9 @@ Public Class 预设管理
                 Case 2 : 在RTF输出文本(RTF, "字幕操作：转为 mov_text 编码", Color.Silver)
             End Select
         End If
-        If a.流控制_自动混流SRT Then 在RTF输出文本(RTF, "已选择自动混流同名 SRT 字幕文件", Color.Silver)
-        If a.流控制_自动混流ASS Then 在RTF输出文本(RTF, "已选择自动混流同名 ASS 字幕文件", Color.Silver)
-        If a.流控制_自动混流SSA Then 在RTF输出文本(RTF, "已选择自动混流同名 SSA 字幕文件", Color.Silver)
+        If a.流控制_自动混流SRT Then 在RTF输出文本(RTF, "自动混流同名 SRT 字幕文件", Color.Silver)
+        If a.流控制_自动混流ASS Then 在RTF输出文本(RTF, "自动混流同名 ASS 字幕文件", Color.Silver)
+        If a.流控制_自动混流SSA Then 在RTF输出文本(RTF, "自动混流同名 SSA 字幕文件", Color.Silver)
         Select Case a.流控制_元数据选项
             Case 1 : 在RTF输出文本(RTF, "保留元数据", Color.Silver)
             Case 2 : 在RTF输出文本(RTF, "清除元数据", Color.Silver)
