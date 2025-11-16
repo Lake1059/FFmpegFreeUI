@@ -6,7 +6,7 @@
 
 **本 README 文件内容很多，请耐心看完！！**
 
-请认准官网域名：https://ffmpegfreeui.top 和 https://3fui.top<br>群友的暂用域名：https://3fui.frostlynx.work<br>三个域名都是正确的，都会解析到同一个地方
+请认准官网域名：https://ffmpegfreeui.top 和 https://3fui.top<br>2个域名都是正确的，都会解析到同一个地方
 
 哔哩哔哩宣传视频：https://www.bilibili.com/video/BV1eeH9zLED5  
 知乎终末诗的教程：https://zhuanlan.zhihu.com/p/1943079795341623993
@@ -14,7 +14,7 @@
 > 如果我的设计对你有帮助，请帮我宣传或者考虑资金支持  
 > 本文已包含各种新手内容，就看有没有心思学了
 
-![](https://img.shields.io/github/downloads/Lake1059/FFmpegFreeUI/total?label=所有文件总下载量)&nbsp;&nbsp;[![](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2F3fui.top%2Fapi%2Fgithub-downloads&label=准确数量（延迟刷新）含镜像站&query=$.totalDownloads)](https://github.com/Lake1059/FFmpegFreeUI)
+![](https://img.shields.io/github/downloads/Lake1059/FFmpegFreeUI/total?label=Github所有文件总下载量)&nbsp;&nbsp;[![](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2F3fui.top%2Fapi%2Fgithub-downloads&label=镜像站所有文件总下载量&query=$.totalDownloads)](https://github.com/Lake1059/FFmpegFreeUI)
 
 FFmpegFreeUI（简称 3FUI）是在 Windows 上的 [FFmpeg](https://ffmpeg.org) 的专业交互外壳，使用 .NET 10 运行时以纯 WinForm 框架开发，配合 SunnyUI 和自绘制打造专业高效的暗黑风格界面。目标做一款轻度专业参数调整的转码软件，让普通人能够通过图形化界面接触到较为全面的通用参数来轻松压制和转换格式。不仅如此，3FUI 具备极高的自由和扩展性，因此也适合任何深度专业人士，即便只是用上一个低消耗的进度条。
 
