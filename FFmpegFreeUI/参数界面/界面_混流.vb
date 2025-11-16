@@ -209,7 +209,7 @@
 
         插件管理.使用命令行添加任务到编码队列(arg, $"混流任务 {Now:HHmmss}", UiTextBox输出文件.Text)
         Form1.UiTabControlMenu1.SelectedTab = Form1.TabPage编码队列
-        Task.Run(AddressOf 编码任务.检查是否有可以开始的任务)
+        编码任务.检查并开始新任务的定时器.Enabled = True
 
     End Sub
 

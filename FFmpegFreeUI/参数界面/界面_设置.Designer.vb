@@ -112,6 +112,11 @@ Partial Class 界面_设置
         Panel2 = New Panel()
         UiButton前往afdian购买 = New Sunny.UI.UIButton()
         Label4 = New Label()
+        TabPage隐私设置 = New TabPage()
+        Panel14 = New Panel()
+        UiSwitch参与用户统计 = New Sunny.UI.UISwitch()
+        Label21 = New Label()
+        Label17 = New Label()
         TabPageSupporter = New TabPage()
         Label16 = New Label()
         UiTabControlMenu1.SuspendLayout()
@@ -143,6 +148,8 @@ Partial Class 界面_设置
         Panel13.SuspendLayout()
         Panel1.SuspendLayout()
         Panel2.SuspendLayout()
+        TabPage隐私设置.SuspendLayout()
+        Panel14.SuspendLayout()
         TabPageSupporter.SuspendLayout()
         SuspendLayout()
         ' 
@@ -154,6 +161,7 @@ Partial Class 界面_设置
         UiTabControlMenu1.Controls.Add(TabPage功能设定)
         UiTabControlMenu1.Controls.Add(TabPage转译运行)
         UiTabControlMenu1.Controls.Add(TabPage个性化)
+        UiTabControlMenu1.Controls.Add(TabPage隐私设置)
         UiTabControlMenu1.Controls.Add(TabPageSupporter)
         UiTabControlMenu1.Dock = DockStyle.Fill
         UiTabControlMenu1.DrawMode = TabDrawMode.OwnerDrawFixed
@@ -1695,6 +1703,72 @@ Partial Class 界面_设置
         Label4.TabIndex = 130
         Label4.Text = "购买 FFmpegFreeUI Supporter Pack 以解锁个性化设置"
         ' 
+        ' TabPage隐私设置
+        ' 
+        TabPage隐私设置.BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
+        TabPage隐私设置.Controls.Add(Panel14)
+        TabPage隐私设置.Controls.Add(Label21)
+        TabPage隐私设置.Controls.Add(Label17)
+        TabPage隐私设置.Location = New Point(201, 0)
+        TabPage隐私设置.Name = "TabPage隐私设置"
+        TabPage隐私设置.Size = New Size(700, 616)
+        TabPage隐私设置.TabIndex = 6
+        TabPage隐私设置.Text = "隐私设置"
+        ' 
+        ' Panel14
+        ' 
+        Panel14.Controls.Add(UiSwitch参与用户统计)
+        Panel14.Dock = DockStyle.Top
+        Panel14.Location = New Point(0, 99)
+        Panel14.Name = "Panel14"
+        Panel14.Padding = New Padding(20, 0, 0, 0)
+        Panel14.Size = New Size(700, 28)
+        Panel14.TabIndex = 132
+        ' 
+        ' UiSwitch参与用户统计
+        ' 
+        UiSwitch参与用户统计.Active = True
+        UiSwitch参与用户统计.ActiveColor = Color.OliveDrab
+        UiSwitch参与用户统计.ActiveText = ""
+        UiSwitch参与用户统计.ButtonColor = Color.FromArgb(CByte(224), CByte(224), CByte(224))
+        UiSwitch参与用户统计.Dock = DockStyle.Left
+        UiSwitch参与用户统计.Font = New Font("微软雅黑", 12F, FontStyle.Regular, GraphicsUnit.Point, CByte(134))
+        UiSwitch参与用户统计.ForeColor = Color.Silver
+        UiSwitch参与用户统计.InActiveColor = Color.IndianRed
+        UiSwitch参与用户统计.InActiveText = ""
+        UiSwitch参与用户统计.Location = New Point(20, 0)
+        UiSwitch参与用户统计.Margin = New Padding(19, 0, 0, 0)
+        UiSwitch参与用户统计.MinimumSize = New Size(1, 1)
+        UiSwitch参与用户统计.Name = "UiSwitch参与用户统计"
+        UiSwitch参与用户统计.Size = New Size(60, 28)
+        UiSwitch参与用户统计.Style = Sunny.UI.UIStyle.Custom
+        UiSwitch参与用户统计.TabIndex = 50
+        ' 
+        ' Label21
+        ' 
+        Label21.AutoSize = True
+        Label21.Dock = DockStyle.Top
+        Label21.Font = New Font("微软雅黑", 10F)
+        Label21.ForeColor = Color.Gray
+        Label21.Location = New Point(0, 44)
+        Label21.Name = "Label21"
+        Label21.Padding = New Padding(16, 5, 0, 10)
+        Label21.Size = New Size(403, 55)
+        Label21.TabIndex = 131
+        Label21.Text = "这可以让我知道有多少人正在使用 3FUI" & vbCrLf & "此过程不会收集任何信息，如果您有任何需求，可以随时关闭"
+        ' 
+        ' Label17
+        ' 
+        Label17.AutoSize = True
+        Label17.Dock = DockStyle.Top
+        Label17.Font = New Font("微软雅黑", 13F)
+        Label17.Location = New Point(0, 0)
+        Label17.Name = "Label17"
+        Label17.Padding = New Padding(16, 20, 0, 0)
+        Label17.Size = New Size(134, 44)
+        Label17.TabIndex = 130
+        Label17.Text = "参与用户统计"
+        ' 
         ' TabPageSupporter
         ' 
         TabPageSupporter.BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
@@ -1762,6 +1836,9 @@ Partial Class 界面_设置
         Panel1.ResumeLayout(False)
         Panel1.PerformLayout()
         Panel2.ResumeLayout(False)
+        TabPage隐私设置.ResumeLayout(False)
+        TabPage隐私设置.PerformLayout()
+        Panel14.ResumeLayout(False)
         TabPageSupporter.ResumeLayout(False)
         TabPageSupporter.PerformLayout()
         ResumeLayout(False)
@@ -1859,5 +1936,10 @@ Partial Class 界面_设置
     Friend WithEvents Label15 As Label
     Friend WithEvents TabPageSupporter As TabPage
     Friend WithEvents Label16 As Label
+    Friend WithEvents TabPage隐私设置 As TabPage
+    Friend WithEvents Label21 As Label
+    Friend WithEvents Label17 As Label
+    Friend WithEvents Panel14 As Panel
+    Friend WithEvents UiSwitch参与用户统计 As Sunny.UI.UISwitch
 
 End Class

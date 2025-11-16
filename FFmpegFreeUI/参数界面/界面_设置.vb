@@ -35,11 +35,9 @@ Public Class 界面_设置
                                                  用户设置.实例对象.个性化_起始页背景图 = a.FileName
                                              End If
                                          End Sub
+        AddHandler UiSwitch参与用户统计.Click, Sub() 用户设置.实例对象.是否参与用户统计 = Form1.设置页面.UiSwitch参与用户统计.Active
+
         调整界面()
-    End Sub
-
-    Private Sub 界面_设置_SizeChanged(sender As Object, e As EventArgs) Handles Me.SizeChanged
-
     End Sub
 
     Sub 调整界面()

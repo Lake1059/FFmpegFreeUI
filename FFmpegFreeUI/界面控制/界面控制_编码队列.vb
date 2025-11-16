@@ -5,7 +5,7 @@ Public Class 界面控制_编码队列
 
     Public Shared Sub 开始任务()
         If Form1.ListView1.SelectedItems.Count = 0 Then Exit Sub
-        If 编码任务.获取正在处理的任务数量 >= 10 Then
+        If 编码任务.队列.Where(Function(item) item.状态 = 编码任务.编码状态.正在处理).Count() >= 10 Then
             Dim 选项字典 As New Dictionary(Of String, Action)
             选项字典("了解") = Nothing
             选项字典("确认开始更多的任务") = AddressOf 真的开始任务

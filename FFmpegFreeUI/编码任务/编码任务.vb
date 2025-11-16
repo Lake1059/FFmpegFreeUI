@@ -1,9 +1,13 @@
 ﻿Imports System.IO
 Imports System.Text.RegularExpressions
-Imports Mono.Unix.Native
 Imports Sunny.UI
 
 Public Class 编码任务
+
+    Public Shared Sub 初始化()
+        AddHandler 检查并开始新任务的定时器.Tick, AddressOf 检查并开始新任务的定时器_处理过程
+    End Sub
+
     Enum 编码状态
         未处理 = 0
         正在处理 = 1
@@ -14,44 +18,39 @@ Public Class 编码任务
     End Enum
 
     Public Shared Property 队列 As New List(Of 单片任务)
-    Public Shared Sub 检查是否有可以开始的任务()
+
+    Public Shared Property 检查并开始新任务的定时器 As New Timer With {.Interval = 100, .Enabled = False}
+    Public Shared Sub 检查并开始新任务的定时器_处理过程()
         If 用户设置.实例对象.自动开始任务选项 <> 0 Then Exit Sub
-        Dim a As Integer = 获取正在处理的任务数量()
-        If a < 同时运行任务上限 Then 开始还未处理的任务(a)
-    End Sub
-    Public Shared Function 获取正在处理的任务数量() As Integer
-        Return 队列.Where(Function(item) item.状态 = 编码状态.正在处理).Count()
-    End Function
-    Public Shared Sub 开始还未处理的任务(当前正在运行的任务数量 As Integer)
-        Dim 已运行的任务数量 As Integer = 当前正在运行的任务数量
+        Dim 当前正在运行的任务数量 As Integer = 队列.Where(Function(item) item.状态 = 编码状态.正在处理).Count()
+
+        If 当前正在运行的任务数量 >= 同时运行任务上限 Then 检查并开始新任务的定时器.Enabled = False : Exit Sub
         For Each item As 单片任务 In 队列
             If item.状态 = 编码状态.未处理 Then
                 Task.Run(AddressOf item.开始)
-                已运行的任务数量 += 1
-                If 已运行的任务数量 >= 同时运行任务上限 Then Exit Sub
+                当前正在运行的任务数量 += 1
+                If 当前正在运行的任务数量 >= 同时运行任务上限 Then 检查并开始新任务的定时器.Enabled = False : Exit Sub
             End If
         Next
-        Task.Run(Sub()
-                     Try
-                         If 获取正在处理的任务数量() = 0 Then
-                             If 全部任务已完成是否有错误 Then
-                                 If 用户设置.实例对象.提示音选项 = 0 Then
-                                     Sound_Error.Position = 0
-                                     My.Computer.Audio.Play(Sound_Error, AudioPlayMode.Background)
-                                 End If
-                                 全部任务已完成是否有错误 = False
-                             Else
-                                 If 用户设置.实例对象.提示音选项 = 0 Then
-                                     Sound_Finish.Position = 0
-                                     My.Computer.Audio.Play(Sound_Finish, AudioPlayMode.Background)
-                                 End If
-                             End If
-                             恢复系统状态()
-                         End If
-                     Catch ex As Exception
-                     End Try
-                 End Sub)
+
+        If 当前正在运行的任务数量 = 0 Then
+            If 全部任务已完成是否有错误 Then
+                If 用户设置.实例对象.提示音选项 = 0 Then
+                    Sound_Error.Position = 0
+                    My.Computer.Audio.Play(Sound_Error, AudioPlayMode.Background)
+                End If
+                全部任务已完成是否有错误 = False
+            Else
+                If 用户设置.实例对象.提示音选项 = 0 Then
+                    Sound_Finish.Position = 0
+                    My.Computer.Audio.Play(Sound_Finish, AudioPlayMode.Background)
+                End If
+            End If
+        End If
+
+        检查并开始新任务的定时器.Enabled = False
     End Sub
+
     Public Shared Property 全部任务已完成是否有错误 As Boolean = False
 
     Public Shared Property 要刷新的项 As New Dictionary(Of ListViewItem, 刷新到界面数据结构)
@@ -111,11 +110,10 @@ Public Class 编码任务
         Public Property 上次刷新界面的时间戳 As TimeSpan = Now.TimeOfDay
 
         Public Sub 开始()
+            状态 = 编码状态.正在处理
             Try
                 错误列表.Clear()
                 非进度输出列表.Clear()
-                状态 = 编码状态.正在处理
-
                 If 预设数据 Is Nothing Then GoTo jx1
                 If 预设数据.视频参数_降噪_方式 = "avs" Then
                     If FileIO.FileSystem.FileExists(Path.Combine(Application.StartupPath, "AviSynth.avs")) Then
@@ -182,7 +180,6 @@ jx1:
                 状态 = 编码状态.错误
                 实时输出 = $"[3FUI] {ex.Message}"
                 错误列表.Add($"[3FUI] {ex.Message}")
-                '界面线程执行(Sub() MsgBox(ex.Message, MsgBoxStyle.Critical))
             End Try
         End Sub
 
@@ -354,15 +351,14 @@ jx1:
                             Case >= 1 : 列表视图项.SubItems(4).ForeColor = Color.IndianRed
                         End Select
                     End If
-
                 Case 编码状态.已完成
                     列表视图项.ForeColor = Color.OliveDrab
                     列表视图项.SubItems(1).Text = "已完成"
                     列表视图项.SubItems(2).Text = "100%"
                     If FileIO.FileSystem.FileExists(输入文件) And FileIO.FileSystem.FileExists(输出文件) Then
                         Dim 输出文件的大小 As Long = FileIO.FileSystem.GetFileInfo(输出文件).Length
-                        Dim sizeText As String = ""
                         Dim sizeValue As Long = 输出文件的大小 / 1024
+                        Dim sizeText As String
                         If sizeValue >= 1024 * 1024 Then
                             sizeText = $"{sizeValue / 1024.0 / 1024.0:F2} GB"
                         ElseIf sizeValue >= 1024 Then
@@ -380,8 +376,8 @@ jx1:
                     End If
                     If Not FileIO.FileSystem.FileExists(输入文件) And FileIO.FileSystem.FileExists(输出文件) Then
                         Dim 输出文件的大小 As Long = FileIO.FileSystem.GetFileInfo(输出文件).Length
-                        Dim sizeText As String = ""
                         Dim sizeValue As Long = 输出文件的大小 / 1024
+                        Dim sizeText As String
                         If sizeValue >= 1024 * 1024 Then
                             sizeText = $"{sizeValue / 1024.0 / 1024.0:F2} GB"
                         ElseIf sizeValue >= 1024 Then
@@ -404,11 +400,7 @@ jx1:
                     If elapsed.Minutes > 0 OrElse elapsedParts.Count > 0 Then elapsedParts.Add($"{elapsed.Minutes} 分")
                     elapsedParts.Add($"{elapsed.Seconds} 秒")
                     列表视图项.SubItems(7).Text = "耗时 " & String.Join(" ", elapsedParts)
-                    If Not 手动停止不要尝试启动其他任务 Then
-                        Task.Run(AddressOf 检查是否有可以开始的任务)
-                    Else
-                        手动停止不要尝试启动其他任务 = True
-                    End If
+                    If Not 手动停止不要尝试启动其他任务 Then 检查并开始新任务的定时器.Enabled = True
                 Case 编码状态.已暂停
                     列表视图项.ForeColor = Color.Goldenrod
                     列表视图项.SubItems(1).Text = "已暂停"
@@ -426,7 +418,7 @@ jx1:
                     Else
                         列表视图项.ForeColor = Color.IndianRed
                         列表视图项.SubItems(1).Text = "错误"
-                        Task.Run(AddressOf 检查是否有可以开始的任务)
+                        检查并开始新任务的定时器.Enabled = True
                     End If
             End Select
         End Sub

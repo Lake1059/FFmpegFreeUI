@@ -51,21 +51,18 @@ Public Class 界面控制_添加文件
 
         Form1.ListView2.Items.Clear()
         Form1.UiTabControlMenu1.SelectedTab = Form1.TabPage编码队列
-        Task.Run(AddressOf 编码任务.检查是否有可以开始的任务)
+        编码任务.检查并开始新任务的定时器.Enabled = True
     End Sub
 
     Public Shared Function 加入编码队列(拖入的文件 As String(), 参数面板 As 界面_常规流程参数_V2) As Boolean
         If Not 验证参数面板(参数面板, 参数面板.ParentForm) Then Return False
-
         Dim a As New 预设数据类型
         预设管理.储存预设(a, 参数面板)
         Dim 输出目录 = 参数面板.UiComboBox输出目录.Text.Trim
-
         For Each item In 拖入的文件
             添加单个任务(item, a, 输出目录, 用户设置.实例对象.转译模式)
         Next
-
-        Task.Run(AddressOf 编码任务.检查是否有可以开始的任务)
+        编码任务.检查并开始新任务的定时器.Enabled = True
         Return True
     End Function
 

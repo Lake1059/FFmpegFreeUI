@@ -256,10 +256,10 @@ Partial Class Form1
         ' 
         Panel新闻列表面板.BackColor = Color.Transparent
         Panel新闻列表面板.Dock = DockStyle.Fill
-        Panel新闻列表面板.Location = New Point(650, 54)
+        Panel新闻列表面板.Location = New Point(645, 54)
         Panel新闻列表面板.Name = "Panel新闻列表面板"
         Panel新闻列表面板.Padding = New Padding(1, 0, 20, 20)
-        Panel新闻列表面板.Size = New Size(383, 517)
+        Panel新闻列表面板.Size = New Size(388, 517)
         Panel新闻列表面板.TabIndex = 86
         ' 
         ' Label29
@@ -268,7 +268,7 @@ Partial Class Form1
         Label29.BackColor = Color.Transparent
         Label29.Dock = DockStyle.Top
         Label29.Font = New Font("微软雅黑", 13F)
-        Label29.Location = New Point(650, 0)
+        Label29.Location = New Point(645, 0)
         Label29.Name = "Label29"
         Label29.Padding = New Padding(0, 20, 0, 10)
         Label29.Size = New Size(82, 54)
@@ -290,8 +290,8 @@ Partial Class Form1
         Panel44.Font = New Font("微软雅黑", 9.75F)
         Panel44.Location = New Point(300, 0)
         Panel44.Name = "Panel44"
-        Panel44.Padding = New Padding(0, 0, 18, 0)
-        Panel44.Size = New Size(350, 571)
+        Panel44.Padding = New Padding(0, 0, 20, 0)
+        Panel44.Size = New Size(345, 571)
         Panel44.TabIndex = 0
         ' 
         ' Label35
@@ -302,7 +302,7 @@ Partial Class Form1
         Label35.Location = New Point(0, 379)
         Label35.Name = "Label35"
         Label35.Padding = New Padding(0, 5, 0, 0)
-        Label35.Size = New Size(332, 192)
+        Label35.Size = New Size(325, 192)
         Label35.TabIndex = 47
         Label35.Text = "请尽可能只在主显示器上使用；在不同缩放的显示器之间移动很容易导致 SunnyUI 出现字体过大的问题，其内部支持很有限；如果在主显示器上出现问题请直接汇报。"
         ' 
@@ -326,7 +326,7 @@ Partial Class Form1
         Label1.Location = New Point(0, 249)
         Label1.Name = "Label1"
         Label1.Padding = New Padding(0, 10, 0, 0)
-        Label1.Size = New Size(332, 81)
+        Label1.Size = New Size(325, 81)
         Label1.TabIndex = 48
         Label1.Text = "求助时请第一时间提供报错信息、任务命令行和参数总览，保持专注和成熟，不要发泄情绪，抱怨和算卦不会解决任何问题。"
         ' 
@@ -338,7 +338,7 @@ Partial Class Form1
         Label21.Location = New Point(0, 173)
         Label21.Name = "Label21"
         Label21.Padding = New Padding(0, 5, 0, 0)
-        Label21.Size = New Size(332, 76)
+        Label21.Size = New Size(325, 76)
         Label21.TabIndex = 40
         Label21.Text = "3FUI 的主要逻辑是先去参数面板设定好选项，再把文件拖进编码队列自动开始。遇到任何不懂的概念可直接问 AI，这些都是写在维基百科里的词汇。"
         ' 
@@ -362,7 +362,7 @@ Partial Class Form1
         Label126.Location = New Point(0, 49)
         Label126.Name = "Label126"
         Label126.Padding = New Padding(0, 5, 0, 0)
-        Label126.Size = New Size(332, 75)
+        Label126.Size = New Size(325, 75)
         Label126.TabIndex = 35
         Label126.Text = "即便已经是正式版，3FUI 还有大量可改进的地方和需要修复的问题，欢迎积极提出建议和提交修改，很多问题一直存在却一直没人上报。"
         ' 

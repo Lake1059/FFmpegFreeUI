@@ -22,7 +22,8 @@ Public Class 用户设置
         Public Property 自动加载预设选项 As 自动加载预设选项枚举 = 自动加载预设选项枚举.不自动加载预设
         Public Property 自动加载预设文件路径 As String = ""
         Public Property 最后的预设数据 As New 预设数据类型
-        Public Property V2Tips As Boolean = True
+        Public Property 是否参与用户统计 As Boolean = True
+        Public Property 上次回报活跃信息的日期 As Date
         Public Property 自定义视频编码器列表 As New List(Of String)
 
         Public Property 个性化_软件图标 As String = ""
@@ -83,6 +84,7 @@ Public Class 用户设置
             Form1.设置页面.UiTextBox替代进程的文件名.Text = 实例对象.替代进程文件名
             Form1.设置页面.UiTextBox覆盖参数传递.Text = 实例对象.覆盖参数传递
             Form1.设置页面.UiCheckBox转译模式.Checked = 实例对象.转译模式
+            Form1.设置页面.UiSwitch参与用户统计.Active = 实例对象.是否参与用户统计
             Form1.常规流程参数页面.UiComboBox自动加载预设选项.SelectedIndex = 实例对象.自动加载预设选项
             Form1.常规流程参数页面.UiTextBox自动加载的预设文件路径.Text = 实例对象.自动加载预设文件路径
             Select Case Form1.设置页面.UiComboBox自动开始最大任务数量.SelectedIndex

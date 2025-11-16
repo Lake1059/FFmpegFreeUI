@@ -1125,6 +1125,7 @@ Partial Class 界面_常规流程参数_V2
         ' 
         ' UiComboBox输出目录
         ' 
+        UiComboBox输出目录.AllowDrop = True
         UiComboBox输出目录.DataSource = Nothing
         UiComboBox输出目录.Dock = DockStyle.Fill
         UiComboBox输出目录.DropDownStyle = Sunny.UI.UIDropDownStyle.DropDownList

@@ -36,6 +36,7 @@ Public Class Form1
         编码队列右键菜单.重设字体()
         编码队列管理选项.重设字体()
         界面控制.界面校准()
+        编码任务.初始化()
         If DPI <> 1 Then DPI变动时校准界面()
 
         上一次窗口状态 = Me.WindowState
@@ -61,6 +62,7 @@ Public Class Form1
         回收自身内存占用()
 
         新闻列表.获取新闻()
+        用户统计.回报活跃()
     End Sub
 
     Public Sub 重新创建句柄()

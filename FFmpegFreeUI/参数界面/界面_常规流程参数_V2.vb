@@ -27,6 +27,15 @@ Public Class 界面_常规流程参数_V2
         AddHandler UiButton选择容器.MouseDown, AddressOf 选择输出容器鼠标按下事件
         AddHandler UiComboBox输出目录.SelectedIndexChanged, AddressOf 选择输出目录
         UiComboBox输出目录.SelectedIndex = 0
+        AddHandler UiComboBox输出目录.DragEnter, Sub(s, e1) e1.Effect = If(e1.Data.GetDataPresent(DataFormats.FileDrop), DragDropEffects.Copy, DragDropEffects.None)
+        AddHandler UiComboBox输出目录.DragDrop, Sub(s, e1)
+                                                Dim F As String = e1.Data.GetData(DataFormats.FileDrop)(0)
+                                                If FileIO.FileSystem.DirectoryExists(F) Then
+                                                    UiComboBox输出目录.Text = "  " & F
+                                                ElseIf FileIO.FileSystem.FileExists(F) Then
+                                                    UiComboBox输出目录.Text = "  " & Path.GetDirectoryName(F)
+                                                End If
+                                            End Sub
         '==============================================
         AddHandler UiComboBox编码类别.SelectedIndexChanged, AddressOf 视频编码类别改动事件
         AddHandler UiComboBox具体编码.SelectedIndexChanged, AddressOf 视频具体编码改动事件
