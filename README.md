@@ -14,7 +14,7 @@
 > 如果我的设计对你有帮助，请帮我宣传或者考虑资金支持  
 > 本文已包含各种新手内容，就看有没有心思学了
 
-![](https://img.shields.io/github/downloads/Lake1059/FFmpegFreeUI/total?label=Github所有文件总下载量)&nbsp;&nbsp;[![](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2F3fui.top%2Fapi%2Fgithub-downloads&label=镜像站所有文件总下载量&query=$.totalDownloads)](https://github.com/Lake1059/FFmpegFreeUI)
+![](https://img.shields.io/github/downloads/Lake1059/FFmpegFreeUI/total?label=Github%20所有文件总下载量)&nbsp;&nbsp;[![](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2F3fui.top%2Fapi%2Fgithub-downloads&label=镜像站所有文件总下载量&query=$.totalDownloads)](https://github.com/Lake1059/FFmpegFreeUI)
 
 FFmpegFreeUI（简称 3FUI）是在 Windows 上的 [FFmpeg](https://ffmpeg.org) 的专业交互外壳，使用 .NET 10 运行时以纯 WinForm 框架开发，配合 SunnyUI 和自绘制打造专业高效的暗黑风格界面。目标做一款轻度专业参数调整的转码软件，让普通人能够通过图形化界面接触到较为全面的通用参数来轻松压制和转换格式。不仅如此，3FUI 具备极高的自由和扩展性，因此也适合任何深度专业人士，即便只是用上一个低消耗的进度条。
 
@@ -126,7 +126,8 @@ PluginExample 是我做的示例插件；在程序目录下创建 Plugin 文件�
 
 - 性能监控里显卡的占用只要有显示就说明那个核心在工作，0% 是占用太小四舍五入没了，不是没在干活，没干活的核心会自动移除显示。
 - 开始任务有延迟是正常的，这部分代码是交给后台线程的，状态已经改变了只是没有刷新到界面上，当然你点了多次开始也不会出事，写了判断的。
-- 不要同时一次性开始太多任务，如果加上任务完成得太快，有概率导致任务已经结束了而我代码还没绑定输出重定向，这会引发连锁反应炸掉 3FUI。
+- ~~不要同时一次性开始太多任务，如果加上任务完成得太快，有概率导致任务已经结束了而我代码还没绑定输出重定向，这会引发连锁反应炸掉 3FUI。~~
+  - 划掉，从 3.3 版本开始，随便开，炸了算我输（已经在连续两万五千个文件自动开10个任务的暴力测试中成功存活）
 - 启动时有个 sys 的驱动文件生成？应该是性能监控的库要用的，反正我代码里没这玩意，正常情况下应该生成出来后就自动删除了，没自动删除我也不清楚怎么回事。什么你说担心安全问题？都是开源组件你觉得能干什么坏事。
 - 如果电脑没有插显示器，请设置阻止显示器关闭来防止进度刷新卡住，系统睡了会把 GDI+ 绘制消息泵睡死导致重新亮屏后无法更新进度了，只能重启软件，但是 Windows 又不允许重连进程，你说气不气人。
   - 如果插了显示器发现息屏后也卡了，那也设置阻止显示器关闭，睡觉或离开直接关显示器电源
