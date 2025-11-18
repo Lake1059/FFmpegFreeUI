@@ -275,4 +275,41 @@ Public Class 界面控制_编码队列
         End SyncLock
     End Sub
 
+    Public Shared Sub 置顶已有的错误任务()
+
+        SyncLock 编码任务.队列
+            ' 收集队列中错误项的索引
+            Dim indices As New List(Of Integer)
+            For Each item As ListViewItem In Form1.ListView1.Items
+                Select Case 编码任务.队列(item.Index).状态
+                    Case 编码任务.编码状态.错误
+                        indices.Add(item.Index)
+                End Select
+
+            Next
+
+            If indices.Count > 0 Then
+                indices.Sort()
+                ' 从前向后处理，避免影响后续索引
+                For Each i In indices
+                    If i > 0 Then
+                        ' 删除第i项，将该项插入到第0项
+                        Dim temp = 编码任务.队列(i)
+                        编码任务.队列.RemoveAt(i)
+                        编码任务.队列.Insert(0, temp)
+
+                        Dim item1 = Form1.ListView1.Items(i)
+                        Form1.ListView1.Items.RemoveAt(i)
+                        Form1.ListView1.Items.Insert(0, item1)
+
+                        '将列表视图项与ListView1对其
+                        For a As Integer = 0 To i
+                            编码任务.队列(a).列表视图项 = Form1.ListView1.Items(a)
+                        Next
+                    End If
+                Next
+            End If
+
+        End SyncLock
+    End Sub
 End Class
