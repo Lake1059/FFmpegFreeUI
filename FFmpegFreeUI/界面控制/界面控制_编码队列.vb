@@ -276,7 +276,7 @@ Public Class 界面控制_编码队列
     End Sub
 
     Public Shared Sub 置顶已有的错误任务()
-        If Form1.ListView1.SelectedItems.Count = 0 Then Exit Sub
+        'If Form1.ListView1.SelectedItems.Count = 0 Then Exit Sub
 
         SyncLock 编码任务.队列
             ' 收集选中项的索引并排序
@@ -288,28 +288,31 @@ Public Class 界面控制_编码队列
                 End Select
 
             Next
-            indices.Sort()
 
-            ' 从前向后处理，避免影响后续索引
-            For Each i In indices
-                If i > 0 Then
-                    ' 交换队列中的任务对象
-                    Dim temp = 编码任务.队列(i)
-                    编码任务.队列.RemoveAt(i)
-                    编码任务.队列.Insert(0, temp)
+            If indices.Count > 0 Then
+                indices.Sort()
+                ' 从前向后处理，避免影响后续索引
+                For Each i In indices
+                    If i > 0 Then
+                        ' 交换队列中的任务对象
+                        Dim temp = 编码任务.队列(i)
+                        编码任务.队列.RemoveAt(i)
+                        编码任务.队列.Insert(0, temp)
 
-                    ' 交换 ListView 中的项
-                    Dim item1 = Form1.ListView1.Items(i)
+                        ' 交换 ListView 中的项
+                        Dim item1 = Form1.ListView1.Items(i)
 
-                    ' 移除并重新插入以交换位置
-                    Form1.ListView1.Items.RemoveAt(i)
-                    Form1.ListView1.Items.Insert(0, item1)
+                        ' 移除并重新插入以交换位置
+                        Form1.ListView1.Items.RemoveAt(i)
+                        Form1.ListView1.Items.Insert(0, item1)
 
-                    For a As Integer = 0 To i
-                        编码任务.队列(a).列表视图项 = Form1.ListView1.Items(a)
-                    Next
-                End If
-            Next
+                        For a As Integer = 0 To i
+                            编码任务.队列(a).列表视图项 = Form1.ListView1.Items(a)
+                        Next
+                    End If
+                Next
+            End If
+
         End SyncLock
     End Sub
 End Class
