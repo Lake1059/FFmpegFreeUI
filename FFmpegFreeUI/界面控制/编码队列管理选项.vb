@@ -21,6 +21,7 @@
                  New ToolStripMenuItem("全选", Nothing, AddressOf 界面控制_编码队列.全选任务),
                  New ToolStripMenuItem("反选", Nothing, AddressOf 界面控制_编码队列.反选任务),
                  New ToolStripMenuItem("选中所有出错的任务并定位首个", Nothing, AddressOf 界面控制_编码队列.选中所有出错的任务),
+                 New ToolStripMenuItem("置顶所有已有的出错任务", Nothing, AddressOf 界面控制_编码队列.置顶已有的错误任务),
                  New ToolStripMenuItem("定位首个选中", Nothing, Sub() If Form1.ListView1.SelectedItems.Count > 0 Then Form1.ListView1.EnsureVisible(Form1.ListView1.SelectedItems(0).Index)),
                  New ToolStripSeparator(),
                  New ToolStripMenuItem("教学内容") With {.ForeColor = Color.CornflowerBlue, .Enabled = False},
