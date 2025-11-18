@@ -293,7 +293,7 @@ Public Class 界面控制_编码队列
                 ' 从前向后处理，避免影响后续索引
                 For Each i In indices
                     If i > 0 Then
-                        ' 删除第i项，将改项插入到第0项
+                        ' 删除第i项，将该项插入到第0项
                         Dim temp = 编码任务.队列(i)
                         编码任务.队列.RemoveAt(i)
                         编码任务.队列.Insert(0, temp)
