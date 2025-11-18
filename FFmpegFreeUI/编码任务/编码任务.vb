@@ -63,21 +63,24 @@ Public Class 编码任务
         Public Property 时间 As String = ""
     End Class
     Public Shared Sub 用定时器刷新到界面上()
-        On Error Resume Next
-        If 队列.Count = 0 Then Exit Sub
-        Dim 要刷新的项副本 As New Dictionary(Of ListViewItem, 刷新到界面数据结构)(要刷新的项)
-        SyncLock 要刷新的项
-            If 要刷新的项.Count = 0 Then Exit Sub
-            要刷新的项.Clear()
-        End SyncLock
-        For Each item As ListViewItem In 要刷新的项副本.Keys
-            item.SubItems(2).Text = 要刷新的项副本(item).进度
-            item.SubItems(3).Text = 要刷新的项副本(item).效率
-            item.SubItems(4).Text = 要刷新的项副本(item).输出大小
-            item.SubItems(5).Text = 要刷新的项副本(item).质量
-            item.SubItems(6).Text = 要刷新的项副本(item).比特率
-            item.SubItems(7).Text = 要刷新的项副本(item).时间
-        Next
+        Try
+            If 队列.Count = 0 Then Exit Sub
+            Dim 要刷新的项副本 As New Dictionary(Of ListViewItem, 刷新到界面数据结构)(要刷新的项)
+            SyncLock 要刷新的项
+                If 要刷新的项.Count = 0 Then Exit Sub
+                要刷新的项.Clear()
+            End SyncLock
+            For Each item As ListViewItem In 要刷新的项副本.Keys
+                item.SubItems(2).Text = 要刷新的项副本(item).进度
+                item.SubItems(3).Text = 要刷新的项副本(item).效率
+                item.SubItems(4).Text = 要刷新的项副本(item).输出大小
+                item.SubItems(5).Text = 要刷新的项副本(item).质量
+                item.SubItems(6).Text = 要刷新的项副本(item).比特率
+                item.SubItems(7).Text = 要刷新的项副本(item).时间
+            Next
+        Catch ex As Exception
+
+        End Try
     End Sub
 
     Public Class 单片任务
@@ -158,6 +161,8 @@ jx1:
                 FFmpegProcess.StartInfo.RedirectStandardError = True
                 FFmpegProcess.StartInfo.StandardOutputEncoding = Text.Encoding.UTF8
                 FFmpegProcess.StartInfo.StandardErrorEncoding = Text.Encoding.UTF8
+                FFmpegProcess.StartInfo.RedirectStandardInput = True
+                FFmpegProcess.StartInfo.StandardInputEncoding = Text.Encoding.UTF8
                 FFmpegProcess.StartInfo.CreateNoWindow = True
                 FFmpegProcess.EnableRaisingEvents = True
                 AddHandler FFmpegProcess.OutputDataReceived, AddressOf FFmpegOutputHandler
@@ -168,16 +173,12 @@ jx1:
                 FFmpegProcess.BeginOutputReadLine()
                 FFmpegProcess.BeginErrorReadLine()
 
-                If 用户设置.实例对象.指定处理器核心 <> "" Then
-                    Dim coreList() As Integer = 用户设置.实例对象.指定处理器核心.Split(","c).Select(Function(s) s.Trim()).Where(Function(s) Integer.TryParse(s, Nothing)).Select(Function(s) Integer.Parse(s)).ToArray()
-                    FFmpegProcess.ProcessorAffinity = GetAffinityMask(coreList)
-                End If
+                If 用户设置.实例对象.指定处理器核心 <> "" Then FFmpegProcess.ProcessorAffinity = GetAffinityMask(用户设置.实例对象.指定处理器核心.Split(","c).Select(Function(s) s.Trim()).Where(Function(s) Integer.TryParse(s, Nothing)).Select(Function(s) Integer.Parse(s)).ToArray())
 
                 设定系统状态()
                 任务耗时计时器.Start()
 
             Catch ex As Exception
-                状态 = 编码状态.错误
                 实时输出 = $"[3FUI] {ex.Message}"
                 错误列表.Add($"[3FUI] {ex.Message}")
             End Try
@@ -322,7 +323,8 @@ jx1:
                     Select Case Path.GetExtension(输出文件).ToLower.Trim
                         Case ".mp4"
                             If 输出文件.Trim.Equals(输入文件.Trim, StringComparison.CurrentCultureIgnoreCase) Then
-                                界面线程执行(Sub() MsgBox("你在干什么？！输出文件等于输入文件？", MsgBoxStyle.Critical))
+                                实时输出 = $"[3FUI] 你在干什么？！输出文件等于输入文件？"
+                                错误列表.Add($"[3FUI] 你在干什么？！输出文件等于输入文件？")
                             Else
                                 FileIO.FileSystem.DeleteFile(输出文件, FileIO.UIOption.OnlyErrorDialogs, FileIO.RecycleOption.SendToRecycleBin)
                             End If

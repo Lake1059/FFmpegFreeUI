@@ -83,11 +83,6 @@ Public Class Form1
         End If
     End Sub
 
-    'Private Sub Form1_Move(sender As Object, e As EventArgs) Handles Me.Move
-    '    If 是否初始化 = False Then Exit Sub
-    '    界面控制.界面校准()
-    'End Sub
-
     Sub DPI变动时校准界面()
         Me.MinimumSize = New Size(0, 0)
         Me.Size = New Size(1200 * DPI, 700 * DPI)
@@ -134,8 +129,16 @@ Public Class Form1
     End Sub
     Private Sub ListView1_KeyDown(sender As Object, e As KeyEventArgs) Handles ListView1.KeyDown
         Select Case e.KeyCode
-            Case Keys.A : If e.Control Then 界面控制_编码队列.全选任务()
+            Case Keys.Enter : 界面控制_编码队列.开始任务()
+            Case Keys.Space : 界面控制_编码队列.暂停任务()
+            Case Keys.A
+                If e.Control Then 界面控制_编码队列.全选任务()
+                If e.Alt Then 界面控制_编码队列.反选任务()
             Case Keys.Delete : 界面控制_编码队列.移除任务()
+            Case Keys.Escape : 界面控制_编码队列.重置任务()
+            Case Keys.End : 界面控制_编码队列.停止任务()
+            Case Keys.F3 : 界面控制_编码队列.上移任务()
+            Case Keys.F4 : 界面控制_编码队列.下移任务()
         End Select
     End Sub
     Private Sub ListView1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ListView1.SelectedIndexChanged

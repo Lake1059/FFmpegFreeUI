@@ -434,6 +434,8 @@ Partial Class 界面_常规流程参数_V2
         UiButton刷新预设列表 = New Sunny.UI.UIButton()
         Label123 = New Label()
         Label124 = New Label()
+        Label170 = New Label()
+        Label172 = New Label()
         UiTabControlMenu1.SuspendLayout()
         TabPage参数总览.SuspendLayout()
         Panel74.SuspendLayout()
@@ -2138,7 +2140,10 @@ Partial Class 界面_常规流程参数_V2
         ' 
         ' TabPage视频参数画面帧
         ' 
+        TabPage视频参数画面帧.AutoScroll = True
         TabPage视频参数画面帧.BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
+        TabPage视频参数画面帧.Controls.Add(Label172)
+        TabPage视频参数画面帧.Controls.Add(Label170)
         TabPage视频参数画面帧.Controls.Add(Panel23)
         TabPage视频参数画面帧.Controls.Add(Label37)
         TabPage视频参数画面帧.Controls.Add(Label38)
@@ -5272,12 +5277,12 @@ Partial Class 界面_常规流程参数_V2
         Label15.AutoSize = True
         Label15.Dock = DockStyle.Bottom
         Label15.Font = New Font("微软雅黑", 13F)
-        Label15.Location = New Point(0, 482)
+        Label15.Location = New Point(0, 462)
         Label15.Name = "Label15"
         Label15.Padding = New Padding(16, 0, 0, 10)
-        Label15.Size = New Size(169, 34)
+        Label15.Size = New Size(228, 34)
         Label15.TabIndex = 20
-        Label15.Text = "已从列表移除 avif"
+        Label15.Text = "如何编码 avif 超高压缩图"
         ' 
         ' Label154
         ' 
@@ -5285,12 +5290,12 @@ Partial Class 界面_常规流程参数_V2
         Label154.Dock = DockStyle.Bottom
         Label154.Font = New Font("微软雅黑", 10F)
         Label154.ForeColor = Color.Gray
-        Label154.Location = New Point(0, 516)
+        Label154.Location = New Point(0, 496)
         Label154.Name = "Label154"
         Label154.Padding = New Padding(16, 0, 0, 20)
-        Label154.Size = New Size(508, 60)
+        Label154.Size = New Size(637, 80)
         Label154.TabIndex = 21
-        Label154.Text = "强烈不推荐将 avif 用于生产环境，因为无法从 ffmpeg 关闭它的细节涂抹" & vbCrLf & "如何使用：视频编码 libaom-av1 输出到 .avif 文件，预设和质量正常设定即可"
+        Label154.Text = "友情提醒：不要把你的珍贵回忆存成 avif ，因为 AV1 的细节涂抹问题，重要文件请优先考虑 webp" & vbCrLf & "使用视频编码 libaom-av1 或者 libsvtav1 输出到 .avif 文件，预设和质量正常设定即可" & vbCrLf & "推荐用 libsvtav1，其涂抹相比前者更易接受，当 crf=12 时很难看出，建议进一步提升到 10"
         ' 
         ' Label161
         ' 
@@ -5300,9 +5305,9 @@ Partial Class 界面_常规流程参数_V2
         Label161.Location = New Point(0, 576)
         Label161.Name = "Label161"
         Label161.Padding = New Padding(16, 0, 0, 10)
-        Label161.Size = New Size(241, 34)
+        Label161.Size = New Size(238, 34)
         Label161.TabIndex = 22
-        Label161.Text = "ffmpeg 不支持 HEIC/HEIF"
+        Label161.Text = "ffmpeg 不支持 heic / heif"
         ' 
         ' Label162
         ' 
@@ -5313,9 +5318,9 @@ Partial Class 界面_常规流程参数_V2
         Label162.Location = New Point(0, 610)
         Label162.Name = "Label162"
         Label162.Padding = New Padding(16, 0, 0, 20)
-        Label162.Size = New Size(417, 40)
+        Label162.Size = New Size(375, 40)
         Label162.TabIndex = 23
-        Label162.Text = "如果想要批量转到此格式，建议找三方软件或单独开发这个需求"
+        Label162.Text = "如果想要编码此格式，请找其他软件或单独开发这个需求"
         ' 
         ' Panel67
         ' 
@@ -7560,6 +7565,31 @@ Partial Class 界面_常规流程参数_V2
         Label124.TabIndex = 29
         Label124.Text = "预设管理"
         ' 
+        ' Label170
+        ' 
+        Label170.AutoSize = True
+        Label170.Dock = DockStyle.Top
+        Label170.Font = New Font("微软雅黑", 13F)
+        Label170.Location = New Point(0, 456)
+        Label170.Name = "Label170"
+        Label170.Padding = New Padding(16, 20, 0, 0)
+        Label170.Size = New Size(98, 44)
+        Label170.TabIndex = 23
+        Label170.Text = "烧录字幕"
+        ' 
+        ' Label172
+        ' 
+        Label172.AutoSize = True
+        Label172.Dock = DockStyle.Top
+        Label172.Font = New Font("微软雅黑", 10F)
+        Label172.ForeColor = Color.Gray
+        Label172.Location = New Point(0, 500)
+        Label172.Name = "Label172"
+        Label172.Padding = New Padding(16, 5, 0, 0)
+        Label172.Size = New Size(81, 25)
+        Label172.TabIndex = 24
+        Label172.Text = "敬请期待"
+        ' 
         ' 界面_常规流程参数_V2
         ' 
         AutoScaleDimensions = New SizeF(96F, 96F)
@@ -8116,5 +8146,7 @@ Partial Class 界面_常规流程参数_V2
     Friend WithEvents UiTextBox使用哪些文件的哪些内嵌字幕 As Sunny.UI.UITextBox
     Friend WithEvents Label166 As Label
     Friend WithEvents Label169 As Label
+    Friend WithEvents Label172 As Label
+    Friend WithEvents Label170 As Label
 
 End Class

@@ -84,6 +84,15 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  查找类似  的本地化字符串。
+        '''</summary>
+        Friend Shared ReadOnly Property 编码队列快捷键() As String
+            Get
+                Return ResourceManager.GetString("编码队列快捷键", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  查找类似于 System.IO.MemoryStream 的 System.IO.UnmanagedMemoryStream 类型的本地化资源。
         '''</summary>
         Friend Shared ReadOnly Property 错误() As System.IO.UnmanagedMemoryStream

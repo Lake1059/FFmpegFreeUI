@@ -12,14 +12,19 @@
                  New ToolStripSeparator() With {.Tag = "null"},
                  New ToolStripMenuItem("任务数据管理") With {.ForeColor = Color.CornflowerBlue, .Enabled = False},
                  New ToolStripMenuItem("(可多选) 复制任务的命令行（每行一个）", Nothing, AddressOf 界面控制_编码队列.复制多个任务的命令行),
-                 New ToolStripMenuItem("(可多选) 将参数面板数据覆盖到任务", Nothing, AddressOf 界面控制_编码队列.将参数面板数据覆盖到任务),
-                 New ToolStripMenuItem("(仅单选) 将任务参数覆盖到参数面板", Nothing, AddressOf 界面控制_编码队列.将任务参数覆盖到参数面板),
-                 New ToolStripMenuItem("(可多选) 将任务放到添加文件选项卡", Nothing, AddressOf 界面控制_编码队列.将任务放到添加文件选项卡),
-                 New ToolStripMenuItem("(仅单选) 导出任务参数数据到预设文件", Nothing, AddressOf 界面控制_编码队列.导出任务参数数据到预设文件),
+                 New ToolStripMenuItem("(可多选) 将参数面板数据  -->  覆盖到任务", Nothing, AddressOf 界面控制_编码队列.将参数面板数据覆盖到任务),
+                 New ToolStripMenuItem("(仅单选) 将任务参数  -->  覆盖到参数面板", Nothing, AddressOf 界面控制_编码队列.将任务参数覆盖到参数面板),
+                 New ToolStripMenuItem("(可多选) 将任务  -->  放到添加文件选项卡", Nothing, AddressOf 界面控制_编码队列.将任务放到添加文件选项卡),
+                 New ToolStripMenuItem("(仅单选) 导出任务参数数据  -->  到预设文件", Nothing, AddressOf 界面控制_编码队列.导出任务参数数据到预设文件),
                  New ToolStripSeparator(),
                  New ToolStripMenuItem("任务数量管理") With {.ForeColor = Color.CornflowerBlue, .Enabled = False},
                  New ToolStripMenuItem("全选", Nothing, AddressOf 界面控制_编码队列.全选任务),
                  New ToolStripMenuItem("反选", Nothing, AddressOf 界面控制_编码队列.反选任务),
+                 New ToolStripMenuItem("选中所有出错的任务并定位首个", Nothing, AddressOf 界面控制_编码队列.选中所有出错的任务),
+                 New ToolStripMenuItem("定位首个选中", Nothing, Sub() If Form1.ListView1.SelectedItems.Count > 0 Then Form1.ListView1.EnsureVisible(Form1.ListView1.SelectedItems(0).Index)),
+                 New ToolStripSeparator(),
+                 New ToolStripMenuItem("教学内容") With {.ForeColor = Color.CornflowerBlue, .Enabled = False},
+                 New ToolStripMenuItem("查看快捷键", Nothing, Sub() 软件内对话框.显示对话框(Form1, "快捷键", My.Resources.Resource1.编码队列快捷键, New Dictionary(Of String, Action) From {{"了解", Nothing}}, 软件内对话框.主题类型.放行,, 0.3)),
                  New ToolStripSeparator() With {.Tag = "null"}})
     End Sub
 

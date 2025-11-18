@@ -96,6 +96,16 @@ Public Class 界面控制_编码队列
         Next
     End Sub
 
+    Public Shared Sub 选中所有出错的任务()
+        For Each item As ListViewItem In Form1.ListView1.Items
+            Select Case 编码任务.队列(item.Index).状态
+                Case 编码任务.编码状态.错误 : item.Selected = True
+                Case Else : item.Selected = False
+            End Select
+        Next
+        If Form1.ListView1.SelectedItems.Count > 0 Then Form1.ListView1.EnsureVisible(Form1.ListView1.SelectedItems(0).Index)
+    End Sub
+
     Public Shared Sub 定位输出()
         If Form1.ListView1.SelectedItems.Count <> 1 Then Exit Sub
         Dim 输出文件 = 编码任务.队列(Form1.ListView1.SelectedItems(0).Index).输出文件
@@ -172,6 +182,97 @@ Public Class 界面控制_编码队列
         d.ShowDialog(Form1)
         If d.FileName = "" Then Exit Sub
         File.WriteAllText(d.FileName, JsonSerializer.Serialize(编码任务.队列(Form1.ListView1.SelectedItems(0).Index).预设数据, JsonSO))
+    End Sub
+
+    Public Shared Sub 上移任务()
+        If Form1.ListView1.SelectedItems.Count = 0 Then Exit Sub
+
+        SyncLock 编码任务.队列
+            ' 收集选中项的索引并排序
+            Dim indices As New List(Of Integer)
+            For Each item As ListViewItem In Form1.ListView1.SelectedItems
+                indices.Add(item.Index)
+            Next
+            indices.Sort()
+
+            ' 从前向后处理，避免影响后续索引
+            For Each i In indices
+                If i > 0 Then
+                    ' 交换队列中的任务对象
+                    Dim temp = 编码任务.队列(i - 1)
+                    编码任务.队列(i - 1) = 编码任务.队列(i)
+                    编码任务.队列(i) = temp
+
+                    ' 交换 ListView 中的项
+                    Dim item1 = Form1.ListView1.Items(i - 1)
+                    Dim item2 = Form1.ListView1.Items(i)
+
+                    ' 保存选中状态
+                    Dim wasSelected1 = item1.Selected
+                    Dim wasSelected2 = item2.Selected
+
+                    ' 移除并重新插入以交换位置
+                    Form1.ListView1.Items.RemoveAt(i)
+                    Form1.ListView1.Items.RemoveAt(i - 1)
+                    Form1.ListView1.Items.Insert(i - 1, item2)
+                    Form1.ListView1.Items.Insert(i, item1)
+
+                    ' 恢复选中状态
+                    Form1.ListView1.Items(i - 1).Selected = wasSelected2
+                    Form1.ListView1.Items(i).Selected = wasSelected1
+
+                    ' 更新任务对象中的列表视图项引用
+                    编码任务.队列(i - 1).列表视图项 = Form1.ListView1.Items(i - 1)
+                    编码任务.队列(i).列表视图项 = Form1.ListView1.Items(i)
+                End If
+            Next
+        End SyncLock
+    End Sub
+
+    Public Shared Sub 下移任务()
+        If Form1.ListView1.SelectedItems.Count = 0 Then Exit Sub
+
+        SyncLock 编码任务.队列
+            ' 收集选中项的索引并排序（降序，从后向前处理）
+            Dim indices As New List(Of Integer)
+            For Each item As ListViewItem In Form1.ListView1.SelectedItems
+                indices.Add(item.Index)
+            Next
+            indices.Sort()
+            indices.Reverse()
+
+            ' 从后向前处理，避免影响前面的索引
+            For Each i In indices
+                If i < 编码任务.队列.Count - 1 Then
+                    ' 交换队列中的任务对象
+                    Dim temp = 编码任务.队列(i + 1)
+                    编码任务.队列(i + 1) = 编码任务.队列(i)
+                    编码任务.队列(i) = temp
+
+                    ' 交换 ListView 中的项
+                    Dim item1 = Form1.ListView1.Items(i)
+                    Dim item2 = Form1.ListView1.Items(i + 1)
+
+                    ' 保存选中状态
+                    Dim wasSelected1 = item1.Selected
+                    Dim wasSelected2 = item2.Selected
+
+                    ' 移除并重新插入以交换位置
+                    Form1.ListView1.Items.RemoveAt(i + 1)
+                    Form1.ListView1.Items.RemoveAt(i)
+                    Form1.ListView1.Items.Insert(i, item2)
+                    Form1.ListView1.Items.Insert(i + 1, item1)
+
+                    ' 恢复选中状态
+                    Form1.ListView1.Items(i).Selected = wasSelected2
+                    Form1.ListView1.Items(i + 1).Selected = wasSelected1
+
+                    ' 更新任务对象中的列表视图项引用
+                    编码任务.队列(i).列表视图项 = Form1.ListView1.Items(i)
+                    编码任务.队列(i + 1).列表视图项 = Form1.ListView1.Items(i + 1)
+                End If
+            Next
+        End SyncLock
     End Sub
 
 End Class
