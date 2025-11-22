@@ -8,6 +8,9 @@
 
 请认准官网域名：https://ffmpegfreeui.top 和 https://3fui.top<br>2个域名都是正确的，都会解析到同一个地方
 
+主群：1050613952  
+分群①：1070953324
+
 哔哩哔哩宣传视频：https://www.bilibili.com/video/BV1eeH9zLED5  
 知乎终末诗的教程：https://zhuanlan.zhihu.com/p/1943079795341623993
 

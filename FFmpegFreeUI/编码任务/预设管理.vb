@@ -3,6 +3,7 @@ Imports Sunny.UI
 Public Class 预设管理
     Public Shared Sub 显示预设(a As 预设数据类型, ui As 界面_常规流程参数_V2)
         ui.UiTextBox输出容器.Text = a.输出容器
+
         If a.计算机名称 = Environment.MachineName AndAlso FileIO.FileSystem.DirectoryExists(a.输出位置) Then
             ui.UiComboBox输出目录.Text = "  " & a.输出位置
         Else
@@ -719,7 +720,7 @@ Public Class 预设管理
 
         If a.视频参数_帧混合_混合模式 <> "" Then
             Dim s1 As String = $"tblend=all_mode={a.视频参数_帧混合_混合模式}"
-            If a.视频参数_帧混合_指定帧率 <> "" Then s1 = $":fps={a.视频参数_帧混合_指定帧率}," & s1
+            If a.视频参数_帧混合_指定帧率 <> "" Then s1 = $"fps={a.视频参数_帧混合_指定帧率}," & s1
             If a.视频参数_帧混合_混合比例 <> "" Then s1 &= $":all_opacity={a.视频参数_帧混合_混合比例}"
             视频滤镜参数集.Add(s1)
         End If
@@ -1113,7 +1114,22 @@ Public Class 预设管理
         If a.视频参数_超分_着色器列表.Count > 0 Then 在RTF输出文本(RTF, $"超分正在使用 {a.视频参数_超分_着色器列表.Count} 个自定义着色器", Color.Silver)
 
         '---------------- 码率 / 质量控制 ----------------
-        If a.视频参数_质量控制_参数名 <> "" Then 在RTF输出文本(RTF, "质量控制参数：" & a.视频参数_质量控制_参数名 & " = " & a.视频参数_质量控制_值, Color.Silver)
+        If a.视频参数_比特率_控制方式 <> "" Then
+            Select Case a.视频参数_比特率_控制方式
+                Case "CRF" : 在RTF输出文本(RTF, "质量/比特率控制方法：CRF", Color.Silver)
+                Case "VBR" : 在RTF输出文本(RTF, "质量/比特率控制方法：VBR", Color.Silver)
+                Case "VBR HQ" : 在RTF输出文本(RTF, "质量/比特率控制方法：VBR HQ", Color.Silver)
+                Case "CQP" : 在RTF输出文本(RTF, "质量/比特率控制方法：CQP", Color.Silver)
+                Case "CBR" : 在RTF输出文本(RTF, "质量/比特率控制方法：CBR", Color.Silver)
+            End Select
+        End If
+        If a.视频参数_质量控制_参数名 <> "" Then
+            If a.视频参数_质量控制_值 <> "" Then
+                在RTF输出文本(RTF, "质量控制参数：" & a.视频参数_质量控制_参数名 & " = " & a.视频参数_质量控制_值, Color.Silver)
+            Else
+                在RTF输出文本(RTF, "全局质量控制选了参数名但是没有写值，要出事！", Color.IndianRed)
+            End If
+        End If
         If a.视频参数_比特率_基础 <> "" Then 在RTF输出文本(RTF, "基础码率：" & a.视频参数_比特率_基础, Color.Silver)
         If a.视频参数_比特率_最低值 <> "" Then 在RTF输出文本(RTF, "最低码率：" & a.视频参数_比特率_最低值, Color.Silver)
         If a.视频参数_比特率_最高值 <> "" Then 在RTF输出文本(RTF, "最高码率：" & a.视频参数_比特率_最高值, Color.Silver)

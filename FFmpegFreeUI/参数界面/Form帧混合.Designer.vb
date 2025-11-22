@@ -358,7 +358,7 @@ Partial Class Form帧混合
         ShowIcon = False
         ShowInTaskbar = False
         StartPosition = FormStartPosition.Manual
-        Text = "tblend 滤镜参数"
+        Text = "tblend 动态模糊"
         Panel73.ResumeLayout(False)
         Panel73.PerformLayout()
         Panel8.ResumeLayout(False)
