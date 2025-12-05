@@ -1,4 +1,6 @@
-官网：https://ffmpegfreeui.top 和 https://3fui.top<br>主群 [1050613952](https://qm.qq.com/q/fiauAsddG8) 分群① [1070953324](https://qm.qq.com/q/nKoapm6KyW) 频道 [3fui10590000](https://pd.qq.com/s/9emex878m?b=5) KOOK [稻草的工坊](https://kook.vip/1nLQNk)<br>![](https://img.shields.io/github/stars/Lake1059/FFmpegFreeUI?label=星标)![GitHub License](https://img.shields.io/github/license/Lake1059/FFmpegFreeUI?label=许可证)![GitHub repo size](https://img.shields.io/github/repo-size/Lake1059/FFmpegFreeUI?label=仓库大小)![](https://img.shields.io/github/downloads/Lake1059/FFmpegFreeUI/total?label=Github%20总下载量)![](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2F3fui.top%2Fapi%2Fgithub-downloads&label=镜像站总下载量&query=$.totalDownloads)
+官网：https://ffmpegfreeui.top 和 https://3fui.top<br>主群 [1050613952](https://qm.qq.com/q/fiauAsddG8) 分群① [1070953324](https://qm.qq.com/q/nKoapm6KyW) 频道 [3fui10590000](https://pd.qq.com/s/9emex878m?b=5) KOOK [稻草的工坊](https://kook.vip/1nLQNk)
+
+![](https://img.shields.io/github/stars/Lake1059/FFmpegFreeUI?label=星标) ![GitHub License](https://img.shields.io/github/license/Lake1059/FFmpegFreeUI?label=许可证) ![GitHub repo size](https://img.shields.io/github/repo-size/Lake1059/FFmpegFreeUI?label=仓库大小) ![](https://img.shields.io/github/downloads/Lake1059/FFmpegFreeUI/total?label=Github%20总下载量) ![](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2F3fui.top%2Fapi%2Fgithub-downloads&label=镜像站总下载量&query=$.totalDownloads)
 
 ## FFmpegFreeUI
 
