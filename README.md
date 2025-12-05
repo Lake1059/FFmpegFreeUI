@@ -1,33 +1,31 @@
-[《如何在 GitHub 下载软件》小白提醒：你的需求是下载这个软件去使用而不是要工程文件，点此去 Releases 下载发行版才是下载软件；上面的 Code 是下载源代码；我都写成这样了如果你在 Releases 里又下成了源代码，那真的是人机，都是手机和短视频害的。](https://github.com/Lake1059/FFmpegFreeUI/releases)
-
-<img src="FFmpegFreeUI\Resources\AppIcon.png" width="100" /> 
+官网：https://ffmpegfreeui.top 和 https://3fui.top<br>主群 [1050613952](https://qm.qq.com/q/fiauAsddG8) 分群① [1070953324](https://qm.qq.com/q/nKoapm6KyW) 频道 [3fui10590000](https://pd.qq.com/s/9emex878m?b=5) KOOK [稻草的工坊](https://kook.vip/1nLQNk)<br>![](https://img.shields.io/github/stars/Lake1059/FFmpegFreeUI?label=星标)![GitHub License](https://img.shields.io/github/license/Lake1059/FFmpegFreeUI?label=许可证)![GitHub repo size](https://img.shields.io/github/repo-size/Lake1059/FFmpegFreeUI?label=仓库大小)![](https://img.shields.io/github/downloads/Lake1059/FFmpegFreeUI/total?label=Github%20总下载量)![](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2F3fui.top%2Fapi%2Fgithub-downloads&label=镜像站总下载量&query=$.totalDownloads)
 
 ## FFmpegFreeUI
 
-**本 README 文件内容很多，请耐心看完！！**
+**本 README 文件已包含全部教学，请耐心看完**<br>**在反馈问题之前先看看是不是最新版，并不是所有改动都写出来了**
 
-请认准官网域名：https://ffmpegfreeui.top 和 https://3fui.top<br>2个域名都是正确的，都会解析到同一个地方
+<img src="FFmpegFreeUI\Resources\AppIcon.png" width="100" />
 
-主群：1050613952  
-分群①：1070953324
+FFmpegFreeUI（简称 3FUI）是在 Windows 上的 [FFmpeg](https://ffmpeg.org) 的专业交互外壳，目前使用 .NET 10 运行时以纯 WinForm 框架开发，使用 [SunnyUI](https://github.com/yhuse/SunnyUI) 和自绘制打造的专业高效的暗黑风格界面。目标做一款轻度专业参数调整的转码软件，让普通人能够通过图形化界面接触到较为全面的通用参数来轻松压制和转换格式。不仅如此，3FUI 具备极高的自由和扩展性，因此也适合任何深度专业人士，即便只是用上一个低消耗的进度条。
+
+3FUI 目前收录了 40 种视频编码器（包含红绿蓝三家全部硬件加速）、21 种音频编码器、13 种图片编码器，如果这还不够还可以自定义参数，提供各种形式的自写参数，所以不要问什么能不能实现什么有没有。如果我的设计对你有帮助，请帮我宣传或者考虑资金支持，目前这个项目纯靠着生活费维持的，所以不要抱怨更新慢。
 
 哔哩哔哩宣传视频：https://www.bilibili.com/video/BV1eeH9zLED5  
 知乎终末诗的教程：https://zhuanlan.zhihu.com/p/1943079795341623993
 
-> 如果我的设计对你有帮助，请帮我宣传或者考虑资金支持  
-> 本文已包含各种新手内容，就看有没有心思学了
+<img src="IMG\img1.png"  />
 
-![](https://img.shields.io/github/downloads/Lake1059/FFmpegFreeUI/total?label=Github%20所有文件总下载量)&nbsp;&nbsp;[![](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2F3fui.top%2Fapi%2Fgithub-downloads&label=镜像站所有文件总下载量&query=$.totalDownloads)](https://github.com/Lake1059/FFmpegFreeUI)
+## 开发目的
 
-FFmpegFreeUI（简称 3FUI）是在 Windows 上的 [FFmpeg](https://ffmpeg.org) 的专业交互外壳，使用 .NET 10 运行时以纯 WinForm 框架开发，配合 SunnyUI 和自绘制打造专业高效的暗黑风格界面。目标做一款轻度专业参数调整的转码软件，让普通人能够通过图形化界面接触到较为全面的通用参数来轻松压制和转换格式。不仅如此，3FUI 具备极高的自由和扩展性，因此也适合任何深度专业人士，即便只是用上一个低消耗的进度条。
+是啊，市面上那么多现成的难道不好吗？请记住 3FUI 是被气出来的项目，如果不是某盒子的运营行为，3FUI 根本不会存在，想要一个参数真正透明纯净自由批量的壳很难吗？What can i say，还真 TMD 难。这是一群压片党的需求，不是大众随便转一下的需求，也不是还搞各种限制的需求，我知道菠萝和刹那很火，但我强迫症既要又要，而且也别搞什么私人秘制配方。有人会说怎么不搞批量脚本，那你跟群友的两万五千个任务说去吧，外壳不仅仅是简单拼一下参数，各种外围支持也是非常重要的。
 
-3FUI 目前收录了 40 种视频编码器、21 种音频编码器、13 种图片编码器，如果这还不够还可以自定义参数，提供各种形式的自写参数，所以不要问什么能不能实现什么有没有。
+## 设计定位
 
-> **为什么开发 3FUI？** *其实我本不打算做的，我也只是想找个好用的壳，如果不是某个盒子的运营行为，3FUI 根本不会存在，工具一定要能用，作者的生活情绪跟用户没有半根毛线的关系，不要通过各种限制来让用户记住开发者的辛苦，既然你不想要这个市场那我要了，给 ffmpeg 做壳不是什么高深的技术，甚至还不如很多大学生的毕业设计，网上能人多得是，别太把自己当回事。*
+3FUI 与 [HandBrake](https://github.com/HandBrake/HandBrake)、[ShanaEncoder](https://shana.pe.kr/shanaencoder_portable) 同坐一桌，属于常规专业级压制转换软件，尽管被 **终末诗** 评价为比菠萝刹那更专业，但在我自己看来是同一桌。与菠萝刹那不同是，3FUI 只使用 ffmpeg 来执行任务，没有内置任何编解码器，需要用户手动放置 ffmpeg 或将其添加到环境变量中，这使得 3FUI 的性能始终保持在最新水平，同时也无需在参数上频繁更新。当 ffmpeg 更新的时候，你可以直接换上去使用，而不用等待任何事情。
 
-市面上各家外壳作者对 FFmpeg 都有自己的理解和交互设计，它们都有各自擅长的需求类型，如 HandBrake、ShanaEncoder 等等专业级软件；3FUI 也不例外，我选择了最折中的方案，同时满足参数自由透明、批量处理、功能扩展的需求，如果你在其他软件上觉得某些需求体验不佳，不妨来尝试 3FUI。作为一款定位专业级的转码软件，我不会在 3FUI 程序中内置任何傻瓜方案，因为这样就会变成我的想法强加于用户，最后变成用户表达的刻板印象；3FUI 具有充分的自由，如果你对参数很了解，那么你当然知道要设置什么内容，如果不了解，也可以在本文和终末诗的文章中了解到非常多的知识和闻所未闻的细节。
+3FUI 也是市面上唯一一个完全不内置现成预设的外壳，它只是帮你传参数和管理任务，你该学的概念是一个都不能落下，既然在用 3FUI，那必然要明确自己需要的是什么，以及基本的参数概念，你总不能连封装格式和编码格式都分不清吧。如果你觉得陌生，那是因为 3FUI 这里强调实事求是，是什么就是什么，如果你此前一直被各种工具的业余叙述蒙在鼓里，那么你可以在这里看到真理。
 
-会用格式工厂吗？那你已经会用 3FUI 了。所有转码软件的最终逻辑和基本参数都一样，没有谁能自己造一个概念出来，它们内部都是 ffmpeg 在干活，这可是古希腊掌管音视频编解码的神。当然现在有人说给普通人用结果还要自己学参数，那我只能说人类进化的时候可能把这类人落下了。如果你连解压都不会、分不清内存条和硬盘，那还是洗洗睡吧。我没有那个精力去照顾所有编码器的参数更新，如果发现了某个参数无效，请直接提交反馈，告诉我什么不能用以及正确的是什么，不要因为这个就说 3FUI 的不好，我拿了几个钱啊这么拼命，生产队的驴都还要吃饭呢。
+会用格式工厂吗？那你已经会用 3FUI 了。所有转码软件的最终逻辑和基本参数都一样，没有谁能自己造一个概念出来，它们内部都是 ffmpeg 在干活，这可是古希腊掌管音视频编解码的神。
 
 ## 特点
 
@@ -95,12 +93,10 @@ PluginExample 是我做的示例插件；在程序目录下创建 Plugin 文件�
 >3. 直接打开 **.sln** 文件，剩下的依赖会自动补齐（需联网下载）
 > 4. 直接运行**全部重新生成**就行了
 
-> **用低版本会死？**
+> **用低版本会死？**  
 > 会死。我需要最新的特性和bug修复，保持最新的代码规范。
 
 ## 截图
-
-<img src="IMG\img1.png"  />
 <img src="IMG\img2.png"  />
 <img src="IMG\img3.png"  />
 
@@ -111,12 +107,14 @@ PluginExample 是我做的示例插件；在程序目录下创建 Plugin 文件�
 1. 首先下载 3FUI
    - 不管我重复多少次永远都会有人下成源代码，md
    - 还有一大堆人连处理器架构的概念都没有，tmd
-
+   - 老夫不用掐指都能算到有人没看上面的下载说明跑来问有什么区别
+   
 2. 前往 [FFmpeg 官网](https://ffmpeg.org/) 下载最新的发行版，gyan.dev 和 BtbN 两者的发行皆可
-   - 若选择 gyan.dev 的发行版，下载 ffmpeg-git-full.7z
-   - 若选择 BtbN 的发行版，下载 ffmpeg-master-latest-win64-gpl.zip
+   - 若选择 gyan.dev 的发行版，下载 **ffmpeg-git-full**
+   - 若选择 BtbN 的发行版，下载 **ffmpeg-master-latest-win64-gpl**
    - 不要选带 lgpl 名称的，不然你又要来问怎么连 libx264 都跑不起来
-   - 也不建议选带 shared 名称的，我掐指一算就料到你没放完整文件
+   - 也不建议选带 shared 名称的，老夫掐指一算就料到你没放完整文件
+   - 如果你想自己编译 ffmpeg，可以试试这个[全自动编译脚本](https://github.com/m-ab-s/media-autobuild_suite)
 3. 将压缩包中的 ffmpeg.exe 和我的 FFmpegFreeUI 放在同一个文件夹中<br>或者将其加入环境变量中也可以，推荐是加环境变量
 4. 然后就可以开始使用了
 5. ffprobe.exe 也建议放上，查看信息需要的
@@ -144,9 +142,11 @@ PluginExample 是我做的示例插件；在程序目录下创建 Plugin 文件�
 - 要反馈任何问题，请到Q群：1050613952
 - **不要在 B站 汇报问题！** 评论很容易被刷掉；私信也基本是让加群
 
-### 新手必看：如何寻求帮助
+### 不要算卦！
 
-选中一个错误的任务，然后将调试信息完整地截图 然后发给技术人员！<br>最好带上命令行，如果你不想让别人看到你的文件名，可以手动抹掉或在预设管理中复制！<br>如果有条件，请提供输入文件的详细参数，很多播放器都可以查看！
+<img src="IMG\img_rep.png" />
+
+选中一个错误的任务，点击 编码队列底部 的 **捕获N个错误** 文字来打开输出日志<br>**然后发给技术人员！**<br>最好带上命令行，如果你不想让别人看到你的文件名，可以手动抹掉！<br>如果有条件，请提供输入文件的详细参数，很多播放器都可以查看！
 
 > 请勿让 **我** 或 **群友** 或 **专业人士** 或 **外行人士** 进行包括但不限于这些行为：算卦、猜谜、托梦、占卜、人脑推理、强行传教、交流物理学、灵能飞升、虚空扰动、尝试进入量子隧道等等，如有以上行为或类似行为的，造成的全部后果由用户全责承担。
 
@@ -196,7 +196,7 @@ PluginExample 是我做的示例插件；在程序目录下创建 Plugin 文件�
 | H.266/VVC    | libx266        | 本应是 266 的官方实现，可到现在仍未发布                      |                                           |
 | AV1          | libaom-av1     | 官方实现，很慢，偏商用，适合多开任务跑单线程，不适合日常使用 |                                           |
 | AV1          | libsvtav1      | Intel 主导，多线程优化，民用友好，轻松吃满 CPU，日常推荐     | crf=32：综合推荐                          |
-| AV1          | av1_nvenc      | RTX 40 系开始支持，但建议用 RTX 50 系及以上显卡（第九代 NVENC），可跟 libsvtav1 五五开，部分场景已超越，日常强烈推荐 | cq=36：综合推荐                           |
+| AV1          | av1_nvenc      | RTX 40 系开始支持，但建议用 RTX 50 系及以上显卡（第九代 NVENC），可跟 libsvtav1 五五开，部分场景已超越，日常强烈推荐 | cq=36：肉眼无损万能通用值                 |
 | AV1          | av1_qsv        | ARC 独显、Ultra100核显开始支持                               | 缺少实测<br/>-global_quality=34           |
 | AV1          | av1_amf        | 7000系独显、780M核显开始支持，A卡虽然一直很弱，但AV1大概还行？ | 缺少实测<br/>-qp_i=34 和 -qp_p=34         |
 | AV1          | librav1e       | 很慢，综合表现一般                                           |                                           |
