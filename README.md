@@ -1,4 +1,6 @@
-官网：https://ffmpegfreeui.top 和 https://3fui.top<br>主群 [1050613952](https://qm.qq.com/q/fiauAsddG8) 分群① [1070953324](https://qm.qq.com/q/nKoapm6KyW) 频道 [3fui10590000](https://pd.qq.com/s/9emex878m?b=5) KOOK [稻草的工坊](https://kook.vip/1nLQNk)<br>![](https://img.shields.io/github/stars/Lake1059/FFmpegFreeUI?label=星标)![GitHub License](https://img.shields.io/github/license/Lake1059/FFmpegFreeUI?label=许可证)![GitHub repo size](https://img.shields.io/github/repo-size/Lake1059/FFmpegFreeUI?label=仓库大小)![](https://img.shields.io/github/downloads/Lake1059/FFmpegFreeUI/total?label=Github%20总下载量)![](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2F3fui.top%2Fapi%2Fgithub-downloads&label=镜像站总下载量&query=$.totalDownloads)
+官网：https://ffmpegfreeui.top 和 https://3fui.top<br>主群 [1050613952](https://qm.qq.com/q/fiauAsddG8) 分群① [1070953324](https://qm.qq.com/q/nKoapm6KyW) 频道 [3fui10590000](https://pd.qq.com/s/9emex878m?b=5) KOOK [稻草的工坊](https://kook.vip/1nLQNk)
+
+![](https://img.shields.io/github/stars/Lake1059/FFmpegFreeUI?label=星标) ![GitHub License](https://img.shields.io/github/license/Lake1059/FFmpegFreeUI?label=许可证) ![GitHub repo size](https://img.shields.io/github/repo-size/Lake1059/FFmpegFreeUI?label=仓库大小) ![](https://img.shields.io/github/downloads/Lake1059/FFmpegFreeUI/total?label=Github%20总下载量) ![](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2F3fui.top%2Fapi%2Fgithub-downloads&label=镜像站总下载量&query=$.totalDownloads)
 
 ## FFmpegFreeUI
 
@@ -273,7 +275,7 @@ PluginExample 是我做的示例插件；在程序目录下创建 Plugin 文件�
 
 虽然它俩都能生成符合编码标准的媒体，但是这是完全不同的编码器，在压缩度上显卡总是弱于处理器，这是必然的，显卡的编解码电路是固定的，要想提高显卡的压缩度你就只能期待新显卡有没有做出改进，而处理器只要指令集还支持那就可以跑最新的算法，软件可以直接更新但显卡电路你总不能重新刻吧。
 
-使用 CPU 编码时，需要占用内存条，视频规格越高占用越多，例如使用 libsvtav1 编码一个 4K 分辨率的 AV1 视频，你至少应该安装 16GB 内存条才足够。使用 GPU 编码时，需要占用 PCIE 带宽和显存，通常情况下显存的要求较低，但要求较多 PCIE 带宽，例如 N卡 50系 编码 AV1，通常需要安装在 PCIE 5.0 的主板上才不会让 PCIE 带宽成为瓶颈，但其编码 HEVC 时 PCIE 4.0x8 的带宽即可满足。
+使用 CPU 编码时，需要占用内存条，视频规格越高占用越多，例如使用 libsvtav1 编码一个 4K 分辨率的视频，你至少应该安装 16GB 内存条才能让任务稳定得跑起来，这个规格下如果要发挥全部性能，最好还是安装 32GB 内存条。使用 GPU 编码时，需要占用 PCIE 带宽和显存，通常情况下显存的要求较低，但要求较多 PCIE 带宽，例如 N卡 50系 编码 AV1，通常需要安装在 PCIE 5.0 的主板上才不会让 PCIE 带宽成为瓶颈，但其编码 HEVC 时 PCIE 4.0x8 的带宽即可满足。
 
 ### 概念科普：有损编码和无损编码
 
@@ -289,7 +291,7 @@ https://developer.nvidia.com/video-encode-and-decode-gpu-support-matrix-new
 
 所以是的，3090 等于 3060，如果只是单任务，那 5090 也等于 5050。编解码核心只有代数和个数的差距，没有所谓的规模差距，老黄不至于抠成这样，所以如果你要买一张N卡只做编解码，那么直接买当代最低型号即可，例如50系买 RTX 5050 即可，而 ffmpeg 也没法在一个任务中正确调用多个编解码核心。另外老黄对游戏卡的同时调用数量做了限制，一般是8个，也就是差不多能同时启动 8 个调用N卡进行编码的 ffmpeg，但专业卡是没有这个限制的，这方面倒是专业卡高人一等。
 
-要不还得是老黄上心呢，你看看另外两家的表格多寒颤
+要不还得是老黄上心呢，你看看另外两家的表格多寒颤。
 
 ### INTEL QSV 规格
 
@@ -324,13 +326,48 @@ https://en.wikipedia.org/wiki/Intel_Quick_Sync_Video
 
 除了是什么颜色以外还有精度这个参数，也就是我们常说的 8bit、10bit 等，例如 yuv420p、nv12、nv21 是 8bit，而 yuv420p10le、p010le 是 10bit。这个精度并不会影响数据的体积，它只决定颜色有多准确，8bit 的每个像素只能有 **256^3=16777216** 约1677万种颜色，而 10bit 的每个像素可以有 **1024^3=1073741824** 超过10亿种颜色。虽然我们已经看了很久的8bit视频，但你不得不承认提升精度有助于压制，而且对提升各种滤镜的效果有帮助。
 
-### 概念科普：色彩空间
+### 色彩空间
 
-等我写
+色彩空间的概念其实很深奥，你不需要深入了解，只需要记住常用的值就可以了。
 
-### 概念科普：质量控制
+|          | 标准范围 SDR | 高动态范围 HDR         |
+| -------- | ------------ | ---------------------- |
+| 矩阵系数 | bt709        | bt2020nc<br>bt2020c    |
+| 色域     | bt709        | bt2020                 |
+| 传输特性 | bt709        | bt2020-10<br>smpte2084 |
 
-等我写
+至于色彩范围选什么是看你的用途，一般都建议与原视频保持一致，很多播放器都能看文件参数，看一下照抄就行了，比较反直觉的是：生活中绝大多数视频其实都是有限范围，而不是完全范围。
+
+如果你有其他需求直接找 AI 问一套参数组合就行了。3FUI 提供了两种转换滤镜，如果你要转杜比视界建议用跑显卡的 libplacebo，色调映射算法选 auto 基本上都能自动把杜比视界转换成正常的色彩。
+
+HDR 的标准实际上非常乱，除了显示屏的色准以外，最大亮度也是一个非常重要的参数，但你应该非常清楚，普通人的眼睛根本承受不住高规格的 HDR，对未成年人更是加倍伤害，民用闪光弹了属于是。
+
+## 视频质量控制
+
+只需要使用：
+
+- **恒定质量 CRF**：软件编码首选，会自动选到 crf
+- **动态码率 VBR**：硬件加速首选，会自动选到 cq，VBR HQ 同理
+
+> [!IMPORTANT]
+>
+> N卡用 cq，I卡用 global_quality，A卡用 qp_i 和 -qp_p 也或者 global_quality
+
+不建议使用：
+
+- **动态码率 VBR HQ**：硬件加速专用，并不会有什么可观的提升，反而时间爆涨
+- **恒定量化 CQP**：较少使用，主用于研究和特定场景，并没有 CQP 这个玩意，但是个别编码器的 rc 是真的有这个值，反正日常别用就对了
+- **恒定码率 CBR**：仅限搞事和图一乐
+
+做不了一点：
+
+- **平均码率 ABR**：不需要做 ABR，就是传统转码直接写比特率
+- **二次编码 TPE**：懒得做，要不你写自定义参数保存个预设吧
+- **三次编码？** 别闹
+
+注意根据具体编码器和视频内容灵活调整质量值！每个编码器的质量基准都不一样，还会受到视频内容的影响，要根据自己的需求去慢慢调，不要指望一步到位。鱼和熊掌不可兼得，编码时间、画面质量、文件体积、解码性能，这四个里你总要至少放弃一样，不要想着全都要。
+
+已经被压过的视频几乎不可能再压得更小！例如流媒体平台上扒下来的和压制组发布的动漫资源（仅限于看起来已经压得很好的比较小体积的），在维持视觉质量的前提下即便是 264 转 AV1 也基本不可能有好的结果。不要用这点参数去挑战压制组的实力！除非你开挂，否则你不可能干得过他们。
 
 ## 音频编码器
 
@@ -339,45 +376,6 @@ https://en.wikipedia.org/wiki/Intel_Quick_Sync_Video
 ## 图片编码器
 
 PNG、APNG、JPEG\JPG、WEBP、GIF、BMP、JPEG 2000、JPEG-LS、HDR、TIFF、DPX、OpenEXR
-
-## 比特率控制方式
-
-其实这东西不选也行的，直接去设置质量参数和值，这东西就是对特定编码器加上对应 rc
-
-- **恒定质量 CRF**：软件编码首选，-rc 并没有 crf 这个值，而是使用 -crf <?>，你需要在质量控制里填写它
-- **动态码率 VBR**：硬件加速首选，会自动选到 cq，但 I卡 和 A卡 通常不用 cq，VBR HQ 同理
-
-注意我写的是首选，某些编码器不走寻常路，比如 vvenc 根本不支持 crf。
-
-- **动态码率 VBR HQ**：硬件加速专用，一般没必要选，并不会有太多肉眼可见的提升，反而时间爆涨
-- **恒定量化 CQP**：较少使用，主用于研究和特定场景，并没有 CQP 这个玩意，但是个别编码器的 rc 是真的有这个值，反正日常别用就对了
-- **恒定速率 CBR**：到底是什么人这么浪费还用这玩意
-
-做不了一点
-
-- **平均码率 ABR**：哪有 ABR，不就是传统转码，直接写比特率不就完了
-- **二次编码 TPE**：没钱，给我转一个W就做，不然我先饿死了
-- **三次编码？** 富哥V我一个小目标看看实力
-
-## 质量设定 -crf / -cq / -qp / -global_quality
-
-| 硬件类型        | 建议首选       |
-| --------------- | -------------- |
-| CPU（软件编码） | crf            |
-| N卡             | cq             |
-| I卡             | global_quality |
-| A卡             | qp_i 和 -qp_p  |
-
-### 注意根据具体编码器和视频内容灵活调整质量值
-质量的默认值是 23，肉眼无损是 16，注意这是一个均衡标准（实时输出的质量值，就是 ffmpeg 进度信息里的 q= 那个），实际使用起来不同的编码器要设定的值差得非常远；23 不一定是糊的，但 16 一定是清晰的，还很可能清晰过度了！每种编码器的质量度量都不一样，还会受到片源自身清晰度和内容的影响。所以要根据每种不同的情况慢慢尝试，不要指望一步到位！通常情况下硬件加速要设定更大一些的质量值。
-
-### 已经被压过的视频几乎不可能再压得更小
-例如流媒体平台上扒下来的和压制组发布的动漫资源（仅限于看起来已经压得很好的比较小体积的），在维持视觉质量的前提下即便是 264 转 AV1 也基本不可能有好的结果（266 除外，那已经是纯挂逼了），编码器会利用人眼的各种局限性，诸如视觉暂留等。
-
-请牢记：不要用这点参数去挑战压制组的实力！除非你开挂，否则你不可能干得过他们！
-
-### 鱼和熊掌不可兼得
-编码时间、画面质量、文件体积、解码性能，你总要至少放弃一样，不要想着全都要
 
 ## 更多功能和所用滤镜
 
@@ -406,9 +404,9 @@ PNG、APNG、JPEG\JPG、WEBP、GIF、BMP、JPEG 2000、JPEG-LS、HDR、TIFF、DP
 
 使用此配套工具来进行剪辑区间可视化：https://github.com/Lake1059/3fuiVideoHelper
 
-## 烧录字幕不会做！
+## 烧录字幕
 
-真的还不如手写参数来得灵活稳定，而且目前这样的设计是可以实现批量烧录的
+暂时没心思做可视化交互，还不如手写参数来得灵活稳定，而且目前这样的设计是可以实现批量烧录的。
 
 - SRT/ASS/SSA
 
@@ -435,7 +433,7 @@ PNG、APNG、JPEG\JPG、WEBP、GIF、BMP、JPEG 2000、JPEG-LS、HDR、TIFF、DP
 
 首先你需要有与我开发 3FUI 相同的集成开发环境：
 
-1. 下载并安装 [Visual Studio Community 2026](https://visualstudio.microsoft.com/zh-hans/vs/)（注意在安装程序里选择预览版）
+1. 下载并安装 [Visual Studio Community 2026](https://visualstudio.microsoft.com/zh-hans/vs/)
 2. 工作负载勾选：.NET 桌面开发
    - 可选组件看自己需求，可以能不要就都不要的
    - 但是我仍旧推荐这些组件：IntelliCode、.NET 可移植库目标包、.NET 分析工具
