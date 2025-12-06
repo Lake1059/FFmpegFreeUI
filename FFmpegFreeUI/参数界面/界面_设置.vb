@@ -1,4 +1,4 @@
-﻿Imports Microsoft.WindowsAPICodePack.Dialogs
+Imports Microsoft.WindowsAPICodePack.Dialogs
 
 Public Class 界面_设置
     Private Sub 界面_设置_Load(sender As Object, e As EventArgs) Handles Me.Load
@@ -49,10 +49,55 @@ Public Class 界面_设置
         校准UiComboBox视觉(UiComboBox自动重置参数面板的页面选择)
         校准UiComboBox视觉(UiComboBox混淆任务名称)
         校准UiComboBox视觉(UiComboBox自动开始最大任务数量)
+        校准UiComboBox视觉(UiComboBox语言选择)
         UiCheckBox转译模式.CheckBoxSize = 20 * Form1.DPI
     End Sub
 
     Public Sub 初始化设置操作响应()
+        ' 初始化语言选择
+        UiComboBox语言选择.Items.Clear()
+        
+        ' 动态获取语言列表
+        Dim availableLanguages = LanguageManager.GetAvailableLanguages()
+        UiComboBox语言选择.Items.AddRange(availableLanguages.Keys.ToArray())
+        
+        ' 根据当前的语言代码，找到对应的显示名称并设置选中
+        Dim currentLangName = availableLanguages.FirstOrDefault(Function(x) x.Value = 用户设置.实例对象.语言).Key
+        If Not String.IsNullOrEmpty(currentLangName) Then
+            UiComboBox语言选择.Text = currentLangName
+        Else
+            ' 如果找不到当前设置的语言（可能文件被删了），尝试回退到第一个
+            If availableLanguages.Count > 0 Then
+                UiComboBox语言选择.Text = availableLanguages.Keys.First()
+                用户设置.实例对象.语言 = availableLanguages.Values.First() ' 更新设置为有效值
+            Else
+                UiComboBox语言选择.Text = "zh-CN" ' 最后的防线
+            End If
+        End If
+
+        AddHandler UiButton应用语言.Click, Sub()
+                                               Dim selectedLangName = UiComboBox语言选择.Text
+                                               If String.IsNullOrEmpty(selectedLangName) Then Exit Sub
+                                               
+                                               ' 重新获取一遍，防止在界面打开期间文件发生变动（虽然可能性极低，但为了安全）
+                                               ' 这里为了性能直接用闭包里的 availableLanguages 也可以，
+                                               ' 但考虑到健壮性，我们复用上面的 dictionary 即可，因为初始化后通常不会变。
+                                               ' 如果需要实时刷新，可以在下拉框展开时刷新。这里保持简单。
+                                               
+                                               If availableLanguages.ContainsKey(selectedLangName) Then
+                                                   Dim langCode = availableLanguages(selectedLangName)
+                                                   
+                                                   ' 保存设置
+                                                   用户设置.实例对象.语言 = langCode
+                                                   
+                                                   ' 应用语言
+                                                   LanguageManager.LoadLanguage(langCode)
+                                                   LanguageManager.ApplyLanguage(Form1)
+                                                   
+                                                   ' MsgBox(LanguageManager.GetText("Msg_LanguageApplied", "语言已应用 / Language Applied"), MsgBoxStyle.Information)
+                                               End If
+                                           End Sub
+
         Dim 字体列表 As New List(Of String)
         For Each 字体 As FontFamily In FontFamily.Families
             字体列表.Add(字体.Name)

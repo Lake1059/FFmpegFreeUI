@@ -1,4 +1,4 @@
-﻿Imports System.IO
+Imports System.IO
 Imports Sunny.UI
 
 Public Class Form1
@@ -19,6 +19,14 @@ Public Class Form1
     Public 任务进度更新计时器 As New Timer With {.Interval = 1000, .Enabled = False}
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        ' 加载并应用语言设置
+        ' 暂时默认 zh-CN，后续可从配置文件读取
+        用户设置.启动时加载设置()
+        LanguageManager.LoadLanguage(用户设置.实例对象.语言)
+        
+        ' 确保在初始化阶段应用语言
+        LanguageManager.ApplyLanguage(Me) 
+
         启用Win32API深色模式(Me.Handle)
 
         If Not FileIO.FileSystem.DirectoryExists(Path.Combine(Application.StartupPath, "Preset")) Then
@@ -31,7 +39,7 @@ Public Class Form1
 
         视频编码器数据库.初始化()
         界面控制.初始化()
-        用户设置.启动时加载设置()
+        ' 用户设置.启动时加载设置() ' Moved to beginning of Load
         插件管理.启动时读取个性化功能解锁器()
         编码队列右键菜单.重设字体()
         编码队列管理选项.重设字体()

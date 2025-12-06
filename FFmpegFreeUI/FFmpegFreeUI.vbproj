@@ -33,6 +33,9 @@
 
   <ItemGroup>
     <Content Include="ico.ico" />
+    <Content Include="Lang\**">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>

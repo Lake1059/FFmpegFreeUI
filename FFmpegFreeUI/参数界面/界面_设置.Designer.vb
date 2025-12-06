@@ -24,7 +24,10 @@ Partial Class 界面_设置
     Private Sub InitializeComponent()
         UiTabControlMenu1 = New Sunny.UI.UITabControlMenu()
         TabPage界面显示 = New TabPage()
-        Label8 = New Label()
+        Panel语言设置 = New Panel()
+        UiButton应用语言 = New Sunny.UI.UIButton()
+        Label语言设置占位 = New Label()
+        UiComboBox语言选择 = New Sunny.UI.UIComboBox()
         Label7 = New Label()
         Label30 = New Label()
         Panel38 = New Panel()
@@ -183,7 +186,7 @@ Partial Class 界面_设置
         ' TabPage界面显示
         ' 
         TabPage界面显示.BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
-        TabPage界面显示.Controls.Add(Label8)
+        TabPage界面显示.Controls.Add(Panel语言设置)
         TabPage界面显示.Controls.Add(Label7)
         TabPage界面显示.Controls.Add(Label30)
         TabPage界面显示.Controls.Add(Panel38)
@@ -195,18 +198,95 @@ Partial Class 界面_设置
         TabPage界面显示.TabIndex = 0
         TabPage界面显示.Text = "界面显示"
         ' 
-        ' Label8
+        ' Panel语言设置
         ' 
-        Label8.AutoSize = True
-        Label8.Dock = DockStyle.Top
-        Label8.Font = New Font("微软雅黑", 10F)
-        Label8.ForeColor = Color.Gray
-        Label8.Location = New Point(0, 173)
-        Label8.Name = "Label8"
-        Label8.Padding = New Padding(16, 5, 0, 0)
-        Label8.Size = New Size(221, 25)
-        Label8.TabIndex = 125
-        Label8.Text = "我也想做多语言，只恨财力不足"
+        Panel语言设置.Controls.Add(UiButton应用语言)
+        Panel语言设置.Controls.Add(Label语言设置占位)
+        Panel语言设置.Controls.Add(UiComboBox语言选择)
+        Panel语言设置.Dock = DockStyle.Top
+        Panel语言设置.Location = New Point(0, 173)
+        Panel语言设置.Name = "Panel语言设置"
+        Panel语言设置.Padding = New Padding(21, 10, 20, 0)
+        Panel语言设置.Size = New Size(700, 40)
+        Panel语言设置.TabIndex = 125
+        ' 
+        ' UiButton应用语言
+        ' 
+        UiButton应用语言.Dock = DockStyle.Left
+        UiButton应用语言.FillColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        UiButton应用语言.FillColor2 = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        UiButton应用语言.FillDisableColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiButton应用语言.FillHoverColor = Color.FromArgb(CByte(56), CByte(56), CByte(56))
+        UiButton应用语言.FillPressColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        UiButton应用语言.FillSelectedColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        UiButton应用语言.Font = New Font("微软雅黑", 10F)
+        UiButton应用语言.ForeColor = Color.Silver
+        UiButton应用语言.ForeDisableColor = Color.Silver
+        UiButton应用语言.ForeHoverColor = Color.Silver
+        UiButton应用语言.ForePressColor = Color.Silver
+        UiButton应用语言.ForeSelectedColor = Color.Silver
+        UiButton应用语言.Location = New Point(295, 10)
+        UiButton应用语言.MinimumSize = New Size(1, 1)
+        UiButton应用语言.Name = "UiButton应用语言"
+        UiButton应用语言.RadiusSides = Sunny.UI.UICornerRadiusSides.None
+        UiButton应用语言.RectColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        UiButton应用语言.RectDisableColor = Color.FromArgb(CByte(12), CByte(12), CByte(12))
+        UiButton应用语言.RectHoverColor = Color.CornflowerBlue
+        UiButton应用语言.RectPressColor = Color.FromArgb(CByte(64), CByte(148), CByte(64))
+        UiButton应用语言.RectSelectedColor = Color.CornflowerBlue
+        UiButton应用语言.Size = New Size(140, 30)
+        UiButton应用语言.TabIndex = 117
+        UiButton应用语言.Text = "Apply Language"
+        UiButton应用语言.TipsFont = New Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point, CByte(134))
+        ' 
+        ' Label语言设置占位
+        ' 
+        Label语言设置占位.Dock = DockStyle.Left
+        Label语言设置占位.ForeColor = Color.Gray
+        Label语言设置占位.Location = New Point(285, 10)
+        Label语言设置占位.Name = "Label语言设置占位"
+        Label语言设置占位.Padding = New Padding(10, 0, 0, 0)
+        Label语言设置占位.Size = New Size(10, 30)
+        Label语言设置占位.TabIndex = 116
+        Label语言设置占位.TextAlign = ContentAlignment.MiddleLeft
+        ' 
+        ' UiComboBox语言选择
+        ' 
+        UiComboBox语言选择.DataSource = Nothing
+        UiComboBox语言选择.Dock = DockStyle.Left
+        UiComboBox语言选择.DropDownStyle = Sunny.UI.UIDropDownStyle.DropDownList
+        UiComboBox语言选择.FillColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        UiComboBox语言选择.FillColor2 = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        UiComboBox语言选择.FillDisableColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        UiComboBox语言选择.Font = New Font("微软雅黑", 10F)
+        UiComboBox语言选择.ForeColor = Color.Silver
+        UiComboBox语言选择.ForeDisableColor = Color.Silver
+        UiComboBox语言选择.ItemFillColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        UiComboBox语言选择.ItemForeColor = Color.Silver
+        UiComboBox语言选择.ItemHeight = 30
+        UiComboBox语言选择.ItemHoverColor = Color.FromArgb(CByte(56), CByte(56), CByte(56))
+        UiComboBox语言选择.ItemRectColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        UiComboBox语言选择.ItemSelectBackColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        UiComboBox语言选择.ItemSelectForeColor = Color.Silver
+        UiComboBox语言选择.Location = New Point(21, 10)
+        UiComboBox语言选择.Margin = New Padding(4, 5, 4, 5)
+        UiComboBox语言选择.MaxDropDownItems = 17
+        UiComboBox语言选择.MinimumSize = New Size(63, 0)
+        UiComboBox语言选择.Name = "UiComboBox语言选择"
+        UiComboBox语言选择.Padding = New Padding(0, 0, 30, 2)
+        UiComboBox语言选择.RadiusSides = Sunny.UI.UICornerRadiusSides.None
+        UiComboBox语言选择.RectColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        UiComboBox语言选择.RectDisableColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        UiComboBox语言选择.ScrollBarBackColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        UiComboBox语言选择.ScrollBarColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        UiComboBox语言选择.ScrollBarHandleWidth = 20
+        UiComboBox语言选择.ScrollBarStyleInherited = False
+        UiComboBox语言选择.Size = New Size(264, 30)
+        UiComboBox语言选择.Style = Sunny.UI.UIStyle.Custom
+        UiComboBox语言选择.SymbolSize = 24
+        UiComboBox语言选择.TabIndex = 115
+        UiComboBox语言选择.TextAlignment = ContentAlignment.MiddleLeft
+        UiComboBox语言选择.Watermark = ""
         ' 
         ' Label7
         ' 
@@ -218,7 +298,7 @@ Partial Class 界面_设置
         Label7.Padding = New Padding(16, 20, 0, 0)
         Label7.Size = New Size(80, 44)
         Label7.TabIndex = 124
-        Label7.Text = "语言？"
+        Label7.Text = "语言设置"
         ' 
         ' Label30
         ' 
@@ -1905,7 +1985,10 @@ Partial Class 界面_设置
     Friend WithEvents Panel3 As Panel
     Friend WithEvents Label5 As Label
     Friend WithEvents Label6 As Label
-    Friend WithEvents Label8 As Label
+    Friend WithEvents Panel语言设置 As Panel
+    Friend WithEvents UiButton应用语言 As Sunny.UI.UIButton
+    Friend WithEvents Label语言设置占位 As Label
+    Friend WithEvents UiComboBox语言选择 As Sunny.UI.UIComboBox
     Friend WithEvents Label7 As Label
     Friend WithEvents Panel4 As Panel
     Friend WithEvents Label9 As Label

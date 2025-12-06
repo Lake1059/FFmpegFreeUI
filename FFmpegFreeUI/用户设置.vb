@@ -1,4 +1,4 @@
-﻿Imports System.IO
+Imports System.IO
 Imports System.Text.Json
 Imports Microsoft.VisualBasic.FileIO.FileSystem
 
@@ -8,6 +8,7 @@ Public Class 用户设置
     <Serializable>
     Public Class 用户设置数据结构
         Public Property 字体 As String = SystemFonts.DefaultFont.FontFamily.Name
+        Public Property 语言 As String = "zh-CN"
         Public Property 指定处理器核心 As String = ""
         Public Property 自动同时运行任务数量选项 As Integer = 0
         Public Property 有任务时系统保持状态选项 As Integer = 0
