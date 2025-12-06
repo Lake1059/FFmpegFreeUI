@@ -464,7 +464,7 @@ Public Class 界面_常规流程参数_V2
                 Dim a As New 预设数据类型
                 预设管理.储存预设(a, Me)
                 预设管理.显示参数总览(RichTextBox2, a)
-                RichTextBox1.Text = "ffmpeg " & 预设管理.将预设数据转换为命令行(a, "<输入文件>", "<输出文件>")
+                RichTextBox1.Text = "ffmpeg " & 预设管理.将预设数据转换为命令行(a, LanguageManager.GetTranslation("Placeholder.InputFile", "<输入文件>"), LanguageManager.GetTranslation("Placeholder.OutputFile", "<输出文件>"))
 
             Case 选项卡.IsEqual(TabPage输出文件设置)
                 校准UiComboBox视觉(UiComboBox自动命名选项)
@@ -562,7 +562,7 @@ Public Class 界面_常规流程参数_V2
             Case 1
                 Dim a As 预设数据类型 = JsonSerializer.Deserialize(Of 预设数据类型)(FileIO.FileSystem.ReadAllText(Path.Combine(Application.StartupPath, "Preset", ListView2.SelectedItems(0).Text & ".json")))
                 预设管理.显示参数总览(Me.RichTextBox3, a)
-                RichTextBox4.Text = "ffmpeg " & 预设管理.将预设数据转换为命令行(a, "<输入文件>", "<输出文件>")
+                RichTextBox4.Text = "ffmpeg " & 预设管理.将预设数据转换为命令行(a, LanguageManager.GetTranslation("Placeholder.InputFile", "<输入文件>"), LanguageManager.GetTranslation("Placeholder.OutputFile", "<输出文件>"))
             Case Else
                 Me.RichTextBox3.Text = ""
                 Me.RichTextBox4.Text = ""
@@ -574,21 +574,21 @@ Public Class 界面_常规流程参数_V2
                 Dim a As New 预设数据类型
                 预设管理.储存预设(a, Me)
                 File.WriteAllText(Path.Combine(Application.StartupPath, "Preset", ListView2.SelectedItems(0).Text & ".json"), JsonSerializer.Serialize(a, JsonSO))
-                Sunny.UI.UIMessageTip.ShowOk($"已保存：{ListView2.SelectedItems(0).Text}", 1500, False)
+                Sunny.UI.UIMessageTip.ShowOk($"{LanguageManager.GetTranslation("Message.Saved", "已保存：")}{ListView2.SelectedItems(0).Text}", 1500, False)
             Case 0
                 Dim a As New 预设数据类型
                 预设管理.储存预设(a, Me)
                 Dim 名称 As String = $"预设-{Now:yyyyMMdd-HHmmss}"
                 File.WriteAllText(Path.Combine(Application.StartupPath, "Preset", 名称 & ".json"), JsonSerializer.Serialize(a, JsonSO))
                 ListView2.Items.Add(名称)
-                Sunny.UI.UIMessageTip.ShowOk($"已保存：{名称}", 1500, False)
+                Sunny.UI.UIMessageTip.ShowOk($"{LanguageManager.GetTranslation("Message.Saved", "已保存：")}{名称}", 1500, False)
         End Select
     End Sub
     Sub 加载选中预设()
         Select Case ListView2.SelectedItems.Count
             Case 1
                 预设管理.显示预设(JsonSerializer.Deserialize(Of 预设数据类型)(FileIO.FileSystem.ReadAllText(Path.Combine(Application.StartupPath, "Preset", ListView2.SelectedItems(0).Text & ".json"))), Me)
-                Sunny.UI.UIMessageTip.ShowOk($"已加载：{ ListView2.SelectedItems(0).Text}", 1500, False)
+                Sunny.UI.UIMessageTip.ShowOk($"{LanguageManager.GetTranslation("Message.Loaded", "已加载：")}{ ListView2.SelectedItems(0).Text}", 1500, False)
         End Select
     End Sub
     Sub 预设列表视图项文本更改前事件(sender As Object, e As LabelEditEventArgs)
@@ -604,8 +604,8 @@ Public Class 界面_常规流程参数_V2
         End If
     End Sub
     Public Sub 保存预设到文件()
-        Dim d As New SaveFileDialog With {.Filter = "Json|*.json", .Title = "将方案保存到单独文件（要加入列表请放到 Preset 文件夹）"}
-        If ListView2.SelectedItems.Count > 0 Then Sunny.UI.UIMessageTip.ShowWarning($"注意这不是保存到列表中", 1500, False)
+        Dim d As New SaveFileDialog With {.Filter = "Json|*.json", .Title = LanguageManager.GetTranslation("Dialog.SavePresetTitle", "将方案保存到单独文件（要加入列表请放到 Preset 文件夹）")}
+        If ListView2.SelectedItems.Count > 0 Then Sunny.UI.UIMessageTip.ShowWarning(LanguageManager.GetTranslation("Message.NotSavedToList", "注意这不是保存到列表中"), 1500, False)
         d.ShowDialog(Form1)
         If d.FileName = "" Then Exit Sub
         Dim a As New 预设数据类型
@@ -618,12 +618,12 @@ Public Class 界面_常规流程参数_V2
         End Select
     End Sub
     Public Sub 从文件读取预设()
-        Dim d As New OpenFileDialog With {.Filter = "Json|*.json", .Title = "加载外部预设方案文件（此操作不会将其加入列表）"}
+        Dim d As New OpenFileDialog With {.Filter = "Json|*.json", .Title = LanguageManager.GetTranslation("Dialog.LoadPresetTitle", "加载外部预设方案文件（此操作不会将其加入列表）")}
         d.ShowDialog(Form1)
         If Not File.Exists(d.FileName) Then Exit Sub
         Dim a As 预设数据类型 = JsonSerializer.Deserialize(Of 预设数据类型)(File.ReadAllText(d.FileName))
         预设管理.显示预设(a, Me)
-        Me.RichTextBox1.Text = "ffmpeg " & 预设管理.将预设数据转换为命令行(a, "<输入文件>", "<输出文件>")
+        Me.RichTextBox1.Text = "ffmpeg " & 预设管理.将预设数据转换为命令行(a, LanguageManager.GetTranslation("Placeholder.InputFile", "<输入文件>"), LanguageManager.GetTranslation("Placeholder.OutputFile", "<输出文件>"))
         Select Case 用户设置.实例对象.自动加载预设选项
             Case 用户设置.自动加载预设选项枚举.自动加载最后的预设文件
                 用户设置.实例对象.自动加载预设文件路径 = d.FileName

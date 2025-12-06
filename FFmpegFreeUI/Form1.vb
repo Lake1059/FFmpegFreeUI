@@ -25,7 +25,11 @@ Public Class Form1
         LanguageManager.LoadLanguage(用户设置.实例对象.语言)
         
         ' 确保在初始化阶段应用语言
-        LanguageManager.ApplyLanguage(Me) 
+        LanguageManager.ApplyLanguage(Me)
+        LanguageManager.ApplyLanguage(常规流程参数页面)
+        LanguageManager.ApplyLanguage(混流页面)
+        LanguageManager.ApplyLanguage(合并页面)
+        LanguageManager.ApplyLanguage(设置页面)
 
         启用Win32API深色模式(Me.Handle)
 

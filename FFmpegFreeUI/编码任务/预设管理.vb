@@ -646,7 +646,7 @@ Public Class 预设管理
 
         If a.自定义参数_之前参数 <> "" Then arg &= $"{处理自定义参数的通配字符串(a.自定义参数_之前参数, 输入文件)} "
 
-        If a.视频参数_编码器_类别 = "禁用" Then 视频参数 &= $"-vn "
+        If a.视频参数_编码器_类别 = "禁用" OrElse a.视频参数_编码器_类别 = "Disabled" Then 视频参数 &= $"-vn "
         If a.视频参数_编码器_具体编码 <> "" Then 视频参数 &= $"-c:v {a.视频参数_编码器_具体编码} "
         Select Case a.图片参数_编码器_编码名称
             Case "png" : 视频参数 &= $"-c:v png {If(a.图片参数_编码器_质量值 <> "", "-compression_level " & a.图片参数_编码器_质量值, "")} "
@@ -1039,84 +1039,84 @@ Public Class 预设管理
     Shared Sub 显示参数总览(RTF As System.Windows.Forms.RichTextBox, a As 预设数据类型)
         RTF.Clear()
         If a.自定义参数_完全自己写 <> "" Then
-            在RTF输出文本(RTF, "正在使用完全自己写参数模式，所有参数均不会生效", Color.IndianRed)
+            在RTF输出文本(RTF, LanguageManager.GetTranslation("Overview.CustomParamsOnly", "正在使用完全自己写参数模式，所有参数均不会生效"), Color.IndianRed)
             Exit Sub
         End If
 
         If a.输出容器 <> "" Then
-            在RTF输出文本(RTF, "输出容器：" & a.输出容器, Color.Gray)
+            在RTF输出文本(RTF, LanguageManager.GetTranslation("Overview.OutputContainer", "输出容器：") & a.输出容器, Color.Gray)
         Else
-            在RTF输出文本(RTF, "没有指定输出容器", Color.IndianRed)
+            在RTF输出文本(RTF, LanguageManager.GetTranslation("Overview.NoOutputContainer", "没有指定输出容器"), Color.IndianRed)
         End If
         If a.输出命名_使用自动命名 And a.输出命名_自动命名选项 = 0 Then
-            在RTF输出文本(RTF, "正在使用默认的附加时间戳", Color.Gray)
+            在RTF输出文本(RTF, LanguageManager.GetTranslation("Overview.DefaultTimestamp", "正在使用默认的附加时间戳"), Color.Gray)
         ElseIf a.输出命名_使用自动命名 And a.输出命名_自动命名选项 <> 0 Then
-            在RTF输出文本(RTF, "正在使用其他自动命名", Color.Gray)
+            在RTF输出文本(RTF, LanguageManager.GetTranslation("Overview.OtherAutoNaming", "正在使用其他自动命名"), Color.Gray)
         ElseIf Not a.输出命名_使用自动命名 Then
-            在RTF输出文本(RTF, "注意没有使用自动命名", Color.IndianRed)
+            在RTF输出文本(RTF, LanguageManager.GetTranslation("Overview.NoAutoNaming", "注意没有使用自动命名"), Color.IndianRed)
         End If
-        If a.输出命名_不使用输出文件参数 Then 在RTF输出文本(RTF, "警告：已启用不使用输出文件参数，仅用于特殊需求，未指定自定义参数必报错", Color.IndianRed)
-        If a.输出命名_开头文本 <> "" Then 在RTF输出文本(RTF, "输出文件开头文本：" & a.输出命名_开头文本, Color.Gray)
-        If a.输出命名_替代文本 <> "" Then 在RTF输出文本(RTF, "输出文件替代文本：" & a.输出命名_替代文本, Color.Gray)
-        If a.输出命名_结尾文本 <> "" Then 在RTF输出文本(RTF, "输出文件结尾文本：" & a.输出命名_结尾文本, Color.Gray)
+        If a.输出命名_不使用输出文件参数 Then 在RTF输出文本(RTF, LanguageManager.GetTranslation("Overview.NoOutputFileArg", "警告：已启用不使用输出文件参数，仅用于特殊需求，未指定自定义参数必报错"), Color.IndianRed)
+        If a.输出命名_开头文本 <> "" Then 在RTF输出文本(RTF, LanguageManager.GetTranslation("Overview.OutputPrefix", "输出文件开头文本：") & a.输出命名_开头文本, Color.Gray)
+        If a.输出命名_替代文本 <> "" Then 在RTF输出文本(RTF, LanguageManager.GetTranslation("Overview.OutputReplace", "输出文件替代文本：") & a.输出命名_替代文本, Color.Gray)
+        If a.输出命名_结尾文本 <> "" Then 在RTF输出文本(RTF, LanguageManager.GetTranslation("Overview.OutputSuffix", "输出文件结尾文本：") & a.输出命名_结尾文本, Color.Gray)
 
-        If a.解码参数_解码器 <> "" Then 在RTF输出文本(RTF, "解码器：" & a.解码参数_解码器, Color.Silver)
-        If a.解码参数_CPU解码线程数 <> "" Then 在RTF输出文本(RTF, "CPU 解码线程数：" & a.解码参数_CPU解码线程数, Color.Silver)
-        If a.解码参数_解码数据格式 <> "" Then 在RTF输出文本(RTF, "解码数据格式：" & a.解码参数_解码数据格式, Color.Silver)
+        If a.解码参数_解码器 <> "" Then 在RTF输出文本(RTF, LanguageManager.GetTranslation("Overview.Decoder", "解码器：") & a.解码参数_解码器, Color.Silver)
+        If a.解码参数_CPU解码线程数 <> "" Then 在RTF输出文本(RTF, LanguageManager.GetTranslation("Overview.DecoderThreads", "CPU 解码线程数：") & a.解码参数_CPU解码线程数, Color.Silver)
+        If a.解码参数_解码数据格式 <> "" Then 在RTF输出文本(RTF, LanguageManager.GetTranslation("Overview.DecoderFormat", "解码数据格式：") & a.解码参数_解码数据格式, Color.Silver)
         If a.解码参数_指定硬件的参数名 <> "" Then
             If a.解码参数_指定硬件的参数 <> "" Then
-                在RTF输出文本(RTF, "指定解码硬件参数：-" & a.解码参数_指定硬件的参数名 & " " & a.解码参数_指定硬件的参数, Color.Silver)
+                在RTF输出文本(RTF, LanguageManager.GetTranslation("Overview.HardwareDecoderParam", "指定解码硬件参数：") & "-" & a.解码参数_指定硬件的参数名 & " " & a.解码参数_指定硬件的参数, Color.Silver)
             Else
-                在RTF输出文本(RTF, "必须指定解码硬件的参数，那不是选了就能用的", Color.IndianRed)
+                在RTF输出文本(RTF, LanguageManager.GetTranslation("Overview.HardwareDecoderParamMissing", "必须指定解码硬件的参数，那不是选了就能用的"), Color.IndianRed)
             End If
         End If
 
-        If a.视频参数_编码器_类别 <> "" Then 在RTF输出文本(RTF, "视频编码类别：" & a.视频参数_编码器_类别, Color.Silver)
-        If a.视频参数_编码器_具体编码 <> "" Then 在RTF输出文本(RTF, "视频编码器：" & a.视频参数_编码器_具体编码, Color.Silver)
-        If a.视频参数_编码器_编码预设 <> "" Then 在RTF输出文本(RTF, "视频编码预设：" & a.视频参数_编码器_编码预设, Color.Silver)
-        If a.视频参数_编码器_配置文件 <> "" Then 在RTF输出文本(RTF, "视频编码配置文件：" & a.视频参数_编码器_配置文件, Color.Silver)
-        If a.视频参数_编码器_场景优化 <> "" Then 在RTF输出文本(RTF, "视频编码场景优化：" & a.视频参数_编码器_场景优化, Color.Silver)
+        If a.视频参数_编码器_类别 <> "" Then 在RTF输出文本(RTF, LanguageManager.GetTranslation("Overview.VideoEncoderCategory", "视频编码类别：") & a.视频参数_编码器_类别, Color.Silver)
+        If a.视频参数_编码器_具体编码 <> "" Then 在RTF输出文本(RTF, LanguageManager.GetTranslation("Overview.VideoEncoder", "视频编码器：") & a.视频参数_编码器_具体编码, Color.Silver)
+        If a.视频参数_编码器_编码预设 <> "" Then 在RTF输出文本(RTF, LanguageManager.GetTranslation("Overview.VideoEncoderPreset", "视频编码预设：") & a.视频参数_编码器_编码预设, Color.Silver)
+        If a.视频参数_编码器_配置文件 <> "" Then 在RTF输出文本(RTF, LanguageManager.GetTranslation("Overview.VideoEncoderProfile", "视频编码配置文件：") & a.视频参数_编码器_配置文件, Color.Silver)
+        If a.视频参数_编码器_场景优化 <> "" Then 在RTF输出文本(RTF, LanguageManager.GetTranslation("Overview.VideoEncoderTune", "视频编码场景优化：") & a.视频参数_编码器_场景优化, Color.Silver)
 
         '---------------- 视频尺寸 / 帧率 ----------------
-        If a.视频参数_分辨率 <> "" Then 在RTF输出文本(RTF, "视频分辨率：" & a.视频参数_分辨率, Color.Silver)
+        If a.视频参数_分辨率 <> "" Then 在RTF输出文本(RTF, LanguageManager.GetTranslation("Overview.VideoResolution", "视频分辨率：") & a.视频参数_分辨率, Color.Silver)
         If a.视频参数_分辨率自动计算_宽度 <> "" Then
-            在RTF输出文本(RTF, "视频分辨率自动计算：宽 = " & a.视频参数_分辨率自动计算_宽度, Color.Silver)
+            在RTF输出文本(RTF, LanguageManager.GetTranslation("Overview.VideoAutoWidth", "视频分辨率自动计算：宽 = ") & a.视频参数_分辨率自动计算_宽度, Color.Silver)
         End If
         If a.视频参数_分辨率自动计算_高度 <> "" Then
-            在RTF输出文本(RTF, "视频分辨率自动计算：高 = " & a.视频参数_分辨率自动计算_高度, Color.Silver)
+            在RTF输出文本(RTF, LanguageManager.GetTranslation("Overview.VideoAutoHeight", "视频分辨率自动计算：高 = ") & a.视频参数_分辨率自动计算_高度, Color.Silver)
         End If
 
-        If a.视频参数_分辨率_裁剪滤镜参数 <> "" Then 在RTF输出文本(RTF, "画面裁剪：" & a.视频参数_分辨率_裁剪滤镜参数, Color.Silver)
-        If a.视频参数_帧速率 <> "" Then 在RTF输出文本(RTF, "输出帧率：" & a.视频参数_帧速率, Color.Silver)
-        If a.视频参数_帧速率_抽帧最大变化比例 <> "" Then 在RTF输出文本(RTF, "抽帧最大变化比例：" & a.视频参数_帧速率_抽帧最大变化比例, Color.Silver)
+        If a.视频参数_分辨率_裁剪滤镜参数 <> "" Then 在RTF输出文本(RTF, LanguageManager.GetTranslation("Overview.VideoCrop", "画面裁剪：") & a.视频参数_分辨率_裁剪滤镜参数, Color.Silver)
+        If a.视频参数_帧速率 <> "" Then 在RTF输出文本(RTF, LanguageManager.GetTranslation("Overview.VideoFPS", "输出帧率：") & a.视频参数_帧速率, Color.Silver)
+        If a.视频参数_帧速率_抽帧最大变化比例 <> "" Then 在RTF输出文本(RTF, LanguageManager.GetTranslation("Overview.FrameDropRatio", "抽帧最大变化比例：") & a.视频参数_帧速率_抽帧最大变化比例, Color.Silver)
 
         '---------------- 插帧 ----------------
-        If a.视频参数_插帧_目标帧率 <> "" Then 在RTF输出文本(RTF, "插帧目标帧率：" & a.视频参数_插帧_目标帧率, Color.Silver)
-        If a.视频参数_插帧_插帧模式 <> "" Then 在RTF输出文本(RTF, "插帧模式：" & a.视频参数_插帧_插帧模式, Color.Silver)
-        If a.视频参数_插帧_运动估计模式 <> "" Then 在RTF输出文本(RTF, "运动估计模式：" & a.视频参数_插帧_运动估计模式, Color.Silver)
-        If a.视频参数_插帧_运动估计算法 <> "" Then 在RTF输出文本(RTF, "运动估计算法：" & a.视频参数_插帧_运动估计算法, Color.Silver)
-        If a.视频参数_插帧_运动补偿模式 <> "" Then 在RTF输出文本(RTF, "运动补偿模式：" & a.视频参数_插帧_运动补偿模式, Color.Silver)
-        If a.视频参数_插帧_可变块大小的运动补偿 Then 在RTF输出文本(RTF, "插帧：已启用可变块大小运动补偿", Color.Silver)
-        If a.视频参数_插帧_块大小 <> "" Then 在RTF输出文本(RTF, "插帧块大小：" & a.视频参数_插帧_块大小, Color.Silver)
-        If a.视频参数_插帧_搜索范围 <> "" Then 在RTF输出文本(RTF, "插帧搜索范围：" & a.视频参数_插帧_搜索范围, Color.Silver)
-        If a.视频参数_插帧_场景变化检测强度 <> "" Then 在RTF输出文本(RTF, "场景变化检测强度：" & a.视频参数_插帧_场景变化检测强度, Color.Silver)
+        If a.视频参数_插帧_目标帧率 <> "" Then 在RTF输出文本(RTF, LanguageManager.GetTranslation("Overview.InterpolationFPS", "插帧目标帧率：") & a.视频参数_插帧_目标帧率, Color.Silver)
+        If a.视频参数_插帧_插帧模式 <> "" Then 在RTF输出文本(RTF, LanguageManager.GetTranslation("Overview.InterpolationMode", "插帧模式：") & a.视频参数_插帧_插帧模式, Color.Silver)
+        If a.视频参数_插帧_运动估计模式 <> "" Then 在RTF输出文本(RTF, LanguageManager.GetTranslation("Overview.MotionEstimationMode", "运动估计模式：") & a.视频参数_插帧_运动估计模式, Color.Silver)
+        If a.视频参数_插帧_运动估计算法 <> "" Then 在RTF输出文本(RTF, LanguageManager.GetTranslation("Overview.MotionEstimationAlgorithm", "运动估计算法：") & a.视频参数_插帧_运动估计算法, Color.Silver)
+        If a.视频参数_插帧_运动补偿模式 <> "" Then 在RTF输出文本(RTF, LanguageManager.GetTranslation("Overview.MotionCompensationMode", "运动补偿模式：") & a.视频参数_插帧_运动补偿模式, Color.Silver)
+        If a.视频参数_插帧_可变块大小的运动补偿 Then 在RTF输出文本(RTF, LanguageManager.GetTranslation("Overview.VariableBlockSize", "插帧：已启用可变块大小运动补偿"), Color.Silver)
+        If a.视频参数_插帧_块大小 <> "" Then 在RTF输出文本(RTF, LanguageManager.GetTranslation("Overview.BlockSize", "插帧块大小：") & a.视频参数_插帧_块大小, Color.Silver)
+        If a.视频参数_插帧_搜索范围 <> "" Then 在RTF输出文本(RTF, LanguageManager.GetTranslation("Overview.SearchRange", "插帧搜索范围：") & a.视频参数_插帧_搜索范围, Color.Silver)
+        If a.视频参数_插帧_场景变化检测强度 <> "" Then 在RTF输出文本(RTF, LanguageManager.GetTranslation("Overview.SceneChangeThreshold", "场景变化检测强度：") & a.视频参数_插帧_场景变化检测强度, Color.Silver)
 
         '---------------- 帧混合 ----------------
-        If a.视频参数_帧混合_指定帧率 <> "" Then 在RTF输出文本(RTF, "帧混合指定帧率：" & a.视频参数_帧混合_指定帧率, Color.Silver)
-        If a.视频参数_帧混合_混合模式 <> "" Then 在RTF输出文本(RTF, "帧混合模式：" & a.视频参数_帧混合_混合模式, Color.Silver)
-        If a.视频参数_帧混合_混合比例 <> "" Then 在RTF输出文本(RTF, "帧混合比例：" & a.视频参数_帧混合_混合比例, Color.Silver)
+        If a.视频参数_帧混合_指定帧率 <> "" Then 在RTF输出文本(RTF, LanguageManager.GetTranslation("Overview.BlendingFPS", "帧混合指定帧率：") & a.视频参数_帧混合_指定帧率, Color.Silver)
+        If a.视频参数_帧混合_混合模式 <> "" Then 在RTF输出文本(RTF, LanguageManager.GetTranslation("Overview.BlendingMode", "帧混合模式：") & a.视频参数_帧混合_混合模式, Color.Silver)
+        If a.视频参数_帧混合_混合比例 <> "" Then 在RTF输出文本(RTF, LanguageManager.GetTranslation("Overview.BlendingRatio", "帧混合比例：") & a.视频参数_帧混合_混合比例, Color.Silver)
 
         '---------------- 超分 ----------------
-        If a.视频参数_超分_目标宽度 <> "" Then 在RTF输出文本(RTF, $"超分目标分辨率：{a.视频参数_超分_目标宽度} x {a.视频参数_超分_目标高度}", Color.Silver)
-        If a.视频参数_超分_上采样算法 <> "" Then 在RTF输出文本(RTF, $"超分上采样算法：{a.视频参数_超分_上采样算法}", Color.Silver)
-        If a.视频参数_超分_下采样算法 <> "" Then 在RTF输出文本(RTF, $"超分下采样算法：{a.视频参数_超分_下采样算法}", Color.Silver)
-        If a.视频参数_超分_抗振铃强度 <> "" Then 在RTF输出文本(RTF, $"超分抗振铃强度：{a.视频参数_超分_抗振铃强度}", Color.Silver)
-        If a.视频参数_超分_着色器列表.Count > 0 Then 在RTF输出文本(RTF, $"超分正在使用 {a.视频参数_超分_着色器列表.Count} 个自定义着色器", Color.Silver)
+        If a.视频参数_超分_目标宽度 <> "" Then 在RTF输出文本(RTF, LanguageManager.GetTranslation("Overview.SuperResResolution", "超分目标分辨率：") & $"{a.视频参数_超分_目标宽度} x {a.视频参数_超分_目标高度}", Color.Silver)
+        If a.视频参数_超分_上采样算法 <> "" Then 在RTF输出文本(RTF, LanguageManager.GetTranslation("Overview.SuperResUpscaler", "超分上采样算法：") & a.视频参数_超分_上采样算法, Color.Silver)
+        If a.视频参数_超分_下采样算法 <> "" Then 在RTF输出文本(RTF, LanguageManager.GetTranslation("Overview.SuperResDownscaler", "超分下采样算法：") & a.视频参数_超分_下采样算法, Color.Silver)
+        If a.视频参数_超分_抗振铃强度 <> "" Then 在RTF输出文本(RTF, LanguageManager.GetTranslation("Overview.SuperResAntiringing", "超分抗振铃强度：") & a.视频参数_超分_抗振铃强度, Color.Silver)
+        If a.视频参数_超分_着色器列表.Count > 0 Then 在RTF输出文本(RTF, LanguageManager.GetTranslation("Overview.SuperResShaders", "超分正在使用 {0} 个自定义着色器").Replace("{0}", a.视频参数_超分_着色器列表.Count.ToString()), Color.Silver)
 
         '---------------- 码率 / 质量控制 ----------------
         If a.视频参数_比特率_控制方式 <> "" Then
             Select Case a.视频参数_比特率_控制方式
-                Case "CRF" : 在RTF输出文本(RTF, "质量/比特率控制方法：CRF", Color.Silver)
+                Case "CRF" : 在RTF输出文本(RTF, LanguageManager.GetTranslation("Overview.RateControlCRF", "质量/比特率控制方法：CRF"), Color.Silver)
                 Case "VBR" : 在RTF输出文本(RTF, "质量/比特率控制方法：VBR", Color.Silver)
                 Case "VBR HQ" : 在RTF输出文本(RTF, "质量/比特率控制方法：VBR HQ", Color.Silver)
                 Case "CQP" : 在RTF输出文本(RTF, "质量/比特率控制方法：CQP", Color.Silver)
@@ -1172,71 +1172,71 @@ Public Class 预设管理
         If a.视频参数_画面翻转_镜像翻转 > 0 Then 在RTF输出文本(RTF, a.视频参数_画面翻转_镜像翻转, Color.Silver)
 
         '---------------- 音频参数 ----------------
-        If a.音频参数_编码器_具体编码 <> "" Then 在RTF输出文本(RTF, "音频编码器：" & a.音频参数_编码器_具体编码, Color.Silver)
-        If a.音频参数_比特率 <> "" Then 在RTF输出文本(RTF, "音频比特率：" & a.音频参数_比特率, Color.Silver)
-        If a.音频参数_质量参数名 <> "" Then 在RTF输出文本(RTF, "音频质量控制：" & a.音频参数_质量参数名 & "=" & a.音频参数_质量值, Color.Silver)
-        If a.音频参数_声道数 <> "" Then 在RTF输出文本(RTF, "声道布局：" & a.音频参数_声道数, Color.Silver)
-        If a.音频参数_采样率 <> "" Then 在RTF输出文本(RTF, "采样率：" & a.音频参数_采样率, Color.Silver)
-        If a.音频参数_响度标准化_目标响度 <> "" Then 在RTF输出文本(RTF, "响度标准化目标：" & a.音频参数_响度标准化_目标响度, Color.Silver)
-        If a.音频参数_响度标准化_动态范围 <> "" Then 在RTF输出文本(RTF, "响度动态范围：" & a.音频参数_响度标准化_动态范围, Color.Silver)
-        If a.音频参数_响度标准化_峰值电平 <> "" Then 在RTF输出文本(RTF, "响度峰值电平：" & a.音频参数_响度标准化_峰值电平, Color.Silver)
+        If a.音频参数_编码器_具体编码 <> "" Then 在RTF输出文本(RTF, LanguageManager.GetTranslation("Overview.AudioEncoder", "音频编码器：") & a.音频参数_编码器_具体编码, Color.Silver)
+        If a.音频参数_比特率 <> "" Then 在RTF输出文本(RTF, LanguageManager.GetTranslation("Overview.AudioBitrate", "音频比特率：") & a.音频参数_比特率, Color.Silver)
+        If a.音频参数_质量参数名 <> "" Then 在RTF输出文本(RTF, LanguageManager.GetTranslation("Overview.AudioQuality", "音频质量控制：") & a.音频参数_质量参数名 & "=" & a.音频参数_质量值, Color.Silver)
+        If a.音频参数_声道数 <> "" Then 在RTF输出文本(RTF, LanguageManager.GetTranslation("Overview.AudioChannels", "声道布局：") & a.音频参数_声道数, Color.Silver)
+        If a.音频参数_采样率 <> "" Then 在RTF输出文本(RTF, LanguageManager.GetTranslation("Overview.AudioSampleRate", "采样率：") & a.音频参数_采样率, Color.Silver)
+        If a.音频参数_响度标准化_目标响度 <> "" Then 在RTF输出文本(RTF, LanguageManager.GetTranslation("Overview.LoudnessNormTarget", "响度标准化目标：") & a.音频参数_响度标准化_目标响度, Color.Silver)
+        If a.音频参数_响度标准化_动态范围 <> "" Then 在RTF输出文本(RTF, LanguageManager.GetTranslation("Overview.LoudnessNormRange", "响度动态范围：") & a.音频参数_响度标准化_动态范围, Color.Silver)
+        If a.音频参数_响度标准化_峰值电平 <> "" Then 在RTF输出文本(RTF, LanguageManager.GetTranslation("Overview.LoudnessNormPeak", "响度峰值电平：") & a.音频参数_响度标准化_峰值电平, Color.Silver)
 
         '---------------- 图片参数 ----------------
-        If a.图片参数_编码器_编码名称 <> "" Then 在RTF输出文本(RTF, "图片编码器：" & a.图片参数_编码器_编码名称, Color.Silver)
-        If a.图片参数_编码器_质量值 <> "" Then 在RTF输出文本(RTF, "图片质量：" & a.图片参数_编码器_质量值, Color.Silver)
+        If a.图片参数_编码器_编码名称 <> "" Then 在RTF输出文本(RTF, LanguageManager.GetTranslation("Overview.ImageEncoder", "图片编码器：") & a.图片参数_编码器_编码名称, Color.Silver)
+        If a.图片参数_编码器_质量值 <> "" Then 在RTF输出文本(RTF, LanguageManager.GetTranslation("Overview.ImageQuality", "图片质量：") & a.图片参数_编码器_质量值, Color.Silver)
 
         '---------------- 自定义参数 ----------------
-        If a.自定义参数_开头参数 <> "" Then 在RTF输出文本(RTF, "自定义开头参数：" & a.自定义参数_开头参数, Color.Gray)
-        If a.自定义参数_之前参数 <> "" Then 在RTF输出文本(RTF, "自定义之前参数：" & a.自定义参数_之前参数, Color.Gray)
-        If a.自定义参数_视频滤镜 <> "" Then 在RTF输出文本(RTF, "自定义视频滤镜：" & a.自定义参数_视频滤镜, Color.Gray)
-        If a.自定义参数_音频滤镜 <> "" Then 在RTF输出文本(RTF, "自定义音频滤镜：" & a.自定义参数_音频滤镜, Color.Gray)
-        If a.自定义参数_filter_complex <> "" Then 在RTF输出文本(RTF, "自定义 filter_complex：" & a.自定义参数_filter_complex, Color.Gray)
-        If a.自定义参数_视频参数 <> "" Then 在RTF输出文本(RTF, "自定义视频参数：" & a.自定义参数_视频参数, Color.Gray)
-        If a.自定义参数_音频参数 <> "" Then 在RTF输出文本(RTF, "自定义音频参数：" & a.自定义参数_音频参数, Color.Gray)
-        If a.自定义参数_之后参数 <> "" Then 在RTF输出文本(RTF, "自定义之后参数：" & a.自定义参数_之后参数, Color.Gray)
-        If a.自定义参数_最后参数 <> "" Then 在RTF输出文本(RTF, "自定义最后参数：" & a.自定义参数_最后参数, Color.Gray)
+        If a.自定义参数_开头参数 <> "" Then 在RTF输出文本(RTF, LanguageManager.GetTranslation("Overview.CustomPrefix", "自定义开头参数：") & a.自定义参数_开头参数, Color.Gray)
+        If a.自定义参数_之前参数 <> "" Then 在RTF输出文本(RTF, LanguageManager.GetTranslation("Overview.CustomBefore", "自定义之前参数：") & a.自定义参数_之前参数, Color.Gray)
+        If a.自定义参数_视频滤镜 <> "" Then 在RTF输出文本(RTF, LanguageManager.GetTranslation("Overview.CustomVideoFilter", "自定义视频滤镜：") & a.自定义参数_视频滤镜, Color.Gray)
+        If a.自定义参数_音频滤镜 <> "" Then 在RTF输出文本(RTF, LanguageManager.GetTranslation("Overview.CustomAudioFilter", "自定义音频滤镜：") & a.自定义参数_音频滤镜, Color.Gray)
+        If a.自定义参数_filter_complex <> "" Then 在RTF输出文本(RTF, LanguageManager.GetTranslation("Overview.CustomComplexFilter", "自定义 filter_complex：") & a.自定义参数_filter_complex, Color.Gray)
+        If a.自定义参数_视频参数 <> "" Then 在RTF输出文本(RTF, LanguageManager.GetTranslation("Overview.CustomVideoParam", "自定义视频参数：") & a.自定义参数_视频参数, Color.Gray)
+        If a.自定义参数_音频参数 <> "" Then 在RTF输出文本(RTF, LanguageManager.GetTranslation("Overview.CustomAudioParam", "自定义音频参数：") & a.自定义参数_音频参数, Color.Gray)
+        If a.自定义参数_之后参数 <> "" Then 在RTF输出文本(RTF, LanguageManager.GetTranslation("Overview.CustomAfter", "自定义之后参数：") & a.自定义参数_之后参数, Color.Gray)
+        If a.自定义参数_最后参数 <> "" Then 在RTF输出文本(RTF, LanguageManager.GetTranslation("Overview.CustomLast", "自定义最后参数：") & a.自定义参数_最后参数, Color.Gray)
 
         '---------------- 剪辑区间 ----------------
         Select Case a.剪辑区间_方法
-            Case 1 : 在RTF输出文本(RTF, "剪辑区间方法：粗剪", Color.Silver)
-            Case 2 : 在RTF输出文本(RTF, "剪辑区间方法：精剪 (从头解码)", Color.Silver)
-            Case 3 : 在RTF输出文本(RTF, "剪辑区间方法：精剪 (快速响应)", Color.Silver)
-            Case Else : If a.剪辑区间_入点 <> "" OrElse a.剪辑区间_出点 <> "" Then 在RTF输出文本(RTF, "警告：指定了剪辑范围却没有指定剪辑方法，不会进行剪辑", Color.IndianRed)
+            Case 1 : 在RTF输出文本(RTF, LanguageManager.GetTranslation("Overview.ClipMethodRough", "剪辑区间方法：粗剪"), Color.Silver)
+            Case 2 : 在RTF输出文本(RTF, LanguageManager.GetTranslation("Overview.ClipMethodPreciseDecode", "剪辑区间方法：精剪 (从头解码)"), Color.Silver)
+            Case 3 : 在RTF输出文本(RTF, LanguageManager.GetTranslation("Overview.ClipMethodPreciseFast", "剪辑区间方法：精剪 (快速响应)"), Color.Silver)
+            Case Else : If a.剪辑区间_入点 <> "" OrElse a.剪辑区间_出点 <> "" Then 在RTF输出文本(RTF, LanguageManager.GetTranslation("Overview.ClipMethodMissing", "警告：指定了剪辑范围却没有指定剪辑方法，不会进行剪辑"), Color.IndianRed)
         End Select
-        If a.剪辑区间_入点 <> "" Then 在RTF输出文本(RTF, "剪辑入点：" & a.剪辑区间_入点, Color.Silver)
-        If a.剪辑区间_出点 <> "" Then 在RTF输出文本(RTF, "剪辑出点：" & a.剪辑区间_出点, Color.Silver)
-        If a.剪辑区间_向前解码多久秒 <> "" Then 在RTF输出文本(RTF, "快速响应的精剪向前解码 " & a.剪辑区间_向前解码多久秒 & " 秒", Color.Silver)
+        If a.剪辑区间_入点 <> "" Then 在RTF输出文本(RTF, LanguageManager.GetTranslation("Overview.ClipStart", "剪辑入点：") & a.剪辑区间_入点, Color.Silver)
+        If a.剪辑区间_出点 <> "" Then 在RTF输出文本(RTF, LanguageManager.GetTranslation("Overview.ClipEnd", "剪辑出点：") & a.剪辑区间_出点, Color.Silver)
+        If a.剪辑区间_向前解码多久秒 <> "" Then 在RTF输出文本(RTF, LanguageManager.GetTranslation("Overview.ClipDecodeAhead", "快速响应的精剪向前解码 {0} 秒").Replace("{0}", a.剪辑区间_向前解码多久秒), Color.Silver)
 
         '---------------- 流控制 ----------------
-        If a.流控制_启用保留其他视频流 Then 在RTF输出文本(RTF, "已选择保留其他视频流", Color.Silver)
+        If a.流控制_启用保留其他视频流 Then 在RTF输出文本(RTF, LanguageManager.GetTranslation("Overview.KeepOtherVideoStreams", "已选择保留其他视频流"), Color.Silver)
         If a.流控制_将视频参数应用于指定流 IsNot Nothing AndAlso a.流控制_将视频参数应用于指定流.Length > 0 Then
-            在RTF输出文本(RTF, "应用视频参数到流：" & String.Join(",", a.流控制_将视频参数应用于指定流), Color.Silver)
+            在RTF输出文本(RTF, LanguageManager.GetTranslation("Overview.ApplyVideoParamsTo", "应用视频参数到流：") & String.Join(",", a.流控制_将视频参数应用于指定流), Color.Silver)
         End If
-        If a.流控制_启用保留其他音频流 Then 在RTF输出文本(RTF, "已选择保留其他音频流", Color.Silver)
+        If a.流控制_启用保留其他音频流 Then 在RTF输出文本(RTF, LanguageManager.GetTranslation("Overview.KeepOtherAudioStreams", "已选择保留其他音频流"), Color.Silver)
         If a.流控制_将音频参数应用于指定流 IsNot Nothing AndAlso a.流控制_将音频参数应用于指定流.Length > 0 Then
-            在RTF输出文本(RTF, "应用音频参数到流：" & String.Join(",", a.流控制_将音频参数应用于指定流), Color.Silver)
+            在RTF输出文本(RTF, LanguageManager.GetTranslation("Overview.ApplyAudioParamsTo", "应用音频参数到流：") & String.Join(",", a.流控制_将音频参数应用于指定流), Color.Silver)
         End If
         If a.流控制_使用哪些文件的哪些内嵌字幕 IsNot Nothing AndAlso a.流控制_使用哪些文件的哪些内嵌字幕.Length > 0 Then
-            在RTF输出文本(RTF, "使用这些文件的这些字幕：" & String.Join(",", a.流控制_使用哪些文件的哪些内嵌字幕), Color.Silver)
+            在RTF输出文本(RTF, LanguageManager.GetTranslation("Overview.UseSubtitleStreams", "使用这些文件的这些字幕：") & String.Join(",", a.流控制_使用哪些文件的哪些内嵌字幕), Color.Silver)
             Select Case a.流控制_使用哪些文件的哪些内嵌字幕_如何操作
-                Case 1 : 在RTF输出文本(RTF, "字幕操作：复制流", Color.Silver)
-                Case 2 : 在RTF输出文本(RTF, "字幕操作：转为 mov_text 编码", Color.Silver)
+                Case 1 : 在RTF输出文本(RTF, LanguageManager.GetTranslation("Overview.SubtitleCopy", "字幕操作：复制流"), Color.Silver)
+                Case 2 : 在RTF输出文本(RTF, LanguageManager.GetTranslation("Overview.SubtitleMovText", "字幕操作：转为 mov_text 编码"), Color.Silver)
             End Select
         End If
-        If a.流控制_自动混流SRT Then 在RTF输出文本(RTF, "自动混流同名 SRT 字幕文件", Color.Silver)
-        If a.流控制_自动混流ASS Then 在RTF输出文本(RTF, "自动混流同名 ASS 字幕文件", Color.Silver)
-        If a.流控制_自动混流SSA Then 在RTF输出文本(RTF, "自动混流同名 SSA 字幕文件", Color.Silver)
+        If a.流控制_自动混流SRT Then 在RTF输出文本(RTF, LanguageManager.GetTranslation("Overview.AutoMuxSRT", "自动混流同名 SRT 字幕文件"), Color.Silver)
+        If a.流控制_自动混流ASS Then 在RTF输出文本(RTF, LanguageManager.GetTranslation("Overview.AutoMuxASS", "自动混流同名 ASS 字幕文件"), Color.Silver)
+        If a.流控制_自动混流SSA Then 在RTF输出文本(RTF, LanguageManager.GetTranslation("Overview.AutoMuxSSA", "自动混流同名 SSA 字幕文件"), Color.Silver)
         Select Case a.流控制_元数据选项
-            Case 1 : 在RTF输出文本(RTF, "保留元数据", Color.Silver)
-            Case 2 : 在RTF输出文本(RTF, "清除元数据", Color.Silver)
+            Case 1 : 在RTF输出文本(RTF, LanguageManager.GetTranslation("Overview.MetadataKeep", "保留元数据"), Color.Silver)
+            Case 2 : 在RTF输出文本(RTF, LanguageManager.GetTranslation("Overview.MetadataRemove", "清除元数据"), Color.Silver)
         End Select
         Select Case a.流控制_章节选项
-            Case 1 : 在RTF输出文本(RTF, "保留章节", Color.Silver)
-            Case 2 : 在RTF输出文本(RTF, "清除章节", Color.Silver)
+            Case 1 : 在RTF输出文本(RTF, LanguageManager.GetTranslation("Overview.ChaptersKeep", "保留章节"), Color.Silver)
+            Case 2 : 在RTF输出文本(RTF, LanguageManager.GetTranslation("Overview.ChaptersRemove", "清除章节"), Color.Silver)
         End Select
-        If a.流控制_附件选项 = 1 Then 在RTF输出文本(RTF, "保留附件", Color.Silver)
+        If a.流控制_附件选项 = 1 Then 在RTF输出文本(RTF, LanguageManager.GetTranslation("Overview.AttachmentsKeep", "保留附件"), Color.Silver)
 
         '---------------- 其他 ----------------
-        If a.输出位置 <> "" Then 在RTF输出文本(RTF, "输出位置：" & a.输出位置, Color.Gray)
+        If a.输出位置 <> "" Then 在RTF输出文本(RTF, LanguageManager.GetTranslation("Overview.OutputLocation", "输出位置：") & a.输出位置, Color.Gray)
     End Sub
 End Class

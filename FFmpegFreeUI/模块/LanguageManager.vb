@@ -88,6 +88,13 @@ Public Module LanguageManager
     End Function
 
     ''' <summary>
+    ''' 获取翻译文本 (Alias for GetText)
+    ''' </summary>
+    Public Function GetTranslation(key As String, Optional defaultText As String = "") As String
+        Return GetText(key, defaultText)
+    End Function
+
+    ''' <summary>
     ''' 自动翻译窗体及其控件
     ''' </summary>
     ''' <param name="root">根控件或窗体</param>
@@ -152,6 +159,74 @@ Public Module LanguageManager
         If Not String.IsNullOrEmpty(ctrl.Text) AndAlso Not String.IsNullOrEmpty(ctrl.Name) AndAlso LanguageData.ContainsKey(key) Then
             ctrl.Text = LanguageData(key)
         End If
+
+        ' 处理 SunnyUI 控件的特殊属性
+        If TypeOf ctrl Is Sunny.UI.UIComboBox Then
+            Dim combo = DirectCast(ctrl, Sunny.UI.UIComboBox)
+            Dim emptyKey = $"{key}.EmptyText" ' 假设这是占位符文本的 Key 命名规则，或者检查它是否有特定的属性
+            ' 实际上 SunnyUI 的 UIComboBox 没有显式的 Placeholder 属性，但可能有 Text 作为初始值
+            ' 如果 Text 已经翻译了，那就够了。
+            ' 但这里提到的可能是 "Watermark" 或者类似的属性，如果 SunnyUI 支持的话。
+            ' 经过检查，UIComboBox 可能没有 Watermark。
+            ' 如果是 UITextBox，可能有 Watermark。
+        End If
+
+        ' SunnyUI TextBox Watermark
+        If TypeOf ctrl Is Sunny.UI.UITextBox Then
+            Dim txt = DirectCast(ctrl, Sunny.UI.UITextBox)
+            Dim watermarkKey = $"{key}.Watermark"
+            If LanguageData.ContainsKey(watermarkKey) Then
+                txt.Watermark = LanguageData(watermarkKey)
+            End If
+#If DEBUG Then
+            If Not String.IsNullOrWhiteSpace(txt.Watermark) AndAlso Not LanguageData.ContainsKey(watermarkKey) Then
+                Dim logMsg = $"[i18n Missing] Key: {watermarkKey}, Text: {txt.Watermark}"
+                Debug.WriteLine(logMsg)
+                File.AppendAllText(Path.Combine(Application.StartupPath, "i18n_missing.log"), logMsg & Environment.NewLine)
+            End If
+#End If
+        End If
+        
+        ' ComboBox Items Translation
+        If TypeOf ctrl Is Sunny.UI.UIComboBox Then
+            Dim combo = DirectCast(ctrl, Sunny.UI.UIComboBox)
+            
+            ' Translate Watermark (SunnyUI specific)
+            Dim watermarkKey = $"{key}.Watermark"
+            If LanguageData.ContainsKey(watermarkKey) Then
+                combo.Watermark = LanguageData(watermarkKey)
+            End If
+#If DEBUG Then
+            If Not String.IsNullOrWhiteSpace(combo.Watermark) AndAlso Not LanguageData.ContainsKey(watermarkKey) Then
+                Dim logMsg = $"[i18n Missing] Key: {watermarkKey}, Text: {combo.Watermark}"
+                Debug.WriteLine(logMsg)
+                File.AppendAllText(Path.Combine(Application.StartupPath, "i18n_missing.log"), logMsg & Environment.NewLine)
+            End If
+#End If
+
+            ' Translate Items
+            If combo.Items.Count > 0 AndAlso combo.Items.Count < 50 Then
+                For i As Integer = 0 To combo.Items.Count - 1
+                    Dim itemText = combo.Items(i).ToString()
+                    Dim itemKey = $"{key}.Item_{i}"
+                    
+                    ' If item text is empty, skip
+                    If String.IsNullOrWhiteSpace(itemText) Then Continue For
+
+                    If LanguageData.ContainsKey(itemKey) Then
+                        combo.Items(i) = LanguageData(itemKey)
+                    End If
+#If DEBUG Then
+                    If Not LanguageData.ContainsKey(itemKey) AndAlso Not String.IsNullOrWhiteSpace(itemText) Then
+                        Dim logMsg = $"[i18n Missing] Key: {itemKey}, Text: {itemText}"
+                        Debug.WriteLine(logMsg)
+                        File.AppendAllText(Path.Combine(Application.StartupPath, "i18n_missing.log"), logMsg & Environment.NewLine)
+                    End If
+#End If
+                Next
+            End If
+        End If
+
 #If DEBUG Then
         If Not String.IsNullOrEmpty(ctrl.Text) AndAlso Not String.IsNullOrEmpty(ctrl.Name) AndAlso Not LanguageData.ContainsKey(key) Then
             Dim logMsg = $"[i18n Missing] Key: {key}, Text: {ctrl.Text}"

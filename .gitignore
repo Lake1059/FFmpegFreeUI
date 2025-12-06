@@ -362,3 +362,14 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+compare_keys.py
+debug_json.py
+fix_json.py
+missing_keys.txt
+fix_zh_garbage.py
+inspect_json_line.py
+sanitize_json.py
+find_control_char.py
+fix_broken_lines.py
+fix_missing_quotes.py
+inspect_line_777.py
