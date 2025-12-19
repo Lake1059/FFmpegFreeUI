@@ -170,7 +170,6 @@ Module Module1
     Public Function LoadImageFromFile(File As String) As Image
         Using fs As New FileStream(File, FileMode.Open, FileAccess.Read)
             Return Image.FromStream(fs)
-            fs.Dispose()
         End Using
     End Function
 

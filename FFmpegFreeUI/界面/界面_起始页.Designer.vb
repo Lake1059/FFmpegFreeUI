@@ -170,6 +170,7 @@ Partial Class 界面_起始页
         ' 
         ' Panel5
         ' 
+        Panel5.BackgroundImageLayout = ImageLayout.Zoom
         Panel5.Controls.Add(Panel新闻列表面板)
         Panel5.Controls.Add(Label29)
         Panel5.Controls.Add(Panel44)

@@ -121,9 +121,6 @@ Public Class Form1
                 If files.Length > 0 Then
                     Dim a As New Form独立参数面板 With {.文件列表 = files}
                     a.Label1.Text = $"为 {files.Length} 个文件使用单独的参数方案{vbCrLf}{files(0)}"
-                    If 用户设置.实例对象.打开独立参数面板时自动切到预设管理页面 = 1 Then
-                        a.参数面板.UiTabControlMenu1.SelectedTab = a.参数面板.TabPage方案管理
-                    End If
                     显示窗体(a, Me)
                 End If
             Case Else

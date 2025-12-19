@@ -9,6 +9,9 @@
         Me.Panel3.Controls.Add(参数面板)
         参数面板.Dock = DockStyle.Fill
         参数面板.BringToFront()
+        If 用户设置.实例对象.打开独立参数面板时自动切到预设管理页面 = 1 Then
+            参数面板.UiTabControlMenu1.SelectedTab = 参数面板.TabPage方案管理
+        End If
         If 用户设置.实例对象.界面修正_选项卡文字增加左侧空格 > 0 Then
             For Each page As TabPage In 参数面板.UiTabControlMenu1.TabPages
                 page.Text = Space(用户设置.实例对象.界面修正_选项卡文字增加左侧空格) & page.Text
