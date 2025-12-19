@@ -4,7 +4,7 @@ Public Class 新闻列表
     Public Shared Property 列表数据 As New List(Of KeyValuePair(Of String, String))
 
     Public Shared Sub 显示新闻列表()
-        Form1.Panel新闻列表面板.Controls.Clear()
+        Form1.起始页面.Panel新闻列表面板.Controls.Clear()
 
         For i = 0 To 列表数据.Count - 1
             Dim c1 As New LinkLabel With {.AutoSize = True, .Dock = DockStyle.Top, .TextAlign = ContentAlignment.MiddleLeft, .Padding = New Padding(0, 0, 0, 10 * Form1.DPI), .BackColor = Color.Transparent, .ActiveLinkColor = Color.Violet, .Text = 列表数据(i).Key, .Tag = i, .Font = New Font(用户设置.实例对象.字体, 11), .LinkBehavior = LinkBehavior.HoverUnderline, .Cursor = Cursors.Hand}
@@ -35,7 +35,7 @@ Public Class 新闻列表
                 End Select
             End If
 
-            Form1.Panel新闻列表面板.Controls.Add(c1)
+            Form1.起始页面.Panel新闻列表面板.Controls.Add(c1)
             c1.BringToFront()
         Next
     End Sub
@@ -64,7 +64,7 @@ jx1:
                 If e.Result = "" Then
                     显示新闻列表()
                 Else
-                    Form1.Panel新闻列表面板.Controls.Add(New Label With {.Text = "获取新闻内容失败" & vbCrLf & vbCrLf & e.Result, .Dock = DockStyle.Fill, .AutoSize = False, .Font = New Font(用户设置.实例对象.字体, 11), .ForeColor = Color.Gray})
+                    Form1.起始页面.Panel新闻列表面板.Controls.Add(New Label With {.Text = "获取新闻内容失败" & vbCrLf & vbCrLf & e.Result, .Dock = DockStyle.Fill, .AutoSize = False, .Font = New Font(用户设置.实例对象.字体, 11), .ForeColor = Color.Gray})
                 End If
             End Sub
         服务器获取_新闻.RunWorkerAsync()

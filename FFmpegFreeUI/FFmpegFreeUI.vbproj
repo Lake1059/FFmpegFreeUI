@@ -14,7 +14,7 @@
 	  <EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
 	  <Authors>1059 Studio</Authors>
 	  <Company>1059 Studio</Company>
-	  <Version>3.5.0</Version>
+	  <Version>5.0.0-dev1</Version>
 	  <SupportedOSPlatformVersion>10.0.17763.0</SupportedOSPlatformVersion>
 	  <ApplicationIcon>ico.ico</ApplicationIcon>
 	  <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
@@ -30,6 +30,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Language\**" />
+    <EmbeddedResource Remove="Language\**" />
+    <None Remove="Language\**" />
+    <Page Remove="Language\**" />
+  </ItemGroup>
 
   <ItemGroup>
     <Content Include="ico.ico" />
@@ -49,7 +56,7 @@
 
   <ItemGroup>
     <Reference Include="LibreHardwareMonitorLib">
-      <HintPath>..\DLL\LibreHardwareMonitorLib.dll</HintPath>
+      <HintPath>..\..\LibreHardwareMonitor-master\bin\Debug\x64\net10.0\LibreHardwareMonitorLib.dll</HintPath>
     </Reference>
   </ItemGroup>
 
@@ -91,6 +98,12 @@
     <None Update="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Update="Resources\语言_en.json">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\语言_zh.json">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 

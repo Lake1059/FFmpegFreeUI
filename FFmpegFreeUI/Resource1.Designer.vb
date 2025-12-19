@@ -84,11 +84,69 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  查找类似  的本地化字符串。
+        '''  查找类似 Enter  --&gt;  开始
+        '''Space  --&gt;  暂停
+        '''Ctrl + A  --&gt;  全选
+        '''Alt + A  --&gt;  反选
+        '''Delete  --&gt;  移除
+        '''Esc  --&gt;  重置
+        '''End  --&gt;  停止
+        '''F3  --&gt;  上移
+        '''F4  --&gt;  下移 的本地化字符串。
         '''</summary>
         Friend Shared ReadOnly Property 编码队列快捷键() As String
             Get
                 Return ResourceManager.GetString("编码队列快捷键", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  查找类似 {
+        '''  &quot;Button.StartMission&quot;: &quot;Start&quot;,
+        '''  &quot;Button.PauseMission&quot;: &quot;Pause&quot;,
+        '''  &quot;Button.ResumeMission&quot;: &quot;Resume&quot;,
+        '''  &quot;Button.StopMission&quot;: &quot;Stop&quot;,
+        '''  &quot;Button.RemoveMission&quot;: &quot;Remove&quot;,
+        '''  &quot;Button.ResetMission&quot;: &quot;Reset&quot;,
+        '''  &quot;Button.LocateMission&quot;: &quot;Locate&quot;,
+        '''  &quot;Button.MissionMenu&quot;: &quot;Mission Menu&quot;,
+        '''  &quot;Label.Status&quot;: &quot;Status&quot;,
+        '''  &quot;Label.Progress&quot;: &quot;Progress&quot;,
+        '''  &quot;Label.Speed&quot;: &quot;Speed&quot;,
+        '''  &quot;Label.OutputSize&quot;: &quot;Size &amp;&amp; Remaining&quot;,
+        '''  &quot;Label.Quality&quot;: &quot;q&quot;,
+        '''  &quot;Label.Bitrate&quot;: &quot;Bitrate&quot;,
+        '''  &quot;Label.TimeRemaining&quot;: &quot;Time [字符串的其余部分被截断]&quot;; 的本地化字符串。
+        '''</summary>
+        Friend Shared ReadOnly Property 语言_en() As String
+            Get
+                Return ResourceManager.GetString("语言_en", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  查找类似 {
+        '''  &quot;Button.StartMission&quot;: &quot;开始&quot;,
+        '''  &quot;Button.PauseMission&quot;: &quot;暂停&quot;,
+        '''  &quot;Button.ResumeMission&quot;: &quot;恢复&quot;,
+        '''  &quot;Button.StopMission&quot;: &quot;停止&quot;,
+        '''  &quot;Button.RemoveMission&quot;: &quot;移除&quot;,
+        '''  &quot;Button.ResetMission&quot;: &quot;重置&quot;,
+        '''  &quot;Button.LocateMission&quot;: &quot;定位&quot;,
+        '''  &quot;Button.MissionMenu&quot;: &quot;任务管理菜单&quot;,
+        '''  &quot;Label.Status&quot;: &quot;状态&quot;,
+        '''  &quot;Label.Progress&quot;: &quot;进度&quot;,
+        '''  &quot;Label.Speed&quot;: &quot;效率&quot;,
+        '''  &quot;Label.OutputSize&quot;: &quot;输出大小 &amp;&amp; 预估&quot;,
+        '''  &quot;Label.Quality&quot;: &quot;质量&quot;,
+        '''  &quot;Label.Bitrate&quot;: &quot;比特率&quot;,
+        '''  &quot;Label.TimeRemaining&quot;: &quot;预计剩余 &amp;&amp; 已用&quot;,
+        '''  &quot;LinkLabel.Send&quot;: &quot;发送&quot;,
+        '''  &quot;LinkLabel.Sw [字符串的其余部分被截断]&quot;; 的本地化字符串。
+        '''</summary>
+        Friend Shared ReadOnly Property 语言_zh() As String
+            Get
+                Return ResourceManager.GetString("语言_zh", resourceCulture)
             End Get
         End Property
         

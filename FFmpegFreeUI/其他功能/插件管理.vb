@@ -51,14 +51,14 @@ Public Class 插件管理
 
             If 用户设置.实例对象.个性化_起始页标题 <> "" Then
                 Form1.设置页面.UiTextBox1.Text = 用户设置.实例对象.个性化_起始页标题
-                Form1.Label主标题.Text = 用户设置.实例对象.个性化_起始页标题
+                Form1.起始页面.Label主标题.Text = 用户设置.实例对象.个性化_起始页标题
             Else
                 Form1.设置页面.UiTextBox1.Text = ""
             End If
 
             If 用户设置.实例对象.个性化_起始页副标题 <> "" Then
                 Form1.设置页面.UiTextBox2.Text = 用户设置.实例对象.个性化_起始页副标题
-                Form1.Label副标题.Text = 用户设置.实例对象.个性化_起始页副标题
+                Form1.起始页面.Label副标题.Text = 用户设置.实例对象.个性化_起始页副标题
             Else
                 Form1.设置页面.UiTextBox2.Text = ""
             End If
@@ -72,7 +72,7 @@ Public Class 插件管理
 
             If FileIO.FileSystem.FileExists(用户设置.实例对象.个性化_起始页背景图) Then
                 Form1.设置页面.Label14.Text = 用户设置.实例对象.个性化_起始页背景图
-                Form1.Panel5.BackgroundImage = LoadImageFromFile(用户设置.实例对象.个性化_起始页背景图)
+                Form1.起始页面.Panel5.BackgroundImage = LoadImageFromFile(用户设置.实例对象.个性化_起始页背景图)
             Else
                 Form1.设置页面.Label14.Text = ""
                 用户设置.实例对象.个性化_起始页背景图 = ""

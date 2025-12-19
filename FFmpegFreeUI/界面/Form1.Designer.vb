@@ -26,41 +26,6 @@ Partial Class Form1
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form1))
         UiTabControlMenu1 = New Sunny.UI.UITabControlMenu()
         TabPage起始页面 = New TabPage()
-        Panel5 = New Panel()
-        Panel新闻列表面板 = New Panel()
-        Label29 = New Label()
-        Panel44 = New Panel()
-        Label35 = New Label()
-        Label28 = New Label()
-        Label1 = New Label()
-        Label21 = New Label()
-        Label14 = New Label()
-        Label126 = New Label()
-        Label9 = New Label()
-        Panel7 = New Panel()
-        Label122 = New Label()
-        Label75 = New Label()
-        Label73 = New Label()
-        Label65 = New Label()
-        Label64 = New Label()
-        Label129 = New Label()
-        LinkLabel8 = New LinkLabel()
-        LinkLabel1 = New LinkLabel()
-        LinkLabel6 = New LinkLabel()
-        LinkLabel5 = New LinkLabel()
-        LinkLabel4 = New LinkLabel()
-        LinkLabel3 = New LinkLabel()
-        LinkLabel2 = New LinkLabel()
-        LinkLabel7 = New LinkLabel()
-        Label127 = New Label()
-        Panel73 = New Panel()
-        Label副标题 = New Label()
-        Label主标题 = New Label()
-        Label11 = New Label()
-        PictureBox1 = New PictureBox()
-        Panel16 = New Panel()
-        Label36 = New Label()
-        LinkLabel清理内存 = New LinkLabel()
         TabPage编码队列 = New TabPage()
         Panel输出面板 = New Panel()
         Panel77 = New Panel()
@@ -108,21 +73,6 @@ Partial Class Form1
         UiButton暂停任务 = New Sunny.UI.UIButton()
         UiButton开始任务 = New Sunny.UI.UIButton()
         TabPage准备文件 = New TabPage()
-        Panel58 = New Panel()
-        ListView2 = New ListView()
-        ColumnHeader9 = New ColumnHeader()
-        Label2 = New Label()
-        Panel3 = New Panel()
-        Label102 = New Label()
-        UiButton12 = New Sunny.UI.UIButton()
-        Label18 = New Label()
-        UiButton11 = New Sunny.UI.UIButton()
-        Label17 = New Label()
-        UiButton10 = New Sunny.UI.UIButton()
-        Label24 = New Label()
-        UiButton18 = New Sunny.UI.UIButton()
-        Label19 = New Label()
-        UiButton14 = New Sunny.UI.UIButton()
         TabPage参数面板 = New TabPage()
         Panel6 = New Panel()
         TabPage媒体信息 = New TabPage()
@@ -133,38 +83,21 @@ Partial Class Form1
         Panel75 = New Panel()
         Label123 = New Label()
         UiButton打开文件显示参数 = New Sunny.UI.UIButton()
-        Label22 = New Label()
-        TabPageEX混流 = New TabPage()
-        TabPageEX合并 = New TabPage()
+        TabPage混流 = New TabPage()
+        TabPage合并 = New TabPage()
         TabPage性能监控 = New TabPage()
-        Panel17 = New Panel()
-        Label46 = New Label()
-        Panel20 = New Panel()
-        ListView4 = New ListView()
-        ColumnHeader12 = New ColumnHeader()
-        Panel18 = New Panel()
-        ListView3 = New ListView()
-        ColumnHeader10 = New ColumnHeader()
-        Panel25 = New Panel()
-        Panel26 = New Panel()
-        Label27 = New Label()
-        UiButton切换处理器占用面板 = New Sunny.UI.UIButton()
-        Label31 = New Label()
         TabPage插件扩展 = New TabPage()
         Panel21 = New Panel()
         Panel24 = New Panel()
         Panel22 = New Panel()
         Label16 = New Label()
         UiComboBox3 = New Sunny.UI.UIComboBox()
-        TabPage软件设置 = New TabPage()
+        TabPage设置 = New TabPage()
+        TabPage支持者名单 = New TabPage()
+        Panel顶部视觉修正区域 = New Panel()
+        Panel顶部视觉修正区域_二级选项卡 = New Panel()
+        Panel顶部视觉修正区域_一级选项卡 = New Panel()
         UiTabControlMenu1.SuspendLayout()
-        TabPage起始页面.SuspendLayout()
-        Panel5.SuspendLayout()
-        Panel44.SuspendLayout()
-        Panel7.SuspendLayout()
-        Panel73.SuspendLayout()
-        CType(PictureBox1, ComponentModel.ISupportInitialize).BeginInit()
-        Panel16.SuspendLayout()
         TabPage编码队列.SuspendLayout()
         Panel输出面板.SuspendLayout()
         Panel77.SuspendLayout()
@@ -176,24 +109,16 @@ Partial Class Form1
         Panel35.SuspendLayout()
         Panel36.SuspendLayout()
         Panel2.SuspendLayout()
-        TabPage准备文件.SuspendLayout()
-        Panel58.SuspendLayout()
-        Panel3.SuspendLayout()
         TabPage参数面板.SuspendLayout()
         TabPage媒体信息.SuspendLayout()
         Panel4.SuspendLayout()
         Panel76.SuspendLayout()
         Panel9.SuspendLayout()
         Panel75.SuspendLayout()
-        TabPage性能监控.SuspendLayout()
-        Panel17.SuspendLayout()
-        Panel20.SuspendLayout()
-        Panel18.SuspendLayout()
-        Panel25.SuspendLayout()
-        Panel26.SuspendLayout()
         TabPage插件扩展.SuspendLayout()
         Panel21.SuspendLayout()
         Panel22.SuspendLayout()
+        Panel顶部视觉修正区域.SuspendLayout()
         SuspendLayout()
         ' 
         ' UiTabControlMenu1
@@ -204,22 +129,23 @@ Partial Class Form1
         UiTabControlMenu1.Controls.Add(TabPage准备文件)
         UiTabControlMenu1.Controls.Add(TabPage参数面板)
         UiTabControlMenu1.Controls.Add(TabPage媒体信息)
-        UiTabControlMenu1.Controls.Add(TabPageEX混流)
-        UiTabControlMenu1.Controls.Add(TabPageEX合并)
+        UiTabControlMenu1.Controls.Add(TabPage混流)
+        UiTabControlMenu1.Controls.Add(TabPage合并)
         UiTabControlMenu1.Controls.Add(TabPage性能监控)
         UiTabControlMenu1.Controls.Add(TabPage插件扩展)
-        UiTabControlMenu1.Controls.Add(TabPage软件设置)
+        UiTabControlMenu1.Controls.Add(TabPage设置)
+        UiTabControlMenu1.Controls.Add(TabPage支持者名单)
         UiTabControlMenu1.Dock = DockStyle.Fill
         UiTabControlMenu1.DrawMode = TabDrawMode.OwnerDrawFixed
         UiTabControlMenu1.FillColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         UiTabControlMenu1.Font = New Font("微软雅黑", 11F)
-        UiTabControlMenu1.ItemSize = New Size(150, 40)
-        UiTabControlMenu1.Location = New Point(0, 0)
+        UiTabControlMenu1.ItemSize = New Size(150, 38)
+        UiTabControlMenu1.Location = New Point(0, 10)
         UiTabControlMenu1.MenuStyle = Sunny.UI.UIMenuStyle.Custom
         UiTabControlMenu1.Multiline = True
         UiTabControlMenu1.Name = "UiTabControlMenu1"
         UiTabControlMenu1.SelectedIndex = 0
-        UiTabControlMenu1.Size = New Size(1184, 661)
+        UiTabControlMenu1.Size = New Size(1184, 651)
         UiTabControlMenu1.SizeMode = TabSizeMode.Fixed
         UiTabControlMenu1.TabIndex = 1
         UiTabControlMenu1.TabSelectedColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
@@ -230,496 +156,12 @@ Partial Class Form1
         ' TabPage起始页面
         ' 
         TabPage起始页面.BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
-        TabPage起始页面.Controls.Add(Panel5)
-        TabPage起始页面.Controls.Add(Panel73)
         TabPage起始页面.Font = New Font("微软雅黑", 10F)
         TabPage起始页面.Location = New Point(151, 0)
         TabPage起始页面.Name = "TabPage起始页面"
-        TabPage起始页面.Size = New Size(1033, 661)
+        TabPage起始页面.Size = New Size(1033, 651)
         TabPage起始页面.TabIndex = 10
         TabPage起始页面.Text = "3FUI"
-        ' 
-        ' Panel5
-        ' 
-        Panel5.BackgroundImageLayout = ImageLayout.Zoom
-        Panel5.Controls.Add(Panel新闻列表面板)
-        Panel5.Controls.Add(Label29)
-        Panel5.Controls.Add(Panel44)
-        Panel5.Controls.Add(Panel7)
-        Panel5.Dock = DockStyle.Fill
-        Panel5.Location = New Point(0, 90)
-        Panel5.Name = "Panel5"
-        Panel5.Size = New Size(1033, 571)
-        Panel5.TabIndex = 87
-        ' 
-        ' Panel新闻列表面板
-        ' 
-        Panel新闻列表面板.BackColor = Color.Transparent
-        Panel新闻列表面板.Dock = DockStyle.Fill
-        Panel新闻列表面板.Location = New Point(645, 54)
-        Panel新闻列表面板.Name = "Panel新闻列表面板"
-        Panel新闻列表面板.Padding = New Padding(1, 0, 20, 20)
-        Panel新闻列表面板.Size = New Size(388, 517)
-        Panel新闻列表面板.TabIndex = 86
-        ' 
-        ' Label29
-        ' 
-        Label29.AutoSize = True
-        Label29.BackColor = Color.Transparent
-        Label29.Dock = DockStyle.Top
-        Label29.Font = New Font("微软雅黑", 13F)
-        Label29.Location = New Point(645, 0)
-        Label29.Name = "Label29"
-        Label29.Padding = New Padding(0, 20, 0, 10)
-        Label29.Size = New Size(82, 54)
-        Label29.TabIndex = 85
-        Label29.Text = "新闻列表"
-        ' 
-        ' Panel44
-        ' 
-        Panel44.BackColor = Color.Transparent
-        Panel44.BackgroundImageLayout = ImageLayout.Stretch
-        Panel44.Controls.Add(Label35)
-        Panel44.Controls.Add(Label28)
-        Panel44.Controls.Add(Label1)
-        Panel44.Controls.Add(Label21)
-        Panel44.Controls.Add(Label14)
-        Panel44.Controls.Add(Label126)
-        Panel44.Controls.Add(Label9)
-        Panel44.Dock = DockStyle.Left
-        Panel44.Font = New Font("微软雅黑", 9.75F)
-        Panel44.Location = New Point(300, 0)
-        Panel44.Name = "Panel44"
-        Panel44.Padding = New Padding(0, 0, 20, 0)
-        Panel44.Size = New Size(345, 571)
-        Panel44.TabIndex = 0
-        ' 
-        ' Label35
-        ' 
-        Label35.Dock = DockStyle.Fill
-        Label35.Font = New Font("微软雅黑", 10F)
-        Label35.ForeColor = Color.Gray
-        Label35.Location = New Point(0, 379)
-        Label35.Name = "Label35"
-        Label35.Padding = New Padding(0, 5, 0, 0)
-        Label35.Size = New Size(325, 192)
-        Label35.TabIndex = 47
-        Label35.Text = "请尽可能只在主显示器上使用；在不同缩放的显示器之间移动很容易导致 SunnyUI 出现字体过大的问题，其内部支持很有限；如果在主显示器上出现问题请直接汇报。"
-        ' 
-        ' Label28
-        ' 
-        Label28.AutoSize = True
-        Label28.Dock = DockStyle.Top
-        Label28.Font = New Font("微软雅黑", 13F)
-        Label28.Location = New Point(0, 330)
-        Label28.Name = "Label28"
-        Label28.Padding = New Padding(0, 20, 0, 5)
-        Label28.Size = New Size(104, 49)
-        Label28.TabIndex = 46
-        Label28.Text = "高 DPI 支持"
-        ' 
-        ' Label1
-        ' 
-        Label1.Dock = DockStyle.Top
-        Label1.Font = New Font("微软雅黑", 10F)
-        Label1.ForeColor = Color.Gray
-        Label1.Location = New Point(0, 249)
-        Label1.Name = "Label1"
-        Label1.Padding = New Padding(0, 10, 0, 0)
-        Label1.Size = New Size(325, 81)
-        Label1.TabIndex = 48
-        Label1.Text = "求助时请第一时间提供报错信息、任务命令行和参数总览，保持专注和成熟，不要发泄情绪，抱怨和算卦不会解决任何问题。"
-        ' 
-        ' Label21
-        ' 
-        Label21.Dock = DockStyle.Top
-        Label21.Font = New Font("微软雅黑", 10F)
-        Label21.ForeColor = Color.Gray
-        Label21.Location = New Point(0, 173)
-        Label21.Name = "Label21"
-        Label21.Padding = New Padding(0, 5, 0, 0)
-        Label21.Size = New Size(325, 76)
-        Label21.TabIndex = 40
-        Label21.Text = "3FUI 的主要逻辑是先去参数面板设定好选项，再把文件拖进编码队列自动开始。遇到任何不懂的概念可直接问 AI，这些都是写在维基百科里的词汇。"
-        ' 
-        ' Label14
-        ' 
-        Label14.AutoSize = True
-        Label14.Dock = DockStyle.Top
-        Label14.Font = New Font("微软雅黑", 13F)
-        Label14.Location = New Point(0, 124)
-        Label14.Name = "Label14"
-        Label14.Padding = New Padding(0, 20, 0, 5)
-        Label14.Size = New Size(82, 49)
-        Label14.TabIndex = 39
-        Label14.Text = "帮助信息"
-        ' 
-        ' Label126
-        ' 
-        Label126.Dock = DockStyle.Top
-        Label126.Font = New Font("微软雅黑", 10F)
-        Label126.ForeColor = Color.Gray
-        Label126.Location = New Point(0, 49)
-        Label126.Name = "Label126"
-        Label126.Padding = New Padding(0, 5, 0, 0)
-        Label126.Size = New Size(325, 75)
-        Label126.TabIndex = 35
-        Label126.Text = "即便已经是正式版，3FUI 还有大量可改进的地方和需要修复的问题，欢迎积极提出建议和提交修改，很多问题一直存在却一直没人上报。"
-        ' 
-        ' Label9
-        ' 
-        Label9.AutoSize = True
-        Label9.Dock = DockStyle.Top
-        Label9.Font = New Font("微软雅黑", 13F)
-        Label9.Location = New Point(0, 0)
-        Label9.Name = "Label9"
-        Label9.Padding = New Padding(0, 20, 0, 5)
-        Label9.Size = New Size(82, 49)
-        Label9.TabIndex = 24
-        Label9.Text = "参与开发"
-        ' 
-        ' Panel7
-        ' 
-        Panel7.BackColor = Color.Transparent
-        Panel7.Controls.Add(Label122)
-        Panel7.Controls.Add(Label75)
-        Panel7.Controls.Add(Label73)
-        Panel7.Controls.Add(Label65)
-        Panel7.Controls.Add(Label64)
-        Panel7.Controls.Add(Label129)
-        Panel7.Controls.Add(LinkLabel8)
-        Panel7.Controls.Add(LinkLabel1)
-        Panel7.Controls.Add(LinkLabel6)
-        Panel7.Controls.Add(LinkLabel5)
-        Panel7.Controls.Add(LinkLabel4)
-        Panel7.Controls.Add(LinkLabel3)
-        Panel7.Controls.Add(LinkLabel2)
-        Panel7.Controls.Add(LinkLabel7)
-        Panel7.Controls.Add(Label127)
-        Panel7.Dock = DockStyle.Left
-        Panel7.Location = New Point(0, 0)
-        Panel7.Name = "Panel7"
-        Panel7.Size = New Size(300, 571)
-        Panel7.TabIndex = 84
-        ' 
-        ' Label122
-        ' 
-        Label122.Dock = DockStyle.Fill
-        Label122.Font = New Font("微软雅黑", 10F)
-        Label122.ForeColor = Color.Gray
-        Label122.Location = New Point(0, 398)
-        Label122.Name = "Label122"
-        Label122.Padding = New Padding(20, 5, 20, 20)
-        Label122.Size = New Size(300, 173)
-        Label122.TabIndex = 37
-        Label122.Text = "更新信息"
-        ' 
-        ' Label75
-        ' 
-        Label75.AutoSize = True
-        Label75.Dock = DockStyle.Top
-        Label75.Font = New Font("微软雅黑", 10F)
-        Label75.ForeColor = Color.Gray
-        Label75.Location = New Point(0, 373)
-        Label75.Name = "Label75"
-        Label75.Padding = New Padding(20, 5, 0, 0)
-        Label75.Size = New Size(85, 25)
-        Label75.TabIndex = 36
-        Label75.Text = "更新信息"
-        ' 
-        ' Label73
-        ' 
-        Label73.AutoSize = True
-        Label73.Dock = DockStyle.Top
-        Label73.Font = New Font("微软雅黑", 10F)
-        Label73.ForeColor = Color.Gray
-        Label73.Location = New Point(0, 348)
-        Label73.Name = "Label73"
-        Label73.Padding = New Padding(20, 5, 0, 0)
-        Label73.Size = New Size(85, 25)
-        Label73.TabIndex = 35
-        Label73.Text = "更新信息"
-        ' 
-        ' Label65
-        ' 
-        Label65.AutoSize = True
-        Label65.Dock = DockStyle.Top
-        Label65.Font = New Font("微软雅黑", 10F)
-        Label65.ForeColor = Color.Gray
-        Label65.Location = New Point(0, 323)
-        Label65.Name = "Label65"
-        Label65.Padding = New Padding(20, 5, 0, 0)
-        Label65.Size = New Size(85, 25)
-        Label65.TabIndex = 34
-        Label65.Text = "更新信息"
-        ' 
-        ' Label64
-        ' 
-        Label64.AutoSize = True
-        Label64.Dock = DockStyle.Top
-        Label64.Font = New Font("微软雅黑", 10F)
-        Label64.ForeColor = Color.Gray
-        Label64.Location = New Point(0, 298)
-        Label64.Name = "Label64"
-        Label64.Padding = New Padding(20, 5, 0, 0)
-        Label64.Size = New Size(85, 25)
-        Label64.TabIndex = 33
-        Label64.Text = "更新信息"
-        ' 
-        ' Label129
-        ' 
-        Label129.AutoSize = True
-        Label129.Dock = DockStyle.Top
-        Label129.Font = New Font("微软雅黑", 13F)
-        Label129.Location = New Point(0, 249)
-        Label129.Name = "Label129"
-        Label129.Padding = New Padding(20, 20, 0, 5)
-        Label129.Size = New Size(102, 49)
-        Label129.TabIndex = 32
-        Label129.Text = "检查更新"
-        ' 
-        ' LinkLabel8
-        ' 
-        LinkLabel8.ActiveLinkColor = Color.CornflowerBlue
-        LinkLabel8.AutoSize = True
-        LinkLabel8.Dock = DockStyle.Top
-        LinkLabel8.Font = New Font("微软雅黑", 10F)
-        LinkLabel8.LinkBehavior = LinkBehavior.HoverUnderline
-        LinkLabel8.LinkColor = Color.CornflowerBlue
-        LinkLabel8.Location = New Point(0, 224)
-        LinkLabel8.Name = "LinkLabel8"
-        LinkLabel8.Padding = New Padding(20, 5, 0, 0)
-        LinkLabel8.Size = New Size(123, 25)
-        LinkLabel8.TabIndex = 31
-        LinkLabel8.TabStop = True
-        LinkLabel8.Text = "官网：3fui.top"
-        ' 
-        ' LinkLabel1
-        ' 
-        LinkLabel1.ActiveLinkColor = Color.CornflowerBlue
-        LinkLabel1.AutoSize = True
-        LinkLabel1.Dock = DockStyle.Top
-        LinkLabel1.Font = New Font("微软雅黑", 10F)
-        LinkLabel1.LinkBehavior = LinkBehavior.HoverUnderline
-        LinkLabel1.LinkColor = Color.CornflowerBlue
-        LinkLabel1.Location = New Point(0, 199)
-        LinkLabel1.Name = "LinkLabel1"
-        LinkLabel1.Padding = New Padding(20, 5, 0, 0)
-        LinkLabel1.Size = New Size(185, 25)
-        LinkLabel1.TabIndex = 30
-        LinkLabel1.TabStop = True
-        LinkLabel1.Text = "官网：ffmpegfreeui.top"
-        ' 
-        ' LinkLabel6
-        ' 
-        LinkLabel6.ActiveLinkColor = Color.Orchid
-        LinkLabel6.AutoSize = True
-        LinkLabel6.Dock = DockStyle.Top
-        LinkLabel6.Font = New Font("微软雅黑", 10F)
-        LinkLabel6.LinkBehavior = LinkBehavior.HoverUnderline
-        LinkLabel6.LinkColor = Color.Orchid
-        LinkLabel6.Location = New Point(0, 174)
-        LinkLabel6.Name = "LinkLabel6"
-        LinkLabel6.Padding = New Padding(20, 5, 0, 0)
-        LinkLabel6.Size = New Size(197, 25)
-        LinkLabel6.TabIndex = 28
-        LinkLabel6.TabStop = True
-        LinkLabel6.Text = "查看作者主页（哔哩哔哩）"
-        ' 
-        ' LinkLabel5
-        ' 
-        LinkLabel5.ActiveLinkColor = Color.MediumPurple
-        LinkLabel5.AutoSize = True
-        LinkLabel5.Dock = DockStyle.Top
-        LinkLabel5.Font = New Font("微软雅黑", 10F)
-        LinkLabel5.LinkBehavior = LinkBehavior.HoverUnderline
-        LinkLabel5.LinkColor = Color.MediumPurple
-        LinkLabel5.Location = New Point(0, 149)
-        LinkLabel5.Name = "LinkLabel5"
-        LinkLabel5.Padding = New Padding(20, 5, 0, 0)
-        LinkLabel5.Size = New Size(156, 25)
-        LinkLabel5.TabIndex = 27
-        LinkLabel5.TabStop = True
-        LinkLabel5.Text = "赞助一下（afdian）"
-        ' 
-        ' LinkLabel4
-        ' 
-        LinkLabel4.ActiveLinkColor = Color.OliveDrab
-        LinkLabel4.AutoSize = True
-        LinkLabel4.Dock = DockStyle.Top
-        LinkLabel4.Font = New Font("微软雅黑", 10F)
-        LinkLabel4.LinkBehavior = LinkBehavior.HoverUnderline
-        LinkLabel4.LinkColor = Color.OliveDrab
-        LinkLabel4.Location = New Point(0, 124)
-        LinkLabel4.Name = "LinkLabel4"
-        LinkLabel4.Padding = New Padding(20, 5, 0, 0)
-        LinkLabel4.Size = New Size(176, 25)
-        LinkLabel4.TabIndex = 26
-        LinkLabel4.TabStop = True
-        LinkLabel4.Text = "下载 FFmpeg（BtbN）"
-        ' 
-        ' LinkLabel3
-        ' 
-        LinkLabel3.ActiveLinkColor = Color.OliveDrab
-        LinkLabel3.AutoSize = True
-        LinkLabel3.Dock = DockStyle.Top
-        LinkLabel3.Font = New Font("微软雅黑", 10F)
-        LinkLabel3.LinkBehavior = LinkBehavior.HoverUnderline
-        LinkLabel3.LinkColor = Color.OliveDrab
-        LinkLabel3.Location = New Point(0, 99)
-        LinkLabel3.Name = "LinkLabel3"
-        LinkLabel3.Padding = New Padding(20, 5, 0, 0)
-        LinkLabel3.Size = New Size(202, 25)
-        LinkLabel3.TabIndex = 25
-        LinkLabel3.TabStop = True
-        LinkLabel3.Text = "下载 FFmpeg（gyan.dev）"
-        ' 
-        ' LinkLabel2
-        ' 
-        LinkLabel2.ActiveLinkColor = Color.OliveDrab
-        LinkLabel2.AutoSize = True
-        LinkLabel2.Dock = DockStyle.Top
-        LinkLabel2.Font = New Font("微软雅黑", 10F)
-        LinkLabel2.LinkBehavior = LinkBehavior.HoverUnderline
-        LinkLabel2.LinkColor = Color.OliveDrab
-        LinkLabel2.Location = New Point(0, 74)
-        LinkLabel2.Name = "LinkLabel2"
-        LinkLabel2.Padding = New Padding(20, 5, 0, 0)
-        LinkLabel2.Size = New Size(245, 25)
-        LinkLabel2.TabIndex = 24
-        LinkLabel2.TabStop = True
-        LinkLabel2.Text = "FFmpeg 官方文档（ffmpeg.org）"
-        ' 
-        ' LinkLabel7
-        ' 
-        LinkLabel7.ActiveLinkColor = Color.OliveDrab
-        LinkLabel7.AutoSize = True
-        LinkLabel7.Dock = DockStyle.Top
-        LinkLabel7.Font = New Font("微软雅黑", 10F)
-        LinkLabel7.LinkBehavior = LinkBehavior.HoverUnderline
-        LinkLabel7.LinkColor = Color.OliveDrab
-        LinkLabel7.Location = New Point(0, 49)
-        LinkLabel7.Name = "LinkLabel7"
-        LinkLabel7.Padding = New Padding(20, 5, 0, 0)
-        LinkLabel7.Size = New Size(109, 25)
-        LinkLabel7.TabIndex = 29
-        LinkLabel7.TabStop = True
-        LinkLabel7.Text = "GitHub 仓库"
-        ' 
-        ' Label127
-        ' 
-        Label127.AutoSize = True
-        Label127.Dock = DockStyle.Top
-        Label127.Font = New Font("微软雅黑", 13F)
-        Label127.Location = New Point(0, 0)
-        Label127.Name = "Label127"
-        Label127.Padding = New Padding(20, 20, 0, 5)
-        Label127.Size = New Size(120, 49)
-        Label127.TabIndex = 23
-        Label127.Text = "链接和文档"
-        ' 
-        ' Panel73
-        ' 
-        Panel73.AutoSize = True
-        Panel73.BackColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        Panel73.Controls.Add(Label副标题)
-        Panel73.Controls.Add(Label主标题)
-        Panel73.Controls.Add(Label11)
-        Panel73.Controls.Add(PictureBox1)
-        Panel73.Controls.Add(Panel16)
-        Panel73.Dock = DockStyle.Top
-        Panel73.Location = New Point(0, 0)
-        Panel73.Name = "Panel73"
-        Panel73.Padding = New Padding(20)
-        Panel73.Size = New Size(1033, 90)
-        Panel73.TabIndex = 81
-        ' 
-        ' Label副标题
-        ' 
-        Label副标题.AutoSize = True
-        Label副标题.Dock = DockStyle.Top
-        Label副标题.Font = New Font("微软雅黑", 10F)
-        Label副标题.ForeColor = Color.CornflowerBlue
-        Label副标题.Location = New Point(80, 50)
-        Label副标题.Name = "Label副标题"
-        Label副标题.Padding = New Padding(1, 0, 0, 0)
-        Label副标题.Size = New Size(410, 20)
-        Label副标题.TabIndex = 12
-        Label副标题.Text = "将 ffmpeg.exe 加入环境变量或放置于 3FUI 程序目录下即可调用"
-        ' 
-        ' Label主标题
-        ' 
-        Label主标题.AutoSize = True
-        Label主标题.Dock = DockStyle.Top
-        Label主标题.Font = New Font("微软雅黑", 13F, FontStyle.Bold)
-        Label主标题.Location = New Point(80, 20)
-        Label主标题.Name = "Label主标题"
-        Label主标题.Padding = New Padding(0, 0, 0, 5)
-        Label主标题.Size = New Size(210, 30)
-        Label主标题.TabIndex = 9
-        Label主标题.Text = "FFmpegFreeUI Official"
-        ' 
-        ' Label11
-        ' 
-        Label11.Dock = DockStyle.Left
-        Label11.ForeColor = Color.Gray
-        Label11.Location = New Point(70, 20)
-        Label11.Name = "Label11"
-        Label11.Padding = New Padding(10, 0, 0, 0)
-        Label11.Size = New Size(10, 50)
-        Label11.TabIndex = 113
-        Label11.TextAlign = ContentAlignment.MiddleLeft
-        ' 
-        ' PictureBox1
-        ' 
-        PictureBox1.Dock = DockStyle.Left
-        PictureBox1.Location = New Point(20, 20)
-        PictureBox1.Name = "PictureBox1"
-        PictureBox1.Size = New Size(50, 50)
-        PictureBox1.SizeMode = PictureBoxSizeMode.Zoom
-        PictureBox1.TabIndex = 13
-        PictureBox1.TabStop = False
-        ' 
-        ' Panel16
-        ' 
-        Panel16.AutoSize = True
-        Panel16.Controls.Add(Label36)
-        Panel16.Controls.Add(LinkLabel清理内存)
-        Panel16.Dock = DockStyle.Right
-        Panel16.Location = New Point(809, 20)
-        Panel16.Name = "Panel16"
-        Panel16.Size = New Size(204, 50)
-        Panel16.TabIndex = 116
-        ' 
-        ' Label36
-        ' 
-        Label36.AutoSize = True
-        Label36.Dock = DockStyle.Fill
-        Label36.Font = New Font("微软雅黑", 10.8F, FontStyle.Bold, GraphicsUnit.Point, CByte(134))
-        Label36.ForeColor = Color.Gray
-        Label36.Location = New Point(0, 0)
-        Label36.Name = "Label36"
-        Label36.Padding = New Padding(0, 3, 0, 0)
-        Label36.Size = New Size(204, 22)
-        Label36.TabIndex = 115
-        Label36.Text = "@湖边的稻草 (1059 Studio)"
-        Label36.TextAlign = ContentAlignment.MiddleRight
-        ' 
-        ' LinkLabel清理内存
-        ' 
-        LinkLabel清理内存.ActiveLinkColor = Color.MediumPurple
-        LinkLabel清理内存.Dock = DockStyle.Fill
-        LinkLabel清理内存.Font = New Font("微软雅黑", 10F)
-        LinkLabel清理内存.LinkBehavior = LinkBehavior.HoverUnderline
-        LinkLabel清理内存.LinkColor = Color.MediumPurple
-        LinkLabel清理内存.Location = New Point(0, 0)
-        LinkLabel清理内存.Name = "LinkLabel清理内存"
-        LinkLabel清理内存.Padding = New Padding(0, 0, 0, 3)
-        LinkLabel清理内存.Size = New Size(204, 50)
-        LinkLabel清理内存.TabIndex = 28
-        LinkLabel清理内存.TabStop = True
-        LinkLabel清理内存.Text = "清理 3FUI 内存 (GC+内核)"
-        LinkLabel清理内存.TextAlign = ContentAlignment.BottomRight
         ' 
         ' TabPage编码队列
         ' 
@@ -732,7 +174,7 @@ Partial Class Form1
         TabPage编码队列.Font = New Font("微软雅黑", 10F)
         TabPage编码队列.Location = New Point(151, 0)
         TabPage编码队列.Name = "TabPage编码队列"
-        TabPage编码队列.Size = New Size(1033, 661)
+        TabPage编码队列.Size = New Size(1033, 651)
         TabPage编码队列.TabIndex = 0
         TabPage编码队列.Text = "编码队列"
         ' 
@@ -743,7 +185,7 @@ Partial Class Form1
         Panel输出面板.Controls.Add(Label45)
         Panel输出面板.Controls.Add(Panel13)
         Panel输出面板.Dock = DockStyle.Right
-        Panel输出面板.Location = New Point(533, 90)
+        Panel输出面板.Location = New Point(533, 80)
         Panel输出面板.Name = "Panel输出面板"
         Panel输出面板.Padding = New Padding(10, 10, 10, 0)
         Panel输出面板.Size = New Size(500, 531)
@@ -905,7 +347,7 @@ Partial Class Form1
         ' 
         Panel56.Controls.Add(ListView1)
         Panel56.Dock = DockStyle.Fill
-        Panel56.Location = New Point(0, 90)
+        Panel56.Location = New Point(0, 80)
         Panel56.Name = "Panel56"
         Panel56.Padding = New Padding(15, 15, 0, 15)
         Panel56.Size = New Size(1033, 531)
@@ -951,7 +393,7 @@ Partial Class Form1
         Panel1.Controls.Add(Label比特率)
         Panel1.Controls.Add(Label预计剩余)
         Panel1.Dock = DockStyle.Top
-        Panel1.Location = New Point(0, 50)
+        Panel1.Location = New Point(0, 40)
         Panel1.Name = "Panel1"
         Panel1.Size = New Size(1033, 40)
         Panel1.TabIndex = 2
@@ -962,7 +404,7 @@ Partial Class Form1
         Panel15.Dock = DockStyle.Fill
         Panel15.Location = New Point(0, 0)
         Panel15.Name = "Panel15"
-        Panel15.Size = New Size(293, 40)
+        Panel15.Size = New Size(283, 40)
         Panel15.TabIndex = 8
         ' 
         ' UiButton任务管理菜单
@@ -992,76 +434,84 @@ Partial Class Form1
         UiButton任务管理菜单.RectSelectedColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
         UiButton任务管理菜单.Size = New Size(120, 40)
         UiButton任务管理菜单.TabIndex = 45
+        UiButton任务管理菜单.Tag = "Button.MissionMenu"
         UiButton任务管理菜单.Text = "任务管理菜单"
         UiButton任务管理菜单.TipsFont = New Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point, CByte(134))
         ' 
         ' Label状态
         ' 
         Label状态.Dock = DockStyle.Right
-        Label状态.Location = New Point(293, 0)
+        Label状态.Location = New Point(283, 0)
         Label状态.Name = "Label状态"
         Label状态.Size = New Size(80, 40)
         Label状态.TabIndex = 1
+        Label状态.Tag = "Label.Status"
         Label状态.Text = "状态"
         Label状态.TextAlign = ContentAlignment.MiddleLeft
         ' 
         ' Label进度
         ' 
         Label进度.Dock = DockStyle.Right
-        Label进度.Location = New Point(373, 0)
+        Label进度.Location = New Point(363, 0)
         Label进度.Name = "Label进度"
         Label进度.Size = New Size(70, 40)
         Label进度.TabIndex = 2
+        Label进度.Tag = "Label.Progress"
         Label进度.Text = "进度"
         Label进度.TextAlign = ContentAlignment.MiddleLeft
         ' 
         ' Label效率
         ' 
         Label效率.Dock = DockStyle.Right
-        Label效率.Location = New Point(443, 0)
+        Label效率.Location = New Point(433, 0)
         Label效率.Name = "Label效率"
         Label效率.Size = New Size(80, 40)
         Label效率.TabIndex = 3
+        Label效率.Tag = "Label.Speed"
         Label效率.Text = "效率"
         Label效率.TextAlign = ContentAlignment.MiddleLeft
         ' 
         ' Label输出大小
         ' 
         Label输出大小.Dock = DockStyle.Right
-        Label输出大小.Location = New Point(523, 0)
+        Label输出大小.Location = New Point(513, 0)
         Label输出大小.Name = "Label输出大小"
         Label输出大小.Size = New Size(150, 40)
         Label输出大小.TabIndex = 4
+        Label输出大小.Tag = "Label.OutputSize"
         Label输出大小.Text = "输出大小 && 预估"
         Label输出大小.TextAlign = ContentAlignment.MiddleLeft
         ' 
         ' Label质量
         ' 
         Label质量.Dock = DockStyle.Right
-        Label质量.Location = New Point(673, 0)
+        Label质量.Location = New Point(663, 0)
         Label质量.Name = "Label质量"
         Label质量.Size = New Size(55, 40)
         Label质量.TabIndex = 5
+        Label质量.Tag = "Label.Quality"
         Label质量.Text = "质量"
         Label质量.TextAlign = ContentAlignment.MiddleLeft
         ' 
         ' Label比特率
         ' 
         Label比特率.Dock = DockStyle.Right
-        Label比特率.Location = New Point(728, 0)
+        Label比特率.Location = New Point(718, 0)
         Label比特率.Name = "Label比特率"
         Label比特率.Size = New Size(115, 40)
         Label比特率.TabIndex = 6
+        Label比特率.Tag = "Label.Bitrate"
         Label比特率.Text = "比特率"
         Label比特率.TextAlign = ContentAlignment.MiddleLeft
         ' 
         ' Label预计剩余
         ' 
         Label预计剩余.Dock = DockStyle.Right
-        Label预计剩余.Location = New Point(843, 0)
+        Label预计剩余.Location = New Point(833, 0)
         Label预计剩余.Name = "Label预计剩余"
-        Label预计剩余.Size = New Size(190, 40)
+        Label预计剩余.Size = New Size(200, 40)
         Label预计剩余.TabIndex = 7
+        Label预计剩余.Tag = "Label.TimeRemaining"
         Label预计剩余.Text = "预计剩余 && 已用"
         Label预计剩余.TextAlign = ContentAlignment.MiddleLeft
         ' 
@@ -1071,7 +521,7 @@ Partial Class Form1
         Panel41.BackColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
         Panel41.Controls.Add(Panel35)
         Panel41.Dock = DockStyle.Bottom
-        Panel41.Location = New Point(0, 621)
+        Panel41.Location = New Point(0, 611)
         Panel41.Name = "Panel41"
         Panel41.Padding = New Padding(10)
         Panel41.Size = New Size(1033, 40)
@@ -1137,6 +587,7 @@ Partial Class Form1
         LinkLabel向ffmpeg发送消息.Size = New Size(37, 20)
         LinkLabel向ffmpeg发送消息.TabIndex = 16
         LinkLabel向ffmpeg发送消息.TabStop = True
+        LinkLabel向ffmpeg发送消息.Tag = "LinkLabel.Send"
         LinkLabel向ffmpeg发送消息.Text = "发送"
         ' 
         ' Panel2
@@ -1152,8 +603,8 @@ Partial Class Form1
         Panel2.Dock = DockStyle.Top
         Panel2.Location = New Point(0, 0)
         Panel2.Name = "Panel2"
-        Panel2.Padding = New Padding(0, 10, 10, 0)
-        Panel2.Size = New Size(1033, 50)
+        Panel2.Padding = New Padding(0, 0, 10, 0)
+        Panel2.Size = New Size(1033, 40)
         Panel2.TabIndex = 3
         ' 
         ' UiButton定位输出
@@ -1171,7 +622,7 @@ Partial Class Form1
         UiButton定位输出.ForeHoverColor = Color.MediumPurple
         UiButton定位输出.ForePressColor = Color.MediumPurple
         UiButton定位输出.ForeSelectedColor = Color.MediumPurple
-        UiButton定位输出.Location = New Point(390, 10)
+        UiButton定位输出.Location = New Point(390, 0)
         UiButton定位输出.MinimumSize = New Size(1, 1)
         UiButton定位输出.Name = "UiButton定位输出"
         UiButton定位输出.Radius = 0
@@ -1184,6 +635,7 @@ Partial Class Form1
         UiButton定位输出.RectSides = ToolStripStatusLabelBorderSides.None
         UiButton定位输出.Size = New Size(65, 40)
         UiButton定位输出.TabIndex = 86
+        UiButton定位输出.Tag = "Button.LocateMission"
         UiButton定位输出.Text = "定位"
         UiButton定位输出.TipsFont = New Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point, CByte(134))
         UiButton定位输出.TipsText = "定位输出"
@@ -1203,7 +655,7 @@ Partial Class Form1
         UiButton重置任务.ForeHoverColor = Color.Goldenrod
         UiButton重置任务.ForePressColor = Color.Goldenrod
         UiButton重置任务.ForeSelectedColor = Color.Goldenrod
-        UiButton重置任务.Location = New Point(325, 10)
+        UiButton重置任务.Location = New Point(325, 0)
         UiButton重置任务.MinimumSize = New Size(1, 1)
         UiButton重置任务.Name = "UiButton重置任务"
         UiButton重置任务.Radius = 0
@@ -1216,6 +668,7 @@ Partial Class Form1
         UiButton重置任务.RectSides = ToolStripStatusLabelBorderSides.None
         UiButton重置任务.Size = New Size(65, 40)
         UiButton重置任务.TabIndex = 78
+        UiButton重置任务.Tag = "Button.ResetMission"
         UiButton重置任务.Text = "重置"
         UiButton重置任务.TipsFont = New Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point, CByte(134))
         ' 
@@ -1234,7 +687,7 @@ Partial Class Form1
         UiButton移除任务.ForeHoverColor = Color.IndianRed
         UiButton移除任务.ForePressColor = Color.IndianRed
         UiButton移除任务.ForeSelectedColor = Color.IndianRed
-        UiButton移除任务.Location = New Point(260, 10)
+        UiButton移除任务.Location = New Point(260, 0)
         UiButton移除任务.MinimumSize = New Size(1, 1)
         UiButton移除任务.Name = "UiButton移除任务"
         UiButton移除任务.Radius = 0
@@ -1247,6 +700,7 @@ Partial Class Form1
         UiButton移除任务.RectSides = ToolStripStatusLabelBorderSides.None
         UiButton移除任务.Size = New Size(65, 40)
         UiButton移除任务.TabIndex = 54
+        UiButton移除任务.Tag = "Button.RemoveMission"
         UiButton移除任务.Text = "移除"
         UiButton移除任务.TipsFont = New Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point, CByte(134))
         ' 
@@ -1265,7 +719,7 @@ Partial Class Form1
         UiButton停止任务.ForeHoverColor = Color.IndianRed
         UiButton停止任务.ForePressColor = Color.IndianRed
         UiButton停止任务.ForeSelectedColor = Color.IndianRed
-        UiButton停止任务.Location = New Point(195, 10)
+        UiButton停止任务.Location = New Point(195, 0)
         UiButton停止任务.MinimumSize = New Size(1, 1)
         UiButton停止任务.Name = "UiButton停止任务"
         UiButton停止任务.Radius = 0
@@ -1278,6 +732,7 @@ Partial Class Form1
         UiButton停止任务.RectSides = ToolStripStatusLabelBorderSides.None
         UiButton停止任务.Size = New Size(65, 40)
         UiButton停止任务.TabIndex = 52
+        UiButton停止任务.Tag = "Button.StopMission"
         UiButton停止任务.Text = "停止"
         UiButton停止任务.TipsFont = New Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point, CByte(134))
         ' 
@@ -1296,7 +751,7 @@ Partial Class Form1
         UiButton恢复任务.ForeHoverColor = Color.YellowGreen
         UiButton恢复任务.ForePressColor = Color.YellowGreen
         UiButton恢复任务.ForeSelectedColor = Color.YellowGreen
-        UiButton恢复任务.Location = New Point(130, 10)
+        UiButton恢复任务.Location = New Point(130, 0)
         UiButton恢复任务.MinimumSize = New Size(1, 1)
         UiButton恢复任务.Name = "UiButton恢复任务"
         UiButton恢复任务.Radius = 0
@@ -1309,6 +764,7 @@ Partial Class Form1
         UiButton恢复任务.RectSides = ToolStripStatusLabelBorderSides.None
         UiButton恢复任务.Size = New Size(65, 40)
         UiButton恢复任务.TabIndex = 48
+        UiButton恢复任务.Tag = "Button.ResumeMission"
         UiButton恢复任务.Text = "恢复"
         UiButton恢复任务.TipsFont = New Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point, CByte(134))
         ' 
@@ -1327,7 +783,7 @@ Partial Class Form1
         UiButton暂停任务.ForeHoverColor = Color.Goldenrod
         UiButton暂停任务.ForePressColor = Color.Goldenrod
         UiButton暂停任务.ForeSelectedColor = Color.Goldenrod
-        UiButton暂停任务.Location = New Point(65, 10)
+        UiButton暂停任务.Location = New Point(65, 0)
         UiButton暂停任务.MinimumSize = New Size(1, 1)
         UiButton暂停任务.Name = "UiButton暂停任务"
         UiButton暂停任务.Radius = 0
@@ -1340,6 +796,7 @@ Partial Class Form1
         UiButton暂停任务.RectSides = ToolStripStatusLabelBorderSides.None
         UiButton暂停任务.Size = New Size(65, 40)
         UiButton暂停任务.TabIndex = 46
+        UiButton暂停任务.Tag = "Button.PauseMission"
         UiButton暂停任务.Text = "暂停"
         UiButton暂停任务.TipsFont = New Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point, CByte(134))
         ' 
@@ -1358,7 +815,7 @@ Partial Class Form1
         UiButton开始任务.ForeHoverColor = Color.YellowGreen
         UiButton开始任务.ForePressColor = Color.YellowGreen
         UiButton开始任务.ForeSelectedColor = Color.YellowGreen
-        UiButton开始任务.Location = New Point(0, 10)
+        UiButton开始任务.Location = New Point(0, 0)
         UiButton开始任务.MinimumSize = New Size(1, 1)
         UiButton开始任务.Name = "UiButton开始任务"
         UiButton开始任务.Radius = 0
@@ -1371,285 +828,19 @@ Partial Class Form1
         UiButton开始任务.RectSides = ToolStripStatusLabelBorderSides.None
         UiButton开始任务.Size = New Size(65, 40)
         UiButton开始任务.TabIndex = 44
+        UiButton开始任务.Tag = "Button.StartMission"
         UiButton开始任务.Text = "开始"
         UiButton开始任务.TipsFont = New Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point, CByte(134))
         ' 
         ' TabPage准备文件
         ' 
         TabPage准备文件.BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
-        TabPage准备文件.Controls.Add(Panel58)
-        TabPage准备文件.Controls.Add(Panel3)
         TabPage准备文件.Font = New Font("微软雅黑", 10F)
         TabPage准备文件.Location = New Point(151, 0)
         TabPage准备文件.Name = "TabPage准备文件"
-        TabPage准备文件.Size = New Size(1033, 661)
+        TabPage准备文件.Size = New Size(1033, 651)
         TabPage准备文件.TabIndex = 1
         TabPage准备文件.Text = "准备文件"
-        ' 
-        ' Panel58
-        ' 
-        Panel58.Controls.Add(ListView2)
-        Panel58.Controls.Add(Label2)
-        Panel58.Dock = DockStyle.Fill
-        Panel58.Location = New Point(0, 60)
-        Panel58.Name = "Panel58"
-        Panel58.Padding = New Padding(10, 10, 0, 10)
-        Panel58.Size = New Size(1033, 601)
-        Panel58.TabIndex = 6
-        ' 
-        ' ListView2
-        ' 
-        ListView2.AllowDrop = True
-        ListView2.BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
-        ListView2.BorderStyle = BorderStyle.None
-        ListView2.Columns.AddRange(New ColumnHeader() {ColumnHeader9})
-        ListView2.Dock = DockStyle.Fill
-        ListView2.ForeColor = Color.Silver
-        ListView2.FullRowSelect = True
-        ListView2.HeaderStyle = ColumnHeaderStyle.None
-        ListView2.LabelEdit = True
-        ListView2.Location = New Point(10, 10)
-        ListView2.Name = "ListView2"
-        ListView2.OwnerDraw = True
-        ListView2.ShowItemToolTips = True
-        ListView2.Size = New Size(1023, 551)
-        ListView2.StateImageList = ImageList1
-        ListView2.TabIndex = 0
-        ListView2.TabStop = False
-        ListView2.UseCompatibleStateImageBehavior = False
-        ListView2.View = View.Details
-        ' 
-        ' Label2
-        ' 
-        Label2.AutoSize = True
-        Label2.Dock = DockStyle.Bottom
-        Label2.ForeColor = Color.Gray
-        Label2.Location = New Point(10, 561)
-        Label2.Name = "Label2"
-        Label2.Padding = New Padding(0, 10, 0, 0)
-        Label2.Size = New Size(513, 30)
-        Label2.TabIndex = 1
-        Label2.Text = "可以直接把文件拖进编码队列来开始，如果文件很多或者有其他需求再用这个页面"
-        ' 
-        ' Panel3
-        ' 
-        Panel3.BackColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        Panel3.Controls.Add(Label102)
-        Panel3.Controls.Add(UiButton12)
-        Panel3.Controls.Add(Label18)
-        Panel3.Controls.Add(UiButton11)
-        Panel3.Controls.Add(Label17)
-        Panel3.Controls.Add(UiButton10)
-        Panel3.Controls.Add(Label24)
-        Panel3.Controls.Add(UiButton18)
-        Panel3.Controls.Add(Label19)
-        Panel3.Controls.Add(UiButton14)
-        Panel3.Dock = DockStyle.Top
-        Panel3.Location = New Point(0, 0)
-        Panel3.Name = "Panel3"
-        Panel3.Padding = New Padding(10)
-        Panel3.Size = New Size(1033, 60)
-        Panel3.TabIndex = 4
-        ' 
-        ' Label102
-        ' 
-        Label102.Dock = DockStyle.Fill
-        Label102.Font = New Font("微软雅黑", 9F)
-        Label102.ForeColor = Color.Gray
-        Label102.Location = New Point(700, 10)
-        Label102.Name = "Label102"
-        Label102.Padding = New Padding(10, 0, 0, 0)
-        Label102.Size = New Size(323, 40)
-        Label102.TabIndex = 75
-        Label102.Text = "每个文件都是独立的任务，互不影响！" & vbCrLf & "如需加字幕等其他高级操作需用自定义参数实现"
-        Label102.TextAlign = ContentAlignment.MiddleLeft
-        ' 
-        ' UiButton12
-        ' 
-        UiButton12.Dock = DockStyle.Left
-        UiButton12.FillColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
-        UiButton12.FillColor2 = Color.FromArgb(CByte(36), CByte(36), CByte(36))
-        UiButton12.FillDisableColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
-        UiButton12.FillHoverColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiButton12.FillPressColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiButton12.FillSelectedColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiButton12.Font = New Font("微软雅黑", 10F)
-        UiButton12.ForeColor = Color.IndianRed
-        UiButton12.ForeDisableColor = Color.IndianRed
-        UiButton12.ForeHoverColor = Color.IndianRed
-        UiButton12.ForePressColor = Color.IndianRed
-        UiButton12.ForeSelectedColor = Color.IndianRed
-        UiButton12.Location = New Point(600, 10)
-        UiButton12.MinimumSize = New Size(1, 1)
-        UiButton12.Name = "UiButton12"
-        UiButton12.Radius = 0
-        UiButton12.RadiusSides = Sunny.UI.UICornerRadiusSides.None
-        UiButton12.RectColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
-        UiButton12.RectDisableColor = Color.FromArgb(CByte(12), CByte(12), CByte(12))
-        UiButton12.RectHoverColor = Color.IndianRed
-        UiButton12.RectPressColor = Color.FromArgb(CByte(64), CByte(148), CByte(64))
-        UiButton12.RectSelectedColor = Color.IndianRed
-        UiButton12.RectSize = 2
-        UiButton12.Size = New Size(100, 40)
-        UiButton12.TabIndex = 50
-        UiButton12.Text = "全部移除"
-        UiButton12.TipsFont = New Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point, CByte(134))
-        ' 
-        ' Label18
-        ' 
-        Label18.Dock = DockStyle.Left
-        Label18.Location = New Point(590, 10)
-        Label18.Name = "Label18"
-        Label18.Size = New Size(10, 40)
-        Label18.TabIndex = 49
-        ' 
-        ' UiButton11
-        ' 
-        UiButton11.Dock = DockStyle.Left
-        UiButton11.FillColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
-        UiButton11.FillColor2 = Color.FromArgb(CByte(36), CByte(36), CByte(36))
-        UiButton11.FillDisableColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
-        UiButton11.FillHoverColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiButton11.FillPressColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiButton11.FillSelectedColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiButton11.Font = New Font("微软雅黑", 10F)
-        UiButton11.ForeColor = Color.IndianRed
-        UiButton11.ForeDisableColor = Color.IndianRed
-        UiButton11.ForeHoverColor = Color.IndianRed
-        UiButton11.ForePressColor = Color.IndianRed
-        UiButton11.ForeSelectedColor = Color.IndianRed
-        UiButton11.Location = New Point(490, 10)
-        UiButton11.MinimumSize = New Size(1, 1)
-        UiButton11.Name = "UiButton11"
-        UiButton11.Radius = 0
-        UiButton11.RadiusSides = Sunny.UI.UICornerRadiusSides.None
-        UiButton11.RectColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
-        UiButton11.RectDisableColor = Color.FromArgb(CByte(12), CByte(12), CByte(12))
-        UiButton11.RectHoverColor = Color.IndianRed
-        UiButton11.RectPressColor = Color.FromArgb(CByte(64), CByte(148), CByte(64))
-        UiButton11.RectSelectedColor = Color.IndianRed
-        UiButton11.RectSize = 2
-        UiButton11.Size = New Size(100, 40)
-        UiButton11.TabIndex = 48
-        UiButton11.Text = "移除"
-        UiButton11.TipsFont = New Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point, CByte(134))
-        ' 
-        ' Label17
-        ' 
-        Label17.Dock = DockStyle.Left
-        Label17.Location = New Point(480, 10)
-        Label17.Name = "Label17"
-        Label17.Size = New Size(10, 40)
-        Label17.TabIndex = 47
-        ' 
-        ' UiButton10
-        ' 
-        UiButton10.Dock = DockStyle.Left
-        UiButton10.FillColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
-        UiButton10.FillColor2 = Color.FromArgb(CByte(36), CByte(36), CByte(36))
-        UiButton10.FillDisableColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
-        UiButton10.FillHoverColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiButton10.FillPressColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiButton10.FillSelectedColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiButton10.Font = New Font("微软雅黑", 10F)
-        UiButton10.ForeColor = Color.MediumPurple
-        UiButton10.ForeDisableColor = Color.MediumPurple
-        UiButton10.ForeHoverColor = Color.MediumPurple
-        UiButton10.ForePressColor = Color.MediumPurple
-        UiButton10.ForeSelectedColor = Color.MediumPurple
-        UiButton10.Location = New Point(280, 10)
-        UiButton10.MinimumSize = New Size(1, 1)
-        UiButton10.Name = "UiButton10"
-        UiButton10.Radius = 0
-        UiButton10.RadiusSides = Sunny.UI.UICornerRadiusSides.None
-        UiButton10.RectColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
-        UiButton10.RectDisableColor = Color.FromArgb(CByte(12), CByte(12), CByte(12))
-        UiButton10.RectHoverColor = Color.MediumPurple
-        UiButton10.RectPressColor = Color.FromArgb(CByte(64), CByte(148), CByte(64))
-        UiButton10.RectSelectedColor = Color.MediumPurple
-        UiButton10.RectSize = 2
-        UiButton10.Size = New Size(200, 40)
-        UiButton10.TabIndex = 46
-        UiButton10.Text = "添加文件夹及其子目录"
-        UiButton10.TipsFont = New Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point, CByte(134))
-        ' 
-        ' Label24
-        ' 
-        Label24.Dock = DockStyle.Left
-        Label24.Location = New Point(270, 10)
-        Label24.Name = "Label24"
-        Label24.Size = New Size(10, 40)
-        Label24.TabIndex = 45
-        ' 
-        ' UiButton18
-        ' 
-        UiButton18.Dock = DockStyle.Left
-        UiButton18.FillColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
-        UiButton18.FillColor2 = Color.FromArgb(CByte(36), CByte(36), CByte(36))
-        UiButton18.FillDisableColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
-        UiButton18.FillHoverColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiButton18.FillPressColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiButton18.FillSelectedColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiButton18.Font = New Font("微软雅黑", 10F)
-        UiButton18.ForeColor = Color.MediumPurple
-        UiButton18.ForeDisableColor = Color.MediumPurple
-        UiButton18.ForeHoverColor = Color.MediumPurple
-        UiButton18.ForePressColor = Color.MediumPurple
-        UiButton18.ForeSelectedColor = Color.MediumPurple
-        UiButton18.Location = New Point(170, 10)
-        UiButton18.MinimumSize = New Size(1, 1)
-        UiButton18.Name = "UiButton18"
-        UiButton18.Radius = 0
-        UiButton18.RadiusSides = Sunny.UI.UICornerRadiusSides.None
-        UiButton18.RectColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
-        UiButton18.RectDisableColor = Color.FromArgb(CByte(12), CByte(12), CByte(12))
-        UiButton18.RectHoverColor = Color.MediumPurple
-        UiButton18.RectPressColor = Color.FromArgb(CByte(64), CByte(148), CByte(64))
-        UiButton18.RectSelectedColor = Color.MediumPurple
-        UiButton18.RectSize = 2
-        UiButton18.Size = New Size(100, 40)
-        UiButton18.TabIndex = 44
-        UiButton18.Text = "添加文件"
-        UiButton18.TipsFont = New Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point, CByte(134))
-        ' 
-        ' Label19
-        ' 
-        Label19.Dock = DockStyle.Left
-        Label19.Location = New Point(160, 10)
-        Label19.Name = "Label19"
-        Label19.Size = New Size(10, 40)
-        Label19.TabIndex = 72
-        ' 
-        ' UiButton14
-        ' 
-        UiButton14.Dock = DockStyle.Left
-        UiButton14.FillColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
-        UiButton14.FillColor2 = Color.FromArgb(CByte(36), CByte(36), CByte(36))
-        UiButton14.FillDisableColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
-        UiButton14.FillHoverColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiButton14.FillPressColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiButton14.FillSelectedColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiButton14.Font = New Font("微软雅黑", 10F)
-        UiButton14.ForeColor = Color.YellowGreen
-        UiButton14.ForeDisableColor = Color.YellowGreen
-        UiButton14.ForeHoverColor = Color.YellowGreen
-        UiButton14.ForePressColor = Color.YellowGreen
-        UiButton14.ForeSelectedColor = Color.YellowGreen
-        UiButton14.Location = New Point(10, 10)
-        UiButton14.MinimumSize = New Size(1, 1)
-        UiButton14.Name = "UiButton14"
-        UiButton14.Radius = 0
-        UiButton14.RadiusSides = Sunny.UI.UICornerRadiusSides.None
-        UiButton14.RectColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
-        UiButton14.RectDisableColor = Color.FromArgb(CByte(12), CByte(12), CByte(12))
-        UiButton14.RectHoverColor = Color.YellowGreen
-        UiButton14.RectPressColor = Color.FromArgb(CByte(64), CByte(148), CByte(64))
-        UiButton14.RectSelectedColor = Color.YellowGreen
-        UiButton14.RectSize = 2
-        UiButton14.Size = New Size(150, 40)
-        UiButton14.TabIndex = 71
-        UiButton14.Text = "加入编码队列"
-        UiButton14.TipsFont = New Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point, CByte(134))
         ' 
         ' TabPage参数面板
         ' 
@@ -1657,7 +848,7 @@ Partial Class Form1
         TabPage参数面板.Controls.Add(Panel6)
         TabPage参数面板.Location = New Point(151, 0)
         TabPage参数面板.Name = "TabPage参数面板"
-        TabPage参数面板.Size = New Size(1033, 661)
+        TabPage参数面板.Size = New Size(1033, 651)
         TabPage参数面板.TabIndex = 14
         TabPage参数面板.Text = "参数面板"
         ' 
@@ -1667,7 +858,7 @@ Partial Class Form1
         Panel6.Font = New Font("微软雅黑", 10F)
         Panel6.Location = New Point(0, 0)
         Panel6.Name = "Panel6"
-        Panel6.Size = New Size(1033, 661)
+        Panel6.Size = New Size(1033, 651)
         Panel6.TabIndex = 0
         ' 
         ' TabPage媒体信息
@@ -1676,7 +867,7 @@ Partial Class Form1
         TabPage媒体信息.Controls.Add(Panel4)
         TabPage媒体信息.Location = New Point(151, 0)
         TabPage媒体信息.Name = "TabPage媒体信息"
-        TabPage媒体信息.Size = New Size(1033, 661)
+        TabPage媒体信息.Size = New Size(1033, 651)
         TabPage媒体信息.TabIndex = 17
         TabPage媒体信息.Text = "媒体信息"
         ' 
@@ -1688,7 +879,7 @@ Partial Class Form1
         Panel4.Font = New Font("微软雅黑", 10F)
         Panel4.Location = New Point(0, 0)
         Panel4.Name = "Panel4"
-        Panel4.Size = New Size(1033, 661)
+        Panel4.Size = New Size(1033, 651)
         Panel4.TabIndex = 0
         ' 
         ' Panel76
@@ -1697,10 +888,10 @@ Partial Class Form1
         Panel76.BackColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
         Panel76.Controls.Add(RichTextBox1)
         Panel76.Dock = DockStyle.Fill
-        Panel76.Location = New Point(0, 85)
+        Panel76.Location = New Point(0, 45)
         Panel76.Name = "Panel76"
         Panel76.Padding = New Padding(10, 10, 0, 10)
-        Panel76.Size = New Size(1033, 576)
+        Panel76.Size = New Size(1033, 606)
         Panel76.TabIndex = 84
         ' 
         ' RichTextBox1
@@ -1715,7 +906,7 @@ Partial Class Form1
         RichTextBox1.Name = "RichTextBox1"
         RichTextBox1.ReadOnly = True
         RichTextBox1.ScrollBars = RichTextBoxScrollBars.Vertical
-        RichTextBox1.Size = New Size(1023, 556)
+        RichTextBox1.Size = New Size(1023, 586)
         RichTextBox1.TabIndex = 12
         RichTextBox1.Text = ""
         ' 
@@ -1724,12 +915,11 @@ Partial Class Form1
         Panel9.AutoSize = True
         Panel9.BackColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
         Panel9.Controls.Add(Panel75)
-        Panel9.Controls.Add(Label22)
         Panel9.Dock = DockStyle.Top
         Panel9.Location = New Point(0, 0)
         Panel9.Name = "Panel9"
-        Panel9.Padding = New Padding(10)
-        Panel9.Size = New Size(1033, 85)
+        Panel9.Padding = New Padding(10, 0, 10, 10)
+        Panel9.Size = New Size(1033, 45)
         Panel9.TabIndex = 80
         ' 
         ' Panel75
@@ -1737,9 +927,8 @@ Partial Class Form1
         Panel75.Controls.Add(Label123)
         Panel75.Controls.Add(UiButton打开文件显示参数)
         Panel75.Dock = DockStyle.Top
-        Panel75.Location = New Point(10, 40)
+        Panel75.Location = New Point(10, 0)
         Panel75.Name = "Panel75"
-        Panel75.Padding = New Padding(3, 0, 0, 0)
         Panel75.Size = New Size(1013, 35)
         Panel75.TabIndex = 11
         ' 
@@ -1748,12 +937,12 @@ Partial Class Form1
         Label123.Dock = DockStyle.Fill
         Label123.Font = New Font("微软雅黑", 10F)
         Label123.ForeColor = Color.Gray
-        Label123.Location = New Point(103, 0)
+        Label123.Location = New Point(100, 0)
         Label123.Name = "Label123"
         Label123.Padding = New Padding(10, 0, 0, 0)
-        Label123.Size = New Size(910, 35)
+        Label123.Size = New Size(913, 35)
         Label123.TabIndex = 45
-        Label123.Text = "调用 ffprobe.exe 直接展示输出信息，可以把文件拖到打开按钮上；此功能不兼容转译模式！"
+        Label123.Text = "调用 ffprobe.exe 直接展示输出信息，可以把文件拖到此区域；此功能不兼容转译模式！"
         Label123.TextAlign = ContentAlignment.MiddleLeft
         ' 
         ' UiButton打开文件显示参数
@@ -1772,7 +961,7 @@ Partial Class Form1
         UiButton打开文件显示参数.ForeHoverColor = Color.YellowGreen
         UiButton打开文件显示参数.ForePressColor = Color.YellowGreen
         UiButton打开文件显示参数.ForeSelectedColor = Color.YellowGreen
-        UiButton打开文件显示参数.Location = New Point(3, 0)
+        UiButton打开文件显示参数.Location = New Point(0, 0)
         UiButton打开文件显示参数.MinimumSize = New Size(1, 1)
         UiButton打开文件显示参数.Name = "UiButton打开文件显示参数"
         UiButton打开文件显示参数.Radius = 0
@@ -1788,213 +977,32 @@ Partial Class Form1
         UiButton打开文件显示参数.Text = "打开"
         UiButton打开文件显示参数.TipsFont = New Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point, CByte(134))
         ' 
-        ' Label22
+        ' TabPage混流
         ' 
-        Label22.AutoSize = True
-        Label22.Dock = DockStyle.Top
-        Label22.Location = New Point(10, 10)
-        Label22.Name = "Label22"
-        Label22.Padding = New Padding(0, 0, 0, 10)
-        Label22.Size = New Size(149, 30)
-        Label22.TabIndex = 0
-        Label22.Text = "快捷查看媒体参数信息"
+        TabPage混流.BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
+        TabPage混流.Location = New Point(151, 0)
+        TabPage混流.Name = "TabPage混流"
+        TabPage混流.Size = New Size(1033, 651)
+        TabPage混流.TabIndex = 18
+        TabPage混流.Text = "混流"
         ' 
-        ' TabPageEX混流
+        ' TabPage合并
         ' 
-        TabPageEX混流.BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
-        TabPageEX混流.Location = New Point(151, 0)
-        TabPageEX混流.Name = "TabPageEX混流"
-        TabPageEX混流.Size = New Size(1033, 661)
-        TabPageEX混流.TabIndex = 18
-        TabPageEX混流.Text = "混流"
-        ' 
-        ' TabPageEX合并
-        ' 
-        TabPageEX合并.BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
-        TabPageEX合并.Location = New Point(151, 0)
-        TabPageEX合并.Name = "TabPageEX合并"
-        TabPageEX合并.Size = New Size(1033, 661)
-        TabPageEX合并.TabIndex = 19
-        TabPageEX合并.Text = "合并"
+        TabPage合并.BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
+        TabPage合并.Location = New Point(151, 0)
+        TabPage合并.Name = "TabPage合并"
+        TabPage合并.Size = New Size(1033, 651)
+        TabPage合并.TabIndex = 19
+        TabPage合并.Text = "合并"
         ' 
         ' TabPage性能监控
         ' 
         TabPage性能监控.BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
-        TabPage性能监控.Controls.Add(Panel17)
         TabPage性能监控.Location = New Point(151, 0)
         TabPage性能监控.Name = "TabPage性能监控"
-        TabPage性能监控.Size = New Size(1033, 661)
+        TabPage性能监控.Size = New Size(1033, 651)
         TabPage性能监控.TabIndex = 21
         TabPage性能监控.Text = "性能监控"
-        ' 
-        ' Panel17
-        ' 
-        Panel17.Controls.Add(Label46)
-        Panel17.Controls.Add(Panel20)
-        Panel17.Controls.Add(Panel18)
-        Panel17.Controls.Add(Panel25)
-        Panel17.Dock = DockStyle.Fill
-        Panel17.Font = New Font("微软雅黑", 9.75F)
-        Panel17.Location = New Point(0, 0)
-        Panel17.Name = "Panel17"
-        Panel17.Size = New Size(1033, 661)
-        Panel17.TabIndex = 0
-        ' 
-        ' Label46
-        ' 
-        Label46.BackColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
-        Label46.Dock = DockStyle.Left
-        Label46.Location = New Point(294, 85)
-        Label46.Name = "Label46"
-        Label46.Size = New Size(2, 576)
-        Label46.TabIndex = 82
-        Label46.Text = "Label46"
-        ' 
-        ' Panel20
-        ' 
-        Panel20.BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
-        Panel20.Controls.Add(ListView4)
-        Panel20.Dock = DockStyle.Fill
-        Panel20.Location = New Point(294, 85)
-        Panel20.Name = "Panel20"
-        Panel20.Padding = New Padding(13, 13, 0, 13)
-        Panel20.Size = New Size(739, 576)
-        Panel20.TabIndex = 2
-        ' 
-        ' ListView4
-        ' 
-        ListView4.AllowDrop = True
-        ListView4.BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
-        ListView4.BorderStyle = BorderStyle.None
-        ListView4.Columns.AddRange(New ColumnHeader() {ColumnHeader12})
-        ListView4.Dock = DockStyle.Fill
-        ListView4.Font = New Font("微软雅黑", 10F)
-        ListView4.ForeColor = Color.DarkGray
-        ListView4.FullRowSelect = True
-        ListView4.HeaderStyle = ColumnHeaderStyle.None
-        ListView4.Location = New Point(13, 13)
-        ListView4.Name = "ListView4"
-        ListView4.OwnerDraw = True
-        ListView4.ShowItemToolTips = True
-        ListView4.Size = New Size(726, 550)
-        ListView4.StateImageList = ImageList1
-        ListView4.TabIndex = 2
-        ListView4.TabStop = False
-        ListView4.UseCompatibleStateImageBehavior = False
-        ListView4.View = View.Details
-        ' 
-        ' Panel18
-        ' 
-        Panel18.Controls.Add(ListView3)
-        Panel18.Dock = DockStyle.Left
-        Panel18.Location = New Point(0, 85)
-        Panel18.Name = "Panel18"
-        Panel18.Padding = New Padding(13, 13, 0, 13)
-        Panel18.Size = New Size(294, 576)
-        Panel18.TabIndex = 0
-        ' 
-        ' ListView3
-        ' 
-        ListView3.AllowDrop = True
-        ListView3.BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
-        ListView3.BorderStyle = BorderStyle.None
-        ListView3.Columns.AddRange(New ColumnHeader() {ColumnHeader10})
-        ListView3.Dock = DockStyle.Fill
-        ListView3.Font = New Font("微软雅黑", 10F)
-        ListView3.ForeColor = Color.DarkGray
-        ListView3.FullRowSelect = True
-        ListView3.HeaderStyle = ColumnHeaderStyle.None
-        ListView3.Location = New Point(13, 13)
-        ListView3.Name = "ListView3"
-        ListView3.OwnerDraw = True
-        ListView3.ShowItemToolTips = True
-        ListView3.Size = New Size(281, 550)
-        ListView3.StateImageList = ImageList1
-        ListView3.TabIndex = 1
-        ListView3.TabStop = False
-        ListView3.UseCompatibleStateImageBehavior = False
-        ListView3.View = View.Details
-        ' 
-        ' Panel25
-        ' 
-        Panel25.AutoSize = True
-        Panel25.BackColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        Panel25.Controls.Add(Panel26)
-        Panel25.Controls.Add(Label31)
-        Panel25.Dock = DockStyle.Top
-        Panel25.Location = New Point(0, 0)
-        Panel25.Name = "Panel25"
-        Panel25.Padding = New Padding(10)
-        Panel25.Size = New Size(1033, 85)
-        Panel25.TabIndex = 81
-        ' 
-        ' Panel26
-        ' 
-        Panel26.Controls.Add(Label27)
-        Panel26.Controls.Add(UiButton切换处理器占用面板)
-        Panel26.Dock = DockStyle.Top
-        Panel26.Location = New Point(10, 40)
-        Panel26.Name = "Panel26"
-        Panel26.Padding = New Padding(3, 0, 0, 0)
-        Panel26.Size = New Size(1013, 35)
-        Panel26.TabIndex = 11
-        ' 
-        ' Label27
-        ' 
-        Label27.Dock = DockStyle.Fill
-        Label27.Font = New Font("微软雅黑", 9.75F)
-        Label27.ForeColor = Color.Gray
-        Label27.Location = New Point(203, 0)
-        Label27.Name = "Label27"
-        Label27.Padding = New Padding(10, 0, 0, 0)
-        Label27.Size = New Size(810, 35)
-        Label27.TabIndex = 45
-        Label27.Text = "有些处理器有上百个核心，这会在刷新时严重增加 UI 线程的负担，所以还是去任务管理器看吧"
-        Label27.TextAlign = ContentAlignment.MiddleLeft
-        ' 
-        ' UiButton切换处理器占用面板
-        ' 
-        UiButton切换处理器占用面板.AllowDrop = True
-        UiButton切换处理器占用面板.Dock = DockStyle.Left
-        UiButton切换处理器占用面板.FillColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
-        UiButton切换处理器占用面板.FillColor2 = Color.FromArgb(CByte(36), CByte(36), CByte(36))
-        UiButton切换处理器占用面板.FillDisableColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
-        UiButton切换处理器占用面板.FillHoverColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiButton切换处理器占用面板.FillPressColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiButton切换处理器占用面板.FillSelectedColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiButton切换处理器占用面板.Font = New Font("微软雅黑", 10F)
-        UiButton切换处理器占用面板.ForeColor = Color.YellowGreen
-        UiButton切换处理器占用面板.ForeDisableColor = Color.YellowGreen
-        UiButton切换处理器占用面板.ForeHoverColor = Color.YellowGreen
-        UiButton切换处理器占用面板.ForePressColor = Color.YellowGreen
-        UiButton切换处理器占用面板.ForeSelectedColor = Color.YellowGreen
-        UiButton切换处理器占用面板.Location = New Point(3, 0)
-        UiButton切换处理器占用面板.MinimumSize = New Size(1, 1)
-        UiButton切换处理器占用面板.Name = "UiButton切换处理器占用面板"
-        UiButton切换处理器占用面板.Radius = 0
-        UiButton切换处理器占用面板.RadiusSides = Sunny.UI.UICornerRadiusSides.None
-        UiButton切换处理器占用面板.RectColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
-        UiButton切换处理器占用面板.RectDisableColor = Color.FromArgb(CByte(12), CByte(12), CByte(12))
-        UiButton切换处理器占用面板.RectHoverColor = Color.YellowGreen
-        UiButton切换处理器占用面板.RectPressColor = Color.FromArgb(CByte(64), CByte(148), CByte(64))
-        UiButton切换处理器占用面板.RectSelectedColor = Color.YellowGreen
-        UiButton切换处理器占用面板.RectSize = 2
-        UiButton切换处理器占用面板.Size = New Size(200, 35)
-        UiButton切换处理器占用面板.TabIndex = 44
-        UiButton切换处理器占用面板.Text = "切换折叠 CPU 显示"
-        UiButton切换处理器占用面板.TipsFont = New Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point, CByte(134))
-        ' 
-        ' Label31
-        ' 
-        Label31.AutoSize = True
-        Label31.Dock = DockStyle.Top
-        Label31.Font = New Font("微软雅黑", 10F)
-        Label31.Location = New Point(10, 10)
-        Label31.Name = "Label31"
-        Label31.Padding = New Padding(0, 0, 0, 10)
-        Label31.Size = New Size(345, 30)
-        Label31.TabIndex = 0
-        Label31.Text = "追踪每个处理器核心和所有显卡正在工作中的核心占用"
         ' 
         ' TabPage插件扩展
         ' 
@@ -2002,7 +1010,7 @@ Partial Class Form1
         TabPage插件扩展.Controls.Add(Panel21)
         TabPage插件扩展.Location = New Point(151, 0)
         TabPage插件扩展.Name = "TabPage插件扩展"
-        TabPage插件扩展.Size = New Size(1033, 661)
+        TabPage插件扩展.Size = New Size(1033, 651)
         TabPage插件扩展.TabIndex = 22
         TabPage插件扩展.Text = "插件扩展"
         ' 
@@ -2013,7 +1021,7 @@ Partial Class Form1
         Panel21.Dock = DockStyle.Fill
         Panel21.Location = New Point(0, 0)
         Panel21.Name = "Panel21"
-        Panel21.Size = New Size(1033, 661)
+        Panel21.Size = New Size(1033, 651)
         Panel21.TabIndex = 0
         ' 
         ' Panel24
@@ -2021,7 +1029,7 @@ Partial Class Form1
         Panel24.Dock = DockStyle.Fill
         Panel24.Location = New Point(0, 50)
         Panel24.Name = "Panel24"
-        Panel24.Size = New Size(1033, 611)
+        Panel24.Size = New Size(1033, 601)
         Panel24.TabIndex = 86
         ' 
         ' Panel22
@@ -2083,15 +1091,52 @@ Partial Class Form1
         UiComboBox3.TextAlignment = ContentAlignment.MiddleLeft
         UiComboBox3.Watermark = ""
         ' 
-        ' TabPage软件设置
+        ' TabPage设置
         ' 
-        TabPage软件设置.AutoScroll = True
-        TabPage软件设置.BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
-        TabPage软件设置.Location = New Point(151, 0)
-        TabPage软件设置.Name = "TabPage软件设置"
-        TabPage软件设置.Size = New Size(1033, 661)
-        TabPage软件设置.TabIndex = 24
-        TabPage软件设置.Text = "设置"
+        TabPage设置.AutoScroll = True
+        TabPage设置.BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
+        TabPage设置.Location = New Point(151, 0)
+        TabPage设置.Name = "TabPage设置"
+        TabPage设置.Size = New Size(1033, 651)
+        TabPage设置.TabIndex = 24
+        TabPage设置.Text = "设置"
+        ' 
+        ' TabPage支持者名单
+        ' 
+        TabPage支持者名单.BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
+        TabPage支持者名单.Location = New Point(151, 0)
+        TabPage支持者名单.Name = "TabPage支持者名单"
+        TabPage支持者名单.Size = New Size(1033, 651)
+        TabPage支持者名单.TabIndex = 25
+        TabPage支持者名单.Text = "支持者"
+        ' 
+        ' Panel顶部视觉修正区域
+        ' 
+        Panel顶部视觉修正区域.Controls.Add(Panel顶部视觉修正区域_二级选项卡)
+        Panel顶部视觉修正区域.Controls.Add(Panel顶部视觉修正区域_一级选项卡)
+        Panel顶部视觉修正区域.Dock = DockStyle.Top
+        Panel顶部视觉修正区域.Location = New Point(0, 0)
+        Panel顶部视觉修正区域.Name = "Panel顶部视觉修正区域"
+        Panel顶部视觉修正区域.Size = New Size(1184, 10)
+        Panel顶部视觉修正区域.TabIndex = 2
+        ' 
+        ' Panel顶部视觉修正区域_二级选项卡
+        ' 
+        Panel顶部视觉修正区域_二级选项卡.BackColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        Panel顶部视觉修正区域_二级选项卡.Dock = DockStyle.Left
+        Panel顶部视觉修正区域_二级选项卡.Location = New Point(152, 0)
+        Panel顶部视觉修正区域_二级选项卡.Name = "Panel顶部视觉修正区域_二级选项卡"
+        Panel顶部视觉修正区域_二级选项卡.Size = New Size(202, 10)
+        Panel顶部视觉修正区域_二级选项卡.TabIndex = 1
+        ' 
+        ' Panel顶部视觉修正区域_一级选项卡
+        ' 
+        Panel顶部视觉修正区域_一级选项卡.BackColor = Color.FromArgb(CByte(56), CByte(56), CByte(56))
+        Panel顶部视觉修正区域_一级选项卡.Dock = DockStyle.Left
+        Panel顶部视觉修正区域_一级选项卡.Location = New Point(0, 0)
+        Panel顶部视觉修正区域_一级选项卡.Name = "Panel顶部视觉修正区域_一级选项卡"
+        Panel顶部视觉修正区域_一级选项卡.Size = New Size(152, 10)
+        Panel顶部视觉修正区域_一级选项卡.TabIndex = 0
         ' 
         ' Form1
         ' 
@@ -2100,6 +1145,7 @@ Partial Class Form1
         BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         ClientSize = New Size(1184, 661)
         Controls.Add(UiTabControlMenu1)
+        Controls.Add(Panel顶部视觉修正区域)
         DoubleBuffered = True
         Font = New Font("微软雅黑", 10F)
         ForeColor = Color.Silver
@@ -2110,19 +1156,6 @@ Partial Class Form1
         StartPosition = FormStartPosition.CenterScreen
         Text = "FFmpegFreeUI"
         UiTabControlMenu1.ResumeLayout(False)
-        TabPage起始页面.ResumeLayout(False)
-        TabPage起始页面.PerformLayout()
-        Panel5.ResumeLayout(False)
-        Panel5.PerformLayout()
-        Panel44.ResumeLayout(False)
-        Panel44.PerformLayout()
-        Panel7.ResumeLayout(False)
-        Panel7.PerformLayout()
-        Panel73.ResumeLayout(False)
-        Panel73.PerformLayout()
-        CType(PictureBox1, ComponentModel.ISupportInitialize).EndInit()
-        Panel16.ResumeLayout(False)
-        Panel16.PerformLayout()
         TabPage编码队列.ResumeLayout(False)
         TabPage编码队列.PerformLayout()
         Panel输出面板.ResumeLayout(False)
@@ -2139,29 +1172,17 @@ Partial Class Form1
         Panel36.ResumeLayout(False)
         Panel36.PerformLayout()
         Panel2.ResumeLayout(False)
-        TabPage准备文件.ResumeLayout(False)
-        Panel58.ResumeLayout(False)
-        Panel58.PerformLayout()
-        Panel3.ResumeLayout(False)
         TabPage参数面板.ResumeLayout(False)
         TabPage媒体信息.ResumeLayout(False)
         Panel4.ResumeLayout(False)
         Panel4.PerformLayout()
         Panel76.ResumeLayout(False)
         Panel9.ResumeLayout(False)
-        Panel9.PerformLayout()
         Panel75.ResumeLayout(False)
-        TabPage性能监控.ResumeLayout(False)
-        Panel17.ResumeLayout(False)
-        Panel17.PerformLayout()
-        Panel20.ResumeLayout(False)
-        Panel18.ResumeLayout(False)
-        Panel25.ResumeLayout(False)
-        Panel25.PerformLayout()
-        Panel26.ResumeLayout(False)
         TabPage插件扩展.ResumeLayout(False)
         Panel21.ResumeLayout(False)
         Panel22.ResumeLayout(False)
+        Panel顶部视觉修正区域.ResumeLayout(False)
         ResumeLayout(False)
     End Sub
     Friend WithEvents UiTabControlMenu1 As Sunny.UI.UITabControlMenu
@@ -2181,14 +1202,6 @@ Partial Class Form1
     Friend WithEvents UiButton停止任务 As Sunny.UI.UIButton
     Friend WithEvents UiButton恢复任务 As Sunny.UI.UIButton
     Friend WithEvents UiButton暂停任务 As Sunny.UI.UIButton
-    Friend WithEvents Panel3 As Panel
-    Friend WithEvents UiButton12 As Sunny.UI.UIButton
-    Friend WithEvents Label18 As Label
-    Friend WithEvents UiButton11 As Sunny.UI.UIButton
-    Friend WithEvents Label17 As Label
-    Friend WithEvents UiButton10 As Sunny.UI.UIButton
-    Friend WithEvents Label24 As Label
-    Friend WithEvents UiButton18 As Sunny.UI.UIButton
     Friend WithEvents Panel56 As Panel
     Friend WithEvents ListView1 As ListView
     Friend WithEvents ColumnHeader1 As ColumnHeader
@@ -2200,36 +1213,21 @@ Partial Class Form1
     Friend WithEvents ColumnHeader7 As ColumnHeader
     Friend WithEvents ColumnHeader8 As ColumnHeader
     Friend WithEvents ImageList1 As ImageList
-    Friend WithEvents Panel58 As Panel
-    Friend WithEvents ListView2 As ListView
-    Friend WithEvents ColumnHeader9 As ColumnHeader
-    Friend WithEvents Label19 As Label
-    Friend WithEvents UiButton14 As Sunny.UI.UIButton
     Friend WithEvents UiButton重置任务 As Sunny.UI.UIButton
     Friend WithEvents TabPage起始页面 As TabPage
-    Friend WithEvents Panel44 As Panel
-    Friend WithEvents Label102 As Label
     Friend WithEvents Panel41 As Panel
     Friend WithEvents TabPage参数面板 As TabPage
     Friend WithEvents Panel6 As Panel
     Friend WithEvents TabPage媒体信息 As TabPage
     Friend WithEvents Panel4 As Panel
     Friend WithEvents Panel9 As Panel
-    Friend WithEvents Label22 As Label
     Friend WithEvents Panel75 As Panel
     Friend WithEvents UiButton打开文件显示参数 As Sunny.UI.UIButton
     Friend WithEvents Panel76 As Panel
     Friend WithEvents UiButton定位输出 As Sunny.UI.UIButton
-    Friend WithEvents TabPageEX混流 As TabPage
-    Friend WithEvents TabPageEX合并 As TabPage
+    Friend WithEvents TabPage混流 As TabPage
+    Friend WithEvents TabPage合并 As TabPage
     Friend WithEvents TabPage性能监控 As TabPage
-    Friend WithEvents Panel17 As Panel
-    Friend WithEvents Panel18 As Panel
-    Friend WithEvents Panel20 As Panel
-    Friend WithEvents ListView3 As ListView
-    Friend WithEvents ColumnHeader10 As ColumnHeader
-    Friend WithEvents ListView4 As ListView
-    Friend WithEvents ColumnHeader12 As ColumnHeader
     Friend WithEvents TabPage插件扩展 As TabPage
     Friend WithEvents Panel21 As Panel
     Friend WithEvents Panel24 As Panel
@@ -2237,65 +1235,28 @@ Partial Class Form1
     Friend WithEvents Label16 As Label
     Friend WithEvents UiComboBox3 As Sunny.UI.UIComboBox
     Friend WithEvents Label123 As Label
-    Friend WithEvents Panel25 As Panel
-    Friend WithEvents Panel26 As Panel
-    Friend WithEvents Label27 As Label
-    Friend WithEvents UiButton切换处理器占用面板 As Sunny.UI.UIButton
-    Friend WithEvents Label31 As Label
     Friend WithEvents Panel35 As Panel
     Friend WithEvents Labelffmpeg实时信息 As Label
     Friend WithEvents Panel36 As Panel
     Friend WithEvents LinkLabel向ffmpeg发送消息 As LinkLabel
     Friend WithEvents RichTextBox1 As RichTextBox
-    Friend WithEvents TabPage软件设置 As TabPage
-    Friend WithEvents Panel7 As Panel
-    Friend WithEvents Panel73 As Panel
-    Friend WithEvents Label副标题 As Label
-    Friend WithEvents Label主标题 As Label
-    Friend WithEvents Label11 As Label
-    Friend WithEvents PictureBox1 As PictureBox
-    Friend WithEvents Label122 As Label
-    Friend WithEvents Label75 As Label
-    Friend WithEvents Label73 As Label
-    Friend WithEvents Label65 As Label
-    Friend WithEvents Label64 As Label
-    Friend WithEvents Label129 As Label
-    Friend WithEvents LinkLabel8 As LinkLabel
-    Friend WithEvents LinkLabel1 As LinkLabel
-    Friend WithEvents LinkLabel6 As LinkLabel
-    Friend WithEvents LinkLabel5 As LinkLabel
-    Friend WithEvents LinkLabel4 As LinkLabel
-    Friend WithEvents LinkLabel3 As LinkLabel
-    Friend WithEvents LinkLabel2 As LinkLabel
-    Friend WithEvents LinkLabel7 As LinkLabel
-    Friend WithEvents Label127 As Label
-    Friend WithEvents Label9 As Label
-    Friend WithEvents Label126 As Label
-    Friend WithEvents Label14 As Label
+    Friend WithEvents TabPage设置 As TabPage
     Friend WithEvents Panel输出面板 As Panel
     Friend WithEvents LinkLabel切换显示输出面板 As LinkLabel
     Friend WithEvents Panel13 As Panel
     Friend WithEvents UiComboBox输出显示类型 As Sunny.UI.UIComboBox
     Friend WithEvents Label15 As Label
     Friend WithEvents UiButton复制输出 As Sunny.UI.UIButton
-    Friend WithEvents Label21 As Label
-    Friend WithEvents Panel新闻列表面板 As Panel
-    Friend WithEvents Label29 As Label
     Friend WithEvents UiCheckBox强制滚动到最后 As Sunny.UI.UICheckBox
     Friend WithEvents Label44 As Label
     Friend WithEvents Panel77 As Panel
     Friend WithEvents RichTextBox2 As RichTextBox
     Friend WithEvents Label45 As Label
-    Friend WithEvents Label28 As Label
-    Friend WithEvents Label35 As Label
-    Friend WithEvents Label46 As Label
     Friend WithEvents Panel15 As Panel
     Friend WithEvents UiButton任务管理菜单 As Sunny.UI.UIButton
-    Friend WithEvents Panel16 As Panel
-    Friend WithEvents Label36 As Label
-    Friend WithEvents LinkLabel清理内存 As LinkLabel
-    Friend WithEvents Label2 As Label
-    Friend WithEvents Panel5 As Panel
-    Friend WithEvents Label1 As Label
+    Friend WithEvents TabPage支持者名单 As TabPage
+    Friend WithEvents Panel顶部视觉修正区域 As Panel
+    Friend WithEvents Panel顶部视觉修正区域_一级选项卡 As Panel
+    Friend WithEvents Panel顶部视觉修正区域_二级选项卡 As Panel
 
 End Class

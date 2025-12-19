@@ -1,0 +1,20 @@
+﻿{
+  "Button.StartMission": "Start",
+  "Button.PauseMission": "Pause",
+  "Button.ResumeMission": "Resume",
+  "Button.StopMission": "Stop",
+  "Button.RemoveMission": "Remove",
+  "Button.ResetMission": "Reset",
+  "Button.LocateMission": "Locate",
+  "Button.MissionMenu": "Mission Menu",
+  "Label.Status": "Status",
+  "Label.Progress": "Progress",
+  "Label.Speed": "Speed",
+  "Label.OutputSize": "Size && Remaining",
+  "Label.Quality": "q",
+  "Label.Bitrate": "Bitrate",
+  "Label.TimeRemaining": "Time && Used",
+  "LinkLabel.Send": "Send",
+  "LinkLabel.SwitchOutputDisplay": "Switch Output Display",
+  "LinkLabel.CatchErrors": "Catch {0} Errors"
+}

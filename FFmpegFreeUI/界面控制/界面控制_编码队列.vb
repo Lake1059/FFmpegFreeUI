@@ -5,11 +5,17 @@ Public Class 界面控制_编码队列
 
     Public Shared Sub 开始任务()
         If Form1.ListView1.SelectedItems.Count = 0 Then Exit Sub
-        If 编码任务.队列.Where(Function(item) item.状态 = 编码任务.编码状态.正在处理).Count() >= 10 Then
+        Dim 已经进行的任务数量 = 编码任务.队列.Where(Function(item) item.状态 = 编码任务.编码状态.正在处理).Count
+        If 已经进行的任务数量 >= 10 Then
             Dim 选项字典 As New Dictionary(Of String, Action)
-            选项字典("了解") = Nothing
+            选项字典("取消") = Nothing
             选项字典("确认开始更多的任务") = AddressOf 真的开始任务
-            软件内对话框.显示对话框(Form1, "同时进行的任务过多", "正在进行的任务已经 ≥ 10 个，确定要继续开始新任务吗？ffmpeg 使用的资源过多可能导致系统运行缓慢甚至各种崩溃!", 选项字典, 软件内对话框.主题类型.错误)
+            软件内对话框.显示对话框(Form1, "同时进行的任务过多", "正在进行的任务已经 ≥ 10 个，确定要继续开始新任务吗？ffmpeg 使用的资源过多可能导致系统运行缓慢甚至各种崩溃！", 选项字典, 软件内对话框.主题类型.错误)
+        ElseIf 已经进行的任务数量 + Form1.ListView1.SelectedItems.Count > 10 Then
+            Dim 选项字典 As New Dictionary(Of String, Action)
+            选项字典("取消") = Nothing
+            选项字典("确认开始更多的任务") = AddressOf 真的开始任务
+            软件内对话框.显示对话框(Form1, "注意你选择的任务数量", "你将要开始太多任务，算上正在进行的，已经超过 10 个，确定要继续开始新任务吗？ffmpeg 使用的资源过多可能导致系统运行缓慢甚至各种崩溃！", 选项字典, 软件内对话框.主题类型.错误)
         Else
             真的开始任务()
         End If
@@ -80,6 +86,7 @@ Public Class 界面控制_编码队列
                     编码任务.队列(i).状态 = 编码任务.编码状态.未处理
                     编码任务.队列(i).任务耗时计时器.Reset()
                     编码任务.队列(i).状态刷新统一逻辑()
+                    编码任务.队列(i).手动停止不要尝试启动其他任务 = False
             End Select
         Next
     End Sub
@@ -162,12 +169,12 @@ Public Class 界面控制_编码队列
     Public Shared Sub 将任务放到添加文件选项卡()
         If Form1.ListView1.SelectedItems.Count = 0 Then Exit Sub
         Dim 已有的文件 As New List(Of String)
-        For Each item As ListViewItem In Form1.ListView2.Items
+        For Each item As ListViewItem In Form1.准备文件页面.ListView2.Items
             已有的文件.Add(item.Text)
         Next
         For Each item As ListViewItem In Form1.ListView1.SelectedItems
             If Not 已有的文件.Contains(编码任务.队列(item.Index).输入文件) Then
-                Form1.ListView2.Items.Add(编码任务.队列(item.Index).输入文件)
+                Form1.准备文件页面.ListView2.Items.Add(编码任务.队列(item.Index).输入文件)
             End If
         Next
     End Sub

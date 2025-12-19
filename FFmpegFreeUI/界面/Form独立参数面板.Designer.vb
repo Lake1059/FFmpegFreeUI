@@ -27,9 +27,12 @@ Partial Class Form独立参数面板
         Panel2 = New Panel()
         UiButton确认并添加任务 = New Sunny.UI.UIButton()
         Panel3 = New Panel()
+        Panel顶部视觉修正区域 = New Panel()
+        Panel顶部视觉修正区域_二级选项卡 = New Panel()
         Panel1.SuspendLayout()
         Panel2.SuspendLayout()
         Panel3.SuspendLayout()
+        Panel顶部视觉修正区域.SuspendLayout()
         SuspendLayout()
         ' 
         ' Panel1
@@ -96,12 +99,31 @@ Partial Class Form独立参数面板
         ' 
         ' Panel3
         ' 
+        Panel3.Controls.Add(Panel顶部视觉修正区域)
         Panel3.Controls.Add(Panel1)
         Panel3.Dock = DockStyle.Fill
         Panel3.Location = New Point(0, 0)
         Panel3.Name = "Panel3"
         Panel3.Size = New Size(1084, 661)
         Panel3.TabIndex = 1
+        ' 
+        ' Panel顶部视觉修正区域
+        ' 
+        Panel顶部视觉修正区域.Controls.Add(Panel顶部视觉修正区域_二级选项卡)
+        Panel顶部视觉修正区域.Dock = DockStyle.Top
+        Panel顶部视觉修正区域.Location = New Point(0, 50)
+        Panel顶部视觉修正区域.Name = "Panel顶部视觉修正区域"
+        Panel顶部视觉修正区域.Size = New Size(1084, 10)
+        Panel顶部视觉修正区域.TabIndex = 3
+        ' 
+        ' Panel顶部视觉修正区域_二级选项卡
+        ' 
+        Panel顶部视觉修正区域_二级选项卡.BackColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        Panel顶部视觉修正区域_二级选项卡.Dock = DockStyle.Left
+        Panel顶部视觉修正区域_二级选项卡.Location = New Point(0, 0)
+        Panel顶部视觉修正区域_二级选项卡.Name = "Panel顶部视觉修正区域_二级选项卡"
+        Panel顶部视觉修正区域_二级选项卡.Size = New Size(202, 10)
+        Panel顶部视觉修正区域_二级选项卡.TabIndex = 1
         ' 
         ' Form独立参数面板
         ' 
@@ -123,6 +145,7 @@ Partial Class Form独立参数面板
         Panel1.ResumeLayout(False)
         Panel2.ResumeLayout(False)
         Panel3.ResumeLayout(False)
+        Panel顶部视觉修正区域.ResumeLayout(False)
         ResumeLayout(False)
     End Sub
 
@@ -131,4 +154,6 @@ Partial Class Form独立参数面板
     Friend WithEvents UiButton确认并添加任务 As Sunny.UI.UIButton
     Friend WithEvents Label1 As Label
     Friend WithEvents Panel3 As Panel
+    Friend WithEvents Panel顶部视觉修正区域 As Panel
+    Friend WithEvents Panel顶部视觉修正区域_二级选项卡 As Panel
 End Class

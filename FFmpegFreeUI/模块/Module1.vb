@@ -151,11 +151,19 @@ Module Module1
         Dim unused = SetThreadExecutionState(EXECUTION_STATE.ES_CONTINUOUS)
     End Sub
 
-    Public Sub 根据标签宽度设置显示高度(标签控件 As Label)
+    Public Sub 根据文本设置标签高度(标签控件 As Label)
         Using g As Graphics = 标签控件.CreateGraphics()
             Dim availableWidth As Integer = 标签控件.Width - 标签控件.Padding.Left - 标签控件.Padding.Right
             Dim size As SizeF = g.MeasureString(标签控件.Text, 标签控件.Font, availableWidth)
-            标签控件.Height = CInt(Math.Ceiling(size.Height)) + 标签控件.Padding.Top + 标签控件.Padding.Bottom
+            标签控件.Height = CInt(Math.Ceiling(size.Height)) + 标签控件.Padding.Top + 标签控件.Padding.Bottom + 用户设置.实例对象.界面修正_增加使用文字渲染尺寸来调节的标签的尺寸 * Form1.DPI
+        End Using
+    End Sub
+
+    Public Sub 根据文本设置按钮宽度(控件 As UIButton)
+        Using g As Graphics = 控件.CreateGraphics()
+            Dim availableWidth As Integer = 控件.Width - 控件.Padding.Left - 控件.Padding.Right
+            Dim size As SizeF = g.MeasureString(控件.Text, 控件.Font, availableWidth)
+            控件.Width = CInt(Math.Ceiling(size.Width)) + 控件.Padding.Left + 控件.Padding.Right + If(用户设置.实例对象.语言 = "zh", 30, 20) * Form1.DPI
         End Using
     End Sub
 
@@ -178,12 +186,12 @@ Module Module1
         End If
     End Sub
 
-    Public Sub 根据标签宽度计算并设置显示高度(标签控件 As Label)
-        Dim g As Graphics = 标签控件.CreateGraphics()
-        Dim size As SizeF = g.MeasureString(标签控件.Text, 标签控件.Font, 标签控件.Width - 标签控件.Padding.Left - 标签控件.Padding.Right)
-        g.Dispose()
-        标签控件.Height = size.Height + 标签控件.Padding.Top + 标签控件.Padding.Bottom
-    End Sub
+    'Public Sub 根据标签宽度计算并设置显示高度(标签控件 As Label)
+    '    Dim g As Graphics = 标签控件.CreateGraphics()
+    '    Dim size As SizeF = g.MeasureString(标签控件.Text, 标签控件.Font, 标签控件.Width - 标签控件.Padding.Left - 标签控件.Padding.Right)
+    '    g.Dispose()
+    '    标签控件.Height = size.Height + 标签控件.Padding.Top + 标签控件.Padding.Bottom
+    'End Sub
 
     ''' <summary>
     ''' 根据核心编号列表生成 ProcessorAffinity 掩码
@@ -208,9 +216,18 @@ Module Module1
             If ExcludeContorl IsNot Nothing Then
                 If ExcludeContorl.Contains(ctrl) Then Continue For
             End If
-            Dim controlType As Type = c.GetType()
+            Dim controlType As Type = ctrl.GetType()
+
             Dim propInfo As PropertyInfo = controlType.GetProperty("Font")
             If propInfo IsNot Nothing Then ctrl.Font = New Font(FontName, ctrl.Font.Size, ctrl.Font.Style)
+
+            Dim propInfo2 As PropertyInfo = controlType.GetProperty("Tag")
+            Dim propInfo3 As PropertyInfo = controlType.GetProperty("Text")
+            If propInfo2 IsNot Nothing AndAlso propInfo3 IsNot Nothing AndAlso ctrl.Tag IsNot Nothing AndAlso ctrl.Tag.ToString().Trim() <> "" Then
+                Dim a = 翻译(ctrl.Tag.ToString())
+                If a <> "" AndAlso a <> ctrl.Tag.ToString() Then ctrl.Text = a
+            End If
+
             If ctrl.HasChildren Then SetControlFont(FontName, ctrl, ExcludeContorl)
         Next
     End Sub
@@ -281,6 +298,7 @@ Module Module1
         c.ScrollBarHandleWidth = 30 * Form1.DPI
         c.ScrollBarBackColor = Color.FromArgb(64, 64, 64)
         c.ScrollBarColor = SystemColors.WindowFrame
+        c.DropDownWidth = c.Width
     End Sub
 
     Public Function 将时间字符串转换为时间类型(timeStr As String) As TimeSpan

@@ -1,14 +1,9 @@
-﻿Imports Microsoft.WindowsAPICodePack.Dialogs
+﻿
 Imports Sunny.UI
 
 Public Class 界面控制
     Public Shared Sub 初始化()
-        绑定拖动控件移动窗体(Form1.Panel73)
-        绑定拖动控件移动窗体(Form1.Label主标题)
-        绑定拖动控件移动窗体(Form1.Label副标题)
-        绑定拖动控件移动窗体(Form1.PictureBox1)
-        绑定拖动控件移动窗体(Form1.Label11)
-        绑定拖动控件移动窗体(Form1.Label36)
+
         绑定拖动控件移动窗体(Form1.Panel2)
 
         Form1.设置页面.初始化设置操作响应()
@@ -16,42 +11,24 @@ Public Class 界面控制
         编码队列右键菜单.初始化()
         编码队列管理选项.初始化()
 
-        AddHandler Form1.LinkLabel向ffmpeg发送消息.LinkClicked, Sub()
-                                                               Dim a1 As String = InputBox("向 FFmpeg 进程发送消息")
-                                                               If a1 <> "" Then 编码任务.队列(Form1.ListView1.SelectedItems(0).Index).发送消息(a1)
-                                                           End Sub
-
         设置富文本框行高(Form1.RichTextBox1, 350)
         设置富文本框行高(Form1.RichTextBox2, 300)
+
         Form1.RichTextBox1.AllowDrop = True
+
+        Form1.TabPage起始页面.Controls.Add(Form1.起始页面)
+        Form1.TabPage准备文件.Controls.Add(Form1.准备文件页面)
         Form1.Panel6.Controls.Add(Form1.常规流程参数页面)
-        Form1.常规流程参数页面.Dock = DockStyle.Fill
-        Form1.TabPageEX混流.Controls.Add(Form1.混流页面)
-        Form1.混流页面.Dock = DockStyle.Fill
-        Form1.TabPageEX合并.Controls.Add(Form1.合并页面)
-        Form1.合并页面.Dock = DockStyle.Fill
-        Form1.TabPage软件设置.Controls.Add(Form1.设置页面)
-        Form1.设置页面.Dock = DockStyle.Fill
+        Form1.TabPage混流.Controls.Add(Form1.混流页面)
+        Form1.TabPage合并.Controls.Add(Form1.合并页面)
+        Form1.TabPage设置.Controls.Add(Form1.设置页面)
+        Form1.TabPage性能监控.Controls.Add(Form1.性能监控页面)
 
         Form1.Panel41.AutoSize = True
 
         AddHandler Form1.UiTabControlMenu1.SelectedIndexChanged, AddressOf 界面校准
 
-        AddHandler Form1.LinkLabel清理内存.LinkClicked, AddressOf 回收自身内存占用
-
-        AddHandler Form1.LinkLabel7.LinkClicked, Sub() Process.Start(New ProcessStartInfo With {.FileName = "https://github.com/Lake1059/FFmpegFreeUI", .UseShellExecute = True})
-        AddHandler Form1.LinkLabel2.LinkClicked, Sub() Process.Start(New ProcessStartInfo With {.FileName = "https://ffmpeg.org/documentation.html", .UseShellExecute = True})
-        AddHandler Form1.LinkLabel3.LinkClicked, Sub() Process.Start(New ProcessStartInfo With {.FileName = "https://www.gyan.dev/ffmpeg/builds/", .UseShellExecute = True})
-        AddHandler Form1.LinkLabel4.LinkClicked, Sub() Process.Start(New ProcessStartInfo With {.FileName = "https://github.com/BtbN/FFmpeg-Builds/releases", .UseShellExecute = True})
-        AddHandler Form1.LinkLabel5.LinkClicked, Sub() Process.Start(New ProcessStartInfo With {.FileName = "https://afdian.com/a/1059Studio", .UseShellExecute = True})
-        AddHandler Form1.LinkLabel6.LinkClicked, Sub() Process.Start(New ProcessStartInfo With {.FileName = "https://space.bilibili.com/319785096", .UseShellExecute = True})
-        AddHandler Form1.LinkLabel1.LinkClicked, Sub() Process.Start(New ProcessStartInfo With {.FileName = "https://ffmpegfreeui.top", .UseShellExecute = True})
-        AddHandler Form1.LinkLabel8.LinkClicked, Sub() Process.Start(New ProcessStartInfo With {.FileName = "https://3fui.top", .UseShellExecute = True})
-
         暗黑列表视图自绘制.绑定列表视图事件(Form1.ListView1)
-        暗黑列表视图自绘制.绑定列表视图事件(Form1.ListView2)
-        性能统计.绑定性能统计处理器列表视图事件()
-        性能统计.绑定性能统计显卡列表视图事件()
 
         AddHandler Form1.UiButton开始任务.Click, AddressOf 界面控制_编码队列.开始任务
         AddHandler Form1.UiButton暂停任务.Click, AddressOf 界面控制_编码队列.暂停任务
@@ -60,7 +37,10 @@ Public Class 界面控制
         AddHandler Form1.UiButton移除任务.Click, AddressOf 界面控制_编码队列.移除任务
         AddHandler Form1.UiButton重置任务.Click, AddressOf 界面控制_编码队列.重置任务
         AddHandler Form1.UiButton定位输出.Click, AddressOf 界面控制_编码队列.定位输出
-
+        AddHandler Form1.LinkLabel向ffmpeg发送消息.LinkClicked, Sub()
+                                                               Dim a1 As String = InputBox("向 FFmpeg 进程发送消息")
+                                                               If a1 <> "" Then 编码任务.队列(Form1.ListView1.SelectedItems(0).Index).发送消息(a1)
+                                                           End Sub
         Form1.UiComboBox输出显示类型.SelectedIndex = 0
         AddHandler Form1.LinkLabel切换显示输出面板.LinkClicked, Sub()
                                                             If Form1.Panel输出面板.Visible Then
@@ -74,14 +54,6 @@ Public Class 界面控制
                                                         End Sub
         AddHandler Form1.UiButton复制输出.Click, Sub() Clipboard.SetText(Form1.RichTextBox2.Text)
         AddHandler Form1.UiComboBox输出显示类型.SelectedIndexChanged, AddressOf 编码任务.切换输出类型时单独刷新
-
-        AddHandler Form1.UiButton14.Click, AddressOf 界面控制_添加文件.加入编码队列
-        AddHandler Form1.ListView2.DragEnter, AddressOf 界面控制_添加文件.ListView2_DragEnter
-        AddHandler Form1.ListView2.DragDrop, AddressOf 界面控制_添加文件.ListView2_DragDrop
-        AddHandler Form1.UiButton18.Click, AddressOf 界面控制_添加文件.添加文件
-        AddHandler Form1.UiButton10.Click, AddressOf 界面控制_添加文件.打开文件夹添加全部文件
-        AddHandler Form1.UiButton11.Click, AddressOf 界面控制_添加文件.批量移除选中项
-        AddHandler Form1.UiButton12.Click, AddressOf 界面控制_添加文件.移除全部项
 
         AddHandler Form1.选中项刷新信息计时器.Tick, AddressOf 编码任务.选中项刷新信息
         AddHandler Form1.任务进度更新计时器.Tick, AddressOf 编码任务.用定时器刷新到界面上
@@ -97,54 +69,67 @@ Public Class 界面控制
         Form1.性能统计刷新计时器.Enabled = False
         Select Case True
             Case 选项卡.IsEqual(Form1.TabPage起始页面)
-
+                Form1.Panel顶部视觉修正区域_二级选项卡.BackColor = Form1.起始页面.Panel73.BackColor
+                Form1.Panel顶部视觉修正区域_二级选项卡.Dock = DockStyle.Fill
 
             Case 选项卡.IsEqual(Form1.TabPage编码队列)
-                'Form1.Label1.Width = Form1.Panel1.Width - Form1.Panel1.Padding.Left - Form1.Label状态.Width - Form1.Label进度.Width - Form1.Label效率.Width - Form1.Label输出大小.Width - Form1.Label质量.Width - Form1.Label比特率.Width - 200 * Form1.DPI
-                Form1.ListView1.Columns(0).Width = Form1.Panel15.Width - Form1.ListView1.Parent.Padding.Left - 5 * Form1.DPI
-                Form1.ListView1.Columns(1).Width = Form1.Label状态.Width
-                Form1.ListView1.Columns(2).Width = Form1.Label进度.Width
-                Form1.ListView1.Columns(3).Width = Form1.Label效率.Width
-                Form1.ListView1.Columns(4).Width = Form1.Label输出大小.Width
-                Form1.ListView1.Columns(5).Width = Form1.Label质量.Width
-                Form1.ListView1.Columns(6).Width = Form1.Label比特率.Width
-                Form1.ListView1.Columns(7).Width = Form1.Label预计剩余.Width - SystemInformation.VerticalScrollBarWidth * Form1.DPI * 2
+                Form1.Panel顶部视觉修正区域_二级选项卡.BackColor = Form1.Panel2.BackColor
+                Form1.Panel顶部视觉修正区域_二级选项卡.Dock = DockStyle.Fill
+
+                校准编码队列的列宽()
                 校准输出面板的宽度()
                 Dim s1 As Integer = 0
                 For Each c As UIButton In Form1.Panel2.Controls
+                    根据文本设置按钮宽度(c)
                     s1 += c.Width
                 Next
+                根据文本设置按钮宽度(Form1.UiButton任务管理菜单)
                 Form1.Panel2.Padding = New Padding((Form1.Panel2.Width - s1) * 0.5, Form1.Panel2.Padding.Top, (Form1.Panel2.Width - s1) * 0.5, 0)
                 校准UiComboBox视觉(Form1.UiComboBox输出显示类型)
                 Form1.UiCheckBox强制滚动到最后.CheckBoxSize = 20 * Form1.DPI
 
             Case 选项卡.IsEqual(Form1.TabPage准备文件)
-                Form1.ListView2.Columns(0).Width = Form1.ListView2.Width - SystemInformation.VerticalScrollBarWidth * Form1.DPI * 2
+                Form1.Panel顶部视觉修正区域_二级选项卡.BackColor = Form1.准备文件页面.Panel3.BackColor
+                Form1.Panel顶部视觉修正区域_二级选项卡.Dock = DockStyle.Fill
+
+                Form1.准备文件页面.界面校准()
 
             Case 选项卡.IsEqual(Form1.TabPage参数面板)
-                If 用户设置.实例对象.自动重置参数面板的页面选择 = 1 Then
-                    Form1.常规流程参数页面.UiTabControlMenu1.SelectedTab = Form1.常规流程参数页面.TabPage参数总览
-                End If
-                'If Form1.常规流程参数页面.UiTabControlMenu1.SelectedTab.IsEqual(Form1.常规流程参数页面.TabPage参数总览) Then
-                '    Form1.常规流程参数页面.显示参数总览(Form1.常规流程参数页面.RichTextBox2)
-                'End If
+                Form1.Panel顶部视觉修正区域_二级选项卡.BackColor = Form1.常规流程参数页面.UiTabControlMenu1.TabBackColor
+                Form1.Panel顶部视觉修正区域_二级选项卡.Dock = DockStyle.Left
+                Form1.Panel顶部视觉修正区域_二级选项卡.Width = Form1.常规流程参数页面.UiTabControlMenu1.ItemSize.Width + 1
+
+                If 用户设置.实例对象.自动重置参数面板的页面选择 = 1 Then Form1.常规流程参数页面.UiTabControlMenu1.SelectedTab = Form1.常规流程参数页面.TabPage参数总览
 
             Case 选项卡.IsEqual(Form1.TabPage媒体信息)
+                Form1.Panel顶部视觉修正区域_二级选项卡.BackColor = Form1.Panel9.BackColor
+                Form1.Panel顶部视觉修正区域_二级选项卡.Dock = DockStyle.Fill
                 Form1.RichTextBox1.Size = New Size(Form1.RichTextBox1.Parent.Width - Form1.RichTextBox1.Parent.Padding.Left, Form1.RichTextBox1.Parent.Height - Form1.RichTextBox1.Parent.Padding.Top * 2)
 
-            Case 选项卡.IsEqual(Form1.TabPageEX混流)
+            Case 选项卡.IsEqual(Form1.TabPage混流)
+                Form1.Panel顶部视觉修正区域_二级选项卡.BackColor = Form1.混流页面.BackColor
+                Form1.Panel顶部视觉修正区域_二级选项卡.Dock = DockStyle.Fill
                 Form1.混流页面.界面校准()
 
-            Case 选项卡.IsEqual(Form1.TabPageEX合并)
+            Case 选项卡.IsEqual(Form1.TabPage合并)
+                Form1.Panel顶部视觉修正区域_二级选项卡.BackColor = Form1.合并页面.BackColor
+                Form1.Panel顶部视觉修正区域_二级选项卡.Dock = DockStyle.Fill
                 Form1.合并页面.界面校准()
 
             Case 选项卡.IsEqual(Form1.TabPage性能监控)
-                Form1.Panel18.Width = Form1.Panel18.Parent.Width * 0.3
-                Form1.ListView3.Columns(0).Width = Form1.ListView3.Parent.Width - Form1.ListView3.Parent.Padding.Left - SystemInformation.VerticalScrollBarWidth * Form1.DPI * 2
-                Form1.ListView4.Columns(0).Width = Form1.ListView4.Parent.Width - Form1.ListView4.Parent.Padding.Left - SystemInformation.VerticalScrollBarWidth * Form1.DPI * 2
+                Form1.Panel顶部视觉修正区域_二级选项卡.BackColor = Form1.性能监控页面.Panel1.BackColor
+                Form1.Panel顶部视觉修正区域_二级选项卡.Dock = DockStyle.Fill
+
+                'Form1.Panel18.Width = Form1.Panel18.Parent.Width * 0.3
+                'Form1.ListView3.Columns(0).Width = Form1.ListView3.Parent.Width - Form1.ListView3.Parent.Padding.Left - SystemInformation.VerticalScrollBarWidth * Form1.DPI * 2
+                'Form1.ListView4.Columns(0).Width = Form1.ListView4.Parent.Width - Form1.ListView4.Parent.Padding.Left - SystemInformation.VerticalScrollBarWidth * Form1.DPI * 2
                 Form1.性能统计刷新计时器.Enabled = True
 
-            Case 选项卡.IsEqual(Form1.TabPage软件设置)
+            Case 选项卡.IsEqual(Form1.TabPage设置)
+                Form1.Panel顶部视觉修正区域_二级选项卡.BackColor = Form1.设置页面.UiTabControlMenu1.TabBackColor
+                Form1.Panel顶部视觉修正区域_二级选项卡.Dock = DockStyle.Left
+                Form1.Panel顶部视觉修正区域_二级选项卡.Width = Form1.设置页面.UiTabControlMenu1.ItemSize.Width + 1
+
                 校准UiComboBox视觉(Form1.设置页面.UiComboBox字体名称)
                 校准UiComboBox视觉(Form1.设置页面.UiComboBox自动开始最大任务数量)
                 校准UiComboBox视觉(Form1.设置页面.UiComboBox有任务时系统状态)
@@ -154,7 +139,41 @@ Public Class 界面控制
                 校准UiComboBox视觉(Form1.设置页面.UiComboBox混淆任务名称)
                 Form1.设置页面.UiCheckBox转译模式.CheckBoxSize = 20 * Form1.DPI
 
+            Case 选项卡.IsEqual(Form1.TabPage支持者名单)
+                Form1.Panel顶部视觉修正区域_二级选项卡.BackColor = Form1.TabPage支持者名单.BackColor
+                Form1.Panel顶部视觉修正区域_二级选项卡.Dock = DockStyle.Fill
+
         End Select
+    End Sub
+
+    Public Shared Sub 校准编码队列的列宽()
+        Select Case 用户设置.实例对象.界面修正_编码队列的列宽调整逻辑
+            Case 0
+                Form1.Label状态.Width = 80 * Form1.DPI
+                Form1.Label进度.Width = 70 * Form1.DPI
+                Form1.Label效率.Width = 80 * Form1.DPI
+                Form1.Label输出大小.Width = 150 * Form1.DPI
+                Form1.Label质量.Width = 55 * Form1.DPI
+                Form1.Label比特率.Width = 115 * Form1.DPI
+                Form1.Label预计剩余.Width = 200 * Form1.DPI
+            Case 1
+                Dim 总宽度 As Integer = Form1.Panel1.Width
+                Form1.Label状态.Width = 总宽度 * 0.076
+                Form1.Label进度.Width = 总宽度 * 0.071
+                Form1.Label效率.Width = 总宽度 * 0.076
+                Form1.Label输出大小.Width = 总宽度 * 0.143
+                Form1.Label质量.Width = 总宽度 * 0.053
+                Form1.Label比特率.Width = 总宽度 * 0.113
+                Form1.Label预计剩余.Width = 总宽度 * 0.186
+        End Select
+        Form1.ListView1.Columns(0).Width = Form1.Panel15.Width - Form1.ListView1.Parent.Padding.Left - 5 * Form1.DPI
+        Form1.ListView1.Columns(1).Width = Form1.Label状态.Width
+        Form1.ListView1.Columns(2).Width = Form1.Label进度.Width
+        Form1.ListView1.Columns(3).Width = Form1.Label效率.Width
+        Form1.ListView1.Columns(4).Width = Form1.Label输出大小.Width
+        Form1.ListView1.Columns(5).Width = Form1.Label质量.Width
+        Form1.ListView1.Columns(6).Width = Form1.Label比特率.Width
+        Form1.ListView1.Columns(7).Width = Form1.Label预计剩余.Width - SystemInformation.VerticalScrollBarWidth * Form1.DPI * 2
     End Sub
 
     Public Shared Sub 校准输出面板的宽度()
@@ -162,7 +181,5 @@ Public Class 界面控制
             Form1.Panel输出面板.Width = Form1.Panel输出面板.Parent.Width * 0.5
         End If
     End Sub
-
-
 
 End Class

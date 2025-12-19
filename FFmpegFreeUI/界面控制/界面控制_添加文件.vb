@@ -45,11 +45,11 @@ Public Class 界面控制_添加文件
         预设管理.储存预设(a, Form1.常规流程参数页面)
         Dim 输出目录 = Form1.常规流程参数页面.UiComboBox输出目录.Text.Trim
 
-        For Each item As ListViewItem In Form1.ListView2.Items
+        For Each item As ListViewItem In Form1.准备文件页面.ListView2.Items
             添加单个任务(item.Text, a, 输出目录, False)
         Next
 
-        Form1.ListView2.Items.Clear()
+        Form1.准备文件页面.ListView2.Items.Clear()
         Form1.UiTabControlMenu1.SelectedTab = Form1.TabPage编码队列
         编码任务.检查并开始新任务的定时器.Enabled = True
     End Sub
@@ -76,7 +76,7 @@ Public Class 界面控制_添加文件
         Dim files As String() = e.Data.GetData(DataFormats.FileDrop)
         For Each b As String In files
             Dim 路径 = If(用户设置.实例对象.转译模式, 转译模式处理路径(b), b)
-            Form1.ListView2.Items.Add(路径)
+            Form1.准备文件页面.ListView2.Items.Add(路径)
         Next
     End Sub
 
@@ -86,7 +86,7 @@ Public Class 界面控制_添加文件
 
         For Each filePath As String In openFileDialog.FileNames
             Dim 路径 = If(用户设置.实例对象.转译模式, 转译模式处理路径(filePath), filePath)
-            Form1.ListView2.Items.Add(路径)
+            Form1.准备文件页面.ListView2.Items.Add(路径)
         Next
     End Sub
 
@@ -96,7 +96,7 @@ Public Class 界面控制_添加文件
 
         For Each file As String In 获取文件夹中的所有文件(dialog.FileName)
             Dim 路径 = If(用户设置.实例对象.转译模式, 转译模式处理路径(file), file)
-            Form1.ListView2.Items.Add(路径)
+            Form1.准备文件页面.ListView2.Items.Add(路径)
         Next
     End Sub
 
@@ -115,13 +115,13 @@ Public Class 界面控制_添加文件
     End Function
 
     Public Shared Sub 批量移除选中项()
-        For Each a As ListViewItem In Form1.ListView2.SelectedItems
-            Form1.ListView2.Items.Remove(a)
+        For Each a As ListViewItem In Form1.准备文件页面.ListView2.SelectedItems
+            Form1.准备文件页面.ListView2.Items.Remove(a)
         Next
     End Sub
 
     Public Shared Sub 移除全部项()
-        Form1.ListView2.Items.Clear()
+        Form1.准备文件页面.ListView2.Items.Clear()
     End Sub
 
 End Class

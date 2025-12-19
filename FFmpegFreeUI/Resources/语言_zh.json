@@ -1,0 +1,20 @@
+﻿{
+  "Button.StartMission": "开始",
+  "Button.PauseMission": "暂停",
+  "Button.ResumeMission": "恢复",
+  "Button.StopMission": "停止",
+  "Button.RemoveMission": "移除",
+  "Button.ResetMission": "重置",
+  "Button.LocateMission": "定位",
+  "Button.MissionMenu": "任务管理菜单",
+  "Label.Status": "状态",
+  "Label.Progress": "进度",
+  "Label.Speed": "效率",
+  "Label.OutputSize": "输出大小 && 预估",
+  "Label.Quality": "质量",
+  "Label.Bitrate": "比特率",
+  "Label.TimeRemaining": "预计剩余 && 已用",
+  "LinkLabel.Send": "发送",
+  "LinkLabel.SwitchOutputDisplay": "切换输出显示",
+  "LinkLabel.CatchErrors": "捕获 {0} 个错误"
+}

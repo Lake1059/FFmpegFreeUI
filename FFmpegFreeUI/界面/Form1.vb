@@ -7,10 +7,13 @@ Public Class Form1
     Public 是否初始化 As Boolean = False
     Private 上一次窗口状态 As FormWindowState
 
-    Public 常规流程参数页面 As New 界面_常规流程参数_V2
-    Public 混流页面 As New 界面_混流
-    Public 合并页面 As New 界面_合并
-    Public 设置页面 As New 界面_设置
+    Public 起始页面 As New 界面_起始页 With {.Dock = DockStyle.Fill}
+    Public 准备文件页面 As New 界面_准备文件 With {.Dock = DockStyle.Fill}
+    Public 常规流程参数页面 As New 界面_常规流程参数_V2 With {.Dock = DockStyle.Fill}
+    Public 混流页面 As New 界面_混流 With {.Dock = DockStyle.Fill}
+    Public 合并页面 As New 界面_合并 With {.Dock = DockStyle.Fill}
+    Public 设置页面 As New 界面_设置 With {.Dock = DockStyle.Fill}
+    Public 性能监控页面 As New 界面_性能监控 With {.Dock = DockStyle.Fill}
 
     Public 性能统计对象 As New 性能统计
     Public 性能统计刷新计时器 As New Timer With {.Interval = 2000, .Enabled = False}
@@ -24,10 +27,13 @@ Public Class Form1
         If Not FileIO.FileSystem.DirectoryExists(Path.Combine(Application.StartupPath, "Preset")) Then
             FileIO.FileSystem.CreateDirectory(Path.Combine(Application.StartupPath, "Preset"))
         End If
+        'If Not FileIO.FileSystem.DirectoryExists(Path.Combine(Application.StartupPath, "Plugin")) Then
+        '    FileIO.FileSystem.CreateDirectory(Path.Combine(Application.StartupPath, "Plugin"))
+        'End If
 
         Dim 版本号 = String.Join(".", Application.ProductVersion.Split("."c).Take(3)).Split("+"c)(0)
         Me.Text = $"FFmpegFreeUI {版本号}"
-        Label主标题.Text = $"FFmpegFreeUI Official {版本号}"
+        起始页面.Label主标题.Text = $"FFmpegFreeUI 内部开发版本 {版本号}"
 
         视频编码器数据库.初始化()
         界面控制.初始化()
@@ -48,11 +54,7 @@ Public Class Form1
     End Sub
 
     Private Sub Form1_Shown(sender As Object, e As EventArgs) Handles Me.Shown
-        根据标签宽度设置显示高度(Label126)
-        根据标签宽度设置显示高度(Label21)
-        根据标签宽度设置显示高度(Label1)
-        根据标签宽度设置显示高度(Label35)
-
+        Me.Panel顶部视觉修正区域_一级选项卡.Width = Me.UiTabControlMenu1.ItemSize.Width + 1
         'bro薛定谔的猫知道吧，你不搞个监控这玩意就是随机态
         If UI同步上下文 Is Nothing Then MsgBox("警告：UI 同步上下文是空的，继续使用软件将导致崩溃，请联系开发者排查问题", MsgBoxStyle.Critical)
 
@@ -87,7 +89,7 @@ Public Class Form1
         Me.MinimumSize = New Size(0, 0)
         Me.Size = New Size(1200 * DPI, 700 * DPI)
         Me.MinimumSize = New Size(1200 * DPI, 700 * DPI)
-        Me.UiTabControlMenu1.ItemSize = New Size(150 * DPI, 40 * DPI)
+        Me.UiTabControlMenu1.ItemSize = New Size(150 * DPI, 38 * DPI)
         Me.ImageList1.ImageSize = New Size(1, 30 * DPI)
     End Sub
 
@@ -119,6 +121,9 @@ Public Class Form1
                 If files.Length > 0 Then
                     Dim a As New Form独立参数面板 With {.文件列表 = files}
                     a.Label1.Text = $"为 {files.Length} 个文件使用单独的参数方案{vbCrLf}{files(0)}"
+                    If 用户设置.实例对象.打开独立参数面板时自动切到预设管理页面 = 1 Then
+                        a.参数面板.UiTabControlMenu1.SelectedTab = a.参数面板.TabPage方案管理
+                    End If
                     显示窗体(a, Me)
                 End If
             Case Else
@@ -203,17 +208,6 @@ Public Class Form1
         End If
     End Sub
 
-    Private Sub UiButton切换处理器占用面板_Click(sender As Object, e As EventArgs) Handles UiButton切换处理器占用面板.Click
-        If Panel18.Visible Then
-            Panel18.Visible = False
-            Label46.Visible = False
-        Else
-            Panel18.Visible = True
-            Label46.Visible = True
-        End If
-        界面控制.界面校准()
-    End Sub
-
     Private Sub UiComboBox3_SelectedIndexChanged(sender As Object, e As EventArgs) Handles UiComboBox3.SelectedIndexChanged
         For Each C As Control In Panel24.Controls
             Panel24.Controls.Remove(C)
@@ -257,14 +251,14 @@ Public Class Form1
     End Sub
     Public Sub 加载自定义图标(img As String)
         Try
-            Me.PictureBox1.Width = Me.PictureBox1.Height
+            起始页面.PictureBox1.Width = 起始页面.PictureBox1.Height
             If FileIO.FileSystem.FileExists(img) AndAlso img IsNot Nothing AndAlso img <> "" Then
-                Me.PictureBox1.Image = LoadImageFromFile(img).GetThumbnailImage(Me.PictureBox1.Width, Me.PictureBox1.Height, Nothing, Nothing)
-                Using bitmap As New Bitmap(Me.PictureBox1.Image)
+                起始页面.PictureBox1.Image = LoadImageFromFile(img).GetThumbnailImage(起始页面.PictureBox1.Width, 起始页面.PictureBox1.Height, Nothing, Nothing)
+                Using bitmap As New Bitmap(起始页面.PictureBox1.Image)
                     Me.Icon = Icon.FromHandle(bitmap.GetHicon())
                 End Using
             Else
-                Me.PictureBox1.Image = My.Resources.Resource1.AppIcon.GetThumbnailImage(Me.PictureBox1.Width, Me.PictureBox1.Height, Nothing, Nothing)
+                起始页面.PictureBox1.Image = My.Resources.Resource1.AppIcon.GetThumbnailImage(起始页面.PictureBox1.Width, 起始页面.PictureBox1.Height, Nothing, Nothing)
             End If
         Catch ex As Exception
         End Try

@@ -83,7 +83,7 @@ Partial Class 界面_混流
         Panel73.BackColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
         Panel73.Controls.Add(Label123)
         Panel73.Dock = DockStyle.Top
-        Panel73.Location = New Point(10, 10)
+        Panel73.Location = New Point(10, 0)
         Panel73.Name = "Panel73"
         Panel73.Padding = New Padding(10)
         Panel73.Size = New Size(1080, 39)
@@ -104,7 +104,7 @@ Partial Class 界面_混流
         ' Label20
         ' 
         Label20.Dock = DockStyle.Top
-        Label20.Location = New Point(10, 49)
+        Label20.Location = New Point(10, 39)
         Label20.Name = "Label20"
         Label20.Size = New Size(1080, 10)
         Label20.TabIndex = 82
@@ -118,10 +118,10 @@ Partial Class 界面_混流
         Panel1.Controls.Add(Panel4)
         Panel1.Controls.Add(Label1)
         Panel1.Dock = DockStyle.Fill
-        Panel1.Location = New Point(10, 59)
+        Panel1.Location = New Point(10, 49)
         Panel1.Name = "Panel1"
         Panel1.Padding = New Padding(10)
-        Panel1.Size = New Size(1080, 571)
+        Panel1.Size = New Size(1080, 581)
         Panel1.TabIndex = 83
         ' 
         ' Panel2
@@ -132,7 +132,7 @@ Partial Class 界面_混流
         Panel2.Location = New Point(10, 79)
         Panel2.Name = "Panel2"
         Panel2.Padding = New Padding(10, 10, 0, 10)
-        Panel2.Size = New Size(1060, 402)
+        Panel2.Size = New Size(1060, 412)
         Panel2.TabIndex = 5
         ' 
         ' ListView1
@@ -148,7 +148,7 @@ Partial Class 界面_混流
         ListView1.Location = New Point(10, 10)
         ListView1.Name = "ListView1"
         ListView1.OwnerDraw = True
-        ListView1.Size = New Size(1050, 382)
+        ListView1.Size = New Size(1050, 392)
         ListView1.TabIndex = 0
         ListView1.UseCompatibleStateImageBehavior = False
         ListView1.View = View.Details
@@ -159,7 +159,7 @@ Partial Class 界面_混流
         Panel3.Controls.Add(Panel8)
         Panel3.Controls.Add(Panel62)
         Panel3.Dock = DockStyle.Bottom
-        Panel3.Location = New Point(10, 481)
+        Panel3.Location = New Point(10, 491)
         Panel3.Name = "Panel3"
         Panel3.Padding = New Padding(0, 10, 0, 0)
         Panel3.Size = New Size(1060, 80)
@@ -732,7 +732,7 @@ Partial Class 界面_混流
         Font = New Font("微软雅黑", 9.75F, FontStyle.Regular, GraphicsUnit.Point, CByte(134))
         ForeColor = Color.Silver
         Name = "界面_混流"
-        Padding = New Padding(10)
+        Padding = New Padding(10, 0, 10, 10)
         Size = New Size(1100, 700)
         Panel73.ResumeLayout(False)
         Panel73.PerformLayout()

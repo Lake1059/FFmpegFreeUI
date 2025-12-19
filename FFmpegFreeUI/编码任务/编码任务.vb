@@ -107,7 +107,7 @@ Public Class 编码任务
         Public Property 实时输出 As String = ""
         Public Property 错误列表 As New List(Of String)
         Public Property 非进度输出列表 As New List(Of String)
-
+        Public Property 手动停止不要尝试启动其他任务 As Boolean = False
         Public Property FFmpegProcess As Process
         Public Property 任务耗时计时器 As New Stopwatch
         Public Property 上次刷新界面的时间戳 As TimeSpan = Now.TimeOfDay
@@ -213,8 +213,6 @@ jx1:
             End Try
         End Sub
 
-        Dim 手动停止不要尝试启动其他任务 As Boolean = False
-
         Public Sub 停止()
             Try
                 If FFmpegProcess.HasExited = False Then
@@ -300,9 +298,8 @@ jx1:
                 状态 = 编码状态.已完成
 
                 If 预设数据 IsNot Nothing AndAlso 预设数据.视频参数_降噪_方式 = "avs" Then
-                    If FileIO.FileSystem.FileExists(Path.Combine(Path.GetDirectoryName(输入文件), Path.GetFileNameWithoutExtension(输入文件) & ".avs")) Then
-                        FileIO.FileSystem.DeleteFile(Path.Combine(Path.GetDirectoryName(输入文件), Path.GetFileNameWithoutExtension(输入文件) & ".avs"))
-                    End If
+                    Dim avsF = Path.Combine(Path.GetDirectoryName(输入文件), Path.GetFileNameWithoutExtension(输入文件) & ".avs")
+                    If FileIO.FileSystem.FileExists(avsF) Then FileIO.FileSystem.DeleteFile(avsF)
                 End If
 
                 Dim concat_demuxer = Path.Combine(Application.StartupPath, "ffmpeg_concat_demuxer.txt")
@@ -317,17 +314,28 @@ jx1:
                 End If
 
             Else
+
                 全部任务已完成是否有错误 = True
                 If Not 手动停止不要尝试启动其他任务 Then 状态 = 编码状态.错误
                 If FileIO.FileSystem.FileExists(输出文件) Then
-                    Select Case Path.GetExtension(输出文件).ToLower.Trim
-                        Case ".mp4"
+                    Select Case 用户设置.实例对象.任务失败自动删除输出文件
+                        Case 0
+                            If Path.GetExtension(输出文件).ToLower.Trim = ".mp4" Then
+                                If 输出文件.Trim.Equals(输入文件.Trim, StringComparison.CurrentCultureIgnoreCase) Then
+                                    实时输出 = $"[3FUI] 你在干什么？！输出文件等于输入文件？"
+                                    错误列表.Add($"[3FUI] 你在干什么？！输出文件等于输入文件？")
+                                Else
+                                    FileIO.FileSystem.DeleteFile(输出文件, FileIO.UIOption.OnlyErrorDialogs, FileIO.RecycleOption.SendToRecycleBin)
+                                End If
+                            End If
+                        Case 1
                             If 输出文件.Trim.Equals(输入文件.Trim, StringComparison.CurrentCultureIgnoreCase) Then
                                 实时输出 = $"[3FUI] 你在干什么？！输出文件等于输入文件？"
                                 错误列表.Add($"[3FUI] 你在干什么？！输出文件等于输入文件？")
                             Else
                                 FileIO.FileSystem.DeleteFile(输出文件, FileIO.UIOption.OnlyErrorDialogs, FileIO.RecycleOption.SendToRecycleBin)
                             End If
+                        Case 2
                     End Select
                 End If
 
@@ -513,12 +521,12 @@ jx1:
     End Class
 
 
-    Public Shared ReadOnly DurationPattern As New Regex("Duration:\s*(\d{2}:\d{2}:\d{2}\.\d{2})", RegexOptions.Compiled)
+    Public Shared ReadOnly DurationPattern As New Regex("Duration:\s*(\d+:\d{2}:\d{2}\.\d{2})", RegexOptions.Compiled)
     Public Shared ReadOnly FramePattern As New Regex("frame=\s*(?<value>\d+)", RegexOptions.Compiled)
     Public Shared ReadOnly FpsPattern As New Regex("fps=\s*(?<value>\d+)", RegexOptions.Compiled)
     Public Shared ReadOnly QPattern As New Regex("q=\s*(?<value>[\d\.]+)", RegexOptions.Compiled)
     Public Shared ReadOnly SizePattern As New Regex("size=\s*(?<value>\d+)\s*(?<unit>[KMG]iB)", RegexOptions.Compiled)
-    Public Shared ReadOnly TimePattern As New Regex("time=\s*(?<value>\d{2}:\d{2}:\d{2}\.\d{2})", RegexOptions.Compiled)
+    Public Shared ReadOnly TimePattern As New Regex("time=\s*(?<value>\d+:\d{2}:\d{2}\.\d{2})", RegexOptions.Compiled)
     Public Shared ReadOnly BitratePattern As New Regex("bitrate=\s*(?<value>[\d\.]+)\s*kbits/s", RegexOptions.Compiled)
     Public Shared ReadOnly SpeedPattern As New Regex("speed=\s*(?<value>[\d\.eE\+\-]+)\s*x", RegexOptions.Compiled)
 
@@ -597,10 +605,10 @@ jx1:
             Dim errorCount As Integer = 队列(Form1.ListView1.SelectedItems(0).Index).错误列表.Count
             Select Case errorCount
                 Case > 0
-                    Form1.LinkLabel切换显示输出面板.Text = $"捕获 {errorCount} 个错误"
+                    Form1.LinkLabel切换显示输出面板.Text = 翻译("LinkLabel.CatchErrors").Replace("{0}", errorCount)
                     Form1.LinkLabel切换显示输出面板.LinkColor = Color.IndianRed
                 Case 0
-                    Form1.LinkLabel切换显示输出面板.Text = $"切换输出显示"
+                    Form1.LinkLabel切换显示输出面板.Text = 翻译("LinkLabel.SwitchOutputDisplay")
                     Form1.LinkLabel切换显示输出面板.LinkColor = Color.YellowGreen
             End Select
 
