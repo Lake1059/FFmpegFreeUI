@@ -773,10 +773,10 @@ Partial Class 界面_性能监控
         LinkLabel1.Location = New Point(0, 0)
         LinkLabel1.Name = "LinkLabel1"
         LinkLabel1.Padding = New Padding(16, 20, 0, 0)
-        LinkLabel1.Size = New Size(462, 44)
+        LinkLabel1.Size = New Size(383, 44)
         LinkLabel1.TabIndex = 127
         LinkLabel1.TabStop = True
-        LinkLabel1.Text = "NVIDIA RTX Pro Max Ultra Ultimate 9000 Ti 1024G"
+        LinkLabel1.Text = "NVIDIA RTX Pro Max Ultra 9000 Ti 1024G"
         ' 
         ' 界面_性能监控
         ' 

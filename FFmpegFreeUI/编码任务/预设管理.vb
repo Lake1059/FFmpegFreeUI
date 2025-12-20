@@ -1,6 +1,39 @@
 ﻿Imports System.IO
 Imports Sunny.UI
 Public Class 预设管理
+
+    Public Shared Property 音频编码器排序表 As New List(Of String) From {
+        "",
+        "copy",
+        "-an",
+        "aac",
+        "aac -profile:a aac_he",
+        "aac -profile:a aac_he_v2",
+        "libfdk_aac",
+        "libfdk_aac -profile:a aac_he",
+        "libfdk_aac -profile:a aac_he_v2",
+        "libmp3lame",
+        "libopus",
+        "flac",
+        "alac",
+        "pcm_s16le",
+        "pcm_s24le",
+        "pcm_s32le",
+        "pcm_s64le",
+        "ac3",
+        "eac3",
+        "dca",
+        "truehd",
+        "tta",
+        "libvorbis",
+        "real_144",
+        "wavpack",
+        "libtwolame",
+        "libopencore_amrnb",
+        "libvo_amrwbenc"
+    }
+
+
     Public Shared Sub 显示预设(a As 预设数据类型, ui As 界面_常规流程参数_V2)
         ui.UiTextBox输出容器.Text = a.输出容器
 
@@ -151,31 +184,7 @@ Public Class 预设管理
         ui.UiComboBox角度翻转.SelectedIndex = a.视频参数_画面翻转_角度翻转
         ui.UiComboBox镜像翻转.SelectedIndex = a.视频参数_画面翻转_镜像翻转
 
-        Select Case a.音频参数_编码器_具体编码
-            Case "copy" : ui.UiComboBox音频编码器.SelectedIndex = 1
-            Case "-an" : ui.UiComboBox音频编码器.SelectedIndex = 2
-            Case "aac" : ui.UiComboBox音频编码器.SelectedIndex = 3
-            Case "libmp3lame" : ui.UiComboBox音频编码器.SelectedIndex = 4
-            Case "libopus" : ui.UiComboBox音频编码器.SelectedIndex = 5
-            Case "flac" : ui.UiComboBox音频编码器.SelectedIndex = 6
-            Case "alac" : ui.UiComboBox音频编码器.SelectedIndex = 7
-            Case "pcm_s16le" : ui.UiComboBox音频编码器.SelectedIndex = 8
-            Case "pcm_s24le" : ui.UiComboBox音频编码器.SelectedIndex = 9
-            Case "pcm_s32le" : ui.UiComboBox音频编码器.SelectedIndex = 10
-            Case "pcm_s64le" : ui.UiComboBox音频编码器.SelectedIndex = 11
-            Case "ac3" : ui.UiComboBox音频编码器.SelectedIndex = 12
-            Case "eac3" : ui.UiComboBox音频编码器.SelectedIndex = 13
-            Case "dca" : ui.UiComboBox音频编码器.SelectedIndex = 14
-            Case "truehd" : ui.UiComboBox音频编码器.SelectedIndex = 15
-            Case "tta" : ui.UiComboBox音频编码器.SelectedIndex = 16
-            Case "libvorbis" : ui.UiComboBox音频编码器.SelectedIndex = 17
-            Case "real_144" : ui.UiComboBox音频编码器.SelectedIndex = 18
-            Case "wavpack" : ui.UiComboBox音频编码器.SelectedIndex = 19
-            Case "libtwolame" : ui.UiComboBox音频编码器.SelectedIndex = 20
-            Case "libopencore_amrnb" : ui.UiComboBox音频编码器.SelectedIndex = 21
-            Case "libvo_amrwbenc" : ui.UiComboBox音频编码器.SelectedIndex = 22
-            Case Else : ui.UiComboBox音频编码器.Text = ""
-        End Select
+        ui.UiComboBox音频编码器.SelectedIndex = 音频编码器排序表.IndexOf(a.音频参数_编码器_具体编码)
         ui.UiComboBox音频比特率.Text = a.音频参数_比特率
         ui.UiComboBox音频质量参数.Text = a.音频参数_质量参数名
         ui.UiTextBox音频质量值.Text = a.音频参数_质量值
@@ -382,31 +391,9 @@ Public Class 预设管理
         a.视频参数_画面翻转_角度翻转 = ui.UiComboBox角度翻转.SelectedIndex
         a.视频参数_画面翻转_镜像翻转 = ui.UiComboBox镜像翻转.SelectedIndex
 
-        Select Case ui.UiComboBox音频编码器.SelectedIndex
-            Case 1 : a.音频参数_编码器_具体编码 = "copy"
-            Case 2 : a.音频参数_编码器_具体编码 = "-an"
-            Case 3 : a.音频参数_编码器_具体编码 = "aac"
-            Case 4 : a.音频参数_编码器_具体编码 = "libmp3lame"
-            Case 5 : a.音频参数_编码器_具体编码 = "libopus"
-            Case 6 : a.音频参数_编码器_具体编码 = "flac"
-            Case 7 : a.音频参数_编码器_具体编码 = "alac"
-            Case 8 : a.音频参数_编码器_具体编码 = "pcm_s16le"
-            Case 9 : a.音频参数_编码器_具体编码 = "pcm_s24le"
-            Case 10 : a.音频参数_编码器_具体编码 = "pcm_s32le"
-            Case 11 : a.音频参数_编码器_具体编码 = "pcm_s64le"
-            Case 12 : a.音频参数_编码器_具体编码 = "ac3"
-            Case 13 : a.音频参数_编码器_具体编码 = "eac3"
-            Case 14 : a.音频参数_编码器_具体编码 = "dca"
-            Case 15 : a.音频参数_编码器_具体编码 = "truehd"
-            Case 16 : a.音频参数_编码器_具体编码 = "tta"
-            Case 17 : a.音频参数_编码器_具体编码 = "libvorbis"
-            Case 18 : a.音频参数_编码器_具体编码 = "real_144"
-            Case 19 : a.音频参数_编码器_具体编码 = "wavpack"
-            Case 20 : a.音频参数_编码器_具体编码 = "libtwolame"
-            Case 21 : a.音频参数_编码器_具体编码 = "libopencore_amrnb"
-            Case 22 : a.音频参数_编码器_具体编码 = "libvo_amrwbenc"
-        End Select
-
+        If ui.UiComboBox音频编码器.SelectedIndex <> -1 Then
+            a.音频参数_编码器_具体编码 = 音频编码器排序表(ui.UiComboBox音频编码器.SelectedIndex)
+        End If
         a.音频参数_比特率 = ui.UiComboBox音频比特率.Text
         a.音频参数_质量参数名 = ui.UiComboBox音频质量参数.Text
         a.音频参数_质量值 = ui.UiTextBox音频质量值.Text
@@ -687,6 +674,7 @@ Public Class 预设管理
         If a.视频参数_编码器_gpu <> "" Then arg &= $"-gpu {a.视频参数_编码器_gpu} "
         If a.视频参数_编码器_threads <> "" Then 视频参数 &= $"-threads {a.视频参数_编码器_threads} "
 
+        If a.视频参数_分辨率_裁剪滤镜参数 <> "" Then 视频滤镜参数集.Add($"crop={a.视频参数_分辨率_裁剪滤镜参数}")
         If a.视频参数_分辨率 <> "" Then
             视频参数 &= $"-s {a.视频参数_分辨率} "
         Else
@@ -696,7 +684,6 @@ Public Class 预设管理
                 视频滤镜参数集.Add($"scale=-2:{a.视频参数_分辨率自动计算_高度}")
             End If
         End If
-        If a.视频参数_分辨率_裁剪滤镜参数 <> "" Then 视频滤镜参数集.Add($"crop={a.视频参数_分辨率_裁剪滤镜参数}")
 
         If a.视频参数_帧速率 <> "" Then 视频参数 &= $"-r {a.视频参数_帧速率} "
         If a.视频参数_帧速率_抽帧最大变化比例 <> "" Then
@@ -733,10 +720,10 @@ Public Class 预设管理
             For Each shader In a.视频参数_超分_着色器列表
                 s1 &= $":custom_shader_path='{将路径转换为FFmpeg滤镜接受的格式(shader)}'"
             Next
-                视频滤镜参数集.Add(s1)
-            End If
+            视频滤镜参数集.Add(s1)
+        End If
 
-            Select Case a.视频参数_比特率_控制方式
+        Select Case a.视频参数_比特率_控制方式
             Case "VBR"
                 Select Case a.视频参数_编码器_具体编码
                     Case "av1_amf", "hevc_amf", "h264_amf"
@@ -979,6 +966,12 @@ Public Class 预设管理
                         arg &= $"-map {si}? -c:s copy "
                     Case 2
                         arg &= $"-map {si}? -c:s mov_text "
+                    Case 3
+                        arg &= $"-map {si}? -c:s srt "
+                    Case 4
+                        arg &= $"-map {si}? -c:s ass "
+                    Case 5
+                        arg &= $"-map {si}? -c:s ssa "
                 End Select
             Next
         End If
@@ -1221,6 +1214,9 @@ Public Class 预设管理
             Select Case a.流控制_使用哪些文件的哪些内嵌字幕_如何操作
                 Case 1 : 在RTF输出文本(RTF, "字幕操作：复制流", Color.Silver)
                 Case 2 : 在RTF输出文本(RTF, "字幕操作：转为 mov_text 编码", Color.Silver)
+                Case 3 : 在RTF输出文本(RTF, "字幕操作：转为 srt 编码", Color.Silver)
+                Case 4 : 在RTF输出文本(RTF, "字幕操作：转为 ass 编码", Color.Silver)
+                Case 5 : 在RTF输出文本(RTF, "字幕操作：转为 ssa 编码", Color.Silver)
             End Select
         End If
         If a.流控制_自动混流SRT Then 在RTF输出文本(RTF, "自动混流同名 SRT 字幕文件", Color.Silver)

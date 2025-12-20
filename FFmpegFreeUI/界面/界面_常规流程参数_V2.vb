@@ -236,9 +236,11 @@ Public Class 界面_常规流程参数_V2
                 UiComboBox具体编码.Items.Add("av1_nvenc")
                 UiComboBox具体编码.Items.Add("av1_qsv")
                 UiComboBox具体编码.Items.Add("av1_amf")
+                UiComboBox具体编码.Items.Add("av1_d3d12va")
                 UiComboBox具体编码.Items.Add("libaom-av1")
                 UiComboBox具体编码.Items.Add("librav1e")
                 UiComboBox具体编码.Items.Add("av1_vaapi")
+                UiComboBox具体编码.Items.Add("av1_vulkan")
             Case 4    'H.265/HEVC
                 UiComboBox具体编码.Items.Add("libx265")
                 UiComboBox具体编码.Items.Add("hevc_nvenc")
@@ -247,11 +249,13 @@ Public Class 界面_常规流程参数_V2
                 UiComboBox具体编码.Items.Add("hevc_d3d12va")
                 UiComboBox具体编码.Items.Add("hevc_vaapi")
                 UiComboBox具体编码.Items.Add("hevc_vulkan")
+                UiComboBox具体编码.Items.Add("libkvazaar")
             Case 5    'H.264/AVC
                 UiComboBox具体编码.Items.Add("libx264")
                 UiComboBox具体编码.Items.Add("h264_nvenc")
                 UiComboBox具体编码.Items.Add("h264_qsv")
                 UiComboBox具体编码.Items.Add("h264_amf")
+                UiComboBox具体编码.Items.Add("h264_d3d12va")
                 UiComboBox具体编码.Items.Add("h264_vaapi")
                 UiComboBox具体编码.Items.Add("h264_vulkan")
             Case 6    '来自 Apple
@@ -259,6 +263,8 @@ Public Class 界面_常规流程参数_V2
                 UiComboBox具体编码.Items.Add("prores_aw")
             Case 7    '来自 Google
                 UiComboBox具体编码.Items.Add("libvpx-vp9")
+                UiComboBox具体编码.Items.Add("libsvt_vp9")
+                UiComboBox具体编码.Items.Add("vp9_qsv")
                 UiComboBox具体编码.Items.Add("vp9_vaapi")
                 UiComboBox具体编码.Items.Add("libvpx")
                 UiComboBox具体编码.Items.Add("vp8_vaapi")
@@ -268,6 +274,7 @@ Public Class 界面_常规流程参数_V2
                 UiComboBox具体编码.Items.Add("ffv1_vulkan")
             Case 9    '其他现代编码
                 UiComboBox具体编码.Items.Add("libxeve")
+                UiComboBox具体编码.Items.Add("libxavs")
                 UiComboBox具体编码.Items.Add("libxavs2")
                 UiComboBox具体编码.Items.Add("cfhd")
             Case 10    '老旧格式
@@ -287,6 +294,13 @@ Public Class 界面_常规流程参数_V2
         If UiComboBox具体编码.Items.Count > 1 Then UiComboBox具体编码.SelectedIndex = 0
     End Sub
     Sub 视频具体编码改动事件()
+        Select Case UiComboBox具体编码.Text
+            Case "libkvazaar"
+                Label124.Visible = True
+            Case Else
+                Label124.Visible = False
+        End Select
+
         UiComboBox编码预设.Items.Clear()
         UiComboBox编码预设.Text = ""
         UiComboBox配置文件.Items.Clear()
@@ -432,6 +446,11 @@ Public Class 界面_常规流程参数_V2
                 UiTextBox响度标准化目标响度.Text = ""
                 UiTextBox响度标准化动态范围.Text = ""
                 UiTextBox响度标准化峰值电平.Text = ""
+                Label25.Visible = False
+            Case "FDK AAC", "FDK AAC HE", "FDK AAC HE v2"
+                Label25.Visible = True
+            Case Else
+                Label25.Visible = False
         End Select
     End Sub
 
@@ -794,7 +813,5 @@ Public Class 界面_常规流程参数_V2
             End If
         End If
     End Sub
-
-
 
 End Class

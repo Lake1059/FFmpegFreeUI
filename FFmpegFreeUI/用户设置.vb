@@ -87,6 +87,8 @@ Public Class 用户设置
             Form1.设置页面.UiComboBox字体名称.Text = 实例对象.字体
             If Form1.设置页面.UiComboBox字体名称.Items.Contains("微软雅黑") Then Form1.设置页面.UiComboBox字体名称.Font = New Font("微软雅黑", Form1.设置页面.UiComboBox字体名称.Font.Size)
             SetControlFont(用户设置.实例对象.字体, Form1, {Form1.设置页面.UiComboBox字体名称}, True)
+            编码队列右键菜单.重设字体()
+            编码队列管理选项.重设字体()
 
             If 用户设置.实例对象.界面修正_选项卡文字增加左侧空格 > 0 Then
                 For Each page As TabPage In Form1.UiTabControlMenu1.TabPages
