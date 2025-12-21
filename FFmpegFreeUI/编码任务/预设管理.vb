@@ -7,8 +7,6 @@ Public Class 预设管理
         "copy",
         "-an",
         "aac",
-        "aac -profile:a aac_he",
-        "aac -profile:a aac_he_v2",
         "libfdk_aac",
         "libfdk_aac -profile:a aac_he",
         "libfdk_aac -profile:a aac_he_v2",
