@@ -84,6 +84,31 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  查找类似 易相逢|#FBE4FF 的本地化字符串。
+        '''</summary>
+        Friend Shared ReadOnly Property 支持者名单() As String
+            Get
+                Return ResourceManager.GetString("支持者名单", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  查找类似 格里芬指挥官|#39C5BB
+        '''陆耀YSNX462 (FFBOX最严厉的父亲)|#66FF66
+        '''Celery (酒吧点蛋炒饭的)|#21AEFF
+        '''哈哈6662333 (坏点子大师/&quot;网&quot;管)|#FF9633
+        '''哈基曼波|#FF96DE
+        '''ZOGMOS (终末诗) (首席教程制作大师) (开发者特别授予)|#72565F|终末诗
+        '''Uyanide (I use arch btw) (首席二次元)|#89B4FA
+        '''Simlalsy (压片的)|#E3E0F9 的本地化字符串。
+        '''</summary>
+        Friend Shared ReadOnly Property 支持者名单_赠送() As String
+            Get
+                Return ResourceManager.GetString("支持者名单_赠送", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  查找类似 Enter  --&gt;  开始
         '''Space  --&gt;  暂停
         '''Ctrl + A  --&gt;  全选

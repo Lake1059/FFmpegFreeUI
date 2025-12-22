@@ -124,6 +124,12 @@
   <data name="完成" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\完成.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="支持者名单" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\支持者名单.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="支持者名单_赠送" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\支持者名单_赠送.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
   <data name="编码队列快捷键" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\编码队列快捷键.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>

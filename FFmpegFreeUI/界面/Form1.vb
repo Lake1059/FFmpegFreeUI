@@ -16,6 +16,7 @@ Public Class Form1
     Public 合并页面 As New 界面_合并 With {.Dock = DockStyle.Fill}
     Public 设置页面 As New 界面_设置 With {.Dock = DockStyle.Fill}
     Public 性能监控页面 As New 界面_性能监控 With {.Dock = DockStyle.Fill}
+    Public 支持者页面 As New 界面_支持者 With {.Dock = DockStyle.Fill}
 
     Public 性能统计对象 As New 性能统计
     Public 性能统计刷新计时器 As New Timer With {.Interval = 2000, .Enabled = False}

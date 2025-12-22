@@ -22,6 +22,7 @@ Public Class 界面控制
         Form1.TabPage合并.Controls.Add(Form1.合并页面)
         Form1.TabPage设置.Controls.Add(Form1.设置页面)
         Form1.TabPage性能监控.Controls.Add(Form1.性能监控页面)
+        Form1.TabPage支持者名单.Controls.Add(Form1.支持者页面)
 
         Form1.Panel41.AutoSize = True
 
@@ -141,9 +142,11 @@ Public Class 界面控制
                 Form1.设置页面.UiCheckBox转译模式.CheckBoxSize = 20 * Form1.DPI
 
             Case 选项卡.IsEqual(Form1.TabPage支持者名单)
-                Form1.Panel顶部视觉修正区域_二级选项卡.BackColor = Form1.TabPage支持者名单.BackColor
+                Form1.Panel顶部视觉修正区域_二级选项卡.BackColor = Form1.支持者页面.BackColor
                 Form1.Panel顶部视觉修正区域_二级选项卡.Dock = DockStyle.Fill
 
+                Form1.支持者页面.调整界面()
+                Form1.支持者页面.调整顶部按钮宽度()
         End Select
     End Sub
 

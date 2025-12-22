@@ -299,6 +299,8 @@ Partial Class 界面_常规流程参数_V2
         TabPage图片参数 = New TabPage()
         Label15 = New Label()
         Label154 = New Label()
+        Label91 = New Label()
+        Label93 = New Label()
         Label161 = New Label()
         Label162 = New Label()
         Panel67 = New Panel()
@@ -437,6 +439,8 @@ Partial Class 界面_常规流程参数_V2
         Label159 = New Label()
         UiButton刷新预设列表 = New Sunny.UI.UIButton()
         Label123 = New Label()
+        Label94 = New Label()
+        Label135 = New Label()
         UiTabControlMenu1.SuspendLayout()
         TabPage参数总览.SuspendLayout()
         Panel74.SuspendLayout()
@@ -5302,8 +5306,12 @@ Partial Class 界面_常规流程参数_V2
         ' TabPage图片参数
         ' 
         TabPage图片参数.BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
+        TabPage图片参数.Controls.Add(Label94)
+        TabPage图片参数.Controls.Add(Label135)
         TabPage图片参数.Controls.Add(Label15)
         TabPage图片参数.Controls.Add(Label154)
+        TabPage图片参数.Controls.Add(Label91)
+        TabPage图片参数.Controls.Add(Label93)
         TabPage图片参数.Controls.Add(Label161)
         TabPage图片参数.Controls.Add(Label162)
         TabPage图片参数.Controls.Add(Panel67)
@@ -5320,12 +5328,12 @@ Partial Class 界面_常规流程参数_V2
         Label15.AutoSize = True
         Label15.Dock = DockStyle.Bottom
         Label15.Font = New Font("微软雅黑", 13F)
-        Label15.Location = New Point(0, 462)
+        Label15.Location = New Point(0, 328)
         Label15.Name = "Label15"
         Label15.Padding = New Padding(16, 0, 0, 10)
-        Label15.Size = New Size(228, 34)
+        Label15.Size = New Size(192, 34)
         Label15.TabIndex = 20
-        Label15.Text = "如何编码 avif 超高压缩图"
+        Label15.Text = "编码 avif 超高压缩图"
         ' 
         ' Label154
         ' 
@@ -5333,12 +5341,37 @@ Partial Class 界面_常规流程参数_V2
         Label154.Dock = DockStyle.Bottom
         Label154.Font = New Font("微软雅黑", 10F)
         Label154.ForeColor = Color.Gray
-        Label154.Location = New Point(0, 496)
+        Label154.Location = New Point(0, 362)
         Label154.Name = "Label154"
         Label154.Padding = New Padding(16, 0, 0, 20)
-        Label154.Size = New Size(637, 80)
+        Label154.Size = New Size(645, 100)
         Label154.TabIndex = 21
-        Label154.Text = "友情提醒：不要把你的珍贵回忆存成 avif ，因为 AV1 的细节涂抹问题，重要文件请优先考虑 webp" & vbCrLf & "使用视频编码 libaom-av1 或者 libsvtav1 输出到 .avif 文件，预设和质量正常设定即可" & vbCrLf & "推荐用 libsvtav1，其涂抹相比前者更易接受，当 crf=12 时很难看出，建议进一步提升到 10"
+        Label154.Text = resources.GetString("Label154.Text")
+        ' 
+        ' Label91
+        ' 
+        Label91.AutoSize = True
+        Label91.Dock = DockStyle.Bottom
+        Label91.Font = New Font("微软雅黑", 13F)
+        Label91.Location = New Point(0, 462)
+        Label91.Name = "Label91"
+        Label91.Padding = New Padding(16, 0, 0, 10)
+        Label91.Size = New Size(189, 34)
+        Label91.TabIndex = 24
+        Label91.Text = "编码 vvc 超高压缩图"
+        ' 
+        ' Label93
+        ' 
+        Label93.AutoSize = True
+        Label93.Dock = DockStyle.Bottom
+        Label93.Font = New Font("微软雅黑", 10F)
+        Label93.ForeColor = Color.Gray
+        Label93.Location = New Point(0, 496)
+        Label93.Name = "Label93"
+        Label93.Padding = New Padding(16, 0, 0, 20)
+        Label93.Size = New Size(507, 80)
+        Label93.TabIndex = 25
+        Label93.Text = "H.266/VVC 的 libvvenc 可像 avif 一样直接输出到 .vvc 文件，涂抹也容易接受" & vbCrLf & "但目前几乎没有主流软件能打开，也许你只能通过 ffplay 来查看" & vbCrLf & "质量使用 qp 给定即可，它不支持 crf"
         ' 
         ' Label161
         ' 
@@ -7595,6 +7628,31 @@ Partial Class 界面_常规流程参数_V2
         Label123.TabIndex = 30
         Label123.Text = "不保证跨版本通用，使用非当前版本则某些设置可能未还原，版本相差过大或早期版本会直接报错" & vbCrLf & "选中项进行操作；双击快速读取；重复选中进入编辑模式来重命名" & vbCrLf & "选中时进行保存是覆盖到选中，不选中时会新建，删除直接手动删文件即可，位于根目录下的 Preset 文件夹"
         ' 
+        ' Label94
+        ' 
+        Label94.AutoSize = True
+        Label94.Dock = DockStyle.Bottom
+        Label94.Font = New Font("微软雅黑", 13F)
+        Label94.Location = New Point(0, 234)
+        Label94.Name = "Label94"
+        Label94.Padding = New Padding(16, 0, 0, 10)
+        Label94.Size = New Size(156, 34)
+        Label94.TabIndex = 26
+        Label94.Text = "关于 webp 动图"
+        ' 
+        ' Label135
+        ' 
+        Label135.AutoSize = True
+        Label135.Dock = DockStyle.Bottom
+        Label135.Font = New Font("微软雅黑", 10F)
+        Label135.ForeColor = Color.Gray
+        Label135.Location = New Point(0, 268)
+        Label135.Name = "Label135"
+        Label135.Padding = New Padding(16, 0, 0, 20)
+        Label135.Size = New Size(375, 60)
+        Label135.TabIndex = 27
+        Label135.Text = "ffmpeg 可以编码 webp 的动图，但是无法解码它的动图" & vbCrLf & "这是一个陈年旧事，很久以来都没有进展，所以需要注意"
+        ' 
         ' 界面_常规流程参数_V2
         ' 
         AutoScaleDimensions = New SizeF(96F, 96F)
@@ -8153,5 +8211,9 @@ Partial Class 界面_常规流程参数_V2
     Friend WithEvents Panel45 As Panel
     Friend WithEvents UiComboBox声道布局 As Sunny.UI.UIComboBox
     Friend WithEvents Label86 As Label
+    Friend WithEvents Label91 As Label
+    Friend WithEvents Label93 As Label
+    Friend WithEvents Label94 As Label
+    Friend WithEvents Label135 As Label
 
 End Class

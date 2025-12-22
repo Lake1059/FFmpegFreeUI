@@ -23,6 +23,7 @@ Partial Class 界面_播放器
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Panel1 = New Panel()
+        Label3 = New Label()
         Label2 = New Label()
         Label1 = New Label()
         Panel2 = New Panel()
@@ -38,14 +39,27 @@ Partial Class 界面_播放器
         ' 
         Panel1.AutoSize = True
         Panel1.BackColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        Panel1.Controls.Add(Label3)
         Panel1.Controls.Add(Label2)
         Panel1.Controls.Add(Label1)
         Panel1.Dock = DockStyle.Top
         Panel1.Location = New Point(0, 0)
         Panel1.Name = "Panel1"
         Panel1.Padding = New Padding(10, 0, 10, 10)
-        Panel1.Size = New Size(1143, 55)
+        Panel1.Size = New Size(1143, 80)
         Panel1.TabIndex = 0
+        ' 
+        ' Label3
+        ' 
+        Label3.AutoSize = True
+        Label3.Dock = DockStyle.Top
+        Label3.ForeColor = Color.DarkGray
+        Label3.Location = New Point(10, 45)
+        Label3.Name = "Label3"
+        Label3.Padding = New Padding(0, 5, 0, 0)
+        Label3.Size = New Size(569, 25)
+        Label3.TabIndex = 2
+        Label3.Text = "仅建议用于临时场景需求，例如播放最新或小众的编码，日常观看视频请去用成熟的播放器"
         ' 
         ' Label2
         ' 
@@ -55,9 +69,9 @@ Partial Class 界面_播放器
         Label2.Location = New Point(10, 20)
         Label2.Name = "Label2"
         Label2.Padding = New Padding(0, 5, 0, 0)
-        Label2.Size = New Size(569, 25)
+        Label2.Size = New Size(383, 25)
         Label2.TabIndex = 1
-        Label2.Text = "此功能仅用于临时场景需求，例如播放最新发布的编码，日常观看视频请去用成熟的播放器"
+        Label2.Text = "ffplay 是用于调试目的的播放器，会大量占据显卡 PCIE 带宽"
         ' 
         ' Label1
         ' 
@@ -153,9 +167,9 @@ Partial Class 界面_播放器
         ' 
         Panel3.AllowDrop = True
         Panel3.Dock = DockStyle.Fill
-        Panel3.Location = New Point(0, 55)
+        Panel3.Location = New Point(0, 80)
         Panel3.Name = "Panel3"
-        Panel3.Size = New Size(1143, 622)
+        Panel3.Size = New Size(1143, 597)
         Panel3.TabIndex = 2
         ' 
         ' 界面_播放器
@@ -186,5 +200,6 @@ Partial Class 界面_播放器
     Friend WithEvents UiButton关闭进程 As Sunny.UI.UIButton
     Friend WithEvents Label8 As Label
     Friend WithEvents Panel3 As Panel
+    Friend WithEvents Label3 As Label
 
 End Class

@@ -159,11 +159,14 @@ Module Module1
         End Using
     End Sub
 
-    Public Sub 根据文本设置按钮宽度(控件 As UIButton)
+    Public Sub 根据文本设置按钮宽度(控件 As UIButton, Optional 语言校准 As Boolean = True, Optional 额外加成 As Integer = 0)
         Using g As Graphics = 控件.CreateGraphics()
-            Dim availableWidth As Integer = 控件.Width - 控件.Padding.Left - 控件.Padding.Right
-            Dim size As SizeF = g.MeasureString(控件.Text, 控件.Font, availableWidth)
-            控件.Width = CInt(Math.Ceiling(size.Width)) + 控件.Padding.Left + 控件.Padding.Right + If(用户设置.实例对象.语言 = "zh", 30, 20) * Form1.DPI
+            Dim size As SizeF = g.MeasureString(控件.Text, 控件.Font)
+            Dim 额外宽度修正值 As Integer = 0
+            If 语言校准 Then
+                额外宽度修正值 = If(用户设置.实例对象.语言 = "zh", 30, 20) * Form1.DPI
+            End If
+            控件.Width = CInt(Math.Ceiling(size.Width)) + 控件.Padding.Left + 控件.Padding.Right + 额外宽度修正值 + 额外加成
         End Using
     End Sub
 
