@@ -56,6 +56,7 @@ Partial Class 界面_起始页
         LinkLabel3 = New LinkLabel()
         LinkLabel2 = New LinkLabel()
         LinkLabel7 = New LinkLabel()
+        LinkLabel9 = New LinkLabel()
         Label127 = New Label()
         Panel73.SuspendLayout()
         CType(PictureBox1, ComponentModel.ISupportInitialize).BeginInit()
@@ -228,10 +229,10 @@ Partial Class 界面_起始页
         Label35.Dock = DockStyle.Fill
         Label35.Font = New Font("微软雅黑", 10F)
         Label35.ForeColor = Color.Gray
-        Label35.Location = New Point(0, 379)
+        Label35.Location = New Point(0, 420)
         Label35.Name = "Label35"
         Label35.Padding = New Padding(0, 5, 0, 0)
-        Label35.Size = New Size(325, 191)
+        Label35.Size = New Size(325, 150)
         Label35.TabIndex = 47
         Label35.Text = "请尽可能只在主显示器上使用；在不同缩放的显示器之间移动很容易导致 SunnyUI 出现字体过大的问题，其内部支持很有限；如果在主显示器上出现问题请直接汇报。"
         ' 
@@ -240,7 +241,7 @@ Partial Class 界面_起始页
         Label28.AutoSize = True
         Label28.Dock = DockStyle.Top
         Label28.Font = New Font("微软雅黑", 13F)
-        Label28.Location = New Point(0, 330)
+        Label28.Location = New Point(0, 371)
         Label28.Name = "Label28"
         Label28.Padding = New Padding(0, 20, 0, 5)
         Label28.Size = New Size(104, 49)
@@ -252,7 +253,7 @@ Partial Class 界面_起始页
         Label1.Dock = DockStyle.Top
         Label1.Font = New Font("微软雅黑", 10F)
         Label1.ForeColor = Color.Gray
-        Label1.Location = New Point(0, 249)
+        Label1.Location = New Point(0, 290)
         Label1.Name = "Label1"
         Label1.Padding = New Padding(0, 10, 0, 0)
         Label1.Size = New Size(325, 81)
@@ -267,9 +268,9 @@ Partial Class 界面_起始页
         Label21.Location = New Point(0, 173)
         Label21.Name = "Label21"
         Label21.Padding = New Padding(0, 5, 0, 0)
-        Label21.Size = New Size(325, 76)
+        Label21.Size = New Size(325, 117)
         Label21.TabIndex = 40
-        Label21.Text = "3FUI 的主要逻辑是先去参数面板设定好选项，再把文件拖进编码队列自动开始。遇到任何不懂的概念可直接问 AI，这些都是写在维基百科里的词汇。"
+        Label21.Text = "3FUI 的主要逻辑是先去参数面板设定好选项，再把文件拖进编码队列自动开始。遇到任何不懂的概念可直接问 AI，这些都是写在维基百科里的词汇。但不要相信 AI 给你的建议！"
         ' 
         ' Label14
         ' 
@@ -324,6 +325,7 @@ Partial Class 界面_起始页
         Panel7.Controls.Add(LinkLabel3)
         Panel7.Controls.Add(LinkLabel2)
         Panel7.Controls.Add(LinkLabel7)
+        Panel7.Controls.Add(LinkLabel9)
         Panel7.Controls.Add(Label127)
         Panel7.Dock = DockStyle.Left
         Panel7.Location = New Point(0, 0)
@@ -336,10 +338,10 @@ Partial Class 界面_起始页
         Label122.Dock = DockStyle.Fill
         Label122.Font = New Font("微软雅黑", 10F)
         Label122.ForeColor = Color.Gray
-        Label122.Location = New Point(0, 398)
+        Label122.Location = New Point(0, 423)
         Label122.Name = "Label122"
         Label122.Padding = New Padding(20, 5, 20, 20)
-        Label122.Size = New Size(300, 172)
+        Label122.Size = New Size(300, 147)
         Label122.TabIndex = 37
         Label122.Text = "更新信息"
         ' 
@@ -349,7 +351,7 @@ Partial Class 界面_起始页
         Label75.Dock = DockStyle.Top
         Label75.Font = New Font("微软雅黑", 10F)
         Label75.ForeColor = Color.Gray
-        Label75.Location = New Point(0, 373)
+        Label75.Location = New Point(0, 398)
         Label75.Name = "Label75"
         Label75.Padding = New Padding(20, 5, 0, 0)
         Label75.Size = New Size(85, 25)
@@ -362,7 +364,7 @@ Partial Class 界面_起始页
         Label73.Dock = DockStyle.Top
         Label73.Font = New Font("微软雅黑", 10F)
         Label73.ForeColor = Color.Gray
-        Label73.Location = New Point(0, 348)
+        Label73.Location = New Point(0, 373)
         Label73.Name = "Label73"
         Label73.Padding = New Padding(20, 5, 0, 0)
         Label73.Size = New Size(85, 25)
@@ -375,7 +377,7 @@ Partial Class 界面_起始页
         Label65.Dock = DockStyle.Top
         Label65.Font = New Font("微软雅黑", 10F)
         Label65.ForeColor = Color.Gray
-        Label65.Location = New Point(0, 323)
+        Label65.Location = New Point(0, 348)
         Label65.Name = "Label65"
         Label65.Padding = New Padding(20, 5, 0, 0)
         Label65.Size = New Size(85, 25)
@@ -388,7 +390,7 @@ Partial Class 界面_起始页
         Label64.Dock = DockStyle.Top
         Label64.Font = New Font("微软雅黑", 10F)
         Label64.ForeColor = Color.Gray
-        Label64.Location = New Point(0, 298)
+        Label64.Location = New Point(0, 323)
         Label64.Name = "Label64"
         Label64.Padding = New Padding(20, 5, 0, 0)
         Label64.Size = New Size(85, 25)
@@ -400,7 +402,7 @@ Partial Class 界面_起始页
         Label129.AutoSize = True
         Label129.Dock = DockStyle.Top
         Label129.Font = New Font("微软雅黑", 13F)
-        Label129.Location = New Point(0, 249)
+        Label129.Location = New Point(0, 274)
         Label129.Name = "Label129"
         Label129.Padding = New Padding(20, 20, 0, 5)
         Label129.Size = New Size(102, 49)
@@ -415,7 +417,7 @@ Partial Class 界面_起始页
         LinkLabel8.Font = New Font("微软雅黑", 10F)
         LinkLabel8.LinkBehavior = LinkBehavior.HoverUnderline
         LinkLabel8.LinkColor = Color.CornflowerBlue
-        LinkLabel8.Location = New Point(0, 224)
+        LinkLabel8.Location = New Point(0, 249)
         LinkLabel8.Name = "LinkLabel8"
         LinkLabel8.Padding = New Padding(20, 5, 0, 0)
         LinkLabel8.Size = New Size(113, 25)
@@ -431,7 +433,7 @@ Partial Class 界面_起始页
         LinkLabel1.Font = New Font("微软雅黑", 10F)
         LinkLabel1.LinkBehavior = LinkBehavior.HoverUnderline
         LinkLabel1.LinkColor = Color.CornflowerBlue
-        LinkLabel1.Location = New Point(0, 199)
+        LinkLabel1.Location = New Point(0, 224)
         LinkLabel1.Name = "LinkLabel1"
         LinkLabel1.Padding = New Padding(20, 5, 0, 0)
         LinkLabel1.Size = New Size(175, 25)
@@ -447,7 +449,7 @@ Partial Class 界面_起始页
         LinkLabel6.Font = New Font("微软雅黑", 10F)
         LinkLabel6.LinkBehavior = LinkBehavior.HoverUnderline
         LinkLabel6.LinkColor = Color.Orchid
-        LinkLabel6.Location = New Point(0, 174)
+        LinkLabel6.Location = New Point(0, 199)
         LinkLabel6.Name = "LinkLabel6"
         LinkLabel6.Padding = New Padding(20, 5, 0, 0)
         LinkLabel6.Size = New Size(169, 25)
@@ -463,7 +465,7 @@ Partial Class 界面_起始页
         LinkLabel5.Font = New Font("微软雅黑", 10F)
         LinkLabel5.LinkBehavior = LinkBehavior.HoverUnderline
         LinkLabel5.LinkColor = Color.MediumPurple
-        LinkLabel5.Location = New Point(0, 149)
+        LinkLabel5.Location = New Point(0, 174)
         LinkLabel5.Name = "LinkLabel5"
         LinkLabel5.Padding = New Padding(20, 5, 0, 0)
         LinkLabel5.Size = New Size(156, 25)
@@ -479,7 +481,7 @@ Partial Class 界面_起始页
         LinkLabel4.Font = New Font("微软雅黑", 10F)
         LinkLabel4.LinkBehavior = LinkBehavior.HoverUnderline
         LinkLabel4.LinkColor = Color.OliveDrab
-        LinkLabel4.Location = New Point(0, 124)
+        LinkLabel4.Location = New Point(0, 149)
         LinkLabel4.Name = "LinkLabel4"
         LinkLabel4.Padding = New Padding(20, 5, 0, 0)
         LinkLabel4.Size = New Size(176, 25)
@@ -495,7 +497,7 @@ Partial Class 界面_起始页
         LinkLabel3.Font = New Font("微软雅黑", 10F)
         LinkLabel3.LinkBehavior = LinkBehavior.HoverUnderline
         LinkLabel3.LinkColor = Color.OliveDrab
-        LinkLabel3.Location = New Point(0, 99)
+        LinkLabel3.Location = New Point(0, 124)
         LinkLabel3.Name = "LinkLabel3"
         LinkLabel3.Padding = New Padding(20, 5, 0, 0)
         LinkLabel3.Size = New Size(202, 25)
@@ -511,7 +513,7 @@ Partial Class 界面_起始页
         LinkLabel2.Font = New Font("微软雅黑", 10F)
         LinkLabel2.LinkBehavior = LinkBehavior.HoverUnderline
         LinkLabel2.LinkColor = Color.OliveDrab
-        LinkLabel2.Location = New Point(0, 74)
+        LinkLabel2.Location = New Point(0, 99)
         LinkLabel2.Name = "LinkLabel2"
         LinkLabel2.Padding = New Padding(20, 5, 0, 0)
         LinkLabel2.Size = New Size(245, 25)
@@ -527,13 +529,29 @@ Partial Class 界面_起始页
         LinkLabel7.Font = New Font("微软雅黑", 10F)
         LinkLabel7.LinkBehavior = LinkBehavior.HoverUnderline
         LinkLabel7.LinkColor = Color.OliveDrab
-        LinkLabel7.Location = New Point(0, 49)
+        LinkLabel7.Location = New Point(0, 74)
         LinkLabel7.Name = "LinkLabel7"
         LinkLabel7.Padding = New Padding(20, 5, 0, 0)
         LinkLabel7.Size = New Size(142, 25)
         LinkLabel7.TabIndex = 29
         LinkLabel7.TabStop = True
         LinkLabel7.Text = "3FUI GitHub 仓库"
+        ' 
+        ' LinkLabel9
+        ' 
+        LinkLabel9.ActiveLinkColor = Color.FromArgb(CByte(255), CByte(128), CByte(0))
+        LinkLabel9.AutoSize = True
+        LinkLabel9.Dock = DockStyle.Top
+        LinkLabel9.Font = New Font("微软雅黑", 10F)
+        LinkLabel9.LinkBehavior = LinkBehavior.HoverUnderline
+        LinkLabel9.LinkColor = Color.FromArgb(CByte(255), CByte(128), CByte(0))
+        LinkLabel9.Location = New Point(0, 49)
+        LinkLabel9.Name = "LinkLabel9"
+        LinkLabel9.Padding = New Padding(20, 5, 0, 0)
+        LinkLabel9.Size = New Size(121, 25)
+        LinkLabel9.TabIndex = 38
+        LinkLabel9.TabStop = True
+        LinkLabel9.Text = "不要相信 AI ！"
         ' 
         ' Label127
         ' 
@@ -607,5 +625,6 @@ Partial Class 界面_起始页
     Friend WithEvents LinkLabel2 As LinkLabel
     Friend WithEvents LinkLabel7 As LinkLabel
     Friend WithEvents Label127 As Label
+    Friend WithEvents LinkLabel9 As LinkLabel
 
 End Class

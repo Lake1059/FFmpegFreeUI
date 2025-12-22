@@ -10,6 +10,8 @@ Public Class Form1
     Public 起始页面 As New 界面_起始页 With {.Dock = DockStyle.Fill}
     Public 准备文件页面 As New 界面_准备文件 With {.Dock = DockStyle.Fill}
     Public 常规流程参数页面 As New 界面_常规流程参数_V2 With {.Dock = DockStyle.Fill}
+    Public 媒体信息页面 As New 界面_媒体信息 With {.Dock = DockStyle.Fill}
+    Public 播放器页面 As New 界面_播放器 With {.Dock = DockStyle.Fill}
     Public 混流页面 As New 界面_混流 With {.Dock = DockStyle.Fill}
     Public 合并页面 As New 界面_合并 With {.Dock = DockStyle.Fill}
     Public 设置页面 As New 界面_设置 With {.Dock = DockStyle.Fill}
@@ -18,7 +20,7 @@ Public Class Form1
     Public 性能统计对象 As New 性能统计
     Public 性能统计刷新计时器 As New Timer With {.Interval = 2000, .Enabled = False}
 
-    Public 选中项刷新信息计时器 As New Timer With {.Interval = 1000, .Enabled = False}
+    Public 选中项刷新信息计时器 As New Timer With {.Interval = 1500, .Enabled = False}
     Public 任务进度更新计时器 As New Timer With {.Interval = 1000, .Enabled = False}
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -104,6 +106,7 @@ Public Class Form1
         Next
         恢复系统状态()
         用户设置.退出时保存设置()
+        播放器页面.停止()
         e.Cancel = False
     End Sub
 
@@ -156,52 +159,6 @@ Public Class Form1
     End Sub
 
     Public 是否打开了输出面板 As Boolean = False
-
-    Private Sub UiButton打开文件显示参数_Click(sender As Object, e As EventArgs) Handles UiButton打开文件显示参数.Click
-        Dim openFileDialog As New OpenFileDialog With {.Multiselect = False, .Filter = "所有文件|*.*"}
-        If openFileDialog.ShowDialog = DialogResult.OK Then
-            显示媒体信息流程(openFileDialog.FileName)
-        End If
-    End Sub
-    Sub 显示媒体信息流程(文件路径 As String)
-        Me.RichTextBox1.Text = ""
-        Dim FFprobeProcess As New Process
-        FFprobeProcess = New Process()
-        FFprobeProcess.StartInfo.FileName = "ffprobe"
-        FFprobeProcess.StartInfo.WorkingDirectory = If(用户设置.实例对象.工作目录 <> "", 用户设置.实例对象.工作目录, "")
-        FFprobeProcess.StartInfo.Arguments = $"-hide_banner ""{文件路径}"""
-        FFprobeProcess.StartInfo.RedirectStandardOutput = True
-        FFprobeProcess.StartInfo.RedirectStandardError = True
-        FFprobeProcess.StartInfo.StandardOutputEncoding = System.Text.Encoding.UTF8
-        FFprobeProcess.StartInfo.StandardErrorEncoding = System.Text.Encoding.UTF8
-        FFprobeProcess.StartInfo.CreateNoWindow = True
-        FFprobeProcess.EnableRaisingEvents = True
-        AddHandler FFprobeProcess.OutputDataReceived, AddressOf 显示媒体信息输出事件
-        AddHandler FFprobeProcess.ErrorDataReceived, AddressOf 显示媒体信息输出事件
-        FFprobeProcess.Start()
-        FFprobeProcess.BeginOutputReadLine()
-        FFprobeProcess.BeginErrorReadLine()
-    End Sub
-    Sub 显示媒体信息输出事件(sender As Object, e As DataReceivedEventArgs)
-        If e.Data Is Nothing Then Exit Sub
-        Try
-            界面线程执行(Sub() Me.RichTextBox1.AppendText(e.Data & vbCrLf))
-        Catch ex As Exception
-        End Try
-    End Sub
-    Private Sub UiButton打开文件显示参数_DragDrop(sender As Object, e As DragEventArgs) Handles UiButton打开文件显示参数.DragDrop
-        Dim files() As String = e.Data.GetData(DataFormats.FileDrop)
-        If files.Length > 0 Then
-            显示媒体信息流程(files(0))
-        End If
-    End Sub
-    Private Sub UiButton打开文件显示参数_DragEnter(sender As Object, e As DragEventArgs) Handles UiButton打开文件显示参数.DragEnter
-        If e.Data.GetData(DataFormats.FileDrop) IsNot Nothing Then
-            e.Effect = DragDropEffects.Copy
-        Else
-            e.Effect = DragDropEffects.None
-        End If
-    End Sub
 
     Private Sub UiComboBox3_SelectedIndexChanged(sender As Object, e As EventArgs) Handles UiComboBox3.SelectedIndexChanged
         For Each C As Control In Panel24.Controls

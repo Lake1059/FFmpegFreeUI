@@ -8,6 +8,8 @@ Public Class 编码任务
         AddHandler 检查并开始新任务的定时器.Tick, AddressOf 检查并开始新任务的定时器_处理过程
     End Sub
 
+    Public Shared Property 错误输出匹配字符串列表 As New List(Of String) From {"Error", "Invalid", "cannot", "failed", "not supported", "require", "must be", "Could not", "is experimental", "if you want to use it", "Nothing was written"}
+
     Enum 编码状态
         未处理 = 0
         正在处理 = 1
@@ -254,7 +256,7 @@ jx1:
             End Try
         End Sub
 
-        Public errorKeywords As String() = {"Error", "Invalid", "cannot", "failed", "not supported", "require", "must be", "Could not", "is experimental", "if you want to use it", "Nothing was written"}
+
 
         Public Sub FFmpegOutputHandler(sender As Object, e As DataReceivedEventArgs)
             If e.Data Is Nothing Then Exit Sub
@@ -285,7 +287,7 @@ jx1:
                 End If
             End If
 
-            If errorKeywords.Any(Function(keyword) e.Data.Contains(keyword, StringComparison.OrdinalIgnoreCase)) Then
+            If 错误输出匹配字符串列表.Any(Function(keyword) e.Data.Contains(keyword, StringComparison.OrdinalIgnoreCase)) Then
                 错误列表.Add(e.Data)
             End If
 
@@ -616,14 +618,18 @@ jx1:
                 Case 0
                     Dim pretext = String.Join(vbCrLf, 队列(Form1.ListView1.SelectedItems(0).Index).非进度输出列表)
                     If IsRichTextBoxTextDifferent(pretext, Form1.RichTextBox2) Then
-                        Form1.RichTextBox2.Text = pretext
-                        Form1.RichTextBox2.ForeColor = Color.Silver
+                        Form1.RichTextBox2.Clear()
+                        For Each s In 队列(Form1.ListView1.SelectedItems(0).Index).非进度输出列表
+                            在富文本框输出(Form1.RichTextBox2, s)
+                        Next
                     End If
                 Case 1
                     Dim pretext = String.Join(vbCrLf, 队列(Form1.ListView1.SelectedItems(0).Index).错误列表)
                     If IsRichTextBoxTextDifferent(pretext, Form1.RichTextBox2) Then
-                        Form1.RichTextBox2.Text = pretext
-                        Form1.RichTextBox2.ForeColor = Color.IndianRed
+                        Form1.RichTextBox2.Clear()
+                        For Each s In 队列(Form1.ListView1.SelectedItems(0).Index).错误列表
+                            在富文本框输出(Form1.RichTextBox2, s)
+                        Next
                     End If
             End Select
 
@@ -645,18 +651,21 @@ jx1:
     Public Shared Sub 切换输出类型时单独刷新()
         Try
             If Form1.ListView1.SelectedItems.Count <> 1 Then Exit Sub
+            Form1.RichTextBox2.Clear()
             Select Case Form1.UiComboBox输出显示类型.SelectedIndex
                 Case 0
                     Dim pretext = String.Join(vbCrLf, 队列(Form1.ListView1.SelectedItems(0).Index).非进度输出列表)
-                    If pretext <> Form1.RichTextBox2.Text Then
-                        Form1.RichTextBox2.Text = pretext
-                        Form1.RichTextBox2.ForeColor = Color.Silver
+                    If IsRichTextBoxTextDifferent(pretext, Form1.RichTextBox2) Then
+                        For Each s In 队列(Form1.ListView1.SelectedItems(0).Index).非进度输出列表
+                            在富文本框输出(Form1.RichTextBox2, s)
+                        Next
                     End If
                 Case 1
                     Dim pretext = String.Join(vbCrLf, 队列(Form1.ListView1.SelectedItems(0).Index).错误列表)
-                    If pretext <> Form1.RichTextBox2.Text Then
-                        Form1.RichTextBox2.Text = pretext
-                        Form1.RichTextBox2.ForeColor = Color.IndianRed
+                    If IsRichTextBoxTextDifferent(pretext, Form1.RichTextBox2) Then
+                        For Each s In 队列(Form1.ListView1.SelectedItems(0).Index).错误列表
+                            在富文本框输出(Form1.RichTextBox2, s)
+                        Next
                     End If
             End Select
         Catch ex As Exception
@@ -665,9 +674,9 @@ jx1:
     End Sub
     Shared Function IsRichTextBoxTextDifferent(newText As String, richTextBox As RichTextBox) As Boolean
         Dim currentPlainText As String = richTextBox.Text
-        Dim normalizedNewText As String = newText.Replace(vbCrLf, vbLf).Replace(vbCr, vbLf)
-        Dim normalizedCurrentText As String = currentPlainText.Replace(vbCrLf, vbLf).Replace(vbCr, vbLf)
-        Return Not String.Equals(normalizedNewText, normalizedCurrentText, StringComparison.Ordinal)
+        Dim normalizedNewText As String = newText.Replace(vbCrLf, "").Replace(vbLf, "").Replace(vbCr, "")
+        Dim normalizedCurrentText As String = currentPlainText.Replace(vbCrLf, "").Replace(vbLf, "").Replace(vbCr, "")
+        Return Not String.Equals(normalizedNewText, normalizedCurrentText, StringComparison.CurrentCultureIgnoreCase)
     End Function
 
 End Class

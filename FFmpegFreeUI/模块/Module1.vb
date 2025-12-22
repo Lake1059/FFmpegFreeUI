@@ -155,7 +155,7 @@ Module Module1
         Using g As Graphics = 标签控件.CreateGraphics()
             Dim availableWidth As Integer = 标签控件.Width - 标签控件.Padding.Left - 标签控件.Padding.Right
             Dim size As SizeF = g.MeasureString(标签控件.Text, 标签控件.Font, availableWidth)
-            标签控件.Height = CInt(Math.Ceiling(size.Height)) + 标签控件.Padding.Top + 标签控件.Padding.Bottom + 用户设置.实例对象.界面修正_增加使用文字渲染尺寸来调节的标签的尺寸 * Form1.DPI
+            标签控件.Height = CInt(Math.Ceiling(size.Height)) + 标签控件.Padding.Top + 标签控件.Padding.Bottom + 2 * Form1.DPI + 用户设置.实例对象.界面修正_增加使用文字渲染尺寸来调节的标签的尺寸 * Form1.DPI
         End Using
     End Sub
 
@@ -421,5 +421,34 @@ Module Module1
         End If
         Return path.Replace("\", "\\")
     End Function
+
+    Public Sub 在富文本框输出(RTF As RichTextBox, 文本 As String)
+        Dim 文本长度 = Len(文本)
+        RTF.AppendText(If(RTF.Text <> "", vbCrLf, "") & 文本)
+        Dim 添加起始位 As Integer = RTF.TextLength - 文本长度
+        RTF.Select(添加起始位, 文本长度)
+        RTF.SelectionColor = 识别FF单行输出并调整文字颜色(文本, RTF.ForeColor)
+        RTF.Select(RTF.TextLength, 0)
+    End Sub
+
+    Public Function 识别FF单行输出并调整文字颜色(单行输出 As String, 默认颜色 As Color) As Color
+        If String.IsNullOrEmpty(单行输出) Then Return 默认颜色
+        If 编码任务.错误输出匹配字符串列表.Any(Function(keyword) 单行输出.Contains(keyword, StringComparison.OrdinalIgnoreCase)) Then
+            Return Color.IndianRed
+        End If
+        Select Case True
+            Case 单行输出.Contains("Input #", StringComparison.OrdinalIgnoreCase)
+                Return Color.LightGreen
+            Case 单行输出.Contains("Duration:", StringComparison.OrdinalIgnoreCase)
+                Return Color.CornflowerBlue
+            Case 单行输出.Contains("Stream #", StringComparison.OrdinalIgnoreCase)
+                Return Color.Plum
+            Case 单行输出.Contains("Output #", StringComparison.OrdinalIgnoreCase)
+                Return Color.Goldenrod
+        End Select
+        Return 默认颜色
+    End Function
+
+
 
 End Module

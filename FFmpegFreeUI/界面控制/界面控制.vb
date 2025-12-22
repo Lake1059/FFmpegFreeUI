@@ -11,14 +11,13 @@ Public Class 界面控制
         编码队列右键菜单.初始化()
         编码队列管理选项.初始化()
 
-        设置富文本框行高(Form1.RichTextBox1, 350)
         设置富文本框行高(Form1.RichTextBox2, 300)
-
-        Form1.RichTextBox1.AllowDrop = True
 
         Form1.TabPage起始页面.Controls.Add(Form1.起始页面)
         Form1.TabPage准备文件.Controls.Add(Form1.准备文件页面)
         Form1.Panel6.Controls.Add(Form1.常规流程参数页面)
+        Form1.TabPage媒体信息.Controls.Add(Form1.媒体信息页面)
+        Form1.TabPage播放器.Controls.Add(Form1.播放器页面)
         Form1.TabPage混流.Controls.Add(Form1.混流页面)
         Form1.TabPage合并.Controls.Add(Form1.合并页面)
         Form1.TabPage设置.Controls.Add(Form1.设置页面)
@@ -101,10 +100,15 @@ Public Class 界面控制
 
                 If 用户设置.实例对象.自动重置参数面板的页面选择 = 1 Then Form1.常规流程参数页面.UiTabControlMenu1.SelectedTab = Form1.常规流程参数页面.TabPage参数总览
 
-            Case 选项卡.IsEqual(Form1.TabPage媒体信息)
-                Form1.Panel顶部视觉修正区域_二级选项卡.BackColor = Form1.Panel9.BackColor
+            Case 选项卡.IsEqual(Form1.TabPage播放器)
+                Form1.Panel顶部视觉修正区域_二级选项卡.BackColor = Form1.播放器页面.Panel1.BackColor
                 Form1.Panel顶部视觉修正区域_二级选项卡.Dock = DockStyle.Fill
-                Form1.RichTextBox1.Size = New Size(Form1.RichTextBox1.Parent.Width - Form1.RichTextBox1.Parent.Padding.Left, Form1.RichTextBox1.Parent.Height - Form1.RichTextBox1.Parent.Padding.Top * 2)
+
+            Case 选项卡.IsEqual(Form1.TabPage媒体信息)
+                Form1.Panel顶部视觉修正区域_二级选项卡.BackColor = Form1.媒体信息页面.Panel9.BackColor
+                Form1.Panel顶部视觉修正区域_二级选项卡.Dock = DockStyle.Fill
+
+                Form1.媒体信息页面.调整界面()
 
             Case 选项卡.IsEqual(Form1.TabPage混流)
                 Form1.Panel顶部视觉修正区域_二级选项卡.BackColor = Form1.混流页面.BackColor
@@ -120,9 +124,6 @@ Public Class 界面控制
                 Form1.Panel顶部视觉修正区域_二级选项卡.BackColor = Form1.性能监控页面.Panel1.BackColor
                 Form1.Panel顶部视觉修正区域_二级选项卡.Dock = DockStyle.Fill
 
-                'Form1.Panel18.Width = Form1.Panel18.Parent.Width * 0.3
-                'Form1.ListView3.Columns(0).Width = Form1.ListView3.Parent.Width - Form1.ListView3.Parent.Padding.Left - SystemInformation.VerticalScrollBarWidth * Form1.DPI * 2
-                'Form1.ListView4.Columns(0).Width = Form1.ListView4.Parent.Width - Form1.ListView4.Parent.Padding.Left - SystemInformation.VerticalScrollBarWidth * Form1.DPI * 2
                 Form1.性能统计刷新计时器.Enabled = True
 
             Case 选项卡.IsEqual(Form1.TabPage设置)

@@ -3,7 +3,6 @@ Public Class 软件内对话框
 
     Public Shared Sub 显示对话框(窗口 As Form, 标题 As String, 内容 As String, 按钮列表和程序 As Dictionary(Of String, Action), 对话框主题 As 主题类型, Optional 宽度比例 As Single = 0.5, Optional 高度比例 As Single = 0.5)
         Dim 主面板 As New Panel With {
-            .Dock = DockStyle.Fill,
             .BackColor = Color.FromArgb(0, 0, 0),
             .BackgroundImageLayout = ImageLayout.None
         }
@@ -79,6 +78,8 @@ Public Class 软件内对话框
         对话框区域.Controls.Add(描述文字)
         描述文字.BringToFront()
         窗口.Controls.Add(主面板)
+        主面板.Location = New Point(0, 0)
+        主面板.Size = 窗口.ClientSize
         主面板.BringToFront()
     End Sub
 

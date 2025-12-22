@@ -76,13 +76,7 @@ Partial Class Form1
         TabPage参数面板 = New TabPage()
         Panel6 = New Panel()
         TabPage媒体信息 = New TabPage()
-        Panel4 = New Panel()
-        Panel76 = New Panel()
-        RichTextBox1 = New RichTextBox()
-        Panel9 = New Panel()
-        Panel75 = New Panel()
-        Label123 = New Label()
-        UiButton打开文件显示参数 = New Sunny.UI.UIButton()
+        TabPage播放器 = New TabPage()
         TabPage混流 = New TabPage()
         TabPage合并 = New TabPage()
         TabPage性能监控 = New TabPage()
@@ -110,11 +104,6 @@ Partial Class Form1
         Panel36.SuspendLayout()
         Panel2.SuspendLayout()
         TabPage参数面板.SuspendLayout()
-        TabPage媒体信息.SuspendLayout()
-        Panel4.SuspendLayout()
-        Panel76.SuspendLayout()
-        Panel9.SuspendLayout()
-        Panel75.SuspendLayout()
         TabPage插件扩展.SuspendLayout()
         Panel21.SuspendLayout()
         Panel22.SuspendLayout()
@@ -129,6 +118,7 @@ Partial Class Form1
         UiTabControlMenu1.Controls.Add(TabPage准备文件)
         UiTabControlMenu1.Controls.Add(TabPage参数面板)
         UiTabControlMenu1.Controls.Add(TabPage媒体信息)
+        UiTabControlMenu1.Controls.Add(TabPage播放器)
         UiTabControlMenu1.Controls.Add(TabPage混流)
         UiTabControlMenu1.Controls.Add(TabPage合并)
         UiTabControlMenu1.Controls.Add(TabPage性能监控)
@@ -864,118 +854,20 @@ Partial Class Form1
         ' TabPage媒体信息
         ' 
         TabPage媒体信息.BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
-        TabPage媒体信息.Controls.Add(Panel4)
         TabPage媒体信息.Location = New Point(151, 0)
         TabPage媒体信息.Name = "TabPage媒体信息"
         TabPage媒体信息.Size = New Size(1033, 651)
         TabPage媒体信息.TabIndex = 17
         TabPage媒体信息.Text = "媒体信息"
         ' 
-        ' Panel4
+        ' TabPage播放器
         ' 
-        Panel4.Controls.Add(Panel76)
-        Panel4.Controls.Add(Panel9)
-        Panel4.Dock = DockStyle.Fill
-        Panel4.Font = New Font("微软雅黑", 10F)
-        Panel4.Location = New Point(0, 0)
-        Panel4.Name = "Panel4"
-        Panel4.Size = New Size(1033, 651)
-        Panel4.TabIndex = 0
-        ' 
-        ' Panel76
-        ' 
-        Panel76.AutoSize = True
-        Panel76.BackColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
-        Panel76.Controls.Add(RichTextBox1)
-        Panel76.Dock = DockStyle.Fill
-        Panel76.Location = New Point(0, 45)
-        Panel76.Name = "Panel76"
-        Panel76.Padding = New Padding(10, 10, 0, 10)
-        Panel76.Size = New Size(1033, 606)
-        Panel76.TabIndex = 84
-        ' 
-        ' RichTextBox1
-        ' 
-        RichTextBox1.BackColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
-        RichTextBox1.BorderStyle = BorderStyle.None
-        RichTextBox1.DetectUrls = False
-        RichTextBox1.Dock = DockStyle.Fill
-        RichTextBox1.Font = New Font("微软雅黑", 12F, FontStyle.Regular, GraphicsUnit.Point, CByte(134))
-        RichTextBox1.ForeColor = Color.Silver
-        RichTextBox1.Location = New Point(10, 10)
-        RichTextBox1.Name = "RichTextBox1"
-        RichTextBox1.ReadOnly = True
-        RichTextBox1.ScrollBars = RichTextBoxScrollBars.Vertical
-        RichTextBox1.Size = New Size(1023, 586)
-        RichTextBox1.TabIndex = 12
-        RichTextBox1.Text = ""
-        ' 
-        ' Panel9
-        ' 
-        Panel9.AutoSize = True
-        Panel9.BackColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        Panel9.Controls.Add(Panel75)
-        Panel9.Dock = DockStyle.Top
-        Panel9.Location = New Point(0, 0)
-        Panel9.Name = "Panel9"
-        Panel9.Padding = New Padding(10, 0, 10, 10)
-        Panel9.Size = New Size(1033, 45)
-        Panel9.TabIndex = 80
-        ' 
-        ' Panel75
-        ' 
-        Panel75.Controls.Add(Label123)
-        Panel75.Controls.Add(UiButton打开文件显示参数)
-        Panel75.Dock = DockStyle.Top
-        Panel75.Location = New Point(10, 0)
-        Panel75.Name = "Panel75"
-        Panel75.Size = New Size(1013, 35)
-        Panel75.TabIndex = 11
-        ' 
-        ' Label123
-        ' 
-        Label123.Dock = DockStyle.Fill
-        Label123.Font = New Font("微软雅黑", 10F)
-        Label123.ForeColor = Color.Gray
-        Label123.Location = New Point(100, 0)
-        Label123.Name = "Label123"
-        Label123.Padding = New Padding(10, 0, 0, 0)
-        Label123.Size = New Size(913, 35)
-        Label123.TabIndex = 45
-        Label123.Text = "调用 ffprobe.exe 直接展示输出信息，可以把文件拖到此区域；此功能不兼容转译模式！"
-        Label123.TextAlign = ContentAlignment.MiddleLeft
-        ' 
-        ' UiButton打开文件显示参数
-        ' 
-        UiButton打开文件显示参数.AllowDrop = True
-        UiButton打开文件显示参数.Dock = DockStyle.Left
-        UiButton打开文件显示参数.FillColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
-        UiButton打开文件显示参数.FillColor2 = Color.FromArgb(CByte(36), CByte(36), CByte(36))
-        UiButton打开文件显示参数.FillDisableColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
-        UiButton打开文件显示参数.FillHoverColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiButton打开文件显示参数.FillPressColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiButton打开文件显示参数.FillSelectedColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiButton打开文件显示参数.Font = New Font("微软雅黑", 10F)
-        UiButton打开文件显示参数.ForeColor = Color.YellowGreen
-        UiButton打开文件显示参数.ForeDisableColor = Color.YellowGreen
-        UiButton打开文件显示参数.ForeHoverColor = Color.YellowGreen
-        UiButton打开文件显示参数.ForePressColor = Color.YellowGreen
-        UiButton打开文件显示参数.ForeSelectedColor = Color.YellowGreen
-        UiButton打开文件显示参数.Location = New Point(0, 0)
-        UiButton打开文件显示参数.MinimumSize = New Size(1, 1)
-        UiButton打开文件显示参数.Name = "UiButton打开文件显示参数"
-        UiButton打开文件显示参数.Radius = 0
-        UiButton打开文件显示参数.RadiusSides = Sunny.UI.UICornerRadiusSides.None
-        UiButton打开文件显示参数.RectColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
-        UiButton打开文件显示参数.RectDisableColor = Color.FromArgb(CByte(12), CByte(12), CByte(12))
-        UiButton打开文件显示参数.RectHoverColor = Color.YellowGreen
-        UiButton打开文件显示参数.RectPressColor = Color.FromArgb(CByte(64), CByte(148), CByte(64))
-        UiButton打开文件显示参数.RectSelectedColor = Color.YellowGreen
-        UiButton打开文件显示参数.RectSize = 2
-        UiButton打开文件显示参数.Size = New Size(100, 35)
-        UiButton打开文件显示参数.TabIndex = 44
-        UiButton打开文件显示参数.Text = "打开"
-        UiButton打开文件显示参数.TipsFont = New Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point, CByte(134))
+        TabPage播放器.BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
+        TabPage播放器.Location = New Point(151, 0)
+        TabPage播放器.Name = "TabPage播放器"
+        TabPage播放器.Size = New Size(1033, 651)
+        TabPage播放器.TabIndex = 26
+        TabPage播放器.Text = "播放器"
         ' 
         ' TabPage混流
         ' 
@@ -1173,12 +1065,6 @@ Partial Class Form1
         Panel36.PerformLayout()
         Panel2.ResumeLayout(False)
         TabPage参数面板.ResumeLayout(False)
-        TabPage媒体信息.ResumeLayout(False)
-        Panel4.ResumeLayout(False)
-        Panel4.PerformLayout()
-        Panel76.ResumeLayout(False)
-        Panel9.ResumeLayout(False)
-        Panel75.ResumeLayout(False)
         TabPage插件扩展.ResumeLayout(False)
         Panel21.ResumeLayout(False)
         Panel22.ResumeLayout(False)
@@ -1219,11 +1105,6 @@ Partial Class Form1
     Friend WithEvents TabPage参数面板 As TabPage
     Friend WithEvents Panel6 As Panel
     Friend WithEvents TabPage媒体信息 As TabPage
-    Friend WithEvents Panel4 As Panel
-    Friend WithEvents Panel9 As Panel
-    Friend WithEvents Panel75 As Panel
-    Friend WithEvents UiButton打开文件显示参数 As Sunny.UI.UIButton
-    Friend WithEvents Panel76 As Panel
     Friend WithEvents UiButton定位输出 As Sunny.UI.UIButton
     Friend WithEvents TabPage混流 As TabPage
     Friend WithEvents TabPage合并 As TabPage
@@ -1234,12 +1115,10 @@ Partial Class Form1
     Friend WithEvents Panel22 As Panel
     Friend WithEvents Label16 As Label
     Friend WithEvents UiComboBox3 As Sunny.UI.UIComboBox
-    Friend WithEvents Label123 As Label
     Friend WithEvents Panel35 As Panel
     Friend WithEvents Labelffmpeg实时信息 As Label
     Friend WithEvents Panel36 As Panel
     Friend WithEvents LinkLabel向ffmpeg发送消息 As LinkLabel
-    Friend WithEvents RichTextBox1 As RichTextBox
     Friend WithEvents TabPage设置 As TabPage
     Friend WithEvents Panel输出面板 As Panel
     Friend WithEvents LinkLabel切换显示输出面板 As LinkLabel
@@ -1258,5 +1137,6 @@ Partial Class Form1
     Friend WithEvents Panel顶部视觉修正区域 As Panel
     Friend WithEvents Panel顶部视觉修正区域_一级选项卡 As Panel
     Friend WithEvents Panel顶部视觉修正区域_二级选项卡 As Panel
+    Friend WithEvents TabPage播放器 As TabPage
 
 End Class
