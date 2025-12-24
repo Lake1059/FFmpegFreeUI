@@ -549,6 +549,7 @@ Public Class 界面_常规流程参数_V2
                 UiCheckBox保留其他视频流.CheckBoxSize = 20 * Form1.DPI
                 UiCheckBox保留其他音频流.CheckBoxSize = 20 * Form1.DPI
                 校准UiComboBox视觉(UiComboBox使用哪些文件的哪些内嵌字幕_如何操作)
+                UiCheckBox保留其他字幕流.CheckBoxSize = 20 * Form1.DPI
                 UiCheckBox自动混流SRT.CheckBoxSize = 20 * Form1.DPI
                 UiCheckBox自动混流ASS.CheckBoxSize = 20 * Form1.DPI
                 UiCheckBox自动混流SSA.CheckBoxSize = 20 * Form1.DPI

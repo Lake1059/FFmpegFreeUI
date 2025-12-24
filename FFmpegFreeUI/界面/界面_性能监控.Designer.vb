@@ -41,15 +41,15 @@ Partial Class 界面_性能监控
         Label1 = New Label()
         Panel9 = New Panel()
         Panel14 = New Panel()
-        UiRoundProcess整卡功耗 = New Sunny.UI.UIRoundProcess()
+        UiRoundProcess功耗 = New Sunny.UI.UIRoundProcess()
         Label17 = New Label()
         Label18 = New Label()
         Panel10 = New Panel()
-        UiRoundProcess核心功耗 = New Sunny.UI.UIRoundProcess()
+        UiRoundProcess风扇转速 = New Sunny.UI.UIRoundProcess()
         Label10 = New Label()
         Label11 = New Label()
         Panel11 = New Panel()
-        UiRoundProcessCore = New Sunny.UI.UIRoundProcess()
+        UiRoundProcess温度 = New Sunny.UI.UIRoundProcess()
         Label12 = New Label()
         Label13 = New Label()
         Panel12 = New Panel()
@@ -320,7 +320,7 @@ Partial Class 界面_性能监控
         ' Panel14
         ' 
         Panel14.BackColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
-        Panel14.Controls.Add(UiRoundProcess整卡功耗)
+        Panel14.Controls.Add(UiRoundProcess功耗)
         Panel14.Controls.Add(Label17)
         Panel14.Dock = DockStyle.Left
         Panel14.Location = New Point(532, 0)
@@ -328,25 +328,25 @@ Partial Class 界面_性能监控
         Panel14.Size = New Size(118, 125)
         Panel14.TabIndex = 8
         ' 
-        ' UiRoundProcess整卡功耗
+        ' UiRoundProcess功耗
         ' 
-        UiRoundProcess整卡功耗.DecimalPlaces = 0
-        UiRoundProcess整卡功耗.Dock = DockStyle.Fill
-        UiRoundProcess整卡功耗.Font = New Font("微软雅黑", 9F, FontStyle.Bold)
-        UiRoundProcess整卡功耗.ForeColor = Color.Silver
-        UiRoundProcess整卡功耗.ForeColor2 = Color.Black
-        UiRoundProcess整卡功耗.Inner = 25
-        UiRoundProcess整卡功耗.Location = New Point(0, 30)
-        UiRoundProcess整卡功耗.MinimumSize = New Size(1, 1)
-        UiRoundProcess整卡功耗.Name = "UiRoundProcess整卡功耗"
-        UiRoundProcess整卡功耗.Outer = 30
-        UiRoundProcess整卡功耗.ProcessBackColor = Color.DimGray
-        UiRoundProcess整卡功耗.ProcessColor = Color.FromArgb(CByte(0), CByte(192), CByte(0))
-        UiRoundProcess整卡功耗.ShowProcess = True
-        UiRoundProcess整卡功耗.Size = New Size(118, 95)
-        UiRoundProcess整卡功耗.TabIndex = 1
-        UiRoundProcess整卡功耗.Text = "50%"
-        UiRoundProcess整卡功耗.Value = 50
+        UiRoundProcess功耗.DecimalPlaces = 0
+        UiRoundProcess功耗.Dock = DockStyle.Fill
+        UiRoundProcess功耗.Font = New Font("微软雅黑", 9F, FontStyle.Bold)
+        UiRoundProcess功耗.ForeColor = Color.Silver
+        UiRoundProcess功耗.ForeColor2 = Color.Black
+        UiRoundProcess功耗.Inner = 25
+        UiRoundProcess功耗.Location = New Point(0, 30)
+        UiRoundProcess功耗.MinimumSize = New Size(1, 1)
+        UiRoundProcess功耗.Name = "UiRoundProcess功耗"
+        UiRoundProcess功耗.Outer = 30
+        UiRoundProcess功耗.ProcessBackColor = Color.DimGray
+        UiRoundProcess功耗.ProcessColor = Color.FromArgb(CByte(0), CByte(192), CByte(0))
+        UiRoundProcess功耗.ShowProcess = True
+        UiRoundProcess功耗.Size = New Size(118, 95)
+        UiRoundProcess功耗.TabIndex = 1
+        UiRoundProcess功耗.Text = "50%"
+        UiRoundProcess功耗.Value = 50
         ' 
         ' Label17
         ' 
@@ -355,9 +355,9 @@ Partial Class 界面_性能监控
         Label17.Location = New Point(0, 0)
         Label17.Name = "Label17"
         Label17.Padding = New Padding(10, 10, 0, 0)
-        Label17.Size = New Size(75, 30)
+        Label17.Size = New Size(47, 30)
         Label17.TabIndex = 0
-        Label17.Text = "整卡功耗"
+        Label17.Text = "功耗"
         ' 
         ' Label18
         ' 
@@ -370,7 +370,7 @@ Partial Class 界面_性能监控
         ' Panel10
         ' 
         Panel10.BackColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
-        Panel10.Controls.Add(UiRoundProcess核心功耗)
+        Panel10.Controls.Add(UiRoundProcess风扇转速)
         Panel10.Controls.Add(Label10)
         Panel10.Dock = DockStyle.Left
         Panel10.Location = New Point(404, 0)
@@ -378,25 +378,25 @@ Partial Class 界面_性能监控
         Panel10.Size = New Size(118, 125)
         Panel10.TabIndex = 6
         ' 
-        ' UiRoundProcess核心功耗
+        ' UiRoundProcess风扇转速
         ' 
-        UiRoundProcess核心功耗.DecimalPlaces = 0
-        UiRoundProcess核心功耗.Dock = DockStyle.Fill
-        UiRoundProcess核心功耗.Font = New Font("微软雅黑", 9F, FontStyle.Bold)
-        UiRoundProcess核心功耗.ForeColor = Color.Silver
-        UiRoundProcess核心功耗.ForeColor2 = Color.Black
-        UiRoundProcess核心功耗.Inner = 25
-        UiRoundProcess核心功耗.Location = New Point(0, 30)
-        UiRoundProcess核心功耗.MinimumSize = New Size(1, 1)
-        UiRoundProcess核心功耗.Name = "UiRoundProcess核心功耗"
-        UiRoundProcess核心功耗.Outer = 30
-        UiRoundProcess核心功耗.ProcessBackColor = Color.DimGray
-        UiRoundProcess核心功耗.ProcessColor = Color.FromArgb(CByte(0), CByte(192), CByte(0))
-        UiRoundProcess核心功耗.ShowProcess = True
-        UiRoundProcess核心功耗.Size = New Size(118, 95)
-        UiRoundProcess核心功耗.TabIndex = 1
-        UiRoundProcess核心功耗.Text = "50%"
-        UiRoundProcess核心功耗.Value = 50
+        UiRoundProcess风扇转速.DecimalPlaces = 0
+        UiRoundProcess风扇转速.Dock = DockStyle.Fill
+        UiRoundProcess风扇转速.Font = New Font("微软雅黑", 9F, FontStyle.Bold)
+        UiRoundProcess风扇转速.ForeColor = Color.Silver
+        UiRoundProcess风扇转速.ForeColor2 = Color.Black
+        UiRoundProcess风扇转速.Inner = 25
+        UiRoundProcess风扇转速.Location = New Point(0, 30)
+        UiRoundProcess风扇转速.MinimumSize = New Size(1, 1)
+        UiRoundProcess风扇转速.Name = "UiRoundProcess风扇转速"
+        UiRoundProcess风扇转速.Outer = 30
+        UiRoundProcess风扇转速.ProcessBackColor = Color.DimGray
+        UiRoundProcess风扇转速.ProcessColor = Color.FromArgb(CByte(0), CByte(192), CByte(0))
+        UiRoundProcess风扇转速.ShowProcess = True
+        UiRoundProcess风扇转速.Size = New Size(118, 95)
+        UiRoundProcess风扇转速.TabIndex = 1
+        UiRoundProcess风扇转速.Text = "50%"
+        UiRoundProcess风扇转速.Value = 50
         ' 
         ' Label10
         ' 
@@ -405,9 +405,9 @@ Partial Class 界面_性能监控
         Label10.Location = New Point(0, 0)
         Label10.Name = "Label10"
         Label10.Padding = New Padding(10, 10, 0, 0)
-        Label10.Size = New Size(75, 30)
+        Label10.Size = New Size(47, 30)
         Label10.TabIndex = 0
-        Label10.Text = "核心功耗"
+        Label10.Text = "风扇"
         ' 
         ' Label11
         ' 
@@ -420,7 +420,7 @@ Partial Class 界面_性能监控
         ' Panel11
         ' 
         Panel11.BackColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
-        Panel11.Controls.Add(UiRoundProcessCore)
+        Panel11.Controls.Add(UiRoundProcess温度)
         Panel11.Controls.Add(Label12)
         Panel11.Dock = DockStyle.Left
         Panel11.Location = New Point(276, 0)
@@ -428,25 +428,25 @@ Partial Class 界面_性能监控
         Panel11.Size = New Size(118, 125)
         Panel11.TabIndex = 4
         ' 
-        ' UiRoundProcessCore
+        ' UiRoundProcess温度
         ' 
-        UiRoundProcessCore.DecimalPlaces = 0
-        UiRoundProcessCore.Dock = DockStyle.Fill
-        UiRoundProcessCore.Font = New Font("微软雅黑", 9F, FontStyle.Bold)
-        UiRoundProcessCore.ForeColor = Color.Silver
-        UiRoundProcessCore.ForeColor2 = Color.Black
-        UiRoundProcessCore.Inner = 25
-        UiRoundProcessCore.Location = New Point(0, 30)
-        UiRoundProcessCore.MinimumSize = New Size(1, 1)
-        UiRoundProcessCore.Name = "UiRoundProcessCore"
-        UiRoundProcessCore.Outer = 30
-        UiRoundProcessCore.ProcessBackColor = Color.DimGray
-        UiRoundProcessCore.ProcessColor = Color.FromArgb(CByte(0), CByte(192), CByte(0))
-        UiRoundProcessCore.ShowProcess = True
-        UiRoundProcessCore.Size = New Size(118, 95)
-        UiRoundProcessCore.TabIndex = 1
-        UiRoundProcessCore.Text = "50%"
-        UiRoundProcessCore.Value = 50
+        UiRoundProcess温度.DecimalPlaces = 0
+        UiRoundProcess温度.Dock = DockStyle.Fill
+        UiRoundProcess温度.Font = New Font("微软雅黑", 9F, FontStyle.Bold)
+        UiRoundProcess温度.ForeColor = Color.Silver
+        UiRoundProcess温度.ForeColor2 = Color.Black
+        UiRoundProcess温度.Inner = 25
+        UiRoundProcess温度.Location = New Point(0, 30)
+        UiRoundProcess温度.MinimumSize = New Size(1, 1)
+        UiRoundProcess温度.Name = "UiRoundProcess温度"
+        UiRoundProcess温度.Outer = 30
+        UiRoundProcess温度.ProcessBackColor = Color.DimGray
+        UiRoundProcess温度.ProcessColor = Color.FromArgb(CByte(0), CByte(192), CByte(0))
+        UiRoundProcess温度.ShowProcess = True
+        UiRoundProcess温度.Size = New Size(118, 95)
+        UiRoundProcess温度.TabIndex = 1
+        UiRoundProcess温度.Text = "50%"
+        UiRoundProcess温度.Value = 50
         ' 
         ' Label12
         ' 
@@ -455,9 +455,9 @@ Partial Class 界面_性能监控
         Label12.Location = New Point(0, 0)
         Label12.Name = "Label12"
         Label12.Padding = New Padding(10, 10, 0, 0)
-        Label12.Size = New Size(50, 30)
+        Label12.Size = New Size(47, 30)
         Label12.TabIndex = 0
-        Label12.Text = "Core"
+        Label12.Text = "温度"
         ' 
         ' Label13
         ' 
@@ -848,11 +848,11 @@ Partial Class 界面_性能监控
     Friend WithEvents Label6 As Label
     Friend WithEvents Panel9 As Panel
     Friend WithEvents Panel10 As Panel
-    Friend WithEvents UiRoundProcess核心功耗 As Sunny.UI.UIRoundProcess
+    Friend WithEvents UiRoundProcess风扇转速 As Sunny.UI.UIRoundProcess
     Friend WithEvents Label10 As Label
     Friend WithEvents Label11 As Label
     Friend WithEvents Panel11 As Panel
-    Friend WithEvents UiRoundProcessCore As Sunny.UI.UIRoundProcess
+    Friend WithEvents UiRoundProcess温度 As Sunny.UI.UIRoundProcess
     Friend WithEvents Label12 As Label
     Friend WithEvents Label13 As Label
     Friend WithEvents Panel12 As Panel
@@ -863,7 +863,7 @@ Partial Class 界面_性能监控
     Friend WithEvents UiRoundProcess3D As Sunny.UI.UIRoundProcess
     Friend WithEvents Label16 As Label
     Friend WithEvents Panel14 As Panel
-    Friend WithEvents UiRoundProcess整卡功耗 As Sunny.UI.UIRoundProcess
+    Friend WithEvents UiRoundProcess功耗 As Sunny.UI.UIRoundProcess
     Friend WithEvents Label17 As Label
     Friend WithEvents Label18 As Label
     Friend WithEvents Panel17 As Panel

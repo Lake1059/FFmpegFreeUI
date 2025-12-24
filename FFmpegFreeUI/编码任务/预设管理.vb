@@ -31,7 +31,6 @@ Public Class 预设管理
         "libvo_amrwbenc"
     }
 
-
     Public Shared Sub 显示预设(a As 预设数据类型, ui As 界面_常规流程参数_V2)
         ui.UiTextBox输出容器.Text = a.输出容器
 
@@ -202,10 +201,11 @@ Public Class 预设管理
             Case "bmp" : ui.UiComboBox图片编码器.SelectedIndex = 7
             Case "libopenjpeg" : ui.UiComboBox图片编码器.SelectedIndex = 8
             Case "jpegls" : ui.UiComboBox图片编码器.SelectedIndex = 9
-            Case "hdr" : ui.UiComboBox图片编码器.SelectedIndex = 10
-            Case "tiff" : ui.UiComboBox图片编码器.SelectedIndex = 11
-            Case "dpx" : ui.UiComboBox图片编码器.SelectedIndex = 12
-            Case "exr" : ui.UiComboBox图片编码器.SelectedIndex = 13
+            Case "libsvtjpegxs" : ui.UiComboBox图片编码器.SelectedIndex = 10
+            Case "hdr" : ui.UiComboBox图片编码器.SelectedIndex = 11
+            Case "tiff" : ui.UiComboBox图片编码器.SelectedIndex = 12
+            Case "dpx" : ui.UiComboBox图片编码器.SelectedIndex = 13
+            Case "exr" : ui.UiComboBox图片编码器.SelectedIndex = 14
             Case Else : ui.UiComboBox图片编码器.SelectedIndex = 0
         End Select
         ui.UiTextBox图片编码器质量.Text = a.图片参数_编码器_质量值
@@ -229,8 +229,9 @@ Public Class 预设管理
         ui.UiCheckBox保留其他视频流.Checked = a.流控制_启用保留其他视频流
         ui.UiTextBox将音频参数用于这些流.Text = String.Join(",", a.流控制_将音频参数应用于指定流)
         ui.UiCheckBox保留其他音频流.Checked = a.流控制_启用保留其他音频流
-        ui.UiTextBox使用哪些文件的哪些内嵌字幕.Text = String.Join(",", a.流控制_使用哪些文件的哪些内嵌字幕)
-        ui.UiComboBox使用哪些文件的哪些内嵌字幕_如何操作.SelectedIndex = a.流控制_使用哪些文件的哪些内嵌字幕_如何操作
+        ui.UiTextBox使用哪些文件的哪些内嵌字幕.Text = String.Join(",", a.流控制_将字幕参数应用于指定流)
+        ui.UiComboBox使用哪些文件的哪些内嵌字幕_如何操作.SelectedIndex = a.流控制_如何操作指定的字幕
+        ui.UiCheckBox保留其他字幕流.Checked = a.流控制_启用保留其他字幕流
         ui.UiCheckBox自动混流SRT.Checked = a.流控制_自动混流SRT
         ui.UiCheckBox自动混流ASS.Checked = a.流控制_自动混流ASS
         ui.UiCheckBox自动混流SSA.Checked = a.流控制_自动混流SSA
@@ -411,10 +412,11 @@ Public Class 预设管理
             Case 7 : a.图片参数_编码器_编码名称 = "bmp"
             Case 8 : a.图片参数_编码器_编码名称 = "libopenjpeg"
             Case 9 : a.图片参数_编码器_编码名称 = "jpegls"
-            Case 10 : a.图片参数_编码器_编码名称 = "hdr"
-            Case 11 : a.图片参数_编码器_编码名称 = "tiff"
-            Case 12 : a.图片参数_编码器_编码名称 = "dpx"
-            Case 13 : a.图片参数_编码器_编码名称 = "exr"
+            Case 10 : a.图片参数_编码器_编码名称 = "libsvtjpegxs"
+            Case 11 : a.图片参数_编码器_编码名称 = "hdr"
+            Case 12 : a.图片参数_编码器_编码名称 = "tiff"
+            Case 13 : a.图片参数_编码器_编码名称 = "dpx"
+            Case 14 : a.图片参数_编码器_编码名称 = "exr"
         End Select
         a.图片参数_编码器_质量值 = ui.UiTextBox图片编码器质量.Text
 
@@ -438,9 +440,9 @@ Public Class 预设管理
         a.流控制_启用保留其他视频流 = ui.UiCheckBox保留其他视频流.Checked
         a.流控制_将音频参数应用于指定流 = ui.UiTextBox将音频参数用于这些流.Text.Replace("-", "").Split(separator, StringSplitOptions.RemoveEmptyEntries)
         a.流控制_启用保留其他音频流 = ui.UiCheckBox保留其他音频流.Checked
-        a.流控制_使用哪些文件的哪些内嵌字幕 = ui.UiTextBox使用哪些文件的哪些内嵌字幕.Text.Replace("-", "").Split(separator, StringSplitOptions.RemoveEmptyEntries)
-        a.流控制_使用哪些文件的哪些内嵌字幕_如何操作 = ui.UiComboBox使用哪些文件的哪些内嵌字幕_如何操作.SelectedIndex
-
+        a.流控制_将字幕参数应用于指定流 = ui.UiTextBox使用哪些文件的哪些内嵌字幕.Text.Replace("-", "").Split(separator, StringSplitOptions.RemoveEmptyEntries)
+        a.流控制_如何操作指定的字幕 = ui.UiComboBox使用哪些文件的哪些内嵌字幕_如何操作.SelectedIndex
+        a.流控制_启用保留其他字幕流 = ui.UiCheckBox保留其他字幕流.Checked
         a.流控制_自动混流SRT = ui.UiCheckBox自动混流SRT.Checked
         a.流控制_自动混流ASS = ui.UiCheckBox自动混流ASS.Checked
         a.流控制_自动混流SSA = ui.UiCheckBox自动混流SSA.Checked
@@ -559,6 +561,7 @@ Public Class 预设管理
         ui.UiCheckBox保留其他音频流.Checked = False
         ui.UiTextBox使用哪些文件的哪些内嵌字幕.Text = ""
         ui.UiComboBox使用哪些文件的哪些内嵌字幕_如何操作.SelectedIndex = 0
+        ui.UiCheckBox保留其他字幕流.Checked = False
         ui.UiCheckBox自动混流SRT.Checked = False
         ui.UiCheckBox自动混流ASS.Checked = False
         ui.UiCheckBox自动混流SSA.Checked = False
@@ -581,6 +584,7 @@ Public Class 预设管理
         Dim 音频滤镜参数集 As New List(Of String)
         Dim 视频参数 As String = ""
         Dim 音频参数 As String = ""
+        Dim 字幕参数 As String = ""
         Dim 输入文件的文件夹 As String = Path.GetDirectoryName(输入文件)
 
         Dim 将自动混流的SRT字幕 As String = Path.Combine(输入文件的文件夹, Path.GetFileNameWithoutExtension(输入文件) & ".srt")
@@ -645,6 +649,7 @@ Public Class 预设管理
             Case "bmp" : 视频参数 &= $"-c:v bmp "
             Case "libopenjpeg" : 视频参数 &= $"-c:v libopenjpeg {If(a.图片参数_编码器_质量值 <> "", "-q:v " & a.图片参数_编码器_质量值, "")} "
             Case "jpegls" : 视频参数 &= $"-c:v jpegls "
+            Case "libsvtjpegxs" : 视频参数 &= $"-c:v libsvtjpegxs "
             Case "hdr" : 视频参数 &= $"-c:v hdr "
             Case "tiff" : 视频参数 &= $"-c:v tiff "
             Case "dpx" : 视频参数 &= $"-c:v dpx "
@@ -957,21 +962,39 @@ Public Class 预设管理
 
         '=================================================================
 
-        If a.流控制_使用哪些文件的哪些内嵌字幕.Length > 0 AndAlso a.流控制_使用哪些文件的哪些内嵌字幕_如何操作 > 0 Then
-            For Each si In a.流控制_使用哪些文件的哪些内嵌字幕
-                Select Case a.流控制_使用哪些文件的哪些内嵌字幕_如何操作
-                    Case 1
-                        arg &= $"-map {si}? -c:s copy "
-                    Case 2
-                        arg &= $"-map {si}? -c:s mov_text "
-                    Case 3
-                        arg &= $"-map {si}? -c:s srt "
-                    Case 4
-                        arg &= $"-map {si}? -c:s ass "
-                    Case 5
-                        arg &= $"-map {si}? -c:s ssa "
-                End Select
-            Next
+        Select Case a.流控制_如何操作指定的字幕
+            Case 1
+                字幕参数 &= $"-c:s copy "
+            Case 2
+                字幕参数 &= $"-c:s mov_text "
+            Case 3
+                字幕参数 &= $"-c:s srt "
+            Case 4
+                字幕参数 &= $"-c:s ass "
+            Case 5
+                字幕参数 &= $"-c:s ssa "
+        End Select
+
+        '=================================================================
+
+        If a.流控制_启用保留其他字幕流 AndAlso 字幕参数 <> "" Then
+            arg &= $"-map 0:s? -c:s copy "
+            If a.流控制_将字幕参数应用于指定流.Length > 0 Then
+                For Each ai In a.流控制_将字幕参数应用于指定流
+                    arg &= $"-map -{ai}? "
+                Next
+            Else
+                If 字幕参数 <> "" Then arg &= $"-map -0:s:0? "
+            End If
+        End If
+        If a.流控制_将字幕参数应用于指定流.Length > 0 Then
+            If 字幕参数 <> "" Then
+                For Each ai In a.流控制_将字幕参数应用于指定流
+                    arg &= $"-map {ai}? {字幕参数} "
+                Next
+            End If
+        Else
+            If 字幕参数 <> "" Then arg &= $"{字幕参数} "
         End If
 
         '=================================================================
@@ -1189,9 +1212,11 @@ Public Class 预设管理
 
         '---------------- 剪辑区间 ----------------
         Select Case a.剪辑区间_方法
-            Case 1 : 在RTF输出文本(RTF, "剪辑区间方法：粗剪", Color.Silver)
+            Case 1 : 在RTF输出文本(RTF, "剪辑区间方法：粗剪 (立即响应)", Color.Silver)
             Case 2 : 在RTF输出文本(RTF, "剪辑区间方法：精剪 (从头解码)", Color.Silver)
             Case 3 : 在RTF输出文本(RTF, "剪辑区间方法：精剪 (快速响应)", Color.Silver)
+            Case 4 : 在RTF输出文本(RTF, "剪辑区间方法：去除末尾 (立即响应)", Color.Silver)
+            Case 5 : 在RTF输出文本(RTF, "剪辑区间方法：去除末尾 (从头解码)", Color.Silver)
             Case Else : If a.剪辑区间_入点 <> "" OrElse a.剪辑区间_出点 <> "" Then 在RTF输出文本(RTF, "警告：指定了剪辑范围却没有指定剪辑方法，不会进行剪辑", Color.IndianRed)
         End Select
         If a.剪辑区间_入点 <> "" Then 在RTF输出文本(RTF, "剪辑入点：" & a.剪辑区间_入点, Color.Silver)
@@ -1199,17 +1224,19 @@ Public Class 预设管理
         If a.剪辑区间_向前解码多久秒 <> "" Then 在RTF输出文本(RTF, "快速响应的精剪向前解码 " & a.剪辑区间_向前解码多久秒 & " 秒", Color.Silver)
 
         '---------------- 流控制 ----------------
-        If a.流控制_启用保留其他视频流 Then 在RTF输出文本(RTF, "已选择保留其他视频流", Color.Silver)
         If a.流控制_将视频参数应用于指定流 IsNot Nothing AndAlso a.流控制_将视频参数应用于指定流.Length > 0 Then
             在RTF输出文本(RTF, "应用视频参数到流：" & String.Join(",", a.流控制_将视频参数应用于指定流), Color.Silver)
         End If
-        If a.流控制_启用保留其他音频流 Then 在RTF输出文本(RTF, "已选择保留其他音频流", Color.Silver)
+        If a.流控制_启用保留其他视频流 Then 在RTF输出文本(RTF, "已选择保留其他视频流", Color.Silver)
+
         If a.流控制_将音频参数应用于指定流 IsNot Nothing AndAlso a.流控制_将音频参数应用于指定流.Length > 0 Then
             在RTF输出文本(RTF, "应用音频参数到流：" & String.Join(",", a.流控制_将音频参数应用于指定流), Color.Silver)
         End If
-        If a.流控制_使用哪些文件的哪些内嵌字幕 IsNot Nothing AndAlso a.流控制_使用哪些文件的哪些内嵌字幕.Length > 0 Then
-            在RTF输出文本(RTF, "使用这些文件的这些字幕：" & String.Join(",", a.流控制_使用哪些文件的哪些内嵌字幕), Color.Silver)
-            Select Case a.流控制_使用哪些文件的哪些内嵌字幕_如何操作
+        If a.流控制_启用保留其他音频流 Then 在RTF输出文本(RTF, "已选择保留其他音频流", Color.Silver)
+
+        If a.流控制_将字幕参数应用于指定流 IsNot Nothing AndAlso a.流控制_将字幕参数应用于指定流.Length > 0 Then
+            在RTF输出文本(RTF, "使用这些文件的这些字幕：" & String.Join(",", a.流控制_将字幕参数应用于指定流), Color.Silver)
+            Select Case a.流控制_如何操作指定的字幕
                 Case 1 : 在RTF输出文本(RTF, "字幕操作：复制流", Color.Silver)
                 Case 2 : 在RTF输出文本(RTF, "字幕操作：转为 mov_text 编码", Color.Silver)
                 Case 3 : 在RTF输出文本(RTF, "字幕操作：转为 srt 编码", Color.Silver)
@@ -1217,12 +1244,15 @@ Public Class 预设管理
                 Case 5 : 在RTF输出文本(RTF, "字幕操作：转为 ssa 编码", Color.Silver)
             End Select
         End If
+        If a.流控制_启用保留其他字幕流 Then 在RTF输出文本(RTF, "已选择保留其他字幕流", Color.Silver)
+
         If a.流控制_自动混流SRT Then 在RTF输出文本(RTF, "自动混流同名 SRT 字幕文件", Color.Silver)
         If a.流控制_自动混流ASS Then 在RTF输出文本(RTF, "自动混流同名 ASS 字幕文件", Color.Silver)
         If a.流控制_自动混流SSA Then 在RTF输出文本(RTF, "自动混流同名 SSA 字幕文件", Color.Silver)
         Select Case a.流控制_元数据选项
             Case 1 : 在RTF输出文本(RTF, "保留元数据", Color.Silver)
             Case 2 : 在RTF输出文本(RTF, "清除元数据", Color.Silver)
+            Case 3 : 在RTF输出文本(RTF, "清除更多元数据", Color.Silver)
         End Select
         Select Case a.流控制_章节选项
             Case 1 : 在RTF输出文本(RTF, "保留章节", Color.Silver)
@@ -1231,6 +1261,10 @@ Public Class 预设管理
         If a.流控制_附件选项 = 1 Then 在RTF输出文本(RTF, "保留附件", Color.Silver)
 
         '---------------- 其他 ----------------
-        If a.输出位置 <> "" Then 在RTF输出文本(RTF, "输出位置：" & a.输出位置, Color.Gray)
+        If a.输出位置 <> "" Then
+            在RTF输出文本(RTF, "输出位置：" & a.输出位置, Color.Gray)
+        Else
+            在RTF输出文本(RTF, "输出到源文件目录" & a.输出位置, Color.Gray)
+        End If
     End Sub
 End Class

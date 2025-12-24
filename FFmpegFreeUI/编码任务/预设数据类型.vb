@@ -123,8 +123,9 @@ Public Class 预设数据类型
     Public Property 流控制_将视频参数应用于指定流 As String() = Array.Empty(Of String)()
     Public Property 流控制_启用保留其他音频流 As Boolean = False
     Public Property 流控制_将音频参数应用于指定流 As String() = Array.Empty(Of String)()
-    Public Property 流控制_使用哪些文件的哪些内嵌字幕 As String() = Array.Empty(Of String)()
-    Public Property 流控制_使用哪些文件的哪些内嵌字幕_如何操作 As Integer = 0
+    Public Property 流控制_将字幕参数应用于指定流 As String() = Array.Empty(Of String)()
+    Public Property 流控制_如何操作指定的字幕 As Integer = 0
+    Public Property 流控制_启用保留其他字幕流 As Boolean = False
     Public Property 流控制_自动混流SRT As Boolean = False
     Public Property 流控制_自动混流ASS As Boolean = False
     Public Property 流控制_自动混流SSA As Boolean = False

@@ -13,9 +13,9 @@
         UiRoundProcess显存.Value = 0
         UiRoundProcess3D.Value = 0
         UiRoundProcessCopy.Value = 0
-        UiRoundProcessCore.Value = 0
-        UiRoundProcess核心功耗.Value = 0
-        UiRoundProcess整卡功耗.Value = 0
+        UiRoundProcess温度.Value = 0
+        UiRoundProcess风扇转速.Value = 0
+        UiRoundProcess功耗.Value = 0
         是否初始化 = True
     End Sub
 
@@ -43,12 +43,12 @@
         UiRoundProcess3D.Outer = 30 * Form1.DPI
         UiRoundProcessCopy.Inner = 25 * Form1.DPI
         UiRoundProcessCopy.Outer = 30 * Form1.DPI
-        UiRoundProcessCore.Inner = 25 * Form1.DPI
-        UiRoundProcessCore.Outer = 30 * Form1.DPI
-        UiRoundProcess核心功耗.Inner = 25 * Form1.DPI
-        UiRoundProcess核心功耗.Outer = 30 * Form1.DPI
-        UiRoundProcess整卡功耗.Inner = 25 * Form1.DPI
-        UiRoundProcess整卡功耗.Outer = 30 * Form1.DPI
+        UiRoundProcess温度.Inner = 25 * Form1.DPI
+        UiRoundProcess温度.Outer = 30 * Form1.DPI
+        UiRoundProcess风扇转速.Inner = 25 * Form1.DPI
+        UiRoundProcess风扇转速.Outer = 30 * Form1.DPI
+        UiRoundProcess功耗.Inner = 25 * Form1.DPI
+        UiRoundProcess功耗.Outer = 30 * Form1.DPI
 
     End Sub
 
