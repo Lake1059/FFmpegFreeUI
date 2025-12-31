@@ -118,7 +118,8 @@ Partial Class 界面_常规流程参数_V2
         Label16 = New Label()
         Label20 = New Label()
         TabPage视频参数画面帧 = New TabPage()
-        Label172 = New Label()
+        Panel96 = New Panel()
+        UiButton烧录字幕 = New Sunny.UI.UIButton()
         Label170 = New Label()
         Panel23 = New Panel()
         UiButton打开超分参数窗口 = New Sunny.UI.UIButton()
@@ -259,11 +260,26 @@ Partial Class 界面_常规流程参数_V2
         Label降噪参数3 = New Label()
         Label降噪参数2 = New Label()
         Label降噪参数1 = New Label()
-        Label68 = New Label()
         Panel34 = New Panel()
         UiComboBox降噪方式 = New Sunny.UI.UIComboBox()
         Label66 = New Label()
         Label67 = New Label()
+        TabPage视频帧服务器 = New TabPage()
+        Label189 = New Label()
+        Panel94 = New Panel()
+        UiComboBox选择vpy文件 = New Sunny.UI.UIComboBox()
+        Panel95 = New Panel()
+        UiCheckBox使用VapourSynth = New Sunny.UI.UICheckBox()
+        Label188 = New Label()
+        Label186 = New Label()
+        Panel49 = New Panel()
+        UiComboBox选择avs文件 = New Sunny.UI.UIComboBox()
+        Panel48 = New Panel()
+        UiCheckBox使用AviSynth = New Sunny.UI.UICheckBox()
+        Label187 = New Label()
+        Label185 = New Label()
+        Label183 = New Label()
+        Label182 = New Label()
         TabPage音频参数 = New TabPage()
         Panel93 = New Panel()
         UiTextBox响度标准化峰值电平 = New Sunny.UI.UITextBox()
@@ -480,6 +496,7 @@ Partial Class 界面_常规流程参数_V2
         Panel14.SuspendLayout()
         Panel13.SuspendLayout()
         TabPage视频参数画面帧.SuspendLayout()
+        Panel96.SuspendLayout()
         Panel23.SuspendLayout()
         Panel22.SuspendLayout()
         Panel21.SuspendLayout()
@@ -511,6 +528,11 @@ Partial Class 界面_常规流程参数_V2
         Panel36.SuspendLayout()
         Panel35.SuspendLayout()
         Panel34.SuspendLayout()
+        TabPage视频帧服务器.SuspendLayout()
+        Panel94.SuspendLayout()
+        Panel95.SuspendLayout()
+        Panel49.SuspendLayout()
+        Panel48.SuspendLayout()
         TabPage音频参数.SuspendLayout()
         Panel93.SuspendLayout()
         Panel92.SuspendLayout()
@@ -571,6 +593,7 @@ Partial Class 界面_常规流程参数_V2
         UiTabControlMenu1.Controls.Add(TabPage视频参数质量)
         UiTabControlMenu1.Controls.Add(TabPage视频参数色彩管理)
         UiTabControlMenu1.Controls.Add(TabPage视频参数常见滤镜)
+        UiTabControlMenu1.Controls.Add(TabPage视频帧服务器)
         UiTabControlMenu1.Controls.Add(TabPage音频参数)
         UiTabControlMenu1.Controls.Add(TabPage图片参数)
         UiTabControlMenu1.Controls.Add(TabPage自定义参数)
@@ -2154,7 +2177,7 @@ Partial Class 界面_常规流程参数_V2
         ' 
         TabPage视频参数画面帧.AutoScroll = True
         TabPage视频参数画面帧.BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
-        TabPage视频参数画面帧.Controls.Add(Label172)
+        TabPage视频参数画面帧.Controls.Add(Panel96)
         TabPage视频参数画面帧.Controls.Add(Label170)
         TabPage视频参数画面帧.Controls.Add(Panel23)
         TabPage视频参数画面帧.Controls.Add(Label37)
@@ -2174,18 +2197,44 @@ Partial Class 界面_常规流程参数_V2
         TabPage视频参数画面帧.TabIndex = 4
         TabPage视频参数画面帧.Text = "视频参数 | 画面帧"
         ' 
-        ' Label172
+        ' Panel96
         ' 
-        Label172.AutoSize = True
-        Label172.Dock = DockStyle.Top
-        Label172.Font = New Font("微软雅黑", 10F)
-        Label172.ForeColor = Color.Gray
-        Label172.Location = New Point(0, 470)
-        Label172.Name = "Label172"
-        Label172.Padding = New Padding(16, 5, 0, 0)
-        Label172.Size = New Size(81, 25)
-        Label172.TabIndex = 24
-        Label172.Text = "敬请期待"
+        Panel96.Controls.Add(UiButton烧录字幕)
+        Panel96.Dock = DockStyle.Top
+        Panel96.Location = New Point(0, 470)
+        Panel96.Name = "Panel96"
+        Panel96.Padding = New Padding(21, 10, 20, 0)
+        Panel96.Size = New Size(899, 40)
+        Panel96.TabIndex = 25
+        ' 
+        ' UiButton烧录字幕
+        ' 
+        UiButton烧录字幕.Dock = DockStyle.Left
+        UiButton烧录字幕.FillColor = Color.FromArgb(CByte(56), CByte(56), CByte(56))
+        UiButton烧录字幕.FillColor2 = Color.FromArgb(CByte(56), CByte(56), CByte(56))
+        UiButton烧录字幕.FillDisableColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiButton烧录字幕.FillHoverColor = Color.FromArgb(CByte(56), CByte(56), CByte(56))
+        UiButton烧录字幕.FillPressColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        UiButton烧录字幕.FillSelectedColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        UiButton烧录字幕.Font = New Font("微软雅黑", 10F)
+        UiButton烧录字幕.ForeColor = Color.Silver
+        UiButton烧录字幕.ForeDisableColor = Color.Silver
+        UiButton烧录字幕.ForeHoverColor = Color.Silver
+        UiButton烧录字幕.ForePressColor = Color.Silver
+        UiButton烧录字幕.ForeSelectedColor = Color.Silver
+        UiButton烧录字幕.Location = New Point(21, 10)
+        UiButton烧录字幕.MinimumSize = New Size(1, 1)
+        UiButton烧录字幕.Name = "UiButton烧录字幕"
+        UiButton烧录字幕.Radius = 30
+        UiButton烧录字幕.RectColor = Color.FromArgb(CByte(56), CByte(56), CByte(56))
+        UiButton烧录字幕.RectDisableColor = Color.FromArgb(CByte(56), CByte(56), CByte(56))
+        UiButton烧录字幕.RectHoverColor = Color.DarkGray
+        UiButton烧录字幕.RectPressColor = Color.FromArgb(CByte(64), CByte(148), CByte(64))
+        UiButton烧录字幕.RectSelectedColor = Color.DarkGray
+        UiButton烧录字幕.Size = New Size(175, 30)
+        UiButton烧录字幕.TabIndex = 84
+        UiButton烧录字幕.Text = "烧录字幕"
+        UiButton烧录字幕.TipsFont = New Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point, CByte(134))
         ' 
         ' Label170
         ' 
@@ -3330,7 +3379,7 @@ Partial Class 界面_常规流程参数_V2
         Panel33.Controls.Add(Label61)
         Panel33.Controls.Add(UiComboBox色彩管理处理方式)
         Panel33.Dock = DockStyle.Top
-        Panel33.Location = New Point(0, 339)
+        Panel33.Location = New Point(0, 359)
         Panel33.Name = "Panel33"
         Panel33.Padding = New Padding(21, 10, 20, 0)
         Panel33.Size = New Size(699, 40)
@@ -3392,7 +3441,7 @@ Partial Class 界面_常规流程参数_V2
         Panel90.Controls.Add(Label59)
         Panel90.Controls.Add(UiComboBox色调映射算法)
         Panel90.Dock = DockStyle.Top
-        Panel90.Location = New Point(0, 299)
+        Panel90.Location = New Point(0, 319)
         Panel90.Name = "Panel90"
         Panel90.Padding = New Padding(21, 10, 20, 0)
         Panel90.Size = New Size(699, 40)
@@ -3455,7 +3504,7 @@ Partial Class 界面_常规流程参数_V2
         Panel32.Controls.Add(Label65)
         Panel32.Controls.Add(UiComboBox色彩范围)
         Panel32.Dock = DockStyle.Top
-        Panel32.Location = New Point(0, 259)
+        Panel32.Location = New Point(0, 279)
         Panel32.Name = "Panel32"
         Panel32.Padding = New Padding(21, 10, 20, 0)
         Panel32.Size = New Size(699, 40)
@@ -3520,7 +3569,7 @@ Partial Class 界面_常规流程参数_V2
         Panel31.Controls.Add(Label64)
         Panel31.Controls.Add(UiComboBox传输特性)
         Panel31.Dock = DockStyle.Top
-        Panel31.Location = New Point(0, 219)
+        Panel31.Location = New Point(0, 239)
         Panel31.Name = "Panel31"
         Panel31.Padding = New Padding(21, 10, 20, 0)
         Panel31.Size = New Size(699, 40)
@@ -3585,7 +3634,7 @@ Partial Class 界面_常规流程参数_V2
         Panel29.Controls.Add(Label63)
         Panel29.Controls.Add(UiComboBox色域)
         Panel29.Dock = DockStyle.Top
-        Panel29.Location = New Point(0, 179)
+        Panel29.Location = New Point(0, 199)
         Panel29.Name = "Panel29"
         Panel29.Padding = New Padding(21, 10, 20, 0)
         Panel29.Size = New Size(699, 40)
@@ -3649,7 +3698,7 @@ Partial Class 界面_常规流程参数_V2
         Panel28.Controls.Add(Label62)
         Panel28.Controls.Add(UiComboBox矩阵系数)
         Panel28.Dock = DockStyle.Top
-        Panel28.Location = New Point(0, 139)
+        Panel28.Location = New Point(0, 159)
         Panel28.Name = "Panel28"
         Panel28.Padding = New Padding(21, 10, 20, 0)
         Panel28.Size = New Size(699, 40)
@@ -3713,7 +3762,7 @@ Partial Class 界面_常规流程参数_V2
         Label81.Dock = DockStyle.Top
         Label81.Font = New Font("微软雅黑", 10F)
         Label81.ForeColor = Color.Gray
-        Label81.Location = New Point(0, 109)
+        Label81.Location = New Point(0, 129)
         Label81.Name = "Label81"
         Label81.Padding = New Padding(16, 10, 0, 0)
         Label81.Size = New Size(193, 30)
@@ -3725,7 +3774,7 @@ Partial Class 界面_常规流程参数_V2
         Panel41.Controls.Add(Label147)
         Panel41.Controls.Add(UiComboBox色彩空间滤镜选择)
         Panel41.Dock = DockStyle.Top
-        Panel41.Location = New Point(0, 69)
+        Panel41.Location = New Point(0, 89)
         Panel41.Name = "Panel41"
         Panel41.Padding = New Padding(21, 10, 20, 0)
         Panel41.Size = New Size(699, 40)
@@ -3791,9 +3840,9 @@ Partial Class 界面_常规流程参数_V2
         Label80.Location = New Point(0, 44)
         Label80.Name = "Label80"
         Label80.Padding = New Padding(16, 5, 0, 0)
-        Label80.Size = New Size(351, 25)
+        Label80.Size = New Size(351, 45)
         Label80.TabIndex = 20
-        Label80.Text = "zscale (CPU)；libplacebo (GPU) 转换杜比视界推荐"
+        Label80.Text = "要转换色彩建议和上边的像素格式一起使用" & vbCrLf & "zscale (CPU)；libplacebo (GPU) 转换杜比视界推荐"
         ' 
         ' Label60
         ' 
@@ -4132,7 +4181,6 @@ Partial Class 界面_常规流程参数_V2
         TabPage视频参数常见滤镜.Controls.Add(Label73)
         TabPage视频参数常见滤镜.Controls.Add(Panel36)
         TabPage视频参数常见滤镜.Controls.Add(Panel35)
-        TabPage视频参数常见滤镜.Controls.Add(Label68)
         TabPage视频参数常见滤镜.Controls.Add(Panel34)
         TabPage视频参数常见滤镜.Controls.Add(Label66)
         TabPage视频参数常见滤镜.Controls.Add(Label67)
@@ -4148,7 +4196,7 @@ Partial Class 界面_常规流程参数_V2
         Panel39.Controls.Add(Label92)
         Panel39.Controls.Add(UiComboBox角度翻转)
         Panel39.Dock = DockStyle.Top
-        Panel39.Location = New Point(0, 471)
+        Panel39.Location = New Point(0, 421)
         Panel39.Name = "Panel39"
         Panel39.Padding = New Padding(21, 10, 20, 0)
         Panel39.Size = New Size(899, 40)
@@ -4239,7 +4287,7 @@ Partial Class 界面_常规流程参数_V2
         Label77.AutoSize = True
         Label77.Dock = DockStyle.Top
         Label77.Font = New Font("微软雅黑", 13F)
-        Label77.Location = New Point(0, 427)
+        Label77.Location = New Point(0, 377)
         Label77.Name = "Label77"
         Label77.Padding = New Padding(16, 20, 0, 0)
         Label77.Size = New Size(98, 44)
@@ -4250,7 +4298,7 @@ Partial Class 界面_常规流程参数_V2
         ' 
         Panel38.Controls.Add(UiComboBox逐行与隔行处理方式)
         Panel38.Dock = DockStyle.Top
-        Panel38.Location = New Point(0, 387)
+        Panel38.Location = New Point(0, 337)
         Panel38.Name = "Panel38"
         Panel38.Padding = New Padding(21, 10, 20, 0)
         Panel38.Size = New Size(899, 40)
@@ -4297,7 +4345,7 @@ Partial Class 界面_常规流程参数_V2
         Label75.AutoSize = True
         Label75.Dock = DockStyle.Top
         Label75.Font = New Font("微软雅黑", 13F)
-        Label75.Location = New Point(0, 343)
+        Label75.Location = New Point(0, 293)
         Label75.Name = "Label75"
         Label75.Padding = New Padding(16, 20, 0, 0)
         Label75.Size = New Size(98, 44)
@@ -4313,7 +4361,7 @@ Partial Class 界面_常规流程参数_V2
         Panel37.Controls.Add(Label117)
         Panel37.Controls.Add(UiTextBox锐化水平尺寸)
         Panel37.Dock = DockStyle.Top
-        Panel37.Location = New Point(0, 303)
+        Panel37.Location = New Point(0, 253)
         Panel37.Name = "Panel37"
         Panel37.Padding = New Padding(21, 10, 20, 0)
         Panel37.Size = New Size(899, 40)
@@ -4442,7 +4490,7 @@ Partial Class 界面_常规流程参数_V2
         Label72.Dock = DockStyle.Top
         Label72.Font = New Font("微软雅黑", 10F)
         Label72.ForeColor = Color.Gray
-        Label72.Location = New Point(0, 278)
+        Label72.Location = New Point(0, 228)
         Label72.Name = "Label72"
         Label72.Padding = New Padding(16, 5, 0, 0)
         Label72.Size = New Size(393, 25)
@@ -4454,7 +4502,7 @@ Partial Class 界面_常规流程参数_V2
         Label73.AutoSize = True
         Label73.Dock = DockStyle.Top
         Label73.Font = New Font("微软雅黑", 13F)
-        Label73.Location = New Point(0, 234)
+        Label73.Location = New Point(0, 184)
         Label73.Name = "Label73"
         Label73.Padding = New Padding(16, 20, 0, 0)
         Label73.Size = New Size(62, 44)
@@ -4471,7 +4519,7 @@ Partial Class 界面_常规流程参数_V2
         Panel36.Controls.Add(Label71)
         Panel36.Controls.Add(UiTextBox降噪参数1)
         Panel36.Dock = DockStyle.Top
-        Panel36.Location = New Point(0, 204)
+        Panel36.Location = New Point(0, 154)
         Panel36.Name = "Panel36"
         Panel36.Padding = New Padding(21, 0, 20, 0)
         Panel36.Size = New Size(899, 30)
@@ -4613,7 +4661,7 @@ Partial Class 界面_常规流程参数_V2
         Panel35.Controls.Add(Label降噪参数2)
         Panel35.Controls.Add(Label降噪参数1)
         Panel35.Dock = DockStyle.Top
-        Panel35.Location = New Point(0, 149)
+        Panel35.Location = New Point(0, 99)
         Panel35.Name = "Panel35"
         Panel35.Padding = New Padding(17, 0, 10, 0)
         Panel35.Size = New Size(899, 55)
@@ -4664,20 +4712,6 @@ Partial Class 界面_常规流程参数_V2
         Label降噪参数1.Text = "参数1" & vbCrLf & "name"
         Label降噪参数1.TextAlign = ContentAlignment.MiddleLeft
         ' 
-        ' Label68
-        ' 
-        Label68.AutoSize = True
-        Label68.Dock = DockStyle.Top
-        Label68.Font = New Font("微软雅黑", 10F)
-        Label68.ForeColor = Color.Gray
-        Label68.Location = New Point(0, 99)
-        Label68.Name = "Label68"
-        Label68.Padding = New Padding(16, 10, 0, 0)
-        Label68.Size = New Size(590, 50)
-        Label68.TabIndex = 30
-        Label68.Text = "将 AviSynth.avs 脚本文件放置于程序目录下，在其中使用 <FilePath> 来表示输入文件路径" & vbCrLf & "如果没有处理音频，那么输出的视频是没有音频的，需在自定义参数或 avs 中处理" & vbCrLf
-        Label68.Visible = False
-        ' 
         ' Panel34
         ' 
         Panel34.Controls.Add(UiComboBox降噪方式)
@@ -4704,7 +4738,7 @@ Partial Class 界面_常规流程参数_V2
         UiComboBox降噪方式.ItemHeight = 30
         UiComboBox降噪方式.ItemHoverColor = Color.FromArgb(CByte(56), CByte(56), CByte(56))
         UiComboBox降噪方式.ItemRectColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
-        UiComboBox降噪方式.Items.AddRange(New Object() {"", "hqdn3d - 时空域降噪，适合普通噪声", "nlmeans - 高级降噪，效果更好速度更慢", "atadenoise - 轻量级时间域降噪", "bm3d - 高质量降噪，适合严重噪声", "外部 AviSynth - 加载 avs 文件"})
+        UiComboBox降噪方式.Items.AddRange(New Object() {"", "hqdn3d - 时空域降噪，适合普通噪声", "nlmeans - 高级降噪，效果更好速度更慢", "atadenoise - 轻量级时间域降噪", "bm3d - 高质量降噪，适合严重噪声"})
         UiComboBox降噪方式.ItemSelectBackColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
         UiComboBox降噪方式.ItemSelectForeColor = Color.Silver
         UiComboBox降噪方式.Location = New Point(21, 10)
@@ -4748,6 +4782,262 @@ Partial Class 界面_常规流程参数_V2
         Label67.Size = New Size(62, 34)
         Label67.TabIndex = 17
         Label67.Text = "降噪"
+        ' 
+        ' TabPage视频帧服务器
+        ' 
+        TabPage视频帧服务器.BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
+        TabPage视频帧服务器.Controls.Add(Label189)
+        TabPage视频帧服务器.Controls.Add(Panel94)
+        TabPage视频帧服务器.Controls.Add(Panel95)
+        TabPage视频帧服务器.Controls.Add(Label188)
+        TabPage视频帧服务器.Controls.Add(Label186)
+        TabPage视频帧服务器.Controls.Add(Panel49)
+        TabPage视频帧服务器.Controls.Add(Panel48)
+        TabPage视频帧服务器.Controls.Add(Label187)
+        TabPage视频帧服务器.Controls.Add(Label185)
+        TabPage视频帧服务器.Controls.Add(Label183)
+        TabPage视频帧服务器.Controls.Add(Label182)
+        TabPage视频帧服务器.Location = New Point(201, 0)
+        TabPage视频帧服务器.Name = "TabPage视频帧服务器"
+        TabPage视频帧服务器.Size = New Size(899, 650)
+        TabPage视频帧服务器.TabIndex = 14
+        TabPage视频帧服务器.Text = "视频帧服务器"
+        ' 
+        ' Label189
+        ' 
+        Label189.AutoSize = True
+        Label189.Dock = DockStyle.Bottom
+        Label189.Font = New Font("微软雅黑", 10F)
+        Label189.ForeColor = Color.Gray
+        Label189.Location = New Point(0, 594)
+        Label189.Name = "Label189"
+        Label189.Padding = New Padding(16, 0, 0, 16)
+        Label189.Size = New Size(422, 56)
+        Label189.TabIndex = 119
+        Label189.Text = "不要忘记将相关 dll 与 ffmpeg 放在一起" & vbCrLf & "3FUI 要求输入文件位置的写入权限，如果是远程访问则需要注意"
+        ' 
+        ' Panel94
+        ' 
+        Panel94.Controls.Add(UiComboBox选择vpy文件)
+        Panel94.Dock = DockStyle.Top
+        Panel94.Location = New Point(0, 437)
+        Panel94.Name = "Panel94"
+        Panel94.Padding = New Padding(20, 10, 20, 0)
+        Panel94.Size = New Size(899, 40)
+        Panel94.TabIndex = 118
+        ' 
+        ' UiComboBox选择vpy文件
+        ' 
+        UiComboBox选择vpy文件.AllowDrop = True
+        UiComboBox选择vpy文件.DataSource = Nothing
+        UiComboBox选择vpy文件.Dock = DockStyle.Fill
+        UiComboBox选择vpy文件.DropDownStyle = Sunny.UI.UIDropDownStyle.DropDownList
+        UiComboBox选择vpy文件.FillColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiComboBox选择vpy文件.FillColor2 = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiComboBox选择vpy文件.FillDisableColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        UiComboBox选择vpy文件.Font = New Font("微软雅黑", 10F)
+        UiComboBox选择vpy文件.ForeColor = Color.Silver
+        UiComboBox选择vpy文件.ForeDisableColor = Color.Silver
+        UiComboBox选择vpy文件.ItemFillColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        UiComboBox选择vpy文件.ItemForeColor = Color.Silver
+        UiComboBox选择vpy文件.ItemHeight = 30
+        UiComboBox选择vpy文件.ItemHoverColor = Color.FromArgb(CByte(56), CByte(56), CByte(56))
+        UiComboBox选择vpy文件.ItemRectColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        UiComboBox选择vpy文件.Items.AddRange(New Object() {"  浏览 ..."})
+        UiComboBox选择vpy文件.ItemSelectBackColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        UiComboBox选择vpy文件.ItemSelectForeColor = Color.Silver
+        UiComboBox选择vpy文件.Location = New Point(20, 10)
+        UiComboBox选择vpy文件.Margin = New Padding(4, 5, 4, 5)
+        UiComboBox选择vpy文件.MaxDropDownItems = 17
+        UiComboBox选择vpy文件.MinimumSize = New Size(63, 0)
+        UiComboBox选择vpy文件.Name = "UiComboBox选择vpy文件"
+        UiComboBox选择vpy文件.Padding = New Padding(0, 0, 30, 2)
+        UiComboBox选择vpy文件.RadiusSides = Sunny.UI.UICornerRadiusSides.None
+        UiComboBox选择vpy文件.RectColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        UiComboBox选择vpy文件.RectDisableColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        UiComboBox选择vpy文件.ScrollBarBackColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        UiComboBox选择vpy文件.ScrollBarColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        UiComboBox选择vpy文件.ScrollBarHandleWidth = 20
+        UiComboBox选择vpy文件.ScrollBarStyleInherited = False
+        UiComboBox选择vpy文件.Size = New Size(859, 30)
+        UiComboBox选择vpy文件.Style = Sunny.UI.UIStyle.Custom
+        UiComboBox选择vpy文件.SymbolSize = 24
+        UiComboBox选择vpy文件.TabIndex = 94
+        UiComboBox选择vpy文件.TextAlignment = ContentAlignment.MiddleLeft
+        UiComboBox选择vpy文件.Watermark = "选择 .vpy/.py 文件"
+        ' 
+        ' Panel95
+        ' 
+        Panel95.Controls.Add(UiCheckBox使用VapourSynth)
+        Panel95.Dock = DockStyle.Top
+        Panel95.Location = New Point(0, 397)
+        Panel95.Name = "Panel95"
+        Panel95.Padding = New Padding(18, 10, 20, 0)
+        Panel95.Size = New Size(899, 40)
+        Panel95.TabIndex = 116
+        ' 
+        ' UiCheckBox使用VapourSynth
+        ' 
+        UiCheckBox使用VapourSynth.CheckBoxColor = Color.Silver
+        UiCheckBox使用VapourSynth.CheckBoxSize = 20
+        UiCheckBox使用VapourSynth.Dock = DockStyle.Left
+        UiCheckBox使用VapourSynth.Font = New Font("微软雅黑", 10F)
+        UiCheckBox使用VapourSynth.ForeColor = Color.DarkGray
+        UiCheckBox使用VapourSynth.Location = New Point(18, 10)
+        UiCheckBox使用VapourSynth.MinimumSize = New Size(1, 1)
+        UiCheckBox使用VapourSynth.Name = "UiCheckBox使用VapourSynth"
+        UiCheckBox使用VapourSynth.Size = New Size(200, 30)
+        UiCheckBox使用VapourSynth.TabIndex = 98
+        UiCheckBox使用VapourSynth.Text = "使用 VapourSynth"
+        ' 
+        ' Label188
+        ' 
+        Label188.AutoSize = True
+        Label188.Dock = DockStyle.Top
+        Label188.Font = New Font("微软雅黑", 10F)
+        Label188.ForeColor = Color.Gray
+        Label188.Location = New Point(0, 352)
+        Label188.Name = "Label188"
+        Label188.Padding = New Padding(16, 5, 0, 0)
+        Label188.Size = New Size(473, 45)
+        Label188.TabIndex = 117
+        Label188.Text = "在 .vpy/.py 脚本文件中使用 <FilePath> 来表示输入文件路径" & vbCrLf & "创建 VapourSynth 文件夹并放置 .vpy/.py 文件就可以在下拉框快速选择" & vbCrLf
+        ' 
+        ' Label186
+        ' 
+        Label186.AutoSize = True
+        Label186.Dock = DockStyle.Top
+        Label186.Font = New Font("微软雅黑", 13F)
+        Label186.Location = New Point(0, 308)
+        Label186.Name = "Label186"
+        Label186.Padding = New Padding(16, 20, 0, 0)
+        Label186.Size = New Size(138, 44)
+        Label186.TabIndex = 112
+        Label186.Text = "VapourSynth"
+        ' 
+        ' Panel49
+        ' 
+        Panel49.Controls.Add(UiComboBox选择avs文件)
+        Panel49.Dock = DockStyle.Top
+        Panel49.Location = New Point(0, 268)
+        Panel49.Name = "Panel49"
+        Panel49.Padding = New Padding(20, 10, 20, 0)
+        Panel49.Size = New Size(899, 40)
+        Panel49.TabIndex = 115
+        ' 
+        ' UiComboBox选择avs文件
+        ' 
+        UiComboBox选择avs文件.AllowDrop = True
+        UiComboBox选择avs文件.DataSource = Nothing
+        UiComboBox选择avs文件.Dock = DockStyle.Fill
+        UiComboBox选择avs文件.DropDownStyle = Sunny.UI.UIDropDownStyle.DropDownList
+        UiComboBox选择avs文件.FillColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiComboBox选择avs文件.FillColor2 = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiComboBox选择avs文件.FillDisableColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        UiComboBox选择avs文件.Font = New Font("微软雅黑", 10F)
+        UiComboBox选择avs文件.ForeColor = Color.Silver
+        UiComboBox选择avs文件.ForeDisableColor = Color.Silver
+        UiComboBox选择avs文件.ItemFillColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        UiComboBox选择avs文件.ItemForeColor = Color.Silver
+        UiComboBox选择avs文件.ItemHeight = 30
+        UiComboBox选择avs文件.ItemHoverColor = Color.FromArgb(CByte(56), CByte(56), CByte(56))
+        UiComboBox选择avs文件.ItemRectColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        UiComboBox选择avs文件.Items.AddRange(New Object() {"  浏览 ..."})
+        UiComboBox选择avs文件.ItemSelectBackColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        UiComboBox选择avs文件.ItemSelectForeColor = Color.Silver
+        UiComboBox选择avs文件.Location = New Point(20, 10)
+        UiComboBox选择avs文件.Margin = New Padding(4, 5, 4, 5)
+        UiComboBox选择avs文件.MaxDropDownItems = 17
+        UiComboBox选择avs文件.MinimumSize = New Size(63, 0)
+        UiComboBox选择avs文件.Name = "UiComboBox选择avs文件"
+        UiComboBox选择avs文件.Padding = New Padding(0, 0, 30, 2)
+        UiComboBox选择avs文件.RadiusSides = Sunny.UI.UICornerRadiusSides.None
+        UiComboBox选择avs文件.RectColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        UiComboBox选择avs文件.RectDisableColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        UiComboBox选择avs文件.ScrollBarBackColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        UiComboBox选择avs文件.ScrollBarColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        UiComboBox选择avs文件.ScrollBarHandleWidth = 20
+        UiComboBox选择avs文件.ScrollBarStyleInherited = False
+        UiComboBox选择avs文件.Size = New Size(859, 30)
+        UiComboBox选择avs文件.Style = Sunny.UI.UIStyle.Custom
+        UiComboBox选择avs文件.SymbolSize = 24
+        UiComboBox选择avs文件.TabIndex = 94
+        UiComboBox选择avs文件.TextAlignment = ContentAlignment.MiddleLeft
+        UiComboBox选择avs文件.Watermark = "选择 .avs 文件"
+        ' 
+        ' Panel48
+        ' 
+        Panel48.Controls.Add(UiCheckBox使用AviSynth)
+        Panel48.Dock = DockStyle.Top
+        Panel48.Location = New Point(0, 228)
+        Panel48.Name = "Panel48"
+        Panel48.Padding = New Padding(18, 10, 20, 0)
+        Panel48.Size = New Size(899, 40)
+        Panel48.TabIndex = 113
+        ' 
+        ' UiCheckBox使用AviSynth
+        ' 
+        UiCheckBox使用AviSynth.CheckBoxColor = Color.Silver
+        UiCheckBox使用AviSynth.CheckBoxSize = 20
+        UiCheckBox使用AviSynth.Dock = DockStyle.Left
+        UiCheckBox使用AviSynth.Font = New Font("微软雅黑", 10F)
+        UiCheckBox使用AviSynth.ForeColor = Color.DarkGray
+        UiCheckBox使用AviSynth.Location = New Point(18, 10)
+        UiCheckBox使用AviSynth.MinimumSize = New Size(1, 1)
+        UiCheckBox使用AviSynth.Name = "UiCheckBox使用AviSynth"
+        UiCheckBox使用AviSynth.Size = New Size(200, 30)
+        UiCheckBox使用AviSynth.TabIndex = 98
+        UiCheckBox使用AviSynth.Text = "使用 AviSynth"
+        ' 
+        ' Label187
+        ' 
+        Label187.AutoSize = True
+        Label187.Dock = DockStyle.Top
+        Label187.Font = New Font("微软雅黑", 10F)
+        Label187.ForeColor = Color.Gray
+        Label187.Location = New Point(0, 183)
+        Label187.Name = "Label187"
+        Label187.Padding = New Padding(16, 5, 0, 0)
+        Label187.Size = New Size(418, 45)
+        Label187.TabIndex = 114
+        Label187.Text = "在 .avs 脚本文件中使用 <FilePath> 来表示输入文件路径" & vbCrLf & "创建 AviSynth 文件夹并放置 .avs 文件就可以在下拉框快速选择" & vbCrLf
+        ' 
+        ' Label185
+        ' 
+        Label185.AutoSize = True
+        Label185.Dock = DockStyle.Top
+        Label185.Font = New Font("微软雅黑", 13F)
+        Label185.Location = New Point(0, 139)
+        Label185.Name = "Label185"
+        Label185.Padding = New Padding(16, 20, 0, 0)
+        Label185.Size = New Size(102, 44)
+        Label185.TabIndex = 111
+        Label185.Text = "AviSynth"
+        ' 
+        ' Label183
+        ' 
+        Label183.AutoSize = True
+        Label183.Dock = DockStyle.Top
+        Label183.Font = New Font("微软雅黑", 10F)
+        Label183.ForeColor = Color.Gray
+        Label183.Location = New Point(0, 34)
+        Label183.Name = "Label183"
+        Label183.Padding = New Padding(16, 5, 0, 0)
+        Label183.Size = New Size(585, 105)
+        Label183.TabIndex = 19
+        Label183.Text = "视频帧服务器，又称为 视频脚本处理框架，或称为 预处理软件" & vbCrLf & "旨在对视频帧（或者也包含音频）进行预处理，并将处理后的帧直接传递到编码器进行编码" & vbCrLf & "常见于压制组用以提升画质、修复内容等" & vbCrLf & "3FUI 通过替换输入文件和脚本模板来向使用这些工具提供便利" & vbCrLf & "这是高阶内容，如果你是新手，不要考虑这些"
+        ' 
+        ' Label182
+        ' 
+        Label182.AutoSize = True
+        Label182.Dock = DockStyle.Top
+        Label182.Font = New Font("微软雅黑", 13F)
+        Label182.Location = New Point(0, 0)
+        Label182.Name = "Label182"
+        Label182.Padding = New Padding(16, 10, 0, 0)
+        Label182.Size = New Size(98, 34)
+        Label182.TabIndex = 18
+        Label182.Text = "这是什么"
         ' 
         ' TabPage音频参数
         ' 
@@ -5334,7 +5624,7 @@ Partial Class 界面_常规流程参数_V2
         Label94.AutoSize = True
         Label94.Dock = DockStyle.Bottom
         Label94.Font = New Font("微软雅黑", 13F)
-        Label94.Location = New Point(0, 234)
+        Label94.Location = New Point(0, 238)
         Label94.Name = "Label94"
         Label94.Padding = New Padding(16, 0, 0, 10)
         Label94.Size = New Size(156, 34)
@@ -5347,7 +5637,7 @@ Partial Class 界面_常规流程参数_V2
         Label135.Dock = DockStyle.Bottom
         Label135.Font = New Font("微软雅黑", 10F)
         Label135.ForeColor = Color.Gray
-        Label135.Location = New Point(0, 268)
+        Label135.Location = New Point(0, 272)
         Label135.Name = "Label135"
         Label135.Padding = New Padding(16, 0, 0, 20)
         Label135.Size = New Size(375, 60)
@@ -5359,7 +5649,7 @@ Partial Class 界面_常规流程参数_V2
         Label15.AutoSize = True
         Label15.Dock = DockStyle.Bottom
         Label15.Font = New Font("微软雅黑", 13F)
-        Label15.Location = New Point(0, 328)
+        Label15.Location = New Point(0, 332)
         Label15.Name = "Label15"
         Label15.Padding = New Padding(16, 0, 0, 10)
         Label15.Size = New Size(192, 34)
@@ -5372,7 +5662,7 @@ Partial Class 界面_常规流程参数_V2
         Label154.Dock = DockStyle.Bottom
         Label154.Font = New Font("微软雅黑", 10F)
         Label154.ForeColor = Color.Gray
-        Label154.Location = New Point(0, 362)
+        Label154.Location = New Point(0, 366)
         Label154.Name = "Label154"
         Label154.Padding = New Padding(16, 0, 0, 20)
         Label154.Size = New Size(645, 100)
@@ -5384,7 +5674,7 @@ Partial Class 界面_常规流程参数_V2
         Label91.AutoSize = True
         Label91.Dock = DockStyle.Bottom
         Label91.Font = New Font("微软雅黑", 13F)
-        Label91.Location = New Point(0, 462)
+        Label91.Location = New Point(0, 466)
         Label91.Name = "Label91"
         Label91.Padding = New Padding(16, 0, 0, 10)
         Label91.Size = New Size(189, 34)
@@ -5397,7 +5687,7 @@ Partial Class 界面_常规流程参数_V2
         Label93.Dock = DockStyle.Bottom
         Label93.Font = New Font("微软雅黑", 10F)
         Label93.ForeColor = Color.Gray
-        Label93.Location = New Point(0, 496)
+        Label93.Location = New Point(0, 500)
         Label93.Name = "Label93"
         Label93.Padding = New Padding(16, 0, 0, 20)
         Label93.Size = New Size(507, 80)
@@ -5409,7 +5699,7 @@ Partial Class 界面_常规流程参数_V2
         Label161.AutoSize = True
         Label161.Dock = DockStyle.Bottom
         Label161.Font = New Font("微软雅黑", 13F)
-        Label161.Location = New Point(0, 576)
+        Label161.Location = New Point(0, 580)
         Label161.Name = "Label161"
         Label161.Padding = New Padding(16, 0, 0, 10)
         Label161.Size = New Size(238, 34)
@@ -5422,10 +5712,10 @@ Partial Class 界面_常规流程参数_V2
         Label162.Dock = DockStyle.Bottom
         Label162.Font = New Font("微软雅黑", 10F)
         Label162.ForeColor = Color.Gray
-        Label162.Location = New Point(0, 610)
+        Label162.Location = New Point(0, 614)
         Label162.Name = "Label162"
-        Label162.Padding = New Padding(16, 0, 0, 20)
-        Label162.Size = New Size(375, 40)
+        Label162.Padding = New Padding(16, 0, 0, 16)
+        Label162.Size = New Size(375, 36)
         Label162.TabIndex = 23
         Label162.Text = "如果想要编码此格式，请找其他软件或单独开发这个需求"
         ' 
@@ -5669,7 +5959,7 @@ Partial Class 界面_常规流程参数_V2
         ' 
         Panel52.Controls.Add(UiTextBox自定义视频滤镜)
         Panel52.Dock = DockStyle.Fill
-        Panel52.Location = New Point(0, 124)
+        Panel52.Location = New Point(0, 104)
         Panel52.Name = "Panel52"
         Panel52.Padding = New Padding(4, 0, 4, 0)
         Panel52.Size = New Size(200, 0)
@@ -5815,9 +6105,9 @@ Partial Class 界面_常规流程参数_V2
         Label138.Location = New Point(0, 54)
         Label138.Name = "Label138"
         Label138.Padding = New Padding(0, 0, 0, 10)
-        Label138.Size = New Size(747, 70)
+        Label138.Size = New Size(524, 50)
         Label138.TabIndex = 43
-        Label138.Text = "subtitles 滤镜烧录字幕的时候如果报错：Error applying option 'original_size' to filter 'subtitles': Invalid argument" & vbCrLf & "是因为 ffmpeg 错把盘符的冒号当成参数分隔符了，即便路径加了(单)引号也没用，依旧报错" & vbCrLf & "解决方法：在盘符字母之后冒号之前加一个斜杠，把后面的斜杠全都改成双斜杠"
+        Label138.Text = "在滤镜中写路径的时候，ffmpeg 会错把盘符的冒号当成参数分隔符，加引号也没用" & vbCrLf & "解决方法：在盘符字母之后冒号之前加一个斜杠，把后面的斜杠全都改成双斜杠"
         ' 
         ' Label96
         ' 
@@ -6512,7 +6802,7 @@ Partial Class 界面_常规流程参数_V2
         UiComboBox剪辑方法.ItemHeight = 30
         UiComboBox剪辑方法.ItemHoverColor = Color.FromArgb(CByte(56), CByte(56), CByte(56))
         UiComboBox剪辑方法.ItemRectColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
-        UiComboBox剪辑方法.Items.AddRange(New Object() {"", "粗剪 (立即响应)", "精剪 (从头解码)", "精剪 (快速响应)"})
+        UiComboBox剪辑方法.Items.AddRange(New Object() {"", "粗剪 (立即响应)", "精剪 (从头解码)", "精剪 (快速响应)", "Trim 滤镜"})
         UiComboBox剪辑方法.ItemSelectBackColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
         UiComboBox剪辑方法.ItemSelectForeColor = Color.Silver
         UiComboBox剪辑方法.Location = New Point(21, 10)
@@ -7770,6 +8060,7 @@ Partial Class 界面_常规流程参数_V2
         Panel13.ResumeLayout(False)
         TabPage视频参数画面帧.ResumeLayout(False)
         TabPage视频参数画面帧.PerformLayout()
+        Panel96.ResumeLayout(False)
         Panel23.ResumeLayout(False)
         Panel22.ResumeLayout(False)
         Panel21.ResumeLayout(False)
@@ -7806,6 +8097,12 @@ Partial Class 界面_常规流程参数_V2
         Panel36.ResumeLayout(False)
         Panel35.ResumeLayout(False)
         Panel34.ResumeLayout(False)
+        TabPage视频帧服务器.ResumeLayout(False)
+        TabPage视频帧服务器.PerformLayout()
+        Panel94.ResumeLayout(False)
+        Panel95.ResumeLayout(False)
+        Panel49.ResumeLayout(False)
+        Panel48.ResumeLayout(False)
         TabPage音频参数.ResumeLayout(False)
         TabPage音频参数.PerformLayout()
         Panel93.ResumeLayout(False)
@@ -8007,7 +8304,6 @@ Partial Class 界面_常规流程参数_V2
     Friend WithEvents Label66 As Label
     Friend WithEvents Label67 As Label
     Friend WithEvents Panel34 As Panel
-    Friend WithEvents Label68 As Label
     Friend WithEvents UiComboBox降噪方式 As Sunny.UI.UIComboBox
     Friend WithEvents Panel35 As Panel
     Friend WithEvents Label降噪参数4 As Label
@@ -8263,7 +8559,6 @@ Partial Class 界面_常规流程参数_V2
     Friend WithEvents UiTextBox使用哪些文件的哪些内嵌字幕 As Sunny.UI.UITextBox
     Friend WithEvents Label166 As Label
     Friend WithEvents Label169 As Label
-    Friend WithEvents Label172 As Label
     Friend WithEvents Label170 As Label
     Friend WithEvents Label25 As Label
     Friend WithEvents Label124 As Label
@@ -8290,5 +8585,23 @@ Partial Class 界面_常规流程参数_V2
     Friend WithEvents Panel47 As Panel
     Friend WithEvents UiCheckBox保留其他字幕流 As Sunny.UI.UICheckBox
     Friend WithEvents Label184 As Label
+    Friend WithEvents TabPage视频帧服务器 As TabPage
+    Friend WithEvents Label183 As Label
+    Friend WithEvents Label182 As Label
+    Friend WithEvents Label185 As Label
+    Friend WithEvents Label186 As Label
+    Friend WithEvents Panel48 As Panel
+    Friend WithEvents UiCheckBox使用AviSynth As Sunny.UI.UICheckBox
+    Friend WithEvents Panel49 As Panel
+    Friend WithEvents UiComboBox选择avs文件 As Sunny.UI.UIComboBox
+    Friend WithEvents Label187 As Label
+    Friend WithEvents Panel94 As Panel
+    Friend WithEvents UiComboBox选择vpy文件 As Sunny.UI.UIComboBox
+    Friend WithEvents Panel95 As Panel
+    Friend WithEvents UiCheckBox使用VapourSynth As Sunny.UI.UICheckBox
+    Friend WithEvents Label188 As Label
+    Friend WithEvents Label189 As Label
+    Friend WithEvents Panel96 As Panel
+    Friend WithEvents UiButton烧录字幕 As Sunny.UI.UIButton
 
 End Class

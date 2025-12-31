@@ -114,19 +114,35 @@ Public Class 编码任务
         Public Property 任务耗时计时器 As New Stopwatch
         Public Property 上次刷新界面的时间戳 As TimeSpan = Now.TimeOfDay
 
+        Public Property AviSynthCachePath As String = ""
+        Public Property VapourSynthCachePath As String = ""
+
+
         Public Sub 开始()
             状态 = 编码状态.正在处理
             Try
                 错误列表.Clear()
                 非进度输出列表.Clear()
                 If 预设数据 Is Nothing Then GoTo jx1
-                If 预设数据.视频参数_降噪_方式 = "avs" Then
-                    If FileIO.FileSystem.FileExists(Path.Combine(Application.StartupPath, "AviSynth.avs")) Then
-                        Dim avs1 As String = File.ReadAllText(Path.Combine(Application.StartupPath, "AviSynth.avs"))
+
+                If 预设数据.视频参数_视频帧服务器_使用AviSynth Then
+                    If FileIO.FileSystem.FileExists(预设数据.视频参数_视频帧服务器_avs脚本文件) Then
+                        Dim avs1 As String = File.ReadAllText(预设数据.视频参数_视频帧服务器_avs脚本文件)
                         avs1 = avs1.Replace("<FilePath>", 输入文件)
-                        File.WriteAllText(Path.Combine(Path.GetDirectoryName(输入文件), Path.GetFileNameWithoutExtension(输入文件) & ".avs"), avs1, New Text.UTF8Encoding(False))
+                        AviSynthCachePath = Path.Combine(Path.GetDirectoryName(输入文件), Path.GetFileNameWithoutExtension(输入文件) & ".avs")
+                        File.WriteAllText(AviSynthCachePath, avs1, New Text.UTF8Encoding(False))
                     Else
-                        Err.Raise(10001, "", "AviSynth.avs 脚本文件不存在，请检查是否将其放置于程序目录下！")
+                        Err.Raise(10001, "", "AviSynth 脚本模板文件不存在！")
+                    End If
+                End If
+                If 预设数据.视频参数_视频帧服务器_使用VapourSynth Then
+                    If FileIO.FileSystem.FileExists(预设数据.视频参数_视频帧服务器_vpy脚本文件) Then
+                        Dim vpy1 As String = File.ReadAllText(预设数据.视频参数_视频帧服务器_vpy脚本文件)
+                        vpy1 = vpy1.Replace("<FilePath>", 输入文件)
+                        VapourSynthCachePath = Path.Combine(Path.GetDirectoryName(输入文件), Path.GetFileNameWithoutExtension(输入文件) & Path.GetExtension(预设数据.视频参数_视频帧服务器_vpy脚本文件))
+                        File.WriteAllText(AviSynthCachePath, vpy1, New Text.UTF8Encoding(False))
+                    Else
+                        Err.Raise(10001, "", "VapourSynth 脚本模板文件不存在！")
                     End If
                 End If
 
@@ -299,14 +315,18 @@ jx1:
             If FFmpegProcess.ExitCode = 0 Then
                 状态 = 编码状态.已完成
 
-                If 预设数据 IsNot Nothing AndAlso 预设数据.视频参数_降噪_方式 = "avs" Then
-                    Dim avsF = Path.Combine(Path.GetDirectoryName(输入文件), Path.GetFileNameWithoutExtension(输入文件) & ".avs")
-                    If FileIO.FileSystem.FileExists(avsF) Then FileIO.FileSystem.DeleteFile(avsF)
+                If 预设数据 IsNot Nothing Then
+                    If 预设数据.视频参数_视频帧服务器_使用AviSynth Then
+                        If FileIO.FileSystem.FileExists(AviSynthCachePath) Then FileIO.FileSystem.DeleteFile(AviSynthCachePath)
+                    End If
+                    If 预设数据.视频参数_视频帧服务器_使用VapourSynth Then
+                        If FileIO.FileSystem.FileExists(VapourSynthCachePath) Then FileIO.FileSystem.DeleteFile(VapourSynthCachePath)
+                    End If
                 End If
 
-                Dim concat_demuxer = Path.Combine(Application.StartupPath, "ffmpeg_concat_demuxer.txt")
-                If FileIO.FileSystem.FileExists(concat_demuxer) Then
-                    FileIO.FileSystem.DeleteFile(concat_demuxer)
+                Dim 合并任务缓存 = Path.Combine(Application.StartupPath, "ffmpeg_concat_demuxer.txt")
+                If FileIO.FileSystem.FileExists(合并任务缓存) Then
+                    FileIO.FileSystem.DeleteFile(合并任务缓存)
                 End If
 
                 If FileIO.FileSystem.FileExists(输出文件) AndAlso FileIO.FileSystem.FileExists(输入文件) Then

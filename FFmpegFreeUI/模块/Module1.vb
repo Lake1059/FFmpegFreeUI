@@ -1,4 +1,5 @@
-﻿Imports System.IO
+﻿Imports System.Globalization
+Imports System.IO
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
@@ -302,6 +303,17 @@ Module Module1
         c.ScrollBarColor = SystemColors.WindowFrame
         c.DropDownWidth = c.Width
     End Sub
+    Public Sub 绑定下拉框鼠标滚轮事件(下拉框 As UIComboBox)
+        AddHandler 下拉框.MouseWheel, AddressOf 下拉框鼠标滚轮事件
+    End Sub
+    Sub 下拉框鼠标滚轮事件(sender As Object, e As MouseEventArgs)
+        Select Case e.Delta
+            Case > 0 : If sender.SelectedIndex > 0 Then sender.SelectedIndex -= 1
+            Case < 0 : If sender.SelectedIndex < sender.Items.Count - 1 Then sender.SelectedIndex += 1
+        End Select
+    End Sub
+
+
 
     Public Function 将时间字符串转换为时间类型(timeStr As String) As TimeSpan
         Try
@@ -452,6 +464,30 @@ Module Module1
         Return 默认颜色
     End Function
 
+    Public Function 转换HTML颜色到ffmpeg接受的格式(HTML颜色 As String, Optional 透明度 As String = "") As String
+        If String.IsNullOrWhiteSpace(HTML颜色) Then Return ""
+        Dim parsedColor As Color
+        Try
+            parsedColor = ColorTranslator.FromHtml(HTML颜色.Trim())
+        Catch
+            Return ""
+        End Try
+        Dim a As Byte = parsedColor.A
+        Dim r As Byte = parsedColor.R
+        Dim g As Byte = parsedColor.G
+        Dim b As Byte = parsedColor.B
+        Dim Ap As String = 透明度.Trim()
+        If Ap = "" Then Ap = "0"
+        Dim alphaValue As Byte
+        If Byte.TryParse(Ap, NumberStyles.Integer, CultureInfo.InvariantCulture, alphaValue) Then
+            a = alphaValue
+        ElseIf Byte.TryParse(Ap, NumberStyles.HexNumber, CultureInfo.InvariantCulture, alphaValue) Then
+            a = alphaValue
+        Else
+            Return ""
+        End If
 
+        Return $"&H{a:X2}{b:X2}{g:X2}{r:X2}"
+    End Function
 
 End Module

@@ -56,6 +56,41 @@ Public Class 预设数据类型
     Public Property 视频参数_超分_抗振铃强度 As String = ""
     Public Property 视频参数_超分_着色器列表 As New List(Of String)
 
+    Public Property 视频参数_烧录字幕_滤镜选择 As String = ""
+    Public Property 视频参数_烧录字幕_字幕格式优先级 As New List(Of Integer) From {-1, -1, -1}
+    Public Property 视频参数_烧录字幕_字幕来源是外部文件 As Boolean = False
+    Public Property 视频参数_烧录字幕_外部字幕文件名 As String = ""
+    Public Property 视频参数_烧录字幕_外部字幕文件夹位置 As String = ""
+    Public Property 视频参数_烧录字幕_字幕来源是内嵌的流 As Boolean = False
+    Public Property 视频参数_烧录字幕_指定内嵌的流 As String = ""
+    Public Property 视频参数_烧录字幕_字体文件夹 As String = ""
+    Public Property 视频参数_烧录字幕_基本样式_名称 As String = ""
+    Public Property 视频参数_烧录字幕_基本样式_大小 As Single
+    Public Property 视频参数_烧录字幕_基本样式_粗体 As Boolean = False
+    Public Property 视频参数_烧录字幕_基本样式_斜体 As Boolean = False
+    Public Property 视频参数_烧录字幕_基本样式_下划线 As Boolean = False
+    Public Property 视频参数_烧录字幕_基本样式_删除线 As Boolean = False
+    Public Property 视频参数_烧录字幕_边框样式 As Integer = -1
+    Public Property 视频参数_烧录字幕_描边宽度 As String = ""
+    Public Property 视频参数_烧录字幕_阴影距离 As String = ""
+    Public Property 视频参数_烧录字幕_主要颜色 As Color = Color.Transparent
+    Public Property 视频参数_烧录字幕_主要颜色_透明度 As String = ""
+    Public Property 视频参数_烧录字幕_次要颜色 As Color = Color.Transparent
+    Public Property 视频参数_烧录字幕_次要颜色_透明度 As String = ""
+    Public Property 视频参数_烧录字幕_描边颜色 As Color = Color.Transparent
+    Public Property 视频参数_烧录字幕_描边颜色_透明度 As String = ""
+    Public Property 视频参数_烧录字幕_阴影或背景颜色 As Color = Color.Transparent
+    Public Property 视频参数_烧录字幕_阴影或背景颜色_透明度 As String = ""
+    Public Property 视频参数_烧录字幕_对齐方位 As Integer = -1
+    Public Property 视频参数_烧录字幕_垂直边距 As String = ""
+    Public Property 视频参数_烧录字幕_左边距 As String = ""
+    Public Property 视频参数_烧录字幕_右边距 As String = ""
+    Public Property 视频参数_烧录字幕_字距 As String = ""
+    Public Property 视频参数_烧录字幕_行距 As String = ""
+    Public Property 视频参数_烧录字幕_视频分辨率 As String = ""
+    Public Property 视频参数_烧录字幕_自定义样式 As String = ""
+    Public Property 视频参数_烧录字幕_自定义滤镜参数 As String = ""
+
     Public Property 视频参数_比特率_控制方式 As String = ""
     Public Property 视频参数_质量控制_参数名 As String = ""
     Public Property 视频参数_质量控制_值 As String = ""
@@ -89,6 +124,11 @@ Public Class 预设数据类型
     Public Property 视频参数_逐行与隔行_操作 As String = ""
     Public Property 视频参数_画面翻转_角度翻转 As Integer = 0
     Public Property 视频参数_画面翻转_镜像翻转 As Integer = 0
+
+    Public Property 视频参数_视频帧服务器_使用AviSynth As Boolean = False
+    Public Property 视频参数_视频帧服务器_avs脚本文件 As String = ""
+    Public Property 视频参数_视频帧服务器_使用VapourSynth As Boolean = False
+    Public Property 视频参数_视频帧服务器_vpy脚本文件 As String = ""
 
     Public Property 音频参数_编码器_具体编码 As String = ""
     Public Property 音频参数_比特率 As String = ""

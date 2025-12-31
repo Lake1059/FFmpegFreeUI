@@ -10,6 +10,9 @@ Public Class 界面_常规流程参数_V2
     Public 动态模糊页面 As New Form帧混合
     Public 画面裁剪页面 As New Form画面裁剪交互窗口
     Public 超分页面 As New Form超分
+    Public 烧录字幕页面 As New Form烧字幕
+
+    Private Shared ReadOnly VapourSynth脚本多种后缀 As String() = {"*.vpy", "*.py"}
 
     Private Sub 界面_常规流程参数_Load(sender As Object, e As EventArgs) Handles Me.Load
         UiTabControlMenu1.ItemSize = New Size(200 * Form1.DPI, 36 * Form1.DPI)
@@ -58,6 +61,11 @@ Public Class 界面_常规流程参数_V2
                                                SetControlFont(用户设置.实例对象.字体, 超分页面)
                                            End Sub
         '==============================================
+        AddHandler UiButton烧录字幕.Click, Sub()
+                                           显示窗体(烧录字幕页面, Me.ParentForm)
+                                           SetControlFont(用户设置.实例对象.字体, 烧录字幕页面, {烧录字幕页面.Label字体样式预览})
+                                       End Sub
+        '==============================================
         AddHandler UiComboBox全局质量控制方式.SelectedIndexChanged, AddressOf 视频比特率控制方式改动事件
         AddHandler UiButton添加进阶质量控制预制项.Click, Sub()
                                                   进阶质量控制预制菜单项.Font = New Font(用户设置.实例对象.字体, 10)
@@ -69,6 +77,11 @@ Public Class 界面_常规流程参数_V2
         AddHandler UiComboBox色彩管理处理方式.TextChanged, AddressOf 色彩管理处理方式变动事件
         '==============================================
         AddHandler UiComboBox降噪方式.TextChanged, AddressOf 视频降噪方式变动事件
+        '==============================================
+        AddHandler UiCheckBox使用AviSynth.Click, Sub(s1, e1) 视频帧服务器页面操作变动事件(s1)
+        AddHandler UiComboBox选择avs文件.TextChanged, Sub(s1, e1) 视频帧服务器页面操作变动事件(s1)
+        AddHandler UiCheckBox使用VapourSynth.Click, Sub(s1, e1) 视频帧服务器页面操作变动事件(s1)
+        AddHandler UiComboBox选择vpy文件.TextChanged, Sub(s1, e1) 视频帧服务器页面操作变动事件(s1)
         '==============================================
         AddHandler UiComboBox音频编码器.TextChanged, AddressOf 音频编码参数变动事件
         AddHandler UiComboBox音频比特率.TextChanged, AddressOf 音频比特率参数变动事件
@@ -195,7 +208,24 @@ Public Class 界面_常规流程参数_V2
         AddHandler UiComboBox自动加载预设选项.MouseWheel, AddressOf 下拉框鼠标滚轮事件
         '==================================================
 
-
+        Dim AviSynthDirPath = Path.Combine(Application.StartupPath, "AviSynth")
+        If FileIO.FileSystem.DirectoryExists(AviSynthDirPath) Then
+            Dim 文件列表 = FileIO.FileSystem.GetFiles(AviSynthDirPath, FileIO.SearchOption.SearchTopLevelOnly, "*.avs")
+            If 文件列表.Count > 0 Then
+                For Each 文件 In 文件列表
+                    UiComboBox选择avs文件.Items.Add(文件)
+                Next
+            End If
+        End If
+        Dim VapourSynthDirPath = Path.Combine(Application.StartupPath, "VapourSynth")
+        If FileIO.FileSystem.DirectoryExists(VapourSynthDirPath) Then
+            Dim 文件列表 = FileIO.FileSystem.GetFiles(VapourSynthDirPath, FileIO.SearchOption.SearchTopLevelOnly, VapourSynth脚本多种后缀)
+            If 文件列表.Count > 0 Then
+                For Each 文件 In 文件列表
+                    UiComboBox选择vpy文件.Items.Add(文件)
+                Next
+            End If
+        End If
 
         界面校准()
         是否已初始化 = True
@@ -349,21 +379,20 @@ Public Class 界面_常规流程参数_V2
             Case 0
                 UiComboBox全局质量控制参数.SelectedIndex = 0
                 UiTextBox全局质量控制值.Text = ""
-            Case 1    '恒定质量 CRF - 存储首选，软件编码首选
+            Case 1    '恒定质量 CRF
                 UiComboBox全局质量控制参数.SelectedIndex = 1
-            Case 2    '动态码率 VBR - 存储首选，硬件加速首选
+            Case 2    '动态码率 VBR
                 UiComboBox全局质量控制参数.SelectedIndex = 2
-            Case 3    '动态码率 VBR HQ - 硬件加速专用，极致质量
+            Case 3    '动态码率 VBR HQ
                 UiComboBox全局质量控制参数.SelectedIndex = 2
-            Case 4    '恒定量化 CQP - 不推荐，主用于研究和特定场景
+            Case 4    '恒定量化 CQP
                 UiComboBox全局质量控制参数.SelectedIndex = 3
-            Case 5    '恒定速率 CBR - 流媒体常用，不适合存储
+            Case 5    '恒定速率 CBR
                 UiComboBox全局质量控制参数.SelectedIndex = 0
                 UiTextBox全局质量控制值.Text = ""
         End Select
     End Sub
     Sub 视频降噪方式变动事件()
-        Label68.Visible = False
         Select Case UiComboBox降噪方式.SelectedIndex
             Case 1 'hqdn3d - 时空域降噪，去除普通噪声并保留细节
                 Label降噪参数1.Text = "亮度空间强度" & vbCrLf & "luma_spatial"
@@ -409,14 +438,6 @@ Public Class 界面_常规流程参数_V2
                 UiTextBox降噪参数4.Watermark = "默认 1"
                 Panel36.Visible = True
                 Panel35.Visible = True
-            Case 5   '外部 AviSynth - 加载 avs 文件
-                UiTextBox降噪参数1.Text = ""
-                UiTextBox降噪参数2.Text = ""
-                UiTextBox降噪参数3.Text = ""
-                UiTextBox降噪参数4.Text = ""
-                Panel35.Visible = False
-                Panel36.Visible = False
-                Label68.Visible = True
             Case Else
                 UiTextBox降噪参数1.Text = ""
                 UiTextBox降噪参数2.Text = ""
@@ -433,6 +454,51 @@ Public Class 界面_常规流程参数_V2
             UiComboBox传输特性.Text = ""
             UiComboBox色彩范围.Text = ""
         End If
+    End Sub
+
+    Sub 视频帧服务器页面操作变动事件(变化的控件 As Control)
+        Select Case 变化的控件.Name
+            Case UiCheckBox使用AviSynth.Name
+                If UiCheckBox使用AviSynth.Checked Then
+                    UiCheckBox使用VapourSynth.Checked = False
+                    UiComboBox选择vpy文件.Text = ""
+                    UiComboBox选择avs文件.Text = ""
+                Else
+                    UiComboBox选择avs文件.Text = ""
+                End If
+
+            Case UiComboBox选择avs文件.Name
+                If UiComboBox选择avs文件.SelectedIndex = 0 Then
+                    Dim a As New OpenFileDialog With {.Filter = "avs|*.avs"}
+                    Dim b = a.ShowDialog
+                    If FileIO.FileSystem.FileExists(b) Then
+                        UiComboBox选择avs文件.Text = b
+                    Else
+                        UiComboBox选择avs文件.SelectedIndex = -1
+                    End If
+                End If
+
+            Case UiCheckBox使用VapourSynth.Name
+                If UiCheckBox使用VapourSynth.Checked Then
+                    UiCheckBox使用AviSynth.Checked = False
+                    UiComboBox选择avs文件.Text = ""
+                    UiComboBox选择vpy文件.Text = ""
+                Else
+                    UiComboBox选择vpy文件.Text = ""
+                End If
+
+            Case UiComboBox选择vpy文件.Name
+                If UiComboBox选择vpy文件.SelectedIndex = 0 Then
+                    Dim a As New OpenFileDialog With {.Filter = "vps|*.vps"}
+                    Dim b = a.ShowDialog
+                    If FileIO.FileSystem.FileExists(b) Then
+                        UiComboBox选择vpy文件.Text = b
+                    Else
+                        UiComboBox选择vpy文件.SelectedIndex = -1
+                    End If
+                End If
+
+        End Select
     End Sub
 
     Sub 音频编码参数变动事件()
@@ -453,14 +519,12 @@ Public Class 界面_常规流程参数_V2
                 Label25.Visible = False
         End Select
     End Sub
-
     Sub 音频比特率参数变动事件()
         If UiComboBox音频比特率.Text = "" Then
             UiComboBox音频质量参数.Text = ""
             UiTextBox音频质量值.Text = ""
         End If
     End Sub
-
     Sub 音频质量参数变动事件()
         If UiComboBox音频质量参数.Text = "" Then
             UiTextBox音频质量值.Text = ""
@@ -527,6 +591,12 @@ Public Class 界面_常规流程参数_V2
                 校准UiComboBox视觉(UiComboBox逐行与隔行处理方式)
                 校准UiComboBox视觉(UiComboBox角度翻转)
                 校准UiComboBox视觉(UiComboBox镜像翻转)
+
+            Case 选项卡.IsEqual(TabPage视频帧服务器)
+                校准UiComboBox视觉(UiComboBox选择avs文件)
+                校准UiComboBox视觉(UiComboBox选择vpy文件)
+                UiCheckBox使用AviSynth.CheckBoxSize = 20 * Form1.DPI
+                UiCheckBox使用VapourSynth.CheckBoxSize = 20 * Form1.DPI
 
             Case 选项卡.IsEqual(TabPage音频参数)
                 校准UiComboBox视觉(UiComboBox音频编码器)
@@ -716,6 +786,7 @@ Public Class 界面_常规流程参数_V2
     End Sub
 
     Public 进阶质量控制预制菜单项 As New 暗黑上下文菜单 With {.ShowImageMargin = False, .Font = New Font(用户设置.实例对象.字体, 10)}
+
     Sub 初始化进阶质量控制预制菜单项()
         进阶质量控制预制菜单项.Items.AddRange(New ToolStripItem() {
         New ToolStripSeparator() With {.Tag = "null"},

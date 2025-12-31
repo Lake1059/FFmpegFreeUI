@@ -123,6 +123,52 @@ Public Class 预设管理
             ui.超分页面.ListView1.Items.Add(c)
         Next
 
+        Select Case a.视频参数_烧录字幕_滤镜选择
+            Case "subtitles" : ui.烧录字幕页面.UiComboBox选择滤镜.SelectedIndex = 1
+            Case "ass" : ui.烧录字幕页面.UiComboBox选择滤镜.SelectedIndex = 2
+            Case Else : ui.烧录字幕页面.UiComboBox选择滤镜.SelectedIndex = 0
+        End Select
+        ui.烧录字幕页面.UiComboBox优先选择.SelectedIndex = a.视频参数_烧录字幕_字幕格式优先级(0)
+        ui.烧录字幕页面.UiComboBox然后选择.SelectedIndex = a.视频参数_烧录字幕_字幕格式优先级(1)
+        ui.烧录字幕页面.UiComboBox最后选择.SelectedIndex = a.视频参数_烧录字幕_字幕格式优先级(2)
+        ui.烧录字幕页面.UiCheckBox字幕来源是外部文件.Checked = a.视频参数_烧录字幕_字幕来源是外部文件
+        ui.烧录字幕页面.UiTextBox字幕来源外部文件名.Text = a.视频参数_烧录字幕_外部字幕文件名
+        ui.烧录字幕页面.UiTextBox字幕来源指定文件夹.Text = a.视频参数_烧录字幕_外部字幕文件夹位置
+        ui.烧录字幕页面.UiCheckBox字幕文件是内嵌的流.Checked = a.视频参数_烧录字幕_字幕来源是内嵌的流
+        ui.烧录字幕页面.UiTextBox指定内嵌流.Text = a.视频参数_烧录字幕_指定内嵌的流
+        ui.烧录字幕页面.UiTextBox字体文件夹.Text = a.视频参数_烧录字幕_字体文件夹
+        If a.视频参数_烧录字幕_基本样式_名称 = "" Then
+            ui.烧录字幕页面.UiButton清除基本样式.PerformClick()
+        Else
+            ui.烧录字幕页面.Label字体样式预览.Enabled = True
+            Dim s As New FontStyle
+            If a.视频参数_烧录字幕_基本样式_粗体 Then s += FontStyle.Bold
+            If a.视频参数_烧录字幕_基本样式_斜体 Then s += FontStyle.Italic
+            If a.视频参数_烧录字幕_基本样式_下划线 Then s += FontStyle.Underline
+            If a.视频参数_烧录字幕_基本样式_删除线 Then s += FontStyle.Strikeout
+            ui.烧录字幕页面.Label字体样式预览.Font = New Font(a.视频参数_烧录字幕_基本样式_名称, a.视频参数_烧录字幕_基本样式_大小, s)
+        End If
+        ui.烧录字幕页面.UiComboBox边框类型.SelectedIndex = a.视频参数_烧录字幕_边框样式
+        ui.烧录字幕页面.UiTextBox描边宽度.Text = a.视频参数_烧录字幕_描边宽度
+        ui.烧录字幕页面.UiTextBox阴影距离.Text = a.视频参数_烧录字幕_阴影距离
+        ui.烧录字幕页面.UiTextBox设置主要颜色透明度.Text = a.视频参数_烧录字幕_主要颜色_透明度
+        ui.烧录字幕页面.Label主要颜色.BackColor = a.视频参数_烧录字幕_主要颜色
+        ui.烧录字幕页面.UiTextBox设置次要颜色透明度.Text = a.视频参数_烧录字幕_次要颜色_透明度
+        ui.烧录字幕页面.Label次要颜色.BackColor = a.视频参数_烧录字幕_次要颜色
+        ui.烧录字幕页面.UiTextBox设置描边颜色透明度.Text = a.视频参数_烧录字幕_描边颜色_透明度
+        ui.烧录字幕页面.Label描边颜色.BackColor = a.视频参数_烧录字幕_描边颜色
+        ui.烧录字幕页面.UiTextBox设置阴影背景颜色透明度.Text = a.视频参数_烧录字幕_阴影或背景颜色_透明度
+        ui.烧录字幕页面.Label阴影背景颜色.BackColor = a.视频参数_烧录字幕_阴影或背景颜色
+        ui.烧录字幕页面.UiComboBox对齐方位.SelectedIndex = a.视频参数_烧录字幕_对齐方位
+        ui.烧录字幕页面.UiTextBox垂直边距.Text = a.视频参数_烧录字幕_垂直边距
+        ui.烧录字幕页面.UiTextBox左边距.Text = a.视频参数_烧录字幕_左边距
+        ui.烧录字幕页面.UiTextBox右边距.Text = a.视频参数_烧录字幕_右边距
+        ui.烧录字幕页面.UiTextBox字距.Text = a.视频参数_烧录字幕_字距
+        ui.烧录字幕页面.UiTextBox行距.Text = a.视频参数_烧录字幕_行距
+        ui.烧录字幕页面.UiTextBox视频分辨率.Text = a.视频参数_烧录字幕_视频分辨率
+        ui.烧录字幕页面.UiTextBox自定义样式.Text = a.视频参数_烧录字幕_自定义样式
+        ui.烧录字幕页面.UiTextBox自定义滤镜参数.Text = a.视频参数_烧录字幕_自定义滤镜参数
+
         Select Case a.视频参数_比特率_控制方式
             Case "CRF" : ui.UiComboBox全局质量控制方式.SelectedIndex = 1
             Case "VBR" : ui.UiComboBox全局质量控制方式.SelectedIndex = 2
@@ -180,6 +226,11 @@ Public Class 预设管理
         ui.UiComboBox逐行与隔行处理方式.SelectedIndex = a.视频参数_逐行与隔行_操作
         ui.UiComboBox角度翻转.SelectedIndex = a.视频参数_画面翻转_角度翻转
         ui.UiComboBox镜像翻转.SelectedIndex = a.视频参数_画面翻转_镜像翻转
+
+        ui.UiCheckBox使用AviSynth.Checked = a.视频参数_视频帧服务器_使用AviSynth
+        ui.UiComboBox选择avs文件.Text = a.视频参数_视频帧服务器_avs脚本文件
+        ui.UiCheckBox使用VapourSynth.Checked = a.视频参数_视频帧服务器_使用VapourSynth
+        ui.UiComboBox选择vpy文件.Text = a.视频参数_视频帧服务器_vpy脚本文件
 
         ui.UiComboBox音频编码器.SelectedIndex = 音频编码器排序表.IndexOf(a.音频参数_编码器_具体编码)
         ui.UiComboBox音频比特率.Text = a.音频参数_比特率
@@ -333,6 +384,56 @@ Public Class 预设管理
             a.视频参数_超分_着色器列表.Add(c.Text)
         Next
 
+        Select Case ui.烧录字幕页面.UiComboBox选择滤镜.SelectedIndex
+            Case 1 : a.视频参数_烧录字幕_滤镜选择 = "subtitles"
+            Case 2 : a.视频参数_烧录字幕_滤镜选择 = "ass"
+            Case Else : a.视频参数_烧录字幕_滤镜选择 = ""
+        End Select
+        a.视频参数_烧录字幕_字幕格式优先级(0) = ui.烧录字幕页面.UiComboBox优先选择.SelectedIndex
+        a.视频参数_烧录字幕_字幕格式优先级(1) = ui.烧录字幕页面.UiComboBox然后选择.SelectedIndex
+        a.视频参数_烧录字幕_字幕格式优先级(2) = ui.烧录字幕页面.UiComboBox最后选择.SelectedIndex
+        a.视频参数_烧录字幕_字幕来源是外部文件 = ui.烧录字幕页面.UiCheckBox字幕来源是外部文件.Checked
+        a.视频参数_烧录字幕_外部字幕文件名 = ui.烧录字幕页面.UiTextBox字幕来源外部文件名.Text
+        a.视频参数_烧录字幕_外部字幕文件夹位置 = ui.烧录字幕页面.UiTextBox字幕来源指定文件夹.Text
+        a.视频参数_烧录字幕_字幕来源是内嵌的流 = ui.烧录字幕页面.UiCheckBox字幕文件是内嵌的流.Checked
+        a.视频参数_烧录字幕_指定内嵌的流 = ui.烧录字幕页面.UiTextBox指定内嵌流.Text
+        a.视频参数_烧录字幕_字体文件夹 = ui.烧录字幕页面.UiTextBox字体文件夹.Text
+        If ui.烧录字幕页面.Label字体样式预览.Enabled Then
+            a.视频参数_烧录字幕_基本样式_名称 = ui.烧录字幕页面.Label字体样式预览.Font.Name
+            a.视频参数_烧录字幕_基本样式_大小 = ui.烧录字幕页面.Label字体样式预览.Font.Size
+            a.视频参数_烧录字幕_基本样式_粗体 = ui.烧录字幕页面.Label字体样式预览.Font.Bold
+            a.视频参数_烧录字幕_基本样式_斜体 = ui.烧录字幕页面.Label字体样式预览.Font.Italic
+            a.视频参数_烧录字幕_基本样式_下划线 = ui.烧录字幕页面.Label字体样式预览.Font.Underline
+            a.视频参数_烧录字幕_基本样式_删除线 = ui.烧录字幕页面.Label字体样式预览.Font.Strikeout
+        Else
+            a.视频参数_烧录字幕_基本样式_名称 = ""
+            a.视频参数_烧录字幕_基本样式_大小 = 0
+            a.视频参数_烧录字幕_基本样式_粗体 = False
+            a.视频参数_烧录字幕_基本样式_斜体 = False
+            a.视频参数_烧录字幕_基本样式_下划线 = False
+            a.视频参数_烧录字幕_基本样式_删除线 = False
+        End If
+        a.视频参数_烧录字幕_边框样式 = ui.烧录字幕页面.UiComboBox边框类型.SelectedIndex
+        a.视频参数_烧录字幕_描边宽度 = ui.烧录字幕页面.UiTextBox描边宽度.Text
+        a.视频参数_烧录字幕_阴影距离 = ui.烧录字幕页面.UiTextBox阴影距离.Text
+        a.视频参数_烧录字幕_主要颜色 = ui.烧录字幕页面.Label主要颜色.BackColor
+        a.视频参数_烧录字幕_主要颜色_透明度 = ui.烧录字幕页面.UiTextBox设置主要颜色透明度.Text
+        a.视频参数_烧录字幕_次要颜色 = ui.烧录字幕页面.Label次要颜色.BackColor
+        a.视频参数_烧录字幕_次要颜色_透明度 = ui.烧录字幕页面.UiTextBox设置次要颜色透明度.Text
+        a.视频参数_烧录字幕_描边颜色 = ui.烧录字幕页面.Label描边颜色.BackColor
+        a.视频参数_烧录字幕_描边颜色_透明度 = ui.烧录字幕页面.UiTextBox设置描边颜色透明度.Text
+        a.视频参数_烧录字幕_阴影或背景颜色 = ui.烧录字幕页面.Label阴影背景颜色.BackColor
+        a.视频参数_烧录字幕_阴影或背景颜色_透明度 = ui.烧录字幕页面.UiTextBox设置阴影背景颜色透明度.Text
+        a.视频参数_烧录字幕_对齐方位 = ui.烧录字幕页面.UiComboBox对齐方位.SelectedIndex
+        a.视频参数_烧录字幕_垂直边距 = ui.烧录字幕页面.UiTextBox垂直边距.Text
+        a.视频参数_烧录字幕_左边距 = ui.烧录字幕页面.UiTextBox左边距.Text
+        a.视频参数_烧录字幕_右边距 = ui.烧录字幕页面.UiTextBox右边距.Text
+        a.视频参数_烧录字幕_字距 = ui.烧录字幕页面.UiTextBox字距.Text
+        a.视频参数_烧录字幕_行距 = ui.烧录字幕页面.UiTextBox行距.Text
+        a.视频参数_烧录字幕_视频分辨率 = ui.烧录字幕页面.UiTextBox视频分辨率.Text
+        a.视频参数_烧录字幕_自定义样式 = ui.烧录字幕页面.UiTextBox自定义样式.Text
+        a.视频参数_烧录字幕_自定义滤镜参数 = ui.烧录字幕页面.UiTextBox自定义滤镜参数.Text
+
         Select Case ui.UiComboBox全局质量控制方式.SelectedIndex
             Case 1 : a.视频参数_比特率_控制方式 = "CRF"
             Case 2 : a.视频参数_比特率_控制方式 = "VBR"
@@ -389,6 +490,11 @@ Public Class 预设管理
         a.视频参数_逐行与隔行_操作 = ui.UiComboBox逐行与隔行处理方式.SelectedIndex
         a.视频参数_画面翻转_角度翻转 = ui.UiComboBox角度翻转.SelectedIndex
         a.视频参数_画面翻转_镜像翻转 = ui.UiComboBox镜像翻转.SelectedIndex
+
+        a.视频参数_视频帧服务器_使用AviSynth = ui.UiCheckBox使用AviSynth.Checked
+        a.视频参数_视频帧服务器_avs脚本文件 = ui.UiComboBox选择avs文件.Text
+        a.视频参数_视频帧服务器_使用VapourSynth = ui.UiCheckBox使用VapourSynth.Checked
+        a.视频参数_视频帧服务器_vpy脚本文件 = ui.UiComboBox选择vpy文件.Text
 
         If ui.UiComboBox音频编码器.SelectedIndex <> -1 Then
             a.音频参数_编码器_具体编码 = 音频编码器排序表(ui.UiComboBox音频编码器.SelectedIndex)
@@ -491,6 +597,7 @@ Public Class 预设管理
         ui.插帧页面.重置所有选项()
         ui.动态模糊页面.重置所有选项()
         ui.超分页面.重置所有选项()
+        ui.烧录字幕页面.重置所有选项()
 
         ui.UiComboBox全局质量控制方式.SelectedIndex = -1
         ui.UiComboBox全局质量控制参数.SelectedIndex = -1
@@ -525,6 +632,11 @@ Public Class 预设管理
         ui.UiComboBox逐行与隔行处理方式.SelectedIndex = -1
         ui.UiComboBox角度翻转.SelectedIndex = -1
         ui.UiComboBox镜像翻转.SelectedIndex = -1
+
+        ui.UiCheckBox使用AviSynth.Checked = False
+        ui.UiComboBox选择avs文件.SelectedIndex = -1
+        ui.UiCheckBox使用VapourSynth.Checked = False
+        ui.UiComboBox选择vpy文件.SelectedIndex = -1
 
         ui.UiComboBox音频编码器.Text = ""
         ui.UiComboBox音频比特率.Text = ""
@@ -614,13 +726,16 @@ Public Class 预设管理
                 Dim 计算后的入点时间 = 入点时间 - 向前解码的时间
                 If 计算后的入点时间 < TimeSpan.Zero Then 计算后的入点时间 = TimeSpan.Zero
                 arg &= $"-ss {将时间类型转换为时间字符串(计算后的入点时间)} "
+
         End Select
 
-        'avs 文件在启动任务时创建 
-        If a.视频参数_降噪_方式 = "avs" Then
+        '脚本文件在启动任务时创建 
+        If a.视频参数_视频帧服务器_使用AviSynth Then
             arg &= $"-i ""{Path.Combine(Path.GetDirectoryName(输入文件), Path.GetFileNameWithoutExtension(输入文件) & ".avs")}"" "
+        ElseIf a.视频参数_视频帧服务器_使用VapourSynth Then
+            arg &= $"-f vapoursynth -i ""{Path.Combine(Path.GetDirectoryName(输入文件), Path.GetFileNameWithoutExtension(输入文件) & ".py")}"" "
         Else
-            arg &= $"-i {""""}{输入文件}{""""} "
+            arg &= $"-i ""{输入文件}"" "
         End If
 
         If a.流控制_自动混流SRT AndAlso FileIO.FileSystem.FileExists(将自动混流的SRT字幕) Then
@@ -637,6 +752,7 @@ Public Class 预设管理
 
         If a.视频参数_编码器_类别 = "禁用" Then 视频参数 &= $"-vn "
         If a.视频参数_编码器_具体编码 <> "" Then 视频参数 &= $"-c:v {a.视频参数_编码器_具体编码} "
+
         Select Case a.图片参数_编码器_编码名称
             Case "png" : 视频参数 &= $"-c:v png {If(a.图片参数_编码器_质量值 <> "", "-compression_level " & a.图片参数_编码器_质量值, "")} "
             Case "apng" : 视频参数 &= $"-c:v apng {If(a.图片参数_编码器_质量值 <> "", "-compression_level " & a.图片参数_编码器_质量值, "")} "
@@ -655,6 +771,7 @@ Public Class 预设管理
             Case "dpx" : 视频参数 &= $"-c:v dpx "
             Case "exr" : 视频参数 &= $"-c:v exr "
         End Select
+
         If a.视频参数_编码器_编码预设 <> "" Then
             Select Case a.视频参数_编码器_具体编码
                 Case "libaom-av1", "libvpx-vp9"
@@ -663,7 +780,7 @@ Public Class 预设管理
                     视频参数 &= $"-preset {a.视频参数_编码器_编码预设} "
             End Select
         End If
-        If a.视频参数_编码器_配置文件 <> "" Then 视频参数 &= $"-profile {a.视频参数_编码器_配置文件} "
+        If a.视频参数_编码器_配置文件 <> "" Then 视频参数 &= $"-profile:v {a.视频参数_编码器_配置文件} "
         If a.视频参数_编码器_场景优化 <> "" Then
             Select Case a.视频参数_编码器_具体编码
                 Case "hevc_amf", "h264_amf"
@@ -724,6 +841,82 @@ Public Class 预设管理
                 s1 &= $":custom_shader_path='{将路径转换为FFmpeg滤镜接受的格式(shader)}'"
             Next
             视频滤镜参数集.Add(s1)
+        End If
+
+        If a.视频参数_烧录字幕_滤镜选择 = "subtitles" OrElse a.视频参数_烧录字幕_滤镜选择 = "ass" Then
+            Dim 滤镜参数列表 As New List(Of String)
+            Dim 样式参数列表 As New List(Of String)
+            If a.视频参数_烧录字幕_字幕来源是外部文件 Then
+                Dim 字幕位置, 字幕文件名 As String
+                If a.视频参数_烧录字幕_外部字幕文件名 = "" Then
+                    字幕文件名 = Path.GetFileNameWithoutExtension(输入文件)
+                Else
+                    字幕文件名 = a.视频参数_烧录字幕_外部字幕文件名
+                End If
+                If a.视频参数_烧录字幕_外部字幕文件夹位置 = "" Then
+                    字幕位置 = 输入文件的文件夹
+                Else
+                    字幕位置 = a.视频参数_烧录字幕_外部字幕文件夹位置
+                End If
+                If 输入文件 = "<输入文件>" Then
+                    滤镜参数列表.Add($"filename='<字幕 | 预览模式专用>'")
+                Else
+                    For Each abc In a.视频参数_烧录字幕_字幕格式优先级
+                        Select Case abc
+                            Case 1
+                                Dim efg = Path.Combine(字幕位置, 字幕文件名 & ".srt")
+                                If FileIO.FileSystem.FileExists(efg) Then
+                                    滤镜参数列表.Add($"filename='{将路径转换为FFmpeg滤镜接受的格式(efg)}'")
+                                    Exit For
+                                End If
+                            Case 2
+                                Dim efg = Path.Combine(字幕位置, 字幕文件名 & ".ass")
+                                If FileIO.FileSystem.FileExists(efg) Then
+                                    滤镜参数列表.Add($"filename='{将路径转换为FFmpeg滤镜接受的格式(efg)}'")
+                                    Exit For
+                                End If
+                            Case 3
+                                Dim efg = Path.Combine(字幕位置, 字幕文件名 & ".ssa")
+                                If FileIO.FileSystem.FileExists(efg) Then
+                                    滤镜参数列表.Add($"filename='{将路径转换为FFmpeg滤镜接受的格式(efg)}'")
+                                    Exit For
+                                End If
+                        End Select
+                    Next
+                End If
+            End If
+            If a.视频参数_烧录字幕_字幕来源是内嵌的流 Then
+                滤镜参数列表.Add($"filename='{输入文件}'")
+                滤镜参数列表.Add($"stream_index={a.视频参数_烧录字幕_指定内嵌的流}")
+            End If
+            If a.视频参数_烧录字幕_字体文件夹 <> "" Then 滤镜参数列表.Add($"fontsdir={将路径转换为FFmpeg滤镜接受的格式(a.视频参数_烧录字幕_字体文件夹)}")
+            If a.视频参数_烧录字幕_基本样式_名称 <> "" Then 样式参数列表.Add($"FontName={a.视频参数_烧录字幕_基本样式_名称}")
+            If a.视频参数_烧录字幕_基本样式_大小 <> 0 Then 样式参数列表.Add($"FontSize={a.视频参数_烧录字幕_基本样式_大小}")
+            If a.视频参数_烧录字幕_基本样式_粗体 Then 样式参数列表.Add($"Bold=-1")
+            If a.视频参数_烧录字幕_基本样式_斜体 Then 样式参数列表.Add($"Italic=-1")
+            If a.视频参数_烧录字幕_基本样式_下划线 Then 样式参数列表.Add($"Underline=-1")
+            If a.视频参数_烧录字幕_基本样式_删除线 Then 样式参数列表.Add($"StrikeOut=-1")
+            Select Case a.视频参数_烧录字幕_边框样式
+                Case 1 : 样式参数列表.Add($"BorderStyle=1")
+                Case 2 : 样式参数列表.Add($"BorderStyle=3")
+            End Select
+            If a.视频参数_烧录字幕_描边宽度 <> "" Then 样式参数列表.Add($"Outline={a.视频参数_烧录字幕_描边宽度}")
+            If a.视频参数_烧录字幕_阴影距离 <> "" Then 样式参数列表.Add($"Shadow={a.视频参数_烧录字幕_阴影距离}")
+            If a.视频参数_烧录字幕_主要颜色 <> Color.Transparent Then 样式参数列表.Add($"PrimaryColour={转换HTML颜色到ffmpeg接受的格式(a.视频参数_烧录字幕_主要颜色.ToHTML, a.视频参数_烧录字幕_主要颜色_透明度)}")
+            If a.视频参数_烧录字幕_次要颜色 <> Color.Transparent Then 样式参数列表.Add($"SecondaryColour={转换HTML颜色到ffmpeg接受的格式(a.视频参数_烧录字幕_次要颜色.ToHTML, a.视频参数_烧录字幕_次要颜色_透明度)}")
+            If a.视频参数_烧录字幕_描边颜色 <> Color.Transparent Then 样式参数列表.Add($"OutlineColour={转换HTML颜色到ffmpeg接受的格式(a.视频参数_烧录字幕_描边颜色.ToHTML, a.视频参数_烧录字幕_描边颜色_透明度)}")
+            If a.视频参数_烧录字幕_阴影或背景颜色 <> Color.Transparent Then 样式参数列表.Add($"BackColour={转换HTML颜色到ffmpeg接受的格式(a.视频参数_烧录字幕_阴影或背景颜色.ToHTML, a.视频参数_烧录字幕_阴影或背景颜色_透明度)}")
+            If a.视频参数_烧录字幕_对齐方位 > 0 Then 样式参数列表.Add($"Alignment={a.视频参数_烧录字幕_对齐方位}")
+            If a.视频参数_烧录字幕_垂直边距 <> "" Then 样式参数列表.Add($"MarginV={a.视频参数_烧录字幕_垂直边距}")
+            If a.视频参数_烧录字幕_左边距 <> "" Then 样式参数列表.Add($"MarginL={a.视频参数_烧录字幕_左边距}")
+            If a.视频参数_烧录字幕_右边距 <> "" Then 样式参数列表.Add($"MarginR={a.视频参数_烧录字幕_右边距}")
+            If a.视频参数_烧录字幕_字距 <> "" Then 样式参数列表.Add($"Spacing={a.视频参数_烧录字幕_字距}")
+            If a.视频参数_烧录字幕_行距 <> "" Then 样式参数列表.Add($"LineSpacing={a.视频参数_烧录字幕_行距}")
+            If a.视频参数_烧录字幕_自定义样式 <> "" Then 样式参数列表.Add(a.视频参数_烧录字幕_自定义样式)
+            If a.视频参数_烧录字幕_视频分辨率 <> "" Then 滤镜参数列表.Add($"original_size={a.视频参数_烧录字幕_视频分辨率}")
+            If 样式参数列表.Count > 0 Then 滤镜参数列表.Add($"force_style='{Join(样式参数列表.ToArray, ",")}'")
+            If a.视频参数_烧录字幕_自定义滤镜参数 <> "" Then 滤镜参数列表.Add(a.视频参数_烧录字幕_自定义滤镜参数)
+            If 滤镜参数列表.Count > 0 Then 视频滤镜参数集.Add($"{a.视频参数_烧录字幕_滤镜选择}={Join(滤镜参数列表.ToArray, ":")}")
         End If
 
         Select Case a.视频参数_比特率_控制方式
@@ -868,6 +1061,14 @@ Public Class 预设管理
                 If a.剪辑区间_出点 = "" Then Exit Select
                 Dim 持续时间 = 将时间字符串转换为时间类型(a.剪辑区间_出点) - 将时间字符串转换为时间类型(a.剪辑区间_入点)
                 视频参数 &= $"-t {将时间类型转换为时间字符串(持续时间)} "
+            Case 4
+                Dim abc As New List(Of String)
+                If a.剪辑区间_入点 <> "" Then abc.Add($"start={将时间字符串转换为时间类型(a.剪辑区间_入点).TotalSeconds}")
+                If a.剪辑区间_出点 <> "" Then abc.Add($"end={将时间字符串转换为时间类型(a.剪辑区间_出点).TotalSeconds}")
+                视频滤镜参数集.Add($"trim={Join(abc.ToArray, ":")}")
+                视频滤镜参数集.Add("setpts=PTS-STARTPTS")
+                音频滤镜参数集.Add($"atrim={Join(abc.ToArray, ":")}")
+                音频滤镜参数集.Add("asetpts=PTS-STARTPTS")
         End Select
 
         If a.自定义参数_视频滤镜 <> "" Then 视频滤镜参数集.Add(处理自定义参数的通配字符串(a.自定义参数_视频滤镜, 输入文件))
@@ -1057,6 +1258,23 @@ Public Class 预设管理
             Exit Sub
         End If
 
+        If a.视频参数_视频帧服务器_使用AviSynth Then
+            在RTF输出文本(RTF, "正在使用 AviSynth，请不要直接将此任务的命令行直接复制到其他地方运行，因为与任务对应的脚本文件还未生成，至少运行一次任务再尝试外部操作！" & a.输出容器, Color.RosyBrown)
+            If FileIO.FileSystem.FileExists(a.视频参数_视频帧服务器_avs脚本文件) Then
+                在RTF输出文本(RTF, "AviSynth 指定模板：" & a.视频参数_视频帧服务器_avs脚本文件, Color.Silver)
+            Else
+                在RTF输出文本(RTF, "没有指定 AviSynth 模板！", Color.IndianRed)
+            End If
+        End If
+        If a.视频参数_视频帧服务器_使用VapourSynth Then
+            在RTF输出文本(RTF, "正在使用 VapourSynth，请不要直接将此任务的命令行直接复制到其他地方运行，因为与任务对应的脚本文件还未生成，至少运行一次任务再尝试外部操作！" & a.输出容器, Color.RosyBrown)
+            If FileIO.FileSystem.FileExists(a.视频参数_视频帧服务器_vpy脚本文件) Then
+                在RTF输出文本(RTF, "VapourSynth 指定模板：" & a.视频参数_视频帧服务器_vpy脚本文件, Color.Silver)
+            Else
+                在RTF输出文本(RTF, "没有指定 VapourSynth 模板！", Color.IndianRed)
+            End If
+        End If
+
         If a.输出容器 <> "" Then
             在RTF输出文本(RTF, "输出容器：" & a.输出容器, Color.Gray)
         Else
@@ -1215,8 +1433,7 @@ Public Class 预设管理
             Case 1 : 在RTF输出文本(RTF, "剪辑区间方法：粗剪 (立即响应)", Color.Silver)
             Case 2 : 在RTF输出文本(RTF, "剪辑区间方法：精剪 (从头解码)", Color.Silver)
             Case 3 : 在RTF输出文本(RTF, "剪辑区间方法：精剪 (快速响应)", Color.Silver)
-            Case 4 : 在RTF输出文本(RTF, "剪辑区间方法：去除末尾 (立即响应)", Color.Silver)
-            Case 5 : 在RTF输出文本(RTF, "剪辑区间方法：去除末尾 (从头解码)", Color.Silver)
+            Case 4 : 在RTF输出文本(RTF, "剪辑区间方法：Trim 滤镜", Color.Silver)
             Case Else : If a.剪辑区间_入点 <> "" OrElse a.剪辑区间_出点 <> "" Then 在RTF输出文本(RTF, "警告：指定了剪辑范围却没有指定剪辑方法，不会进行剪辑", Color.IndianRed)
         End Select
         If a.剪辑区间_入点 <> "" Then 在RTF输出文本(RTF, "剪辑入点：" & a.剪辑区间_入点, Color.Silver)
