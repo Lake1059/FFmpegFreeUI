@@ -152,7 +152,7 @@ Public Class 用户设置
             End Select
 
         Catch ex As Exception
-            MsgBox($"加载设置失败：{ex.Message}", MsgBoxStyle.Critical)
+        MsgBox($"加载设置失败：{ex.Message}", MsgBoxStyle.Critical)
         End Try
     End Sub
 

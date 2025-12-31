@@ -11,7 +11,12 @@ Public Class 暗黑上下文菜单自绘制
 
     Protected Overrides Sub InitializeItem(item As ToolStripItem)
         MyBase.InitializeItem(item)
-        item.Padding = New Padding(5)
+        Select Case item.Tag
+            Case "label"
+                item.Padding = New Padding(0)
+            Case Else
+                item.Padding = New Padding(5 * Form1.DPI)
+        End Select
         item.Margin = New Padding(0)
         'If item.GetType() = GetType(ToolStripSeparator) Then
         'End If
@@ -44,12 +49,12 @@ Public Class 暗黑上下文菜单自绘制
                 e.Item.AutoSize = False
                 e.Item.Margin = New Padding(0)
                 e.Item.Padding = New Padding(0)
-                e.Item.Height = 5 * (Form1.DeviceDpi / 96)
+                e.Item.Height = 5 * Form1.DPI
                 Exit Sub
             Case Else
                 e.Item.AutoSize = False
                 e.Item.Height = 2
-                e.Item.Margin = New Padding(0, 5 * (Form1.DeviceDpi / 96), 0, 5 * (Form1.DeviceDpi / 96))
+                e.Item.Margin = New Padding(0, 5 * Form1.DPI, 0, 5 * Form1.DPI)
                 e.Item.Padding = New Padding(0)
         End Select
         Dim g = e.Graphics
@@ -67,11 +72,16 @@ Public Class 暗黑上下文菜单自绘制
     Protected Overrides Sub OnRenderMenuItemBackground(e As ToolStripItemRenderEventArgs)
         Dim g = e.Graphics
         If e.Item.Enabled Then
-            If e.Item.Selected Then
-                Using b As New SolidBrush(ColorTranslator.FromWin32(RGB(64, 64, 64)))
-                    g.FillRectangle(b, e.Item.ContentRectangle.Left + 5, e.Item.ContentRectangle.Top, e.Item.ContentRectangle.Width - 19, e.Item.ContentRectangle.Height)
-                End Using
-            End If
+            Select Case e.Item.Tag
+                Case "label"
+                Case Else
+                    If e.Item.Selected Then
+                        Using b As New SolidBrush(ColorTranslator.FromWin32(RGB(64, 64, 64)))
+                            g.FillRectangle(b, e.Item.ContentRectangle.Left + 5, e.Item.ContentRectangle.Top, e.Item.ContentRectangle.Width - 19, e.Item.ContentRectangle.Height)
+                        End Using
+                    End If
+            End Select
+
         End If
     End Sub
 
@@ -93,9 +103,16 @@ Public Class 暗黑上下文菜单自绘制
         Else
             e.Item.Margin = New Padding(0)
             e.Item.Padding = New Padding(0)
-            Using b As New SolidBrush(e.TextColor)
-                TextRenderer.DrawText(e.Graphics, e.Text.Replace("&", "&&"), New Font(e.TextFont.Name, e.TextFont.Size - 2, FontStyle.Regular), New Rectangle(e.TextRectangle.Left, e.Item.ContentRectangle.Top, e.TextRectangle.Width, e.Item.ContentRectangle.Height), e.TextColor, Nothing, TextFormatFlags.VerticalCenter)
-            End Using
+            Select Case e.Item.Tag
+                Case "label"
+                    Using b As New SolidBrush(e.TextColor)
+                        TextRenderer.DrawText(e.Graphics, e.Text.Replace("&", "&&"), New Font(e.TextFont.Name, e.TextFont.Size, FontStyle.Regular), New Rectangle(e.TextRectangle.Left, e.Item.ContentRectangle.Top, e.TextRectangle.Width, e.Item.ContentRectangle.Height), e.TextColor, Nothing, TextFormatFlags.VerticalCenter)
+                    End Using
+                Case Else
+                    Using b As New SolidBrush(e.TextColor)
+                        TextRenderer.DrawText(e.Graphics, e.Text.Replace("&", "&&"), New Font(e.TextFont.Name, e.TextFont.Size - 2, FontStyle.Regular), New Rectangle(e.TextRectangle.Left, e.Item.ContentRectangle.Top, e.TextRectangle.Width, e.Item.ContentRectangle.Height), e.TextColor, Nothing, TextFormatFlags.VerticalCenter)
+                    End Using
+            End Select
         End If
     End Sub
 

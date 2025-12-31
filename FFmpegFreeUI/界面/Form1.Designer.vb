@@ -166,6 +166,7 @@ Partial Class Form1
         TabPage编码队列.Name = "TabPage编码队列"
         TabPage编码队列.Size = New Size(1033, 651)
         TabPage编码队列.TabIndex = 0
+        TabPage编码队列.Tag = "TabPage.EncodingQueue"
         TabPage编码队列.Text = "编码队列"
         ' 
         ' Panel输出面板
@@ -830,6 +831,7 @@ Partial Class Form1
         TabPage准备文件.Name = "TabPage准备文件"
         TabPage准备文件.Size = New Size(1033, 651)
         TabPage准备文件.TabIndex = 1
+        TabPage准备文件.Tag = "TabPage.PrepareFile"
         TabPage准备文件.Text = "准备文件"
         ' 
         ' TabPage参数面板
@@ -840,6 +842,7 @@ Partial Class Form1
         TabPage参数面板.Name = "TabPage参数面板"
         TabPage参数面板.Size = New Size(1033, 651)
         TabPage参数面板.TabIndex = 14
+        TabPage参数面板.Tag = "TabPage.ParameterPanel"
         TabPage参数面板.Text = "参数面板"
         ' 
         ' Panel6
@@ -858,6 +861,7 @@ Partial Class Form1
         TabPage媒体信息.Name = "TabPage媒体信息"
         TabPage媒体信息.Size = New Size(1033, 651)
         TabPage媒体信息.TabIndex = 17
+        TabPage媒体信息.Tag = "TabPage.MediaInfo"
         TabPage媒体信息.Text = "媒体信息"
         ' 
         ' TabPage播放器
@@ -867,6 +871,7 @@ Partial Class Form1
         TabPage播放器.Name = "TabPage播放器"
         TabPage播放器.Size = New Size(1033, 651)
         TabPage播放器.TabIndex = 26
+        TabPage播放器.Tag = "TabPage.Player"
         TabPage播放器.Text = "播放器"
         ' 
         ' TabPage混流
@@ -876,6 +881,7 @@ Partial Class Form1
         TabPage混流.Name = "TabPage混流"
         TabPage混流.Size = New Size(1033, 651)
         TabPage混流.TabIndex = 18
+        TabPage混流.Tag = "TabPage.Mixing"
         TabPage混流.Text = "混流"
         ' 
         ' TabPage合并
@@ -885,6 +891,7 @@ Partial Class Form1
         TabPage合并.Name = "TabPage合并"
         TabPage合并.Size = New Size(1033, 651)
         TabPage合并.TabIndex = 19
+        TabPage合并.Tag = "TabPage.Merging"
         TabPage合并.Text = "合并"
         ' 
         ' TabPage性能监控
@@ -894,6 +901,7 @@ Partial Class Form1
         TabPage性能监控.Name = "TabPage性能监控"
         TabPage性能监控.Size = New Size(1033, 651)
         TabPage性能监控.TabIndex = 21
+        TabPage性能监控.Tag = "TabPage.PerformanceMonitoring"
         TabPage性能监控.Text = "性能监控"
         ' 
         ' TabPage插件扩展
@@ -904,6 +912,7 @@ Partial Class Form1
         TabPage插件扩展.Name = "TabPage插件扩展"
         TabPage插件扩展.Size = New Size(1033, 651)
         TabPage插件扩展.TabIndex = 22
+        TabPage插件扩展.Tag = "TabPage.PluginExtension"
         TabPage插件扩展.Text = "插件扩展"
         ' 
         ' Panel21
@@ -991,6 +1000,7 @@ Partial Class Form1
         TabPage设置.Name = "TabPage设置"
         TabPage设置.Size = New Size(1033, 651)
         TabPage设置.TabIndex = 24
+        TabPage设置.Tag = "TabPage.Settings"
         TabPage设置.Text = "设置"
         ' 
         ' TabPage支持者名单
@@ -1000,6 +1010,7 @@ Partial Class Form1
         TabPage支持者名单.Name = "TabPage支持者名单"
         TabPage支持者名单.Size = New Size(1033, 651)
         TabPage支持者名单.TabIndex = 25
+        TabPage支持者名单.Tag = "TabPage.Supporters"
         TabPage支持者名单.Text = "支持者"
         ' 
         ' Panel顶部视觉修正区域

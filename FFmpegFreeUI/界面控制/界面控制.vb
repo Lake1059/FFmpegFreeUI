@@ -14,8 +14,10 @@ Public Class 界面控制
         设置富文本框行高(Form1.RichTextBox2, 300)
 
         Form1.TabPage起始页面.Controls.Add(Form1.起始页面)
+        Form1.起始页面.调整界面()
         Form1.TabPage准备文件.Controls.Add(Form1.准备文件页面)
         Form1.Panel6.Controls.Add(Form1.常规流程参数页面)
+        绑定提示板.绑定参数面板的提示板(Form1.常规流程参数页面)
         Form1.TabPage媒体信息.Controls.Add(Form1.媒体信息页面)
         Form1.TabPage播放器.Controls.Add(Form1.播放器页面)
         Form1.TabPage混流.Controls.Add(Form1.混流页面)

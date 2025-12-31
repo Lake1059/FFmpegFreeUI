@@ -372,20 +372,16 @@ Partial Class 界面_常规流程参数_V2
         Label106 = New Label()
         TabPage剪辑区间 = New TabPage()
         Label181 = New Label()
-        Label153 = New Label()
         Panel75 = New Panel()
-        Label144 = New Label()
         UiComboBox剪辑向前解码多久秒 = New Sunny.UI.UIComboBox()
         Label151 = New Label()
         Label150 = New Label()
-        Label180 = New Label()
         Panel76 = New Panel()
         UiTextBox快速剪辑出点 = New Sunny.UI.UITextBox()
         Label116 = New Label()
         UiTextBox快速剪辑入点 = New Sunny.UI.UITextBox()
         Label115 = New Label()
         Label152 = New Label()
-        Label143 = New Label()
         Panel66 = New Panel()
         UiComboBox剪辑方法 = New Sunny.UI.UIComboBox()
         Label109 = New Label()
@@ -627,6 +623,7 @@ Partial Class 界面_常规流程参数_V2
         TabPage参数总览.Name = "TabPage参数总览"
         TabPage参数总览.Size = New Size(899, 650)
         TabPage参数总览.TabIndex = 0
+        TabPage参数总览.Tag = "TabPage.ParameterOverview"
         TabPage参数总览.Text = "参数总览"
         ' 
         ' Panel74
@@ -788,6 +785,7 @@ Partial Class 界面_常规流程参数_V2
         TabPage输出文件设置.Name = "TabPage输出文件设置"
         TabPage输出文件设置.Size = New Size(899, 650)
         TabPage输出文件设置.TabIndex = 1
+        TabPage输出文件设置.Tag = "TabPage.OutputFileSettings"
         TabPage输出文件设置.Text = "输出文件设置"
         ' 
         ' Panel71
@@ -1370,6 +1368,7 @@ Partial Class 界面_常规流程参数_V2
         TabPage解码设置.Name = "TabPage解码设置"
         TabPage解码设置.Size = New Size(899, 650)
         TabPage解码设置.TabIndex = 2
+        TabPage解码设置.Tag = "TabPage.DecodingSettings"
         TabPage解码设置.Text = "解码设置"
         ' 
         ' Panel78
@@ -1701,6 +1700,7 @@ Partial Class 界面_常规流程参数_V2
         TabPage视频参数编码器.Name = "TabPage视频参数编码器"
         TabPage视频参数编码器.Size = New Size(899, 650)
         TabPage视频参数编码器.TabIndex = 3
+        TabPage视频参数编码器.Tag = "TabPage.VideoParametersDecoder"
         TabPage视频参数编码器.Text = "视频参数 | 编码器"
         ' 
         ' Panel19
@@ -2195,6 +2195,7 @@ Partial Class 界面_常规流程参数_V2
         TabPage视频参数画面帧.Name = "TabPage视频参数画面帧"
         TabPage视频参数画面帧.Size = New Size(899, 650)
         TabPage视频参数画面帧.TabIndex = 4
+        TabPage视频参数画面帧.Tag = "TabPage.VideoParametersFrame"
         TabPage视频参数画面帧.Text = "视频参数 | 画面帧"
         ' 
         ' Panel96
@@ -2784,6 +2785,7 @@ Partial Class 界面_常规流程参数_V2
         TabPage视频参数质量.Name = "TabPage视频参数质量"
         TabPage视频参数质量.Size = New Size(899, 650)
         TabPage视频参数质量.TabIndex = 5
+        TabPage视频参数质量.Tag = "TabPage.VideoParametersQuality"
         TabPage视频参数质量.Text = "视频参数 | 质量"
         ' 
         ' FlowLayoutPanel1
@@ -3354,6 +3356,7 @@ Partial Class 界面_常规流程参数_V2
         TabPage视频参数色彩管理.Name = "TabPage视频参数色彩管理"
         TabPage视频参数色彩管理.Size = New Size(899, 650)
         TabPage视频参数色彩管理.TabIndex = 6
+        TabPage视频参数色彩管理.Tag = "TabPage.VideoParametersColorManagement"
         TabPage视频参数色彩管理.Text = "视频参数 | 色彩管理"
         ' 
         ' Panel40
@@ -4188,6 +4191,7 @@ Partial Class 界面_常规流程参数_V2
         TabPage视频参数常见滤镜.Name = "TabPage视频参数常见滤镜"
         TabPage视频参数常见滤镜.Size = New Size(899, 650)
         TabPage视频参数常见滤镜.TabIndex = 7
+        TabPage视频参数常见滤镜.Tag = "TabPage.VideoParametersCommonFilters"
         TabPage视频参数常见滤镜.Text = "视频参数 | 常见滤镜"
         ' 
         ' Panel39
@@ -4801,6 +4805,7 @@ Partial Class 界面_常规流程参数_V2
         TabPage视频帧服务器.Name = "TabPage视频帧服务器"
         TabPage视频帧服务器.Size = New Size(899, 650)
         TabPage视频帧服务器.TabIndex = 14
+        TabPage视频帧服务器.Tag = "TabPage.VideoFrameServer"
         TabPage视频帧服务器.Text = "视频帧服务器"
         ' 
         ' Label189
@@ -5059,6 +5064,7 @@ Partial Class 界面_常规流程参数_V2
         TabPage音频参数.Name = "TabPage音频参数"
         TabPage音频参数.Size = New Size(899, 650)
         TabPage音频参数.TabIndex = 8
+        TabPage音频参数.Tag = "TabPage.AudioParameters"
         TabPage音频参数.Text = "音频参数"
         ' 
         ' Panel93
@@ -5617,6 +5623,7 @@ Partial Class 界面_常规流程参数_V2
         TabPage图片参数.Name = "TabPage图片参数"
         TabPage图片参数.Size = New Size(899, 650)
         TabPage图片参数.TabIndex = 11
+        TabPage图片参数.Tag = "TabPage.ImageParameters"
         TabPage图片参数.Text = "图片参数"
         ' 
         ' Label94
@@ -5837,6 +5844,7 @@ Partial Class 界面_常规流程参数_V2
         TabPage自定义参数.Name = "TabPage自定义参数"
         TabPage自定义参数.Size = New Size(899, 650)
         TabPage自定义参数.TabIndex = 9
+        TabPage自定义参数.Tag = "TabPage.CustomParameters"
         TabPage自定义参数.Text = "自定义参数"
         ' 
         ' Panel50
@@ -6525,15 +6533,12 @@ Partial Class 界面_常规流程参数_V2
         TabPage剪辑区间.AutoScroll = True
         TabPage剪辑区间.BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         TabPage剪辑区间.Controls.Add(Label181)
-        TabPage剪辑区间.Controls.Add(Label153)
         TabPage剪辑区间.Controls.Add(Panel75)
         TabPage剪辑区间.Controls.Add(Label151)
         TabPage剪辑区间.Controls.Add(Label150)
-        TabPage剪辑区间.Controls.Add(Label180)
         TabPage剪辑区间.Controls.Add(Panel76)
         TabPage剪辑区间.Controls.Add(Label115)
         TabPage剪辑区间.Controls.Add(Label152)
-        TabPage剪辑区间.Controls.Add(Label143)
         TabPage剪辑区间.Controls.Add(Panel66)
         TabPage剪辑区间.Controls.Add(Label109)
         TabPage剪辑区间.Controls.Add(Label146)
@@ -6541,6 +6546,7 @@ Partial Class 界面_常规流程参数_V2
         TabPage剪辑区间.Name = "TabPage剪辑区间"
         TabPage剪辑区间.Size = New Size(899, 650)
         TabPage剪辑区间.TabIndex = 13
+        TabPage剪辑区间.Tag = "TabPage.ClipInterval"
         TabPage剪辑区间.Text = "剪辑区间"
         ' 
         ' Label181
@@ -6556,42 +6562,15 @@ Partial Class 界面_常规流程参数_V2
         Label181.TabIndex = 117
         Label181.Text = "掐头去尾模式已经尝试了各种方法均无法实现一次性处理" & vbCrLf & "除非能找到可行的一次性实现办法，否则不要再提这个需求"
         ' 
-        ' Label153
-        ' 
-        Label153.AutoSize = True
-        Label153.Dock = DockStyle.Top
-        Label153.Font = New Font("微软雅黑", 10F)
-        Label153.ForeColor = Color.Gray
-        Label153.Location = New Point(0, 452)
-        Label153.Name = "Label153"
-        Label153.Padding = New Padding(16, 5, 0, 0)
-        Label153.Size = New Size(613, 25)
-        Label153.TabIndex = 115
-        Label153.Text = "注意勿与前向参考帧的时间方向概念混淆，此处的向前解码是向开头的方向，不是向结尾的方向"
-        ' 
         ' Panel75
         ' 
-        Panel75.Controls.Add(Label144)
         Panel75.Controls.Add(UiComboBox剪辑向前解码多久秒)
         Panel75.Dock = DockStyle.Top
-        Panel75.Location = New Point(0, 412)
+        Panel75.Location = New Point(0, 317)
         Panel75.Name = "Panel75"
         Panel75.Padding = New Padding(21, 10, 20, 0)
         Panel75.Size = New Size(899, 40)
         Panel75.TabIndex = 108
-        ' 
-        ' Label144
-        ' 
-        Label144.Dock = DockStyle.Fill
-        Label144.Font = New Font("微软雅黑", 9.75F)
-        Label144.ForeColor = Color.Gray
-        Label144.Location = New Point(171, 10)
-        Label144.Name = "Label144"
-        Label144.Padding = New Padding(10, 0, 0, 0)
-        Label144.Size = New Size(708, 30)
-        Label144.TabIndex = 105
-        Label144.Text = "只能写数字，单位是秒！"
-        Label144.TextAlign = ContentAlignment.MiddleLeft
         ' 
         ' UiComboBox剪辑向前解码多久秒
         ' 
@@ -6634,37 +6613,24 @@ Partial Class 界面_常规流程参数_V2
         Label151.Dock = DockStyle.Top
         Label151.Font = New Font("微软雅黑", 10F)
         Label151.ForeColor = Color.Gray
-        Label151.Location = New Point(0, 367)
+        Label151.Location = New Point(0, 272)
         Label151.Name = "Label151"
         Label151.Padding = New Padding(16, 5, 0, 0)
-        Label151.Size = New Size(487, 45)
+        Label151.Size = New Size(187, 45)
         Label151.TabIndex = 114
-        Label151.Text = "仅限快速响应的精剪使用；确保向前的时间包含了关键帧，否则还不如粗剪" & vbCrLf & "务必确保时间都输入正确！我需要计算你填写的时间的差值来传给 ffmpeg"
+        Label151.Text = "仅限 精剪 (快速响应) 使用" & vbCrLf & "只能写数字，单位是秒！"
         ' 
         ' Label150
         ' 
         Label150.AutoSize = True
         Label150.Dock = DockStyle.Top
         Label150.Font = New Font("微软雅黑", 13F)
-        Label150.Location = New Point(0, 323)
+        Label150.Location = New Point(0, 228)
         Label150.Name = "Label150"
         Label150.Padding = New Padding(16, 20, 0, 0)
-        Label150.Size = New Size(152, 44)
+        Label150.Size = New Size(98, 44)
         Label150.TabIndex = 113
-        Label150.Text = "向前解码（秒）"
-        ' 
-        ' Label180
-        ' 
-        Label180.AutoSize = True
-        Label180.Dock = DockStyle.Top
-        Label180.Font = New Font("微软雅黑", 10F)
-        Label180.ForeColor = Color.Gray
-        Label180.Location = New Point(0, 298)
-        Label180.Name = "Label180"
-        Label180.Padding = New Padding(16, 5, 0, 0)
-        Label180.Size = New Size(397, 25)
-        Label180.TabIndex = 116
-        Label180.Text = "可以只写一个来表示从指定时间到末尾 或 从开头到指定时间"
+        Label150.Text = "向前解码"
         ' 
         ' Panel76
         ' 
@@ -6672,7 +6638,7 @@ Partial Class 界面_常规流程参数_V2
         Panel76.Controls.Add(Label116)
         Panel76.Controls.Add(UiTextBox快速剪辑入点)
         Panel76.Dock = DockStyle.Top
-        Panel76.Location = New Point(0, 258)
+        Panel76.Location = New Point(0, 188)
         Panel76.Name = "Panel76"
         Panel76.Padding = New Padding(21, 10, 20, 0)
         Panel76.Size = New Size(899, 40)
@@ -6744,43 +6710,30 @@ Partial Class 界面_常规流程参数_V2
         Label115.Dock = DockStyle.Top
         Label115.Font = New Font("微软雅黑", 10F)
         Label115.ForeColor = Color.Gray
-        Label115.Location = New Point(0, 233)
+        Label115.Location = New Point(0, 143)
         Label115.Name = "Label115"
         Label115.Padding = New Padding(16, 5, 0, 0)
-        Label115.Size = New Size(174, 25)
+        Label115.Size = New Size(397, 45)
         Label115.TabIndex = 112
-        Label115.Text = "时间格式：时:分:秒.毫秒"
+        Label115.Text = "时间格式：时:分:秒.毫秒" & vbCrLf & "可以只写一个来表示从指定时间到末尾 或 从开头到指定时间"
         ' 
         ' Label152
         ' 
         Label152.AutoSize = True
         Label152.Dock = DockStyle.Top
         Label152.Font = New Font("微软雅黑", 13F)
-        Label152.Location = New Point(0, 189)
+        Label152.Location = New Point(0, 99)
         Label152.Name = "Label152"
         Label152.Padding = New Padding(16, 20, 0, 0)
         Label152.Size = New Size(116, 44)
         Label152.TabIndex = 110
         Label152.Text = "入点和出点"
         ' 
-        ' Label143
-        ' 
-        Label143.AutoSize = True
-        Label143.Dock = DockStyle.Top
-        Label143.Font = New Font("微软雅黑", 10F)
-        Label143.ForeColor = Color.Gray
-        Label143.Location = New Point(0, 139)
-        Label143.Name = "Label143"
-        Label143.Padding = New Padding(16, 10, 0, 0)
-        Label143.Size = New Size(498, 50)
-        Label143.TabIndex = 107
-        Label143.Text = "精剪必须重编码才能精确到帧！ffmpeg 做不到在不重编码的情况下精确到帧" & vbCrLf & "如果复制流则下一个关键帧之前的帧都是卡住的！" & vbCrLf
-        ' 
         ' Panel66
         ' 
         Panel66.Controls.Add(UiComboBox剪辑方法)
         Panel66.Dock = DockStyle.Top
-        Panel66.Location = New Point(0, 99)
+        Panel66.Location = New Point(0, 59)
         Panel66.Name = "Panel66"
         Panel66.Padding = New Padding(21, 10, 20, 0)
         Panel66.Size = New Size(899, 40)
@@ -6831,9 +6784,9 @@ Partial Class 界面_常规流程参数_V2
         Label109.Location = New Point(0, 34)
         Label109.Name = "Label109"
         Label109.Padding = New Padding(16, 5, 0, 0)
-        Label109.Size = New Size(655, 65)
+        Label109.Size = New Size(179, 25)
         Label109.TabIndex = 105
-        Label109.Text = "立即响应：定位关键帧，快但不准；除了此模式外，剪辑参数都是视频参数的一部分" & vbCrLf & "从头解码：从头解码到剪辑位置，要等但准 (重编码才真的准)" & vbCrLf & "快速响应：手动指定从入点前面的一定时间开始解码，确保解码到关键帧，又快又准 (重编码才真的准)"
+        Label109.Text = "在提示板中查看注意事项"
         ' 
         ' Label146
         ' 
@@ -6867,6 +6820,7 @@ Partial Class 界面_常规流程参数_V2
         TabPage流控制.Name = "TabPage流控制"
         TabPage流控制.Size = New Size(899, 650)
         TabPage流控制.TabIndex = 10
+        TabPage流控制.Tag = "TabPage.StreamControl"
         TabPage流控制.Text = "流控制"
         ' 
         ' Panel64
@@ -7483,6 +7437,7 @@ Partial Class 界面_常规流程参数_V2
         TabPage方案管理.Name = "TabPage方案管理"
         TabPage方案管理.Size = New Size(899, 650)
         TabPage方案管理.TabIndex = 12
+        TabPage方案管理.Tag = "TabPage.SchemeManagement"
         TabPage方案管理.Text = "方案管理"
         ' 
         ' Panel77
@@ -8442,9 +8397,7 @@ Partial Class 界面_常规流程参数_V2
     Friend WithEvents TabPage剪辑区间 As TabPage
     Friend WithEvents Panel76 As Panel
     Friend WithEvents Label152 As Label
-    Friend WithEvents Label143 As Label
     Friend WithEvents Panel75 As Panel
-    Friend WithEvents Label144 As Label
     Friend WithEvents UiComboBox剪辑向前解码多久秒 As Sunny.UI.UIComboBox
     Friend WithEvents Panel66 As Panel
     Friend WithEvents UiComboBox剪辑方法 As Sunny.UI.UIComboBox
@@ -8456,7 +8409,6 @@ Partial Class 界面_常规流程参数_V2
     Friend WithEvents UiTextBox快速剪辑入点 As Sunny.UI.UITextBox
     Friend WithEvents Label115 As Label
     Friend WithEvents Label151 As Label
-    Friend WithEvents Label153 As Label
     Friend WithEvents Panel78 As Panel
     Friend WithEvents UiTextBox硬件加速解码参数 As Sunny.UI.UITextBox
     Friend WithEvents Panel79 As Panel
@@ -8580,7 +8532,6 @@ Partial Class 界面_常规流程参数_V2
     Friend WithEvents Label93 As Label
     Friend WithEvents Label94 As Label
     Friend WithEvents Label135 As Label
-    Friend WithEvents Label180 As Label
     Friend WithEvents Label181 As Label
     Friend WithEvents Panel47 As Panel
     Friend WithEvents UiCheckBox保留其他字幕流 As Sunny.UI.UICheckBox

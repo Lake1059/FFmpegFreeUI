@@ -1123,7 +1123,7 @@ Public Class 预设管理
             arg &= $"-map 0:v? -c:v copy "
             If a.流控制_将视频参数应用于指定流.Length > 0 Then
                 For Each vi In a.流控制_将视频参数应用于指定流
-                    arg &= $"-map {vi}? "
+                    arg &= $"-map -{vi}? "
                 Next
             Else
                 If 视频参数 <> "" Then arg &= $"-map -0:v:0? "
@@ -1181,8 +1181,8 @@ Public Class 预设管理
         If a.流控制_启用保留其他字幕流 AndAlso 字幕参数 <> "" Then
             arg &= $"-map 0:s? -c:s copy "
             If a.流控制_将字幕参数应用于指定流.Length > 0 Then
-                For Each ai In a.流控制_将字幕参数应用于指定流
-                    arg &= $"-map -{ai}? "
+                For Each si In a.流控制_将字幕参数应用于指定流
+                    arg &= $"-map -{si}? "
                 Next
             Else
                 If 字幕参数 <> "" Then arg &= $"-map -0:s:0? "
@@ -1190,8 +1190,8 @@ Public Class 预设管理
         End If
         If a.流控制_将字幕参数应用于指定流.Length > 0 Then
             If 字幕参数 <> "" Then
-                For Each ai In a.流控制_将字幕参数应用于指定流
-                    arg &= $"-map {ai}? {字幕参数} "
+                For Each si In a.流控制_将字幕参数应用于指定流
+                    arg &= $"-map {si}? {字幕参数} "
                 Next
             End If
         Else

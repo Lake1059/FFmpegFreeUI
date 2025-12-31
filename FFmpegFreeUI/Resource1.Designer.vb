@@ -127,21 +127,15 @@ Namespace My.Resources
         
         '''<summary>
         '''  查找类似 {
-        '''  &quot;Button.StartMission&quot;: &quot;Start&quot;,
-        '''  &quot;Button.PauseMission&quot;: &quot;Pause&quot;,
-        '''  &quot;Button.ResumeMission&quot;: &quot;Resume&quot;,
-        '''  &quot;Button.StopMission&quot;: &quot;Stop&quot;,
-        '''  &quot;Button.RemoveMission&quot;: &quot;Remove&quot;,
-        '''  &quot;Button.ResetMission&quot;: &quot;Reset&quot;,
-        '''  &quot;Button.LocateMission&quot;: &quot;Locate&quot;,
-        '''  &quot;Button.MissionMenu&quot;: &quot;Mission Menu&quot;,
-        '''  &quot;Label.Status&quot;: &quot;Status&quot;,
-        '''  &quot;Label.Progress&quot;: &quot;Progress&quot;,
-        '''  &quot;Label.Speed&quot;: &quot;Speed&quot;,
-        '''  &quot;Label.OutputSize&quot;: &quot;Size &amp;&amp; Remaining&quot;,
-        '''  &quot;Label.Quality&quot;: &quot;q&quot;,
-        '''  &quot;Label.Bitrate&quot;: &quot;Bitrate&quot;,
-        '''  &quot;Label.TimeRemaining&quot;: &quot;Time [字符串的其余部分被截断]&quot;; 的本地化字符串。
+        '''  &quot;Label.SubTitle&quot;: &quot;Simply add FFmpeg to environment variables or place it in the 3FUI directory to use.&quot;,
+        '''  &quot;Label.LinkAndDocument&quot;: &quot;Link And Document&quot;,
+        '''  &quot;Label.DonotTrustAI&quot;: &quot;Do Not Trust AI !&quot;,
+        '''  &quot;Label.3FUIGithubRepository&quot;: &quot;3FUI Github Repository&quot;,
+        '''  &quot;Label.FFmpegOfficialDoc&quot;: &quot;FFmpeg Official Doc (ffmpeg.org)&quot;,
+        '''  &quot;Label.DownloadFFmpegGyandev&quot;: &quot;Download FFmpeg (gyan.dev)&quot;,
+        '''  &quot;Label.DownloadFFmpegBtbN&quot;: &quot;Download FFmpeg (BtbN)&quot;,
+        '''  &quot;Label.afdian&quot;: &quot;Sponsor (afdian)&quot;,
+        '''  &quot;Label.bilibili&quot;:  [字符串的其余部分被截断]&quot;; 的本地化字符串。
         '''</summary>
         Friend Shared ReadOnly Property 语言_en() As String
             Get
@@ -151,23 +145,17 @@ Namespace My.Resources
         
         '''<summary>
         '''  查找类似 {
-        '''  &quot;Button.StartMission&quot;: &quot;开始&quot;,
-        '''  &quot;Button.PauseMission&quot;: &quot;暂停&quot;,
-        '''  &quot;Button.ResumeMission&quot;: &quot;恢复&quot;,
-        '''  &quot;Button.StopMission&quot;: &quot;停止&quot;,
-        '''  &quot;Button.RemoveMission&quot;: &quot;移除&quot;,
-        '''  &quot;Button.ResetMission&quot;: &quot;重置&quot;,
-        '''  &quot;Button.LocateMission&quot;: &quot;定位&quot;,
-        '''  &quot;Button.MissionMenu&quot;: &quot;任务管理菜单&quot;,
-        '''  &quot;Label.Status&quot;: &quot;状态&quot;,
-        '''  &quot;Label.Progress&quot;: &quot;进度&quot;,
-        '''  &quot;Label.Speed&quot;: &quot;效率&quot;,
-        '''  &quot;Label.OutputSize&quot;: &quot;输出大小 &amp;&amp; 预估&quot;,
-        '''  &quot;Label.Quality&quot;: &quot;质量&quot;,
-        '''  &quot;Label.Bitrate&quot;: &quot;比特率&quot;,
-        '''  &quot;Label.TimeRemaining&quot;: &quot;预计剩余 &amp;&amp; 已用&quot;,
-        '''  &quot;LinkLabel.Send&quot;: &quot;发送&quot;,
-        '''  &quot;LinkLabel.Sw [字符串的其余部分被截断]&quot;; 的本地化字符串。
+        '''  &quot;Label.SubTitle&quot;: &quot;将 FFmpeg 加入环境变量或放置于 3FUI 程序目录下即可调用&quot;,
+        '''  &quot;Label.LinkAndDocument&quot;: &quot;链接和文档&quot;,
+        '''  &quot;Label.DonotTrustAI&quot;: &quot;不要相信 AI&quot;,
+        '''  &quot;Label.3FUIGithubRepository&quot;: &quot;3FUI Github 仓库&quot;,
+        '''  &quot;Label.FFmpegOfficialDoc&quot;: &quot;FFmpeg 官方文档（ffmpeg.org）&quot;,
+        '''  &quot;Label.DownloadFFmpegGyandev&quot;: &quot;下载 FFmpeg（gyan.dev）&quot;,
+        '''  &quot;Label.DownloadFFmpegBtbN&quot;: &quot;下载 FFmpeg（BtbN）&quot;,
+        '''  &quot;Label.afdian&quot;: &quot;赞助一下（afdian）&quot;,
+        '''  &quot;Label.bilibili&quot;: &quot;作者主页（哔哩哔哩）&quot;,
+        '''  &quot;Label.OfficialWebsite1&quot;: &quot;官网 ffmpegfreeui.top&quot;,
+        '''  &quot;Label.OfficialWebsite2&quot;: &quot;官网 3fui.top [字符串的其余部分被截断]&quot;; 的本地化字符串。
         '''</summary>
         Friend Shared ReadOnly Property 语言_zh() As String
             Get

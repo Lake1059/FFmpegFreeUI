@@ -32,32 +32,32 @@ Partial Class 界面_起始页
         LinkLabel清理内存 = New LinkLabel()
         Panel5 = New Panel()
         Panel新闻列表面板 = New Panel()
-        Label29 = New Label()
+        Label新闻列表 = New Label()
         Panel44 = New Panel()
-        Label35 = New Label()
-        Label28 = New Label()
-        Label1 = New Label()
-        Label21 = New Label()
-        Label14 = New Label()
-        Label126 = New Label()
-        Label9 = New Label()
+        Label高DPI支持描述 = New Label()
+        Label高DPI支持 = New Label()
+        Label帮助信息描述2 = New Label()
+        Label帮助信息描述1 = New Label()
+        Label帮助信息 = New Label()
+        Label提示板描述 = New Label()
+        Label提示板 = New Label()
         Panel7 = New Panel()
         Label122 = New Label()
         Label75 = New Label()
         Label73 = New Label()
         Label65 = New Label()
         Label64 = New Label()
-        Label129 = New Label()
-        LinkLabel8 = New LinkLabel()
-        LinkLabel1 = New LinkLabel()
-        LinkLabel6 = New LinkLabel()
-        LinkLabel5 = New LinkLabel()
-        LinkLabel4 = New LinkLabel()
-        LinkLabel3 = New LinkLabel()
-        LinkLabel2 = New LinkLabel()
-        LinkLabel7 = New LinkLabel()
-        LinkLabel9 = New LinkLabel()
-        Label127 = New Label()
+        Label检查更新 = New Label()
+        LinkLabel官网2 = New LinkLabel()
+        LinkLabel官网1 = New LinkLabel()
+        LinkLabel作者主页 = New LinkLabel()
+        LinkLabel赞助一下 = New LinkLabel()
+        LinkLabel下载FFmpeg2 = New LinkLabel()
+        LinkLabel下载FFmpeg1 = New LinkLabel()
+        LinkLabelFFmpeg官方文档 = New LinkLabel()
+        LinkLabel3FUI仓库 = New LinkLabel()
+        LinkLabel不要相信AI = New LinkLabel()
+        Label链接和文档 = New Label()
         Panel73.SuspendLayout()
         CType(PictureBox1, ComponentModel.ISupportInitialize).BeginInit()
         Panel16.SuspendLayout()
@@ -91,9 +91,10 @@ Partial Class 界面_起始页
         Label副标题.Location = New Point(80, 40)
         Label副标题.Name = "Label副标题"
         Label副标题.Padding = New Padding(1, 0, 0, 0)
-        Label副标题.Size = New Size(410, 20)
+        Label副标题.Size = New Size(388, 20)
         Label副标题.TabIndex = 12
-        Label副标题.Text = "将 ffmpeg.exe 加入环境变量或放置于 3FUI 程序目录下即可调用"
+        Label副标题.Tag = "Label.SubTitle"
+        Label副标题.Text = "将 FFmpeg 加入环境变量或放置于 3FUI 程序目录下即可调用"
         ' 
         ' Label主标题
         ' 
@@ -166,6 +167,7 @@ Partial Class 界面_起始页
         LinkLabel清理内存.Size = New Size(204, 50)
         LinkLabel清理内存.TabIndex = 28
         LinkLabel清理内存.TabStop = True
+        LinkLabel清理内存.Tag = "LinkLabel.GC"
         LinkLabel清理内存.Text = "清理 3FUI 内存 (GC+内核)"
         LinkLabel清理内存.TextAlign = ContentAlignment.BottomRight
         ' 
@@ -173,7 +175,7 @@ Partial Class 界面_起始页
         ' 
         Panel5.BackgroundImageLayout = ImageLayout.Zoom
         Panel5.Controls.Add(Panel新闻列表面板)
-        Panel5.Controls.Add(Label29)
+        Panel5.Controls.Add(Label新闻列表)
         Panel5.Controls.Add(Panel44)
         Panel5.Controls.Add(Panel7)
         Panel5.Dock = DockStyle.Fill
@@ -192,30 +194,31 @@ Partial Class 界面_起始页
         Panel新闻列表面板.Size = New Size(355, 516)
         Panel新闻列表面板.TabIndex = 92
         ' 
-        ' Label29
+        ' Label新闻列表
         ' 
-        Label29.AutoSize = True
-        Label29.BackColor = Color.Transparent
-        Label29.Dock = DockStyle.Top
-        Label29.Font = New Font("微软雅黑", 13F)
-        Label29.Location = New Point(645, 0)
-        Label29.Name = "Label29"
-        Label29.Padding = New Padding(0, 20, 0, 10)
-        Label29.Size = New Size(82, 54)
-        Label29.TabIndex = 91
-        Label29.Text = "新闻列表"
+        Label新闻列表.AutoSize = True
+        Label新闻列表.BackColor = Color.Transparent
+        Label新闻列表.Dock = DockStyle.Top
+        Label新闻列表.Font = New Font("微软雅黑", 13F)
+        Label新闻列表.Location = New Point(645, 0)
+        Label新闻列表.Name = "Label新闻列表"
+        Label新闻列表.Padding = New Padding(0, 20, 0, 10)
+        Label新闻列表.Size = New Size(82, 54)
+        Label新闻列表.TabIndex = 91
+        Label新闻列表.Tag = "Label.News"
+        Label新闻列表.Text = "新闻列表"
         ' 
         ' Panel44
         ' 
         Panel44.BackColor = Color.Transparent
         Panel44.BackgroundImageLayout = ImageLayout.Stretch
-        Panel44.Controls.Add(Label35)
-        Panel44.Controls.Add(Label28)
-        Panel44.Controls.Add(Label1)
-        Panel44.Controls.Add(Label21)
-        Panel44.Controls.Add(Label14)
-        Panel44.Controls.Add(Label126)
-        Panel44.Controls.Add(Label9)
+        Panel44.Controls.Add(Label高DPI支持描述)
+        Panel44.Controls.Add(Label高DPI支持)
+        Panel44.Controls.Add(Label帮助信息描述2)
+        Panel44.Controls.Add(Label帮助信息描述1)
+        Panel44.Controls.Add(Label帮助信息)
+        Panel44.Controls.Add(Label提示板描述)
+        Panel44.Controls.Add(Label提示板)
         Panel44.Dock = DockStyle.Left
         Panel44.Font = New Font("微软雅黑", 9.75F)
         Panel44.Location = New Point(300, 0)
@@ -224,89 +227,96 @@ Partial Class 界面_起始页
         Panel44.Size = New Size(345, 570)
         Panel44.TabIndex = 89
         ' 
-        ' Label35
+        ' Label高DPI支持描述
         ' 
-        Label35.Dock = DockStyle.Fill
-        Label35.Font = New Font("微软雅黑", 10F)
-        Label35.ForeColor = Color.Gray
-        Label35.Location = New Point(0, 420)
-        Label35.Name = "Label35"
-        Label35.Padding = New Padding(0, 5, 0, 0)
-        Label35.Size = New Size(325, 150)
-        Label35.TabIndex = 47
-        Label35.Text = "请尽可能只在主显示器上使用；在不同缩放的显示器之间移动很容易导致 SunnyUI 出现字体过大的问题，其内部支持很有限；如果在主显示器上出现问题请直接汇报。"
+        Label高DPI支持描述.Dock = DockStyle.Fill
+        Label高DPI支持描述.Font = New Font("微软雅黑", 10F)
+        Label高DPI支持描述.ForeColor = Color.Gray
+        Label高DPI支持描述.Location = New Point(0, 420)
+        Label高DPI支持描述.Name = "Label高DPI支持描述"
+        Label高DPI支持描述.Padding = New Padding(0, 5, 0, 0)
+        Label高DPI支持描述.Size = New Size(325, 150)
+        Label高DPI支持描述.TabIndex = 47
+        Label高DPI支持描述.Tag = "Label.HighDPISupportDescription"
+        Label高DPI支持描述.Text = "请尽可能只在主显示器上使用；在不同缩放的显示器之间移动很容易导致 SunnyUI 出现字体过大的问题，其内部支持很有限；如果在主显示器上出现问题请直接汇报。"
         ' 
-        ' Label28
+        ' Label高DPI支持
         ' 
-        Label28.AutoSize = True
-        Label28.Dock = DockStyle.Top
-        Label28.Font = New Font("微软雅黑", 13F)
-        Label28.Location = New Point(0, 371)
-        Label28.Name = "Label28"
-        Label28.Padding = New Padding(0, 20, 0, 5)
-        Label28.Size = New Size(104, 49)
-        Label28.TabIndex = 46
-        Label28.Text = "高 DPI 支持"
+        Label高DPI支持.AutoSize = True
+        Label高DPI支持.Dock = DockStyle.Top
+        Label高DPI支持.Font = New Font("微软雅黑", 13F)
+        Label高DPI支持.Location = New Point(0, 371)
+        Label高DPI支持.Name = "Label高DPI支持"
+        Label高DPI支持.Padding = New Padding(0, 20, 0, 5)
+        Label高DPI支持.Size = New Size(104, 49)
+        Label高DPI支持.TabIndex = 46
+        Label高DPI支持.Tag = "Label.HighDPISupport"
+        Label高DPI支持.Text = "高 DPI 支持"
         ' 
-        ' Label1
+        ' Label帮助信息描述2
         ' 
-        Label1.Dock = DockStyle.Top
-        Label1.Font = New Font("微软雅黑", 10F)
-        Label1.ForeColor = Color.Gray
-        Label1.Location = New Point(0, 290)
-        Label1.Name = "Label1"
-        Label1.Padding = New Padding(0, 10, 0, 0)
-        Label1.Size = New Size(325, 81)
-        Label1.TabIndex = 48
-        Label1.Text = "求助时请第一时间提供报错信息、任务命令行和参数总览，保持专注和成熟，不要发泄情绪，抱怨和算卦不会解决任何问题。"
+        Label帮助信息描述2.Dock = DockStyle.Top
+        Label帮助信息描述2.Font = New Font("微软雅黑", 10F)
+        Label帮助信息描述2.ForeColor = Color.Gray
+        Label帮助信息描述2.Location = New Point(0, 290)
+        Label帮助信息描述2.Name = "Label帮助信息描述2"
+        Label帮助信息描述2.Padding = New Padding(0, 10, 0, 0)
+        Label帮助信息描述2.Size = New Size(325, 81)
+        Label帮助信息描述2.TabIndex = 48
+        Label帮助信息描述2.Tag = "Label.HelpInfoDescription2"
+        Label帮助信息描述2.Text = "求助时请第一时间提供报错信息、任务命令行和参数总览，保持专注和成熟，不要发泄情绪，抱怨和算卦不会解决任何问题。"
         ' 
-        ' Label21
+        ' Label帮助信息描述1
         ' 
-        Label21.Dock = DockStyle.Top
-        Label21.Font = New Font("微软雅黑", 10F)
-        Label21.ForeColor = Color.Gray
-        Label21.Location = New Point(0, 173)
-        Label21.Name = "Label21"
-        Label21.Padding = New Padding(0, 5, 0, 0)
-        Label21.Size = New Size(325, 117)
-        Label21.TabIndex = 40
-        Label21.Text = "3FUI 的主要逻辑是先去参数面板设定好选项，再把文件拖进编码队列自动开始。遇到任何不懂的概念可直接问 AI，这些都是写在维基百科里的词汇。但不要相信 AI 给你的建议！"
+        Label帮助信息描述1.Dock = DockStyle.Top
+        Label帮助信息描述1.Font = New Font("微软雅黑", 10F)
+        Label帮助信息描述1.ForeColor = Color.Gray
+        Label帮助信息描述1.Location = New Point(0, 173)
+        Label帮助信息描述1.Name = "Label帮助信息描述1"
+        Label帮助信息描述1.Padding = New Padding(0, 5, 0, 0)
+        Label帮助信息描述1.Size = New Size(325, 117)
+        Label帮助信息描述1.TabIndex = 40
+        Label帮助信息描述1.Tag = "Label.HelpInfoDescription1"
+        Label帮助信息描述1.Text = "3FUI 的主要逻辑是先去参数面板设定好选项，再把文件拖进编码队列自动开始。遇到任何不懂的概念可直接问 AI，这些都是写在维基百科里的词汇。但不要相信 AI 给你的建议！"
         ' 
-        ' Label14
+        ' Label帮助信息
         ' 
-        Label14.AutoSize = True
-        Label14.Dock = DockStyle.Top
-        Label14.Font = New Font("微软雅黑", 13F)
-        Label14.Location = New Point(0, 124)
-        Label14.Name = "Label14"
-        Label14.Padding = New Padding(0, 20, 0, 5)
-        Label14.Size = New Size(82, 49)
-        Label14.TabIndex = 39
-        Label14.Text = "帮助信息"
+        Label帮助信息.AutoSize = True
+        Label帮助信息.Dock = DockStyle.Top
+        Label帮助信息.Font = New Font("微软雅黑", 13F)
+        Label帮助信息.Location = New Point(0, 124)
+        Label帮助信息.Name = "Label帮助信息"
+        Label帮助信息.Padding = New Padding(0, 20, 0, 5)
+        Label帮助信息.Size = New Size(82, 49)
+        Label帮助信息.TabIndex = 39
+        Label帮助信息.Tag = "Label.HelpInfo"
+        Label帮助信息.Text = "帮助信息"
         ' 
-        ' Label126
+        ' Label提示板描述
         ' 
-        Label126.Dock = DockStyle.Top
-        Label126.Font = New Font("微软雅黑", 10F)
-        Label126.ForeColor = Color.Gray
-        Label126.Location = New Point(0, 49)
-        Label126.Name = "Label126"
-        Label126.Padding = New Padding(0, 5, 0, 0)
-        Label126.Size = New Size(325, 75)
-        Label126.TabIndex = 35
-        Label126.Text = "即便已经是正式版，3FUI 还有大量可改进的地方和需要修复的问题，欢迎积极提出建议和提交修改，很多问题一直存在却一直没人上报。"
+        Label提示板描述.Dock = DockStyle.Top
+        Label提示板描述.Font = New Font("微软雅黑", 10F)
+        Label提示板描述.ForeColor = Color.Gray
+        Label提示板描述.Location = New Point(0, 49)
+        Label提示板描述.Name = "Label提示板描述"
+        Label提示板描述.Padding = New Padding(0, 5, 0, 0)
+        Label提示板描述.Size = New Size(325, 75)
+        Label提示板描述.TabIndex = 35
+        Label提示板描述.Tag = "Label.NoticeBoardDescription"
+        Label提示板描述.Text = "一些选项有绑定的提示板，使用鼠标中键、鼠标侧键、键盘 F1 键来查看。对于可编辑的下拉框，尝试使用键盘或在非文本框区域使用鼠标。"
         ' 
-        ' Label9
+        ' Label提示板
         ' 
-        Label9.AutoSize = True
-        Label9.Dock = DockStyle.Top
-        Label9.Font = New Font("微软雅黑", 13F)
-        Label9.Location = New Point(0, 0)
-        Label9.Name = "Label9"
-        Label9.Padding = New Padding(0, 20, 0, 5)
-        Label9.Size = New Size(82, 49)
-        Label9.TabIndex = 24
-        Label9.Text = "参与开发"
+        Label提示板.AutoSize = True
+        Label提示板.Dock = DockStyle.Top
+        Label提示板.Font = New Font("微软雅黑", 13F)
+        Label提示板.Location = New Point(0, 0)
+        Label提示板.Name = "Label提示板"
+        Label提示板.Padding = New Padding(0, 20, 0, 5)
+        Label提示板.Size = New Size(64, 49)
+        Label提示板.TabIndex = 24
+        Label提示板.Tag = "Label.NoticeBoard"
+        Label提示板.Text = "提示板"
         ' 
         ' Panel7
         ' 
@@ -316,17 +326,17 @@ Partial Class 界面_起始页
         Panel7.Controls.Add(Label73)
         Panel7.Controls.Add(Label65)
         Panel7.Controls.Add(Label64)
-        Panel7.Controls.Add(Label129)
-        Panel7.Controls.Add(LinkLabel8)
-        Panel7.Controls.Add(LinkLabel1)
-        Panel7.Controls.Add(LinkLabel6)
-        Panel7.Controls.Add(LinkLabel5)
-        Panel7.Controls.Add(LinkLabel4)
-        Panel7.Controls.Add(LinkLabel3)
-        Panel7.Controls.Add(LinkLabel2)
-        Panel7.Controls.Add(LinkLabel7)
-        Panel7.Controls.Add(LinkLabel9)
-        Panel7.Controls.Add(Label127)
+        Panel7.Controls.Add(Label检查更新)
+        Panel7.Controls.Add(LinkLabel官网2)
+        Panel7.Controls.Add(LinkLabel官网1)
+        Panel7.Controls.Add(LinkLabel作者主页)
+        Panel7.Controls.Add(LinkLabel赞助一下)
+        Panel7.Controls.Add(LinkLabel下载FFmpeg2)
+        Panel7.Controls.Add(LinkLabel下载FFmpeg1)
+        Panel7.Controls.Add(LinkLabelFFmpeg官方文档)
+        Panel7.Controls.Add(LinkLabel3FUI仓库)
+        Panel7.Controls.Add(LinkLabel不要相信AI)
+        Panel7.Controls.Add(Label链接和文档)
         Panel7.Dock = DockStyle.Left
         Panel7.Location = New Point(0, 0)
         Panel7.Name = "Panel7"
@@ -397,173 +407,184 @@ Partial Class 界面_起始页
         Label64.TabIndex = 33
         Label64.Text = "更新信息"
         ' 
-        ' Label129
+        ' Label检查更新
         ' 
-        Label129.AutoSize = True
-        Label129.Dock = DockStyle.Top
-        Label129.Font = New Font("微软雅黑", 13F)
-        Label129.Location = New Point(0, 274)
-        Label129.Name = "Label129"
-        Label129.Padding = New Padding(20, 20, 0, 5)
-        Label129.Size = New Size(102, 49)
-        Label129.TabIndex = 32
-        Label129.Text = "检查更新"
+        Label检查更新.AutoSize = True
+        Label检查更新.Dock = DockStyle.Top
+        Label检查更新.Font = New Font("微软雅黑", 13F)
+        Label检查更新.Location = New Point(0, 274)
+        Label检查更新.Name = "Label检查更新"
+        Label检查更新.Padding = New Padding(20, 20, 0, 5)
+        Label检查更新.Size = New Size(102, 49)
+        Label检查更新.TabIndex = 32
+        Label检查更新.Tag = "Label.CheckUpdate"
+        Label检查更新.Text = "检查更新"
         ' 
-        ' LinkLabel8
+        ' LinkLabel官网2
         ' 
-        LinkLabel8.ActiveLinkColor = Color.CornflowerBlue
-        LinkLabel8.AutoSize = True
-        LinkLabel8.Dock = DockStyle.Top
-        LinkLabel8.Font = New Font("微软雅黑", 10F)
-        LinkLabel8.LinkBehavior = LinkBehavior.HoverUnderline
-        LinkLabel8.LinkColor = Color.CornflowerBlue
-        LinkLabel8.Location = New Point(0, 249)
-        LinkLabel8.Name = "LinkLabel8"
-        LinkLabel8.Padding = New Padding(20, 5, 0, 0)
-        LinkLabel8.Size = New Size(113, 25)
-        LinkLabel8.TabIndex = 31
-        LinkLabel8.TabStop = True
-        LinkLabel8.Text = "官网 3fui.top"
+        LinkLabel官网2.ActiveLinkColor = Color.CornflowerBlue
+        LinkLabel官网2.AutoSize = True
+        LinkLabel官网2.Dock = DockStyle.Top
+        LinkLabel官网2.Font = New Font("微软雅黑", 10F)
+        LinkLabel官网2.LinkBehavior = LinkBehavior.HoverUnderline
+        LinkLabel官网2.LinkColor = Color.CornflowerBlue
+        LinkLabel官网2.Location = New Point(0, 249)
+        LinkLabel官网2.Name = "LinkLabel官网2"
+        LinkLabel官网2.Padding = New Padding(20, 5, 0, 0)
+        LinkLabel官网2.Size = New Size(113, 25)
+        LinkLabel官网2.TabIndex = 31
+        LinkLabel官网2.TabStop = True
+        LinkLabel官网2.Tag = "Label.OfficialWebsite2"
+        LinkLabel官网2.Text = "官网 3fui.top"
         ' 
-        ' LinkLabel1
+        ' LinkLabel官网1
         ' 
-        LinkLabel1.ActiveLinkColor = Color.CornflowerBlue
-        LinkLabel1.AutoSize = True
-        LinkLabel1.Dock = DockStyle.Top
-        LinkLabel1.Font = New Font("微软雅黑", 10F)
-        LinkLabel1.LinkBehavior = LinkBehavior.HoverUnderline
-        LinkLabel1.LinkColor = Color.CornflowerBlue
-        LinkLabel1.Location = New Point(0, 224)
-        LinkLabel1.Name = "LinkLabel1"
-        LinkLabel1.Padding = New Padding(20, 5, 0, 0)
-        LinkLabel1.Size = New Size(175, 25)
-        LinkLabel1.TabIndex = 30
-        LinkLabel1.TabStop = True
-        LinkLabel1.Text = "官网 ffmpegfreeui.top"
+        LinkLabel官网1.ActiveLinkColor = Color.CornflowerBlue
+        LinkLabel官网1.AutoSize = True
+        LinkLabel官网1.Dock = DockStyle.Top
+        LinkLabel官网1.Font = New Font("微软雅黑", 10F)
+        LinkLabel官网1.LinkBehavior = LinkBehavior.HoverUnderline
+        LinkLabel官网1.LinkColor = Color.CornflowerBlue
+        LinkLabel官网1.Location = New Point(0, 224)
+        LinkLabel官网1.Name = "LinkLabel官网1"
+        LinkLabel官网1.Padding = New Padding(20, 5, 0, 0)
+        LinkLabel官网1.Size = New Size(175, 25)
+        LinkLabel官网1.TabIndex = 30
+        LinkLabel官网1.TabStop = True
+        LinkLabel官网1.Tag = "Label.OfficialWebsite1"
+        LinkLabel官网1.Text = "官网 ffmpegfreeui.top"
         ' 
-        ' LinkLabel6
+        ' LinkLabel作者主页
         ' 
-        LinkLabel6.ActiveLinkColor = Color.Orchid
-        LinkLabel6.AutoSize = True
-        LinkLabel6.Dock = DockStyle.Top
-        LinkLabel6.Font = New Font("微软雅黑", 10F)
-        LinkLabel6.LinkBehavior = LinkBehavior.HoverUnderline
-        LinkLabel6.LinkColor = Color.Orchid
-        LinkLabel6.Location = New Point(0, 199)
-        LinkLabel6.Name = "LinkLabel6"
-        LinkLabel6.Padding = New Padding(20, 5, 0, 0)
-        LinkLabel6.Size = New Size(169, 25)
-        LinkLabel6.TabIndex = 28
-        LinkLabel6.TabStop = True
-        LinkLabel6.Text = "作者主页（哔哩哔哩）"
+        LinkLabel作者主页.ActiveLinkColor = Color.Orchid
+        LinkLabel作者主页.AutoSize = True
+        LinkLabel作者主页.Dock = DockStyle.Top
+        LinkLabel作者主页.Font = New Font("微软雅黑", 10F)
+        LinkLabel作者主页.LinkBehavior = LinkBehavior.HoverUnderline
+        LinkLabel作者主页.LinkColor = Color.Orchid
+        LinkLabel作者主页.Location = New Point(0, 199)
+        LinkLabel作者主页.Name = "LinkLabel作者主页"
+        LinkLabel作者主页.Padding = New Padding(20, 5, 0, 0)
+        LinkLabel作者主页.Size = New Size(169, 25)
+        LinkLabel作者主页.TabIndex = 28
+        LinkLabel作者主页.TabStop = True
+        LinkLabel作者主页.Tag = "Label.bilibili"
+        LinkLabel作者主页.Text = "作者主页（哔哩哔哩）"
         ' 
-        ' LinkLabel5
+        ' LinkLabel赞助一下
         ' 
-        LinkLabel5.ActiveLinkColor = Color.MediumPurple
-        LinkLabel5.AutoSize = True
-        LinkLabel5.Dock = DockStyle.Top
-        LinkLabel5.Font = New Font("微软雅黑", 10F)
-        LinkLabel5.LinkBehavior = LinkBehavior.HoverUnderline
-        LinkLabel5.LinkColor = Color.MediumPurple
-        LinkLabel5.Location = New Point(0, 174)
-        LinkLabel5.Name = "LinkLabel5"
-        LinkLabel5.Padding = New Padding(20, 5, 0, 0)
-        LinkLabel5.Size = New Size(156, 25)
-        LinkLabel5.TabIndex = 27
-        LinkLabel5.TabStop = True
-        LinkLabel5.Text = "赞助一下（afdian）"
+        LinkLabel赞助一下.ActiveLinkColor = Color.MediumPurple
+        LinkLabel赞助一下.AutoSize = True
+        LinkLabel赞助一下.Dock = DockStyle.Top
+        LinkLabel赞助一下.Font = New Font("微软雅黑", 10F)
+        LinkLabel赞助一下.LinkBehavior = LinkBehavior.HoverUnderline
+        LinkLabel赞助一下.LinkColor = Color.MediumPurple
+        LinkLabel赞助一下.Location = New Point(0, 174)
+        LinkLabel赞助一下.Name = "LinkLabel赞助一下"
+        LinkLabel赞助一下.Padding = New Padding(20, 5, 0, 0)
+        LinkLabel赞助一下.Size = New Size(156, 25)
+        LinkLabel赞助一下.TabIndex = 27
+        LinkLabel赞助一下.TabStop = True
+        LinkLabel赞助一下.Tag = "Label.afdian"
+        LinkLabel赞助一下.Text = "赞助一下（afdian）"
         ' 
-        ' LinkLabel4
+        ' LinkLabel下载FFmpeg2
         ' 
-        LinkLabel4.ActiveLinkColor = Color.OliveDrab
-        LinkLabel4.AutoSize = True
-        LinkLabel4.Dock = DockStyle.Top
-        LinkLabel4.Font = New Font("微软雅黑", 10F)
-        LinkLabel4.LinkBehavior = LinkBehavior.HoverUnderline
-        LinkLabel4.LinkColor = Color.OliveDrab
-        LinkLabel4.Location = New Point(0, 149)
-        LinkLabel4.Name = "LinkLabel4"
-        LinkLabel4.Padding = New Padding(20, 5, 0, 0)
-        LinkLabel4.Size = New Size(176, 25)
-        LinkLabel4.TabIndex = 26
-        LinkLabel4.TabStop = True
-        LinkLabel4.Text = "下载 FFmpeg（BtbN）"
+        LinkLabel下载FFmpeg2.ActiveLinkColor = Color.OliveDrab
+        LinkLabel下载FFmpeg2.AutoSize = True
+        LinkLabel下载FFmpeg2.Dock = DockStyle.Top
+        LinkLabel下载FFmpeg2.Font = New Font("微软雅黑", 10F)
+        LinkLabel下载FFmpeg2.LinkBehavior = LinkBehavior.HoverUnderline
+        LinkLabel下载FFmpeg2.LinkColor = Color.OliveDrab
+        LinkLabel下载FFmpeg2.Location = New Point(0, 149)
+        LinkLabel下载FFmpeg2.Name = "LinkLabel下载FFmpeg2"
+        LinkLabel下载FFmpeg2.Padding = New Padding(20, 5, 0, 0)
+        LinkLabel下载FFmpeg2.Size = New Size(176, 25)
+        LinkLabel下载FFmpeg2.TabIndex = 26
+        LinkLabel下载FFmpeg2.TabStop = True
+        LinkLabel下载FFmpeg2.Tag = "Label.DownloadFFmpegBtbN"
+        LinkLabel下载FFmpeg2.Text = "下载 FFmpeg（BtbN）"
         ' 
-        ' LinkLabel3
+        ' LinkLabel下载FFmpeg1
         ' 
-        LinkLabel3.ActiveLinkColor = Color.OliveDrab
-        LinkLabel3.AutoSize = True
-        LinkLabel3.Dock = DockStyle.Top
-        LinkLabel3.Font = New Font("微软雅黑", 10F)
-        LinkLabel3.LinkBehavior = LinkBehavior.HoverUnderline
-        LinkLabel3.LinkColor = Color.OliveDrab
-        LinkLabel3.Location = New Point(0, 124)
-        LinkLabel3.Name = "LinkLabel3"
-        LinkLabel3.Padding = New Padding(20, 5, 0, 0)
-        LinkLabel3.Size = New Size(202, 25)
-        LinkLabel3.TabIndex = 25
-        LinkLabel3.TabStop = True
-        LinkLabel3.Text = "下载 FFmpeg（gyan.dev）"
+        LinkLabel下载FFmpeg1.ActiveLinkColor = Color.OliveDrab
+        LinkLabel下载FFmpeg1.AutoSize = True
+        LinkLabel下载FFmpeg1.Dock = DockStyle.Top
+        LinkLabel下载FFmpeg1.Font = New Font("微软雅黑", 10F)
+        LinkLabel下载FFmpeg1.LinkBehavior = LinkBehavior.HoverUnderline
+        LinkLabel下载FFmpeg1.LinkColor = Color.OliveDrab
+        LinkLabel下载FFmpeg1.Location = New Point(0, 124)
+        LinkLabel下载FFmpeg1.Name = "LinkLabel下载FFmpeg1"
+        LinkLabel下载FFmpeg1.Padding = New Padding(20, 5, 0, 0)
+        LinkLabel下载FFmpeg1.Size = New Size(202, 25)
+        LinkLabel下载FFmpeg1.TabIndex = 25
+        LinkLabel下载FFmpeg1.TabStop = True
+        LinkLabel下载FFmpeg1.Tag = "Label.DownloadFFmpegGyandev"
+        LinkLabel下载FFmpeg1.Text = "下载 FFmpeg（gyan.dev）"
         ' 
-        ' LinkLabel2
+        ' LinkLabelFFmpeg官方文档
         ' 
-        LinkLabel2.ActiveLinkColor = Color.OliveDrab
-        LinkLabel2.AutoSize = True
-        LinkLabel2.Dock = DockStyle.Top
-        LinkLabel2.Font = New Font("微软雅黑", 10F)
-        LinkLabel2.LinkBehavior = LinkBehavior.HoverUnderline
-        LinkLabel2.LinkColor = Color.OliveDrab
-        LinkLabel2.Location = New Point(0, 99)
-        LinkLabel2.Name = "LinkLabel2"
-        LinkLabel2.Padding = New Padding(20, 5, 0, 0)
-        LinkLabel2.Size = New Size(245, 25)
-        LinkLabel2.TabIndex = 24
-        LinkLabel2.TabStop = True
-        LinkLabel2.Text = "FFmpeg 官方文档（ffmpeg.org）"
+        LinkLabelFFmpeg官方文档.ActiveLinkColor = Color.OliveDrab
+        LinkLabelFFmpeg官方文档.AutoSize = True
+        LinkLabelFFmpeg官方文档.Dock = DockStyle.Top
+        LinkLabelFFmpeg官方文档.Font = New Font("微软雅黑", 10F)
+        LinkLabelFFmpeg官方文档.LinkBehavior = LinkBehavior.HoverUnderline
+        LinkLabelFFmpeg官方文档.LinkColor = Color.OliveDrab
+        LinkLabelFFmpeg官方文档.Location = New Point(0, 99)
+        LinkLabelFFmpeg官方文档.Name = "LinkLabelFFmpeg官方文档"
+        LinkLabelFFmpeg官方文档.Padding = New Padding(20, 5, 0, 0)
+        LinkLabelFFmpeg官方文档.Size = New Size(245, 25)
+        LinkLabelFFmpeg官方文档.TabIndex = 24
+        LinkLabelFFmpeg官方文档.TabStop = True
+        LinkLabelFFmpeg官方文档.Tag = "Label.FFmpegOfficialDoc"
+        LinkLabelFFmpeg官方文档.Text = "FFmpeg 官方文档（ffmpeg.org）"
         ' 
-        ' LinkLabel7
+        ' LinkLabel3FUI仓库
         ' 
-        LinkLabel7.ActiveLinkColor = Color.OliveDrab
-        LinkLabel7.AutoSize = True
-        LinkLabel7.Dock = DockStyle.Top
-        LinkLabel7.Font = New Font("微软雅黑", 10F)
-        LinkLabel7.LinkBehavior = LinkBehavior.HoverUnderline
-        LinkLabel7.LinkColor = Color.OliveDrab
-        LinkLabel7.Location = New Point(0, 74)
-        LinkLabel7.Name = "LinkLabel7"
-        LinkLabel7.Padding = New Padding(20, 5, 0, 0)
-        LinkLabel7.Size = New Size(142, 25)
-        LinkLabel7.TabIndex = 29
-        LinkLabel7.TabStop = True
-        LinkLabel7.Text = "3FUI GitHub 仓库"
+        LinkLabel3FUI仓库.ActiveLinkColor = Color.OliveDrab
+        LinkLabel3FUI仓库.AutoSize = True
+        LinkLabel3FUI仓库.Dock = DockStyle.Top
+        LinkLabel3FUI仓库.Font = New Font("微软雅黑", 10F)
+        LinkLabel3FUI仓库.LinkBehavior = LinkBehavior.HoverUnderline
+        LinkLabel3FUI仓库.LinkColor = Color.OliveDrab
+        LinkLabel3FUI仓库.Location = New Point(0, 74)
+        LinkLabel3FUI仓库.Name = "LinkLabel3FUI仓库"
+        LinkLabel3FUI仓库.Padding = New Padding(20, 5, 0, 0)
+        LinkLabel3FUI仓库.Size = New Size(142, 25)
+        LinkLabel3FUI仓库.TabIndex = 29
+        LinkLabel3FUI仓库.TabStop = True
+        LinkLabel3FUI仓库.Tag = "Label.3FUIGithubRepository"
+        LinkLabel3FUI仓库.Text = "3FUI GitHub 仓库"
         ' 
-        ' LinkLabel9
+        ' LinkLabel不要相信AI
         ' 
-        LinkLabel9.ActiveLinkColor = Color.FromArgb(CByte(255), CByte(128), CByte(0))
-        LinkLabel9.AutoSize = True
-        LinkLabel9.Dock = DockStyle.Top
-        LinkLabel9.Font = New Font("微软雅黑", 10F)
-        LinkLabel9.LinkBehavior = LinkBehavior.HoverUnderline
-        LinkLabel9.LinkColor = Color.FromArgb(CByte(255), CByte(128), CByte(0))
-        LinkLabel9.Location = New Point(0, 49)
-        LinkLabel9.Name = "LinkLabel9"
-        LinkLabel9.Padding = New Padding(20, 5, 0, 0)
-        LinkLabel9.Size = New Size(121, 25)
-        LinkLabel9.TabIndex = 38
-        LinkLabel9.TabStop = True
-        LinkLabel9.Text = "不要相信 AI ！"
+        LinkLabel不要相信AI.ActiveLinkColor = Color.Peru
+        LinkLabel不要相信AI.AutoSize = True
+        LinkLabel不要相信AI.Dock = DockStyle.Top
+        LinkLabel不要相信AI.Font = New Font("微软雅黑", 10F)
+        LinkLabel不要相信AI.LinkBehavior = LinkBehavior.HoverUnderline
+        LinkLabel不要相信AI.LinkColor = Color.Peru
+        LinkLabel不要相信AI.Location = New Point(0, 49)
+        LinkLabel不要相信AI.Name = "LinkLabel不要相信AI"
+        LinkLabel不要相信AI.Padding = New Padding(20, 5, 0, 0)
+        LinkLabel不要相信AI.Size = New Size(121, 25)
+        LinkLabel不要相信AI.TabIndex = 38
+        LinkLabel不要相信AI.TabStop = True
+        LinkLabel不要相信AI.Tag = "Label.DonotTrustAI"
+        LinkLabel不要相信AI.Text = "不要相信 AI ！"
         ' 
-        ' Label127
+        ' Label链接和文档
         ' 
-        Label127.AutoSize = True
-        Label127.Dock = DockStyle.Top
-        Label127.Font = New Font("微软雅黑", 13F)
-        Label127.Location = New Point(0, 0)
-        Label127.Name = "Label127"
-        Label127.Padding = New Padding(20, 20, 0, 5)
-        Label127.Size = New Size(120, 49)
-        Label127.TabIndex = 23
-        Label127.Text = "链接和文档"
+        Label链接和文档.AutoSize = True
+        Label链接和文档.Dock = DockStyle.Top
+        Label链接和文档.Font = New Font("微软雅黑", 13F)
+        Label链接和文档.Location = New Point(0, 0)
+        Label链接和文档.Name = "Label链接和文档"
+        Label链接和文档.Padding = New Padding(20, 20, 0, 5)
+        Label链接和文档.Size = New Size(120, 49)
+        Label链接和文档.TabIndex = 23
+        Label链接和文档.Tag = "Label.LinkAndDocument"
+        Label链接和文档.Text = "链接和文档"
         ' 
         ' 界面_起始页
         ' 
@@ -600,31 +621,31 @@ Partial Class 界面_起始页
     Friend WithEvents LinkLabel清理内存 As LinkLabel
     Friend WithEvents Panel5 As Panel
     Friend WithEvents Panel新闻列表面板 As Panel
-    Friend WithEvents Label29 As Label
+    Friend WithEvents Label新闻列表 As Label
     Friend WithEvents Panel44 As Panel
-    Friend WithEvents Label35 As Label
-    Friend WithEvents Label28 As Label
-    Friend WithEvents Label1 As Label
-    Friend WithEvents Label21 As Label
-    Friend WithEvents Label14 As Label
-    Friend WithEvents Label126 As Label
-    Friend WithEvents Label9 As Label
+    Friend WithEvents Label高DPI支持描述 As Label
+    Friend WithEvents Label高DPI支持 As Label
+    Friend WithEvents Label帮助信息描述2 As Label
+    Friend WithEvents Label帮助信息描述1 As Label
+    Friend WithEvents Label帮助信息 As Label
+    Friend WithEvents Label提示板描述 As Label
+    Friend WithEvents Label提示板 As Label
     Friend WithEvents Panel7 As Panel
     Friend WithEvents Label122 As Label
     Friend WithEvents Label75 As Label
     Friend WithEvents Label73 As Label
     Friend WithEvents Label65 As Label
     Friend WithEvents Label64 As Label
-    Friend WithEvents Label129 As Label
-    Friend WithEvents LinkLabel8 As LinkLabel
-    Friend WithEvents LinkLabel1 As LinkLabel
-    Friend WithEvents LinkLabel6 As LinkLabel
-    Friend WithEvents LinkLabel5 As LinkLabel
-    Friend WithEvents LinkLabel4 As LinkLabel
-    Friend WithEvents LinkLabel3 As LinkLabel
-    Friend WithEvents LinkLabel2 As LinkLabel
-    Friend WithEvents LinkLabel7 As LinkLabel
-    Friend WithEvents Label127 As Label
-    Friend WithEvents LinkLabel9 As LinkLabel
+    Friend WithEvents Label检查更新 As Label
+    Friend WithEvents LinkLabel官网2 As LinkLabel
+    Friend WithEvents LinkLabel官网1 As LinkLabel
+    Friend WithEvents LinkLabel作者主页 As LinkLabel
+    Friend WithEvents LinkLabel赞助一下 As LinkLabel
+    Friend WithEvents LinkLabel下载FFmpeg2 As LinkLabel
+    Friend WithEvents LinkLabel下载FFmpeg1 As LinkLabel
+    Friend WithEvents LinkLabelFFmpeg官方文档 As LinkLabel
+    Friend WithEvents LinkLabel3FUI仓库 As LinkLabel
+    Friend WithEvents Label链接和文档 As Label
+    Friend WithEvents LinkLabel不要相信AI As LinkLabel
 
 End Class

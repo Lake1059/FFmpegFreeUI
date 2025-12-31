@@ -230,6 +230,7 @@ Partial Class 界面_设置
         TabPage界面显示.Name = "TabPage界面显示"
         TabPage界面显示.Size = New Size(700, 616)
         TabPage界面显示.TabIndex = 0
+        TabPage界面显示.Tag = "TabPage.Settings.UIDisplay"
         TabPage界面显示.Text = "界面显示"
         ' 
         ' Panel23
@@ -743,6 +744,7 @@ Partial Class 界面_设置
         TabPage性能调度.Name = "TabPage性能调度"
         TabPage性能调度.Size = New Size(700, 616)
         TabPage性能调度.TabIndex = 1
+        TabPage性能调度.Tag = "TabPage.Settings.Performance"
         TabPage性能调度.Text = "性能调度"
         ' 
         ' LinkLabel1
@@ -1024,6 +1026,7 @@ Partial Class 界面_设置
         TabPage功能设定.Name = "TabPage功能设定"
         TabPage功能设定.Size = New Size(700, 616)
         TabPage功能设定.TabIndex = 4
+        TabPage功能设定.Tag = "TabPage.Settings.Function"
         TabPage功能设定.Text = "功能设定"
         ' 
         ' Panel24
@@ -1546,6 +1549,7 @@ Partial Class 界面_设置
         TabPage转译运行.Name = "TabPage转译运行"
         TabPage转译运行.Size = New Size(700, 616)
         TabPage转译运行.TabIndex = 2
+        TabPage转译运行.Tag = "TabPage.Settings.TranslationRun"
         TabPage转译运行.Text = "转译运行"
         ' 
         ' Panel46
@@ -1691,6 +1695,7 @@ Partial Class 界面_设置
         TabPage个性化.Name = "TabPage个性化"
         TabPage个性化.Size = New Size(700, 616)
         TabPage个性化.TabIndex = 3
+        TabPage个性化.Tag = "TabPage.Settings.Personalization"
         TabPage个性化.Text = "个性化"
         ' 
         ' Panel3
@@ -2279,6 +2284,7 @@ Partial Class 界面_设置
         TabPage隐私设置.Name = "TabPage隐私设置"
         TabPage隐私设置.Size = New Size(700, 616)
         TabPage隐私设置.TabIndex = 6
+        TabPage隐私设置.Tag = "TabPage.Settings.Privacy"
         TabPage隐私设置.Text = "隐私设置"
         ' 
         ' Panel14

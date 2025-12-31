@@ -56,6 +56,8 @@ Public Class Form1
 
     Private Sub Form1_Shown(sender As Object, e As EventArgs) Handles Me.Shown
         Me.Panel顶部视觉修正区域_一级选项卡.Width = Me.UiTabControlMenu1.ItemSize.Width + 1
+        起始页面.调整界面()
+
         'bro薛定谔的猫知道吧，你不搞个监控这玩意就是随机态
         If UI同步上下文 Is Nothing Then MsgBox("警告：UI 同步上下文是空的，继续使用软件将导致崩溃，请联系开发者排查问题", MsgBoxStyle.Critical)
 
