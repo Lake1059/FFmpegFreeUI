@@ -15,7 +15,7 @@ Public Class 暗黑上下文菜单自绘制
             Case "label"
                 item.Padding = New Padding(0)
             Case Else
-                item.Padding = New Padding(5 * Form1.DPI)
+                item.Padding = New Padding(5 * Form1.DPI, 3 * Form1.DPI, 5 * Form1.DPI, 3 * Form1.DPI)
         End Select
         item.Margin = New Padding(0)
         'If item.GetType() = GetType(ToolStripSeparator) Then
@@ -49,7 +49,7 @@ Public Class 暗黑上下文菜单自绘制
                 e.Item.AutoSize = False
                 e.Item.Margin = New Padding(0)
                 e.Item.Padding = New Padding(0)
-                e.Item.Height = 5 * Form1.DPI
+                e.Item.Height = 7 * Form1.DPI
                 Exit Sub
             Case Else
                 e.Item.AutoSize = False
@@ -77,7 +77,7 @@ Public Class 暗黑上下文菜单自绘制
                 Case Else
                     If e.Item.Selected Then
                         Using b As New SolidBrush(ColorTranslator.FromWin32(RGB(64, 64, 64)))
-                            g.FillRectangle(b, e.Item.ContentRectangle.Left + 5, e.Item.ContentRectangle.Top, e.Item.ContentRectangle.Width - 19, e.Item.ContentRectangle.Height)
+                            g.FillRectangle(b, e.Item.ContentRectangle.Left + 5 * Form1.DPI - 1, e.Item.ContentRectangle.Top, e.Item.ContentRectangle.Width - 18 * Form1.DPI, e.Item.ContentRectangle.Height)
                         End Using
                     End If
             End Select

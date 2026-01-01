@@ -120,6 +120,7 @@ Partial Class 界面_常规流程参数_V2
         TabPage视频参数画面帧 = New TabPage()
         Panel96 = New Panel()
         UiButton烧录字幕 = New Sunny.UI.UIButton()
+        Label68 = New Label()
         Label170 = New Label()
         Panel23 = New Panel()
         UiButton打开超分参数窗口 = New Sunny.UI.UIButton()
@@ -137,11 +138,10 @@ Partial Class 界面_常规流程参数_V2
         Label33 = New Label()
         Label34 = New Label()
         Panel21 = New Panel()
-        UiButton裁剪交互窗口 = New Sunny.UI.UIButton()
-        Label137 = New Label()
         UiTextBox画面裁剪滤镜参数 = New Sunny.UI.UITextBox()
+        Label137 = New Label()
+        UiButton画面裁剪窗口 = New Sunny.UI.UIButton()
         Label31 = New Label()
-        Label32 = New Label()
         Panel20 = New Panel()
         UiTextBox分辨率自动计算高度 = New Sunny.UI.UITextBox()
         Label35 = New Label()
@@ -189,6 +189,7 @@ Partial Class 界面_常规流程参数_V2
         Panel33 = New Panel()
         Label61 = New Label()
         UiComboBox色彩管理处理方式 = New Sunny.UI.UIComboBox()
+        Label143 = New Label()
         Panel90 = New Panel()
         Label59 = New Label()
         UiComboBox色调映射算法 = New Sunny.UI.UIComboBox()
@@ -387,6 +388,7 @@ Partial Class 界面_常规流程参数_V2
         Label109 = New Label()
         Label146 = New Label()
         TabPage流控制 = New TabPage()
+        Label32 = New Label()
         Panel64 = New Panel()
         Label108 = New Label()
         UiComboBox附件选项 = New Sunny.UI.UIComboBox()
@@ -1700,7 +1702,7 @@ Partial Class 界面_常规流程参数_V2
         TabPage视频参数编码器.Name = "TabPage视频参数编码器"
         TabPage视频参数编码器.Size = New Size(899, 650)
         TabPage视频参数编码器.TabIndex = 3
-        TabPage视频参数编码器.Tag = "TabPage.VideoParametersDecoder"
+        TabPage视频参数编码器.Tag = "TabPage.VideoParametersEncoder"
         TabPage视频参数编码器.Text = "视频参数 | 编码器"
         ' 
         ' Panel19
@@ -2178,6 +2180,7 @@ Partial Class 界面_常规流程参数_V2
         TabPage视频参数画面帧.AutoScroll = True
         TabPage视频参数画面帧.BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         TabPage视频参数画面帧.Controls.Add(Panel96)
+        TabPage视频参数画面帧.Controls.Add(Label68)
         TabPage视频参数画面帧.Controls.Add(Label170)
         TabPage视频参数画面帧.Controls.Add(Panel23)
         TabPage视频参数画面帧.Controls.Add(Label37)
@@ -2187,7 +2190,6 @@ Partial Class 界面_常规流程参数_V2
         TabPage视频参数画面帧.Controls.Add(Label34)
         TabPage视频参数画面帧.Controls.Add(Panel21)
         TabPage视频参数画面帧.Controls.Add(Label31)
-        TabPage视频参数画面帧.Controls.Add(Label32)
         TabPage视频参数画面帧.Controls.Add(Panel20)
         TabPage视频参数画面帧.Controls.Add(Label28)
         TabPage视频参数画面帧.Controls.Add(Label29)
@@ -2202,7 +2204,7 @@ Partial Class 界面_常规流程参数_V2
         ' 
         Panel96.Controls.Add(UiButton烧录字幕)
         Panel96.Dock = DockStyle.Top
-        Panel96.Location = New Point(0, 470)
+        Panel96.Location = New Point(0, 456)
         Panel96.Name = "Panel96"
         Panel96.Padding = New Padding(21, 10, 20, 0)
         Panel96.Size = New Size(899, 40)
@@ -2234,15 +2236,28 @@ Partial Class 界面_常规流程参数_V2
         UiButton烧录字幕.RectSelectedColor = Color.DarkGray
         UiButton烧录字幕.Size = New Size(175, 30)
         UiButton烧录字幕.TabIndex = 84
-        UiButton烧录字幕.Text = "烧录字幕"
+        UiButton烧录字幕.Text = "烧录字幕窗口"
         UiButton烧录字幕.TipsFont = New Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point, CByte(134))
+        ' 
+        ' Label68
+        ' 
+        Label68.AutoSize = True
+        Label68.Dock = DockStyle.Top
+        Label68.Font = New Font("微软雅黑", 10F)
+        Label68.ForeColor = Color.Gray
+        Label68.Location = New Point(0, 431)
+        Label68.Name = "Label68"
+        Label68.Padding = New Padding(16, 5, 0, 0)
+        Label68.Size = New Size(165, 25)
+        Label68.TabIndex = 26
+        Label68.Text = "更多视频效果敬请期待"
         ' 
         ' Label170
         ' 
         Label170.AutoSize = True
         Label170.Dock = DockStyle.Top
         Label170.Font = New Font("微软雅黑", 13F)
-        Label170.Location = New Point(0, 426)
+        Label170.Location = New Point(0, 387)
         Label170.Name = "Label170"
         Label170.Padding = New Padding(16, 20, 0, 0)
         Label170.Size = New Size(62, 44)
@@ -2257,7 +2272,7 @@ Partial Class 界面_常规流程参数_V2
         Panel23.Controls.Add(Label145)
         Panel23.Controls.Add(UiButton打开插帧参数窗口)
         Panel23.Dock = DockStyle.Top
-        Panel23.Location = New Point(0, 386)
+        Panel23.Location = New Point(0, 347)
         Panel23.Name = "Panel23"
         Panel23.Padding = New Padding(21, 10, 20, 0)
         Panel23.Size = New Size(899, 40)
@@ -2374,7 +2389,7 @@ Partial Class 界面_常规流程参数_V2
         Label37.Dock = DockStyle.Top
         Label37.Font = New Font("微软雅黑", 10F)
         Label37.ForeColor = Color.Gray
-        Label37.Location = New Point(0, 361)
+        Label37.Location = New Point(0, 322)
         Label37.Name = "Label37"
         Label37.Padding = New Padding(16, 5, 0, 0)
         Label37.Size = New Size(249, 25)
@@ -2386,7 +2401,7 @@ Partial Class 界面_常规流程参数_V2
         Label38.AutoSize = True
         Label38.Dock = DockStyle.Top
         Label38.Font = New Font("微软雅黑", 13F)
-        Label38.Location = New Point(0, 317)
+        Label38.Location = New Point(0, 278)
         Label38.Name = "Label38"
         Label38.Padding = New Padding(16, 20, 0, 0)
         Label38.Size = New Size(186, 44)
@@ -2400,7 +2415,7 @@ Partial Class 界面_常规流程参数_V2
         Panel22.Controls.Add(Label36)
         Panel22.Controls.Add(UiComboBox帧速率)
         Panel22.Dock = DockStyle.Top
-        Panel22.Location = New Point(0, 277)
+        Panel22.Location = New Point(0, 238)
         Panel22.Name = "Panel22"
         Panel22.Padding = New Padding(21, 10, 20, 0)
         Panel22.Size = New Size(899, 40)
@@ -2454,7 +2469,7 @@ Partial Class 界面_常规流程参数_V2
         Label36.Name = "Label36"
         Label36.Size = New Size(200, 30)
         Label36.TabIndex = 91
-        Label36.Text = "变化低于此值则抽帧："
+        Label36.Text = "变化低于此则抽帧："
         Label36.TextAlign = ContentAlignment.MiddleRight
         ' 
         ' UiComboBox帧速率
@@ -2490,7 +2505,7 @@ Partial Class 界面_常规流程参数_V2
         UiComboBox帧速率.SymbolSize = 24
         UiComboBox帧速率.TabIndex = 68
         UiComboBox帧速率.TextAlignment = ContentAlignment.MiddleLeft
-        UiComboBox帧速率.Watermark = "帧率 -r"
+        UiComboBox帧速率.Watermark = " -r"
         ' 
         ' Label33
         ' 
@@ -2498,19 +2513,19 @@ Partial Class 界面_常规流程参数_V2
         Label33.Dock = DockStyle.Top
         Label33.Font = New Font("微软雅黑", 10F)
         Label33.ForeColor = Color.Gray
-        Label33.Location = New Point(0, 252)
+        Label33.Location = New Point(0, 213)
         Label33.Name = "Label33"
         Label33.Padding = New Padding(16, 5, 0, 0)
-        Label33.Size = New Size(473, 25)
+        Label33.Size = New Size(515, 25)
         Label33.TabIndex = 18
-        Label33.Text = "指定每秒钟有多少张画面，如果视频还需要用外挂字幕观看则不要抽帧！" & vbCrLf
+        Label33.Text = "指定帧率 (固定帧率)；抽帧 (动态帧率)；如果还要用外挂字幕观看则不要抽帧！" & vbCrLf
         ' 
         ' Label34
         ' 
         Label34.AutoSize = True
         Label34.Dock = DockStyle.Top
         Label34.Font = New Font("微软雅黑", 13F)
-        Label34.Location = New Point(0, 208)
+        Label34.Location = New Point(0, 169)
         Label34.Name = "Label34"
         Label34.Padding = New Padding(16, 20, 0, 0)
         Label34.Size = New Size(62, 44)
@@ -2519,55 +2534,15 @@ Partial Class 界面_常规流程参数_V2
         ' 
         ' Panel21
         ' 
-        Panel21.Controls.Add(UiButton裁剪交互窗口)
-        Panel21.Controls.Add(Label137)
         Panel21.Controls.Add(UiTextBox画面裁剪滤镜参数)
+        Panel21.Controls.Add(Label137)
+        Panel21.Controls.Add(UiButton画面裁剪窗口)
         Panel21.Dock = DockStyle.Top
-        Panel21.Location = New Point(0, 168)
+        Panel21.Location = New Point(0, 129)
         Panel21.Name = "Panel21"
         Panel21.Padding = New Padding(21, 10, 20, 0)
         Panel21.Size = New Size(899, 40)
         Panel21.TabIndex = 16
-        ' 
-        ' UiButton裁剪交互窗口
-        ' 
-        UiButton裁剪交互窗口.Dock = DockStyle.Left
-        UiButton裁剪交互窗口.FillColor = Color.FromArgb(CByte(56), CByte(56), CByte(56))
-        UiButton裁剪交互窗口.FillColor2 = Color.FromArgb(CByte(56), CByte(56), CByte(56))
-        UiButton裁剪交互窗口.FillDisableColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
-        UiButton裁剪交互窗口.FillHoverColor = Color.FromArgb(CByte(56), CByte(56), CByte(56))
-        UiButton裁剪交互窗口.FillPressColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
-        UiButton裁剪交互窗口.FillSelectedColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiButton裁剪交互窗口.Font = New Font("微软雅黑", 10F)
-        UiButton裁剪交互窗口.ForeColor = Color.Silver
-        UiButton裁剪交互窗口.ForeDisableColor = Color.Silver
-        UiButton裁剪交互窗口.ForeHoverColor = Color.Silver
-        UiButton裁剪交互窗口.ForePressColor = Color.Silver
-        UiButton裁剪交互窗口.ForeSelectedColor = Color.Silver
-        UiButton裁剪交互窗口.Location = New Point(206, 10)
-        UiButton裁剪交互窗口.MinimumSize = New Size(1, 1)
-        UiButton裁剪交互窗口.Name = "UiButton裁剪交互窗口"
-        UiButton裁剪交互窗口.Radius = 30
-        UiButton裁剪交互窗口.RectColor = Color.FromArgb(CByte(56), CByte(56), CByte(56))
-        UiButton裁剪交互窗口.RectDisableColor = Color.FromArgb(CByte(56), CByte(56), CByte(56))
-        UiButton裁剪交互窗口.RectHoverColor = Color.DarkGray
-        UiButton裁剪交互窗口.RectPressColor = Color.FromArgb(CByte(64), CByte(148), CByte(64))
-        UiButton裁剪交互窗口.RectSelectedColor = Color.DarkGray
-        UiButton裁剪交互窗口.Size = New Size(175, 30)
-        UiButton裁剪交互窗口.TabIndex = 83
-        UiButton裁剪交互窗口.Text = "裁剪交互窗口"
-        UiButton裁剪交互窗口.TipsFont = New Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point, CByte(134))
-        ' 
-        ' Label137
-        ' 
-        Label137.Dock = DockStyle.Left
-        Label137.ForeColor = Color.Gray
-        Label137.Location = New Point(196, 10)
-        Label137.Name = "Label137"
-        Label137.Padding = New Padding(10, 0, 0, 0)
-        Label137.Size = New Size(10, 30)
-        Label137.TabIndex = 82
-        Label137.TextAlign = ContentAlignment.MiddleLeft
         ' 
         ' UiTextBox画面裁剪滤镜参数
         ' 
@@ -2580,7 +2555,7 @@ Partial Class 界面_常规流程参数_V2
         UiTextBox画面裁剪滤镜参数.ForeColor = Color.Silver
         UiTextBox画面裁剪滤镜参数.ForeDisableColor = Color.Silver
         UiTextBox画面裁剪滤镜参数.ForeReadOnlyColor = Color.Silver
-        UiTextBox画面裁剪滤镜参数.Location = New Point(21, 10)
+        UiTextBox画面裁剪滤镜参数.Location = New Point(206, 10)
         UiTextBox画面裁剪滤镜参数.Margin = New Padding(4, 5, 4, 5)
         UiTextBox画面裁剪滤镜参数.MinimumSize = New Size(1, 16)
         UiTextBox画面裁剪滤镜参数.Name = "UiTextBox画面裁剪滤镜参数"
@@ -2593,7 +2568,47 @@ Partial Class 界面_常规流程参数_V2
         UiTextBox画面裁剪滤镜参数.Size = New Size(175, 30)
         UiTextBox画面裁剪滤镜参数.TabIndex = 81
         UiTextBox画面裁剪滤镜参数.TextAlignment = ContentAlignment.MiddleLeft
-        UiTextBox画面裁剪滤镜参数.Watermark = "画面裁剪 -crop"
+        UiTextBox画面裁剪滤镜参数.Watermark = "-crop"
+        ' 
+        ' Label137
+        ' 
+        Label137.Dock = DockStyle.Left
+        Label137.ForeColor = Color.Gray
+        Label137.Location = New Point(196, 10)
+        Label137.Name = "Label137"
+        Label137.Padding = New Padding(10, 0, 0, 0)
+        Label137.Size = New Size(10, 30)
+        Label137.TabIndex = 82
+        Label137.TextAlign = ContentAlignment.MiddleLeft
+        ' 
+        ' UiButton画面裁剪窗口
+        ' 
+        UiButton画面裁剪窗口.Dock = DockStyle.Left
+        UiButton画面裁剪窗口.FillColor = Color.FromArgb(CByte(56), CByte(56), CByte(56))
+        UiButton画面裁剪窗口.FillColor2 = Color.FromArgb(CByte(56), CByte(56), CByte(56))
+        UiButton画面裁剪窗口.FillDisableColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiButton画面裁剪窗口.FillHoverColor = Color.FromArgb(CByte(56), CByte(56), CByte(56))
+        UiButton画面裁剪窗口.FillPressColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        UiButton画面裁剪窗口.FillSelectedColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        UiButton画面裁剪窗口.Font = New Font("微软雅黑", 10F)
+        UiButton画面裁剪窗口.ForeColor = Color.Silver
+        UiButton画面裁剪窗口.ForeDisableColor = Color.Silver
+        UiButton画面裁剪窗口.ForeHoverColor = Color.Silver
+        UiButton画面裁剪窗口.ForePressColor = Color.Silver
+        UiButton画面裁剪窗口.ForeSelectedColor = Color.Silver
+        UiButton画面裁剪窗口.Location = New Point(21, 10)
+        UiButton画面裁剪窗口.MinimumSize = New Size(1, 1)
+        UiButton画面裁剪窗口.Name = "UiButton画面裁剪窗口"
+        UiButton画面裁剪窗口.Radius = 30
+        UiButton画面裁剪窗口.RectColor = Color.FromArgb(CByte(56), CByte(56), CByte(56))
+        UiButton画面裁剪窗口.RectDisableColor = Color.FromArgb(CByte(56), CByte(56), CByte(56))
+        UiButton画面裁剪窗口.RectHoverColor = Color.DarkGray
+        UiButton画面裁剪窗口.RectPressColor = Color.FromArgb(CByte(64), CByte(148), CByte(64))
+        UiButton画面裁剪窗口.RectSelectedColor = Color.DarkGray
+        UiButton画面裁剪窗口.Size = New Size(175, 30)
+        UiButton画面裁剪窗口.TabIndex = 83
+        UiButton画面裁剪窗口.Text = "画面裁剪窗口"
+        UiButton画面裁剪窗口.TipsFont = New Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point, CByte(134))
         ' 
         ' Label31
         ' 
@@ -2601,24 +2616,12 @@ Partial Class 界面_常规流程参数_V2
         Label31.Dock = DockStyle.Top
         Label31.Font = New Font("微软雅黑", 10F)
         Label31.ForeColor = Color.Gray
-        Label31.Location = New Point(0, 143)
+        Label31.Location = New Point(0, 99)
         Label31.Name = "Label31"
-        Label31.Padding = New Padding(16, 5, 0, 0)
-        Label31.Size = New Size(361, 25)
+        Label31.Padding = New Padding(16, 10, 0, 0)
+        Label31.Size = New Size(403, 30)
         Label31.TabIndex = 15
-        Label31.Text = "在画面中裁出一块区域；使用可视化交互！不要硬写！"
-        ' 
-        ' Label32
-        ' 
-        Label32.AutoSize = True
-        Label32.Dock = DockStyle.Top
-        Label32.Font = New Font("微软雅黑", 13F)
-        Label32.Location = New Point(0, 99)
-        Label32.Name = "Label32"
-        Label32.Padding = New Padding(16, 20, 0, 0)
-        Label32.Size = New Size(98, 44)
-        Label32.TabIndex = 14
-        Label32.Text = "画面裁剪"
+        Label31.Text = "画面裁剪可以与自动计算的分辨率一起使用，会先裁剪再缩放"
         ' 
         ' Panel20
         ' 
@@ -2740,7 +2743,7 @@ Partial Class 界面_常规流程参数_V2
         UiComboBox分辨率.SymbolSize = 24
         UiComboBox分辨率.TabIndex = 91
         UiComboBox分辨率.TextAlignment = ContentAlignment.MiddleLeft
-        UiComboBox分辨率.Watermark = "分辨率 -s"
+        UiComboBox分辨率.Watermark = "-s"
         ' 
         ' Label28
         ' 
@@ -2753,7 +2756,7 @@ Partial Class 界面_常规流程参数_V2
         Label28.Padding = New Padding(16, 5, 0, 0)
         Label28.Size = New Size(459, 25)
         Label28.TabIndex = 12
-        Label28.Text = "指定宽度和高度，如果需要缩放更推荐使用自动计算来维持原视频比例"
+        Label28.Text = "指定宽度和高度，建议优先考虑使用自动计算，这个是在滤镜里处理的"
         ' 
         ' Label29
         ' 
@@ -3174,7 +3177,7 @@ Partial Class 界面_常规流程参数_V2
         Label44.Padding = New Padding(16, 5, 0, 0)
         Label44.Size = New Size(445, 45)
         Label44.TabIndex = 19
-        Label44.Text = "传统的转码直接指定数据速率；对于压制工作这通常是不考虑的事情" & vbCrLf & "记得带上单位，例如 5000k、5m"
+        Label44.Text = "传统的转码直接指定数据速率；对于压制工作这通常是不考虑的事情" & vbCrLf & "记得带上单位，例如 5000k、5m；基础比特率与全局质量控制冲突"
         ' 
         ' Label45
         ' 
@@ -3362,6 +3365,7 @@ Partial Class 界面_常规流程参数_V2
         ' Panel40
         ' 
         Panel40.Controls.Add(Panel33)
+        Panel40.Controls.Add(Label143)
         Panel40.Controls.Add(Panel90)
         Panel40.Controls.Add(Panel32)
         Panel40.Controls.Add(Panel31)
@@ -3382,7 +3386,7 @@ Partial Class 界面_常规流程参数_V2
         Panel33.Controls.Add(Label61)
         Panel33.Controls.Add(UiComboBox色彩管理处理方式)
         Panel33.Dock = DockStyle.Top
-        Panel33.Location = New Point(0, 359)
+        Panel33.Location = New Point(0, 369)
         Panel33.Name = "Panel33"
         Panel33.Padding = New Padding(21, 10, 20, 0)
         Panel33.Size = New Size(699, 40)
@@ -3439,12 +3443,25 @@ Partial Class 界面_常规流程参数_V2
         UiComboBox色彩管理处理方式.TextAlignment = ContentAlignment.MiddleLeft
         UiComboBox色彩管理处理方式.Watermark = "处理方式"
         ' 
+        ' Label143
+        ' 
+        Label143.AutoSize = True
+        Label143.Dock = DockStyle.Top
+        Label143.Font = New Font("微软雅黑", 10F)
+        Label143.ForeColor = Color.Gray
+        Label143.Location = New Point(0, 339)
+        Label143.Name = "Label143"
+        Label143.Padding = New Padding(16, 10, 0, 0)
+        Label143.Size = New Size(221, 30)
+        Label143.TabIndex = 88
+        Label143.Text = "必须设置处理方式才会使用滤镜"
+        ' 
         ' Panel90
         ' 
         Panel90.Controls.Add(Label59)
         Panel90.Controls.Add(UiComboBox色调映射算法)
         Panel90.Dock = DockStyle.Top
-        Panel90.Location = New Point(0, 319)
+        Panel90.Location = New Point(0, 299)
         Panel90.Name = "Panel90"
         Panel90.Padding = New Padding(21, 10, 20, 0)
         Panel90.Size = New Size(699, 40)
@@ -3507,7 +3524,7 @@ Partial Class 界面_常规流程参数_V2
         Panel32.Controls.Add(Label65)
         Panel32.Controls.Add(UiComboBox色彩范围)
         Panel32.Dock = DockStyle.Top
-        Panel32.Location = New Point(0, 279)
+        Panel32.Location = New Point(0, 259)
         Panel32.Name = "Panel32"
         Panel32.Padding = New Padding(21, 10, 20, 0)
         Panel32.Size = New Size(699, 40)
@@ -3572,7 +3589,7 @@ Partial Class 界面_常规流程参数_V2
         Panel31.Controls.Add(Label64)
         Panel31.Controls.Add(UiComboBox传输特性)
         Panel31.Dock = DockStyle.Top
-        Panel31.Location = New Point(0, 239)
+        Panel31.Location = New Point(0, 219)
         Panel31.Name = "Panel31"
         Panel31.Padding = New Padding(21, 10, 20, 0)
         Panel31.Size = New Size(699, 40)
@@ -3637,7 +3654,7 @@ Partial Class 界面_常规流程参数_V2
         Panel29.Controls.Add(Label63)
         Panel29.Controls.Add(UiComboBox色域)
         Panel29.Dock = DockStyle.Top
-        Panel29.Location = New Point(0, 199)
+        Panel29.Location = New Point(0, 179)
         Panel29.Name = "Panel29"
         Panel29.Padding = New Padding(21, 10, 20, 0)
         Panel29.Size = New Size(699, 40)
@@ -3701,7 +3718,7 @@ Partial Class 界面_常规流程参数_V2
         Panel28.Controls.Add(Label62)
         Panel28.Controls.Add(UiComboBox矩阵系数)
         Panel28.Dock = DockStyle.Top
-        Panel28.Location = New Point(0, 159)
+        Panel28.Location = New Point(0, 139)
         Panel28.Name = "Panel28"
         Panel28.Padding = New Padding(21, 10, 20, 0)
         Panel28.Size = New Size(699, 40)
@@ -3765,19 +3782,19 @@ Partial Class 界面_常规流程参数_V2
         Label81.Dock = DockStyle.Top
         Label81.Font = New Font("微软雅黑", 10F)
         Label81.ForeColor = Color.Gray
-        Label81.Location = New Point(0, 129)
+        Label81.Location = New Point(0, 109)
         Label81.Name = "Label81"
         Label81.Padding = New Padding(16, 10, 0, 0)
-        Label81.Size = New Size(193, 30)
+        Label81.Size = New Size(347, 30)
         Label81.TabIndex = 22
-        Label81.Text = "除可选外所有选项都要设置"
+        Label81.Text = "虽然不强制要求全部设置，但滤镜可能有自己的逻辑"
         ' 
         ' Panel41
         ' 
         Panel41.Controls.Add(Label147)
         Panel41.Controls.Add(UiComboBox色彩空间滤镜选择)
         Panel41.Dock = DockStyle.Top
-        Panel41.Location = New Point(0, 89)
+        Panel41.Location = New Point(0, 69)
         Panel41.Name = "Panel41"
         Panel41.Padding = New Padding(21, 10, 20, 0)
         Panel41.Size = New Size(699, 40)
@@ -3793,7 +3810,7 @@ Partial Class 界面_常规流程参数_V2
         Label147.Padding = New Padding(10, 0, 0, 0)
         Label147.Size = New Size(458, 30)
         Label147.TabIndex = 90
-        Label147.Text = "如果不使用就不要挂着选择，滤镜有自己的默认逻辑"
+        Label147.Text = "先选择用于转换色彩的滤镜"
         Label147.TextAlign = ContentAlignment.MiddleLeft
         ' 
         ' UiComboBox色彩空间滤镜选择
@@ -3843,9 +3860,9 @@ Partial Class 界面_常规流程参数_V2
         Label80.Location = New Point(0, 44)
         Label80.Name = "Label80"
         Label80.Padding = New Padding(16, 5, 0, 0)
-        Label80.Size = New Size(351, 45)
+        Label80.Size = New Size(351, 25)
         Label80.TabIndex = 20
-        Label80.Text = "要转换色彩建议和上边的像素格式一起使用" & vbCrLf & "zscale (CPU)；libplacebo (GPU) 转换杜比视界推荐"
+        Label80.Text = "zscale (CPU)；libplacebo (GPU) 转换杜比视界推荐"
         ' 
         ' Label60
         ' 
@@ -3917,9 +3934,9 @@ Partial Class 界面_常规流程参数_V2
         Label57.Location = New Point(0, 34)
         Label57.Name = "Label57"
         Label57.Padding = New Padding(16, 5, 0, 0)
-        Label57.Size = New Size(403, 25)
+        Label57.Size = New Size(445, 25)
         Label57.TabIndex = 16
-        Label57.Text = "指定像素如何存储；此处将跟随选择的编码器显示可用的选项"
+        Label57.Text = "指定像素如何存储；下拉选项跟随选择的编码器，当然也可以自己写"
         ' 
         ' Label58
         ' 
@@ -4771,9 +4788,9 @@ Partial Class 界面_常规流程参数_V2
         Label66.Location = New Point(0, 34)
         Label66.Name = "Label66"
         Label66.Padding = New Padding(16, 5, 0, 0)
-        Label66.Size = New Size(445, 25)
+        Label66.Size = New Size(333, 25)
         Label66.TabIndex = 18
-        Label66.Text = "去除画面中的噪点；四个参数都要写；水印文字不是默认填写的值！"
+        Label66.Text = "去除画面中的噪点；水印文字不是默认填写的值！"
         ' 
         ' Label67
         ' 
@@ -6803,6 +6820,7 @@ Partial Class 界面_常规流程参数_V2
         ' TabPage流控制
         ' 
         TabPage流控制.BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
+        TabPage流控制.Controls.Add(Label32)
         TabPage流控制.Controls.Add(Panel64)
         TabPage流控制.Controls.Add(Label111)
         TabPage流控制.Controls.Add(Label165)
@@ -6822,6 +6840,19 @@ Partial Class 界面_常规流程参数_V2
         TabPage流控制.TabIndex = 10
         TabPage流控制.Tag = "TabPage.StreamControl"
         TabPage流控制.Text = "流控制"
+        ' 
+        ' Label32
+        ' 
+        Label32.AutoSize = True
+        Label32.Dock = DockStyle.Bottom
+        Label32.Font = New Font("微软雅黑", 10F)
+        Label32.ForeColor = Color.Gray
+        Label32.Location = New Point(0, 594)
+        Label32.Name = "Label32"
+        Label32.Padding = New Padding(16, 0, 0, 16)
+        Label32.Size = New Size(417, 56)
+        Label32.TabIndex = 118
+        Label32.Text = "当同时指定流和保留其他流时，可能有部分参数与该逻辑不兼容" & vbCrLf & "处理多轨媒体时需要注意，尽量使用滤镜实现其他需求"
         ' 
         ' Panel64
         ' 
@@ -8202,9 +8233,8 @@ Partial Class 界面_常规流程参数_V2
     Friend WithEvents Label35 As Label
     Friend WithEvents UiTextBox分辨率自动计算宽度 As Sunny.UI.UITextBox
     Friend WithEvents Label31 As Label
-    Friend WithEvents Label32 As Label
     Friend WithEvents Panel21 As Panel
-    Friend WithEvents UiButton裁剪交互窗口 As Sunny.UI.UIButton
+    Friend WithEvents UiButton画面裁剪窗口 As Sunny.UI.UIButton
     Friend WithEvents Label137 As Label
     Friend WithEvents UiTextBox画面裁剪滤镜参数 As Sunny.UI.UITextBox
     Friend WithEvents Label33 As Label
@@ -8554,5 +8584,8 @@ Partial Class 界面_常规流程参数_V2
     Friend WithEvents Label189 As Label
     Friend WithEvents Panel96 As Panel
     Friend WithEvents UiButton烧录字幕 As Sunny.UI.UIButton
+    Friend WithEvents Label68 As Label
+    Friend WithEvents Label143 As Label
+    Friend WithEvents Label32 As Label
 
 End Class

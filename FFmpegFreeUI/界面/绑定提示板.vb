@@ -4,7 +4,7 @@ Public Class 绑定提示板
 
     Public Shared Sub 绑定参数面板的提示板(参数面板对象 As 界面_常规流程参数_V2)
         绑定(参数面板对象.UiTextBox全局质量控制值, New List(Of Tp_Data) From {
-           New Tp_Data With {.Title = "推荐的视觉无损平衡点", .Text = "libx264 & lib265 crf=23<br>hevc_nvenc cq=26~28<br>av1_nvenc cq=36"}})
+           New Tp_Data With {.Title = "推荐的视觉无损平衡点", .Text = "libx264 & lib265 | crf=23<br>hevc_nvenc | cq=26~28<br>av1_nvenc | cq=36"}})
 
 
         绑定(参数面板对象.UiComboBox剪辑方法, New List(Of Tp_Data) From {

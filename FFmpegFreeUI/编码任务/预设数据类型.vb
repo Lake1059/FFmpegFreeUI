@@ -79,8 +79,8 @@ Public Class 预设数据类型
     Public Property 视频参数_烧录字幕_次要颜色_透明度 As String = ""
     Public Property 视频参数_烧录字幕_描边颜色 As Color = Color.Transparent
     Public Property 视频参数_烧录字幕_描边颜色_透明度 As String = ""
-    Public Property 视频参数_烧录字幕_阴影或背景颜色 As Color = Color.Transparent
-    Public Property 视频参数_烧录字幕_阴影或背景颜色_透明度 As String = ""
+    Public Property 视频参数_烧录字幕_背景颜色 As Color = Color.Transparent
+    Public Property 视频参数_烧录字幕_背景颜色_透明度 As String = ""
     Public Property 视频参数_烧录字幕_对齐方位 As Integer = -1
     Public Property 视频参数_烧录字幕_垂直边距 As String = ""
     Public Property 视频参数_烧录字幕_左边距 As String = ""

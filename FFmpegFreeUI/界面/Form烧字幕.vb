@@ -66,12 +66,12 @@ Public Class Form烧字幕
                                              Dim a As New ColorDialog With {.Color = Label描边颜色.BackColor, .FullOpen = True, .AnyColor = True}
                                              If a.ShowDialog() = DialogResult.OK Then Label描边颜色.BackColor = a.Color
                                          End Sub
-        AddHandler Label阴影背景颜色.BackColorChanged, AddressOf 更新阴影背景颜色显示
-        AddHandler UiTextBox设置阴影背景颜色透明度.TextChanged, AddressOf 更新阴影背景颜色显示
-        AddHandler UiButton清除阴影背景颜色.Click, Sub() Label阴影背景颜色.BackColor = Color.Transparent
-        AddHandler UiButton选择阴影背景颜色.Click, Sub()
-                                               Dim a As New ColorDialog With {.Color = Label阴影背景颜色.BackColor, .FullOpen = True, .AnyColor = True}
-                                               If a.ShowDialog() = DialogResult.OK Then Label阴影背景颜色.BackColor = a.Color
+        AddHandler Label背景颜色.BackColorChanged, AddressOf 更新阴影背景颜色显示
+        AddHandler UiTextBox设置背景颜色透明度.TextChanged, AddressOf 更新阴影背景颜色显示
+        AddHandler UiButton清除背景颜色.Click, Sub() Label背景颜色.BackColor = Color.Transparent
+        AddHandler UiButton选择背景颜色.Click, Sub()
+                                               Dim a As New ColorDialog With {.Color = Label背景颜色.BackColor, .FullOpen = True, .AnyColor = True}
+                                               If a.ShowDialog() = DialogResult.OK Then Label背景颜色.BackColor = a.Color
                                            End Sub
 
         绑定下拉框鼠标滚轮事件(UiComboBox选择滤镜)
@@ -135,16 +135,15 @@ Public Class Form烧字幕
         UiTextBox设置描边颜色透明度.Text = ""
         Label描边颜色.BackColor = Color.Transparent
         Label描边颜色值.Text = ""
-        UiTextBox设置阴影背景颜色透明度.Text = ""
-        Label阴影背景颜色.BackColor = Color.Transparent
-        Label阴影背景颜色值.Text = ""
+        UiTextBox设置背景颜色透明度.Text = ""
+        Label背景颜色.BackColor = Color.Transparent
+        Label背景颜色值.Text = ""
         UiComboBox对齐方位.Text = ""
         UiTextBox垂直边距.Text = ""
         UiTextBox左边距.Text = ""
         UiTextBox右边距.Text = ""
         UiTextBox字距.Text = ""
         UiTextBox行距.Text = ""
-        UiTextBox视频分辨率.Text = ""
         UiTextBox自定义样式.Text = ""
         UiTextBox自定义滤镜参数.Text = ""
     End Sub
@@ -184,13 +183,13 @@ Public Class Form烧字幕
         End If
     End Sub
     Sub 更新阴影背景颜色显示()
-        If Label阴影背景颜色.BackColor = Color.Transparent Then
-            Label阴影背景颜色.BorderStyle = BorderStyle.FixedSingle
-            Label阴影背景颜色值.Text = "未设定"
+        If Label背景颜色.BackColor = Color.Transparent Then
+            Label背景颜色.BorderStyle = BorderStyle.FixedSingle
+            Label背景颜色值.Text = "未设定"
         Else
-            Label阴影背景颜色.BorderStyle = BorderStyle.None
-            Label阴影背景颜色值.Text = 转换HTML颜色到ffmpeg接受的格式(Label阴影背景颜色.BackColor.ToHTML, UiTextBox设置阴影背景颜色透明度.Text)
-            Label阴影背景颜色值.Text.Replace("&", "&&")
+            Label背景颜色.BorderStyle = BorderStyle.None
+            Label背景颜色值.Text = 转换HTML颜色到ffmpeg接受的格式(Label背景颜色.BackColor.ToHTML, UiTextBox设置背景颜色透明度.Text)
+            Label背景颜色值.Text.Replace("&", "&&")
         End If
     End Sub
 

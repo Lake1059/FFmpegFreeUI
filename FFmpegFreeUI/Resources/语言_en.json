@@ -61,7 +61,7 @@
   "TabPage.ParameterOverview": "Overview",
   "TabPage.OutputFileSettings": "Output File",
   "TabPage.DecodingSettings": "Decoding",
-  "TabPage.VideoParametersDecoder": "Video | Decoder",
+  "TabPage.VideoParametersEncoder": "Video | Encoder",
   "TabPage.VideoParametersFrame": "Video | Frame",
   "TabPage.VideoParametersQuality": "Video | Quality",
   "TabPage.VideoParametersColorManagement": "Video | Color Manage",

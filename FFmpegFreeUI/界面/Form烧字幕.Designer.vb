@@ -26,6 +26,7 @@ Partial Class Form烧字幕
         Label1 = New Label()
         UiTabControlMenu1 = New Sunny.UI.UITabControlMenu()
         TabPage滤镜选择 = New TabPage()
+        Label21 = New Label()
         Panel22 = New Panel()
         Label50 = New Label()
         UiComboBox最后选择 = New Sunny.UI.UIComboBox()
@@ -35,6 +36,7 @@ Partial Class Form烧字幕
         Panel20 = New Panel()
         Label43 = New Label()
         UiComboBox优先选择 = New Sunny.UI.UIComboBox()
+        Label11 = New Label()
         Label4 = New Label()
         Label3 = New Label()
         Panel19 = New Panel()
@@ -42,6 +44,7 @@ Partial Class Form烧字幕
         Label187 = New Label()
         Label2 = New Label()
         TabPage字幕来源 = New TabPage()
+        Label20 = New Label()
         Panel2 = New Panel()
         Panel10 = New Panel()
         UiTextBox指定内嵌流 = New Sunny.UI.UITextBox()
@@ -55,6 +58,7 @@ Partial Class Form烧字幕
         Panel17 = New Panel()
         UiTextBox字幕来源外部文件名 = New Sunny.UI.UITextBox()
         Label8 = New Label()
+        Label13 = New Label()
         UiCheckBox字幕来源是外部文件 = New Sunny.UI.UICheckBox()
         TabPage字体文件夹 = New TabPage()
         Panel80 = New Panel()
@@ -65,13 +69,13 @@ Partial Class Form烧字幕
         TabPage样式和颜色 = New TabPage()
         Label12 = New Label()
         Panel8 = New Panel()
-        Label阴影背景颜色值 = New Label()
-        Label阴影背景颜色 = New Label()
+        Label背景颜色值 = New Label()
+        Label背景颜色 = New Label()
         Label28 = New Label()
-        UiTextBox设置阴影背景颜色透明度 = New Sunny.UI.UITextBox()
+        UiTextBox设置背景颜色透明度 = New Sunny.UI.UITextBox()
         Label29 = New Label()
-        UiButton选择阴影背景颜色 = New Sunny.UI.UIButton()
-        UiButton清除阴影背景颜色 = New Sunny.UI.UIButton()
+        UiButton选择背景颜色 = New Sunny.UI.UIButton()
+        UiButton清除背景颜色 = New Sunny.UI.UIButton()
         Panel7 = New Panel()
         Label描边颜色值 = New Label()
         Label描边颜色 = New Label()
@@ -113,9 +117,6 @@ Partial Class Form烧字幕
         Label字体样式预览 = New Label()
         UiButton清除基本样式 = New Sunny.UI.UIButton()
         TabPage文字定位 = New TabPage()
-        Panel15 = New Panel()
-        UiTextBox视频分辨率 = New Sunny.UI.UITextBox()
-        Label34 = New Label()
         Panel14 = New Panel()
         UiTextBox行距 = New Sunny.UI.UITextBox()
         Label46 = New Label()
@@ -170,7 +171,6 @@ Partial Class Form烧字幕
         Panel30.SuspendLayout()
         Panel3.SuspendLayout()
         TabPage文字定位.SuspendLayout()
-        Panel15.SuspendLayout()
         Panel14.SuspendLayout()
         Panel13.SuspendLayout()
         Panel11.SuspendLayout()
@@ -234,9 +234,11 @@ Partial Class Form烧字幕
         ' TabPage滤镜选择
         ' 
         TabPage滤镜选择.BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
+        TabPage滤镜选择.Controls.Add(Label21)
         TabPage滤镜选择.Controls.Add(Panel22)
         TabPage滤镜选择.Controls.Add(Panel21)
         TabPage滤镜选择.Controls.Add(Panel20)
+        TabPage滤镜选择.Controls.Add(Label11)
         TabPage滤镜选择.Controls.Add(Label4)
         TabPage滤镜选择.Controls.Add(Label3)
         TabPage滤镜选择.Controls.Add(Panel19)
@@ -248,12 +250,25 @@ Partial Class Form烧字幕
         TabPage滤镜选择.TabIndex = 0
         TabPage滤镜选择.Text = "滤镜和格式"
         ' 
+        ' Label21
+        ' 
+        Label21.AutoSize = True
+        Label21.Dock = DockStyle.Bottom
+        Label21.Font = New Font("微软雅黑", 10F)
+        Label21.ForeColor = Color.Gray
+        Label21.Location = New Point(0, 408)
+        Label21.Name = "Label21"
+        Label21.Padding = New Padding(16, 0, 0, 13)
+        Label21.Size = New Size(431, 53)
+        Label21.TabIndex = 133
+        Label21.Text = "如果需要烧录 sup 位图字幕请手写参数" & vbCrLf & "在参数面板 -> 自定义参数的 filter_complex 中使用 overlay 实现"
+        ' 
         ' Panel22
         ' 
         Panel22.Controls.Add(Label50)
         Panel22.Controls.Add(UiComboBox最后选择)
         Panel22.Dock = DockStyle.Top
-        Panel22.Location = New Point(0, 270)
+        Panel22.Location = New Point(0, 295)
         Panel22.Name = "Panel22"
         Panel22.Padding = New Padding(20, 0, 20, 10)
         Panel22.Size = New Size(588, 40)
@@ -317,7 +332,7 @@ Partial Class Form烧字幕
         Panel21.Controls.Add(Label49)
         Panel21.Controls.Add(UiComboBox然后选择)
         Panel21.Dock = DockStyle.Top
-        Panel21.Location = New Point(0, 230)
+        Panel21.Location = New Point(0, 255)
         Panel21.Name = "Panel21"
         Panel21.Padding = New Padding(20, 0, 20, 10)
         Panel21.Size = New Size(588, 40)
@@ -381,7 +396,7 @@ Partial Class Form烧字幕
         Panel20.Controls.Add(Label43)
         Panel20.Controls.Add(UiComboBox优先选择)
         Panel20.Dock = DockStyle.Top
-        Panel20.Location = New Point(0, 190)
+        Panel20.Location = New Point(0, 215)
         Panel20.Name = "Panel20"
         Panel20.Padding = New Padding(20, 0, 20, 10)
         Panel20.Size = New Size(588, 40)
@@ -440,6 +455,19 @@ Partial Class Form烧字幕
         UiComboBox优先选择.TextAlignment = ContentAlignment.MiddleLeft
         UiComboBox优先选择.Watermark = ""
         ' 
+        ' Label11
+        ' 
+        Label11.AutoSize = True
+        Label11.Dock = DockStyle.Top
+        Label11.Font = New Font("微软雅黑", 10F)
+        Label11.ForeColor = Color.Goldenrod
+        Label11.Location = New Point(0, 185)
+        Label11.Name = "Label11"
+        Label11.Padding = New Padding(16, 0, 0, 10)
+        Label11.Size = New Size(361, 30)
+        Label11.TabIndex = 132
+        Label11.Text = "此选项配合来源选项的外部文件，对内嵌的流不起作用"
+        ' 
         ' Label4
         ' 
         Label4.AutoSize = True
@@ -448,10 +476,10 @@ Partial Class Form烧字幕
         Label4.ForeColor = Color.Gray
         Label4.Location = New Point(0, 155)
         Label4.Name = "Label4"
-        Label4.Padding = New Padding(16, 5, 0, 10)
-        Label4.Size = New Size(221, 35)
+        Label4.Padding = New Padding(16, 5, 0, 5)
+        Label4.Size = New Size(249, 30)
         Label4.TabIndex = 128
-        Label4.Text = "选择要烧录的外部文件的优先级"
+        Label4.Text = "选择要烧录的外部字幕文件的优先级"
         ' 
         ' Label3
         ' 
@@ -461,9 +489,9 @@ Partial Class Form烧字幕
         Label3.Location = New Point(0, 115)
         Label3.Name = "Label3"
         Label3.Padding = New Padding(16, 16, 0, 0)
-        Label3.Size = New Size(134, 40)
+        Label3.Size = New Size(152, 40)
         Label3.TabIndex = 127
-        Label3.Text = "选择字幕格式"
+        Label3.Text = "字幕格式优先级"
         ' 
         ' Panel19
         ' 
@@ -543,12 +571,26 @@ Partial Class Form烧字幕
         ' TabPage字幕来源
         ' 
         TabPage字幕来源.BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
+        TabPage字幕来源.Controls.Add(Label20)
         TabPage字幕来源.Controls.Add(Panel2)
         TabPage字幕来源.Location = New Point(176, 0)
         TabPage字幕来源.Name = "TabPage字幕来源"
         TabPage字幕来源.Size = New Size(588, 461)
         TabPage字幕来源.TabIndex = 3
         TabPage字幕来源.Text = "字幕来源"
+        ' 
+        ' Label20
+        ' 
+        Label20.AutoSize = True
+        Label20.Dock = DockStyle.Bottom
+        Label20.Font = New Font("微软雅黑", 10F)
+        Label20.ForeColor = Color.Gray
+        Label20.Location = New Point(0, 408)
+        Label20.Name = "Label20"
+        Label20.Padding = New Padding(16, 0, 0, 13)
+        Label20.Size = New Size(403, 53)
+        Label20.TabIndex = 132
+        Label20.Text = "虽然是复选框，其实你不能同时选择两者" & vbCrLf & "主要是为了能直接取消选项，虽然我也知道这个设计是多余的"
         ' 
         ' Panel2
         ' 
@@ -560,19 +602,20 @@ Partial Class Form烧字幕
         Panel2.Controls.Add(Label35)
         Panel2.Controls.Add(Panel17)
         Panel2.Controls.Add(Label8)
+        Panel2.Controls.Add(Label13)
         Panel2.Controls.Add(UiCheckBox字幕来源是外部文件)
         Panel2.Dock = DockStyle.Top
         Panel2.Location = New Point(0, 0)
         Panel2.Name = "Panel2"
         Panel2.Padding = New Padding(18, 5, 20, 0)
-        Panel2.Size = New Size(588, 345)
+        Panel2.Size = New Size(588, 365)
         Panel2.TabIndex = 117
         ' 
         ' Panel10
         ' 
         Panel10.Controls.Add(UiTextBox指定内嵌流)
         Panel10.Dock = DockStyle.Top
-        Panel10.Location = New Point(18, 315)
+        Panel10.Location = New Point(18, 335)
         Panel10.Name = "Panel10"
         Panel10.Padding = New Padding(30, 0, 20, 0)
         Panel10.Size = New Size(550, 30)
@@ -610,7 +653,7 @@ Partial Class Form烧字幕
         Label7.Dock = DockStyle.Top
         Label7.Font = New Font("微软雅黑", 10F)
         Label7.ForeColor = Color.Gray
-        Label7.Location = New Point(18, 280)
+        Label7.Location = New Point(18, 300)
         Label7.Name = "Label7"
         Label7.Padding = New Padding(27, 5, 0, 10)
         Label7.Size = New Size(306, 35)
@@ -623,7 +666,7 @@ Partial Class Form烧字幕
         UiCheckBox字幕文件是内嵌的流.Dock = DockStyle.Top
         UiCheckBox字幕文件是内嵌的流.Font = New Font("微软雅黑", 12F)
         UiCheckBox字幕文件是内嵌的流.ForeColor = Color.Silver
-        UiCheckBox字幕文件是内嵌的流.Location = New Point(18, 250)
+        UiCheckBox字幕文件是内嵌的流.Location = New Point(18, 270)
         UiCheckBox字幕文件是内嵌的流.MinimumSize = New Size(1, 1)
         UiCheckBox字幕文件是内嵌的流.Name = "UiCheckBox字幕文件是内嵌的流"
         UiCheckBox字幕文件是内嵌的流.Size = New Size(550, 30)
@@ -636,7 +679,7 @@ Partial Class Form烧字幕
         Panel18.Controls.Add(Label47)
         Panel18.Controls.Add(UiButton选择外部字幕文件位置)
         Panel18.Dock = DockStyle.Top
-        Panel18.Location = New Point(18, 205)
+        Panel18.Location = New Point(18, 225)
         Panel18.Name = "Panel18"
         Panel18.Padding = New Padding(30, 0, 20, 15)
         Panel18.Size = New Size(550, 45)
@@ -663,16 +706,16 @@ Partial Class Form烧字幕
         UiTextBox字幕来源指定文件夹.RectDisableColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
         UiTextBox字幕来源指定文件夹.RectReadOnlyColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
         UiTextBox字幕来源指定文件夹.ShowText = False
-        UiTextBox字幕来源指定文件夹.Size = New Size(450, 30)
+        UiTextBox字幕来源指定文件夹.Size = New Size(455, 30)
         UiTextBox字幕来源指定文件夹.TabIndex = 83
         UiTextBox字幕来源指定文件夹.TextAlignment = ContentAlignment.MiddleLeft
-        UiTextBox字幕来源指定文件夹.Watermark = ""
+        UiTextBox字幕来源指定文件夹.Watermark = "指定字幕文件所在文件夹"
         ' 
         ' Label47
         ' 
         Label47.Dock = DockStyle.Right
         Label47.Font = New Font("微软雅黑", 9.75F)
-        Label47.Location = New Point(480, 0)
+        Label47.Location = New Point(485, 0)
         Label47.Name = "Label47"
         Label47.Size = New Size(10, 30)
         Label47.TabIndex = 118
@@ -692,7 +735,7 @@ Partial Class Form烧字幕
         UiButton选择外部字幕文件位置.ForeHoverColor = Color.Silver
         UiButton选择外部字幕文件位置.ForePressColor = Color.Silver
         UiButton选择外部字幕文件位置.ForeSelectedColor = Color.Silver
-        UiButton选择外部字幕文件位置.Location = New Point(490, 0)
+        UiButton选择外部字幕文件位置.Location = New Point(495, 0)
         UiButton选择外部字幕文件位置.MinimumSize = New Size(1, 1)
         UiButton选择外部字幕文件位置.Name = "UiButton选择外部字幕文件位置"
         UiButton选择外部字幕文件位置.Radius = 0
@@ -702,7 +745,7 @@ Partial Class Form烧字幕
         UiButton选择外部字幕文件位置.RectHoverColor = Color.Silver
         UiButton选择外部字幕文件位置.RectPressColor = Color.White
         UiButton选择外部字幕文件位置.RectSelectedColor = Color.Silver
-        UiButton选择外部字幕文件位置.Size = New Size(40, 30)
+        UiButton选择外部字幕文件位置.Size = New Size(35, 30)
         UiButton选择外部字幕文件位置.TabIndex = 117
         UiButton选择外部字幕文件位置.Text = "..."
         UiButton选择外部字幕文件位置.TipsFont = New Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point, CByte(134))
@@ -713,7 +756,7 @@ Partial Class Form烧字幕
         Label35.Dock = DockStyle.Top
         Label35.Font = New Font("微软雅黑", 10F)
         Label35.ForeColor = Color.Gray
-        Label35.Location = New Point(18, 155)
+        Label35.Location = New Point(18, 175)
         Label35.Name = "Label35"
         Label35.Padding = New Padding(27, 0, 0, 10)
         Label35.Size = New Size(302, 50)
@@ -724,7 +767,7 @@ Partial Class Form烧字幕
         ' 
         Panel17.Controls.Add(UiTextBox字幕来源外部文件名)
         Panel17.Dock = DockStyle.Top
-        Panel17.Location = New Point(18, 110)
+        Panel17.Location = New Point(18, 130)
         Panel17.Name = "Panel17"
         Panel17.Padding = New Padding(30, 0, 20, 15)
         Panel17.Size = New Size(550, 45)
@@ -754,7 +797,7 @@ Partial Class Form烧字幕
         UiTextBox字幕来源外部文件名.Size = New Size(500, 30)
         UiTextBox字幕来源外部文件名.TabIndex = 83
         UiTextBox字幕来源外部文件名.TextAlignment = ContentAlignment.MiddleLeft
-        UiTextBox字幕来源外部文件名.Watermark = ""
+        UiTextBox字幕来源外部文件名.Watermark = "此处输入的文件名不包含后缀"
         ' 
         ' Label8
         ' 
@@ -762,12 +805,25 @@ Partial Class Form烧字幕
         Label8.Dock = DockStyle.Top
         Label8.Font = New Font("微软雅黑", 10F)
         Label8.ForeColor = Color.Gray
-        Label8.Location = New Point(18, 35)
+        Label8.Location = New Point(18, 60)
         Label8.Name = "Label8"
-        Label8.Padding = New Padding(27, 5, 0, 10)
-        Label8.Size = New Size(400, 75)
+        Label8.Padding = New Padding(27, 0, 0, 10)
+        Label8.Size = New Size(400, 70)
         Label8.TabIndex = 116
-        Label8.Text = "字幕文件名不与视频同名？可在此指定多余字符 (不含后缀)" & vbCrLf & "使用参数面板中自定义参数的通配字符串来适配多余字符" & vbCrLf & "留空则表示同名"
+        Label8.Text = "字幕文件名不与视频同名？可在此指定多余字符 (不含后缀)" & vbCrLf & "使用自定义参数的通配字符串来适配多余字符" & vbCrLf & "留空则表示同名"
+        ' 
+        ' Label13
+        ' 
+        Label13.AutoSize = True
+        Label13.Dock = DockStyle.Top
+        Label13.Font = New Font("微软雅黑", 10F)
+        Label13.ForeColor = Color.Goldenrod
+        Label13.Location = New Point(18, 35)
+        Label13.Name = "Label13"
+        Label13.Padding = New Padding(27, 0, 0, 5)
+        Label13.Size = New Size(358, 25)
+        Label13.TabIndex = 133
+        Label13.Text = "要使用外部文件，必须在前一个选项卡中设置优先级"
         ' 
         ' UiCheckBox字幕来源是外部文件
         ' 
@@ -908,22 +964,22 @@ Partial Class Form烧字幕
         Label12.Dock = DockStyle.Bottom
         Label12.Font = New Font("微软雅黑", 10F)
         Label12.ForeColor = Color.Gray
-        Label12.Location = New Point(0, 428)
+        Label12.Location = New Point(0, 408)
         Label12.Name = "Label12"
         Label12.Padding = New Padding(16, 0, 0, 13)
-        Label12.Size = New Size(411, 33)
+        Label12.Size = New Size(411, 53)
         Label12.TabIndex = 131
-        Label12.Text = "透明度 (范围 0~255) 的效果不会即时渲染，注意在输出中观察"
+        Label12.Text = "透明度 (范围 0~255) 的效果不会即时渲染，注意在输出中观察" & vbCrLf & "并不是所有的组合都生效！"
         ' 
         ' Panel8
         ' 
-        Panel8.Controls.Add(Label阴影背景颜色值)
-        Panel8.Controls.Add(Label阴影背景颜色)
+        Panel8.Controls.Add(Label背景颜色值)
+        Panel8.Controls.Add(Label背景颜色)
         Panel8.Controls.Add(Label28)
-        Panel8.Controls.Add(UiTextBox设置阴影背景颜色透明度)
+        Panel8.Controls.Add(UiTextBox设置背景颜色透明度)
         Panel8.Controls.Add(Label29)
-        Panel8.Controls.Add(UiButton选择阴影背景颜色)
-        Panel8.Controls.Add(UiButton清除阴影背景颜色)
+        Panel8.Controls.Add(UiButton选择背景颜色)
+        Panel8.Controls.Add(UiButton清除背景颜色)
         Panel8.Dock = DockStyle.Top
         Panel8.Location = New Point(0, 300)
         Panel8.Name = "Panel8"
@@ -931,28 +987,28 @@ Partial Class Form烧字幕
         Panel8.Size = New Size(588, 40)
         Panel8.TabIndex = 130
         ' 
-        ' Label阴影背景颜色值
+        ' Label背景颜色值
         ' 
-        Label阴影背景颜色值.Dock = DockStyle.Fill
-        Label阴影背景颜色值.Font = New Font("微软雅黑", 9.75F)
-        Label阴影背景颜色值.Location = New Point(320, 10)
-        Label阴影背景颜色值.Name = "Label阴影背景颜色值"
-        Label阴影背景颜色值.Padding = New Padding(10, 0, 0, 0)
-        Label阴影背景颜色值.Size = New Size(188, 30)
-        Label阴影背景颜色值.TabIndex = 122
-        Label阴影背景颜色值.Text = "未设定"
-        Label阴影背景颜色值.TextAlign = ContentAlignment.MiddleLeft
+        Label背景颜色值.Dock = DockStyle.Fill
+        Label背景颜色值.Font = New Font("微软雅黑", 9.75F)
+        Label背景颜色值.Location = New Point(320, 10)
+        Label背景颜色值.Name = "Label背景颜色值"
+        Label背景颜色值.Padding = New Padding(10, 0, 0, 0)
+        Label背景颜色值.Size = New Size(188, 30)
+        Label背景颜色值.TabIndex = 122
+        Label背景颜色值.Text = "未设定"
+        Label背景颜色值.TextAlign = ContentAlignment.MiddleLeft
         ' 
-        ' Label阴影背景颜色
+        ' Label背景颜色
         ' 
-        Label阴影背景颜色.BackColor = Color.Transparent
-        Label阴影背景颜色.BorderStyle = BorderStyle.FixedSingle
-        Label阴影背景颜色.Dock = DockStyle.Left
-        Label阴影背景颜色.Font = New Font("微软雅黑", 9.75F)
-        Label阴影背景颜色.Location = New Point(290, 10)
-        Label阴影背景颜色.Name = "Label阴影背景颜色"
-        Label阴影背景颜色.Size = New Size(30, 30)
-        Label阴影背景颜色.TabIndex = 120
+        Label背景颜色.BackColor = Color.Transparent
+        Label背景颜色.BorderStyle = BorderStyle.FixedSingle
+        Label背景颜色.Dock = DockStyle.Left
+        Label背景颜色.Font = New Font("微软雅黑", 9.75F)
+        Label背景颜色.Location = New Point(290, 10)
+        Label背景颜色.Name = "Label背景颜色"
+        Label背景颜色.Size = New Size(30, 30)
+        Label背景颜色.TabIndex = 120
         ' 
         ' Label28
         ' 
@@ -963,33 +1019,33 @@ Partial Class Form烧字幕
         Label28.Size = New Size(10, 30)
         Label28.TabIndex = 119
         ' 
-        ' UiTextBox设置阴影背景颜色透明度
+        ' UiTextBox设置背景颜色透明度
         ' 
-        UiTextBox设置阴影背景颜色透明度.Dock = DockStyle.Left
-        UiTextBox设置阴影背景颜色透明度.FillColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiTextBox设置阴影背景颜色透明度.FillColor2 = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiTextBox设置阴影背景颜色透明度.FillDisableColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiTextBox设置阴影背景颜色透明度.FillReadOnlyColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiTextBox设置阴影背景颜色透明度.Font = New Font("微软雅黑", 10F)
-        UiTextBox设置阴影背景颜色透明度.ForeColor = Color.Silver
-        UiTextBox设置阴影背景颜色透明度.ForeDisableColor = Color.Silver
-        UiTextBox设置阴影背景颜色透明度.ForeReadOnlyColor = Color.Silver
-        UiTextBox设置阴影背景颜色透明度.Location = New Point(180, 10)
-        UiTextBox设置阴影背景颜色透明度.Margin = New Padding(4, 5, 4, 5)
-        UiTextBox设置阴影背景颜色透明度.MinimumSize = New Size(1, 16)
-        UiTextBox设置阴影背景颜色透明度.Name = "UiTextBox设置阴影背景颜色透明度"
-        UiTextBox设置阴影背景颜色透明度.Padding = New Padding(5)
-        UiTextBox设置阴影背景颜色透明度.Radius = 30
-        UiTextBox设置阴影背景颜色透明度.RectColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiTextBox设置阴影背景颜色透明度.RectDisableColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiTextBox设置阴影背景颜色透明度.RectReadOnlyColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiTextBox设置阴影背景颜色透明度.ShowText = False
-        UiTextBox设置阴影背景颜色透明度.Size = New Size(100, 30)
-        UiTextBox设置阴影背景颜色透明度.TabIndex = 118
-        UiTextBox设置阴影背景颜色透明度.TextAlignment = ContentAlignment.MiddleLeft
-        UiTextBox设置阴影背景颜色透明度.Watermark = "透明度"
-        UiTextBox设置阴影背景颜色透明度.WatermarkActiveColor = Color.DimGray
-        UiTextBox设置阴影背景颜色透明度.WatermarkColor = Color.DimGray
+        UiTextBox设置背景颜色透明度.Dock = DockStyle.Left
+        UiTextBox设置背景颜色透明度.FillColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        UiTextBox设置背景颜色透明度.FillColor2 = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        UiTextBox设置背景颜色透明度.FillDisableColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        UiTextBox设置背景颜色透明度.FillReadOnlyColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        UiTextBox设置背景颜色透明度.Font = New Font("微软雅黑", 10F)
+        UiTextBox设置背景颜色透明度.ForeColor = Color.Silver
+        UiTextBox设置背景颜色透明度.ForeDisableColor = Color.Silver
+        UiTextBox设置背景颜色透明度.ForeReadOnlyColor = Color.Silver
+        UiTextBox设置背景颜色透明度.Location = New Point(180, 10)
+        UiTextBox设置背景颜色透明度.Margin = New Padding(4, 5, 4, 5)
+        UiTextBox设置背景颜色透明度.MinimumSize = New Size(1, 16)
+        UiTextBox设置背景颜色透明度.Name = "UiTextBox设置背景颜色透明度"
+        UiTextBox设置背景颜色透明度.Padding = New Padding(5)
+        UiTextBox设置背景颜色透明度.Radius = 30
+        UiTextBox设置背景颜色透明度.RectColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        UiTextBox设置背景颜色透明度.RectDisableColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        UiTextBox设置背景颜色透明度.RectReadOnlyColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        UiTextBox设置背景颜色透明度.ShowText = False
+        UiTextBox设置背景颜色透明度.Size = New Size(100, 30)
+        UiTextBox设置背景颜色透明度.TabIndex = 118
+        UiTextBox设置背景颜色透明度.TextAlignment = ContentAlignment.MiddleLeft
+        UiTextBox设置背景颜色透明度.Watermark = "透明度"
+        UiTextBox设置背景颜色透明度.WatermarkActiveColor = Color.DimGray
+        UiTextBox设置背景颜色透明度.WatermarkColor = Color.DimGray
         ' 
         ' Label29
         ' 
@@ -1000,65 +1056,65 @@ Partial Class Form烧字幕
         Label29.Size = New Size(10, 30)
         Label29.TabIndex = 117
         ' 
-        ' UiButton选择阴影背景颜色
+        ' UiButton选择背景颜色
         ' 
-        UiButton选择阴影背景颜色.Dock = DockStyle.Left
-        UiButton选择阴影背景颜色.FillColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
-        UiButton选择阴影背景颜色.FillColor2 = Color.FromArgb(CByte(36), CByte(36), CByte(36))
-        UiButton选择阴影背景颜色.FillDisableColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
-        UiButton选择阴影背景颜色.FillHoverColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiButton选择阴影背景颜色.FillPressColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiButton选择阴影背景颜色.FillSelectedColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiButton选择阴影背景颜色.Font = New Font("微软雅黑", 10F)
-        UiButton选择阴影背景颜色.ForeColor = Color.Silver
-        UiButton选择阴影背景颜色.ForeDisableColor = Color.Silver
-        UiButton选择阴影背景颜色.ForeHoverColor = Color.Silver
-        UiButton选择阴影背景颜色.ForePressColor = Color.Silver
-        UiButton选择阴影背景颜色.ForeSelectedColor = Color.Silver
-        UiButton选择阴影背景颜色.Location = New Point(20, 10)
-        UiButton选择阴影背景颜色.MinimumSize = New Size(1, 1)
-        UiButton选择阴影背景颜色.Name = "UiButton选择阴影背景颜色"
-        UiButton选择阴影背景颜色.Radius = 0
-        UiButton选择阴影背景颜色.RadiusSides = Sunny.UI.UICornerRadiusSides.None
-        UiButton选择阴影背景颜色.RectColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
-        UiButton选择阴影背景颜色.RectDisableColor = Color.FromArgb(CByte(12), CByte(12), CByte(12))
-        UiButton选择阴影背景颜色.RectHoverColor = Color.Silver
-        UiButton选择阴影背景颜色.RectPressColor = Color.White
-        UiButton选择阴影背景颜色.RectSelectedColor = Color.Silver
-        UiButton选择阴影背景颜色.Size = New Size(150, 30)
-        UiButton选择阴影背景颜色.TabIndex = 116
-        UiButton选择阴影背景颜色.Text = "阴影/背景"
-        UiButton选择阴影背景颜色.TipsFont = New Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point, CByte(134))
+        UiButton选择背景颜色.Dock = DockStyle.Left
+        UiButton选择背景颜色.FillColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiButton选择背景颜色.FillColor2 = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiButton选择背景颜色.FillDisableColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiButton选择背景颜色.FillHoverColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        UiButton选择背景颜色.FillPressColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        UiButton选择背景颜色.FillSelectedColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        UiButton选择背景颜色.Font = New Font("微软雅黑", 10F)
+        UiButton选择背景颜色.ForeColor = Color.Silver
+        UiButton选择背景颜色.ForeDisableColor = Color.Silver
+        UiButton选择背景颜色.ForeHoverColor = Color.Silver
+        UiButton选择背景颜色.ForePressColor = Color.Silver
+        UiButton选择背景颜色.ForeSelectedColor = Color.Silver
+        UiButton选择背景颜色.Location = New Point(20, 10)
+        UiButton选择背景颜色.MinimumSize = New Size(1, 1)
+        UiButton选择背景颜色.Name = "UiButton选择背景颜色"
+        UiButton选择背景颜色.Radius = 0
+        UiButton选择背景颜色.RadiusSides = Sunny.UI.UICornerRadiusSides.None
+        UiButton选择背景颜色.RectColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        UiButton选择背景颜色.RectDisableColor = Color.FromArgb(CByte(12), CByte(12), CByte(12))
+        UiButton选择背景颜色.RectHoverColor = Color.Silver
+        UiButton选择背景颜色.RectPressColor = Color.White
+        UiButton选择背景颜色.RectSelectedColor = Color.Silver
+        UiButton选择背景颜色.Size = New Size(150, 30)
+        UiButton选择背景颜色.TabIndex = 116
+        UiButton选择背景颜色.Text = "背景"
+        UiButton选择背景颜色.TipsFont = New Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point, CByte(134))
         ' 
-        ' UiButton清除阴影背景颜色
+        ' UiButton清除背景颜色
         ' 
-        UiButton清除阴影背景颜色.Dock = DockStyle.Right
-        UiButton清除阴影背景颜色.FillColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
-        UiButton清除阴影背景颜色.FillColor2 = Color.FromArgb(CByte(36), CByte(36), CByte(36))
-        UiButton清除阴影背景颜色.FillDisableColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
-        UiButton清除阴影背景颜色.FillHoverColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiButton清除阴影背景颜色.FillPressColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiButton清除阴影背景颜色.FillSelectedColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiButton清除阴影背景颜色.Font = New Font("微软雅黑", 10F)
-        UiButton清除阴影背景颜色.ForeColor = Color.Silver
-        UiButton清除阴影背景颜色.ForeDisableColor = Color.Silver
-        UiButton清除阴影背景颜色.ForeHoverColor = Color.Silver
-        UiButton清除阴影背景颜色.ForePressColor = Color.Silver
-        UiButton清除阴影背景颜色.ForeSelectedColor = Color.Silver
-        UiButton清除阴影背景颜色.Location = New Point(508, 10)
-        UiButton清除阴影背景颜色.MinimumSize = New Size(1, 1)
-        UiButton清除阴影背景颜色.Name = "UiButton清除阴影背景颜色"
-        UiButton清除阴影背景颜色.Radius = 0
-        UiButton清除阴影背景颜色.RadiusSides = Sunny.UI.UICornerRadiusSides.None
-        UiButton清除阴影背景颜色.RectColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
-        UiButton清除阴影背景颜色.RectDisableColor = Color.FromArgb(CByte(12), CByte(12), CByte(12))
-        UiButton清除阴影背景颜色.RectHoverColor = Color.Silver
-        UiButton清除阴影背景颜色.RectPressColor = Color.White
-        UiButton清除阴影背景颜色.RectSelectedColor = Color.Silver
-        UiButton清除阴影背景颜色.Size = New Size(70, 30)
-        UiButton清除阴影背景颜色.TabIndex = 123
-        UiButton清除阴影背景颜色.Text = "清除"
-        UiButton清除阴影背景颜色.TipsFont = New Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point, CByte(134))
+        UiButton清除背景颜色.Dock = DockStyle.Right
+        UiButton清除背景颜色.FillColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiButton清除背景颜色.FillColor2 = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiButton清除背景颜色.FillDisableColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiButton清除背景颜色.FillHoverColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        UiButton清除背景颜色.FillPressColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        UiButton清除背景颜色.FillSelectedColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        UiButton清除背景颜色.Font = New Font("微软雅黑", 10F)
+        UiButton清除背景颜色.ForeColor = Color.Silver
+        UiButton清除背景颜色.ForeDisableColor = Color.Silver
+        UiButton清除背景颜色.ForeHoverColor = Color.Silver
+        UiButton清除背景颜色.ForePressColor = Color.Silver
+        UiButton清除背景颜色.ForeSelectedColor = Color.Silver
+        UiButton清除背景颜色.Location = New Point(508, 10)
+        UiButton清除背景颜色.MinimumSize = New Size(1, 1)
+        UiButton清除背景颜色.Name = "UiButton清除背景颜色"
+        UiButton清除背景颜色.Radius = 0
+        UiButton清除背景颜色.RadiusSides = Sunny.UI.UICornerRadiusSides.None
+        UiButton清除背景颜色.RectColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        UiButton清除背景颜色.RectDisableColor = Color.FromArgb(CByte(12), CByte(12), CByte(12))
+        UiButton清除背景颜色.RectHoverColor = Color.Silver
+        UiButton清除背景颜色.RectPressColor = Color.White
+        UiButton清除背景颜色.RectSelectedColor = Color.Silver
+        UiButton清除背景颜色.Size = New Size(70, 30)
+        UiButton清除背景颜色.TabIndex = 123
+        UiButton清除背景颜色.Text = "清除"
+        UiButton清除背景颜色.TipsFont = New Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point, CByte(134))
         ' 
         ' Panel7
         ' 
@@ -1782,8 +1838,6 @@ Partial Class Form烧字幕
         ' TabPage文字定位
         ' 
         TabPage文字定位.BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
-        TabPage文字定位.Controls.Add(Panel15)
-        TabPage文字定位.Controls.Add(Label34)
         TabPage文字定位.Controls.Add(Panel14)
         TabPage文字定位.Controls.Add(Panel13)
         TabPage文字定位.Controls.Add(Label42)
@@ -1796,56 +1850,6 @@ Partial Class Form烧字幕
         TabPage文字定位.Size = New Size(588, 461)
         TabPage文字定位.TabIndex = 4
         TabPage文字定位.Text = "文字定位"
-        ' 
-        ' Panel15
-        ' 
-        Panel15.Controls.Add(UiTextBox视频分辨率)
-        Panel15.Dock = DockStyle.Top
-        Panel15.Location = New Point(0, 297)
-        Panel15.Name = "Panel15"
-        Panel15.Padding = New Padding(20, 0, 20, 0)
-        Panel15.Size = New Size(588, 30)
-        Panel15.TabIndex = 132
-        ' 
-        ' UiTextBox视频分辨率
-        ' 
-        UiTextBox视频分辨率.Dock = DockStyle.Left
-        UiTextBox视频分辨率.FillColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiTextBox视频分辨率.FillColor2 = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiTextBox视频分辨率.FillDisableColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiTextBox视频分辨率.FillReadOnlyColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiTextBox视频分辨率.Font = New Font("微软雅黑", 10F)
-        UiTextBox视频分辨率.ForeColor = Color.Silver
-        UiTextBox视频分辨率.ForeDisableColor = Color.Silver
-        UiTextBox视频分辨率.ForeReadOnlyColor = Color.Silver
-        UiTextBox视频分辨率.Location = New Point(20, 0)
-        UiTextBox视频分辨率.Margin = New Padding(4, 5, 4, 5)
-        UiTextBox视频分辨率.MinimumSize = New Size(1, 16)
-        UiTextBox视频分辨率.Name = "UiTextBox视频分辨率"
-        UiTextBox视频分辨率.Padding = New Padding(5)
-        UiTextBox视频分辨率.Radius = 30
-        UiTextBox视频分辨率.RectColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiTextBox视频分辨率.RectDisableColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiTextBox视频分辨率.RectReadOnlyColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UiTextBox视频分辨率.ShowText = False
-        UiTextBox视频分辨率.Size = New Size(210, 30)
-        UiTextBox视频分辨率.TabIndex = 120
-        UiTextBox视频分辨率.TextAlignment = ContentAlignment.MiddleLeft
-        UiTextBox视频分辨率.Watermark = ""
-        UiTextBox视频分辨率.WatermarkActiveColor = Color.DimGray
-        UiTextBox视频分辨率.WatermarkColor = Color.DimGray
-        ' 
-        ' Label34
-        ' 
-        Label34.AutoSize = True
-        Label34.Dock = DockStyle.Top
-        Label34.Font = New Font("微软雅黑", 13F)
-        Label34.Location = New Point(0, 243)
-        Label34.Name = "Label34"
-        Label34.Padding = New Padding(16, 20, 0, 10)
-        Label34.Size = New Size(116, 54)
-        Label34.TabIndex = 131
-        Label34.Text = "视频分辨率"
         ' 
         ' Panel14
         ' 
@@ -2393,7 +2397,6 @@ Partial Class Form烧字幕
         Panel3.ResumeLayout(False)
         TabPage文字定位.ResumeLayout(False)
         TabPage文字定位.PerformLayout()
-        Panel15.ResumeLayout(False)
         Panel14.ResumeLayout(False)
         Panel13.ResumeLayout(False)
         Panel11.ResumeLayout(False)
@@ -2450,18 +2453,18 @@ Partial Class Form烧字幕
     Friend WithEvents Label23 As Label
     Friend WithEvents UiButton选择次要颜色 As Sunny.UI.UIButton
     Friend WithEvents Panel8 As Panel
-    Friend WithEvents Label阴影背景颜色 As Label
+    Friend WithEvents Label背景颜色 As Label
     Friend WithEvents Label28 As Label
-    Friend WithEvents UiTextBox设置阴影背景颜色透明度 As Sunny.UI.UITextBox
+    Friend WithEvents UiTextBox设置背景颜色透明度 As Sunny.UI.UITextBox
     Friend WithEvents Label29 As Label
-    Friend WithEvents UiButton选择阴影背景颜色 As Sunny.UI.UIButton
+    Friend WithEvents UiButton选择背景颜色 As Sunny.UI.UIButton
     Friend WithEvents Panel7 As Panel
     Friend WithEvents Label描边颜色 As Label
     Friend WithEvents Label25 As Label
     Friend WithEvents UiTextBox设置描边颜色透明度 As Sunny.UI.UITextBox
     Friend WithEvents Label26 As Label
     Friend WithEvents UiButton选择描边颜色 As Sunny.UI.UIButton
-    Friend WithEvents Label阴影背景颜色值 As Label
+    Friend WithEvents Label背景颜色值 As Label
     Friend WithEvents Label描边颜色值 As Label
     Friend WithEvents Label次要颜色值 As Label
     Friend WithEvents Label主要颜色值 As Label
@@ -2486,9 +2489,6 @@ Partial Class Form烧字幕
     Friend WithEvents Label44 As Label
     Friend WithEvents Label45 As Label
     Friend WithEvents Label42 As Label
-    Friend WithEvents Panel15 As Panel
-    Friend WithEvents UiTextBox视频分辨率 As Sunny.UI.UITextBox
-    Friend WithEvents Label34 As Label
     Friend WithEvents Label6 As Label
     Friend WithEvents Label5 As Label
     Friend WithEvents Panel16 As Panel
@@ -2501,7 +2501,7 @@ Partial Class Form烧字幕
     Friend WithEvents UiButton清除主要颜色 As Sunny.UI.UIButton
     Friend WithEvents UiTextBox阴影距离 As Sunny.UI.UITextBox
     Friend WithEvents UiTextBox描边宽度 As Sunny.UI.UITextBox
-    Friend WithEvents UiButton清除阴影背景颜色 As Sunny.UI.UIButton
+    Friend WithEvents UiButton清除背景颜色 As Sunny.UI.UIButton
     Friend WithEvents UiButton清除描边颜色 As Sunny.UI.UIButton
     Friend WithEvents UiButton清除次要颜色 As Sunny.UI.UIButton
     Friend WithEvents UiButton清除基本样式 As Sunny.UI.UIButton
@@ -2533,4 +2533,8 @@ Partial Class Form烧字幕
     Friend WithEvents Label43 As Label
     Friend WithEvents Label字体样式预览 As Label
     Friend WithEvents Label12 As Label
+    Friend WithEvents Label11 As Label
+    Friend WithEvents Label13 As Label
+    Friend WithEvents Label21 As Label
+    Friend WithEvents Label20 As Label
 End Class

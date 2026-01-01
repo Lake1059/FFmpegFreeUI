@@ -61,7 +61,7 @@
   "TabPage.ParameterOverview": "参数总览",
   "TabPage.OutputFileSettings": "输出文件设置",
   "TabPage.DecodingSettings": "解码设置",
-  "TabPage.VideoParametersDecoder": "视频参数 | 解码器",
+  "TabPage.VideoParametersEncoder": "视频参数 | 编码器",
   "TabPage.VideoParametersFrame": "视频参数 | 画面帧",
   "TabPage.VideoParametersQuality": "视频参数 | 质量",
   "TabPage.VideoParametersColorManagement": "视频参数 | 色彩管理",

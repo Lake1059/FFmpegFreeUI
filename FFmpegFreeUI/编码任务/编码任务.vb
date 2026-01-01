@@ -56,6 +56,7 @@ Public Class 编码任务
     Public Shared Property 全部任务已完成是否有错误 As Boolean = False
 
     Public Shared Property 要刷新的项 As New Dictionary(Of ListViewItem, 刷新到界面数据结构)
+    Public Shared Property 要刷新的项副本 As Dictionary(Of ListViewItem, 刷新到界面数据结构)
     Public Class 刷新到界面数据结构
         Public Property 进度 As String = ""
         Public Property 效率 As String = ""
@@ -65,24 +66,20 @@ Public Class 编码任务
         Public Property 时间 As String = ""
     End Class
     Public Shared Sub 用定时器刷新到界面上()
-        Try
-            If 队列.Count = 0 Then Exit Sub
-            Dim 要刷新的项副本 As New Dictionary(Of ListViewItem, 刷新到界面数据结构)(要刷新的项)
-            SyncLock 要刷新的项
-                If 要刷新的项.Count = 0 Then Exit Sub
-                要刷新的项.Clear()
-            End SyncLock
-            For Each item As ListViewItem In 要刷新的项副本.Keys
-                item.SubItems(2).Text = 要刷新的项副本(item).进度
-                item.SubItems(3).Text = 要刷新的项副本(item).效率
-                item.SubItems(4).Text = 要刷新的项副本(item).输出大小
-                item.SubItems(5).Text = 要刷新的项副本(item).质量
-                item.SubItems(6).Text = 要刷新的项副本(item).比特率
-                item.SubItems(7).Text = 要刷新的项副本(item).时间
-            Next
-        Catch ex As Exception
-
-        End Try
+        If 队列.Count = 0 Then Exit Sub
+        If 要刷新的项.Count = 0 Then Exit Sub
+        SyncLock 要刷新的项
+            要刷新的项副本 = New Dictionary(Of ListViewItem, 刷新到界面数据结构)(要刷新的项)
+            要刷新的项.Clear()
+        End SyncLock
+        For Each item As ListViewItem In 要刷新的项副本.Keys
+            item.SubItems(2).Text = 要刷新的项副本(item).进度
+            item.SubItems(3).Text = 要刷新的项副本(item).效率
+            item.SubItems(4).Text = 要刷新的项副本(item).输出大小
+            item.SubItems(5).Text = 要刷新的项副本(item).质量
+            item.SubItems(6).Text = 要刷新的项副本(item).比特率
+            item.SubItems(7).Text = 要刷新的项副本(item).时间
+        Next
     End Sub
 
     Public Class 单片任务
@@ -311,7 +308,10 @@ jx1:
         End Sub
 
         Public Sub FFmpegProcessExited(sender As Object, e As EventArgs)
-            If 要刷新的项.ContainsKey(列表视图项) Then 要刷新的项.Remove(列表视图项)
+            SyncLock 要刷新的项
+                If 要刷新的项.ContainsKey(列表视图项) Then 要刷新的项.Remove(列表视图项)
+            End SyncLock
+
             If FFmpegProcess.ExitCode = 0 Then
                 状态 = 编码状态.已完成
 
@@ -520,6 +520,7 @@ jx1:
             If el.Minutes > 0 OrElse elapsedParts.Count > 0 Then elapsedParts.Add($"{el.Minutes}m")
             elapsedParts.Add($"{el.Seconds}s")
             信息数据.时间 = $"{remainTime} - {String.Join("", elapsedParts)}"
+
             SyncLock 要刷新的项
                 要刷新的项(列表视图项) = 信息数据
             End SyncLock

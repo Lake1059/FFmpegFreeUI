@@ -84,7 +84,9 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  查找类似 易相逢|#FBE4FF 的本地化字符串。
+        '''  查找类似 易相逢|#FBE4FF
+        '''爱发电用户_3c3a0
+        '''爱发电用户_Ck8g 的本地化字符串。
         '''</summary>
         Friend Shared ReadOnly Property 支持者名单() As String
             Get

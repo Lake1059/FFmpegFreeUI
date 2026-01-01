@@ -14,6 +14,8 @@ Public Class 界面_常规流程参数_V2
 
     Private Shared ReadOnly VapourSynth脚本多种后缀 As String() = {"*.vpy", "*.py"}
 
+    Public 选择容器的上下文菜单 As 暗黑上下文菜单
+
     Private Sub 界面_常规流程参数_Load(sender As Object, e As EventArgs) Handles Me.Load
         UiTabControlMenu1.ItemSize = New Size(200 * Form1.DPI, 36 * Form1.DPI)
 
@@ -27,7 +29,8 @@ Public Class 界面_常规流程参数_V2
 
         AddHandler UiButton复制即时命令行显示.Click, Sub() Clipboard.SetText(RichTextBox1.Text)
         '==============================================
-        AddHandler UiButton选择容器.MouseDown, AddressOf 选择输出容器鼠标按下事件
+        初始化选择输出容器的上下文菜单()
+        AddHandler UiButton选择容器.MouseDown, Sub(s1, e1) 选择容器的上下文菜单.Show(s1, New Point(0, s1.Height))
         AddHandler UiComboBox输出目录.SelectedIndexChanged, AddressOf 选择输出目录
         UiComboBox输出目录.SelectedIndex = 0
         AddHandler UiComboBox输出目录.DragEnter, Sub(s, e1) e1.Effect = If(e1.Data.GetDataPresent(DataFormats.FileDrop), DragDropEffects.Copy, DragDropEffects.None)
@@ -46,7 +49,7 @@ Public Class 界面_常规流程参数_V2
         AddHandler UiComboBox分辨率.TextChanged, AddressOf 视频分辨率变动事件
         AddHandler UiTextBox分辨率自动计算宽度.TextChanged, AddressOf 视频分辨率自动计算宽度变动事件
         AddHandler UiTextBox分辨率自动计算高度.TextChanged, AddressOf 视频分辨率自动计算高度变动事件
-        AddHandler UiButton裁剪交互窗口.Click, Sub() 显示窗体(Form画面裁剪交互窗口, Form1)
+        AddHandler UiButton画面裁剪窗口.Click, Sub() 显示窗体(Form画面裁剪交互窗口, Form1)
         '==============================================
         AddHandler UiButton打开插帧参数窗口.Click, Sub()
                                                显示窗体(插帧页面, Me.ParentForm)
@@ -810,7 +813,7 @@ Public Class 界面_常规流程参数_V2
         New ToolStripSeparator() With {.Tag = "null"}})
     End Sub
 
-    Sub 选择输出容器鼠标按下事件(sender As Object, e As MouseEventArgs)
+    Sub 初始化选择输出容器的上下文菜单()
 
         Dim b As New 暗黑上下文菜单 With {.ShowImageMargin = False, .Font = Form1.Font}
         b.Items.AddRange(New ToolStripItem() {
@@ -820,6 +823,7 @@ Public Class 界面_常规流程参数_V2
              New ToolStripMenuItem(".flv", Nothing, Sub(s1, e1) UiTextBox输出容器.Text = s1.Text) With {.ForeColor = Color.Silver},
              New ToolStripMenuItem(".mov", Nothing, Sub(s1, e1) UiTextBox输出容器.Text = s1.Text) With {.ForeColor = Color.Silver},
              New ToolStripMenuItem(".webm", Nothing, Sub(s1, e1) UiTextBox输出容器.Text = s1.Text) With {.ForeColor = Color.Silver},
+             New ToolStripMenuItem(".m2ts", Nothing, Sub(s1, e1) UiTextBox输出容器.Text = s1.Text) With {.ForeColor = Color.Silver},
              New ToolStripMenuItem(".wmv", Nothing, Sub(s1, e1) UiTextBox输出容器.Text = s1.Text) With {.ForeColor = Color.Silver},
              New ToolStripMenuItem(".avi", Nothing, Sub(s1, e1) UiTextBox输出容器.Text = s1.Text) With {.ForeColor = Color.Silver},
              New ToolStripMenuItem(".rmvb", Nothing, Sub(s1, e1) UiTextBox输出容器.Text = s1.Text) With {.ForeColor = Color.Silver},
@@ -855,8 +859,8 @@ Public Class 界面_常规流程参数_V2
              New ToolStripMenuItem(".ico", Nothing, Sub(s1, e1) UiTextBox输出容器.Text = s1.Text) With {.ForeColor = Color.Silver},
              New ToolStripSeparator() With {.Tag = "null"}})
 
-        Dim a As New 暗黑上下文菜单 With {.ShowImageMargin = False, .Font = Form1.Font}
-        a.Items.AddRange(New ToolStripItem() {
+        选择容器的上下文菜单 = New 暗黑上下文菜单 With {.ShowImageMargin = False, .Font = Form1.Font}
+        选择容器的上下文菜单.Items.AddRange(New ToolStripItem() {
              New ToolStripSeparator() With {.Tag = "null"},
              New ToolStripMenuItem("全部分类") With {.ForeColor = Color.CornflowerBlue, .Enabled = False},
              New ToolStripMenuItem("视频") With {.ForeColor = Color.Silver, .DropDown = b},
@@ -866,9 +870,6 @@ Public Class 界面_常规流程参数_V2
              New ToolStripMenuItem(".mp4", Nothing, Sub(s1, e1) UiTextBox输出容器.Text = s1.Text) With {.ForeColor = Color.Silver},
              New ToolStripMenuItem(".mkv", Nothing, Sub(s1, e1) UiTextBox输出容器.Text = s1.Text) With {.ForeColor = Color.Silver},
              New ToolStripSeparator() With {.Tag = "null"}})
-
-        a.Show(sender, New Point(0, sender.Height))
-
     End Sub
 
     Sub 选择输出目录()

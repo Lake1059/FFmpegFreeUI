@@ -157,15 +157,14 @@ Public Class 预设管理
         ui.烧录字幕页面.Label次要颜色.BackColor = a.视频参数_烧录字幕_次要颜色
         ui.烧录字幕页面.UiTextBox设置描边颜色透明度.Text = a.视频参数_烧录字幕_描边颜色_透明度
         ui.烧录字幕页面.Label描边颜色.BackColor = a.视频参数_烧录字幕_描边颜色
-        ui.烧录字幕页面.UiTextBox设置阴影背景颜色透明度.Text = a.视频参数_烧录字幕_阴影或背景颜色_透明度
-        ui.烧录字幕页面.Label阴影背景颜色.BackColor = a.视频参数_烧录字幕_阴影或背景颜色
+        ui.烧录字幕页面.UiTextBox设置背景颜色透明度.Text = a.视频参数_烧录字幕_背景颜色_透明度
+        ui.烧录字幕页面.Label背景颜色.BackColor = a.视频参数_烧录字幕_背景颜色
         ui.烧录字幕页面.UiComboBox对齐方位.SelectedIndex = a.视频参数_烧录字幕_对齐方位
         ui.烧录字幕页面.UiTextBox垂直边距.Text = a.视频参数_烧录字幕_垂直边距
         ui.烧录字幕页面.UiTextBox左边距.Text = a.视频参数_烧录字幕_左边距
         ui.烧录字幕页面.UiTextBox右边距.Text = a.视频参数_烧录字幕_右边距
         ui.烧录字幕页面.UiTextBox字距.Text = a.视频参数_烧录字幕_字距
         ui.烧录字幕页面.UiTextBox行距.Text = a.视频参数_烧录字幕_行距
-        ui.烧录字幕页面.UiTextBox视频分辨率.Text = a.视频参数_烧录字幕_视频分辨率
         ui.烧录字幕页面.UiTextBox自定义样式.Text = a.视频参数_烧录字幕_自定义样式
         ui.烧录字幕页面.UiTextBox自定义滤镜参数.Text = a.视频参数_烧录字幕_自定义滤镜参数
 
@@ -422,15 +421,14 @@ Public Class 预设管理
         a.视频参数_烧录字幕_次要颜色_透明度 = ui.烧录字幕页面.UiTextBox设置次要颜色透明度.Text
         a.视频参数_烧录字幕_描边颜色 = ui.烧录字幕页面.Label描边颜色.BackColor
         a.视频参数_烧录字幕_描边颜色_透明度 = ui.烧录字幕页面.UiTextBox设置描边颜色透明度.Text
-        a.视频参数_烧录字幕_阴影或背景颜色 = ui.烧录字幕页面.Label阴影背景颜色.BackColor
-        a.视频参数_烧录字幕_阴影或背景颜色_透明度 = ui.烧录字幕页面.UiTextBox设置阴影背景颜色透明度.Text
+        a.视频参数_烧录字幕_背景颜色 = ui.烧录字幕页面.Label背景颜色.BackColor
+        a.视频参数_烧录字幕_背景颜色_透明度 = ui.烧录字幕页面.UiTextBox设置背景颜色透明度.Text
         a.视频参数_烧录字幕_对齐方位 = ui.烧录字幕页面.UiComboBox对齐方位.SelectedIndex
         a.视频参数_烧录字幕_垂直边距 = ui.烧录字幕页面.UiTextBox垂直边距.Text
         a.视频参数_烧录字幕_左边距 = ui.烧录字幕页面.UiTextBox左边距.Text
         a.视频参数_烧录字幕_右边距 = ui.烧录字幕页面.UiTextBox右边距.Text
         a.视频参数_烧录字幕_字距 = ui.烧录字幕页面.UiTextBox字距.Text
         a.视频参数_烧录字幕_行距 = ui.烧录字幕页面.UiTextBox行距.Text
-        a.视频参数_烧录字幕_视频分辨率 = ui.烧录字幕页面.UiTextBox视频分辨率.Text
         a.视频参数_烧录字幕_自定义样式 = ui.烧录字幕页面.UiTextBox自定义样式.Text
         a.视频参数_烧录字幕_自定义滤镜参数 = ui.烧录字幕页面.UiTextBox自定义滤镜参数.Text
 
@@ -706,7 +704,7 @@ Public Class 预设管理
 
         Dim arg As String = "-hide_banner -nostdin "
 
-        If a.自定义参数_开头参数 <> "" Then arg &= $"{处理自定义参数的通配字符串(a.自定义参数_开头参数, 输入文件)} "
+        If a.自定义参数_开头参数 <> "" Then arg &= $"{a.自定义参数_开头参数} "
 
         If a.解码参数_解码器 <> "" Then arg &= $"-hwaccel {a.解码参数_解码器} "
         If a.解码参数_CPU解码线程数 <> "" Then arg &= $"-threads {a.解码参数_CPU解码线程数} "
@@ -748,7 +746,7 @@ Public Class 预设管理
             arg &= $"-i {""""}{将自动混流的SSA字幕}{""""} " : 自动混流字幕个数 += 1
         End If
 
-        If a.自定义参数_之前参数 <> "" Then arg &= $"{处理自定义参数的通配字符串(a.自定义参数_之前参数, 输入文件)} "
+        If a.自定义参数_之前参数 <> "" Then arg &= $"{a.自定义参数_之前参数} "
 
         If a.视频参数_编码器_类别 = "禁用" Then 视频参数 &= $"-vn "
         If a.视频参数_编码器_具体编码 <> "" Then 视频参数 &= $"-c:v {a.视频参数_编码器_具体编码} "
@@ -859,7 +857,7 @@ Public Class 预设管理
                     字幕位置 = a.视频参数_烧录字幕_外部字幕文件夹位置
                 End If
                 If 输入文件 = "<输入文件>" Then
-                    滤镜参数列表.Add($"filename='<字幕 | 预览模式专用>'")
+                    滤镜参数列表.Add($"filename='<字幕文件 | 预览模式专用字符>'")
                 Else
                     For Each abc In a.视频参数_烧录字幕_字幕格式优先级
                         Select Case abc
@@ -905,7 +903,7 @@ Public Class 预设管理
             If a.视频参数_烧录字幕_主要颜色 <> Color.Transparent Then 样式参数列表.Add($"PrimaryColour={转换HTML颜色到ffmpeg接受的格式(a.视频参数_烧录字幕_主要颜色.ToHTML, a.视频参数_烧录字幕_主要颜色_透明度)}")
             If a.视频参数_烧录字幕_次要颜色 <> Color.Transparent Then 样式参数列表.Add($"SecondaryColour={转换HTML颜色到ffmpeg接受的格式(a.视频参数_烧录字幕_次要颜色.ToHTML, a.视频参数_烧录字幕_次要颜色_透明度)}")
             If a.视频参数_烧录字幕_描边颜色 <> Color.Transparent Then 样式参数列表.Add($"OutlineColour={转换HTML颜色到ffmpeg接受的格式(a.视频参数_烧录字幕_描边颜色.ToHTML, a.视频参数_烧录字幕_描边颜色_透明度)}")
-            If a.视频参数_烧录字幕_阴影或背景颜色 <> Color.Transparent Then 样式参数列表.Add($"BackColour={转换HTML颜色到ffmpeg接受的格式(a.视频参数_烧录字幕_阴影或背景颜色.ToHTML, a.视频参数_烧录字幕_阴影或背景颜色_透明度)}")
+            If a.视频参数_烧录字幕_背景颜色 <> Color.Transparent Then 样式参数列表.Add($"BackColour={转换HTML颜色到ffmpeg接受的格式(a.视频参数_烧录字幕_背景颜色.ToHTML, a.视频参数_烧录字幕_背景颜色_透明度)}")
             If a.视频参数_烧录字幕_对齐方位 > 0 Then 样式参数列表.Add($"Alignment={a.视频参数_烧录字幕_对齐方位}")
             If a.视频参数_烧录字幕_垂直边距 <> "" Then 样式参数列表.Add($"MarginV={a.视频参数_烧录字幕_垂直边距}")
             If a.视频参数_烧录字幕_左边距 <> "" Then 样式参数列表.Add($"MarginL={a.视频参数_烧录字幕_左边距}")
@@ -913,7 +911,6 @@ Public Class 预设管理
             If a.视频参数_烧录字幕_字距 <> "" Then 样式参数列表.Add($"Spacing={a.视频参数_烧录字幕_字距}")
             If a.视频参数_烧录字幕_行距 <> "" Then 样式参数列表.Add($"LineSpacing={a.视频参数_烧录字幕_行距}")
             If a.视频参数_烧录字幕_自定义样式 <> "" Then 样式参数列表.Add(a.视频参数_烧录字幕_自定义样式)
-            If a.视频参数_烧录字幕_视频分辨率 <> "" Then 滤镜参数列表.Add($"original_size={a.视频参数_烧录字幕_视频分辨率}")
             If 样式参数列表.Count > 0 Then 滤镜参数列表.Add($"force_style='{Join(样式参数列表.ToArray, ",")}'")
             If a.视频参数_烧录字幕_自定义滤镜参数 <> "" Then 滤镜参数列表.Add(a.视频参数_烧录字幕_自定义滤镜参数)
             If 滤镜参数列表.Count > 0 Then 视频滤镜参数集.Add($"{a.视频参数_烧录字幕_滤镜选择}={Join(滤镜参数列表.ToArray, ":")}")
@@ -969,59 +966,64 @@ Public Class 预设管理
         If a.视频参数_色彩管理_像素格式 <> "" Then 视频参数 &= $"-pix_fmt {a.视频参数_色彩管理_像素格式} "
 
         Select Case a.视频参数_色彩管理_处理方式
-            Case 1 '写入元数据并转换
-                视频参数 &= $"-colorspace {a.视频参数_色彩管理_矩阵系数} "
-                视频参数 &= $"-color_primaries {a.视频参数_色彩管理_色域} "
-                视频参数 &= $"-color_trc {a.视频参数_色彩管理_传输特性} "
-                视频参数 &= $"-color_range {a.视频参数_色彩管理_范围} "
-                Dim vf As String = ""
+            Case 1, 2
+                If a.视频参数_色彩管理_矩阵系数 <> "" Then 视频参数 &= $"-colorspace {a.视频参数_色彩管理_矩阵系数} "
+                If a.视频参数_色彩管理_色域 <> "" Then 视频参数 &= $"-color_primaries {a.视频参数_色彩管理_色域} "
+                If a.视频参数_色彩管理_传输特性 <> "" Then 视频参数 &= $"-color_trc {a.视频参数_色彩管理_传输特性} "
+                If a.视频参数_色彩管理_范围 <> "" Then 视频参数 &= $"-color_range {a.视频参数_色彩管理_范围} "
+        End Select
+        Select Case a.视频参数_色彩管理_处理方式
+            Case 1, 3
                 Select Case a.视频参数_色彩管理_滤镜选择
                     Case "zscale"
-                        vf = $"zscale=matrix={a.视频参数_色彩管理_矩阵系数}:primaries={a.视频参数_色彩管理_色域}:transfer={a.视频参数_色彩管理_传输特性}"
+                        Dim abc As New List(Of String)
+                        If a.视频参数_色彩管理_矩阵系数 <> "" Then abc.Add($"matrix={a.视频参数_色彩管理_矩阵系数}")
+                        If a.视频参数_色彩管理_色域 <> "" Then abc.Add($"primaries={a.视频参数_色彩管理_色域}")
+                        If a.视频参数_色彩管理_传输特性 <> "" Then abc.Add($"transfer={a.视频参数_色彩管理_传输特性}")
+                        If a.视频参数_色彩管理_范围 = "pc" Then abc.Add($"range=full")
+                        If a.视频参数_色彩管理_范围 = "tv" Then abc.Add($"range=limited")
+                        If abc.Count > 0 Then 视频滤镜参数集.Add($"zscale={String.Join(":", abc)}")
                     Case "libplacebo"
-                        vf = $"libplacebo=colorspace={a.视频参数_色彩管理_矩阵系数}:color_primaries={a.视频参数_色彩管理_色域}:color_trc={a.视频参数_色彩管理_传输特性}"
+                        Dim abc As New List(Of String)
+                        If a.视频参数_色彩管理_矩阵系数 <> "" Then abc.Add($"colorspace={a.视频参数_色彩管理_矩阵系数}")
+                        If a.视频参数_色彩管理_色域 <> "" Then abc.Add($"color_primaries={a.视频参数_色彩管理_色域}")
+                        If a.视频参数_色彩管理_传输特性 <> "" Then abc.Add($"color_trc={a.视频参数_色彩管理_传输特性}")
+                        If a.视频参数_色彩管理_范围 = "pc" Then abc.Add($"range=full")
+                        If a.视频参数_色彩管理_范围 = "tv" Then abc.Add($"range=limited")
+                        If a.视频参数_色彩管理_色调映射算法 <> "" Then abc.Add($"tonemapping={a.视频参数_色彩管理_色调映射算法}")
+                        If abc.Count > 0 Then 视频滤镜参数集.Add($"libplacebo={String.Join(":", abc)}")
                 End Select
-                Select Case a.视频参数_色彩管理_范围
-                    Case "pc" : vf &= ":range=full"
-                    Case "tv" : vf &= ":range=limited"
-                End Select
-                Select Case a.视频参数_色彩管理_滤镜选择
-                    Case "libplacebo"
-                        If a.视频参数_色彩管理_色调映射算法 <> "" Then vf &= $":tonemapping={a.视频参数_色彩管理_色调映射算法}"
-                End Select
-                If a.视频参数_色彩管理_像素格式 <> "" Then vf &= $",format={a.视频参数_色彩管理_像素格式}"
-                视频滤镜参数集.Add(vf)
-            Case 2 '仅写入元数据
-                视频参数 &= $"-colorspace {a.视频参数_色彩管理_矩阵系数} "
-                视频参数 &= $"-color_primaries {a.视频参数_色彩管理_色域} "
-                视频参数 &= $"-color_trc {a.视频参数_色彩管理_传输特性} "
-                视频参数 &= $"-color_range {a.视频参数_色彩管理_范围} "
-            Case 3 '仅转换
-                Dim vf As String = ""
-                Select Case a.视频参数_色彩管理_滤镜选择
-                    Case "zscale"
-                        vf = $"zscale=matrix={a.视频参数_色彩管理_矩阵系数}:primaries={a.视频参数_色彩管理_色域}:transfer={a.视频参数_色彩管理_传输特性}"
-                    Case "libplacebo"
-                        vf = $"libplacebo=colorspace={a.视频参数_色彩管理_矩阵系数}:color_primaries={a.视频参数_色彩管理_色域}:color_trc={a.视频参数_色彩管理_传输特性}"
-                End Select
-                Select Case a.视频参数_色彩管理_范围
-                    Case "pc" : vf &= ":range=full"
-                    Case "tv" : vf &= ":range=limited"
-                End Select
-                Select Case a.视频参数_色彩管理_滤镜选择
-                    Case "libplacebo"
-                        If a.视频参数_色彩管理_色调映射算法 <> "" Then vf &= $":tonemapping={a.视频参数_色彩管理_色调映射算法}"
-                End Select
-                If a.视频参数_色彩管理_像素格式 <> "" Then vf &= $",format={a.视频参数_色彩管理_像素格式}"
-                视频滤镜参数集.Add(vf)
         End Select
 
         Select Case a.视频参数_降噪_方式
-            Case "hqdn3d" : 视频滤镜参数集.Add($"hqdn3d=luma_spatial={a.视频参数_降噪_参数1}:chroma_spatial={a.视频参数_降噪_参数2}:luma_tmp={a.视频参数_降噪_参数3}:chroma_tmp={a.视频参数_降噪_参数4}")
-            Case "nlmeans" : 视频滤镜参数集.Add($"nlmeans=s={a.视频参数_降噪_参数1}:p={a.视频参数_降噪_参数2}:pc={a.视频参数_降噪_参数3}:r={a.视频参数_降噪_参数4}")
-            Case "atadenoise" : 视频滤镜参数集.Add($"atadenoise=0a={a.视频参数_降噪_参数1}:0b={a.视频参数_降噪_参数2}:1a={a.视频参数_降噪_参数3}:1b={a.视频参数_降噪_参数4}")
-            Case "bm3d" : 视频滤镜参数集.Add($"bm3d=sigma={a.视频参数_降噪_参数1}:block={a.视频参数_降噪_参数2}:bstep={a.视频参数_降噪_参数3}:group={a.视频参数_降噪_参数4}")
-            Case "avs" '在后面处理，防止出事
+            Case "hqdn3d"
+                Dim abc As New List(Of String)
+                If a.视频参数_降噪_参数1 <> "" Then abc.Add($"luma_spatial={a.视频参数_降噪_参数1}")
+                If a.视频参数_降噪_参数2 <> "" Then abc.Add($"chroma_spatial={a.视频参数_降噪_参数2}")
+                If a.视频参数_降噪_参数3 <> "" Then abc.Add($"luma_tmp={a.视频参数_降噪_参数3}")
+                If a.视频参数_降噪_参数4 <> "" Then abc.Add($"chroma_tmp={a.视频参数_降噪_参数4}")
+                If abc.Count > 0 Then 视频滤镜参数集.Add($"hqdn3d={String.Join(":", abc)}")
+            Case "nlmeans"
+                Dim abc As New List(Of String)
+                If a.视频参数_降噪_参数1 <> "" Then abc.Add($"s={a.视频参数_降噪_参数1}")
+                If a.视频参数_降噪_参数2 <> "" Then abc.Add($"p={a.视频参数_降噪_参数2}")
+                If a.视频参数_降噪_参数3 <> "" Then abc.Add($"pc={a.视频参数_降噪_参数3}")
+                If a.视频参数_降噪_参数4 <> "" Then abc.Add($"r={a.视频参数_降噪_参数4}")
+                If abc.Count > 0 Then 视频滤镜参数集.Add($"nlmeans={String.Join(":", abc)}")
+            Case "atadenoise"
+                Dim abc As New List(Of String)
+                If a.视频参数_降噪_参数1 <> "" Then abc.Add($"0a={a.视频参数_降噪_参数1}")
+                If a.视频参数_降噪_参数2 <> "" Then abc.Add($"0b={a.视频参数_降噪_参数2}")
+                If a.视频参数_降噪_参数3 <> "" Then abc.Add($"1a={a.视频参数_降噪_参数3}")
+                If a.视频参数_降噪_参数4 <> "" Then abc.Add($"1b={a.视频参数_降噪_参数4}")
+                If abc.Count > 0 Then 视频滤镜参数集.Add($"atadenoise={String.Join(":", abc)}")
+            Case "bm3d"
+                Dim abc As New List(Of String)
+                If a.视频参数_降噪_参数1 <> "" Then abc.Add($"sigma={a.视频参数_降噪_参数1}")
+                If a.视频参数_降噪_参数2 <> "" Then abc.Add($"block={a.视频参数_降噪_参数2}")
+                If a.视频参数_降噪_参数3 <> "" Then abc.Add($"bstep={a.视频参数_降噪_参数3}")
+                If a.视频参数_降噪_参数4 <> "" Then abc.Add($"group={a.视频参数_降噪_参数4}")
+                If abc.Count > 0 Then 视频滤镜参数集.Add($"bm3d={String.Join(":", abc)}")
         End Select
 
         If a.视频参数_锐化_水平尺寸 <> "" AndAlso a.视频参数_锐化_垂直尺寸 <> "" AndAlso a.视频参数_锐化_锐化强度 <> "" Then
@@ -1071,13 +1073,13 @@ Public Class 预设管理
                 音频滤镜参数集.Add("asetpts=PTS-STARTPTS")
         End Select
 
-        If a.自定义参数_视频滤镜 <> "" Then 视频滤镜参数集.Add(处理自定义参数的通配字符串(a.自定义参数_视频滤镜, 输入文件))
-        If 视频滤镜参数集.Count > 0 Then
-            Dim vf As String = String.Join(",", 视频滤镜参数集)
-            视频参数 &= $"-vf ""{vf}"" "
-        End If
+        If a.自定义参数_视频滤镜 <> "" Then 视频滤镜参数集.Add(a.自定义参数_视频滤镜)
+        'If 视频滤镜参数集.Count > 0 Then
+        '    Dim vf As String = String.Join(",", 视频滤镜参数集)
+        '    视频参数 &= $"-vf ""{vf}"" "
+        'End If
 
-        If a.自定义参数_视频参数 <> "" Then 视频参数 &= 处理自定义参数的通配字符串(a.自定义参数_视频参数, 输入文件) & " "
+        If a.自定义参数_视频参数 <> "" Then 视频参数 &= $"{a.自定义参数_视频参数} "
 
         '=============================================================
 
@@ -1098,13 +1100,13 @@ Public Class 预设管理
             音频滤镜参数集.Add($"loudnorm=I={If(a.音频参数_响度标准化_目标响度 <> "", a.音频参数_响度标准化_目标响度, -16)}:LRA={If(a.音频参数_响度标准化_动态范围 <> "", a.音频参数_响度标准化_动态范围, 1)}:tp={If(a.音频参数_响度标准化_峰值电平 <> "", a.音频参数_响度标准化_峰值电平, -1)}")
         End If
 
-        If a.自定义参数_音频滤镜 <> "" Then 音频滤镜参数集.Add(处理自定义参数的通配字符串(a.自定义参数_音频滤镜, 输入文件))
-        If 音频滤镜参数集.Count > 0 Then
-            Dim vf As String = String.Join(",", 音频滤镜参数集)
-            音频参数 &= $"-af ""{vf}"" "
-        End If
+        If a.自定义参数_音频滤镜 <> "" Then 音频滤镜参数集.Add(a.自定义参数_音频滤镜)
+        'If 音频滤镜参数集.Count > 0 Then
+        '    Dim vf As String = String.Join(",", 音频滤镜参数集)
+        '    音频参数 &= $"-af ""{vf}"" "
+        'End If
 
-        If a.自定义参数_音频参数 <> "" Then arg &= 处理自定义参数的通配字符串(a.自定义参数_音频参数, 输入文件) & " "
+        If a.自定义参数_音频参数 <> "" Then arg &= $"{a.自定义参数_音频参数} "
 
         '=================================================================
 
@@ -1118,92 +1120,133 @@ Public Class 预设管理
         End If
 
         '=================================================================
+        '=================================================================
+        ' 流控制 - 视频
+        ' 核心思路：当需要保留其他流时，使用 -map 映射所有流，
+        ' 先设置默认 -c:v copy，再用 -c:v:索引 覆盖指定流
+        ' 滤镜和其他参数通过 -filter:v:索引 指定目标流
+        '=================================================================
 
-        If a.流控制_启用保留其他视频流 AndAlso 视频参数 <> "" Then
-            arg &= $"-map 0:v? -c:v copy "
-            If a.流控制_将视频参数应用于指定流.Length > 0 Then
-                For Each vi In a.流控制_将视频参数应用于指定流
-                    arg &= $"-map -{vi}? "
-                Next
+        Dim 需要map视频 As Boolean = a.流控制_启用保留其他视频流 OrElse (a.流控制_将视频参数应用于指定流 IsNot Nothing AndAlso a.流控制_将视频参数应用于指定流.Length > 0)
+        If 需要map视频 Then
+            If a.流控制_启用保留其他视频流 Then
+                ' 映射所有视频流
+                arg &= "-map 0:v? "
+                ' 默认所有流复制
+                arg &= "-c:v copy "
+                ' 确定要处理的流索引列表
+                Dim 目标流索引列表 As New List(Of String)
+                If a.流控制_将视频参数应用于指定流.Length > 0 Then
+                    For Each vi In a.流控制_将视频参数应用于指定流
+                        目标流索引列表.Add(提取流类型索引(vi))
+                    Next
+                Else
+                    目标流索引列表.Add("0") ' 默认处理第一个流
+                End If
+                ' 对每个目标流应用参数
+                If 视频参数 <> "" OrElse 视频滤镜参数集.Count > 0 Then
+                    For Each 流索引 In 目标流索引列表
+                        arg &= 生成指定流的视频参数(视频参数, 视频滤镜参数集, 流索引)
+                    Next
+                End If
             Else
-                If 视频参数 <> "" Then arg &= $"-map -0:v:0? "
-            End If
-        End If
-        If a.流控制_将视频参数应用于指定流.Length > 0 Then
-            If 视频参数 <> "" Then
+                ' 只映射指定的流，不保留其他流
                 For Each vi In a.流控制_将视频参数应用于指定流
-                    arg &= $"-map {vi}? {视频参数} "
+                    arg &= $"-map {vi}? "
                 Next
+                ' 直接应用参数（作用于所有映射的流）
+                If 视频滤镜参数集.Count > 0 Then
+                    arg &= $"-vf ""{String.Join(",", 视频滤镜参数集)}"" "
+                End If
+                If 视频参数 <> "" Then arg &= $"{视频参数} "
             End If
         Else
+            ' 不使用 map，FFmpeg 默认行为
+            If 视频滤镜参数集.Count > 0 Then
+                arg &= $"-vf ""{String.Join(",", 视频滤镜参数集)}"" "
+            End If
             If 视频参数 <> "" Then arg &= $"{视频参数} "
         End If
 
         '=================================================================
+        ' 流控制 - 音频
+        '=================================================================
 
-        If a.流控制_启用保留其他音频流 AndAlso 音频参数 <> "" Then
-            arg &= $"-map 0:a? -c:a copy "
-            If a.流控制_将音频参数应用于指定流.Length > 0 Then
-                For Each ai In a.流控制_将音频参数应用于指定流
-                    arg &= $"-map -{ai}? "
-                Next
+        Dim 需要map音频 As Boolean = a.流控制_启用保留其他音频流 OrElse (a.流控制_将音频参数应用于指定流 IsNot Nothing AndAlso a.流控制_将音频参数应用于指定流.Length > 0)
+        If 需要map音频 Then
+            If a.流控制_启用保留其他音频流 Then
+                arg &= "-map 0:a? "
+                arg &= "-c:a copy "
+                Dim 目标流索引列表 As New List(Of String)
+                If a.流控制_将音频参数应用于指定流.Length > 0 Then
+                    For Each ai In a.流控制_将音频参数应用于指定流
+                        目标流索引列表.Add(提取流类型索引(ai))
+                    Next
+                Else
+                    目标流索引列表.Add("0")
+                End If
+                If 音频参数 <> "" OrElse 音频滤镜参数集.Count > 0 Then
+                    For Each 流索引 In 目标流索引列表
+                        arg &= 生成指定流的音频参数(音频参数, 音频滤镜参数集, 流索引)
+                    Next
+                End If
             Else
-                If 音频参数 <> "" Then arg &= $"-map -0:a:0? "
-            End If
-        End If
-        If a.流控制_将音频参数应用于指定流.Length > 0 Then
-            If 音频参数 <> "" Then
                 For Each ai In a.流控制_将音频参数应用于指定流
-                    arg &= $"-map {ai}? {音频参数} "
+                    arg &= $"-map {ai}? "
                 Next
+                If 音频滤镜参数集.Count > 0 Then
+                    arg &= $"-af ""{String.Join(",", 音频滤镜参数集)}"" "
+                End If
+                If 音频参数 <> "" Then arg &= $"{音频参数} "
             End If
         Else
+            If 音频滤镜参数集.Count > 0 Then
+                arg &= $"-af ""{String.Join(",", 音频滤镜参数集)}"" "
+            End If
             If 音频参数 <> "" Then arg &= $"{音频参数} "
         End If
 
         '=================================================================
-
-        Select Case a.流控制_如何操作指定的字幕
-            Case 1
-                字幕参数 &= $"-c:s copy "
-            Case 2
-                字幕参数 &= $"-c:s mov_text "
-            Case 3
-                字幕参数 &= $"-c:s srt "
-            Case 4
-                字幕参数 &= $"-c:s ass "
-            Case 5
-                字幕参数 &= $"-c:s ssa "
-        End Select
-
+        ' 流控制 - 字幕
         '=================================================================
 
-        If a.流控制_启用保留其他字幕流 AndAlso 字幕参数 <> "" Then
-            arg &= $"-map 0:s? -c:s copy "
-            If a.流控制_将字幕参数应用于指定流.Length > 0 Then
-                For Each si In a.流控制_将字幕参数应用于指定流
-                    arg &= $"-map -{si}? "
-                Next
+        Select Case a.流控制_如何操作指定的字幕
+            Case 1 : 字幕参数 = "copy"
+            Case 2 : 字幕参数 = "mov_text"
+            Case 3 : 字幕参数 = "srt"
+            Case 4 : 字幕参数 = "ass"
+            Case 5 : 字幕参数 = "ssa"
+        End Select
+
+        Dim 需要map字幕 As Boolean = a.流控制_启用保留其他字幕流 OrElse (a.流控制_将字幕参数应用于指定流 IsNot Nothing AndAlso a.流控制_将字幕参数应用于指定流.Length > 0)
+        If 需要map字幕 Then
+            If a.流控制_启用保留其他字幕流 Then
+                arg &= "-map 0:s? -c:s copy "
+                If a.流控制_将字幕参数应用于指定流.Length > 0 AndAlso 字幕参数 <> "" Then
+                    For Each si In a.流控制_将字幕参数应用于指定流
+                        Dim 流索引 = 提取流类型索引(si)
+                        arg &= $"-c:s:{流索引} {字幕参数} "
+                    Next
+                ElseIf 字幕参数 <> "" Then
+                    arg &= $"-c:s:0 {字幕参数} "
+                End If
             Else
-                If 字幕参数 <> "" Then arg &= $"-map -0:s:0? "
-            End If
-        End If
-        If a.流控制_将字幕参数应用于指定流.Length > 0 Then
-            If 字幕参数 <> "" Then
                 For Each si In a.流控制_将字幕参数应用于指定流
-                    arg &= $"-map {si}? {字幕参数} "
+                    arg &= $"-map {si}? "
                 Next
+                If 字幕参数 <> "" Then arg &= $"-c:s {字幕参数} "
             End If
-        Else
-            If 字幕参数 <> "" Then arg &= $"{字幕参数} "
         End If
 
+        '=================================================================
+        ' 自动混流字幕
         '=================================================================
 
         If 自动混流字幕个数 > 0 Then
             For i = 1 To 自动混流字幕个数
-                arg &= $"-map {i}:s? -c:s {If(a.流控制_自动混流的字幕转为MOVTEXT, "mov_text", "copy")} "
+                arg &= $"-map {i}:s? "
             Next
+            arg &= $"-c:s {If(a.流控制_自动混流的字幕转为MOVTEXT, "mov_text", "copy")} "
         End If
 
         '=================================================================
@@ -1229,26 +1272,150 @@ Public Class 预设管理
 
         '=================================================================
 
-        If a.自定义参数_之后参数 <> "" Then arg &= $"{处理自定义参数的通配字符串(a.自定义参数_之后参数, 输入文件)} "
+        If a.自定义参数_之后参数 <> "" Then arg &= $"{a.自定义参数_之后参数} "
 
-        If Not a.输出命名_不使用输出文件参数 Then arg &= $"{""""}{输出文件}{""""} -y "
+        If Not a.输出命名_不使用输出文件参数 Then arg &= $"""{输出文件}"" -y "
 
-        If a.自定义参数_最后参数 <> "" Then arg &= $"{处理自定义参数的通配字符串(a.自定义参数_最后参数, 输入文件)} "
+        If a.自定义参数_最后参数 <> "" Then arg &= $"{a.自定义参数_最后参数} "
+
+        arg = arg.Replace("<InputFilePath>", 输入文件)
+        arg = arg.Replace("<InputFilePathWithOutExtension>", Path.Combine(Path.GetDirectoryName(输入文件), Path.GetFileNameWithoutExtension(输入文件)))
+        arg = arg.Replace("<InputFileName>", Path.GetFileName(输入文件))
+        arg = arg.Replace("<InputFileNameWithOutExtension>", Path.GetFileNameWithoutExtension(输入文件))
 
         Return arg
     End Function
 
-    Shared Function 处理自定义参数的通配字符串(自定义参数 As String, 输入文件 As String) As String
-        If 自定义参数 = "" Then
-            Return ""
-            Exit Function
+    ''' <summary>
+    ''' 生成指定流的视频参数
+    ''' 支持流索引的参数添加索引，不支持的参数转换为滤镜
+    ''' </summary>
+    Private Shared Function 生成指定流的视频参数(视频参数 As String, 视频滤镜参数集 As List(Of String), 流索引 As String) As String
+        Dim result As String = ""
+        Dim 额外滤镜 As New List(Of String)
+        Dim 处理后参数 As String = 视频参数
+
+        If 处理后参数 <> "" Then
+            ' 提取并移除 -r（帧率），转为 fps 滤镜
+            Dim matchR = System.Text.RegularExpressions.Regex.Match(处理后参数, "-r\s+(\S+)")
+            If matchR.Success Then
+                额外滤镜.Add($"fps={matchR.Groups(1).Value}")
+                处理后参数 = System.Text.RegularExpressions.Regex.Replace(处理后参数, "-r\s+\S+\s*", "")
+            End If
+
+            ' 提取并移除 -s（分辨率），转为 scale 滤镜
+            Dim matchS = System.Text.RegularExpressions.Regex.Match(处理后参数, "-s\s+(\d+)x(\d+)")
+            If matchS.Success Then
+                额外滤镜.Add($"scale={matchS.Groups(1).Value}:{matchS.Groups(2).Value}")
+                处理后参数 = System.Text.RegularExpressions.Regex.Replace(处理后参数, "-s\s+\d+x\d+\s*", "")
+            End If
+
+            ' 提取并移除 -pix_fmt（像素格式），转为 format 滤镜
+            Dim matchPix = System.Text.RegularExpressions.Regex.Match(处理后参数, "-pix_fmt\s+(\S+)")
+            If matchPix.Success Then
+                额外滤镜.Add($"format={matchPix.Groups(1).Value}")
+                处理后参数 = System.Text.RegularExpressions.Regex.Replace(处理后参数, "-pix_fmt\s+\S+\s*", "")
+            End If
+
+            '' 提取并移除 -aspect（宽高比），转为 setdar 滤镜
+            'Dim matchAspect = System.Text.RegularExpressions.Regex.Match(处理后参数, "-aspect\s+(\S+)")
+            'If matchAspect.Success Then
+            '    额外滤镜.Add($"setdar={matchAspect.Groups(1).Value}")
+            '    处理后参数 = System.Text.RegularExpressions.Regex.Replace(处理后参数, "-aspect\s+\S+\s*", "")
+            'End If
+
+            ' 替换支持流索引的参数
+            处理后参数 = System.Text.RegularExpressions.Regex.Replace(处理后参数, "-c:v\s", $"-c:v:{流索引} ")
+            处理后参数 = System.Text.RegularExpressions.Regex.Replace(处理后参数, "-b:v\s", $"-b:v:{流索引} ")
+            处理后参数 = System.Text.RegularExpressions.Regex.Replace(处理后参数, "-q:v\s", $"-q:v:{流索引} ")
+            处理后参数 = System.Text.RegularExpressions.Regex.Replace(处理后参数, "-profile:v\s", $"-profile:v:{流索引} ")
+            处理后参数 = System.Text.RegularExpressions.Regex.Replace(处理后参数, "-tag:v\s", $"-tag:v:{流索引} ")
         End If
-        Dim a As String = 自定义参数
-        a = a.Replace("<InputFilePath>", 输入文件)
-        a = a.Replace("<InputFilePathWithOutExtension>", Path.Combine(Path.GetDirectoryName(输入文件), Path.GetFileNameWithoutExtension(输入文件)))
-        a = a.Replace("<InputFileName>", Path.GetFileName(输入文件))
-        a = a.Replace("<InputFileNameWithOutExtension>", Path.GetFileNameWithoutExtension(输入文件))
-        Return a
+
+        ' 合并原有滤镜和额外滤镜
+        Dim 所有滤镜 As New List(Of String)
+        所有滤镜.AddRange(额外滤镜)
+        所有滤镜.AddRange(视频滤镜参数集)
+
+        ' 生成滤镜参数
+        If 所有滤镜.Count > 0 Then
+            result &= $"-filter:v:{流索引} ""{String.Join(",", 所有滤镜)}"" "
+        End If
+
+        ' 添加处理后的编码参数
+        If 处理后参数.Trim() <> "" Then
+            result &= 处理后参数.Trim() & " "
+        End If
+
+        Return result
+    End Function
+
+    ''' <summary>
+    ''' 生成指定流的音频参数
+    ''' 支持流索引的参数添加索引，不支持的参数转换为滤镜
+    ''' </summary>
+    Private Shared Function 生成指定流的音频参数(音频参数 As String, 音频滤镜参数集 As List(Of String), 流索引 As String) As String
+        Dim result As String = ""
+        Dim 额外滤镜 As New List(Of String)
+        Dim 处理后参数 As String = 音频参数
+
+        If 处理后参数 <> "" Then
+            ' 提取并移除 -ar（采样率），转为 aresample 滤镜
+            Dim matchAr = System.Text.RegularExpressions.Regex.Match(处理后参数, "-ar\s+(\S+)")
+            If matchAr.Success Then
+                额外滤镜.Add($"aresample={matchAr.Groups(1).Value}")
+                处理后参数 = System.Text.RegularExpressions.Regex.Replace(处理后参数, "-ar\s+\S+\s*", "")
+            End If
+
+            '' 提取并移除 -ac（声道数），转为 aformat 滤镜
+            'Dim matchAc = System.Text.RegularExpressions.Regex.Match(处理后参数, "-ac\s+(\S+)")
+            'If matchAc.Success Then
+            '    额外滤镜.Add($"aformat=channel_layouts={matchAc.Groups(1).Value}")
+            '    处理后参数 = System.Text.RegularExpressions.Regex.Replace(处理后参数, "-ac\s+\S+\s*", "")
+            'End If
+
+            ' 提取并移除 -channel_layout，转为 aformat 滤镜
+            Dim matchCh = System.Text.RegularExpressions.Regex.Match(处理后参数, "-channel_layout\s+(\S+)")
+            If matchCh.Success Then
+                额外滤镜.Add($"aformat=channel_layouts={matchCh.Groups(1).Value}")
+                处理后参数 = System.Text.RegularExpressions.Regex.Replace(处理后参数, "-channel_layout\s+\S+\s*", "")
+            End If
+
+            ' 替换支持流索引的参数
+            处理后参数 = System.Text.RegularExpressions.Regex.Replace(处理后参数, "-c:a\s", $"-c:a:{流索引} ")
+            处理后参数 = System.Text.RegularExpressions.Regex.Replace(处理后参数, "-b:a\s", $"-b:a:{流索引} ")
+            处理后参数 = System.Text.RegularExpressions.Regex.Replace(处理后参数, "-q:a\s", $"-q:a:{流索引} ")
+            处理后参数 = System.Text.RegularExpressions.Regex.Replace(处理后参数, "-profile:a\s", $"-profile:a:{流索引} ")
+            处理后参数 = System.Text.RegularExpressions.Regex.Replace(处理后参数, "-tag:a\s", $"-tag:a:{流索引} ")
+        End If
+
+        ' 合并滤镜
+        Dim 所有滤镜 As New List(Of String)
+        所有滤镜.AddRange(额外滤镜)
+        所有滤镜.AddRange(音频滤镜参数集)
+
+        If 所有滤镜.Count > 0 Then
+            result &= $"-filter:a:{流索引} ""{String.Join(",", 所有滤镜)}"" "
+        End If
+
+        If 处理后参数.Trim() <> "" Then
+            result &= 处理后参数.Trim() & " "
+        End If
+
+        Return result
+    End Function
+
+    ''' <summary>
+    ''' 从流标识符中提取流类型索引（如 "0:v:1" 返回 "1"，"0:v" 返回 "0"）
+    ''' </summary>
+    Private Shared Function 提取流类型索引(流标识符 As String) As String
+        Dim parts = 流标识符.Replace(" ", "").Split(":"c)
+        If parts.Length >= 3 Then
+            Return parts(2)
+        ElseIf parts.Length = 2 Then
+            Return "0"
+        End If
+        Return ""
     End Function
 
     Shared Sub 显示参数总览(RTF As System.Windows.Forms.RichTextBox, a As 预设数据类型)
@@ -1345,8 +1512,54 @@ Public Class 预设管理
         If a.视频参数_超分_抗振铃强度 <> "" Then 在RTF输出文本(RTF, $"超分抗振铃强度：{a.视频参数_超分_抗振铃强度}", Color.Silver)
         If a.视频参数_超分_着色器列表.Count > 0 Then 在RTF输出文本(RTF, $"超分正在使用 {a.视频参数_超分_着色器列表.Count} 个自定义着色器", Color.Silver)
 
-        '---------------- 码率 / 质量控制 ----------------
-        If a.视频参数_比特率_控制方式 <> "" Then
+        '---------------- 烧录字幕 ----------------
+        If a.视频参数_烧录字幕_滤镜选择 <> "" Then
+            Dim abc As New List(Of String) From {$"滤镜：{a.视频参数_烧录字幕_滤镜选择}"}
+            If a.视频参数_烧录字幕_字幕来源是外部文件 Then abc.Add($"字幕来源是外部文件")
+            If a.视频参数_烧录字幕_字幕来源是内嵌的流 Then abc.Add($"字幕来源是内嵌的流")
+            If a.视频参数_烧录字幕_外部字幕文件名 = "" Then
+                abc.Add($"外部字幕文件与输入文件同名")
+            Else
+                abc.Add($"外部字幕文件名：{a.视频参数_烧录字幕_外部字幕文件名}")
+            End If
+            If a.视频参数_烧录字幕_外部字幕文件夹位置 = "" Then
+                abc.Add($"外部字幕文件与输入文件在同一位置")
+            Else
+                abc.Add($"外部字幕文件夹位置：{a.视频参数_烧录字幕_外部字幕文件夹位置}")
+            End If
+            If a.视频参数_烧录字幕_指定内嵌的流 <> "" Then abc.Add($"指定内嵌的流：{a.视频参数_烧录字幕_指定内嵌的流}")
+            If a.视频参数_烧录字幕_字体文件夹 <> "" Then abc.Add($"字体文件夹：{a.视频参数_烧录字幕_字体文件夹}")
+            If a.视频参数_烧录字幕_基本样式_名称 <> "" Then
+                abc.Add($"字体：{a.视频参数_烧录字幕_基本样式_名称}")
+                abc.Add($"大小：{a.视频参数_烧录字幕_基本样式_大小}")
+                If a.视频参数_烧录字幕_基本样式_粗体 Then abc.Add($"粗体")
+                If a.视频参数_烧录字幕_基本样式_斜体 Then abc.Add($"斜体")
+                If a.视频参数_烧录字幕_基本样式_下划线 Then abc.Add($"下划线")
+                If a.视频参数_烧录字幕_基本样式_删除线 Then abc.Add($"删除线")
+            End If
+            Select Case a.视频参数_烧录字幕_边框样式
+                Case 1 : abc.Add($"边框样式：描边+阴影")
+                Case 2 : abc.Add($"边框样式：背景框")
+            End Select
+            If a.视频参数_烧录字幕_描边宽度 <> "" Then abc.Add($"描边宽度：{a.视频参数_烧录字幕_描边宽度}")
+            If a.视频参数_烧录字幕_阴影距离 <> "" Then abc.Add($"阴影距离：{a.视频参数_烧录字幕_阴影距离}")
+            If a.视频参数_烧录字幕_主要颜色 <> Color.Transparent Then abc.Add($"主要颜色：{转换HTML颜色到ffmpeg接受的格式(a.视频参数_烧录字幕_主要颜色.ToHTML, a.视频参数_烧录字幕_主要颜色_透明度)}")
+            If a.视频参数_烧录字幕_次要颜色 <> Color.Transparent Then abc.Add($"次要颜色：{转换HTML颜色到ffmpeg接受的格式(a.视频参数_烧录字幕_次要颜色.ToHTML, a.视频参数_烧录字幕_次要颜色_透明度)}")
+            If a.视频参数_烧录字幕_描边颜色 <> Color.Transparent Then abc.Add($"描边颜色：{转换HTML颜色到ffmpeg接受的格式(a.视频参数_烧录字幕_描边颜色.ToHTML, a.视频参数_烧录字幕_描边颜色_透明度)}")
+            If a.视频参数_烧录字幕_背景颜色 <> Color.Transparent Then abc.Add($"背景颜色：{转换HTML颜色到ffmpeg接受的格式(a.视频参数_烧录字幕_背景颜色.ToHTML, a.视频参数_烧录字幕_背景颜色_透明度)}")
+            If a.视频参数_烧录字幕_对齐方位 > 0 Then abc.Add($"对齐方位：{a.视频参数_烧录字幕_对齐方位}")
+            If a.视频参数_烧录字幕_垂直边距 <> "" Then abc.Add($"垂直边距：{a.视频参数_烧录字幕_垂直边距}")
+            If a.视频参数_烧录字幕_左边距 <> "" Then abc.Add($"左边距：{a.视频参数_烧录字幕_左边距}")
+            If a.视频参数_烧录字幕_右边距 <> "" Then abc.Add($"右边距：{a.视频参数_烧录字幕_右边距}")
+            If a.视频参数_烧录字幕_字距 <> "" Then abc.Add($"字距：{a.视频参数_烧录字幕_字距}")
+            If a.视频参数_烧录字幕_行距 <> "" Then abc.Add($"行距：{a.视频参数_烧录字幕_行距}")
+            If a.视频参数_烧录字幕_自定义样式 <> "" Then abc.Add($"自定义样式：{a.视频参数_烧录字幕_自定义样式}")
+            If a.视频参数_烧录字幕_自定义滤镜参数 <> "" Then abc.Add($"自定义滤镜参数：{a.视频参数_烧录字幕_自定义滤镜参数}")
+            在RTF输出文本(RTF, $"烧录字幕：{String.Join("；", abc)}", Color.Gray)
+        End If
+
+            '---------------- 码率 / 质量控制 ----------------
+            If a.视频参数_比特率_控制方式 <> "" Then
             Select Case a.视频参数_比特率_控制方式
                 Case "CRF" : 在RTF输出文本(RTF, "质量/比特率控制方法：CRF", Color.Silver)
                 Case "VBR" : 在RTF输出文本(RTF, "质量/比特率控制方法：VBR", Color.Silver)
