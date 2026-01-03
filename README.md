@@ -63,6 +63,10 @@ FFmpegFreeUI（简称 3FUI）是在 Windows 上的 [FFmpeg](https://ffmpeg.org) 
 
 为了维持 3FUI 的 Free，并且能够维持更新和后续项目，从 3.0 版本开始推出一次性购买的 **[Supporter Pack](https://afdian.com/item/a98d04e8b98011f0a49952540025c377)**，仅提供个性化功能，如果手头充裕欢迎支持。作为付费支持者，您可以向我提供一个支持者信息并在下一次更新中硬编码到 3FUI 中。
 
+## 多语言支持
+
+3FUI 现在已经接入多语言支持，但还有很多工作要做，目前 English 的完成度仅 10%。如果未来有意向自发添加更多语言的，请向我提供你组织能够进行保质量翻译的证明，我不想看到因为翻译组的原因导致的差评。
+
 ## Linux & macOS
 
 [Wine](https://www.winehq.org) 是一个在多种 POSIX-compliant 操作系统上运行 Windows 应用的兼容层，如果能够在 macOS 和 Linux 上安装并正确使用，理论上可以直接在这些操作系统上使用 3FUI。关于这部分的内容请进群跟群友讨论，我买不起苹果电脑也用不来 Linux。
