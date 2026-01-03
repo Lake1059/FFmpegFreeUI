@@ -129,6 +129,10 @@ Public Class 界面控制
 
                 Form1.性能统计刷新计时器.Enabled = True
 
+            Case 选项卡.IsEqual(Form1.TabPage插件扩展)
+                Form1.Panel顶部视觉修正区域_二级选项卡.BackColor = Form1.Panel22.BackColor
+                Form1.Panel顶部视觉修正区域_二级选项卡.Dock = DockStyle.Fill
+
             Case 选项卡.IsEqual(Form1.TabPage设置)
                 Form1.Panel顶部视觉修正区域_二级选项卡.BackColor = Form1.设置页面.UiTabControlMenu1.TabBackColor
                 Form1.Panel顶部视觉修正区域_二级选项卡.Dock = DockStyle.Left

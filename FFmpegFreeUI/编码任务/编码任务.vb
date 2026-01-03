@@ -167,6 +167,7 @@ jx1:
                     Catch ex As Exception
                     End Try
                 End If
+
                 FFmpegProcess = New Process()
                 FFmpegProcess.StartInfo.FileName = If(用户设置.实例对象.替代进程文件名 <> "", 用户设置.实例对象.替代进程文件名, "ffmpeg")
                 FFmpegProcess.StartInfo.WorkingDirectory = If(用户设置.实例对象.工作目录 <> "", 用户设置.实例对象.工作目录, "")
@@ -269,16 +270,15 @@ jx1:
             End Try
         End Sub
 
-
-
         Public Sub FFmpegOutputHandler(sender As Object, e As DataReceivedEventArgs)
             If e.Data Is Nothing Then Exit Sub
             实时输出 = e.Data
 
             If Not 已获取到总时长 AndAlso e.Data.Contains("Duration") Then
                 Dim durationMatch = DurationPattern.Match(e.Data)
-                If durationMatch.Success AndAlso 预设数据 IsNot Nothing Then
-                    If 预设数据.剪辑区间_入点 <> "" AndAlso 预设数据.剪辑区间_出点 = "" Then
+                If durationMatch.Success Then
+                    ' 仅当有预设数据且设置了入点但没设置出点时，才减去入点
+                    If 预设数据 IsNot Nothing AndAlso 预设数据.剪辑区间_入点 <> "" AndAlso 预设数据.剪辑区间_出点 = "" Then
                         获取_总时长 = 将时间字符串转换为时间类型(durationMatch.Groups(1).Value) - 将时间字符串转换为时间类型(预设数据.剪辑区间_入点)
                     Else
                         获取_总时长 = 将时间字符串转换为时间类型(durationMatch.Groups(1).Value)

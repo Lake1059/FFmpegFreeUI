@@ -25,6 +25,8 @@ Partial Class 界面_支持者
         Label1 = New Label()
         Label47 = New Label()
         Panel2 = New Panel()
+        UiButton4 = New Sunny.UI.UIButton()
+        Label3 = New Label()
         UiButton3 = New Sunny.UI.UIButton()
         Label2 = New Label()
         UiButton2 = New Sunny.UI.UIButton()
@@ -61,6 +63,8 @@ Partial Class 界面_支持者
         ' 
         ' Panel2
         ' 
+        Panel2.Controls.Add(UiButton4)
+        Panel2.Controls.Add(Label3)
         Panel2.Controls.Add(UiButton3)
         Panel2.Controls.Add(Label2)
         Panel2.Controls.Add(UiButton2)
@@ -72,6 +76,44 @@ Partial Class 界面_支持者
         Panel2.Padding = New Padding(20, 10, 10, 10)
         Panel2.Size = New Size(1000, 50)
         Panel2.TabIndex = 124
+        ' 
+        ' UiButton4
+        ' 
+        UiButton4.AllowDrop = True
+        UiButton4.Dock = DockStyle.Left
+        UiButton4.FillColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
+        UiButton4.FillColor2 = Color.FromArgb(CByte(24), CByte(24), CByte(24))
+        UiButton4.FillDisableColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
+        UiButton4.FillHoverColor = Color.DarkSlateBlue
+        UiButton4.FillPressColor = Color.MediumPurple
+        UiButton4.FillSelectedColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
+        UiButton4.Font = New Font("微软雅黑", 9.75F)
+        UiButton4.ForeColor = Color.Silver
+        UiButton4.ForeDisableColor = Color.Silver
+        UiButton4.ForeHoverColor = Color.Silver
+        UiButton4.ForePressColor = Color.Silver
+        UiButton4.ForeSelectedColor = Color.Silver
+        UiButton4.Location = New Point(350, 10)
+        UiButton4.MinimumSize = New Size(1, 1)
+        UiButton4.Name = "UiButton4"
+        UiButton4.Radius = 30
+        UiButton4.RectColor = Color.MediumPurple
+        UiButton4.RectDisableColor = Color.MediumPurple
+        UiButton4.RectHoverColor = Color.MediumPurple
+        UiButton4.RectPressColor = Color.MediumPurple
+        UiButton4.RectSelectedColor = Color.MediumPurple
+        UiButton4.Size = New Size(80, 30)
+        UiButton4.TabIndex = 105
+        UiButton4.Text = "清空"
+        UiButton4.TipsFont = New Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point, CByte(134))
+        ' 
+        ' Label3
+        ' 
+        Label3.Dock = DockStyle.Left
+        Label3.Location = New Point(340, 10)
+        Label3.Name = "Label3"
+        Label3.Size = New Size(10, 30)
+        Label3.TabIndex = 104
         ' 
         ' UiButton3
         ' 
@@ -216,5 +258,7 @@ Partial Class 界面_支持者
     Friend WithEvents UiButton3 As Sunny.UI.UIButton
     Friend WithEvents Label2 As Label
     Friend WithEvents FlowLayoutPanel1 As FlowLayoutPanel
+    Friend WithEvents UiButton4 As Sunny.UI.UIButton
+    Friend WithEvents Label3 As Label
 
 End Class

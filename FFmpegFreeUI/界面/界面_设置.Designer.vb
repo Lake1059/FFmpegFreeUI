@@ -143,6 +143,14 @@ Partial Class 界面_设置
         UiSwitch参与用户统计 = New Sunny.UI.UISwitch()
         Label21 = New Label()
         Label17 = New Label()
+        TabPage远程调用 = New TabPage()
+        Label38 = New Label()
+        Panel25 = New Panel()
+        UiTextBox监听的端口 = New Sunny.UI.UITextBox()
+        Label37 = New Label()
+        UiSwitch端口监听 = New Sunny.UI.UISwitch()
+        Label35 = New Label()
+        Label36 = New Label()
         UiTabControlMenu1.SuspendLayout()
         TabPage界面显示.SuspendLayout()
         Panel23.SuspendLayout()
@@ -182,6 +190,8 @@ Partial Class 界面_设置
         Panel2.SuspendLayout()
         TabPage隐私设置.SuspendLayout()
         Panel14.SuspendLayout()
+        TabPage远程调用.SuspendLayout()
+        Panel25.SuspendLayout()
         SuspendLayout()
         ' 
         ' UiTabControlMenu1
@@ -193,6 +203,7 @@ Partial Class 界面_设置
         UiTabControlMenu1.Controls.Add(TabPage转译运行)
         UiTabControlMenu1.Controls.Add(TabPage个性化)
         UiTabControlMenu1.Controls.Add(TabPage隐私设置)
+        UiTabControlMenu1.Controls.Add(TabPage远程调用)
         UiTabControlMenu1.Dock = DockStyle.Fill
         UiTabControlMenu1.DrawMode = TabDrawMode.OwnerDrawFixed
         UiTabControlMenu1.FillColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
@@ -238,7 +249,7 @@ Partial Class 界面_设置
         Panel23.Controls.Add(Label16)
         Panel23.Controls.Add(UiComboBox修正_编码队列列宽调整逻辑)
         Panel23.Dock = DockStyle.Top
-        Panel23.Location = New Point(0, 437)
+        Panel23.Location = New Point(0, 417)
         Panel23.Name = "Panel23"
         Panel23.Padding = New Padding(21, 10, 20, 0)
         Panel23.Size = New Size(700, 40)
@@ -301,7 +312,7 @@ Partial Class 界面_设置
         Panel22.Controls.Add(Label31)
         Panel22.Controls.Add(UiComboBox修正_列表视图项高度)
         Panel22.Dock = DockStyle.Top
-        Panel22.Location = New Point(0, 397)
+        Panel22.Location = New Point(0, 377)
         Panel22.Name = "Panel22"
         Panel22.Padding = New Padding(21, 10, 20, 0)
         Panel22.Size = New Size(700, 40)
@@ -364,7 +375,7 @@ Partial Class 界面_设置
         Panel21.Controls.Add(Label29)
         Panel21.Controls.Add(UiComboBox修正_增加标签尺寸)
         Panel21.Dock = DockStyle.Top
-        Panel21.Location = New Point(0, 357)
+        Panel21.Location = New Point(0, 337)
         Panel21.Name = "Panel21"
         Panel21.Padding = New Padding(21, 10, 20, 0)
         Panel21.Size = New Size(700, 40)
@@ -427,7 +438,7 @@ Partial Class 界面_设置
         Panel20.Controls.Add(Label28)
         Panel20.Controls.Add(UiComboBox修正_选项卡文字增加左侧空格)
         Panel20.Dock = DockStyle.Top
-        Panel20.Location = New Point(0, 317)
+        Panel20.Location = New Point(0, 297)
         Panel20.Name = "Panel20"
         Panel20.Padding = New Padding(21, 10, 20, 0)
         Panel20.Size = New Size(700, 40)
@@ -491,7 +502,7 @@ Partial Class 界面_设置
         Label23.Dock = DockStyle.Top
         Label23.Font = New Font("微软雅黑", 10F)
         Label23.ForeColor = Color.Gray
-        Label23.Location = New Point(0, 292)
+        Label23.Location = New Point(0, 272)
         Label23.Name = "Label23"
         Label23.Padding = New Padding(16, 5, 0, 0)
         Label23.Size = New Size(333, 25)
@@ -503,7 +514,7 @@ Partial Class 界面_设置
         Label22.AutoSize = True
         Label22.Dock = DockStyle.Top
         Label22.Font = New Font("微软雅黑", 13F)
-        Label22.Location = New Point(0, 248)
+        Label22.Location = New Point(0, 228)
         Label22.Name = "Label22"
         Label22.Padding = New Padding(16, 20, 0, 0)
         Label22.Size = New Size(98, 44)
@@ -514,7 +525,7 @@ Partial Class 界面_设置
         ' 
         Panel15.Controls.Add(UiComboBox语言选择)
         Panel15.Dock = DockStyle.Top
-        Panel15.Location = New Point(0, 208)
+        Panel15.Location = New Point(0, 188)
         Panel15.Name = "Panel15"
         Panel15.Padding = New Padding(21, 10, 20, 0)
         Panel15.Size = New Size(700, 40)
@@ -536,7 +547,7 @@ Partial Class 界面_设置
         UiComboBox语言选择.ItemHeight = 30
         UiComboBox语言选择.ItemHoverColor = Color.FromArgb(CByte(56), CByte(56), CByte(56))
         UiComboBox语言选择.ItemRectColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
-        UiComboBox语言选择.Items.AddRange(New Object() {"简体中文 (1059 Studio)", "English (1059 Studio)"})
+        UiComboBox语言选择.Items.AddRange(New Object() {"简体中文 (1059 Studio) 100%", "English (1059 Studio) 10%"})
         UiComboBox语言选择.ItemSelectBackColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
         UiComboBox语言选择.ItemSelectForeColor = Color.Silver
         UiComboBox语言选择.Location = New Point(21, 10)
@@ -552,7 +563,7 @@ Partial Class 界面_设置
         UiComboBox语言选择.ScrollBarColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
         UiComboBox语言选择.ScrollBarHandleWidth = 20
         UiComboBox语言选择.ScrollBarStyleInherited = False
-        UiComboBox语言选择.Size = New Size(264, 30)
+        UiComboBox语言选择.Size = New Size(414, 30)
         UiComboBox语言选择.Style = Sunny.UI.UIStyle.Custom
         UiComboBox语言选择.SymbolSize = 24
         UiComboBox语言选择.TabIndex = 115
@@ -568,9 +579,9 @@ Partial Class 界面_设置
         Label8.Location = New Point(0, 163)
         Label8.Name = "Label8"
         Label8.Padding = New Padding(16, 5, 0, 0)
-        Label8.Size = New Size(429, 45)
+        Label8.Size = New Size(457, 25)
         Label8.TabIndex = 125
-        Label8.Text = "语言改动需要重启后才会完全生效，即时更改仅部分生效" & vbCrLf & "若需增加更多语言支持，请按照仓库 README 文件上的说明联系"
+        Label8.Text = "[需重启] 若需增加语言支持，请按照仓库 README 文件上的说明联系"
         ' 
         ' Label7
         ' 
@@ -2341,6 +2352,121 @@ Partial Class 界面_设置
         Label17.TabIndex = 130
         Label17.Text = "参与用户统计"
         ' 
+        ' TabPage远程调用
+        ' 
+        TabPage远程调用.BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
+        TabPage远程调用.Controls.Add(Label38)
+        TabPage远程调用.Controls.Add(Panel25)
+        TabPage远程调用.Controls.Add(Label35)
+        TabPage远程调用.Controls.Add(Label36)
+        TabPage远程调用.Location = New Point(201, 0)
+        TabPage远程调用.Name = "TabPage远程调用"
+        TabPage远程调用.Size = New Size(700, 616)
+        TabPage远程调用.TabIndex = 7
+        TabPage远程调用.Text = "远程调用"
+        ' 
+        ' Label38
+        ' 
+        Label38.AutoSize = True
+        Label38.Dock = DockStyle.Bottom
+        Label38.Font = New Font("微软雅黑", 10F)
+        Label38.ForeColor = Color.DimGray
+        Label38.Location = New Point(0, 580)
+        Label38.Name = "Label38"
+        Label38.Padding = New Padding(16, 0, 0, 16)
+        Label38.Size = New Size(367, 36)
+        Label38.TabIndex = 136
+        Label38.Text = "你不能使用 10590 端口，因为我的其他项目已经占用了"
+        ' 
+        ' Panel25
+        ' 
+        Panel25.Controls.Add(UiTextBox监听的端口)
+        Panel25.Controls.Add(Label37)
+        Panel25.Controls.Add(UiSwitch端口监听)
+        Panel25.Dock = DockStyle.Top
+        Panel25.Location = New Point(0, 89)
+        Panel25.Name = "Panel25"
+        Panel25.Padding = New Padding(20, 0, 0, 0)
+        Panel25.Size = New Size(700, 28)
+        Panel25.TabIndex = 135
+        ' 
+        ' UiTextBox监听的端口
+        ' 
+        UiTextBox监听的端口.Dock = DockStyle.Left
+        UiTextBox监听的端口.FillColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        UiTextBox监听的端口.FillColor2 = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        UiTextBox监听的端口.FillDisableColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        UiTextBox监听的端口.FillReadOnlyColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        UiTextBox监听的端口.Font = New Font("微软雅黑", 11F)
+        UiTextBox监听的端口.ForeColor = Color.Silver
+        UiTextBox监听的端口.ForeDisableColor = Color.Silver
+        UiTextBox监听的端口.ForeReadOnlyColor = Color.Silver
+        UiTextBox监听的端口.Location = New Point(90, 0)
+        UiTextBox监听的端口.Margin = New Padding(4, 5, 4, 5)
+        UiTextBox监听的端口.MinimumSize = New Size(1, 16)
+        UiTextBox监听的端口.Name = "UiTextBox监听的端口"
+        UiTextBox监听的端口.Padding = New Padding(5)
+        UiTextBox监听的端口.Radius = 28
+        UiTextBox监听的端口.RectColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        UiTextBox监听的端口.RectDisableColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        UiTextBox监听的端口.RectReadOnlyColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        UiTextBox监听的端口.ShowText = False
+        UiTextBox监听的端口.Size = New Size(100, 28)
+        UiTextBox监听的端口.TabIndex = 97
+        UiTextBox监听的端口.TextAlignment = ContentAlignment.MiddleLeft
+        UiTextBox监听的端口.Watermark = "10591"
+        ' 
+        ' Label37
+        ' 
+        Label37.Dock = DockStyle.Left
+        Label37.Location = New Point(80, 0)
+        Label37.Name = "Label37"
+        Label37.Size = New Size(10, 28)
+        Label37.TabIndex = 98
+        ' 
+        ' UiSwitch端口监听
+        ' 
+        UiSwitch端口监听.ActiveColor = Color.OliveDrab
+        UiSwitch端口监听.ActiveText = ""
+        UiSwitch端口监听.ButtonColor = Color.FromArgb(CByte(224), CByte(224), CByte(224))
+        UiSwitch端口监听.Dock = DockStyle.Left
+        UiSwitch端口监听.Font = New Font("微软雅黑", 12F, FontStyle.Regular, GraphicsUnit.Point, CByte(134))
+        UiSwitch端口监听.ForeColor = Color.Silver
+        UiSwitch端口监听.InActiveColor = Color.IndianRed
+        UiSwitch端口监听.InActiveText = ""
+        UiSwitch端口监听.Location = New Point(20, 0)
+        UiSwitch端口监听.Margin = New Padding(19, 0, 0, 0)
+        UiSwitch端口监听.MinimumSize = New Size(1, 1)
+        UiSwitch端口监听.Name = "UiSwitch端口监听"
+        UiSwitch端口监听.Size = New Size(60, 28)
+        UiSwitch端口监听.Style = Sunny.UI.UIStyle.Custom
+        UiSwitch端口监听.TabIndex = 50
+        ' 
+        ' Label35
+        ' 
+        Label35.AutoSize = True
+        Label35.Dock = DockStyle.Top
+        Label35.Font = New Font("微软雅黑", 10F)
+        Label35.ForeColor = Color.Gray
+        Label35.Location = New Point(0, 34)
+        Label35.Name = "Label35"
+        Label35.Padding = New Padding(16, 5, 0, 10)
+        Label35.Size = New Size(376, 55)
+        Label35.TabIndex = 134
+        Label35.Text = "3FUI 会启动一个 UDP 服务器来负责接收指定端口的数据" & vbCrLf & "数据格式就是 3FUI 的启动参数，在仓库上查看功能列表"
+        ' 
+        ' Label36
+        ' 
+        Label36.AutoSize = True
+        Label36.Dock = DockStyle.Top
+        Label36.Font = New Font("微软雅黑", 13F)
+        Label36.Location = New Point(0, 0)
+        Label36.Name = "Label36"
+        Label36.Padding = New Padding(16, 10, 0, 0)
+        Label36.Size = New Size(98, 34)
+        Label36.TabIndex = 133
+        Label36.Text = "远程调用"
+        ' 
         ' 界面_设置
         ' 
         AutoScaleDimensions = New SizeF(96F, 96F)
@@ -2397,6 +2523,9 @@ Partial Class 界面_设置
         TabPage隐私设置.ResumeLayout(False)
         TabPage隐私设置.PerformLayout()
         Panel14.ResumeLayout(False)
+        TabPage远程调用.ResumeLayout(False)
+        TabPage远程调用.PerformLayout()
+        Panel25.ResumeLayout(False)
         ResumeLayout(False)
     End Sub
 
@@ -2521,5 +2650,13 @@ Partial Class 界面_设置
     Friend WithEvents Panel24 As Panel
     Friend WithEvents UiComboBox任务失败自动删除输出文件 As Sunny.UI.UIComboBox
     Friend WithEvents Label34 As Label
+    Friend WithEvents TabPage远程调用 As TabPage
+    Friend WithEvents Panel25 As Panel
+    Friend WithEvents UiSwitch端口监听 As Sunny.UI.UISwitch
+    Friend WithEvents Label35 As Label
+    Friend WithEvents Label36 As Label
+    Friend WithEvents UiTextBox监听的端口 As Sunny.UI.UITextBox
+    Friend WithEvents Label37 As Label
+    Friend WithEvents Label38 As Label
 
 End Class

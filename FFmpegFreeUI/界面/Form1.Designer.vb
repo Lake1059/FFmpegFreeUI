@@ -928,9 +928,9 @@ Partial Class Form1
         ' Panel24
         ' 
         Panel24.Dock = DockStyle.Fill
-        Panel24.Location = New Point(0, 50)
+        Panel24.Location = New Point(0, 40)
         Panel24.Name = "Panel24"
-        Panel24.Size = New Size(1033, 601)
+        Panel24.Size = New Size(1033, 611)
         Panel24.TabIndex = 86
         ' 
         ' Panel22
@@ -941,8 +941,8 @@ Partial Class Form1
         Panel22.Dock = DockStyle.Top
         Panel22.Location = New Point(0, 0)
         Panel22.Name = "Panel22"
-        Panel22.Padding = New Padding(10)
-        Panel22.Size = New Size(1033, 50)
+        Panel22.Padding = New Padding(10, 0, 10, 10)
+        Panel22.Size = New Size(1033, 40)
         Panel22.TabIndex = 84
         ' 
         ' Label16
@@ -950,7 +950,7 @@ Partial Class Form1
         Label16.Dock = DockStyle.Fill
         Label16.Font = New Font("微软雅黑", 10F)
         Label16.ForeColor = Color.Gray
-        Label16.Location = New Point(310, 10)
+        Label16.Location = New Point(310, 0)
         Label16.Name = "Label16"
         Label16.Padding = New Padding(10, 0, 0, 0)
         Label16.Size = New Size(713, 30)
@@ -976,12 +976,14 @@ Partial Class Form1
         UiComboBox3.ItemRectColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
         UiComboBox3.ItemSelectBackColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
         UiComboBox3.ItemSelectForeColor = Color.Silver
-        UiComboBox3.Location = New Point(10, 10)
+        UiComboBox3.Location = New Point(10, 0)
         UiComboBox3.Margin = New Padding(4, 5, 4, 5)
         UiComboBox3.MaxDropDownItems = 17
         UiComboBox3.MinimumSize = New Size(63, 0)
         UiComboBox3.Name = "UiComboBox3"
         UiComboBox3.Padding = New Padding(0, 0, 30, 2)
+        UiComboBox3.Radius = 0
+        UiComboBox3.RadiusSides = Sunny.UI.UICornerRadiusSides.None
         UiComboBox3.RectColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
         UiComboBox3.RectDisableColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
         UiComboBox3.ScrollBarHandleWidth = 20

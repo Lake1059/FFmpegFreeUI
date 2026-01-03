@@ -23,6 +23,7 @@ Namespace My
     '   e.MinimumSplashScreenDisplayTime = 4000
     ' End Sub
 
+
     Partial Friend Class MyApplication
         Private Sub MyApplication_Startup(sender As Object, e As StartupEventArgs) Handles Me.Startup
             If e.CommandLine.Contains("fullscreen") Then
@@ -32,14 +33,8 @@ Namespace My
         End Sub
 
         Private Sub MyApplication_StartupNextInstance(sender As Object, e As StartupNextInstanceEventArgs) Handles Me.StartupNextInstance
-            For i = 0 To e.CommandLine.Count - 1
-                Select Case e.CommandLine(i)
-                    Case "-3fuiVideoHelperInPointTime"
-                        Form1.常规流程参数页面.UiTextBox快速剪辑入点.Text = e.CommandLine(i + 1)
-                    Case "-3fuiVideoHelperOutPointTime"
-                        Form1.常规流程参数页面.UiTextBox快速剪辑出点.Text = e.CommandLine(i + 1)
-                End Select
-            Next
+            启动参数响应.处理接收的参数(e.CommandLine.ToList)
         End Sub
+
     End Class
 End Namespace

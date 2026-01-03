@@ -128,26 +128,34 @@ Public Class 界面_设置
         AddHandler LinkLabel1.LinkClicked, Sub() Form1.任务进度更新计时器.Enabled = True
 
         AddHandler UiComboBox有任务时系统状态.SelectedIndexChanged, Sub()
-                                                                                                       If UiComboBox有任务时系统状态.Text = "" Then Exit Sub
-                                                                                                       If UiComboBox有任务时系统状态.SelectedIndex < 0 Then Exit Sub
-                                                                                                       用户设置.实例对象.有任务时系统保持状态选项 = UiComboBox有任务时系统状态.SelectedIndex
-                                                                                                   End Sub
-                                               AddHandler UiComboBox提示音.SelectedIndexChanged, Sub() 用户设置.实例对象.提示音选项 = UiComboBox提示音.SelectedIndex
-                                               AddHandler UiComboBox自动开始任务.SelectedIndexChanged, Sub() 用户设置.实例对象.自动开始任务选项 = UiComboBox自动开始任务.SelectedIndex
-                                               AddHandler UiComboBox自动重置参数面板的页面选择.SelectedIndexChanged, Sub() 用户设置.实例对象.自动重置参数面板的页面选择 = UiComboBox自动重置参数面板的页面选择.SelectedIndex
-                                               AddHandler UiComboBox混淆任务名称.SelectedIndexChanged, Sub() 用户设置.实例对象.混淆任务名称 = UiComboBox混淆任务名称.SelectedIndex
-                                               AddHandler UiComboBox独立参数面板自动切换页面.SelectedIndexChanged, Sub() 用户设置.实例对象.打开独立参数面板时自动切到预设管理页面 = UiComboBox独立参数面板自动切换页面.SelectedIndex
-                                               AddHandler UiComboBox任务失败自动删除输出文件.SelectedIndexChanged, Sub() 用户设置.实例对象.任务失败自动删除输出文件 = UiComboBox任务失败自动删除输出文件.SelectedIndex
+                                                                If UiComboBox有任务时系统状态.Text = "" Then Exit Sub
+                                                                If UiComboBox有任务时系统状态.SelectedIndex < 0 Then Exit Sub
+                                                                用户设置.实例对象.有任务时系统保持状态选项 = UiComboBox有任务时系统状态.SelectedIndex
+                                                            End Sub
+        AddHandler UiComboBox提示音.SelectedIndexChanged, Sub() 用户设置.实例对象.提示音选项 = UiComboBox提示音.SelectedIndex
+        AddHandler UiComboBox自动开始任务.SelectedIndexChanged, Sub() 用户设置.实例对象.自动开始任务选项 = UiComboBox自动开始任务.SelectedIndex
+        AddHandler UiComboBox自动重置参数面板的页面选择.SelectedIndexChanged, Sub() 用户设置.实例对象.自动重置参数面板的页面选择 = UiComboBox自动重置参数面板的页面选择.SelectedIndex
+        AddHandler UiComboBox混淆任务名称.SelectedIndexChanged, Sub() 用户设置.实例对象.混淆任务名称 = UiComboBox混淆任务名称.SelectedIndex
+        AddHandler UiComboBox独立参数面板自动切换页面.SelectedIndexChanged, Sub() 用户设置.实例对象.打开独立参数面板时自动切到预设管理页面 = UiComboBox独立参数面板自动切换页面.SelectedIndex
+        AddHandler UiComboBox任务失败自动删除输出文件.SelectedIndexChanged, Sub() 用户设置.实例对象.任务失败自动删除输出文件 = UiComboBox任务失败自动删除输出文件.SelectedIndex
 
-                                               AddHandler UiTextBoxFFmpeg自定义工作目录.TextChanged, Sub() 用户设置.实例对象.工作目录 = UiTextBoxFFmpeg自定义工作目录.Text
-                                               AddHandler UiButton13.Click, Sub()
-                                                                                Dim dialog As New CommonOpenFileDialog With {.IsFolderPicker = True}
-                                                                                If dialog.ShowDialog() = CommonFileDialogResult.Ok Then UiTextBoxFFmpeg自定义工作目录.Text = dialog.FileName
-                                                                            End Sub
-                                               AddHandler UiTextBox替代进程的文件名.TextChanged, Sub() 用户设置.实例对象.替代进程文件名 = UiTextBox替代进程的文件名.Text
-                                               AddHandler UiTextBox覆盖参数传递.TextChanged, Sub() 用户设置.实例对象.覆盖参数传递 = UiTextBox覆盖参数传递.Text
-                                               AddHandler UiCheckBox转译模式.Click, Sub() 用户设置.实例对象.转译模式 = UiCheckBox转译模式.Checked = True
-                                           End Sub
+        AddHandler UiTextBoxFFmpeg自定义工作目录.TextChanged, Sub() 用户设置.实例对象.工作目录 = UiTextBoxFFmpeg自定义工作目录.Text
+        AddHandler UiButton13.Click, Sub()
+                                         Dim dialog As New CommonOpenFileDialog With {.IsFolderPicker = True}
+                                         If dialog.ShowDialog() = CommonFileDialogResult.Ok Then UiTextBoxFFmpeg自定义工作目录.Text = dialog.FileName
+                                     End Sub
+        AddHandler UiTextBox替代进程的文件名.TextChanged, Sub() 用户设置.实例对象.替代进程文件名 = UiTextBox替代进程的文件名.Text
+        AddHandler UiTextBox覆盖参数传递.TextChanged, Sub() 用户设置.实例对象.覆盖参数传递 = UiTextBox覆盖参数传递.Text
+        AddHandler UiCheckBox转译模式.Click, Sub() 用户设置.实例对象.转译模式 = UiCheckBox转译模式.Checked = True
+
+        AddHandler UiSwitch端口监听.Click, Sub()
+                                           Select Case UiSwitch端口监听.Active
+                                               Case True : 端口监听.启动客户端()
+                                               Case False : 端口监听.停止客户端()
+                                           End Select
+                                       End Sub
+        AddHandler UiTextBox监听的端口.TextChanged, Sub() 用户设置.实例对象.监听的端口 = UiTextBox监听的端口.Text
+    End Sub
 
     Private Sub 界面_设置_DpiChangedAfterParent(sender As Object, e As EventArgs) Handles Me.DpiChangedAfterParent
         UiTabControlMenu1.ItemSize = New Size(200 * Form1.DPI, 40 * Form1.DPI)

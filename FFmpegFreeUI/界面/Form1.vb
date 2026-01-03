@@ -36,7 +36,7 @@ Public Class Form1
 
         Dim 版本号 = String.Join(".", Application.ProductVersion.Split("."c).Take(3)).Split("+"c)(0)
         Me.Text = $"FFmpegFreeUI {版本号}"
-        起始页面.Label主标题.Text = $"FFmpegFreeUI 内部开发版本 {版本号}"
+        起始页面.Label主标题.Text = $"FFmpegFreeUI 2026 春节特别更新 {版本号}"
 
         视频编码器数据库.初始化()
         界面控制.初始化()
@@ -64,10 +64,10 @@ Public Class Form1
         任务进度更新计时器.Enabled = True
         界面线程执行(AddressOf 插件管理.启动时加载插件)
         界面线程执行(AddressOf 检查更新.检查)
-        回收自身内存占用()
-
         新闻列表.获取新闻()
         用户统计.回报活跃()
+        回收自身内存占用()
+        If 用户设置.实例对象.是否监听端口 Then 端口监听.启动客户端()
     End Sub
 
     Public Sub 重新创建句柄()

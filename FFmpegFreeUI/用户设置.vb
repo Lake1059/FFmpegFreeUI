@@ -31,6 +31,9 @@ Public Class 用户设置
         Public Property 自动加载预设文件路径 As String = ""
         Public Property 最后的预设数据 As New 预设数据类型
         Public Property 是否参与用户统计 As Boolean = True
+        Public Property 是否监听端口 As Boolean = False
+        Public Property 监听的端口 As String = ""
+
         Public Property 上次回报活跃信息的日期 As Date
         Public Property 自定义视频编码器列表 As New List(Of String)
 
@@ -124,6 +127,9 @@ Public Class 用户设置
             Form1.设置页面.UiCheckBox转译模式.Checked = 实例对象.转译模式
 
             Form1.设置页面.UiSwitch参与用户统计.Active = 实例对象.是否参与用户统计
+
+            Form1.设置页面.UiSwitch端口监听.Active = 实例对象.是否监听端口
+            Form1.设置页面.UiTextBox监听的端口.Text = 实例对象.监听的端口
 
             Form1.常规流程参数页面.UiComboBox自动加载预设选项.SelectedIndex = 实例对象.自动加载预设选项
             Form1.常规流程参数页面.UiTextBox自动加载的预设文件路径.Text = 实例对象.自动加载预设文件路径

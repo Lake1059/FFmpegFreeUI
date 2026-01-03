@@ -1154,7 +1154,7 @@ Partial Class 界面_常规流程参数_V2
         Panel80.Dock = DockStyle.Top
         Panel80.Location = New Point(0, 104)
         Panel80.Name = "Panel80"
-        Panel80.Padding = New Padding(21, 10, 20, 0)
+        Panel80.Padding = New Padding(20, 10, 20, 0)
         Panel80.Size = New Size(899, 45)
         Panel80.TabIndex = 14
         ' 
@@ -1178,7 +1178,7 @@ Partial Class 界面_常规流程参数_V2
         UiComboBox输出目录.Items.AddRange(New Object() {"  输出到原目录", "  浏览 ..."})
         UiComboBox输出目录.ItemSelectBackColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
         UiComboBox输出目录.ItemSelectForeColor = Color.Silver
-        UiComboBox输出目录.Location = New Point(21, 10)
+        UiComboBox输出目录.Location = New Point(20, 10)
         UiComboBox输出目录.Margin = New Padding(4, 5, 4, 5)
         UiComboBox输出目录.MaxDropDownItems = 17
         UiComboBox输出目录.MinimumSize = New Size(63, 0)
@@ -1191,7 +1191,7 @@ Partial Class 界面_常规流程参数_V2
         UiComboBox输出目录.ScrollBarColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
         UiComboBox输出目录.ScrollBarHandleWidth = 20
         UiComboBox输出目录.ScrollBarStyleInherited = False
-        UiComboBox输出目录.Size = New Size(858, 35)
+        UiComboBox输出目录.Size = New Size(859, 35)
         UiComboBox输出目录.Style = Sunny.UI.UIStyle.Custom
         UiComboBox输出目录.SymbolSize = 24
         UiComboBox输出目录.TabIndex = 93
@@ -1256,7 +1256,7 @@ Partial Class 界面_常规流程参数_V2
         Panel79.Dock = DockStyle.Top
         Panel79.Location = New Point(0, 59)
         Panel79.Name = "Panel79"
-        Panel79.Padding = New Padding(21, 10, 20, 0)
+        Panel79.Padding = New Padding(20, 10, 20, 0)
         Panel79.Size = New Size(899, 45)
         Panel79.TabIndex = 12
         ' 
@@ -1267,11 +1267,11 @@ Partial Class 界面_常规流程参数_V2
         UiTextBox输出容器.FillColor2 = Color.FromArgb(CByte(36), CByte(36), CByte(36))
         UiTextBox输出容器.FillDisableColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
         UiTextBox输出容器.FillReadOnlyColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
-        UiTextBox输出容器.Font = New Font("微软雅黑", 10F)
+        UiTextBox输出容器.Font = New Font("微软雅黑", 10.8F, FontStyle.Regular, GraphicsUnit.Point, CByte(134))
         UiTextBox输出容器.ForeColor = Color.DarkGray
         UiTextBox输出容器.ForeDisableColor = Color.DarkGray
         UiTextBox输出容器.ForeReadOnlyColor = Color.DarkGray
-        UiTextBox输出容器.Location = New Point(101, 10)
+        UiTextBox输出容器.Location = New Point(100, 10)
         UiTextBox输出容器.Margin = New Padding(4, 5, 4, 5)
         UiTextBox输出容器.MinimumSize = New Size(1, 16)
         UiTextBox输出容器.Name = "UiTextBox输出容器"
@@ -1309,7 +1309,7 @@ Partial Class 界面_常规流程参数_V2
         UiButton选择容器.ForeHoverColor = Color.CornflowerBlue
         UiButton选择容器.ForePressColor = Color.CornflowerBlue
         UiButton选择容器.ForeSelectedColor = Color.CornflowerBlue
-        UiButton选择容器.Location = New Point(21, 10)
+        UiButton选择容器.Location = New Point(20, 10)
         UiButton选择容器.MinimumSize = New Size(1, 1)
         UiButton选择容器.Name = "UiButton选择容器"
         UiButton选择容器.Radius = 0

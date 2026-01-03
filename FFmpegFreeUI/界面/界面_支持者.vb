@@ -87,8 +87,8 @@ Public Class 界面_支持者
     End Sub
 
     Private Sub UiButton3_Click(sender As Object, e As EventArgs) Handles UiButton3.Click
-        UiButton1.FillColor = Me.BackColor
-        UiButton2.FillColor = Me.BackColor
+        UiButton1.FillColor = BackColor
+        UiButton2.FillColor = BackColor
         UiButton3.FillColor = Color.DarkSlateBlue
         清空支持者列表()
         读取赠送支持者()
@@ -102,6 +102,7 @@ Public Class 界面_支持者
         UiButton1.Radius = 30 * Form1.DPI
         UiButton2.Radius = 30 * Form1.DPI
         UiButton3.Radius = 30 * Form1.DPI
+        UiButton4.Radius = 30 * Form1.DPI
         For Each b As UIButton In FlowLayoutPanel1.Controls.OfType(Of UIButton)()
             根据文本设置按钮宽度(b, False, 20 * Form1.DPI)
         Next
@@ -111,6 +112,10 @@ Public Class 界面_支持者
         根据文本设置按钮宽度(UiButton1)
         根据文本设置按钮宽度(UiButton2)
         根据文本设置按钮宽度(UiButton3)
+        根据文本设置按钮宽度(UiButton4)
     End Sub
 
+    Private Sub UiButton4_Click(sender As Object, e As EventArgs) Handles UiButton4.Click
+        清空支持者列表()
+    End Sub
 End Class

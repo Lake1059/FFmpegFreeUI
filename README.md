@@ -1,50 +1,63 @@
-官网：https://ffmpegfreeui.top 和 https://3fui.top<br>主群 [1050613952](https://qm.qq.com/q/fiauAsddG8) 分群① [1070953324](https://qm.qq.com/q/nKoapm6KyW) 频道 [3fui10590000](https://pd.qq.com/s/9emex878m?b=5) KOOK [稻草的工坊](https://kook.vip/1nLQNk)
+官网 https://ffmpegfreeui.top 和 https://3fui.top<br>主群 [1050613952](https://qm.qq.com/q/fiauAsddG8) 分群① [1070953324](https://qm.qq.com/q/nKoapm6KyW) 频道 [3fui10590000](https://pd.qq.com/s/9emex878m?b=5) KOOK [稻草的工坊](https://kook.vip/1nLQNk)
 
 ![](https://img.shields.io/github/stars/Lake1059/FFmpegFreeUI?label=星标) ![GitHub License](https://img.shields.io/github/license/Lake1059/FFmpegFreeUI?label=许可证) ![GitHub repo size](https://img.shields.io/github/repo-size/Lake1059/FFmpegFreeUI?label=仓库大小) ![](https://img.shields.io/github/downloads/Lake1059/FFmpegFreeUI/total?label=Github%20总下载量) ![](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2F3fui.top%2Fapi%2Fgithub-downloads&label=镜像站总下载量&query=$.totalDownloads)
 
-## FFmpegFreeUI
-
-**本 README 文件已包含全部教学，请耐心看完**<br>**在反馈问题之前先看看是不是最新版，并不是所有改动都写出来了**
-
 <img src="FFmpegFreeUI\Resources\AppIcon.png" width="100" />
+
+## FFmpegFreeUI
 
 FFmpegFreeUI（简称 3FUI）是在 Windows 上的 [FFmpeg](https://ffmpeg.org) 的专业交互外壳，目前使用 .NET 10 运行时以纯 WinForm 框架开发，使用 [SunnyUI](https://github.com/yhuse/SunnyUI) 和自绘制打造的专业高效的暗黑风格界面。目标做一款轻度专业参数调整的转码软件，让普通人能够通过图形化界面接触到较为全面的通用参数来轻松压制和转换格式。不仅如此，3FUI 具备极高的自由和扩展性，因此也适合任何深度专业人士，即便只是用上一个低消耗的进度条。
 
-3FUI 目前收录了 40 种视频编码器（包含红绿蓝三家全部硬件加速）、21 种音频编码器、13 种图片编码器，如果这还不够还可以自定义参数，提供各种形式的自写参数，所以不要问什么能不能实现什么有没有。如果我的设计对你有帮助，请帮我宣传或者考虑资金支持，目前这个项目纯靠着生活费维持的，所以不要抱怨更新慢。
+目前收录了 40 多个视频编码器（包含红绿蓝三家全部硬件加速）、20 多个音频编码器、10 多个图片编码器，如果这还不够还可以自定义参数，提供各种形式的自写参数，所以不要问什么能不能实现什么有没有。如果我的设计对你有帮助，请帮我宣传或者考虑资金支持，目前这个项目纯靠着生活费维持的，所以不要抱怨更新慢。
 
 哔哩哔哩宣传视频：https://www.bilibili.com/video/BV1eeH9zLED5  
 知乎终末诗的教程：https://zhuanlan.zhihu.com/p/1943079795341623993
+
+> **感谢所有自发宣传的博主**
+>
+> 小in分享 [BV1uzv6BQE2C](https://www.bilibili.com/video/BV1uzv6BQE2C)
 
 <img src="IMG\img1.png"  />
 
 ## 开发目的
 
-是啊，市面上那么多现成的难道不好吗？请记住 3FUI 是被气出来的项目，如果不是某盒子的运营行为，3FUI 根本不会存在，想要一个参数真正透明纯净自由批量的壳很难吗？What can i say，还真 TMD 难。这是一群压片党的需求，不是大众随便转一下的需求，也不是还搞各种限制的需求，我知道菠萝和刹那很火，但我强迫症既要又要，而且也别搞什么私人秘制配方。有人会说怎么不搞批量脚本，那你跟群友的两万五千个任务说去吧，外壳不仅仅是简单拼一下参数，各种外围支持也是非常重要的。
+是啊，市面上那么多现成的难道不好吗？请记住 3FUI 是被气出来的项目，如果不是某个盒子的运营行为，3FUI 根本不会存在。想要一个参数真正透明纯净自由批量的壳很难吗？What can i say，还真 TMD 难。这是一群压片党的需求，不是大众随便转一下的需求，也不是还搞各种限制的需求，我知道菠萝和刹那很火，但我强迫症既要又要，而且也别搞什么私人秘制配方。有人会说怎么不搞批量脚本，那你跟群友的两万五千个任务说去吧，外壳不仅仅是简单拼一下参数，各种外围支持也是非常重要的。
 
 ## 设计定位
 
+> [!IMPORTANT]  
+>
+> 无废话总结
+>
+> - 3FUI 目标人群：愿意折腾、追求质量、强迫症、专业工作者、压片佬
+> - 3FUI 不适合：想要无脑全自动、不想看字、也不想学任何东西
+
 3FUI 与 [HandBrake](https://github.com/HandBrake/HandBrake)、[ShanaEncoder](https://shana.pe.kr/shanaencoder_portable) 同坐一桌，属于常规专业级压制转换软件，尽管被 **终末诗** 评价为比菠萝刹那更专业，但在我自己看来是同一桌。与菠萝刹那不同是，3FUI 只使用 ffmpeg 来执行任务，没有内置任何编解码器，需要用户手动放置 ffmpeg 或将其添加到环境变量中，这使得 3FUI 的性能始终保持在最新水平，同时也无需在参数上频繁更新。当 ffmpeg 更新的时候，你可以直接换上去使用，而不用等待任何事情。
 
-3FUI 也是市面上唯一一个完全不内置现成预设的外壳，它只是帮你传参数和管理任务，你该学的概念是一个都不能落下，既然在用 3FUI，那必然要明确自己需要的是什么，以及基本的参数概念，你总不能连封装格式和编码格式都分不清吧。如果你觉得陌生，那是因为 3FUI 这里强调实事求是，是什么就是什么，如果你此前一直被各种工具的业余叙述蒙在鼓里，那么你可以在这里看到真理。
+**3FUI 是市面上唯一一个完全不内置现成预设的外壳**，它只是帮你传参数和管理任务，你该学的概念是一个都不能落下，既然在用 3FUI，那必然要明确自己需要的是什么，以及基本的参数概念，你总不能连封装格式和编码格式都分不清吧。如果你觉得陌生，那是因为 3FUI 这里强调实事求是，是什么就是什么，如果你此前一直被各种工具的业余叙述蒙在鼓里，那么你可以在这里看到真理。在 3FUI 的参数交互设计中，我充分考虑了每个常用参数的意义并以此做出页面分类，这方面会与其他软件有明显不同。
 
-会用格式工厂吗？那你已经会用 3FUI 了。所有转码软件的最终逻辑和基本参数都一样，没有谁能自己造一个概念出来，它们内部都是 ffmpeg 在干活，这可是古希腊掌管音视频编解码的神。
-
-编码视频实际上是一个非常专业的事情，属于重度生产力，在不考虑算法优化和其他瓶颈的情况下，有多少性能就会吃多少性能，只是在各媒体的渲染下让大众觉得很普通简单。在 3FUI 的参数交互设计中，我充分考虑了每个常用参数的意义并以此做出页面分类，这方面会与其他软件有明显不同。
+会用 **“丸菠刹格”** 吗？那你已经会用 3FUI 了。所有转码软件的最终逻辑和基本参数都一样，没有谁能自己造一个概念出来，它们内部都是 ffmpeg 在干活，这可是古希腊掌管音视频编解码的神。
 
 ## 特点
 
-- 底层逻辑基于预设，可以很方便地与他人分享方案
-- 多数地方直接标出参数名、准确显示 ffmpeg 输出的信息，更易于上手和尝试新方案
+- 全自由转码，自由组合，任意自写参数
+- 专业调校的交互设计，主次分明，简洁高效
+- 完全无广告，所有生产力功能全部免费
+- 超高缩放支持，带手动微调校准
+- 底层逻辑基于预设，方便分享方案
+- 多数地方直接标出参数名，更易于上手和尝试新方案
 - 实时计算剩余时间、预估最终大小、可暂停任务
-- 最多自动同时开始 10 个任务，手动开始无限制
+- 专为批量处理而设计，无限制任务添加数量
 - 不会向输出文件里写入软件信息
-- 缓存自动收拾、不碰注册表
-- 不在任何地方扔垃圾（崩溃转储除外，这不是我能控制的）
-- 不会收集任何信息
-- 附带简易混流和合并功能
-- 附带轻量性能监控，可以看处理器和显卡的每个核心占用
-
-支持开发插件来扩展功能，可接入编码队列。VB 和 C# 都可以写，还额外支持 WPF 界面。
+- 不碰注册表、不乱扔垃圾、不会收集任何信息
+- 完整色彩管理选项
+- 为烧字幕提供大量选项
+- 为调用 AviSynth 和 VapourSynth 提供便捷
+- 附带简易混流和合并
+- 附带轻量性能监控，数框框和仪表盘
+- 附带 ffprobe 和 ffplay 调用
+- 支持外部调用和远程调用
+- 支持插件
 
 ## 支持者计划
 
@@ -118,12 +131,11 @@ PluginExample 是我做的示例插件；在程序目录下创建 Plugin 文件�
    - 不要选带 lgpl 名称的，不然你又要来问怎么连 libx264 都跑不起来
    - 也不建议选带 shared 名称的，老夫掐指一算就料到你没放完整文件
    - 如果你想自己编译 ffmpeg，可以试试这个 [全自动编译脚本](https://github.com/m-ab-s/media-autobuild_suite)
-3. 将压缩包中的 ffmpeg.exe 和我的 FFmpegFreeUI 放在同一个文件夹中<br>或者将其加入环境变量中也可以，推荐是加环境变量
-   - 添加环境变量是把包含 ffmpeg.exe 这个文件的文件夹加到 Path 里<br>而不是把这个文件加到 Path
+   - 或者建议试试这个
+3. 将压缩包中的 ffmpeg.exe、ffprobe.exe、ffplay.exe<br>放在 FFmpegFreeUI 主程序文件夹中<br>或者将其加入环境变量中也可以，推荐是加环境变量
+   - 添加环境变量是把包含这三个 exe 文件的文件夹加到 Path 里<br>而不是把文件加到 Path
 
 4. 然后就可以开始使用了
-   - ffprobe.exe 也建议放上，查看信息需要的
-   - 在未来计划中，ffplay.exe 也会用上
 
 
 ## 基本逻辑流程
@@ -221,51 +233,32 @@ PluginExample 是我做的示例插件；在程序目录下创建 Plugin 文件�
 
 ## 视频编码器
 
-推荐的质量值为个人观点，仅供参考，请自行慢慢调
+推荐的质量值为个人观点，仅供参考，请自行慢慢调<br>此处仅列出部分编码器，毕竟太多了
 
-| 归属类别     | 编码器具体名称 | 描述                                                         | 推荐的质量值                                                 |
-| ------------ | -------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| 复制流       | copy           | 不重编码直接复制一遍                                         |                                                              |
-| H.266/VVC    | libvvenc       | 跑分的神，faster 即可吊打全场，解码和编码性能消耗巨大，优化空间巨大，目前不适合日常使用和生产环境 | 不支持 crf<br>按照 qp 给定即可                               |
-| H.266/VVC    | libx266        | 本应是 266 的官方实现，可到现在仍未发布                      |                                                              |
-| AV1          | libaom-av1     | 官方实现，很慢，偏商用，适合多开任务跑单线程，不适合日常使用 |                                                              |
-| AV1          | libsvtav1      | Intel 主导，多线程优化，民用友好，轻松吃满 CPU，日常推荐     | crf=32~34 综合推荐                                           |
-| AV1          | av1_nvenc      | RTX 40 系开始支持，但建议用 RTX 50 系及以上显卡（第九代 NVENC），可跟 libsvtav1 五五开，部分场景已超越，日常强烈推荐 | cq=36 肉眼无损万能通用值，极度推荐；但注意这不适合本身就模糊的内容。 |
-| AV1          | av1_qsv        | ARC 独显、Ultra100核显开始支持                               | 缺少实测 global_quality=34                                   |
-| AV1          | av1_amf        | 7000系独显、780M核显开始支持，A卡虽然一直很弱，但AV1大概还行？ | 缺少实测 qp_i=34 和 qp_p=34                                  |
-| AV1          | librav1e       | 很慢，综合表现一般                                           |                                                              |
-| AV1          | av1_vaapi      | Linux                                                        |                                                              |
-| H.265/HEVC   | libx265        | 目前的最佳选择，压制组目前的首选                             | crf=23~25 综合推荐                                           |
-| H.265/HEVC   | hevc_nvenc     | 比 libx265 有明显差距，但足够日常基本需求                    | cq=26~28 综合推荐                                            |
-| H.265/HEVC   | hevc_qsv       | 大概好于N卡？反正I卡这个还是不错的，可以用于日常需求         | global_quality=24                                            |
-| H.265/HEVC   | hevc_amf       | 不推荐将 AMD 的 265 用于日常需求，除非你只是转个码不在乎别的 | qp_i=28 和 qp_p=28                                           |
-| H.265/HEVC   | hevc_d3d12va   | ？                                                           |                                                              |
-| H.265/HEVC   | hevc_vaapi     | Linux                                                        |                                                              |
-| H.265/HEVC   | hevc_vulkan    | ？                                                           |                                                              |
-| H.264/AVC    | libx264        | 说实在的有点过时，除非为了兼容老设备否则也没必要用于日常了   | crf=23 综合推荐                                              |
-| H.264/AVC    | h264_nvenc     | 不推荐，除非你只是转个码不在乎别的                           |                                                              |
-| H.264/AVC    | h264_qsv       | 不推荐，除非你只是转个码不在乎别的                           |                                                              |
-| H.264/AVC    | h264_amf       | 极其不推荐，图一乐就行，纯转码都不推荐                       |                                                              |
-| H.264/AVC    | h264_vaapi     | Linux                                                        |                                                              |
-| H.264/AVC    | h264_vulkan    | ？                                                           |                                                              |
-| 来自 Apple   | prores_ks      | 通用，但是不建议用于日常，prores 本身就是几乎没有压缩度的编码，仅建议用于中转流程 |                                                              |
-| 来自 Apple   | prores_aw      | 需要 macOS                                                   |                                                              |
-| 来自 Google  | libvpx-vp9     | VP9 强于 264，弱于 265                                       |                                                              |
-| 来自 Google  | vp9_vaapi      | Linux                                                        |                                                              |
-| 来自 Google  | libvpx         | 这个就是 VP8，稍逊于 264                                     |                                                              |
-| 来自 Google  | vp8_vaapi      | Linux                                                        |                                                              |
-| FFv1         | ffv1 -level 3  | 博物馆级别无损编码，个人使用仅建议用于中转流程               | 不要设置质量参数                                             |
-| FFv1         | ffv1 -level 1  | 博物馆级别无损编码，第一版                                   | 不要设置质量参数                                             |
-| FFv1         | ffv1_vulkan    | ？                                                           | 不要设置质量参数                                             |
-| 其他现代编码 | libxeve        | 这是 MPEG5，目前并不好用，速度极慢跟 266 坐一桌              |                                                              |
-| 其他现代编码 | libxavs2       | 国产编码 AVS 第二版，用于电视节目，但是挺难用，速度也比较慢  |                                                              |
-| 老旧格式     | mpeg4          | 已过时                                                       |                                                              |
-| 老旧格式     | libxvid        | 已过时，但目前仍有工业场景在用                               |                                                              |
-| 老旧格式     | rv20           | 已过时，RMVB 2.0                                             |                                                              |
-| 老旧格式     | rv10           | 已过时，RMVB 1.0                                             |                                                              |
-| 老旧格式     | wmv2           | 已被淘汰                                                     |                                                              |
-| 老旧格式     | wmv1           | 已被淘汰                                                     |                                                              |
-| 禁用         | -vn            |                                                              |                                                              |
+| 归属类别    | 编码器具体名称 | 描述                                                         | 推荐的质量值                                                 |
+| ----------- | -------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| 复制流      | copy           | 不重编码直接复制一遍                                         |                                                              |
+| H.266/VVC   | libvvenc       | 跑分的神，faster 即可吊打全场，解码和编码性能消耗巨大，优化空间巨大，目前不适合日常使用和生产环境 | 不支持 crf<br>按照 qp 给定即可                               |
+| H.266/VVC   | libx266        | 本应是 266 的官方实现，可到现在仍未发布                      |                                                              |
+| AV1         | libaom-av1     | 官方实现，很慢，偏商用，适合多开任务跑单线程，不适合日常使用 |                                                              |
+| AV1         | libsvtav1      | Intel 主导，多线程优化，民用友好，轻松吃满 CPU，日常推荐     | crf=32~34 综合推荐                                           |
+| AV1         | av1_nvenc      | RTX 40 系开始支持，但建议用 RTX 50 系及以上显卡（第九代 NVENC），可跟 libsvtav1 五五开，部分场景已超越，日常强烈推荐 | cq=36 肉眼无损万能通用值，极度推荐；但注意这不适合本身就模糊的内容。 |
+| AV1         | av1_qsv        | ARC 独显、Ultra100核显开始支持                               | 缺少实测 global_quality=34                                   |
+| AV1         | av1_amf        | 7000系独显、780M核显开始支持，A卡虽然一直很弱，但AV1大概还行？ | 缺少实测 qp_i=34 和 qp_p=34                                  |
+| AV1         | librav1e       | 很慢，综合表现一般                                           |                                                              |
+| H.265/HEVC  | libx265        | 目前的最佳选择，压制组目前的首选                             | crf=23~25 综合推荐                                           |
+| H.265/HEVC  | hevc_nvenc     | 比 libx265 有明显差距，但足够日常基本需求                    | cq=26~28 综合推荐                                            |
+| H.265/HEVC  | hevc_qsv       | 大概好于N卡？反正I卡这个还是不错的，可以用于日常需求         | global_quality=24                                            |
+| H.265/HEVC  | hevc_amf       | 不推荐将 AMD 的 265 用于日常需求，除非你只是转个码不在乎别的 | qp_i=28 和 qp_p=28                                           |
+| H.264/AVC   | libx264        | 说实在的有点过时，除非为了兼容老设备否则也没必要用于日常了   | crf=23 综合推荐                                              |
+| H.264/AVC   | h264_nvenc     | 不推荐，除非你只是转个码不在乎别的                           |                                                              |
+| H.264/AVC   | h264_qsv       | 不推荐，除非你只是转个码不在乎别的                           |                                                              |
+| H.264/AVC   | h264_amf       | 极其不推荐，图一乐就行，纯转码都不推荐                       |                                                              |
+| 来自 Apple  | prores_ks      | 通用，但是不建议用于日常，prores 本身就是几乎没有压缩度的编码，仅建议用于中转流程 |                                                              |
+| 来自 Apple  | prores_aw      | 需要 macOS                                                   |                                                              |
+| 来自 Google | libvpx-vp9     | VP9 强于 264，弱于 265                                       |                                                              |
+| 来自 Google | libvpx         | 这个就是 VP8，稍逊于 264                                     |                                                              |
+| 禁用        | -vn            |                                                              |                                                              |
 
 ### 概念科普：软件编码与硬件加速
 
@@ -371,11 +364,11 @@ HDR 的标准实际上非常乱，除了显示屏的色准以外，最大亮度�
 
 ## 音频编码器
 
-复制流、禁用、AAC、LAME MP3、Opus、FLAC、ALAC、WAV 16bit、WAV 24bit、WAV 32bit、WAV 64bit、AC3、EAC3、DTS Coherent Acoustics、TrueHD、True Audio、Vorbis、RealAudio、WavPack、LAME MP2、AMR-NB、AMR-WB
+复制流、禁用、AAC、FDK AAC、LAME MP3、Opus、FLAC、ALAC、WAV 16bit、WAV 24bit、WAV 32bit、WAV 64bit、AC3、EAC3、DTS Coherent Acoustics、TrueHD、True Audio、Vorbis、RealAudio、WavPack、LAME MP2、AMR-NB、AMR-WB
 
 ## 图片编码器
 
-PNG、APNG、JPEG\JPG、WEBP、GIF、BMP、JPEG 2000、JPEG-LS、HDR、TIFF、DPX、OpenEXR
+PNG、APNG、JPEG\JPG、WEBP、GIF、BMP、JPEG 2000、JPEG-LS、SVT JPEG XS、HDR、TIFF、DPX、OpenEXR
 
 ## 更多功能和所用滤镜
 
@@ -388,6 +381,8 @@ PNG、APNG、JPEG\JPG、WEBP、GIF、BMP、JPEG 2000、JPEG-LS、HDR、TIFF、DP
 - 超分 libplacebo
   - 支持使用自定义着色器，例如 Anime4K、FSRCNNX 等，文件请自行下载
 
+- 烧录字幕 subtitles 和 ass
+  
 - 色彩管理 zscale 和 libplacebo
 - 基本调色 eq
 - 降噪 hqdn3d、nlmeans、atadenoise、bm3d、AviSynth+（avs）
@@ -404,26 +399,29 @@ PNG、APNG、JPEG\JPG、WEBP、GIF、BMP、JPEG 2000、JPEG-LS、HDR、TIFF、DP
 
 使用此配套工具来进行剪辑区间可视化：https://github.com/Lake1059/3fuiVideoHelper
 
-## 烧录字幕
+## 启动参数
 
-暂时没心思做可视化交互，还不如手写参数来得灵活稳定，而且目前这样的设计是可以实现批量烧录的。
+3FUI 具有和 FFmpeg 一样的参数调用方式，你可以随便找个终端来使用或者在外部程序中启动时传递，也可以用快捷方式做个测试；这些功能在原理上是走的插件功能。(需要5.0及以上版本)
 
-- SRT/ASS/SSA
+| 参数                | 作用                        | 在情况下使用 |
+| ------------------- | --------------------------- | ------------ |
+| -i [string]         | 输入媒体文件                | 已启动软件   |
+| -3fui_file [string] | 输入预设文件                | 已启动软件   |
+| -ffmpeg [string]... | 把后面的参数全部喂给 ffmpeg | 已启动软件   |
+| -test               | 测试用，会弹出“哔哔”        | 已启动软件   |
+| fullscreen          | 全屏无边框模式              | 未启动软件   |
 
-  ```bash
-  // 视频滤镜
-  
-  subtitles='字幕文件路径':force_style='FontName=字体名称,FontSize=字号,PrimaryColour=HTML颜色值,MarginV=距离底部的像素距离'
-  
-  // 字幕文件路径配合我的通配字符串去写
-  // 特效字幕都内置了字体样式和其他属性，当然也可以使用 force_style 进行覆盖
-  ```
+- -i 和 -3fui_file 必须一起用，表示使用指定预设文件对指定媒体文件进行任务，预设文件可以直接指定在 Preset 文件夹也就是方案管理中的预设名称。
+- -ffmpeg 是纯命令模式，后面的所有内容全都会给 ffmpeg。
+- 另外还有用于传递剪辑区间参数的 -3fuiVideoHelperInPointTime 和 -3fuiVideoHelperOutPointTime
 
-  - stream_index 可直接指定已混流在文件中的字幕流索引
-  - charenc 可指定字符编码
-  - fontsdir 可指定字体文件目录
+## 远程调用
 
-- SUP 位图字幕<br>最好还是用专门的 sup 工具，ffmpeg 这里必须先把 sup 转成逐帧图像，然后再用 overlay 叠加到视频上，无法一次性处理好。
+在设置中打开远程调用即可监听指定的端口，收到消息就会开始任务，消息数据内容与启动参数是一样的，这就意味着 3FUI 可以部署在一个巨大的局域网中，只要 3FUI 能够访问文件，那么你可以从这个局域网的任意电脑通过其他程序发任务给编码机上的 3FUI，只要有权限访问，远程访问也是理所当然的。
+
+注意发起程序需要用 UDP 协议发送，默认端口 10591。
+
+(需要5.0及以上版本)
 
 ## 插件开发
 
@@ -603,12 +601,6 @@ HostCall_AddMissionToQueueWith3fuiFile?.Invoke("3FUI 预设文件的路径", "�
 如果你引用了其他三方组件，需要将那些文件一并发布，当然那些文件就不要改后缀了，3FUI 就是用这个后缀来识别哪些是要加载的插件的。
 
 由于你并没有引用 3FUI，相关许可证条款对你不生效，因此你可以选择闭源甚至出售（虽然这并不能保护你的代码，.NET 程序非常容易反编译）。
-
-## 隐藏功能
-
-### 全屏无边框
-
-在 3FUI 的启动参数中加入 fullscreen 即可变为全屏无边框，在该模式下，右键主页顶部区域可以切换全屏，你应该知道那部分区域是可以用来拖动窗口的，全屏下拖一下就变回原来的尺寸了
 
 ## 你已获得成就
 
