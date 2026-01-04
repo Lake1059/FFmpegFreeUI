@@ -69,7 +69,7 @@ FFmpegFreeUI（简称 3FUI）是在 Windows 上的 [FFmpeg](https://ffmpeg.org) 
 
 ## Linux & macOS
 
-[Wine](https://www.winehq.org) 是一个在多种 POSIX-compliant 操作系统上运行 Windows 应用的兼容层，如果能够在 macOS 和 Linux 上安装并正确使用，理论上可以直接在这些操作系统上使用 3FUI。关于这部分的内容请进群跟群友讨论，我买不起苹果电脑也用不来 Linux。
+[Wine](https://www.winehq.org) 是一个在多种 POSIX-compliant 操作系统上运行 Windows 应用的兼容层，如果能够在 macOS 和 Linux 上安装并正确使用，理论上可以直接在这些操作系统上使用 3FUI。关于这部分的内容请进群跟群友讨论，我买不起苹果电脑也用不来 Linux。或者据说直接添加到 Steam 也可以跑起来？
 
 群友倾情贡献：关于在 Linux 中使用 Wine 转译运行 3FUI 的方法：[linux.md](doc/linux.md)
 
@@ -135,7 +135,6 @@ PluginExample 是我做的示例插件；在程序目录下创建 Plugin 文件�
    - 不要选带 lgpl 名称的，不然你又要来问怎么连 libx264 都跑不起来
    - 也不建议选带 shared 名称的，老夫掐指一算就料到你没放完整文件
    - 如果你想自己编译 ffmpeg，可以试试这个 [全自动编译脚本](https://github.com/m-ab-s/media-autobuild_suite)
-   - 或者建议试试这个
 3. 将压缩包中的 ffmpeg.exe、ffprobe.exe、ffplay.exe<br>放在 FFmpegFreeUI 主程序文件夹中<br>或者将其加入环境变量中也可以，推荐是加环境变量
    - 添加环境变量是把包含这三个 exe 文件的文件夹加到 Path 里<br>而不是把文件加到 Path
 
