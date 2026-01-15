@@ -1,5 +1,6 @@
 ﻿Imports System.IO
 Imports System.Text.Json
+Imports FFmpegFreeUI.媒体信息解析器
 Imports Microsoft.WindowsAPICodePack.Dialogs
 Imports Sunny.UI
 Public Class 界面_常规流程参数_V2
@@ -92,6 +93,16 @@ Public Class 界面_常规流程参数_V2
         '==============================================
         AddHandler UiComboBox图片编码器.TextChanged, AddressOf 图片编码器参数变动事件
         '==============================================
+        AddHandler UiButton可视化流选择器.Click, Sub()
+                                              显示窗体(New Form媒体流选择器(
+                                                   视频流文本目标对象:=UiTextBox将视频参数用于这些流,
+                                                   音频流文本目标对象:=UiTextBox将音频参数用于这些流,
+                                                   字幕流文本目标对象:=UiTextBox使用哪些文件的哪些内嵌字幕,
+                                                   文件索引:="0",
+                                                   视频流已选:=UiTextBox将视频参数用于这些流.Text,
+                                                   音频流已选:=UiTextBox将音频参数用于这些流.Text,
+                                                   字幕流已选:=UiTextBox使用哪些文件的哪些内嵌字幕.Text), Me.ParentForm)
+                                          End Sub
         AddHandler UiTextBox将视频参数用于这些流.TextBox.MouseWheel, Sub(s1, e1)
                                                                Select Case e1.Delta
                                                                    Case > 0 : UiTextBox将视频参数用于这些流.Text = "0:v"
@@ -492,7 +503,7 @@ Public Class 界面_常规流程参数_V2
 
             Case UiComboBox选择vpy文件.Name
                 If UiComboBox选择vpy文件.SelectedIndex = 0 Then
-                    Dim a As New OpenFileDialog With {.Filter = "vps|*.vps"}
+                    Dim a As New OpenFileDialog With {.Filter = "vpy/py|*.vpy;*.py"}
                     Dim b = a.ShowDialog
                     If FileIO.FileSystem.FileExists(b) Then
                         UiComboBox选择vpy文件.Text = b

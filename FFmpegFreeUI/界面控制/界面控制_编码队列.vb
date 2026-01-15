@@ -169,12 +169,12 @@ Public Class 界面控制_编码队列
     Public Shared Sub 将任务放到添加文件选项卡()
         If Form1.ListView1.SelectedItems.Count = 0 Then Exit Sub
         Dim 已有的文件 As New List(Of String)
-        For Each item As ListViewItem In Form1.准备文件页面.ListView2.Items
+        For Each item As ListViewItem In Form1.准备文件页面.ListView1.Items
             已有的文件.Add(item.Text)
         Next
         For Each item As ListViewItem In Form1.ListView1.SelectedItems
             If Not 已有的文件.Contains(编码任务.队列(item.Index).输入文件) Then
-                Form1.准备文件页面.ListView2.Items.Add(编码任务.队列(item.Index).输入文件)
+                Form1.准备文件页面.ListView1.Items.Add(编码任务.队列(item.Index).输入文件)
             End If
         Next
     End Sub

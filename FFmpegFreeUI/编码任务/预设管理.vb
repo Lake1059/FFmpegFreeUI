@@ -212,7 +212,6 @@ Public Class 预设管理
             Case "nlmeans" : ui.UiComboBox降噪方式.SelectedIndex = 2
             Case "atadenoise" : ui.UiComboBox降噪方式.SelectedIndex = 3
             Case "bm3d" : ui.UiComboBox降噪方式.SelectedIndex = 4
-            Case "avs" : ui.UiComboBox降噪方式.SelectedIndex = 5
             Case Else : ui.UiComboBox降噪方式.Text = ""
         End Select
         ui.UiTextBox降噪参数1.Text = a.视频参数_降噪_参数1
@@ -222,7 +221,7 @@ Public Class 预设管理
         ui.UiTextBox锐化水平尺寸.Text = a.视频参数_锐化_水平尺寸
         ui.UiTextBox锐化垂直尺寸.Text = a.视频参数_锐化_垂直尺寸
         ui.UiTextBox锐化强度.Text = a.视频参数_锐化_锐化强度
-        ui.UiComboBox逐行与隔行处理方式.SelectedIndex = a.视频参数_逐行与隔行_操作
+        ui.UiComboBox逐行与隔行处理方式.SelectedIndex = a.视频参数_逐行与隔行
         ui.UiComboBox角度翻转.SelectedIndex = a.视频参数_画面翻转_角度翻转
         ui.UiComboBox镜像翻转.SelectedIndex = a.视频参数_画面翻转_镜像翻转
 
@@ -485,7 +484,7 @@ Public Class 预设管理
         a.视频参数_锐化_水平尺寸 = ui.UiTextBox锐化水平尺寸.Text
         a.视频参数_锐化_垂直尺寸 = ui.UiTextBox锐化垂直尺寸.Text
         a.视频参数_锐化_锐化强度 = ui.UiTextBox锐化强度.Text
-        a.视频参数_逐行与隔行_操作 = ui.UiComboBox逐行与隔行处理方式.SelectedIndex
+        a.视频参数_逐行与隔行 = ui.UiComboBox逐行与隔行处理方式.SelectedIndex
         a.视频参数_画面翻转_角度翻转 = ui.UiComboBox角度翻转.SelectedIndex
         a.视频参数_画面翻转_镜像翻转 = ui.UiComboBox镜像翻转.SelectedIndex
 
@@ -748,6 +747,21 @@ Public Class 预设管理
 
         If a.自定义参数_之前参数 <> "" Then arg &= $"{a.自定义参数_之前参数} "
 
+        Select Case a.视频参数_逐行与隔行
+            Case 1 : 视频滤镜参数集.Add($"yadif=0:-1:0")
+            Case 2 : 视频滤镜参数集.Add($"yadif=0:0:0")
+            Case 3 : 视频滤镜参数集.Add($"yadif=0:1:0")
+            Case 4 : 视频滤镜参数集.Add($"tinterlace=4")
+            Case 5 : 视频滤镜参数集.Add($"tinterlace=6")
+            Case 6 : 视频滤镜参数集.Add($"fieldmatch,yadif=deint=interlaced,decimate")
+            Case 7 : 视频滤镜参数集.Add($"yadif=1")
+            Case 8 : 视频滤镜参数集.Add($"pullup=jl=1:jr=1,fps=25")
+            Case 9 : 视频滤镜参数集.Add($"yadif=0")
+            Case 10 : 视频滤镜参数集.Add($"yadif=1")
+            Case 11 : 视频滤镜参数集.Add($"bwdif=0")
+            Case 12 : 视频滤镜参数集.Add($"bwdif=1")
+        End Select
+
         If a.视频参数_编码器_类别 = "禁用" Then 视频参数 &= $"-vn "
         If a.视频参数_编码器_具体编码 <> "" Then 视频参数 &= $"-c:v {a.视频参数_编码器_具体编码} "
 
@@ -839,81 +853,6 @@ Public Class 预设管理
                 s1 &= $":custom_shader_path='{将路径转换为FFmpeg滤镜接受的格式(shader)}'"
             Next
             视频滤镜参数集.Add(s1)
-        End If
-
-        If a.视频参数_烧录字幕_滤镜选择 = "subtitles" OrElse a.视频参数_烧录字幕_滤镜选择 = "ass" Then
-            Dim 滤镜参数列表 As New List(Of String)
-            Dim 样式参数列表 As New List(Of String)
-            If a.视频参数_烧录字幕_字幕来源是外部文件 Then
-                Dim 字幕位置, 字幕文件名 As String
-                If a.视频参数_烧录字幕_外部字幕文件名 = "" Then
-                    字幕文件名 = Path.GetFileNameWithoutExtension(输入文件)
-                Else
-                    字幕文件名 = a.视频参数_烧录字幕_外部字幕文件名
-                End If
-                If a.视频参数_烧录字幕_外部字幕文件夹位置 = "" Then
-                    字幕位置 = 输入文件的文件夹
-                Else
-                    字幕位置 = a.视频参数_烧录字幕_外部字幕文件夹位置
-                End If
-                If 输入文件 = "<输入文件>" Then
-                    滤镜参数列表.Add($"filename='<字幕文件 | 预览模式专用字符>'")
-                Else
-                    For Each abc In a.视频参数_烧录字幕_字幕格式优先级
-                        Select Case abc
-                            Case 1
-                                Dim efg = Path.Combine(字幕位置, 字幕文件名 & ".srt")
-                                If FileIO.FileSystem.FileExists(efg) Then
-                                    滤镜参数列表.Add($"filename='{将路径转换为FFmpeg滤镜接受的格式(efg)}'")
-                                    Exit For
-                                End If
-                            Case 2
-                                Dim efg = Path.Combine(字幕位置, 字幕文件名 & ".ass")
-                                If FileIO.FileSystem.FileExists(efg) Then
-                                    滤镜参数列表.Add($"filename='{将路径转换为FFmpeg滤镜接受的格式(efg)}'")
-                                    Exit For
-                                End If
-                            Case 3
-                                Dim efg = Path.Combine(字幕位置, 字幕文件名 & ".ssa")
-                                If FileIO.FileSystem.FileExists(efg) Then
-                                    滤镜参数列表.Add($"filename='{将路径转换为FFmpeg滤镜接受的格式(efg)}'")
-                                    Exit For
-                                End If
-                        End Select
-                    Next
-                End If
-            End If
-            If a.视频参数_烧录字幕_字幕来源是内嵌的流 Then
-                滤镜参数列表.Add($"filename='{输入文件}'")
-                滤镜参数列表.Add($"stream_index={a.视频参数_烧录字幕_指定内嵌的流}")
-            End If
-            If a.视频参数_烧录字幕_字体文件夹 <> "" Then 滤镜参数列表.Add($"fontsdir={将路径转换为FFmpeg滤镜接受的格式(a.视频参数_烧录字幕_字体文件夹)}")
-            If a.视频参数_烧录字幕_基本样式_名称 <> "" Then 样式参数列表.Add($"FontName={a.视频参数_烧录字幕_基本样式_名称}")
-            If a.视频参数_烧录字幕_基本样式_大小 <> 0 Then 样式参数列表.Add($"FontSize={a.视频参数_烧录字幕_基本样式_大小}")
-            If a.视频参数_烧录字幕_基本样式_粗体 Then 样式参数列表.Add($"Bold=-1")
-            If a.视频参数_烧录字幕_基本样式_斜体 Then 样式参数列表.Add($"Italic=-1")
-            If a.视频参数_烧录字幕_基本样式_下划线 Then 样式参数列表.Add($"Underline=-1")
-            If a.视频参数_烧录字幕_基本样式_删除线 Then 样式参数列表.Add($"StrikeOut=-1")
-            Select Case a.视频参数_烧录字幕_边框样式
-                Case 1 : 样式参数列表.Add($"BorderStyle=1")
-                Case 2 : 样式参数列表.Add($"BorderStyle=3")
-            End Select
-            If a.视频参数_烧录字幕_描边宽度 <> "" Then 样式参数列表.Add($"Outline={a.视频参数_烧录字幕_描边宽度}")
-            If a.视频参数_烧录字幕_阴影距离 <> "" Then 样式参数列表.Add($"Shadow={a.视频参数_烧录字幕_阴影距离}")
-            If a.视频参数_烧录字幕_主要颜色 <> Color.Transparent Then 样式参数列表.Add($"PrimaryColour={转换HTML颜色到ffmpeg接受的格式(a.视频参数_烧录字幕_主要颜色.ToHTML, a.视频参数_烧录字幕_主要颜色_透明度)}")
-            If a.视频参数_烧录字幕_次要颜色 <> Color.Transparent Then 样式参数列表.Add($"SecondaryColour={转换HTML颜色到ffmpeg接受的格式(a.视频参数_烧录字幕_次要颜色.ToHTML, a.视频参数_烧录字幕_次要颜色_透明度)}")
-            If a.视频参数_烧录字幕_描边颜色 <> Color.Transparent Then 样式参数列表.Add($"OutlineColour={转换HTML颜色到ffmpeg接受的格式(a.视频参数_烧录字幕_描边颜色.ToHTML, a.视频参数_烧录字幕_描边颜色_透明度)}")
-            If a.视频参数_烧录字幕_背景颜色 <> Color.Transparent Then 样式参数列表.Add($"BackColour={转换HTML颜色到ffmpeg接受的格式(a.视频参数_烧录字幕_背景颜色.ToHTML, a.视频参数_烧录字幕_背景颜色_透明度)}")
-            If a.视频参数_烧录字幕_对齐方位 > 0 Then 样式参数列表.Add($"Alignment={a.视频参数_烧录字幕_对齐方位}")
-            If a.视频参数_烧录字幕_垂直边距 <> "" Then 样式参数列表.Add($"MarginV={a.视频参数_烧录字幕_垂直边距}")
-            If a.视频参数_烧录字幕_左边距 <> "" Then 样式参数列表.Add($"MarginL={a.视频参数_烧录字幕_左边距}")
-            If a.视频参数_烧录字幕_右边距 <> "" Then 样式参数列表.Add($"MarginR={a.视频参数_烧录字幕_右边距}")
-            If a.视频参数_烧录字幕_字距 <> "" Then 样式参数列表.Add($"Spacing={a.视频参数_烧录字幕_字距}")
-            If a.视频参数_烧录字幕_行距 <> "" Then 样式参数列表.Add($"LineSpacing={a.视频参数_烧录字幕_行距}")
-            If a.视频参数_烧录字幕_自定义样式 <> "" Then 样式参数列表.Add(a.视频参数_烧录字幕_自定义样式)
-            If 样式参数列表.Count > 0 Then 滤镜参数列表.Add($"force_style='{Join(样式参数列表.ToArray, ",")}'")
-            If a.视频参数_烧录字幕_自定义滤镜参数 <> "" Then 滤镜参数列表.Add(a.视频参数_烧录字幕_自定义滤镜参数)
-            If 滤镜参数列表.Count > 0 Then 视频滤镜参数集.Add($"{a.视频参数_烧录字幕_滤镜选择}={Join(滤镜参数列表.ToArray, ":")}")
         End If
 
         Select Case a.视频参数_比特率_控制方式
@@ -1030,13 +969,80 @@ Public Class 预设管理
             视频滤镜参数集.Add($"unsharp=luma_msize_x={a.视频参数_锐化_水平尺寸}:luma_msize_y={a.视频参数_锐化_垂直尺寸}:luma_amount={a.视频参数_锐化_锐化强度}")
         End If
 
-        Select Case a.视频参数_逐行与隔行_操作
-            Case 1 : 视频滤镜参数集.Add($"yadif=0:-1:0")
-            Case 2 : 视频滤镜参数集.Add($"yadif=0:0:0")
-            Case 3 : 视频滤镜参数集.Add($"yadif=0:1:0")
-            Case 4 : 视频滤镜参数集.Add($"tinterlace=4")
-            Case 5 : 视频滤镜参数集.Add($"tinterlace=6")
-        End Select
+        If a.视频参数_烧录字幕_滤镜选择 = "subtitles" OrElse a.视频参数_烧录字幕_滤镜选择 = "ass" Then
+            Dim 滤镜参数列表 As New List(Of String)
+            Dim 样式参数列表 As New List(Of String)
+            If a.视频参数_烧录字幕_字幕来源是外部文件 Then
+                Dim 字幕位置, 字幕文件名 As String
+                If a.视频参数_烧录字幕_外部字幕文件名 = "" Then
+                    字幕文件名 = Path.GetFileNameWithoutExtension(输入文件)
+                Else
+                    字幕文件名 = a.视频参数_烧录字幕_外部字幕文件名
+                End If
+                If a.视频参数_烧录字幕_外部字幕文件夹位置 = "" Then
+                    字幕位置 = 输入文件的文件夹
+                Else
+                    字幕位置 = a.视频参数_烧录字幕_外部字幕文件夹位置
+                End If
+                If 输入文件 = "<输入文件>" Then
+                    滤镜参数列表.Add($"filename='<字幕文件 | 预览模式专用字符>'")
+                Else
+                    For Each abc In a.视频参数_烧录字幕_字幕格式优先级
+                        Select Case abc
+                            Case 1
+                                Dim efg = Path.Combine(字幕位置, 字幕文件名 & ".srt")
+                                If FileIO.FileSystem.FileExists(efg) Then
+                                    滤镜参数列表.Add($"filename='{将路径转换为FFmpeg滤镜接受的格式(efg)}'")
+                                    Exit For
+                                End If
+                            Case 2
+                                Dim efg = Path.Combine(字幕位置, 字幕文件名 & ".ass")
+                                If FileIO.FileSystem.FileExists(efg) Then
+                                    滤镜参数列表.Add($"filename='{将路径转换为FFmpeg滤镜接受的格式(efg)}'")
+                                    Exit For
+                                End If
+                            Case 3
+                                Dim efg = Path.Combine(字幕位置, 字幕文件名 & ".ssa")
+                                If FileIO.FileSystem.FileExists(efg) Then
+                                    滤镜参数列表.Add($"filename='{将路径转换为FFmpeg滤镜接受的格式(efg)}'")
+                                    Exit For
+                                End If
+                        End Select
+                    Next
+                End If
+            End If
+            If a.视频参数_烧录字幕_字幕来源是内嵌的流 Then
+                滤镜参数列表.Add($"filename='{输入文件}'")
+                滤镜参数列表.Add($"stream_index={a.视频参数_烧录字幕_指定内嵌的流}")
+            End If
+            If a.视频参数_烧录字幕_字体文件夹 <> "" Then 滤镜参数列表.Add($"fontsdir={将路径转换为FFmpeg滤镜接受的格式(a.视频参数_烧录字幕_字体文件夹)}")
+            If a.视频参数_烧录字幕_基本样式_名称 <> "" Then 样式参数列表.Add($"FontName={a.视频参数_烧录字幕_基本样式_名称}")
+            If a.视频参数_烧录字幕_基本样式_大小 <> 0 Then 样式参数列表.Add($"FontSize={a.视频参数_烧录字幕_基本样式_大小}")
+            If a.视频参数_烧录字幕_基本样式_粗体 Then 样式参数列表.Add($"Bold=-1")
+            If a.视频参数_烧录字幕_基本样式_斜体 Then 样式参数列表.Add($"Italic=-1")
+            If a.视频参数_烧录字幕_基本样式_下划线 Then 样式参数列表.Add($"Underline=-1")
+            If a.视频参数_烧录字幕_基本样式_删除线 Then 样式参数列表.Add($"StrikeOut=-1")
+            Select Case a.视频参数_烧录字幕_边框样式
+                Case 1 : 样式参数列表.Add($"BorderStyle=1")
+                Case 2 : 样式参数列表.Add($"BorderStyle=3")
+            End Select
+            If a.视频参数_烧录字幕_描边宽度 <> "" Then 样式参数列表.Add($"Outline={a.视频参数_烧录字幕_描边宽度}")
+            If a.视频参数_烧录字幕_阴影距离 <> "" Then 样式参数列表.Add($"Shadow={a.视频参数_烧录字幕_阴影距离}")
+            If a.视频参数_烧录字幕_主要颜色 <> Color.Transparent Then 样式参数列表.Add($"PrimaryColour={转换HTML颜色到ffmpeg接受的格式(a.视频参数_烧录字幕_主要颜色.ToHTML, a.视频参数_烧录字幕_主要颜色_透明度)}")
+            If a.视频参数_烧录字幕_次要颜色 <> Color.Transparent Then 样式参数列表.Add($"SecondaryColour={转换HTML颜色到ffmpeg接受的格式(a.视频参数_烧录字幕_次要颜色.ToHTML, a.视频参数_烧录字幕_次要颜色_透明度)}")
+            If a.视频参数_烧录字幕_描边颜色 <> Color.Transparent Then 样式参数列表.Add($"OutlineColour={转换HTML颜色到ffmpeg接受的格式(a.视频参数_烧录字幕_描边颜色.ToHTML, a.视频参数_烧录字幕_描边颜色_透明度)}")
+            If a.视频参数_烧录字幕_背景颜色 <> Color.Transparent Then 样式参数列表.Add($"BackColour={转换HTML颜色到ffmpeg接受的格式(a.视频参数_烧录字幕_背景颜色.ToHTML, a.视频参数_烧录字幕_背景颜色_透明度)}")
+            If a.视频参数_烧录字幕_对齐方位 > 0 Then 样式参数列表.Add($"Alignment={a.视频参数_烧录字幕_对齐方位}")
+            If a.视频参数_烧录字幕_垂直边距 <> "" Then 样式参数列表.Add($"MarginV={a.视频参数_烧录字幕_垂直边距}")
+            If a.视频参数_烧录字幕_左边距 <> "" Then 样式参数列表.Add($"MarginL={a.视频参数_烧录字幕_左边距}")
+            If a.视频参数_烧录字幕_右边距 <> "" Then 样式参数列表.Add($"MarginR={a.视频参数_烧录字幕_右边距}")
+            If a.视频参数_烧录字幕_字距 <> "" Then 样式参数列表.Add($"Spacing={a.视频参数_烧录字幕_字距}")
+            If a.视频参数_烧录字幕_行距 <> "" Then 样式参数列表.Add($"LineSpacing={a.视频参数_烧录字幕_行距}")
+            If a.视频参数_烧录字幕_自定义样式 <> "" Then 样式参数列表.Add(a.视频参数_烧录字幕_自定义样式)
+            If 样式参数列表.Count > 0 Then 滤镜参数列表.Add($"force_style='{Join(样式参数列表.ToArray, ",")}'")
+            If a.视频参数_烧录字幕_自定义滤镜参数 <> "" Then 滤镜参数列表.Add(a.视频参数_烧录字幕_自定义滤镜参数)
+            If 滤镜参数列表.Count > 0 Then 视频滤镜参数集.Add($"{a.视频参数_烧录字幕_滤镜选择}={Join(滤镜参数列表.ToArray, ":")}")
+        End If
 
         Select Case a.视频参数_画面翻转_角度翻转
             Case 1 : 视频滤镜参数集.AddRange({$"transpose=1"})
@@ -1558,8 +1564,8 @@ Public Class 预设管理
             在RTF输出文本(RTF, $"烧录字幕：{String.Join("；", abc)}", Color.Gray)
         End If
 
-            '---------------- 码率 / 质量控制 ----------------
-            If a.视频参数_比特率_控制方式 <> "" Then
+        '---------------- 码率 / 质量控制 ----------------
+        If a.视频参数_比特率_控制方式 <> "" Then
             Select Case a.视频参数_比特率_控制方式
                 Case "CRF" : 在RTF输出文本(RTF, "质量/比特率控制方法：CRF", Color.Silver)
                 Case "VBR" : 在RTF输出文本(RTF, "质量/比特率控制方法：VBR", Color.Silver)
@@ -1612,9 +1618,9 @@ Public Class 预设管理
         If a.视频参数_锐化_水平尺寸 <> "" OrElse a.视频参数_锐化_垂直尺寸 <> "" OrElse a.视频参数_锐化_锐化强度 <> "" Then
             在RTF输出文本(RTF, "锐化：水平 = " & a.视频参数_锐化_水平尺寸 & " 垂直 = " & a.视频参数_锐化_垂直尺寸 & " 强度 = " & a.视频参数_锐化_锐化强度, Color.Silver)
         End If
-        If a.视频参数_逐行与隔行_操作 > 0 Then 在RTF输出文本(RTF, a.视频参数_逐行与隔行_操作, Color.Silver)
-        If a.视频参数_画面翻转_角度翻转 > 0 Then 在RTF输出文本(RTF, a.视频参数_画面翻转_角度翻转, Color.Silver)
-        If a.视频参数_画面翻转_镜像翻转 > 0 Then 在RTF输出文本(RTF, a.视频参数_画面翻转_镜像翻转, Color.Silver)
+        If a.视频参数_逐行与隔行 > 0 Then 在RTF输出文本(RTF, "已选择反交错，选项索引：" & a.视频参数_逐行与隔行, Color.Silver)
+        If a.视频参数_画面翻转_角度翻转 > 0 Then 在RTF输出文本(RTF, "已选择角度翻转，选项索引：" & a.视频参数_画面翻转_角度翻转, Color.Silver)
+        If a.视频参数_画面翻转_镜像翻转 > 0 Then 在RTF输出文本(RTF, "已选择镜像翻转，选项索引：" & a.视频参数_画面翻转_镜像翻转, Color.Silver)
 
         '---------------- 音频参数 ----------------
         If a.音频参数_编码器_具体编码 <> "" Then 在RTF输出文本(RTF, "音频编码器：" & a.音频参数_编码器_具体编码, Color.Silver)

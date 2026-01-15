@@ -121,7 +121,7 @@ Public Class 预设数据类型
     Public Property 视频参数_锐化_水平尺寸 As String = ""
     Public Property 视频参数_锐化_垂直尺寸 As String = ""
     Public Property 视频参数_锐化_锐化强度 As String = ""
-    Public Property 视频参数_逐行与隔行_操作 As String = ""
+    Public Property 视频参数_逐行与隔行 As Integer = 0
     Public Property 视频参数_画面翻转_角度翻转 As Integer = 0
     Public Property 视频参数_画面翻转_镜像翻转 As Integer = 0
 

@@ -71,8 +71,25 @@
         End If
     End Sub
 
+    Private Sub ListView1_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles ListView1.MouseDoubleClick
+        If Me.ListView1.SelectedItems.Count <> 1 Then Exit Sub
+        显示窗体(New Form媒体流选择器(要读取的媒体文件:=ListView1.SelectedItems(0).Text,
+             视频流文本目标对象:=ListView1.SelectedItems(0).SubItems(1),
+             音频流文本目标对象:=ListView1.SelectedItems(0).SubItems(2),
+             字幕流文本目标对象:=ListView1.SelectedItems(0).SubItems(3),
+             视频流已选:=ListView1.SelectedItems(0).SubItems(1).Text,
+             音频流已选:=ListView1.SelectedItems(0).SubItems(2).Text,
+             字幕流已选:=ListView1.SelectedItems(0).SubItems(3).Text), Form1)
+    End Sub
+
     Private Sub ListView1_KeyDown(sender As Object, e As KeyEventArgs) Handles ListView1.KeyDown
         Select Case e.KeyCode
+            Case Keys.A
+                If e.Control Then
+                    For Each item As ListViewItem In ListView1.Items
+                        item.Selected = True
+                    Next
+                End If
             Case Keys.F3
                 UiButton上移.PerformClick()
                 ListView1.Focus()

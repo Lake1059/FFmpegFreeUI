@@ -12,6 +12,12 @@ Public Class 界面_合并
 
     Private Sub ListView1_KeyDown(sender As Object, e As KeyEventArgs) Handles ListView1.KeyDown
         Select Case e.KeyCode
+            Case Keys.A
+                If e.Control Then
+                    For Each item As ListViewItem In ListView1.Items
+                        item.Selected = True
+                    Next
+                End If
             Case Keys.F3
                 UiButton上移.PerformClick()
                 ListView1.Focus()

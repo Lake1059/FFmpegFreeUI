@@ -405,6 +405,9 @@ Partial Class 界面_常规流程参数_V2
         UiCheckBox自动混流ASS = New Sunny.UI.UICheckBox()
         UiCheckBox自动混流SRT = New Sunny.UI.UICheckBox()
         Label164 = New Label()
+        Panel97 = New Panel()
+        Label107 = New Label()
+        UiButton可视化流选择器 = New Sunny.UI.UIButton()
         Panel47 = New Panel()
         UiCheckBox保留其他字幕流 = New Sunny.UI.UICheckBox()
         Label184 = New Label()
@@ -427,7 +430,6 @@ Partial Class 界面_常规流程参数_V2
         Label132 = New Label()
         UiTextBox将视频参数用于这些流 = New Sunny.UI.UITextBox()
         Label114 = New Label()
-        Label107 = New Label()
         TabPage方案管理 = New TabPage()
         Panel77 = New Panel()
         Panel84 = New Panel()
@@ -567,6 +569,7 @@ Partial Class 界面_常规流程参数_V2
         TabPage流控制.SuspendLayout()
         Panel64.SuspendLayout()
         Panel91.SuspendLayout()
+        Panel97.SuspendLayout()
         Panel47.SuspendLayout()
         Panel63.SuspendLayout()
         Panel61.SuspendLayout()
@@ -4341,7 +4344,7 @@ Partial Class 界面_常规流程参数_V2
         UiComboBox逐行与隔行处理方式.ItemHeight = 30
         UiComboBox逐行与隔行处理方式.ItemHoverColor = Color.FromArgb(CByte(56), CByte(56), CByte(56))
         UiComboBox逐行与隔行处理方式.ItemRectColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
-        UiComboBox逐行与隔行处理方式.Items.AddRange(New Object() {"", "隔行转逐行 - yadif 单帧输入+自动场序+空间检查", "隔行转逐行 - yadif 单帧输入+顶场优先+空间检查", "隔行转逐行 - yadif 单帧输入+底场优先+空间检查", "逐行转隔行 - tinterlace 顶场优先", "逐行转隔行 - tinterlace 底场优先"})
+        UiComboBox逐行与隔行处理方式.Items.AddRange(New Object() {"", "隔行转逐行 - yadif 单帧输入+自动场序+空间检查", "隔行转逐行 - yadif 单帧输入+顶场优先+空间检查", "隔行转逐行 - yadif 单帧输入+底场优先+空间检查", "逐行转隔行 - tinterlace 顶场优先", "逐行转隔行 - tinterlace 底场优先", "NTSC 标准 IVTC 胶片 3:2 pulldown 转逐行", "NTSC 纯隔行 非胶片 转逐行", "NTSC 自动检测 pulldown 模式至 25fps", "PAL 标准反交错", "PAL 标准反交错 双倍帧率", "PAL 高质量反交错 ", "PAL 高质量反交错 双倍帧率"})
         UiComboBox逐行与隔行处理方式.ItemSelectBackColor = Color.FromArgb(CByte(80), CByte(80), CByte(80))
         UiComboBox逐行与隔行处理方式.ItemSelectForeColor = Color.Silver
         UiComboBox逐行与隔行处理方式.Location = New Point(21, 10)
@@ -6826,6 +6829,7 @@ Partial Class 界面_常规流程参数_V2
         TabPage流控制.Controls.Add(Label165)
         TabPage流控制.Controls.Add(Panel91)
         TabPage流控制.Controls.Add(Label164)
+        TabPage流控制.Controls.Add(Panel97)
         TabPage流控制.Controls.Add(Panel47)
         TabPage流控制.Controls.Add(Panel63)
         TabPage流控制.Controls.Add(Label112)
@@ -6833,7 +6837,6 @@ Partial Class 界面_常规流程参数_V2
         TabPage流控制.Controls.Add(Label113)
         TabPage流控制.Controls.Add(Panel62)
         TabPage流控制.Controls.Add(Label114)
-        TabPage流控制.Controls.Add(Label107)
         TabPage流控制.Location = New Point(201, 0)
         TabPage流控制.Name = "TabPage流控制"
         TabPage流控制.Size = New Size(899, 650)
@@ -6845,14 +6848,14 @@ Partial Class 界面_常规流程参数_V2
         ' 
         Label32.AutoSize = True
         Label32.Dock = DockStyle.Bottom
-        Label32.Font = New Font("微软雅黑", 10F)
+        Label32.Font = New Font("微软雅黑", 9F)
         Label32.ForeColor = Color.Gray
-        Label32.Location = New Point(0, 594)
+        Label32.Location = New Point(0, 549)
         Label32.Name = "Label32"
         Label32.Padding = New Padding(16, 0, 0, 16)
-        Label32.Size = New Size(417, 56)
+        Label32.Size = New Size(540, 101)
         Label32.TabIndex = 118
-        Label32.Text = "当同时指定流和保留其他流时，可能有部分参数与该逻辑不兼容" & vbCrLf & "处理多轨媒体时需要注意，尽量使用滤镜实现其他需求"
+        Label32.Text = "ffmpeg 的 -map 参数具有很高的优先级，当使用其指定流参数时其他类型的流也必须带上 -map" & vbCrLf & "否则 ffmpeg 可能会丢弃流，ffmpeg 默认的逻辑是视频和音频分别只保留一个" & vbCrLf & "必须指定了具体的流才可以使用" & ChrW(8220) & "然后保留其他流" & ChrW(8221) & "，否则会发生意外情况" & vbCrLf & "当同时指定流和保留其他流时，可能有部分参数与该逻辑不兼容" & vbCrLf & "处理多轨媒体时需要注意，尽量使用滤镜实现其他需求"
         ' 
         ' Panel64
         ' 
@@ -6863,7 +6866,7 @@ Partial Class 界面_常规流程参数_V2
         Panel64.Controls.Add(Label148)
         Panel64.Controls.Add(UiComboBox元数据选项)
         Panel64.Dock = DockStyle.Top
-        Panel64.Location = New Point(0, 486)
+        Panel64.Location = New Point(0, 454)
         Panel64.Name = "Panel64"
         Panel64.Padding = New Padding(21, 10, 20, 0)
         Panel64.Size = New Size(899, 40)
@@ -7011,7 +7014,7 @@ Partial Class 界面_常规流程参数_V2
         Label111.AutoSize = True
         Label111.Dock = DockStyle.Top
         Label111.Font = New Font("微软雅黑", 11F)
-        Label111.Location = New Point(0, 451)
+        Label111.Location = New Point(0, 419)
         Label111.Name = "Label111"
         Label111.Padding = New Padding(16, 15, 0, 0)
         Label111.Size = New Size(172, 35)
@@ -7022,14 +7025,14 @@ Partial Class 界面_常规流程参数_V2
         ' 
         Label165.AutoSize = True
         Label165.Dock = DockStyle.Top
-        Label165.Font = New Font("微软雅黑", 10F)
+        Label165.Font = New Font("微软雅黑", 9F)
         Label165.ForeColor = Color.Gray
-        Label165.Location = New Point(0, 406)
+        Label165.Location = New Point(0, 380)
         Label165.Name = "Label165"
         Label165.Padding = New Padding(16, 5, 0, 0)
-        Label165.Size = New Size(415, 45)
+        Label165.Size = New Size(359, 39)
         Label165.TabIndex = 115
-        Label165.Text = "这些功能强制使用 -map，因为无法在一般情况下处理这些需求" & vbCrLf & "就像最上方所说的一样，注意对其他类型的流使用 -map 参数"
+        Label165.Text = "这些功能强制使用 -map，因为无法在一般情况下处理这些需求" & vbCrLf & "就像最下方所说的一样，注意对其他类型的流使用 -map 参数"
         ' 
         ' Panel91
         ' 
@@ -7039,7 +7042,7 @@ Partial Class 界面_常规流程参数_V2
         Panel91.Controls.Add(UiCheckBox自动混流ASS)
         Panel91.Controls.Add(UiCheckBox自动混流SRT)
         Panel91.Dock = DockStyle.Top
-        Panel91.Location = New Point(0, 366)
+        Panel91.Location = New Point(0, 340)
         Panel91.Name = "Panel91"
         Panel91.Padding = New Padding(18, 10, 20, 0)
         Panel91.Size = New Size(899, 40)
@@ -7118,19 +7121,72 @@ Partial Class 界面_常规流程参数_V2
         Label164.AutoSize = True
         Label164.Dock = DockStyle.Top
         Label164.Font = New Font("微软雅黑", 11F)
-        Label164.Location = New Point(0, 331)
+        Label164.Location = New Point(0, 305)
         Label164.Name = "Label164"
         Label164.Padding = New Padding(16, 15, 0, 0)
         Label164.Size = New Size(115, 35)
         Label164.TabIndex = 102
         Label164.Text = "混流同名字幕"
         ' 
+        ' Panel97
+        ' 
+        Panel97.Controls.Add(Label107)
+        Panel97.Controls.Add(UiButton可视化流选择器)
+        Panel97.Dock = DockStyle.Top
+        Panel97.Location = New Point(0, 265)
+        Panel97.Name = "Panel97"
+        Panel97.Padding = New Padding(21, 10, 20, 0)
+        Panel97.Size = New Size(899, 40)
+        Panel97.TabIndex = 120
+        ' 
+        ' Label107
+        ' 
+        Label107.Dock = DockStyle.Fill
+        Label107.Font = New Font("微软雅黑", 10F)
+        Label107.ForeColor = Color.Gray
+        Label107.Location = New Point(221, 10)
+        Label107.Name = "Label107"
+        Label107.Padding = New Padding(10, 0, 0, 0)
+        Label107.Size = New Size(658, 30)
+        Label107.TabIndex = 101
+        Label107.Text = "推荐使用可视化选择器来快速填写上面三个文本框"
+        Label107.TextAlign = ContentAlignment.MiddleLeft
+        ' 
+        ' UiButton可视化流选择器
+        ' 
+        UiButton可视化流选择器.Dock = DockStyle.Left
+        UiButton可视化流选择器.FillColor = Color.FromArgb(CByte(56), CByte(56), CByte(56))
+        UiButton可视化流选择器.FillColor2 = Color.FromArgb(CByte(56), CByte(56), CByte(56))
+        UiButton可视化流选择器.FillDisableColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UiButton可视化流选择器.FillHoverColor = Color.FromArgb(CByte(56), CByte(56), CByte(56))
+        UiButton可视化流选择器.FillPressColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        UiButton可视化流选择器.FillSelectedColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        UiButton可视化流选择器.Font = New Font("微软雅黑", 10F)
+        UiButton可视化流选择器.ForeColor = Color.Silver
+        UiButton可视化流选择器.ForeDisableColor = Color.Silver
+        UiButton可视化流选择器.ForeHoverColor = Color.Silver
+        UiButton可视化流选择器.ForePressColor = Color.Silver
+        UiButton可视化流选择器.ForeSelectedColor = Color.Silver
+        UiButton可视化流选择器.Location = New Point(21, 10)
+        UiButton可视化流选择器.MinimumSize = New Size(1, 1)
+        UiButton可视化流选择器.Name = "UiButton可视化流选择器"
+        UiButton可视化流选择器.Radius = 30
+        UiButton可视化流选择器.RectColor = Color.FromArgb(CByte(56), CByte(56), CByte(56))
+        UiButton可视化流选择器.RectDisableColor = Color.FromArgb(CByte(56), CByte(56), CByte(56))
+        UiButton可视化流选择器.RectHoverColor = Color.DarkGray
+        UiButton可视化流选择器.RectPressColor = Color.FromArgb(CByte(64), CByte(148), CByte(64))
+        UiButton可视化流选择器.RectSelectedColor = Color.DarkGray
+        UiButton可视化流选择器.Size = New Size(200, 30)
+        UiButton可视化流选择器.TabIndex = 84
+        UiButton可视化流选择器.Text = "可视化流选择器"
+        UiButton可视化流选择器.TipsFont = New Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point, CByte(134))
+        ' 
         ' Panel47
         ' 
         Panel47.Controls.Add(UiCheckBox保留其他字幕流)
         Panel47.Controls.Add(Label184)
         Panel47.Dock = DockStyle.Top
-        Panel47.Location = New Point(0, 291)
+        Panel47.Location = New Point(0, 225)
         Panel47.Name = "Panel47"
         Panel47.Padding = New Padding(21, 10, 20, 0)
         Panel47.Size = New Size(899, 40)
@@ -7166,7 +7222,7 @@ Partial Class 界面_常规流程参数_V2
         Panel63.Controls.Add(Label168)
         Panel63.Controls.Add(UiTextBox使用哪些文件的哪些内嵌字幕)
         Panel63.Dock = DockStyle.Top
-        Panel63.Location = New Point(0, 251)
+        Panel63.Location = New Point(0, 185)
         Panel63.Name = "Panel63"
         Panel63.Padding = New Padding(21, 10, 20, 0)
         Panel63.Size = New Size(899, 40)
@@ -7267,7 +7323,7 @@ Partial Class 界面_常规流程参数_V2
         Label112.AutoSize = True
         Label112.Dock = DockStyle.Top
         Label112.Font = New Font("微软雅黑", 11F)
-        Label112.Location = New Point(0, 216)
+        Label112.Location = New Point(0, 150)
         Label112.Name = "Label112"
         Label112.Padding = New Padding(16, 15, 0, 0)
         Label112.Size = New Size(211, 35)
@@ -7281,7 +7337,7 @@ Partial Class 界面_常规流程参数_V2
         Panel61.Controls.Add(Label133)
         Panel61.Controls.Add(UiTextBox将音频参数用于这些流)
         Panel61.Dock = DockStyle.Top
-        Panel61.Location = New Point(0, 176)
+        Panel61.Location = New Point(0, 110)
         Panel61.Name = "Panel61"
         Panel61.Padding = New Padding(21, 10, 20, 0)
         Panel61.Size = New Size(899, 40)
@@ -7352,7 +7408,7 @@ Partial Class 界面_常规流程参数_V2
         Label113.AutoSize = True
         Label113.Dock = DockStyle.Top
         Label113.Font = New Font("微软雅黑", 11F)
-        Label113.Location = New Point(0, 141)
+        Label113.Location = New Point(0, 75)
         Label113.Name = "Label113"
         Label113.Padding = New Padding(16, 15, 0, 0)
         Label113.Size = New Size(257, 35)
@@ -7366,7 +7422,7 @@ Partial Class 界面_常规流程参数_V2
         Panel62.Controls.Add(Label132)
         Panel62.Controls.Add(UiTextBox将视频参数用于这些流)
         Panel62.Dock = DockStyle.Top
-        Panel62.Location = New Point(0, 101)
+        Panel62.Location = New Point(0, 35)
         Panel62.Name = "Panel62"
         Panel62.Padding = New Padding(21, 10, 20, 0)
         Panel62.Size = New Size(899, 40)
@@ -7437,25 +7493,12 @@ Partial Class 界面_常规流程参数_V2
         Label114.AutoSize = True
         Label114.Dock = DockStyle.Top
         Label114.Font = New Font("微软雅黑", 11F)
-        Label114.Location = New Point(0, 66)
+        Label114.Location = New Point(0, 0)
         Label114.Name = "Label114"
         Label114.Padding = New Padding(16, 15, 0, 0)
         Label114.Size = New Size(257, 35)
         Label114.TabIndex = 23
         Label114.Text = "将视频参数应用于哪些文件和流 (v)"
-        ' 
-        ' Label107
-        ' 
-        Label107.AutoSize = True
-        Label107.Dock = DockStyle.Top
-        Label107.Font = New Font("微软雅黑", 10F)
-        Label107.ForeColor = Color.Gray
-        Label107.Location = New Point(0, 0)
-        Label107.Name = "Label107"
-        Label107.Padding = New Padding(16, 6, 0, 0)
-        Label107.Size = New Size(624, 66)
-        Label107.TabIndex = 18
-        Label107.Text = "ffmpeg 的 -map 参数具有很高的优先级，当使用其指定流参数时其他类型的流也必须带上 -map" & vbCrLf & "否则 ffmpeg 可能会丢弃流，ffmpeg 默认的逻辑是视频和音频分别只保留一个" & vbCrLf & "必须指定了具体的流才可以使用" & ChrW(8220) & "然后保留其他流" & ChrW(8221) & "，否则会发生意外情况"
         ' 
         ' TabPage方案管理
         ' 
@@ -8135,6 +8178,7 @@ Partial Class 界面_常规流程参数_V2
         TabPage流控制.PerformLayout()
         Panel64.ResumeLayout(False)
         Panel91.ResumeLayout(False)
+        Panel97.ResumeLayout(False)
         Panel47.ResumeLayout(False)
         Panel63.ResumeLayout(False)
         Panel61.ResumeLayout(False)
@@ -8372,7 +8416,6 @@ Partial Class 界面_常规流程参数_V2
     Friend WithEvents Label106 As Label
     Friend WithEvents Panel52 As Panel
     Friend WithEvents UiTextBox自定义视频滤镜 As Sunny.UI.UITextBox
-    Friend WithEvents Label107 As Label
     Friend WithEvents Panel64 As Panel
     Friend WithEvents UiComboBox附件选项 As Sunny.UI.UIComboBox
     Friend WithEvents Label163 As Label
@@ -8587,5 +8630,8 @@ Partial Class 界面_常规流程参数_V2
     Friend WithEvents Label68 As Label
     Friend WithEvents Label143 As Label
     Friend WithEvents Label32 As Label
+    Friend WithEvents Panel97 As Panel
+    Friend WithEvents UiButton可视化流选择器 As Sunny.UI.UIButton
+    Friend WithEvents Label107 As Label
 
 End Class
