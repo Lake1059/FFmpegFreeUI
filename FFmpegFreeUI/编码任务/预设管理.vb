@@ -1012,7 +1012,7 @@ Public Class 预设管理
                 End If
             End If
             If a.视频参数_烧录字幕_字幕来源是内嵌的流 Then
-                滤镜参数列表.Add($"filename='{输入文件}'")
+                滤镜参数列表.Add($"filename='{将路径转换为FFmpeg滤镜接受的格式(输入文件)}'")
                 滤镜参数列表.Add($"stream_index={a.视频参数_烧录字幕_指定内嵌的流}")
             End If
             If a.视频参数_烧录字幕_字体文件夹 <> "" Then 滤镜参数列表.Add($"fontsdir={将路径转换为FFmpeg滤镜接受的格式(a.视频参数_烧录字幕_字体文件夹)}")
