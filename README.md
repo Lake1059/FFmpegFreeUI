@@ -593,6 +593,33 @@ public static void SetHost_AddMissionToQueueWith3fuiFile(object action)
 HostCall_AddMissionToQueueWith3fuiFile?.Invoke("3FUI 预设文件的路径", "在编码队列里显示的文件名，也可以用来显示其他信息", "输出文件的路径在哪，用于编码队列中的定位输出功能", "输入文件在哪，可以不写");
 ```
 
+### 媒体流可视化选择器
+
+从 5.1 版本开始，新增了一个可视化的媒体流选择器，得益于优秀的设计逻辑，这个功能不仅完美接入 3FUI 的现有功能，还可以通过插件调用来为你自己的功能服务。*不过从长远角度来讲，不太建议插件去使用这个功能，因为它的参数太多了，而这种调用方式也无法自定义参数的顺序，会显得很乱。*
+
+VB 语言：
+
+```vb
+Public Shared Property HostCall_MediaStreamVisualSelector As Action(Of String, String, String, String)
+Public Shared Sub SetHost_MediaStreamVisualSelector(action As Object)
+	HostCall_AddMissionToQueueWithArgs = CType(action, Action(Of String, Object, Object, Object, String, String, String, String))
+End Sub
+
+'调用，注意所有参数都是可选，如果不需要指定，直接给nothing即可
+HostCall_MediaStreamVisualSelector.Invoke(
+        "FilePath", '字符串，指定要让 ffprobe 读取的文件，如果文件存在那么窗口打开后将自动启动
+        VideoStreamTargetObject, 'Object对象，但必须有Text属性，指定要将视频流的选择结果输出到什么对象上
+        AudioStreamTargetObject, '同上，指定要将音频流的选择结果输出到什么对象上
+        SubtitleStreamTargetObject, '同上，指定要将字幕流的选择结果输出到什么对象上
+        "InputFileIndex", '字符串，选择器只能对一个文件的流进行选择，如果你希望输出附带文件索引，可以直接填写这是哪个索引的文件，会像这样输出：0:v:0,0:v:1 如果不设置则仅输出逗号分隔的数字：0,1,2
+        "VideoStreamSelected", '字符串，如果用户已经选择了指定的视频流，可以设置此属性来让对应流直接勾选，格式必须是逗号分隔的直接索引：0,1,2 不能带其他字符
+        "AudioStreamSelected", '同上，是指定的音频流
+        "SubtitleStreamSelected", '同上，是指定的字幕流
+        )
+```
+
+C# 的版本懒得写了，太长了，让AI直接翻译吧。
+
 ### 发布你的插件
 
 当你完成开发和测试后，点击生成即可在输出目录得到你的插件。前面我们选择了窗体应用，所以是生成的 exe 文件，但从 .NET 5 开始这个 exe 是纯二进制文件，同名的 dll 文件才是代码。此时将这个同名的 dll 单独复制出来，将其后缀从 .dll 改为 .3fui.dll，这样这个文件就是你要发布的插件了，而那个 exe 是完全不需要的。

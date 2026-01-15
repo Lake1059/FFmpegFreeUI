@@ -121,6 +121,11 @@ Public Class 插件管理
                 Entry类.GetMethod("SetHost_AddMissionToQueueWith3fuiFile").Invoke(Entry类的实例, New Object() {myCallback})
             End If
 
+            If Entry类.GetMethod("SetHost_MediaStreamVisualSelector") IsNot Nothing Then
+                Dim myCallback As Action(Of String, Object, Object, Object, String, String, String, String) = AddressOf 打开媒体流可视化选择器
+                Entry类.GetMethod("SetHost_MediaStreamVisualSelector").Invoke(Entry类的实例, New Object() {myCallback})
+            End If
+
             Dim Entry方法 As MethodInfo = Entry类.GetMethod("Entry")
             If Entry方法 Is Nothing Then
                 MsgBox($"{插件文件} 找不到在 Entry 类中的 Entry 方法（需要是共享\静态的，VB 使用 Shared，C# 使用 static），此插件未执行初始化", MsgBoxStyle.Exclamation)
@@ -173,7 +178,24 @@ Public Class 插件管理
         Next
     End Sub
 
-
+    Public Shared Sub 打开媒体流可视化选择器(FilePath As String,
+                                  VideoStreamTargetObject As Object,
+                                  AudioStreamTargetObject As Object,
+                                  SubtitleStreamTargetObject As Object,
+                                  InputFileIndex As String,
+                                  VideoStreamSelected As String,
+                                  AudioStreamSelected As String,
+                                  SubtitleStreamSelected As String
+                                  )
+        显示窗体(New Form媒体流选择器(要读取的媒体文件:=FilePath,
+          视频流文本目标对象:=VideoStreamTargetObject,
+          音频流文本目标对象:=AudioStreamTargetObject,
+          字幕流文本目标对象:=SubtitleStreamTargetObject,
+          文件索引:=InputFileIndex,
+          视频流已选:=VideoStreamSelected,
+          音频流已选:=AudioStreamSelected,
+          字幕流已选:=SubtitleStreamSelected), Form1)
+    End Sub
 
 
 
