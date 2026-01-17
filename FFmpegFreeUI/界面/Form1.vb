@@ -149,14 +149,22 @@ Public Class Form1
     End Sub
     Private Sub ListView1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ListView1.SelectedIndexChanged
         If Me.ListView1.SelectedItems.Count = 1 Then
-            Panel41.Visible = True
+            LinkLabel向ffmpeg发送消息.Visible = True
+            LinkLabel切换显示输出面板.Visible = True
+            Labelffmpeg实时信息.Visible = True
+            Label1.Visible = False
+            Labelffmpeg实时信息.BringToFront()
+            LinkLabel向ffmpeg发送消息.SendToBack()
             If 是否打开了输出面板 Then Panel输出面板.Visible = True
             界面控制.校准输出面板的宽度()
             编码任务.选中项刷新信息()
             选中项刷新信息计时器.Enabled = True
         Else
             选中项刷新信息计时器.Enabled = False
-            Panel41.Visible = False
+            Label1.Visible = True
+            LinkLabel向ffmpeg发送消息.Visible = False
+            LinkLabel切换显示输出面板.Visible = False
+            Labelffmpeg实时信息.Visible = False
             Panel输出面板.Visible = False
         End If
     End Sub

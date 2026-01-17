@@ -137,7 +137,8 @@ Public Class 编码任务
                         Dim vpy1 As String = File.ReadAllText(预设数据.视频参数_视频帧服务器_vpy脚本文件)
                         vpy1 = vpy1.Replace("<FilePath>", 输入文件)
                         VapourSynthCachePath = Path.Combine(Path.GetDirectoryName(输入文件), Path.GetFileNameWithoutExtension(输入文件) & Path.GetExtension(预设数据.视频参数_视频帧服务器_vpy脚本文件))
-                        File.WriteAllText(AviSynthCachePath, vpy1, New Text.UTF8Encoding(False))
+                        File.WriteAllText(VapourSynthCachePath, vpy1, New Text.UTF8Encoding(False))
+
                     Else
                         Err.Raise(10001, "", "VapourSynth 脚本模板文件不存在！")
                     End If

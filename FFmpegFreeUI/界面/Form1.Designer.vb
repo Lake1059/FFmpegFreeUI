@@ -62,8 +62,8 @@ Partial Class Form1
         Panel35 = New Panel()
         Labelffmpeg实时信息 = New Label()
         LinkLabel切换显示输出面板 = New LinkLabel()
-        Panel36 = New Panel()
         LinkLabel向ffmpeg发送消息 = New LinkLabel()
+        Label1 = New Label()
         Panel2 = New Panel()
         UiButton定位输出 = New Sunny.UI.UIButton()
         UiButton重置任务 = New Sunny.UI.UIButton()
@@ -101,7 +101,6 @@ Partial Class Form1
         Panel15.SuspendLayout()
         Panel41.SuspendLayout()
         Panel35.SuspendLayout()
-        Panel36.SuspendLayout()
         Panel2.SuspendLayout()
         TabPage参数面板.SuspendLayout()
         TabPage插件扩展.SuspendLayout()
@@ -178,25 +177,25 @@ Partial Class Form1
         Panel输出面板.Dock = DockStyle.Right
         Panel输出面板.Location = New Point(533, 80)
         Panel输出面板.Name = "Panel输出面板"
-        Panel输出面板.Padding = New Padding(10, 10, 10, 0)
+        Panel输出面板.Padding = New Padding(10)
         Panel输出面板.Size = New Size(500, 531)
         Panel输出面板.TabIndex = 37
         Panel输出面板.Visible = False
         ' 
         ' Panel77
         ' 
-        Panel77.BorderStyle = BorderStyle.FixedSingle
+        Panel77.BackColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
         Panel77.Controls.Add(RichTextBox2)
         Panel77.Dock = DockStyle.Fill
         Panel77.Location = New Point(10, 80)
         Panel77.Name = "Panel77"
         Panel77.Padding = New Padding(10, 10, 0, 10)
-        Panel77.Size = New Size(480, 451)
+        Panel77.Size = New Size(480, 441)
         Panel77.TabIndex = 37
         ' 
         ' RichTextBox2
         ' 
-        RichTextBox2.BackColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        RichTextBox2.BackColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
         RichTextBox2.BorderStyle = BorderStyle.None
         RichTextBox2.DetectUrls = False
         RichTextBox2.Dock = DockStyle.Fill
@@ -206,7 +205,7 @@ Partial Class Form1
         RichTextBox2.Name = "RichTextBox2"
         RichTextBox2.ReadOnly = True
         RichTextBox2.ScrollBars = RichTextBoxScrollBars.Vertical
-        RichTextBox2.Size = New Size(468, 429)
+        RichTextBox2.Size = New Size(470, 421)
         RichTextBox2.TabIndex = 11
         RichTextBox2.Text = ""
         ' 
@@ -508,8 +507,7 @@ Partial Class Form1
         ' 
         ' Panel41
         ' 
-        Panel41.AutoSize = True
-        Panel41.BackColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        Panel41.BackColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
         Panel41.Controls.Add(Panel35)
         Panel41.Dock = DockStyle.Bottom
         Panel41.Location = New Point(0, 611)
@@ -517,14 +515,14 @@ Partial Class Form1
         Panel41.Padding = New Padding(10)
         Panel41.Size = New Size(1033, 40)
         Panel41.TabIndex = 5
-        Panel41.Visible = False
         ' 
         ' Panel35
         ' 
         Panel35.AutoSize = True
         Panel35.Controls.Add(Labelffmpeg实时信息)
         Panel35.Controls.Add(LinkLabel切换显示输出面板)
-        Panel35.Controls.Add(Panel36)
+        Panel35.Controls.Add(LinkLabel向ffmpeg发送消息)
+        Panel35.Controls.Add(Label1)
         Panel35.Dock = DockStyle.Top
         Panel35.Location = New Point(10, 10)
         Panel35.Name = "Panel35"
@@ -536,11 +534,12 @@ Partial Class Form1
         Labelffmpeg实时信息.AutoSize = True
         Labelffmpeg实时信息.Dock = DockStyle.Top
         Labelffmpeg实时信息.ForeColor = Color.CornflowerBlue
-        Labelffmpeg实时信息.Location = New Point(102, 0)
+        Labelffmpeg实时信息.Location = New Point(293, 0)
         Labelffmpeg实时信息.Name = "Labelffmpeg实时信息"
         Labelffmpeg实时信息.Size = New Size(118, 20)
         Labelffmpeg实时信息.TabIndex = 14
         Labelffmpeg实时信息.Text = "ffmpeg 实时信息"
+        Labelffmpeg实时信息.Visible = False
         ' 
         ' LinkLabel切换显示输出面板
         ' 
@@ -549,22 +548,13 @@ Partial Class Form1
         LinkLabel切换显示输出面板.Dock = DockStyle.Left
         LinkLabel切换显示输出面板.LinkBehavior = LinkBehavior.HoverUnderline
         LinkLabel切换显示输出面板.LinkColor = Color.YellowGreen
-        LinkLabel切换显示输出面板.Location = New Point(37, 0)
+        LinkLabel切换显示输出面板.Location = New Point(228, 0)
         LinkLabel切换显示输出面板.Name = "LinkLabel切换显示输出面板"
         LinkLabel切换显示输出面板.Size = New Size(65, 20)
         LinkLabel切换显示输出面板.TabIndex = 17
         LinkLabel切换显示输出面板.TabStop = True
         LinkLabel切换显示输出面板.Text = "输出面板"
-        ' 
-        ' Panel36
-        ' 
-        Panel36.AutoSize = True
-        Panel36.Controls.Add(LinkLabel向ffmpeg发送消息)
-        Panel36.Dock = DockStyle.Left
-        Panel36.Location = New Point(0, 0)
-        Panel36.Name = "Panel36"
-        Panel36.Size = New Size(37, 20)
-        Panel36.TabIndex = 16
+        LinkLabel切换显示输出面板.Visible = False
         ' 
         ' LinkLabel向ffmpeg发送消息
         ' 
@@ -573,13 +563,25 @@ Partial Class Form1
         LinkLabel向ffmpeg发送消息.Dock = DockStyle.Left
         LinkLabel向ffmpeg发送消息.LinkBehavior = LinkBehavior.HoverUnderline
         LinkLabel向ffmpeg发送消息.LinkColor = Color.Silver
-        LinkLabel向ffmpeg发送消息.Location = New Point(0, 0)
+        LinkLabel向ffmpeg发送消息.Location = New Point(191, 0)
         LinkLabel向ffmpeg发送消息.Name = "LinkLabel向ffmpeg发送消息"
         LinkLabel向ffmpeg发送消息.Size = New Size(37, 20)
-        LinkLabel向ffmpeg发送消息.TabIndex = 16
+        LinkLabel向ffmpeg发送消息.TabIndex = 18
         LinkLabel向ffmpeg发送消息.TabStop = True
         LinkLabel向ffmpeg发送消息.Tag = "LinkLabel.Send"
         LinkLabel向ffmpeg发送消息.Text = "发送"
+        LinkLabel向ffmpeg发送消息.Visible = False
+        ' 
+        ' Label1
+        ' 
+        Label1.AutoSize = True
+        Label1.Dock = DockStyle.Left
+        Label1.ForeColor = Color.Gray
+        Label1.Location = New Point(0, 0)
+        Label1.Name = "Label1"
+        Label1.Size = New Size(191, 20)
+        Label1.TabIndex = 19
+        Label1.Text = "选中一个任务来查看实时信息"
         ' 
         ' Panel2
         ' 
@@ -1062,7 +1064,6 @@ Partial Class Form1
         Text = "FFmpegFreeUI"
         UiTabControlMenu1.ResumeLayout(False)
         TabPage编码队列.ResumeLayout(False)
-        TabPage编码队列.PerformLayout()
         Panel输出面板.ResumeLayout(False)
         Panel输出面板.PerformLayout()
         Panel77.ResumeLayout(False)
@@ -1074,8 +1075,6 @@ Partial Class Form1
         Panel41.PerformLayout()
         Panel35.ResumeLayout(False)
         Panel35.PerformLayout()
-        Panel36.ResumeLayout(False)
-        Panel36.PerformLayout()
         Panel2.ResumeLayout(False)
         TabPage参数面板.ResumeLayout(False)
         TabPage插件扩展.ResumeLayout(False)
@@ -1130,8 +1129,6 @@ Partial Class Form1
     Friend WithEvents UiComboBox3 As Sunny.UI.UIComboBox
     Friend WithEvents Panel35 As Panel
     Friend WithEvents Labelffmpeg实时信息 As Label
-    Friend WithEvents Panel36 As Panel
-    Friend WithEvents LinkLabel向ffmpeg发送消息 As LinkLabel
     Friend WithEvents TabPage设置 As TabPage
     Friend WithEvents Panel输出面板 As Panel
     Friend WithEvents LinkLabel切换显示输出面板 As LinkLabel
@@ -1151,5 +1148,7 @@ Partial Class Form1
     Friend WithEvents Panel顶部视觉修正区域_一级选项卡 As Panel
     Friend WithEvents Panel顶部视觉修正区域_二级选项卡 As Panel
     Friend WithEvents TabPage播放器 As TabPage
+    Friend WithEvents LinkLabel向ffmpeg发送消息 As LinkLabel
+    Friend WithEvents Label1 As Label
 
 End Class

@@ -3,6 +3,7 @@ Imports Sunny.UI
 
 Public Class 界面控制
     Public Shared Sub 初始化()
+        Form1.Label1.Dock = DockStyle.Top
 
         绑定拖动控件移动窗体(Form1.Panel2)
 
@@ -89,6 +90,8 @@ Public Class 界面控制
                 Form1.Panel2.Padding = New Padding((Form1.Panel2.Width - s1) * 0.5, Form1.Panel2.Padding.Top, (Form1.Panel2.Width - s1) * 0.5, 0)
                 校准UiComboBox视觉(Form1.UiComboBox输出显示类型)
                 Form1.UiCheckBox强制滚动到最后.CheckBoxSize = 20 * Form1.DPI
+
+                Form1.Panel41.Height = Form1.Panel35.Height + Form1.Panel41.Padding.Top + Form1.Panel41.Padding.Bottom
 
             Case 选项卡.IsEqual(Form1.TabPage准备文件)
                 Form1.Panel顶部视觉修正区域_二级选项卡.BackColor = Form1.准备文件页面.Panel3.BackColor

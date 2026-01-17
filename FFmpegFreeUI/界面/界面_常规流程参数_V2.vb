@@ -83,9 +83,9 @@ Public Class 界面_常规流程参数_V2
         AddHandler UiComboBox降噪方式.TextChanged, AddressOf 视频降噪方式变动事件
         '==============================================
         AddHandler UiCheckBox使用AviSynth.Click, Sub(s1, e1) 视频帧服务器页面操作变动事件(s1)
-        AddHandler UiComboBox选择avs文件.TextChanged, Sub(s1, e1) 视频帧服务器页面操作变动事件(s1)
+        AddHandler UiComboBox选择avs文件.SelectedIndexChanged, Sub(s1, e1) 视频帧服务器页面操作变动事件(s1)
         AddHandler UiCheckBox使用VapourSynth.Click, Sub(s1, e1) 视频帧服务器页面操作变动事件(s1)
-        AddHandler UiComboBox选择vpy文件.TextChanged, Sub(s1, e1) 视频帧服务器页面操作变动事件(s1)
+        AddHandler UiComboBox选择vpy文件.SelectedIndexChanged, Sub(s1, e1) 视频帧服务器页面操作变动事件(s1)
         '==============================================
         AddHandler UiComboBox音频编码器.TextChanged, AddressOf 音频编码参数变动事件
         AddHandler UiComboBox音频比特率.TextChanged, AddressOf 音频比特率参数变动事件
@@ -484,11 +484,15 @@ Public Class 界面_常规流程参数_V2
             Case UiComboBox选择avs文件.Name
                 If UiComboBox选择avs文件.SelectedIndex = 0 Then
                     Dim a As New OpenFileDialog With {.Filter = "avs|*.avs"}
-                    Dim b = a.ShowDialog
-                    If FileIO.FileSystem.FileExists(b) Then
-                        UiComboBox选择avs文件.Text = b
-                    Else
-                        UiComboBox选择avs文件.SelectedIndex = -1
+                    If a.ShowDialog = DialogResult.OK Then
+                        If FileIO.FileSystem.FileExists(a.FileName) Then
+                            UiComboBox选择avs文件.Text = a.FileName
+                            UiCheckBox使用AviSynth.Checked = True
+                            UiCheckBox使用VapourSynth.Checked = False
+                            UiComboBox选择vpy文件.Text = ""
+                        Else
+                            UiComboBox选择avs文件.SelectedIndex = -1
+                        End If
                     End If
                 End If
 
@@ -504,11 +508,15 @@ Public Class 界面_常规流程参数_V2
             Case UiComboBox选择vpy文件.Name
                 If UiComboBox选择vpy文件.SelectedIndex = 0 Then
                     Dim a As New OpenFileDialog With {.Filter = "vpy/py|*.vpy;*.py"}
-                    Dim b = a.ShowDialog
-                    If FileIO.FileSystem.FileExists(b) Then
-                        UiComboBox选择vpy文件.Text = b
-                    Else
-                        UiComboBox选择vpy文件.SelectedIndex = -1
+                    If a.ShowDialog = DialogResult.OK Then
+                        If FileIO.FileSystem.FileExists(a.FileName) Then
+                            UiComboBox选择vpy文件.Text = a.FileName
+                            UiCheckBox使用VapourSynth.Checked = True
+                            UiCheckBox使用AviSynth.Checked = False
+                            UiComboBox选择avs文件.Text = ""
+                        Else
+                            UiComboBox选择vpy文件.SelectedIndex = -1
+                        End If
                     End If
                 End If
 

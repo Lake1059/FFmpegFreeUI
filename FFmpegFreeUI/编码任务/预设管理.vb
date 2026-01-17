@@ -730,7 +730,7 @@ Public Class 预设管理
         If a.视频参数_视频帧服务器_使用AviSynth Then
             arg &= $"-i ""{Path.Combine(Path.GetDirectoryName(输入文件), Path.GetFileNameWithoutExtension(输入文件) & ".avs")}"" "
         ElseIf a.视频参数_视频帧服务器_使用VapourSynth Then
-            arg &= $"-f vapoursynth -i ""{Path.Combine(Path.GetDirectoryName(输入文件), Path.GetFileNameWithoutExtension(输入文件) & ".py")}"" "
+            arg &= $"-f vapoursynth -i ""{Path.Combine(Path.GetDirectoryName(输入文件), Path.GetFileNameWithoutExtension(输入文件) & Path.GetExtension(a.视频参数_视频帧服务器_vpy脚本文件))}"" "
         Else
             arg &= $"-i ""{输入文件}"" "
         End If
