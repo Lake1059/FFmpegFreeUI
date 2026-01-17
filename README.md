@@ -600,7 +600,7 @@ HostCall_AddMissionToQueueWith3fuiFile?.Invoke("3FUI 预设文件的路径", "�
 VB 语言：
 
 ```vb
-Public Shared Property HostCall_MediaStreamVisualSelector As Action(Of String, String, String, String)
+Public Shared Property HostCall_MediaStreamVisualSelector As Action(Of String, Object, Object, Object, String, String, String, String)
 Public Shared Sub SetHost_MediaStreamVisualSelector(action As Object)
 	HostCall_AddMissionToQueueWithArgs = CType(action, Action(Of String, Object, Object, Object, String, String, String, String))
 End Sub
