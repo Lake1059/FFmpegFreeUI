@@ -77,7 +77,7 @@ Public Class 视频编码器数据库
 .Pix_fmt = New List(Of String) From {"yuv420p", "yuvj420p", "yuv420p10le", "yuv420p12le", "yuv422p", "yuvj422p", "yuv422p10le", "yuv422p12le", "yuv444p", "yuvj444p", "yuv444p10le", "yuv444p12le"}
 })
         字典.Add("libsvtav1", New 视频编码器数据单片结构 With {
-.Preset = New List(Of String) From {"-2", "-1", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13"},
+.Preset = New List(Of String) From {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13"},
 .Profile = New List(Of String) From {"high", "main", "professional"},
 .Tune = New List(Of String) From {},
 .Pix_fmt = New List(Of String) From {"yuv420p", "yuv420p10le"}
