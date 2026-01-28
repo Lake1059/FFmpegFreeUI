@@ -89,7 +89,7 @@ Public Class 视频编码器数据库
 .Pix_fmt = New List(Of String) From {"nv12", "p010le", "qsv"}
 })
         字典.Add("av1_amf", New 视频编码器数据单片结构 With {
-.Preset = New List(Of String) From {"speed", "balanced", "quality", "high_quality"},
+.Preset = New List(Of String) From {"high_quality", "quality", "balanced", "speed"},
 .Profile = New List(Of String) From {"main"},
 .Tune = New List(Of String) From {""},
 .Pix_fmt = New List(Of String) From {"nv12", "yuv420p", "d3d11", "dxva2_vld", "p010le", "amf", "bgr0", "rgb0", "bgra", "argb", "rgba", "x2bgr10le", "rgbaf16le"}
