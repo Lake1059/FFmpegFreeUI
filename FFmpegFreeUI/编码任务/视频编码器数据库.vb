@@ -77,9 +77,9 @@ Public Class 视频编码器数据库
 .Pix_fmt = New List(Of String) From {"yuv420p", "yuv420p10le"}
 })
         字典.Add("av1_nvenc", New 视频编码器数据单片结构 With {
-.Preset = New List(Of String) From {"p7", "p6", "p5", "p4", "p3", "p2", "p1", "fast", "medium", "slow"},
+.Preset = New List(Of String) From {"p7", "p6", "p5", "p4", "p3", "p2", "p1"},
 .Profile = New List(Of String) From {"main", "high", "professional"},
-.Tune = New List(Of String) From {"hq", "ll", "lossless", "uhq", "ull"},
+.Tune = New List(Of String) From {"hq", "uhq", "ll", "ull", "lossless"},
 .Pix_fmt = New List(Of String) From {"yuv420p", "nv12", "p010le", "yuv444p", "p016le", "nv16", "p210le", "p216le", "yuv444p10msble", "yuv444p16le", "bgr0", "bgra", "rgb0", "rgba", "x2rgb10le", "x2bgr10le", "gbrp", "gbrp10msble", "gbrp16le", "cuda", "d3d11"}
 })
         字典.Add("av1_qsv", New 视频编码器数据单片结构 With {
@@ -109,7 +109,7 @@ Public Class 视频编码器数据库
         字典.Add("av1_vulkan", New 视频编码器数据单片结构 With {
 .Preset = New List(Of String) From {""},
 .Profile = New List(Of String) From {"main", "high", "professional"},
-.Tune = New List(Of String) From {"hq", "ll", "lossless", "ull"},
+.Tune = New List(Of String) From {"hq", "ll", "ull", "lossless"},
 .Pix_fmt = New List(Of String) From {"vulkan"}
 })
         字典.Add("avrp", New 视频编码器数据单片结构 With {
@@ -181,7 +181,7 @@ Public Class 视频编码器数据库
         字典.Add("libxeve", New 视频编码器数据单片结构 With {
 .Preset = New List(Of String) From {"placebo", "slow", "medium", "fast"},
 .Profile = New List(Of String) From {"baseline", "main"},
-.Tune = New List(Of String) From {"none", "psnr", "zerolatency"},
+.Tune = New List(Of String) From {"none", "zerolatency", "psnr"},
 .Pix_fmt = New List(Of String) From {"yuv420p", "yuv420p10le"}
 })
         字典.Add("ffv1", New 视频编码器数据单片结构 With {
@@ -241,7 +241,7 @@ Public Class 视频编码器数据库
         字典.Add("libx264", New 视频编码器数据单片结构 With {
 .Preset = New List(Of String) From {"ultrafast", "superfast", "veryfast", "faster", "fast", "medium", "slow", "slower", "veryslow"},
 .Profile = New List(Of String) From {"baseline", "main", "high", "high10", "high422", "high444"},
-.Tune = New List(Of String) From {"animation", "fastdecode", "film", "grain", "psnr", "ssim", "stillimage", "zerolatency"},
+.Tune = New List(Of String) From {"film", "animation", "grain", "stillimage", "psnr", "ssim", "fastdecode", "zerolatency"},
 .Pix_fmt = New List(Of String) From {"yuv420p", "yuvj420p", "yuv422p", "yuvj422p", "yuv444p", "yuvj444p", "nv12", "nv16", "nv21", "yuv420p10le", "yuv422p10le", "yuv444p10le", "nv20le", "gray", "gray10le"}
 })
         字典.Add("libx264rgb", New 视频编码器数据单片结构 With {
@@ -253,7 +253,7 @@ Public Class 视频编码器数据库
         字典.Add("h264_amf", New 视频编码器数据单片结构 With {
 .Preset = New List(Of String) From {"quality", "speed", "balanced"},
 .Profile = New List(Of String) From {"main", "high", "constrained_baseline", "constrained_high"},
-.Tune = New List(Of String) From {"high_quality", "lowlatency", "lowlatency_high_quality", "transcoding", "ultralowlatency", "webcam"},
+.Tune = New List(Of String) From {"transcoding", "ultralowlatency", "lowlatency", "webcam", "high_quality", "lowlatency_high_quality"},
 .Pix_fmt = New List(Of String) From {"nv12", "yuv420p", "d3d11", "dxva2_vld", "p010le", "amf", "bgr0", "rgb0", "bgra", "argb", "rgba", "x2bgr10le", "rgbaf16le"}
 })
         字典.Add("h264_d3d12va", New 视频编码器数据单片结构 With {
@@ -269,9 +269,9 @@ Public Class 视频编码器数据库
 .Pix_fmt = New List(Of String) From {"nv12", "yuv420p", "d3d11"}
 })
         字典.Add("h264_nvenc", New 视频编码器数据单片结构 With {
-.Preset = New List(Of String) From {"p7", "p6", "p5", "p4", "p3", "p2", "p1", "losslesshp", "lossless", "llhp", "llhq", "ll", "bd", "hq", "hp", "fast", "medium", "slow"},
+.Preset = New List(Of String) From {"p7", "p6", "p5", "p4", "p3", "p2", "p1"},
 .Profile = New List(Of String) From {"baseline", "main", "high", "high10", "high422", "high444p"},
-.Tune = New List(Of String) From {"hq", "ll", "lossless", "ull"},
+.Tune = New List(Of String) From {"hq", "ll", "ull", "lossless"},
 .Pix_fmt = New List(Of String) From {"yuv420p", "nv12", "p010le", "yuv444p", "p016le", "nv16", "p210le", "p216le", "yuv444p10msble", "yuv444p16le", "bgr0", "bgra", "rgb0", "rgba", "x2rgb10le", "x2bgr10le", "gbrp", "gbrp10msble", "gbrp16le", "cuda", "d3d11"}
 })
         字典.Add("h264_qsv", New 视频编码器数据单片结构 With {
@@ -289,7 +289,7 @@ Public Class 视频编码器数据库
         字典.Add("h264_vulkan", New 视频编码器数据单片结构 With {
 .Preset = New List(Of String) From {""},
 .Profile = New List(Of String) From {"constrained_baseline", "main", "high", "high444p"},
-.Tune = New List(Of String) From {"hq", "ll", "lossless", "ull"},
+.Tune = New List(Of String) From {"hq", "ll", "ull", "lossless"},
 .Pix_fmt = New List(Of String) From {"vulkan"}
 })
         字典.Add("hap", New 视频编码器数据单片结构 With {
@@ -307,13 +307,13 @@ Public Class 视频编码器数据库
         字典.Add("libx265", New 视频编码器数据单片结构 With {
 .Preset = New List(Of String) From {"ultrafast", "superfast", "veryfast", "faster", "fast", "medium", "slow", "slower", "veryslow"},
 .Profile = New List(Of String) From {"main", "mainstillpicture"},
-.Tune = New List(Of String) From {"animation", "fastdecode", "grain", "psnr", "ssim", "stillimage", "zerolatency"},
+.Tune = New List(Of String) From {"psnr", "ssim", "grain", "fastdecode", "zerolatency", "animation", "stillimage"},
 .Pix_fmt = New List(Of String) From {"yuv420p", "yuvj420p", "yuv422p", "yuvj422p", "yuv444p", "yuvj444p", "gbrp", "yuv420p10le", "yuv422p10le", "yuv444p10le", "gbrp10le", "yuv420p12le", "yuv422p12le", "yuv444p12le", "gbrp12le", "gray", "gray10le", "gray12le", "yuva420p", "yuva420p10le"}
 })
         字典.Add("hevc_amf", New 视频编码器数据单片结构 With {
 .Preset = New List(Of String) From {"speed", "balanced", "quality"},
 .Profile = New List(Of String) From {"main", "main10"},
-.Tune = New List(Of String) From {"high_quality", "lowlatency", "lowlatency_high_quality", "transcoding", "ultralowlatency", "webcam"},
+.Tune = New List(Of String) From {"transcoding", "ultralowlatency", "lowlatency", "webcam", "high_quality", "lowlatency_high_quality"},
 .Pix_fmt = New List(Of String) From {"nv12", "yuv420p", "d3d11", "dxva2_vld", "p010le", "amf", "bgr0", "rgb0", "bgra", "argb", "rgba", "x2bgr10le", "rgbaf16le"}
 })
         字典.Add("hevc_d3d12va", New 视频编码器数据单片结构 With {
@@ -329,9 +329,9 @@ Public Class 视频编码器数据库
 .Pix_fmt = New List(Of String) From {"nv12", "yuv420p", "d3d11"}
 })
         字典.Add("hevc_nvenc", New 视频编码器数据单片结构 With {
-.Preset = New List(Of String) From {"p7", "p6", "p5", "p4", "p3", "p2", "p1", "losslesshp", "lossless", "llhp", "llhq", "ll", "bd", "hq", "hp", "fast", "medium", "slow"},
+.Preset = New List(Of String) From {"p7", "p6", "p5", "p4", "p3", "p2", "p1"},
 .Profile = New List(Of String) From {"main", "main10", "rext", "mv"},
-.Tune = New List(Of String) From {"hq", "ll", "lossless", "uhq", "ull"},
+.Tune = New List(Of String) From {"hq", "uhq", "ll", "ull", "lossless"},
 .Pix_fmt = New List(Of String) From {"yuv420p", "nv12", "p010le", "yuv444p", "p016le", "nv16", "p210le", "p216le", "yuv444p10msble", "yuv444p16le", "bgr0", "bgra", "rgb0", "rgba", "x2rgb10le", "x2bgr10le", "gbrp", "gbrp10msble", "gbrp16le", "cuda", "d3d11"}
 })
         字典.Add("hevc_qsv", New 视频编码器数据单片结构 With {
@@ -349,7 +349,7 @@ Public Class 视频编码器数据库
         字典.Add("hevc_vulkan", New 视频编码器数据单片结构 With {
 .Preset = New List(Of String) From {""},
 .Profile = New List(Of String) From {"main", "main10", "rext"},
-.Tune = New List(Of String) From {"hq", "ll", "lossless", "ull"},
+.Tune = New List(Of String) From {"hq", "ll", "ull", "lossless"},
 .Pix_fmt = New List(Of String) From {"vulkan"}
 })
         字典.Add("huffyuv", New 视频编码器数据单片结构 With {
