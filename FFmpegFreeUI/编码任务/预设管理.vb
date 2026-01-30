@@ -268,6 +268,7 @@ Public Class 预设管理
         ui.UiTextBox之前参数.Text = a.自定义参数_之前参数
         ui.UiTextBox之后参数.Text = a.自定义参数_之后参数
         ui.UiTextBox最后参数.Text = a.自定义参数_最后参数
+        ui.UiTextBox完全自己写参数.Text = a.自定义参数_完全自己写
 
         ui.UiComboBox剪辑方法.SelectedIndex = a.剪辑区间_方法
         ui.UiTextBox快速剪辑入点.Text = a.剪辑区间_入点
