@@ -685,6 +685,12 @@ Public Class 预设管理
             Dim x1 = a.自定义参数_完全自己写
             x1 = x1.Replace("<InputFile>", 输入文件)
             x1 = x1.Replace("<OutputFile>", 输出文件)
+            x1 = x1.Replace("<InputFileWithOutExtension>", Path.Combine(Path.GetDirectoryName(输入文件), Path.GetFileNameWithoutExtension(输入文件)))
+            x1 = x1.Replace("<InputFilePath>", Path.GetDirectoryName(输入文件))
+            x1 = x1.Replace("<InputFileName>", Path.GetFileName(输入文件))
+            x1 = x1.Replace("<InputFileNameWithOutExtension>", Path.GetFileNameWithoutExtension(输入文件))
+            x1 = x1.Replace("<\InputFileWithOutExtension>", 将路径转换为FFmpeg滤镜接受的格式(Path.Combine(Path.GetDirectoryName(输入文件), Path.GetFileNameWithoutExtension(输入文件))))
+            x1 = x1.Replace("<\InputFilePath>", 将路径转换为FFmpeg滤镜接受的格式(Path.GetDirectoryName(输入文件)))
             Return x1
             Exit Function
         End If
@@ -1284,10 +1290,13 @@ Public Class 预设管理
 
         If a.自定义参数_最后参数 <> "" Then arg &= $"{a.自定义参数_最后参数} "
 
-        arg = arg.Replace("<InputFilePath>", 输入文件)
-        arg = arg.Replace("<InputFilePathWithOutExtension>", Path.Combine(Path.GetDirectoryName(输入文件), Path.GetFileNameWithoutExtension(输入文件)))
+        arg = arg.Replace("<InputFile>", 输入文件)
+        arg = arg.Replace("<InputFileWithOutExtension>", Path.Combine(Path.GetDirectoryName(输入文件), Path.GetFileNameWithoutExtension(输入文件)))
+        arg = arg.Replace("<InputFilePath>", Path.GetDirectoryName(输入文件))
         arg = arg.Replace("<InputFileName>", Path.GetFileName(输入文件))
         arg = arg.Replace("<InputFileNameWithOutExtension>", Path.GetFileNameWithoutExtension(输入文件))
+        arg = arg.Replace("<\InputFileWithOutExtension>", 将路径转换为FFmpeg滤镜接受的格式(Path.Combine(Path.GetDirectoryName(输入文件), Path.GetFileNameWithoutExtension(输入文件))))
+        arg = arg.Replace("<\InputFilePath>", 将路径转换为FFmpeg滤镜接受的格式(Path.GetDirectoryName(输入文件)))
 
         Return arg
     End Function
