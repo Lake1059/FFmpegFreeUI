@@ -268,6 +268,7 @@ Public Class 预设管理
         ui.UiTextBox之前参数.Text = a.自定义参数_之前参数
         ui.UiTextBox之后参数.Text = a.自定义参数_之后参数
         ui.UiTextBox最后参数.Text = a.自定义参数_最后参数
+        ui.UiTextBox完全自己写参数.Text = a.自定义参数_完全自己写
 
         ui.UiComboBox剪辑方法.SelectedIndex = a.剪辑区间_方法
         ui.UiTextBox快速剪辑入点.Text = a.剪辑区间_入点
@@ -685,6 +686,12 @@ Public Class 预设管理
             Dim x1 = a.自定义参数_完全自己写
             x1 = x1.Replace("<InputFile>", 输入文件)
             x1 = x1.Replace("<OutputFile>", 输出文件)
+            x1 = x1.Replace("<InputFileWithOutExtension>", Path.Combine(Path.GetDirectoryName(输入文件), Path.GetFileNameWithoutExtension(输入文件)))
+            x1 = x1.Replace("<InputFilePath>", Path.GetDirectoryName(输入文件))
+            x1 = x1.Replace("<InputFileName>", Path.GetFileName(输入文件))
+            x1 = x1.Replace("<InputFileNameWithOutExtension>", Path.GetFileNameWithoutExtension(输入文件))
+            x1 = x1.Replace("<\InputFileWithOutExtension>", 将路径转换为FFmpeg滤镜接受的格式(Path.Combine(Path.GetDirectoryName(输入文件), Path.GetFileNameWithoutExtension(输入文件))))
+            x1 = x1.Replace("<\InputFilePath>", 将路径转换为FFmpeg滤镜接受的格式(Path.GetDirectoryName(输入文件)))
             Return x1
             Exit Function
         End If
@@ -1015,7 +1022,7 @@ Public Class 预设管理
                 滤镜参数列表.Add($"filename='{将路径转换为FFmpeg滤镜接受的格式(输入文件)}'")
                 滤镜参数列表.Add($"stream_index={a.视频参数_烧录字幕_指定内嵌的流}")
             End If
-            If a.视频参数_烧录字幕_字体文件夹 <> "" Then 滤镜参数列表.Add($"fontsdir={将路径转换为FFmpeg滤镜接受的格式(a.视频参数_烧录字幕_字体文件夹)}")
+            If a.视频参数_烧录字幕_字体文件夹 <> "" Then 滤镜参数列表.Add($"fontsdir='{将路径转换为FFmpeg滤镜接受的格式(a.视频参数_烧录字幕_字体文件夹)}'")
             If a.视频参数_烧录字幕_基本样式_名称 <> "" Then 样式参数列表.Add($"FontName={a.视频参数_烧录字幕_基本样式_名称}")
             If a.视频参数_烧录字幕_基本样式_大小 <> 0 Then 样式参数列表.Add($"FontSize={a.视频参数_烧录字幕_基本样式_大小}")
             If a.视频参数_烧录字幕_基本样式_粗体 Then 样式参数列表.Add($"Bold=-1")
@@ -1284,10 +1291,13 @@ Public Class 预设管理
 
         If a.自定义参数_最后参数 <> "" Then arg &= $"{a.自定义参数_最后参数} "
 
-        arg = arg.Replace("<InputFilePath>", 输入文件)
-        arg = arg.Replace("<InputFilePathWithOutExtension>", Path.Combine(Path.GetDirectoryName(输入文件), Path.GetFileNameWithoutExtension(输入文件)))
+        arg = arg.Replace("<InputFile>", 输入文件)
+        arg = arg.Replace("<InputFileWithOutExtension>", Path.Combine(Path.GetDirectoryName(输入文件), Path.GetFileNameWithoutExtension(输入文件)))
+        arg = arg.Replace("<InputFilePath>", Path.GetDirectoryName(输入文件))
         arg = arg.Replace("<InputFileName>", Path.GetFileName(输入文件))
         arg = arg.Replace("<InputFileNameWithOutExtension>", Path.GetFileNameWithoutExtension(输入文件))
+        arg = arg.Replace("<\InputFileWithOutExtension>", 将路径转换为FFmpeg滤镜接受的格式(Path.Combine(Path.GetDirectoryName(输入文件), Path.GetFileNameWithoutExtension(输入文件))))
+        arg = arg.Replace("<\InputFilePath>", 将路径转换为FFmpeg滤镜接受的格式(Path.GetDirectoryName(输入文件)))
 
         Return arg
     End Function

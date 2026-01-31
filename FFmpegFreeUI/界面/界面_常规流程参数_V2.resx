@@ -127,17 +127,26 @@ libsvtav1 需要使用巨量内存，极限分辨率 16384x8704，超过 8K 的�
   <data name="TextBox1.Text" xml:space="preserve">
     <value>通配字符串区分大小写，请注意填写；不会对路径增加引号，请自行处理
 
-&lt;InputFilePath&gt;
+&lt;InputFile&gt;
 表示输入文件完整路径
 
-&lt;InputFilePathWithOutExtension&gt;
+&lt;InputFileWithOutExtension&gt;
 表示不包含后缀的输入文件路径，注意点号也是算在后缀里的
+
+&lt;InputFilePath&gt;
+表示输入文件所在文件夹路径
 
 &lt;InputFileName&gt;
 表示输入文件名，不包含其路径
 
 &lt;InputFileNameWithOutExtension&gt;
 表示不包含后缀的输入文件名，也不包含其路径
+
+&lt;\InputFileWithOutExtension&gt;
+&lt;InputFileWithOutExtension&gt;的转义版本，可用于滤镜
+
+&lt;\InputFilePath&gt;
+&lt;InputFilePath&gt;的转义版本，可用于滤镜
 
 实际上这些字符串写在其他任何地方都能生效，不过没必要那样做就是了</value>
   </data>
