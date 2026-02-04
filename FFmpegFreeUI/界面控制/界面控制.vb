@@ -21,6 +21,7 @@ Public Class 界面控制
         绑定提示板.绑定参数面板的提示板(Form1.常规流程参数页面)
         Form1.TabPage媒体信息.Controls.Add(Form1.媒体信息页面)
         Form1.TabPage播放器.Controls.Add(Form1.播放器页面)
+        'Form1.TabPage画质评测.Controls.Add(Form1.画质评测页面)
         Form1.TabPage混流.Controls.Add(Form1.混流页面)
         Form1.TabPage合并.Controls.Add(Form1.合并页面)
         Form1.TabPage设置.Controls.Add(Form1.设置页面)
@@ -108,6 +109,10 @@ Public Class 界面控制
 
             Case 选项卡.IsEqual(Form1.TabPage播放器)
                 Form1.Panel顶部视觉修正区域_二级选项卡.BackColor = Form1.播放器页面.Panel1.BackColor
+                Form1.Panel顶部视觉修正区域_二级选项卡.Dock = DockStyle.Fill
+
+            Case 选项卡.IsEqual(Form1.TabPage画质评测)
+                Form1.Panel顶部视觉修正区域_二级选项卡.BackColor = Form1.画质评测页面.Panel1.BackColor
                 Form1.Panel顶部视觉修正区域_二级选项卡.Dock = DockStyle.Fill
 
             Case 选项卡.IsEqual(Form1.TabPage媒体信息)

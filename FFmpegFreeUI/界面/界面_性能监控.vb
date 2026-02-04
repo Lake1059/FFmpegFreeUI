@@ -6,7 +6,7 @@
         校准界面()
         FlowLayoutPanel1.Controls.Clear()
         UiRoundProcess物理内存.Value = 0
-        UiRoundProcess虚拟内存.Value = 0
+        'UiRoundProcess虚拟内存.Value = 0
         UiRoundProcess解码核心.Value = 0
         UiRoundProcess编码核心.Value = 0
         UiRoundProcessPCIE带宽.Value = 0
@@ -27,8 +27,8 @@
 
         UiRoundProcess物理内存.Inner = 30 * Form1.DPI
         UiRoundProcess物理内存.Outer = 40 * Form1.DPI
-        UiRoundProcess虚拟内存.Inner = 30 * Form1.DPI
-        UiRoundProcess虚拟内存.Outer = 40 * Form1.DPI
+        'UiRoundProcess虚拟内存.Inner = 30 * Form1.DPI
+        'UiRoundProcess虚拟内存.Outer = 40 * Form1.DPI
 
         UiRoundProcess解码核心.Inner = 30 * Form1.DPI
         UiRoundProcess解码核心.Outer = 40 * Form1.DPI

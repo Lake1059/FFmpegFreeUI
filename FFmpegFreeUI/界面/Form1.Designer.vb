@@ -91,6 +91,7 @@ Partial Class Form1
         Panel顶部视觉修正区域 = New Panel()
         Panel顶部视觉修正区域_二级选项卡 = New Panel()
         Panel顶部视觉修正区域_一级选项卡 = New Panel()
+        TabPage画质评测 = New TabPage()
         UiTabControlMenu1.SuspendLayout()
         TabPage编码队列.SuspendLayout()
         Panel输出面板.SuspendLayout()
@@ -118,6 +119,7 @@ Partial Class Form1
         UiTabControlMenu1.Controls.Add(TabPage参数面板)
         UiTabControlMenu1.Controls.Add(TabPage媒体信息)
         UiTabControlMenu1.Controls.Add(TabPage播放器)
+        UiTabControlMenu1.Controls.Add(TabPage画质评测)
         UiTabControlMenu1.Controls.Add(TabPage混流)
         UiTabControlMenu1.Controls.Add(TabPage合并)
         UiTabControlMenu1.Controls.Add(TabPage性能监控)
@@ -1045,6 +1047,15 @@ Partial Class Form1
         Panel顶部视觉修正区域_一级选项卡.Size = New Size(152, 10)
         Panel顶部视觉修正区域_一级选项卡.TabIndex = 0
         ' 
+        ' TabPage画质评测
+        ' 
+        TabPage画质评测.BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
+        TabPage画质评测.Location = New Point(151, 0)
+        TabPage画质评测.Name = "TabPage画质评测"
+        TabPage画质评测.Size = New Size(1033, 651)
+        TabPage画质评测.TabIndex = 27
+        TabPage画质评测.Text = "画质评测"
+        ' 
         ' Form1
         ' 
         AutoScaleDimensions = New SizeF(96F, 96F)
@@ -1150,5 +1161,6 @@ Partial Class Form1
     Friend WithEvents TabPage播放器 As TabPage
     Friend WithEvents LinkLabel向ffmpeg发送消息 As LinkLabel
     Friend WithEvents Label1 As Label
+    Friend WithEvents TabPage画质评测 As TabPage
 
 End Class

@@ -5938,6 +5938,7 @@ Partial Class 界面_常规流程参数_V2
         TextBox1.Multiline = True
         TextBox1.Name = "TextBox1"
         TextBox1.ReadOnly = True
+        TextBox1.ScrollBars = ScrollBars.Vertical
         TextBox1.Size = New Size(817, 424)
         TextBox1.TabIndex = 79
         TextBox1.Text = resources.GetString("TextBox1.Text")
@@ -6866,7 +6867,7 @@ Partial Class 界面_常规流程参数_V2
         Panel64.Controls.Add(Label148)
         Panel64.Controls.Add(UiComboBox元数据选项)
         Panel64.Dock = DockStyle.Top
-        Panel64.Location = New Point(0, 454)
+        Panel64.Location = New Point(0, 445)
         Panel64.Name = "Panel64"
         Panel64.Padding = New Padding(21, 10, 20, 0)
         Panel64.Size = New Size(899, 40)
@@ -7014,7 +7015,7 @@ Partial Class 界面_常规流程参数_V2
         Label111.AutoSize = True
         Label111.Dock = DockStyle.Top
         Label111.Font = New Font("微软雅黑", 11F)
-        Label111.Location = New Point(0, 419)
+        Label111.Location = New Point(0, 410)
         Label111.Name = "Label111"
         Label111.Padding = New Padding(16, 15, 0, 0)
         Label111.Size = New Size(172, 35)
@@ -7027,7 +7028,7 @@ Partial Class 界面_常规流程参数_V2
         Label165.Dock = DockStyle.Top
         Label165.Font = New Font("微软雅黑", 9F)
         Label165.ForeColor = Color.Gray
-        Label165.Location = New Point(0, 380)
+        Label165.Location = New Point(0, 371)
         Label165.Name = "Label165"
         Label165.Padding = New Padding(16, 5, 0, 0)
         Label165.Size = New Size(359, 39)
@@ -7042,7 +7043,7 @@ Partial Class 界面_常规流程参数_V2
         Panel91.Controls.Add(UiCheckBox自动混流ASS)
         Panel91.Controls.Add(UiCheckBox自动混流SRT)
         Panel91.Dock = DockStyle.Top
-        Panel91.Location = New Point(0, 340)
+        Panel91.Location = New Point(0, 331)
         Panel91.Name = "Panel91"
         Panel91.Padding = New Padding(18, 10, 20, 0)
         Panel91.Size = New Size(899, 40)
@@ -7121,7 +7122,7 @@ Partial Class 界面_常规流程参数_V2
         Label164.AutoSize = True
         Label164.Dock = DockStyle.Top
         Label164.Font = New Font("微软雅黑", 11F)
-        Label164.Location = New Point(0, 305)
+        Label164.Location = New Point(0, 296)
         Label164.Name = "Label164"
         Label164.Padding = New Padding(16, 15, 0, 0)
         Label164.Size = New Size(115, 35)
@@ -7133,7 +7134,7 @@ Partial Class 界面_常规流程参数_V2
         Panel97.Controls.Add(Label107)
         Panel97.Controls.Add(UiButton可视化流选择器)
         Panel97.Dock = DockStyle.Top
-        Panel97.Location = New Point(0, 265)
+        Panel97.Location = New Point(0, 256)
         Panel97.Name = "Panel97"
         Panel97.Padding = New Padding(21, 10, 20, 0)
         Panel97.Size = New Size(899, 40)
@@ -7186,7 +7187,7 @@ Partial Class 界面_常规流程参数_V2
         Panel47.Controls.Add(UiCheckBox保留其他字幕流)
         Panel47.Controls.Add(Label184)
         Panel47.Dock = DockStyle.Top
-        Panel47.Location = New Point(0, 225)
+        Panel47.Location = New Point(0, 216)
         Panel47.Name = "Panel47"
         Panel47.Padding = New Padding(21, 10, 20, 0)
         Panel47.Size = New Size(899, 40)
@@ -7222,7 +7223,7 @@ Partial Class 界面_常规流程参数_V2
         Panel63.Controls.Add(Label168)
         Panel63.Controls.Add(UiTextBox使用哪些文件的哪些内嵌字幕)
         Panel63.Dock = DockStyle.Top
-        Panel63.Location = New Point(0, 185)
+        Panel63.Location = New Point(0, 176)
         Panel63.Name = "Panel63"
         Panel63.Padding = New Padding(21, 10, 20, 0)
         Panel63.Size = New Size(899, 40)
@@ -7323,7 +7324,7 @@ Partial Class 界面_常规流程参数_V2
         Label112.AutoSize = True
         Label112.Dock = DockStyle.Top
         Label112.Font = New Font("微软雅黑", 11F)
-        Label112.Location = New Point(0, 150)
+        Label112.Location = New Point(0, 141)
         Label112.Name = "Label112"
         Label112.Padding = New Padding(16, 15, 0, 0)
         Label112.Size = New Size(211, 35)
@@ -7337,7 +7338,7 @@ Partial Class 界面_常规流程参数_V2
         Panel61.Controls.Add(Label133)
         Panel61.Controls.Add(UiTextBox将音频参数用于这些流)
         Panel61.Dock = DockStyle.Top
-        Panel61.Location = New Point(0, 110)
+        Panel61.Location = New Point(0, 101)
         Panel61.Name = "Panel61"
         Panel61.Padding = New Padding(21, 10, 20, 0)
         Panel61.Size = New Size(899, 40)
@@ -7408,7 +7409,7 @@ Partial Class 界面_常规流程参数_V2
         Label113.AutoSize = True
         Label113.Dock = DockStyle.Top
         Label113.Font = New Font("微软雅黑", 11F)
-        Label113.Location = New Point(0, 75)
+        Label113.Location = New Point(0, 66)
         Label113.Name = "Label113"
         Label113.Padding = New Padding(16, 15, 0, 0)
         Label113.Size = New Size(257, 35)
@@ -7422,7 +7423,7 @@ Partial Class 界面_常规流程参数_V2
         Panel62.Controls.Add(Label132)
         Panel62.Controls.Add(UiTextBox将视频参数用于这些流)
         Panel62.Dock = DockStyle.Top
-        Panel62.Location = New Point(0, 35)
+        Panel62.Location = New Point(0, 26)
         Panel62.Name = "Panel62"
         Panel62.Padding = New Padding(21, 10, 20, 0)
         Panel62.Size = New Size(899, 40)
@@ -7495,8 +7496,8 @@ Partial Class 界面_常规流程参数_V2
         Label114.Font = New Font("微软雅黑", 11F)
         Label114.Location = New Point(0, 0)
         Label114.Name = "Label114"
-        Label114.Padding = New Padding(16, 15, 0, 0)
-        Label114.Size = New Size(257, 35)
+        Label114.Padding = New Padding(16, 6, 0, 0)
+        Label114.Size = New Size(257, 26)
         Label114.TabIndex = 23
         Label114.Text = "将视频参数应用于哪些文件和流 (v)"
         ' 

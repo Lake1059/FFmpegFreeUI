@@ -29,7 +29,6 @@ Partial Class 界面_性能监控
         FlowLayoutPanel1 = New FlowLayoutPanel()
         Panel17 = New Panel()
         Panel19 = New Panel()
-        UiRoundProcess虚拟内存 = New Sunny.UI.UIRoundProcess()
         Label22 = New Label()
         Label21 = New Label()
         Panel18 = New Panel()
@@ -163,7 +162,6 @@ Partial Class 界面_性能监控
         ' Panel19
         ' 
         Panel19.BackColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
-        Panel19.Controls.Add(UiRoundProcess虚拟内存)
         Panel19.Controls.Add(Label22)
         Panel19.Dock = DockStyle.Fill
         Panel19.Location = New Point(192, 20)
@@ -171,35 +169,16 @@ Partial Class 界面_性能监控
         Panel19.Size = New Size(160, 150)
         Panel19.TabIndex = 3
         ' 
-        ' UiRoundProcess虚拟内存
-        ' 
-        UiRoundProcess虚拟内存.DecimalPlaces = 0
-        UiRoundProcess虚拟内存.Dock = DockStyle.Fill
-        UiRoundProcess虚拟内存.Font = New Font("微软雅黑", 10F, FontStyle.Bold)
-        UiRoundProcess虚拟内存.ForeColor = Color.Silver
-        UiRoundProcess虚拟内存.ForeColor2 = Color.Black
-        UiRoundProcess虚拟内存.Location = New Point(0, 30)
-        UiRoundProcess虚拟内存.MinimumSize = New Size(1, 1)
-        UiRoundProcess虚拟内存.Name = "UiRoundProcess虚拟内存"
-        UiRoundProcess虚拟内存.Outer = 40
-        UiRoundProcess虚拟内存.ProcessBackColor = Color.DimGray
-        UiRoundProcess虚拟内存.ProcessColor = Color.FromArgb(CByte(0), CByte(192), CByte(0))
-        UiRoundProcess虚拟内存.ShowProcess = True
-        UiRoundProcess虚拟内存.Size = New Size(160, 120)
-        UiRoundProcess虚拟内存.TabIndex = 1
-        UiRoundProcess虚拟内存.Text = "50%"
-        UiRoundProcess虚拟内存.Value = 50
-        ' 
         ' Label22
         ' 
-        Label22.AutoSize = True
-        Label22.Dock = DockStyle.Top
+        Label22.Dock = DockStyle.Fill
         Label22.Location = New Point(0, 0)
         Label22.Name = "Label22"
-        Label22.Padding = New Padding(10, 10, 0, 0)
-        Label22.Size = New Size(75, 30)
+        Label22.Padding = New Padding(10)
+        Label22.Size = New Size(160, 150)
         Label22.TabIndex = 0
-        Label22.Text = "虚拟已用"
+        Label22.Text = "LibreHardwareMonitor 移除了虚拟内存的获取，希望未来能加回来"
+        Label22.TextAlign = ContentAlignment.MiddleCenter
         ' 
         ' Label21
         ' 
@@ -773,10 +752,10 @@ Partial Class 界面_性能监控
         LinkLabel1.Location = New Point(0, 0)
         LinkLabel1.Name = "LinkLabel1"
         LinkLabel1.Padding = New Padding(16, 20, 0, 0)
-        LinkLabel1.Size = New Size(383, 44)
+        LinkLabel1.Size = New Size(505, 44)
         LinkLabel1.TabIndex = 127
         LinkLabel1.TabStop = True
-        LinkLabel1.Text = "NVIDIA RTX Pro Max Ultra 9000 Ti 1024G"
+        LinkLabel1.Text = "NVIDIA RTX Pro Max Ultra 9000 Ti 1024G (Just kidding)"
         ' 
         ' 界面_性能监控
         ' 
@@ -797,7 +776,6 @@ Partial Class 界面_性能监控
         Panel15.ResumeLayout(False)
         Panel17.ResumeLayout(False)
         Panel19.ResumeLayout(False)
-        Panel19.PerformLayout()
         Panel18.ResumeLayout(False)
         Panel18.PerformLayout()
         Panel3.ResumeLayout(False)
@@ -871,7 +849,6 @@ Partial Class 界面_性能监控
     Friend WithEvents UiRoundProcess物理内存 As Sunny.UI.UIRoundProcess
     Friend WithEvents Label20 As Label
     Friend WithEvents Panel19 As Panel
-    Friend WithEvents UiRoundProcess虚拟内存 As Sunny.UI.UIRoundProcess
     Friend WithEvents Label22 As Label
     Friend WithEvents Label21 As Label
     Friend WithEvents Label19 As Label
