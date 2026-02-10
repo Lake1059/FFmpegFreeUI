@@ -288,7 +288,7 @@ jx1:
                 End If
             End If
 
-            If e.Data.Contains("="c) Then
+            If e.Data.StartsWith("frame=") OrElse e.Data.StartsWith("size=") Then
                 If (Now.TimeOfDay - 上次刷新界面的时间戳).TotalSeconds >= 1 Then
                     在实时输出中提取数据(e.Data)
                     处理捕获的数据并添加到刷新队列()

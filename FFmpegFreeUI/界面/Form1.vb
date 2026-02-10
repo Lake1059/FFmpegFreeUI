@@ -12,6 +12,7 @@ Public Class Form1
     Public 常规流程参数页面 As New 界面_常规流程参数_V2 With {.Dock = DockStyle.Fill}
     Public 媒体信息页面 As New 界面_媒体信息 With {.Dock = DockStyle.Fill}
     Public 播放器页面 As New 界面_播放器 With {.Dock = DockStyle.Fill}
+    Public 画质评测页面 As New 界面_画质评测 With {.Dock = DockStyle.Fill}
     Public 混流页面 As New 界面_混流 With {.Dock = DockStyle.Fill}
     Public 合并页面 As New 界面_合并 With {.Dock = DockStyle.Fill}
     Public 设置页面 As New 界面_设置 With {.Dock = DockStyle.Fill}
@@ -35,8 +36,8 @@ Public Class Form1
         'End If
 
         Dim 版本号 = String.Join(".", Application.ProductVersion.Split("."c).Take(3)).Split("+"c)(0)
-        Me.Text = $"FFmpegFreeUI {版本号}"
-        起始页面.Label主标题.Text = $"FFmpegFreeUI 2026 春节特别更新 {版本号}"
+        Me.Text = $"FFmpegFreeUI {版本号} dev1"
+        起始页面.Label主标题.Text = $"FFmpegFreeUI 2026 春节后更新预览 {版本号} dev1"
 
         视频编码器数据库.初始化()
         界面控制.初始化()

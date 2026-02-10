@@ -25,7 +25,7 @@ Namespace My.Resources
     <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "18.0.0.0"),  _
      Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
      Global.System.Runtime.CompilerServices.CompilerGeneratedAttribute()>  _
-    Friend Class Resource1
+    Public Class Resource1
         
         Private Shared resourceMan As Global.System.Resources.ResourceManager
         
@@ -40,7 +40,7 @@ Namespace My.Resources
         '''  返回此类使用的缓存的 ResourceManager 实例。
         '''</summary>
         <Global.System.ComponentModel.EditorBrowsableAttribute(Global.System.ComponentModel.EditorBrowsableState.Advanced)>  _
-        Friend Shared ReadOnly Property ResourceManager() As Global.System.Resources.ResourceManager
+        Public Shared ReadOnly Property ResourceManager() As Global.System.Resources.ResourceManager
             Get
                 If Object.ReferenceEquals(resourceMan, Nothing) Then
                     Dim temp As Global.System.Resources.ResourceManager = New Global.System.Resources.ResourceManager("FFmpegFreeUI.Resource1", GetType(Resource1).Assembly)
@@ -55,7 +55,7 @@ Namespace My.Resources
         '''  使用此强类型资源类的所有资源查找执行重写。
         '''</summary>
         <Global.System.ComponentModel.EditorBrowsableAttribute(Global.System.ComponentModel.EditorBrowsableState.Advanced)>  _
-        Friend Shared Property Culture() As Global.System.Globalization.CultureInfo
+        Public Shared Property Culture() As Global.System.Globalization.CultureInfo
             Get
                 Return resourceCulture
             End Get
@@ -67,7 +67,7 @@ Namespace My.Resources
         '''<summary>
         '''  查找 System.Drawing.Bitmap 类型的本地化资源。
         '''</summary>
-        Friend Shared ReadOnly Property AppIcon() As System.Drawing.Bitmap
+        Public Shared ReadOnly Property AppIcon() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("AppIcon", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
@@ -77,7 +77,7 @@ Namespace My.Resources
         '''<summary>
         '''  查找类似于 System.IO.MemoryStream 的 System.IO.UnmanagedMemoryStream 类型的本地化资源。
         '''</summary>
-        Friend Shared ReadOnly Property 完成() As System.IO.UnmanagedMemoryStream
+        Public Shared ReadOnly Property 完成() As System.IO.UnmanagedMemoryStream
             Get
                 Return ResourceManager.GetStream("完成", resourceCulture)
             End Get
@@ -85,10 +85,15 @@ Namespace My.Resources
         
         '''<summary>
         '''  查找类似 易相逢|#FBE4FF
-        '''爱发电用户_3c3a0
-        '''爱发电用户_Ck8g 的本地化字符串。
+        '''夜枫|#CCA4A3
+        '''爱发电用户_Ck8g
+        '''David King
+        '''Daydreamer|#037DEC
+        '''爱发电用户_217cb
+        '''BAILING (学生)|#905BD9
+        '''zhengjun638504@163.com 的本地化字符串。
         '''</summary>
-        Friend Shared ReadOnly Property 支持者名单() As String
+        Public Shared ReadOnly Property 支持者名单() As String
             Get
                 Return ResourceManager.GetString("支持者名单", resourceCulture)
             End Get
@@ -104,7 +109,7 @@ Namespace My.Resources
         '''Uyanide (I use arch btw) (首席二次元)|#89B4FA
         '''Simlalsy (压片的)|#E3E0F9 的本地化字符串。
         '''</summary>
-        Friend Shared ReadOnly Property 支持者名单_赠送() As String
+        Public Shared ReadOnly Property 支持者名单_赠送() As String
             Get
                 Return ResourceManager.GetString("支持者名单_赠送", resourceCulture)
             End Get
@@ -121,7 +126,7 @@ Namespace My.Resources
         '''F3  --&gt;  上移
         '''F4  --&gt;  下移 的本地化字符串。
         '''</summary>
-        Friend Shared ReadOnly Property 编码队列快捷键() As String
+        Public Shared ReadOnly Property 编码队列快捷键() As String
             Get
                 Return ResourceManager.GetString("编码队列快捷键", resourceCulture)
             End Get
@@ -139,7 +144,7 @@ Namespace My.Resources
         '''  &quot;Label.afdian&quot;: &quot;Sponsor (afdian)&quot;,
         '''  &quot;Label.bilibili&quot;:  [字符串的其余部分被截断]&quot;; 的本地化字符串。
         '''</summary>
-        Friend Shared ReadOnly Property 语言_en() As String
+        Public Shared ReadOnly Property 语言_en() As String
             Get
                 Return ResourceManager.GetString("语言_en", resourceCulture)
             End Get
@@ -159,7 +164,7 @@ Namespace My.Resources
         '''  &quot;Label.OfficialWebsite1&quot;: &quot;官网 ffmpegfreeui.top&quot;,
         '''  &quot;Label.OfficialWebsite2&quot;: &quot;官网 3fui.top [字符串的其余部分被截断]&quot;; 的本地化字符串。
         '''</summary>
-        Friend Shared ReadOnly Property 语言_zh() As String
+        Public Shared ReadOnly Property 语言_zh() As String
             Get
                 Return ResourceManager.GetString("语言_zh", resourceCulture)
             End Get
@@ -168,7 +173,7 @@ Namespace My.Resources
         '''<summary>
         '''  查找类似于 System.IO.MemoryStream 的 System.IO.UnmanagedMemoryStream 类型的本地化资源。
         '''</summary>
-        Friend Shared ReadOnly Property 错误() As System.IO.UnmanagedMemoryStream
+        Public Shared ReadOnly Property 错误() As System.IO.UnmanagedMemoryStream
             Get
                 Return ResourceManager.GetStream("错误", resourceCulture)
             End Get

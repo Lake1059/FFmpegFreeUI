@@ -130,7 +130,7 @@ Public Class 性能统计
                             Case SensorType.Temperature
                                 Select Case True
                                     Case sensor.Name.Contains("Core")
-                                        gpuInfo.核心温度 = sensor.Value.GetValueOrDefault
+                                        gpuInfo.核心温度 = Format(sensor.Value.GetValueOrDefault, "0")
                                 End Select
 
                             Case SensorType.Fan
@@ -154,23 +154,25 @@ Public Class 性能统计
                     For Each sensor In hardware.Sensors
                         Select Case sensor.SensorType
                             Case SensorType.Data
+                                'Debug.WriteLine($"[Memory Data] {sensor.Name}: {sensor.Value.GetValueOrDefault()}")
                                 Select Case sensor.Name
                                     Case "Memory Used"
                                         memInfo.物理内存已用MB = sensor.Value.GetValueOrDefault() * 1024
                                     Case "Memory Available"
                                         memInfo.物理内存可用MB = sensor.Value.GetValueOrDefault() * 1024
-                                    Case "Virtual Memory Used"
+                                    Case "Virtual Memory Used", "Committed Memory Used"
                                         memInfo.虚拟内存已用MB = sensor.Value.GetValueOrDefault() * 1024
-                                    Case "Virtual Memory Available"
+                                    Case "Virtual Memory Available", "Committed Memory Available"
                                         memInfo.虚拟内存可用MB = sensor.Value.GetValueOrDefault() * 1024
                                     Case Else
                                         Debug.WriteLine(sensor.Name)
                                 End Select
                             Case SensorType.Load
+                                'Debug.WriteLine($"[Memory Load] {sensor.Name}: {sensor.Value.GetValueOrDefault()}")
                                 Select Case sensor.Name
                                     Case "Memory"
                                         memInfo.物理内存使用率 = 转换最大值100的百分数(sensor.Value.GetValueOrDefault())
-                                    Case "Virtual Memory"
+                                    Case "Virtual Memory", "Committed Memory"
                                         memInfo.虚拟内存使用率 = 转换最大值100的百分数(sensor.Value.GetValueOrDefault())
                                     Case Else
                                         Debug.WriteLine(sensor.Name)
@@ -243,9 +245,9 @@ Public Class 性能统计
         Form1.性能监控页面.UiRoundProcess物理内存.Value = 内存信息.物理内存使用率
         Form1.性能监控页面.UiRoundProcess物理内存.ProcessColor = 设置GPU占用的颜色(内存信息.物理内存使用率)
         Form1.性能监控页面.Label20.Text = $"物理已用 {Format(内存信息.物理内存已用MB / 1024, "0.0")}G"
-        Form1.性能监控页面.UiRoundProcess虚拟内存.Value = 内存信息.虚拟内存使用率
-        Form1.性能监控页面.UiRoundProcess虚拟内存.ProcessColor = 设置GPU占用的颜色(内存信息.虚拟内存使用率)
-        Form1.性能监控页面.Label22.Text = $"已提交 {Format(内存信息.虚拟内存已用MB / 1024, "0.0")}G"
+        'Form1.性能监控页面.UiRoundProcess虚拟内存.Value = 内存信息.虚拟内存使用率
+        'Form1.性能监控页面.UiRoundProcess虚拟内存.ProcessColor = 设置GPU占用的颜色(内存信息.虚拟内存使用率)
+        'Form1.性能监控页面.Label22.Text = $"已提交 {Format(内存信息.虚拟内存已用MB / 1024, "0.0")}G"
 
         If 显卡信息表.Count = 0 Then Exit Sub
         If Not 显卡信息表.ContainsKey(Form1.性能监控页面.LinkLabel1.Text) Then Form1.性能监控页面.LinkLabel1.Text = 显卡信息表.Keys(0)

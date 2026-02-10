@@ -117,37 +117,4 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Label154.Text" xml:space="preserve">
-    <value>友情提醒：不要把你的珍贵回忆存成 avif ，因为 AV1 的细节涂抹问题，重要文件请优先考虑 webp
-使用视频编码 libaom-av1、libsvtav1、librav1e 输出到 .avif 文件，预设和质量正常设定即可
-推荐用后两者，其涂抹相比前者更易接受，libsvtav1 当 crf=12 时很难看出
-libsvtav1 需要使用巨量内存，极限分辨率 16384x8704，超过 8K 的分辨率必须使用 5 及以下的预设
-</value>
-  </data>
-  <data name="TextBox1.Text" xml:space="preserve">
-    <value>通配字符串区分大小写，请注意填写；不会对路径增加引号，请自行处理
-
-&lt;InputFile&gt;
-表示输入文件完整路径
-
-&lt;InputFileWithOutExtension&gt;
-表示不包含后缀的输入文件路径，注意点号也是算在后缀里的
-
-&lt;InputFilePath&gt;
-表示输入文件所在文件夹路径
-
-&lt;InputFileName&gt;
-表示输入文件名，不包含其路径
-
-&lt;InputFileNameWithOutExtension&gt;
-表示不包含后缀的输入文件名，也不包含其路径
-
-&lt;\InputFileWithOutExtension&gt;
-&lt;InputFileWithOutExtension&gt;的转义版本，可用于滤镜
-
-&lt;\InputFilePath&gt;
-&lt;InputFilePath&gt;的转义版本，可用于滤镜
-
-实际上这些字符串写在其他任何地方都能生效，不过没必要那样做就是了</value>
-  </data>
 </root>
