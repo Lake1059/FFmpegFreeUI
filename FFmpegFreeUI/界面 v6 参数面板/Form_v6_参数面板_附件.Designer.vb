@@ -1,0 +1,271 @@
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+Partial Class Form_v6_参数面板_附件
+    Inherits System.Windows.Forms.Form
+
+    'Form 重写 Dispose，以清理组件列表。
+    <System.Diagnostics.DebuggerNonUserCode()> _
+    Protected Overrides Sub Dispose(ByVal disposing As Boolean)
+        Try
+            If disposing AndAlso components IsNot Nothing Then
+                components.Dispose()
+            End If
+        Finally
+            MyBase.Dispose(disposing)
+        End Try
+    End Sub
+
+    'Windows 窗体设计器所必需的
+    Private components As System.ComponentModel.IContainer
+
+    '注意: 以下过程是 Windows 窗体设计器所必需的
+    '可以使用 Windows 窗体设计器修改它。  
+    '不要使用代码编辑器修改它。
+    <System.Diagnostics.DebuggerStepThrough()> _
+    Private Sub InitializeComponent()
+        Dim ListColumn1 As LakeUI.UltraDetailListView.ListColumn = New LakeUI.UltraDetailListView.ListColumn()
+        Dim ListColumn2 As LakeUI.UltraDetailListView.ListColumn = New LakeUI.UltraDetailListView.ListColumn()
+        ModernPanel1 = New LakeUI.ModernPanel()
+        UltraDetailListView1 = New LakeUI.UltraDetailListView()
+        Panel1 = New Panel()
+        ModernButton3 = New LakeUI.ModernButton()
+        JustEmptyControl4 = New LakeUI.JustEmptyControl()
+        ModernButton2 = New LakeUI.ModernButton()
+        JustEmptyControl3 = New LakeUI.JustEmptyControl()
+        ModernButton1 = New LakeUI.ModernButton()
+        JustEmptyControl2 = New LakeUI.JustEmptyControl()
+        ModernButton4 = New LakeUI.ModernButton()
+        JustEmptyControl1 = New LakeUI.JustEmptyControl()
+        ModernComboBox1 = New LakeUI.ModernComboBox()
+        HtmlColorLabel1 = New LakeUI.HtmlColorLabel()
+        ModernPanel1.SuspendLayout()
+        Panel1.SuspendLayout()
+        SuspendLayout()
+        ' 
+        ' ModernPanel1
+        ' 
+        ModernPanel1.BackColor1 = Color.FromArgb(CByte(24), CByte(24), CByte(24))
+        ModernPanel1.BorderSize = 0
+        ModernPanel1.Controls.Add(UltraDetailListView1)
+        ModernPanel1.Controls.Add(Panel1)
+        ModernPanel1.Controls.Add(HtmlColorLabel1)
+        ModernPanel1.Dock = DockStyle.Fill
+        ModernPanel1.Location = New Point(0, 0)
+        ModernPanel1.Name = "ModernPanel1"
+        ModernPanel1.Padding = New Padding(20)
+        ModernPanel1.ScrollBarMode = LakeUI.ModernPanel.ScrollMode.Vertical
+        ModernPanel1.Size = New Size(767, 570)
+        ModernPanel1.TabIndex = 2
+        ' 
+        ' UltraDetailListView1
+        ' 
+        UltraDetailListView1.AllowDragReorder = True
+        UltraDetailListView1.BackgroundColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        UltraDetailListView1.BorderRadius = 10
+        UltraDetailListView1.BorderSize = 0
+        ListColumn1.Text = "类型"
+        ListColumn1.Width = 150
+        ListColumn2.AllowLabelEdit = True
+        ListColumn2.Text = "文件路径"
+        ListColumn2.Width = 500
+        UltraDetailListView1.Columns.Add(ListColumn1)
+        UltraDetailListView1.Columns.Add(ListColumn2)
+        UltraDetailListView1.Dock = DockStyle.Fill
+        UltraDetailListView1.DragSelectZoneWidth = 100
+        UltraDetailListView1.GroupBorderColor = Color.Silver
+        UltraDetailListView1.GroupHeight = 35
+        UltraDetailListView1.HeaderBackColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        UltraDetailListView1.HeaderBorderColor = Color.FromArgb(CByte(120), CByte(120), CByte(120))
+        UltraDetailListView1.HeaderHeight = 40
+        UltraDetailListView1.ItemPadding = New Padding(10, 6, 10, 6)
+        UltraDetailListView1.Location = New Point(20, 102)
+        UltraDetailListView1.Margin = New Padding(2, 2, 2, 2)
+        UltraDetailListView1.Name = "UltraDetailListView1"
+        UltraDetailListView1.Padding = New Padding(10, 3, 10, 10)
+        UltraDetailListView1.Size = New Size(727, 448)
+        UltraDetailListView1.TabIndex = 1
+        ' 
+        ' Panel1
+        ' 
+        Panel1.Controls.Add(ModernButton3)
+        Panel1.Controls.Add(JustEmptyControl4)
+        Panel1.Controls.Add(ModernButton2)
+        Panel1.Controls.Add(JustEmptyControl3)
+        Panel1.Controls.Add(ModernButton1)
+        Panel1.Controls.Add(JustEmptyControl2)
+        Panel1.Controls.Add(ModernButton4)
+        Panel1.Controls.Add(JustEmptyControl1)
+        Panel1.Controls.Add(ModernComboBox1)
+        Panel1.Dock = DockStyle.Top
+        Panel1.Location = New Point(20, 50)
+        Panel1.Name = "Panel1"
+        Panel1.Padding = New Padding(0, 10, 0, 10)
+        Panel1.Size = New Size(727, 52)
+        Panel1.TabIndex = 11
+        ' 
+        ' ModernButton3
+        ' 
+        ModernButton3.BackColor1 = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        ModernButton3.BorderRadius = 10
+        ModernButton3.BorderSize = 0
+        ModernButton3.Dock = DockStyle.Left
+        ModernButton3.HoverBackColor1 = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        ModernButton3.Location = New Point(510, 10)
+        ModernButton3.Margin = New Padding(2)
+        ModernButton3.Name = "ModernButton3"
+        ModernButton3.PressedBackColor1 = SystemColors.WindowFrame
+        ModernButton3.Size = New Size(70, 32)
+        ModernButton3.TabIndex = 16
+        ModernButton3.Text = "导入"
+        ' 
+        ' JustEmptyControl4
+        ' 
+        JustEmptyControl4.Dock = DockStyle.Left
+        JustEmptyControl4.Location = New Point(500, 10)
+        JustEmptyControl4.Name = "JustEmptyControl4"
+        JustEmptyControl4.Size = New Size(10, 32)
+        JustEmptyControl4.TabIndex = 15
+        ' 
+        ' ModernButton2
+        ' 
+        ModernButton2.BackColor1 = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        ModernButton2.BorderRadius = 10
+        ModernButton2.BorderSize = 0
+        ModernButton2.Dock = DockStyle.Left
+        ModernButton2.HoverBackColor1 = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        ModernButton2.Location = New Point(430, 10)
+        ModernButton2.Margin = New Padding(2)
+        ModernButton2.Name = "ModernButton2"
+        ModernButton2.PressedBackColor1 = SystemColors.WindowFrame
+        ModernButton2.Size = New Size(70, 32)
+        ModernButton2.TabIndex = 14
+        ModernButton2.Text = "导出"
+        ' 
+        ' JustEmptyControl3
+        ' 
+        JustEmptyControl3.Dock = DockStyle.Left
+        JustEmptyControl3.Location = New Point(420, 10)
+        JustEmptyControl3.Name = "JustEmptyControl3"
+        JustEmptyControl3.Size = New Size(10, 32)
+        JustEmptyControl3.TabIndex = 13
+        ' 
+        ' ModernButton1
+        ' 
+        ModernButton1.BackColor1 = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        ModernButton1.BorderRadius = 10
+        ModernButton1.BorderSize = 0
+        ModernButton1.Dock = DockStyle.Left
+        ModernButton1.HoverBackColor1 = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        ModernButton1.Location = New Point(320, 10)
+        ModernButton1.Margin = New Padding(2)
+        ModernButton1.Name = "ModernButton1"
+        ModernButton1.PressedBackColor1 = SystemColors.WindowFrame
+        ModernButton1.Size = New Size(100, 32)
+        ModernButton1.TabIndex = 12
+        ModernButton1.Text = "全部清空"
+        ' 
+        ' JustEmptyControl2
+        ' 
+        JustEmptyControl2.Dock = DockStyle.Left
+        JustEmptyControl2.Location = New Point(310, 10)
+        JustEmptyControl2.Name = "JustEmptyControl2"
+        JustEmptyControl2.Size = New Size(10, 32)
+        JustEmptyControl2.TabIndex = 11
+        ' 
+        ' ModernButton4
+        ' 
+        ModernButton4.BackColor1 = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        ModernButton4.BorderRadius = 10
+        ModernButton4.BorderSize = 0
+        ModernButton4.Dock = DockStyle.Left
+        ModernButton4.HoverBackColor1 = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        ModernButton4.Location = New Point(210, 10)
+        ModernButton4.Margin = New Padding(2)
+        ModernButton4.Name = "ModernButton4"
+        ModernButton4.PressedBackColor1 = SystemColors.WindowFrame
+        ModernButton4.Size = New Size(100, 32)
+        ModernButton4.TabIndex = 7
+        ModernButton4.Text = "删除所选"
+        ' 
+        ' JustEmptyControl1
+        ' 
+        JustEmptyControl1.Dock = DockStyle.Left
+        JustEmptyControl1.Location = New Point(200, 10)
+        JustEmptyControl1.Name = "JustEmptyControl1"
+        JustEmptyControl1.Size = New Size(10, 32)
+        JustEmptyControl1.TabIndex = 2
+        ' 
+        ' ModernComboBox1
+        ' 
+        ModernComboBox1.BackColor1 = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        ModernComboBox1.BorderColorFocus = Color.Silver
+        ModernComboBox1.BorderRadius = 10
+        ModernComboBox1.BorderSize = 0
+        ModernComboBox1.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
+        ModernComboBox1.Dock = DockStyle.Left
+        ModernComboBox1.DropDownBorderSize = 2
+        ModernComboBox1.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
+        ModernComboBox1.DropDownPadding = New Padding(10)
+        ModernComboBox1.DropDownScrollBarHoverColor = Color.FromArgb(CByte(200), CByte(200), CByte(200))
+        ModernComboBox1.Items.Add("添加图片")
+        ModernComboBox1.Items.Add("添加 MP4 封面图")
+        ModernComboBox1.Items.Add("添加 MKV 封面图")
+        ModernComboBox1.Items.Add("添加字体文件")
+        ModernComboBox1.Items.Add("添加文本文档")
+        ModernComboBox1.Location = New Point(0, 10)
+        ModernComboBox1.Margin = New Padding(2, 2, 2, 2)
+        ModernComboBox1.MaxDropDownItems = 15
+        ModernComboBox1.Name = "ModernComboBox1"
+        ModernComboBox1.Padding = New Padding(10, 0, 10, 0)
+        ModernComboBox1.Size = New Size(200, 32)
+        ModernComboBox1.TabIndex = 10
+        ModernComboBox1.ToolTipBorderSize = 2
+        ModernComboBox1.ToolTipGap = 10
+        ModernComboBox1.ToolTipMaxWidth = 350
+        ModernComboBox1.ToolTipPadding = New Padding(15)
+        ModernComboBox1.WaterText = "添加附件"
+        ModernComboBox1.WaterTextForeColor = Color.Silver
+        ' 
+        ' HtmlColorLabel1
+        ' 
+        HtmlColorLabel1.AutoSize = True
+        HtmlColorLabel1.AutoSizeMode = AutoSizeMode.GrowAndShrink
+        HtmlColorLabel1.Dock = DockStyle.Top
+        HtmlColorLabel1.Location = New Point(20, 20)
+        HtmlColorLabel1.Margin = New Padding(2)
+        HtmlColorLabel1.Name = "HtmlColorLabel1"
+        HtmlColorLabel1.Padding = New Padding(0, 0, 0, 5)
+        HtmlColorLabel1.Size = New Size(727, 30)
+        HtmlColorLabel1.TabIndex = 10
+        HtmlColorLabel1.Text = "<span style=""font-size:13"">附件</span>   <span style=""font-size:10pt; color:Gray"">向输出文件中塞入附件，例如图片、字体、文本文档，甚至是封面图</span>"
+        ' 
+        ' Form_v6_参数面板_附件
+        ' 
+        AutoScaleDimensions = New SizeF(96F, 96F)
+        AutoScaleMode = AutoScaleMode.Dpi
+        BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
+        ClientSize = New Size(767, 570)
+        Controls.Add(ModernPanel1)
+        Font = New Font("Microsoft YaHei UI", 10F)
+        ForeColor = Color.Silver
+        Name = "Form_v6_参数面板_附件"
+        Text = "Form_v6_参数面板_附件"
+        ModernPanel1.ResumeLayout(False)
+        ModernPanel1.PerformLayout()
+        Panel1.ResumeLayout(False)
+        ResumeLayout(False)
+    End Sub
+
+    Friend WithEvents ModernPanel1 As LakeUI.ModernPanel
+    Friend WithEvents UltraDetailListView1 As LakeUI.UltraDetailListView
+    Friend WithEvents Panel1 As Panel
+    Friend WithEvents ModernButton3 As LakeUI.ModernButton
+    Friend WithEvents JustEmptyControl4 As LakeUI.JustEmptyControl
+    Friend WithEvents ModernButton2 As LakeUI.ModernButton
+    Friend WithEvents JustEmptyControl3 As LakeUI.JustEmptyControl
+    Friend WithEvents ModernButton1 As LakeUI.ModernButton
+    Friend WithEvents JustEmptyControl2 As LakeUI.JustEmptyControl
+    Friend WithEvents ModernButton4 As LakeUI.ModernButton
+    Friend WithEvents JustEmptyControl1 As LakeUI.JustEmptyControl
+    Friend WithEvents ModernComboBox1 As LakeUI.ModernComboBox
+    Friend WithEvents HtmlColorLabel1 As LakeUI.HtmlColorLabel
+End Class

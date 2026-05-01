@@ -3,7 +3,7 @@
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net10.0-windows10.0.26100.0</TargetFramework>
-    <StartupObject>Sub Main</StartupObject>
+    <StartupObject>FFmpegFreeUI.My.MyApplication</StartupObject>
     <UseWindowsForms>true</UseWindowsForms>
     <MyType>WindowsForms</MyType>
     <UseWPF>True</UseWPF>
@@ -15,7 +15,7 @@
 	  <Authors>1059 Studio</Authors>
 	  <Company>1059 Studio</Company>
 	  <Version>5.3.0</Version>
-	  <SupportedOSPlatformVersion>10.0.17763.0</SupportedOSPlatformVersion>
+	  <SupportedOSPlatformVersion>7.0</SupportedOSPlatformVersion>
 	  <ApplicationIcon>ico.ico</ApplicationIcon>
 	  <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
 	  <Title>FFmpegFreeUI</Title>
@@ -51,10 +51,15 @@
   <ItemGroup>
     <PackageReference Include="LibreHardwareMonitorLib" Version="0.9.6-pre623" />
     <PackageReference Include="Microsoft-WindowsAPICodePack-Shell" Version="1.1.5" />
+    <PackageReference Include="Microsoft.Agents.AI" Version="1.3.0" />
+    <PackageReference Include="Microsoft.Agents.AI.OpenAI" Version="1.3.0" />
     <PackageReference Include="SunnyUI" Version="3.7.2" />
   </ItemGroup>
 
   <ItemGroup>
+    <Reference Include="LakeUI">
+      <HintPath>..\..\LakeUI\LakeUI\bin\Debug\net10.0-windows\LakeUI.dll</HintPath>
+    </Reference>
     <Reference Include="LibreHardwareMonitorLib">
       <HintPath>..\..\LibreHardwareMonitor-master\bin\Debug\x64\net10.0\LibreHardwareMonitorLib.dll</HintPath>
     </Reference>

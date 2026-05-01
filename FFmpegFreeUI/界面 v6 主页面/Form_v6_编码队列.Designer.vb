@@ -1,0 +1,294 @@
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+Partial Class Form_v6_编码队列
+    Inherits System.Windows.Forms.Form
+
+    'Form 重写 Dispose，以清理组件列表。
+    <System.Diagnostics.DebuggerNonUserCode()> _
+    Protected Overrides Sub Dispose(ByVal disposing As Boolean)
+        Try
+            If disposing AndAlso components IsNot Nothing Then
+                components.Dispose()
+            End If
+        Finally
+            MyBase.Dispose(disposing)
+        End Try
+    End Sub
+
+    'Windows 窗体设计器所必需的
+    Private components As System.ComponentModel.IContainer
+
+    '注意: 以下过程是 Windows 窗体设计器所必需的
+    '可以使用 Windows 窗体设计器修改它。  
+    '不要使用代码编辑器修改它。
+    <System.Diagnostics.DebuggerStepThrough()> _
+    Private Sub InitializeComponent()
+        Dim ListColumn1 As LakeUI.UltraDetailListView.ListColumn = New LakeUI.UltraDetailListView.ListColumn()
+        Dim ListColumn2 As LakeUI.UltraDetailListView.ListColumn = New LakeUI.UltraDetailListView.ListColumn()
+        Dim ListColumn3 As LakeUI.UltraDetailListView.ListColumn = New LakeUI.UltraDetailListView.ListColumn()
+        Dim ListColumn4 As LakeUI.UltraDetailListView.ListColumn = New LakeUI.UltraDetailListView.ListColumn()
+        Dim ListColumn5 As LakeUI.UltraDetailListView.ListColumn = New LakeUI.UltraDetailListView.ListColumn()
+        Dim ListColumn6 As LakeUI.UltraDetailListView.ListColumn = New LakeUI.UltraDetailListView.ListColumn()
+        Dim ListColumn7 As LakeUI.UltraDetailListView.ListColumn = New LakeUI.UltraDetailListView.ListColumn()
+        Dim ListColumn8 As LakeUI.UltraDetailListView.ListColumn = New LakeUI.UltraDetailListView.ListColumn()
+        Panel1 = New Panel()
+        ModernButton7 = New LakeUI.ModernButton()
+        ModernButton6 = New LakeUI.ModernButton()
+        ModernButton5 = New LakeUI.ModernButton()
+        ModernButton4 = New LakeUI.ModernButton()
+        ModernButton3 = New LakeUI.ModernButton()
+        ModernButton2 = New LakeUI.ModernButton()
+        ModernButton1 = New LakeUI.ModernButton()
+        Label1 = New Label()
+        ModernButton8 = New LakeUI.ModernButton()
+        UltraDetailListView1 = New LakeUI.UltraDetailListView()
+        Panel1.SuspendLayout()
+        SuspendLayout()
+        ' 
+        ' Panel1
+        ' 
+        Panel1.BackColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        Panel1.Controls.Add(ModernButton7)
+        Panel1.Controls.Add(ModernButton6)
+        Panel1.Controls.Add(ModernButton5)
+        Panel1.Controls.Add(ModernButton4)
+        Panel1.Controls.Add(ModernButton3)
+        Panel1.Controls.Add(ModernButton2)
+        Panel1.Controls.Add(ModernButton1)
+        Panel1.Controls.Add(Label1)
+        Panel1.Controls.Add(ModernButton8)
+        Panel1.Dock = DockStyle.Top
+        Panel1.Location = New Point(0, 0)
+        Panel1.Name = "Panel1"
+        Panel1.Padding = New Padding(0, 20, 0, 5)
+        Panel1.Size = New Size(984, 65)
+        Panel1.TabIndex = 0
+        ' 
+        ' ModernButton7
+        ' 
+        ModernButton7.BorderColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        ModernButton7.BorderRadius = 10
+        ModernButton7.BorderSize = 2
+        ModernButton7.Dock = DockStyle.Left
+        ModernButton7.Font = New Font("Microsoft YaHei UI", 11F)
+        ModernButton7.ForeColor = Color.MediumPurple
+        ModernButton7.HoverBackColor1 = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        ModernButton7.HoverBorderColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        ModernButton7.Location = New Point(654, 20)
+        ModernButton7.Margin = New Padding(2)
+        ModernButton7.Name = "ModernButton7"
+        ModernButton7.PressedBackColor1 = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        ModernButton7.PressedBorderColor = Color.MediumPurple
+        ModernButton7.Size = New Size(60, 40)
+        ModernButton7.TabIndex = 6
+        ModernButton7.Text = "定位"
+        ' 
+        ' ModernButton6
+        ' 
+        ModernButton6.BorderColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        ModernButton6.BorderRadius = 10
+        ModernButton6.BorderSize = 2
+        ModernButton6.Dock = DockStyle.Left
+        ModernButton6.Font = New Font("Microsoft YaHei UI", 11F)
+        ModernButton6.ForeColor = Color.Goldenrod
+        ModernButton6.HoverBackColor1 = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        ModernButton6.HoverBorderColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        ModernButton6.Location = New Point(594, 20)
+        ModernButton6.Margin = New Padding(2)
+        ModernButton6.Name = "ModernButton6"
+        ModernButton6.PressedBackColor1 = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        ModernButton6.PressedBorderColor = Color.Goldenrod
+        ModernButton6.Size = New Size(60, 40)
+        ModernButton6.TabIndex = 5
+        ModernButton6.Text = "重置"
+        ' 
+        ' ModernButton5
+        ' 
+        ModernButton5.BorderColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        ModernButton5.BorderRadius = 10
+        ModernButton5.BorderSize = 2
+        ModernButton5.Dock = DockStyle.Left
+        ModernButton5.Font = New Font("Microsoft YaHei UI", 11F)
+        ModernButton5.ForeColor = Color.IndianRed
+        ModernButton5.HoverBackColor1 = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        ModernButton5.HoverBorderColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        ModernButton5.Location = New Point(534, 20)
+        ModernButton5.Margin = New Padding(2)
+        ModernButton5.Name = "ModernButton5"
+        ModernButton5.PressedBackColor1 = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        ModernButton5.PressedBorderColor = Color.IndianRed
+        ModernButton5.Size = New Size(60, 40)
+        ModernButton5.TabIndex = 4
+        ModernButton5.Text = "移除"
+        ' 
+        ' ModernButton4
+        ' 
+        ModernButton4.BorderColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        ModernButton4.BorderRadius = 10
+        ModernButton4.BorderSize = 2
+        ModernButton4.Dock = DockStyle.Left
+        ModernButton4.Font = New Font("Microsoft YaHei UI", 11F)
+        ModernButton4.ForeColor = Color.IndianRed
+        ModernButton4.HoverBackColor1 = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        ModernButton4.HoverBorderColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        ModernButton4.Location = New Point(474, 20)
+        ModernButton4.Margin = New Padding(2)
+        ModernButton4.Name = "ModernButton4"
+        ModernButton4.PressedBackColor1 = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        ModernButton4.PressedBorderColor = Color.IndianRed
+        ModernButton4.Size = New Size(60, 40)
+        ModernButton4.TabIndex = 3
+        ModernButton4.Text = "停止"
+        ' 
+        ' ModernButton3
+        ' 
+        ModernButton3.BorderColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        ModernButton3.BorderRadius = 10
+        ModernButton3.BorderSize = 2
+        ModernButton3.Dock = DockStyle.Left
+        ModernButton3.Font = New Font("Microsoft YaHei UI", 11F)
+        ModernButton3.ForeColor = Color.YellowGreen
+        ModernButton3.HoverBackColor1 = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        ModernButton3.HoverBorderColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        ModernButton3.Location = New Point(414, 20)
+        ModernButton3.Margin = New Padding(2)
+        ModernButton3.Name = "ModernButton3"
+        ModernButton3.PressedBackColor1 = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        ModernButton3.PressedBorderColor = Color.YellowGreen
+        ModernButton3.Size = New Size(60, 40)
+        ModernButton3.TabIndex = 2
+        ModernButton3.Text = "恢复"
+        ' 
+        ' ModernButton2
+        ' 
+        ModernButton2.BorderColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        ModernButton2.BorderRadius = 10
+        ModernButton2.BorderSize = 2
+        ModernButton2.Dock = DockStyle.Left
+        ModernButton2.Font = New Font("Microsoft YaHei UI", 11F)
+        ModernButton2.ForeColor = Color.Goldenrod
+        ModernButton2.HoverBackColor1 = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        ModernButton2.HoverBorderColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        ModernButton2.Location = New Point(354, 20)
+        ModernButton2.Margin = New Padding(2)
+        ModernButton2.Name = "ModernButton2"
+        ModernButton2.PressedBackColor1 = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        ModernButton2.PressedBorderColor = Color.Goldenrod
+        ModernButton2.Size = New Size(60, 40)
+        ModernButton2.TabIndex = 1
+        ModernButton2.Text = "暂停"
+        ' 
+        ' ModernButton1
+        ' 
+        ModernButton1.BorderColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        ModernButton1.BorderRadius = 10
+        ModernButton1.BorderSize = 2
+        ModernButton1.Dock = DockStyle.Left
+        ModernButton1.Font = New Font("Microsoft YaHei UI", 11F)
+        ModernButton1.ForeColor = Color.YellowGreen
+        ModernButton1.HoverBackColor1 = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        ModernButton1.HoverBorderColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        ModernButton1.Location = New Point(294, 20)
+        ModernButton1.Margin = New Padding(2)
+        ModernButton1.Name = "ModernButton1"
+        ModernButton1.PressedBackColor1 = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        ModernButton1.PressedBorderColor = Color.YellowGreen
+        ModernButton1.Size = New Size(60, 40)
+        ModernButton1.TabIndex = 0
+        ModernButton1.Text = "开始"
+        ' 
+        ' Label1
+        ' 
+        Label1.Dock = DockStyle.Left
+        Label1.Location = New Point(126, 20)
+        Label1.Name = "Label1"
+        Label1.Size = New Size(168, 40)
+        Label1.TabIndex = 8
+        ' 
+        ' ModernButton8
+        ' 
+        ModernButton8.BorderColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        ModernButton8.BorderSize = 2
+        ModernButton8.Dock = DockStyle.Left
+        ModernButton8.Font = New Font("Microsoft YaHei UI", 11F)
+        ModernButton8.ForeColor = Color.CornflowerBlue
+        ModernButton8.HoverBackColor1 = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        ModernButton8.HoverBorderColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        ModernButton8.Location = New Point(0, 20)
+        ModernButton8.Margin = New Padding(2)
+        ModernButton8.Name = "ModernButton8"
+        ModernButton8.PressedBackColor1 = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        ModernButton8.PressedBorderColor = Color.CornflowerBlue
+        ModernButton8.Size = New Size(126, 40)
+        ModernButton8.TabIndex = 7
+        ModernButton8.Text = "任务管理菜单"
+        ' 
+        ' UltraDetailListView1
+        ' 
+        UltraDetailListView1.BackgroundColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
+        UltraDetailListView1.BorderSize = 0
+        ListColumn1.AllowLabelEdit = True
+        ListColumn1.HeaderPadding = New Padding(15, 0, 0, 0)
+        ListColumn1.Text = "任务名称"
+        ListColumn1.Width = 200
+        ListColumn2.Text = "状态"
+        ListColumn3.Text = "进度"
+        ListColumn3.Width = 80
+        ListColumn4.Text = "效率"
+        ListColumn4.Width = 80
+        ListColumn5.Text = "输出大小 && 预估"
+        ListColumn5.Width = 150
+        ListColumn6.Text = "质量"
+        ListColumn6.Width = 80
+        ListColumn7.Text = "比特率"
+        ListColumn8.Text = "预计剩余 && 已用"
+        UltraDetailListView1.Columns.Add(ListColumn1)
+        UltraDetailListView1.Columns.Add(ListColumn2)
+        UltraDetailListView1.Columns.Add(ListColumn3)
+        UltraDetailListView1.Columns.Add(ListColumn4)
+        UltraDetailListView1.Columns.Add(ListColumn5)
+        UltraDetailListView1.Columns.Add(ListColumn6)
+        UltraDetailListView1.Columns.Add(ListColumn7)
+        UltraDetailListView1.Columns.Add(ListColumn8)
+        UltraDetailListView1.Dock = DockStyle.Fill
+        UltraDetailListView1.GroupBackColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UltraDetailListView1.GroupForeColor = Color.Gainsboro
+        UltraDetailListView1.GroupHeight = 40
+        UltraDetailListView1.HeaderBackColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        UltraDetailListView1.HeaderBorderColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
+        UltraDetailListView1.HeaderBorderWidth = 2
+        UltraDetailListView1.HeaderForeColor = Color.Gray
+        UltraDetailListView1.HeaderHeight = 36
+        UltraDetailListView1.Location = New Point(0, 65)
+        UltraDetailListView1.Margin = New Padding(2, 2, 2, 2)
+        UltraDetailListView1.Name = "UltraDetailListView1"
+        UltraDetailListView1.Size = New Size(984, 616)
+        UltraDetailListView1.TabIndex = 1
+        ' 
+        ' Form_v6_编码队列
+        ' 
+        AutoScaleDimensions = New SizeF(96F, 96F)
+        AutoScaleMode = AutoScaleMode.Dpi
+        BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
+        ClientSize = New Size(984, 681)
+        Controls.Add(UltraDetailListView1)
+        Controls.Add(Panel1)
+        Font = New Font("Microsoft YaHei UI", 10F)
+        ForeColor = Color.Silver
+        Name = "Form_v6_编码队列"
+        Text = "Form_v6_编码队列"
+        Panel1.ResumeLayout(False)
+        ResumeLayout(False)
+    End Sub
+
+    Friend WithEvents Panel1 As Panel
+    Friend WithEvents ModernButton1 As LakeUI.ModernButton
+    Friend WithEvents ModernButton3 As LakeUI.ModernButton
+    Friend WithEvents ModernButton2 As LakeUI.ModernButton
+    Friend WithEvents ModernButton5 As LakeUI.ModernButton
+    Friend WithEvents ModernButton4 As LakeUI.ModernButton
+    Friend WithEvents ModernButton7 As LakeUI.ModernButton
+    Friend WithEvents ModernButton6 As LakeUI.ModernButton
+    Friend WithEvents UltraDetailListView1 As LakeUI.UltraDetailListView
+    Friend WithEvents ModernButton8 As LakeUI.ModernButton
+    Friend WithEvents Label1 As Label
+End Class

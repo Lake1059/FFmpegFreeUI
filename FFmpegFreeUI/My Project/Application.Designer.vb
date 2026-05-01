@@ -33,7 +33,7 @@ Namespace My
         
         <Global.System.Diagnostics.DebuggerStepThroughAttribute()>  _
         Protected Overrides Sub OnCreateMainForm()
-            Me.MainForm = Global.FFmpegFreeUI.Form1
+            Me.MainForm = Global.FFmpegFreeUI.FormMain_v6
         End Sub
         
         <Global.System.Diagnostics.DebuggerStepThroughAttribute()>  _

@@ -1,0 +1,206 @@
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+Partial Class Form_v6_参数面板_滤镜排序
+    Inherits System.Windows.Forms.Form
+
+    'Form 重写 Dispose，以清理组件列表。
+    <System.Diagnostics.DebuggerNonUserCode()> _
+    Protected Overrides Sub Dispose(ByVal disposing As Boolean)
+        Try
+            If disposing AndAlso components IsNot Nothing Then
+                components.Dispose()
+            End If
+        Finally
+            MyBase.Dispose(disposing)
+        End Try
+    End Sub
+
+    'Windows 窗体设计器所必需的
+    Private components As System.ComponentModel.IContainer
+
+    '注意: 以下过程是 Windows 窗体设计器所必需的
+    '可以使用 Windows 窗体设计器修改它。  
+    '不要使用代码编辑器修改它。
+    <System.Diagnostics.DebuggerStepThrough()> _
+    Private Sub InitializeComponent()
+        Dim ListColumn1 As LakeUI.UltraDetailListView.ListColumn = New LakeUI.UltraDetailListView.ListColumn()
+        Dim ListColumn2 As LakeUI.UltraDetailListView.ListColumn = New LakeUI.UltraDetailListView.ListColumn()
+        Dim ListColumn3 As LakeUI.UltraDetailListView.ListColumn = New LakeUI.UltraDetailListView.ListColumn()
+        Dim ListColumn4 As LakeUI.UltraDetailListView.ListColumn = New LakeUI.UltraDetailListView.ListColumn()
+        Dim ListItem1 As LakeUI.UltraDetailListView.ListItem = New LakeUI.UltraDetailListView.ListItem()
+        Dim ListSubItem1 As LakeUI.UltraDetailListView.ListSubItem = New LakeUI.UltraDetailListView.ListSubItem()
+        Dim ListSubItem2 As LakeUI.UltraDetailListView.ListSubItem = New LakeUI.UltraDetailListView.ListSubItem()
+        Dim ListSubItem3 As LakeUI.UltraDetailListView.ListSubItem = New LakeUI.UltraDetailListView.ListSubItem()
+        Dim ListSubItem4 As LakeUI.UltraDetailListView.ListSubItem = New LakeUI.UltraDetailListView.ListSubItem()
+        ModernPanel1 = New LakeUI.ModernPanel()
+        UltraDetailListView1 = New LakeUI.UltraDetailListView()
+        Panel1 = New Panel()
+        ModernButton4 = New LakeUI.ModernButton()
+        JustEmptyControl1 = New LakeUI.JustEmptyControl()
+        ModernComboBox1 = New LakeUI.ModernComboBox()
+        HtmlColorLabel1 = New LakeUI.HtmlColorLabel()
+        ModernPanel1.SuspendLayout()
+        Panel1.SuspendLayout()
+        SuspendLayout()
+        ' 
+        ' ModernPanel1
+        ' 
+        ModernPanel1.BackColor1 = Color.FromArgb(CByte(24), CByte(24), CByte(24))
+        ModernPanel1.BorderSize = 0
+        ModernPanel1.Controls.Add(UltraDetailListView1)
+        ModernPanel1.Controls.Add(Panel1)
+        ModernPanel1.Controls.Add(HtmlColorLabel1)
+        ModernPanel1.Dock = DockStyle.Fill
+        ModernPanel1.Location = New Point(0, 0)
+        ModernPanel1.Name = "ModernPanel1"
+        ModernPanel1.Padding = New Padding(20)
+        ModernPanel1.ScrollBarMode = LakeUI.ModernPanel.ScrollMode.Vertical
+        ModernPanel1.Size = New Size(945, 614)
+        ModernPanel1.TabIndex = 0
+        ' 
+        ' UltraDetailListView1
+        ' 
+        UltraDetailListView1.AllowDragReorder = True
+        UltraDetailListView1.BackgroundColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        UltraDetailListView1.BorderRadius = 10
+        UltraDetailListView1.BorderSize = 0
+        ListColumn1.Text = "标识符"
+        ListColumn1.Width = 150
+        ListColumn2.Text = "流类型"
+        ListColumn3.AllowLabelEdit = True
+        ListColumn3.Text = "滤镜内容"
+        ListColumn3.Width = 450
+        ListColumn4.AllowLabelEdit = True
+        ListColumn4.Text = "作用于流"
+        ListColumn4.Width = 150
+        UltraDetailListView1.Columns.Add(ListColumn1)
+        UltraDetailListView1.Columns.Add(ListColumn2)
+        UltraDetailListView1.Columns.Add(ListColumn3)
+        UltraDetailListView1.Columns.Add(ListColumn4)
+        UltraDetailListView1.Dock = DockStyle.Fill
+        UltraDetailListView1.DragSelectZoneWidth = 100
+        UltraDetailListView1.GroupBorderColor = Color.Silver
+        UltraDetailListView1.GroupHeight = 35
+        UltraDetailListView1.HeaderBackColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        UltraDetailListView1.HeaderBorderColor = Color.FromArgb(CByte(120), CByte(120), CByte(120))
+        UltraDetailListView1.HeaderHeight = 40
+        UltraDetailListView1.ItemPadding = New Padding(10, 6, 10, 6)
+        ListSubItem1.Text = "TestFilter"
+        ListSubItem2.ForeColor = Color.CornflowerBlue
+        ListSubItem2.Text = "video"
+        ListSubItem3.Text = "这里写滤镜内容，多个写一行使用英文逗号隔开"
+        ListSubItem4.Text = "默认 0"
+        ListItem1.SubItems.Add(ListSubItem1)
+        ListItem1.SubItems.Add(ListSubItem2)
+        ListItem1.SubItems.Add(ListSubItem3)
+        ListItem1.SubItems.Add(ListSubItem4)
+        UltraDetailListView1.Items.Add(ListItem1)
+        UltraDetailListView1.Location = New Point(20, 102)
+        UltraDetailListView1.Margin = New Padding(2, 2, 2, 2)
+        UltraDetailListView1.Name = "UltraDetailListView1"
+        UltraDetailListView1.Padding = New Padding(10, 3, 10, 10)
+        UltraDetailListView1.Size = New Size(905, 492)
+        UltraDetailListView1.TabIndex = 1
+        ' 
+        ' Panel1
+        ' 
+        Panel1.Controls.Add(ModernButton4)
+        Panel1.Controls.Add(JustEmptyControl1)
+        Panel1.Controls.Add(ModernComboBox1)
+        Panel1.Dock = DockStyle.Top
+        Panel1.Location = New Point(20, 50)
+        Panel1.Name = "Panel1"
+        Panel1.Padding = New Padding(0, 10, 0, 10)
+        Panel1.Size = New Size(905, 52)
+        Panel1.TabIndex = 11
+        ' 
+        ' ModernButton4
+        ' 
+        ModernButton4.BackColor1 = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        ModernButton4.BorderRadius = 10
+        ModernButton4.BorderSize = 0
+        ModernButton4.Dock = DockStyle.Left
+        ModernButton4.HoverBackColor1 = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        ModernButton4.Location = New Point(160, 10)
+        ModernButton4.Margin = New Padding(2)
+        ModernButton4.Name = "ModernButton4"
+        ModernButton4.PressedBackColor1 = SystemColors.WindowFrame
+        ModernButton4.Size = New Size(100, 32)
+        ModernButton4.TabIndex = 7
+        ModernButton4.Text = "删除所选"
+        ' 
+        ' JustEmptyControl1
+        ' 
+        JustEmptyControl1.Dock = DockStyle.Left
+        JustEmptyControl1.Location = New Point(150, 10)
+        JustEmptyControl1.Name = "JustEmptyControl1"
+        JustEmptyControl1.Size = New Size(10, 32)
+        JustEmptyControl1.TabIndex = 2
+        ' 
+        ' ModernComboBox1
+        ' 
+        ModernComboBox1.BackColor1 = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        ModernComboBox1.BorderColorFocus = Color.Silver
+        ModernComboBox1.BorderRadius = 10
+        ModernComboBox1.BorderSize = 0
+        ModernComboBox1.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
+        ModernComboBox1.Dock = DockStyle.Left
+        ModernComboBox1.DropDownBorderSize = 2
+        ModernComboBox1.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
+        ModernComboBox1.DropDownPadding = New Padding(10)
+        ModernComboBox1.DropDownScrollBarHoverColor = Color.FromArgb(CByte(200), CByte(200), CByte(200))
+        ModernComboBox1.Items.Add("添加视频滤镜")
+        ModernComboBox1.Items.Add("添加音频滤镜")
+        ModernComboBox1.Location = New Point(0, 10)
+        ModernComboBox1.Margin = New Padding(2, 2, 2, 2)
+        ModernComboBox1.Name = "ModernComboBox1"
+        ModernComboBox1.Padding = New Padding(10, 0, 10, 0)
+        ModernComboBox1.Size = New Size(150, 32)
+        ModernComboBox1.TabIndex = 10
+        ModernComboBox1.ToolTipBorderSize = 2
+        ModernComboBox1.ToolTipGap = 10
+        ModernComboBox1.ToolTipMaxWidth = 350
+        ModernComboBox1.ToolTipPadding = New Padding(15)
+        ModernComboBox1.WaterText = "添加新滤镜"
+        ' 
+        ' HtmlColorLabel1
+        ' 
+        HtmlColorLabel1.AutoSize = True
+        HtmlColorLabel1.AutoSizeMode = AutoSizeMode.GrowAndShrink
+        HtmlColorLabel1.Dock = DockStyle.Top
+        HtmlColorLabel1.Location = New Point(20, 20)
+        HtmlColorLabel1.Margin = New Padding(2)
+        HtmlColorLabel1.Name = "HtmlColorLabel1"
+        HtmlColorLabel1.Padding = New Padding(0, 0, 0, 5)
+        HtmlColorLabel1.Size = New Size(905, 30)
+        HtmlColorLabel1.TabIndex = 10
+        HtmlColorLabel1.Text = "<span style=""font-size:13"">滤镜排序和自定义</span>   <span style=""font-size:10pt; color:Gray"">如果需要一行里写多个滤镜，使用英文逗号隔开即可</span>"
+        ' 
+        ' Form_v6_参数面板_滤镜排序
+        ' 
+        AutoScaleDimensions = New SizeF(96F, 96F)
+        AutoScaleMode = AutoScaleMode.Dpi
+        BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
+        ClientSize = New Size(945, 614)
+        Controls.Add(ModernPanel1)
+        Font = New Font("Microsoft YaHei UI", 10F)
+        ForeColor = Color.Silver
+        Name = "Form_v6_参数面板_滤镜排序"
+        Text = "Form_v6_参数面板_滤镜排序"
+        ModernPanel1.ResumeLayout(False)
+        ModernPanel1.PerformLayout()
+        Panel1.ResumeLayout(False)
+        ResumeLayout(False)
+    End Sub
+
+    Friend WithEvents ModernPanel1 As LakeUI.ModernPanel
+    Friend WithEvents HtmlColorLabel1 As LakeUI.HtmlColorLabel
+    Friend WithEvents Panel1 As Panel
+    Friend WithEvents ModernButton4 As LakeUI.ModernButton
+    Friend WithEvents JustEmptyControl3 As LakeUI.JustEmptyControl
+    Friend WithEvents ModernButton3 As LakeUI.ModernButton
+    Friend WithEvents ModernButton2 As LakeUI.ModernButton
+    Friend WithEvents JustEmptyControl1 As LakeUI.JustEmptyControl
+    Friend WithEvents UltraDetailListView1 As LakeUI.UltraDetailListView
+    Friend WithEvents JustEmptyControl2 As LakeUI.JustEmptyControl
+    Friend WithEvents ModernComboBox1 As LakeUI.ModernComboBox
+End Class

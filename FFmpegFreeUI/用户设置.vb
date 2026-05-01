@@ -62,7 +62,6 @@ Public Class 用户设置
                 Case Else
                     实例对象.最后的预设数据 = Nothing
             End Select
-
             Dim a = Path.Combine(Application.StartupPath, "Settings.json")
             WriteAllText(a, JsonSerializer.Serialize(实例对象, JsonSO), False)
         Catch ex As Exception
