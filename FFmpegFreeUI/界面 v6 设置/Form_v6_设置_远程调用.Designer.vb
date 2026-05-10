@@ -23,13 +23,13 @@ Partial Class Form_v6_设置_远程调用
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         ModernPanel1 = New LakeUI.ModernPanel()
+        HtmlColorLabel3 = New LakeUI.HtmlColorLabel()
         Panel2 = New Panel()
+        ModernTextBox1 = New LakeUI.ModernTextBox()
+        JustEmptyControl1 = New LakeUI.JustEmptyControl()
         BooleanSwitch1 = New LakeUI.BooleanSwitch()
         HtmlColorLabel2 = New LakeUI.HtmlColorLabel()
         HtmlColorLabel1 = New LakeUI.HtmlColorLabel()
-        ModernTextBox1 = New LakeUI.ModernTextBox()
-        JustEmptyControl1 = New LakeUI.JustEmptyControl()
-        HtmlColorLabel3 = New LakeUI.HtmlColorLabel()
         ModernPanel1.SuspendLayout()
         Panel2.SuspendLayout()
         SuspendLayout()
@@ -50,6 +50,19 @@ Partial Class Form_v6_设置_远程调用
         ModernPanel1.Size = New Size(695, 595)
         ModernPanel1.TabIndex = 3
         ' 
+        ' HtmlColorLabel3
+        ' 
+        HtmlColorLabel3.AutoSize = True
+        HtmlColorLabel3.AutoSizeMode = AutoSizeMode.GrowAndShrink
+        HtmlColorLabel3.Dock = DockStyle.Bottom
+        HtmlColorLabel3.ForeColor = Color.Gray
+        HtmlColorLabel3.Location = New Point(20, 554)
+        HtmlColorLabel3.Margin = New Padding(2)
+        HtmlColorLabel3.Name = "HtmlColorLabel3"
+        HtmlColorLabel3.Size = New Size(655, 21)
+        HtmlColorLabel3.TabIndex = 13
+        HtmlColorLabel3.Text = "你不能使用 10590 端口，因为我的其他项目已经占用了"
+        ' 
         ' Panel2
         ' 
         Panel2.Controls.Add(ModernTextBox1)
@@ -61,6 +74,31 @@ Partial Class Form_v6_设置_远程调用
         Panel2.Padding = New Padding(0, 10, 0, 0)
         Panel2.Size = New Size(655, 42)
         Panel2.TabIndex = 11
+        ' 
+        ' ModernTextBox1
+        ' 
+        ModernTextBox1.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        ModernTextBox1.BorderColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        ModernTextBox1.BorderColorFocus = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        ModernTextBox1.BorderRadius = 10
+        ModernTextBox1.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
+        ModernTextBox1.Dock = DockStyle.Left
+        ModernTextBox1.Location = New Point(65, 10)
+        ModernTextBox1.Margin = New Padding(2, 2, 2, 2)
+        ModernTextBox1.Name = "ModernTextBox1"
+        ModernTextBox1.Padding = New Padding(10, 0, 10, 0)
+        ModernTextBox1.ScrollBarHoverColor = Color.FromArgb(CByte(200), CByte(200), CByte(200))
+        ModernTextBox1.Size = New Size(100, 32)
+        ModernTextBox1.TabIndex = 14
+        ModernTextBox1.WaterText = "10591"
+        ' 
+        ' JustEmptyControl1
+        ' 
+        JustEmptyControl1.Dock = DockStyle.Left
+        JustEmptyControl1.Location = New Point(55, 10)
+        JustEmptyControl1.Name = "JustEmptyControl1"
+        JustEmptyControl1.Size = New Size(10, 32)
+        JustEmptyControl1.TabIndex = 13
         ' 
         ' BooleanSwitch1
         ' 
@@ -99,44 +137,6 @@ Partial Class Form_v6_设置_远程调用
         HtmlColorLabel1.Size = New Size(655, 30)
         HtmlColorLabel1.TabIndex = 10
         HtmlColorLabel1.Text = "<span style=""font-size:13"">远程调用</span>"
-        ' 
-        ' ModernTextBox1
-        ' 
-        ModernTextBox1.BackColor1 = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        ModernTextBox1.BorderColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        ModernTextBox1.BorderRadius = 10
-        ModernTextBox1.BorderSize = 2
-        ModernTextBox1.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
-        ModernTextBox1.Dock = DockStyle.Left
-        ModernTextBox1.Location = New Point(65, 10)
-        ModernTextBox1.Margin = New Padding(2, 2, 2, 2)
-        ModernTextBox1.Name = "ModernTextBox1"
-        ModernTextBox1.Padding = New Padding(10, 0, 10, 0)
-        ModernTextBox1.ScrollBarHoverColor = Color.FromArgb(CByte(200), CByte(200), CByte(200))
-        ModernTextBox1.Size = New Size(100, 32)
-        ModernTextBox1.TabIndex = 14
-        ModernTextBox1.WaterText = "10591"
-        ' 
-        ' JustEmptyControl1
-        ' 
-        JustEmptyControl1.Dock = DockStyle.Left
-        JustEmptyControl1.Location = New Point(55, 10)
-        JustEmptyControl1.Name = "JustEmptyControl1"
-        JustEmptyControl1.Size = New Size(10, 32)
-        JustEmptyControl1.TabIndex = 13
-        ' 
-        ' HtmlColorLabel3
-        ' 
-        HtmlColorLabel3.AutoSize = True
-        HtmlColorLabel3.AutoSizeMode = AutoSizeMode.GrowAndShrink
-        HtmlColorLabel3.Dock = DockStyle.Bottom
-        HtmlColorLabel3.ForeColor = Color.Gray
-        HtmlColorLabel3.Location = New Point(20, 554)
-        HtmlColorLabel3.Margin = New Padding(2)
-        HtmlColorLabel3.Name = "HtmlColorLabel3"
-        HtmlColorLabel3.Size = New Size(655, 21)
-        HtmlColorLabel3.TabIndex = 13
-        HtmlColorLabel3.Text = "你不能使用 10590 端口，因为我的其他项目已经占用了"
         ' 
         ' Form_v6_设置_远程调用
         ' 

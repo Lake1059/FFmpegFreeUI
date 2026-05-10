@@ -32,10 +32,12 @@ Partial Class Form_v6_参数面板_参数总览
         Panel70 = New Panel()
         ModernButton2 = New LakeUI.ModernButton()
         HtmlColorLabel2 = New LakeUI.HtmlColorLabel()
+        ModernPanel1 = New LakeUI.ModernPanel()
         Panel1.SuspendLayout()
         Panel3.SuspendLayout()
         Panel2.SuspendLayout()
         Panel70.SuspendLayout()
+        ModernPanel1.SuspendLayout()
         SuspendLayout()
         ' 
         ' Panel1
@@ -47,7 +49,7 @@ Partial Class Form_v6_参数面板_参数总览
         Panel1.Location = New Point(0, 0)
         Panel1.Name = "Panel1"
         Panel1.Padding = New Padding(20, 20, 10, 20)
-        Panel1.Size = New Size(365, 611)
+        Panel1.Size = New Size(370, 611)
         Panel1.TabIndex = 0
         ' 
         ' ModernTextBox1
@@ -61,7 +63,7 @@ Partial Class Form_v6_参数面板_参数总览
         ModernTextBox1.Name = "ModernTextBox1"
         ModernTextBox1.Padding = New Padding(15, 10, 15, 10)
         ModernTextBox1.ReadOnly = True
-        ModernTextBox1.Size = New Size(335, 479)
+        ModernTextBox1.Size = New Size(340, 479)
         ModernTextBox1.TabIndex = 1
         ModernTextBox1.Text = "ModernTextBox1"
         ' 
@@ -72,7 +74,7 @@ Partial Class Form_v6_参数面板_参数总览
         Panel3.Location = New Point(20, 541)
         Panel3.Name = "Panel3"
         Panel3.Padding = New Padding(0, 15, 0, 0)
-        Panel3.Size = New Size(335, 50)
+        Panel3.Size = New Size(340, 50)
         Panel3.TabIndex = 40
         ' 
         ' ModernButton1
@@ -86,7 +88,7 @@ Partial Class Form_v6_参数面板_参数总览
         ModernButton1.Margin = New Padding(2)
         ModernButton1.Name = "ModernButton1"
         ModernButton1.PressedBackColor1 = SystemColors.WindowFrame
-        ModernButton1.Size = New Size(335, 35)
+        ModernButton1.Size = New Size(340, 35)
         ModernButton1.TabIndex = 2
         ModernButton1.Text = "复制参数总览"
         ' 
@@ -100,7 +102,7 @@ Partial Class Form_v6_参数面板_参数总览
         HtmlColorLabel1.Margin = New Padding(2)
         HtmlColorLabel1.Name = "HtmlColorLabel1"
         HtmlColorLabel1.Padding = New Padding(0, 0, 0, 15)
-        HtmlColorLabel1.Size = New Size(335, 42)
+        HtmlColorLabel1.Size = New Size(340, 42)
         HtmlColorLabel1.TabIndex = 0
         HtmlColorLabel1.Text = "参数总览"
         HtmlColorLabel1.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.Center
@@ -111,10 +113,10 @@ Partial Class Form_v6_参数面板_参数总览
         Panel2.Controls.Add(Panel70)
         Panel2.Controls.Add(HtmlColorLabel2)
         Panel2.Dock = DockStyle.Fill
-        Panel2.Location = New Point(365, 0)
+        Panel2.Location = New Point(370, 0)
         Panel2.Name = "Panel2"
         Panel2.Padding = New Padding(10, 20, 20, 20)
-        Panel2.Size = New Size(397, 611)
+        Panel2.Size = New Size(392, 611)
         Panel2.TabIndex = 1
         ' 
         ' ModernTextBox2
@@ -128,7 +130,7 @@ Partial Class Form_v6_参数面板_参数总览
         ModernTextBox2.Name = "ModernTextBox2"
         ModernTextBox2.Padding = New Padding(15, 10, 15, 10)
         ModernTextBox2.ReadOnly = True
-        ModernTextBox2.Size = New Size(367, 479)
+        ModernTextBox2.Size = New Size(362, 479)
         ModernTextBox2.TabIndex = 3
         ModernTextBox2.Text = "ModernTextBox2"
         ' 
@@ -139,7 +141,7 @@ Partial Class Form_v6_参数面板_参数总览
         Panel70.Location = New Point(10, 541)
         Panel70.Name = "Panel70"
         Panel70.Padding = New Padding(0, 15, 0, 0)
-        Panel70.Size = New Size(367, 50)
+        Panel70.Size = New Size(362, 50)
         Panel70.TabIndex = 39
         ' 
         ' ModernButton2
@@ -153,7 +155,7 @@ Partial Class Form_v6_参数面板_参数总览
         ModernButton2.Margin = New Padding(2)
         ModernButton2.Name = "ModernButton2"
         ModernButton2.PressedBackColor1 = SystemColors.WindowFrame
-        ModernButton2.Size = New Size(367, 35)
+        ModernButton2.Size = New Size(362, 35)
         ModernButton2.TabIndex = 3
         ModernButton2.Text = "复制命令行模版"
         ' 
@@ -167,10 +169,23 @@ Partial Class Form_v6_参数面板_参数总览
         HtmlColorLabel2.Margin = New Padding(2)
         HtmlColorLabel2.Name = "HtmlColorLabel2"
         HtmlColorLabel2.Padding = New Padding(0, 0, 0, 15)
-        HtmlColorLabel2.Size = New Size(367, 42)
+        HtmlColorLabel2.Size = New Size(362, 42)
         HtmlColorLabel2.TabIndex = 2
         HtmlColorLabel2.Text = "命令行模板"
         HtmlColorLabel2.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.Center
+        ' 
+        ' ModernPanel1
+        ' 
+        ModernPanel1.BackColor1 = Color.FromArgb(CByte(24), CByte(24), CByte(24))
+        ModernPanel1.BorderSize = 0
+        ModernPanel1.Controls.Add(Panel2)
+        ModernPanel1.Controls.Add(Panel1)
+        ModernPanel1.Dock = DockStyle.Fill
+        ModernPanel1.Location = New Point(0, 0)
+        ModernPanel1.Name = "ModernPanel1"
+        ModernPanel1.ScrollBarMode = LakeUI.ModernPanel.ScrollMode.None
+        ModernPanel1.Size = New Size(762, 611)
+        ModernPanel1.TabIndex = 2
         ' 
         ' Form_v6_参数面板_参数总览
         ' 
@@ -178,8 +193,7 @@ Partial Class Form_v6_参数面板_参数总览
         AutoScaleMode = AutoScaleMode.Dpi
         BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         ClientSize = New Size(762, 611)
-        Controls.Add(Panel2)
-        Controls.Add(Panel1)
+        Controls.Add(ModernPanel1)
         Font = New Font("Microsoft YaHei UI", 10F)
         ForeColor = Color.Silver
         Name = "Form_v6_参数面板_参数总览"
@@ -190,6 +204,7 @@ Partial Class Form_v6_参数面板_参数总览
         Panel2.ResumeLayout(False)
         Panel2.PerformLayout()
         Panel70.ResumeLayout(False)
+        ModernPanel1.ResumeLayout(False)
         ResumeLayout(False)
     End Sub
 
@@ -203,4 +218,5 @@ Partial Class Form_v6_参数面板_参数总览
     Friend WithEvents Panel3 As Panel
     Friend WithEvents ModernButton1 As LakeUI.ModernButton
     Friend WithEvents ModernButton2 As LakeUI.ModernButton
+    Friend WithEvents ModernPanel1 As LakeUI.ModernPanel
 End Class

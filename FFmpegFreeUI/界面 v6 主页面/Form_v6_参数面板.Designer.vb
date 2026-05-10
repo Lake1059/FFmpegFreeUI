@@ -42,15 +42,15 @@ Partial Class Form_v6_参数面板
         Dim ModernTabPage18 As LakeUI.ModernTabListControl.ModernTabPage = New LakeUI.ModernTabListControl.ModernTabPage()
         Dim ModernTabPage19 As LakeUI.ModernTabListControl.ModernTabPage = New LakeUI.ModernTabListControl.ModernTabPage()
         Dim ModernTabPage20 As LakeUI.ModernTabListControl.ModernTabPage = New LakeUI.ModernTabListControl.ModernTabPage()
-        Dim ModernTabPage21 As LakeUI.ModernTabListControl.ModernTabPage = New LakeUI.ModernTabListControl.ModernTabPage()
         ModernTabListControl1 = New LakeUI.ModernTabListControl()
+        ModernPanel1 = New LakeUI.ModernPanel()
+        ModernPanel1.SuspendLayout()
         SuspendLayout()
         ' 
         ' ModernTabListControl1
         ' 
         ModernTabListControl1.AnimationDuration = 0
         ModernTabListControl1.BackColor = Color.Transparent
-        ModernTabListControl1.ContentBackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         ModernTabListControl1.Dock = DockStyle.Fill
         ModernTabPage1.Text = "参数总览"
         ModernTabPage2.Text = "预设管理"
@@ -62,17 +62,16 @@ Partial Class Form_v6_参数面板
         ModernTabPage8.Text = "视频参数 | 画面帧"
         ModernTabPage9.Text = "视频参数 | 质量"
         ModernTabPage10.Text = "视频参数 | 色彩管理"
-        ModernTabPage11.Text = "视频参数 | 后处理"
-        ModernTabPage12.Text = "视频帧服务器"
-        ModernTabPage13.IsSeparator = True
-        ModernTabPage14.Text = "音频参数"
-        ModernTabPage15.IsSeparator = True
-        ModernTabPage16.Text = "剪辑区间"
-        ModernTabPage17.Text = "滤镜排序"
-        ModernTabPage18.Text = "自定义参数"
-        ModernTabPage19.Text = "流控制"
-        ModernTabPage20.IsSeparator = True
-        ModernTabPage21.Text = "附加内容"
+        ModernTabPage11.Text = "视频帧服务器"
+        ModernTabPage12.IsSeparator = True
+        ModernTabPage13.Text = "音频参数"
+        ModernTabPage14.IsSeparator = True
+        ModernTabPage15.Text = "剪辑区间"
+        ModernTabPage16.Text = "滤镜排序"
+        ModernTabPage17.Text = "自定义参数"
+        ModernTabPage18.Text = "流控制"
+        ModernTabPage19.IsSeparator = True
+        ModernTabPage20.Text = "附加内容"
         ModernTabListControl1.Items.Add(ModernTabPage1)
         ModernTabListControl1.Items.Add(ModernTabPage2)
         ModernTabListControl1.Items.Add(ModernTabPage3)
@@ -93,16 +92,33 @@ Partial Class Form_v6_参数面板
         ModernTabListControl1.Items.Add(ModernTabPage18)
         ModernTabListControl1.Items.Add(ModernTabPage19)
         ModernTabListControl1.Items.Add(ModernTabPage20)
-        ModernTabListControl1.Items.Add(ModernTabPage21)
         ModernTabListControl1.Location = New Point(0, 0)
         ModernTabListControl1.Name = "ModernTabListControl1"
+        ModernTabListControl1.ScrollBarThumbColor = Color.FromArgb(CByte(40), CByte(200), CByte(200), CByte(200))
+        ModernTabListControl1.ScrollBarThumbHoverColor = Color.FromArgb(CByte(80), CByte(200), CByte(200), CByte(200))
+        ModernTabListControl1.ScrollBarTrackColor = Color.FromArgb(CByte(20), CByte(200), CByte(200), CByte(200))
         ModernTabListControl1.ScrollBarWidth = 8
+        ModernTabListControl1.SeparatorColor = Color.FromArgb(CByte(80), CByte(200), CByte(200), CByte(200))
         ModernTabListControl1.Size = New Size(959, 653)
         ModernTabListControl1.TabIndex = 1
         ModernTabListControl1.TabItemHeight = 32
+        ModernTabListControl1.TabItemHoverBackColor = Color.FromArgb(CByte(40), CByte(200), CByte(200), CByte(200))
+        ModernTabListControl1.TabItemSelectedBackColor = Color.FromArgb(CByte(80), CByte(200), CByte(200), CByte(200))
         ModernTabListControl1.TabItemSpacing = 0
         ModernTabListControl1.TabStripBackColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
         ModernTabListControl1.TabStripWidth = 210
+        ' 
+        ' ModernPanel1
+        ' 
+        ModernPanel1.BackColor1 = Color.Transparent
+        ModernPanel1.BorderSize = 0
+        ModernPanel1.Controls.Add(ModernTabListControl1)
+        ModernPanel1.Dock = DockStyle.Fill
+        ModernPanel1.Location = New Point(0, 0)
+        ModernPanel1.Name = "ModernPanel1"
+        ModernPanel1.ScrollBarMode = LakeUI.ModernPanel.ScrollMode.None
+        ModernPanel1.Size = New Size(959, 653)
+        ModernPanel1.TabIndex = 2
         ' 
         ' Form_v6_参数面板
         ' 
@@ -110,13 +126,15 @@ Partial Class Form_v6_参数面板
         AutoScaleMode = AutoScaleMode.Dpi
         BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         ClientSize = New Size(959, 653)
-        Controls.Add(ModernTabListControl1)
+        Controls.Add(ModernPanel1)
         Font = New Font("Microsoft YaHei UI", 10F)
         ForeColor = Color.Silver
         Name = "Form_v6_参数面板"
         Text = "Form_v6_参数面板"
+        ModernPanel1.ResumeLayout(False)
         ResumeLayout(False)
     End Sub
 
     Friend WithEvents ModernTabListControl1 As LakeUI.ModernTabListControl
+    Friend WithEvents ModernPanel1 As LakeUI.ModernPanel
 End Class

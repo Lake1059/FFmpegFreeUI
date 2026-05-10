@@ -51,7 +51,6 @@ Partial Class FormMain_v6
         ' 
         ModernTabListControl1.AnimationDuration = 0
         ModernTabListControl1.BackColor = Color.Transparent
-        ModernTabListControl1.ContentBackColor = Color.Transparent
         ModernTabListControl1.Controls.Add(ModernTextBox1)
         ModernTabListControl1.Dock = DockStyle.Fill
         ModernTabPage1.IsDescription = True
@@ -91,6 +90,9 @@ Partial Class FormMain_v6
         ModernTabListControl1.Items.Add(ModernTabPage17)
         ModernTabListControl1.Location = New Point(0, 0)
         ModernTabListControl1.Name = "ModernTabListControl1"
+        ModernTabListControl1.ScrollBarThumbColor = Color.FromArgb(CByte(40), CByte(200), CByte(200), CByte(200))
+        ModernTabListControl1.ScrollBarThumbHoverColor = Color.FromArgb(CByte(80), CByte(200), CByte(200), CByte(200))
+        ModernTabListControl1.ScrollBarTrackColor = Color.FromArgb(CByte(20), CByte(200), CByte(200), CByte(200))
         ModernTabListControl1.ScrollBarWidth = 8
         ModernTabListControl1.SearchBoxControl = ModernTextBox1
         ModernTabListControl1.SeparatorColor = Color.FromArgb(CByte(80), CByte(200), CByte(200), CByte(200))
@@ -100,15 +102,15 @@ Partial Class FormMain_v6
         ModernTabListControl1.TabItemHoverBackColor = Color.FromArgb(CByte(40), CByte(200), CByte(200), CByte(200))
         ModernTabListControl1.TabItemSelectedBackColor = Color.FromArgb(CByte(80), CByte(200), CByte(200), CByte(200))
         ModernTabListControl1.TabItemSpacing = 0
-        ModernTabListControl1.TabStripBackColor = Color.Transparent
         ModernTabListControl1.TabStripWidth = 200
         ' 
         ' ModernTextBox1
         ' 
-        ModernTextBox1.BackColor = Color.Transparent
-        ModernTextBox1.BackColor1 = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
+        ModernTextBox1.BackColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        ModernTextBox1.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        ModernTextBox1.BorderColor = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
+        ModernTextBox1.BorderColorFocus = Color.FromArgb(CByte(120), CByte(220), CByte(220), CByte(220))
         ModernTextBox1.BorderRadius = 5
-        ModernTextBox1.BorderSize = 0
         ModernTextBox1.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
         ModernTextBox1.Location = New Point(10, 10)
         ModernTextBox1.Margin = New Padding(2, 2, 2, 2)
@@ -125,13 +127,13 @@ Partial Class FormMain_v6
         ThisIsYourWindow1.BackdropBlurPasses = 1
         ThisIsYourWindow1.BackdropBlurRadius = 1
         ThisIsYourWindow1.BackdropImage = CType(resources.GetObject("ThisIsYourWindow1.BackdropImage"), Image)
-        ThisIsYourWindow1.BackdropMaxParallelism = 6
+        ThisIsYourWindow1.BackdropMaxParallelism = 4
         ThisIsYourWindow1.BackdropMode = LakeUI.ThisIsYourWindow.BackdropModeEnum.Image
-        ThisIsYourWindow1.BackdropTintColor = Color.FromArgb(CByte(120), CByte(0), CByte(0), CByte(0))
-        ThisIsYourWindow1.BackdropTintInactiveColor = Color.FromArgb(CByte(120), CByte(0), CByte(0), CByte(0))
-        ThisIsYourWindow1.BorderAutoColor = True
+        ThisIsYourWindow1.BackdropTintColor = Color.FromArgb(CByte(160), CByte(0), CByte(0), CByte(0))
+        ThisIsYourWindow1.BackdropTintInactiveColor = Color.FromArgb(CByte(160), CByte(0), CByte(0), CByte(0))
         ThisIsYourWindow1.BorderColor = Color.MediumPurple
         ThisIsYourWindow1.BorderInactiveColor = Color.MediumPurple
+        ThisIsYourWindow1.BorderSize = 0
         ThisIsYourWindow1.ButtonCornerRadius = 6
         ThisIsYourWindow1.ButtonGlyphLineWidth = 2F
         ThisIsYourWindow1.ButtonGlyphSize = 12

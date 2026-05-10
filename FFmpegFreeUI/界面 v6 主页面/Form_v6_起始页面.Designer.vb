@@ -66,7 +66,6 @@ Partial Class Form_v6_起始页面
         ' 
         ' ModernPanel2
         ' 
-        ModernPanel2.BackColor = Color.Transparent
         ModernPanel2.BackColor1 = Color.Transparent
         ModernPanel2.BorderRadius = 10
         ModernPanel2.BorderSize = 0
@@ -118,6 +117,7 @@ Partial Class Form_v6_起始页面
         ModernComboBox1.DropDownBorderSize = 2
         ModernComboBox1.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
         ModernComboBox1.DropDownPadding = New Padding(10)
+        ModernComboBox1.DropDownScrollBarHoverColor = Color.FromArgb(CByte(200), CByte(200), CByte(200))
         ModernComboBox1.Items.Add("清理 3FUI 内存 (GC)")
         ModernComboBox1.Items.Add("清理 3FUI 内存 (内核)")
         ModernComboBox1.Location = New Point(0, 28)
@@ -138,31 +138,30 @@ Partial Class Form_v6_起始页面
         ' 
         HtmlColorLabel1.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel1.Dock = DockStyle.Fill
-        HtmlColorLabel1.Font = New Font("Microsoft YaHei UI", 14F)
+        HtmlColorLabel1.Font = New Font("Microsoft YaHei UI", 15F)
         HtmlColorLabel1.LineSpacing = 5
-        HtmlColorLabel1.Location = New Point(90, 20)
+        HtmlColorLabel1.Location = New Point(80, 20)
         HtmlColorLabel1.Margin = New Padding(2)
         HtmlColorLabel1.Name = "HtmlColorLabel1"
         HtmlColorLabel1.Padding = New Padding(15, 0, 0, 0)
-        HtmlColorLabel1.Size = New Size(824, 60)
+        HtmlColorLabel1.Size = New Size(834, 60)
         HtmlColorLabel1.TabIndex = 1
-        HtmlColorLabel1.Text = "FFmpegFreeUI 6.0.0 Dev.1 ReDesign With LakeUI<br><span style=""font-size:10pt; color:CornflowerBlue"">将 ffmpeg、ffplay、ffprobe 加入环境变量或放置于当前目录即可调用</span>"
+        HtmlColorLabel1.Text = "<b>FFmpegFreeUI 6.0.0 Dev.1 ReDesign With LakeUI</b><br><span style=""font-size:10pt; color:CornflowerBlue"">将 ffmpeg、ffplay、ffprobe 加入环境变量或放置于当前目录即可调用</span>"
         HtmlColorLabel1.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
         ' 
         ' ModernPanel3
         ' 
-        ModernPanel3.BackColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
         ModernPanel3.BackColor1 = Color.Transparent
         ModernPanel3.BorderColor = Color.FromArgb(CByte(56), CByte(56), CByte(56))
         ModernPanel3.BorderRadius = 10
         ModernPanel3.BorderSize = 0
         ModernPanel3.Dock = DockStyle.Left
         ModernPanel3.Image = CType(resources.GetObject("ModernPanel3.Image"), Image)
-        ModernPanel3.ImageMode = LakeUI.ModernPanel.ImageFillMode.Zoom
         ModernPanel3.Location = New Point(20, 20)
         ModernPanel3.Name = "ModernPanel3"
         ModernPanel3.ScrollBarMode = LakeUI.ModernPanel.ScrollMode.None
-        ModernPanel3.Size = New Size(70, 60)
+        ModernPanel3.Size = New Size(60, 60)
+        ModernPanel3.SuperSamplingScale = LakeUI.Class1.SuperSamplingScaleEnum.x2
         ModernPanel3.TabIndex = 0
         ' 
         ' ModernPanel1

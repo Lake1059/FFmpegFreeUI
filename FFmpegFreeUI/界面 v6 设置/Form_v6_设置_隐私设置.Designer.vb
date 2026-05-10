@@ -24,9 +24,9 @@ Partial Class Form_v6_设置_隐私设置
     Private Sub InitializeComponent()
         ModernPanel1 = New LakeUI.ModernPanel()
         Panel2 = New Panel()
-        HtmlColorLabel1 = New LakeUI.HtmlColorLabel()
-        HtmlColorLabel2 = New LakeUI.HtmlColorLabel()
         BooleanSwitch1 = New LakeUI.BooleanSwitch()
+        HtmlColorLabel2 = New LakeUI.HtmlColorLabel()
+        HtmlColorLabel1 = New LakeUI.HtmlColorLabel()
         ModernPanel1.SuspendLayout()
         Panel2.SuspendLayout()
         SuspendLayout()
@@ -56,18 +56,17 @@ Partial Class Form_v6_设置_隐私设置
         Panel2.Size = New Size(637, 42)
         Panel2.TabIndex = 11
         ' 
-        ' HtmlColorLabel1
+        ' BooleanSwitch1
         ' 
-        HtmlColorLabel1.AutoSize = True
-        HtmlColorLabel1.AutoSizeMode = AutoSizeMode.GrowAndShrink
-        HtmlColorLabel1.Dock = DockStyle.Top
-        HtmlColorLabel1.Location = New Point(20, 20)
-        HtmlColorLabel1.Margin = New Padding(2)
-        HtmlColorLabel1.Name = "HtmlColorLabel1"
-        HtmlColorLabel1.Padding = New Padding(0, 0, 0, 5)
-        HtmlColorLabel1.Size = New Size(637, 30)
-        HtmlColorLabel1.TabIndex = 10
-        HtmlColorLabel1.Text = "<span style=""font-size:13"">隐私设置</span>"
+        BooleanSwitch1.Dock = DockStyle.Left
+        BooleanSwitch1.KnobColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
+        BooleanSwitch1.Location = New Point(0, 10)
+        BooleanSwitch1.Margin = New Padding(2, 2, 2, 2)
+        BooleanSwitch1.Name = "BooleanSwitch1"
+        BooleanSwitch1.Size = New Size(55, 32)
+        BooleanSwitch1.TabIndex = 0
+        BooleanSwitch1.TrackColorOff = Color.IndianRed
+        BooleanSwitch1.TrackColorOn = Color.OliveDrab
         ' 
         ' HtmlColorLabel2
         ' 
@@ -82,17 +81,18 @@ Partial Class Form_v6_设置_隐私设置
         HtmlColorLabel2.TabIndex = 12
         HtmlColorLabel2.Text = "这可以让我知道有多少人正在使用 3FUI<br>此过程不会收集任何信息，如果您有任何需求，可以随时关闭"
         ' 
-        ' BooleanSwitch1
+        ' HtmlColorLabel1
         ' 
-        BooleanSwitch1.Dock = DockStyle.Left
-        BooleanSwitch1.KnobColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
-        BooleanSwitch1.Location = New Point(0, 10)
-        BooleanSwitch1.Margin = New Padding(2, 2, 2, 2)
-        BooleanSwitch1.Name = "BooleanSwitch1"
-        BooleanSwitch1.Size = New Size(55, 32)
-        BooleanSwitch1.TabIndex = 0
-        BooleanSwitch1.TrackColorOff = Color.IndianRed
-        BooleanSwitch1.TrackColorOn = Color.OliveDrab
+        HtmlColorLabel1.AutoSize = True
+        HtmlColorLabel1.AutoSizeMode = AutoSizeMode.GrowAndShrink
+        HtmlColorLabel1.Dock = DockStyle.Top
+        HtmlColorLabel1.Location = New Point(20, 20)
+        HtmlColorLabel1.Margin = New Padding(2)
+        HtmlColorLabel1.Name = "HtmlColorLabel1"
+        HtmlColorLabel1.Padding = New Padding(0, 0, 0, 5)
+        HtmlColorLabel1.Size = New Size(637, 30)
+        HtmlColorLabel1.TabIndex = 10
+        HtmlColorLabel1.Text = "<span style=""font-size:13"">隐私设置</span>"
         ' 
         ' Form_v6_设置_隐私设置
         ' 

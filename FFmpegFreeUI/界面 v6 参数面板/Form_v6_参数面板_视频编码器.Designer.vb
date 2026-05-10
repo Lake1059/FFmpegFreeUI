@@ -334,6 +334,7 @@ Partial Class Form_v6_参数面板_视频编码器
         Panel7.Padding = New Padding(0, 10, 0, 0)
         Panel7.Size = New Size(862, 42)
         Panel7.TabIndex = 14
+        Panel7.Visible = False
         ' 
         ' HtmlColorLabel7
         ' 

@@ -38,12 +38,14 @@ Partial Class Form_v6_设置
         Dim ModernTabPage14 As LakeUI.ModernTabListControl.ModernTabPage = New LakeUI.ModernTabListControl.ModernTabPage()
         Dim ModernTabPage15 As LakeUI.ModernTabListControl.ModernTabPage = New LakeUI.ModernTabListControl.ModernTabPage()
         Dim ModernTabPage16 As LakeUI.ModernTabListControl.ModernTabPage = New LakeUI.ModernTabListControl.ModernTabPage()
+        Dim ModernTabPage17 As LakeUI.ModernTabListControl.ModernTabPage = New LakeUI.ModernTabListControl.ModernTabPage()
         ModernTabListControl1 = New LakeUI.ModernTabListControl()
+        ModernPanel1 = New LakeUI.ModernPanel()
+        ModernPanel1.SuspendLayout()
         SuspendLayout()
         ' 
         ' ModernTabListControl1
         ' 
-        ModernTabListControl1.ContentBackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         ModernTabListControl1.Dock = DockStyle.Fill
         ModernTabPage1.IsDescription = True
         ModernTabPage1.Text = "界面主框架 - 湖界"
@@ -60,10 +62,11 @@ Partial Class Form_v6_设置
         ModernTabPage11.Text = "更新选项"
         ModernTabPage12.Text = "隐私设置"
         ModernTabPage13.Text = "远程调用"
-        ModernTabPage14.IsSeparator = True
-        ModernTabPage15.IsDescription = True
-        ModernTabPage15.Text = "支持者内容包"
-        ModernTabPage16.Text = "个性化"
+        ModernTabPage14.Text = "Agent 设置"
+        ModernTabPage15.IsSeparator = True
+        ModernTabPage16.IsDescription = True
+        ModernTabPage16.Text = "支持者内容包"
+        ModernTabPage17.Text = "个性化"
         ModernTabListControl1.Items.Add(ModernTabPage1)
         ModernTabListControl1.Items.Add(ModernTabPage2)
         ModernTabListControl1.Items.Add(ModernTabPage3)
@@ -80,15 +83,33 @@ Partial Class Form_v6_设置
         ModernTabListControl1.Items.Add(ModernTabPage14)
         ModernTabListControl1.Items.Add(ModernTabPage15)
         ModernTabListControl1.Items.Add(ModernTabPage16)
+        ModernTabListControl1.Items.Add(ModernTabPage17)
         ModernTabListControl1.Location = New Point(0, 0)
         ModernTabListControl1.Name = "ModernTabListControl1"
+        ModernTabListControl1.ScrollBarThumbColor = Color.FromArgb(CByte(40), CByte(200), CByte(200), CByte(200))
+        ModernTabListControl1.ScrollBarThumbHoverColor = Color.FromArgb(CByte(80), CByte(200), CByte(200), CByte(200))
+        ModernTabListControl1.ScrollBarTrackColor = Color.FromArgb(CByte(20), CByte(200), CByte(200), CByte(200))
         ModernTabListControl1.ScrollBarWidth = 8
+        ModernTabListControl1.SeparatorColor = Color.FromArgb(CByte(80), CByte(200), CByte(200), CByte(200))
         ModernTabListControl1.Size = New Size(904, 622)
         ModernTabListControl1.TabIndex = 2
         ModernTabListControl1.TabItemHeight = 32
+        ModernTabListControl1.TabItemHoverBackColor = Color.FromArgb(CByte(40), CByte(200), CByte(200), CByte(200))
+        ModernTabListControl1.TabItemSelectedBackColor = Color.FromArgb(CByte(80), CByte(200), CByte(200), CByte(200))
         ModernTabListControl1.TabItemSpacing = 0
         ModernTabListControl1.TabStripBackColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
         ModernTabListControl1.TabStripWidth = 200
+        ' 
+        ' ModernPanel1
+        ' 
+        ModernPanel1.BorderSize = 0
+        ModernPanel1.Controls.Add(ModernTabListControl1)
+        ModernPanel1.Dock = DockStyle.Fill
+        ModernPanel1.Location = New Point(0, 0)
+        ModernPanel1.Name = "ModernPanel1"
+        ModernPanel1.ScrollBarMode = LakeUI.ModernPanel.ScrollMode.None
+        ModernPanel1.Size = New Size(904, 622)
+        ModernPanel1.TabIndex = 3
         ' 
         ' Form_v6_设置
         ' 
@@ -96,13 +117,15 @@ Partial Class Form_v6_设置
         AutoScaleMode = AutoScaleMode.Dpi
         BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         ClientSize = New Size(904, 622)
-        Controls.Add(ModernTabListControl1)
+        Controls.Add(ModernPanel1)
         Font = New Font("Microsoft YaHei UI", 10F)
         ForeColor = Color.Silver
         Name = "Form_v6_设置"
         Text = "Form_v6_设置"
+        ModernPanel1.ResumeLayout(False)
         ResumeLayout(False)
     End Sub
 
     Friend WithEvents ModernTabListControl1 As LakeUI.ModernTabListControl
+    Friend WithEvents ModernPanel1 As LakeUI.ModernPanel
 End Class

@@ -24,11 +24,11 @@ Partial Class Form_v6_设置_界面显示
     Private Sub InitializeComponent()
         ModernPanel1 = New LakeUI.ModernPanel()
         Panel1 = New Panel()
-        ModernComboBox2 = New LakeUI.ModernComboBox()
+        MCB_编码队列列宽调整模式 = New LakeUI.ModernComboBox()
         HtmlColorLabel2 = New LakeUI.HtmlColorLabel()
         Panel2 = New Panel()
         HtmlColorLabel6 = New LakeUI.HtmlColorLabel()
-        ModernComboBox1 = New LakeUI.ModernComboBox()
+        MCB_全局字体 = New LakeUI.ModernComboBox()
         HtmlColorLabel1 = New LakeUI.HtmlColorLabel()
         ModernPanel1.SuspendLayout()
         Panel1.SuspendLayout()
@@ -53,59 +53,59 @@ Partial Class Form_v6_设置_界面显示
         ' 
         ' Panel1
         ' 
-        Panel1.Controls.Add(ModernComboBox2)
+        Panel1.Controls.Add(MCB_编码队列列宽调整模式)
         Panel1.Dock = DockStyle.Top
-        Panel1.Location = New Point(20, 142)
+        Panel1.Location = New Point(20, 132)
         Panel1.Name = "Panel1"
         Panel1.Padding = New Padding(0, 10, 0, 0)
         Panel1.Size = New Size(712, 42)
         Panel1.TabIndex = 13
         ' 
-        ' ModernComboBox2
+        ' MCB_编码队列列宽调整模式
         ' 
-        ModernComboBox2.BackColor1 = Color.FromArgb(CByte(64), CByte(64), CByte(64))
-        ModernComboBox2.BorderColorFocus = Color.Silver
-        ModernComboBox2.BorderRadius = 10
-        ModernComboBox2.BorderSize = 0
-        ModernComboBox2.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
-        ModernComboBox2.Dock = DockStyle.Left
-        ModernComboBox2.DropDownBorderSize = 2
-        ModernComboBox2.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
-        ModernComboBox2.DropDownPadding = New Padding(10)
-        ModernComboBox2.DropDownScrollBarHoverColor = Color.FromArgb(CByte(200), CByte(200), CByte(200))
-        ModernComboBox2.Items.Add("DPI（控件默认行为）")
-        ModernComboBox2.Items.Add("百分比（计算比例）")
-        ModernComboBox2.Location = New Point(0, 10)
-        ModernComboBox2.Margin = New Padding(2, 2, 2, 2)
-        ModernComboBox2.MaxDropDownItems = 15
-        ModernComboBox2.Name = "ModernComboBox2"
-        ModernComboBox2.Padding = New Padding(10, 0, 10, 0)
-        ModernComboBox2.Size = New Size(200, 32)
-        ModernComboBox2.TabIndex = 0
-        ModernComboBox2.ToolTipBorderSize = 2
-        ModernComboBox2.ToolTipGap = 10
-        ModernComboBox2.ToolTipMaxWidth = 350
-        ModernComboBox2.ToolTipPadding = New Padding(15)
+        MCB_编码队列列宽调整模式.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MCB_编码队列列宽调整模式.BorderColorFocus = Color.Silver
+        MCB_编码队列列宽调整模式.BorderRadius = 10
+        MCB_编码队列列宽调整模式.BorderSize = 0
+        MCB_编码队列列宽调整模式.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
+        MCB_编码队列列宽调整模式.Dock = DockStyle.Left
+        MCB_编码队列列宽调整模式.DropDownBorderSize = 2
+        MCB_编码队列列宽调整模式.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
+        MCB_编码队列列宽调整模式.DropDownPadding = New Padding(10)
+        MCB_编码队列列宽调整模式.DropDownScrollBarHoverColor = Color.FromArgb(CByte(200), CByte(200), CByte(200))
+        MCB_编码队列列宽调整模式.Items.Add("DPI（控件默认行为）")
+        MCB_编码队列列宽调整模式.Items.Add("百分比（计算比例）")
+        MCB_编码队列列宽调整模式.Location = New Point(0, 10)
+        MCB_编码队列列宽调整模式.Margin = New Padding(2, 2, 2, 2)
+        MCB_编码队列列宽调整模式.MaxDropDownItems = 15
+        MCB_编码队列列宽调整模式.Name = "MCB_编码队列列宽调整模式"
+        MCB_编码队列列宽调整模式.Padding = New Padding(10, 0, 10, 0)
+        MCB_编码队列列宽调整模式.Size = New Size(200, 32)
+        MCB_编码队列列宽调整模式.TabIndex = 0
+        MCB_编码队列列宽调整模式.ToolTipBorderSize = 2
+        MCB_编码队列列宽调整模式.ToolTipGap = 10
+        MCB_编码队列列宽调整模式.ToolTipMaxWidth = 350
+        MCB_编码队列列宽调整模式.ToolTipPadding = New Padding(15)
         ' 
         ' HtmlColorLabel2
         ' 
         HtmlColorLabel2.AutoSize = True
         HtmlColorLabel2.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel2.Dock = DockStyle.Top
-        HtmlColorLabel2.Location = New Point(20, 92)
+        HtmlColorLabel2.Location = New Point(20, 87)
         HtmlColorLabel2.Margin = New Padding(2)
         HtmlColorLabel2.Name = "HtmlColorLabel2"
-        HtmlColorLabel2.Padding = New Padding(0, 20, 0, 5)
-        HtmlColorLabel2.Size = New Size(712, 50)
+        HtmlColorLabel2.Padding = New Padding(0, 20, 0, 0)
+        HtmlColorLabel2.Size = New Size(712, 45)
         HtmlColorLabel2.TabIndex = 12
         HtmlColorLabel2.Text = "<span style=""font-size:13"">编码队列 - 列宽调整模式</span>"
         ' 
         ' Panel2
         ' 
         Panel2.Controls.Add(HtmlColorLabel6)
-        Panel2.Controls.Add(ModernComboBox1)
+        Panel2.Controls.Add(MCB_全局字体)
         Panel2.Dock = DockStyle.Top
-        Panel2.Location = New Point(20, 50)
+        Panel2.Location = New Point(20, 45)
         Panel2.Name = "Panel2"
         Panel2.Padding = New Padding(0, 10, 0, 0)
         Panel2.Size = New Size(712, 42)
@@ -124,29 +124,28 @@ Partial Class Form_v6_设置_界面显示
         HtmlColorLabel6.Text = "敏捷的棕色狐狸跳过了懒惰的狗。"
         HtmlColorLabel6.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
         ' 
-        ' ModernComboBox1
+        ' MCB_全局字体
         ' 
-        ModernComboBox1.BackColor1 = Color.FromArgb(CByte(64), CByte(64), CByte(64))
-        ModernComboBox1.BorderColorFocus = Color.Silver
-        ModernComboBox1.BorderRadius = 10
-        ModernComboBox1.BorderSize = 0
-        ModernComboBox1.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
-        ModernComboBox1.Dock = DockStyle.Left
-        ModernComboBox1.DropDownBorderSize = 2
-        ModernComboBox1.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
-        ModernComboBox1.DropDownPadding = New Padding(10)
-        ModernComboBox1.DropDownScrollBarHoverColor = Color.FromArgb(CByte(200), CByte(200), CByte(200))
-        ModernComboBox1.Location = New Point(0, 10)
-        ModernComboBox1.Margin = New Padding(2, 2, 2, 2)
-        ModernComboBox1.MaxDropDownItems = 15
-        ModernComboBox1.Name = "ModernComboBox1"
-        ModernComboBox1.Padding = New Padding(10, 0, 10, 0)
-        ModernComboBox1.Size = New Size(200, 32)
-        ModernComboBox1.TabIndex = 0
-        ModernComboBox1.ToolTipBorderSize = 2
-        ModernComboBox1.ToolTipGap = 10
-        ModernComboBox1.ToolTipMaxWidth = 350
-        ModernComboBox1.ToolTipPadding = New Padding(15)
+        MCB_全局字体.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MCB_全局字体.BorderColorFocus = Color.Silver
+        MCB_全局字体.BorderRadius = 10
+        MCB_全局字体.BorderSize = 0
+        MCB_全局字体.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
+        MCB_全局字体.Dock = DockStyle.Left
+        MCB_全局字体.DropDownBorderSize = 2
+        MCB_全局字体.DropDownPadding = New Padding(10)
+        MCB_全局字体.DropDownScrollBarHoverColor = Color.FromArgb(CByte(200), CByte(200), CByte(200))
+        MCB_全局字体.Location = New Point(0, 10)
+        MCB_全局字体.Margin = New Padding(2, 2, 2, 2)
+        MCB_全局字体.MaxDropDownItems = 15
+        MCB_全局字体.Name = "MCB_全局字体"
+        MCB_全局字体.Padding = New Padding(10, 0, 10, 0)
+        MCB_全局字体.Size = New Size(200, 32)
+        MCB_全局字体.TabIndex = 0
+        MCB_全局字体.ToolTipBorderSize = 2
+        MCB_全局字体.ToolTipGap = 10
+        MCB_全局字体.ToolTipMaxWidth = 350
+        MCB_全局字体.ToolTipPadding = New Padding(15)
         ' 
         ' HtmlColorLabel1
         ' 
@@ -156,10 +155,9 @@ Partial Class Form_v6_设置_界面显示
         HtmlColorLabel1.Location = New Point(20, 20)
         HtmlColorLabel1.Margin = New Padding(2)
         HtmlColorLabel1.Name = "HtmlColorLabel1"
-        HtmlColorLabel1.Padding = New Padding(0, 0, 0, 5)
-        HtmlColorLabel1.Size = New Size(712, 30)
+        HtmlColorLabel1.Size = New Size(712, 25)
         HtmlColorLabel1.TabIndex = 10
-        HtmlColorLabel1.Text = "<span style=""font-size:13"">全局字体</span>   <span style=""font-size:10pt; color:Gray"">如系统缩放小于 150% 则推荐使用 MacType 来改善文字视觉体验</span>"
+        HtmlColorLabel1.Text = "<span style=""font-size:13"">全局字体</span>   <span style=""font-size:10pt; color:Gray"">在 150% 以及更低 DPI 下使用可以尝试 LakeUI 视觉中的矢量几何绘制</span>"
         ' 
         ' Form_v6_设置_界面显示
         ' 
@@ -182,9 +180,9 @@ Partial Class Form_v6_设置_界面显示
     Friend WithEvents ModernPanel1 As LakeUI.ModernPanel
     Friend WithEvents HtmlColorLabel1 As LakeUI.HtmlColorLabel
     Friend WithEvents Panel2 As Panel
-    Friend WithEvents ModernComboBox1 As LakeUI.ModernComboBox
+    Friend WithEvents MCB_全局字体 As LakeUI.ModernComboBox
     Friend WithEvents HtmlColorLabel2 As LakeUI.HtmlColorLabel
     Friend WithEvents HtmlColorLabel6 As LakeUI.HtmlColorLabel
     Friend WithEvents Panel1 As Panel
-    Friend WithEvents ModernComboBox2 As LakeUI.ModernComboBox
+    Friend WithEvents MCB_编码队列列宽调整模式 As LakeUI.ModernComboBox
 End Class

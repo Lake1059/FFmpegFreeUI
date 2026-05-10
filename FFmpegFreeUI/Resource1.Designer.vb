@@ -75,6 +75,16 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  查找 System.Drawing.Bitmap 类型的本地化资源。
+        '''</summary>
+        Public Shared ReadOnly Property SP_默认背景图() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("SP_默认背景图", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  查找类似于 System.IO.MemoryStream 的 System.IO.UnmanagedMemoryStream 类型的本地化资源。
         '''</summary>
         Public Shared ReadOnly Property 完成() As System.IO.UnmanagedMemoryStream

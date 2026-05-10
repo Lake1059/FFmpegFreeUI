@@ -25,28 +25,30 @@ Partial Class Form_v6_设置_功能设定
         ModernPanel1 = New LakeUI.ModernPanel()
         Panel8 = New Panel()
         HtmlColorLabel8 = New LakeUI.HtmlColorLabel()
-        ModernComboBox8 = New LakeUI.ModernComboBox()
+        MCB_任务失败删除文件 = New LakeUI.ModernComboBox()
         Panel7 = New Panel()
         HtmlColorLabel7 = New LakeUI.HtmlColorLabel()
-        ModernComboBox7 = New LakeUI.ModernComboBox()
+        MCB_独立参数面板自动切预设管理 = New LakeUI.ModernComboBox()
         Panel6 = New Panel()
         HtmlColorLabel6 = New LakeUI.HtmlColorLabel()
-        ModernComboBox6 = New LakeUI.ModernComboBox()
+        MCB_任务名称混淆 = New LakeUI.ModernComboBox()
         Panel5 = New Panel()
         HtmlColorLabel5 = New LakeUI.HtmlColorLabel()
-        ModernComboBox5 = New LakeUI.ModernComboBox()
+        MCB_是否自动重置参数面板到第一个页面 = New LakeUI.ModernComboBox()
         Panel4 = New Panel()
         HtmlColorLabel4 = New LakeUI.HtmlColorLabel()
-        ModernComboBox4 = New LakeUI.ModernComboBox()
+        MCB_是否自动开始任务 = New LakeUI.ModernComboBox()
         Panel3 = New Panel()
         HtmlColorLabel3 = New LakeUI.HtmlColorLabel()
-        ModernComboBox3 = New LakeUI.ModernComboBox()
+        MCB_是否启用提示音 = New LakeUI.ModernComboBox()
         Panel1 = New Panel()
         HtmlColorLabel2 = New LakeUI.HtmlColorLabel()
-        ModernComboBox2 = New LakeUI.ModernComboBox()
+        MCB_有任务时系统状态 = New LakeUI.ModernComboBox()
         JustEmptyControl1 = New LakeUI.JustEmptyControl()
         Panel2 = New Panel()
-        ModernComboBox1 = New LakeUI.ModernComboBox()
+        MTB_工作目录 = New LakeUI.ModernTextBox()
+        JustEmptyControl2 = New LakeUI.JustEmptyControl()
+        MB_浏览文件夹 = New LakeUI.ModernButton()
         HtmlColorLabel1 = New LakeUI.HtmlColorLabel()
         ModernPanel1.SuspendLayout()
         Panel8.SuspendLayout()
@@ -84,7 +86,7 @@ Partial Class Form_v6_设置_功能设定
         ' Panel8
         ' 
         Panel8.Controls.Add(HtmlColorLabel8)
-        Panel8.Controls.Add(ModernComboBox8)
+        Panel8.Controls.Add(MCB_任务失败删除文件)
         Panel8.Dock = DockStyle.Top
         Panel8.Location = New Point(20, 345)
         Panel8.Name = "Panel8"
@@ -97,7 +99,6 @@ Partial Class Form_v6_设置_功能设定
         HtmlColorLabel8.AutoSize = True
         HtmlColorLabel8.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel8.Dock = DockStyle.Fill
-        HtmlColorLabel8.Font = New Font("Microsoft YaHei UI", 11F)
         HtmlColorLabel8.Location = New Point(200, 10)
         HtmlColorLabel8.Margin = New Padding(2)
         HtmlColorLabel8.Name = "HtmlColorLabel8"
@@ -107,36 +108,36 @@ Partial Class Form_v6_设置_功能设定
         HtmlColorLabel8.Text = "任务失败时是否删除文件"
         HtmlColorLabel8.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
         ' 
-        ' ModernComboBox8
+        ' MCB_任务失败删除文件
         ' 
-        ModernComboBox8.BackColor1 = Color.FromArgb(CByte(64), CByte(64), CByte(64))
-        ModernComboBox8.BorderColorFocus = Color.Silver
-        ModernComboBox8.BorderRadius = 10
-        ModernComboBox8.BorderSize = 0
-        ModernComboBox8.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
-        ModernComboBox8.Dock = DockStyle.Left
-        ModernComboBox8.DropDownBorderSize = 2
-        ModernComboBox8.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
-        ModernComboBox8.DropDownPadding = New Padding(10)
-        ModernComboBox8.DropDownScrollBarHoverColor = Color.FromArgb(CByte(200), CByte(200), CByte(200))
-        ModernComboBox8.Items.Add("删除到回收站")
-        ModernComboBox8.Items.Add("彻底删除")
-        ModernComboBox8.Items.Add("什么都不做")
-        ModernComboBox8.Location = New Point(0, 10)
-        ModernComboBox8.Margin = New Padding(2, 2, 2, 2)
-        ModernComboBox8.Name = "ModernComboBox8"
-        ModernComboBox8.Padding = New Padding(10, 0, 10, 0)
-        ModernComboBox8.Size = New Size(200, 32)
-        ModernComboBox8.TabIndex = 0
-        ModernComboBox8.ToolTipBorderSize = 2
-        ModernComboBox8.ToolTipGap = 10
-        ModernComboBox8.ToolTipMaxWidth = 350
-        ModernComboBox8.ToolTipPadding = New Padding(15)
+        MCB_任务失败删除文件.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MCB_任务失败删除文件.BorderColorFocus = Color.Silver
+        MCB_任务失败删除文件.BorderRadius = 10
+        MCB_任务失败删除文件.BorderSize = 0
+        MCB_任务失败删除文件.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
+        MCB_任务失败删除文件.Dock = DockStyle.Left
+        MCB_任务失败删除文件.DropDownBorderSize = 2
+        MCB_任务失败删除文件.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
+        MCB_任务失败删除文件.DropDownPadding = New Padding(10)
+        MCB_任务失败删除文件.DropDownScrollBarHoverColor = Color.FromArgb(CByte(200), CByte(200), CByte(200))
+        MCB_任务失败删除文件.Items.Add("删除到回收站")
+        MCB_任务失败删除文件.Items.Add("彻底删除")
+        MCB_任务失败删除文件.Items.Add("什么都不做")
+        MCB_任务失败删除文件.Location = New Point(0, 10)
+        MCB_任务失败删除文件.Margin = New Padding(2, 2, 2, 2)
+        MCB_任务失败删除文件.Name = "MCB_任务失败删除文件"
+        MCB_任务失败删除文件.Padding = New Padding(10, 0, 10, 0)
+        MCB_任务失败删除文件.Size = New Size(200, 32)
+        MCB_任务失败删除文件.TabIndex = 0
+        MCB_任务失败删除文件.ToolTipBorderSize = 2
+        MCB_任务失败删除文件.ToolTipGap = 10
+        MCB_任务失败删除文件.ToolTipMaxWidth = 350
+        MCB_任务失败删除文件.ToolTipPadding = New Padding(15)
         ' 
         ' Panel7
         ' 
         Panel7.Controls.Add(HtmlColorLabel7)
-        Panel7.Controls.Add(ModernComboBox7)
+        Panel7.Controls.Add(MCB_独立参数面板自动切预设管理)
         Panel7.Dock = DockStyle.Top
         Panel7.Location = New Point(20, 303)
         Panel7.Name = "Panel7"
@@ -149,7 +150,6 @@ Partial Class Form_v6_设置_功能设定
         HtmlColorLabel7.AutoSize = True
         HtmlColorLabel7.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel7.Dock = DockStyle.Fill
-        HtmlColorLabel7.Font = New Font("Microsoft YaHei UI", 11F)
         HtmlColorLabel7.Location = New Point(200, 10)
         HtmlColorLabel7.Margin = New Padding(2)
         HtmlColorLabel7.Name = "HtmlColorLabel7"
@@ -159,35 +159,35 @@ Partial Class Form_v6_设置_功能设定
         HtmlColorLabel7.Text = "打开独立参数面板时要自动切到预设管理吗？"
         HtmlColorLabel7.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
         ' 
-        ' ModernComboBox7
+        ' MCB_独立参数面板自动切预设管理
         ' 
-        ModernComboBox7.BackColor1 = Color.FromArgb(CByte(64), CByte(64), CByte(64))
-        ModernComboBox7.BorderColorFocus = Color.Silver
-        ModernComboBox7.BorderRadius = 10
-        ModernComboBox7.BorderSize = 0
-        ModernComboBox7.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
-        ModernComboBox7.Dock = DockStyle.Left
-        ModernComboBox7.DropDownBorderSize = 2
-        ModernComboBox7.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
-        ModernComboBox7.DropDownPadding = New Padding(10)
-        ModernComboBox7.DropDownScrollBarHoverColor = Color.FromArgb(CByte(200), CByte(200), CByte(200))
-        ModernComboBox7.Items.Add("默认第一个页面")
-        ModernComboBox7.Items.Add("自动切到预设管理")
-        ModernComboBox7.Location = New Point(0, 10)
-        ModernComboBox7.Margin = New Padding(2, 2, 2, 2)
-        ModernComboBox7.Name = "ModernComboBox7"
-        ModernComboBox7.Padding = New Padding(10, 0, 10, 0)
-        ModernComboBox7.Size = New Size(200, 32)
-        ModernComboBox7.TabIndex = 0
-        ModernComboBox7.ToolTipBorderSize = 2
-        ModernComboBox7.ToolTipGap = 10
-        ModernComboBox7.ToolTipMaxWidth = 350
-        ModernComboBox7.ToolTipPadding = New Padding(15)
+        MCB_独立参数面板自动切预设管理.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MCB_独立参数面板自动切预设管理.BorderColorFocus = Color.Silver
+        MCB_独立参数面板自动切预设管理.BorderRadius = 10
+        MCB_独立参数面板自动切预设管理.BorderSize = 0
+        MCB_独立参数面板自动切预设管理.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
+        MCB_独立参数面板自动切预设管理.Dock = DockStyle.Left
+        MCB_独立参数面板自动切预设管理.DropDownBorderSize = 2
+        MCB_独立参数面板自动切预设管理.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
+        MCB_独立参数面板自动切预设管理.DropDownPadding = New Padding(10)
+        MCB_独立参数面板自动切预设管理.DropDownScrollBarHoverColor = Color.FromArgb(CByte(200), CByte(200), CByte(200))
+        MCB_独立参数面板自动切预设管理.Items.Add("默认第一个页面")
+        MCB_独立参数面板自动切预设管理.Items.Add("自动切到预设管理")
+        MCB_独立参数面板自动切预设管理.Location = New Point(0, 10)
+        MCB_独立参数面板自动切预设管理.Margin = New Padding(2, 2, 2, 2)
+        MCB_独立参数面板自动切预设管理.Name = "MCB_独立参数面板自动切预设管理"
+        MCB_独立参数面板自动切预设管理.Padding = New Padding(10, 0, 10, 0)
+        MCB_独立参数面板自动切预设管理.Size = New Size(200, 32)
+        MCB_独立参数面板自动切预设管理.TabIndex = 0
+        MCB_独立参数面板自动切预设管理.ToolTipBorderSize = 2
+        MCB_独立参数面板自动切预设管理.ToolTipGap = 10
+        MCB_独立参数面板自动切预设管理.ToolTipMaxWidth = 350
+        MCB_独立参数面板自动切预设管理.ToolTipPadding = New Padding(15)
         ' 
         ' Panel6
         ' 
         Panel6.Controls.Add(HtmlColorLabel6)
-        Panel6.Controls.Add(ModernComboBox6)
+        Panel6.Controls.Add(MCB_任务名称混淆)
         Panel6.Dock = DockStyle.Top
         Panel6.Location = New Point(20, 261)
         Panel6.Name = "Panel6"
@@ -200,7 +200,6 @@ Partial Class Form_v6_设置_功能设定
         HtmlColorLabel6.AutoSize = True
         HtmlColorLabel6.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel6.Dock = DockStyle.Fill
-        HtmlColorLabel6.Font = New Font("Microsoft YaHei UI", 11F)
         HtmlColorLabel6.Location = New Point(200, 10)
         HtmlColorLabel6.Margin = New Padding(2)
         HtmlColorLabel6.Name = "HtmlColorLabel6"
@@ -210,35 +209,35 @@ Partial Class Form_v6_设置_功能设定
         HtmlColorLabel6.Text = "你这任务正经吗？"
         HtmlColorLabel6.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
         ' 
-        ' ModernComboBox6
+        ' MCB_任务名称混淆
         ' 
-        ModernComboBox6.BackColor1 = Color.FromArgb(CByte(64), CByte(64), CByte(64))
-        ModernComboBox6.BorderColorFocus = Color.Silver
-        ModernComboBox6.BorderRadius = 10
-        ModernComboBox6.BorderSize = 0
-        ModernComboBox6.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
-        ModernComboBox6.Dock = DockStyle.Left
-        ModernComboBox6.DropDownBorderSize = 2
-        ModernComboBox6.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
-        ModernComboBox6.DropDownPadding = New Padding(10)
-        ModernComboBox6.DropDownScrollBarHoverColor = Color.FromArgb(CByte(200), CByte(200), CByte(200))
-        ModernComboBox6.Items.Add("默认")
-        ModernComboBox6.Items.Add("我请来了喵喵星神")
-        ModernComboBox6.Location = New Point(0, 10)
-        ModernComboBox6.Margin = New Padding(2, 2, 2, 2)
-        ModernComboBox6.Name = "ModernComboBox6"
-        ModernComboBox6.Padding = New Padding(10, 0, 10, 0)
-        ModernComboBox6.Size = New Size(200, 32)
-        ModernComboBox6.TabIndex = 0
-        ModernComboBox6.ToolTipBorderSize = 2
-        ModernComboBox6.ToolTipGap = 10
-        ModernComboBox6.ToolTipMaxWidth = 350
-        ModernComboBox6.ToolTipPadding = New Padding(15)
+        MCB_任务名称混淆.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MCB_任务名称混淆.BorderColorFocus = Color.Silver
+        MCB_任务名称混淆.BorderRadius = 10
+        MCB_任务名称混淆.BorderSize = 0
+        MCB_任务名称混淆.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
+        MCB_任务名称混淆.Dock = DockStyle.Left
+        MCB_任务名称混淆.DropDownBorderSize = 2
+        MCB_任务名称混淆.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
+        MCB_任务名称混淆.DropDownPadding = New Padding(10)
+        MCB_任务名称混淆.DropDownScrollBarHoverColor = Color.FromArgb(CByte(200), CByte(200), CByte(200))
+        MCB_任务名称混淆.Items.Add("默认")
+        MCB_任务名称混淆.Items.Add("我请来了喵喵星神")
+        MCB_任务名称混淆.Location = New Point(0, 10)
+        MCB_任务名称混淆.Margin = New Padding(2, 2, 2, 2)
+        MCB_任务名称混淆.Name = "MCB_任务名称混淆"
+        MCB_任务名称混淆.Padding = New Padding(10, 0, 10, 0)
+        MCB_任务名称混淆.Size = New Size(200, 32)
+        MCB_任务名称混淆.TabIndex = 0
+        MCB_任务名称混淆.ToolTipBorderSize = 2
+        MCB_任务名称混淆.ToolTipGap = 10
+        MCB_任务名称混淆.ToolTipMaxWidth = 350
+        MCB_任务名称混淆.ToolTipPadding = New Padding(15)
         ' 
         ' Panel5
         ' 
         Panel5.Controls.Add(HtmlColorLabel5)
-        Panel5.Controls.Add(ModernComboBox5)
+        Panel5.Controls.Add(MCB_是否自动重置参数面板到第一个页面)
         Panel5.Dock = DockStyle.Top
         Panel5.Location = New Point(20, 219)
         Panel5.Name = "Panel5"
@@ -251,7 +250,6 @@ Partial Class Form_v6_设置_功能设定
         HtmlColorLabel5.AutoSize = True
         HtmlColorLabel5.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel5.Dock = DockStyle.Fill
-        HtmlColorLabel5.Font = New Font("Microsoft YaHei UI", 11F)
         HtmlColorLabel5.Location = New Point(200, 10)
         HtmlColorLabel5.Margin = New Padding(2)
         HtmlColorLabel5.Name = "HtmlColorLabel5"
@@ -261,35 +259,35 @@ Partial Class Form_v6_设置_功能设定
         HtmlColorLabel5.Text = "从主选项卡切回参数面板是否需要重置到第一个页面"
         HtmlColorLabel5.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
         ' 
-        ' ModernComboBox5
+        ' MCB_是否自动重置参数面板到第一个页面
         ' 
-        ModernComboBox5.BackColor1 = Color.FromArgb(CByte(64), CByte(64), CByte(64))
-        ModernComboBox5.BorderColorFocus = Color.Silver
-        ModernComboBox5.BorderRadius = 10
-        ModernComboBox5.BorderSize = 0
-        ModernComboBox5.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
-        ModernComboBox5.Dock = DockStyle.Left
-        ModernComboBox5.DropDownBorderSize = 2
-        ModernComboBox5.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
-        ModernComboBox5.DropDownPadding = New Padding(10)
-        ModernComboBox5.DropDownScrollBarHoverColor = Color.FromArgb(CByte(200), CByte(200), CByte(200))
-        ModernComboBox5.Items.Add("不要自动重置页面")
-        ModernComboBox5.Items.Add("自动切到参数总览")
-        ModernComboBox5.Location = New Point(0, 10)
-        ModernComboBox5.Margin = New Padding(2, 2, 2, 2)
-        ModernComboBox5.Name = "ModernComboBox5"
-        ModernComboBox5.Padding = New Padding(10, 0, 10, 0)
-        ModernComboBox5.Size = New Size(200, 32)
-        ModernComboBox5.TabIndex = 0
-        ModernComboBox5.ToolTipBorderSize = 2
-        ModernComboBox5.ToolTipGap = 10
-        ModernComboBox5.ToolTipMaxWidth = 350
-        ModernComboBox5.ToolTipPadding = New Padding(15)
+        MCB_是否自动重置参数面板到第一个页面.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MCB_是否自动重置参数面板到第一个页面.BorderColorFocus = Color.Silver
+        MCB_是否自动重置参数面板到第一个页面.BorderRadius = 10
+        MCB_是否自动重置参数面板到第一个页面.BorderSize = 0
+        MCB_是否自动重置参数面板到第一个页面.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
+        MCB_是否自动重置参数面板到第一个页面.Dock = DockStyle.Left
+        MCB_是否自动重置参数面板到第一个页面.DropDownBorderSize = 2
+        MCB_是否自动重置参数面板到第一个页面.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
+        MCB_是否自动重置参数面板到第一个页面.DropDownPadding = New Padding(10)
+        MCB_是否自动重置参数面板到第一个页面.DropDownScrollBarHoverColor = Color.FromArgb(CByte(200), CByte(200), CByte(200))
+        MCB_是否自动重置参数面板到第一个页面.Items.Add("不要自动重置页面")
+        MCB_是否自动重置参数面板到第一个页面.Items.Add("自动切到参数总览")
+        MCB_是否自动重置参数面板到第一个页面.Location = New Point(0, 10)
+        MCB_是否自动重置参数面板到第一个页面.Margin = New Padding(2, 2, 2, 2)
+        MCB_是否自动重置参数面板到第一个页面.Name = "MCB_是否自动重置参数面板到第一个页面"
+        MCB_是否自动重置参数面板到第一个页面.Padding = New Padding(10, 0, 10, 0)
+        MCB_是否自动重置参数面板到第一个页面.Size = New Size(200, 32)
+        MCB_是否自动重置参数面板到第一个页面.TabIndex = 0
+        MCB_是否自动重置参数面板到第一个页面.ToolTipBorderSize = 2
+        MCB_是否自动重置参数面板到第一个页面.ToolTipGap = 10
+        MCB_是否自动重置参数面板到第一个页面.ToolTipMaxWidth = 350
+        MCB_是否自动重置参数面板到第一个页面.ToolTipPadding = New Padding(15)
         ' 
         ' Panel4
         ' 
         Panel4.Controls.Add(HtmlColorLabel4)
-        Panel4.Controls.Add(ModernComboBox4)
+        Panel4.Controls.Add(MCB_是否自动开始任务)
         Panel4.Dock = DockStyle.Top
         Panel4.Location = New Point(20, 177)
         Panel4.Name = "Panel4"
@@ -302,7 +300,6 @@ Partial Class Form_v6_设置_功能设定
         HtmlColorLabel4.AutoSize = True
         HtmlColorLabel4.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel4.Dock = DockStyle.Fill
-        HtmlColorLabel4.Font = New Font("Microsoft YaHei UI", 11F)
         HtmlColorLabel4.Location = New Point(200, 10)
         HtmlColorLabel4.Margin = New Padding(2)
         HtmlColorLabel4.Name = "HtmlColorLabel4"
@@ -312,35 +309,35 @@ Partial Class Form_v6_设置_功能设定
         HtmlColorLabel4.Text = "是否自动开始任务"
         HtmlColorLabel4.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
         ' 
-        ' ModernComboBox4
+        ' MCB_是否自动开始任务
         ' 
-        ModernComboBox4.BackColor1 = Color.FromArgb(CByte(64), CByte(64), CByte(64))
-        ModernComboBox4.BorderColorFocus = Color.Silver
-        ModernComboBox4.BorderRadius = 10
-        ModernComboBox4.BorderSize = 0
-        ModernComboBox4.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
-        ModernComboBox4.Dock = DockStyle.Left
-        ModernComboBox4.DropDownBorderSize = 2
-        ModernComboBox4.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
-        ModernComboBox4.DropDownPadding = New Padding(10)
-        ModernComboBox4.DropDownScrollBarHoverColor = Color.FromArgb(CByte(200), CByte(200), CByte(200))
-        ModernComboBox4.Items.Add("自动开始任务")
-        ModernComboBox4.Items.Add("手动开始任务")
-        ModernComboBox4.Location = New Point(0, 10)
-        ModernComboBox4.Margin = New Padding(2, 2, 2, 2)
-        ModernComboBox4.Name = "ModernComboBox4"
-        ModernComboBox4.Padding = New Padding(10, 0, 10, 0)
-        ModernComboBox4.Size = New Size(200, 32)
-        ModernComboBox4.TabIndex = 0
-        ModernComboBox4.ToolTipBorderSize = 2
-        ModernComboBox4.ToolTipGap = 10
-        ModernComboBox4.ToolTipMaxWidth = 350
-        ModernComboBox4.ToolTipPadding = New Padding(15)
+        MCB_是否自动开始任务.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MCB_是否自动开始任务.BorderColorFocus = Color.Silver
+        MCB_是否自动开始任务.BorderRadius = 10
+        MCB_是否自动开始任务.BorderSize = 0
+        MCB_是否自动开始任务.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
+        MCB_是否自动开始任务.Dock = DockStyle.Left
+        MCB_是否自动开始任务.DropDownBorderSize = 2
+        MCB_是否自动开始任务.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
+        MCB_是否自动开始任务.DropDownPadding = New Padding(10)
+        MCB_是否自动开始任务.DropDownScrollBarHoverColor = Color.FromArgb(CByte(200), CByte(200), CByte(200))
+        MCB_是否自动开始任务.Items.Add("自动开始任务")
+        MCB_是否自动开始任务.Items.Add("手动开始任务")
+        MCB_是否自动开始任务.Location = New Point(0, 10)
+        MCB_是否自动开始任务.Margin = New Padding(2, 2, 2, 2)
+        MCB_是否自动开始任务.Name = "MCB_是否自动开始任务"
+        MCB_是否自动开始任务.Padding = New Padding(10, 0, 10, 0)
+        MCB_是否自动开始任务.Size = New Size(200, 32)
+        MCB_是否自动开始任务.TabIndex = 0
+        MCB_是否自动开始任务.ToolTipBorderSize = 2
+        MCB_是否自动开始任务.ToolTipGap = 10
+        MCB_是否自动开始任务.ToolTipMaxWidth = 350
+        MCB_是否自动开始任务.ToolTipPadding = New Padding(15)
         ' 
         ' Panel3
         ' 
         Panel3.Controls.Add(HtmlColorLabel3)
-        Panel3.Controls.Add(ModernComboBox3)
+        Panel3.Controls.Add(MCB_是否启用提示音)
         Panel3.Dock = DockStyle.Top
         Panel3.Location = New Point(20, 135)
         Panel3.Name = "Panel3"
@@ -353,7 +350,6 @@ Partial Class Form_v6_设置_功能设定
         HtmlColorLabel3.AutoSize = True
         HtmlColorLabel3.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel3.Dock = DockStyle.Fill
-        HtmlColorLabel3.Font = New Font("Microsoft YaHei UI", 11F)
         HtmlColorLabel3.Location = New Point(200, 10)
         HtmlColorLabel3.Margin = New Padding(2)
         HtmlColorLabel3.Name = "HtmlColorLabel3"
@@ -363,35 +359,35 @@ Partial Class Form_v6_设置_功能设定
         HtmlColorLabel3.Text = "是否启用提示音"
         HtmlColorLabel3.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
         ' 
-        ' ModernComboBox3
+        ' MCB_是否启用提示音
         ' 
-        ModernComboBox3.BackColor1 = Color.FromArgb(CByte(64), CByte(64), CByte(64))
-        ModernComboBox3.BorderColorFocus = Color.Silver
-        ModernComboBox3.BorderRadius = 10
-        ModernComboBox3.BorderSize = 0
-        ModernComboBox3.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
-        ModernComboBox3.Dock = DockStyle.Left
-        ModernComboBox3.DropDownBorderSize = 2
-        ModernComboBox3.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
-        ModernComboBox3.DropDownPadding = New Padding(10)
-        ModernComboBox3.DropDownScrollBarHoverColor = Color.FromArgb(CByte(200), CByte(200), CByte(200))
-        ModernComboBox3.Items.Add("启用提示音")
-        ModernComboBox3.Items.Add("禁用提示音")
-        ModernComboBox3.Location = New Point(0, 10)
-        ModernComboBox3.Margin = New Padding(2, 2, 2, 2)
-        ModernComboBox3.Name = "ModernComboBox3"
-        ModernComboBox3.Padding = New Padding(10, 0, 10, 0)
-        ModernComboBox3.Size = New Size(200, 32)
-        ModernComboBox3.TabIndex = 0
-        ModernComboBox3.ToolTipBorderSize = 2
-        ModernComboBox3.ToolTipGap = 10
-        ModernComboBox3.ToolTipMaxWidth = 350
-        ModernComboBox3.ToolTipPadding = New Padding(15)
+        MCB_是否启用提示音.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MCB_是否启用提示音.BorderColorFocus = Color.Silver
+        MCB_是否启用提示音.BorderRadius = 10
+        MCB_是否启用提示音.BorderSize = 0
+        MCB_是否启用提示音.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
+        MCB_是否启用提示音.Dock = DockStyle.Left
+        MCB_是否启用提示音.DropDownBorderSize = 2
+        MCB_是否启用提示音.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
+        MCB_是否启用提示音.DropDownPadding = New Padding(10)
+        MCB_是否启用提示音.DropDownScrollBarHoverColor = Color.FromArgb(CByte(200), CByte(200), CByte(200))
+        MCB_是否启用提示音.Items.Add("启用提示音")
+        MCB_是否启用提示音.Items.Add("禁用提示音")
+        MCB_是否启用提示音.Location = New Point(0, 10)
+        MCB_是否启用提示音.Margin = New Padding(2, 2, 2, 2)
+        MCB_是否启用提示音.Name = "MCB_是否启用提示音"
+        MCB_是否启用提示音.Padding = New Padding(10, 0, 10, 0)
+        MCB_是否启用提示音.Size = New Size(200, 32)
+        MCB_是否启用提示音.TabIndex = 0
+        MCB_是否启用提示音.ToolTipBorderSize = 2
+        MCB_是否启用提示音.ToolTipGap = 10
+        MCB_是否启用提示音.ToolTipMaxWidth = 350
+        MCB_是否启用提示音.ToolTipPadding = New Padding(15)
         ' 
         ' Panel1
         ' 
         Panel1.Controls.Add(HtmlColorLabel2)
-        Panel1.Controls.Add(ModernComboBox2)
+        Panel1.Controls.Add(MCB_有任务时系统状态)
         Panel1.Dock = DockStyle.Top
         Panel1.Location = New Point(20, 93)
         Panel1.Name = "Panel1"
@@ -404,7 +400,6 @@ Partial Class Form_v6_设置_功能设定
         HtmlColorLabel2.AutoSize = True
         HtmlColorLabel2.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel2.Dock = DockStyle.Fill
-        HtmlColorLabel2.Font = New Font("Microsoft YaHei UI", 11F)
         HtmlColorLabel2.Location = New Point(200, 10)
         HtmlColorLabel2.Margin = New Padding(2)
         HtmlColorLabel2.Name = "HtmlColorLabel2"
@@ -414,31 +409,31 @@ Partial Class Form_v6_设置_功能设定
         HtmlColorLabel2.Text = "有任务时系统要保持什么状态"
         HtmlColorLabel2.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
         ' 
-        ' ModernComboBox2
+        ' MCB_有任务时系统状态
         ' 
-        ModernComboBox2.BackColor1 = Color.FromArgb(CByte(64), CByte(64), CByte(64))
-        ModernComboBox2.BorderColorFocus = Color.Silver
-        ModernComboBox2.BorderRadius = 10
-        ModernComboBox2.BorderSize = 0
-        ModernComboBox2.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
-        ModernComboBox2.Dock = DockStyle.Left
-        ModernComboBox2.DropDownBorderSize = 2
-        ModernComboBox2.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
-        ModernComboBox2.DropDownPadding = New Padding(10)
-        ModernComboBox2.DropDownScrollBarHoverColor = Color.FromArgb(CByte(200), CByte(200), CByte(200))
-        ModernComboBox2.Items.Add("阻止系统休眠（默认）")
-        ModernComboBox2.Items.Add("阻止显示器超时关闭")
-        ModernComboBox2.Items.Add("默认状态（不推荐）")
-        ModernComboBox2.Location = New Point(0, 10)
-        ModernComboBox2.Margin = New Padding(2, 2, 2, 2)
-        ModernComboBox2.Name = "ModernComboBox2"
-        ModernComboBox2.Padding = New Padding(10, 0, 10, 0)
-        ModernComboBox2.Size = New Size(200, 32)
-        ModernComboBox2.TabIndex = 0
-        ModernComboBox2.ToolTipBorderSize = 2
-        ModernComboBox2.ToolTipGap = 10
-        ModernComboBox2.ToolTipMaxWidth = 350
-        ModernComboBox2.ToolTipPadding = New Padding(15)
+        MCB_有任务时系统状态.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MCB_有任务时系统状态.BorderColorFocus = Color.Silver
+        MCB_有任务时系统状态.BorderRadius = 10
+        MCB_有任务时系统状态.BorderSize = 0
+        MCB_有任务时系统状态.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
+        MCB_有任务时系统状态.Dock = DockStyle.Left
+        MCB_有任务时系统状态.DropDownBorderSize = 2
+        MCB_有任务时系统状态.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
+        MCB_有任务时系统状态.DropDownPadding = New Padding(10)
+        MCB_有任务时系统状态.DropDownScrollBarHoverColor = Color.FromArgb(CByte(200), CByte(200), CByte(200))
+        MCB_有任务时系统状态.Items.Add("阻止系统休眠（默认）")
+        MCB_有任务时系统状态.Items.Add("阻止显示器超时关闭")
+        MCB_有任务时系统状态.Items.Add("默认状态（不推荐）")
+        MCB_有任务时系统状态.Location = New Point(0, 10)
+        MCB_有任务时系统状态.Margin = New Padding(2, 2, 2, 2)
+        MCB_有任务时系统状态.Name = "MCB_有任务时系统状态"
+        MCB_有任务时系统状态.Padding = New Padding(10, 0, 10, 0)
+        MCB_有任务时系统状态.Size = New Size(200, 32)
+        MCB_有任务时系统状态.TabIndex = 0
+        MCB_有任务时系统状态.ToolTipBorderSize = 2
+        MCB_有任务时系统状态.ToolTipGap = 10
+        MCB_有任务时系统状态.ToolTipMaxWidth = 350
+        MCB_有任务时系统状态.ToolTipPadding = New Padding(15)
         ' 
         ' JustEmptyControl1
         ' 
@@ -450,7 +445,9 @@ Partial Class Form_v6_设置_功能设定
         ' 
         ' Panel2
         ' 
-        Panel2.Controls.Add(ModernComboBox1)
+        Panel2.Controls.Add(MTB_工作目录)
+        Panel2.Controls.Add(JustEmptyControl2)
+        Panel2.Controls.Add(MB_浏览文件夹)
         Panel2.Dock = DockStyle.Top
         Panel2.Location = New Point(20, 41)
         Panel2.Name = "Panel2"
@@ -458,33 +455,48 @@ Partial Class Form_v6_设置_功能设定
         Panel2.Size = New Size(702, 42)
         Panel2.TabIndex = 13
         ' 
-        ' ModernComboBox1
+        ' MTB_工作目录
         ' 
-        ModernComboBox1.BackColor1 = Color.FromArgb(CByte(64), CByte(64), CByte(64))
-        ModernComboBox1.BorderColorFocus = Color.Silver
-        ModernComboBox1.BorderRadius = 10
-        ModernComboBox1.BorderSize = 0
-        ModernComboBox1.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
-        ModernComboBox1.Dock = DockStyle.Fill
-        ModernComboBox1.DropDownBorderSize = 2
-        ModernComboBox1.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
-        ModernComboBox1.DropDownPadding = New Padding(10)
-        ModernComboBox1.DropDownScrollBarHoverColor = Color.FromArgb(CByte(200), CByte(200), CByte(200))
-        ModernComboBox1.Items.Add("浏览 ...")
-        ModernComboBox1.Location = New Point(0, 10)
-        ModernComboBox1.Margin = New Padding(2, 2, 2, 2)
-        ModernComboBox1.Name = "ModernComboBox1"
-        ModernComboBox1.Padding = New Padding(10, 0, 10, 0)
-        ModernComboBox1.Size = New Size(702, 32)
-        ModernComboBox1.TabIndex = 5
-        ModernComboBox1.WaterTextForeColor = Color.DarkGray
+        MTB_工作目录.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MTB_工作目录.BorderColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MTB_工作目录.BorderColorFocus = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        MTB_工作目录.BorderRadius = 10
+        MTB_工作目录.Dock = DockStyle.Fill
+        MTB_工作目录.Location = New Point(0, 10)
+        MTB_工作目录.Margin = New Padding(2, 2, 2, 2)
+        MTB_工作目录.Name = "MTB_工作目录"
+        MTB_工作目录.Padding = New Padding(10, 0, 0, 0)
+        MTB_工作目录.Size = New Size(612, 32)
+        MTB_工作目录.TabIndex = 19
+        ' 
+        ' JustEmptyControl2
+        ' 
+        JustEmptyControl2.Dock = DockStyle.Right
+        JustEmptyControl2.Location = New Point(612, 10)
+        JustEmptyControl2.Name = "JustEmptyControl2"
+        JustEmptyControl2.Size = New Size(10, 32)
+        JustEmptyControl2.TabIndex = 7
+        ' 
+        ' MB_浏览文件夹
+        ' 
+        MB_浏览文件夹.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MB_浏览文件夹.BorderRadius = 10
+        MB_浏览文件夹.BorderSize = 0
+        MB_浏览文件夹.Dock = DockStyle.Right
+        MB_浏览文件夹.HoverBackColor1 = Color.FromArgb(CByte(50), CByte(220), CByte(220), CByte(220))
+        MB_浏览文件夹.Location = New Point(622, 10)
+        MB_浏览文件夹.Margin = New Padding(2)
+        MB_浏览文件夹.Name = "MB_浏览文件夹"
+        MB_浏览文件夹.PressedBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        MB_浏览文件夹.Size = New Size(80, 32)
+        MB_浏览文件夹.TabIndex = 6
+        MB_浏览文件夹.Text = "浏览"
         ' 
         ' HtmlColorLabel1
         ' 
         HtmlColorLabel1.AutoSize = True
         HtmlColorLabel1.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel1.Dock = DockStyle.Top
-        HtmlColorLabel1.Font = New Font("Microsoft YaHei UI", 11F)
         HtmlColorLabel1.Location = New Point(20, 20)
         HtmlColorLabel1.Margin = New Padding(2)
         HtmlColorLabel1.Name = "HtmlColorLabel1"
@@ -525,22 +537,21 @@ Partial Class Form_v6_设置_功能设定
 
     Friend WithEvents ModernPanel1 As LakeUI.ModernPanel
     Friend WithEvents Panel3 As Panel
-    Friend WithEvents ModernComboBox3 As LakeUI.ModernComboBox
+    Friend WithEvents MCB_是否启用提示音 As LakeUI.ModernComboBox
     Friend WithEvents Panel1 As Panel
-    Friend WithEvents ModernComboBox2 As LakeUI.ModernComboBox
+    Friend WithEvents MCB_有任务时系统状态 As LakeUI.ModernComboBox
     Friend WithEvents Panel2 As Panel
     Friend WithEvents Panel7 As Panel
-    Friend WithEvents ModernComboBox7 As LakeUI.ModernComboBox
+    Friend WithEvents MCB_独立参数面板自动切预设管理 As LakeUI.ModernComboBox
     Friend WithEvents Panel6 As Panel
-    Friend WithEvents ModernComboBox6 As LakeUI.ModernComboBox
+    Friend WithEvents MCB_任务名称混淆 As LakeUI.ModernComboBox
     Friend WithEvents Panel5 As Panel
-    Friend WithEvents ModernComboBox5 As LakeUI.ModernComboBox
+    Friend WithEvents MCB_是否自动重置参数面板到第一个页面 As LakeUI.ModernComboBox
     Friend WithEvents Panel4 As Panel
-    Friend WithEvents ModernComboBox4 As LakeUI.ModernComboBox
+    Friend WithEvents MCB_是否自动开始任务 As LakeUI.ModernComboBox
     Friend WithEvents Panel8 As Panel
-    Friend WithEvents ModernComboBox8 As LakeUI.ModernComboBox
+    Friend WithEvents MCB_任务失败删除文件 As LakeUI.ModernComboBox
     Friend WithEvents HtmlColorLabel1 As LakeUI.HtmlColorLabel
-    Friend WithEvents ModernComboBox1 As LakeUI.ModernComboBox
     Friend WithEvents HtmlColorLabel8 As LakeUI.HtmlColorLabel
     Friend WithEvents HtmlColorLabel7 As LakeUI.HtmlColorLabel
     Friend WithEvents HtmlColorLabel6 As LakeUI.HtmlColorLabel
@@ -549,4 +560,7 @@ Partial Class Form_v6_设置_功能设定
     Friend WithEvents HtmlColorLabel3 As LakeUI.HtmlColorLabel
     Friend WithEvents HtmlColorLabel2 As LakeUI.HtmlColorLabel
     Friend WithEvents JustEmptyControl1 As LakeUI.JustEmptyControl
+    Friend WithEvents JustEmptyControl2 As LakeUI.JustEmptyControl
+    Friend WithEvents MB_浏览文件夹 As LakeUI.ModernButton
+    Friend WithEvents MTB_工作目录 As LakeUI.ModernTextBox
 End Class

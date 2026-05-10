@@ -11,6 +11,7 @@ Module Module1
 
     Public Sound_Finish As Stream = My.Resources.Resource1.完成
     Public Sound_Error As Stream = My.Resources.Resource1.错误
+    Public SP_UnLock As Boolean = True
 
     <DllImport("user32.dll")>
     Public Function ReleaseCapture() As Boolean
