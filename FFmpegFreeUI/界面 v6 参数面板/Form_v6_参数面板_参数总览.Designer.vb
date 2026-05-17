@@ -54,16 +54,19 @@ Partial Class Form_v6_参数面板_参数总览
         ' 
         ' ModernTextBox1
         ' 
+        ModernTextBox1.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        ModernTextBox1.BorderColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        ModernTextBox1.BorderColorFocus = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernTextBox1.BorderRadius = 10
         ModernTextBox1.BorderSize = 0
         ModernTextBox1.Dock = DockStyle.Fill
-        ModernTextBox1.Location = New Point(20, 62)
+        ModernTextBox1.Location = New Point(20, 61)
         ModernTextBox1.Margin = New Padding(2, 2, 2, 2)
         ModernTextBox1.MultiLine = True
         ModernTextBox1.Name = "ModernTextBox1"
         ModernTextBox1.Padding = New Padding(15, 10, 15, 10)
         ModernTextBox1.ReadOnly = True
-        ModernTextBox1.Size = New Size(340, 479)
+        ModernTextBox1.Size = New Size(340, 480)
         ModernTextBox1.TabIndex = 1
         ModernTextBox1.Text = "ModernTextBox1"
         ' 
@@ -79,15 +82,15 @@ Partial Class Form_v6_参数面板_参数总览
         ' 
         ' ModernButton1
         ' 
-        ModernButton1.BackColor1 = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        ModernButton1.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernButton1.BorderRadius = 10
         ModernButton1.BorderSize = 0
         ModernButton1.Dock = DockStyle.Fill
-        ModernButton1.HoverBackColor1 = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        ModernButton1.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
         ModernButton1.Location = New Point(0, 15)
         ModernButton1.Margin = New Padding(2)
         ModernButton1.Name = "ModernButton1"
-        ModernButton1.PressedBackColor1 = SystemColors.WindowFrame
+        ModernButton1.PressedBackColor1 = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
         ModernButton1.Size = New Size(340, 35)
         ModernButton1.TabIndex = 2
         ModernButton1.Text = "复制参数总览"
@@ -97,12 +100,12 @@ Partial Class Form_v6_参数面板_参数总览
         HtmlColorLabel1.AutoSize = True
         HtmlColorLabel1.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel1.Dock = DockStyle.Top
-        HtmlColorLabel1.Font = New Font("Microsoft YaHei UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, CByte(134))
+        HtmlColorLabel1.Font = New Font("Microsoft YaHei UI", 13F, FontStyle.Bold)
         HtmlColorLabel1.Location = New Point(20, 20)
         HtmlColorLabel1.Margin = New Padding(2)
         HtmlColorLabel1.Name = "HtmlColorLabel1"
         HtmlColorLabel1.Padding = New Padding(0, 0, 0, 15)
-        HtmlColorLabel1.Size = New Size(340, 42)
+        HtmlColorLabel1.Size = New Size(340, 41)
         HtmlColorLabel1.TabIndex = 0
         HtmlColorLabel1.Text = "参数总览"
         HtmlColorLabel1.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.Center
@@ -121,16 +124,19 @@ Partial Class Form_v6_参数面板_参数总览
         ' 
         ' ModernTextBox2
         ' 
+        ModernTextBox2.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        ModernTextBox2.BorderColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        ModernTextBox2.BorderColorFocus = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernTextBox2.BorderRadius = 10
         ModernTextBox2.BorderSize = 0
         ModernTextBox2.Dock = DockStyle.Fill
-        ModernTextBox2.Location = New Point(10, 62)
+        ModernTextBox2.Location = New Point(10, 61)
         ModernTextBox2.Margin = New Padding(2, 2, 2, 2)
         ModernTextBox2.MultiLine = True
         ModernTextBox2.Name = "ModernTextBox2"
         ModernTextBox2.Padding = New Padding(15, 10, 15, 10)
         ModernTextBox2.ReadOnly = True
-        ModernTextBox2.Size = New Size(362, 479)
+        ModernTextBox2.Size = New Size(362, 480)
         ModernTextBox2.TabIndex = 3
         ModernTextBox2.Text = "ModernTextBox2"
         ' 
@@ -146,15 +152,15 @@ Partial Class Form_v6_参数面板_参数总览
         ' 
         ' ModernButton2
         ' 
-        ModernButton2.BackColor1 = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        ModernButton2.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernButton2.BorderRadius = 10
         ModernButton2.BorderSize = 0
         ModernButton2.Dock = DockStyle.Fill
-        ModernButton2.HoverBackColor1 = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        ModernButton2.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
         ModernButton2.Location = New Point(0, 15)
         ModernButton2.Margin = New Padding(2)
         ModernButton2.Name = "ModernButton2"
-        ModernButton2.PressedBackColor1 = SystemColors.WindowFrame
+        ModernButton2.PressedBackColor1 = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
         ModernButton2.Size = New Size(362, 35)
         ModernButton2.TabIndex = 3
         ModernButton2.Text = "复制命令行模版"
@@ -164,12 +170,12 @@ Partial Class Form_v6_参数面板_参数总览
         HtmlColorLabel2.AutoSize = True
         HtmlColorLabel2.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel2.Dock = DockStyle.Top
-        HtmlColorLabel2.Font = New Font("Microsoft YaHei UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, CByte(134))
+        HtmlColorLabel2.Font = New Font("Microsoft YaHei UI", 13F, FontStyle.Bold)
         HtmlColorLabel2.Location = New Point(10, 20)
         HtmlColorLabel2.Margin = New Padding(2)
         HtmlColorLabel2.Name = "HtmlColorLabel2"
         HtmlColorLabel2.Padding = New Padding(0, 0, 0, 15)
-        HtmlColorLabel2.Size = New Size(362, 42)
+        HtmlColorLabel2.Size = New Size(362, 41)
         HtmlColorLabel2.TabIndex = 2
         HtmlColorLabel2.Text = "命令行模板"
         HtmlColorLabel2.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.Center

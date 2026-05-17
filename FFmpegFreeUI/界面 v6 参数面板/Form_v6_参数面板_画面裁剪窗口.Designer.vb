@@ -22,7 +22,9 @@ Partial Class Form_v6_参数面板_画面裁剪窗口
     '不要使用代码编辑器修改它。
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        HtmlColorLabel1 = New LakeUI.HtmlColorLabel()
+        ModernPanel1 = New LakeUI.ModernPanel()
+        PixelPictureBox1 = New LakeUI.PixelPictureBox()
+        JustEmptyControl5 = New LakeUI.JustEmptyControl()
         Panel2 = New Panel()
         ModernCheckBox4 = New LakeUI.ModernCheckBox()
         ModernComboBox1 = New LakeUI.ModernComboBox()
@@ -34,22 +36,43 @@ Partial Class Form_v6_参数面板_画面裁剪窗口
         ModernButton2 = New LakeUI.ModernButton()
         JustEmptyControl1 = New LakeUI.JustEmptyControl()
         ModernButton1 = New LakeUI.ModernButton()
-        JustEmptyControl5 = New LakeUI.JustEmptyControl()
-        PixelPictureBox1 = New LakeUI.PixelPictureBox()
+        HtmlColorLabel1 = New LakeUI.HtmlColorLabel()
+        ModernPanel1.SuspendLayout()
         Panel2.SuspendLayout()
         SuspendLayout()
         ' 
-        ' HtmlColorLabel1
+        ' ModernPanel1
         ' 
-        HtmlColorLabel1.AutoSize = True
-        HtmlColorLabel1.AutoSizeMode = AutoSizeMode.GrowAndShrink
-        HtmlColorLabel1.Dock = DockStyle.Top
-        HtmlColorLabel1.Location = New Point(20, 20)
-        HtmlColorLabel1.Margin = New Padding(2)
-        HtmlColorLabel1.Name = "HtmlColorLabel1"
-        HtmlColorLabel1.Size = New Size(732, 41)
-        HtmlColorLabel1.TabIndex = 14
-        HtmlColorLabel1.Text = "鼠标左键移动视野，鼠标滚轮控制缩放，鼠标右键绘制新框选<br>默认取第 10 秒处截图，可以先自行设定再打开视频"
+        ModernPanel1.BackColor1 = Color.Transparent
+        ModernPanel1.BorderSize = 0
+        ModernPanel1.Controls.Add(PixelPictureBox1)
+        ModernPanel1.Controls.Add(JustEmptyControl5)
+        ModernPanel1.Controls.Add(Panel2)
+        ModernPanel1.Controls.Add(HtmlColorLabel1)
+        ModernPanel1.Dock = DockStyle.Fill
+        ModernPanel1.Location = New Point(0, 0)
+        ModernPanel1.Name = "ModernPanel1"
+        ModernPanel1.Padding = New Padding(20)
+        ModernPanel1.Size = New Size(772, 588)
+        ModernPanel1.TabIndex = 18
+        ' 
+        ' PixelPictureBox1
+        ' 
+        PixelPictureBox1.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        PixelPictureBox1.BorderSize = 0
+        PixelPictureBox1.Dock = DockStyle.Fill
+        PixelPictureBox1.Location = New Point(20, 118)
+        PixelPictureBox1.Name = "PixelPictureBox1"
+        PixelPictureBox1.Size = New Size(732, 450)
+        PixelPictureBox1.TabIndex = 19
+        ' 
+        ' JustEmptyControl5
+        ' 
+        JustEmptyControl5.Dock = DockStyle.Top
+        JustEmptyControl5.Location = New Point(20, 103)
+        JustEmptyControl5.Name = "JustEmptyControl5"
+        JustEmptyControl5.Size = New Size(732, 15)
+        JustEmptyControl5.TabIndex = 18
         ' 
         ' Panel2
         ' 
@@ -68,7 +91,7 @@ Partial Class Form_v6_参数面板_画面裁剪窗口
         Panel2.Name = "Panel2"
         Panel2.Padding = New Padding(0, 10, 0, 0)
         Panel2.Size = New Size(732, 42)
-        Panel2.TabIndex = 15
+        Panel2.TabIndex = 16
         ' 
         ' ModernCheckBox4
         ' 
@@ -87,7 +110,7 @@ Partial Class Form_v6_参数面板_画面裁剪窗口
         ' 
         ' ModernComboBox1
         ' 
-        ModernComboBox1.BackColor1 = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        ModernComboBox1.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernComboBox1.BorderColorFocus = Color.Silver
         ModernComboBox1.BorderRadius = 10
         ModernComboBox1.BorderSize = 0
@@ -126,10 +149,10 @@ Partial Class Form_v6_参数面板_画面裁剪窗口
         ' 
         ' ModernTextBox2
         ' 
-        ModernTextBox2.BackColor1 = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        ModernTextBox2.BorderColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        ModernTextBox2.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        ModernTextBox2.BorderColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        ModernTextBox2.BorderColorFocus = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
         ModernTextBox2.BorderRadius = 10
-        ModernTextBox2.BorderSize = 2
         ModernTextBox2.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
         ModernTextBox2.Dock = DockStyle.Left
         ModernTextBox2.Location = New Point(341, 10)
@@ -151,10 +174,10 @@ Partial Class Form_v6_参数面板_画面裁剪窗口
         ' 
         ' ModernTextBox1
         ' 
-        ModernTextBox1.BackColor1 = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        ModernTextBox1.BorderColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        ModernTextBox1.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        ModernTextBox1.BorderColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        ModernTextBox1.BorderColorFocus = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
         ModernTextBox1.BorderRadius = 10
-        ModernTextBox1.BorderSize = 2
         ModernTextBox1.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
         ModernTextBox1.Dock = DockStyle.Left
         ModernTextBox1.Location = New Point(162, 10)
@@ -176,15 +199,15 @@ Partial Class Form_v6_参数面板_画面裁剪窗口
         ' 
         ' ModernButton2
         ' 
-        ModernButton2.BackColor1 = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        ModernButton2.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernButton2.BorderRadius = 10
         ModernButton2.BorderSize = 0
         ModernButton2.Dock = DockStyle.Left
-        ModernButton2.HoverBackColor1 = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        ModernButton2.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
         ModernButton2.Location = New Point(81, 10)
         ModernButton2.Margin = New Padding(2)
         ModernButton2.Name = "ModernButton2"
-        ModernButton2.PressedBackColor1 = SystemColors.WindowFrame
+        ModernButton2.PressedBackColor1 = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
         ModernButton2.Size = New Size(70, 32)
         ModernButton2.TabIndex = 7
         ModernButton2.Text = "完成"
@@ -199,36 +222,30 @@ Partial Class Form_v6_参数面板_画面裁剪窗口
         ' 
         ' ModernButton1
         ' 
-        ModernButton1.BackColor1 = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        ModernButton1.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernButton1.BorderRadius = 10
         ModernButton1.BorderSize = 0
         ModernButton1.Dock = DockStyle.Left
-        ModernButton1.HoverBackColor1 = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        ModernButton1.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
         ModernButton1.Location = New Point(0, 10)
         ModernButton1.Margin = New Padding(2)
         ModernButton1.Name = "ModernButton1"
-        ModernButton1.PressedBackColor1 = SystemColors.WindowFrame
+        ModernButton1.PressedBackColor1 = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
         ModernButton1.Size = New Size(70, 32)
         ModernButton1.TabIndex = 1
         ModernButton1.Text = "打开"
         ' 
-        ' JustEmptyControl5
+        ' HtmlColorLabel1
         ' 
-        JustEmptyControl5.Dock = DockStyle.Top
-        JustEmptyControl5.Location = New Point(20, 103)
-        JustEmptyControl5.Name = "JustEmptyControl5"
-        JustEmptyControl5.Size = New Size(732, 10)
-        JustEmptyControl5.TabIndex = 16
-        ' 
-        ' PixelPictureBox1
-        ' 
-        PixelPictureBox1.BackColor1 = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        PixelPictureBox1.BorderSize = 0
-        PixelPictureBox1.Dock = DockStyle.Fill
-        PixelPictureBox1.Location = New Point(20, 113)
-        PixelPictureBox1.Name = "PixelPictureBox1"
-        PixelPictureBox1.Size = New Size(732, 455)
-        PixelPictureBox1.TabIndex = 17
+        HtmlColorLabel1.AutoSize = True
+        HtmlColorLabel1.AutoSizeMode = AutoSizeMode.GrowAndShrink
+        HtmlColorLabel1.Dock = DockStyle.Top
+        HtmlColorLabel1.Location = New Point(20, 20)
+        HtmlColorLabel1.Margin = New Padding(2)
+        HtmlColorLabel1.Name = "HtmlColorLabel1"
+        HtmlColorLabel1.Size = New Size(732, 41)
+        HtmlColorLabel1.TabIndex = 15
+        HtmlColorLabel1.Text = "鼠标左键移动视野，鼠标滚轮控制缩放，鼠标右键绘制新框选<br>默认取第 10 秒处截图，可以先自行设定再打开视频"
         ' 
         ' Form_v6_参数面板_画面裁剪窗口
         ' 
@@ -236,38 +253,35 @@ Partial Class Form_v6_参数面板_画面裁剪窗口
         AutoScaleMode = AutoScaleMode.Dpi
         BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         ClientSize = New Size(772, 588)
-        Controls.Add(PixelPictureBox1)
-        Controls.Add(JustEmptyControl5)
-        Controls.Add(Panel2)
-        Controls.Add(HtmlColorLabel1)
+        Controls.Add(ModernPanel1)
         Font = New Font("Microsoft YaHei UI", 10F)
         ForeColor = Color.Silver
         MaximizeBox = False
         MinimizeBox = False
         Name = "Form_v6_参数面板_画面裁剪窗口"
-        Padding = New Padding(20)
         ShowIcon = False
         ShowInTaskbar = False
         StartPosition = FormStartPosition.Manual
         Text = "画面裁剪"
+        ModernPanel1.ResumeLayout(False)
+        ModernPanel1.PerformLayout()
         Panel2.ResumeLayout(False)
         Panel2.PerformLayout()
         ResumeLayout(False)
-        PerformLayout()
     End Sub
-
-    Friend WithEvents HtmlColorLabel1 As LakeUI.HtmlColorLabel
+    Friend WithEvents ModernPanel1 As LakeUI.ModernPanel
+    Friend WithEvents PixelPictureBox1 As LakeUI.PixelPictureBox
+    Friend WithEvents JustEmptyControl5 As LakeUI.JustEmptyControl
     Friend WithEvents Panel2 As Panel
-    Friend WithEvents ModernButton1 As LakeUI.ModernButton
+    Friend WithEvents ModernCheckBox4 As LakeUI.ModernCheckBox
+    Friend WithEvents ModernComboBox1 As LakeUI.ModernComboBox
+    Friend WithEvents JustEmptyControl4 As LakeUI.JustEmptyControl
+    Friend WithEvents ModernTextBox2 As LakeUI.ModernTextBox
+    Friend WithEvents JustEmptyControl3 As LakeUI.JustEmptyControl
+    Friend WithEvents ModernTextBox1 As LakeUI.ModernTextBox
     Friend WithEvents JustEmptyControl2 As LakeUI.JustEmptyControl
     Friend WithEvents ModernButton2 As LakeUI.ModernButton
     Friend WithEvents JustEmptyControl1 As LakeUI.JustEmptyControl
-    Friend WithEvents ModernTextBox1 As LakeUI.ModernTextBox
-    Friend WithEvents JustEmptyControl3 As LakeUI.JustEmptyControl
-    Friend WithEvents ModernTextBox2 As LakeUI.ModernTextBox
-    Friend WithEvents ModernComboBox1 As LakeUI.ModernComboBox
-    Friend WithEvents JustEmptyControl4 As LakeUI.JustEmptyControl
-    Friend WithEvents ModernCheckBox4 As LakeUI.ModernCheckBox
-    Friend WithEvents JustEmptyControl5 As LakeUI.JustEmptyControl
-    Friend WithEvents PixelPictureBox1 As LakeUI.PixelPictureBox
+    Friend WithEvents ModernButton1 As LakeUI.ModernButton
+    Friend WithEvents HtmlColorLabel1 As LakeUI.HtmlColorLabel
 End Class

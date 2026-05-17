@@ -60,8 +60,8 @@ Partial Class Form_v6_编码队列
         Panel1.Dock = DockStyle.Top
         Panel1.Location = New Point(0, 0)
         Panel1.Name = "Panel1"
-        Panel1.Padding = New Padding(0, 20, 0, 10)
-        Panel1.Size = New Size(984, 65)
+        Panel1.Padding = New Padding(10, 10, 0, 10)
+        Panel1.Size = New Size(984, 55)
         Panel1.TabIndex = 0
         ' 
         ' ModernButton7
@@ -75,7 +75,7 @@ Partial Class Form_v6_编码队列
         ModernButton7.ForeColor = Color.MediumPurple
         ModernButton7.HoverBackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernButton7.HoverBorderColor = Color.Transparent
-        ModernButton7.Location = New Point(654, 20)
+        ModernButton7.Location = New Point(664, 10)
         ModernButton7.Margin = New Padding(2)
         ModernButton7.Name = "ModernButton7"
         ModernButton7.PressedBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
@@ -95,7 +95,7 @@ Partial Class Form_v6_编码队列
         ModernButton6.ForeColor = Color.Goldenrod
         ModernButton6.HoverBackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernButton6.HoverBorderColor = Color.Transparent
-        ModernButton6.Location = New Point(594, 20)
+        ModernButton6.Location = New Point(604, 10)
         ModernButton6.Margin = New Padding(2)
         ModernButton6.Name = "ModernButton6"
         ModernButton6.PressedBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
@@ -115,7 +115,7 @@ Partial Class Form_v6_编码队列
         ModernButton5.ForeColor = Color.IndianRed
         ModernButton5.HoverBackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernButton5.HoverBorderColor = Color.Transparent
-        ModernButton5.Location = New Point(534, 20)
+        ModernButton5.Location = New Point(544, 10)
         ModernButton5.Margin = New Padding(2)
         ModernButton5.Name = "ModernButton5"
         ModernButton5.PressedBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
@@ -135,7 +135,7 @@ Partial Class Form_v6_编码队列
         ModernButton4.ForeColor = Color.IndianRed
         ModernButton4.HoverBackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernButton4.HoverBorderColor = Color.Transparent
-        ModernButton4.Location = New Point(474, 20)
+        ModernButton4.Location = New Point(484, 10)
         ModernButton4.Margin = New Padding(2)
         ModernButton4.Name = "ModernButton4"
         ModernButton4.PressedBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
@@ -155,7 +155,7 @@ Partial Class Form_v6_编码队列
         ModernButton3.ForeColor = Color.YellowGreen
         ModernButton3.HoverBackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernButton3.HoverBorderColor = Color.Transparent
-        ModernButton3.Location = New Point(414, 20)
+        ModernButton3.Location = New Point(424, 10)
         ModernButton3.Margin = New Padding(2)
         ModernButton3.Name = "ModernButton3"
         ModernButton3.PressedBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
@@ -175,7 +175,7 @@ Partial Class Form_v6_编码队列
         ModernButton2.ForeColor = Color.Goldenrod
         ModernButton2.HoverBackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernButton2.HoverBorderColor = Color.Transparent
-        ModernButton2.Location = New Point(354, 20)
+        ModernButton2.Location = New Point(364, 10)
         ModernButton2.Margin = New Padding(2)
         ModernButton2.Name = "ModernButton2"
         ModernButton2.PressedBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
@@ -195,7 +195,7 @@ Partial Class Form_v6_编码队列
         ModernButton1.ForeColor = Color.YellowGreen
         ModernButton1.HoverBackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernButton1.HoverBorderColor = Color.Transparent
-        ModernButton1.Location = New Point(294, 20)
+        ModernButton1.Location = New Point(304, 10)
         ModernButton1.Margin = New Padding(2)
         ModernButton1.Name = "ModernButton1"
         ModernButton1.PressedBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
@@ -207,7 +207,7 @@ Partial Class Form_v6_编码队列
         ' Label1
         ' 
         Label1.Dock = DockStyle.Left
-        Label1.Location = New Point(126, 20)
+        Label1.Location = New Point(136, 10)
         Label1.Name = "Label1"
         Label1.Size = New Size(168, 35)
         Label1.TabIndex = 8
@@ -223,7 +223,7 @@ Partial Class Form_v6_编码队列
         ModernButton8.ForeColor = Color.CornflowerBlue
         ModernButton8.HoverBackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernButton8.HoverBorderColor = Color.Transparent
-        ModernButton8.Location = New Point(0, 20)
+        ModernButton8.Location = New Point(10, 10)
         ModernButton8.Margin = New Padding(2)
         ModernButton8.Name = "ModernButton8"
         ModernButton8.PressedBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
@@ -263,15 +263,17 @@ Partial Class Form_v6_编码队列
         UltraDetailListView1.GroupBackColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
         UltraDetailListView1.GroupForeColor = Color.Gainsboro
         UltraDetailListView1.GroupHeight = 40
-        UltraDetailListView1.HeaderBackColor = Color.FromArgb(CByte(40), CByte(0), CByte(0), CByte(0))
+        UltraDetailListView1.HeaderBackColor = Color.Transparent
         UltraDetailListView1.HeaderBorderColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         UltraDetailListView1.HeaderBorderWidth = 2
         UltraDetailListView1.HeaderForeColor = Color.DarkGray
         UltraDetailListView1.HeaderHeight = 36
-        UltraDetailListView1.Location = New Point(0, 65)
+        UltraDetailListView1.Location = New Point(0, 55)
         UltraDetailListView1.Margin = New Padding(2, 2, 2, 2)
         UltraDetailListView1.Name = "UltraDetailListView1"
-        UltraDetailListView1.Size = New Size(984, 616)
+        UltraDetailListView1.SelectionRectBorderColor = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
+        UltraDetailListView1.SelectionRectFillColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        UltraDetailListView1.Size = New Size(984, 626)
         UltraDetailListView1.TabIndex = 1
         ' 
         ' ModernPanel1

@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>Updater</RootNamespace>
+    <TargetFramework>net10.0-windows10.0.26100.0</TargetFramework>
+    <InvariantGlobalization>true</InvariantGlobalization>
+    <SupportedOSPlatformVersion>7.0</SupportedOSPlatformVersion>
+    <AssemblyVersion>1.0.0</AssemblyVersion>
+    <FileVersion>1.0.0</FileVersion>
+	  <PublishAot>true</PublishAot>
+	  <Authors>1059 Studio</Authors>
+	  <Company>1059 Studio</Company>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DebugType>embedded</DebugType>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DebugType>embedded</DebugType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="LakeUI">
+      <HintPath>..\..\LakeUI\LakeUI\bin\Debug\net10.0-windows\LakeUI.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

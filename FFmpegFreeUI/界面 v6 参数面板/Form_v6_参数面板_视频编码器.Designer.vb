@@ -113,10 +113,10 @@ Partial Class Form_v6_参数面板_视频编码器
         ' 
         ' MTB_threads
         ' 
-        MTB_threads.BackColor1 = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        MTB_threads.BorderColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        MTB_threads.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MTB_threads.BorderColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MTB_threads.BorderColorFocus = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
         MTB_threads.BorderRadius = 10
-        MTB_threads.BorderSize = 2
         MTB_threads.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
         MTB_threads.Dock = DockStyle.Left
         MTB_threads.Location = New Point(0, 10)
@@ -155,10 +155,10 @@ Partial Class Form_v6_参数面板_视频编码器
         ' 
         ' MTB_gpu
         ' 
-        MTB_gpu.BackColor1 = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        MTB_gpu.BorderColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        MTB_gpu.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MTB_gpu.BorderColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MTB_gpu.BorderColorFocus = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
         MTB_gpu.BorderRadius = 10
-        MTB_gpu.BorderSize = 2
         MTB_gpu.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
         MTB_gpu.Dock = DockStyle.Left
         MTB_gpu.Location = New Point(0, 10)
@@ -195,7 +195,7 @@ Partial Class Form_v6_参数面板_视频编码器
         ' 
         ' MCB_场景优化
         ' 
-        MCB_场景优化.BackColor1 = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        MCB_场景优化.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_场景优化.BorderColorFocus = Color.Silver
         MCB_场景优化.BorderRadius = 10
         MCB_场景优化.BorderSize = 0
@@ -242,7 +242,7 @@ Partial Class Form_v6_参数面板_视频编码器
         ' 
         ' MCB_配置文件
         ' 
-        MCB_配置文件.BackColor1 = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        MCB_配置文件.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_配置文件.BorderColorFocus = Color.Silver
         MCB_配置文件.BorderRadius = 10
         MCB_配置文件.BorderSize = 0
@@ -289,7 +289,7 @@ Partial Class Form_v6_参数面板_视频编码器
         ' 
         ' MCB_编码预设
         ' 
-        MCB_编码预设.BackColor1 = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        MCB_编码预设.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_编码预设.BorderColorFocus = Color.Silver
         MCB_编码预设.BorderRadius = 10
         MCB_编码预设.BorderSize = 0
@@ -352,10 +352,10 @@ Partial Class Form_v6_参数面板_视频编码器
         ' 
         ' ModernTextBox1
         ' 
-        ModernTextBox1.BackColor1 = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        ModernTextBox1.BorderColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        ModernTextBox1.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        ModernTextBox1.BorderColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        ModernTextBox1.BorderColorFocus = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
         ModernTextBox1.BorderRadius = 10
-        ModernTextBox1.BorderSize = 2
         ModernTextBox1.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
         ModernTextBox1.Dock = DockStyle.Left
         ModernTextBox1.Location = New Point(0, 10)
@@ -382,7 +382,7 @@ Partial Class Form_v6_参数面板_视频编码器
         ' 
         ' MCB_具体编码器
         ' 
-        MCB_具体编码器.BackColor1 = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        MCB_具体编码器.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_具体编码器.BorderColorFocus = Color.Silver
         MCB_具体编码器.BorderRadius = 10
         MCB_具体编码器.BorderSize = 0
@@ -415,7 +415,7 @@ Partial Class Form_v6_参数面板_视频编码器
         ' 
         ' MCB_视频编码器分类
         ' 
-        MCB_视频编码器分类.BackColor1 = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        MCB_视频编码器分类.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_视频编码器分类.BorderColorFocus = Color.Silver
         MCB_视频编码器分类.BorderRadius = 10
         MCB_视频编码器分类.BorderSize = 0
@@ -448,7 +448,7 @@ Partial Class Form_v6_参数面板_视频编码器
         ' 
         ' MCB_视频编码器类型
         ' 
-        MCB_视频编码器类型.BackColor1 = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        MCB_视频编码器类型.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_视频编码器类型.BorderColorFocus = Color.Silver
         MCB_视频编码器类型.BorderRadius = 10
         MCB_视频编码器类型.BorderSize = 0

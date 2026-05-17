@@ -22,7 +22,6 @@ Partial Class Form_v6_参数面板_预设管理
     '不要使用代码编辑器修改它。
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim ToolTipEntry1 As LakeUI.ModernListBox.ToolTipEntry = New LakeUI.ModernListBox.ToolTipEntry()
         ModernPanel1 = New LakeUI.ModernPanel()
         Panel2 = New Panel()
         ModernTextBox2 = New LakeUI.ModernTextBox()
@@ -73,7 +72,8 @@ Partial Class Form_v6_参数面板_预设管理
         ModernPanel1.Location = New Point(0, 0)
         ModernPanel1.Name = "ModernPanel1"
         ModernPanel1.Padding = New Padding(20)
-        ModernPanel1.Size = New Size(869, 652)
+        ModernPanel1.ScrollBarMode = LakeUI.ModernPanel.ScrollMode.None
+        ModernPanel1.Size = New Size(816, 633)
         ModernPanel1.TabIndex = 0
         ' 
         ' Panel2
@@ -87,12 +87,14 @@ Partial Class Form_v6_参数面板_预设管理
         Panel2.Location = New Point(20, 129)
         Panel2.Name = "Panel2"
         Panel2.Padding = New Padding(0, 10, 0, 0)
-        Panel2.Size = New Size(829, 461)
+        Panel2.Size = New Size(776, 442)
         Panel2.TabIndex = 11
         ' 
         ' ModernTextBox2
         ' 
-        ModernTextBox2.BackColor1 = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        ModernTextBox2.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        ModernTextBox2.BorderColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        ModernTextBox2.BorderColorFocus = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernTextBox2.BorderRadius = 10
         ModernTextBox2.BorderSize = 0
         ModernTextBox2.Dock = DockStyle.Fill
@@ -102,7 +104,7 @@ Partial Class Form_v6_参数面板_预设管理
         ModernTextBox2.Name = "ModernTextBox2"
         ModernTextBox2.Padding = New Padding(15, 10, 15, 10)
         ModernTextBox2.ReadOnly = True
-        ModernTextBox2.Size = New Size(287, 451)
+        ModernTextBox2.Size = New Size(234, 432)
         ModernTextBox2.TabIndex = 4
         ModernTextBox2.Text = "ModernTextBox2"
         ' 
@@ -111,12 +113,14 @@ Partial Class Form_v6_参数面板_预设管理
         JustEmptyControl2.Dock = DockStyle.Left
         JustEmptyControl2.Location = New Point(532, 10)
         JustEmptyControl2.Name = "JustEmptyControl2"
-        JustEmptyControl2.Size = New Size(10, 451)
+        JustEmptyControl2.Size = New Size(10, 432)
         JustEmptyControl2.TabIndex = 3
         ' 
         ' ModernTextBox1
         ' 
-        ModernTextBox1.BackColor1 = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        ModernTextBox1.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        ModernTextBox1.BorderColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        ModernTextBox1.BorderColorFocus = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernTextBox1.BorderRadius = 10
         ModernTextBox1.BorderSize = 0
         ModernTextBox1.Dock = DockStyle.Left
@@ -126,7 +130,7 @@ Partial Class Form_v6_参数面板_预设管理
         ModernTextBox1.Name = "ModernTextBox1"
         ModernTextBox1.Padding = New Padding(15, 10, 15, 10)
         ModernTextBox1.ReadOnly = True
-        ModernTextBox1.Size = New Size(267, 451)
+        ModernTextBox1.Size = New Size(267, 432)
         ModernTextBox1.TabIndex = 2
         ModernTextBox1.Text = "ModernTextBox1"
         ' 
@@ -135,34 +139,24 @@ Partial Class Form_v6_参数面板_预设管理
         JustEmptyControl1.Dock = DockStyle.Left
         JustEmptyControl1.Location = New Point(255, 10)
         JustEmptyControl1.Name = "JustEmptyControl1"
-        JustEmptyControl1.Size = New Size(10, 451)
+        JustEmptyControl1.Size = New Size(10, 432)
         JustEmptyControl1.TabIndex = 1
         ' 
         ' ModernListBox1
         ' 
         ModernListBox1.AllowDragReorder = True
         ModernListBox1.AnimationDuration = 300
-        ModernListBox1.BackColor1 = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        ModernListBox1.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernListBox1.BorderRadius = 10
         ModernListBox1.BorderSize = 0
         ModernListBox1.Dock = DockStyle.Left
-        ModernListBox1.Items.Add("示例预设项 - 289Q43UJ9FHA9O8Y32")
-        ModernListBox1.Items.Add("示例预设项")
-        ModernListBox1.Items.Add("示例预设项")
-        ModernListBox1.Items.Add("示例预设项")
-        ModernListBox1.Items.Add("示例预设项")
-        ModernListBox1.Items.Add("示例预设项")
-        ModernListBox1.Items.Add("示例预设项")
-        ToolTipEntry1.ItemText = "示例预设项"
-        ToolTipEntry1.ToolTipText = "这里显示选中的预设项备注，备注会在鼠标移上时显示在侧边，如果有相同的名称则会显示一样的"
-        ModernListBox1.ItemToolTips.Add(ToolTipEntry1)
         ModernListBox1.Location = New Point(0, 10)
         ModernListBox1.Margin = New Padding(2, 2, 2, 2)
         ModernListBox1.MultiSelect = False
         ModernListBox1.Name = "ModernListBox1"
         ModernListBox1.Padding = New Padding(8, 8, 8, 8)
         ModernListBox1.ScrollBarHoverColor = Color.FromArgb(CByte(200), CByte(200), CByte(200))
-        ModernListBox1.Size = New Size(255, 451)
+        ModernListBox1.Size = New Size(255, 432)
         ModernListBox1.TabIndex = 5
         ModernListBox1.ToolTipBorderSize = 2
         ModernListBox1.ToolTipMaxWidth = 350
@@ -177,15 +171,15 @@ Partial Class Form_v6_参数面板_预设管理
         Panel3.Location = New Point(20, 87)
         Panel3.Name = "Panel3"
         Panel3.Padding = New Padding(0, 10, 0, 0)
-        Panel3.Size = New Size(829, 42)
+        Panel3.Size = New Size(776, 42)
         Panel3.TabIndex = 12
         ' 
         ' ModernTextBox3
         ' 
-        ModernTextBox3.BackColor1 = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        ModernTextBox3.BorderColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        ModernTextBox3.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        ModernTextBox3.BorderColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        ModernTextBox3.BorderColorFocus = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
         ModernTextBox3.BorderRadius = 10
-        ModernTextBox3.BorderSize = 2
         ModernTextBox3.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
         ModernTextBox3.Dock = DockStyle.Fill
         ModernTextBox3.Location = New Point(0, 10)
@@ -193,29 +187,29 @@ Partial Class Form_v6_参数面板_预设管理
         ModernTextBox3.Name = "ModernTextBox3"
         ModernTextBox3.Padding = New Padding(10, 0, 10, 0)
         ModernTextBox3.ScrollBarHoverColor = Color.FromArgb(CByte(200), CByte(200), CByte(200))
-        ModernTextBox3.Size = New Size(719, 32)
+        ModernTextBox3.Size = New Size(666, 32)
         ModernTextBox3.TabIndex = 5
         ModernTextBox3.WaterText = "这里显示选中的预设项名称，主用于显示完整名称，也可在此直接重命名"
         ' 
         ' JustEmptyControl9
         ' 
         JustEmptyControl9.Dock = DockStyle.Right
-        JustEmptyControl9.Location = New Point(719, 10)
+        JustEmptyControl9.Location = New Point(666, 10)
         JustEmptyControl9.Name = "JustEmptyControl9"
         JustEmptyControl9.Size = New Size(10, 32)
         JustEmptyControl9.TabIndex = 13
         ' 
         ' ModernButton6
         ' 
-        ModernButton6.BackColor1 = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        ModernButton6.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernButton6.BorderRadius = 10
         ModernButton6.BorderSize = 0
         ModernButton6.Dock = DockStyle.Right
-        ModernButton6.HoverBackColor1 = Color.FromArgb(CByte(80), CByte(80), CByte(80))
-        ModernButton6.Location = New Point(729, 10)
+        ModernButton6.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        ModernButton6.Location = New Point(676, 10)
         ModernButton6.Margin = New Padding(2)
         ModernButton6.Name = "ModernButton6"
-        ModernButton6.PressedBackColor1 = SystemColors.WindowFrame
+        ModernButton6.PressedBackColor1 = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
         ModernButton6.Size = New Size(100, 32)
         ModernButton6.TabIndex = 12
         ModernButton6.Text = "变更名称"
@@ -239,7 +233,7 @@ Partial Class Form_v6_参数面板_预设管理
         Panel1.Location = New Point(20, 45)
         Panel1.Name = "Panel1"
         Panel1.Padding = New Padding(0, 10, 0, 0)
-        Panel1.Size = New Size(829, 42)
+        Panel1.Size = New Size(776, 42)
         Panel1.TabIndex = 10
         ' 
         ' ModernCheckBox1
@@ -267,15 +261,15 @@ Partial Class Form_v6_参数面板_预设管理
         ' 
         ' ModernButton5
         ' 
-        ModernButton5.BackColor1 = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        ModernButton5.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernButton5.BorderRadius = 10
         ModernButton5.BorderSize = 0
         ModernButton5.Dock = DockStyle.Left
-        ModernButton5.HoverBackColor1 = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        ModernButton5.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
         ModernButton5.Location = New Point(460, 10)
         ModernButton5.Margin = New Padding(2)
         ModernButton5.Name = "ModernButton5"
-        ModernButton5.PressedBackColor1 = SystemColors.WindowFrame
+        ModernButton5.PressedBackColor1 = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
         ModernButton5.Size = New Size(100, 32)
         ModernButton5.TabIndex = 11
         ModernButton5.Text = "重置所有"
@@ -290,15 +284,15 @@ Partial Class Form_v6_参数面板_预设管理
         ' 
         ' ModernButton4
         ' 
-        ModernButton4.BackColor1 = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        ModernButton4.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernButton4.BorderRadius = 10
         ModernButton4.BorderSize = 0
         ModernButton4.Dock = DockStyle.Left
-        ModernButton4.HoverBackColor1 = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        ModernButton4.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
         ModernButton4.Location = New Point(385, 10)
         ModernButton4.Margin = New Padding(2)
         ModernButton4.Name = "ModernButton4"
-        ModernButton4.PressedBackColor1 = SystemColors.WindowFrame
+        ModernButton4.PressedBackColor1 = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
         ModernButton4.Size = New Size(65, 32)
         ModernButton4.TabIndex = 9
         ModernButton4.Text = "导入"
@@ -313,15 +307,15 @@ Partial Class Form_v6_参数面板_预设管理
         ' 
         ' ModernButton3
         ' 
-        ModernButton3.BackColor1 = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        ModernButton3.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernButton3.BorderRadius = 10
         ModernButton3.BorderSize = 0
         ModernButton3.Dock = DockStyle.Left
-        ModernButton3.HoverBackColor1 = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        ModernButton3.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
         ModernButton3.Location = New Point(310, 10)
         ModernButton3.Margin = New Padding(2)
         ModernButton3.Name = "ModernButton3"
-        ModernButton3.PressedBackColor1 = SystemColors.WindowFrame
+        ModernButton3.PressedBackColor1 = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
         ModernButton3.Size = New Size(65, 32)
         ModernButton3.TabIndex = 7
         ModernButton3.Text = "导出"
@@ -336,15 +330,15 @@ Partial Class Form_v6_参数面板_预设管理
         ' 
         ' ModernButton2
         ' 
-        ModernButton2.BackColor1 = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        ModernButton2.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernButton2.BorderRadius = 10
         ModernButton2.BorderSize = 0
         ModernButton2.Dock = DockStyle.Left
-        ModernButton2.HoverBackColor1 = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        ModernButton2.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
         ModernButton2.Location = New Point(235, 10)
         ModernButton2.Margin = New Padding(2)
         ModernButton2.Name = "ModernButton2"
-        ModernButton2.PressedBackColor1 = SystemColors.WindowFrame
+        ModernButton2.PressedBackColor1 = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
         ModernButton2.Size = New Size(65, 32)
         ModernButton2.TabIndex = 5
         ModernButton2.Text = "读取"
@@ -359,15 +353,15 @@ Partial Class Form_v6_参数面板_预设管理
         ' 
         ' ModernButton1
         ' 
-        ModernButton1.BackColor1 = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        ModernButton1.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernButton1.BorderRadius = 10
         ModernButton1.BorderSize = 0
         ModernButton1.Dock = DockStyle.Left
-        ModernButton1.HoverBackColor1 = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        ModernButton1.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
         ModernButton1.Location = New Point(160, 10)
         ModernButton1.Margin = New Padding(2)
         ModernButton1.Name = "ModernButton1"
-        ModernButton1.PressedBackColor1 = SystemColors.WindowFrame
+        ModernButton1.PressedBackColor1 = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
         ModernButton1.Size = New Size(65, 32)
         ModernButton1.TabIndex = 3
         ModernButton1.Text = "保存"
@@ -382,7 +376,7 @@ Partial Class Form_v6_参数面板_预设管理
         ' 
         ' ModernComboBox1
         ' 
-        ModernComboBox1.BackColor1 = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        ModernComboBox1.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernComboBox1.BorderColorFocus = Color.Silver
         ModernComboBox1.BorderRadius = 10
         ModernComboBox1.BorderSize = 0
@@ -415,9 +409,9 @@ Partial Class Form_v6_参数面板_预设管理
         HtmlColorLabel1.Location = New Point(20, 20)
         HtmlColorLabel1.Margin = New Padding(2)
         HtmlColorLabel1.Name = "HtmlColorLabel1"
-        HtmlColorLabel1.Size = New Size(829, 25)
+        HtmlColorLabel1.Size = New Size(776, 25)
         HtmlColorLabel1.TabIndex = 7
-        HtmlColorLabel1.Text = "<span style=""font-size:13"">预设管理</span>   <span style=""font-size:10pt; color:Gray"">先选择预设来源，使用双击来加载，批量操作需求请直接去文件夹里操作</span>"
+        HtmlColorLabel1.Text = "<span style=""font-size:13"">预设管理</span>   <span style=""font-size:10pt; color:DarkGray"">先选择预设来源，使用双击来加载，批量操作需求请直接去文件夹里操作</span>"
         ' 
         ' Panel4
         ' 
@@ -425,18 +419,18 @@ Partial Class Form_v6_参数面板_预设管理
         Panel4.Controls.Add(JustEmptyControl10)
         Panel4.Controls.Add(ModernButton7)
         Panel4.Dock = DockStyle.Bottom
-        Panel4.Location = New Point(20, 590)
+        Panel4.Location = New Point(20, 571)
         Panel4.Name = "Panel4"
         Panel4.Padding = New Padding(0, 10, 0, 0)
-        Panel4.Size = New Size(829, 42)
+        Panel4.Size = New Size(776, 42)
         Panel4.TabIndex = 13
         ' 
         ' ModernTextBox4
         ' 
-        ModernTextBox4.BackColor1 = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        ModernTextBox4.BorderColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        ModernTextBox4.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        ModernTextBox4.BorderColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        ModernTextBox4.BorderColorFocus = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
         ModernTextBox4.BorderRadius = 10
-        ModernTextBox4.BorderSize = 2
         ModernTextBox4.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
         ModernTextBox4.Dock = DockStyle.Fill
         ModernTextBox4.Location = New Point(0, 10)
@@ -444,29 +438,29 @@ Partial Class Form_v6_参数面板_预设管理
         ModernTextBox4.Name = "ModernTextBox4"
         ModernTextBox4.Padding = New Padding(10, 0, 10, 0)
         ModernTextBox4.ScrollBarHoverColor = Color.FromArgb(CByte(200), CByte(200), CByte(200))
-        ModernTextBox4.Size = New Size(719, 32)
+        ModernTextBox4.Size = New Size(666, 32)
         ModernTextBox4.TabIndex = 5
         ModernTextBox4.WaterText = "这里显示选中的预设项备注，备注会在鼠标移上时显示在侧边，如果有相同的名称则会显示一样的"
         ' 
         ' JustEmptyControl10
         ' 
         JustEmptyControl10.Dock = DockStyle.Right
-        JustEmptyControl10.Location = New Point(719, 10)
+        JustEmptyControl10.Location = New Point(666, 10)
         JustEmptyControl10.Name = "JustEmptyControl10"
         JustEmptyControl10.Size = New Size(10, 32)
         JustEmptyControl10.TabIndex = 13
         ' 
         ' ModernButton7
         ' 
-        ModernButton7.BackColor1 = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        ModernButton7.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernButton7.BorderRadius = 10
         ModernButton7.BorderSize = 0
         ModernButton7.Dock = DockStyle.Right
-        ModernButton7.HoverBackColor1 = Color.FromArgb(CByte(80), CByte(80), CByte(80))
-        ModernButton7.Location = New Point(729, 10)
+        ModernButton7.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        ModernButton7.Location = New Point(676, 10)
         ModernButton7.Margin = New Padding(2)
         ModernButton7.Name = "ModernButton7"
-        ModernButton7.PressedBackColor1 = SystemColors.WindowFrame
+        ModernButton7.PressedBackColor1 = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
         ModernButton7.Size = New Size(100, 32)
         ModernButton7.TabIndex = 12
         ModernButton7.Text = "变更备注"
@@ -476,7 +470,7 @@ Partial Class Form_v6_参数面板_预设管理
         AutoScaleDimensions = New SizeF(96F, 96F)
         AutoScaleMode = AutoScaleMode.Dpi
         BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
-        ClientSize = New Size(869, 652)
+        ClientSize = New Size(816, 633)
         Controls.Add(ModernPanel1)
         Font = New Font("Microsoft YaHei UI", 10F)
         ForeColor = Color.Silver

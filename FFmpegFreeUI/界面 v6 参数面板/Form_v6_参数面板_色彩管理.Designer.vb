@@ -22,18 +22,18 @@ Partial Class Form_v6_参数面板_色彩管理
     '不要使用代码编辑器修改它。
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim TrackLabel13 As LakeUI.ExcellentTrackBar.TrackLabel = New LakeUI.ExcellentTrackBar.TrackLabel()
-        Dim TrackLabel14 As LakeUI.ExcellentTrackBar.TrackLabel = New LakeUI.ExcellentTrackBar.TrackLabel()
-        Dim TrackLabel15 As LakeUI.ExcellentTrackBar.TrackLabel = New LakeUI.ExcellentTrackBar.TrackLabel()
-        Dim TrackLabel16 As LakeUI.ExcellentTrackBar.TrackLabel = New LakeUI.ExcellentTrackBar.TrackLabel()
-        Dim TrackLabel17 As LakeUI.ExcellentTrackBar.TrackLabel = New LakeUI.ExcellentTrackBar.TrackLabel()
-        Dim TrackLabel18 As LakeUI.ExcellentTrackBar.TrackLabel = New LakeUI.ExcellentTrackBar.TrackLabel()
-        Dim TrackLabel19 As LakeUI.ExcellentTrackBar.TrackLabel = New LakeUI.ExcellentTrackBar.TrackLabel()
-        Dim TrackLabel20 As LakeUI.ExcellentTrackBar.TrackLabel = New LakeUI.ExcellentTrackBar.TrackLabel()
-        Dim TrackLabel21 As LakeUI.ExcellentTrackBar.TrackLabel = New LakeUI.ExcellentTrackBar.TrackLabel()
-        Dim TrackLabel22 As LakeUI.ExcellentTrackBar.TrackLabel = New LakeUI.ExcellentTrackBar.TrackLabel()
-        Dim TrackLabel23 As LakeUI.ExcellentTrackBar.TrackLabel = New LakeUI.ExcellentTrackBar.TrackLabel()
-        Dim TrackLabel24 As LakeUI.ExcellentTrackBar.TrackLabel = New LakeUI.ExcellentTrackBar.TrackLabel()
+        Dim TrackLabel1 As LakeUI.ExcellentTrackBar.TrackLabel = New LakeUI.ExcellentTrackBar.TrackLabel()
+        Dim TrackLabel2 As LakeUI.ExcellentTrackBar.TrackLabel = New LakeUI.ExcellentTrackBar.TrackLabel()
+        Dim TrackLabel3 As LakeUI.ExcellentTrackBar.TrackLabel = New LakeUI.ExcellentTrackBar.TrackLabel()
+        Dim TrackLabel4 As LakeUI.ExcellentTrackBar.TrackLabel = New LakeUI.ExcellentTrackBar.TrackLabel()
+        Dim TrackLabel5 As LakeUI.ExcellentTrackBar.TrackLabel = New LakeUI.ExcellentTrackBar.TrackLabel()
+        Dim TrackLabel6 As LakeUI.ExcellentTrackBar.TrackLabel = New LakeUI.ExcellentTrackBar.TrackLabel()
+        Dim TrackLabel7 As LakeUI.ExcellentTrackBar.TrackLabel = New LakeUI.ExcellentTrackBar.TrackLabel()
+        Dim TrackLabel8 As LakeUI.ExcellentTrackBar.TrackLabel = New LakeUI.ExcellentTrackBar.TrackLabel()
+        Dim TrackLabel9 As LakeUI.ExcellentTrackBar.TrackLabel = New LakeUI.ExcellentTrackBar.TrackLabel()
+        Dim TrackLabel10 As LakeUI.ExcellentTrackBar.TrackLabel = New LakeUI.ExcellentTrackBar.TrackLabel()
+        Dim TrackLabel11 As LakeUI.ExcellentTrackBar.TrackLabel = New LakeUI.ExcellentTrackBar.TrackLabel()
+        Dim TrackLabel12 As LakeUI.ExcellentTrackBar.TrackLabel = New LakeUI.ExcellentTrackBar.TrackLabel()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form_v6_参数面板_色彩管理))
         ModernPanel1 = New LakeUI.ModernPanel()
         Panel9 = New Panel()
@@ -163,20 +163,20 @@ Partial Class Form_v6_参数面板_色彩管理
         ' 
         ' ExcellentTrackBar4
         ' 
-        ExcellentTrackBar4.BackColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        ExcellentTrackBar4.BackColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
         ExcellentTrackBar4.Dock = DockStyle.Fill
         ExcellentTrackBar4.LabelLineLength = 20
-        TrackLabel13.Position = 10R
-        TrackLabel13.Side = LakeUI.ExcellentTrackBar.LabelSideEnum.TopOrLeft
-        TrackLabel13.Text = "最亮"
-        TrackLabel14.Position = 1R
-        TrackLabel14.Text = "原点"
-        TrackLabel15.Position = 0.10000000149011612R
-        TrackLabel15.Side = LakeUI.ExcellentTrackBar.LabelSideEnum.TopOrLeft
-        TrackLabel15.Text = "最暗"
-        ExcellentTrackBar4.Labels.Add(TrackLabel13)
-        ExcellentTrackBar4.Labels.Add(TrackLabel14)
-        ExcellentTrackBar4.Labels.Add(TrackLabel15)
+        TrackLabel1.Position = 10R
+        TrackLabel1.Side = LakeUI.ExcellentTrackBar.LabelSideEnum.TopOrLeft
+        TrackLabel1.Text = "最亮"
+        TrackLabel2.Position = 1R
+        TrackLabel2.Text = "原点"
+        TrackLabel3.Position = 0.10000000149011612R
+        TrackLabel3.Side = LakeUI.ExcellentTrackBar.LabelSideEnum.TopOrLeft
+        TrackLabel3.Text = "最暗"
+        ExcellentTrackBar4.Labels.Add(TrackLabel1)
+        ExcellentTrackBar4.Labels.Add(TrackLabel2)
+        ExcellentTrackBar4.Labels.Add(TrackLabel3)
         ExcellentTrackBar4.LargeChange = 0.1R
         ExcellentTrackBar4.Location = New Point(0, 0)
         ExcellentTrackBar4.Margin = New Padding(2, 2, 2, 2)
@@ -227,19 +227,19 @@ Partial Class Form_v6_参数面板_色彩管理
         ' 
         ' ExcellentTrackBar3
         ' 
-        ExcellentTrackBar3.BackColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        ExcellentTrackBar3.BackColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
         ExcellentTrackBar3.Dock = DockStyle.Fill
         ExcellentTrackBar3.LabelLineLength = 20
-        TrackLabel16.Position = 3R
-        TrackLabel16.Side = LakeUI.ExcellentTrackBar.LabelSideEnum.TopOrLeft
-        TrackLabel16.Text = "最高"
-        TrackLabel17.Position = 1R
-        TrackLabel17.Text = "原点"
-        TrackLabel18.Side = LakeUI.ExcellentTrackBar.LabelSideEnum.TopOrLeft
-        TrackLabel18.Text = "最低"
-        ExcellentTrackBar3.Labels.Add(TrackLabel16)
-        ExcellentTrackBar3.Labels.Add(TrackLabel17)
-        ExcellentTrackBar3.Labels.Add(TrackLabel18)
+        TrackLabel4.Position = 3R
+        TrackLabel4.Side = LakeUI.ExcellentTrackBar.LabelSideEnum.TopOrLeft
+        TrackLabel4.Text = "最高"
+        TrackLabel5.Position = 1R
+        TrackLabel5.Text = "原点"
+        TrackLabel6.Side = LakeUI.ExcellentTrackBar.LabelSideEnum.TopOrLeft
+        TrackLabel6.Text = "最低"
+        ExcellentTrackBar3.Labels.Add(TrackLabel4)
+        ExcellentTrackBar3.Labels.Add(TrackLabel5)
+        ExcellentTrackBar3.Labels.Add(TrackLabel6)
         ExcellentTrackBar3.LargeChange = 0.1R
         ExcellentTrackBar3.Location = New Point(0, 0)
         ExcellentTrackBar3.Margin = New Padding(2, 2, 2, 2)
@@ -289,19 +289,19 @@ Partial Class Form_v6_参数面板_色彩管理
         ' 
         ' ExcellentTrackBar2
         ' 
-        ExcellentTrackBar2.BackColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        ExcellentTrackBar2.BackColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
         ExcellentTrackBar2.Dock = DockStyle.Fill
         ExcellentTrackBar2.LabelLineLength = 20
-        TrackLabel19.Position = 2R
-        TrackLabel19.Side = LakeUI.ExcellentTrackBar.LabelSideEnum.TopOrLeft
-        TrackLabel19.Text = "最高"
-        TrackLabel20.Position = 1R
-        TrackLabel20.Text = "原点"
-        TrackLabel21.Side = LakeUI.ExcellentTrackBar.LabelSideEnum.TopOrLeft
-        TrackLabel21.Text = "最低"
-        ExcellentTrackBar2.Labels.Add(TrackLabel19)
-        ExcellentTrackBar2.Labels.Add(TrackLabel20)
-        ExcellentTrackBar2.Labels.Add(TrackLabel21)
+        TrackLabel7.Position = 2R
+        TrackLabel7.Side = LakeUI.ExcellentTrackBar.LabelSideEnum.TopOrLeft
+        TrackLabel7.Text = "最高"
+        TrackLabel8.Position = 1R
+        TrackLabel8.Text = "原点"
+        TrackLabel9.Side = LakeUI.ExcellentTrackBar.LabelSideEnum.TopOrLeft
+        TrackLabel9.Text = "最低"
+        ExcellentTrackBar2.Labels.Add(TrackLabel7)
+        ExcellentTrackBar2.Labels.Add(TrackLabel8)
+        ExcellentTrackBar2.Labels.Add(TrackLabel9)
         ExcellentTrackBar2.LargeChange = 0.1R
         ExcellentTrackBar2.Location = New Point(0, 0)
         ExcellentTrackBar2.Margin = New Padding(2, 2, 2, 2)
@@ -351,19 +351,19 @@ Partial Class Form_v6_参数面板_色彩管理
         ' 
         ' ExcellentTrackBar1
         ' 
-        ExcellentTrackBar1.BackColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        ExcellentTrackBar1.BackColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
         ExcellentTrackBar1.Dock = DockStyle.Fill
         ExcellentTrackBar1.LabelLineLength = 20
-        TrackLabel22.Position = 1R
-        TrackLabel22.Side = LakeUI.ExcellentTrackBar.LabelSideEnum.TopOrLeft
-        TrackLabel22.Text = "最亮"
-        TrackLabel23.Text = "原点"
-        TrackLabel24.Position = -1R
-        TrackLabel24.Side = LakeUI.ExcellentTrackBar.LabelSideEnum.TopOrLeft
-        TrackLabel24.Text = "最暗"
-        ExcellentTrackBar1.Labels.Add(TrackLabel22)
-        ExcellentTrackBar1.Labels.Add(TrackLabel23)
-        ExcellentTrackBar1.Labels.Add(TrackLabel24)
+        TrackLabel10.Position = 1R
+        TrackLabel10.Side = LakeUI.ExcellentTrackBar.LabelSideEnum.TopOrLeft
+        TrackLabel10.Text = "最亮"
+        TrackLabel11.Text = "原点"
+        TrackLabel12.Position = -1R
+        TrackLabel12.Side = LakeUI.ExcellentTrackBar.LabelSideEnum.TopOrLeft
+        TrackLabel12.Text = "最暗"
+        ExcellentTrackBar1.Labels.Add(TrackLabel10)
+        ExcellentTrackBar1.Labels.Add(TrackLabel11)
+        ExcellentTrackBar1.Labels.Add(TrackLabel12)
         ExcellentTrackBar1.LargeChange = 0.1R
         ExcellentTrackBar1.Location = New Point(0, 0)
         ExcellentTrackBar1.Margin = New Padding(2, 2, 2, 2)
@@ -433,7 +433,7 @@ Partial Class Form_v6_参数面板_色彩管理
         ' 
         ' ModernComboBox9
         ' 
-        ModernComboBox9.BackColor1 = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        ModernComboBox9.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernComboBox9.BorderColorFocus = Color.Silver
         ModernComboBox9.BorderRadius = 10
         ModernComboBox9.BorderSize = 0
@@ -482,7 +482,7 @@ Partial Class Form_v6_参数面板_色彩管理
         ' 
         ' ModernComboBox8
         ' 
-        ModernComboBox8.BackColor1 = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        ModernComboBox8.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernComboBox8.BorderColorFocus = Color.Silver
         ModernComboBox8.BorderRadius = 10
         ModernComboBox8.BorderSize = 0
@@ -531,7 +531,7 @@ Partial Class Form_v6_参数面板_色彩管理
         ' 
         ' ModernComboBox7
         ' 
-        ModernComboBox7.BackColor1 = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        ModernComboBox7.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernComboBox7.BorderColorFocus = Color.Silver
         ModernComboBox7.BorderRadius = 10
         ModernComboBox7.BorderSize = 0
@@ -580,7 +580,7 @@ Partial Class Form_v6_参数面板_色彩管理
         ' 
         ' ModernComboBox6
         ' 
-        ModernComboBox6.BackColor1 = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        ModernComboBox6.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernComboBox6.BorderColorFocus = Color.Silver
         ModernComboBox6.BorderRadius = 10
         ModernComboBox6.BorderSize = 0
@@ -629,7 +629,7 @@ Partial Class Form_v6_参数面板_色彩管理
         ' 
         ' ModernComboBox5
         ' 
-        ModernComboBox5.BackColor1 = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        ModernComboBox5.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernComboBox5.BorderColorFocus = Color.Silver
         ModernComboBox5.BorderRadius = 10
         ModernComboBox5.BorderSize = 0
@@ -678,7 +678,7 @@ Partial Class Form_v6_参数面板_色彩管理
         ' 
         ' ModernComboBox3
         ' 
-        ModernComboBox3.BackColor1 = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        ModernComboBox3.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernComboBox3.BorderColorFocus = Color.Silver
         ModernComboBox3.BorderRadius = 10
         ModernComboBox3.BorderSize = 0
@@ -727,7 +727,7 @@ Partial Class Form_v6_参数面板_色彩管理
         ' 
         ' ModernComboBox4
         ' 
-        ModernComboBox4.BackColor1 = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        ModernComboBox4.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernComboBox4.BorderColorFocus = Color.Silver
         ModernComboBox4.BorderRadius = 10
         ModernComboBox4.BorderSize = 0
@@ -790,7 +790,7 @@ Partial Class Form_v6_参数面板_色彩管理
         ' 
         ' MCB_预先转换到像素格式
         ' 
-        MCB_预先转换到像素格式.BackColor1 = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        MCB_预先转换到像素格式.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_预先转换到像素格式.BorderColorFocus = Color.Silver
         MCB_预先转换到像素格式.BorderRadius = 10
         MCB_预先转换到像素格式.BorderSize = 0
@@ -836,7 +836,7 @@ Partial Class Form_v6_参数面板_色彩管理
         ' 
         ' MCB_像素格式
         ' 
-        MCB_像素格式.BackColor1 = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        MCB_像素格式.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_像素格式.BorderColorFocus = Color.Silver
         MCB_像素格式.BorderRadius = 10
         MCB_像素格式.BorderSize = 0

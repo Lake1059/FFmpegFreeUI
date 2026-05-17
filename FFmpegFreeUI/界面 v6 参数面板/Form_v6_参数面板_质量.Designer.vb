@@ -85,9 +85,10 @@ Partial Class Form_v6_参数面板_质量
         ' 
         ' ModernTextBox6
         ' 
-        ModernTextBox6.BorderColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        ModernTextBox6.BackColor1 = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
+        ModernTextBox6.BorderColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
+        ModernTextBox6.BorderColorFocus = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernTextBox6.BorderRadius = 10
-        ModernTextBox6.BorderSize = 2
         ModernTextBox6.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
         ModernTextBox6.Dock = DockStyle.Fill
         ModernTextBox6.Location = New Point(20, 383)
@@ -96,7 +97,7 @@ Partial Class Form_v6_参数面板_质量
         ModernTextBox6.Name = "ModernTextBox6"
         ModernTextBox6.Padding = New Padding(13, 10, 13, 10)
         ModernTextBox6.ScrollBarHoverColor = Color.FromArgb(CByte(200), CByte(200), CByte(200))
-        ModernTextBox6.Size = New Size(807, 273)
+        ModernTextBox6.Size = New Size(795, 273)
         ModernTextBox6.TabIndex = 17
         ' 
         ' JustEmptyControl8
@@ -104,7 +105,7 @@ Partial Class Form_v6_参数面板_质量
         JustEmptyControl8.Dock = DockStyle.Top
         JustEmptyControl8.Location = New Point(20, 373)
         JustEmptyControl8.Name = "JustEmptyControl8"
-        JustEmptyControl8.Size = New Size(807, 10)
+        JustEmptyControl8.Size = New Size(795, 10)
         JustEmptyControl8.TabIndex = 16
         ' 
         ' Panel3
@@ -115,7 +116,7 @@ Partial Class Form_v6_参数面板_质量
         Panel3.Location = New Point(20, 331)
         Panel3.Name = "Panel3"
         Panel3.Padding = New Padding(0, 10, 0, 0)
-        Panel3.Size = New Size(807, 42)
+        Panel3.Size = New Size(795, 42)
         Panel3.TabIndex = 13
         ' 
         ' HtmlColorLabel10
@@ -128,22 +129,22 @@ Partial Class Form_v6_参数面板_质量
         HtmlColorLabel10.Margin = New Padding(2)
         HtmlColorLabel10.Name = "HtmlColorLabel10"
         HtmlColorLabel10.Padding = New Padding(10, 0, 0, 0)
-        HtmlColorLabel10.Size = New Size(657, 32)
+        HtmlColorLabel10.Size = New Size(645, 32)
         HtmlColorLabel10.TabIndex = 12
         HtmlColorLabel10.Text = "可自由安排换行，注意 <span style=""font-size:10pt; color:MediumPurple"">参数和值之间</span> 以及 <span style=""font-size:10pt; color:MediumPurple"">参数与参数之间</span> 的空格即可"
         HtmlColorLabel10.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
         ' 
         ' ModernButton1
         ' 
-        ModernButton1.BackColor1 = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        ModernButton1.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernButton1.BorderRadius = 10
         ModernButton1.BorderSize = 0
         ModernButton1.Dock = DockStyle.Left
-        ModernButton1.HoverBackColor1 = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        ModernButton1.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
         ModernButton1.Location = New Point(0, 10)
         ModernButton1.Margin = New Padding(2)
         ModernButton1.Name = "ModernButton1"
-        ModernButton1.PressedBackColor1 = SystemColors.WindowFrame
+        ModernButton1.PressedBackColor1 = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
         ModernButton1.Size = New Size(150, 32)
         ModernButton1.TabIndex = 11
         ModernButton1.Text = "插入预制条目"
@@ -157,7 +158,7 @@ Partial Class Form_v6_参数面板_质量
         HtmlColorLabel9.Margin = New Padding(2)
         HtmlColorLabel9.Name = "HtmlColorLabel9"
         HtmlColorLabel9.Padding = New Padding(0, 20, 0, 5)
-        HtmlColorLabel9.Size = New Size(807, 50)
+        HtmlColorLabel9.Size = New Size(795, 50)
         HtmlColorLabel9.TabIndex = 12
         HtmlColorLabel9.Text = "<span style=""font-size:13"">进阶质量控制</span>   <span style=""font-size:10pt; color:Gray"">不常用，此处指定编码器内部小参可能不会起作用</span>"
         ' 
@@ -174,15 +175,15 @@ Partial Class Form_v6_参数面板_质量
         Panel1.Location = New Point(20, 239)
         Panel1.Name = "Panel1"
         Panel1.Padding = New Padding(0, 10, 0, 0)
-        Panel1.Size = New Size(807, 42)
+        Panel1.Size = New Size(795, 42)
         Panel1.TabIndex = 10
         ' 
         ' ModernTextBox5
         ' 
-        ModernTextBox5.BackColor1 = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        ModernTextBox5.BorderColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        ModernTextBox5.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        ModernTextBox5.BorderColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        ModernTextBox5.BorderColorFocus = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
         ModernTextBox5.BorderRadius = 10
-        ModernTextBox5.BorderSize = 2
         ModernTextBox5.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
         ModernTextBox5.Dock = DockStyle.Left
         ModernTextBox5.Location = New Point(405, 10)
@@ -204,10 +205,10 @@ Partial Class Form_v6_参数面板_质量
         ' 
         ' ModernTextBox4
         ' 
-        ModernTextBox4.BackColor1 = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        ModernTextBox4.BorderColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        ModernTextBox4.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        ModernTextBox4.BorderColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        ModernTextBox4.BorderColorFocus = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
         ModernTextBox4.BorderRadius = 10
-        ModernTextBox4.BorderSize = 2
         ModernTextBox4.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
         ModernTextBox4.Dock = DockStyle.Left
         ModernTextBox4.Location = New Point(270, 10)
@@ -229,10 +230,10 @@ Partial Class Form_v6_参数面板_质量
         ' 
         ' ModernTextBox3
         ' 
-        ModernTextBox3.BackColor1 = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        ModernTextBox3.BorderColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        ModernTextBox3.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        ModernTextBox3.BorderColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        ModernTextBox3.BorderColorFocus = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
         ModernTextBox3.BorderRadius = 10
-        ModernTextBox3.BorderSize = 2
         ModernTextBox3.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
         ModernTextBox3.Dock = DockStyle.Left
         ModernTextBox3.Location = New Point(135, 10)
@@ -254,10 +255,10 @@ Partial Class Form_v6_参数面板_质量
         ' 
         ' ModernTextBox2
         ' 
-        ModernTextBox2.BackColor1 = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        ModernTextBox2.BorderColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        ModernTextBox2.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        ModernTextBox2.BorderColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        ModernTextBox2.BorderColorFocus = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
         ModernTextBox2.BorderRadius = 10
-        ModernTextBox2.BorderSize = 2
         ModernTextBox2.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
         ModernTextBox2.Dock = DockStyle.Left
         ModernTextBox2.Location = New Point(0, 10)
@@ -278,7 +279,7 @@ Partial Class Form_v6_参数面板_质量
         Panel4.Dock = DockStyle.Top
         Panel4.Location = New Point(20, 209)
         Panel4.Name = "Panel4"
-        Panel4.Size = New Size(807, 30)
+        Panel4.Size = New Size(795, 30)
         Panel4.TabIndex = 9
         ' 
         ' HtmlColorLabel8
@@ -337,7 +338,7 @@ Partial Class Form_v6_参数面板_质量
         HtmlColorLabel4.Location = New Point(20, 188)
         HtmlColorLabel4.Margin = New Padding(2)
         HtmlColorLabel4.Name = "HtmlColorLabel4"
-        HtmlColorLabel4.Size = New Size(807, 21)
+        HtmlColorLabel4.Size = New Size(795, 21)
         HtmlColorLabel4.TabIndex = 11
         HtmlColorLabel4.Text = resources.GetString("HtmlColorLabel4.Text")
         ' 
@@ -350,7 +351,7 @@ Partial Class Form_v6_参数面板_质量
         HtmlColorLabel3.Margin = New Padding(2)
         HtmlColorLabel3.Name = "HtmlColorLabel3"
         HtmlColorLabel3.Padding = New Padding(0, 20, 0, 5)
-        HtmlColorLabel3.Size = New Size(807, 50)
+        HtmlColorLabel3.Size = New Size(795, 50)
         HtmlColorLabel3.TabIndex = 8
         HtmlColorLabel3.Text = "<span style=""font-size:13"">比特率</span>   <span style=""font-size:10pt; color:Gray"">传统的转码直接写比特率，范围和缓冲区可配合全局质量控制</span>"
         ' 
@@ -365,15 +366,15 @@ Partial Class Form_v6_参数面板_质量
         Panel2.Location = New Point(20, 96)
         Panel2.Name = "Panel2"
         Panel2.Padding = New Padding(0, 10, 0, 0)
-        Panel2.Size = New Size(807, 42)
+        Panel2.Size = New Size(795, 42)
         Panel2.TabIndex = 6
         ' 
         ' ModernTextBox1
         ' 
-        ModernTextBox1.BackColor1 = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        ModernTextBox1.BorderColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        ModernTextBox1.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        ModernTextBox1.BorderColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        ModernTextBox1.BorderColorFocus = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
         ModernTextBox1.BorderRadius = 10
-        ModernTextBox1.BorderSize = 2
         ModernTextBox1.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
         ModernTextBox1.Dock = DockStyle.Left
         ModernTextBox1.Location = New Point(470, 10)
@@ -395,7 +396,7 @@ Partial Class Form_v6_参数面板_质量
         ' 
         ' ModernComboBox2
         ' 
-        ModernComboBox2.BackColor1 = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        ModernComboBox2.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernComboBox2.BorderColorFocus = Color.Silver
         ModernComboBox2.BorderRadius = 10
         ModernComboBox2.BorderSize = 0
@@ -432,7 +433,7 @@ Partial Class Form_v6_参数面板_质量
         ' 
         ' ModernComboBox1
         ' 
-        ModernComboBox1.BackColor1 = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        ModernComboBox1.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernComboBox1.BorderColorFocus = Color.Silver
         ModernComboBox1.BorderRadius = 10
         ModernComboBox1.BorderSize = 0
@@ -471,7 +472,7 @@ Partial Class Form_v6_参数面板_质量
         HtmlColorLabel2.Margin = New Padding(2)
         HtmlColorLabel2.Name = "HtmlColorLabel2"
         HtmlColorLabel2.Padding = New Padding(0, 0, 0, 5)
-        HtmlColorLabel2.Size = New Size(807, 46)
+        HtmlColorLabel2.Size = New Size(795, 46)
         HtmlColorLabel2.TabIndex = 7
         HtmlColorLabel2.Text = resources.GetString("HtmlColorLabel2.Text")
         ' 
@@ -484,7 +485,7 @@ Partial Class Form_v6_参数面板_质量
         HtmlColorLabel1.Margin = New Padding(2)
         HtmlColorLabel1.Name = "HtmlColorLabel1"
         HtmlColorLabel1.Padding = New Padding(0, 0, 0, 5)
-        HtmlColorLabel1.Size = New Size(807, 30)
+        HtmlColorLabel1.Size = New Size(795, 30)
         HtmlColorLabel1.TabIndex = 5
         HtmlColorLabel1.Text = "<span style=""font-size:13"">全局质量控制</span>   <span style=""font-size:10pt; color:Goldenrod"">常规压制仅需在此设置全局质量即可满足需求</span>"
         ' 

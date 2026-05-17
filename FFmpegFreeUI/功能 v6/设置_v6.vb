@@ -53,6 +53,7 @@ Public Class 设置_v6
     Public Property SP_起始页面顶栏副标题 As String = ""
     Public Property SP_窗口边框颜色 As Color = Color.MediumPurple
     Public Property SP_分层阴影颜色 As Color = Color.MediumPurple
+    Public Property SP_边框宽度 As Integer = 1
     Public Property SP_毛玻璃模式 As Integer = 0
     Public Property SP_毛玻璃背景来源 As Integer = -1
     Public Property SP_毛玻璃噪点颗粒 As Integer = -1
@@ -141,6 +142,7 @@ Public Class 设置_v6
         Form_v6_设置_远程调用.BooleanSwitch1.Checked = 实例对象.是否监听端口
         Form_v6_设置_远程调用.ModernTextBox1.Text = 实例对象.监听的端口
 
+        Form_v6_设置_个性化.MCB_边框宽度.SelectedIndex = 实例对象.SP_边框宽度
         Form_v6_设置_个性化.MCB_毛玻璃模式.SelectedIndex = 实例对象.SP_毛玻璃模式
         Form_v6_设置_个性化.MCB_背景来源.SelectedIndex = 实例对象.SP_毛玻璃背景来源
         Form_v6_设置_个性化.MCB_噪点颗粒.SelectedIndex = 实例对象.SP_毛玻璃噪点颗粒

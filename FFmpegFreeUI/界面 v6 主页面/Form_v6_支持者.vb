@@ -5,7 +5,7 @@
         "爱发电用户_Ck8g", "David King",
         "Daydreamer|#037DEC", "爱发电用户_217cb",
         "BAILING (学生)|#905BD9", "zhengjun638504@163.com",
-        "尧泉", "FlyBalloon|#ADD8E6", "落叶清风|#6495ED"
+        "尧泉", "FlyBalloon|#ADD8E6", "落叶清风|#6495ED", "Xing|#135da7", "xrh0905"
     }
 
     Public Shared Property 赠送支持者列表 As New List(Of String) From {
@@ -45,7 +45,7 @@
         If HTML颜色值文本.StartsWith("#"c) Then
             背景颜色 = ColorTranslator.FromHtml(HTML颜色值文本)
         Else
-            背景颜色 = ColorTranslator.FromWin32(RGB(56, 56, 56))
+            背景颜色 = Color.FromArgb(20, 0, 0, 0)
         End If
         Dim 背景色亮度 As Double = 背景颜色.R * 0.299 + 背景颜色.G * 0.587 + 背景颜色.B * 0.114
         Dim 文字颜色 As Color = If(背景色亮度 >= 128, Color.Black, Color.Silver)
@@ -55,9 +55,9 @@
             .Height = 32 * Form1.DPI,
             .BorderRadius = 16,
             .BackColor = Color.Transparent,
-            .BackColor1 = 背景颜色,
+            .BackColor1 = Color.FromArgb(200, 背景颜色.R, 背景颜色.G, 背景颜色.B),
             .BorderColor = 背景颜色,
-            .BorderSize = 1,
+            .BorderSize = 0,
             .ForeColor = 文字颜色,
             .Font = New Font(Me.Font.Name, 10),
             .Margin = New Padding(0, 0, 15, 15),
@@ -65,7 +65,7 @@
         }
         Select Case 特殊标记
             Case "终末诗"
-                b.BorderColor = Color.White
+                b.BorderColor = Color.FromArgb(80, 220, 220, 220)
                 b.BorderSize = 2
         End Select
         根据文本设置按钮宽度(b, 30 * Form1.DPI)

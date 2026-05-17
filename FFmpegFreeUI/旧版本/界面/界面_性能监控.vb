@@ -56,16 +56,16 @@
         If 是否初始化 Then 校准界面()
     End Sub
 
-    Private Sub LinkLabel1_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel1.LinkClicked
-        Dim a As New 暗黑上下文菜单 With {.ShowImageMargin = False, .Font = Form1.Font}
-        a.Items.Add(New ToolStripSeparator() With {.Tag = "null"})
-        a.Items.Add(New ToolStripMenuItem("选择显卡") With {.ForeColor = Color.CornflowerBlue, .Enabled = False})
-        For Each item In 性能统计.显卡信息表.Keys
-            Dim b As New ToolStripMenuItem(item) With {.Tag = item}
-            AddHandler b.Click, Sub() LinkLabel1.Text = item
-            a.Items.Add(b)
-        Next
-        a.Items.Add(New ToolStripSeparator() With {.Tag = "null"})
-        a.Show(LinkLabel1, New Point(20 * Form1.DPI, LinkLabel1.Height + 20 * Form1.DPI))
-    End Sub
+    'Private Sub LinkLabel1_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel1.LinkClicked
+    '    Dim a As New 暗黑上下文菜单 With {.ShowImageMargin = False, .Font = Form1.Font}
+    '    a.Items.Add(New ToolStripSeparator() With {.Tag = "null"})
+    '    a.Items.Add(New ToolStripMenuItem("选择显卡") With {.ForeColor = Color.CornflowerBlue, .Enabled = False})
+    '    For Each item In 性能统计.显卡信息表.Keys
+    '        Dim b As New ToolStripMenuItem(item) With {.Tag = item}
+    '        AddHandler b.Click, Sub() LinkLabel1.Text = item
+    '        a.Items.Add(b)
+    '    Next
+    '    a.Items.Add(New ToolStripSeparator() With {.Tag = "null"})
+    '    a.Show(LinkLabel1, New Point(20 * Form1.DPI, LinkLabel1.Height + 20 * Form1.DPI))
+    'End Sub
 End Class

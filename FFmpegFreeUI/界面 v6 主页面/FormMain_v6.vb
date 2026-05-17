@@ -22,12 +22,14 @@ Public Class FormMain_v6
                         Case > 0
                             ModernTabListControl1.TabStripBackColor = Color.Transparent
                             ModernTabListControl1.ContentBackColor = Color.Transparent
+                            Form_v6_参数面板.ModernTabListControl1.TabStripBackColor = Color.Transparent
+                            Form_v6_参数面板.ModernTabListControl1.ContentBackColor = Color.Transparent
                             Form_v6_设置.ModernTabListControl1.TabStripBackColor = Color.Transparent
                             Form_v6_设置.ModernTabListControl1.ContentBackColor = Color.Transparent
                     End Select
                 End If
         End Select
-        Me.ModernTabListControl1.Focus()
+
         Me.ModernTabListControl1.Items(1).BoundControl = Form_v6_起始页面
         绑定选项卡窗体背景透明(Form_v6_起始页面.ModernPanel1)
         Me.ModernTabListControl1.Items(2).BoundControl = Form_v6_编码队列
@@ -35,16 +37,19 @@ Public Class FormMain_v6
         Me.ModernTabListControl1.Items(5).BoundControl = Form_v6_参数面板
         绑定选项卡窗体背景透明(Form_v6_参数面板.ModernPanel1)
         Me.ModernTabListControl1.Items(11).BoundControl = Form_v6_性能监控
+        绑定选项卡窗体背景透明(Form_v6_性能监控.ModernPanel1)
         Me.ModernTabListControl1.Items(14).BoundControl = Form_v6_设置
         绑定选项卡窗体背景透明(Form_v6_设置.ModernPanel1)
         Me.ModernTabListControl1.Items(15).BoundControl = Form_v6_支持者
+        绑定选项卡窗体背景透明(Form_v6_支持者.ModernPanel1)
         Me.ModernTabListControl1.SelectedIndex = 1
         Me.ModernTextBox1.Parent = Me.ModernTabListControl1
     End Sub
 
     Private Sub FormMain_v6_Shown(sender As Object, e As EventArgs) Handles Me.Shown
-
-
+        Me.ModernTabListControl1.Focus()
+        网络功能.检查软件本体更新()
+        网络功能.检查更新器更新()
 
 
 
@@ -81,7 +86,7 @@ Public Class FormMain_v6
         ModernTextBox1.BackColor1 = Color.FromArgb(40, 220, 220, 220)
     End Sub
 
-    Private Sub FormMain_v6_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
+    Private Sub FormMain_v6_Closing(sender As Object, e As CancelEventArgs) Handles Me.FormClosing
         设置_v6.退出时保存设置()
     End Sub
 End Class

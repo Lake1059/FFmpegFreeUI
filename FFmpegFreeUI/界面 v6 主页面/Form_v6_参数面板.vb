@@ -32,13 +32,20 @@ Public Class Form_v6_参数面板
         绑定选项卡窗体背景透明(私有界面_预设管理.ModernPanel1)
         '==================================================
         Me.ModernTabListControl1.Items(3).BoundControl = 私有界面_输出文件设置
+        绑定选项卡窗体背景透明(私有界面_输出文件设置.ModernPanel1)
         Me.ModernTabListControl1.Items(4).BoundControl = 私有界面_解码参数
+        绑定选项卡窗体背景透明(私有界面_解码参数.ModernPanel1)
         '==================================================
         Me.ModernTabListControl1.Items(6).BoundControl = 私有界面_视频编码器
+        绑定选项卡窗体背景透明(私有界面_视频编码器.ModernPanel1)
         Me.ModernTabListControl1.Items(7).BoundControl = 私有界面_画面帧
+        绑定选项卡窗体背景透明(私有界面_画面帧.ModernPanel1)
         Me.ModernTabListControl1.Items(8).BoundControl = 私有界面_质量
+        绑定选项卡窗体背景透明(私有界面_质量.ModernPanel1)
         Me.ModernTabListControl1.Items(9).BoundControl = 私有界面_色彩管理
+        绑定选项卡窗体背景透明(私有界面_色彩管理.ModernPanel1)
         Me.ModernTabListControl1.Items(10).BoundControl = 私有界面_视频帧服务器
+        绑定选项卡窗体背景透明(私有界面_视频帧服务器.ModernPanel1)
         '==================================================
         Me.ModernTabListControl1.Items(12).BoundControl = 私有界面_音频参数
         '==================================================

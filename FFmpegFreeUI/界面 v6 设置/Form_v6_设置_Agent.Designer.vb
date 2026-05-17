@@ -41,6 +41,7 @@ Partial Class Form_v6_设置_Agent
         ModernComboBox1 = New LakeUI.ModernComboBox()
         HtmlColorLabel1 = New LakeUI.HtmlColorLabel()
         HtmlColorLabel6 = New LakeUI.HtmlColorLabel()
+        HtmlColorLabel3 = New LakeUI.HtmlColorLabel()
         ModernPanel1.SuspendLayout()
         Panel4.SuspendLayout()
         Panel3.SuspendLayout()
@@ -61,6 +62,7 @@ Partial Class Form_v6_设置_Agent
         ModernPanel1.Controls.Add(Panel3)
         ModernPanel1.Controls.Add(Panel1)
         ModernPanel1.Controls.Add(Panel2)
+        ModernPanel1.Controls.Add(HtmlColorLabel3)
         ModernPanel1.Controls.Add(HtmlColorLabel1)
         ModernPanel1.Controls.Add(HtmlColorLabel6)
         ModernPanel1.Dock = DockStyle.Fill
@@ -83,7 +85,7 @@ Partial Class Form_v6_设置_Agent
         ModernCheckBox3.Checked = True
         ModernCheckBox3.CheckMarkColor = Color.WhiteSmoke
         ModernCheckBox3.Dock = DockStyle.Top
-        ModernCheckBox3.Location = New Point(20, 413)
+        ModernCheckBox3.Location = New Point(20, 439)
         ModernCheckBox3.MainSubTextSpacing = 3
         ModernCheckBox3.Name = "ModernCheckBox3"
         ModernCheckBox3.Padding = New Padding(0, 0, 0, 10)
@@ -105,7 +107,7 @@ Partial Class Form_v6_设置_Agent
         ModernCheckBox2.Checked = True
         ModernCheckBox2.CheckMarkColor = Color.WhiteSmoke
         ModernCheckBox2.Dock = DockStyle.Top
-        ModernCheckBox2.Location = New Point(20, 363)
+        ModernCheckBox2.Location = New Point(20, 389)
         ModernCheckBox2.MainSubTextSpacing = 3
         ModernCheckBox2.Name = "ModernCheckBox2"
         ModernCheckBox2.Padding = New Padding(0, 0, 0, 10)
@@ -127,7 +129,7 @@ Partial Class Form_v6_设置_Agent
         ModernCheckBox1.Checked = True
         ModernCheckBox1.CheckMarkColor = Color.WhiteSmoke
         ModernCheckBox1.Dock = DockStyle.Top
-        ModernCheckBox1.Location = New Point(20, 313)
+        ModernCheckBox1.Location = New Point(20, 339)
         ModernCheckBox1.MainSubTextSpacing = 3
         ModernCheckBox1.Name = "ModernCheckBox1"
         ModernCheckBox1.Padding = New Padding(0, 0, 0, 10)
@@ -141,7 +143,7 @@ Partial Class Form_v6_设置_Agent
         HtmlColorLabel2.AutoSize = True
         HtmlColorLabel2.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel2.Dock = DockStyle.Top
-        HtmlColorLabel2.Location = New Point(20, 258)
+        HtmlColorLabel2.Location = New Point(20, 284)
         HtmlColorLabel2.Margin = New Padding(2)
         HtmlColorLabel2.Name = "HtmlColorLabel2"
         HtmlColorLabel2.Padding = New Padding(0, 20, 0, 10)
@@ -154,7 +156,7 @@ Partial Class Form_v6_设置_Agent
         Panel4.Controls.Add(HtmlColorLabel9)
         Panel4.Controls.Add(ModernTextBox3)
         Panel4.Dock = DockStyle.Top
-        Panel4.Location = New Point(20, 216)
+        Panel4.Location = New Point(20, 242)
         Panel4.Name = "Panel4"
         Panel4.Padding = New Padding(0, 10, 0, 0)
         Panel4.Size = New Size(848, 42)
@@ -192,7 +194,7 @@ Partial Class Form_v6_设置_Agent
         Panel3.Controls.Add(HtmlColorLabel8)
         Panel3.Controls.Add(ModernTextBox2)
         Panel3.Dock = DockStyle.Top
-        Panel3.Location = New Point(20, 174)
+        Panel3.Location = New Point(20, 200)
         Panel3.Name = "Panel3"
         Panel3.Padding = New Padding(0, 10, 0, 0)
         Panel3.Size = New Size(848, 42)
@@ -230,7 +232,7 @@ Partial Class Form_v6_设置_Agent
         Panel1.Controls.Add(HtmlColorLabel7)
         Panel1.Controls.Add(ModernTextBox1)
         Panel1.Dock = DockStyle.Top
-        Panel1.Location = New Point(20, 132)
+        Panel1.Location = New Point(20, 158)
         Panel1.Name = "Panel1"
         Panel1.Padding = New Padding(0, 10, 0, 0)
         Panel1.Size = New Size(848, 42)
@@ -268,7 +270,7 @@ Partial Class Form_v6_设置_Agent
         Panel2.Controls.Add(HtmlColorLabel4)
         Panel2.Controls.Add(ModernComboBox1)
         Panel2.Dock = DockStyle.Top
-        Panel2.Location = New Point(20, 90)
+        Panel2.Location = New Point(20, 116)
         Panel2.Name = "Panel2"
         Panel2.Padding = New Padding(0, 10, 0, 0)
         Panel2.Size = New Size(848, 42)
@@ -279,13 +281,13 @@ Partial Class Form_v6_设置_Agent
         HtmlColorLabel4.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel4.Dock = DockStyle.Fill
         HtmlColorLabel4.ForeColor = Color.Gray
-        HtmlColorLabel4.Location = New Point(200, 10)
+        HtmlColorLabel4.Location = New Point(300, 10)
         HtmlColorLabel4.Margin = New Padding(2)
         HtmlColorLabel4.Name = "HtmlColorLabel4"
         HtmlColorLabel4.Padding = New Padding(10, 0, 0, 0)
-        HtmlColorLabel4.Size = New Size(648, 32)
+        HtmlColorLabel4.Size = New Size(548, 32)
         HtmlColorLabel4.TabIndex = 20
-        HtmlColorLabel4.Text = "免费提供的模型有严格的用量检测，滥用的 IP 地址将被禁止使用"
+        HtmlColorLabel4.Text = "如果有可免费使用的模型，可在此选择，重启软件以刷新"
         HtmlColorLabel4.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
         ' 
         ' ModernComboBox1
@@ -301,15 +303,12 @@ Partial Class Form_v6_设置_Agent
         ModernComboBox1.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
         ModernComboBox1.DropDownPadding = New Padding(10)
         ModernComboBox1.DropDownScrollBarHoverColor = Color.FromArgb(CByte(200), CByte(200), CByte(200))
-        ModernComboBox1.Items.Add("保持控件独立设定")
-        ModernComboBox1.Items.Add("x2")
-        ModernComboBox1.Items.Add("x3")
-        ModernComboBox1.Items.Add("x4")
+        ModernComboBox1.Items.Add("自定义（仅支持 OpenAI 接口标准）")
         ModernComboBox1.Location = New Point(0, 10)
         ModernComboBox1.Margin = New Padding(2, 2, 2, 2)
         ModernComboBox1.Name = "ModernComboBox1"
         ModernComboBox1.Padding = New Padding(10, 0, 10, 0)
-        ModernComboBox1.Size = New Size(200, 32)
+        ModernComboBox1.Size = New Size(300, 32)
         ModernComboBox1.TabIndex = 0
         ModernComboBox1.ToolTipBorderSize = 2
         ModernComboBox1.ToolTipGap = 10
@@ -326,7 +325,7 @@ Partial Class Form_v6_设置_Agent
         HtmlColorLabel1.Name = "HtmlColorLabel1"
         HtmlColorLabel1.Size = New Size(848, 25)
         HtmlColorLabel1.TabIndex = 26
-        HtmlColorLabel1.Text = "<span style=""font-size:13"">模型来源</span>   <span style=""font-size:10pt; color:DarkGray"">更建议自行指定模型；我们可能会提供一些价格较低的模型</span>"
+        HtmlColorLabel1.Text = "<span style=""font-size:13"">模型来源</span>   <span style=""font-size:10pt; color:DarkGray"">更建议自行指定模型；我们可能会提供一些价格较低的模型供 SP 用户免费使用</span>"
         ' 
         ' HtmlColorLabel6
         ' 
@@ -340,6 +339,20 @@ Partial Class Form_v6_设置_Agent
         HtmlColorLabel6.Size = New Size(848, 45)
         HtmlColorLabel6.TabIndex = 25
         HtmlColorLabel6.Text = "<span style=""font-size:13"">3FUI Agent</span>   <span style=""font-size:10pt; color:DarkGray"">专属于 3FUI 的副驾驶！不止聊天，AI 可以操作参数面板并使用 3FUI 文档</span>"
+        ' 
+        ' HtmlColorLabel3
+        ' 
+        HtmlColorLabel3.AutoSize = True
+        HtmlColorLabel3.AutoSizeMode = AutoSizeMode.GrowAndShrink
+        HtmlColorLabel3.Dock = DockStyle.Top
+        HtmlColorLabel3.ForeColor = Color.IndianRed
+        HtmlColorLabel3.Location = New Point(20, 90)
+        HtmlColorLabel3.Margin = New Padding(2)
+        HtmlColorLabel3.Name = "HtmlColorLabel3"
+        HtmlColorLabel3.Padding = New Padding(0, 5, 0, 0)
+        HtmlColorLabel3.Size = New Size(848, 26)
+        HtmlColorLabel3.TabIndex = 35
+        HtmlColorLabel3.Text = "开发者提供的模型有严格的用量检测，滥用（包括偷渡检测）将直接封禁公网 IP"
         ' 
         ' Form_v6_设置_Agent
         ' 
@@ -380,4 +393,5 @@ Partial Class Form_v6_设置_Agent
     Friend WithEvents ModernCheckBox1 As LakeUI.ModernCheckBox
     Friend WithEvents ModernCheckBox2 As LakeUI.ModernCheckBox
     Friend WithEvents ModernCheckBox3 As LakeUI.ModernCheckBox
+    Friend WithEvents HtmlColorLabel3 As LakeUI.HtmlColorLabel
 End Class

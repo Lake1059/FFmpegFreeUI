@@ -245,7 +245,7 @@ Partial Class Form_v6_设置_性能调度
         HtmlColorLabel1.Name = "HtmlColorLabel1"
         HtmlColorLabel1.Size = New Size(699, 25)
         HtmlColorLabel1.TabIndex = 10
-        HtmlColorLabel1.Text = "<span style=""font-size:13"">处理器核心 && 线程</span>   <span style=""font-size:10pt; color:DarkGray"">任务处理器里的处理器相关性，仅对新任务生效</span>"
+        HtmlColorLabel1.Text = "<span style=""font-size:13"">处理器核心 & 线程</span>   <span style=""font-size:10pt; color:DarkGray"">任务处理器里的处理器相关性，仅对新任务生效</span>"
         ' 
         ' Form_v6_设置_性能调度
         ' 

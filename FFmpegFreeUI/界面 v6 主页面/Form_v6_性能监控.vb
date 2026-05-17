@@ -36,8 +36,8 @@ Public Class Form_v6_性能监控
     End Sub
 
     Private Sub Form_v6_性能监控_SizeChanged(sender As Object, e As EventArgs) Handles Me.SizeChanged
-        ModernPanel1.Width = Me.Width * 0.4
-        ModernPanel3.Height = 150 * (DeviceDpi / 96)
+        Panel2.Width = Me.Width * 0.4
+        RamMonitor1.Height = 150 * (DeviceDpi / 96)
         ModernPanel4.Width = (Panel1.Width - JustEmptyControl2.Width * 3) / 4
         ModernPanel5.Width = ModernPanel4.Width
         ModernPanel6.Width = ModernPanel4.Width
@@ -114,7 +114,8 @@ Public Class Form_v6_性能监控
 
     Sub 添加显卡数据小卡片(子文本 As String)
         Dim a As New ModernButton With {
-            .BackColor1 = Color.FromArgb(24, 24, 24),
+            .BackColor1 = Color.FromArgb(120, 0, 0, 0),
+            .BackColor = Color.Transparent,
             .BorderRadius = 10,
             .BorderSize = 0,
             .ForeColor = Color.MediumPurple,

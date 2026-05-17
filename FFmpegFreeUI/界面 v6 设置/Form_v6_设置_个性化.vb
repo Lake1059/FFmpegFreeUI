@@ -31,6 +31,12 @@
 
     End Sub
 
+    Private Sub MCB_边框宽度_SelectedIndexChanged(sender As Object, e As EventArgs) Handles MCB_边框宽度.SelectedIndexChanged
+        If Not SP_UnLock Then Exit Sub
+        设置_v6.实例对象.SP_边框宽度 = MCB_边框宽度.SelectedIndex
+        FormMain_v6.ThisIsYourWindow1.BorderSize = 设置_v6.实例对象.SP_边框宽度
+    End Sub
+
     Private Sub MCB_毛玻璃模式_SelectedIndexChanged(sender As Object, e As EventArgs) Handles MCB_毛玻璃模式.SelectedIndexChanged
         If Not SP_UnLock Then Exit Sub
         设置_v6.实例对象.SP_毛玻璃模式 = MCB_毛玻璃模式.SelectedIndex
@@ -40,8 +46,8 @@
                 FormMain_v6.ThisIsYourWindow1.BackdropImage = Nothing
                 FormMain_v6.ThisIsYourWindow1.BackdropNoiseOpacity = 0
                 MCB_背景来源.SelectedIndex = -1
-                MCB_背景来源.Enabled = False
                 MCB_噪点颗粒.SelectedIndex = -1
+                MCB_背景来源.Enabled = False
                 MCB_噪点颗粒.Enabled = False
             Case 1
                 FormMain_v6.ThisIsYourWindow1.BackdropBlurPasses = 1
@@ -94,4 +100,10 @@
     Private Sub MB_恢复默认背景图_Click(sender As Object, e As EventArgs) Handles MB_恢复默认背景图.Click
 
     End Sub
+
+    Private Sub Form_v6_设置_个性化_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+    End Sub
+
+
 End Class

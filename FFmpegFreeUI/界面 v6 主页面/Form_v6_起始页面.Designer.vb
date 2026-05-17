@@ -31,15 +31,17 @@ Partial Class Form_v6_起始页面
         ModernPanel3 = New LakeUI.ModernPanel()
         ModernPanel1 = New LakeUI.ModernPanel()
         ModernPanel5 = New LakeUI.ModernPanel()
+        ModernButton5 = New LakeUI.ModernButton()
+        JustEmptyControl7 = New LakeUI.JustEmptyControl()
         ModernButton16 = New LakeUI.ModernButton()
         JustEmptyControl6 = New LakeUI.JustEmptyControl()
         ModernButton15 = New LakeUI.ModernButton()
         JustEmptyControl5 = New LakeUI.JustEmptyControl()
         ModernButton14 = New LakeUI.ModernButton()
         HtmlColorLabel5 = New LakeUI.HtmlColorLabel()
-        ModernButton13 = New LakeUI.ModernButton()
+        MB_更新器更新 = New LakeUI.ModernButton()
         JustEmptyControl4 = New LakeUI.JustEmptyControl()
-        ModernButton12 = New LakeUI.ModernButton()
+        MB_软件本体更新 = New LakeUI.ModernButton()
         HtmlColorLabel4 = New LakeUI.HtmlColorLabel()
         JustEmptyControl3 = New LakeUI.JustEmptyControl()
         ModernPanel6 = New LakeUI.ModernPanel()
@@ -75,7 +77,7 @@ Partial Class Form_v6_起始页面
         ModernPanel2.Dock = DockStyle.Top
         ModernPanel2.Location = New Point(15, 10)
         ModernPanel2.Name = "ModernPanel2"
-        ModernPanel2.OverlayColor = Color.FromArgb(CByte(120), CByte(0), CByte(0), CByte(0))
+        ModernPanel2.OverlayColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernPanel2.Padding = New Padding(15)
         ModernPanel2.ScrollBarMode = LakeUI.ModernPanel.ScrollMode.None
         ModernPanel2.Size = New Size(934, 100)
@@ -108,7 +110,7 @@ Partial Class Form_v6_起始页面
         ' 
         ' ModernComboBox1
         ' 
-        ModernComboBox1.BackColor1 = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
+        ModernComboBox1.BackColor1 = Color.FromArgb(CByte(120), CByte(0), CByte(0), CByte(0))
         ModernComboBox1.BorderColorFocus = Color.Silver
         ModernComboBox1.BorderRadius = 10
         ModernComboBox1.BorderSize = 0
@@ -191,15 +193,17 @@ Partial Class Form_v6_起始页面
         ModernPanel5.BorderColor = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
         ModernPanel5.BorderRadius = 10
         ModernPanel5.BorderSize = 0
+        ModernPanel5.Controls.Add(ModernButton5)
+        ModernPanel5.Controls.Add(JustEmptyControl7)
         ModernPanel5.Controls.Add(ModernButton16)
         ModernPanel5.Controls.Add(JustEmptyControl6)
         ModernPanel5.Controls.Add(ModernButton15)
         ModernPanel5.Controls.Add(JustEmptyControl5)
         ModernPanel5.Controls.Add(ModernButton14)
         ModernPanel5.Controls.Add(HtmlColorLabel5)
-        ModernPanel5.Controls.Add(ModernButton13)
+        ModernPanel5.Controls.Add(MB_更新器更新)
         ModernPanel5.Controls.Add(JustEmptyControl4)
-        ModernPanel5.Controls.Add(ModernButton12)
+        ModernPanel5.Controls.Add(MB_软件本体更新)
         ModernPanel5.Controls.Add(HtmlColorLabel4)
         ModernPanel5.Dock = DockStyle.Fill
         ModernPanel5.Location = New Point(330, 125)
@@ -210,23 +214,53 @@ Partial Class Form_v6_起始页面
         ModernPanel5.Size = New Size(304, 581)
         ModernPanel5.TabIndex = 4
         ' 
+        ' ModernButton5
+        ' 
+        ModernButton5.AnimationDuration = 0
+        ModernButton5.BackColor1 = Color.FromArgb(CByte(30), CByte(220), CByte(220), CByte(220))
+        ModernButton5.BorderRadius = 10
+        ModernButton5.BorderSize = 0
+        ModernButton5.Dock = DockStyle.Top
+        ModernButton5.Font = New Font("Microsoft YaHei UI", 10F)
+        ModernButton5.HoverBackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        ModernButton5.Location = New Point(20, 427)
+        ModernButton5.Margin = New Padding(2)
+        ModernButton5.Name = "ModernButton5"
+        ModernButton5.Padding = New Padding(3, 0, 0, 0)
+        ModernButton5.PressedBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        ModernButton5.Size = New Size(264, 55)
+        ModernButton5.SubText = "体积/版本/下载速度/百分比"
+        ModernButton5.SubTextForeColor = Color.Peru
+        ModernButton5.TabIndex = 26
+        ModernButton5.Text = "Agent 智能体组件"
+        ModernButton5.TextAlign = LakeUI.ModernButton.TextAlignEnum.Left
+        ' 
+        ' JustEmptyControl7
+        ' 
+        JustEmptyControl7.BackColor = Color.Transparent
+        JustEmptyControl7.Dock = DockStyle.Top
+        JustEmptyControl7.Location = New Point(20, 417)
+        JustEmptyControl7.Name = "JustEmptyControl7"
+        JustEmptyControl7.Size = New Size(264, 10)
+        JustEmptyControl7.TabIndex = 25
+        ' 
         ' ModernButton16
         ' 
         ModernButton16.AnimationDuration = 0
-        ModernButton16.BackColor1 = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
+        ModernButton16.BackColor1 = Color.FromArgb(CByte(30), CByte(220), CByte(220), CByte(220))
         ModernButton16.BorderRadius = 10
         ModernButton16.BorderSize = 0
         ModernButton16.Dock = DockStyle.Top
         ModernButton16.Font = New Font("Microsoft YaHei UI", 10F)
-        ModernButton16.HoverBackColor1 = Color.FromArgb(CByte(30), CByte(220), CByte(220), CByte(220))
+        ModernButton16.HoverBackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernButton16.Location = New Point(20, 362)
         ModernButton16.Margin = New Padding(2)
         ModernButton16.Name = "ModernButton16"
         ModernButton16.Padding = New Padding(3, 0, 0, 0)
-        ModernButton16.PressedBackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        ModernButton16.PressedBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
         ModernButton16.Size = New Size(264, 55)
         ModernButton16.SubText = "体积/版本/下载速度/百分比"
-        ModernButton16.SubTextForeColor = Color.DarkGray
+        ModernButton16.SubTextForeColor = Color.Peru
         ModernButton16.TabIndex = 24
         ModernButton16.Text = "自建社区应用组件"
         ModernButton16.TextAlign = LakeUI.ModernButton.TextAlignEnum.Left
@@ -243,20 +277,20 @@ Partial Class Form_v6_起始页面
         ' ModernButton15
         ' 
         ModernButton15.AnimationDuration = 0
-        ModernButton15.BackColor1 = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
+        ModernButton15.BackColor1 = Color.FromArgb(CByte(30), CByte(220), CByte(220), CByte(220))
         ModernButton15.BorderRadius = 10
         ModernButton15.BorderSize = 0
         ModernButton15.Dock = DockStyle.Top
         ModernButton15.Font = New Font("Microsoft YaHei UI", 10F)
-        ModernButton15.HoverBackColor1 = Color.FromArgb(CByte(30), CByte(220), CByte(220), CByte(220))
+        ModernButton15.HoverBackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernButton15.Location = New Point(20, 297)
         ModernButton15.Margin = New Padding(2)
         ModernButton15.Name = "ModernButton15"
         ModernButton15.Padding = New Padding(3, 0, 0, 0)
-        ModernButton15.PressedBackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        ModernButton15.PressedBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
         ModernButton15.Size = New Size(264, 55)
         ModernButton15.SubText = "体积/版本/下载速度/百分比"
-        ModernButton15.SubTextForeColor = Color.DarkGray
+        ModernButton15.SubTextForeColor = Color.Peru
         ModernButton15.TabIndex = 23
         ModernButton15.Text = "VLC | 可视化剪辑区间交互"
         ModernButton15.TextAlign = LakeUI.ModernButton.TextAlignEnum.Left
@@ -273,20 +307,20 @@ Partial Class Form_v6_起始页面
         ' ModernButton14
         ' 
         ModernButton14.AnimationDuration = 0
-        ModernButton14.BackColor1 = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
+        ModernButton14.BackColor1 = Color.FromArgb(CByte(30), CByte(220), CByte(220), CByte(220))
         ModernButton14.BorderRadius = 10
         ModernButton14.BorderSize = 0
         ModernButton14.Dock = DockStyle.Top
         ModernButton14.Font = New Font("Microsoft YaHei UI", 10F)
-        ModernButton14.HoverBackColor1 = Color.FromArgb(CByte(30), CByte(220), CByte(220), CByte(220))
+        ModernButton14.HoverBackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernButton14.Location = New Point(20, 232)
         ModernButton14.Margin = New Padding(2)
         ModernButton14.Name = "ModernButton14"
         ModernButton14.Padding = New Padding(3, 0, 0, 0)
-        ModernButton14.PressedBackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        ModernButton14.PressedBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
         ModernButton14.Size = New Size(264, 55)
         ModernButton14.SubText = "体积/版本/下载速度/百分比"
-        ModernButton14.SubTextForeColor = Color.DarkGray
+        ModernButton14.SubTextForeColor = Color.Peru
         ModernButton14.TabIndex = 22
         ModernButton14.Text = "LHM | 驱动级性能监控"
         ModernButton14.TextAlign = LakeUI.ModernButton.TextAlignEnum.Left
@@ -306,26 +340,26 @@ Partial Class Form_v6_起始页面
         HtmlColorLabel5.Text = "分离的组件"
         HtmlColorLabel5.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.Center
         ' 
-        ' ModernButton13
+        ' MB_更新器更新
         ' 
-        ModernButton13.AnimationDuration = 0
-        ModernButton13.BackColor1 = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
-        ModernButton13.BorderRadius = 10
-        ModernButton13.BorderSize = 0
-        ModernButton13.Dock = DockStyle.Top
-        ModernButton13.Font = New Font("Microsoft YaHei UI", 10F)
-        ModernButton13.HoverBackColor1 = Color.FromArgb(CByte(30), CByte(220), CByte(220), CByte(220))
-        ModernButton13.Location = New Point(20, 121)
-        ModernButton13.Margin = New Padding(2)
-        ModernButton13.Name = "ModernButton13"
-        ModernButton13.Padding = New Padding(3, 0, 0, 0)
-        ModernButton13.PressedBackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernButton13.Size = New Size(264, 55)
-        ModernButton13.SubText = "体积/版本/下载速度/百分比"
-        ModernButton13.SubTextForeColor = Color.DarkGray
-        ModernButton13.TabIndex = 21
-        ModernButton13.Text = "控制台更新程序 0.0.1"
-        ModernButton13.TextAlign = LakeUI.ModernButton.TextAlignEnum.Left
+        MB_更新器更新.AnimationDuration = 0
+        MB_更新器更新.BackColor1 = Color.FromArgb(CByte(30), CByte(220), CByte(220), CByte(220))
+        MB_更新器更新.BorderRadius = 10
+        MB_更新器更新.BorderSize = 0
+        MB_更新器更新.Dock = DockStyle.Top
+        MB_更新器更新.Font = New Font("Microsoft YaHei UI", 10F)
+        MB_更新器更新.HoverBackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MB_更新器更新.Location = New Point(20, 121)
+        MB_更新器更新.Margin = New Padding(2)
+        MB_更新器更新.Name = "MB_更新器更新"
+        MB_更新器更新.Padding = New Padding(3, 0, 0, 0)
+        MB_更新器更新.PressedBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        MB_更新器更新.Size = New Size(264, 55)
+        MB_更新器更新.SubText = "体积/版本/下载速度/百分比"
+        MB_更新器更新.SubTextForeColor = Color.CornflowerBlue
+        MB_更新器更新.TabIndex = 21
+        MB_更新器更新.Text = "控制台更新程序 0.0.1"
+        MB_更新器更新.TextAlign = LakeUI.ModernButton.TextAlignEnum.Left
         ' 
         ' JustEmptyControl4
         ' 
@@ -336,26 +370,26 @@ Partial Class Form_v6_起始页面
         JustEmptyControl4.Size = New Size(264, 10)
         JustEmptyControl4.TabIndex = 13
         ' 
-        ' ModernButton12
+        ' MB_软件本体更新
         ' 
-        ModernButton12.AnimationDuration = 0
-        ModernButton12.BackColor1 = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
-        ModernButton12.BorderRadius = 10
-        ModernButton12.BorderSize = 0
-        ModernButton12.Dock = DockStyle.Top
-        ModernButton12.Font = New Font("Microsoft YaHei UI", 10F)
-        ModernButton12.HoverBackColor1 = Color.FromArgb(CByte(30), CByte(220), CByte(220), CByte(220))
-        ModernButton12.Location = New Point(20, 56)
-        ModernButton12.Margin = New Padding(2)
-        ModernButton12.Name = "ModernButton12"
-        ModernButton12.Padding = New Padding(3, 0, 0, 0)
-        ModernButton12.PressedBackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernButton12.Size = New Size(264, 55)
-        ModernButton12.SubText = "体积/版本/下载速度/百分比"
-        ModernButton12.SubTextForeColor = Color.DarkGray
-        ModernButton12.TabIndex = 20
-        ModernButton12.Text = "[更新来源] 云端版本 6.0.0"
-        ModernButton12.TextAlign = LakeUI.ModernButton.TextAlignEnum.Left
+        MB_软件本体更新.AnimationDuration = 0
+        MB_软件本体更新.BackColor1 = Color.FromArgb(CByte(30), CByte(220), CByte(220), CByte(220))
+        MB_软件本体更新.BorderRadius = 10
+        MB_软件本体更新.BorderSize = 0
+        MB_软件本体更新.Dock = DockStyle.Top
+        MB_软件本体更新.Font = New Font("Microsoft YaHei UI", 10F)
+        MB_软件本体更新.HoverBackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MB_软件本体更新.Location = New Point(20, 56)
+        MB_软件本体更新.Margin = New Padding(2)
+        MB_软件本体更新.Name = "MB_软件本体更新"
+        MB_软件本体更新.Padding = New Padding(3, 0, 0, 0)
+        MB_软件本体更新.PressedBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        MB_软件本体更新.Size = New Size(264, 55)
+        MB_软件本体更新.SubText = "体积/版本/下载速度/百分比"
+        MB_软件本体更新.SubTextForeColor = Color.YellowGreen
+        MB_软件本体更新.TabIndex = 20
+        MB_软件本体更新.Text = "[更新来源] 云端版本 6.0.0"
+        MB_软件本体更新.TextAlign = LakeUI.ModernButton.TextAlignEnum.Left
         ' 
         ' HtmlColorLabel4
         ' 
@@ -473,7 +507,7 @@ Partial Class Form_v6_起始页面
         ModernButton9.BorderSize = 0
         ModernButton9.Dock = DockStyle.Top
         ModernButton9.ForeColor = Color.YellowGreen
-        ModernButton9.HoverBackColor1 = Color.FromArgb(CByte(30), CByte(220), CByte(220), CByte(220))
+        ModernButton9.HoverBackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernButton9.Location = New Point(20, 316)
         ModernButton9.Margin = New Padding(2)
         ModernButton9.Name = "ModernButton9"
@@ -492,7 +526,7 @@ Partial Class Form_v6_起始页面
         ModernButton8.BorderSize = 0
         ModernButton8.Dock = DockStyle.Top
         ModernButton8.ForeColor = Color.YellowGreen
-        ModernButton8.HoverBackColor1 = Color.FromArgb(CByte(30), CByte(220), CByte(220), CByte(220))
+        ModernButton8.HoverBackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernButton8.Location = New Point(20, 286)
         ModernButton8.Margin = New Padding(2)
         ModernButton8.Name = "ModernButton8"
@@ -511,7 +545,7 @@ Partial Class Form_v6_起始页面
         ModernButton4.BorderSize = 0
         ModernButton4.Dock = DockStyle.Top
         ModernButton4.ForeColor = Color.MediumPurple
-        ModernButton4.HoverBackColor1 = Color.FromArgb(CByte(30), CByte(220), CByte(220), CByte(220))
+        ModernButton4.HoverBackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernButton4.Location = New Point(20, 236)
         ModernButton4.Margin = New Padding(2)
         ModernButton4.Name = "ModernButton4"
@@ -531,7 +565,7 @@ Partial Class Form_v6_起始页面
         ModernButton3.BorderSize = 0
         ModernButton3.Dock = DockStyle.Top
         ModernButton3.ForeColor = Color.FromArgb(CByte(237), CByte(114), CByte(153))
-        ModernButton3.HoverBackColor1 = Color.FromArgb(CByte(30), CByte(220), CByte(220), CByte(220))
+        ModernButton3.HoverBackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernButton3.Location = New Point(20, 186)
         ModernButton3.Margin = New Padding(2)
         ModernButton3.Name = "ModernButton3"
@@ -551,7 +585,7 @@ Partial Class Form_v6_起始页面
         ModernButton6.BorderSize = 0
         ModernButton6.Dock = DockStyle.Top
         ModernButton6.ForeColor = Color.CornflowerBlue
-        ModernButton6.HoverBackColor1 = Color.FromArgb(CByte(30), CByte(220), CByte(220), CByte(220))
+        ModernButton6.HoverBackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernButton6.Location = New Point(20, 136)
         ModernButton6.Margin = New Padding(2)
         ModernButton6.Name = "ModernButton6"
@@ -571,7 +605,7 @@ Partial Class Form_v6_起始页面
         ModernButton2.BorderSize = 0
         ModernButton2.Dock = DockStyle.Top
         ModernButton2.ForeColor = Color.YellowGreen
-        ModernButton2.HoverBackColor1 = Color.FromArgb(CByte(30), CByte(220), CByte(220), CByte(220))
+        ModernButton2.HoverBackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernButton2.Location = New Point(20, 106)
         ModernButton2.Margin = New Padding(2)
         ModernButton2.Name = "ModernButton2"
@@ -590,7 +624,7 @@ Partial Class Form_v6_起始页面
         ModernButton1.BorderSize = 0
         ModernButton1.Dock = DockStyle.Top
         ModernButton1.ForeColor = Color.Goldenrod
-        ModernButton1.HoverBackColor1 = Color.FromArgb(CByte(30), CByte(220), CByte(220), CByte(220))
+        ModernButton1.HoverBackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernButton1.Location = New Point(20, 56)
         ModernButton1.Margin = New Padding(2)
         ModernButton1.Name = "ModernButton1"
@@ -680,9 +714,11 @@ Partial Class Form_v6_起始页面
     Friend WithEvents JustEmptyControl5 As LakeUI.JustEmptyControl
     Friend WithEvents ModernButton11 As LakeUI.ModernButton
     Friend WithEvents JustEmptyControl6 As LakeUI.JustEmptyControl
-    Friend WithEvents ModernButton12 As LakeUI.ModernButton
+    Friend WithEvents MB_软件本体更新 As LakeUI.ModernButton
     Friend WithEvents ModernButton16 As LakeUI.ModernButton
     Friend WithEvents ModernButton15 As LakeUI.ModernButton
     Friend WithEvents ModernButton14 As LakeUI.ModernButton
-    Friend WithEvents ModernButton13 As LakeUI.ModernButton
+    Friend WithEvents MB_更新器更新 As LakeUI.ModernButton
+    Friend WithEvents ModernButton5 As LakeUI.ModernButton
+    Friend WithEvents JustEmptyControl7 As LakeUI.JustEmptyControl
 End Class
