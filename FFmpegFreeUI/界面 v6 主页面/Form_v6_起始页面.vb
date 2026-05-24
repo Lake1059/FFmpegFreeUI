@@ -9,7 +9,7 @@ Public Class Form_v6_起始页面
     Private Sub Form_v6_起始页面_SizeChanged(sender As Object, e As EventArgs) Handles Me.SizeChanged
         Dim a = (Me.ModernPanel1.Width - Me.ModernPanel1.Padding.Left * 2 - Me.JustEmptyControl2.Width * 2) / 3
         Me.ModernPanel4.Width = a
-        Me.ModernPanel6.Width = a
+        Me.MP_新闻列表.Width = a
     End Sub
 
     Private Sub MCB_清理内存_SelectedIndexChanged(sender As Object, e As EventArgs) Handles MCB_清理内存.SelectedIndexChanged

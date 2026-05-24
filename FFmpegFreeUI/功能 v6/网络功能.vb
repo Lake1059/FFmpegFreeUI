@@ -19,9 +19,9 @@ Public Class 网络功能
             Form_v6_起始页面.HtmlColorLabel10.Text = $"[无网络] 新闻列表"
             Exit Sub
         End If
-        For Each c In Form_v6_起始页面.ModernPanel6.Controls
-            If c = Form_v6_起始页面.HtmlColorLabel10 Then Continue For
-            Form_v6_起始页面.ModernPanel6.Controls.Remove(c)
+        For Each c In Form_v6_起始页面.MP_新闻列表.Controls
+            If c Is Form_v6_起始页面.HtmlColorLabel10 Then Continue For
+            Form_v6_起始页面.MP_新闻列表.Controls.Remove(c)
         Next
         当前是否正在进行获取新闻列表 = True
         Dim data As String
@@ -54,17 +54,18 @@ Public Class 网络功能
     Public Shared Sub 创建一个新闻内容(标题 As String, 标题颜色 As String, 副标题 As String, 行为 As String, 内容 As String)
         Dim a As New LakeUI.ModernButton With {
             .BackColor = Color.Transparent,
-            .BackColor1 = Nothing,
+            .BackColor1 = Color.Transparent,
             .BorderSize = 0,
             .HoverBackColor1 = Color.FromArgb(40, 220, 220, 220),
             .PressedBackColor1 = Color.FromArgb(60, 220, 220, 220),
             .Text = 标题,
             .SubText = 副标题,
             .SubTextForeColor = Color.DarkGray,
-            .Padding = New Padding(10 * FormMain_v6.DeviceDpi / 96),
+            .BorderRadius = 10,
             .Font = New Font(FormMain_v6.Font.Name, 10),
             .SubTextSize = 9,
-            .Dock = DockStyle.Top
+            .Dock = DockStyle.Top,
+            .TextAlign = ModernButton.TextAlignEnum.Left
         }
         If 副标题 = "" Then
             a.Height = 30 * FormMain_v6.DeviceDpi / 96
@@ -74,8 +75,8 @@ Public Class 网络功能
         Select Case 标题颜色.ToLower.Trim
             Case "red" : a.ForeColor = Color.IndianRed
             Case "orange" : a.ForeColor = Color.Peru
-            Case "yellow" : a.ForeColor = Color.GreenYellow
-            Case "green" : a.ForeColor = Color.OliveDrab
+            Case "yellow" : a.ForeColor = Color.Gold
+            Case "green" : a.ForeColor = Color.YellowGreen
             Case "blue" : a.ForeColor = Color.CornflowerBlue
             Case "purple" : a.ForeColor = Color.MediumPurple
             Case Else : a.ForeColor = Color.Silver
@@ -84,10 +85,12 @@ Public Class 网络功能
             Case "msgbox" : AddHandler a.Click, Sub() ExOverlayMsgBox(FormMain_v6, 内容, MsgBoxStyle.OkOnly)
             Case "link" : AddHandler a.Click, Sub() Process.Start(New ProcessStartInfo With {.FileName = 内容, .UseShellExecute = True})
         End Select
+        Form_v6_起始页面.MP_新闻列表.Controls.Add(a)
+        a.BringToFront()
     End Sub
     Public Shared Sub 设置新闻列表获取失败(原因 As String)
-        Dim err1 As New Label With {.Text = 原因, .BackColor = Color.Transparent, .Dock = DockStyle.Fill, .TextAlign = ContentAlignment.MiddleCenter}
-        Form_v6_起始页面.ModernPanel6.Controls.Add(err1)
+        Dim err1 As New Label With {.Text = 原因, .BackColor = Color.Transparent, .Dock = DockStyle.Fill, .TextAlign = ContentAlignment.MiddleCenter, .AutoSize = False}
+        Form_v6_起始页面.MP_新闻列表.Controls.Add(err1)
         当前是否正在进行获取新闻列表 = False
     End Sub
 

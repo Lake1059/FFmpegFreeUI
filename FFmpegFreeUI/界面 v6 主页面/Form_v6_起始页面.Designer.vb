@@ -40,10 +40,11 @@ Partial Class Form_v6_起始页面
         MB_软件本体更新 = New LakeUI.ModernButton()
         HtmlColorLabel4 = New LakeUI.HtmlColorLabel()
         JustEmptyControl3 = New LakeUI.JustEmptyControl()
-        ModernPanel6 = New LakeUI.ModernPanel()
+        MP_新闻列表 = New LakeUI.ModernPanel()
         HtmlColorLabel10 = New LakeUI.HtmlColorLabel()
         JustEmptyControl2 = New LakeUI.JustEmptyControl()
         ModernPanel4 = New LakeUI.ModernPanel()
+        MB_FFmpegFull = New LakeUI.ModernButton()
         MB_LakeUI = New LakeUI.ModernButton()
         MB_终末诗 = New LakeUI.ModernButton()
         MB_爱发电 = New LakeUI.ModernButton()
@@ -53,12 +54,11 @@ Partial Class Form_v6_起始页面
         MB_AI提示 = New LakeUI.ModernButton()
         HtmlColorLabel3 = New LakeUI.HtmlColorLabel()
         JustEmptyControl1 = New LakeUI.JustEmptyControl()
-        MB_FFmpegFull = New LakeUI.ModernButton()
         ModernPanel2.SuspendLayout()
         Panel1.SuspendLayout()
         ModernPanel1.SuspendLayout()
         ModernPanel5.SuspendLayout()
-        ModernPanel6.SuspendLayout()
+        MP_新闻列表.SuspendLayout()
         ModernPanel4.SuspendLayout()
         SuspendLayout()
         ' 
@@ -170,7 +170,7 @@ Partial Class Form_v6_起始页面
         ModernPanel1.BorderSize = 0
         ModernPanel1.Controls.Add(ModernPanel5)
         ModernPanel1.Controls.Add(JustEmptyControl3)
-        ModernPanel1.Controls.Add(ModernPanel6)
+        ModernPanel1.Controls.Add(MP_新闻列表)
         ModernPanel1.Controls.Add(JustEmptyControl2)
         ModernPanel1.Controls.Add(ModernPanel4)
         ModernPanel1.Controls.Add(JustEmptyControl1)
@@ -365,21 +365,21 @@ Partial Class Form_v6_起始页面
         JustEmptyControl3.Size = New Size(15, 500)
         JustEmptyControl3.TabIndex = 6
         ' 
-        ' ModernPanel6
+        ' MP_新闻列表
         ' 
-        ModernPanel6.BackColor1 = Color.Transparent
-        ModernPanel6.BorderColor = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
-        ModernPanel6.BorderRadius = 10
-        ModernPanel6.BorderSize = 0
-        ModernPanel6.Controls.Add(HtmlColorLabel10)
-        ModernPanel6.Dock = DockStyle.Right
-        ModernPanel6.Location = New Point(649, 130)
-        ModernPanel6.Name = "ModernPanel6"
-        ModernPanel6.OverlayColor = Color.FromArgb(CByte(120), CByte(0), CByte(0), CByte(0))
-        ModernPanel6.Padding = New Padding(15)
-        ModernPanel6.ScrollBarMode = LakeUI.ModernPanel.ScrollMode.None
-        ModernPanel6.Size = New Size(300, 500)
-        ModernPanel6.TabIndex = 5
+        MP_新闻列表.BackColor1 = Color.Transparent
+        MP_新闻列表.BorderColor = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
+        MP_新闻列表.BorderRadius = 10
+        MP_新闻列表.BorderSize = 0
+        MP_新闻列表.Controls.Add(HtmlColorLabel10)
+        MP_新闻列表.Dock = DockStyle.Right
+        MP_新闻列表.Location = New Point(649, 130)
+        MP_新闻列表.Name = "MP_新闻列表"
+        MP_新闻列表.OverlayColor = Color.FromArgb(CByte(120), CByte(0), CByte(0), CByte(0))
+        MP_新闻列表.Padding = New Padding(15)
+        MP_新闻列表.ScrollBarMode = LakeUI.ModernPanel.ScrollMode.None
+        MP_新闻列表.Size = New Size(300, 500)
+        MP_新闻列表.TabIndex = 5
         ' 
         ' HtmlColorLabel10
         ' 
@@ -427,6 +427,26 @@ Partial Class Form_v6_起始页面
         ModernPanel4.ScrollBarMode = LakeUI.ModernPanel.ScrollMode.None
         ModernPanel4.Size = New Size(300, 500)
         ModernPanel4.TabIndex = 2
+        ' 
+        ' MB_FFmpegFull
+        ' 
+        MB_FFmpegFull.AnimationDuration = 0
+        MB_FFmpegFull.BackColor1 = Color.Transparent
+        MB_FFmpegFull.BorderRadius = 10
+        MB_FFmpegFull.BorderSize = 0
+        MB_FFmpegFull.Dock = DockStyle.Top
+        MB_FFmpegFull.ForeColor = Color.CornflowerBlue
+        MB_FFmpegFull.HoverBackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MB_FFmpegFull.Location = New Point(20, 316)
+        MB_FFmpegFull.Margin = New Padding(2)
+        MB_FFmpegFull.Name = "MB_FFmpegFull"
+        MB_FFmpegFull.PressedBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        MB_FFmpegFull.Size = New Size(260, 50)
+        MB_FFmpegFull.SubText = "使用完整功能和最新编码器更新"
+        MB_FFmpegFull.SubTextForeColor = Color.DarkGray
+        MB_FFmpegFull.TabIndex = 15
+        MB_FFmpegFull.Text = "下载完整版 FFmpeg"
+        MB_FFmpegFull.TextAlign = LakeUI.ModernButton.TextAlignEnum.Left
         ' 
         ' MB_LakeUI
         ' 
@@ -590,26 +610,6 @@ Partial Class Form_v6_起始页面
         JustEmptyControl1.Size = New Size(934, 15)
         JustEmptyControl1.TabIndex = 1
         ' 
-        ' MB_FFmpegFull
-        ' 
-        MB_FFmpegFull.AnimationDuration = 0
-        MB_FFmpegFull.BackColor1 = Color.Transparent
-        MB_FFmpegFull.BorderRadius = 10
-        MB_FFmpegFull.BorderSize = 0
-        MB_FFmpegFull.Dock = DockStyle.Top
-        MB_FFmpegFull.ForeColor = Color.CornflowerBlue
-        MB_FFmpegFull.HoverBackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        MB_FFmpegFull.Location = New Point(20, 316)
-        MB_FFmpegFull.Margin = New Padding(2)
-        MB_FFmpegFull.Name = "MB_FFmpegFull"
-        MB_FFmpegFull.PressedBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
-        MB_FFmpegFull.Size = New Size(260, 50)
-        MB_FFmpegFull.SubText = "使用完整功能和最新编码器更新"
-        MB_FFmpegFull.SubTextForeColor = Color.DarkGray
-        MB_FFmpegFull.TabIndex = 15
-        MB_FFmpegFull.Text = "下载完整版 FFmpeg"
-        MB_FFmpegFull.TextAlign = LakeUI.ModernButton.TextAlignEnum.Left
-        ' 
         ' Form_v6_起始页面
         ' 
         AutoScaleDimensions = New SizeF(96F, 96F)
@@ -629,8 +629,8 @@ Partial Class Form_v6_起始页面
         ModernPanel1.ResumeLayout(False)
         ModernPanel5.ResumeLayout(False)
         ModernPanel5.PerformLayout()
-        ModernPanel6.ResumeLayout(False)
-        ModernPanel6.PerformLayout()
+        MP_新闻列表.ResumeLayout(False)
+        MP_新闻列表.PerformLayout()
         ModernPanel4.ResumeLayout(False)
         ModernPanel4.PerformLayout()
         ResumeLayout(False)
@@ -647,7 +647,7 @@ Partial Class Form_v6_起始页面
     Friend WithEvents ModernPanel4 As LakeUI.ModernPanel
     Friend WithEvents ModernPanel5 As LakeUI.ModernPanel
     Friend WithEvents JustEmptyControl3 As LakeUI.JustEmptyControl
-    Friend WithEvents ModernPanel6 As LakeUI.ModernPanel
+    Friend WithEvents MP_新闻列表 As LakeUI.ModernPanel
     Friend WithEvents JustEmptyControl2 As LakeUI.JustEmptyControl
     Friend WithEvents HtmlColorLabel3 As LakeUI.HtmlColorLabel
     Friend WithEvents MB_AI提示 As LakeUI.ModernButton
