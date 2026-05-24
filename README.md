@@ -273,10 +273,6 @@ PluginExample 是我做的示例插件；在程序目录下创建 Plugin 文件�
 
 你生活中正常观看的所有视频全都是有损编码，除非你是从事相关职业的。这里的有损和无损是技术上的，不是视觉上的，人眼的能力是非常局限的，就像你眼睛贴到屏幕上才能细微察觉所有的颜色都是用红绿蓝混合出来的。技术上的无损编码是确保了每个像素的信息正确，而生活中的视频每次重编码都会让像素产生变化，所以都是有损压缩，你也不希望一秒钟就有1GB吧。
 
-### 压制组为什么不用 AV1
-
-如果你看到压制组在用 AV1，那你最好要小心了。AV1 有明显的涂抹效果，就是会损坏纹理细节，虽然普通人很难看出，对于个人压片没什么影响，手机上看就更不影响了，但盯帧时仍旧可肉眼察觉，这种问题对于专业压制组不可接受。另外 266 也有类似的涂抹。
-
 ### NVIDIA NVENC 规格
 
 https://developer.nvidia.com/video-encode-and-decode-gpu-support-matrix-new
@@ -345,9 +341,23 @@ HDR 的标准实际上非常乱，除了显示屏的色准以外，最大亮度�
 >
 > N卡用 cq，I卡用 global_quality，A卡用 qp_i 和 -qp_p 也或者 global_quality
 
+- **动态码率 VBR HQ**：硬件加速专用，注意这非常依赖显卡硬件迭代
+> [!IMPORTANT]
+>
+> 强烈推荐 Blackwell 架构的 RTX 50 全系使用，注意更新最新驱动否则达不到预期<br>
+> 参考文献：[NVIDIA 视频编解码器 SDK 13.0 由 NVIDIA Blackwell 驱动](https://developer.nvidia.cn/blog/nvidia-video-codec-sdk-13-0-powered-by-nvidia-blackwell)<br>
+> RTX 50 系列的 UHQ 模式有巨幅提升，考虑上时间和电费成本已经算是追平甚至吊打 CPU 编码<br>
+> 只需设置 -tune 为 uhq 和 VBR HQ 模式即可<br>
+> 常规模式（不设置UHQ）下 av1_nvenc 的标准答案是 cq36 即可稳定做到 VMAF≥95<br>
+> 现在 UHQ 模式下 av1_nvenc 的推荐答案是 cq38 即可稳定做到 VMAF≥96<br>
+> 如果是动漫和纯2D简单画面内容，还可以使用 cq40 和 cq42<br>
+> 42 是极限平衡点，很吃内容，现实拍摄不应使用<br>
+> 与此同时，HEVC UHQ 也在 Blackwell 中得到大幅提升，甚至可以追平 x265 medium
+
+这并不代表 CPU 编码可以淘汰了，在专业需求上追求绝对质量的中转流程仍旧需要 CPU
+
 不建议使用：
 
-- **动态码率 VBR HQ**：硬件加速专用，并不会有什么可观的提升，反而时间爆涨
 - **恒定量化 CQP**：较少使用，主用于研究和特定场景，并没有 CQP 这个玩意，但是个别编码器的 rc 是真的有这个值，反正日常别用就对了
 - **恒定码率 CBR**：仅限搞事和图一乐
 
@@ -388,8 +398,7 @@ PNG、APNG、JPEG\JPG、WEBP、GIF、BMP、JPEG 2000、JPEG-LS、SVT JPEG XS、H
   - 关于使用 AviSynth+ 降噪滤镜可参阅 [AviSynth+.md](doc/AviSynth+.md)
 
 - 锐化 unsharp
-- 转逐行 yadif
-- 转隔行 tinterlace
+- 反交错已收录 NTSC 和 PAL 全主流方案，请到源代码中查看所用滤镜
 - 角度翻转 transpose
 - 镜像翻转 hflip、vflip
 - 响度标准化 loudnorm
