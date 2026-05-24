@@ -11,11 +11,11 @@
 	  <PublishReadyToRunEmitSymbols>True</PublishReadyToRunEmitSymbols>-->
 	  <SelfContained>False</SelfContained>
 	  <PublishSingleFile>True</PublishSingleFile>
-	  <IncludeNativeLibrariesForSelfExtract>True</IncludeNativeLibrariesForSelfExtract>
+	  <!--<IncludeNativeLibrariesForSelfExtract>True</IncludeNativeLibrariesForSelfExtract>-->
 	  <!--<EnableCompressionInSingleFile>True</EnableCompressionInSingleFile>-->
 	  <Authors>1059 Studio</Authors>
 	  <Company>1059 Studio</Company>
-	  <Version>6.0.0.0</Version>
+	  <Version>6.0.0.1</Version>
 	  <SupportedOSPlatformVersion>7.0</SupportedOSPlatformVersion>
 	  <ApplicationIcon>ico.ico</ApplicationIcon>
 	  <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
@@ -55,14 +55,12 @@
     <PackageReference Include="Microsoft-WindowsAPICodePack-Shell" Version="1.1.5" />
     <PackageReference Include="SunnyUI" Version="3.7.2" />
     <PackageReference Include="Vortice.Direct2D1" Version="3.8.3" />
+    <PackageReference Include="Vortice.Direct3D11" Version="3.8.3" />
   </ItemGroup>
 
   <ItemGroup>
     <Reference Include="LakeUI">
       <HintPath>..\..\LakeUI\LakeUI\bin\Debug\net10.0-windows\LakeUI.dll</HintPath>
-    </Reference>
-    <Reference Include="LibreHardwareMonitorLib">
-      <HintPath>..\..\LibreHardwareMonitor-master\bin\Debug\x64\net10.0\LibreHardwareMonitorLib.dll</HintPath>
     </Reference>
   </ItemGroup>
 

@@ -1,6 +1,8 @@
 ﻿Imports System.IO
 Imports System.Text.Json
+Imports LakeUI
 Imports Microsoft.VisualBasic.FileIO.FileSystem
+Imports Windows.Win32.UI.Input
 
 Public Class 设置_v6
 
@@ -51,8 +53,14 @@ Public Class 设置_v6
     Public Property SP_窗口标题文字 As String = ""
     Public Property SP_起始页面顶栏标题 As String = ""
     Public Property SP_起始页面顶栏副标题 As String = ""
-    Public Property SP_窗口边框颜色 As Color = Color.MediumPurple
-    Public Property SP_分层阴影颜色 As Color = Color.MediumPurple
+    Public Property SP_窗口边框颜色_A As Integer = 255
+    Public Property SP_窗口边框颜色_R As Integer = Color.Gray.R
+    Public Property SP_窗口边框颜色_G As Integer = Color.Gray.G
+    Public Property SP_窗口边框颜色_B As Integer = Color.Gray.B
+    Public Property SP_分层阴影颜色_A As Integer = 255
+    Public Property SP_分层阴影颜色_R As Integer = Color.Black.R
+    Public Property SP_分层阴影颜色_G As Integer = Color.Black.G
+    Public Property SP_分层阴影颜色_B As Integer = Color.Black.B
     Public Property SP_边框宽度 As Integer = 1
     Public Property SP_毛玻璃模式 As Integer = 0
     Public Property SP_毛玻璃背景来源 As Integer = -1
@@ -142,12 +150,71 @@ Public Class 设置_v6
         Form_v6_设置_远程调用.BooleanSwitch1.Checked = 实例对象.是否监听端口
         Form_v6_设置_远程调用.ModernTextBox1.Text = 实例对象.监听的端口
 
+        If Not SP_UnLock Then Exit Sub
+
+        If 实例对象.SP_窗口标题文字 <> "" Then FormMain_v6.Text = 实例对象.SP_窗口标题文字
+        Dim 起始页面顶栏默认标题 = $"<b>FFmpegFreeUI {版本号.获取自身版本号} Dev.1 ReDesign With LakeUI</b><br>"
+        Dim 起始页面顶栏副标题 = "<span style=""font-size:10pt; color:CornflowerBlue"">将 ffmpeg、ffplay、ffprobe 加入环境变量或放置于当前目录即可调用</span>"
+        If 实例对象.SP_起始页面顶栏标题 <> "" Then
+            Form_v6_起始页面.HtmlColorLabel1.Text = 实例对象.SP_起始页面顶栏标题
+        Else
+            Form_v6_起始页面.HtmlColorLabel1.Text = 起始页面顶栏默认标题
+        End If
+        If 实例对象.SP_起始页面顶栏副标题 <> "" Then
+            Form_v6_起始页面.HtmlColorLabel1.Text &= 实例对象.SP_起始页面顶栏副标题
+        Else
+            Form_v6_起始页面.HtmlColorLabel1.Text &= 起始页面顶栏副标题
+        End If
+
+        FormMain_v6.ThisIsYourWindow1.BorderColor = Color.FromArgb(实例对象.SP_窗口边框颜色_A, 实例对象.SP_窗口边框颜色_R, 实例对象.SP_窗口边框颜色_G, 实例对象.SP_窗口边框颜色_B)
+        FormMain_v6.ThisIsYourWindow1.BorderInactiveColor = Color.FromArgb(实例对象.SP_窗口边框颜色_A, 实例对象.SP_窗口边框颜色_R, 实例对象.SP_窗口边框颜色_G, 实例对象.SP_窗口边框颜色_B)
+        FormMain_v6.ThisIsYourWindow1.LayerShadowColor = Color.FromArgb(实例对象.SP_分层阴影颜色_A, 实例对象.SP_分层阴影颜色_R, 实例对象.SP_分层阴影颜色_G, 实例对象.SP_分层阴影颜色_B)
+
         Form_v6_设置_个性化.MCB_边框宽度.SelectedIndex = 实例对象.SP_边框宽度
         Form_v6_设置_个性化.MCB_毛玻璃模式.SelectedIndex = 实例对象.SP_毛玻璃模式
         Form_v6_设置_个性化.MCB_背景来源.SelectedIndex = 实例对象.SP_毛玻璃背景来源
         Form_v6_设置_个性化.MCB_噪点颗粒.SelectedIndex = 实例对象.SP_毛玻璃噪点颗粒
 
-
     End Sub
+
+    Public Shared ReadOnly 自定义图标路径 As String = IO.Path.Combine(Application.StartupPath, "SP_Icon")
+    Public Shared ReadOnly 自定义起始页顶栏背景图路径 As String = IO.Path.Combine(Application.StartupPath, "SP_MainTopPanel")
+    Public Shared ReadOnly 自定义背景图路径 As String = IO.Path.Combine(Application.StartupPath, "SP_BackImage")
+
+    Public Shared Sub 加载SP自定义图标()
+        If Not SP_UnLock Then Exit Sub
+        If FileIO.FileSystem.FileExists(自定义图标路径) Then
+            Form_v6_起始页面.ModernPanel3.Image = LoadImageFromFile(自定义图标路径)
+            Using bitmap As New Bitmap(Form_v6_起始页面.ModernPanel3.Image)
+                FormMain_v6.Icon = Icon.FromHandle(bitmap.GetHicon())
+            End Using
+        End If
+    End Sub
+    Public Shared Sub 加载SP自定义起始页顶栏背景图()
+        If Not SP_UnLock Then Exit Sub
+        If FileIO.FileSystem.FileExists(自定义起始页顶栏背景图路径) Then
+            Form_v6_起始页面.ModernPanel2.Image = LoadImageFromFile(自定义起始页顶栏背景图路径)
+        End If
+    End Sub
+    Public Shared Sub 加载SP自定义背景图()
+        If FileIO.FileSystem.FileExists(设置_v6.自定义背景图路径) Then
+            If Not SP_UnLock Then Exit Sub
+            FormMain_v6.ThisIsYourWindow1.BackdropImage = LoadImageFromFile(设置_v6.自定义背景图路径)
+        Else
+            FormMain_v6.ThisIsYourWindow1.BackdropImage = My.Resources.Resource1.SP_默认背景图
+        End If
+    End Sub
+
+    Public Shared Sub 根据设置设定窗体的定制器样式(窗体 As Form)
+        Select Case 设置_v6.实例对象.窗口样式
+            Case 1
+                DwmWindowStyle.SetDarkMode(窗体.Handle, True)
+            Case 2
+                If Not SP_UnLock Then Exit Select
+                FormMain_v6.ThisIsYourWindow1.Attach(窗体)
+        End Select
+    End Sub
+
+
 
 End Class

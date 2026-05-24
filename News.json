@@ -1,0 +1,44 @@
+[
+    {
+        "Title": "视频压缩入门超大型科普",
+        "TitleColor": "green",
+        "SubTitle": "知乎终末诗",
+        "Type": "link",
+        "Body": "https://zhuanlan.zhihu.com/p/1913258114746122747"
+    },
+    {
+        "Title": "加入主群 1050613952",
+        "TitleColor": "blue",
+        "SubTitle": "",
+        "Type": "link",
+        "Body": "https://qm.qq.com/q/fiauAsddG8"
+    },
+    {
+        "Title": "加入分群① 1070953324",
+        "TitleColor": "blue",
+        "SubTitle": "",
+        "Type": "link",
+        "Body": "https://qm.qq.com/q/nKoapm6KyW"
+    },
+    {
+        "Title": "3FUI SP 支持者内容包",
+        "TitleColor": "purplue",
+        "SubTitle": "",
+        "Type": "link",
+        "Body": "https://afdian.com/item/a98d04e8b98011f0a49952540025c377"
+    },
+    {
+        "Title": "剪辑区间可视化配套工具",
+        "TitleColor": "orange",
+        "SubTitle": "即将集成到本体中作为可选组件",
+        "Type": "link",
+        "Body": "https://github.com/Lake1059/3fuiVideoHelper"
+    },
+    {
+        "Title": "3FUI 6.0 计划正在进行中",
+        "TitleColor": "yellow",
+        "SubTitle": "当前测试版无可用生产力功能，敬请期待",
+        "Type": "msgbox",
+        "Body": "6.0 是一个漫长的计划，就像是回到了0.X版本那时候，所以叫做测试开发版，这不是大版本升级，是完全重做，所有轮子自己重造，预计持续到今年9月。"
+    }
+]

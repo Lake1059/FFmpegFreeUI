@@ -5,7 +5,8 @@
         "爱发电用户_Ck8g", "David King",
         "Daydreamer|#037DEC", "爱发电用户_217cb",
         "BAILING (学生)|#905BD9", "zhengjun638504@163.com",
-        "尧泉", "FlyBalloon|#ADD8E6", "落叶清风|#6495ED", "Xing|#135da7", "xrh0905"
+        "尧泉", "FlyBalloon|#ADD8E6", "落叶清风|#6495ED", "Xing|#135da7", "xrh0905",
+        "L. Snow|#6028e0"
     }
 
     Public Shared Property 赠送支持者列表 As New List(Of String) From {

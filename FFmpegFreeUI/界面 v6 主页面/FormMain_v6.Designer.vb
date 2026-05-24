@@ -40,7 +40,6 @@ Partial Class FormMain_v6
         Dim ModernTabPage15 As LakeUI.ModernTabListControl.ModernTabPage = New LakeUI.ModernTabListControl.ModernTabPage()
         Dim ModernTabPage16 As LakeUI.ModernTabListControl.ModernTabPage = New LakeUI.ModernTabListControl.ModernTabPage()
         Dim ModernTabPage17 As LakeUI.ModernTabListControl.ModernTabPage = New LakeUI.ModernTabListControl.ModernTabPage()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormMain_v6))
         ModernTabListControl1 = New LakeUI.ModernTabListControl()
         ModernTextBox1 = New LakeUI.ModernTextBox()
         ThisIsYourWindow1 = New LakeUI.ThisIsYourWindow(components)
@@ -113,7 +112,7 @@ Partial Class FormMain_v6
         ModernTextBox1.BorderRadius = 5
         ModernTextBox1.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
         ModernTextBox1.Location = New Point(10, 10)
-        ModernTextBox1.Margin = New Padding(2, 2, 2, 2)
+        ModernTextBox1.Margin = New Padding(2)
         ModernTextBox1.Name = "ModernTextBox1"
         ModernTextBox1.Padding = New Padding(10, 0, 10, 0)
         ModernTextBox1.Size = New Size(180, 30)
@@ -126,13 +125,12 @@ Partial Class FormMain_v6
         ' 
         ThisIsYourWindow1.BackdropBlurPasses = 1
         ThisIsYourWindow1.BackdropBlurRadius = 1
-        ThisIsYourWindow1.BackdropImage = CType(resources.GetObject("ThisIsYourWindow1.BackdropImage"), Image)
         ThisIsYourWindow1.BackdropMaxParallelism = 4
-        ThisIsYourWindow1.BackdropMode = LakeUI.ThisIsYourWindow.BackdropModeEnum.Image
+        ThisIsYourWindow1.BackdropNoiseScale = 0.5F
         ThisIsYourWindow1.BackdropTintColor = Color.FromArgb(CByte(160), CByte(0), CByte(0), CByte(0))
         ThisIsYourWindow1.BackdropTintInactiveColor = Color.FromArgb(CByte(160), CByte(0), CByte(0), CByte(0))
-        ThisIsYourWindow1.BorderColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        ThisIsYourWindow1.BorderInactiveColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
+        ThisIsYourWindow1.BorderColor = Color.Gray
+        ThisIsYourWindow1.BorderInactiveColor = Color.Gray
         ThisIsYourWindow1.ButtonCornerRadius = 6
         ThisIsYourWindow1.ButtonGlyphLineWidth = 2F
         ThisIsYourWindow1.ButtonGlyphSize = 12
@@ -145,9 +143,9 @@ Partial Class FormMain_v6
         ThisIsYourWindow1.CaptionInactiveBackColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
         ThisIsYourWindow1.CloseButtonGlyphColor = Color.FromArgb(CByte(200), CByte(200), CByte(200))
         ThisIsYourWindow1.IconPaddingLeft = 16
-        ThisIsYourWindow1.IconSize = 20
+        ThisIsYourWindow1.IconSize = 30
         ThisIsYourWindow1.LayerShadowColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        ThisIsYourWindow1.LayerShadowResizeWidth = 10
+        ThisIsYourWindow1.LayerShadowResizeFullArea = True
         ThisIsYourWindow1.ShadowMode = LakeUI.ThisIsYourWindow.ShadowModeEnum.Layer
         ThisIsYourWindow1.TitleAlign = LakeUI.ThisIsYourWindow.TitleAlignEnum.Center
         ThisIsYourWindow1.TitleForeColor = Color.Silver
@@ -160,6 +158,7 @@ Partial Class FormMain_v6
         BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         ClientSize = New Size(1184, 661)
         Controls.Add(ModernTabListControl1)
+        DoubleBuffered = True
         Font = New Font("Microsoft YaHei UI", 10F)
         MinimumSize = New Size(1200, 700)
         Name = "FormMain_v6"

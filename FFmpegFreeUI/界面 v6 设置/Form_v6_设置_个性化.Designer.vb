@@ -26,8 +26,6 @@ Partial Class Form_v6_设置_个性化
         ModernPanel1 = New LakeUI.ModernPanel()
         HtmlColorLabel7 = New LakeUI.HtmlColorLabel()
         Panel6 = New Panel()
-        MB_恢复默认背景图 = New LakeUI.ModernButton()
-        JustEmptyControl7 = New LakeUI.JustEmptyControl()
         MB_选择背景图 = New LakeUI.ModernButton()
         Panel5 = New Panel()
         MCB_噪点颗粒 = New LakeUI.ModernComboBox()
@@ -102,16 +100,14 @@ Partial Class Form_v6_设置_个性化
         HtmlColorLabel7.Location = New Point(20, 589)
         HtmlColorLabel7.Margin = New Padding(2)
         HtmlColorLabel7.Name = "HtmlColorLabel7"
-        HtmlColorLabel7.Padding = New Padding(0, 5, 0, 0)
-        HtmlColorLabel7.Size = New Size(738, 26)
+        HtmlColorLabel7.Padding = New Padding(0, 10, 0, 0)
+        HtmlColorLabel7.Size = New Size(738, 31)
         HtmlColorLabel7.TabIndex = 24
         HtmlColorLabel7.Text = "本页设置请重启软件以获得完整改动"
         HtmlColorLabel7.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.BottomLeft
         ' 
         ' Panel6
         ' 
-        Panel6.Controls.Add(MB_恢复默认背景图)
-        Panel6.Controls.Add(JustEmptyControl7)
         Panel6.Controls.Add(MB_选择背景图)
         Panel6.Dock = DockStyle.Top
         Panel6.Location = New Point(20, 547)
@@ -119,29 +115,6 @@ Partial Class Form_v6_设置_个性化
         Panel6.Padding = New Padding(0, 10, 0, 0)
         Panel6.Size = New Size(738, 42)
         Panel6.TabIndex = 23
-        ' 
-        ' MB_恢复默认背景图
-        ' 
-        MB_恢复默认背景图.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        MB_恢复默认背景图.BorderRadius = 10
-        MB_恢复默认背景图.BorderSize = 0
-        MB_恢复默认背景图.Dock = DockStyle.Left
-        MB_恢复默认背景图.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
-        MB_恢复默认背景图.Location = New Point(160, 10)
-        MB_恢复默认背景图.Margin = New Padding(2)
-        MB_恢复默认背景图.Name = "MB_恢复默认背景图"
-        MB_恢复默认背景图.PressedBackColor1 = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
-        MB_恢复默认背景图.Size = New Size(150, 32)
-        MB_恢复默认背景图.TabIndex = 8
-        MB_恢复默认背景图.Text = "恢复默认背景图"
-        ' 
-        ' JustEmptyControl7
-        ' 
-        JustEmptyControl7.Dock = DockStyle.Left
-        JustEmptyControl7.Location = New Point(150, 10)
-        JustEmptyControl7.Name = "JustEmptyControl7"
-        JustEmptyControl7.Size = New Size(10, 32)
-        JustEmptyControl7.TabIndex = 7
         ' 
         ' MB_选择背景图
         ' 
@@ -679,8 +652,6 @@ Partial Class Form_v6_设置_个性化
     Friend WithEvents JustEmptyControl4 As LakeUI.JustEmptyControl
     Friend WithEvents MB_分层阴影颜色 As LakeUI.ModernButton
     Friend WithEvents JustEmptyControl6 As LakeUI.JustEmptyControl
-    Friend WithEvents MB_恢复默认背景图 As LakeUI.ModernButton
-    Friend WithEvents JustEmptyControl7 As LakeUI.JustEmptyControl
     Friend WithEvents HtmlColorLabel7 As LakeUI.HtmlColorLabel
     Friend WithEvents HtmlColorLabel8 As LakeUI.HtmlColorLabel
     Friend WithEvents MCB_边框宽度 As LakeUI.ModernComboBox

@@ -32,7 +32,6 @@ Public Class Form_v6_性能监控
 
     Private Sub ModernComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ModernComboBox1.SelectedIndexChanged
         CpuMonitor1.DisplayedGroup = ModernComboBox1.SelectedIndex - 1
-        ModernPanel8.Controls.Clear()
     End Sub
 
     Private Sub Form_v6_性能监控_SizeChanged(sender As Object, e As EventArgs) Handles Me.SizeChanged

@@ -10,7 +10,6 @@
             Case 0 : LakeUI.D2DHelper.GlobalAntialiasMode = Vortice.Direct2D1.AntialiasMode.PerPrimitive
             Case 1 : LakeUI.D2DHelper.GlobalAntialiasMode = Vortice.Direct2D1.AntialiasMode.Aliased
         End Select
-
     End Sub
 
     Private Sub MCB_文字渲染模式_SelectedIndexChanged(sender As Object, e As EventArgs) Handles MCB_文字渲染模式.SelectedIndexChanged
@@ -25,8 +24,5 @@
 
     Private Sub MCB_动画帧率_SelectedIndexChanged(sender As Object, e As EventArgs) Handles MCB_动画帧率.SelectedIndexChanged
         设置_v6.实例对象.图形动画帧率 = Me.MCB_动画帧率.Text
-
-
-
     End Sub
 End Class

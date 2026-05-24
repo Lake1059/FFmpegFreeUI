@@ -12,6 +12,7 @@ Module Module1
     Public Sound_Finish As Stream = My.Resources.Resource1.完成
     Public Sound_Error As Stream = My.Resources.Resource1.错误
     Public SP_UnLock As Boolean = True
+    Public UpdateAvailable As Boolean = False
 
     <DllImport("user32.dll")>
     Public Function ReleaseCapture() As Boolean
@@ -72,6 +73,7 @@ Module Module1
         .DictionaryKeyPolicy = Nothing,
         .Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping
     }
+
     Public Sub 设置富文本框行高(RichTextBoxObject As Control, LineHeight As Integer)
         Dim fmt As New PARAFORMAT2()
         fmt.cbSize = Marshal.SizeOf(fmt)
@@ -169,9 +171,8 @@ Module Module1
     End Sub
 
     Public Function LoadImageFromFile(File As String) As Image
-        Using fs As New FileStream(File, FileMode.Open, FileAccess.Read)
-            Return Image.FromStream(fs)
-        End Using
+        Dim ms As New MemoryStream(System.IO.File.ReadAllBytes(File))
+        Return Image.FromStream(ms)
     End Function
 
     Public Sub 显示窗体(哪个窗口 As Form, 以谁为基准显示 As Form)
@@ -369,7 +370,7 @@ Module Module1
     End Function
 
     <DllImport("psapi.dll")>
-    Private Function EmptyWorkingSet(hProcess As IntPtr) As Boolean
+    Public Function EmptyWorkingSet(hProcess As IntPtr) As Boolean
     End Function
     Public Sub 回收自身内存占用()
         GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced, True, True)

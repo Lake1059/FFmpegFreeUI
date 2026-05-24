@@ -2,7 +2,7 @@
 <MyApplicationData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <MySubMain>true</MySubMain>
   <MainForm>FormMain_v6</MainForm>
-  <SingleInstance>true</SingleInstance>
+  <SingleInstance>false</SingleInstance>
   <ShutdownMode>0</ShutdownMode>
   <EnableVisualStyles>true</EnableVisualStyles>
   <AuthenticationMode>1</AuthenticationMode>
