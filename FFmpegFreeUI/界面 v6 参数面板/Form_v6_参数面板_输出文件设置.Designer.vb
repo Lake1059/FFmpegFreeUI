@@ -86,7 +86,7 @@ Partial Class Form_v6_参数面板_输出文件设置
         ' ModernCheckBox3
         ' 
         ModernCheckBox3.AutoSize = True
-        ModernCheckBox3.BoxBorderRadius = 0
+        ModernCheckBox3.BoxBorderRadius = 5
         ModernCheckBox3.BoxBorderSize = 2
         ModernCheckBox3.BoxSize = 20
         ModernCheckBox3.BoxTextSpacing = 10
@@ -101,7 +101,7 @@ Partial Class Form_v6_参数面板_输出文件设置
         ' ModernCheckBox2
         ' 
         ModernCheckBox2.AutoSize = True
-        ModernCheckBox2.BoxBorderRadius = 0
+        ModernCheckBox2.BoxBorderRadius = 5
         ModernCheckBox2.BoxBorderSize = 2
         ModernCheckBox2.BoxSize = 20
         ModernCheckBox2.BoxTextSpacing = 10
@@ -116,7 +116,7 @@ Partial Class Form_v6_参数面板_输出文件设置
         ' ModernCheckBox1
         ' 
         ModernCheckBox1.AutoSize = True
-        ModernCheckBox1.BoxBorderRadius = 0
+        ModernCheckBox1.BoxBorderRadius = 5
         ModernCheckBox1.BoxBorderSize = 2
         ModernCheckBox1.BoxSize = 20
         ModernCheckBox1.BoxTextSpacing = 10
@@ -166,8 +166,8 @@ Partial Class Form_v6_参数面板_输出文件设置
         ' ModernTextBox4
         ' 
         ModernTextBox4.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernTextBox4.BorderColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernTextBox4.BorderColorFocus = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        ModernTextBox4.BorderColor = Color.Transparent
+        ModernTextBox4.BorderColorFocus = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
         ModernTextBox4.BorderRadius = 10
         ModernTextBox4.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
         ModernTextBox4.Dock = DockStyle.Left
@@ -175,7 +175,7 @@ Partial Class Form_v6_参数面板_输出文件设置
         ModernTextBox4.Margin = New Padding(2)
         ModernTextBox4.Name = "ModernTextBox4"
         ModernTextBox4.Padding = New Padding(10, 0, 10, 0)
-        ModernTextBox4.ScrollBarHoverColor = Color.FromArgb(CByte(200), CByte(200), CByte(200))
+        ModernTextBox4.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernTextBox4.Size = New Size(350, 32)
         ModernTextBox4.TabIndex = 3
         ModernTextBox4.WaterText = "输出文件以什么结尾"
@@ -205,8 +205,8 @@ Partial Class Form_v6_参数面板_输出文件设置
         ' ModernTextBox3
         ' 
         ModernTextBox3.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernTextBox3.BorderColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernTextBox3.BorderColorFocus = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        ModernTextBox3.BorderColor = Color.Transparent
+        ModernTextBox3.BorderColorFocus = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
         ModernTextBox3.BorderRadius = 10
         ModernTextBox3.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
         ModernTextBox3.Dock = DockStyle.Left
@@ -214,7 +214,7 @@ Partial Class Form_v6_参数面板_输出文件设置
         ModernTextBox3.Margin = New Padding(2)
         ModernTextBox3.Name = "ModernTextBox3"
         ModernTextBox3.Padding = New Padding(10, 0, 10, 0)
-        ModernTextBox3.ScrollBarHoverColor = Color.FromArgb(CByte(200), CByte(200), CByte(200))
+        ModernTextBox3.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernTextBox3.Size = New Size(350, 32)
         ModernTextBox3.TabIndex = 3
         ModernTextBox3.WaterText = "不使用输入文件的名称，而是使用这里的"
@@ -244,8 +244,8 @@ Partial Class Form_v6_参数面板_输出文件设置
         ' ModernTextBox2
         ' 
         ModernTextBox2.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernTextBox2.BorderColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernTextBox2.BorderColorFocus = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        ModernTextBox2.BorderColor = Color.Transparent
+        ModernTextBox2.BorderColorFocus = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
         ModernTextBox2.BorderRadius = 10
         ModernTextBox2.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
         ModernTextBox2.Dock = DockStyle.Left
@@ -253,7 +253,7 @@ Partial Class Form_v6_参数面板_输出文件设置
         ModernTextBox2.Margin = New Padding(2)
         ModernTextBox2.Name = "ModernTextBox2"
         ModernTextBox2.Padding = New Padding(10, 0, 10, 0)
-        ModernTextBox2.ScrollBarHoverColor = Color.FromArgb(CByte(200), CByte(200), CByte(200))
+        ModernTextBox2.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernTextBox2.Size = New Size(350, 32)
         ModernTextBox2.TabIndex = 3
         ModernTextBox2.WaterText = "输出文件以什么开头"
@@ -281,7 +281,7 @@ Partial Class Form_v6_参数面板_输出文件设置
         ModernComboBox4.DropDownBorderSize = 2
         ModernComboBox4.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
         ModernComboBox4.DropDownPadding = New Padding(10)
-        ModernComboBox4.DropDownScrollBarHoverColor = Color.FromArgb(CByte(200), CByte(200), CByte(200))
+        ModernComboBox4.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
         ModernComboBox4.Items.Add("附加 _递增时间戳（默认，新手强烈建议）")
         ModernComboBox4.Items.Add("附加 ~递增数字")
         ModernComboBox4.Items.Add("附加 ~3FUI")
@@ -319,7 +319,7 @@ Partial Class Form_v6_参数面板_输出文件设置
         ModernComboBox3.DropDownBorderSize = 2
         ModernComboBox3.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
         ModernComboBox3.DropDownPadding = New Padding(10)
-        ModernComboBox3.DropDownScrollBarHoverColor = Color.FromArgb(CByte(200), CByte(200), CByte(200))
+        ModernComboBox3.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
         ModernComboBox3.Items.Add("[建议] 使用自动命名")
         ModernComboBox3.Items.Add("[必须写自定义字符] 不使用自动命名")
         ModernComboBox3.Location = New Point(0, 10)
@@ -364,7 +364,7 @@ Partial Class Form_v6_参数面板_输出文件设置
         ModernComboBox1.DropDownBorderSize = 2
         ModernComboBox1.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
         ModernComboBox1.DropDownPadding = New Padding(10)
-        ModernComboBox1.DropDownScrollBarHoverColor = Color.FromArgb(CByte(200), CByte(200), CByte(200))
+        ModernComboBox1.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
         ModernComboBox1.Items.Add("浏览 ...")
         ModernComboBox1.Items.Add("输出到原目录")
         ModernComboBox1.Location = New Point(0, 10)
@@ -401,7 +401,7 @@ Partial Class Form_v6_参数面板_输出文件设置
         ModernComboBox2.DropDownBorderSize = 2
         ModernComboBox2.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
         ModernComboBox2.DropDownPadding = New Padding(10)
-        ModernComboBox2.DropDownScrollBarHoverColor = Color.FromArgb(CByte(200), CByte(200), CByte(200))
+        ModernComboBox2.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
         ModernComboBox2.Items.Add("常规模式：正常附加输出文件参数")
         ModernComboBox2.Items.Add("[高危] 特殊用途：不附加输出文件参数")
         ModernComboBox2.Items.Add("[高危] 特殊用途：附加丢弃输出文件参数")
@@ -425,8 +425,8 @@ Partial Class Form_v6_参数面板_输出文件设置
         ' ModernTextBox1
         ' 
         ModernTextBox1.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernTextBox1.BorderColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernTextBox1.BorderColorFocus = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        ModernTextBox1.BorderColor = Color.Transparent
+        ModernTextBox1.BorderColorFocus = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
         ModernTextBox1.BorderRadius = 10
         ModernTextBox1.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
         ModernTextBox1.Dock = DockStyle.Left
@@ -434,7 +434,7 @@ Partial Class Form_v6_参数面板_输出文件设置
         ModernTextBox1.Margin = New Padding(2)
         ModernTextBox1.Name = "ModernTextBox1"
         ModernTextBox1.Padding = New Padding(10, 0, 10, 0)
-        ModernTextBox1.ScrollBarHoverColor = Color.FromArgb(CByte(200), CByte(200), CByte(200))
+        ModernTextBox1.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernTextBox1.Size = New Size(100, 32)
         ModernTextBox1.TabIndex = 3
         ModernTextBox1.WaterText = "输入后缀"

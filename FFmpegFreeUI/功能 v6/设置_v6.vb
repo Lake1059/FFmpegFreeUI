@@ -1,8 +1,6 @@
 ﻿Imports System.IO
+Imports System.Reflection
 Imports System.Text.Json
-Imports LakeUI
-Imports Microsoft.VisualBasic.FileIO.FileSystem
-Imports Windows.Win32.UI.Input
 
 Public Class 设置_v6
 
@@ -87,20 +85,20 @@ Public Class 设置_v6
             '    Case Else
             '        实例对象.最后的预设数据 = Nothing
             'End Select
-            WriteAllText(设置文件路径, JsonSerializer.Serialize(实例对象, JsonSO), False)
+            FileIO.FileSystem.WriteAllText(设置文件路径, JsonSerializer.Serialize(实例对象, JsonSO), False)
         Catch ex As Exception
             MsgBox($"保存设置失败：{ex.Message}", MsgBoxStyle.Critical)
         End Try
     End Sub
 
     Public Shared Sub 启动时加载设置()
-        If Not FileExists(设置文件路径) Then
+        If Not FileIO.FileSystem.FileExists(设置文件路径) Then
             If FontFamily.Families.Any(Function(f) f.Name = "微软雅黑") Then
                 实例对象.字体 = "微软雅黑"
             End If
             退出时保存设置()
         Else
-            实例对象 = JsonSerializer.Deserialize(Of 设置_v6)(ReadAllText(设置文件路径))
+            实例对象 = JsonSerializer.Deserialize(Of 设置_v6)(FileIO.FileSystem.ReadAllText(设置文件路径))
         End If
         Form_v6_设置_LakeUI性能选项.MCB_SSAA.SelectedIndex = 实例对象.图形全局SSAA
         Form_v6_设置_LakeUI性能选项.MCB_GPU抗锯齿.SelectedIndex = 实例对象.图形DX抗锯齿
@@ -126,7 +124,7 @@ Public Class 设置_v6
         Form_v6_设置_性能调度.MCB_自动开始数量.SelectedIndex = 实例对象.自动同时运行任务数量选项
         Form_v6_设置_性能调度.MCB_编码队列刷新速度.SelectedIndex = 实例对象.编码队列刷新速度
 
-        If FileExists(实例对象.工作目录) Then
+        If FileIO.FileSystem.FileExists(实例对象.工作目录) Then
             Form_v6_设置_功能设定.MTB_工作目录.Text = 实例对象.工作目录
         Else
             Form_v6_设置_功能设定.MTB_工作目录.Text = ""
@@ -151,9 +149,11 @@ Public Class 设置_v6
         Form_v6_设置_远程调用.ModernTextBox1.Text = 实例对象.监听的端口
 
         If Not SP_UnLock Then Exit Sub
+        Form_v6_设置_个性化.HtmlColorLabel1.Text = "感谢您支持 FFmpegFreeUI Supporter Pack"
+        Form_v6_设置_个性化.Panel4.Visible = False
 
         If 实例对象.SP_窗口标题文字 <> "" Then FormMain_v6.Text = 实例对象.SP_窗口标题文字
-        Dim 起始页面顶栏默认标题 = $"<b>FFmpegFreeUI {版本号.获取自身版本号} Dev.1 ReDesign With LakeUI</b><br>"
+        Dim 起始页面顶栏默认标题 = $"<span style=""font-size:15pt"">FFmpegFreeUI {版本号.获取自身版本号} Dev.1 ReDesign With LakeUI</span><br>"
         Dim 起始页面顶栏副标题 = "<span style=""font-size:10pt; color:CornflowerBlue"">将 ffmpeg、ffplay、ffprobe 加入环境变量或放置于当前目录即可调用</span>"
         If 实例对象.SP_起始页面顶栏标题 <> "" Then
             Form_v6_起始页面.HtmlColorLabel1.Text = 实例对象.SP_起始页面顶栏标题
@@ -205,16 +205,16 @@ Public Class 设置_v6
         End If
     End Sub
 
-    Public Shared Sub 根据设置设定窗体的定制器样式(窗体 As Form)
-        Select Case 设置_v6.实例对象.窗口样式
-            Case 1
-                DwmWindowStyle.SetDarkMode(窗体.Handle, True)
-            Case 2
-                If Not SP_UnLock Then Exit Select
-                FormMain_v6.ThisIsYourWindow1.Attach(窗体)
-        End Select
+    Public Shared Sub 启动时读取SP解锁器()
+        Dim a As String = Path.Combine(Application.StartupPath, "FFmpegFreeUISupporter_v6.dll")
+        If Not FileIO.FileSystem.FileExists(a) Then
+            Form1.加载自定义图标(Nothing)
+            Form1.设置页面.Panel1.Visible = True
+            Form1.设置页面.Panel3.Visible = False
+            Exit Sub
+        End If
+        Dim targetType As Type = Assembly.LoadFile(a).GetType("FFmpegFreeUISupporter.Entry")
+        Dim method As MethodInfo = targetType.GetMethod("Entry", BindingFlags.Public Or BindingFlags.NonPublic Or BindingFlags.Static)
+        method.Invoke(Nothing, Nothing)
     End Sub
-
-
-
 End Class

@@ -4,25 +4,25 @@ Imports LakeUI
 
 Public Class FormMain_v6
     Private Sub FormMain_v6_Load(sender As Object, e As EventArgs) Handles Me.Load
+        设置_v6.启动时读取SP解锁器()
         设置_v6.启动时加载设置()
-
 
         设置_v6.加载SP自定义图标()
         设置_v6.加载SP自定义起始页顶栏背景图()
         设置_v6.加载SP自定义背景图()
 
         Me.ModernTabListControl1.Items(1).BoundControl = Form_v6_起始页面
-        绑定选项卡窗体背景透明(Form_v6_起始页面.ModernPanel1)
+        绑定选项卡(Form_v6_起始页面.ModernPanel1)
         Me.ModernTabListControl1.Items(2).BoundControl = Form_v6_编码队列
-        绑定选项卡窗体背景透明(Form_v6_编码队列.ModernPanel1)
+        绑定选项卡(Form_v6_编码队列.ModernPanel1)
         Me.ModernTabListControl1.Items(5).BoundControl = Form_v6_参数面板
-        绑定选项卡窗体背景透明(Form_v6_参数面板.ModernPanel1)
+        绑定选项卡(Form_v6_参数面板.ModernPanel1)
         Me.ModernTabListControl1.Items(11).BoundControl = Form_v6_性能监控
-        绑定选项卡窗体背景透明(Form_v6_性能监控.ModernPanel1)
+        绑定选项卡(Form_v6_性能监控.ModernPanel1)
         Me.ModernTabListControl1.Items(14).BoundControl = Form_v6_设置
-        绑定选项卡窗体背景透明(Form_v6_设置.ModernPanel1)
+        绑定选项卡(Form_v6_设置.ModernPanel1)
         Me.ModernTabListControl1.Items(15).BoundControl = Form_v6_支持者
-        绑定选项卡窗体背景透明(Form_v6_支持者.ModernPanel1)
+        绑定选项卡(Form_v6_支持者.ModernPanel1)
 
         Select Case 设置_v6.实例对象.窗口样式
             Case 1
@@ -58,7 +58,7 @@ Public Class FormMain_v6
 
     End Sub
 
-    Sub 绑定选项卡窗体背景透明(选项卡的根面板容器 As ModernPanel)
+    Sub 绑定选项卡(选项卡的根面板容器 As ModernPanel)
         If SP_UnLock Then
             Select Case 设置_v6.实例对象.SP_毛玻璃模式
                 Case > 0

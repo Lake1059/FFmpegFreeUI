@@ -25,8 +25,8 @@ Partial Class Form_v6_起始页面
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form_v6_起始页面))
         ModernPanel2 = New LakeUI.ModernPanel()
         Panel1 = New Panel()
-        HtmlColorLabel2 = New LakeUI.HtmlColorLabel()
         MCB_清理内存 = New LakeUI.ModernComboBox()
+        HtmlColorLabel2 = New LakeUI.HtmlColorLabel()
         HtmlColorLabel1 = New LakeUI.HtmlColorLabel()
         ModernPanel3 = New LakeUI.ModernPanel()
         ModernPanel1 = New LakeUI.ModernPanel()
@@ -41,7 +41,7 @@ Partial Class Form_v6_起始页面
         HtmlColorLabel4 = New LakeUI.HtmlColorLabel()
         JustEmptyControl3 = New LakeUI.JustEmptyControl()
         MP_新闻列表 = New LakeUI.ModernPanel()
-        HtmlColorLabel10 = New LakeUI.HtmlColorLabel()
+        HtmlColorLabel6 = New LakeUI.HtmlColorLabel()
         JustEmptyControl2 = New LakeUI.JustEmptyControl()
         ModernPanel4 = New LakeUI.ModernPanel()
         MB_FFmpegFull = New LakeUI.ModernButton()
@@ -81,28 +81,13 @@ Partial Class Form_v6_起始页面
         ' 
         ' Panel1
         ' 
-        Panel1.AutoSize = True
-        Panel1.Controls.Add(HtmlColorLabel2)
         Panel1.Controls.Add(MCB_清理内存)
+        Panel1.Controls.Add(HtmlColorLabel2)
         Panel1.Dock = DockStyle.Right
-        Panel1.Location = New Point(730, 20)
+        Panel1.Location = New Point(714, 20)
         Panel1.Name = "Panel1"
-        Panel1.Size = New Size(184, 60)
+        Panel1.Size = New Size(200, 60)
         Panel1.TabIndex = 14
-        ' 
-        ' HtmlColorLabel2
-        ' 
-        HtmlColorLabel2.AutoSize = True
-        HtmlColorLabel2.AutoSizeMode = AutoSizeMode.GrowAndShrink
-        HtmlColorLabel2.Dock = DockStyle.Right
-        HtmlColorLabel2.Font = New Font("Microsoft YaHei UI", 10F, FontStyle.Bold)
-        HtmlColorLabel2.Location = New Point(0, 0)
-        HtmlColorLabel2.Margin = New Padding(2)
-        HtmlColorLabel2.Name = "HtmlColorLabel2"
-        HtmlColorLabel2.Size = New Size(184, 28)
-        HtmlColorLabel2.TabIndex = 14
-        HtmlColorLabel2.Text = "@湖边的稻草 (1059 Studio)"
-        HtmlColorLabel2.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.TopRight
         ' 
         ' MCB_清理内存
         ' 
@@ -112,6 +97,9 @@ Partial Class Form_v6_起始页面
         MCB_清理内存.BorderSize = 0
         MCB_清理内存.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
         MCB_清理内存.Dock = DockStyle.Bottom
+        MCB_清理内存.DropDownAnimationFPS = 120
+        MCB_清理内存.DropDownBackColor = Color.FromArgb(CByte(180), CByte(0), CByte(0), CByte(0))
+        MCB_清理内存.DropDownBorderColor = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
         MCB_清理内存.DropDownBorderSize = 2
         MCB_清理内存.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
         MCB_清理内存.DropDownPadding = New Padding(10)
@@ -123,7 +111,7 @@ Partial Class Form_v6_起始页面
         MCB_清理内存.MaxDropDownItems = 15
         MCB_清理内存.Name = "MCB_清理内存"
         MCB_清理内存.Padding = New Padding(10, 0, 10, 0)
-        MCB_清理内存.Size = New Size(184, 32)
+        MCB_清理内存.Size = New Size(200, 32)
         MCB_清理内存.TabIndex = 16
         MCB_清理内存.ToolTipBorderSize = 2
         MCB_清理内存.ToolTipGap = 10
@@ -132,11 +120,23 @@ Partial Class Form_v6_起始页面
         MCB_清理内存.WaterText = "清理内存条"
         MCB_清理内存.WaterTextForeColor = Color.Silver
         ' 
+        ' HtmlColorLabel2
+        ' 
+        HtmlColorLabel2.AutoSize = True
+        HtmlColorLabel2.AutoSizeMode = AutoSizeMode.GrowAndShrink
+        HtmlColorLabel2.Dock = DockStyle.Fill
+        HtmlColorLabel2.Location = New Point(0, 0)
+        HtmlColorLabel2.Margin = New Padding(2)
+        HtmlColorLabel2.Name = "HtmlColorLabel2"
+        HtmlColorLabel2.Size = New Size(200, 60)
+        HtmlColorLabel2.TabIndex = 14
+        HtmlColorLabel2.Text = "@湖边的稻草 (1059 Studio)"
+        HtmlColorLabel2.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.TopRight
+        ' 
         ' HtmlColorLabel1
         ' 
         HtmlColorLabel1.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel1.Dock = DockStyle.Fill
-        HtmlColorLabel1.Font = New Font("Microsoft YaHei UI", 15F)
         HtmlColorLabel1.LineSpacing = 5
         HtmlColorLabel1.Location = New Point(80, 20)
         HtmlColorLabel1.Margin = New Padding(2)
@@ -144,7 +144,7 @@ Partial Class Form_v6_起始页面
         HtmlColorLabel1.Padding = New Padding(15, 0, 0, 0)
         HtmlColorLabel1.Size = New Size(834, 60)
         HtmlColorLabel1.TabIndex = 1
-        HtmlColorLabel1.Text = "<b>FFmpegFreeUI 6.0.0 Dev.1 ReDesign With LakeUI</b><br><span style=""font-size:10pt; color:CornflowerBlue"">将 ffmpeg、ffplay、ffprobe 加入环境变量或放置于当前目录即可调用</span>"
+        HtmlColorLabel1.Text = "主标题<br>副标题"
         HtmlColorLabel1.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
         ' 
         ' ModernPanel3
@@ -213,9 +213,8 @@ Partial Class Form_v6_起始页面
         ModernButton5.BorderRadius = 10
         ModernButton5.BorderSize = 0
         ModernButton5.Dock = DockStyle.Top
-        ModernButton5.Font = New Font("Microsoft YaHei UI", 10F)
         ModernButton5.HoverBackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernButton5.Location = New Point(20, 362)
+        ModernButton5.Location = New Point(20, 354)
         ModernButton5.Margin = New Padding(2)
         ModernButton5.Name = "ModernButton5"
         ModernButton5.PressedBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
@@ -233,9 +232,8 @@ Partial Class Form_v6_起始页面
         ModernButton16.BorderRadius = 10
         ModernButton16.BorderSize = 0
         ModernButton16.Dock = DockStyle.Top
-        ModernButton16.Font = New Font("Microsoft YaHei UI", 10F)
         ModernButton16.HoverBackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernButton16.Location = New Point(20, 312)
+        ModernButton16.Location = New Point(20, 304)
         ModernButton16.Margin = New Padding(2)
         ModernButton16.Name = "ModernButton16"
         ModernButton16.PressedBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
@@ -253,9 +251,8 @@ Partial Class Form_v6_起始页面
         ModernButton15.BorderRadius = 10
         ModernButton15.BorderSize = 0
         ModernButton15.Dock = DockStyle.Top
-        ModernButton15.Font = New Font("Microsoft YaHei UI", 10F)
         ModernButton15.HoverBackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernButton15.Location = New Point(20, 262)
+        ModernButton15.Location = New Point(20, 254)
         ModernButton15.Margin = New Padding(2)
         ModernButton15.Name = "ModernButton15"
         ModernButton15.PressedBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
@@ -273,9 +270,8 @@ Partial Class Form_v6_起始页面
         ModernButton14.BorderRadius = 10
         ModernButton14.BorderSize = 0
         ModernButton14.Dock = DockStyle.Top
-        ModernButton14.Font = New Font("Microsoft YaHei UI", 10F)
         ModernButton14.HoverBackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernButton14.Location = New Point(20, 212)
+        ModernButton14.Location = New Point(20, 204)
         ModernButton14.Margin = New Padding(2)
         ModernButton14.Name = "ModernButton14"
         ModernButton14.PressedBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
@@ -291,12 +287,12 @@ Partial Class Form_v6_起始页面
         HtmlColorLabel5.AutoSize = True
         HtmlColorLabel5.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel5.Dock = DockStyle.Top
-        HtmlColorLabel5.Font = New Font("Microsoft YaHei UI", 13F, FontStyle.Bold)
-        HtmlColorLabel5.Location = New Point(20, 156)
+        HtmlColorLabel5.Font = New Font("Microsoft YaHei UI", 12F)
+        HtmlColorLabel5.Location = New Point(20, 152)
         HtmlColorLabel5.Margin = New Padding(2)
         HtmlColorLabel5.Name = "HtmlColorLabel5"
         HtmlColorLabel5.Padding = New Padding(0, 20, 0, 10)
-        HtmlColorLabel5.Size = New Size(264, 56)
+        HtmlColorLabel5.Size = New Size(264, 52)
         HtmlColorLabel5.TabIndex = 3
         HtmlColorLabel5.Text = "分离的组件"
         HtmlColorLabel5.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.Center
@@ -308,9 +304,8 @@ Partial Class Form_v6_起始页面
         MB_更新器更新.BorderRadius = 10
         MB_更新器更新.BorderSize = 0
         MB_更新器更新.Dock = DockStyle.Top
-        MB_更新器更新.Font = New Font("Microsoft YaHei UI", 10F)
         MB_更新器更新.HoverBackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        MB_更新器更新.Location = New Point(20, 106)
+        MB_更新器更新.Location = New Point(20, 102)
         MB_更新器更新.Margin = New Padding(2)
         MB_更新器更新.Name = "MB_更新器更新"
         MB_更新器更新.PressedBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
@@ -328,9 +323,8 @@ Partial Class Form_v6_起始页面
         MB_软件本体更新.BorderRadius = 10
         MB_软件本体更新.BorderSize = 0
         MB_软件本体更新.Dock = DockStyle.Top
-        MB_软件本体更新.Font = New Font("Microsoft YaHei UI", 10F)
         MB_软件本体更新.HoverBackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        MB_软件本体更新.Location = New Point(20, 56)
+        MB_软件本体更新.Location = New Point(20, 52)
         MB_软件本体更新.Margin = New Padding(2)
         MB_软件本体更新.Name = "MB_软件本体更新"
         MB_软件本体更新.PressedBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
@@ -346,12 +340,12 @@ Partial Class Form_v6_起始页面
         HtmlColorLabel4.AutoSize = True
         HtmlColorLabel4.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel4.Dock = DockStyle.Top
-        HtmlColorLabel4.Font = New Font("Microsoft YaHei UI", 13F, FontStyle.Bold)
+        HtmlColorLabel4.Font = New Font("Microsoft YaHei UI", 12F)
         HtmlColorLabel4.Location = New Point(20, 20)
         HtmlColorLabel4.Margin = New Padding(2)
         HtmlColorLabel4.Name = "HtmlColorLabel4"
         HtmlColorLabel4.Padding = New Padding(0, 0, 0, 10)
-        HtmlColorLabel4.Size = New Size(264, 36)
+        HtmlColorLabel4.Size = New Size(264, 32)
         HtmlColorLabel4.TabIndex = 1
         HtmlColorLabel4.Text = "软件更新"
         HtmlColorLabel4.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.Center
@@ -371,7 +365,7 @@ Partial Class Form_v6_起始页面
         MP_新闻列表.BorderColor = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
         MP_新闻列表.BorderRadius = 10
         MP_新闻列表.BorderSize = 0
-        MP_新闻列表.Controls.Add(HtmlColorLabel10)
+        MP_新闻列表.Controls.Add(HtmlColorLabel6)
         MP_新闻列表.Dock = DockStyle.Right
         MP_新闻列表.Location = New Point(649, 130)
         MP_新闻列表.Name = "MP_新闻列表"
@@ -381,20 +375,20 @@ Partial Class Form_v6_起始页面
         MP_新闻列表.Size = New Size(300, 500)
         MP_新闻列表.TabIndex = 5
         ' 
-        ' HtmlColorLabel10
+        ' HtmlColorLabel6
         ' 
-        HtmlColorLabel10.AutoSize = True
-        HtmlColorLabel10.AutoSizeMode = AutoSizeMode.GrowAndShrink
-        HtmlColorLabel10.Dock = DockStyle.Top
-        HtmlColorLabel10.Font = New Font("Microsoft YaHei UI", 13F, FontStyle.Bold)
-        HtmlColorLabel10.Location = New Point(20, 20)
-        HtmlColorLabel10.Margin = New Padding(2)
-        HtmlColorLabel10.Name = "HtmlColorLabel10"
-        HtmlColorLabel10.Padding = New Padding(0, 0, 0, 10)
-        HtmlColorLabel10.Size = New Size(260, 36)
-        HtmlColorLabel10.TabIndex = 2
-        HtmlColorLabel10.Text = "新闻列表"
-        HtmlColorLabel10.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.Center
+        HtmlColorLabel6.AutoSize = True
+        HtmlColorLabel6.AutoSizeMode = AutoSizeMode.GrowAndShrink
+        HtmlColorLabel6.Dock = DockStyle.Top
+        HtmlColorLabel6.Font = New Font("Microsoft YaHei UI", 12F)
+        HtmlColorLabel6.Location = New Point(20, 20)
+        HtmlColorLabel6.Margin = New Padding(2)
+        HtmlColorLabel6.Name = "HtmlColorLabel6"
+        HtmlColorLabel6.Padding = New Padding(0, 0, 0, 10)
+        HtmlColorLabel6.Size = New Size(260, 32)
+        HtmlColorLabel6.TabIndex = 2
+        HtmlColorLabel6.Text = "新闻列表"
+        HtmlColorLabel6.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.Center
         ' 
         ' JustEmptyControl2
         ' 
@@ -437,7 +431,7 @@ Partial Class Form_v6_起始页面
         MB_FFmpegFull.Dock = DockStyle.Top
         MB_FFmpegFull.ForeColor = Color.CornflowerBlue
         MB_FFmpegFull.HoverBackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        MB_FFmpegFull.Location = New Point(20, 316)
+        MB_FFmpegFull.Location = New Point(20, 312)
         MB_FFmpegFull.Margin = New Padding(2)
         MB_FFmpegFull.Name = "MB_FFmpegFull"
         MB_FFmpegFull.PressedBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
@@ -455,7 +449,6 @@ Partial Class Form_v6_起始页面
         MB_LakeUI.BorderRadius = 10
         MB_LakeUI.BorderSize = 0
         MB_LakeUI.Dock = DockStyle.Bottom
-        MB_LakeUI.Font = New Font("Microsoft YaHei UI", 10F)
         MB_LakeUI.HoverBackColor1 = Color.FromArgb(CByte(30), CByte(220), CByte(220), CByte(220))
         MB_LakeUI.Location = New Point(20, 430)
         MB_LakeUI.Margin = New Padding(2)
@@ -477,7 +470,7 @@ Partial Class Form_v6_起始页面
         MB_终末诗.Dock = DockStyle.Top
         MB_终末诗.ForeColor = Color.YellowGreen
         MB_终末诗.HoverBackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        MB_终末诗.Location = New Point(20, 286)
+        MB_终末诗.Location = New Point(20, 282)
         MB_终末诗.Margin = New Padding(2)
         MB_终末诗.Name = "MB_终末诗"
         MB_终末诗.PressedBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
@@ -496,7 +489,7 @@ Partial Class Form_v6_起始页面
         MB_爱发电.Dock = DockStyle.Top
         MB_爱发电.ForeColor = Color.MediumPurple
         MB_爱发电.HoverBackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        MB_爱发电.Location = New Point(20, 236)
+        MB_爱发电.Location = New Point(20, 232)
         MB_爱发电.Margin = New Padding(2)
         MB_爱发电.Name = "MB_爱发电"
         MB_爱发电.PressedBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
@@ -516,7 +509,7 @@ Partial Class Form_v6_起始页面
         MB_哔哩哔哩.Dock = DockStyle.Top
         MB_哔哩哔哩.ForeColor = Color.FromArgb(CByte(237), CByte(114), CByte(153))
         MB_哔哩哔哩.HoverBackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        MB_哔哩哔哩.Location = New Point(20, 186)
+        MB_哔哩哔哩.Location = New Point(20, 182)
         MB_哔哩哔哩.Margin = New Padding(2)
         MB_哔哩哔哩.Name = "MB_哔哩哔哩"
         MB_哔哩哔哩.PressedBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
@@ -536,7 +529,7 @@ Partial Class Form_v6_起始页面
         MB_官网.Dock = DockStyle.Top
         MB_官网.ForeColor = Color.CornflowerBlue
         MB_官网.HoverBackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        MB_官网.Location = New Point(20, 136)
+        MB_官网.Location = New Point(20, 132)
         MB_官网.Margin = New Padding(2)
         MB_官网.Name = "MB_官网"
         MB_官网.PressedBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
@@ -556,7 +549,7 @@ Partial Class Form_v6_起始页面
         MB_GitHub.Dock = DockStyle.Top
         MB_GitHub.ForeColor = Color.YellowGreen
         MB_GitHub.HoverBackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        MB_GitHub.Location = New Point(20, 106)
+        MB_GitHub.Location = New Point(20, 102)
         MB_GitHub.Margin = New Padding(2)
         MB_GitHub.Name = "MB_GitHub"
         MB_GitHub.PressedBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
@@ -575,7 +568,7 @@ Partial Class Form_v6_起始页面
         MB_AI提示.Dock = DockStyle.Top
         MB_AI提示.ForeColor = Color.Goldenrod
         MB_AI提示.HoverBackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        MB_AI提示.Location = New Point(20, 56)
+        MB_AI提示.Location = New Point(20, 52)
         MB_AI提示.Margin = New Padding(2)
         MB_AI提示.Name = "MB_AI提示"
         MB_AI提示.PressedBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
@@ -591,12 +584,12 @@ Partial Class Form_v6_起始页面
         HtmlColorLabel3.AutoSize = True
         HtmlColorLabel3.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel3.Dock = DockStyle.Top
-        HtmlColorLabel3.Font = New Font("Microsoft YaHei UI", 13F, FontStyle.Bold)
+        HtmlColorLabel3.Font = New Font("Microsoft YaHei UI", 12F)
         HtmlColorLabel3.Location = New Point(20, 20)
         HtmlColorLabel3.Margin = New Padding(2)
         HtmlColorLabel3.Name = "HtmlColorLabel3"
         HtmlColorLabel3.Padding = New Padding(0, 0, 0, 10)
-        HtmlColorLabel3.Size = New Size(260, 36)
+        HtmlColorLabel3.Size = New Size(260, 32)
         HtmlColorLabel3.TabIndex = 0
         HtmlColorLabel3.Text = "链接和文档"
         HtmlColorLabel3.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.Center
@@ -623,7 +616,6 @@ Partial Class Form_v6_起始页面
         Name = "Form_v6_起始页面"
         Text = "Form_v6_起始页面"
         ModernPanel2.ResumeLayout(False)
-        ModernPanel2.PerformLayout()
         Panel1.ResumeLayout(False)
         Panel1.PerformLayout()
         ModernPanel1.ResumeLayout(False)
@@ -659,7 +651,7 @@ Partial Class Form_v6_起始页面
     Friend WithEvents MB_终末诗 As LakeUI.ModernButton
     Friend WithEvents HtmlColorLabel4 As LakeUI.HtmlColorLabel
     Friend WithEvents HtmlColorLabel5 As LakeUI.HtmlColorLabel
-    Friend WithEvents HtmlColorLabel10 As LakeUI.HtmlColorLabel
+    Friend WithEvents HtmlColorLabel6 As LakeUI.HtmlColorLabel
     Friend WithEvents MB_LakeUI As LakeUI.ModernButton
     Friend WithEvents MB_软件本体更新 As LakeUI.ModernButton
     Friend WithEvents ModernButton16 As LakeUI.ModernButton

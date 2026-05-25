@@ -1,7 +1,7 @@
 ﻿Imports System.IO
 Imports System.Runtime.InteropServices
 
-Public Class 架构
+Public Class 程序架构
 
     Public Shared Function 获取自身程序架构() As String
         Return 转换架构名称(RuntimeInformation.ProcessArchitecture)

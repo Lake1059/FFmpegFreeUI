@@ -27,7 +27,6 @@ Partial Class Form_v6_设置_界面显示
         MCB_编码队列列宽调整模式 = New LakeUI.ModernComboBox()
         HtmlColorLabel2 = New LakeUI.HtmlColorLabel()
         Panel2 = New Panel()
-        HtmlColorLabel6 = New LakeUI.HtmlColorLabel()
         MCB_全局字体 = New LakeUI.ModernComboBox()
         HtmlColorLabel1 = New LakeUI.HtmlColorLabel()
         ModernPanel1.SuspendLayout()
@@ -102,7 +101,6 @@ Partial Class Form_v6_设置_界面显示
         ' 
         ' Panel2
         ' 
-        Panel2.Controls.Add(HtmlColorLabel6)
         Panel2.Controls.Add(MCB_全局字体)
         Panel2.Dock = DockStyle.Top
         Panel2.Location = New Point(20, 45)
@@ -110,19 +108,6 @@ Partial Class Form_v6_设置_界面显示
         Panel2.Padding = New Padding(0, 10, 0, 0)
         Panel2.Size = New Size(712, 42)
         Panel2.TabIndex = 11
-        ' 
-        ' HtmlColorLabel6
-        ' 
-        HtmlColorLabel6.AutoSizeMode = AutoSizeMode.GrowAndShrink
-        HtmlColorLabel6.Dock = DockStyle.Fill
-        HtmlColorLabel6.Location = New Point(200, 10)
-        HtmlColorLabel6.Margin = New Padding(2)
-        HtmlColorLabel6.Name = "HtmlColorLabel6"
-        HtmlColorLabel6.Padding = New Padding(10, 0, 0, 0)
-        HtmlColorLabel6.Size = New Size(512, 32)
-        HtmlColorLabel6.TabIndex = 2
-        HtmlColorLabel6.Text = "敏捷的棕色狐狸跳过了懒惰的狗。"
-        HtmlColorLabel6.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
         ' 
         ' MCB_全局字体
         ' 
@@ -140,7 +125,7 @@ Partial Class Form_v6_设置_界面显示
         MCB_全局字体.MaxDropDownItems = 15
         MCB_全局字体.Name = "MCB_全局字体"
         MCB_全局字体.Padding = New Padding(10, 0, 10, 0)
-        MCB_全局字体.Size = New Size(200, 32)
+        MCB_全局字体.Size = New Size(300, 32)
         MCB_全局字体.TabIndex = 0
         MCB_全局字体.ToolTipBorderSize = 2
         MCB_全局字体.ToolTipGap = 10
@@ -182,7 +167,6 @@ Partial Class Form_v6_设置_界面显示
     Friend WithEvents Panel2 As Panel
     Friend WithEvents MCB_全局字体 As LakeUI.ModernComboBox
     Friend WithEvents HtmlColorLabel2 As LakeUI.HtmlColorLabel
-    Friend WithEvents HtmlColorLabel6 As LakeUI.HtmlColorLabel
     Friend WithEvents Panel1 As Panel
     Friend WithEvents MCB_编码队列列宽调整模式 As LakeUI.ModernComboBox
 End Class

@@ -7,11 +7,12 @@ Imports System.Text
 Imports System.Text.Json
 Imports System.Threading
 Imports Sunny.UI
+Imports Windows.Networking
 Module Module1
 
     Public Sound_Finish As Stream = My.Resources.Resource1.完成
     Public Sound_Error As Stream = My.Resources.Resource1.错误
-    Public SP_UnLock As Boolean = True
+    Public SP_UnLock As Boolean = False
     Public UpdateAvailable As Boolean = False
 
     <DllImport("user32.dll")>
@@ -214,21 +215,16 @@ Module Module1
     Public Sub SetControlFont(FontName As String, c As Control, Optional ExcludeContorl As Control() = Nothing, Optional Self As Boolean = False)
         If Self Then c.Font = New Font(FontName, c.Font.Size)
         For Each ctrl As Control In c.Controls
-            If ExcludeContorl IsNot Nothing Then
-                If ExcludeContorl.Contains(ctrl) Then Continue For
+            If ExcludeContorl?.Contains(ctrl) Then Continue For
+            Dim propInfo As PropertyInfo = ctrl.GetType().GetProperty("Font", BindingFlags.Public Or BindingFlags.NonPublic)
+            If propInfo IsNot Nothing Then
+                propInfo.SetValue(ctrl, New Font(FontName, ctrl.Font.Size, ctrl.Font.Style))
+            Else
+                Try
+                    ctrl.Font = New Font(FontName, ctrl.Font.Size, ctrl.Font.Style)
+                Catch ex As Exception
+                End Try
             End If
-            Dim controlType As Type = ctrl.GetType()
-
-            Dim propInfo As PropertyInfo = controlType.GetProperty("Font")
-            If propInfo IsNot Nothing Then ctrl.Font = New Font(FontName, ctrl.Font.Size, ctrl.Font.Style)
-
-            Dim propInfo2 As PropertyInfo = controlType.GetProperty("Tag")
-            Dim propInfo3 As PropertyInfo = controlType.GetProperty("Text")
-            If propInfo2 IsNot Nothing AndAlso propInfo3 IsNot Nothing AndAlso ctrl.Tag IsNot Nothing AndAlso ctrl.Tag.ToString().Trim() <> "" Then
-                Dim a = 翻译(ctrl.Tag.ToString())
-                If a <> "" AndAlso a <> ctrl.Tag.ToString() Then ctrl.Text = a
-            End If
-
             If ctrl.HasChildren Then SetControlFont(FontName, ctrl, ExcludeContorl)
         Next
     End Sub

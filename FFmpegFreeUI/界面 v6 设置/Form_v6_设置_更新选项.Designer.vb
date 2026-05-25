@@ -67,7 +67,6 @@ Partial Class Form_v6_设置_更新选项
         MCB_更新服务器.DropDownPadding = New Padding(10)
         MCB_更新服务器.DropDownScrollBarHoverColor = Color.FromArgb(CByte(200), CByte(200), CByte(200))
         MCB_更新服务器.Items.Add("GitHub")
-        MCB_更新服务器.Items.Add("国内镜像")
         MCB_更新服务器.Location = New Point(0, 10)
         MCB_更新服务器.Margin = New Padding(2, 2, 2, 2)
         MCB_更新服务器.Name = "MCB_更新服务器"

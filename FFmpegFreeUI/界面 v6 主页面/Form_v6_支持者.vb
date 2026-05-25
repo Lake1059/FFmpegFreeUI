@@ -56,7 +56,7 @@
             .Height = 32 * Form1.DPI,
             .BorderRadius = 16,
             .BackColor = Color.Transparent,
-            .BackColor1 = Color.FromArgb(200, 背景颜色.R, 背景颜色.G, 背景颜色.B),
+            .BackColor1 = Color.FromArgb(180, 背景颜色.R, 背景颜色.G, 背景颜色.B),
             .BorderColor = 背景颜色,
             .BorderSize = 0,
             .ForeColor = 文字颜色,

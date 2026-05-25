@@ -1,5 +1,6 @@
 ﻿Imports System.IO
 Imports System.Text.Json
+Imports System.Text.Json.Serialization
 Imports LakeUI
 
 Public Class 网络功能
@@ -16,11 +17,11 @@ Public Class 网络功能
     Public Shared Async Sub 获取新闻列表()
         If 当前是否正在进行获取新闻列表 Then Exit Sub
         If Not My.Computer.Network.IsAvailable Then
-            Form_v6_起始页面.HtmlColorLabel10.Text = $"[无网络] 新闻列表"
+            Form_v6_起始页面.HtmlColorLabel6.Text = $"[无网络] 新闻列表"
             Exit Sub
         End If
         For Each c In Form_v6_起始页面.MP_新闻列表.Controls
-            If c Is Form_v6_起始页面.HtmlColorLabel10 Then Continue For
+            If c Is Form_v6_起始页面.HtmlColorLabel6 Then Continue For
             Form_v6_起始页面.MP_新闻列表.Controls.Remove(c)
         Next
         当前是否正在进行获取新闻列表 = True
@@ -62,10 +63,11 @@ Public Class 网络功能
             .SubText = 副标题,
             .SubTextForeColor = Color.DarkGray,
             .BorderRadius = 10,
-            .Font = New Font(FormMain_v6.Font.Name, 10),
+            .Font = New Font(设置_v6.实例对象.字体, 10),
             .SubTextSize = 9,
             .Dock = DockStyle.Top,
-            .TextAlign = ModernButton.TextAlignEnum.Left
+            .TextAlign = ModernButton.TextAlignEnum.Left,
+            .AnimationDuration = 0
         }
         If 副标题 = "" Then
             a.Height = 30 * FormMain_v6.DeviceDpi / 96
@@ -97,10 +99,28 @@ Public Class 网络功能
 
 
 
-    Public Class 国内镜像更新数据类
-        Public Property Version As String
-
+    Public Class 国内镜像源数据结构
+        <JsonPropertyName("release")>
+        Public Property Release As ReleaseInfo
+        <JsonPropertyName("artifact")>
+        Public Property Artifact As ArtifactInfo
+        Public Class ReleaseInfo
+            <JsonPropertyName("version")>
+            Public Property Version As String
+        End Class
+        Public Class ArtifactInfo
+            <JsonPropertyName("sources")>
+            Public Property Sources As New List(Of SourceInfo)
+        End Class
     End Class
+    Public Class SourceInfo
+        <JsonPropertyName("name")>
+        Public Property Name As String
+        <JsonPropertyName("url")>
+        Public Property Url As String
+    End Class
+
+
 
     Public Shared Property 当前是否正在进行本体更新 As Boolean = False
     Public Shared Property 检查软件本体更新最后一次错误 As String = ""
@@ -133,28 +153,38 @@ Public Class 网络功能
                 End If
                 获取到的版本号 = data.TagName
                 For Each a1 In data.Assets
-                    If a1.FileName = $"FFmpegFreeUI.{架构.获取自身程序架构}.exe" Then
+                    If a1.FileName = $"FFmpegFreeUI.{程序架构.获取自身程序架构}.exe" Then
                         获取到的下载地址 = a1.DownloadUrl
                         Exit Select
                     End If
                 Next
-                设置本体更新失败("检查软件本体更新失败", "点此查看详情", $"发行版 {data.TagName} 中没有对应的文件：FFmpegFreeUI.{架构.获取自身程序架构}.exe")
+                设置本体更新失败("检查软件本体更新失败", "点此查看详情", $"发行版 {data.TagName} 中没有对应的文件：FFmpegFreeUI.{程序架构.获取自身程序架构}.exe")
                 Exit Sub
             Case 1
-                Dim data As 国内镜像更新数据类
-                Try
-                    data = Await LakeUI.SRV_JsonSever.GetJsonAsync(Of 国内镜像更新数据类)("https://example.com/config.json", JsonSO, Nothing, "服务名称")
-                Catch ex As Exception
-                    设置本体更新失败("检查软件本体更新失败", ex.Message, ex.Message)
-                    Exit Sub
-                End Try
-                If data Is Nothing Then
-                    设置本体更新失败("检查软件本体更新失败", "未获取到有效数据", "未获取到有效数据")
-                    Exit Sub
-                End If
-
-
-
+                'Dim data As 国内镜像源数据结构
+                'Try
+                '    data = Await LakeUI.SRV_JsonSever.GetJsonAsync(Of 国内镜像源数据结构)($"https://bs.frostlynx.work:44500/v1/update/check?current_version=0.0.1&rid=win-{程序架构.获取自身程序架构}&package_variant=single-file&supported_download_types=direct_http", JsonSO, Nothing, "_ffui-update")
+                'Catch ex As Exception
+                '    设置本体更新失败("检查软件本体更新失败", ex.Message, ex.Message)
+                '    Exit Sub
+                'End Try
+                'If data Is Nothing Then
+                '    设置本体更新失败("检查软件本体更新失败", "未获取到有效数据", "未获取到有效数据")
+                '    Exit Sub
+                'End If
+                'If 版本号.CompareVersion(data.Release.Version, 版本号.获取自身版本号) <= 0 Then
+                '    当前是否正在进行本体更新 = False
+                '    Form_v6_起始页面.MB_软件本体更新.Text = $"[{Form_v6_设置_更新选项.MCB_更新服务器.Items(设置_v6.实例对象.更新服务器选择)}] 3FUI 镜像云版本 {data.Release.Version}"
+                '    Form_v6_起始页面.MB_软件本体更新.SubText = "已是最新版本"
+                '    Exit Sub
+                'End If
+                '获取到的版本号 = data.Release.Version
+                'For Each a1 In data.Artifact.Sources
+                '    If a1.Name.Contains("FrostLynx") Then
+                '        获取到的下载地址 = a1.Url
+                '        Exit Select
+                '    End If
+                'Next
             Case Else
         End Select
         If 获取到的下载地址 = "" Then

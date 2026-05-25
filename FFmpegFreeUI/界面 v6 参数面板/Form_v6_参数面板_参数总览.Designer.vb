@@ -61,11 +61,12 @@ Partial Class Form_v6_参数面板_参数总览
         ModernTextBox1.BorderSize = 0
         ModernTextBox1.Dock = DockStyle.Fill
         ModernTextBox1.Location = New Point(20, 61)
-        ModernTextBox1.Margin = New Padding(2, 2, 2, 2)
+        ModernTextBox1.Margin = New Padding(2)
         ModernTextBox1.MultiLine = True
         ModernTextBox1.Name = "ModernTextBox1"
         ModernTextBox1.Padding = New Padding(15, 10, 15, 10)
         ModernTextBox1.ReadOnly = True
+        ModernTextBox1.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernTextBox1.Size = New Size(340, 480)
         ModernTextBox1.TabIndex = 1
         ModernTextBox1.Text = "ModernTextBox1"
@@ -131,11 +132,12 @@ Partial Class Form_v6_参数面板_参数总览
         ModernTextBox2.BorderSize = 0
         ModernTextBox2.Dock = DockStyle.Fill
         ModernTextBox2.Location = New Point(10, 61)
-        ModernTextBox2.Margin = New Padding(2, 2, 2, 2)
+        ModernTextBox2.Margin = New Padding(2)
         ModernTextBox2.MultiLine = True
         ModernTextBox2.Name = "ModernTextBox2"
         ModernTextBox2.Padding = New Padding(15, 10, 15, 10)
         ModernTextBox2.ReadOnly = True
+        ModernTextBox2.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernTextBox2.Size = New Size(362, 480)
         ModernTextBox2.TabIndex = 3
         ModernTextBox2.Text = "ModernTextBox2"

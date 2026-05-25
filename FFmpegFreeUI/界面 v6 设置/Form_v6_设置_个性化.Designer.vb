@@ -514,7 +514,7 @@ Partial Class Form_v6_设置_个性化
         ' 
         ModernPanel2.AutoSize = True
         ModernPanel2.BackColor = Color.Transparent
-        ModernPanel2.BackColor1 = Color.FromArgb(CByte(30), CByte(220), CByte(220), CByte(220))
+        ModernPanel2.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernPanel2.BorderRadius = 20
         ModernPanel2.BorderSize = 0
         ModernPanel2.Controls.Add(Panel4)
@@ -574,7 +574,7 @@ Partial Class Form_v6_设置_个性化
         HtmlColorLabel2.AutoSize = True
         HtmlColorLabel2.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel2.Dock = DockStyle.Top
-        HtmlColorLabel2.ForeColor = Color.Gray
+        HtmlColorLabel2.ForeColor = Color.DarkGray
         HtmlColorLabel2.Location = New Point(20, 50)
         HtmlColorLabel2.Margin = New Padding(2)
         HtmlColorLabel2.Name = "HtmlColorLabel2"
@@ -587,13 +587,14 @@ Partial Class Form_v6_设置_个性化
         HtmlColorLabel1.AutoSize = True
         HtmlColorLabel1.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel1.Dock = DockStyle.Top
+        HtmlColorLabel1.Font = New Font("Microsoft YaHei UI", 13F)
         HtmlColorLabel1.Location = New Point(20, 20)
         HtmlColorLabel1.Margin = New Padding(2)
         HtmlColorLabel1.Name = "HtmlColorLabel1"
         HtmlColorLabel1.Padding = New Padding(0, 0, 0, 5)
         HtmlColorLabel1.Size = New Size(698, 30)
         HtmlColorLabel1.TabIndex = 11
-        HtmlColorLabel1.Text = "<span style=""font-size:13"">购买 FFmpegFreeUI Supporter Pack 以解锁个性化设置</span>"
+        HtmlColorLabel1.Text = "购买 FFmpegFreeUI Supporter Pack 以解锁个性化设置"
         ' 
         ' Form_v6_设置_个性化
         ' 
