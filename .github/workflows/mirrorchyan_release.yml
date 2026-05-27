@@ -1,0 +1,112 @@
+name: mirrorchyan_release
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        default: ''
+        required: false
+  release:
+    types: [released]
+
+jobs:
+  mirrorchyan-updater:
+    if: ${{ github.repository_owner == 'Lake1059' }}
+    runs-on: macos-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: win
+            arch: ''
+            filename: 'Updater.exe'
+
+    steps:
+      - name: Determine channel
+        id: channel
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TAG="${{ inputs.tag || github.event.release.tag_name }}"
+          if [[ -z "$TAG" ]]; then
+            TAG=$(gh release view --repo Lake1059/FFmpegFreeUI --json tagName -q ".tagName" 2>/dev/null || echo "")
+          fi
+          if [[ -z "$TAG" ]]; then
+            echo "channel=stable" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+          IS_PRERELEASE=$(gh release view "$TAG" --repo Lake1059/FFmpegFreeUI --json isPrerelease -q ".isPrerelease" 2>/dev/null || echo "false")
+          if [[ "$IS_PRERELEASE" == "true" ]]; then
+            echo "channel=beta" >> $GITHUB_OUTPUT
+          else
+            echo "channel=stable" >> $GITHUB_OUTPUT
+          fi
+
+      - uses: MirrorChyan/uploading-action@v1
+        with:
+          filetype: latest-release
+          filename: ${{ matrix.filename }}
+          mirrorchyan_rid: FFmpegFreeUI-Updater
+          tag: ${{ inputs.tag }}
+          channel: ${{ steps.channel.outputs.channel }}
+
+          os: ${{ matrix.os }}
+          arch: ${{ matrix.arch }}
+
+          owner: Lake1059
+          repo: FFmpegFreeUI
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          upload_token: ${{ secrets.MirrorChyanUploadToken }}
+
+  mirrorchyan-app:
+    if: ${{ false && github.repository_owner == 'Lake1059' }}
+    runs-on: macos-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: win
+            arch: x64
+            filename: 'FFmpegFreeUI.x64.exe'
+          - os: win
+            arch: arm64
+            filename: 'FFmpegFreeUI.arm64.exe'
+
+    steps:
+      - name: Determine channel
+        id: channel
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TAG="${{ inputs.tag || github.event.release.tag_name }}"
+          if [[ -z "$TAG" ]]; then
+            TAG=$(gh release view --repo Lake1059/FFmpegFreeUI --json tagName -q ".tagName" 2>/dev/null || echo "")
+          fi
+          if [[ -z "$TAG" ]]; then
+            echo "channel=stable" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+          IS_PRERELEASE=$(gh release view "$TAG" --repo Lake1059/FFmpegFreeUI --json isPrerelease -q ".isPrerelease" 2>/dev/null || echo "false")
+          if [[ "$IS_PRERELEASE" == "true" ]]; then
+            echo "channel=beta" >> $GITHUB_OUTPUT
+          else
+            echo "channel=stable" >> $GITHUB_OUTPUT
+          fi
+
+      - uses: MirrorChyan/uploading-action@v1
+        with:
+          filetype: latest-release
+          filename: ${{ matrix.filename }}
+          mirrorchyan_rid: FFmpegFreeUI
+          tag: ${{ inputs.tag }}
+          channel: ${{ steps.channel.outputs.channel }}
+
+          os: ${{ matrix.os }}
+          arch: ${{ matrix.arch }}
+
+          owner: Lake1059
+          repo: FFmpegFreeUI
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          upload_token: ${{ secrets.MirrorChyanUploadToken }}
