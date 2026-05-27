@@ -1,0 +1,85 @@
+name: mirrorchyan_release_note
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        default: ''
+        required: false
+  release:
+    types: [released, edited]
+
+jobs:
+  mirrorchyan-updater:
+    if: ${{ github.repository_owner == 'Lake1059' }}
+    runs-on: macos-latest
+
+    steps:
+      - name: Determine channel
+        id: channel
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TAG="${{ inputs.tag || github.event.release.tag_name }}"
+          if [[ -z "$TAG" ]]; then
+            TAG=$(gh release view --repo Lake1059/FFmpegFreeUI --json tagName -q ".tagName" 2>/dev/null || echo "")
+          fi
+          if [[ -z "$TAG" ]]; then
+            echo "channel=stable" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+          IS_PRERELEASE=$(gh release view "$TAG" --repo Lake1059/FFmpegFreeUI --json isPrerelease -q ".isPrerelease" 2>/dev/null || echo "false")
+          if [[ "$IS_PRERELEASE" == "true" ]]; then
+            echo "channel=beta" >> $GITHUB_OUTPUT
+          else
+            echo "channel=stable" >> $GITHUB_OUTPUT
+          fi
+
+      - uses: MirrorChyan/release-note-action@v1
+        with:
+          mirrorchyan_rid: FFmpegFreeUI-Updater
+          version_name: ${{ inputs.tag }}
+          channel: ${{ steps.channel.outputs.channel }}
+
+          owner: Lake1059
+          repo: FFmpegFreeUI
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          upload_token: ${{ secrets.MirrorChyanUploadToken }}
+
+  mirrorchyan-app:
+    if: ${{ github.repository_owner == 'Lake1059' }}
+    runs-on: macos-latest
+
+    steps:
+      - name: Determine channel
+        id: channel
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TAG="${{ inputs.tag || github.event.release.tag_name }}"
+          if [[ -z "$TAG" ]]; then
+            TAG=$(gh release view --repo Lake1059/FFmpegFreeUI --json tagName -q ".tagName" 2>/dev/null || echo "")
+          fi
+          if [[ -z "$TAG" ]]; then
+            echo "channel=stable" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+          IS_PRERELEASE=$(gh release view "$TAG" --repo Lake1059/FFmpegFreeUI --json isPrerelease -q ".isPrerelease" 2>/dev/null || echo "false")
+          if [[ "$IS_PRERELEASE" == "true" ]]; then
+            echo "channel=beta" >> $GITHUB_OUTPUT
+          else
+            echo "channel=stable" >> $GITHUB_OUTPUT
+          fi
+
+      - uses: MirrorChyan/release-note-action@v1
+        with:
+          mirrorchyan_rid: FFmpegFreeUI
+          version_name: ${{ inputs.tag }}
+          channel: ${{ steps.channel.outputs.channel }}
+
+          owner: Lake1059
+          repo: FFmpegFreeUI
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          upload_token: ${{ secrets.MirrorChyanUploadToken }}
