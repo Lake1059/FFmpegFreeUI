@@ -721,11 +721,11 @@ Public Class 网络功能
     End Function
 
     Private Shared Function 获取MirrorChyan本体更新地址() As String
-        Return $"https://mirrorchyan.com/api/resources/FFmpegFreeUI/latest?os=win&arch={程序架构.获取自身程序架构}&cdk={设置_v6.实例对象.MirrorChyanCDK}"
+        Return $"https://mirrorchyan.com/api/resources/FFmpegFreeUI/latest?os=win&arch={程序架构.获取自身程序架构}&channel=beta&cdk={设置_v6.实例对象.MirrorChyanCDK}"
     End Function
 
     Private Shared Function 获取MirrorChyan更新器地址() As String
-        Return $"https://mirrorchyan.com/api/resources/FFmpegFreeUI-Updater/latest?os=win&cdk={设置_v6.实例对象.MirrorChyanCDK}"
+        Return $"https://mirrorchyan.com/api/resources/FFmpegFreeUI-Updater/latest?os=win&channel=beta&cdk={设置_v6.实例对象.MirrorChyanCDK}"
     End Function
 
     Private Shared Function 获取更新服务器名称() As String

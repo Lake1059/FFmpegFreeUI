@@ -68,7 +68,11 @@ Public Class Form_v6_性能监控
         RoundDashBoard2.Value = gpus(gi).VideoEncoderUsage * 100
         RoundDashBoard3.Value = gpus(gi).DedicatedMemoryUsedBytes / gpus(gi).DedicatedVideoMemoryBytes * 100
         HtmlColorLabel3.Text = $"显存 {格式化字节(gpus(gi).DedicatedMemoryUsedBytes)}"
-        RoundDashBoard4.Maximum = gpus(gi).PowerLimitWatts
+        Try
+            RoundDashBoard4.Maximum = gpus(gi).PowerLimitWatts
+        Catch ex As Exception
+            RoundDashBoard4.Maximum = 1000
+        End Try
         RoundDashBoard4.Value = gpus(gi).PowerWatts
         HtmlColorLabel4.Text = $"功耗 {gpus(gi).PowerWatts:F1} W"
 
