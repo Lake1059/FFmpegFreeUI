@@ -134,8 +134,8 @@ Public Class 设置_v6
         Form_v6_设置_转译辅助.MTB_覆盖参数传递.Text = 实例对象.覆盖参数传递
         Form_v6_设置_转译辅助.MCB_转译模式.Checked = 实例对象.转译模式
 
-        Form_v6_设置_更新选项.MCB_更新服务器.SelectedIndex = 实例对象.更新服务器选择
         If 实例对象.MirrorChyanCDK <> "" Then Form_v6_设置_更新选项.MCB_更新服务器.Items(3) = "Mirror酱 付费 CDN"
+        Form_v6_设置_更新选项.MCB_更新服务器.SelectedIndex = 实例对象.更新服务器选择
 
         Form_v6_设置_远程调用.BooleanSwitch1.Checked = 实例对象.是否监听端口
         Form_v6_设置_远程调用.ModernTextBox1.Text = 实例对象.监听的端口
@@ -153,23 +153,25 @@ Public Class 设置_v6
         Form_v6_设置_界面显示.MCB_全局字体.Items.AddRange(字体列表.ToArray)
         Form_v6_设置_界面显示.MCB_全局字体.Text = 实例对象.字体
 
-        If Not SP_UnLock Then Exit Sub
-        Form_v6_设置_个性化.HtmlColorLabel1.Text = "感谢您支持 FFmpegFreeUI Supporter Pack"
-        Form_v6_设置_个性化.Panel4.Visible = False
-
-        If 实例对象.SP_窗口标题文字 <> "" Then FormMain_v6.Text = 实例对象.SP_窗口标题文字
-        Dim 起始页面顶栏默认标题 = $"<span style=""font-size:15pt"">FFmpegFreeUI {版本号.获取自身版本号} Dev.1 ReDesign With LakeUI</span><br>"
+        Dim 起始页面顶栏默认标题 = $"<span style=""font-size:15pt"">FFmpegFreeUI {版本号.获取自身版本号} Dev.1 ReDesign With LakeUI</span>"
         Dim 起始页面顶栏副标题 = "<span style=""font-size:10pt; color:CornflowerBlue"">将 ffmpeg、ffplay、ffprobe 加入环境变量或放置于当前目录即可调用</span>"
-        If 实例对象.SP_起始页面顶栏标题 <> "" Then
+        If 实例对象.SP_起始页面顶栏标题 <> "" AndAlso SP_UnLock Then
             Form_v6_起始页面.HtmlColorLabel1.Text = 实例对象.SP_起始页面顶栏标题
         Else
             Form_v6_起始页面.HtmlColorLabel1.Text = 起始页面顶栏默认标题
         End If
-        If 实例对象.SP_起始页面顶栏副标题 <> "" Then
-            Form_v6_起始页面.HtmlColorLabel1.Text &= 实例对象.SP_起始页面顶栏副标题
+        If 实例对象.SP_起始页面顶栏副标题 <> "" AndAlso SP_UnLock Then
+            Form_v6_起始页面.HtmlColorLabel1.Text &= "<br>" & 实例对象.SP_起始页面顶栏副标题
         Else
-            Form_v6_起始页面.HtmlColorLabel1.Text &= 起始页面顶栏副标题
+            Form_v6_起始页面.HtmlColorLabel1.Text &= "<br>" & 起始页面顶栏副标题
         End If
+
+        If Not SP_UnLock Then Exit Sub
+
+        Form_v6_设置_个性化.HtmlColorLabel1.Text = "感谢您支持 FFmpegFreeUI Supporter Pack"
+        Form_v6_设置_个性化.Panel4.Visible = False
+
+        If 实例对象.SP_窗口标题文字 <> "" Then FormMain_v6.Text = 实例对象.SP_窗口标题文字
 
         FormMain_v6.ThisIsYourWindow1.BorderColor = Color.FromArgb(实例对象.SP_窗口边框颜色_A, 实例对象.SP_窗口边框颜色_R, 实例对象.SP_窗口边框颜色_G, 实例对象.SP_窗口边框颜色_B)
         FormMain_v6.ThisIsYourWindow1.BorderInactiveColor = Color.FromArgb(实例对象.SP_窗口边框颜色_A, 实例对象.SP_窗口边框颜色_R, 实例对象.SP_窗口边框颜色_G, 实例对象.SP_窗口边框颜色_B)
