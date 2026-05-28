@@ -4,8 +4,6 @@ Imports System.Threading
 
 Module Program
 
-    '开发期调试路径：当更新器自身所在目录没有 FFmpegFreeUI.exe 时回退到此目录
-    Private Const 调试路径 As String = "F:\Git\FFmpegFreeUI\FFmpegFreeUI\bin\Debug\net10.0-windows10.0.26100.0"
     Private Const 主程序文件名 As String = "FFmpegFreeUI.exe"
     Private Const 更新后缀 As String = "_update"
     Private Const 仓库拥有者 As String = "Lake1059"
@@ -34,39 +32,64 @@ Module Program
     Private Async Function 主流程() As Task(Of Integer)
         输出标题()
 
-        Dim 更新器目录 = Path.GetFullPath(AppContext.BaseDirectory)
-        Dim 已使用调试路径 As Boolean = False
-        Dim 目标目录 = 尝试获取本地主程序目录(更新器目录, 已使用调试路径)
+        Dim 程序目录 = Path.GetFullPath(AppContext.BaseDirectory)
+        Dim 主程序路径 = Path.Combine(程序目录, 主程序文件名)
+        Dim 本体更新文件路径 = 获取更新文件路径(程序目录, 主程序文件名)
+        Dim 主程序已存在 = File.Exists(主程序路径)
+        Dim 本体更新文件已存在 = File.Exists(本体更新文件路径)
+        Dim 首次安装 As Boolean = Not 主程序已存在
         Dim 强制重启 As Boolean = False
 
-        If Not String.IsNullOrEmpty(目标目录) Then
-            If 已使用调试路径 Then
-                输出警告("未在当前目录发现主程序，已启用调试路径。")
-            End If
-            输出信息($"目标目录：{目标目录}")
-        Else
-            输出警告("未在当前目录及调试路径发现 FFmpegFreeUI.exe，进入主程序下载流程。")
-            输出信息($"下载目录：{更新器目录}")
-            Console.WriteLine()
-            目标目录 = 更新器目录
-            Dim 下载成功 = Await 下载主程序(目标目录)
-            If Not 下载成功 Then
-                Console.WriteLine()
-                输出错误("下载未成功，更新器即将退出。按任意键继续 ...")
-                尝试等待按键()
-                Return 2
-            End If
+        输出信息($"程序目录：{程序目录}")
+
+        If 首次安装 Then
             强制重启 = True
+            If 本体更新文件已存在 Then
+                输出警告($"未发现 {主程序文件名}，但已发现 {Path.GetFileName(本体更新文件路径)}，将直接应用。")
+                If Not Await 确保主程序运行环境(程序目录) Then
+                    Console.WriteLine()
+                    输出错误("运行环境未准备就绪，无法启动更新后的 FFmpegFreeUI。按任意键继续 ...")
+                    尝试等待按键()
+                    Return 2
+                End If
+            Else
+                输出警告($"未发现 {主程序文件名} 或 {Path.GetFileName(本体更新文件路径)}，进入主程序下载流程。")
+                输出信息($"下载目录：{程序目录}")
+                Console.WriteLine()
+                Dim 下载成功 = Await 下载主程序(程序目录)
+                If Not 下载成功 Then
+                    Console.WriteLine()
+                    输出错误("下载未成功，更新器即将退出。按任意键继续 ...")
+                    尝试等待按键()
+                    Return 2
+                End If
+            End If
+        End If
+
+        If 主程序已存在 AndAlso Not 存在待应用更新文件(程序目录) Then
+            Console.WriteLine()
+            输出警告("没有发现待应用的更新文件。")
+            输出信息("按任意键退出 ...")
+            尝试等待按键()
+            Return 0
+        End If
+
+        If 主程序已存在 Then
+            Console.WriteLine()
+            等待主程序退出(程序目录)
         End If
 
         Console.WriteLine()
-        等待主程序退出(目标目录)
-
-        Console.WriteLine()
-        Dim 已应用 = 应用更新文件(目标目录)
+        Dim 已应用 = 应用更新文件(程序目录)
         Console.WriteLine()
 
-        If 已应用 = 0 AndAlso Not 强制重启 Then
+        If 已应用 = 0 Then
+            If 强制重启 Then
+                输出错误("未能应用任何本体更新文件，无法完成初次安装。")
+                输出信息("按任意键退出 ...")
+                尝试等待按键()
+                Return 3
+            End If
             输出警告("没有发现待应用的更新文件。")
             输出信息("按任意键退出 ...")
             尝试等待按键()
@@ -77,39 +100,17 @@ Module Program
         Console.WriteLine()
 
         Dim 需要重启 As Boolean = 强制重启 OrElse 询问是否重启()
-        If 需要重启 Then 启动主程序(目标目录)
+        If 需要重启 Then 启动主程序(程序目录)
 
         Return 0
-    End Function
-
-    Private Function 尝试获取本地主程序目录(更新器目录 As String, ByRef 已使用调试路径 As Boolean) As String
-        已使用调试路径 = False
-
-        If File.Exists(Path.Combine(更新器目录, 主程序文件名)) Then
-            Return 更新器目录
-        End If
-
-        If File.Exists(Path.Combine(调试路径, 主程序文件名)) Then
-            已使用调试路径 = True
-            Return Path.GetFullPath(调试路径)
-        End If
-
-        Return ""
     End Function
 
     '======================================================================
     ' 下载流程
     '======================================================================
-    Private Async Function 下载主程序(目标目录 As String) As Task(Of Boolean)
-        Dim 架构 = 获取架构名称()
+    Private Async Function 下载主程序(程序目录 As String) As Task(Of Boolean)
         输出章节("下载主程序")
-        If String.IsNullOrEmpty(架构) Then
-            输出错误($"当前系统架构 {RuntimeInformation.OSArchitecture} 不在发行版支持范围内，仅支持 x64 与 arm64。")
-            Return False
-        End If
-
-        输出信息($"系统架构：{架构}")
-        If Not Await 确保DotNet10WindowsDesktop运行库(目标目录, 架构) Then
+        If Not Await 确保主程序运行环境(程序目录) Then
             输出错误(".NET 10 Desktop Runtime 未准备就绪，无法运行下载后的 FFmpegFreeUI。")
             Return False
         End If
@@ -128,7 +129,7 @@ Module Program
         End If
         输出成功($"最新版本：{info.TagName}")
 
-        Dim 目标资源名 = $"FFmpegFreeUI.{架构}.exe"
+        Dim 目标资源名 = $"FFmpegFreeUI.{获取架构名称()}.exe"
         Dim 下载地址 As String = ""
         If info.Assets IsNot Nothing Then
             For Each a In info.Assets
@@ -143,7 +144,7 @@ Module Program
             Return False
         End If
 
-        Dim 保存路径 = Path.Combine(目标目录, $"FFmpegFreeUI{更新后缀}.exe")
+        Dim 保存路径 = 获取更新文件路径(程序目录, 主程序文件名)
         Try
             If File.Exists(保存路径) Then File.Delete(保存路径)
         Catch ex As Exception
@@ -233,9 +234,9 @@ Module Program
     End Sub
 
     '======================================================================
-    ' 应用更新文件：扫描 *_update.*，去掉 _update 覆盖目标
+    ' 应用更新文件：扫描程序目录，去掉 _update 覆盖目标
     '======================================================================
-    Private Function 应用更新文件(目标目录 As String) As Integer
+    Private Function 应用更新文件(程序目录 As String) As Integer
         输出章节("应用更新文件")
         输出信息("正在扫描待应用的更新文件 ...")
         Dim 计数 As Integer = 0
@@ -247,22 +248,19 @@ Module Program
 
         Dim 文件列表 As IEnumerable(Of String)
         Try
-            文件列表 = Directory.EnumerateFiles(目标目录, $"*{更新后缀}.*", SearchOption.TopDirectoryOnly)
+            输出信息($"扫描目录：{程序目录}")
+            文件列表 = Directory.EnumerateFiles(程序目录, "*", SearchOption.TopDirectoryOnly)
         Catch ex As Exception
-            输出错误($"无法枚举目标目录：{ex.Message}")
+            输出错误($"无法枚举程序目录：{ex.Message}")
             Return 0
         End Try
 
         For Each 源文件 In 文件列表
             Dim 文件名 = Path.GetFileName(源文件)
-            Dim 不含扩展名 = Path.GetFileNameWithoutExtension(文件名)
-            If Not 不含扩展名.EndsWith(更新后缀, StringComparison.Ordinal) Then Continue For
+            Dim 目标名 = 获取更新目标文件名(文件名)
+            If String.IsNullOrEmpty(目标名) Then Continue For
 
-            Dim 扩展名 = Path.GetExtension(文件名)
-            Dim 目标名 = String.Concat(不含扩展名.AsSpan(0, 不含扩展名.Length - 更新后缀.Length), 扩展名)
-            If String.IsNullOrEmpty(目标名) OrElse 目标名 = 扩展名 Then Continue For
-
-            Dim 目标路径 = Path.Combine(目标目录, 目标名)
+            Dim 目标路径 = Path.Combine(程序目录, 目标名)
 
             '不允许更新器自身被覆盖
             If Not String.IsNullOrEmpty(自身路径) AndAlso
@@ -280,6 +278,36 @@ Module Program
             End Try
         Next
         Return 计数
+    End Function
+
+    Private Function 存在待应用更新文件(程序目录 As String) As Boolean
+        Try
+            Return Directory.EnumerateFiles(程序目录, "*", SearchOption.TopDirectoryOnly).
+                Any(Function(文件) Not String.IsNullOrEmpty(获取更新目标文件名(Path.GetFileName(文件))))
+        Catch
+            Return False
+        End Try
+    End Function
+
+    Private Function 获取更新目标文件名(文件名 As String) As String
+        If String.IsNullOrWhiteSpace(文件名) Then Return ""
+
+        Dim 不含扩展名 = Path.GetFileNameWithoutExtension(文件名)
+        If String.IsNullOrWhiteSpace(不含扩展名) OrElse
+           Not 不含扩展名.EndsWith(更新后缀, StringComparison.OrdinalIgnoreCase) Then Return ""
+
+        Dim 原始文件名 = 不含扩展名.Substring(0, 不含扩展名.Length - 更新后缀.Length)
+        If String.IsNullOrWhiteSpace(原始文件名) Then Return ""
+
+        Return 原始文件名 & Path.GetExtension(文件名)
+    End Function
+
+    Private Function 获取更新文件路径(程序目录 As String, 文件名 As String) As String
+        Return Path.Combine(程序目录, 获取更新文件名(文件名))
+    End Function
+
+    Private Function 获取更新文件名(文件名 As String) As String
+        Return Path.GetFileNameWithoutExtension(文件名) & 更新后缀 & Path.GetExtension(文件名)
     End Function
 
     '======================================================================
@@ -338,6 +366,17 @@ Module Program
     '======================================================================
     ' .NET 运行库检查与安装
     '======================================================================
+    Private Async Function 确保主程序运行环境(目标目录 As String) As Task(Of Boolean)
+        Dim 架构 = 获取架构名称()
+        If String.IsNullOrEmpty(架构) Then
+            输出错误($"当前系统架构 {RuntimeInformation.OSArchitecture} 不在发行版支持范围内，仅支持 x64 与 arm64。")
+            Return False
+        End If
+
+        输出信息($"系统架构：{架构}")
+        Return Await 确保DotNet10WindowsDesktop运行库(目标目录, 架构)
+    End Function
+
     Private Async Function 确保DotNet10WindowsDesktop运行库(目标目录 As String, 架构 As String) As Task(Of Boolean)
         If 检查DotNet10WindowsDesktop运行库(架构) Then Return True
 
