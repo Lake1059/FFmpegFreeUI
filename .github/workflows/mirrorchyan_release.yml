@@ -60,7 +60,7 @@ jobs:
           upload_token: ${{ secrets.MirrorChyanUploadToken }}
 
   mirrorchyan-app:
-    if: ${{ false && github.repository_owner == 'Lake1059' }}
+    if: ${{ github.repository_owner == 'Lake1059' }}
     runs-on: macos-latest
     strategy:
       fail-fast: false
