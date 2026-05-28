@@ -101,7 +101,7 @@ Partial Class Form_v6_参数面板_视频编码器
         ' 
         HtmlColorLabel9.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel9.Dock = DockStyle.Fill
-        HtmlColorLabel9.ForeColor = Color.Gray
+        HtmlColorLabel9.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         HtmlColorLabel9.Location = New Point(100, 10)
         HtmlColorLabel9.Margin = New Padding(2)
         HtmlColorLabel9.Name = "HtmlColorLabel9"
@@ -114,19 +114,19 @@ Partial Class Form_v6_参数面板_视频编码器
         ' MTB_threads
         ' 
         MTB_threads.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        MTB_threads.BorderColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        MTB_threads.BorderColorFocus = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        MTB_threads.BorderColor = Color.Transparent
+        MTB_threads.BorderColorFocus = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
         MTB_threads.BorderRadius = 10
         MTB_threads.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
         MTB_threads.Dock = DockStyle.Left
         MTB_threads.Location = New Point(0, 10)
-        MTB_threads.Margin = New Padding(2, 2, 2, 2)
+        MTB_threads.Margin = New Padding(2)
         MTB_threads.Name = "MTB_threads"
         MTB_threads.Padding = New Padding(10, 0, 10, 0)
-        MTB_threads.ScrollBarHoverColor = Color.FromArgb(CByte(200), CByte(200), CByte(200))
         MTB_threads.Size = New Size(100, 32)
         MTB_threads.TabIndex = 4
         MTB_threads.WaterText = "-threads"
+        MTB_threads.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ' 
         ' Panel5
         ' 
@@ -143,7 +143,7 @@ Partial Class Form_v6_参数面板_视频编码器
         ' 
         HtmlColorLabel8.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel8.Dock = DockStyle.Fill
-        HtmlColorLabel8.ForeColor = Color.Gray
+        HtmlColorLabel8.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         HtmlColorLabel8.Location = New Point(100, 10)
         HtmlColorLabel8.Margin = New Padding(2)
         HtmlColorLabel8.Name = "HtmlColorLabel8"
@@ -156,32 +156,33 @@ Partial Class Form_v6_参数面板_视频编码器
         ' MTB_gpu
         ' 
         MTB_gpu.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        MTB_gpu.BorderColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        MTB_gpu.BorderColorFocus = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        MTB_gpu.BorderColor = Color.Transparent
+        MTB_gpu.BorderColorFocus = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
         MTB_gpu.BorderRadius = 10
         MTB_gpu.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
         MTB_gpu.Dock = DockStyle.Left
         MTB_gpu.Location = New Point(0, 10)
-        MTB_gpu.Margin = New Padding(2, 2, 2, 2)
+        MTB_gpu.Margin = New Padding(2)
         MTB_gpu.Name = "MTB_gpu"
         MTB_gpu.Padding = New Padding(10, 0, 10, 0)
-        MTB_gpu.ScrollBarHoverColor = Color.FromArgb(CByte(200), CByte(200), CByte(200))
         MTB_gpu.Size = New Size(100, 32)
         MTB_gpu.TabIndex = 4
         MTB_gpu.WaterText = "-gpu"
+        MTB_gpu.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ' 
         ' HtmlColorLabel5
         ' 
         HtmlColorLabel5.AutoSize = True
         HtmlColorLabel5.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel5.Dock = DockStyle.Top
+        HtmlColorLabel5.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         HtmlColorLabel5.Location = New Point(20, 436)
         HtmlColorLabel5.Margin = New Padding(2)
         HtmlColorLabel5.Name = "HtmlColorLabel5"
         HtmlColorLabel5.Padding = New Padding(0, 20, 0, 5)
         HtmlColorLabel5.Size = New Size(862, 50)
         HtmlColorLabel5.TabIndex = 10
-        HtmlColorLabel5.Text = "<span style=""font-size:13"">性能选项</span>   <span style=""font-size:10pt; color:Gray"">通常不需要考虑，也不一定起作用</span>"
+        HtmlColorLabel5.Text = "<span style=""font-size:13; color:Silver"">性能选项</span>   通常不需要考虑，也不一定起作用"
         ' 
         ' Panel4
         ' 
@@ -196,39 +197,42 @@ Partial Class Form_v6_参数面板_视频编码器
         ' MCB_场景优化
         ' 
         MCB_场景优化.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        MCB_场景优化.BorderColorFocus = Color.Silver
         MCB_场景优化.BorderRadius = 10
         MCB_场景优化.BorderSize = 0
-        MCB_场景优化.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
         MCB_场景优化.Dock = DockStyle.Left
-        MCB_场景优化.DropDownBorderSize = 2
+        MCB_场景优化.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
+        MCB_场景优化.DropDownHoverAnimationDuration = 0
+        MCB_场景优化.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
         MCB_场景优化.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
         MCB_场景优化.DropDownPadding = New Padding(10)
-        MCB_场景优化.DropDownScrollBarHoverColor = Color.FromArgb(CByte(200), CByte(200), CByte(200))
+        MCB_场景优化.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MCB_场景优化.DropDownSelectedForeColor = Color.White
+        MCB_场景优化.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
         MCB_场景优化.Location = New Point(0, 10)
         MCB_场景优化.Margin = New Padding(2, 2, 2, 2)
         MCB_场景优化.Name = "MCB_场景优化"
         MCB_场景优化.Padding = New Padding(10, 0, 10, 0)
         MCB_场景优化.Size = New Size(150, 32)
         MCB_场景优化.TabIndex = 0
-        MCB_场景优化.ToolTipBorderSize = 2
-        MCB_场景优化.ToolTipGap = 10
+        MCB_场景优化.ToolTipGap = -1
         MCB_场景优化.ToolTipMaxWidth = 350
         MCB_场景优化.ToolTipPadding = New Padding(15)
         MCB_场景优化.WaterText = "-tune"
+        MCB_场景优化.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ' 
         ' HtmlColorLabel4
         ' 
         HtmlColorLabel4.AutoSize = True
         HtmlColorLabel4.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel4.Dock = DockStyle.Top
+        HtmlColorLabel4.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         HtmlColorLabel4.Location = New Point(20, 344)
         HtmlColorLabel4.Margin = New Padding(2)
         HtmlColorLabel4.Name = "HtmlColorLabel4"
         HtmlColorLabel4.Padding = New Padding(0, 20, 0, 5)
         HtmlColorLabel4.Size = New Size(862, 50)
         HtmlColorLabel4.TabIndex = 8
-        HtmlColorLabel4.Text = "<span style=""font-size:13"">场景优化</span>   <span style=""font-size:10pt; color:Gray"">对特定需求的专项优化，例如 CPU 编码的颗粒保留或是 GPU 编码的特调模式</span>"
+        HtmlColorLabel4.Text = "<span style=""font-size:13; color:Silver"">场景优化</span>   对特定需求的专项优化，例如 CPU 编码的颗粒保留或是 GPU 编码的特调模式"
         ' 
         ' Panel3
         ' 
@@ -243,39 +247,42 @@ Partial Class Form_v6_参数面板_视频编码器
         ' MCB_配置文件
         ' 
         MCB_配置文件.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        MCB_配置文件.BorderColorFocus = Color.Silver
         MCB_配置文件.BorderRadius = 10
         MCB_配置文件.BorderSize = 0
-        MCB_配置文件.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
         MCB_配置文件.Dock = DockStyle.Left
-        MCB_配置文件.DropDownBorderSize = 2
+        MCB_配置文件.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
+        MCB_配置文件.DropDownHoverAnimationDuration = 0
+        MCB_配置文件.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
         MCB_配置文件.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
         MCB_配置文件.DropDownPadding = New Padding(10)
-        MCB_配置文件.DropDownScrollBarHoverColor = Color.FromArgb(CByte(200), CByte(200), CByte(200))
+        MCB_配置文件.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MCB_配置文件.DropDownSelectedForeColor = Color.White
+        MCB_配置文件.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
         MCB_配置文件.Location = New Point(0, 10)
         MCB_配置文件.Margin = New Padding(2, 2, 2, 2)
         MCB_配置文件.Name = "MCB_配置文件"
         MCB_配置文件.Padding = New Padding(10, 0, 10, 0)
         MCB_配置文件.Size = New Size(150, 32)
         MCB_配置文件.TabIndex = 0
-        MCB_配置文件.ToolTipBorderSize = 2
-        MCB_配置文件.ToolTipGap = 10
+        MCB_配置文件.ToolTipGap = -1
         MCB_配置文件.ToolTipMaxWidth = 350
         MCB_配置文件.ToolTipPadding = New Padding(15)
         MCB_配置文件.WaterText = "-profile"
+        MCB_配置文件.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ' 
         ' HtmlColorLabel3
         ' 
         HtmlColorLabel3.AutoSize = True
         HtmlColorLabel3.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel3.Dock = DockStyle.Top
+        HtmlColorLabel3.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         HtmlColorLabel3.Location = New Point(20, 252)
         HtmlColorLabel3.Margin = New Padding(2)
         HtmlColorLabel3.Name = "HtmlColorLabel3"
         HtmlColorLabel3.Padding = New Padding(0, 20, 0, 5)
         HtmlColorLabel3.Size = New Size(862, 50)
         HtmlColorLabel3.TabIndex = 6
-        HtmlColorLabel3.Text = "<span style=""font-size:13"">配置文件</span>   <span style=""font-size:10pt; color:Gray"">控制要支持怎样的技术规格和功能，一般不用指定</span>"
+        HtmlColorLabel3.Text = "<span style=""font-size:13; color:Silver"">配置文件</span>   控制要支持怎样的技术规格和功能，一般不用指定"
         ' 
         ' Panel1
         ' 
@@ -290,39 +297,42 @@ Partial Class Form_v6_参数面板_视频编码器
         ' MCB_编码预设
         ' 
         MCB_编码预设.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        MCB_编码预设.BorderColorFocus = Color.Silver
         MCB_编码预设.BorderRadius = 10
         MCB_编码预设.BorderSize = 0
-        MCB_编码预设.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
         MCB_编码预设.Dock = DockStyle.Left
-        MCB_编码预设.DropDownBorderSize = 2
+        MCB_编码预设.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
+        MCB_编码预设.DropDownHoverAnimationDuration = 0
+        MCB_编码预设.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
         MCB_编码预设.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
         MCB_编码预设.DropDownPadding = New Padding(10)
-        MCB_编码预设.DropDownScrollBarHoverColor = Color.FromArgb(CByte(200), CByte(200), CByte(200))
+        MCB_编码预设.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MCB_编码预设.DropDownSelectedForeColor = Color.White
+        MCB_编码预设.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
         MCB_编码预设.Location = New Point(0, 10)
         MCB_编码预设.Margin = New Padding(2, 2, 2, 2)
         MCB_编码预设.Name = "MCB_编码预设"
         MCB_编码预设.Padding = New Padding(10, 0, 10, 0)
         MCB_编码预设.Size = New Size(150, 32)
         MCB_编码预设.TabIndex = 0
-        MCB_编码预设.ToolTipBorderSize = 2
-        MCB_编码预设.ToolTipGap = 10
+        MCB_编码预设.ToolTipGap = -1
         MCB_编码预设.ToolTipMaxWidth = 350
         MCB_编码预设.ToolTipPadding = New Padding(15)
         MCB_编码预设.WaterText = "-preset"
+        MCB_编码预设.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ' 
         ' HtmlColorLabel2
         ' 
         HtmlColorLabel2.AutoSize = True
         HtmlColorLabel2.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel2.Dock = DockStyle.Top
+        HtmlColorLabel2.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         HtmlColorLabel2.Location = New Point(20, 160)
         HtmlColorLabel2.Margin = New Padding(2)
         HtmlColorLabel2.Name = "HtmlColorLabel2"
         HtmlColorLabel2.Padding = New Padding(0, 20, 0, 5)
         HtmlColorLabel2.Size = New Size(862, 50)
         HtmlColorLabel2.TabIndex = 4
-        HtmlColorLabel2.Text = "<span style=""font-size:13"">编码预设</span>   <span style=""font-size:10pt; color:Gray"">如何平衡压缩度和速度，往上越慢，往下越快</span>"
+        HtmlColorLabel2.Text = "<span style=""font-size:13; color:Silver"">编码预设</span>   如何平衡压缩度和速度，往上越慢，往下越快"
         ' 
         ' Panel7
         ' 
@@ -340,12 +350,12 @@ Partial Class Form_v6_参数面板_视频编码器
         ' 
         HtmlColorLabel7.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel7.Dock = DockStyle.Fill
-        HtmlColorLabel7.ForeColor = Color.Gray
-        HtmlColorLabel7.Location = New Point(120, 10)
+        HtmlColorLabel7.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
+        HtmlColorLabel7.Location = New Point(150, 10)
         HtmlColorLabel7.Margin = New Padding(2)
         HtmlColorLabel7.Name = "HtmlColorLabel7"
         HtmlColorLabel7.Padding = New Padding(10, 0, 0, 0)
-        HtmlColorLabel7.Size = New Size(742, 32)
+        HtmlColorLabel7.Size = New Size(712, 32)
         HtmlColorLabel7.TabIndex = 6
         HtmlColorLabel7.Text = "图片编码器质量值 / 其他定制参数"
         HtmlColorLabel7.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
@@ -353,18 +363,18 @@ Partial Class Form_v6_参数面板_视频编码器
         ' ModernTextBox1
         ' 
         ModernTextBox1.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernTextBox1.BorderColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernTextBox1.BorderColorFocus = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        ModernTextBox1.BorderColor = Color.Transparent
+        ModernTextBox1.BorderColorFocus = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
         ModernTextBox1.BorderRadius = 10
         ModernTextBox1.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
         ModernTextBox1.Dock = DockStyle.Left
         ModernTextBox1.Location = New Point(0, 10)
-        ModernTextBox1.Margin = New Padding(2, 2, 2, 2)
+        ModernTextBox1.Margin = New Padding(2)
         ModernTextBox1.Name = "ModernTextBox1"
         ModernTextBox1.Padding = New Padding(10, 0, 10, 0)
-        ModernTextBox1.ScrollBarHoverColor = Color.FromArgb(CByte(200), CByte(200), CByte(200))
-        ModernTextBox1.Size = New Size(120, 32)
+        ModernTextBox1.Size = New Size(150, 32)
         ModernTextBox1.TabIndex = 5
+        ModernTextBox1.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ' 
         ' Panel2
         ' 
@@ -383,32 +393,34 @@ Partial Class Form_v6_参数面板_视频编码器
         ' MCB_具体编码器
         ' 
         MCB_具体编码器.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        MCB_具体编码器.BorderColorFocus = Color.Silver
         MCB_具体编码器.BorderRadius = 10
         MCB_具体编码器.BorderSize = 0
-        MCB_具体编码器.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
         MCB_具体编码器.Dock = DockStyle.Left
-        MCB_具体编码器.DropDownBorderSize = 2
+        MCB_具体编码器.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
+        MCB_具体编码器.DropDownHoverAnimationDuration = 0
+        MCB_具体编码器.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
         MCB_具体编码器.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
         MCB_具体编码器.DropDownPadding = New Padding(10)
-        MCB_具体编码器.DropDownScrollBarHoverColor = Color.FromArgb(CByte(200), CByte(200), CByte(200))
-        MCB_具体编码器.Location = New Point(340, 10)
+        MCB_具体编码器.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MCB_具体编码器.DropDownSelectedForeColor = Color.White
+        MCB_具体编码器.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        MCB_具体编码器.Location = New Point(370, 10)
         MCB_具体编码器.Margin = New Padding(2, 2, 2, 2)
         MCB_具体编码器.MaxDropDownItems = 20
         MCB_具体编码器.Name = "MCB_具体编码器"
         MCB_具体编码器.Padding = New Padding(10, 0, 10, 0)
         MCB_具体编码器.Size = New Size(160, 32)
         MCB_具体编码器.TabIndex = 6
-        MCB_具体编码器.ToolTipBorderSize = 2
-        MCB_具体编码器.ToolTipGap = 10
+        MCB_具体编码器.ToolTipGap = -1
         MCB_具体编码器.ToolTipMaxWidth = 350
         MCB_具体编码器.ToolTipPadding = New Padding(15)
         MCB_具体编码器.WaterText = "具体编码"
+        MCB_具体编码器.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ' 
         ' JustEmptyControl2
         ' 
         JustEmptyControl2.Dock = DockStyle.Left
-        JustEmptyControl2.Location = New Point(330, 10)
+        JustEmptyControl2.Location = New Point(360, 10)
         JustEmptyControl2.Name = "JustEmptyControl2"
         JustEmptyControl2.Size = New Size(10, 32)
         JustEmptyControl2.TabIndex = 5
@@ -416,32 +428,34 @@ Partial Class Form_v6_参数面板_视频编码器
         ' MCB_视频编码器分类
         ' 
         MCB_视频编码器分类.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        MCB_视频编码器分类.BorderColorFocus = Color.Silver
         MCB_视频编码器分类.BorderRadius = 10
         MCB_视频编码器分类.BorderSize = 0
-        MCB_视频编码器分类.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
         MCB_视频编码器分类.Dock = DockStyle.Left
-        MCB_视频编码器分类.DropDownBorderSize = 2
+        MCB_视频编码器分类.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
+        MCB_视频编码器分类.DropDownHoverAnimationDuration = 0
+        MCB_视频编码器分类.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
         MCB_视频编码器分类.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
         MCB_视频编码器分类.DropDownPadding = New Padding(10)
-        MCB_视频编码器分类.DropDownScrollBarHoverColor = Color.FromArgb(CByte(200), CByte(200), CByte(200))
-        MCB_视频编码器分类.Location = New Point(130, 10)
+        MCB_视频编码器分类.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MCB_视频编码器分类.DropDownSelectedForeColor = Color.White
+        MCB_视频编码器分类.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        MCB_视频编码器分类.Location = New Point(160, 10)
         MCB_视频编码器分类.Margin = New Padding(2, 2, 2, 2)
         MCB_视频编码器分类.MaxDropDownItems = 15
         MCB_视频编码器分类.Name = "MCB_视频编码器分类"
         MCB_视频编码器分类.Padding = New Padding(10, 0, 10, 0)
         MCB_视频编码器分类.Size = New Size(200, 32)
         MCB_视频编码器分类.TabIndex = 4
-        MCB_视频编码器分类.ToolTipBorderSize = 2
-        MCB_视频编码器分类.ToolTipGap = -3
+        MCB_视频编码器分类.ToolTipGap = -1
         MCB_视频编码器分类.ToolTipMaxWidth = 350
         MCB_视频编码器分类.ToolTipPadding = New Padding(15)
         MCB_视频编码器分类.WaterText = "分类"
+        MCB_视频编码器分类.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ' 
         ' JustEmptyControl1
         ' 
         JustEmptyControl1.Dock = DockStyle.Left
-        JustEmptyControl1.Location = New Point(120, 10)
+        JustEmptyControl1.Location = New Point(150, 10)
         JustEmptyControl1.Name = "JustEmptyControl1"
         JustEmptyControl1.Size = New Size(10, 32)
         JustEmptyControl1.TabIndex = 3
@@ -449,15 +463,17 @@ Partial Class Form_v6_参数面板_视频编码器
         ' MCB_视频编码器类型
         ' 
         MCB_视频编码器类型.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        MCB_视频编码器类型.BorderColorFocus = Color.Silver
         MCB_视频编码器类型.BorderRadius = 10
         MCB_视频编码器类型.BorderSize = 0
-        MCB_视频编码器类型.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
         MCB_视频编码器类型.Dock = DockStyle.Left
-        MCB_视频编码器类型.DropDownBorderSize = 2
+        MCB_视频编码器类型.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
+        MCB_视频编码器类型.DropDownHoverAnimationDuration = 0
+        MCB_视频编码器类型.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
         MCB_视频编码器类型.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
         MCB_视频编码器类型.DropDownPadding = New Padding(10)
-        MCB_视频编码器类型.DropDownScrollBarHoverColor = Color.FromArgb(CByte(200), CByte(200), CByte(200))
+        MCB_视频编码器类型.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MCB_视频编码器类型.DropDownSelectedForeColor = Color.White
+        MCB_视频编码器类型.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
         MCB_视频编码器类型.Items.Add("")
         MCB_视频编码器类型.Items.Add("视频")
         MCB_视频编码器类型.Items.Add("图片")
@@ -465,19 +481,20 @@ Partial Class Form_v6_参数面板_视频编码器
         MCB_视频编码器类型.Margin = New Padding(2, 2, 2, 2)
         MCB_视频编码器类型.Name = "MCB_视频编码器类型"
         MCB_视频编码器类型.Padding = New Padding(10, 0, 10, 0)
-        MCB_视频编码器类型.Size = New Size(120, 32)
+        MCB_视频编码器类型.Size = New Size(150, 32)
         MCB_视频编码器类型.TabIndex = 0
-        MCB_视频编码器类型.ToolTipBorderSize = 2
-        MCB_视频编码器类型.ToolTipGap = 10
+        MCB_视频编码器类型.ToolTipGap = -1
         MCB_视频编码器类型.ToolTipMaxWidth = 350
         MCB_视频编码器类型.ToolTipPadding = New Padding(15)
         MCB_视频编码器类型.WaterText = "类型"
+        MCB_视频编码器类型.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ' 
         ' HtmlColorLabel6
         ' 
         HtmlColorLabel6.AutoSize = True
         HtmlColorLabel6.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel6.Dock = DockStyle.Top
+        HtmlColorLabel6.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         HtmlColorLabel6.Location = New Point(20, 50)
         HtmlColorLabel6.Margin = New Padding(2)
         HtmlColorLabel6.Name = "HtmlColorLabel6"
@@ -491,13 +508,14 @@ Partial Class Form_v6_参数面板_视频编码器
         HtmlColorLabel1.AutoSize = True
         HtmlColorLabel1.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel1.Dock = DockStyle.Top
+        HtmlColorLabel1.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         HtmlColorLabel1.Location = New Point(20, 20)
         HtmlColorLabel1.Margin = New Padding(2)
         HtmlColorLabel1.Name = "HtmlColorLabel1"
         HtmlColorLabel1.Padding = New Padding(0, 0, 0, 5)
         HtmlColorLabel1.Size = New Size(862, 30)
         HtmlColorLabel1.TabIndex = 1
-        HtmlColorLabel1.Text = "<span style=""font-size:13"">视频编码器</span>   <span style=""font-size:10pt; color:Gray"">依次选择类别，再选具体；可编辑设置文件添加自定义</span>"
+        HtmlColorLabel1.Text = "<span style=""font-size:13; color:Silver"">视频编码器</span>   依次选择类别，再选具体；可编辑设置文件添加自定义"
         ' 
         ' Form_v6_参数面板_视频编码器
         ' 

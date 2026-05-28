@@ -84,10 +84,14 @@ Public Class Form_v6_设置_个性化
                 MCB_背景来源.Enabled = False
                 MCB_噪点颗粒.Enabled = False
             Case 1
-                FormMain_v6.ThisIsYourWindow1.BackdropBlurPasses = 1
+                FormMain_v6.ThisIsYourWindow1.BackdropBlurPasses = 0
                 MCB_背景来源.Enabled = True
                 MCB_噪点颗粒.Enabled = True
             Case 2
+                FormMain_v6.ThisIsYourWindow1.BackdropBlurPasses = 1
+                MCB_背景来源.Enabled = True
+                MCB_噪点颗粒.Enabled = True
+            Case 3
                 FormMain_v6.ThisIsYourWindow1.BackdropBlurPasses = 3
                 MCB_背景来源.Enabled = True
                 MCB_噪点颗粒.Enabled = True

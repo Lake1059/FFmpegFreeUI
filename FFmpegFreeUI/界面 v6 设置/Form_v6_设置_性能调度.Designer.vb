@@ -72,15 +72,17 @@ Partial Class Form_v6_设置_性能调度
         ' MCB_编码队列刷新速度
         ' 
         MCB_编码队列刷新速度.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        MCB_编码队列刷新速度.BorderColorFocus = Color.Silver
         MCB_编码队列刷新速度.BorderRadius = 10
         MCB_编码队列刷新速度.BorderSize = 0
-        MCB_编码队列刷新速度.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
         MCB_编码队列刷新速度.Dock = DockStyle.Left
-        MCB_编码队列刷新速度.DropDownBorderSize = 2
+        MCB_编码队列刷新速度.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
+        MCB_编码队列刷新速度.DropDownHoverAnimationDuration = 0
+        MCB_编码队列刷新速度.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
         MCB_编码队列刷新速度.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
         MCB_编码队列刷新速度.DropDownPadding = New Padding(10)
-        MCB_编码队列刷新速度.DropDownScrollBarHoverColor = Color.FromArgb(CByte(200), CByte(200), CByte(200))
+        MCB_编码队列刷新速度.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MCB_编码队列刷新速度.DropDownSelectedForeColor = Color.White
+        MCB_编码队列刷新速度.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
         MCB_编码队列刷新速度.Items.Add("极快速度（200ms）")
         MCB_编码队列刷新速度.Items.Add("较快速度（500ms）")
         MCB_编码队列刷新速度.Items.Add("默认速度（1s）")
@@ -93,23 +95,24 @@ Partial Class Form_v6_设置_性能调度
         MCB_编码队列刷新速度.Padding = New Padding(10, 0, 10, 0)
         MCB_编码队列刷新速度.Size = New Size(200, 32)
         MCB_编码队列刷新速度.TabIndex = 0
-        MCB_编码队列刷新速度.ToolTipBorderSize = 2
-        MCB_编码队列刷新速度.ToolTipGap = 10
+        MCB_编码队列刷新速度.ToolTipGap = -1
         MCB_编码队列刷新速度.ToolTipMaxWidth = 350
         MCB_编码队列刷新速度.ToolTipPadding = New Padding(15)
+        MCB_编码队列刷新速度.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ' 
         ' HtmlColorLabel3
         ' 
         HtmlColorLabel3.AutoSize = True
         HtmlColorLabel3.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel3.Dock = DockStyle.Top
+        HtmlColorLabel3.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         HtmlColorLabel3.Location = New Point(20, 174)
         HtmlColorLabel3.Margin = New Padding(2)
         HtmlColorLabel3.Name = "HtmlColorLabel3"
         HtmlColorLabel3.Padding = New Padding(0, 20, 0, 0)
         HtmlColorLabel3.Size = New Size(699, 45)
         HtmlColorLabel3.TabIndex = 14
-        HtmlColorLabel3.Text = "<span style=""font-size:13"">编码队列刷新速度</span>   <span style=""font-size:10pt; color:DarkGray"">低性能设备可以降低来节约不必要的开支</span>"
+        HtmlColorLabel3.Text = "<span style=""font-size:13; color:Silver"">编码队列刷新速度</span>   低性能设备可以降低来节约不必要的开支"
         ' 
         ' Panel1
         ' 
@@ -124,15 +127,17 @@ Partial Class Form_v6_设置_性能调度
         ' MCB_自动开始数量
         ' 
         MCB_自动开始数量.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        MCB_自动开始数量.BorderColorFocus = Color.Silver
         MCB_自动开始数量.BorderRadius = 10
         MCB_自动开始数量.BorderSize = 0
-        MCB_自动开始数量.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
         MCB_自动开始数量.Dock = DockStyle.Left
-        MCB_自动开始数量.DropDownBorderSize = 2
+        MCB_自动开始数量.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
+        MCB_自动开始数量.DropDownHoverAnimationDuration = 0
+        MCB_自动开始数量.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
         MCB_自动开始数量.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
         MCB_自动开始数量.DropDownPadding = New Padding(10)
-        MCB_自动开始数量.DropDownScrollBarHoverColor = Color.FromArgb(CByte(200), CByte(200), CByte(200))
+        MCB_自动开始数量.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MCB_自动开始数量.DropDownSelectedForeColor = Color.White
+        MCB_自动开始数量.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
         MCB_自动开始数量.Items.Add("同时进行 1 个任务")
         MCB_自动开始数量.Items.Add("同时进行 2 个任务")
         MCB_自动开始数量.Items.Add("同时进行 3 个任务")
@@ -150,23 +155,24 @@ Partial Class Form_v6_设置_性能调度
         MCB_自动开始数量.Padding = New Padding(10, 0, 10, 0)
         MCB_自动开始数量.Size = New Size(200, 32)
         MCB_自动开始数量.TabIndex = 0
-        MCB_自动开始数量.ToolTipBorderSize = 2
-        MCB_自动开始数量.ToolTipGap = 10
+        MCB_自动开始数量.ToolTipGap = -1
         MCB_自动开始数量.ToolTipMaxWidth = 350
         MCB_自动开始数量.ToolTipPadding = New Padding(15)
+        MCB_自动开始数量.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ' 
         ' HtmlColorLabel2
         ' 
         HtmlColorLabel2.AutoSize = True
         HtmlColorLabel2.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel2.Dock = DockStyle.Top
+        HtmlColorLabel2.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         HtmlColorLabel2.Location = New Point(20, 87)
         HtmlColorLabel2.Margin = New Padding(2)
         HtmlColorLabel2.Name = "HtmlColorLabel2"
         HtmlColorLabel2.Padding = New Padding(0, 20, 0, 0)
         HtmlColorLabel2.Size = New Size(699, 45)
         HtmlColorLabel2.TabIndex = 12
-        HtmlColorLabel2.Text = "<span style=""font-size:13"">自动开始数量</span>   <span style=""font-size:10pt; color:DarkGray"">视频建议 1，音频或图片可以尝试按照 CPU 核心数量</span>"
+        HtmlColorLabel2.Text = "<span style=""font-size:13; color:Silver"">自动开始数量</span>   视频建议 1，音频或图片可以尝试按照 CPU 核心数量"
         ' 
         ' Panel2
         ' 
@@ -185,7 +191,7 @@ Partial Class Form_v6_设置_性能调度
         ' 
         HtmlColorLabel6.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel6.Dock = DockStyle.Fill
-        HtmlColorLabel6.ForeColor = Color.Gray
+        HtmlColorLabel6.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         HtmlColorLabel6.Location = New Point(310, 10)
         HtmlColorLabel6.Margin = New Padding(2)
         HtmlColorLabel6.Name = "HtmlColorLabel6"
@@ -198,16 +204,15 @@ Partial Class Form_v6_设置_性能调度
         ' ModernTextBox2
         ' 
         ModernTextBox2.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernTextBox2.BorderColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernTextBox2.BorderColorFocus = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        ModernTextBox2.BorderColor = Color.Empty
+        ModernTextBox2.BorderColorFocus = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
         ModernTextBox2.BorderRadius = 10
         ModernTextBox2.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
         ModernTextBox2.Dock = DockStyle.Left
         ModernTextBox2.Location = New Point(210, 10)
-        ModernTextBox2.Margin = New Padding(2, 2, 2, 2)
+        ModernTextBox2.Margin = New Padding(2)
         ModernTextBox2.Name = "ModernTextBox2"
         ModernTextBox2.Padding = New Padding(10, 0, 10, 0)
-        ModernTextBox2.ScrollBarHoverColor = Color.FromArgb(CByte(200), CByte(200), CByte(200))
         ModernTextBox2.Size = New Size(100, 32)
         ModernTextBox2.TabIndex = 8
         ' 
@@ -222,16 +227,15 @@ Partial Class Form_v6_设置_性能调度
         ' MTB_处理器线程
         ' 
         MTB_处理器线程.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        MTB_处理器线程.BorderColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        MTB_处理器线程.BorderColorFocus = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        MTB_处理器线程.BorderColor = Color.Empty
+        MTB_处理器线程.BorderColorFocus = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
         MTB_处理器线程.BorderRadius = 10
         MTB_处理器线程.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
         MTB_处理器线程.Dock = DockStyle.Left
         MTB_处理器线程.Location = New Point(0, 10)
-        MTB_处理器线程.Margin = New Padding(2, 2, 2, 2)
+        MTB_处理器线程.Margin = New Padding(2)
         MTB_处理器线程.Name = "MTB_处理器线程"
         MTB_处理器线程.Padding = New Padding(10, 0, 10, 0)
-        MTB_处理器线程.ScrollBarHoverColor = Color.FromArgb(CByte(200), CByte(200), CByte(200))
         MTB_处理器线程.Size = New Size(200, 32)
         MTB_处理器线程.TabIndex = 6
         ' 
@@ -240,12 +244,13 @@ Partial Class Form_v6_设置_性能调度
         HtmlColorLabel1.AutoSize = True
         HtmlColorLabel1.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel1.Dock = DockStyle.Top
+        HtmlColorLabel1.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         HtmlColorLabel1.Location = New Point(20, 20)
         HtmlColorLabel1.Margin = New Padding(2)
         HtmlColorLabel1.Name = "HtmlColorLabel1"
         HtmlColorLabel1.Size = New Size(699, 25)
         HtmlColorLabel1.TabIndex = 10
-        HtmlColorLabel1.Text = "<span style=""font-size:13"">处理器核心 & 线程</span>   <span style=""font-size:10pt; color:DarkGray"">任务处理器里的处理器相关性，仅对新任务生效</span>"
+        HtmlColorLabel1.Text = "<span style=""font-size:13; color:Silver"">处理器核心</span>   任务处理器里的处理器相关性，仅对新任务生效"
         ' 
         ' Form_v6_设置_性能调度
         ' 

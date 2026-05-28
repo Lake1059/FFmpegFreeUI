@@ -117,7 +117,4 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="HtmlColorLabel3.Text" xml:space="preserve">
-    <value>可以 &lt;span style="font-size:10pt; color:Gainsboro"&gt;只写一个&lt;/span&gt; 来表示 &lt;span style="font-size:10pt; color:Gainsboro"&gt;从指定时间到末尾&lt;/span&gt; 或 &lt;span style="font-size:10pt; color:Gainsboro"&gt;从开头到指定时间&lt;/span&gt;&lt;br&gt;推荐使用 &lt;span style="font-size:10pt; color:YellowGreen"&gt;3fuiVideoHelper&lt;/span&gt; 或其他接入 3FUI 的三方软件来进行 &lt;span style="font-size:10pt; color:IndianRed"&gt;可视化填写&lt;/span&gt;</value>
-  </data>
 </root>

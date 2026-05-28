@@ -27,16 +27,16 @@ Partial Class Form_v6_参数面板_元数据
         ModernPanel1 = New LakeUI.ModernPanel()
         UltraDetailListView1 = New LakeUI.UltraDetailListView()
         Panel1 = New Panel()
+        ModernButton3 = New LakeUI.ModernButton()
+        JustEmptyControl4 = New LakeUI.JustEmptyControl()
+        ModernButton2 = New LakeUI.ModernButton()
+        JustEmptyControl3 = New LakeUI.JustEmptyControl()
         ModernButton1 = New LakeUI.ModernButton()
         JustEmptyControl2 = New LakeUI.JustEmptyControl()
         ModernButton4 = New LakeUI.ModernButton()
         JustEmptyControl1 = New LakeUI.JustEmptyControl()
         ModernComboBox1 = New LakeUI.ModernComboBox()
         HtmlColorLabel1 = New LakeUI.HtmlColorLabel()
-        ModernButton2 = New LakeUI.ModernButton()
-        JustEmptyControl3 = New LakeUI.JustEmptyControl()
-        ModernButton3 = New LakeUI.ModernButton()
-        JustEmptyControl4 = New LakeUI.JustEmptyControl()
         ModernPanel1.SuspendLayout()
         Panel1.SuspendLayout()
         SuspendLayout()
@@ -59,7 +59,7 @@ Partial Class Form_v6_参数面板_元数据
         ' UltraDetailListView1
         ' 
         UltraDetailListView1.AllowDragReorder = True
-        UltraDetailListView1.BackgroundColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        UltraDetailListView1.BackgroundColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         UltraDetailListView1.BorderRadius = 10
         UltraDetailListView1.BorderSize = 0
         ListColumn1.Text = "字段"
@@ -73,14 +73,13 @@ Partial Class Form_v6_参数面板_元数据
         UltraDetailListView1.DragSelectZoneWidth = 100
         UltraDetailListView1.GroupBorderColor = Color.Silver
         UltraDetailListView1.GroupHeight = 35
-        UltraDetailListView1.HeaderBackColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UltraDetailListView1.HeaderBorderColor = Color.FromArgb(CByte(120), CByte(120), CByte(120))
+        UltraDetailListView1.HeaderBackColor = Color.Transparent
+        UltraDetailListView1.HeaderBorderColor = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
         UltraDetailListView1.HeaderHeight = 40
         UltraDetailListView1.ItemPadding = New Padding(10, 6, 10, 6)
         UltraDetailListView1.Location = New Point(20, 102)
         UltraDetailListView1.Margin = New Padding(2, 2, 2, 2)
         UltraDetailListView1.Name = "UltraDetailListView1"
-        UltraDetailListView1.Padding = New Padding(10, 3, 10, 10)
         UltraDetailListView1.Size = New Size(824, 521)
         UltraDetailListView1.TabIndex = 1
         ' 
@@ -102,17 +101,63 @@ Partial Class Form_v6_参数面板_元数据
         Panel1.Size = New Size(824, 52)
         Panel1.TabIndex = 11
         ' 
+        ' ModernButton3
+        ' 
+        ModernButton3.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        ModernButton3.BorderRadius = 10
+        ModernButton3.BorderSize = 0
+        ModernButton3.Dock = DockStyle.Left
+        ModernButton3.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        ModernButton3.Location = New Point(510, 10)
+        ModernButton3.Margin = New Padding(2)
+        ModernButton3.Name = "ModernButton3"
+        ModernButton3.PressedBackColor1 = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
+        ModernButton3.Size = New Size(70, 32)
+        ModernButton3.TabIndex = 16
+        ModernButton3.Text = "导入"
+        ' 
+        ' JustEmptyControl4
+        ' 
+        JustEmptyControl4.Dock = DockStyle.Left
+        JustEmptyControl4.Location = New Point(500, 10)
+        JustEmptyControl4.Name = "JustEmptyControl4"
+        JustEmptyControl4.Size = New Size(10, 32)
+        JustEmptyControl4.TabIndex = 15
+        ' 
+        ' ModernButton2
+        ' 
+        ModernButton2.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        ModernButton2.BorderRadius = 10
+        ModernButton2.BorderSize = 0
+        ModernButton2.Dock = DockStyle.Left
+        ModernButton2.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        ModernButton2.Location = New Point(430, 10)
+        ModernButton2.Margin = New Padding(2)
+        ModernButton2.Name = "ModernButton2"
+        ModernButton2.PressedBackColor1 = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
+        ModernButton2.Size = New Size(70, 32)
+        ModernButton2.TabIndex = 14
+        ModernButton2.Text = "导出"
+        ' 
+        ' JustEmptyControl3
+        ' 
+        JustEmptyControl3.Dock = DockStyle.Left
+        JustEmptyControl3.Location = New Point(420, 10)
+        JustEmptyControl3.Name = "JustEmptyControl3"
+        JustEmptyControl3.Size = New Size(10, 32)
+        JustEmptyControl3.TabIndex = 13
+        ' 
         ' ModernButton1
         ' 
-        ModernButton1.BackColor1 = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        ModernButton1.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernButton1.BorderRadius = 10
         ModernButton1.BorderSize = 0
         ModernButton1.Dock = DockStyle.Left
-        ModernButton1.HoverBackColor1 = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        ModernButton1.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
         ModernButton1.Location = New Point(320, 10)
         ModernButton1.Margin = New Padding(2)
         ModernButton1.Name = "ModernButton1"
-        ModernButton1.PressedBackColor1 = SystemColors.WindowFrame
+        ModernButton1.PressedBackColor1 = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
         ModernButton1.Size = New Size(100, 32)
         ModernButton1.TabIndex = 12
         ModernButton1.Text = "全部清空"
@@ -127,15 +172,15 @@ Partial Class Form_v6_参数面板_元数据
         ' 
         ' ModernButton4
         ' 
-        ModernButton4.BackColor1 = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        ModernButton4.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernButton4.BorderRadius = 10
         ModernButton4.BorderSize = 0
         ModernButton4.Dock = DockStyle.Left
-        ModernButton4.HoverBackColor1 = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        ModernButton4.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
         ModernButton4.Location = New Point(210, 10)
         ModernButton4.Margin = New Padding(2)
         ModernButton4.Name = "ModernButton4"
-        ModernButton4.PressedBackColor1 = SystemColors.WindowFrame
+        ModernButton4.PressedBackColor1 = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
         ModernButton4.Size = New Size(100, 32)
         ModernButton4.TabIndex = 7
         ModernButton4.Text = "删除所选"
@@ -150,16 +195,24 @@ Partial Class Form_v6_参数面板_元数据
         ' 
         ' ModernComboBox1
         ' 
-        ModernComboBox1.BackColor1 = Color.FromArgb(CByte(64), CByte(64), CByte(64))
-        ModernComboBox1.BorderColorFocus = Color.Silver
+        ModernComboBox1.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernComboBox1.BorderRadius = 10
         ModernComboBox1.BorderSize = 0
-        ModernComboBox1.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
         ModernComboBox1.Dock = DockStyle.Left
-        ModernComboBox1.DropDownBorderSize = 2
+        ModernComboBox1.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
+        ModernComboBox1.DropDownHoverAnimationDuration = 0
+        ModernComboBox1.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
         ModernComboBox1.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
         ModernComboBox1.DropDownPadding = New Padding(10)
-        ModernComboBox1.DropDownScrollBarHoverColor = Color.FromArgb(CByte(200), CByte(200), CByte(200))
+        ModernComboBox1.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        ModernComboBox1.DropDownSelectedForeColor = Color.White
+        ModernComboBox1.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        ModernComboBox1.Margin = New Padding(2, 2, 2, 2)
+        ModernComboBox1.Padding = New Padding(10, 0, 10, 0)
+        ModernComboBox1.ToolTipGap = -1
+        ModernComboBox1.ToolTipMaxWidth = 350
+        ModernComboBox1.ToolTipPadding = New Padding(15)
+        ModernComboBox1.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ModernComboBox1.Items.Add("标题")
         ModernComboBox1.Items.Add("参与创作的艺术家")
         ModernComboBox1.Items.Add("专辑")
@@ -173,77 +226,25 @@ Partial Class Form_v6_参数面板_元数据
         ModernComboBox1.Items.Add("编码器")
         ModernComboBox1.Items.Add("软件")
         ModernComboBox1.Location = New Point(0, 10)
-        ModernComboBox1.Margin = New Padding(2, 2, 2, 2)
         ModernComboBox1.MaxDropDownItems = 15
         ModernComboBox1.Name = "ModernComboBox1"
-        ModernComboBox1.Padding = New Padding(10, 0, 10, 0)
         ModernComboBox1.Size = New Size(200, 32)
         ModernComboBox1.TabIndex = 10
-        ModernComboBox1.ToolTipBorderSize = 2
-        ModernComboBox1.ToolTipGap = 10
-        ModernComboBox1.ToolTipMaxWidth = 350
-        ModernComboBox1.ToolTipPadding = New Padding(15)
         ModernComboBox1.WaterText = "添加预制项"
-        ModernComboBox1.WaterTextForeColor = Color.Silver
         ' 
         ' HtmlColorLabel1
         ' 
         HtmlColorLabel1.AutoSize = True
         HtmlColorLabel1.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel1.Dock = DockStyle.Top
+        HtmlColorLabel1.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         HtmlColorLabel1.Location = New Point(20, 20)
         HtmlColorLabel1.Margin = New Padding(2)
         HtmlColorLabel1.Name = "HtmlColorLabel1"
         HtmlColorLabel1.Padding = New Padding(0, 0, 0, 5)
         HtmlColorLabel1.Size = New Size(824, 30)
         HtmlColorLabel1.TabIndex = 10
-        HtmlColorLabel1.Text = "<span style=""font-size:13"">元数据</span>   <span style=""font-size:10pt; color:Gray"">向输出文件中写入自定义元数据，流的元数据请写自定义参数</span>"
-        ' 
-        ' ModernButton2
-        ' 
-        ModernButton2.BackColor1 = Color.FromArgb(CByte(64), CByte(64), CByte(64))
-        ModernButton2.BorderRadius = 10
-        ModernButton2.BorderSize = 0
-        ModernButton2.Dock = DockStyle.Left
-        ModernButton2.HoverBackColor1 = Color.FromArgb(CByte(80), CByte(80), CByte(80))
-        ModernButton2.Location = New Point(430, 10)
-        ModernButton2.Margin = New Padding(2)
-        ModernButton2.Name = "ModernButton2"
-        ModernButton2.PressedBackColor1 = SystemColors.WindowFrame
-        ModernButton2.Size = New Size(70, 32)
-        ModernButton2.TabIndex = 14
-        ModernButton2.Text = "导出"
-        ' 
-        ' JustEmptyControl3
-        ' 
-        JustEmptyControl3.Dock = DockStyle.Left
-        JustEmptyControl3.Location = New Point(420, 10)
-        JustEmptyControl3.Name = "JustEmptyControl3"
-        JustEmptyControl3.Size = New Size(10, 32)
-        JustEmptyControl3.TabIndex = 13
-        ' 
-        ' ModernButton3
-        ' 
-        ModernButton3.BackColor1 = Color.FromArgb(CByte(64), CByte(64), CByte(64))
-        ModernButton3.BorderRadius = 10
-        ModernButton3.BorderSize = 0
-        ModernButton3.Dock = DockStyle.Left
-        ModernButton3.HoverBackColor1 = Color.FromArgb(CByte(80), CByte(80), CByte(80))
-        ModernButton3.Location = New Point(510, 10)
-        ModernButton3.Margin = New Padding(2)
-        ModernButton3.Name = "ModernButton3"
-        ModernButton3.PressedBackColor1 = SystemColors.WindowFrame
-        ModernButton3.Size = New Size(70, 32)
-        ModernButton3.TabIndex = 16
-        ModernButton3.Text = "导入"
-        ' 
-        ' JustEmptyControl4
-        ' 
-        JustEmptyControl4.Dock = DockStyle.Left
-        JustEmptyControl4.Location = New Point(500, 10)
-        JustEmptyControl4.Name = "JustEmptyControl4"
-        JustEmptyControl4.Size = New Size(10, 32)
-        JustEmptyControl4.TabIndex = 15
+        HtmlColorLabel1.Text = "<span style=""font-size:13; color:Silver"">元数据</span>   向输出文件中写入自定义元数据，流的元数据请写自定义参数"
         ' 
         ' Form_v6_参数面板_元数据
         ' 

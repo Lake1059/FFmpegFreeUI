@@ -3,8 +3,6 @@
 Public Class Form_v6_设置
 
     Private Sub Form_v6_设置_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-
-
         Me.ModernTabListControl1.Items(1).BoundControl = Form_v6_设置_LakeUI性能选项
         绑定选项卡窗体背景透明(Form_v6_设置_LakeUI性能选项.ModernPanel1)
         Me.ModernTabListControl1.Items(2).BoundControl = Form_v6_设置_LakeUI视觉体验
@@ -21,13 +19,11 @@ Public Class Form_v6_设置
         绑定选项卡窗体背景透明(Form_v6_设置_转译辅助.ModernPanel1)
         Me.ModernTabListControl1.Items(10).BoundControl = Form_v6_设置_更新选项
         绑定选项卡窗体背景透明(Form_v6_设置_更新选项.ModernPanel1)
-        Me.ModernTabListControl1.Items(11).BoundControl = Form_v6_设置_隐私设置
-        绑定选项卡窗体背景透明(Form_v6_设置_隐私设置.ModernPanel1)
-        Me.ModernTabListControl1.Items(12).BoundControl = Form_v6_设置_远程调用
+        Me.ModernTabListControl1.Items(11).BoundControl = Form_v6_设置_远程调用
         绑定选项卡窗体背景透明(Form_v6_设置_远程调用.ModernPanel1)
-        Me.ModernTabListControl1.Items(13).BoundControl = Form_v6_设置_Agent
+        Me.ModernTabListControl1.Items(12).BoundControl = Form_v6_设置_Agent
         绑定选项卡窗体背景透明(Form_v6_设置_Agent.ModernPanel1)
-        Me.ModernTabListControl1.Items(16).BoundControl = Form_v6_设置_个性化
+        Me.ModernTabListControl1.Items(15).BoundControl = Form_v6_设置_个性化
         绑定选项卡窗体背景透明(Form_v6_设置_个性化.ModernPanel1)
     End Sub
 

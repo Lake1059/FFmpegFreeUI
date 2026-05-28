@@ -111,15 +111,23 @@ Partial Class Form_v6_参数面板_画面裁剪窗口
         ' ModernComboBox1
         ' 
         ModernComboBox1.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernComboBox1.BorderColorFocus = Color.Silver
         ModernComboBox1.BorderRadius = 10
         ModernComboBox1.BorderSize = 0
-        ModernComboBox1.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
         ModernComboBox1.Dock = DockStyle.Left
-        ModernComboBox1.DropDownBorderSize = 2
+        ModernComboBox1.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
+        ModernComboBox1.DropDownHoverAnimationDuration = 0
+        ModernComboBox1.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
         ModernComboBox1.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
         ModernComboBox1.DropDownPadding = New Padding(10)
-        ModernComboBox1.DropDownScrollBarHoverColor = Color.FromArgb(CByte(200), CByte(200), CByte(200))
+        ModernComboBox1.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        ModernComboBox1.DropDownSelectedForeColor = Color.White
+        ModernComboBox1.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        ModernComboBox1.Margin = New Padding(2, 2, 2, 2)
+        ModernComboBox1.Padding = New Padding(10, 0, 10, 0)
+        ModernComboBox1.ToolTipGap = -1
+        ModernComboBox1.ToolTipMaxWidth = 350
+        ModernComboBox1.ToolTipPadding = New Padding(15)
+        ModernComboBox1.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ModernComboBox1.Items.Add("自由")
         ModernComboBox1.Items.Add("21:9")
         ModernComboBox1.Items.Add("16:9")
@@ -128,15 +136,9 @@ Partial Class Form_v6_参数面板_画面裁剪窗口
         ModernComboBox1.Items.Add("4:3")
         ModernComboBox1.Items.Add("1:1")
         ModernComboBox1.Location = New Point(502, 10)
-        ModernComboBox1.Margin = New Padding(2, 2, 2, 2)
         ModernComboBox1.Name = "ModernComboBox1"
-        ModernComboBox1.Padding = New Padding(10, 0, 10, 0)
         ModernComboBox1.Size = New Size(100, 32)
         ModernComboBox1.TabIndex = 12
-        ModernComboBox1.ToolTipBorderSize = 2
-        ModernComboBox1.ToolTipGap = 10
-        ModernComboBox1.ToolTipMaxWidth = 350
-        ModernComboBox1.ToolTipPadding = New Padding(15)
         ModernComboBox1.WaterText = "比例"
         ' 
         ' JustEmptyControl4

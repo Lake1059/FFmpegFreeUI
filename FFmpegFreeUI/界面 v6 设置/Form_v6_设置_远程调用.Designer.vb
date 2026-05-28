@@ -84,10 +84,9 @@ Partial Class Form_v6_设置_远程调用
         ModernTextBox1.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
         ModernTextBox1.Dock = DockStyle.Left
         ModernTextBox1.Location = New Point(65, 10)
-        ModernTextBox1.Margin = New Padding(2, 2, 2, 2)
+        ModernTextBox1.Margin = New Padding(2)
         ModernTextBox1.Name = "ModernTextBox1"
         ModernTextBox1.Padding = New Padding(10, 0, 10, 0)
-        ModernTextBox1.ScrollBarHoverColor = Color.FromArgb(CByte(200), CByte(200), CByte(200))
         ModernTextBox1.Size = New Size(100, 32)
         ModernTextBox1.TabIndex = 14
         ModernTextBox1.WaterText = "10591"
@@ -117,7 +116,7 @@ Partial Class Form_v6_设置_远程调用
         HtmlColorLabel2.AutoSize = True
         HtmlColorLabel2.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel2.Dock = DockStyle.Top
-        HtmlColorLabel2.ForeColor = Color.Gray
+        HtmlColorLabel2.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         HtmlColorLabel2.Location = New Point(20, 50)
         HtmlColorLabel2.Margin = New Padding(2)
         HtmlColorLabel2.Name = "HtmlColorLabel2"

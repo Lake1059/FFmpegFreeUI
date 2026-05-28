@@ -28,13 +28,13 @@ Partial Class Form_v6_参数面板_输出文件设置
         ModernCheckBox1 = New LakeUI.ModernCheckBox()
         HtmlColorLabel3 = New LakeUI.HtmlColorLabel()
         Panel6 = New Panel()
-        Label6 = New Label()
+        HtmlColorLabel6 = New LakeUI.HtmlColorLabel()
         ModernTextBox4 = New LakeUI.ModernTextBox()
         Panel5 = New Panel()
-        Label5 = New Label()
+        HtmlColorLabel5 = New LakeUI.HtmlColorLabel()
         ModernTextBox3 = New LakeUI.ModernTextBox()
         Panel4 = New Panel()
-        Label4 = New Label()
+        HtmlColorLabel4 = New LakeUI.HtmlColorLabel()
         ModernTextBox2 = New LakeUI.ModernTextBox()
         Panel3 = New Panel()
         ModernComboBox4 = New LakeUI.ModernComboBox()
@@ -87,13 +87,17 @@ Partial Class Form_v6_参数面板_输出文件设置
         ' 
         ModernCheckBox3.AutoSize = True
         ModernCheckBox3.BoxBorderRadius = 5
-        ModernCheckBox3.BoxBorderSize = 2
-        ModernCheckBox3.BoxSize = 20
+        ModernCheckBox3.BoxBorderSize = 0
+        ModernCheckBox3.BoxCheckedBackColor = Color.OliveDrab
+        ModernCheckBox3.BoxInnerPadding = 6
+        ModernCheckBox3.BoxSize = 22
         ModernCheckBox3.BoxTextSpacing = 10
+        ModernCheckBox3.Checked = True
+        ModernCheckBox3.ClickAnywhere = True
         ModernCheckBox3.Dock = DockStyle.Top
-        ModernCheckBox3.Location = New Point(20, 463)
+        ModernCheckBox3.Location = New Point(20, 466)
         ModernCheckBox3.Name = "ModernCheckBox3"
-        ModernCheckBox3.Padding = New Padding(0, 10, 0, 0)
+        ModernCheckBox3.Padding = New Padding(0, 5, 0, 5)
         ModernCheckBox3.Size = New Size(853, 32)
         ModernCheckBox3.TabIndex = 14
         ModernCheckBox3.Text = "保留访问时间"
@@ -102,13 +106,17 @@ Partial Class Form_v6_参数面板_输出文件设置
         ' 
         ModernCheckBox2.AutoSize = True
         ModernCheckBox2.BoxBorderRadius = 5
-        ModernCheckBox2.BoxBorderSize = 2
-        ModernCheckBox2.BoxSize = 20
+        ModernCheckBox2.BoxBorderSize = 0
+        ModernCheckBox2.BoxCheckedBackColor = Color.OliveDrab
+        ModernCheckBox2.BoxInnerPadding = 6
+        ModernCheckBox2.BoxSize = 22
         ModernCheckBox2.BoxTextSpacing = 10
+        ModernCheckBox2.Checked = True
+        ModernCheckBox2.ClickAnywhere = True
         ModernCheckBox2.Dock = DockStyle.Top
-        ModernCheckBox2.Location = New Point(20, 431)
+        ModernCheckBox2.Location = New Point(20, 434)
         ModernCheckBox2.Name = "ModernCheckBox2"
-        ModernCheckBox2.Padding = New Padding(0, 10, 0, 0)
+        ModernCheckBox2.Padding = New Padding(0, 5, 0, 5)
         ModernCheckBox2.Size = New Size(853, 32)
         ModernCheckBox2.TabIndex = 13
         ModernCheckBox2.Text = "保留修改时间"
@@ -117,14 +125,18 @@ Partial Class Form_v6_参数面板_输出文件设置
         ' 
         ModernCheckBox1.AutoSize = True
         ModernCheckBox1.BoxBorderRadius = 5
-        ModernCheckBox1.BoxBorderSize = 2
-        ModernCheckBox1.BoxSize = 20
+        ModernCheckBox1.BoxBorderSize = 0
+        ModernCheckBox1.BoxCheckedBackColor = Color.OliveDrab
+        ModernCheckBox1.BoxInnerPadding = 6
+        ModernCheckBox1.BoxSize = 22
         ModernCheckBox1.BoxTextSpacing = 10
+        ModernCheckBox1.Checked = True
+        ModernCheckBox1.ClickAnywhere = True
         ModernCheckBox1.Dock = DockStyle.Top
         ModernCheckBox1.Location = New Point(20, 402)
         ModernCheckBox1.Name = "ModernCheckBox1"
-        ModernCheckBox1.Padding = New Padding(0, 7, 0, 0)
-        ModernCheckBox1.Size = New Size(853, 29)
+        ModernCheckBox1.Padding = New Padding(0, 5, 0, 5)
+        ModernCheckBox1.Size = New Size(853, 32)
         ModernCheckBox1.TabIndex = 12
         ModernCheckBox1.Text = "保留创建时间"
         ' 
@@ -133,17 +145,18 @@ Partial Class Form_v6_参数面板_输出文件设置
         HtmlColorLabel3.AutoSize = True
         HtmlColorLabel3.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel3.Dock = DockStyle.Top
+        HtmlColorLabel3.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         HtmlColorLabel3.Location = New Point(20, 352)
         HtmlColorLabel3.Margin = New Padding(2)
         HtmlColorLabel3.Name = "HtmlColorLabel3"
         HtmlColorLabel3.Padding = New Padding(0, 20, 0, 5)
         HtmlColorLabel3.Size = New Size(853, 50)
         HtmlColorLabel3.TabIndex = 8
-        HtmlColorLabel3.Text = "<span style=""font-size:13"">文件时间</span>   <span style=""font-size:10pt; color:DarkGray"">这些功能在任务结束时由 3FUI 处理，与 ffmpeg 无关</span>"
+        HtmlColorLabel3.Text = "<span style=""font-size:13; color:Silver"">文件时间</span>   这些功能在任务结束时由 3FUI 处理，与 ffmpeg 无关"
         ' 
         ' Panel6
         ' 
-        Panel6.Controls.Add(Label6)
+        Panel6.Controls.Add(HtmlColorLabel6)
         Panel6.Controls.Add(ModernTextBox4)
         Panel6.Dock = DockStyle.Top
         Panel6.Location = New Point(20, 310)
@@ -152,16 +165,19 @@ Partial Class Form_v6_参数面板_输出文件设置
         Panel6.Size = New Size(853, 42)
         Panel6.TabIndex = 7
         ' 
-        ' Label6
+        ' HtmlColorLabel6
         ' 
-        Label6.Dock = DockStyle.Fill
-        Label6.Location = New Point(350, 10)
-        Label6.Name = "Label6"
-        Label6.Padding = New Padding(10, 0, 0, 0)
-        Label6.Size = New Size(503, 32)
-        Label6.TabIndex = 4
-        Label6.Text = "结尾字符"
-        Label6.TextAlign = ContentAlignment.MiddleLeft
+        HtmlColorLabel6.AutoSizeMode = AutoSizeMode.GrowAndShrink
+        HtmlColorLabel6.Dock = DockStyle.Fill
+        HtmlColorLabel6.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
+        HtmlColorLabel6.Location = New Point(350, 10)
+        HtmlColorLabel6.Margin = New Padding(2)
+        HtmlColorLabel6.Name = "HtmlColorLabel6"
+        HtmlColorLabel6.Padding = New Padding(10, 0, 0, 0)
+        HtmlColorLabel6.Size = New Size(503, 32)
+        HtmlColorLabel6.TabIndex = 5
+        HtmlColorLabel6.Text = "结尾文本"
+        HtmlColorLabel6.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
         ' 
         ' ModernTextBox4
         ' 
@@ -179,10 +195,11 @@ Partial Class Form_v6_参数面板_输出文件设置
         ModernTextBox4.Size = New Size(350, 32)
         ModernTextBox4.TabIndex = 3
         ModernTextBox4.WaterText = "输出文件以什么结尾"
+        ModernTextBox4.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ' 
         ' Panel5
         ' 
-        Panel5.Controls.Add(Label5)
+        Panel5.Controls.Add(HtmlColorLabel5)
         Panel5.Controls.Add(ModernTextBox3)
         Panel5.Dock = DockStyle.Top
         Panel5.Location = New Point(20, 268)
@@ -191,16 +208,19 @@ Partial Class Form_v6_参数面板_输出文件设置
         Panel5.Size = New Size(853, 42)
         Panel5.TabIndex = 6
         ' 
-        ' Label5
+        ' HtmlColorLabel5
         ' 
-        Label5.Dock = DockStyle.Fill
-        Label5.Location = New Point(350, 10)
-        Label5.Name = "Label5"
-        Label5.Padding = New Padding(10, 0, 0, 0)
-        Label5.Size = New Size(503, 32)
-        Label5.TabIndex = 4
-        Label5.Text = "替代文件名"
-        Label5.TextAlign = ContentAlignment.MiddleLeft
+        HtmlColorLabel5.AutoSizeMode = AutoSizeMode.GrowAndShrink
+        HtmlColorLabel5.Dock = DockStyle.Fill
+        HtmlColorLabel5.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
+        HtmlColorLabel5.Location = New Point(350, 10)
+        HtmlColorLabel5.Margin = New Padding(2)
+        HtmlColorLabel5.Name = "HtmlColorLabel5"
+        HtmlColorLabel5.Padding = New Padding(10, 0, 0, 0)
+        HtmlColorLabel5.Size = New Size(503, 32)
+        HtmlColorLabel5.TabIndex = 5
+        HtmlColorLabel5.Text = "替代文件名"
+        HtmlColorLabel5.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
         ' 
         ' ModernTextBox3
         ' 
@@ -218,10 +238,11 @@ Partial Class Form_v6_参数面板_输出文件设置
         ModernTextBox3.Size = New Size(350, 32)
         ModernTextBox3.TabIndex = 3
         ModernTextBox3.WaterText = "不使用输入文件的名称，而是使用这里的"
+        ModernTextBox3.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ' 
         ' Panel4
         ' 
-        Panel4.Controls.Add(Label4)
+        Panel4.Controls.Add(HtmlColorLabel4)
         Panel4.Controls.Add(ModernTextBox2)
         Panel4.Dock = DockStyle.Top
         Panel4.Location = New Point(20, 226)
@@ -230,16 +251,19 @@ Partial Class Form_v6_参数面板_输出文件设置
         Panel4.Size = New Size(853, 42)
         Panel4.TabIndex = 5
         ' 
-        ' Label4
+        ' HtmlColorLabel4
         ' 
-        Label4.Dock = DockStyle.Fill
-        Label4.Location = New Point(350, 10)
-        Label4.Name = "Label4"
-        Label4.Padding = New Padding(10, 0, 0, 0)
-        Label4.Size = New Size(503, 32)
-        Label4.TabIndex = 4
-        Label4.Text = "开头字符"
-        Label4.TextAlign = ContentAlignment.MiddleLeft
+        HtmlColorLabel4.AutoSizeMode = AutoSizeMode.GrowAndShrink
+        HtmlColorLabel4.Dock = DockStyle.Fill
+        HtmlColorLabel4.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
+        HtmlColorLabel4.Location = New Point(350, 10)
+        HtmlColorLabel4.Margin = New Padding(2)
+        HtmlColorLabel4.Name = "HtmlColorLabel4"
+        HtmlColorLabel4.Padding = New Padding(10, 0, 0, 0)
+        HtmlColorLabel4.Size = New Size(503, 32)
+        HtmlColorLabel4.TabIndex = 4
+        HtmlColorLabel4.Text = "开头文本"
+        HtmlColorLabel4.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
         ' 
         ' ModernTextBox2
         ' 
@@ -257,6 +281,7 @@ Partial Class Form_v6_参数面板_输出文件设置
         ModernTextBox2.Size = New Size(350, 32)
         ModernTextBox2.TabIndex = 3
         ModernTextBox2.WaterText = "输出文件以什么开头"
+        ModernTextBox2.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ' 
         ' Panel3
         ' 
@@ -273,15 +298,23 @@ Partial Class Form_v6_参数面板_输出文件设置
         ' ModernComboBox4
         ' 
         ModernComboBox4.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernComboBox4.BorderColorFocus = Color.Silver
         ModernComboBox4.BorderRadius = 10
         ModernComboBox4.BorderSize = 0
-        ModernComboBox4.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
         ModernComboBox4.Dock = DockStyle.Fill
-        ModernComboBox4.DropDownBorderSize = 2
+        ModernComboBox4.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
+        ModernComboBox4.DropDownHoverAnimationDuration = 0
+        ModernComboBox4.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
         ModernComboBox4.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
         ModernComboBox4.DropDownPadding = New Padding(10)
+        ModernComboBox4.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        ModernComboBox4.DropDownSelectedForeColor = Color.White
         ModernComboBox4.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        ModernComboBox4.Margin = New Padding(2, 2, 2, 2)
+        ModernComboBox4.Padding = New Padding(10, 0, 10, 0)
+        ModernComboBox4.ToolTipGap = -1
+        ModernComboBox4.ToolTipMaxWidth = 350
+        ModernComboBox4.ToolTipPadding = New Padding(15)
+        ModernComboBox4.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ModernComboBox4.Items.Add("附加 _递增时间戳（默认，新手强烈建议）")
         ModernComboBox4.Items.Add("附加 ~递增数字")
         ModernComboBox4.Items.Add("附加 ~3FUI")
@@ -293,12 +326,9 @@ Partial Class Form_v6_参数面板_输出文件设置
         ModernComboBox4.Items.Add("附加 _随机16位字母")
         ModernComboBox4.Items.Add("附加 _随机16位数字和字母组合")
         ModernComboBox4.Location = New Point(360, 10)
-        ModernComboBox4.Margin = New Padding(2, 2, 2, 2)
         ModernComboBox4.Name = "ModernComboBox4"
-        ModernComboBox4.Padding = New Padding(10, 0, 10, 0)
         ModernComboBox4.Size = New Size(493, 32)
         ModernComboBox4.TabIndex = 6
-        ModernComboBox4.WaterTextForeColor = Color.DarkGray
         ' 
         ' JustEmptyControl4
         ' 
@@ -311,24 +341,29 @@ Partial Class Form_v6_参数面板_输出文件设置
         ' ModernComboBox3
         ' 
         ModernComboBox3.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernComboBox3.BorderColorFocus = Color.Silver
         ModernComboBox3.BorderRadius = 10
         ModernComboBox3.BorderSize = 0
-        ModernComboBox3.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
         ModernComboBox3.Dock = DockStyle.Left
-        ModernComboBox3.DropDownBorderSize = 2
+        ModernComboBox3.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
+        ModernComboBox3.DropDownHoverAnimationDuration = 0
+        ModernComboBox3.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
         ModernComboBox3.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
         ModernComboBox3.DropDownPadding = New Padding(10)
+        ModernComboBox3.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        ModernComboBox3.DropDownSelectedForeColor = Color.White
         ModernComboBox3.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        ModernComboBox3.Margin = New Padding(2, 2, 2, 2)
+        ModernComboBox3.Padding = New Padding(10, 0, 10, 0)
+        ModernComboBox3.ToolTipGap = -1
+        ModernComboBox3.ToolTipMaxWidth = 350
+        ModernComboBox3.ToolTipPadding = New Padding(15)
+        ModernComboBox3.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ModernComboBox3.Items.Add("[建议] 使用自动命名")
         ModernComboBox3.Items.Add("[必须写自定义字符] 不使用自动命名")
         ModernComboBox3.Location = New Point(0, 10)
-        ModernComboBox3.Margin = New Padding(2, 2, 2, 2)
         ModernComboBox3.Name = "ModernComboBox3"
-        ModernComboBox3.Padding = New Padding(10, 0, 10, 0)
         ModernComboBox3.Size = New Size(350, 32)
         ModernComboBox3.TabIndex = 5
-        ModernComboBox3.WaterTextForeColor = Color.DarkGray
         ' 
         ' HtmlColorLabel2
         ' 
@@ -341,7 +376,7 @@ Partial Class Form_v6_参数面板_输出文件设置
         HtmlColorLabel2.Padding = New Padding(0, 20, 0, 5)
         HtmlColorLabel2.Size = New Size(853, 50)
         HtmlColorLabel2.TabIndex = 3
-        HtmlColorLabel2.Text = "<span style=""font-size:13"">命名方式</span>   <span style=""font-size:10pt; color:IndianRed"">新手请保持附加时间戳的自动命名以避免重大损失！</span>"
+        HtmlColorLabel2.Text = "<span style=""font-size:13"">命名方式</span>   <span style=""color:IndianRed"">新手请保持附加时间戳的自动命名以避免重大损失！</span>"
         ' 
         ' Panel2
         ' 
@@ -356,25 +391,30 @@ Partial Class Form_v6_参数面板_输出文件设置
         ' ModernComboBox1
         ' 
         ModernComboBox1.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernComboBox1.BorderColorFocus = Color.Silver
         ModernComboBox1.BorderRadius = 10
         ModernComboBox1.BorderSize = 0
-        ModernComboBox1.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
         ModernComboBox1.Dock = DockStyle.Fill
-        ModernComboBox1.DropDownBorderSize = 2
+        ModernComboBox1.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
+        ModernComboBox1.DropDownHoverAnimationDuration = 0
+        ModernComboBox1.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
         ModernComboBox1.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
         ModernComboBox1.DropDownPadding = New Padding(10)
+        ModernComboBox1.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        ModernComboBox1.DropDownSelectedForeColor = Color.White
         ModernComboBox1.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        ModernComboBox1.Margin = New Padding(2, 2, 2, 2)
+        ModernComboBox1.Padding = New Padding(10, 0, 10, 0)
+        ModernComboBox1.ToolTipGap = -1
+        ModernComboBox1.ToolTipMaxWidth = 350
+        ModernComboBox1.ToolTipPadding = New Padding(15)
+        ModernComboBox1.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ModernComboBox1.Items.Add("浏览 ...")
         ModernComboBox1.Items.Add("输出到原目录")
         ModernComboBox1.Location = New Point(0, 10)
-        ModernComboBox1.Margin = New Padding(2, 2, 2, 2)
         ModernComboBox1.Name = "ModernComboBox1"
-        ModernComboBox1.Padding = New Padding(10, 0, 10, 0)
         ModernComboBox1.Size = New Size(853, 32)
         ModernComboBox1.TabIndex = 6
         ModernComboBox1.WaterText = "输出位置，将文件或文件夹拖至此来直接获取位置"
-        ModernComboBox1.WaterTextForeColor = Color.DarkGray
         ' 
         ' Panel1
         ' 
@@ -393,26 +433,31 @@ Partial Class Form_v6_参数面板_输出文件设置
         ' ModernComboBox2
         ' 
         ModernComboBox2.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernComboBox2.BorderColorFocus = Color.Silver
         ModernComboBox2.BorderRadius = 10
         ModernComboBox2.BorderSize = 0
-        ModernComboBox2.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
         ModernComboBox2.Dock = DockStyle.Fill
-        ModernComboBox2.DropDownBorderSize = 2
+        ModernComboBox2.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
+        ModernComboBox2.DropDownHoverAnimationDuration = 0
+        ModernComboBox2.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
         ModernComboBox2.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
         ModernComboBox2.DropDownPadding = New Padding(10)
+        ModernComboBox2.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        ModernComboBox2.DropDownSelectedForeColor = Color.White
         ModernComboBox2.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        ModernComboBox2.Margin = New Padding(2, 2, 2, 2)
+        ModernComboBox2.Padding = New Padding(10, 0, 10, 0)
+        ModernComboBox2.ToolTipGap = -1
+        ModernComboBox2.ToolTipMaxWidth = 350
+        ModernComboBox2.ToolTipPadding = New Padding(15)
+        ModernComboBox2.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ModernComboBox2.Items.Add("常规模式：正常附加输出文件参数")
         ModernComboBox2.Items.Add("[高危] 特殊用途：不附加输出文件参数")
         ModernComboBox2.Items.Add("[高危] 特殊用途：附加丢弃输出文件参数")
         ModernComboBox2.Location = New Point(220, 10)
-        ModernComboBox2.Margin = New Padding(2, 2, 2, 2)
         ModernComboBox2.Name = "ModernComboBox2"
-        ModernComboBox2.Padding = New Padding(10, 0, 10, 0)
         ModernComboBox2.Size = New Size(633, 32)
         ModernComboBox2.TabIndex = 5
         ModernComboBox2.WaterText = "输出文件参数使用方法"
-        ModernComboBox2.WaterTextForeColor = Color.DarkGray
         ' 
         ' JustEmptyControl2
         ' 
@@ -438,6 +483,7 @@ Partial Class Form_v6_参数面板_输出文件设置
         ModernTextBox1.Size = New Size(100, 32)
         ModernTextBox1.TabIndex = 3
         ModernTextBox1.WaterText = "输入后缀"
+        ModernTextBox1.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ' 
         ' JustEmptyControl1
         ' 
@@ -467,13 +513,14 @@ Partial Class Form_v6_参数面板_输出文件设置
         HtmlColorLabel1.AutoSize = True
         HtmlColorLabel1.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel1.Dock = DockStyle.Top
+        HtmlColorLabel1.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         HtmlColorLabel1.Location = New Point(20, 20)
         HtmlColorLabel1.Margin = New Padding(2)
         HtmlColorLabel1.Name = "HtmlColorLabel1"
         HtmlColorLabel1.Padding = New Padding(0, 0, 0, 5)
         HtmlColorLabel1.Size = New Size(853, 30)
         HtmlColorLabel1.TabIndex = 0
-        HtmlColorLabel1.Text = "<span style=""font-size:13"">后缀和位置</span>   <span style=""font-size:10pt; color:DarkGray"">输出目录默认不会保存到预设中，需要额外打开保存开关</span>"
+        HtmlColorLabel1.Text = "<span style=""font-size:13; color:Silver"">后缀和位置</span>   输出目录默认不会保存到预设中，需要额外打开保存开关"
         ' 
         ' Form_v6_参数面板_输出文件设置
         ' 
@@ -518,11 +565,11 @@ Partial Class Form_v6_参数面板_输出文件设置
     Friend WithEvents Panel5 As Panel
     Friend WithEvents ModernTextBox3 As LakeUI.ModernTextBox
     Friend WithEvents HtmlColorLabel3 As LakeUI.HtmlColorLabel
-    Friend WithEvents Label6 As Label
-    Friend WithEvents Label5 As Label
-    Friend WithEvents Label4 As Label
     Friend WithEvents ModernCheckBox3 As LakeUI.ModernCheckBox
     Friend WithEvents ModernCheckBox2 As LakeUI.ModernCheckBox
     Friend WithEvents ModernCheckBox1 As LakeUI.ModernCheckBox
     Friend WithEvents ModernComboBox1 As LakeUI.ModernComboBox
+    Friend WithEvents HtmlColorLabel6 As LakeUI.HtmlColorLabel
+    Friend WithEvents HtmlColorLabel5 As LakeUI.HtmlColorLabel
+    Friend WithEvents HtmlColorLabel4 As LakeUI.HtmlColorLabel
 End Class

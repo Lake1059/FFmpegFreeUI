@@ -32,7 +32,12 @@ Public Class 设置_v6
     Public Property 覆盖参数传递 As String = ""
     Public Property 转译模式 As Boolean = False
 
+    ''' <summary>
+    ''' 0=github;1=gh-proxy.com;3=FrostLynx;4=MirrorChyan
+    ''' </summary>
+    ''' <returns></returns>
     Public Property 更新服务器选择 As Integer = 0
+    Public Property MirrorChyanCDK As String = ""
 
     Public Property 是否参与用户统计 As Boolean = True
 
@@ -106,18 +111,6 @@ Public Class 设置_v6
         Form_v6_设置_LakeUI性能选项.MCB_动画帧率.Text = 实例对象.图形动画帧率
         Form_v6_设置_LakeUI视觉体验.MCB_窗口样式.SelectedIndex = 实例对象.窗口样式
 
-        Dim 字体列表 As New List(Of String)
-        For Each 字体 As FontFamily In FontFamily.Families
-            字体列表.Add(字体.Name)
-        Next
-        字体列表.Sort()
-        If 字体列表.Contains("微软雅黑") Then
-            Form_v6_设置_界面显示.MCB_全局字体.Font = New Font("微软雅黑", 10)
-        ElseIf 字体列表.Contains("Microsoft YaHei UI") Then
-            Form_v6_设置_界面显示.MCB_全局字体.Font = New Font("Microsoft YaHei UI", 10)
-        End If
-        Form_v6_设置_界面显示.MCB_全局字体.Items.AddRange(字体列表.ToArray)
-        Form_v6_设置_界面显示.MCB_全局字体.Text = 实例对象.字体
         Form_v6_设置_界面显示.MCB_编码队列列宽调整模式.SelectedIndex = 实例对象.编码队列的列宽调整逻辑
 
         Form_v6_设置_性能调度.MTB_处理器线程.Text = 实例对象.指定处理器核心
@@ -142,11 +135,23 @@ Public Class 设置_v6
         Form_v6_设置_转译辅助.MCB_转译模式.Checked = 实例对象.转译模式
 
         Form_v6_设置_更新选项.MCB_更新服务器.SelectedIndex = 实例对象.更新服务器选择
-
-        Form_v6_设置_隐私设置.BooleanSwitch1.Checked = 实例对象.是否参与用户统计
+        If 实例对象.MirrorChyanCDK <> "" Then Form_v6_设置_更新选项.MCB_更新服务器.Items(3) = "Mirror酱 付费 CDN"
 
         Form_v6_设置_远程调用.BooleanSwitch1.Checked = 实例对象.是否监听端口
         Form_v6_设置_远程调用.ModernTextBox1.Text = 实例对象.监听的端口
+
+        Dim 字体列表 As New List(Of String)
+        For Each 字体 As FontFamily In FontFamily.Families
+            字体列表.Add(字体.Name)
+        Next
+        字体列表.Sort()
+        If 字体列表.Contains("微软雅黑") Then
+            Form_v6_设置_界面显示.MCB_全局字体.Font = New Font("微软雅黑", 10)
+        ElseIf 字体列表.Contains("Microsoft YaHei UI") Then
+            Form_v6_设置_界面显示.MCB_全局字体.Font = New Font("Microsoft YaHei UI", 10)
+        End If
+        Form_v6_设置_界面显示.MCB_全局字体.Items.AddRange(字体列表.ToArray)
+        Form_v6_设置_界面显示.MCB_全局字体.Text = 实例对象.字体
 
         If Not SP_UnLock Then Exit Sub
         Form_v6_设置_个性化.HtmlColorLabel1.Text = "感谢您支持 FFmpegFreeUI Supporter Pack"

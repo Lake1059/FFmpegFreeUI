@@ -152,30 +152,31 @@ Partial Class Form_v6_参数面板_抽帧参数
         ' ModernComboBox2
         ' 
         ModernComboBox2.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernComboBox2.BorderColorFocus = Color.Silver
         ModernComboBox2.BorderRadius = 10
         ModernComboBox2.BorderSize = 0
-        ModernComboBox2.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
         ModernComboBox2.Dock = DockStyle.Left
-        ModernComboBox2.DropDownBorderSize = 2
+        ModernComboBox2.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
+        ModernComboBox2.DropDownHoverAnimationDuration = 0
+        ModernComboBox2.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
         ModernComboBox2.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
         ModernComboBox2.DropDownPadding = New Padding(10)
-        ModernComboBox2.DropDownScrollBarHoverColor = Color.FromArgb(CByte(200), CByte(200), CByte(200))
-        ModernComboBox2.Editable = True
+        ModernComboBox2.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        ModernComboBox2.DropDownSelectedForeColor = Color.White
+        ModernComboBox2.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        ModernComboBox2.Margin = New Padding(2, 2, 2, 2)
+        ModernComboBox2.Padding = New Padding(10, 0, 10, 0)
+        ModernComboBox2.ToolTipGap = -1
+        ModernComboBox2.ToolTipMaxWidth = 350
+        ModernComboBox2.ToolTipPadding = New Padding(15)
+        ModernComboBox2.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ModernComboBox2.Items.Add("64*4")
         ModernComboBox2.Items.Add("64*6")
         ModernComboBox2.Items.Add("64*8")
         ModernComboBox2.Items.Add("64*10")
         ModernComboBox2.Location = New Point(0, 10)
-        ModernComboBox2.Margin = New Padding(2, 2, 2, 2)
         ModernComboBox2.Name = "ModernComboBox2"
-        ModernComboBox2.Padding = New Padding(10, 0, 10, 0)
         ModernComboBox2.Size = New Size(150, 32)
         ModernComboBox2.TabIndex = 1
-        ModernComboBox2.ToolTipBorderSize = 2
-        ModernComboBox2.ToolTipGap = 10
-        ModernComboBox2.ToolTipMaxWidth = 350
-        ModernComboBox2.ToolTipPadding = New Padding(15)
         ModernComboBox2.WaterText = "lo"
         ' 
         ' HtmlColorLabel9
@@ -218,29 +219,30 @@ Partial Class Form_v6_参数面板_抽帧参数
         ' ModernComboBox1
         ' 
         ModernComboBox1.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernComboBox1.BorderColorFocus = Color.Silver
         ModernComboBox1.BorderRadius = 10
         ModernComboBox1.BorderSize = 0
-        ModernComboBox1.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
         ModernComboBox1.Dock = DockStyle.Left
-        ModernComboBox1.DropDownBorderSize = 2
+        ModernComboBox1.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
+        ModernComboBox1.DropDownHoverAnimationDuration = 0
+        ModernComboBox1.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
         ModernComboBox1.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
         ModernComboBox1.DropDownPadding = New Padding(10)
-        ModernComboBox1.DropDownScrollBarHoverColor = Color.FromArgb(CByte(200), CByte(200), CByte(200))
-        ModernComboBox1.Editable = True
+        ModernComboBox1.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        ModernComboBox1.DropDownSelectedForeColor = Color.White
+        ModernComboBox1.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        ModernComboBox1.Margin = New Padding(2, 2, 2, 2)
+        ModernComboBox1.Padding = New Padding(10, 0, 10, 0)
+        ModernComboBox1.ToolTipGap = -1
+        ModernComboBox1.ToolTipMaxWidth = 350
+        ModernComboBox1.ToolTipPadding = New Padding(15)
+        ModernComboBox1.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ModernComboBox1.Items.Add("64*8")
         ModernComboBox1.Items.Add("64*10")
         ModernComboBox1.Items.Add("64*12")
         ModernComboBox1.Location = New Point(0, 10)
-        ModernComboBox1.Margin = New Padding(2, 2, 2, 2)
         ModernComboBox1.Name = "ModernComboBox1"
-        ModernComboBox1.Padding = New Padding(10, 0, 10, 0)
         ModernComboBox1.Size = New Size(150, 32)
         ModernComboBox1.TabIndex = 1
-        ModernComboBox1.ToolTipBorderSize = 2
-        ModernComboBox1.ToolTipGap = 10
-        ModernComboBox1.ToolTipMaxWidth = 350
-        ModernComboBox1.ToolTipPadding = New Padding(15)
         ModernComboBox1.WaterText = "hi"
         ' 
         ' HtmlColorLabel7

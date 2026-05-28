@@ -60,7 +60,7 @@ Partial Class Form_v6_参数面板_滤镜排序
         ' UltraDetailListView1
         ' 
         UltraDetailListView1.AllowDragReorder = True
-        UltraDetailListView1.BackgroundColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        UltraDetailListView1.BackgroundColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         UltraDetailListView1.BorderRadius = 10
         UltraDetailListView1.BorderSize = 0
         ListColumn1.Text = "标识符"
@@ -77,11 +77,11 @@ Partial Class Form_v6_参数面板_滤镜排序
         UltraDetailListView1.Columns.Add(ListColumn3)
         UltraDetailListView1.Columns.Add(ListColumn4)
         UltraDetailListView1.Dock = DockStyle.Fill
-        UltraDetailListView1.DragSelectZoneWidth = 100
+        UltraDetailListView1.DragSelectZoneWidth = 200
         UltraDetailListView1.GroupBorderColor = Color.Silver
         UltraDetailListView1.GroupHeight = 35
-        UltraDetailListView1.HeaderBackColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
-        UltraDetailListView1.HeaderBorderColor = Color.FromArgb(CByte(120), CByte(120), CByte(120))
+        UltraDetailListView1.HeaderBackColor = Color.Transparent
+        UltraDetailListView1.HeaderBorderColor = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
         UltraDetailListView1.HeaderHeight = 40
         UltraDetailListView1.ItemPadding = New Padding(10, 6, 10, 6)
         ListSubItem1.Text = "TestFilter"
@@ -94,10 +94,15 @@ Partial Class Form_v6_参数面板_滤镜排序
         ListItem1.SubItems.Add(ListSubItem3)
         ListItem1.SubItems.Add(ListSubItem4)
         UltraDetailListView1.Items.Add(ListItem1)
+        UltraDetailListView1.ItemSelectedBackColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         UltraDetailListView1.Location = New Point(20, 102)
         UltraDetailListView1.Margin = New Padding(2, 2, 2, 2)
         UltraDetailListView1.Name = "UltraDetailListView1"
-        UltraDetailListView1.Padding = New Padding(10, 3, 10, 10)
+        UltraDetailListView1.ScrollBarThumbColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        UltraDetailListView1.ScrollBarThumbHoverColor = Color.FromArgb(CByte(120), CByte(220), CByte(220), CByte(220))
+        UltraDetailListView1.ScrollBarTrackColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
+        UltraDetailListView1.SelectionRectBorderColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        UltraDetailListView1.SelectionRectFillColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         UltraDetailListView1.Size = New Size(905, 492)
         UltraDetailListView1.TabIndex = 1
         ' 
@@ -115,15 +120,15 @@ Partial Class Form_v6_参数面板_滤镜排序
         ' 
         ' ModernButton4
         ' 
-        ModernButton4.BackColor1 = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        ModernButton4.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernButton4.BorderRadius = 10
         ModernButton4.BorderSize = 0
         ModernButton4.Dock = DockStyle.Left
-        ModernButton4.HoverBackColor1 = Color.FromArgb(CByte(80), CByte(80), CByte(80))
+        ModernButton4.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
         ModernButton4.Location = New Point(160, 10)
         ModernButton4.Margin = New Padding(2)
         ModernButton4.Name = "ModernButton4"
-        ModernButton4.PressedBackColor1 = SystemColors.WindowFrame
+        ModernButton4.PressedBackColor1 = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
         ModernButton4.Size = New Size(100, 32)
         ModernButton4.TabIndex = 7
         ModernButton4.Text = "删除所选"
@@ -138,28 +143,30 @@ Partial Class Form_v6_参数面板_滤镜排序
         ' 
         ' ModernComboBox1
         ' 
-        ModernComboBox1.BackColor1 = Color.FromArgb(CByte(64), CByte(64), CByte(64))
-        ModernComboBox1.BorderColorFocus = Color.Silver
+        ModernComboBox1.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernComboBox1.BorderRadius = 10
         ModernComboBox1.BorderSize = 0
-        ModernComboBox1.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
         ModernComboBox1.Dock = DockStyle.Left
-        ModernComboBox1.DropDownBorderSize = 2
+        ModernComboBox1.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
+        ModernComboBox1.DropDownHoverAnimationDuration = 0
+        ModernComboBox1.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
         ModernComboBox1.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
         ModernComboBox1.DropDownPadding = New Padding(10)
-        ModernComboBox1.DropDownScrollBarHoverColor = Color.FromArgb(CByte(200), CByte(200), CByte(200))
+        ModernComboBox1.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        ModernComboBox1.DropDownSelectedForeColor = Color.White
+        ModernComboBox1.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        ModernComboBox1.Margin = New Padding(2, 2, 2, 2)
+        ModernComboBox1.Padding = New Padding(10, 0, 10, 0)
+        ModernComboBox1.ToolTipGap = -1
+        ModernComboBox1.ToolTipMaxWidth = 350
+        ModernComboBox1.ToolTipPadding = New Padding(15)
+        ModernComboBox1.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ModernComboBox1.Items.Add("添加视频滤镜")
         ModernComboBox1.Items.Add("添加音频滤镜")
         ModernComboBox1.Location = New Point(0, 10)
-        ModernComboBox1.Margin = New Padding(2, 2, 2, 2)
         ModernComboBox1.Name = "ModernComboBox1"
-        ModernComboBox1.Padding = New Padding(10, 0, 10, 0)
         ModernComboBox1.Size = New Size(150, 32)
         ModernComboBox1.TabIndex = 10
-        ModernComboBox1.ToolTipBorderSize = 2
-        ModernComboBox1.ToolTipGap = 10
-        ModernComboBox1.ToolTipMaxWidth = 350
-        ModernComboBox1.ToolTipPadding = New Padding(15)
         ModernComboBox1.WaterText = "添加新滤镜"
         ' 
         ' HtmlColorLabel1
@@ -167,13 +174,14 @@ Partial Class Form_v6_参数面板_滤镜排序
         HtmlColorLabel1.AutoSize = True
         HtmlColorLabel1.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel1.Dock = DockStyle.Top
+        HtmlColorLabel1.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         HtmlColorLabel1.Location = New Point(20, 20)
         HtmlColorLabel1.Margin = New Padding(2)
         HtmlColorLabel1.Name = "HtmlColorLabel1"
         HtmlColorLabel1.Padding = New Padding(0, 0, 0, 5)
         HtmlColorLabel1.Size = New Size(905, 30)
         HtmlColorLabel1.TabIndex = 10
-        HtmlColorLabel1.Text = "<span style=""font-size:13"">滤镜排序和自定义</span>   <span style=""font-size:10pt; color:Gray"">如果需要一行里写多个滤镜，使用英文逗号隔开即可</span>"
+        HtmlColorLabel1.Text = "<span style=""font-size:13; color:Silver"">滤镜排序和自定义</span>   如果需要一行里写多个滤镜，使用英文逗号隔开即可"
         ' 
         ' Form_v6_参数面板_滤镜排序
         ' 

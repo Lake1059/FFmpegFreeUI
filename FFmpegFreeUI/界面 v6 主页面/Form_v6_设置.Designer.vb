@@ -38,7 +38,6 @@ Partial Class Form_v6_设置
         Dim ModernTabPage14 As LakeUI.ModernTabListControl.ModernTabPage = New LakeUI.ModernTabListControl.ModernTabPage()
         Dim ModernTabPage15 As LakeUI.ModernTabListControl.ModernTabPage = New LakeUI.ModernTabListControl.ModernTabPage()
         Dim ModernTabPage16 As LakeUI.ModernTabListControl.ModernTabPage = New LakeUI.ModernTabListControl.ModernTabPage()
-        Dim ModernTabPage17 As LakeUI.ModernTabListControl.ModernTabPage = New LakeUI.ModernTabListControl.ModernTabPage()
         ModernTabListControl1 = New LakeUI.ModernTabListControl()
         ModernPanel1 = New LakeUI.ModernPanel()
         ModernPanel1.SuspendLayout()
@@ -60,13 +59,12 @@ Partial Class Form_v6_设置
         ModernTabPage9.Text = "功能设定"
         ModernTabPage10.Text = "转译辅助"
         ModernTabPage11.Text = "更新选项"
-        ModernTabPage12.Text = "隐私设置"
-        ModernTabPage13.Text = "远程调用"
-        ModernTabPage14.Text = "Agent 设置"
-        ModernTabPage15.IsSeparator = True
-        ModernTabPage16.IsDescription = True
-        ModernTabPage16.Text = "支持者内容包"
-        ModernTabPage17.Text = "个性化"
+        ModernTabPage12.Text = "远程调用"
+        ModernTabPage13.Text = "Agent 设置"
+        ModernTabPage14.IsSeparator = True
+        ModernTabPage15.IsDescription = True
+        ModernTabPage15.Text = "支持者内容包"
+        ModernTabPage16.Text = "个性化"
         ModernTabListControl1.Items.Add(ModernTabPage1)
         ModernTabListControl1.Items.Add(ModernTabPage2)
         ModernTabListControl1.Items.Add(ModernTabPage3)
@@ -83,7 +81,6 @@ Partial Class Form_v6_设置
         ModernTabListControl1.Items.Add(ModernTabPage14)
         ModernTabListControl1.Items.Add(ModernTabPage15)
         ModernTabListControl1.Items.Add(ModernTabPage16)
-        ModernTabListControl1.Items.Add(ModernTabPage17)
         ModernTabListControl1.Location = New Point(0, 0)
         ModernTabListControl1.Name = "ModernTabListControl1"
         ModernTabListControl1.ScrollBarThumbColor = Color.FromArgb(CByte(40), CByte(200), CByte(200), CByte(200))

@@ -30,6 +30,15 @@ Partial Class Form_v6_编码队列
         Dim ListColumn6 As LakeUI.UltraDetailListView.ListColumn = New LakeUI.UltraDetailListView.ListColumn()
         Dim ListColumn7 As LakeUI.UltraDetailListView.ListColumn = New LakeUI.UltraDetailListView.ListColumn()
         Dim ListColumn8 As LakeUI.UltraDetailListView.ListColumn = New LakeUI.UltraDetailListView.ListColumn()
+        Dim ListItem1 As LakeUI.UltraDetailListView.ListItem = New LakeUI.UltraDetailListView.ListItem()
+        Dim ListSubItem1 As LakeUI.UltraDetailListView.ListSubItem = New LakeUI.UltraDetailListView.ListSubItem()
+        Dim ListSubItem2 As LakeUI.UltraDetailListView.ListSubItem = New LakeUI.UltraDetailListView.ListSubItem()
+        Dim ListSubItem3 As LakeUI.UltraDetailListView.ListSubItem = New LakeUI.UltraDetailListView.ListSubItem()
+        Dim ListSubItem4 As LakeUI.UltraDetailListView.ListSubItem = New LakeUI.UltraDetailListView.ListSubItem()
+        Dim ListSubItem5 As LakeUI.UltraDetailListView.ListSubItem = New LakeUI.UltraDetailListView.ListSubItem()
+        Dim ListSubItem6 As LakeUI.UltraDetailListView.ListSubItem = New LakeUI.UltraDetailListView.ListSubItem()
+        Dim ListSubItem7 As LakeUI.UltraDetailListView.ListSubItem = New LakeUI.UltraDetailListView.ListSubItem()
+        Dim ListSubItem8 As LakeUI.UltraDetailListView.ListSubItem = New LakeUI.UltraDetailListView.ListSubItem()
         Panel1 = New Panel()
         ModernButton7 = New LakeUI.ModernButton()
         ModernButton6 = New LakeUI.ModernButton()
@@ -237,7 +246,6 @@ Partial Class Form_v6_编码队列
         UltraDetailListView1.BackgroundColor = Color.Transparent
         UltraDetailListView1.BorderSize = 0
         ListColumn1.AllowLabelEdit = True
-        ListColumn1.HeaderPadding = New Padding(15, 0, 0, 0)
         ListColumn1.Text = "任务名称"
         ListColumn1.Width = 200
         ListColumn2.Text = "状态"
@@ -245,12 +253,12 @@ Partial Class Form_v6_编码队列
         ListColumn3.Width = 80
         ListColumn4.Text = "效率"
         ListColumn4.Width = 80
-        ListColumn5.Text = "输出大小 && 预估"
+        ListColumn5.Text = "输出大小"
         ListColumn5.Width = 150
         ListColumn6.Text = "质量"
         ListColumn6.Width = 80
         ListColumn7.Text = "比特率"
-        ListColumn8.Text = "预计剩余 && 已用"
+        ListColumn8.Text = "时间"
         UltraDetailListView1.Columns.Add(ListColumn1)
         UltraDetailListView1.Columns.Add(ListColumn2)
         UltraDetailListView1.Columns.Add(ListColumn3)
@@ -268,6 +276,25 @@ Partial Class Form_v6_编码队列
         UltraDetailListView1.HeaderBorderWidth = 2
         UltraDetailListView1.HeaderForeColor = Color.DarkGray
         UltraDetailListView1.HeaderHeight = 36
+        UltraDetailListView1.ItemPadding = New Padding(10, 5, 5, 5)
+        ListSubItem1.Text = "字体样式"
+        ListSubItem2.Text = "字体样式"
+        ListSubItem3.Text = "字体样式"
+        ListSubItem4.Text = "字体样式"
+        ListSubItem5.Text = "字体样式"
+        ListSubItem6.Text = "字体样式"
+        ListSubItem7.Text = "字体样式"
+        ListSubItem8.Text = "字体样式"
+        ListItem1.SubItems.Add(ListSubItem1)
+        ListItem1.SubItems.Add(ListSubItem2)
+        ListItem1.SubItems.Add(ListSubItem3)
+        ListItem1.SubItems.Add(ListSubItem4)
+        ListItem1.SubItems.Add(ListSubItem5)
+        ListItem1.SubItems.Add(ListSubItem6)
+        ListItem1.SubItems.Add(ListSubItem7)
+        ListItem1.SubItems.Add(ListSubItem8)
+        UltraDetailListView1.Items.Add(ListItem1)
+        UltraDetailListView1.ItemSelectedBackColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         UltraDetailListView1.Location = New Point(0, 55)
         UltraDetailListView1.Margin = New Padding(2, 2, 2, 2)
         UltraDetailListView1.Name = "UltraDetailListView1"

@@ -91,19 +91,18 @@ Partial Class Form_v6_起始页面
         ' 
         ' MCB_清理内存
         ' 
-        MCB_清理内存.BackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
-        MCB_清理内存.BorderColorFocus = Color.Silver
+        MCB_清理内存.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_清理内存.BorderRadius = 10
         MCB_清理内存.BorderSize = 0
-        MCB_清理内存.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
         MCB_清理内存.Dock = DockStyle.Bottom
-        MCB_清理内存.DropDownAnimationFPS = 120
-        MCB_清理内存.DropDownBackColor = Color.FromArgb(CByte(180), CByte(0), CByte(0), CByte(0))
-        MCB_清理内存.DropDownBorderColor = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
-        MCB_清理内存.DropDownBorderSize = 2
+        MCB_清理内存.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
+        MCB_清理内存.DropDownHoverAnimationDuration = 0
+        MCB_清理内存.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
         MCB_清理内存.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
         MCB_清理内存.DropDownPadding = New Padding(10)
-        MCB_清理内存.DropDownScrollBarHoverColor = Color.FromArgb(CByte(200), CByte(200), CByte(200))
+        MCB_清理内存.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MCB_清理内存.DropDownSelectedForeColor = Color.White
+        MCB_清理内存.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
         MCB_清理内存.Items.Add("清理 3FUI 内存 (GC)")
         MCB_清理内存.Items.Add("清理 3FUI 内存 (内核)")
         MCB_清理内存.Location = New Point(0, 28)
@@ -113,12 +112,11 @@ Partial Class Form_v6_起始页面
         MCB_清理内存.Padding = New Padding(10, 0, 10, 0)
         MCB_清理内存.Size = New Size(200, 32)
         MCB_清理内存.TabIndex = 16
-        MCB_清理内存.ToolTipBorderSize = 2
-        MCB_清理内存.ToolTipGap = 10
+        MCB_清理内存.ToolTipGap = -1
         MCB_清理内存.ToolTipMaxWidth = 350
         MCB_清理内存.ToolTipPadding = New Padding(15)
         MCB_清理内存.WaterText = "清理内存条"
-        MCB_清理内存.WaterTextForeColor = Color.Silver
+        MCB_清理内存.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ' 
         ' HtmlColorLabel2
         ' 

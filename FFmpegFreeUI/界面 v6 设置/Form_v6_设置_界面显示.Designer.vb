@@ -63,15 +63,17 @@ Partial Class Form_v6_设置_界面显示
         ' MCB_编码队列列宽调整模式
         ' 
         MCB_编码队列列宽调整模式.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        MCB_编码队列列宽调整模式.BorderColorFocus = Color.Silver
         MCB_编码队列列宽调整模式.BorderRadius = 10
         MCB_编码队列列宽调整模式.BorderSize = 0
-        MCB_编码队列列宽调整模式.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
         MCB_编码队列列宽调整模式.Dock = DockStyle.Left
-        MCB_编码队列列宽调整模式.DropDownBorderSize = 2
+        MCB_编码队列列宽调整模式.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
+        MCB_编码队列列宽调整模式.DropDownHoverAnimationDuration = 0
+        MCB_编码队列列宽调整模式.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
         MCB_编码队列列宽调整模式.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
         MCB_编码队列列宽调整模式.DropDownPadding = New Padding(10)
-        MCB_编码队列列宽调整模式.DropDownScrollBarHoverColor = Color.FromArgb(CByte(200), CByte(200), CByte(200))
+        MCB_编码队列列宽调整模式.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MCB_编码队列列宽调整模式.DropDownSelectedForeColor = Color.White
+        MCB_编码队列列宽调整模式.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
         MCB_编码队列列宽调整模式.Items.Add("DPI（控件默认行为）")
         MCB_编码队列列宽调整模式.Items.Add("百分比（计算比例）")
         MCB_编码队列列宽调整模式.Location = New Point(0, 10)
@@ -81,10 +83,10 @@ Partial Class Form_v6_设置_界面显示
         MCB_编码队列列宽调整模式.Padding = New Padding(10, 0, 10, 0)
         MCB_编码队列列宽调整模式.Size = New Size(200, 32)
         MCB_编码队列列宽调整模式.TabIndex = 0
-        MCB_编码队列列宽调整模式.ToolTipBorderSize = 2
-        MCB_编码队列列宽调整模式.ToolTipGap = 10
+        MCB_编码队列列宽调整模式.ToolTipGap = -1
         MCB_编码队列列宽调整模式.ToolTipMaxWidth = 350
         MCB_编码队列列宽调整模式.ToolTipPadding = New Padding(15)
+        MCB_编码队列列宽调整模式.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ' 
         ' HtmlColorLabel2
         ' 
@@ -112,14 +114,17 @@ Partial Class Form_v6_设置_界面显示
         ' MCB_全局字体
         ' 
         MCB_全局字体.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        MCB_全局字体.BorderColorFocus = Color.Silver
         MCB_全局字体.BorderRadius = 10
         MCB_全局字体.BorderSize = 0
-        MCB_全局字体.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
         MCB_全局字体.Dock = DockStyle.Left
-        MCB_全局字体.DropDownBorderSize = 2
+        MCB_全局字体.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
+        MCB_全局字体.DropDownHoverAnimationDuration = 0
+        MCB_全局字体.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
+        MCB_全局字体.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
         MCB_全局字体.DropDownPadding = New Padding(10)
-        MCB_全局字体.DropDownScrollBarHoverColor = Color.FromArgb(CByte(200), CByte(200), CByte(200))
+        MCB_全局字体.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MCB_全局字体.DropDownSelectedForeColor = Color.White
+        MCB_全局字体.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
         MCB_全局字体.Location = New Point(0, 10)
         MCB_全局字体.Margin = New Padding(2, 2, 2, 2)
         MCB_全局字体.MaxDropDownItems = 15
@@ -127,22 +132,23 @@ Partial Class Form_v6_设置_界面显示
         MCB_全局字体.Padding = New Padding(10, 0, 10, 0)
         MCB_全局字体.Size = New Size(300, 32)
         MCB_全局字体.TabIndex = 0
-        MCB_全局字体.ToolTipBorderSize = 2
-        MCB_全局字体.ToolTipGap = 10
+        MCB_全局字体.ToolTipGap = -1
         MCB_全局字体.ToolTipMaxWidth = 350
         MCB_全局字体.ToolTipPadding = New Padding(15)
+        MCB_全局字体.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ' 
         ' HtmlColorLabel1
         ' 
         HtmlColorLabel1.AutoSize = True
         HtmlColorLabel1.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel1.Dock = DockStyle.Top
+        HtmlColorLabel1.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         HtmlColorLabel1.Location = New Point(20, 20)
         HtmlColorLabel1.Margin = New Padding(2)
         HtmlColorLabel1.Name = "HtmlColorLabel1"
         HtmlColorLabel1.Size = New Size(712, 25)
         HtmlColorLabel1.TabIndex = 10
-        HtmlColorLabel1.Text = "<span style=""font-size:13"">全局字体</span>   <span style=""font-size:10pt; color:Gray"">在 150% 以及更低 DPI 下使用可以尝试 LakeUI 视觉中的矢量几何绘制</span>"
+        HtmlColorLabel1.Text = "<span style=""font-size:13; color:Silver"">全局字体</span>   在 150% 以及更低 DPI 下使用可以尝试 LakeUI 视觉中的矢量几何绘制"
         ' 
         ' Form_v6_设置_界面显示
         ' 

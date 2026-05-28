@@ -1,12 +1,22 @@
-官网 https://ffmpegfreeui.top 和 https://3fui.top<br>主群 [1050613952](https://qm.qq.com/q/fiauAsddG8) 分群① [1070953324](https://qm.qq.com/q/nKoapm6KyW) 频道 [3fui10590000](https://pd.qq.com/s/9emex878m?b=5) KOOK [稻草的工坊](https://kook.vip/1nLQNk)
+官网 https://ffmpegfreeui.top 和 https://3fui.top 短域名将于 2028 年废弃<br>主群 [1050613952](https://qm.qq.com/q/fiauAsddG8) 分群① [1070953324](https://qm.qq.com/q/nKoapm6KyW) 频道 [3fui10590000](https://pd.qq.com/s/9emex878m?b=5) KOOK [稻草的工坊](https://kook.vip/1nLQNk)
 
-![](https://img.shields.io/github/stars/Lake1059/FFmpegFreeUI?label=星标) ![GitHub License](https://img.shields.io/github/license/Lake1059/FFmpegFreeUI?label=许可证) ![GitHub repo size](https://img.shields.io/github/repo-size/Lake1059/FFmpegFreeUI?label=仓库大小) ![](https://img.shields.io/github/downloads/Lake1059/FFmpegFreeUI/total?label=Github%20总下载量) ![](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2F3fui.top%2Fapi%2Fgithub-downloads&label=镜像站总下载量&query=$.totalDownloads)
+![](https://img.shields.io/github/stars/Lake1059/FFmpegFreeUI?label=星标) ![GitHub License](https://img.shields.io/github/license/Lake1059/FFmpegFreeUI?label=许可证) ![](https://img.shields.io/github/downloads/Lake1059/FFmpegFreeUI/total?label=Github%20总下载量)
 
 <img src="FFmpegFreeUI\Resources\AppIcon.png" width="100" />
 
 ## FFmpegFreeUI
 
-FFmpegFreeUI（简称 3FUI）是在 Windows 上的 [FFmpeg](https://ffmpeg.org) 的专业交互外壳，目前使用 .NET 10 运行时以纯 WinForm 框架开发，使用 [SunnyUI](https://github.com/yhuse/SunnyUI) 和自绘制打造的专业高效的暗黑风格界面。目标做一款轻度专业参数调整的转码软件，让普通人能够通过图形化界面接触到较为全面的通用参数来轻松压制和转换格式。不仅如此，3FUI 具备极高的自由和扩展性，因此也适合任何深度专业人士，即便只是用上一个低消耗的进度条。
+FFmpegFreeUI（简称 3FUI）是在 Windows 上的 [FFmpeg](https://ffmpeg.org) 的专业交互外壳，目前使用 .NET 10 运行时以纯 WinForm 框架开发。目标做一款轻度专业参数调整的转码软件，让普通人能够通过图形化界面接触到较为全面的通用参数来轻松压制和转换格式。不仅如此，3FUI 具备极高的自由和扩展性，因此也适合任何深度专业人士，即便只是用上一个低消耗的进度条。
+
+## 3FUI 6.0 和 LakeUI v2
+
+从 2026 年初开始，斥巨资打造轮子自主化项目 [LakeUI](https://github.com/Lake1059/LakeUI)，其现已成为 WinForms 框架上的尖端 UI 组件，v2 时代全面换装 DirectX GPU 硬件加速，各种视觉效果直逼 Web。3FUI 6.0 是一个十分漫长的计划，这不是简单的大版本更新，而是全部重做，利用 LakeUI 精心调制每一个视觉效果，将 3FUI 打造成一个真正的现代应用。
+
+目前正在漫长的迁移工作，本文件内容待完工时更新，敬请期待。
+
+在主体功能完成之前，请继续使用 v5 版本作为主力。
+
+## 3FUI v5
 
 目前收录了 40 多个视频编码器（包含红绿蓝三家全部硬件加速）、20 多个音频编码器、10 多个图片编码器，如果这还不够还可以自定义参数，提供各种形式的自写参数，所以不要问什么能不能实现什么有没有。如果我的设计对你有帮助，请帮我宣传或者考虑资金支持，目前这个项目纯靠着生活费维持的，所以不要抱怨更新慢。
 
@@ -62,10 +72,6 @@ FFmpegFreeUI（简称 3FUI）是在 Windows 上的 [FFmpeg](https://ffmpeg.org) 
 ## 支持者计划
 
 为了维持 3FUI 的 Free，并且能够维持更新和后续项目，从 3.0 版本开始推出一次性购买的 **[Supporter Pack](https://afdian.com/item/a98d04e8b98011f0a49952540025c377)**，仅提供个性化功能，如果手头充裕欢迎支持。作为付费支持者，您可以向我提供一个支持者信息并在下一次更新中硬编码到 3FUI 中。
-
-## 多语言支持
-
-3FUI 现在已经接入多语言支持，但还有很多工作要做，目前 English 的完成度仅 10%。如果未来有意向自发添加更多语言的，请向我提供你组织能够进行保质量翻译的证明，我不想看到因为翻译组的原因导致的差评。
 
 ## Linux & macOS
 

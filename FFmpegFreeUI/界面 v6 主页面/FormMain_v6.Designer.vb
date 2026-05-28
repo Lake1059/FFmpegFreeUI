@@ -125,7 +125,6 @@ Partial Class FormMain_v6
         ' 
         ThisIsYourWindow1.BackdropBlurPasses = 1
         ThisIsYourWindow1.BackdropBlurRadius = 1
-        ThisIsYourWindow1.BackdropMaxParallelism = 4
         ThisIsYourWindow1.BackdropNoiseScale = 0.5F
         ThisIsYourWindow1.BackdropTintColor = Color.FromArgb(CByte(160), CByte(0), CByte(0), CByte(0))
         ThisIsYourWindow1.BackdropTintInactiveColor = Color.FromArgb(CByte(160), CByte(0), CByte(0), CByte(0))

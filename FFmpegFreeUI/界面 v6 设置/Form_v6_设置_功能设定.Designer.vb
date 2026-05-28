@@ -111,15 +111,17 @@ Partial Class Form_v6_设置_功能设定
         ' MCB_任务失败删除文件
         ' 
         MCB_任务失败删除文件.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        MCB_任务失败删除文件.BorderColorFocus = Color.Silver
         MCB_任务失败删除文件.BorderRadius = 10
         MCB_任务失败删除文件.BorderSize = 0
-        MCB_任务失败删除文件.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
         MCB_任务失败删除文件.Dock = DockStyle.Left
-        MCB_任务失败删除文件.DropDownBorderSize = 2
+        MCB_任务失败删除文件.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
+        MCB_任务失败删除文件.DropDownHoverAnimationDuration = 0
+        MCB_任务失败删除文件.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
         MCB_任务失败删除文件.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
         MCB_任务失败删除文件.DropDownPadding = New Padding(10)
-        MCB_任务失败删除文件.DropDownScrollBarHoverColor = Color.FromArgb(CByte(200), CByte(200), CByte(200))
+        MCB_任务失败删除文件.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MCB_任务失败删除文件.DropDownSelectedForeColor = Color.White
+        MCB_任务失败删除文件.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
         MCB_任务失败删除文件.Items.Add("删除到回收站")
         MCB_任务失败删除文件.Items.Add("彻底删除")
         MCB_任务失败删除文件.Items.Add("什么都不做")
@@ -129,10 +131,10 @@ Partial Class Form_v6_设置_功能设定
         MCB_任务失败删除文件.Padding = New Padding(10, 0, 10, 0)
         MCB_任务失败删除文件.Size = New Size(200, 32)
         MCB_任务失败删除文件.TabIndex = 0
-        MCB_任务失败删除文件.ToolTipBorderSize = 2
-        MCB_任务失败删除文件.ToolTipGap = 10
+        MCB_任务失败删除文件.ToolTipGap = -1
         MCB_任务失败删除文件.ToolTipMaxWidth = 350
         MCB_任务失败删除文件.ToolTipPadding = New Padding(15)
+        MCB_任务失败删除文件.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ' 
         ' Panel7
         ' 
@@ -162,15 +164,17 @@ Partial Class Form_v6_设置_功能设定
         ' MCB_独立参数面板自动切预设管理
         ' 
         MCB_独立参数面板自动切预设管理.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        MCB_独立参数面板自动切预设管理.BorderColorFocus = Color.Silver
         MCB_独立参数面板自动切预设管理.BorderRadius = 10
         MCB_独立参数面板自动切预设管理.BorderSize = 0
-        MCB_独立参数面板自动切预设管理.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
         MCB_独立参数面板自动切预设管理.Dock = DockStyle.Left
-        MCB_独立参数面板自动切预设管理.DropDownBorderSize = 2
+        MCB_独立参数面板自动切预设管理.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
+        MCB_独立参数面板自动切预设管理.DropDownHoverAnimationDuration = 0
+        MCB_独立参数面板自动切预设管理.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
         MCB_独立参数面板自动切预设管理.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
         MCB_独立参数面板自动切预设管理.DropDownPadding = New Padding(10)
-        MCB_独立参数面板自动切预设管理.DropDownScrollBarHoverColor = Color.FromArgb(CByte(200), CByte(200), CByte(200))
+        MCB_独立参数面板自动切预设管理.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MCB_独立参数面板自动切预设管理.DropDownSelectedForeColor = Color.White
+        MCB_独立参数面板自动切预设管理.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
         MCB_独立参数面板自动切预设管理.Items.Add("默认第一个页面")
         MCB_独立参数面板自动切预设管理.Items.Add("自动切到预设管理")
         MCB_独立参数面板自动切预设管理.Location = New Point(0, 10)
@@ -179,10 +183,10 @@ Partial Class Form_v6_设置_功能设定
         MCB_独立参数面板自动切预设管理.Padding = New Padding(10, 0, 10, 0)
         MCB_独立参数面板自动切预设管理.Size = New Size(200, 32)
         MCB_独立参数面板自动切预设管理.TabIndex = 0
-        MCB_独立参数面板自动切预设管理.ToolTipBorderSize = 2
-        MCB_独立参数面板自动切预设管理.ToolTipGap = 10
+        MCB_独立参数面板自动切预设管理.ToolTipGap = -1
         MCB_独立参数面板自动切预设管理.ToolTipMaxWidth = 350
         MCB_独立参数面板自动切预设管理.ToolTipPadding = New Padding(15)
+        MCB_独立参数面板自动切预设管理.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ' 
         ' Panel6
         ' 
@@ -212,27 +216,30 @@ Partial Class Form_v6_设置_功能设定
         ' MCB_任务名称混淆
         ' 
         MCB_任务名称混淆.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        MCB_任务名称混淆.BorderColorFocus = Color.Silver
         MCB_任务名称混淆.BorderRadius = 10
         MCB_任务名称混淆.BorderSize = 0
-        MCB_任务名称混淆.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
         MCB_任务名称混淆.Dock = DockStyle.Left
-        MCB_任务名称混淆.DropDownBorderSize = 2
+        MCB_任务名称混淆.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
+        MCB_任务名称混淆.DropDownHoverAnimationDuration = 0
+        MCB_任务名称混淆.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
         MCB_任务名称混淆.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
         MCB_任务名称混淆.DropDownPadding = New Padding(10)
-        MCB_任务名称混淆.DropDownScrollBarHoverColor = Color.FromArgb(CByte(200), CByte(200), CByte(200))
+        MCB_任务名称混淆.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MCB_任务名称混淆.DropDownSelectedForeColor = Color.White
+        MCB_任务名称混淆.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
         MCB_任务名称混淆.Items.Add("默认")
         MCB_任务名称混淆.Items.Add("我请来了喵喵星神")
+        MCB_任务名称混淆.Items.Add("华强买瓜宇宙")
         MCB_任务名称混淆.Location = New Point(0, 10)
         MCB_任务名称混淆.Margin = New Padding(2, 2, 2, 2)
         MCB_任务名称混淆.Name = "MCB_任务名称混淆"
         MCB_任务名称混淆.Padding = New Padding(10, 0, 10, 0)
         MCB_任务名称混淆.Size = New Size(200, 32)
         MCB_任务名称混淆.TabIndex = 0
-        MCB_任务名称混淆.ToolTipBorderSize = 2
-        MCB_任务名称混淆.ToolTipGap = 10
+        MCB_任务名称混淆.ToolTipGap = -1
         MCB_任务名称混淆.ToolTipMaxWidth = 350
         MCB_任务名称混淆.ToolTipPadding = New Padding(15)
+        MCB_任务名称混淆.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ' 
         ' Panel5
         ' 
@@ -262,15 +269,17 @@ Partial Class Form_v6_设置_功能设定
         ' MCB_是否自动重置参数面板到第一个页面
         ' 
         MCB_是否自动重置参数面板到第一个页面.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        MCB_是否自动重置参数面板到第一个页面.BorderColorFocus = Color.Silver
         MCB_是否自动重置参数面板到第一个页面.BorderRadius = 10
         MCB_是否自动重置参数面板到第一个页面.BorderSize = 0
-        MCB_是否自动重置参数面板到第一个页面.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
         MCB_是否自动重置参数面板到第一个页面.Dock = DockStyle.Left
-        MCB_是否自动重置参数面板到第一个页面.DropDownBorderSize = 2
+        MCB_是否自动重置参数面板到第一个页面.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
+        MCB_是否自动重置参数面板到第一个页面.DropDownHoverAnimationDuration = 0
+        MCB_是否自动重置参数面板到第一个页面.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
         MCB_是否自动重置参数面板到第一个页面.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
         MCB_是否自动重置参数面板到第一个页面.DropDownPadding = New Padding(10)
-        MCB_是否自动重置参数面板到第一个页面.DropDownScrollBarHoverColor = Color.FromArgb(CByte(200), CByte(200), CByte(200))
+        MCB_是否自动重置参数面板到第一个页面.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MCB_是否自动重置参数面板到第一个页面.DropDownSelectedForeColor = Color.White
+        MCB_是否自动重置参数面板到第一个页面.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
         MCB_是否自动重置参数面板到第一个页面.Items.Add("不要自动重置页面")
         MCB_是否自动重置参数面板到第一个页面.Items.Add("自动切到参数总览")
         MCB_是否自动重置参数面板到第一个页面.Location = New Point(0, 10)
@@ -279,10 +288,10 @@ Partial Class Form_v6_设置_功能设定
         MCB_是否自动重置参数面板到第一个页面.Padding = New Padding(10, 0, 10, 0)
         MCB_是否自动重置参数面板到第一个页面.Size = New Size(200, 32)
         MCB_是否自动重置参数面板到第一个页面.TabIndex = 0
-        MCB_是否自动重置参数面板到第一个页面.ToolTipBorderSize = 2
-        MCB_是否自动重置参数面板到第一个页面.ToolTipGap = 10
+        MCB_是否自动重置参数面板到第一个页面.ToolTipGap = -1
         MCB_是否自动重置参数面板到第一个页面.ToolTipMaxWidth = 350
         MCB_是否自动重置参数面板到第一个页面.ToolTipPadding = New Padding(15)
+        MCB_是否自动重置参数面板到第一个页面.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ' 
         ' Panel4
         ' 
@@ -312,15 +321,17 @@ Partial Class Form_v6_设置_功能设定
         ' MCB_是否自动开始任务
         ' 
         MCB_是否自动开始任务.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        MCB_是否自动开始任务.BorderColorFocus = Color.Silver
         MCB_是否自动开始任务.BorderRadius = 10
         MCB_是否自动开始任务.BorderSize = 0
-        MCB_是否自动开始任务.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
         MCB_是否自动开始任务.Dock = DockStyle.Left
-        MCB_是否自动开始任务.DropDownBorderSize = 2
+        MCB_是否自动开始任务.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
+        MCB_是否自动开始任务.DropDownHoverAnimationDuration = 0
+        MCB_是否自动开始任务.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
         MCB_是否自动开始任务.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
         MCB_是否自动开始任务.DropDownPadding = New Padding(10)
-        MCB_是否自动开始任务.DropDownScrollBarHoverColor = Color.FromArgb(CByte(200), CByte(200), CByte(200))
+        MCB_是否自动开始任务.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MCB_是否自动开始任务.DropDownSelectedForeColor = Color.White
+        MCB_是否自动开始任务.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
         MCB_是否自动开始任务.Items.Add("自动开始任务")
         MCB_是否自动开始任务.Items.Add("手动开始任务")
         MCB_是否自动开始任务.Location = New Point(0, 10)
@@ -329,10 +340,10 @@ Partial Class Form_v6_设置_功能设定
         MCB_是否自动开始任务.Padding = New Padding(10, 0, 10, 0)
         MCB_是否自动开始任务.Size = New Size(200, 32)
         MCB_是否自动开始任务.TabIndex = 0
-        MCB_是否自动开始任务.ToolTipBorderSize = 2
-        MCB_是否自动开始任务.ToolTipGap = 10
+        MCB_是否自动开始任务.ToolTipGap = -1
         MCB_是否自动开始任务.ToolTipMaxWidth = 350
         MCB_是否自动开始任务.ToolTipPadding = New Padding(15)
+        MCB_是否自动开始任务.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ' 
         ' Panel3
         ' 
@@ -362,15 +373,17 @@ Partial Class Form_v6_设置_功能设定
         ' MCB_是否启用提示音
         ' 
         MCB_是否启用提示音.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        MCB_是否启用提示音.BorderColorFocus = Color.Silver
         MCB_是否启用提示音.BorderRadius = 10
         MCB_是否启用提示音.BorderSize = 0
-        MCB_是否启用提示音.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
         MCB_是否启用提示音.Dock = DockStyle.Left
-        MCB_是否启用提示音.DropDownBorderSize = 2
+        MCB_是否启用提示音.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
+        MCB_是否启用提示音.DropDownHoverAnimationDuration = 0
+        MCB_是否启用提示音.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
         MCB_是否启用提示音.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
         MCB_是否启用提示音.DropDownPadding = New Padding(10)
-        MCB_是否启用提示音.DropDownScrollBarHoverColor = Color.FromArgb(CByte(200), CByte(200), CByte(200))
+        MCB_是否启用提示音.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MCB_是否启用提示音.DropDownSelectedForeColor = Color.White
+        MCB_是否启用提示音.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
         MCB_是否启用提示音.Items.Add("启用提示音")
         MCB_是否启用提示音.Items.Add("禁用提示音")
         MCB_是否启用提示音.Location = New Point(0, 10)
@@ -379,10 +392,10 @@ Partial Class Form_v6_设置_功能设定
         MCB_是否启用提示音.Padding = New Padding(10, 0, 10, 0)
         MCB_是否启用提示音.Size = New Size(200, 32)
         MCB_是否启用提示音.TabIndex = 0
-        MCB_是否启用提示音.ToolTipBorderSize = 2
-        MCB_是否启用提示音.ToolTipGap = 10
+        MCB_是否启用提示音.ToolTipGap = -1
         MCB_是否启用提示音.ToolTipMaxWidth = 350
         MCB_是否启用提示音.ToolTipPadding = New Padding(15)
+        MCB_是否启用提示音.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ' 
         ' Panel1
         ' 
@@ -412,15 +425,17 @@ Partial Class Form_v6_设置_功能设定
         ' MCB_有任务时系统状态
         ' 
         MCB_有任务时系统状态.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        MCB_有任务时系统状态.BorderColorFocus = Color.Silver
         MCB_有任务时系统状态.BorderRadius = 10
         MCB_有任务时系统状态.BorderSize = 0
-        MCB_有任务时系统状态.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
         MCB_有任务时系统状态.Dock = DockStyle.Left
-        MCB_有任务时系统状态.DropDownBorderSize = 2
+        MCB_有任务时系统状态.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
+        MCB_有任务时系统状态.DropDownHoverAnimationDuration = 0
+        MCB_有任务时系统状态.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
         MCB_有任务时系统状态.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
         MCB_有任务时系统状态.DropDownPadding = New Padding(10)
-        MCB_有任务时系统状态.DropDownScrollBarHoverColor = Color.FromArgb(CByte(200), CByte(200), CByte(200))
+        MCB_有任务时系统状态.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MCB_有任务时系统状态.DropDownSelectedForeColor = Color.White
+        MCB_有任务时系统状态.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
         MCB_有任务时系统状态.Items.Add("阻止系统休眠（默认）")
         MCB_有任务时系统状态.Items.Add("阻止显示器超时关闭")
         MCB_有任务时系统状态.Items.Add("默认状态（不推荐）")
@@ -430,10 +445,10 @@ Partial Class Form_v6_设置_功能设定
         MCB_有任务时系统状态.Padding = New Padding(10, 0, 10, 0)
         MCB_有任务时系统状态.Size = New Size(200, 32)
         MCB_有任务时系统状态.TabIndex = 0
-        MCB_有任务时系统状态.ToolTipBorderSize = 2
-        MCB_有任务时系统状态.ToolTipGap = 10
+        MCB_有任务时系统状态.ToolTipGap = -1
         MCB_有任务时系统状态.ToolTipMaxWidth = 350
         MCB_有任务时系统状态.ToolTipPadding = New Padding(15)
+        MCB_有任务时系统状态.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ' 
         ' JustEmptyControl1
         ' 
@@ -458,12 +473,12 @@ Partial Class Form_v6_设置_功能设定
         ' MTB_工作目录
         ' 
         MTB_工作目录.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        MTB_工作目录.BorderColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        MTB_工作目录.BorderColorFocus = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        MTB_工作目录.BorderColor = Color.Empty
+        MTB_工作目录.BorderColorFocus = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
         MTB_工作目录.BorderRadius = 10
         MTB_工作目录.Dock = DockStyle.Fill
         MTB_工作目录.Location = New Point(0, 10)
-        MTB_工作目录.Margin = New Padding(2, 2, 2, 2)
+        MTB_工作目录.Margin = New Padding(2)
         MTB_工作目录.Name = "MTB_工作目录"
         MTB_工作目录.Padding = New Padding(10, 0, 0, 0)
         MTB_工作目录.Size = New Size(612, 32)
@@ -483,11 +498,11 @@ Partial Class Form_v6_设置_功能设定
         MB_浏览文件夹.BorderRadius = 10
         MB_浏览文件夹.BorderSize = 0
         MB_浏览文件夹.Dock = DockStyle.Right
-        MB_浏览文件夹.HoverBackColor1 = Color.FromArgb(CByte(50), CByte(220), CByte(220), CByte(220))
+        MB_浏览文件夹.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
         MB_浏览文件夹.Location = New Point(622, 10)
         MB_浏览文件夹.Margin = New Padding(2)
         MB_浏览文件夹.Name = "MB_浏览文件夹"
-        MB_浏览文件夹.PressedBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        MB_浏览文件夹.PressedBackColor1 = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
         MB_浏览文件夹.Size = New Size(80, 32)
         MB_浏览文件夹.TabIndex = 6
         MB_浏览文件夹.Text = "浏览"

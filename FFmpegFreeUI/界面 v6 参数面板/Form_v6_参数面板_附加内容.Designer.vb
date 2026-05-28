@@ -26,13 +26,15 @@ Partial Class Form_v6_参数面板_附加内容
         Dim ModernTab2 As LakeUI.ModernTabControl.ModernTab = New LakeUI.ModernTabControl.ModernTab()
         Dim ModernTab3 As LakeUI.ModernTabControl.ModernTab = New LakeUI.ModernTabControl.ModernTab()
         ModernTabControl1 = New LakeUI.ModernTabControl()
+        ModernPanel1 = New LakeUI.ModernPanel()
+        ModernPanel1.SuspendLayout()
         SuspendLayout()
         ' 
         ' ModernTabControl1
         ' 
         ModernTabControl1.ContentBackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         ModernTabControl1.Dock = DockStyle.Fill
-        ModernTabControl1.Font = New Font("Microsoft YaHei UI", 12F, FontStyle.Bold, GraphicsUnit.Point, CByte(134))
+        ModernTabControl1.Font = New Font("Microsoft YaHei UI", 12F)
         ModernTabControl1.IndicatorHeight = 2
         ModernTabControl1.IndicatorPadding = 10
         ModernTab1.Text = "元数据"
@@ -46,10 +48,24 @@ Partial Class Form_v6_参数面板_附加内容
         ModernTabControl1.Size = New Size(856, 688)
         ModernTabControl1.TabAlignment = LakeUI.ModernTabControl.TabAlignmentEnum.Center
         ModernTabControl1.TabIndex = 2
+        ModernTabControl1.TabItemHoverBackColor = Color.FromArgb(CByte(40), CByte(200), CByte(200), CByte(200))
+        ModernTabControl1.TabItemSelectedBackColor = Color.FromArgb(CByte(80), CByte(200), CByte(200), CByte(200))
         ModernTabControl1.TabItemTextPadding = 20
         ModernTabControl1.TabStripBackColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
         ModernTabControl1.TabStripHeight = 55
         ModernTabControl1.TabStripPadding = New Padding(10)
+        ' 
+        ' ModernPanel1
+        ' 
+        ModernPanel1.BackColor1 = Color.FromArgb(CByte(24), CByte(24), CByte(24))
+        ModernPanel1.BorderSize = 0
+        ModernPanel1.Controls.Add(ModernTabControl1)
+        ModernPanel1.Dock = DockStyle.Fill
+        ModernPanel1.Location = New Point(0, 0)
+        ModernPanel1.Name = "ModernPanel1"
+        ModernPanel1.ScrollBarMode = LakeUI.ModernPanel.ScrollMode.None
+        ModernPanel1.Size = New Size(856, 688)
+        ModernPanel1.TabIndex = 3
         ' 
         ' Form_v6_参数面板_附加内容
         ' 
@@ -57,13 +73,15 @@ Partial Class Form_v6_参数面板_附加内容
         AutoScaleMode = AutoScaleMode.Dpi
         BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         ClientSize = New Size(856, 688)
-        Controls.Add(ModernTabControl1)
+        Controls.Add(ModernPanel1)
         Font = New Font("Microsoft YaHei UI", 10F)
         ForeColor = Color.Silver
         Name = "Form_v6_参数面板_附加内容"
         Text = "Form_v6_参数面板_附加内容"
+        ModernPanel1.ResumeLayout(False)
         ResumeLayout(False)
     End Sub
 
     Friend WithEvents ModernTabControl1 As LakeUI.ModernTabControl
+    Friend WithEvents ModernPanel1 As LakeUI.ModernPanel
 End Class

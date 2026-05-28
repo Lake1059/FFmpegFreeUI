@@ -376,25 +376,27 @@ Partial Class Form_v6_性能监控
         ' ModernComboBox3
         ' 
         ModernComboBox3.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernComboBox3.BorderColorFocus = Color.Silver
         ModernComboBox3.BorderRadius = 10
         ModernComboBox3.BorderSize = 0
-        ModernComboBox3.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
         ModernComboBox3.Dock = DockStyle.Fill
-        ModernComboBox3.DropDownBorderSize = 2
+        ModernComboBox3.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
+        ModernComboBox3.DropDownHoverAnimationDuration = 0
+        ModernComboBox3.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
         ModernComboBox3.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
         ModernComboBox3.DropDownPadding = New Padding(10)
-        ModernComboBox3.DropDownScrollBarHoverColor = Color.FromArgb(CByte(200), CByte(200), CByte(200))
-        ModernComboBox3.Location = New Point(210, 0)
+        ModernComboBox3.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        ModernComboBox3.DropDownSelectedForeColor = Color.White
+        ModernComboBox3.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
         ModernComboBox3.Margin = New Padding(2, 2, 2, 2)
-        ModernComboBox3.Name = "ModernComboBox3"
         ModernComboBox3.Padding = New Padding(10, 0, 10, 0)
-        ModernComboBox3.Size = New Size(368, 32)
-        ModernComboBox3.TabIndex = 3
-        ModernComboBox3.ToolTipBorderSize = 2
-        ModernComboBox3.ToolTipGap = 10
+        ModernComboBox3.ToolTipGap = -1
         ModernComboBox3.ToolTipMaxWidth = 350
         ModernComboBox3.ToolTipPadding = New Padding(15)
+        ModernComboBox3.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
+        ModernComboBox3.Location = New Point(210, 0)
+        ModernComboBox3.Name = "ModernComboBox3"
+        ModernComboBox3.Size = New Size(368, 32)
+        ModernComboBox3.TabIndex = 3
         ModernComboBox3.WaterText = "选择显卡"
         ' 
         ' JustEmptyControl4
@@ -408,15 +410,23 @@ Partial Class Form_v6_性能监控
         ' ModernComboBox2
         ' 
         ModernComboBox2.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernComboBox2.BorderColorFocus = Color.Silver
         ModernComboBox2.BorderRadius = 10
         ModernComboBox2.BorderSize = 0
-        ModernComboBox2.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
         ModernComboBox2.Dock = DockStyle.Left
-        ModernComboBox2.DropDownBorderSize = 2
+        ModernComboBox2.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
+        ModernComboBox2.DropDownHoverAnimationDuration = 0
+        ModernComboBox2.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
         ModernComboBox2.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
         ModernComboBox2.DropDownPadding = New Padding(10)
-        ModernComboBox2.DropDownScrollBarHoverColor = Color.FromArgb(CByte(200), CByte(200), CByte(200))
+        ModernComboBox2.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        ModernComboBox2.DropDownSelectedForeColor = Color.White
+        ModernComboBox2.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        ModernComboBox2.Margin = New Padding(2, 2, 2, 2)
+        ModernComboBox2.Padding = New Padding(10, 0, 10, 0)
+        ModernComboBox2.ToolTipGap = -1
+        ModernComboBox2.ToolTipMaxWidth = 350
+        ModernComboBox2.ToolTipPadding = New Padding(15)
+        ModernComboBox2.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ModernComboBox2.Items.Add("LakeUI.GpuMonitor")
         ModernComboBox2.Items.Add("LibreHardwareMonitor")
         ToolTipEntry1.ItemText = "LakeUI.GpuMonitor"
@@ -425,15 +435,9 @@ Partial Class Form_v6_性能监控
         ToolTipEntry2.ToolTipText = "[需下载 LHM 组件] LHM 是 GitHub 上的开源项目，使用驱动对接各种硬件，监控覆盖全面，不过 3FUI 只用其获取显卡信息；缺点是要加载驱动，而且较为沉重。"
         ModernComboBox2.ItemToolTips.AddRange(New LakeUI.ModernComboBox.ToolTipEntry() {ToolTipEntry1, ToolTipEntry2})
         ModernComboBox2.Location = New Point(0, 0)
-        ModernComboBox2.Margin = New Padding(2, 2, 2, 2)
         ModernComboBox2.Name = "ModernComboBox2"
-        ModernComboBox2.Padding = New Padding(10, 0, 10, 0)
         ModernComboBox2.Size = New Size(200, 32)
         ModernComboBox2.TabIndex = 1
-        ModernComboBox2.ToolTipBorderSize = 2
-        ModernComboBox2.ToolTipGap = 10
-        ModernComboBox2.ToolTipMaxWidth = 350
-        ModernComboBox2.ToolTipPadding = New Padding(15)
         ModernComboBox2.WaterText = "选择显卡数据来源"
         ' 
         ' RamMonitor1
@@ -480,25 +484,27 @@ Partial Class Form_v6_性能监控
         ' ModernComboBox1
         ' 
         ModernComboBox1.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernComboBox1.BorderColorFocus = Color.Silver
         ModernComboBox1.BorderRadius = 10
         ModernComboBox1.BorderSize = 0
-        ModernComboBox1.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
         ModernComboBox1.Dock = DockStyle.Top
-        ModernComboBox1.DropDownBorderSize = 2
+        ModernComboBox1.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
+        ModernComboBox1.DropDownHoverAnimationDuration = 0
+        ModernComboBox1.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
         ModernComboBox1.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
         ModernComboBox1.DropDownPadding = New Padding(10)
-        ModernComboBox1.DropDownScrollBarHoverColor = Color.FromArgb(CByte(200), CByte(200), CByte(200))
-        ModernComboBox1.Location = New Point(0, 0)
+        ModernComboBox1.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        ModernComboBox1.DropDownSelectedForeColor = Color.White
+        ModernComboBox1.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
         ModernComboBox1.Margin = New Padding(2, 2, 2, 2)
-        ModernComboBox1.Name = "ModernComboBox1"
         ModernComboBox1.Padding = New Padding(10, 0, 10, 0)
-        ModernComboBox1.Size = New Size(305, 32)
-        ModernComboBox1.TabIndex = 2
-        ModernComboBox1.ToolTipBorderSize = 2
-        ModernComboBox1.ToolTipGap = 10
+        ModernComboBox1.ToolTipGap = -1
         ModernComboBox1.ToolTipMaxWidth = 350
         ModernComboBox1.ToolTipPadding = New Padding(15)
+        ModernComboBox1.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
+        ModernComboBox1.Location = New Point(0, 0)
+        ModernComboBox1.Name = "ModernComboBox1"
+        ModernComboBox1.Size = New Size(305, 32)
+        ModernComboBox1.TabIndex = 2
         ModernComboBox1.WaterText = "选择 CPU 组"
         ' 
         ' Timer1

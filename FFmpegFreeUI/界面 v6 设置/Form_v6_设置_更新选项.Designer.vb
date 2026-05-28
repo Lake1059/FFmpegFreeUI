@@ -57,38 +57,44 @@ Partial Class Form_v6_设置_更新选项
         ' MCB_更新服务器
         ' 
         MCB_更新服务器.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        MCB_更新服务器.BorderColorFocus = Color.Silver
         MCB_更新服务器.BorderRadius = 10
         MCB_更新服务器.BorderSize = 0
-        MCB_更新服务器.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
         MCB_更新服务器.Dock = DockStyle.Left
-        MCB_更新服务器.DropDownBorderSize = 2
+        MCB_更新服务器.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
+        MCB_更新服务器.DropDownHoverAnimationDuration = 0
+        MCB_更新服务器.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
         MCB_更新服务器.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
         MCB_更新服务器.DropDownPadding = New Padding(10)
-        MCB_更新服务器.DropDownScrollBarHoverColor = Color.FromArgb(CByte(200), CByte(200), CByte(200))
+        MCB_更新服务器.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MCB_更新服务器.DropDownSelectedForeColor = Color.White
+        MCB_更新服务器.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
         MCB_更新服务器.Items.Add("GitHub")
+        MCB_更新服务器.Items.Add("gh-proxy.com")
+        MCB_更新服务器.Items.Add("国内镜像 FrostLynx")
+        MCB_更新服务器.Items.Add("???")
         MCB_更新服务器.Location = New Point(0, 10)
         MCB_更新服务器.Margin = New Padding(2, 2, 2, 2)
         MCB_更新服务器.Name = "MCB_更新服务器"
         MCB_更新服务器.Padding = New Padding(10, 0, 10, 0)
         MCB_更新服务器.Size = New Size(200, 32)
         MCB_更新服务器.TabIndex = 0
-        MCB_更新服务器.ToolTipBorderSize = 2
-        MCB_更新服务器.ToolTipGap = 10
+        MCB_更新服务器.ToolTipGap = -1
         MCB_更新服务器.ToolTipMaxWidth = 350
         MCB_更新服务器.ToolTipPadding = New Padding(15)
+        MCB_更新服务器.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ' 
         ' HtmlColorLabel1
         ' 
         HtmlColorLabel1.AutoSize = True
         HtmlColorLabel1.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel1.Dock = DockStyle.Top
+        HtmlColorLabel1.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         HtmlColorLabel1.Location = New Point(20, 20)
         HtmlColorLabel1.Margin = New Padding(2)
         HtmlColorLabel1.Name = "HtmlColorLabel1"
         HtmlColorLabel1.Size = New Size(740, 25)
         HtmlColorLabel1.TabIndex = 8
-        HtmlColorLabel1.Text = "<span style=""font-size:13"">更新服务器</span>   <span style=""font-size:10pt; color:DarkGray"">选择所有的下载更新使用什么服务器</span>"
+        HtmlColorLabel1.Text = "<span style=""font-size:13; color:Silver"">更新服务器</span>   选择所有的下载更新使用什么服务器"
         ' 
         ' Form_v6_设置_更新选项
         ' 

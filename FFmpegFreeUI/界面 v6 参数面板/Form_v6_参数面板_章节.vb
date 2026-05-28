@@ -1,7 +1,14 @@
 ﻿Public Class Form_v6_参数面板_章节
     Private Sub Form_v6_参数面板_章节_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+    End Sub
+
+    Private Sub MB_教程_Click(sender As Object, e As EventArgs) Handles MB_教程.Click
+        MB_教程.Visible = False
+        JustEmptyControl2.Visible = False
+        Me.MarkDownViewer1.Visible = True
         Me.MarkDownViewer1.Text =
-"如果你不清楚章节文本文档如何编写，这是一份简易教程
+ "如果你不清楚章节文本文档如何编写，这是一份简易教程
 
 ## 章节的作用
 - 为长视频/音频提供导航锚点

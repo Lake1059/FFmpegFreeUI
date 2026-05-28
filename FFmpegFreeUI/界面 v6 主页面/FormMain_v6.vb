@@ -17,6 +17,10 @@ Public Class FormMain_v6
         绑定选项卡(Form_v6_编码队列.ModernPanel1)
         Me.ModernTabListControl1.Items(5).BoundControl = Form_v6_参数面板
         绑定选项卡(Form_v6_参数面板.ModernPanel1)
+        Me.ModernTabListControl1.Items(9).BoundControl = Form_v6_媒体信息
+        绑定选项卡(Form_v6_媒体信息.ModernPanel1)
+        Me.ModernTabListControl1.Items(10).BoundControl = Form_v6_调试播放器
+        绑定选项卡(Form_v6_调试播放器.ModernPanel1)
         Me.ModernTabListControl1.Items(11).BoundControl = Form_v6_性能监控
         绑定选项卡(Form_v6_性能监控.ModernPanel1)
         Me.ModernTabListControl1.Items(14).BoundControl = Form_v6_设置
@@ -36,10 +40,13 @@ Public Class FormMain_v6
                         ModernTabListControl1.ContentBackColor = Color.Transparent
                         Form_v6_参数面板.ModernTabListControl1.TabStripBackColor = Color.Transparent
                         Form_v6_参数面板.ModernTabListControl1.ContentBackColor = Color.Transparent
+
                         Form_v6_设置.ModernTabListControl1.TabStripBackColor = Color.Transparent
                         Form_v6_设置.ModernTabListControl1.ContentBackColor = Color.Transparent
 
                         Form_v6_起始页面.ModernPanel1.Padding = New Padding(Form_v6_起始页面.ModernPanel1.Padding.Left, 10 * DeviceDpi / 96, Form_v6_起始页面.ModernPanel1.Padding.Right, Form_v6_起始页面.ModernPanel1.Padding.Bottom)
+                        Form_v6_媒体信息.ModernPanel1.Padding = New Padding(Form_v6_媒体信息.ModernPanel1.Padding.Left, 10 * DeviceDpi / 96, Form_v6_媒体信息.ModernPanel1.Padding.Right, Form_v6_媒体信息.ModernPanel1.Padding.Bottom)
+                        Form_v6_调试播放器.ModernPanel1.Padding = New Padding(Form_v6_调试播放器.ModernPanel1.Padding.Left, 10 * DeviceDpi / 96, Form_v6_调试播放器.ModernPanel1.Padding.Right, Form_v6_调试播放器.ModernPanel1.Padding.Bottom)
                 End Select
         End Select
 
@@ -50,11 +57,12 @@ Public Class FormMain_v6
 
     Private Sub FormMain_v6_Shown(sender As Object, e As EventArgs) Handles Me.Shown
         Me.ModernTabListControl1.Focus()
+
+        ExOverlayMsgBox(Me, $"{vbCrLf}3FUI 6.0 当前处于开发测试阶段，许多功能都未跟进，请耐心等待项目推进，现在的提前放出是为了公开测试新设计的兼容和性能问题，早发现早解决。现在开始使用 GPU 渲染，将使用显存，有任何问题请及时汇报。{vbCrLf & vbCrLf}请勿汇报首次切换选项卡的渲染等待问题，这是解决不了的，再次切换过去就没事了。要解决这个问题的难度不亚于我当上微软老总，极具挑战。",, "当前版本大量功能未实装，标准流程未实装")
+
         网络功能.检查软件本体更新()
         网络功能.检查更新器更新()
-
         网络功能.获取新闻列表()
-
 
     End Sub
 

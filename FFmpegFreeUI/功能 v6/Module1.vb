@@ -7,7 +7,7 @@ Imports System.Text
 Imports System.Text.Json
 Imports System.Threading
 Imports Sunny.UI
-Imports Windows.Networking
+
 Module Module1
 
     Public Sound_Finish As Stream = My.Resources.Resource1.完成
@@ -225,6 +225,8 @@ Module Module1
                 Catch ex As Exception
                 End Try
             End If
+            ctrl.GetType().GetProperty("AnimationFPS", BindingFlags.Public Or BindingFlags.NonPublic)?.SetValue(ctrl, 设置_v6.实例对象.图形动画帧率)
+            ctrl.GetType().GetProperty("DropDownAnimationFPS", BindingFlags.Public Or BindingFlags.NonPublic)?.SetValue(ctrl, 设置_v6.实例对象.图形动画帧率)
             If ctrl.HasChildren Then SetControlFont(FontName, ctrl, ExcludeContorl)
         Next
     End Sub

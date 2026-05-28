@@ -117,10 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="HtmlColorLabel4.Text" xml:space="preserve">
-    <value>&lt;span style="font-size:10pt; color:Gray"&gt;注意带上单位，推荐使用 &lt;/span&gt;&lt;span style="font-size:10pt; color:Gainsboro"&gt;k&lt;/span&gt;&lt;span style="font-size:10pt; color:Gray"&gt;（kbps），例如 5000k，其他还有 &lt;/span&gt;&lt;span style="font-size:10pt; color:Gainsboro"&gt;M&lt;/span&gt;&lt;span style="font-size:10pt; color:Gray"&gt;（mbps，可能要大写）&lt;/span&gt;</value>
-  </data>
   <data name="HtmlColorLabel2.Text" xml:space="preserve">
-    <value>&lt;span style="font-size:10pt; color:Gray"&gt;CPU 编码首选 &lt;/span&gt;&lt;span style="font-size:10pt; color:Gainsboro"&gt;CRF&lt;/span&gt;&lt;span style="font-size:10pt; color:Gray"&gt; 对应 -crf；GPU 编码首选 &lt;/span&gt;&lt;span style="font-size:10pt; color:Gainsboro"&gt;VBR&lt;/span&gt;&lt;span style="font-size:10pt; color:Gray"&gt;；VBR HQ 仅 NVIDIA 和部分卡支持&lt;/span&gt;&lt;br&gt;&lt;span style="font-size:10pt; color:YellowGreen"&gt;NVIDIA&lt;/span&gt;&lt;span style="font-size:10pt; color:Gray"&gt; 使用专属 -cq；&lt;/span&gt;&lt;span style="font-size:10pt; color:CornflowerBlue"&gt;Intel&lt;/span&gt;&lt;span style="font-size:10pt; color:Gray"&gt; 使用 -global_quality；&lt;/span&gt;&lt;span style="font-size:10pt; color:IndianRed"&gt;AMD&lt;/span&gt;&lt;span style="font-size:10pt; color:Gray"&gt; 使用 -qp 相关&lt;/span&gt;</value>
+    <value>CPU 编码首选 &lt;span style="color:Gainsboro"&gt;CRF&lt;/span&gt; 对应 -crf；GPU 编码首选 &lt;span style="color:Gainsboro"&gt;VBR&lt;/span&gt;；VBR HQ 仅 NVIDIA 和部分卡支持&lt;br&gt;&lt;span style="color:YellowGreen"&gt;NVIDIA&lt;/span&gt; 使用专属 -cq；&lt;span style="color:CornflowerBlue"&gt;Intel&lt;/span&gt; 使用 -global_quality；&lt;span style="color:IndianRed"&gt;AMD&lt;/span&gt; 使用 -qp 相关</value>
   </data>
 </root>

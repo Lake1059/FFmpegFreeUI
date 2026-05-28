@@ -1,4 +1,6 @@
-﻿Public Class Form_v6_支持者
+﻿Imports LakeUI
+
+Public Class Form_v6_支持者
 
     Public Shared Property 付费支持者列表 As New List(Of String) From {
         "易相逢|#FBE4FF", "夜枫|#CCA4A3",
@@ -15,16 +17,22 @@
         "Celery (酒吧点蛋炒饭的)|#21AEFF",
         "哈哈6662333 (坏点子大师/""网""管)|#FF9633",
         "哈基曼波|#FF96DE",
-        "ZOGMOS (终末诗) (首席教程制作大师) (开发者特别授予)|#72565F|终末诗",
+        "ZOGMOS (终末诗) (首席教程制作大师) (开发者特别授予)|#72565F|https://zhuanlan.zhihu.com/p/1943079795341623993",
         "Uyanide (I use arch btw) (首席二次元)|#89B4FA",
-        "Simlalsy (压片的)|#E3E0F9"
+        "Simlalsy (压片的)|#E3E0F9",
+        "Dominic|#FF9D9F|AWJ神力"
     }
 
     Sub 读取付费支持者()
         For Each t In 付费支持者列表
-            Dim name = t.Split("|"c)(0)
-            Dim color = If(t.Split("|"c).Length > 1, t.Split("|"c)(1), "")
-            创建一个支持者标签(name, color)
+            Dim data = t.Split("|"c)
+            Dim name = data(0)
+            Dim color = If(data.Length > 1, data(1), "")
+            If data.Length <= 2 Then
+                创建一个支持者标签(name, color)
+            ElseIf data.Length = 3 Then
+                创建一个支持者标签(name, color, data(2))
+            End If
         Next
     End Sub
 
@@ -41,42 +49,34 @@
         Next
     End Sub
 
-    Sub 创建一个支持者标签(文本 As String, HTML颜色值文本 As String, Optional 特殊标记 As String = "")
+    Sub 创建一个支持者标签(文本 As String, HTML颜色值文本 As String, Optional 站点 As String = "")
         Dim 背景颜色 As Color
         If HTML颜色值文本.StartsWith("#"c) Then
             背景颜色 = ColorTranslator.FromHtml(HTML颜色值文本)
+            背景颜色 = Color.FromArgb(200, 背景颜色.R, 背景颜色.G, 背景颜色.B)
         Else
-            背景颜色 = Color.FromArgb(20, 0, 0, 0)
+            背景颜色 = Color.FromArgb(120, 220, 220, 220)
         End If
         Dim 背景色亮度 As Double = 背景颜色.R * 0.299 + 背景颜色.G * 0.587 + 背景颜色.B * 0.114
         Dim 文字颜色 As Color = If(背景色亮度 >= 128, Color.Black, Color.Silver)
-        Dim b As New LakeUI.ModernButton With {
-            .Text = 文本,
-            .AutoSize = False,
-            .Height = 32 * Form1.DPI,
-            .BorderRadius = 16,
-            .BackColor = Color.Transparent,
-            .BackColor1 = Color.FromArgb(180, 背景颜色.R, 背景颜色.G, 背景颜色.B),
-            .BorderColor = 背景颜色,
-            .BorderSize = 0,
-            .ForeColor = 文字颜色,
-            .Font = New Font(Me.Font.Name, 10),
-            .Margin = New Padding(0, 0, 15, 15),
-            .Cursor = Cursors.Default
-        }
-        Select Case 特殊标记
-            Case "终末诗"
-                b.BorderColor = Color.FromArgb(80, 220, 220, 220)
-                b.BorderSize = 2
-        End Select
-        根据文本设置按钮宽度(b, 30 * Form1.DPI)
-
-        Me.FlowLayoutPanel1.Controls.Add(b)
-
+        Dim a As New MemberWall.MemberItem With {.Text = 文本, .BackColor = 背景颜色, .ForeColor = 文字颜色}
+        If 文本.Contains("ZOGMOS") Then
+            a.BorderColor = Color.FromArgb(200, 255, 255, 255)
+            a.BorderSize = 2
+        End If
+        If 站点 <> "" Then
+            If 站点.StartsWith("http") Then
+                a.ClickAction = Sub() Process.Start(New ProcessStartInfo With {.FileName = 站点, .UseShellExecute = True})
+            Else
+                a.ClickAction = Sub() ExOverlayMsgBox(FormMain_v6, 站点)
+            End If
+        End If
+        Me.MemberWall1.Items.Add(a)
     End Sub
 
     Sub 清空支持者列表()
-        Me.FlowLayoutPanel1.Controls.Clear()
+        Me.MemberWall1.Items.Clear()
+        Me.MemberWall1.Update()
     End Sub
 
     Private Sub Form_v6_支持者_Load(sender As Object, e As EventArgs) Handles Me.Load
@@ -87,19 +87,31 @@
         清空支持者列表()
         读取付费支持者()
         读取赠送支持者()
+        Me.MemberWall1.Update()
     End Sub
 
     Private Sub ModernButton2_Click(sender As Object, e As EventArgs) Handles ModernButton2.Click
         清空支持者列表()
         读取付费支持者()
+        Me.MemberWall1.Update()
     End Sub
 
     Private Sub ModernButton3_Click(sender As Object, e As EventArgs) Handles ModernButton3.Click
         清空支持者列表()
         读取赠送支持者()
+        Me.MemberWall1.Update()
     End Sub
 
     Private Sub ModernButton4_Click(sender As Object, e As EventArgs) Handles ModernButton4.Click
         清空支持者列表()
+        Me.MemberWall1.Update()
+    End Sub
+
+    Private Sub ModernButton5_Click(sender As Object, e As EventArgs) Handles ModernButton5.Click
+        Me.MemberWall1.Search(ModernTextBox1.Text)
+    End Sub
+
+    Private Sub ModernTextBox1_KeyDown(sender As Object, e As KeyEventArgs) Handles ModernTextBox1.KeyDown
+        If e.KeyData = Keys.Enter Then Me.MemberWall1.Search(ModernTextBox1.Text)
     End Sub
 End Class

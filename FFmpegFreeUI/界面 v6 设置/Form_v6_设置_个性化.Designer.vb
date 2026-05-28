@@ -148,15 +148,17 @@ Partial Class Form_v6_设置_个性化
         ' MCB_噪点颗粒
         ' 
         MCB_噪点颗粒.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        MCB_噪点颗粒.BorderColorFocus = Color.Silver
         MCB_噪点颗粒.BorderRadius = 10
         MCB_噪点颗粒.BorderSize = 0
-        MCB_噪点颗粒.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
         MCB_噪点颗粒.Dock = DockStyle.Left
-        MCB_噪点颗粒.DropDownBorderSize = 2
+        MCB_噪点颗粒.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
+        MCB_噪点颗粒.DropDownHoverAnimationDuration = 0
+        MCB_噪点颗粒.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
         MCB_噪点颗粒.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
         MCB_噪点颗粒.DropDownPadding = New Padding(10)
-        MCB_噪点颗粒.DropDownScrollBarHoverColor = Color.FromArgb(CByte(200), CByte(200), CByte(200))
+        MCB_噪点颗粒.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MCB_噪点颗粒.DropDownSelectedForeColor = Color.White
+        MCB_噪点颗粒.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
         MCB_噪点颗粒.Items.Add("不使用噪点")
         MCB_噪点颗粒.Items.Add("使用噪点")
         MCB_噪点颗粒.Location = New Point(320, 10)
@@ -165,11 +167,11 @@ Partial Class Form_v6_设置_个性化
         MCB_噪点颗粒.Padding = New Padding(10, 0, 10, 0)
         MCB_噪点颗粒.Size = New Size(150, 32)
         MCB_噪点颗粒.TabIndex = 11
-        MCB_噪点颗粒.ToolTipBorderSize = 2
-        MCB_噪点颗粒.ToolTipGap = 10
+        MCB_噪点颗粒.ToolTipGap = -1
         MCB_噪点颗粒.ToolTipMaxWidth = 350
         MCB_噪点颗粒.ToolTipPadding = New Padding(15)
         MCB_噪点颗粒.WaterText = "噪点颗粒"
+        MCB_噪点颗粒.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ' 
         ' JustEmptyControl5
         ' 
@@ -182,15 +184,17 @@ Partial Class Form_v6_设置_个性化
         ' MCB_背景来源
         ' 
         MCB_背景来源.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        MCB_背景来源.BorderColorFocus = Color.Silver
         MCB_背景来源.BorderRadius = 10
         MCB_背景来源.BorderSize = 0
-        MCB_背景来源.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
         MCB_背景来源.Dock = DockStyle.Left
-        MCB_背景来源.DropDownBorderSize = 2
+        MCB_背景来源.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
+        MCB_背景来源.DropDownHoverAnimationDuration = 0
+        MCB_背景来源.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
         MCB_背景来源.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
         MCB_背景来源.DropDownPadding = New Padding(10)
-        MCB_背景来源.DropDownScrollBarHoverColor = Color.FromArgb(CByte(200), CByte(200), CByte(200))
+        MCB_背景来源.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MCB_背景来源.DropDownSelectedForeColor = Color.White
+        MCB_背景来源.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
         MCB_背景来源.Items.Add("背景图（推荐）")
         MCB_背景来源.Items.Add("窗口穿透")
         ToolTipEntry1.ItemText = "窗口穿透"
@@ -202,11 +206,11 @@ Partial Class Form_v6_设置_个性化
         MCB_背景来源.Padding = New Padding(10, 0, 10, 0)
         MCB_背景来源.Size = New Size(150, 32)
         MCB_背景来源.TabIndex = 9
-        MCB_背景来源.ToolTipBorderSize = 2
-        MCB_背景来源.ToolTipGap = 10
+        MCB_背景来源.ToolTipGap = -1
         MCB_背景来源.ToolTipMaxWidth = 350
         MCB_背景来源.ToolTipPadding = New Padding(15)
         MCB_背景来源.WaterText = "背景来源"
+        MCB_背景来源.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ' 
         ' JustEmptyControl4
         ' 
@@ -219,16 +223,19 @@ Partial Class Form_v6_设置_个性化
         ' MCB_毛玻璃模式
         ' 
         MCB_毛玻璃模式.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        MCB_毛玻璃模式.BorderColorFocus = Color.Silver
         MCB_毛玻璃模式.BorderRadius = 10
         MCB_毛玻璃模式.BorderSize = 0
-        MCB_毛玻璃模式.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
         MCB_毛玻璃模式.Dock = DockStyle.Left
-        MCB_毛玻璃模式.DropDownBorderSize = 2
+        MCB_毛玻璃模式.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
+        MCB_毛玻璃模式.DropDownHoverAnimationDuration = 0
+        MCB_毛玻璃模式.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
         MCB_毛玻璃模式.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
         MCB_毛玻璃模式.DropDownPadding = New Padding(10)
-        MCB_毛玻璃模式.DropDownScrollBarHoverColor = Color.FromArgb(CByte(200), CByte(200), CByte(200))
-        MCB_毛玻璃模式.Items.Add("不使用毛玻璃")
+        MCB_毛玻璃模式.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MCB_毛玻璃模式.DropDownSelectedForeColor = Color.White
+        MCB_毛玻璃模式.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        MCB_毛玻璃模式.Items.Add("不使用玻璃背景")
+        MCB_毛玻璃模式.Items.Add("使用干净玻璃")
         MCB_毛玻璃模式.Items.Add("使用简单毛玻璃")
         MCB_毛玻璃模式.Items.Add("使用更深毛玻璃")
         MCB_毛玻璃模式.Location = New Point(0, 10)
@@ -237,11 +244,11 @@ Partial Class Form_v6_设置_个性化
         MCB_毛玻璃模式.Padding = New Padding(10, 0, 10, 0)
         MCB_毛玻璃模式.Size = New Size(150, 32)
         MCB_毛玻璃模式.TabIndex = 1
-        MCB_毛玻璃模式.ToolTipBorderSize = 2
-        MCB_毛玻璃模式.ToolTipGap = 10
+        MCB_毛玻璃模式.ToolTipGap = -1
         MCB_毛玻璃模式.ToolTipMaxWidth = 350
         MCB_毛玻璃模式.ToolTipPadding = New Padding(15)
         MCB_毛玻璃模式.WaterText = "毛玻璃模式"
+        MCB_毛玻璃模式.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ' 
         ' HtmlColorLabel6
         ' 
@@ -254,7 +261,7 @@ Partial Class Form_v6_设置_个性化
         HtmlColorLabel6.Padding = New Padding(0, 10, 0, 0)
         HtmlColorLabel6.Size = New Size(738, 51)
         HtmlColorLabel6.TabIndex = 22
-        HtmlColorLabel6.Text = "毛玻璃模式下将禁用部分控件的遮罩色以实现全透背景<br>毛玻璃将大幅增加内存和显存占用，并对 UI 性能产生影响，不建议低端 CPU 使用"
+        HtmlColorLabel6.Text = "玻璃背景模式下将禁用部分控件的遮罩色以实现全透背景<br>玻璃背景将大幅增加内存和显存占用，并对 UI 性能产生影响，不建议低端 CPU 使用"
         ' 
         ' Panel3
         ' 
@@ -273,15 +280,17 @@ Partial Class Form_v6_设置_个性化
         ' MCB_边框宽度
         ' 
         MCB_边框宽度.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        MCB_边框宽度.BorderColorFocus = Color.Silver
         MCB_边框宽度.BorderRadius = 10
         MCB_边框宽度.BorderSize = 0
-        MCB_边框宽度.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
         MCB_边框宽度.Dock = DockStyle.Left
-        MCB_边框宽度.DropDownBorderSize = 2
+        MCB_边框宽度.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
+        MCB_边框宽度.DropDownHoverAnimationDuration = 0
+        MCB_边框宽度.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
         MCB_边框宽度.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
         MCB_边框宽度.DropDownPadding = New Padding(10)
-        MCB_边框宽度.DropDownScrollBarHoverColor = Color.FromArgb(CByte(200), CByte(200), CByte(200))
+        MCB_边框宽度.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MCB_边框宽度.DropDownSelectedForeColor = Color.White
+        MCB_边框宽度.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
         MCB_边框宽度.Items.Add("无边框")
         MCB_边框宽度.Items.Add("边框厚度 1")
         MCB_边框宽度.Items.Add("边框厚度 2")
@@ -291,11 +300,11 @@ Partial Class Form_v6_设置_个性化
         MCB_边框宽度.Padding = New Padding(10, 0, 10, 0)
         MCB_边框宽度.Size = New Size(150, 32)
         MCB_边框宽度.TabIndex = 12
-        MCB_边框宽度.ToolTipBorderSize = 2
-        MCB_边框宽度.ToolTipGap = 10
+        MCB_边框宽度.ToolTipGap = -1
         MCB_边框宽度.ToolTipMaxWidth = 350
         MCB_边框宽度.ToolTipPadding = New Padding(15)
         MCB_边框宽度.WaterText = "边框宽度"
+        MCB_边框宽度.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ' 
         ' JustEmptyControl8
         ' 
@@ -544,6 +553,7 @@ Partial Class Form_v6_设置_个性化
         HtmlColorLabel8.AutoSize = True
         HtmlColorLabel8.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel8.Dock = DockStyle.Fill
+        HtmlColorLabel8.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         HtmlColorLabel8.Location = New Point(200, 10)
         HtmlColorLabel8.Margin = New Padding(2)
         HtmlColorLabel8.Name = "HtmlColorLabel8"
@@ -574,7 +584,7 @@ Partial Class Form_v6_设置_个性化
         HtmlColorLabel2.AutoSize = True
         HtmlColorLabel2.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel2.Dock = DockStyle.Top
-        HtmlColorLabel2.ForeColor = Color.DarkGray
+        HtmlColorLabel2.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         HtmlColorLabel2.Location = New Point(20, 50)
         HtmlColorLabel2.Margin = New Padding(2)
         HtmlColorLabel2.Name = "HtmlColorLabel2"

@@ -29,6 +29,8 @@ Partial Class Form_v6_参数面板_自定义参数
         Dim ModernTab5 As LakeUI.ModernTabControl.ModernTab = New LakeUI.ModernTabControl.ModernTab()
         Dim ModernTab6 As LakeUI.ModernTabControl.ModernTab = New LakeUI.ModernTabControl.ModernTab()
         ModernTabControl1 = New LakeUI.ModernTabControl()
+        ModernPanel1 = New LakeUI.ModernPanel()
+        ModernPanel1.SuspendLayout()
         SuspendLayout()
         ' 
         ' ModernTabControl1
@@ -54,10 +56,24 @@ Partial Class Form_v6_参数面板_自定义参数
         ModernTabControl1.Size = New Size(835, 609)
         ModernTabControl1.TabAlignment = LakeUI.ModernTabControl.TabAlignmentEnum.Center
         ModernTabControl1.TabIndex = 1
+        ModernTabControl1.TabItemHoverBackColor = Color.FromArgb(CByte(40), CByte(200), CByte(200), CByte(200))
+        ModernTabControl1.TabItemSelectedBackColor = Color.FromArgb(CByte(80), CByte(200), CByte(200), CByte(200))
         ModernTabControl1.TabItemTextPadding = 20
         ModernTabControl1.TabStripBackColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
         ModernTabControl1.TabStripHeight = 55
         ModernTabControl1.TabStripPadding = New Padding(10)
+        ' 
+        ' ModernPanel1
+        ' 
+        ModernPanel1.BackColor1 = Color.FromArgb(CByte(24), CByte(24), CByte(24))
+        ModernPanel1.BorderSize = 0
+        ModernPanel1.Controls.Add(ModernTabControl1)
+        ModernPanel1.Dock = DockStyle.Fill
+        ModernPanel1.Location = New Point(0, 0)
+        ModernPanel1.Name = "ModernPanel1"
+        ModernPanel1.ScrollBarMode = LakeUI.ModernPanel.ScrollMode.None
+        ModernPanel1.Size = New Size(835, 609)
+        ModernPanel1.TabIndex = 2
         ' 
         ' Form_v6_参数面板_自定义参数
         ' 
@@ -65,13 +81,15 @@ Partial Class Form_v6_参数面板_自定义参数
         AutoScaleMode = AutoScaleMode.Dpi
         BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         ClientSize = New Size(835, 609)
-        Controls.Add(ModernTabControl1)
+        Controls.Add(ModernPanel1)
         Font = New Font("Microsoft YaHei UI", 10F)
         ForeColor = Color.Silver
         Name = "Form_v6_参数面板_自定义参数"
         Text = "Form_v6_参数面板_自定义参数"
+        ModernPanel1.ResumeLayout(False)
         ResumeLayout(False)
     End Sub
 
     Friend WithEvents ModernTabControl1 As LakeUI.ModernTabControl
+    Friend WithEvents ModernPanel1 As LakeUI.ModernPanel
 End Class

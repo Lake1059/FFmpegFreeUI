@@ -60,14 +60,14 @@ Partial Class Form_v6_参数面板_参数总览
         ModernTextBox1.BorderRadius = 10
         ModernTextBox1.BorderSize = 0
         ModernTextBox1.Dock = DockStyle.Fill
-        ModernTextBox1.Location = New Point(20, 61)
+        ModernTextBox1.Location = New Point(20, 60)
         ModernTextBox1.Margin = New Padding(2)
         ModernTextBox1.MultiLine = True
         ModernTextBox1.Name = "ModernTextBox1"
         ModernTextBox1.Padding = New Padding(15, 10, 15, 10)
         ModernTextBox1.ReadOnly = True
         ModernTextBox1.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernTextBox1.Size = New Size(340, 480)
+        ModernTextBox1.Size = New Size(340, 481)
         ModernTextBox1.TabIndex = 1
         ModernTextBox1.Text = "ModernTextBox1"
         ' 
@@ -101,12 +101,12 @@ Partial Class Form_v6_参数面板_参数总览
         HtmlColorLabel1.AutoSize = True
         HtmlColorLabel1.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel1.Dock = DockStyle.Top
-        HtmlColorLabel1.Font = New Font("Microsoft YaHei UI", 13F, FontStyle.Bold)
+        HtmlColorLabel1.Font = New Font("Microsoft YaHei UI", 13F)
         HtmlColorLabel1.Location = New Point(20, 20)
         HtmlColorLabel1.Margin = New Padding(2)
         HtmlColorLabel1.Name = "HtmlColorLabel1"
         HtmlColorLabel1.Padding = New Padding(0, 0, 0, 15)
-        HtmlColorLabel1.Size = New Size(340, 41)
+        HtmlColorLabel1.Size = New Size(340, 40)
         HtmlColorLabel1.TabIndex = 0
         HtmlColorLabel1.Text = "参数总览"
         HtmlColorLabel1.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.Center
@@ -131,14 +131,14 @@ Partial Class Form_v6_参数面板_参数总览
         ModernTextBox2.BorderRadius = 10
         ModernTextBox2.BorderSize = 0
         ModernTextBox2.Dock = DockStyle.Fill
-        ModernTextBox2.Location = New Point(10, 61)
+        ModernTextBox2.Location = New Point(10, 60)
         ModernTextBox2.Margin = New Padding(2)
         ModernTextBox2.MultiLine = True
         ModernTextBox2.Name = "ModernTextBox2"
         ModernTextBox2.Padding = New Padding(15, 10, 15, 10)
         ModernTextBox2.ReadOnly = True
         ModernTextBox2.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernTextBox2.Size = New Size(362, 480)
+        ModernTextBox2.Size = New Size(362, 481)
         ModernTextBox2.TabIndex = 3
         ModernTextBox2.Text = "ModernTextBox2"
         ' 
@@ -172,12 +172,12 @@ Partial Class Form_v6_参数面板_参数总览
         HtmlColorLabel2.AutoSize = True
         HtmlColorLabel2.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel2.Dock = DockStyle.Top
-        HtmlColorLabel2.Font = New Font("Microsoft YaHei UI", 13F, FontStyle.Bold)
+        HtmlColorLabel2.Font = New Font("Microsoft YaHei UI", 13F)
         HtmlColorLabel2.Location = New Point(10, 20)
         HtmlColorLabel2.Margin = New Padding(2)
         HtmlColorLabel2.Name = "HtmlColorLabel2"
         HtmlColorLabel2.Padding = New Padding(0, 0, 0, 15)
-        HtmlColorLabel2.Size = New Size(362, 41)
+        HtmlColorLabel2.Size = New Size(362, 40)
         HtmlColorLabel2.TabIndex = 2
         HtmlColorLabel2.Text = "命令行模板"
         HtmlColorLabel2.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.Center

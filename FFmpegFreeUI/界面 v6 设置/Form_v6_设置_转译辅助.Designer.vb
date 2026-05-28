@@ -88,16 +88,15 @@ Partial Class Form_v6_设置_转译辅助
         ' MTB_覆盖参数传递
         ' 
         MTB_覆盖参数传递.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        MTB_覆盖参数传递.BorderColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        MTB_覆盖参数传递.BorderColorFocus = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        MTB_覆盖参数传递.BorderColor = Color.Empty
+        MTB_覆盖参数传递.BorderColorFocus = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
         MTB_覆盖参数传递.BorderRadius = 10
         MTB_覆盖参数传递.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
         MTB_覆盖参数传递.Dock = DockStyle.Fill
         MTB_覆盖参数传递.Location = New Point(0, 10)
-        MTB_覆盖参数传递.Margin = New Padding(2, 2, 2, 2)
+        MTB_覆盖参数传递.Margin = New Padding(2)
         MTB_覆盖参数传递.Name = "MTB_覆盖参数传递"
         MTB_覆盖参数传递.Padding = New Padding(10, 0, 10, 0)
-        MTB_覆盖参数传递.ScrollBarHoverColor = Color.FromArgb(CByte(200), CByte(200), CByte(200))
         MTB_覆盖参数传递.Size = New Size(745, 32)
         MTB_覆盖参数传递.TabIndex = 6
         ' 
@@ -128,16 +127,15 @@ Partial Class Form_v6_设置_转译辅助
         ' MCB_替代进程的文件名
         ' 
         MCB_替代进程的文件名.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        MCB_替代进程的文件名.BorderColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        MCB_替代进程的文件名.BorderColorFocus = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        MCB_替代进程的文件名.BorderColor = Color.Empty
+        MCB_替代进程的文件名.BorderColorFocus = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
         MCB_替代进程的文件名.BorderRadius = 10
         MCB_替代进程的文件名.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
         MCB_替代进程的文件名.Dock = DockStyle.Fill
         MCB_替代进程的文件名.Location = New Point(0, 10)
-        MCB_替代进程的文件名.Margin = New Padding(2, 2, 2, 2)
+        MCB_替代进程的文件名.Margin = New Padding(2)
         MCB_替代进程的文件名.Name = "MCB_替代进程的文件名"
         MCB_替代进程的文件名.Padding = New Padding(10, 0, 10, 0)
-        MCB_替代进程的文件名.ScrollBarHoverColor = Color.FromArgb(CByte(200), CByte(200), CByte(200))
         MCB_替代进程的文件名.Size = New Size(745, 32)
         MCB_替代进程的文件名.TabIndex = 6
         ' 

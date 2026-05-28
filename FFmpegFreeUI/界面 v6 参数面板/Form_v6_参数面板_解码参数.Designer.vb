@@ -84,19 +84,19 @@ Partial Class Form_v6_参数面板_解码参数
         ' ModernTextBox2
         ' 
         ModernTextBox2.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernTextBox2.BorderColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernTextBox2.BorderColorFocus = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        ModernTextBox2.BorderColor = Color.Transparent
+        ModernTextBox2.BorderColorFocus = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
         ModernTextBox2.BorderRadius = 10
         ModernTextBox2.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
         ModernTextBox2.Dock = DockStyle.Left
         ModernTextBox2.Location = New Point(0, 10)
-        ModernTextBox2.Margin = New Padding(2, 2, 2, 2)
+        ModernTextBox2.Margin = New Padding(2)
         ModernTextBox2.Name = "ModernTextBox2"
         ModernTextBox2.Padding = New Padding(10, 0, 10, 0)
-        ModernTextBox2.ScrollBarHoverColor = Color.FromArgb(CByte(200), CByte(200), CByte(200))
         ModernTextBox2.Size = New Size(220, 32)
         ModernTextBox2.TabIndex = 4
         ModernTextBox2.WaterText = "?"
+        ModernTextBox2.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ' 
         ' Panel3
         ' 
@@ -111,30 +111,31 @@ Partial Class Form_v6_参数面板_解码参数
         ' ModernComboBox3
         ' 
         ModernComboBox3.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernComboBox3.BorderColorFocus = Color.Silver
         ModernComboBox3.BorderRadius = 10
         ModernComboBox3.BorderSize = 0
-        ModernComboBox3.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
         ModernComboBox3.Dock = DockStyle.Left
-        ModernComboBox3.DropDownBorderSize = 2
+        ModernComboBox3.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
+        ModernComboBox3.DropDownHoverAnimationDuration = 0
+        ModernComboBox3.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
         ModernComboBox3.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
         ModernComboBox3.DropDownPadding = New Padding(10)
-        ModernComboBox3.DropDownScrollBarHoverColor = Color.FromArgb(CByte(200), CByte(200), CByte(200))
-        ModernComboBox3.Editable = True
+        ModernComboBox3.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        ModernComboBox3.DropDownSelectedForeColor = Color.White
+        ModernComboBox3.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        ModernComboBox3.Margin = New Padding(2, 2, 2, 2)
+        ModernComboBox3.Padding = New Padding(10, 0, 10, 0)
+        ModernComboBox3.ToolTipGap = -1
+        ModernComboBox3.ToolTipMaxWidth = 350
+        ModernComboBox3.ToolTipPadding = New Padding(15)
+        ModernComboBox3.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ModernComboBox3.Items.Add("")
         ModernComboBox3.Items.Add("-hwaccel_device")
         ModernComboBox3.Items.Add("-init_hw_device")
         ModernComboBox3.Items.Add("-qsv_device")
         ModernComboBox3.Location = New Point(0, 10)
-        ModernComboBox3.Margin = New Padding(2, 2, 2, 2)
         ModernComboBox3.Name = "ModernComboBox3"
-        ModernComboBox3.Padding = New Padding(10, 0, 10, 0)
         ModernComboBox3.Size = New Size(220, 32)
         ModernComboBox3.TabIndex = 0
-        ModernComboBox3.ToolTipBorderSize = 2
-        ModernComboBox3.ToolTipGap = 10
-        ModernComboBox3.ToolTipMaxWidth = 350
-        ModernComboBox3.ToolTipPadding = New Padding(15)
         ModernComboBox3.WaterText = "选择参数"
         ' 
         ' HtmlColorLabel5
@@ -142,13 +143,14 @@ Partial Class Form_v6_参数面板_解码参数
         HtmlColorLabel5.AutoSize = True
         HtmlColorLabel5.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel5.Dock = DockStyle.Top
+        HtmlColorLabel5.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         HtmlColorLabel5.Location = New Point(20, 328)
         HtmlColorLabel5.Margin = New Padding(2)
         HtmlColorLabel5.Name = "HtmlColorLabel5"
         HtmlColorLabel5.Padding = New Padding(0, 20, 0, 5)
         HtmlColorLabel5.Size = New Size(713, 50)
         HtmlColorLabel5.TabIndex = 22
-        HtmlColorLabel5.Text = "<span style=""font-size:13"">硬件加速解码设备</span>   <span style=""font-size:10pt; color:DarkGray"">如果安装了多张同品牌显卡可以指定卡，不一定有效</span>"
+        HtmlColorLabel5.Text = "<span style=""font-size:13; color:Silver"">硬件加速解码设备</span>   如果安装了多张同品牌显卡可以指定卡，不一定有效"
         ' 
         ' Panel2
         ' 
@@ -163,31 +165,32 @@ Partial Class Form_v6_参数面板_解码参数
         ' ModernComboBox2
         ' 
         ModernComboBox2.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernComboBox2.BorderColorFocus = Color.Silver
         ModernComboBox2.BorderRadius = 10
         ModernComboBox2.BorderSize = 0
-        ModernComboBox2.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
         ModernComboBox2.Dock = DockStyle.Left
-        ModernComboBox2.DropDownBorderSize = 2
+        ModernComboBox2.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
+        ModernComboBox2.DropDownHoverAnimationDuration = 0
+        ModernComboBox2.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
         ModernComboBox2.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
         ModernComboBox2.DropDownPadding = New Padding(10)
-        ModernComboBox2.DropDownScrollBarHoverColor = Color.FromArgb(CByte(200), CByte(200), CByte(200))
-        ModernComboBox2.Editable = True
+        ModernComboBox2.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        ModernComboBox2.DropDownSelectedForeColor = Color.White
+        ModernComboBox2.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        ModernComboBox2.Margin = New Padding(2, 2, 2, 2)
+        ModernComboBox2.Padding = New Padding(10, 0, 10, 0)
+        ModernComboBox2.ToolTipGap = -1
+        ModernComboBox2.ToolTipMaxWidth = 350
+        ModernComboBox2.ToolTipPadding = New Padding(15)
+        ModernComboBox2.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ModernComboBox2.Items.Add("")
         ModernComboBox2.Items.Add("nv12")
         ModernComboBox2.Items.Add("yuv420p")
         ModernComboBox2.Items.Add("p010")
         ModernComboBox2.Items.Add("d3d11")
         ModernComboBox2.Location = New Point(0, 10)
-        ModernComboBox2.Margin = New Padding(2, 2, 2, 2)
         ModernComboBox2.Name = "ModernComboBox2"
-        ModernComboBox2.Padding = New Padding(10, 0, 10, 0)
         ModernComboBox2.Size = New Size(220, 32)
         ModernComboBox2.TabIndex = 0
-        ModernComboBox2.ToolTipBorderSize = 2
-        ModernComboBox2.ToolTipGap = 10
-        ModernComboBox2.ToolTipMaxWidth = 350
-        ModernComboBox2.ToolTipPadding = New Padding(15)
         ModernComboBox2.WaterText = "-hwaccel_output_format"
         ' 
         ' HtmlColorLabel4
@@ -195,26 +198,28 @@ Partial Class Form_v6_参数面板_解码参数
         HtmlColorLabel4.AutoSize = True
         HtmlColorLabel4.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel4.Dock = DockStyle.Top
+        HtmlColorLabel4.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         HtmlColorLabel4.Location = New Point(20, 260)
         HtmlColorLabel4.Margin = New Padding(2)
         HtmlColorLabel4.Name = "HtmlColorLabel4"
         HtmlColorLabel4.Padding = New Padding(0, 0, 0, 5)
         HtmlColorLabel4.Size = New Size(713, 26)
         HtmlColorLabel4.TabIndex = 20
-        HtmlColorLabel4.Text = "比如 <span style=""font-size:10pt; color:CornflowerBlue"">I卡解码</span> + <span style=""font-size:10pt; color:YellowGreen"">N卡编码</span> 这样的情况，出问题再考虑！"
+        HtmlColorLabel4.Text = "比如 <span style=""color:CornflowerBlue"">I卡解码</span> + <span style=""color:YellowGreen"">N卡编码</span> 这样的情况，出问题再考虑！"
         ' 
         ' HtmlColorLabel3
         ' 
         HtmlColorLabel3.AutoSize = True
         HtmlColorLabel3.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel3.Dock = DockStyle.Top
+        HtmlColorLabel3.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         HtmlColorLabel3.Location = New Point(20, 210)
         HtmlColorLabel3.Margin = New Padding(2)
         HtmlColorLabel3.Name = "HtmlColorLabel3"
         HtmlColorLabel3.Padding = New Padding(0, 20, 0, 5)
         HtmlColorLabel3.Size = New Size(713, 50)
         HtmlColorLabel3.TabIndex = 19
-        HtmlColorLabel3.Text = "<span style=""font-size:13"">解码数据格式</span>   <span style=""font-size:10pt; color:DarkGray"">编解码都是 CPU 不需要考虑，通常没必要指定</span>"
+        HtmlColorLabel3.Text = "<span style=""font-size:13; color:Silver"">解码数据格式</span>   编解码都是 CPU 不需要考虑，通常没必要指定"
         ' 
         ' Panel5
         ' 
@@ -229,32 +234,33 @@ Partial Class Form_v6_参数面板_解码参数
         ' ModernTextBox1
         ' 
         ModernTextBox1.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernTextBox1.BorderColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernTextBox1.BorderColorFocus = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        ModernTextBox1.BorderColor = Color.Transparent
+        ModernTextBox1.BorderColorFocus = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
         ModernTextBox1.BorderRadius = 10
         ModernTextBox1.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
         ModernTextBox1.Dock = DockStyle.Left
         ModernTextBox1.Location = New Point(0, 10)
-        ModernTextBox1.Margin = New Padding(2, 2, 2, 2)
+        ModernTextBox1.Margin = New Padding(2)
         ModernTextBox1.Name = "ModernTextBox1"
         ModernTextBox1.Padding = New Padding(10, 0, 10, 0)
-        ModernTextBox1.ScrollBarHoverColor = Color.FromArgb(CByte(200), CByte(200), CByte(200))
         ModernTextBox1.Size = New Size(100, 32)
         ModernTextBox1.TabIndex = 4
         ModernTextBox1.WaterText = "-threads"
+        ModernTextBox1.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ' 
         ' HtmlColorLabel2
         ' 
         HtmlColorLabel2.AutoSize = True
         HtmlColorLabel2.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel2.Dock = DockStyle.Top
+        HtmlColorLabel2.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         HtmlColorLabel2.Location = New Point(20, 118)
         HtmlColorLabel2.Margin = New Padding(2)
         HtmlColorLabel2.Name = "HtmlColorLabel2"
         HtmlColorLabel2.Padding = New Padding(0, 20, 0, 5)
         HtmlColorLabel2.Size = New Size(713, 50)
         HtmlColorLabel2.TabIndex = 17
-        HtmlColorLabel2.Text = "<span style=""font-size:13"">CPU 解码线程数</span>   <span style=""font-size:10pt; color:DarkGray"">不一定有效，通常没必要指定</span>"
+        HtmlColorLabel2.Text = "<span style=""font-size:13; color:Silver"">CPU 解码线程数</span>   不一定有效，通常没必要指定"
         ' 
         ' Panel1
         ' 
@@ -269,15 +275,23 @@ Partial Class Form_v6_参数面板_解码参数
         ' ModernComboBox1
         ' 
         ModernComboBox1.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernComboBox1.BorderColorFocus = Color.Silver
         ModernComboBox1.BorderRadius = 10
         ModernComboBox1.BorderSize = 0
-        ModernComboBox1.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
         ModernComboBox1.Dock = DockStyle.Left
-        ModernComboBox1.DropDownBorderSize = 2
+        ModernComboBox1.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
+        ModernComboBox1.DropDownHoverAnimationDuration = 0
+        ModernComboBox1.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
         ModernComboBox1.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
         ModernComboBox1.DropDownPadding = New Padding(10)
-        ModernComboBox1.DropDownScrollBarHoverColor = Color.FromArgb(CByte(200), CByte(200), CByte(200))
+        ModernComboBox1.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        ModernComboBox1.DropDownSelectedForeColor = Color.White
+        ModernComboBox1.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        ModernComboBox1.Margin = New Padding(2, 2, 2, 2)
+        ModernComboBox1.Padding = New Padding(10, 0, 10, 0)
+        ModernComboBox1.ToolTipGap = -1
+        ModernComboBox1.ToolTipMaxWidth = 350
+        ModernComboBox1.ToolTipPadding = New Padding(15)
+        ModernComboBox1.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ModernComboBox1.Items.Add("")
         ModernComboBox1.Items.Add("d3d11va")
         ModernComboBox1.Items.Add("d3d12va")
@@ -289,15 +303,9 @@ Partial Class Form_v6_参数面板_解码参数
         ModernComboBox1.Items.Add("vaapi")
         ModernComboBox1.Items.Add("opencl")
         ModernComboBox1.Location = New Point(0, 10)
-        ModernComboBox1.Margin = New Padding(2, 2, 2, 2)
         ModernComboBox1.Name = "ModernComboBox1"
-        ModernComboBox1.Padding = New Padding(10, 0, 10, 0)
         ModernComboBox1.Size = New Size(150, 32)
         ModernComboBox1.TabIndex = 0
-        ModernComboBox1.ToolTipBorderSize = 2
-        ModernComboBox1.ToolTipGap = 10
-        ModernComboBox1.ToolTipMaxWidth = 350
-        ModernComboBox1.ToolTipPadding = New Padding(15)
         ModernComboBox1.WaterText = "-hwaccel"
         ' 
         ' HtmlColorLabel6
@@ -305,6 +313,7 @@ Partial Class Form_v6_参数面板_解码参数
         HtmlColorLabel6.AutoSize = True
         HtmlColorLabel6.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel6.Dock = DockStyle.Top
+        HtmlColorLabel6.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         HtmlColorLabel6.Location = New Point(20, 50)
         HtmlColorLabel6.Margin = New Padding(2)
         HtmlColorLabel6.Name = "HtmlColorLabel6"
@@ -318,13 +327,14 @@ Partial Class Form_v6_参数面板_解码参数
         HtmlColorLabel1.AutoSize = True
         HtmlColorLabel1.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel1.Dock = DockStyle.Top
+        HtmlColorLabel1.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         HtmlColorLabel1.Location = New Point(20, 20)
         HtmlColorLabel1.Margin = New Padding(2)
         HtmlColorLabel1.Name = "HtmlColorLabel1"
         HtmlColorLabel1.Padding = New Padding(0, 0, 0, 5)
         HtmlColorLabel1.Size = New Size(713, 30)
         HtmlColorLabel1.TabIndex = 14
-        HtmlColorLabel1.Text = "<span style=""font-size:13"">解码器</span>   <span style=""font-size:10pt; color:DarkGray"">本页如果不知道选什么就不要选</span>   <span style=""font-size:10pt; color:Orange"">总有人他非要选然后跑不起来还死磕</span>"
+        HtmlColorLabel1.Text = "<span style=""font-size:13; color:Silver"">解码器</span>   本页如果不知道选什么就不要选   <span style=""color:Orange"">总有人他非要选然后跑不起来还死磕</span>"
         ' 
         ' Form_v6_参数面板_解码参数
         ' 

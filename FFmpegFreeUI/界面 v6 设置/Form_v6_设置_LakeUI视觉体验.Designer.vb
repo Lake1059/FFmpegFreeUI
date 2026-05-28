@@ -56,7 +56,6 @@ Partial Class Form_v6_设置_LakeUI视觉体验
         HtmlColorLabel3.AutoSize = True
         HtmlColorLabel3.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel3.Dock = DockStyle.Top
-        HtmlColorLabel3.ForeColor = Color.DarkGray
         HtmlColorLabel3.Location = New Point(20, 177)
         HtmlColorLabel3.Margin = New Padding(2)
         HtmlColorLabel3.Name = "HtmlColorLabel3"
@@ -94,7 +93,7 @@ Partial Class Form_v6_设置_LakeUI视觉体验
         ' 
         HtmlColorLabel7.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel7.Dock = DockStyle.Fill
-        HtmlColorLabel7.ForeColor = Color.Gray
+        HtmlColorLabel7.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         HtmlColorLabel7.Location = New Point(200, 10)
         HtmlColorLabel7.Margin = New Padding(2)
         HtmlColorLabel7.Name = "HtmlColorLabel7"
@@ -107,15 +106,17 @@ Partial Class Form_v6_设置_LakeUI视觉体验
         ' MCB_窗口样式
         ' 
         MCB_窗口样式.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        MCB_窗口样式.BorderColorFocus = Color.Silver
         MCB_窗口样式.BorderRadius = 10
         MCB_窗口样式.BorderSize = 0
-        MCB_窗口样式.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
         MCB_窗口样式.Dock = DockStyle.Left
-        MCB_窗口样式.DropDownBorderSize = 2
+        MCB_窗口样式.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
+        MCB_窗口样式.DropDownHoverAnimationDuration = 0
+        MCB_窗口样式.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
         MCB_窗口样式.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
         MCB_窗口样式.DropDownPadding = New Padding(10)
-        MCB_窗口样式.DropDownScrollBarHoverColor = Color.FromArgb(CByte(200), CByte(200), CByte(200))
+        MCB_窗口样式.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MCB_窗口样式.DropDownSelectedForeColor = Color.White
+        MCB_窗口样式.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
         MCB_窗口样式.Items.Add("不干涉")
         MCB_窗口样式.Items.Add("Windows 暗黑模式")
         MCB_窗口样式.Items.Add("LakeUI 特别呈现")
@@ -125,35 +126,37 @@ Partial Class Form_v6_设置_LakeUI视觉体验
         MCB_窗口样式.Padding = New Padding(10, 0, 10, 0)
         MCB_窗口样式.Size = New Size(200, 32)
         MCB_窗口样式.TabIndex = 0
-        MCB_窗口样式.ToolTipBorderSize = 2
-        MCB_窗口样式.ToolTipGap = 10
+        MCB_窗口样式.ToolTipGap = -1
         MCB_窗口样式.ToolTipMaxWidth = 350
         MCB_窗口样式.ToolTipPadding = New Padding(15)
+        MCB_窗口样式.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ' 
         ' HtmlColorLabel1
         ' 
         HtmlColorLabel1.AutoSize = True
         HtmlColorLabel1.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel1.Dock = DockStyle.Top
+        HtmlColorLabel1.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         HtmlColorLabel1.Location = New Point(20, 65)
         HtmlColorLabel1.Margin = New Padding(2)
         HtmlColorLabel1.Name = "HtmlColorLabel1"
         HtmlColorLabel1.Size = New Size(702, 25)
         HtmlColorLabel1.TabIndex = 8
-        HtmlColorLabel1.Text = "<span style=""font-size:13"">窗口样式</span>   <span style=""font-size:10pt; color:DarkGray"">特别呈现完全体需要 Windows 11 以及更新版本，需要重启软件</span>"
+        HtmlColorLabel1.Text = "<span style=""font-size:13; color:Silver"">窗口样式</span>   特别呈现完全体需要 Windows 11 以及更新版本，需要重启软件"
         ' 
         ' HtmlColorLabel5
         ' 
         HtmlColorLabel5.AutoSize = True
         HtmlColorLabel5.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel5.Dock = DockStyle.Top
+        HtmlColorLabel5.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         HtmlColorLabel5.Location = New Point(20, 20)
         HtmlColorLabel5.Margin = New Padding(2)
         HtmlColorLabel5.Name = "HtmlColorLabel5"
         HtmlColorLabel5.Padding = New Padding(0, 0, 0, 20)
         HtmlColorLabel5.Size = New Size(702, 45)
         HtmlColorLabel5.TabIndex = 26
-        HtmlColorLabel5.Text = "<span style=""font-size:13"">Win32 COM 传统窗口重写</span>   <span style=""font-size:10pt; color:DarkGray"">由 ThisIsYourWindow 控件特别呈现</span>"
+        HtmlColorLabel5.Text = "<span style=""font-size:13; color:Silver"">Win32 COM 传统窗口重写</span>   由 ThisIsYourWindow 控件特别呈现"
         ' 
         ' Form_v6_设置_LakeUI视觉体验
         ' 

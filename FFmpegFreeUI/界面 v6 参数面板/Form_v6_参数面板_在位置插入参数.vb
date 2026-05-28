@@ -4,7 +4,7 @@
     End Sub
 
     Private Sub Form_v6_参数面板_在位置插入参数_SizeChanged(sender As Object, e As EventArgs) Handles Me.SizeChanged
-        Dim a = Me.ClientSize.Height - Me.Padding.Top - Me.Padding.Bottom
+        Dim a = Me.ModernPanel1.Height - Me.ModernPanel1.Padding.Top - Me.ModernPanel1.Padding.Bottom
         a -= Me.HtmlColorLabel1.Height
         a -= Me.HtmlColorLabel2.Height
         a -= Me.HtmlColorLabel3.Height
