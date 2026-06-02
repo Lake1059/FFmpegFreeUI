@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class Form_v6_参数面板_画面裁剪窗口
+Partial Class Form_v6_参数面板_画面区域选择窗口
     Inherits System.Windows.Forms.Form
 
     'Form 重写 Dispose，以清理组件列表。
@@ -33,9 +33,9 @@ Partial Class Form_v6_参数面板_画面裁剪窗口
         JustEmptyControl3 = New LakeUI.JustEmptyControl()
         ModernTextBox1 = New LakeUI.ModernTextBox()
         JustEmptyControl2 = New LakeUI.JustEmptyControl()
-        ModernButton2 = New LakeUI.ModernButton()
+        MB_完成 = New LakeUI.ModernButton()
         JustEmptyControl1 = New LakeUI.JustEmptyControl()
-        ModernButton1 = New LakeUI.ModernButton()
+        MB_打开 = New LakeUI.ModernButton()
         HtmlColorLabel1 = New LakeUI.HtmlColorLabel()
         ModernPanel1.SuspendLayout()
         Panel2.SuspendLayout()
@@ -83,9 +83,9 @@ Partial Class Form_v6_参数面板_画面裁剪窗口
         Panel2.Controls.Add(JustEmptyControl3)
         Panel2.Controls.Add(ModernTextBox1)
         Panel2.Controls.Add(JustEmptyControl2)
-        Panel2.Controls.Add(ModernButton2)
+        Panel2.Controls.Add(MB_完成)
         Panel2.Controls.Add(JustEmptyControl1)
-        Panel2.Controls.Add(ModernButton1)
+        Panel2.Controls.Add(MB_打开)
         Panel2.Dock = DockStyle.Top
         Panel2.Location = New Point(20, 61)
         Panel2.Name = "Panel2"
@@ -121,13 +121,8 @@ Partial Class Form_v6_参数面板_画面裁剪窗口
         ModernComboBox1.DropDownPadding = New Padding(10)
         ModernComboBox1.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernComboBox1.DropDownSelectedForeColor = Color.White
+        ModernComboBox1.Editable = True
         ModernComboBox1.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
-        ModernComboBox1.Margin = New Padding(2, 2, 2, 2)
-        ModernComboBox1.Padding = New Padding(10, 0, 10, 0)
-        ModernComboBox1.ToolTipGap = -1
-        ModernComboBox1.ToolTipMaxWidth = 350
-        ModernComboBox1.ToolTipPadding = New Padding(15)
-        ModernComboBox1.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ModernComboBox1.Items.Add("自由")
         ModernComboBox1.Items.Add("21:9")
         ModernComboBox1.Items.Add("16:9")
@@ -136,10 +131,17 @@ Partial Class Form_v6_参数面板_画面裁剪窗口
         ModernComboBox1.Items.Add("4:3")
         ModernComboBox1.Items.Add("1:1")
         ModernComboBox1.Location = New Point(502, 10)
+        ModernComboBox1.Margin = New Padding(2, 2, 2, 2)
         ModernComboBox1.Name = "ModernComboBox1"
+        ModernComboBox1.Padding = New Padding(10, 0, 10, 0)
+        ModernComboBox1.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernComboBox1.Size = New Size(100, 32)
         ModernComboBox1.TabIndex = 12
+        ModernComboBox1.ToolTipGap = -1
+        ModernComboBox1.ToolTipMaxWidth = 350
+        ModernComboBox1.ToolTipPadding = New Padding(15)
         ModernComboBox1.WaterText = "比例"
+        ModernComboBox1.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ' 
         ' JustEmptyControl4
         ' 
@@ -152,19 +154,20 @@ Partial Class Form_v6_参数面板_画面裁剪窗口
         ' ModernTextBox2
         ' 
         ModernTextBox2.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernTextBox2.BorderColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernTextBox2.BorderColorFocus = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        ModernTextBox2.BorderColor = Color.Transparent
+        ModernTextBox2.BorderColorFocus = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
         ModernTextBox2.BorderRadius = 10
         ModernTextBox2.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
         ModernTextBox2.Dock = DockStyle.Left
         ModernTextBox2.Location = New Point(341, 10)
-        ModernTextBox2.Margin = New Padding(2, 2, 2, 2)
+        ModernTextBox2.Margin = New Padding(2)
         ModernTextBox2.Name = "ModernTextBox2"
         ModernTextBox2.Padding = New Padding(10, 0, 10, 0)
-        ModernTextBox2.ScrollBarHoverColor = Color.FromArgb(CByte(200), CByte(200), CByte(200))
+        ModernTextBox2.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernTextBox2.Size = New Size(150, 32)
         ModernTextBox2.TabIndex = 11
         ModernTextBox2.WaterText = "指定时间戳"
+        ModernTextBox2.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ' 
         ' JustEmptyControl3
         ' 
@@ -177,19 +180,20 @@ Partial Class Form_v6_参数面板_画面裁剪窗口
         ' ModernTextBox1
         ' 
         ModernTextBox1.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernTextBox1.BorderColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernTextBox1.BorderColorFocus = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        ModernTextBox1.BorderColor = Color.Transparent
+        ModernTextBox1.BorderColorFocus = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
         ModernTextBox1.BorderRadius = 10
         ModernTextBox1.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
         ModernTextBox1.Dock = DockStyle.Left
         ModernTextBox1.Location = New Point(162, 10)
-        ModernTextBox1.Margin = New Padding(2, 2, 2, 2)
+        ModernTextBox1.Margin = New Padding(2)
         ModernTextBox1.Name = "ModernTextBox1"
         ModernTextBox1.Padding = New Padding(10, 0, 10, 0)
-        ModernTextBox1.ScrollBarHoverColor = Color.FromArgb(CByte(200), CByte(200), CByte(200))
+        ModernTextBox1.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernTextBox1.Size = New Size(168, 32)
         ModernTextBox1.TabIndex = 9
         ModernTextBox1.WaterText = "宽:高:左上X:左上Y"
+        ModernTextBox1.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ' 
         ' JustEmptyControl2
         ' 
@@ -199,20 +203,20 @@ Partial Class Form_v6_参数面板_画面裁剪窗口
         JustEmptyControl2.Size = New Size(11, 32)
         JustEmptyControl2.TabIndex = 8
         ' 
-        ' ModernButton2
+        ' MB_完成
         ' 
-        ModernButton2.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernButton2.BorderRadius = 10
-        ModernButton2.BorderSize = 0
-        ModernButton2.Dock = DockStyle.Left
-        ModernButton2.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
-        ModernButton2.Location = New Point(81, 10)
-        ModernButton2.Margin = New Padding(2)
-        ModernButton2.Name = "ModernButton2"
-        ModernButton2.PressedBackColor1 = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
-        ModernButton2.Size = New Size(70, 32)
-        ModernButton2.TabIndex = 7
-        ModernButton2.Text = "完成"
+        MB_完成.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MB_完成.BorderRadius = 10
+        MB_完成.BorderSize = 0
+        MB_完成.Dock = DockStyle.Left
+        MB_完成.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        MB_完成.Location = New Point(81, 10)
+        MB_完成.Margin = New Padding(2)
+        MB_完成.Name = "MB_完成"
+        MB_完成.PressedBackColor1 = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
+        MB_完成.Size = New Size(70, 32)
+        MB_完成.TabIndex = 7
+        MB_完成.Text = "完成"
         ' 
         ' JustEmptyControl1
         ' 
@@ -222,20 +226,20 @@ Partial Class Form_v6_参数面板_画面裁剪窗口
         JustEmptyControl1.Size = New Size(11, 32)
         JustEmptyControl1.TabIndex = 6
         ' 
-        ' ModernButton1
+        ' MB_打开
         ' 
-        ModernButton1.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernButton1.BorderRadius = 10
-        ModernButton1.BorderSize = 0
-        ModernButton1.Dock = DockStyle.Left
-        ModernButton1.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
-        ModernButton1.Location = New Point(0, 10)
-        ModernButton1.Margin = New Padding(2)
-        ModernButton1.Name = "ModernButton1"
-        ModernButton1.PressedBackColor1 = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
-        ModernButton1.Size = New Size(70, 32)
-        ModernButton1.TabIndex = 1
-        ModernButton1.Text = "打开"
+        MB_打开.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MB_打开.BorderRadius = 10
+        MB_打开.BorderSize = 0
+        MB_打开.Dock = DockStyle.Left
+        MB_打开.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        MB_打开.Location = New Point(0, 10)
+        MB_打开.Margin = New Padding(2)
+        MB_打开.Name = "MB_打开"
+        MB_打开.PressedBackColor1 = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
+        MB_打开.Size = New Size(70, 32)
+        MB_打开.TabIndex = 1
+        MB_打开.Text = "打开"
         ' 
         ' HtmlColorLabel1
         ' 
@@ -249,7 +253,7 @@ Partial Class Form_v6_参数面板_画面裁剪窗口
         HtmlColorLabel1.TabIndex = 15
         HtmlColorLabel1.Text = "鼠标左键移动视野，鼠标滚轮控制缩放，鼠标右键绘制新框选<br>默认取第 10 秒处截图，可以先自行设定再打开视频"
         ' 
-        ' Form_v6_参数面板_画面裁剪窗口
+        ' Form_v6_参数面板_画面区域选择窗口
         ' 
         AutoScaleDimensions = New SizeF(96F, 96F)
         AutoScaleMode = AutoScaleMode.Dpi
@@ -260,11 +264,11 @@ Partial Class Form_v6_参数面板_画面裁剪窗口
         ForeColor = Color.Silver
         MaximizeBox = False
         MinimizeBox = False
-        Name = "Form_v6_参数面板_画面裁剪窗口"
+        Name = "Form_v6_参数面板_画面区域选择窗口"
         ShowIcon = False
         ShowInTaskbar = False
         StartPosition = FormStartPosition.Manual
-        Text = "画面裁剪"
+        Text = "画面区域选择"
         ModernPanel1.ResumeLayout(False)
         ModernPanel1.PerformLayout()
         Panel2.ResumeLayout(False)
@@ -282,8 +286,8 @@ Partial Class Form_v6_参数面板_画面裁剪窗口
     Friend WithEvents JustEmptyControl3 As LakeUI.JustEmptyControl
     Friend WithEvents ModernTextBox1 As LakeUI.ModernTextBox
     Friend WithEvents JustEmptyControl2 As LakeUI.JustEmptyControl
-    Friend WithEvents ModernButton2 As LakeUI.ModernButton
+    Friend WithEvents MB_完成 As LakeUI.ModernButton
     Friend WithEvents JustEmptyControl1 As LakeUI.JustEmptyControl
-    Friend WithEvents ModernButton1 As LakeUI.ModernButton
+    Friend WithEvents MB_打开 As LakeUI.ModernButton
     Friend WithEvents HtmlColorLabel1 As LakeUI.HtmlColorLabel
 End Class

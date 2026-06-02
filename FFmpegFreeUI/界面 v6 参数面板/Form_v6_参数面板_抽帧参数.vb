@@ -13,4 +13,8 @@ Public Class Form_v6_参数面板_抽帧参数
         e.Cancel = True
         Me.Hide()
     End Sub
+
+    Private Sub Form_v6_参数面板_抽帧参数_SizeChanged(sender As Object, e As EventArgs) Handles Me.SizeChanged
+        Panel6.Width = Me.ClientSize.Width * 0.5
+    End Sub
 End Class

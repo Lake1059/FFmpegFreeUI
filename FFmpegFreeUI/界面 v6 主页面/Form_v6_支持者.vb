@@ -2,16 +2,15 @@
 
 Public Class Form_v6_支持者
 
-    Public Shared Property 付费支持者列表 As New List(Of String) From {
+    Public Shared ReadOnly 付费支持者列表 As New List(Of String) From {
         "易相逢|#FBE4FF", "夜枫|#CCA4A3",
         "爱发电用户_Ck8g", "David King",
         "Daydreamer|#037DEC", "爱发电用户_217cb",
         "BAILING (学生)|#905BD9", "zhengjun638504@163.com",
-        "尧泉", "FlyBalloon|#ADD8E6", "落叶清风|#6495ED", "Xing|#135da7", "xrh0905",
-        "L. Snow|#6028e0"
+        "尧泉", "FlyBalloon|#ADD8E6", "落叶清风|#6495ED|https://github.com/luoye-cpu/ffmpegPictureUI", "Xing|#135da7", "xrh0905",
+        "L. Snow|#6028e0", "爱发电用户_b274c"
     }
-
-    Public Shared Property 赠送支持者列表 As New List(Of String) From {
+    Public Shared ReadOnly 赠送支持者列表 As New List(Of String) From {
         "格里芬指挥官|#39C5BB",
         "陆耀YSNX462 (FFBOX最严厉的父亲)|#66FF66",
         "Celery (酒吧点蛋炒饭的)|#21AEFF",
@@ -20,7 +19,7 @@ Public Class Form_v6_支持者
         "ZOGMOS (终末诗) (首席教程制作大师) (开发者特别授予)|#72565F|https://zhuanlan.zhihu.com/p/1943079795341623993",
         "Uyanide (I use arch btw) (首席二次元)|#89B4FA",
         "Simlalsy (压片的)|#E3E0F9",
-        "Dominic|#FF9D9F|AWJ神力"
+        "Dominic (AWJ神力)|#FF9D9F|https://github.com/Dominic485649/AWJimage"
     }
 
     Sub 读取付费支持者()

@@ -85,6 +85,7 @@ Public Class FormMain_v6
     End Sub
 
     Private Sub FormMain_v6_Closing(sender As Object, e As CancelEventArgs) Handles Me.FormClosing
+        e.Cancel = False
         设置_v6.退出时保存设置()
         If UpdateAvailable Then
             If FileIO.FileSystem.FileExists(Path.Combine(Application.StartupPath, "Updater.exe")) Then

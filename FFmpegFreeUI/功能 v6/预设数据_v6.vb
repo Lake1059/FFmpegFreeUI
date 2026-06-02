@@ -1,6 +1,6 @@
 ﻿<Serializable()>
 Public Class 预设数据_v6
-    Public Property 预设版本 As String = ""
+    Public Property 预设版本 As String = "6"
     '==================================================
     Public Property 输出容器 As String = ""
     '==================================================
@@ -205,7 +205,15 @@ Public Class 预设数据_v6
     Public Property 自定义参数_最后参数 As String = ""
     Public Property 自定义参数_完全自己写 As String = ""
     '==================================================
-    Public Property 剪辑区间_方法 As Integer = 0
+    Enum 剪辑方法
+        未知 = 0
+        粗剪 = 1
+        精剪从头解码 = 2
+        精剪空降解码 = 3
+        Trim滤镜 = 4
+        掐头去尾 = 5
+    End Enum
+    Public Property 剪辑区间_方法 As 剪辑方法 = 剪辑方法.未知
     Public Property 剪辑区间_入点 As String = ""
     Public Property 剪辑区间_出点 As String = ""
     Public Property 剪辑区间_向前解码多久秒 As String = ""

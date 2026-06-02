@@ -7,7 +7,7 @@ Public Class Form_v6_参数面板
     Public 私有界面_输出文件设置 As New Form_v6_参数面板_输出文件设置
     Public 私有界面_解码参数 As New Form_v6_参数面板_解码参数
     Public 私有界面_视频编码器 As New Form_v6_参数面板_视频编码器 With {.所属参数面板对象 = Me}
-    Public 私有界面_画面帧 As New Form_v6_参数面板_画面帧
+    Public 私有界面_画面帧 As New Form_v6_参数面板_画面帧 With {.所属参数面板对象 = Me}
     Public 私有界面_质量 As New Form_v6_参数面板_质量
     Public 私有界面_色彩管理 As New Form_v6_参数面板_色彩管理
     Public 私有界面_视频帧服务器 As New Form_v6_参数面板_视频帧服务器
@@ -24,6 +24,9 @@ Public Class Form_v6_参数面板
     Public 私有界面_元数据 As New Form_v6_参数面板_元数据
     Public 私有界面_章节 As New Form_v6_参数面板_章节
     Public 私有界面_附件 As New Form_v6_参数面板_附件
+
+    Public 私有界面_画面区域选择窗口 As New Form_v6_参数面板_画面区域选择窗口
+
 
     Private Sub Form_v6_参数面板_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.ModernTabListControl1.Items(0).BoundControl = 私有界面_参数总览
@@ -113,5 +116,16 @@ Public Class Form_v6_参数面板
             End Select
         End If
     End Sub
+
+    Public Sub 弹出画面区域选择窗口(完成按钮返回的控件 As Control, 标题栏 As String)
+        If 私有界面_画面区域选择窗口.目标控件 IsNot Nothing Then
+            ExFloatingTip("这个参数面板的画面区域选择窗口正在使用中，请关闭后再重试", 3000)
+            Exit Sub
+        End If
+        私有界面_画面区域选择窗口.目标控件 = 完成按钮返回的控件
+        私有界面_画面区域选择窗口.Text = 标题栏
+        显示窗体(私有界面_画面区域选择窗口, FormMain_v6)
+    End Sub
+
 
 End Class

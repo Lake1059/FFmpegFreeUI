@@ -6,11 +6,12 @@
     <TargetFramework>net10.0-windows10.0.26100.0</TargetFramework>
     <InvariantGlobalization>true</InvariantGlobalization>
     <SupportedOSPlatformVersion>7.0</SupportedOSPlatformVersion>
-    <AssemblyVersion>1.1.0</AssemblyVersion>
-    <FileVersion>1.1.0</FileVersion>
-	  <PublishAot>true</PublishAot>
-	  <Authors>1059 Studio</Authors>
-	  <Company>1059 Studio</Company>
+    <AssemblyVersion>1.2.0</AssemblyVersion>
+    <FileVersion>1.2.0</FileVersion>
+	<Version>1.2.0</Version>
+	<PublishAot>True</PublishAot>
+	<Authors>1059 Studio</Authors>
+	<Company>1059 Studio</Company>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

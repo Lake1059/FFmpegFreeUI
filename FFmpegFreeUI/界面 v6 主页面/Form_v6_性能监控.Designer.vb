@@ -23,13 +23,13 @@ Partial Class Form_v6_性能监控
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         components = New ComponentModel.Container()
-        Dim ToolTipEntry1 As LakeUI.ModernComboBox.ToolTipEntry = New LakeUI.ModernComboBox.ToolTipEntry()
-        Dim ToolTipEntry2 As LakeUI.ModernComboBox.ToolTipEntry = New LakeUI.ModernComboBox.ToolTipEntry()
+        Dim ToolTipEntry3 As LakeUI.ModernComboBox.ToolTipEntry = New LakeUI.ModernComboBox.ToolTipEntry()
+        Dim ToolTipEntry4 As LakeUI.ModernComboBox.ToolTipEntry = New LakeUI.ModernComboBox.ToolTipEntry()
         CpuMonitor1 = New LakeUI.CpuMonitor()
         ModernPanel1 = New LakeUI.ModernPanel()
         Panel4 = New Panel()
         ModernPanel内置显卡监控面板 = New LakeUI.ModernPanel()
-        ModernPanel8 = New LakeUI.ModernPanel()
+        EasyStatesPanel1 = New LakeUI.EasyStatesPanel()
         JustEmptyControl5 = New LakeUI.JustEmptyControl()
         Panel1 = New Panel()
         ModernPanel7 = New LakeUI.ModernPanel()
@@ -79,7 +79,7 @@ Partial Class Form_v6_性能监控
         CpuMonitor1.HistoryLength = 30
         CpuMonitor1.Location = New Point(0, 42)
         CpuMonitor1.Name = "CpuMonitor1"
-        CpuMonitor1.NormalMaxCores = 20
+        CpuMonitor1.NormalMaxCores = 36
         CpuMonitor1.Size = New Size(305, 570)
         CpuMonitor1.TabIndex = 3
         CpuMonitor1.TextMode = LakeUI.CpuMonitor.TextModeEnum.PercentOnly
@@ -87,6 +87,7 @@ Partial Class Form_v6_性能监控
         ' 
         ' ModernPanel1
         ' 
+        ModernPanel1.BackColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
         ModernPanel1.BorderSize = 0
         ModernPanel1.Controls.Add(Panel4)
         ModernPanel1.Controls.Add(RamMonitor1)
@@ -108,7 +109,7 @@ Partial Class Form_v6_性能监控
         Panel4.Location = New Point(325, 10)
         Panel4.Name = "Panel4"
         Panel4.Padding = New Padding(0, 0, 0, 10)
-        Panel4.Size = New Size(578, 427)
+        Panel4.Size = New Size(578, 452)
         Panel4.TabIndex = 4
         ' 
         ' ModernPanel内置显卡监控面板
@@ -116,27 +117,24 @@ Partial Class Form_v6_性能监控
         ModernPanel内置显卡监控面板.BackColor = Color.Transparent
         ModernPanel内置显卡监控面板.BackColor1 = Color.Transparent
         ModernPanel内置显卡监控面板.BorderSize = 0
-        ModernPanel内置显卡监控面板.Controls.Add(ModernPanel8)
+        ModernPanel内置显卡监控面板.Controls.Add(EasyStatesPanel1)
         ModernPanel内置显卡监控面板.Controls.Add(JustEmptyControl5)
         ModernPanel内置显卡监控面板.Controls.Add(Panel1)
         ModernPanel内置显卡监控面板.Dock = DockStyle.Fill
         ModernPanel内置显卡监控面板.Location = New Point(0, 42)
         ModernPanel内置显卡监控面板.Name = "ModernPanel内置显卡监控面板"
         ModernPanel内置显卡监控面板.ScrollBarMode = LakeUI.ModernPanel.ScrollMode.None
-        ModernPanel内置显卡监控面板.Size = New Size(578, 375)
+        ModernPanel内置显卡监控面板.Size = New Size(578, 400)
         ModernPanel内置显卡监控面板.TabIndex = 7
         ' 
-        ' ModernPanel8
+        ' EasyStatesPanel1
         ' 
-        ModernPanel8.BackColor1 = Color.Transparent
-        ModernPanel8.BorderSize = 0
-        ModernPanel8.Dock = DockStyle.Fill
-        ModernPanel8.LayoutMode = LakeUI.ModernPanel.LayoutModeEnum.Flow
-        ModernPanel8.Location = New Point(0, 150)
-        ModernPanel8.Name = "ModernPanel8"
-        ModernPanel8.ScrollBarMode = LakeUI.ModernPanel.ScrollMode.Vertical
-        ModernPanel8.Size = New Size(578, 225)
-        ModernPanel8.TabIndex = 1
+        EasyStatesPanel1.BackColor = Color.Transparent
+        EasyStatesPanel1.Dock = DockStyle.Fill
+        EasyStatesPanel1.Location = New Point(0, 150)
+        EasyStatesPanel1.Name = "EasyStatesPanel1"
+        EasyStatesPanel1.Size = New Size(578, 250)
+        EasyStatesPanel1.TabIndex = 6
         ' 
         ' JustEmptyControl5
         ' 
@@ -387,17 +385,17 @@ Partial Class Form_v6_性能监控
         ModernComboBox3.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernComboBox3.DropDownSelectedForeColor = Color.White
         ModernComboBox3.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        ModernComboBox3.Location = New Point(210, 0)
         ModernComboBox3.Margin = New Padding(2, 2, 2, 2)
+        ModernComboBox3.Name = "ModernComboBox3"
         ModernComboBox3.Padding = New Padding(10, 0, 10, 0)
+        ModernComboBox3.Size = New Size(368, 32)
+        ModernComboBox3.TabIndex = 3
         ModernComboBox3.ToolTipGap = -1
         ModernComboBox3.ToolTipMaxWidth = 350
         ModernComboBox3.ToolTipPadding = New Padding(15)
-        ModernComboBox3.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        ModernComboBox3.Location = New Point(210, 0)
-        ModernComboBox3.Name = "ModernComboBox3"
-        ModernComboBox3.Size = New Size(368, 32)
-        ModernComboBox3.TabIndex = 3
         ModernComboBox3.WaterText = "选择显卡"
+        ModernComboBox3.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ' 
         ' JustEmptyControl4
         ' 
@@ -421,35 +419,35 @@ Partial Class Form_v6_性能监控
         ModernComboBox2.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernComboBox2.DropDownSelectedForeColor = Color.White
         ModernComboBox2.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        ModernComboBox2.Items.Add("LakeUI.GpuMonitor")
+        ModernComboBox2.Items.Add("LibreHardwareMonitor")
+        ToolTipEntry3.ItemText = "LakeUI.GpuMonitor"
+        ToolTipEntry3.ToolTipText = "LakeUI 提供了 GpuMonitor 用于读取显卡数据，无需任何驱动，无需高级权限，即可直接读取各核心的占用以及显存信息，且性能优秀；缺点是仅对 NVIDIA 有较好支持，以及个别关键信息拿不到。"
+        ToolTipEntry4.ItemText = "LibreHardwareMonitor"
+        ToolTipEntry4.ToolTipText = "[需下载 LHM 组件] LHM 是 GitHub 上的开源项目，使用驱动对接各种硬件，监控覆盖全面，不过 3FUI 只用其获取显卡信息；缺点是要加载驱动，而且较为沉重。"
+        ModernComboBox2.ItemToolTips.AddRange(New LakeUI.ModernComboBox.ToolTipEntry() {ToolTipEntry3, ToolTipEntry4})
+        ModernComboBox2.Location = New Point(0, 0)
         ModernComboBox2.Margin = New Padding(2, 2, 2, 2)
+        ModernComboBox2.Name = "ModernComboBox2"
         ModernComboBox2.Padding = New Padding(10, 0, 10, 0)
+        ModernComboBox2.Size = New Size(200, 32)
+        ModernComboBox2.TabIndex = 1
         ModernComboBox2.ToolTipGap = -1
         ModernComboBox2.ToolTipMaxWidth = 350
         ModernComboBox2.ToolTipPadding = New Padding(15)
-        ModernComboBox2.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        ModernComboBox2.Items.Add("LakeUI.GpuMonitor")
-        ModernComboBox2.Items.Add("LibreHardwareMonitor")
-        ToolTipEntry1.ItemText = "LakeUI.GpuMonitor"
-        ToolTipEntry1.ToolTipText = "LakeUI 提供了 GpuMonitor 用于读取显卡数据，无需任何驱动，无需高级权限，即可直接读取各核心的占用以及显存信息，且性能优秀；缺点是仅对 NVIDIA 有较好支持，以及个别关键信息拿不到。"
-        ToolTipEntry2.ItemText = "LibreHardwareMonitor"
-        ToolTipEntry2.ToolTipText = "[需下载 LHM 组件] LHM 是 GitHub 上的开源项目，使用驱动对接各种硬件，监控覆盖全面，不过 3FUI 只用其获取显卡信息；缺点是要加载驱动，而且较为沉重。"
-        ModernComboBox2.ItemToolTips.AddRange(New LakeUI.ModernComboBox.ToolTipEntry() {ToolTipEntry1, ToolTipEntry2})
-        ModernComboBox2.Location = New Point(0, 0)
-        ModernComboBox2.Name = "ModernComboBox2"
-        ModernComboBox2.Size = New Size(200, 32)
-        ModernComboBox2.TabIndex = 1
         ModernComboBox2.WaterText = "选择显卡数据来源"
+        ModernComboBox2.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ' 
         ' RamMonitor1
         ' 
-        RamMonitor1.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        RamMonitor1.BackColor1 = Color.FromArgb(CByte(40), CByte(0), CByte(0), CByte(0))
         RamMonitor1.BottomTextAlign = ContentAlignment.MiddleCenter
         RamMonitor1.Dock = DockStyle.Bottom
         RamMonitor1.Font = New Font("Microsoft YaHei UI", 9F)
         RamMonitor1.GraphBackColor = Color.FromArgb(CByte(120), CByte(0), CByte(0), CByte(0))
-        RamMonitor1.Location = New Point(325, 437)
+        RamMonitor1.Location = New Point(325, 462)
         RamMonitor1.Name = "RamMonitor1"
-        RamMonitor1.Size = New Size(578, 185)
+        RamMonitor1.Size = New Size(578, 160)
         RamMonitor1.TabIndex = 3
         RamMonitor1.TextPadding = New Padding(7)
         RamMonitor1.TopTextAlign = ContentAlignment.MiddleCenter
@@ -495,17 +493,17 @@ Partial Class Form_v6_性能监控
         ModernComboBox1.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernComboBox1.DropDownSelectedForeColor = Color.White
         ModernComboBox1.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        ModernComboBox1.Location = New Point(0, 0)
         ModernComboBox1.Margin = New Padding(2, 2, 2, 2)
+        ModernComboBox1.Name = "ModernComboBox1"
         ModernComboBox1.Padding = New Padding(10, 0, 10, 0)
+        ModernComboBox1.Size = New Size(305, 32)
+        ModernComboBox1.TabIndex = 2
         ModernComboBox1.ToolTipGap = -1
         ModernComboBox1.ToolTipMaxWidth = 350
         ModernComboBox1.ToolTipPadding = New Padding(15)
-        ModernComboBox1.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        ModernComboBox1.Location = New Point(0, 0)
-        ModernComboBox1.Name = "ModernComboBox1"
-        ModernComboBox1.Size = New Size(305, 32)
-        ModernComboBox1.TabIndex = 2
         ModernComboBox1.WaterText = "选择 CPU 组"
+        ModernComboBox1.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ' 
         ' Timer1
         ' 
@@ -559,7 +557,6 @@ Partial Class Form_v6_性能监控
     Friend WithEvents ModernPanel5 As LakeUI.ModernPanel
     Friend WithEvents RoundDashBoard2 As LakeUI.RoundDashBoard
     Friend WithEvents HtmlColorLabel2 As LakeUI.HtmlColorLabel
-    Friend WithEvents ModernPanel8 As LakeUI.ModernPanel
     Friend WithEvents JustEmptyControl5 As LakeUI.JustEmptyControl
     Friend WithEvents ModernPanel7 As LakeUI.ModernPanel
     Friend WithEvents JustEmptyControl6 As LakeUI.JustEmptyControl
@@ -570,4 +567,5 @@ Partial Class Form_v6_性能监控
     Friend WithEvents Panel2 As Panel
     Friend WithEvents Panel4 As Panel
     Friend WithEvents JustEmptyControl7 As LakeUI.JustEmptyControl
+    Friend WithEvents EasyStatesPanel1 As LakeUI.EasyStatesPanel
 End Class
