@@ -34,7 +34,6 @@ Partial Class Form_v6_起始页面
         ModernButton5 = New LakeUI.ModernButton()
         ModernButton16 = New LakeUI.ModernButton()
         ModernButton15 = New LakeUI.ModernButton()
-        ModernButton14 = New LakeUI.ModernButton()
         HtmlColorLabel5 = New LakeUI.HtmlColorLabel()
         MB_更新器更新 = New LakeUI.ModernButton()
         MB_软件本体更新 = New LakeUI.ModernButton()
@@ -190,7 +189,6 @@ Partial Class Form_v6_起始页面
         ModernPanel5.Controls.Add(ModernButton5)
         ModernPanel5.Controls.Add(ModernButton16)
         ModernPanel5.Controls.Add(ModernButton15)
-        ModernPanel5.Controls.Add(ModernButton14)
         ModernPanel5.Controls.Add(HtmlColorLabel5)
         ModernPanel5.Controls.Add(MB_更新器更新)
         ModernPanel5.Controls.Add(MB_软件本体更新)
@@ -212,7 +210,7 @@ Partial Class Form_v6_起始页面
         ModernButton5.BorderSize = 0
         ModernButton5.Dock = DockStyle.Top
         ModernButton5.HoverBackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernButton5.Location = New Point(20, 354)
+        ModernButton5.Location = New Point(20, 304)
         ModernButton5.Margin = New Padding(2)
         ModernButton5.Name = "ModernButton5"
         ModernButton5.PressedBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
@@ -231,7 +229,7 @@ Partial Class Form_v6_起始页面
         ModernButton16.BorderSize = 0
         ModernButton16.Dock = DockStyle.Top
         ModernButton16.HoverBackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernButton16.Location = New Point(20, 304)
+        ModernButton16.Location = New Point(20, 254)
         ModernButton16.Margin = New Padding(2)
         ModernButton16.Name = "ModernButton16"
         ModernButton16.PressedBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
@@ -250,7 +248,7 @@ Partial Class Form_v6_起始页面
         ModernButton15.BorderSize = 0
         ModernButton15.Dock = DockStyle.Top
         ModernButton15.HoverBackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernButton15.Location = New Point(20, 254)
+        ModernButton15.Location = New Point(20, 204)
         ModernButton15.Margin = New Padding(2)
         ModernButton15.Name = "ModernButton15"
         ModernButton15.PressedBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
@@ -260,25 +258,6 @@ Partial Class Form_v6_起始页面
         ModernButton15.TabIndex = 23
         ModernButton15.Text = "VLC | 可视化剪辑区间交互"
         ModernButton15.TextAlign = LakeUI.ModernButton.TextAlignEnum.Left
-        ' 
-        ' ModernButton14
-        ' 
-        ModernButton14.AnimationDuration = 0
-        ModernButton14.BackColor1 = Color.Transparent
-        ModernButton14.BorderRadius = 10
-        ModernButton14.BorderSize = 0
-        ModernButton14.Dock = DockStyle.Top
-        ModernButton14.HoverBackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernButton14.Location = New Point(20, 204)
-        ModernButton14.Margin = New Padding(2)
-        ModernButton14.Name = "ModernButton14"
-        ModernButton14.PressedBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
-        ModernButton14.Size = New Size(264, 50)
-        ModernButton14.SubText = "尚未准备好"
-        ModernButton14.SubTextForeColor = Color.Peru
-        ModernButton14.TabIndex = 22
-        ModernButton14.Text = "LHM | 驱动级性能监控"
-        ModernButton14.TextAlign = LakeUI.ModernButton.TextAlignEnum.Left
         ' 
         ' HtmlColorLabel5
         ' 
@@ -654,7 +633,6 @@ Partial Class Form_v6_起始页面
     Friend WithEvents MB_软件本体更新 As LakeUI.ModernButton
     Friend WithEvents ModernButton16 As LakeUI.ModernButton
     Friend WithEvents ModernButton15 As LakeUI.ModernButton
-    Friend WithEvents ModernButton14 As LakeUI.ModernButton
     Friend WithEvents MB_更新器更新 As LakeUI.ModernButton
     Friend WithEvents ModernButton5 As LakeUI.ModernButton
     Friend WithEvents MB_FFmpegFull As LakeUI.ModernButton

@@ -2,9 +2,7 @@
 
 Public Class Form_v6_性能监控
 
-    Public LHM面板本体 As Control
-    Public LHM返回的CPU温度 As Double
-    Public LHM面板的刷新时钟 As Timer
+    Private LHM监控窗体 As Form_v6_性能监控_LHM
 
     Private Sub Form_v6_性能监控_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ModernComboBox2.SelectedIndex = 0
@@ -13,13 +11,15 @@ Public Class Form_v6_性能监控
     Public Sub 开始()
         Me.CpuMonitor1.Running = True
         Me.RamMonitor1.Running = True
-        Me.Timer1.Enabled = True
+        Me.Timer1.Enabled = ModernComboBox2.SelectedIndex = 0
+        If ModernComboBox2.SelectedIndex = 1 Then LHM监控窗体?.StartMonitoring()
     End Sub
 
     Public Sub 停止()
         Me.CpuMonitor1.Running = False
         Me.RamMonitor1.Running = False
         Me.Timer1.Enabled = False
+        LHM监控窗体?.StopMonitoring()
     End Sub
 
     Private Sub CpuMonitor1_SamplerReady(sender As Object, e As EventArgs) Handles CpuMonitor1.SamplerReady
@@ -49,9 +49,36 @@ Public Class Form_v6_性能监控
         Select Case ModernComboBox2.SelectedIndex
             Case 0
                 ModernPanel内置显卡监控面板.Visible = True
+                If LHM监控窗体 IsNot Nothing Then LHM监控窗体.RootPanel.Visible = False
+                Timer1.Enabled = True
+                LHM监控窗体?.StopMonitoring()
             Case 1
                 ModernPanel内置显卡监控面板.Visible = False
+                加载LHM组件()
+                If LHM监控窗体 IsNot Nothing Then
+                    Dim lhmPanel = LHM监控窗体.RootPanel
+                    lhmPanel.Visible = True
+                    Panel4.Controls.SetChildIndex(lhmPanel, 0)
+                    Panel4.Controls.SetChildIndex(Panel3, Panel4.Controls.Count - 1)
+                    Timer1.Enabled = False
+                    LHM监控窗体.StartMonitoring()
+                End If
         End Select
+    End Sub
+
+    Private Sub 加载LHM组件()
+        If LHM监控窗体 IsNot Nothing Then Exit Sub
+
+        LHM监控窗体 = New Form_v6_性能监控_LHM()
+        LHM监控窗体.InitializeLhm(ModernComboBox3, ModernComboBox1)
+
+        Dim lhmPanel = LHM监控窗体.RootPanel
+        lhmPanel.Dock = DockStyle.Fill
+        lhmPanel.Visible = False
+        If lhmPanel.Parent IsNot Nothing Then lhmPanel.Parent.Controls.Remove(lhmPanel)
+        Panel4.Controls.Add(lhmPanel)
+        Panel4.Controls.SetChildIndex(lhmPanel, 0)
+        Panel4.Controls.SetChildIndex(Panel3, Panel4.Controls.Count - 1)
     End Sub
 
     Private Async Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick

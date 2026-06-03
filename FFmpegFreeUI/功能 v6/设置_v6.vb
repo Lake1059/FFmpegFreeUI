@@ -1,6 +1,7 @@
 ﻿Imports System.IO
 Imports System.Reflection
 Imports System.Text.Json
+Imports LakeUI
 
 Public Class 设置_v6
 
@@ -134,7 +135,11 @@ Public Class 设置_v6
         Form_v6_设置_转译辅助.MTB_覆盖参数传递.Text = 实例对象.覆盖参数传递
         Form_v6_设置_转译辅助.MCB_转译模式.Checked = 实例对象.转译模式
 
-        If 实例对象.MirrorChyanCDK <> "" Then Form_v6_设置_更新选项.MCB_更新服务器.Items(3) = "Mirror酱 付费 CDN"
+        If 实例对象.MirrorChyanCDK <> "" Then
+            Form_v6_设置_更新选项.MCB_更新服务器.Items(3) = "Mirror酱 付费 CDN"
+            Form_v6_设置_更新选项.HtmlColorLabel4.Visible = True
+            Form_v6_设置_更新选项.HtmlColorLabel5.Visible = False
+        End If
         Form_v6_设置_更新选项.MCB_更新服务器.SelectedIndex = 实例对象.更新服务器选择
 
         Form_v6_设置_远程调用.BooleanSwitch1.Checked = 实例对象.是否监听端口

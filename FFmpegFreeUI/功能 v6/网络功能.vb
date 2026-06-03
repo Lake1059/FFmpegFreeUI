@@ -174,33 +174,148 @@ Public Class 网络功能
     Private Const 更新器下载线程数 As Integer = 4
 
     Public Class 国内镜像源数据结构
-        <JsonPropertyName("release")>
-        Public Property Release As ReleaseInfo
+        <JsonPropertyName("status")>
+        Public Property Status As String
 
-        <JsonPropertyName("artifact")>
-        Public Property Artifact As ArtifactInfo
+        <JsonPropertyName("message")>
+        Public Property Message As String
 
-        Public Class ReleaseInfo
-            <JsonPropertyName("version")>
-            Public Property Version As String
-        End Class
+        <JsonPropertyName("request_id")>
+        Public Property RequestId As String
 
-        Public Class ArtifactInfo
-            <JsonPropertyName("sources")>
-            Public Property Sources As SourceInfo()
-        End Class
+        <JsonPropertyName("data")>
+        Public Property Data As 国内镜像源DataInfo
     End Class
 
-    Public Class SourceInfo
-        <JsonPropertyName("name")>
-        Public Property Name As String
+    Public Class 国内镜像源DataInfo
+        <JsonPropertyName("assets")>
+        Public Property Assets As 国内镜像源AssetInfo()
+    End Class
 
-        <JsonPropertyName("threads")>
+    Public Class 国内镜像源AssetInfo
+        <JsonPropertyName("asset_id")>
+        Public Property AssetId As String
+
+        <JsonPropertyName("version")>
+        Public Property Version As String
+
+        <JsonPropertyName("download_path")>
+        Public Property DownloadPath As String
+
+        <JsonPropertyName("prerelease")>
+        Public Property Prerelease As Boolean
+
+        <JsonPropertyName("file_name")>
+        Public Property FileName As String
+
+        <JsonPropertyName("architecture")>
+        Public Property Architecture As String
+
+        <JsonPropertyName("system")>
+        Public Property TargetSystem As String
+
+        <JsonPropertyName("size_bytes")>
         <JsonNumberHandling(JsonNumberHandling.AllowReadingFromString)>
-        Public Property Threads As Integer
+        Public Property SizeBytes As Long
 
-        <JsonPropertyName("url")>
-        Public Property Url As String
+        <JsonPropertyName("digest_sha256")>
+        Public Property DigestSha256 As String
+
+        <JsonPropertyName("available")>
+        Public Property Available As Boolean
+
+        <JsonPropertyName("unavailable_reason")>
+        Public Property UnavailableReason As String
+    End Class
+
+    Public Class 国内镜像源创建挑战请求
+        <JsonPropertyName("asset_id")>
+        Public Property AssetId As String
+    End Class
+
+    Public Class 国内镜像源挑战数据结构
+        <JsonPropertyName("status")>
+        Public Property Status As String
+
+        <JsonPropertyName("message")>
+        Public Property Message As String
+
+        <JsonPropertyName("request_id")>
+        Public Property RequestId As String
+
+        <JsonPropertyName("data")>
+        Public Property Data As 国内镜像源挑战DataInfo
+    End Class
+
+    Public Class 国内镜像源挑战DataInfo
+        <JsonPropertyName("algorithm")>
+        Public Property Algorithm As String
+
+        <JsonPropertyName("asset_id")>
+        Public Property AssetId As String
+
+        <JsonPropertyName("canonical_format")>
+        Public Property CanonicalFormat As String
+
+        <JsonPropertyName("challenge_id")>
+        Public Property ChallengeId As String
+
+        <JsonPropertyName("expires_at")>
+        Public Property ExpiresAt As String
+
+        <JsonPropertyName("leading_zero_bits")>
+        <JsonNumberHandling(JsonNumberHandling.AllowReadingFromString)>
+        Public Property LeadingZeroBits As Integer
+
+        <JsonPropertyName("nonce_seed")>
+        Public Property NonceSeed As String
+    End Class
+
+    Public Class 国内镜像源创建授权请求
+        <JsonPropertyName("challenge_id")>
+        Public Property ChallengeId As String
+
+        <JsonPropertyName("asset_id")>
+        Public Property AssetId As String
+
+        <JsonPropertyName("nonce")>
+        Public Property Nonce As String
+    End Class
+
+    Public Class 国内镜像源授权数据结构
+        <JsonPropertyName("status")>
+        Public Property Status As String
+
+        <JsonPropertyName("message")>
+        Public Property Message As String
+
+        <JsonPropertyName("request_id")>
+        Public Property RequestId As String
+
+        <JsonPropertyName("data")>
+        Public Property Data As 国内镜像源授权DataInfo
+    End Class
+
+    Public Class 国内镜像源授权DataInfo
+        <JsonPropertyName("authorization_id")>
+        Public Property AuthorizationId As String
+
+        <JsonPropertyName("download_token")>
+        Public Property DownloadToken As String
+
+        <JsonPropertyName("download_url")>
+        Public Property DownloadUrl As String
+
+        <JsonPropertyName("expires_at")>
+        Public Property ExpiresAt As String
+
+        <JsonPropertyName("max_bytes")>
+        <JsonNumberHandling(JsonNumberHandling.AllowReadingFromString)>
+        Public Property MaxBytes As Long
+
+        <JsonPropertyName("range_concurrency_limit")>
+        <JsonNumberHandling(JsonNumberHandling.AllowReadingFromString)>
+        Public Property RangeConcurrencyLimit As Integer
     End Class
 
     Public Class MirrorChyan数据结构
@@ -233,16 +348,18 @@ Public Class 网络功能
         Public Property 状态 As 更新检查状态
         Public Property 版本号 As String = ""
         Public Property 下载地址 As String = ""
+        Public Property 下载授权Token As String = ""
         Public Property 下载线程数 As Integer = 默认本体下载线程数
         Public Property 状态标题 As String = ""
         Public Property 状态子标题 As String = ""
         Public Property 错误详情 As String = ""
 
-        Public Shared Function 可下载(版本号 As String, 下载地址 As String, 下载线程数 As Integer) As 更新检查结果
+        Public Shared Function 可下载(版本号 As String, 下载地址 As String, 下载线程数 As Integer, Optional 下载授权Token As String = "") As 更新检查结果
             Return New 更新检查结果 With {
                 .状态 = 更新检查状态.可下载,
                 .版本号 = 版本号,
                 .下载地址 = 下载地址,
+                .下载授权Token = 下载授权Token,
                 .下载线程数 = 下载线程数
             }
         End Function
@@ -356,22 +473,42 @@ Public Class 网络功能
         End Try
 
         If Not 国内镜像源数据有效(镜像数据) Then
-            Return 更新检查结果.失败("检查软件本体更新失败", "未获取到有效数据", "未获取到有效数据")
+            Dim 错误详情 As String = If(镜像数据 IsNot Nothing AndAlso Not String.IsNullOrWhiteSpace(镜像数据.Message), 镜像数据.Message, "未获取到有效数据")
+            Return 更新检查结果.失败("检查软件本体更新失败", "未获取到有效数据", 错误详情)
         End If
 
-        If 版本号.CompareVersion(镜像数据.Release.Version, 版本号.获取自身版本号) <= 0 Then
+        Dim 云端版本号 As String = 获取国内镜像源版本号(镜像数据)
+        If String.IsNullOrWhiteSpace(云端版本号) Then
+            Return 更新检查结果.失败("检查软件本体更新失败", "未获取到有效数据", "未获取到版本号")
+        End If
+
+        If 版本号.CompareVersion(云端版本号, 版本号.获取自身版本号) <= 0 Then
             Return 更新检查结果.已是最新(
-                镜像数据.Release.Version,
-                $"[{获取更新服务器名称()}] 3FUI 镜像云版本 {镜像数据.Release.Version}",
+                云端版本号,
+                $"[{获取更新服务器名称()}] 3FUI 云端版本 {云端版本号}",
                 "已是最新版本")
         End If
 
-        Dim 下载源 As SourceInfo = 查找国内镜像下载源(镜像数据, "FrostLynx")
-        If 下载源 Is Nothing OrElse String.IsNullOrWhiteSpace(下载源.Url) Then
+        Dim 下载资源 As 国内镜像源AssetInfo = 查找国内镜像下载资源(镜像数据, 获取本体更新文件名())
+        If 下载资源 Is Nothing Then
+            Return 更新检查结果.失败("软件本体更新失败", "服务器上没有对应的文件", $"镜像源中没有对应的文件：{获取本体更新文件名()}")
+        End If
+
+        Form_v6_起始页面.MB_软件本体更新.SubText = "正在完成下载授权挑战 ..."
+
+        Dim 下载授权 As 国内镜像源授权DataInfo
+        Try
+            下载授权 = Await 获取国内镜像源下载授权Async(下载资源.AssetId)
+        Catch ex As Exception
+            Return 更新检查结果.失败("软件本体更新失败", "点此查看详情", ex.Message)
+        End Try
+
+        If 下载授权 Is Nothing OrElse String.IsNullOrWhiteSpace(下载授权.DownloadUrl) OrElse String.IsNullOrWhiteSpace(下载授权.DownloadToken) Then
             Return 更新检查结果.失败("软件本体更新失败", "获取到的下载地址为空", "获取到的下载地址为空")
         End If
 
-        Return 更新检查结果.可下载(镜像数据.Release.Version, 下载源.Url, 获取有效下载线程数(下载源.Threads, 默认本体下载线程数))
+        Dim 下载线程数 As Integer = 获取有效下载线程数(下载授权.RangeConcurrencyLimit, 默认本体下载线程数)
+        Return 更新检查结果.可下载(云端版本号, 下载授权.DownloadUrl, 下载线程数, 下载授权.DownloadToken)
     End Function
 
     Private Shared Async Function 从MirrorChyan获取本体更新信息Async() As Task(Of 更新检查结果)
@@ -438,6 +575,7 @@ Public Class 网络功能
             .SavePath = 检查软件本体更新下载位置,
             .ThreadCount = 获取有效下载线程数(检查结果.下载线程数, 默认本体下载线程数)
         }
+        应用下载授权Header(下载器, 检查结果.下载授权Token)
 
         Form_v6_起始页面.MB_软件本体更新.Text = $"正在下载本体更新 {检查结果.版本号}"
         绑定本体下载事件(下载器, 检查结果.版本号)
@@ -494,7 +632,7 @@ Public Class 网络功能
         If Not 处理更新器更新检查结果(检查结果) Then Exit Sub
         If Not 清理旧更新器文件() Then Exit Sub
 
-        Await 下载更新器Async(检查结果.下载地址)
+        Await 下载更新器Async(检查结果)
     End Sub
 
     Private Shared Function 可以开始检查更新器更新(强制更新 As Boolean) As Boolean
@@ -528,8 +666,10 @@ Public Class 网络功能
 
     Private Shared Async Function 获取更新器更新信息Async() As Task(Of 更新检查结果)
         Select Case 设置_v6.实例对象.更新服务器选择
-            Case 0, 1, 2
+            Case 0, 1
                 Return Await 从GitHub获取更新器更新信息Async()
+            Case 2
+                Return Await 从国内镜像源获取更新器更新信息Async()
             Case 3
                 Return Await 从MirrorChyan获取更新器更新信息Async()
             Case Else
@@ -556,6 +696,42 @@ Public Class 网络功能
         End If
 
         Return 更新检查结果.可下载(发布信息.TagName, 应用GitHub代理(下载地址), 更新器下载线程数)
+    End Function
+
+    Private Shared Async Function 从国内镜像源获取更新器更新信息Async() As Task(Of 更新检查结果)
+        Dim 镜像数据 As 国内镜像源数据结构
+
+        Try
+            镜像数据 = Await LakeUI.SRV_JsonSever.GetJsonAsync(Of 国内镜像源数据结构)(获取国内镜像源本体更新地址(), JsonSO, Nothing, "_ffui-update")
+        Catch ex As Exception
+            Return 更新检查结果.失败("更新器更新失败", "点此查看详情", ex.Message)
+        End Try
+
+        If Not 国内镜像源数据有效(镜像数据) Then
+            Dim 错误详情 As String = If(镜像数据 IsNot Nothing AndAlso Not String.IsNullOrWhiteSpace(镜像数据.Message), 镜像数据.Message, "未获取到有效数据")
+            Return 更新检查结果.失败("更新器更新失败", "未获取到有效数据", 错误详情)
+        End If
+
+        Dim 下载资源 As 国内镜像源AssetInfo = 查找国内镜像下载资源(镜像数据, "Updater.exe")
+        If 下载资源 Is Nothing Then
+            Return 更新检查结果.失败("更新器更新失败", "服务器上没有对应的文件", "镜像源中没有对应的文件：Updater.exe")
+        End If
+
+        Form_v6_起始页面.MB_更新器更新.SubText = "正在完成下载授权挑战 ..."
+
+        Dim 下载授权 As 国内镜像源授权DataInfo
+        Try
+            下载授权 = Await 获取国内镜像源下载授权Async(下载资源.AssetId)
+        Catch ex As Exception
+            Return 更新检查结果.失败("更新器更新失败", "点此查看详情", ex.Message)
+        End Try
+
+        If 下载授权 Is Nothing OrElse String.IsNullOrWhiteSpace(下载授权.DownloadUrl) OrElse String.IsNullOrWhiteSpace(下载授权.DownloadToken) Then
+            Return 更新检查结果.失败("更新器更新失败", "获取到的下载地址为空", "获取到的下载地址为空")
+        End If
+
+        Dim 下载线程数 As Integer = 获取有效下载线程数(下载授权.RangeConcurrencyLimit, 更新器下载线程数)
+        Return 更新检查结果.可下载(下载资源.Version, 下载授权.DownloadUrl, 下载线程数, 下载授权.DownloadToken)
     End Function
 
     Private Shared Async Function 从MirrorChyan获取更新器更新信息Async() As Task(Of 更新检查结果)
@@ -600,12 +776,13 @@ Public Class 网络功能
         End Try
     End Function
 
-    Private Shared Async Function 下载更新器Async(下载地址 As String) As Task
+    Private Shared Async Function 下载更新器Async(检查结果 As 更新检查结果) As Task
         Dim 下载器 As New LakeUI.DownloadFile With {
-            .Url = 下载地址,
+            .Url = 检查结果.下载地址,
             .SavePath = 检查更新器更新下载位置,
-            .ThreadCount = 更新器下载线程数
+            .ThreadCount = 获取有效下载线程数(检查结果.下载线程数, 更新器下载线程数)
         }
+        应用下载授权Header(下载器, 检查结果.下载授权Token)
 
         Form_v6_起始页面.MB_更新器更新.Text = "正在下载更新器"
         绑定更新器下载事件(下载器)
@@ -667,6 +844,69 @@ Public Class 网络功能
         Return ""
     End Function
 
+    Private Shared Async Function 获取国内镜像源下载授权Async(资产ID As String) As Task(Of 国内镜像源授权DataInfo)
+        If String.IsNullOrWhiteSpace(资产ID) Then Throw New InvalidOperationException("资产 ID 为空。")
+
+        Dim 挑战响应 As 国内镜像源挑战数据结构 = Await LakeUI.SRV_JsonSever.PostJsonAsync(Of 国内镜像源创建挑战请求, 国内镜像源挑战数据结构)(
+            获取国内镜像源创建挑战地址(),
+            New 国内镜像源创建挑战请求 With {.AssetId = 资产ID},
+            JsonSO)
+
+        校验国内镜像源挑战数据(挑战响应)
+
+        Dim Nonce As String = Await Task.Run(Function() 求解国内镜像源PowNonce(挑战响应.Data))
+        Dim 授权响应 As 国内镜像源授权数据结构 = Await LakeUI.SRV_JsonSever.PostJsonAsync(Of 国内镜像源创建授权请求, 国内镜像源授权数据结构)(
+            获取国内镜像源创建授权地址(),
+            New 国内镜像源创建授权请求 With {
+                .ChallengeId = 挑战响应.Data.ChallengeId,
+                .AssetId = 资产ID,
+                .Nonce = Nonce
+            },
+            JsonSO)
+
+        校验国内镜像源授权数据(授权响应)
+        Return 授权响应.Data
+    End Function
+
+    Private Shared Sub 校验国内镜像源挑战数据(挑战响应 As 国内镜像源挑战数据结构)
+        If 挑战响应 Is Nothing Then Throw New InvalidOperationException("未获取到挑战数据。")
+        If Not String.Equals(挑战响应.Status, "success", StringComparison.OrdinalIgnoreCase) Then
+            Throw New InvalidOperationException(If(String.IsNullOrWhiteSpace(挑战响应.Message), "创建下载挑战失败。", 挑战响应.Message))
+        End If
+
+        If 挑战响应.Data Is Nothing OrElse
+           Not String.Equals(挑战响应.Data.Algorithm, "sha256", StringComparison.OrdinalIgnoreCase) OrElse
+           String.IsNullOrWhiteSpace(挑战响应.Data.ChallengeId) OrElse
+           String.IsNullOrWhiteSpace(挑战响应.Data.AssetId) OrElse
+           String.IsNullOrWhiteSpace(挑战响应.Data.NonceSeed) OrElse
+           挑战响应.Data.LeadingZeroBits <= 0 Then
+            Throw New InvalidOperationException("下载挑战数据不完整。")
+        End If
+    End Sub
+
+    Private Shared Sub 校验国内镜像源授权数据(授权响应 As 国内镜像源授权数据结构)
+        If 授权响应 Is Nothing Then Throw New InvalidOperationException("未获取到下载授权。")
+        If Not String.Equals(授权响应.Status, "success", StringComparison.OrdinalIgnoreCase) Then
+            Throw New InvalidOperationException(If(String.IsNullOrWhiteSpace(授权响应.Message), "获取下载授权失败。", 授权响应.Message))
+        End If
+
+        If 授权响应.Data Is Nothing OrElse
+           String.IsNullOrWhiteSpace(授权响应.Data.DownloadUrl) OrElse
+           String.IsNullOrWhiteSpace(授权响应.Data.DownloadToken) Then
+            Throw New InvalidOperationException("下载授权数据不完整。")
+        End If
+    End Sub
+
+    Private Shared Function 求解国内镜像源PowNonce(挑战数据 As 国内镜像源挑战DataInfo) As String
+        Return LakeUI.Sha256ProofOfWork.Solve(
+            Function(Nonce) 生成国内镜像源Pow规范文本(挑战数据, Nonce),
+            挑战数据.LeadingZeroBits)
+    End Function
+
+    Private Shared Function 生成国内镜像源Pow规范文本(挑战数据 As 国内镜像源挑战DataInfo, Nonce As ULong) As String
+        Return $"download.v1:{挑战数据.ChallengeId}:{挑战数据.AssetId}:{挑战数据.NonceSeed}:{Nonce}"
+    End Function
+
     Private Shared Function 应用GitHub代理(下载地址 As String) As String
         If 设置_v6.实例对象.更新服务器选择 <> 1 Then Return 下载地址
         Return "https://cdn.gh-proxy.org/" & 下载地址
@@ -697,16 +937,33 @@ Public Class 网络功能
 
     Private Shared Function 国内镜像源数据有效(镜像数据 As 国内镜像源数据结构) As Boolean
         Return 镜像数据 IsNot Nothing AndAlso
-               镜像数据.Release IsNot Nothing AndAlso
-               Not String.IsNullOrWhiteSpace(镜像数据.Release.Version) AndAlso
-               镜像数据.Artifact IsNot Nothing AndAlso
-               镜像数据.Artifact.Sources IsNot Nothing
+               String.Equals(镜像数据.Status, "success", StringComparison.OrdinalIgnoreCase) AndAlso
+               镜像数据.Data IsNot Nothing AndAlso
+               镜像数据.Data.Assets IsNot Nothing AndAlso
+               镜像数据.Data.Assets.Length > 0
     End Function
 
-    Private Shared Function 查找国内镜像下载源(镜像数据 As 国内镜像源数据结构, 名称关键字 As String) As SourceInfo
-        For Each 下载源 As SourceInfo In 镜像数据.Artifact.Sources
-            If 下载源 Is Nothing OrElse String.IsNullOrWhiteSpace(下载源.Name) Then Continue For
-            If 下载源.Name.Contains(名称关键字, StringComparison.OrdinalIgnoreCase) Then Return 下载源
+    Private Shared Function 获取国内镜像源版本号(镜像数据 As 国内镜像源数据结构) As String
+        For Each 资源 As 国内镜像源AssetInfo In 镜像数据.Data.Assets
+            If 资源 Is Nothing OrElse String.IsNullOrWhiteSpace(资源.Version) Then Continue For
+            Return 资源.Version
+        Next
+
+        Return ""
+    End Function
+
+    Private Shared Function 查找国内镜像下载资源(镜像数据 As 国内镜像源数据结构, 文件名 As String) As 国内镜像源AssetInfo
+        For Each 资源 As 国内镜像源AssetInfo In 镜像数据.Data.Assets
+            If 资源 Is Nothing OrElse Not 资源.Available Then Continue For
+            If Not String.Equals(资源.FileName, 文件名, StringComparison.OrdinalIgnoreCase) Then Continue For
+
+            Return 资源
+        Next
+
+        Dim 当前架构 As String = 程序架构.获取自身程序架构
+        For Each 资源 As 国内镜像源AssetInfo In 镜像数据.Data.Assets
+            If 资源 Is Nothing OrElse Not 资源.Available Then Continue For
+            If String.Equals(资源.Architecture, 当前架构, StringComparison.OrdinalIgnoreCase) Then Return 资源
         Next
 
         Return Nothing
@@ -717,7 +974,15 @@ Public Class 网络功能
     End Function
 
     Private Shared Function 获取国内镜像源本体更新地址() As String
-        Return $"https://bs.frostlynx.work:44500/v1/update/check?current_version=0.0.1&channel=stable&rid=win-{程序架构.获取自身程序架构}&package_variant=single-file&locale=zh-CN&supported_download_types=direct_http,frostlynx"
+        Return $"https://fengyuan.frostlynx.work/api/public/v1/projects/FFmpegFreeUI/assets"
+    End Function
+
+    Private Shared Function 获取国内镜像源创建挑战地址() As String
+        Return $"https://fengyuan.frostlynx.work/api/public/v1/api/challenges"
+    End Function
+
+    Private Shared Function 获取国内镜像源创建授权地址() As String
+        Return $"https://fengyuan.frostlynx.work/api/public/v1/api/authorizations"
     End Function
 
     Private Shared Function 获取MirrorChyan本体更新地址() As String
@@ -732,7 +997,7 @@ Public Class 网络功能
         Select Case 设置_v6.实例对象.更新服务器选择
             Case 0 : Return "GitHub"
             Case 1 : Return "gh-proxy.com"
-            Case 2 : Return "国内镜像"
+            Case 2 : Return "枫源镜像"
             Case 3 : Return "Mirror酱"
             Case Else : Return $"未知服务器 {设置_v6.实例对象.更新服务器选择}"
         End Select
@@ -741,6 +1006,11 @@ Public Class 网络功能
 #End Region
 
 #Region "下载与进程辅助"
+
+    Private Shared Sub 应用下载授权Header(下载器 As LakeUI.DownloadFile, 下载授权Token As String)
+        If 下载器 Is Nothing OrElse String.IsNullOrWhiteSpace(下载授权Token) Then Return
+        下载器.RequestHeaders("Authorization") = $"Bearer {下载授权Token}"
+    End Sub
 
     Private Shared Function 获取有效下载线程数(线程数 As Integer, 默认线程数 As Integer) As Integer
         If 线程数 > 0 Then Return 线程数
