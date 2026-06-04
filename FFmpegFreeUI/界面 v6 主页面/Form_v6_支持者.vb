@@ -7,7 +7,10 @@ Public Class Form_v6_支持者
         "爱发电用户_Ck8g", "David King",
         "Daydreamer|#037DEC", "爱发电用户_217cb",
         "BAILING (学生)|#905BD9", "zhengjun638504@163.com",
-        "尧泉", "FlyBalloon|#ADD8E6", "落叶清风|#6495ED|https://github.com/luoye-cpu/ffmpegPictureUI", "Xing|#135da7", "xrh0905",
+        "尧泉", "FlyBalloon|#ADD8E6",
+        "落叶清风|#6495ED|https://github.com/luoye-cpu/ffmpegPictureUI",
+        "Xing|#135da7",
+        "xrh0905||https://www.xrh0905.top",
         "L. Snow|#6028e0", "爱发电用户_b274c"
     }
     Public Shared ReadOnly 赠送支持者列表 As New List(Of String) From {
@@ -54,7 +57,7 @@ Public Class Form_v6_支持者
             背景颜色 = ColorTranslator.FromHtml(HTML颜色值文本)
             背景颜色 = Color.FromArgb(200, 背景颜色.R, 背景颜色.G, 背景颜色.B)
         Else
-            背景颜色 = Color.FromArgb(120, 220, 220, 220)
+            背景颜色 = Color.FromArgb(160, 255, 255, 255)
         End If
         Dim 背景色亮度 As Double = 背景颜色.R * 0.299 + 背景颜色.G * 0.587 + 背景颜色.B * 0.114
         Dim 文字颜色 As Color = If(背景色亮度 >= 128, Color.Black, Color.Silver)
@@ -103,7 +106,6 @@ Public Class Form_v6_支持者
 
     Private Sub ModernButton4_Click(sender As Object, e As EventArgs) Handles ModernButton4.Click
         清空支持者列表()
-        Me.MemberWall1.Update()
     End Sub
 
     Private Sub ModernButton5_Click(sender As Object, e As EventArgs) Handles ModernButton5.Click

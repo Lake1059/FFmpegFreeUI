@@ -127,16 +127,31 @@ Public Class Form_v6_性能监控_LHM
     End Sub
 
     Private Sub ReadCpuSensors(hardware As IHardware)
-        Dim coreTemperatures As New List(Of Single)
+        Dim cpuTemperatureSensor = hardware.Sensors.
+            Where(Function(sensor) sensor.SensorType = SensorType.Temperature AndAlso IsCpuOverallTemperatureSensor(sensor.Name)).
+            OrderBy(Function(sensor) GetCpuOverallTemperaturePriority(sensor.Name)).
+            FirstOrDefault()
 
-        For Each sensor In hardware.Sensors
-            If sensor.SensorType = SensorType.Temperature AndAlso (sensor.Name.Contains("Core") OrElse sensor.Name = "CPU Package") Then
-                coreTemperatures.Add(sensor.Value.GetValueOrDefault())
-            End If
-        Next
-
-        If coreTemperatures.Count > 0 Then cpuTemperatureValue = coreTemperatures.Average()
+        If cpuTemperatureSensor IsNot Nothing Then cpuTemperatureValue = cpuTemperatureSensor.Value.GetValueOrDefault()
     End Sub
+
+    Private Shared Function IsCpuOverallTemperatureSensor(sensorName As String) As Boolean
+        If String.IsNullOrWhiteSpace(sensorName) Then Return False
+
+        Return sensorName.Equals("CPU Package", StringComparison.OrdinalIgnoreCase) OrElse
+            sensorName.Contains("Package", StringComparison.OrdinalIgnoreCase) OrElse
+            sensorName.Contains("Tctl", StringComparison.OrdinalIgnoreCase) OrElse
+            sensorName.Contains("Tdie", StringComparison.OrdinalIgnoreCase)
+    End Function
+
+    Private Shared Function GetCpuOverallTemperaturePriority(sensorName As String) As Integer
+        If sensorName.Equals("CPU Package", StringComparison.OrdinalIgnoreCase) Then Return 0
+        If sensorName.Contains("Package", StringComparison.OrdinalIgnoreCase) Then Return 1
+        If sensorName.Contains("Tctl/Tdie", StringComparison.OrdinalIgnoreCase) Then Return 2
+        If sensorName.Contains("Tctl", StringComparison.OrdinalIgnoreCase) Then Return 3
+        If sensorName.Contains("Tdie", StringComparison.OrdinalIgnoreCase) Then Return 4
+        Return 5
+    End Function
 
     Private Sub ReadGpuSensors(hardware As IHardware)
         Dim gpuInfo As New GpuInfo With {.Name = hardware.Name}
@@ -239,7 +254,7 @@ Public Class Form_v6_性能监控_LHM
 
         HtmlColorLabel4.Text = $"显存 {gpuInfo.MemoryUsedGb:F1}G"
         HtmlColorLabel7.Text = $"温度 {gpuInfo.CoreTemperature:F0}°C"
-        HtmlColorLabel8.Text = $"风扇 {gpuInfo.FanRpm:F0} RPM"
+        HtmlColorLabel8.Text = $"{gpuInfo.FanRpm:F0} RPM"
         HtmlColorLabel9.Text = $"功耗 {gpuInfo.PowerWatt:F0}W"
 
         RefreshGpuEngineInfo(gpuInfo)

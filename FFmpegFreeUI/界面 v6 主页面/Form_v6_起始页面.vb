@@ -67,4 +67,5 @@ Public Class Form_v6_起始页面
     Private Sub MB_LakeUI_Click(sender As Object, e As EventArgs) Handles MB_LakeUI.Click
         Process.Start(New ProcessStartInfo With {.FileName = "https://github.com/Lake1059/LakeUI", .UseShellExecute = True})
     End Sub
+
 End Class
