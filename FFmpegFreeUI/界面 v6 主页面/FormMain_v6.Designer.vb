@@ -141,7 +141,7 @@ Partial Class FormMain_v6
         ThisIsYourWindow1.CaptionHeight = 50
         ThisIsYourWindow1.CaptionInactiveBackColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
         ThisIsYourWindow1.CloseButtonGlyphColor = Color.FromArgb(CByte(200), CByte(200), CByte(200))
-        ThisIsYourWindow1.IconPaddingLeft = 16
+        ThisIsYourWindow1.IconPaddingLeft = 10
         ThisIsYourWindow1.IconSize = 30
         ThisIsYourWindow1.LayerShadowColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ThisIsYourWindow1.LayerShadowResizeFullArea = True

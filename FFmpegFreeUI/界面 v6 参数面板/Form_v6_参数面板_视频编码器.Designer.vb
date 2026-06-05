@@ -42,7 +42,7 @@ Partial Class Form_v6_参数面板_视频编码器
         HtmlColorLabel2 = New LakeUI.HtmlColorLabel()
         Panel7 = New Panel()
         HtmlColorLabel7 = New LakeUI.HtmlColorLabel()
-        ModernTextBox1 = New LakeUI.ModernTextBox()
+        MTB_图片编码器质量值 = New LakeUI.ModernTextBox()
         Panel2 = New Panel()
         MCB_具体编码器 = New LakeUI.ModernComboBox()
         JustEmptyControl2 = New LakeUI.JustEmptyControl()
@@ -60,9 +60,9 @@ Partial Class Form_v6_参数面板_视频编码器
         Panel7.SuspendLayout()
         Panel2.SuspendLayout()
         SuspendLayout()
-        ' 
+        '
         ' ModernPanel1
-        ' 
+        '
         ModernPanel1.BackColor1 = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         ModernPanel1.BorderSize = 0
         ModernPanel1.Controls.Add(Panel6)
@@ -337,7 +337,7 @@ Partial Class Form_v6_参数面板_视频编码器
         ' Panel7
         ' 
         Panel7.Controls.Add(HtmlColorLabel7)
-        Panel7.Controls.Add(ModernTextBox1)
+        Panel7.Controls.Add(MTB_图片编码器质量值)
         Panel7.Dock = DockStyle.Top
         Panel7.Location = New Point(20, 118)
         Panel7.Name = "Panel7"
@@ -359,22 +359,20 @@ Partial Class Form_v6_参数面板_视频编码器
         HtmlColorLabel7.TabIndex = 6
         HtmlColorLabel7.Text = "图片编码器质量值 / 其他定制参数"
         HtmlColorLabel7.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
-        ' 
-        ' ModernTextBox1
-        ' 
-        ModernTextBox1.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernTextBox1.BorderColor = Color.Transparent
-        ModernTextBox1.BorderColorFocus = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
-        ModernTextBox1.BorderRadius = 10
-        ModernTextBox1.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
-        ModernTextBox1.Dock = DockStyle.Left
-        ModernTextBox1.Location = New Point(0, 10)
-        ModernTextBox1.Margin = New Padding(2)
-        ModernTextBox1.Name = "ModernTextBox1"
-        ModernTextBox1.Padding = New Padding(10, 0, 10, 0)
-        ModernTextBox1.Size = New Size(150, 32)
-        ModernTextBox1.TabIndex = 5
-        ModernTextBox1.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
+        ' MTB_图片编码器质量值
+        MTB_图片编码器质量值.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MTB_图片编码器质量值.BorderColor = Color.Transparent
+        MTB_图片编码器质量值.BorderColorFocus = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
+        MTB_图片编码器质量值.BorderRadius = 10
+        MTB_图片编码器质量值.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
+        MTB_图片编码器质量值.Dock = DockStyle.Left
+        MTB_图片编码器质量值.Location = New Point(0, 10)
+        MTB_图片编码器质量值.Margin = New Padding(2)
+        MTB_图片编码器质量值.Name = "MTB_图片编码器质量值"
+        MTB_图片编码器质量值.Padding = New Padding(10, 0, 10, 0)
+        MTB_图片编码器质量值.Size = New Size(150, 32)
+        MTB_图片编码器质量值.TabIndex = 5
+        MTB_图片编码器质量值.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ' 
         ' Panel2
         ' 
@@ -564,7 +562,7 @@ Partial Class Form_v6_参数面板_视频编码器
     Friend WithEvents MTB_threads As LakeUI.ModernTextBox
     Friend WithEvents HtmlColorLabel6 As LakeUI.HtmlColorLabel
     Friend WithEvents Panel7 As Panel
-    Friend WithEvents ModernTextBox1 As LakeUI.ModernTextBox
+    Friend WithEvents MTB_图片编码器质量值 As LakeUI.ModernTextBox
     Friend WithEvents HtmlColorLabel7 As LakeUI.HtmlColorLabel
     Friend WithEvents HtmlColorLabel9 As LakeUI.HtmlColorLabel
     Friend WithEvents HtmlColorLabel8 As LakeUI.HtmlColorLabel

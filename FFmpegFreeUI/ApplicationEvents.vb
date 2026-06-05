@@ -1,4 +1,6 @@
-﻿Imports Microsoft.VisualBasic.ApplicationServices
+﻿Imports System.IO
+Imports LakeUI
+Imports Microsoft.VisualBasic.ApplicationServices
 
 Namespace My
     ' The following events are available for MyApplication:
@@ -26,6 +28,10 @@ Namespace My
 
     Partial Friend Class MyApplication
         Private Sub MyApplication_Startup(sender As Object, e As StartupEventArgs) Handles Me.Startup
+            If PathEquals(System.Windows.Forms.Application.StartupPath, Environment.GetFolderPath(Environment.SpecialFolder.Desktop)) Then
+                ExOverlayMsgBox($"{vbCrLf}这是以便携形式发行的单文件应用程序，需要建一个文件夹单独装起来，其会将当前目录作为自己的数据目录！", MsgBoxStyle.Critical, "不要直接放在桌面运行")
+                End
+            End If
             If e.CommandLine.Contains("fullscreen") Then
                 Form1.FormBorderStyle = FormBorderStyle.None
                 Form1.WindowState = FormWindowState.Maximized
@@ -36,5 +42,21 @@ Namespace My
             启动参数响应.处理接收的参数(e.CommandLine.ToList)
         End Sub
 
+        Shared Function NormalizePath(path As String) As String
+            If String.IsNullOrWhiteSpace(path) Then Return String.Empty
+            Try
+                Return IO.Path.GetFullPath(path) _
+                           .TrimEnd(IO.Path.DirectorySeparatorChar, IO.Path.AltDirectorySeparatorChar) _
+                           .ToLowerInvariant()
+            Catch
+                Return path.TrimEnd("\"c, "/"c).ToLowerInvariant()
+            End Try
+        End Function
+        Shared Function PathEquals(path1 As String, path2 As String) As Boolean
+            Return NormalizePath(path1) = NormalizePath(path2)
+        End Function
+
     End Class
+
+
 End Namespace

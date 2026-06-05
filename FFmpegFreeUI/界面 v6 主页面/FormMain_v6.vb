@@ -60,6 +60,16 @@ Public Class FormMain_v6
 
         ExOverlayMsgBox(Me, $"{vbCrLf}3FUI 6.0 当前处于开发测试阶段，许多功能都未跟进，请耐心等待项目推进，现在的提前放出是为了公开测试新设计的兼容和性能问题，早发现早解决。现在开始使用 GPU 渲染，将使用显存，有任何问题请及时汇报。{vbCrLf & vbCrLf}请勿汇报首次切换选项卡的渲染等待问题，这是解决不了的，再次切换过去就没事了。要解决这个问题的难度不亚于我当上微软老总，极具挑战。",, "当前版本大量功能未实装，标准流程未实装")
 
+        If Not 设置_v6.实例对象.是否询问标记_下载服务器选择 Then
+            If Globalization.RegionInfo.CurrentRegion.EnglishName.ToLower.Trim.Contains("china") Then
+                If ExOverlayMsgBox(Me, $"{vbCrLf}检测到当前系统区域为国内，是否选择使用国内镜像站作为下载更新服务器？详细信息可前往设置查看。", MsgBoxStyle.YesNo, "建议国内用户使用镜像服务器") = MsgBoxResult.Yes Then
+                    设置_v6.实例对象.更新服务器选择 = 2
+                    Form_v6_设置_更新选项.MCB_更新服务器.SelectedIndex = 设置_v6.实例对象.更新服务器选择
+                End If
+                设置_v6.实例对象.是否询问标记_下载服务器选择 = True
+            End If
+        End If
+
         网络功能.检查软件本体更新()
         网络功能.检查更新器更新()
         网络功能.获取新闻列表()

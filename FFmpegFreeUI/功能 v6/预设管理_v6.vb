@@ -2,34 +2,11 @@
 
     Private Shared ReadOnly separator As String() = {","}
 
-    Public Shared Property 音频编码器排序表 As New List(Of String) From {
-        "",
-        "copy",
-        "-an",
-        "aac",
-        "libfdk_aac",
-        "libfdk_aac -profile:a aac_he",
-        "libfdk_aac -profile:a aac_he_v2",
-        "libmp3lame",
-        "libopus",
-        "flac",
-        "alac",
-        "pcm_s16le",
-        "pcm_s24le",
-        "pcm_s32le",
-        "pcm_s64le",
-        "ac3",
-        "eac3",
-        "dca",
-        "truehd",
-        "tta",
-        "libvorbis",
-        "real_144",
-        "wavpack",
-        "libtwolame",
-        "libopencore_amrnb",
-        "libvo_amrwbenc"
-    }
+    Public Shared ReadOnly Property 音频编码器排序表 As List(Of String)
+        Get
+            Return 音频编码器数据库_v6.全部编码器.Select(Function(x) x.私有ID).ToList()
+        End Get
+    End Property
 
     Public Shared Sub 显示预设(a As 预设数据类型, ui As Form_v6_参数面板)
 
