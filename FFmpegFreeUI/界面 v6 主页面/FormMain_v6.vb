@@ -74,6 +74,10 @@ Public Class FormMain_v6
         网络功能.检查更新器更新()
         网络功能.获取新闻列表()
 
+        If 设置_v6.实例对象.启用性能计数器 = 0 Then
+            MainAppUsageCounter.Start()
+            PrecisionTimer1.Start()
+        End If
     End Sub
 
     Sub 绑定选项卡(选项卡的根面板容器 As ModernPanel)
@@ -104,5 +108,16 @@ Public Class FormMain_v6
                 If ExOverlayMsgBox(Me, "程序目录下没有更新器，这是意外情况，仍旧退出？", MsgBoxStyle.YesNo) <> MsgBoxResult.Yes Then e.Cancel = True
             End If
         End If
+    End Sub
+
+    Private Sub PrecisionTimer1_Tick(sender As Object, e As EventArgs) Handles PrecisionTimer1.Tick
+        Dim t1 As String = "FFmpegFreeUI"
+        If SP_UnLock AndAlso 设置_v6.实例对象.SP_窗口标题文字 <> "" Then
+            t1 = 设置_v6.实例对象.SP_窗口标题文字
+        End If
+        t1 &= $"   |   CPU {MainAppUsageCounter.GetCpuUsagePercent():F1}%"
+        t1 &= $"   |   RAM {MainAppUsageCounter.GetCommitMemoryBytes() / 1024 / 1024:F0}M"
+        t1 &= $"   |   GPU {MainAppUsageCounter.GetGpu3DUsagePercent():F1}% {MainAppUsageCounter.GetGpuDedicatedMemoryBytes() / 1024 / 1024:F0}M"
+        Me.Text = t1
     End Sub
 End Class

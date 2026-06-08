@@ -22,11 +22,7 @@ Public Class Form_v6_参数面板_画面区域选择窗口
 
     Private Sub MB_完成_Click(sender As Object, e As EventArgs) Handles MB_完成.Click
         目标控件.Text = ModernTextBox1.Text
-        目标控件 = Nothing
-        Me.PixelPictureBox1.Image = Nothing
-        Me.PixelPictureBox1.ClearSelection()
-        Me.Hide()
-
+        关闭窗体流程()
     End Sub
 
     Private Function ShowFileOpenDialog() As String
@@ -66,10 +62,16 @@ Public Class Form_v6_参数面板_画面区域选择窗口
 
     Private Sub Form_v6_参数面板_画面区域选择窗口_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
         e.Cancel = True
-        目标控件.FindForm?.Focus()
+        关闭窗体流程()
+    End Sub
+
+    Sub 关闭窗体流程()
+        目标控件?.FindForm?.Focus()
         目标控件 = Nothing
+        Me.PixelPictureBox1.Image = Nothing
+        Me.PixelPictureBox1.ClearSelection()
         Me.Text = ""
         Me.Hide()
-
     End Sub
+
 End Class

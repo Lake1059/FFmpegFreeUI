@@ -10,18 +10,19 @@ Public Class 预设数据_v6
         声明丢弃输出 = 2
     End Enum
     Public Property 输出_输出文件参数使用方法 As 输出文件参数使用方法 = 输出文件参数使用方法.正常使用
-    Public Property 输出_使用自动命名 As Boolean = False
+    Public Property 输出目录 As String = ""
     Enum 自动命名选项
-        附加_递增时间戳 = 0
-        附加_递增数字 = 1
-        附加_3FUI = 2
-        常规压片_附加编码器和质量参数 = 3
-        附加_随机8位数字 = 4
-        附加_随机8位字母 = 5
-        附加_随机8位数字和字母组合 = 6
-        附加_随机16位数字 = 7
-        附加_随机16位字母 = 8
-        附加_随机16位数字和字母组合 = 9
+        不使用自动命名 = 0
+        附加_递增时间戳 = 1
+        附加_递增数字 = 2
+        附加_3FUI = 3
+        常规压片_附加编码器和质量参数 = 4
+        附加_随机8位数字 = 5
+        附加_随机8位字母 = 6
+        附加_随机8位数字和字母组合 = 7
+        附加_随机16位数字 = 8
+        附加_随机16位字母 = 9
+        附加_随机16位数字和字母组合 = 10
     End Enum
     Public Property 输出_自动命名选项 As 自动命名选项 = 自动命名选项.附加_递增时间戳
     Public Property 输出命名_开头文本 As String = ""
@@ -57,6 +58,7 @@ Public Class 预设数据_v6
     Public Property 视频参数_分辨率_裁剪滤镜参数 As String = ""
     '==================================================
     Public Property 视频参数_帧速率 As String = ""
+    '==================================================
     Public Property 视频参数_抽帧_max As String = ""
     Public Property 视频参数_抽帧_keep As String = ""
     Public Property 视频参数_抽帧_hi As String = ""

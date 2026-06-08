@@ -25,7 +25,7 @@ Public Class Form_v6_参数面板
     Public 私有界面_章节 As New Form_v6_参数面板_章节
     Public 私有界面_附件 As New Form_v6_参数面板_附件
 
-    Public 私有界面_画面区域选择窗口 As New Form_v6_参数面板_画面区域选择窗口
+    Public Shared ReadOnly 共享界面_画面区域选择窗口 As New Form_v6_参数面板_画面区域选择窗口
 
 
     Private Sub Form_v6_参数面板_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -117,14 +117,14 @@ Public Class Form_v6_参数面板
         End If
     End Sub
 
-    Public Sub 弹出画面区域选择窗口(完成按钮返回的控件 As Control, 标题栏 As String)
-        If 私有界面_画面区域选择窗口.目标控件 IsNot Nothing Then
+    Public Shared Sub 弹出画面区域选择窗口(完成按钮返回的控件 As Control, 标题栏 As String)
+        If 共享界面_画面区域选择窗口.目标控件 IsNot Nothing Then
             ExFloatingTip("这个参数面板的画面区域选择窗口正在使用中，请关闭后再重试", 3000)
             Exit Sub
         End If
-        私有界面_画面区域选择窗口.目标控件 = 完成按钮返回的控件
-        私有界面_画面区域选择窗口.Text = 标题栏
-        显示窗体(私有界面_画面区域选择窗口, FormMain_v6)
+        共享界面_画面区域选择窗口.目标控件 = 完成按钮返回的控件
+        共享界面_画面区域选择窗口.Text = 标题栏
+        显示窗体(共享界面_画面区域选择窗口, FormMain_v6)
     End Sub
 
 

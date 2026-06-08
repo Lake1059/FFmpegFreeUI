@@ -1,0 +1,14 @@
+﻿Public Class Form_v6_参数面板_插帧参数
+    Private Sub Form_v6_参数面板_插帧参数_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        If FormMain_v6.ThisIsYourWindow1.AttachedForms.Count > 0 Then
+            FormMain_v6.ThisIsYourWindow1.Attach(Me)
+            ModernPanel1.BackColor = Color.Transparent
+            ModernPanel1.BackColor1 = Color.Transparent
+        End If
+    End Sub
+
+    Private Sub Form_v6_参数面板_插帧参数_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
+        e.Cancel = True
+        Me.Hide()
+    End Sub
+End Class

@@ -5,16 +5,21 @@ Public Class 设置_v6
 
     Public Shared Property 实例对象 As New 设置_v6
 
-    Public Property 图形全局SSAA As Integer = 0
-    Public Property 图形SSAA渲染缓存命中 As Integer = 2
-    Public Property 图形SSAA渲染缓存总量预算 As Integer = 4
     Public Property 图形DX抗锯齿 As Integer = 0
     Public Property 图形DX文字渲染模式 As Integer = 0
-    Public Property 图形DXImage开销 As Integer = 2
-    Public Property 图形DX超容器背景穿透开销 As Integer = 2
+    Public Property 图形DX_SSAA As Integer = 0
+
+    Public Property 图形DXImage缓存预算 As Integer = 3
+    Public Property 图形DX每对象画刷缓存数量 As Integer = 5
+    Public Property 图形DW字体相关预算 As Integer = 2
+    Public Property 图形DX超容器背景映射源位图缓存 As Integer = 2
+    Public Property 图形DX超容器背景映射脏区策略极限 As Integer = 4
+    Public Property 图形DX超容器背景映射条目预算 As Integer = 2
+
     Public Property 图形动画帧率 As Integer = 60
 
     Public Property 窗口样式 As Integer = 2
+    Public Property 启用性能计数器 As Integer = 0
 
     Public Property 字体 As String = SystemFonts.DefaultFont.FontFamily.Name
     Public Property 编码队列的列宽调整逻辑 As Integer = 0
@@ -110,16 +115,20 @@ Public Class 设置_v6
         Else
             实例对象 = JsonSerializer.Deserialize(Of 设置_v6)(FileIO.FileSystem.ReadAllText(设置文件路径))
         End If
-        Form_v6_设置_LakeUI性能选项.MCB_SSAA.SelectedIndex = 实例对象.图形全局SSAA
-        Form_v6_设置_LakeUI性能选项.MCB_SSAA渲染池缓存命中.SelectedIndex = 实例对象.图形SSAA渲染缓存命中
-        Form_v6_设置_LakeUI性能选项.MCB_SSAA渲染池总量预算.SelectedIndex = 实例对象.图形SSAA渲染缓存总量预算
         Form_v6_设置_LakeUI性能选项.MCB_GPU抗锯齿.SelectedIndex = 实例对象.图形DX抗锯齿
         Form_v6_设置_LakeUI性能选项.MCB_文字渲染模式.SelectedIndex = 实例对象.图形DX文字渲染模式
-        Form_v6_设置_LakeUI性能选项.MCB_D2D位图开销.SelectedIndex = 实例对象.图形DXImage开销
-        Form_v6_设置_LakeUI性能选项.MCB_超容器背景映射开销.SelectedIndex = 实例对象.图形DX超容器背景穿透开销
+        Form_v6_设置_LakeUI性能选项.MCB_SSAA.SelectedIndex = 实例对象.图形DX_SSAA
+
+        Form_v6_设置_LakeUI性能选项.MCB_D2DImage缓存预算.SelectedIndex = 实例对象.图形DXImage缓存预算
+        Form_v6_设置_LakeUI性能选项.MCB_D2D每对象画刷缓存数量.SelectedIndex = 实例对象.图形DX每对象画刷缓存数量
+        Form_v6_设置_LakeUI性能选项.MCB_DW字体相关预算.SelectedIndex = 实例对象.图形DW字体相关预算
+        Form_v6_设置_LakeUI性能选项.MCB_超容器背景映射源位图缓存.SelectedIndex = 实例对象.图形DX超容器背景映射源位图缓存
+        Form_v6_设置_LakeUI性能选项.MCB_超容器背景映射脏区策略极限.SelectedIndex = 实例对象.图形DX超容器背景映射脏区策略极限
+        Form_v6_设置_LakeUI性能选项.MCB_超容器背景映射条目预算.SelectedIndex = 实例对象.图形DX超容器背景映射条目预算
         Form_v6_设置_LakeUI性能选项.MCB_动画帧率.Text = 实例对象.图形动画帧率
 
         Form_v6_设置_LakeUI视觉体验.MCB_窗口样式.SelectedIndex = 实例对象.窗口样式
+        Form_v6_设置_LakeUI视觉体验.MCB_性能计数器.SelectedIndex = 实例对象.启用性能计数器
 
         Form_v6_设置_界面显示.MCB_编码队列列宽调整模式.SelectedIndex = 实例对象.编码队列的列宽调整逻辑
 

@@ -1,5 +1,4 @@
-﻿Imports System.IO
-Imports LakeUI
+﻿Imports LakeUI
 Imports Microsoft.VisualBasic.ApplicationServices
 
 Namespace My
@@ -45,9 +44,7 @@ Namespace My
         Shared Function NormalizePath(path As String) As String
             If String.IsNullOrWhiteSpace(path) Then Return String.Empty
             Try
-                Return IO.Path.GetFullPath(path) _
-                           .TrimEnd(IO.Path.DirectorySeparatorChar, IO.Path.AltDirectorySeparatorChar) _
-                           .ToLowerInvariant()
+                Return IO.Path.GetFullPath(path).TrimEnd(IO.Path.DirectorySeparatorChar, IO.Path.AltDirectorySeparatorChar).ToLowerInvariant()
             Catch
                 Return path.TrimEnd("\"c, "/"c).ToLowerInvariant()
             End Try
