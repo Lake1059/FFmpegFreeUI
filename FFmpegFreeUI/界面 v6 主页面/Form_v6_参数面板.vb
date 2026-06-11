@@ -119,7 +119,7 @@ Public Class Form_v6_参数面板
 
     Public Shared Sub 弹出画面区域选择窗口(完成按钮返回的控件 As Control, 标题栏 As String)
         If 共享界面_画面区域选择窗口.目标控件 IsNot Nothing Then
-            ExFloatingTip("这个参数面板的画面区域选择窗口正在使用中，请关闭后再重试", 3000)
+            ExFloatingTip("画面区域选择窗口正在使用中，请关闭后再试，为了节约性能这个窗口只能打开一个", 3000)
             Exit Sub
         End If
         共享界面_画面区域选择窗口.目标控件 = 完成按钮返回的控件

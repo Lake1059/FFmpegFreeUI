@@ -28,7 +28,7 @@ Partial Class Form_v6_参数面板_画面帧
         JustEmptyControl6 = New LakeUI.JustEmptyControl()
         ModernButton8 = New LakeUI.ModernButton()
         JustEmptyControl7 = New LakeUI.JustEmptyControl()
-        ModernButton7 = New LakeUI.ModernButton()
+        MB_烧录字幕 = New LakeUI.ModernButton()
         HtmlColorLabel4 = New LakeUI.HtmlColorLabel()
         Panel8 = New Panel()
         ModernButton10 = New LakeUI.ModernButton()
@@ -109,7 +109,7 @@ Partial Class Form_v6_参数面板_画面帧
         Panel6.Controls.Add(JustEmptyControl6)
         Panel6.Controls.Add(ModernButton8)
         Panel6.Controls.Add(JustEmptyControl7)
-        Panel6.Controls.Add(ModernButton7)
+        Panel6.Controls.Add(MB_烧录字幕)
         Panel6.Dock = DockStyle.Top
         Panel6.Location = New Point(20, 494)
         Panel6.Name = "Panel6"
@@ -163,20 +163,20 @@ Partial Class Form_v6_参数面板_画面帧
         JustEmptyControl7.Size = New Size(10, 32)
         JustEmptyControl7.TabIndex = 9
         ' 
-        ' ModernButton7
+        ' MB_烧录字幕
         ' 
-        ModernButton7.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernButton7.BorderRadius = 10
-        ModernButton7.BorderSize = 0
-        ModernButton7.Dock = DockStyle.Left
-        ModernButton7.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
-        ModernButton7.Location = New Point(0, 10)
-        ModernButton7.Margin = New Padding(2)
-        ModernButton7.Name = "ModernButton7"
-        ModernButton7.PressedBackColor1 = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
-        ModernButton7.Size = New Size(150, 32)
-        ModernButton7.TabIndex = 11
-        ModernButton7.Text = "烧录字幕"
+        MB_烧录字幕.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MB_烧录字幕.BorderRadius = 10
+        MB_烧录字幕.BorderSize = 0
+        MB_烧录字幕.Dock = DockStyle.Left
+        MB_烧录字幕.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        MB_烧录字幕.Location = New Point(0, 10)
+        MB_烧录字幕.Margin = New Padding(2)
+        MB_烧录字幕.Name = "MB_烧录字幕"
+        MB_烧录字幕.PressedBackColor1 = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
+        MB_烧录字幕.Size = New Size(150, 32)
+        MB_烧录字幕.TabIndex = 11
+        MB_烧录字幕.Text = "烧录字幕"
         ' 
         ' HtmlColorLabel4
         ' 
@@ -799,7 +799,7 @@ Partial Class Form_v6_参数面板_画面帧
     Friend WithEvents Panel6 As Panel
     Friend WithEvents ModernButton8 As LakeUI.ModernButton
     Friend WithEvents JustEmptyControl7 As LakeUI.JustEmptyControl
-    Friend WithEvents ModernButton7 As LakeUI.ModernButton
+    Friend WithEvents MB_烧录字幕 As LakeUI.ModernButton
     Friend WithEvents ModernButton6 As LakeUI.ModernButton
     Friend WithEvents JustEmptyControl6 As LakeUI.JustEmptyControl
     Friend WithEvents Panel7 As Panel

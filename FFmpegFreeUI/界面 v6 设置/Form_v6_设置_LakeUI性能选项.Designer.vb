@@ -22,8 +22,8 @@ Partial Class Form_v6_设置_LakeUI性能选项
     '不要使用代码编辑器修改它。
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim ToolTipEntry1 As LakeUI.ModernComboBox.ToolTipEntry = New LakeUI.ModernComboBox.ToolTipEntry()
-        Dim ToolTipEntry2 As LakeUI.ModernComboBox.ToolTipEntry = New LakeUI.ModernComboBox.ToolTipEntry()
+        Dim ToolTipEntry3 As LakeUI.ModernComboBox.ToolTipEntry = New LakeUI.ModernComboBox.ToolTipEntry()
+        Dim ToolTipEntry4 As LakeUI.ModernComboBox.ToolTipEntry = New LakeUI.ModernComboBox.ToolTipEntry()
         ModernPanel1 = New LakeUI.ModernPanel()
         Panel6 = New Panel()
         HtmlColorLabel5 = New LakeUI.HtmlColorLabel()
@@ -190,7 +190,7 @@ Partial Class Form_v6_设置_LakeUI性能选项
         HtmlColorLabel9.Padding = New Padding(10, 0, 0, 0)
         HtmlColorLabel9.Size = New Size(502, 32)
         HtmlColorLabel9.TabIndex = 17
-        HtmlColorLabel9.Text = "<span style=""color:Silver"">超容器背景映射   条目预算</span>   玻璃背景模式下显存影响显著"
+        HtmlColorLabel9.Text = "<span style=""color:Silver"">超容器背景映射   显存总量和单源条目</span>   预算越少计算越多"
         HtmlColorLabel9.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
         ' 
         ' MCB_超容器背景映射条目预算
@@ -207,11 +207,15 @@ Partial Class Form_v6_设置_LakeUI性能选项
         MCB_超容器背景映射条目预算.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_超容器背景映射条目预算.DropDownSelectedForeColor = Color.White
         MCB_超容器背景映射条目预算.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
-        MCB_超容器背景映射条目预算.Items.Add("没有预算 ! 不推荐")
-        MCB_超容器背景映射条目预算.Items.Add("12 条目")
-        MCB_超容器背景映射条目预算.Items.Add("24 条目（默认）")
-        MCB_超容器背景映射条目预算.Items.Add("48 条目")
-        MCB_超容器背景映射条目预算.Items.Add("96 条目")
+        MCB_超容器背景映射条目预算.Items.Add("全局 32M + 单源 12")
+        MCB_超容器背景映射条目预算.Items.Add("全局 32M + 单源 24")
+        MCB_超容器背景映射条目预算.Items.Add("全局 32M + 单源 48")
+        MCB_超容器背景映射条目预算.Items.Add("全局 64M + 单源 32")
+        MCB_超容器背景映射条目预算.Items.Add("全局 64M + 单源 64")
+        MCB_超容器背景映射条目预算.Items.Add("全局 64M + 单源 128")
+        MCB_超容器背景映射条目预算.Items.Add("全局 128M + 单源 32")
+        MCB_超容器背景映射条目预算.Items.Add("全局 128M + 单源 64")
+        MCB_超容器背景映射条目预算.Items.Add("全局 128M + 单源 128")
         MCB_超容器背景映射条目预算.Location = New Point(0, 10)
         MCB_超容器背景映射条目预算.Margin = New Padding(2, 2, 2, 2)
         MCB_超容器背景映射条目预算.Name = "MCB_超容器背景映射条目预算"
@@ -563,9 +567,9 @@ Partial Class Form_v6_设置_LakeUI性能选项
         MCB_SSAA.Items.Add("x2")
         MCB_SSAA.Items.Add("x3")
         MCB_SSAA.Items.Add("x4")
-        ToolTipEntry1.ItemText = "矢量几何 (试验选项)"
-        ToolTipEntry1.ToolTipText = "矢量几何 Outline 是仿制 MacType 的超高质量绘制模式，彻底避开 Windows 的 GASP表 和 TrueType hinting 字节码，让不想安装三方软件的用户也能体验到 Web 甚至 macOS 的文字效果，其效果由开发者定制，如有不适请及时切换到其他模式"
-        MCB_SSAA.ItemToolTips.AddRange(New LakeUI.ModernComboBox.ToolTipEntry() {ToolTipEntry1})
+        ToolTipEntry3.ItemText = "矢量几何 (试验选项)"
+        ToolTipEntry3.ToolTipText = "矢量几何 Outline 是仿制 MacType 的超高质量绘制模式，彻底避开 Windows 的 GASP表 和 TrueType hinting 字节码，让不想安装三方软件的用户也能体验到 Web 甚至 macOS 的文字效果，其效果由开发者定制，如有不适请及时切换到其他模式"
+        MCB_SSAA.ItemToolTips.AddRange(New LakeUI.ModernComboBox.ToolTipEntry() {ToolTipEntry3})
         MCB_SSAA.Location = New Point(0, 10)
         MCB_SSAA.Margin = New Padding(2, 2, 2, 2)
         MCB_SSAA.Name = "MCB_SSAA"
@@ -620,9 +624,9 @@ Partial Class Form_v6_设置_LakeUI性能选项
         MCB_文字渲染模式.Items.Add("灰度抗锯齿")
         MCB_文字渲染模式.Items.Add("禁用抗锯齿")
         MCB_文字渲染模式.Items.Add("矢量几何 (试验选项)")
-        ToolTipEntry2.ItemText = "矢量几何 (试验选项)"
-        ToolTipEntry2.ToolTipText = "矢量几何 Outline 是仿制 MacType 的超高质量绘制模式，彻底避开 Windows 的 GASP表 和 TrueType hinting 字节码，让不想安装三方软件的用户也能体验到 Web 甚至 macOS 的文字效果，其效果由开发者定制，如有不适请及时切换到其他模式"
-        MCB_文字渲染模式.ItemToolTips.AddRange(New LakeUI.ModernComboBox.ToolTipEntry() {ToolTipEntry2})
+        ToolTipEntry4.ItemText = "矢量几何 (试验选项)"
+        ToolTipEntry4.ToolTipText = "矢量几何 Outline 是仿制 MacType 的超高质量绘制模式，彻底避开 Windows 的 GASP表 和 TrueType hinting 字节码，让不想安装三方软件的用户也能体验到 Web 甚至 macOS 的文字效果，其效果由开发者定制，如有不适请及时切换到其他模式"
+        MCB_文字渲染模式.ItemToolTips.AddRange(New LakeUI.ModernComboBox.ToolTipEntry() {ToolTipEntry4})
         MCB_文字渲染模式.Location = New Point(0, 10)
         MCB_文字渲染模式.Margin = New Padding(2, 2, 2, 2)
         MCB_文字渲染模式.Name = "MCB_文字渲染模式"

@@ -27,4 +27,9 @@
     Private Sub MB_简易插帧_Click(sender As Object, e As EventArgs) Handles MB_简易插帧.Click
         显示窗体(私有窗口_插帧参数, FormMain_v6)
     End Sub
+
+    Public 私有窗口_烧录字幕 As New Form_v6_参数面板_烧录字幕
+    Private Sub MB_烧录字幕_Click(sender As Object, e As EventArgs) Handles MB_烧录字幕.Click
+        显示窗体(私有窗口_烧录字幕, FormMain_v6)
+    End Sub
 End Class

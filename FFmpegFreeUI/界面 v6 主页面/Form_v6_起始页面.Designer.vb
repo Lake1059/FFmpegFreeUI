@@ -156,7 +156,6 @@ Partial Class Form_v6_起始页面
         ModernPanel3.Name = "ModernPanel3"
         ModernPanel3.ScrollBarMode = LakeUI.ModernPanel.ScrollMode.None
         ModernPanel3.Size = New Size(60, 60)
-        ModernPanel3.SuperSamplingScale = LakeUI.GlobalOptions.SuperSamplingScaleEnum.x2
         ModernPanel3.TabIndex = 0
         ' 
         ' ModernPanel1

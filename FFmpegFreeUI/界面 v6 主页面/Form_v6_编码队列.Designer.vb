@@ -276,6 +276,7 @@ Partial Class Form_v6_编码队列
         UltraDetailListView1.HeaderBorderWidth = 2
         UltraDetailListView1.HeaderForeColor = Color.DarkGray
         UltraDetailListView1.HeaderHeight = 36
+        UltraDetailListView1.ItemCornerRadius = 10
         UltraDetailListView1.ItemPadding = New Padding(10, 5, 5, 5)
         ListSubItem1.Text = "字体样式"
         ListSubItem2.Text = "字体样式"
@@ -298,6 +299,7 @@ Partial Class Form_v6_编码队列
         UltraDetailListView1.Location = New Point(0, 55)
         UltraDetailListView1.Margin = New Padding(2, 2, 2, 2)
         UltraDetailListView1.Name = "UltraDetailListView1"
+        UltraDetailListView1.Padding = New Padding(10, 0, 10, 0)
         UltraDetailListView1.SelectionRectBorderColor = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
         UltraDetailListView1.SelectionRectFillColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         UltraDetailListView1.Size = New Size(984, 626)

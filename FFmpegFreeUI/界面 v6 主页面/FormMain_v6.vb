@@ -53,6 +53,9 @@ Public Class FormMain_v6
 
         Me.ModernTabListControl1.SelectedIndex = 1
         Me.ModernTextBox1.Parent = Me.ModernTabListControl1
+
+        其他初始化.启用全局消息框毛玻璃()
+
     End Sub
 
     Private Sub FormMain_v6_Shown(sender As Object, e As EventArgs) Handles Me.Shown
@@ -111,13 +114,10 @@ Public Class FormMain_v6
     End Sub
 
     Private Sub PrecisionTimer1_Tick(sender As Object, e As EventArgs) Handles PrecisionTimer1.Tick
-        Dim t1 As String = "FFmpegFreeUI"
-        If SP_UnLock AndAlso 设置_v6.实例对象.SP_窗口标题文字 <> "" Then
-            t1 = 设置_v6.实例对象.SP_窗口标题文字
-        End If
+        Dim t1 As String = "<Title>"
         t1 &= $"   |   CPU {MainAppUsageCounter.GetCpuUsagePercent():F1}%"
-        t1 &= $"   |   RAM {MainAppUsageCounter.GetCommitMemoryBytes() / 1024 / 1024:F0}M"
-        t1 &= $"   |   GPU {MainAppUsageCounter.GetGpu3DUsagePercent():F1}% {MainAppUsageCounter.GetGpuDedicatedMemoryBytes() / 1024 / 1024:F0}M"
-        Me.Text = t1
+        t1 &= $"   |   RAM {MainAppUsageCounter.GetActivePrivateWorkingSetBytes() / 1024 / 1024:F0}M / {MainAppUsageCounter.GetCommitSizeBytes() / 1024 / 1024:F0}M"
+        t1 &= $"   |   GPU {MainAppUsageCounter.GetGpu3DUsagePercent():F1}% {MainAppUsageCounter.GetGpuDedicatedMemoryBytes() / 1024 / 1024:F0}M + {MainAppUsageCounter.GetGpuSharedMemoryBytes() / 1024 / 1024:F0}M"
+        Me.ThisIsYourWindow1.TitleTextPrivateProtocol = t1
     End Sub
 End Class

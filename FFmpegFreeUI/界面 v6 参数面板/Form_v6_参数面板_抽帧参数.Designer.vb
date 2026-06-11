@@ -480,7 +480,7 @@ Partial Class Form_v6_参数面板_抽帧参数
         ShowIcon = False
         ShowInTaskbar = False
         StartPosition = FormStartPosition.Manual
-        Text = "mpdecimate 滤镜"
+        Text = "视频抽帧"
         ModernPanel1.ResumeLayout(False)
         ModernPanel1.PerformLayout()
         Panel7.ResumeLayout(False)

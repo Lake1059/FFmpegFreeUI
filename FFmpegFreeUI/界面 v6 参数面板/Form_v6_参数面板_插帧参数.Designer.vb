@@ -575,7 +575,7 @@ Partial Class Form_v6_参数面板_插帧参数
         MinimizeBox = False
         MinimumSize = New Size(650, 550)
         Name = "Form_v6_参数面板_插帧参数"
-        Text = "mpdecimate 滤镜"
+        Text = "视频插帧"
         ModernPanel1.ResumeLayout(False)
         ModernPanel1.PerformLayout()
         Panel6.ResumeLayout(False)

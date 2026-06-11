@@ -14,7 +14,7 @@ Public Class 设置_v6
     Public Property 图形DW字体相关预算 As Integer = 2
     Public Property 图形DX超容器背景映射源位图缓存 As Integer = 2
     Public Property 图形DX超容器背景映射脏区策略极限 As Integer = 4
-    Public Property 图形DX超容器背景映射条目预算 As Integer = 2
+    Public Property 图形DX超容器背景映射显存总量和单源条目 As Integer = 3
 
     Public Property 图形动画帧率 As Integer = 60
 
@@ -124,7 +124,7 @@ Public Class 设置_v6
         Form_v6_设置_LakeUI性能选项.MCB_DW字体相关预算.SelectedIndex = 实例对象.图形DW字体相关预算
         Form_v6_设置_LakeUI性能选项.MCB_超容器背景映射源位图缓存.SelectedIndex = 实例对象.图形DX超容器背景映射源位图缓存
         Form_v6_设置_LakeUI性能选项.MCB_超容器背景映射脏区策略极限.SelectedIndex = 实例对象.图形DX超容器背景映射脏区策略极限
-        Form_v6_设置_LakeUI性能选项.MCB_超容器背景映射条目预算.SelectedIndex = 实例对象.图形DX超容器背景映射条目预算
+        Form_v6_设置_LakeUI性能选项.MCB_超容器背景映射条目预算.SelectedIndex = 实例对象.图形DX超容器背景映射显存总量和单源条目
         Form_v6_设置_LakeUI性能选项.MCB_动画帧率.Text = 实例对象.图形动画帧率
 
         Form_v6_设置_LakeUI视觉体验.MCB_窗口样式.SelectedIndex = 实例对象.窗口样式

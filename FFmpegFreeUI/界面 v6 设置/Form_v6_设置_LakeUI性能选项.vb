@@ -93,11 +93,11 @@
     Private Sub MCB_超容器背景映射源位图缓存_SelectedIndexChanged(sender As Object, e As EventArgs) Handles MCB_超容器背景映射源位图缓存.SelectedIndexChanged
         设置_v6.实例对象.图形DX超容器背景映射源位图缓存 = MCB_超容器背景映射源位图缓存.SelectedIndex
         Select Case 设置_v6.实例对象.图形DX超容器背景映射源位图缓存
-            Case 0 : LakeUI.GlobalOptions.BackgroundPenetrationSourceBitmapBudgetBytes = 16
-            Case 1 : LakeUI.GlobalOptions.BackgroundPenetrationSourceBitmapBudgetBytes = 32
-            Case 2 : LakeUI.GlobalOptions.BackgroundPenetrationSourceBitmapBudgetBytes = 64
-            Case 3 : LakeUI.GlobalOptions.BackgroundPenetrationSourceBitmapBudgetBytes = 128
-            Case 4 : LakeUI.GlobalOptions.BackgroundPenetrationSourceBitmapBudgetBytes = 256
+            Case 0 : LakeUI.GlobalOptions.BackgroundPenetrationSourceBitmapBudgetBytes = 16L * 1024L * 1024L
+            Case 1 : LakeUI.GlobalOptions.BackgroundPenetrationSourceBitmapBudgetBytes = 32L * 1024L * 1024L
+            Case 2 : LakeUI.GlobalOptions.BackgroundPenetrationSourceBitmapBudgetBytes = 64L * 1024L * 1024L
+            Case 3 : LakeUI.GlobalOptions.BackgroundPenetrationSourceBitmapBudgetBytes = 128L * 1024L * 1024L
+            Case 4 : LakeUI.GlobalOptions.BackgroundPenetrationSourceBitmapBudgetBytes = 256L * 1024L * 1024L
         End Select
     End Sub
     Private Sub MCB_超容器背景映射脏区策略极限_SelectedIndexChanged(sender As Object, e As EventArgs) Handles MCB_超容器背景映射脏区策略极限.SelectedIndexChanged
@@ -133,13 +133,35 @@
         End Select
     End Sub
     Private Sub MCB_超容器背景映射条目预算_SelectedIndexChanged(sender As Object, e As EventArgs) Handles MCB_超容器背景映射条目预算.SelectedIndexChanged
-        设置_v6.实例对象.图形DX超容器背景映射条目预算 = MCB_超容器背景映射条目预算.SelectedIndex
-        Select Case 设置_v6.实例对象.图形DX超容器背景映射条目预算
-            Case 0 : LakeUI.GlobalOptions.BackgroundPenetrationCropCacheMaxEntriesPerSource = 0
-            Case 1 : LakeUI.GlobalOptions.BackgroundPenetrationCropCacheMaxEntriesPerSource = 12
-            Case 2 : LakeUI.GlobalOptions.BackgroundPenetrationCropCacheMaxEntriesPerSource = 24
-            Case 3 : LakeUI.GlobalOptions.BackgroundPenetrationCropCacheMaxEntriesPerSource = 48
-            Case 4 : LakeUI.GlobalOptions.BackgroundPenetrationCropCacheMaxEntriesPerSource = 96
+        设置_v6.实例对象.图形DX超容器背景映射显存总量和单源条目 = MCB_超容器背景映射条目预算.SelectedIndex
+        Select Case 设置_v6.实例对象.图形DX超容器背景映射显存总量和单源条目
+            Case 0
+                LakeUI.GlobalOptions.BackgroundPenetrationCropCacheBudgetBytes = 32 * 1024 * 1024
+                LakeUI.GlobalOptions.BackgroundPenetrationCropCacheMaxEntriesPerSource = 12
+            Case 1
+                LakeUI.GlobalOptions.BackgroundPenetrationCropCacheBudgetBytes = 32 * 1024 * 1024
+                LakeUI.GlobalOptions.BackgroundPenetrationCropCacheMaxEntriesPerSource = 24
+            Case 2
+                LakeUI.GlobalOptions.BackgroundPenetrationCropCacheBudgetBytes = 32 * 1024 * 1024
+                LakeUI.GlobalOptions.BackgroundPenetrationCropCacheMaxEntriesPerSource = 48
+            Case 3
+                LakeUI.GlobalOptions.BackgroundPenetrationCropCacheBudgetBytes = 64 * 1024 * 1024
+                LakeUI.GlobalOptions.BackgroundPenetrationCropCacheMaxEntriesPerSource = 32
+            Case 4
+                LakeUI.GlobalOptions.BackgroundPenetrationCropCacheBudgetBytes = 64 * 1024 * 1024
+                LakeUI.GlobalOptions.BackgroundPenetrationCropCacheMaxEntriesPerSource = 64
+            Case 5
+                LakeUI.GlobalOptions.BackgroundPenetrationCropCacheBudgetBytes = 64 * 1024 * 1024
+                LakeUI.GlobalOptions.BackgroundPenetrationCropCacheMaxEntriesPerSource = 128
+            Case 6
+                LakeUI.GlobalOptions.BackgroundPenetrationCropCacheBudgetBytes = 128 * 1024 * 1024
+                LakeUI.GlobalOptions.BackgroundPenetrationCropCacheMaxEntriesPerSource = 32
+            Case 7
+                LakeUI.GlobalOptions.BackgroundPenetrationCropCacheBudgetBytes = 128 * 1024 * 1024
+                LakeUI.GlobalOptions.BackgroundPenetrationCropCacheMaxEntriesPerSource = 64
+            Case 8
+                LakeUI.GlobalOptions.BackgroundPenetrationCropCacheBudgetBytes = 128 * 1024 * 1024
+                LakeUI.GlobalOptions.BackgroundPenetrationCropCacheMaxEntriesPerSource = 128
         End Select
     End Sub
 
