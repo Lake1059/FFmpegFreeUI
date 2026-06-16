@@ -104,6 +104,9 @@ Partial Class Form_v6_起始页面
         MCB_清理内存.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
         MCB_清理内存.Items.Add("清理 3FUI 内存 (GC)")
         MCB_清理内存.Items.Add("清理 3FUI 内存 (内核)")
+        MCB_清理内存.Items.Add("D2D 预算清理")
+        MCB_清理内存.Items.Add("D2D 激进清理")
+        MCB_清理内存.Items.Add("D2D 全量清理")
         MCB_清理内存.Location = New Point(0, 28)
         MCB_清理内存.Margin = New Padding(2, 2, 2, 2)
         MCB_清理内存.MaxDropDownItems = 15
@@ -114,7 +117,7 @@ Partial Class Form_v6_起始页面
         MCB_清理内存.ToolTipGap = -1
         MCB_清理内存.ToolTipMaxWidth = 350
         MCB_清理内存.ToolTipPadding = New Padding(15)
-        MCB_清理内存.WaterText = "清理内存条"
+        MCB_清理内存.WaterText = "清理占用"
         MCB_清理内存.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ' 
         ' HtmlColorLabel2

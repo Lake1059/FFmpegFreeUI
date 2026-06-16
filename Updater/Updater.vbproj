@@ -3,9 +3,9 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <RootNamespace>Updater</RootNamespace>
-    <TargetFramework>net10.0-windows10.0.26100.0</TargetFramework>
+    <TargetFramework>net10.0-windows10.0.17763.0</TargetFramework>
     <InvariantGlobalization>true</InvariantGlobalization>
-    <SupportedOSPlatformVersion>7.0</SupportedOSPlatformVersion>
+    <SupportedOSPlatformVersion>10.0.17763.0</SupportedOSPlatformVersion>
     <AssemblyVersion>1.2.0</AssemblyVersion>
     <FileVersion>1.2.0</FileVersion>
 	<Version>1.2.0</Version>
@@ -24,7 +24,7 @@
 
   <ItemGroup>
     <Reference Include="LakeUI">
-      <HintPath>..\..\LakeUI\LakeUI\bin\Debug\net10.0-windows\LakeUI.dll</HintPath>
+      <HintPath>..\..\LakeUI\LakeUI\bin\Debug\net10.0-windows10.0.17763.0\LakeUI.dll</HintPath>
     </Reference>
   </ItemGroup>
 

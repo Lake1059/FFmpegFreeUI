@@ -24,28 +24,24 @@ Partial Class Form_v6_参数面板_画面帧
     Private Sub InitializeComponent()
         ModernPanel1 = New LakeUI.ModernPanel()
         Panel6 = New Panel()
-        ModernButton6 = New LakeUI.ModernButton()
-        JustEmptyControl6 = New LakeUI.JustEmptyControl()
-        ModernButton8 = New LakeUI.ModernButton()
-        JustEmptyControl7 = New LakeUI.JustEmptyControl()
         MB_烧录字幕 = New LakeUI.ModernButton()
         HtmlColorLabel4 = New LakeUI.HtmlColorLabel()
         Panel8 = New Panel()
-        ModernButton10 = New LakeUI.ModernButton()
+        MB_平滑断层 = New LakeUI.ModernButton()
         JustEmptyControl10 = New LakeUI.JustEmptyControl()
-        ModernButton11 = New LakeUI.ModernButton()
+        MB_画面翻转 = New LakeUI.ModernButton()
         JustEmptyControl11 = New LakeUI.JustEmptyControl()
-        ModernButton12 = New LakeUI.ModernButton()
+        MB_扫描方式 = New LakeUI.ModernButton()
         Panel7 = New Panel()
-        ModernButton1 = New LakeUI.ModernButton()
+        MB_胶片颗粒 = New LakeUI.ModernButton()
         JustEmptyControl8 = New LakeUI.JustEmptyControl()
-        ModernButton2 = New LakeUI.ModernButton()
+        MB_传统锐化 = New LakeUI.ModernButton()
         JustEmptyControl9 = New LakeUI.JustEmptyControl()
-        ModernButton9 = New LakeUI.ModernButton()
+        MB_传统降噪 = New LakeUI.ModernButton()
         Panel5 = New Panel()
-        ModernButton5 = New LakeUI.ModernButton()
+        MB_着色器超分 = New LakeUI.ModernButton()
         JustEmptyControl5 = New LakeUI.JustEmptyControl()
-        ModernButton4 = New LakeUI.ModernButton()
+        MB_动态模糊 = New LakeUI.ModernButton()
         JustEmptyControl4 = New LakeUI.JustEmptyControl()
         MB_简易插帧 = New LakeUI.ModernButton()
         HtmlColorLabel3 = New LakeUI.HtmlColorLabel()
@@ -105,10 +101,6 @@ Partial Class Form_v6_参数面板_画面帧
         ' 
         ' Panel6
         ' 
-        Panel6.Controls.Add(ModernButton6)
-        Panel6.Controls.Add(JustEmptyControl6)
-        Panel6.Controls.Add(ModernButton8)
-        Panel6.Controls.Add(JustEmptyControl7)
         Panel6.Controls.Add(MB_烧录字幕)
         Panel6.Dock = DockStyle.Top
         Panel6.Location = New Point(20, 494)
@@ -116,52 +108,6 @@ Partial Class Form_v6_参数面板_画面帧
         Panel6.Padding = New Padding(0, 10, 0, 0)
         Panel6.Size = New Size(729, 42)
         Panel6.TabIndex = 14
-        ' 
-        ' ModernButton6
-        ' 
-        ModernButton6.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernButton6.BorderRadius = 10
-        ModernButton6.BorderSize = 0
-        ModernButton6.Dock = DockStyle.Left
-        ModernButton6.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
-        ModernButton6.Location = New Point(320, 10)
-        ModernButton6.Margin = New Padding(2)
-        ModernButton6.Name = "ModernButton6"
-        ModernButton6.PressedBackColor1 = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
-        ModernButton6.Size = New Size(150, 32)
-        ModernButton6.TabIndex = 13
-        ModernButton6.Text = "抹平水印"
-        ' 
-        ' JustEmptyControl6
-        ' 
-        JustEmptyControl6.Dock = DockStyle.Left
-        JustEmptyControl6.Location = New Point(310, 10)
-        JustEmptyControl6.Name = "JustEmptyControl6"
-        JustEmptyControl6.Size = New Size(10, 32)
-        JustEmptyControl6.TabIndex = 12
-        ' 
-        ' ModernButton8
-        ' 
-        ModernButton8.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernButton8.BorderRadius = 10
-        ModernButton8.BorderSize = 0
-        ModernButton8.Dock = DockStyle.Left
-        ModernButton8.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
-        ModernButton8.Location = New Point(160, 10)
-        ModernButton8.Margin = New Padding(2)
-        ModernButton8.Name = "ModernButton8"
-        ModernButton8.PressedBackColor1 = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
-        ModernButton8.Size = New Size(150, 32)
-        ModernButton8.TabIndex = 10
-        ModernButton8.Text = "添加水印"
-        ' 
-        ' JustEmptyControl7
-        ' 
-        JustEmptyControl7.Dock = DockStyle.Left
-        JustEmptyControl7.Location = New Point(150, 10)
-        JustEmptyControl7.Name = "JustEmptyControl7"
-        JustEmptyControl7.Size = New Size(10, 32)
-        JustEmptyControl7.TabIndex = 9
         ' 
         ' MB_烧录字幕
         ' 
@@ -194,11 +140,11 @@ Partial Class Form_v6_参数面板_画面帧
         ' 
         ' Panel8
         ' 
-        Panel8.Controls.Add(ModernButton10)
+        Panel8.Controls.Add(MB_平滑断层)
         Panel8.Controls.Add(JustEmptyControl10)
-        Panel8.Controls.Add(ModernButton11)
+        Panel8.Controls.Add(MB_画面翻转)
         Panel8.Controls.Add(JustEmptyControl11)
-        Panel8.Controls.Add(ModernButton12)
+        Panel8.Controls.Add(MB_扫描方式)
         Panel8.Dock = DockStyle.Top
         Panel8.Location = New Point(20, 402)
         Panel8.Name = "Panel8"
@@ -206,20 +152,20 @@ Partial Class Form_v6_参数面板_画面帧
         Panel8.Size = New Size(729, 42)
         Panel8.TabIndex = 16
         ' 
-        ' ModernButton10
+        ' MB_平滑断层
         ' 
-        ModernButton10.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernButton10.BorderRadius = 10
-        ModernButton10.BorderSize = 0
-        ModernButton10.Dock = DockStyle.Left
-        ModernButton10.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
-        ModernButton10.Location = New Point(320, 10)
-        ModernButton10.Margin = New Padding(2)
-        ModernButton10.Name = "ModernButton10"
-        ModernButton10.PressedBackColor1 = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
-        ModernButton10.Size = New Size(150, 32)
-        ModernButton10.TabIndex = 13
-        ModernButton10.Text = "平滑断层"
+        MB_平滑断层.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MB_平滑断层.BorderRadius = 10
+        MB_平滑断层.BorderSize = 0
+        MB_平滑断层.Dock = DockStyle.Left
+        MB_平滑断层.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        MB_平滑断层.Location = New Point(320, 10)
+        MB_平滑断层.Margin = New Padding(2)
+        MB_平滑断层.Name = "MB_平滑断层"
+        MB_平滑断层.PressedBackColor1 = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
+        MB_平滑断层.Size = New Size(150, 32)
+        MB_平滑断层.TabIndex = 13
+        MB_平滑断层.Text = "平滑断层"
         ' 
         ' JustEmptyControl10
         ' 
@@ -229,20 +175,20 @@ Partial Class Form_v6_参数面板_画面帧
         JustEmptyControl10.Size = New Size(10, 32)
         JustEmptyControl10.TabIndex = 12
         ' 
-        ' ModernButton11
+        ' MB_画面翻转
         ' 
-        ModernButton11.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernButton11.BorderRadius = 10
-        ModernButton11.BorderSize = 0
-        ModernButton11.Dock = DockStyle.Left
-        ModernButton11.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
-        ModernButton11.Location = New Point(160, 10)
-        ModernButton11.Margin = New Padding(2)
-        ModernButton11.Name = "ModernButton11"
-        ModernButton11.PressedBackColor1 = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
-        ModernButton11.Size = New Size(150, 32)
-        ModernButton11.TabIndex = 11
-        ModernButton11.Text = "画面翻转"
+        MB_画面翻转.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MB_画面翻转.BorderRadius = 10
+        MB_画面翻转.BorderSize = 0
+        MB_画面翻转.Dock = DockStyle.Left
+        MB_画面翻转.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        MB_画面翻转.Location = New Point(160, 10)
+        MB_画面翻转.Margin = New Padding(2)
+        MB_画面翻转.Name = "MB_画面翻转"
+        MB_画面翻转.PressedBackColor1 = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
+        MB_画面翻转.Size = New Size(150, 32)
+        MB_画面翻转.TabIndex = 11
+        MB_画面翻转.Text = "画面翻转"
         ' 
         ' JustEmptyControl11
         ' 
@@ -252,28 +198,28 @@ Partial Class Form_v6_参数面板_画面帧
         JustEmptyControl11.Size = New Size(10, 32)
         JustEmptyControl11.TabIndex = 9
         ' 
-        ' ModernButton12
+        ' MB_扫描方式
         ' 
-        ModernButton12.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernButton12.BorderRadius = 10
-        ModernButton12.BorderSize = 0
-        ModernButton12.Dock = DockStyle.Left
-        ModernButton12.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
-        ModernButton12.Location = New Point(0, 10)
-        ModernButton12.Margin = New Padding(2)
-        ModernButton12.Name = "ModernButton12"
-        ModernButton12.PressedBackColor1 = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
-        ModernButton12.Size = New Size(150, 32)
-        ModernButton12.TabIndex = 10
-        ModernButton12.Text = "扫描方式"
+        MB_扫描方式.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MB_扫描方式.BorderRadius = 10
+        MB_扫描方式.BorderSize = 0
+        MB_扫描方式.Dock = DockStyle.Left
+        MB_扫描方式.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        MB_扫描方式.Location = New Point(0, 10)
+        MB_扫描方式.Margin = New Padding(2)
+        MB_扫描方式.Name = "MB_扫描方式"
+        MB_扫描方式.PressedBackColor1 = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
+        MB_扫描方式.Size = New Size(150, 32)
+        MB_扫描方式.TabIndex = 10
+        MB_扫描方式.Text = "扫描方式"
         ' 
         ' Panel7
         ' 
-        Panel7.Controls.Add(ModernButton1)
+        Panel7.Controls.Add(MB_胶片颗粒)
         Panel7.Controls.Add(JustEmptyControl8)
-        Panel7.Controls.Add(ModernButton2)
+        Panel7.Controls.Add(MB_传统锐化)
         Panel7.Controls.Add(JustEmptyControl9)
-        Panel7.Controls.Add(ModernButton9)
+        Panel7.Controls.Add(MB_传统降噪)
         Panel7.Dock = DockStyle.Top
         Panel7.Location = New Point(20, 360)
         Panel7.Name = "Panel7"
@@ -281,20 +227,20 @@ Partial Class Form_v6_参数面板_画面帧
         Panel7.Size = New Size(729, 42)
         Panel7.TabIndex = 15
         ' 
-        ' ModernButton1
+        ' MB_胶片颗粒
         ' 
-        ModernButton1.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernButton1.BorderRadius = 10
-        ModernButton1.BorderSize = 0
-        ModernButton1.Dock = DockStyle.Left
-        ModernButton1.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
-        ModernButton1.Location = New Point(320, 10)
-        ModernButton1.Margin = New Padding(2)
-        ModernButton1.Name = "ModernButton1"
-        ModernButton1.PressedBackColor1 = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
-        ModernButton1.Size = New Size(150, 32)
-        ModernButton1.TabIndex = 13
-        ModernButton1.Text = "胶片颗粒"
+        MB_胶片颗粒.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MB_胶片颗粒.BorderRadius = 10
+        MB_胶片颗粒.BorderSize = 0
+        MB_胶片颗粒.Dock = DockStyle.Left
+        MB_胶片颗粒.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        MB_胶片颗粒.Location = New Point(320, 10)
+        MB_胶片颗粒.Margin = New Padding(2)
+        MB_胶片颗粒.Name = "MB_胶片颗粒"
+        MB_胶片颗粒.PressedBackColor1 = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
+        MB_胶片颗粒.Size = New Size(150, 32)
+        MB_胶片颗粒.TabIndex = 13
+        MB_胶片颗粒.Text = "胶片颗粒"
         ' 
         ' JustEmptyControl8
         ' 
@@ -304,20 +250,20 @@ Partial Class Form_v6_参数面板_画面帧
         JustEmptyControl8.Size = New Size(10, 32)
         JustEmptyControl8.TabIndex = 12
         ' 
-        ' ModernButton2
+        ' MB_传统锐化
         ' 
-        ModernButton2.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernButton2.BorderRadius = 10
-        ModernButton2.BorderSize = 0
-        ModernButton2.Dock = DockStyle.Left
-        ModernButton2.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
-        ModernButton2.Location = New Point(160, 10)
-        ModernButton2.Margin = New Padding(2)
-        ModernButton2.Name = "ModernButton2"
-        ModernButton2.PressedBackColor1 = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
-        ModernButton2.Size = New Size(150, 32)
-        ModernButton2.TabIndex = 11
-        ModernButton2.Text = "传统锐化"
+        MB_传统锐化.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MB_传统锐化.BorderRadius = 10
+        MB_传统锐化.BorderSize = 0
+        MB_传统锐化.Dock = DockStyle.Left
+        MB_传统锐化.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        MB_传统锐化.Location = New Point(160, 10)
+        MB_传统锐化.Margin = New Padding(2)
+        MB_传统锐化.Name = "MB_传统锐化"
+        MB_传统锐化.PressedBackColor1 = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
+        MB_传统锐化.Size = New Size(150, 32)
+        MB_传统锐化.TabIndex = 11
+        MB_传统锐化.Text = "传统锐化"
         ' 
         ' JustEmptyControl9
         ' 
@@ -327,26 +273,26 @@ Partial Class Form_v6_参数面板_画面帧
         JustEmptyControl9.Size = New Size(10, 32)
         JustEmptyControl9.TabIndex = 9
         ' 
-        ' ModernButton9
+        ' MB_传统降噪
         ' 
-        ModernButton9.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernButton9.BorderRadius = 10
-        ModernButton9.BorderSize = 0
-        ModernButton9.Dock = DockStyle.Left
-        ModernButton9.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
-        ModernButton9.Location = New Point(0, 10)
-        ModernButton9.Margin = New Padding(2)
-        ModernButton9.Name = "ModernButton9"
-        ModernButton9.PressedBackColor1 = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
-        ModernButton9.Size = New Size(150, 32)
-        ModernButton9.TabIndex = 10
-        ModernButton9.Text = "传统降噪"
+        MB_传统降噪.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MB_传统降噪.BorderRadius = 10
+        MB_传统降噪.BorderSize = 0
+        MB_传统降噪.Dock = DockStyle.Left
+        MB_传统降噪.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        MB_传统降噪.Location = New Point(0, 10)
+        MB_传统降噪.Margin = New Padding(2)
+        MB_传统降噪.Name = "MB_传统降噪"
+        MB_传统降噪.PressedBackColor1 = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
+        MB_传统降噪.Size = New Size(150, 32)
+        MB_传统降噪.TabIndex = 10
+        MB_传统降噪.Text = "传统降噪"
         ' 
         ' Panel5
         ' 
-        Panel5.Controls.Add(ModernButton5)
+        Panel5.Controls.Add(MB_着色器超分)
         Panel5.Controls.Add(JustEmptyControl5)
-        Panel5.Controls.Add(ModernButton4)
+        Panel5.Controls.Add(MB_动态模糊)
         Panel5.Controls.Add(JustEmptyControl4)
         Panel5.Controls.Add(MB_简易插帧)
         Panel5.Dock = DockStyle.Top
@@ -356,20 +302,20 @@ Partial Class Form_v6_参数面板_画面帧
         Panel5.Size = New Size(729, 42)
         Panel5.TabIndex = 12
         ' 
-        ' ModernButton5
+        ' MB_着色器超分
         ' 
-        ModernButton5.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernButton5.BorderRadius = 10
-        ModernButton5.BorderSize = 0
-        ModernButton5.Dock = DockStyle.Left
-        ModernButton5.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
-        ModernButton5.Location = New Point(320, 10)
-        ModernButton5.Margin = New Padding(2)
-        ModernButton5.Name = "ModernButton5"
-        ModernButton5.PressedBackColor1 = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
-        ModernButton5.Size = New Size(150, 32)
-        ModernButton5.TabIndex = 13
-        ModernButton5.Text = "着色器超分"
+        MB_着色器超分.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MB_着色器超分.BorderRadius = 10
+        MB_着色器超分.BorderSize = 0
+        MB_着色器超分.Dock = DockStyle.Left
+        MB_着色器超分.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        MB_着色器超分.Location = New Point(320, 10)
+        MB_着色器超分.Margin = New Padding(2)
+        MB_着色器超分.Name = "MB_着色器超分"
+        MB_着色器超分.PressedBackColor1 = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
+        MB_着色器超分.Size = New Size(150, 32)
+        MB_着色器超分.TabIndex = 13
+        MB_着色器超分.Text = "着色器超分"
         ' 
         ' JustEmptyControl5
         ' 
@@ -379,20 +325,20 @@ Partial Class Form_v6_参数面板_画面帧
         JustEmptyControl5.Size = New Size(10, 32)
         JustEmptyControl5.TabIndex = 12
         ' 
-        ' ModernButton4
+        ' MB_动态模糊
         ' 
-        ModernButton4.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernButton4.BorderRadius = 10
-        ModernButton4.BorderSize = 0
-        ModernButton4.Dock = DockStyle.Left
-        ModernButton4.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
-        ModernButton4.Location = New Point(160, 10)
-        ModernButton4.Margin = New Padding(2)
-        ModernButton4.Name = "ModernButton4"
-        ModernButton4.PressedBackColor1 = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
-        ModernButton4.Size = New Size(150, 32)
-        ModernButton4.TabIndex = 11
-        ModernButton4.Text = "相邻帧混合"
+        MB_动态模糊.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MB_动态模糊.BorderRadius = 10
+        MB_动态模糊.BorderSize = 0
+        MB_动态模糊.Dock = DockStyle.Left
+        MB_动态模糊.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        MB_动态模糊.Location = New Point(160, 10)
+        MB_动态模糊.Margin = New Padding(2)
+        MB_动态模糊.Name = "MB_动态模糊"
+        MB_动态模糊.PressedBackColor1 = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
+        MB_动态模糊.Size = New Size(150, 32)
+        MB_动态模糊.TabIndex = 11
+        MB_动态模糊.Text = "动态模糊"
         ' 
         ' JustEmptyControl4
         ' 
@@ -620,6 +566,7 @@ Partial Class Form_v6_参数面板_画面帧
         ModernComboBox3.DropDownPadding = New Padding(10)
         ModernComboBox3.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernComboBox3.DropDownSelectedForeColor = Color.White
+        ModernComboBox3.Editable = True
         ModernComboBox3.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
         ModernComboBox3.Items.Add("")
         ModernComboBox3.Items.Add("ih")
@@ -658,6 +605,7 @@ Partial Class Form_v6_参数面板_画面帧
         ModernComboBox2.DropDownPadding = New Padding(10)
         ModernComboBox2.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernComboBox2.DropDownSelectedForeColor = Color.White
+        ModernComboBox2.Editable = True
         ModernComboBox2.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
         ModernComboBox2.Items.Add("")
         ModernComboBox2.Items.Add("iw")
@@ -711,6 +659,7 @@ Partial Class Form_v6_参数面板_画面帧
         ModernComboBox1.DropDownPadding = New Padding(10)
         ModernComboBox1.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernComboBox1.DropDownSelectedForeColor = Color.White
+        ModernComboBox1.Editable = True
         ModernComboBox1.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
         ModernComboBox1.Items.Add("1024x576")
         ModernComboBox1.Items.Add("1280x720")
@@ -790,28 +739,24 @@ Partial Class Form_v6_参数面板_画面帧
     Friend WithEvents JustEmptyControl3 As LakeUI.JustEmptyControl
     Friend WithEvents HtmlColorLabel3 As LakeUI.HtmlColorLabel
     Friend WithEvents Panel5 As Panel
-    Friend WithEvents ModernButton5 As LakeUI.ModernButton
+    Friend WithEvents MB_着色器超分 As LakeUI.ModernButton
     Friend WithEvents JustEmptyControl5 As LakeUI.JustEmptyControl
-    Friend WithEvents ModernButton4 As LakeUI.ModernButton
+    Friend WithEvents MB_动态模糊 As LakeUI.ModernButton
     Friend WithEvents JustEmptyControl4 As LakeUI.JustEmptyControl
     Friend WithEvents MB_简易插帧 As LakeUI.ModernButton
     Friend WithEvents HtmlColorLabel4 As LakeUI.HtmlColorLabel
     Friend WithEvents Panel6 As Panel
-    Friend WithEvents ModernButton8 As LakeUI.ModernButton
-    Friend WithEvents JustEmptyControl7 As LakeUI.JustEmptyControl
     Friend WithEvents MB_烧录字幕 As LakeUI.ModernButton
-    Friend WithEvents ModernButton6 As LakeUI.ModernButton
-    Friend WithEvents JustEmptyControl6 As LakeUI.JustEmptyControl
     Friend WithEvents Panel7 As Panel
-    Friend WithEvents ModernButton1 As LakeUI.ModernButton
+    Friend WithEvents MB_胶片颗粒 As LakeUI.ModernButton
     Friend WithEvents JustEmptyControl8 As LakeUI.JustEmptyControl
-    Friend WithEvents ModernButton2 As LakeUI.ModernButton
+    Friend WithEvents MB_传统锐化 As LakeUI.ModernButton
     Friend WithEvents JustEmptyControl9 As LakeUI.JustEmptyControl
-    Friend WithEvents ModernButton9 As LakeUI.ModernButton
+    Friend WithEvents MB_传统降噪 As LakeUI.ModernButton
     Friend WithEvents Panel8 As Panel
-    Friend WithEvents ModernButton10 As LakeUI.ModernButton
+    Friend WithEvents MB_平滑断层 As LakeUI.ModernButton
     Friend WithEvents JustEmptyControl10 As LakeUI.JustEmptyControl
-    Friend WithEvents ModernButton11 As LakeUI.ModernButton
+    Friend WithEvents MB_画面翻转 As LakeUI.ModernButton
     Friend WithEvents JustEmptyControl11 As LakeUI.JustEmptyControl
-    Friend WithEvents ModernButton12 As LakeUI.ModernButton
+    Friend WithEvents MB_扫描方式 As LakeUI.ModernButton
 End Class

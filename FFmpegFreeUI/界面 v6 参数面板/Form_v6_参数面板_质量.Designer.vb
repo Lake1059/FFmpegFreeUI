@@ -22,22 +22,23 @@ Partial Class Form_v6_参数面板_质量
     '不要使用代码编辑器修改它。
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form_v6_参数面板_质量))
         ModernPanel1 = New LakeUI.ModernPanel()
         ModernTextBox6 = New LakeUI.ModernTextBox()
         JustEmptyControl8 = New LakeUI.JustEmptyControl()
         Panel3 = New Panel()
         HtmlColorLabel10 = New LakeUI.HtmlColorLabel()
-        ModernButton1 = New LakeUI.ModernButton()
+        MB_插入预制条目 = New LakeUI.ModernButton()
         HtmlColorLabel9 = New LakeUI.HtmlColorLabel()
         Panel1 = New Panel()
-        ModernTextBox5 = New LakeUI.ModernTextBox()
+        MTB_缓冲区 = New LakeUI.ModernTextBox()
         JustEmptyControl5 = New LakeUI.JustEmptyControl()
-        ModernTextBox4 = New LakeUI.ModernTextBox()
+        MTB_最高比特率 = New LakeUI.ModernTextBox()
         JustEmptyControl4 = New LakeUI.JustEmptyControl()
-        ModernTextBox3 = New LakeUI.ModernTextBox()
+        MTB_最低比特率 = New LakeUI.ModernTextBox()
         JustEmptyControl3 = New LakeUI.JustEmptyControl()
-        ModernTextBox2 = New LakeUI.ModernTextBox()
+        MTB_基础比特率 = New LakeUI.ModernTextBox()
         Panel4 = New Panel()
         HtmlColorLabel8 = New LakeUI.HtmlColorLabel()
         HtmlColorLabel7 = New LakeUI.HtmlColorLabel()
@@ -46,13 +47,15 @@ Partial Class Form_v6_参数面板_质量
         HtmlColorLabel4 = New LakeUI.HtmlColorLabel()
         HtmlColorLabel3 = New LakeUI.HtmlColorLabel()
         Panel2 = New Panel()
-        ModernTextBox1 = New LakeUI.ModernTextBox()
+        MTB_质量值 = New LakeUI.ModernTextBox()
         JustEmptyControl1 = New LakeUI.JustEmptyControl()
-        ModernComboBox2 = New LakeUI.ModernComboBox()
+        MCB_质量参数名称 = New LakeUI.ModernComboBox()
         JustEmptyControl2 = New LakeUI.JustEmptyControl()
-        ModernComboBox1 = New LakeUI.ModernComboBox()
+        MCB_全局质量控制方式 = New LakeUI.ModernComboBox()
         HtmlColorLabel2 = New LakeUI.HtmlColorLabel()
         HtmlColorLabel1 = New LakeUI.HtmlColorLabel()
+        预制条目菜单 = New LakeUI.ModernContextMenu()
+        components.Add(预制条目菜单)
         ModernPanel1.SuspendLayout()
         Panel3.SuspendLayout()
         Panel1.SuspendLayout()
@@ -112,7 +115,7 @@ Partial Class Form_v6_参数面板_质量
         ' Panel3
         ' 
         Panel3.Controls.Add(HtmlColorLabel10)
-        Panel3.Controls.Add(ModernButton1)
+        Panel3.Controls.Add(MB_插入预制条目)
         Panel3.Dock = DockStyle.Top
         Panel3.Location = New Point(20, 331)
         Panel3.Name = "Panel3"
@@ -135,20 +138,20 @@ Partial Class Form_v6_参数面板_质量
         HtmlColorLabel10.Text = "可自由安排换行，注意 <span style=""font-size:10pt; color:MediumPurple"">参数和值之间</span> 以及 <span style=""font-size:10pt; color:MediumPurple"">参数与参数之间</span> 的空格即可"
         HtmlColorLabel10.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
         ' 
-        ' ModernButton1
+        ' MB_插入预制条目
         ' 
-        ModernButton1.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernButton1.BorderRadius = 10
-        ModernButton1.BorderSize = 0
-        ModernButton1.Dock = DockStyle.Left
-        ModernButton1.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
-        ModernButton1.Location = New Point(0, 10)
-        ModernButton1.Margin = New Padding(2)
-        ModernButton1.Name = "ModernButton1"
-        ModernButton1.PressedBackColor1 = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
-        ModernButton1.Size = New Size(150, 32)
-        ModernButton1.TabIndex = 11
-        ModernButton1.Text = "插入预制条目"
+        MB_插入预制条目.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MB_插入预制条目.BorderRadius = 10
+        MB_插入预制条目.BorderSize = 0
+        MB_插入预制条目.Dock = DockStyle.Left
+        MB_插入预制条目.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        MB_插入预制条目.Location = New Point(0, 10)
+        MB_插入预制条目.Margin = New Padding(2)
+        MB_插入预制条目.Name = "MB_插入预制条目"
+        MB_插入预制条目.PressedBackColor1 = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
+        MB_插入预制条目.Size = New Size(150, 32)
+        MB_插入预制条目.TabIndex = 11
+        MB_插入预制条目.Text = "插入预制条目"
         ' 
         ' HtmlColorLabel9
         ' 
@@ -166,13 +169,13 @@ Partial Class Form_v6_参数面板_质量
         ' 
         ' Panel1
         ' 
-        Panel1.Controls.Add(ModernTextBox5)
+        Panel1.Controls.Add(MTB_缓冲区)
         Panel1.Controls.Add(JustEmptyControl5)
-        Panel1.Controls.Add(ModernTextBox4)
+        Panel1.Controls.Add(MTB_最高比特率)
         Panel1.Controls.Add(JustEmptyControl4)
-        Panel1.Controls.Add(ModernTextBox3)
+        Panel1.Controls.Add(MTB_最低比特率)
         Panel1.Controls.Add(JustEmptyControl3)
-        Panel1.Controls.Add(ModernTextBox2)
+        Panel1.Controls.Add(MTB_基础比特率)
         Panel1.Dock = DockStyle.Top
         Panel1.Location = New Point(20, 239)
         Panel1.Name = "Panel1"
@@ -180,22 +183,22 @@ Partial Class Form_v6_参数面板_质量
         Panel1.Size = New Size(807, 42)
         Panel1.TabIndex = 10
         ' 
-        ' ModernTextBox5
+        ' MTB_缓冲区
         ' 
-        ModernTextBox5.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernTextBox5.BorderColor = Color.Transparent
-        ModernTextBox5.BorderColorFocus = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
-        ModernTextBox5.BorderRadius = 10
-        ModernTextBox5.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
-        ModernTextBox5.Dock = DockStyle.Left
-        ModernTextBox5.Location = New Point(405, 10)
-        ModernTextBox5.Margin = New Padding(2)
-        ModernTextBox5.Name = "ModernTextBox5"
-        ModernTextBox5.Padding = New Padding(10, 0, 10, 0)
-        ModernTextBox5.Size = New Size(125, 32)
-        ModernTextBox5.TabIndex = 19
-        ModernTextBox5.WaterText = "-bufsize"
-        ModernTextBox5.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
+        MTB_缓冲区.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MTB_缓冲区.BorderColor = Color.Transparent
+        MTB_缓冲区.BorderColorFocus = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
+        MTB_缓冲区.BorderRadius = 10
+        MTB_缓冲区.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
+        MTB_缓冲区.Dock = DockStyle.Left
+        MTB_缓冲区.Location = New Point(405, 10)
+        MTB_缓冲区.Margin = New Padding(2)
+        MTB_缓冲区.Name = "MTB_缓冲区"
+        MTB_缓冲区.Padding = New Padding(10, 0, 10, 0)
+        MTB_缓冲区.Size = New Size(125, 32)
+        MTB_缓冲区.TabIndex = 19
+        MTB_缓冲区.WaterText = "-bufsize"
+        MTB_缓冲区.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ' 
         ' JustEmptyControl5
         ' 
@@ -205,22 +208,22 @@ Partial Class Form_v6_参数面板_质量
         JustEmptyControl5.Size = New Size(10, 32)
         JustEmptyControl5.TabIndex = 18
         ' 
-        ' ModernTextBox4
+        ' MTB_最高比特率
         ' 
-        ModernTextBox4.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernTextBox4.BorderColor = Color.Transparent
-        ModernTextBox4.BorderColorFocus = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
-        ModernTextBox4.BorderRadius = 10
-        ModernTextBox4.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
-        ModernTextBox4.Dock = DockStyle.Left
-        ModernTextBox4.Location = New Point(270, 10)
-        ModernTextBox4.Margin = New Padding(2)
-        ModernTextBox4.Name = "ModernTextBox4"
-        ModernTextBox4.Padding = New Padding(10, 0, 10, 0)
-        ModernTextBox4.Size = New Size(125, 32)
-        ModernTextBox4.TabIndex = 17
-        ModernTextBox4.WaterText = "-maxrate"
-        ModernTextBox4.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
+        MTB_最高比特率.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MTB_最高比特率.BorderColor = Color.Transparent
+        MTB_最高比特率.BorderColorFocus = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
+        MTB_最高比特率.BorderRadius = 10
+        MTB_最高比特率.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
+        MTB_最高比特率.Dock = DockStyle.Left
+        MTB_最高比特率.Location = New Point(270, 10)
+        MTB_最高比特率.Margin = New Padding(2)
+        MTB_最高比特率.Name = "MTB_最高比特率"
+        MTB_最高比特率.Padding = New Padding(10, 0, 10, 0)
+        MTB_最高比特率.Size = New Size(125, 32)
+        MTB_最高比特率.TabIndex = 17
+        MTB_最高比特率.WaterText = "-maxrate"
+        MTB_最高比特率.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ' 
         ' JustEmptyControl4
         ' 
@@ -230,22 +233,22 @@ Partial Class Form_v6_参数面板_质量
         JustEmptyControl4.Size = New Size(10, 32)
         JustEmptyControl4.TabIndex = 16
         ' 
-        ' ModernTextBox3
+        ' MTB_最低比特率
         ' 
-        ModernTextBox3.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernTextBox3.BorderColor = Color.Transparent
-        ModernTextBox3.BorderColorFocus = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
-        ModernTextBox3.BorderRadius = 10
-        ModernTextBox3.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
-        ModernTextBox3.Dock = DockStyle.Left
-        ModernTextBox3.Location = New Point(135, 10)
-        ModernTextBox3.Margin = New Padding(2)
-        ModernTextBox3.Name = "ModernTextBox3"
-        ModernTextBox3.Padding = New Padding(10, 0, 10, 0)
-        ModernTextBox3.Size = New Size(125, 32)
-        ModernTextBox3.TabIndex = 15
-        ModernTextBox3.WaterText = "-minrate"
-        ModernTextBox3.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
+        MTB_最低比特率.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MTB_最低比特率.BorderColor = Color.Transparent
+        MTB_最低比特率.BorderColorFocus = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
+        MTB_最低比特率.BorderRadius = 10
+        MTB_最低比特率.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
+        MTB_最低比特率.Dock = DockStyle.Left
+        MTB_最低比特率.Location = New Point(135, 10)
+        MTB_最低比特率.Margin = New Padding(2)
+        MTB_最低比特率.Name = "MTB_最低比特率"
+        MTB_最低比特率.Padding = New Padding(10, 0, 10, 0)
+        MTB_最低比特率.Size = New Size(125, 32)
+        MTB_最低比特率.TabIndex = 15
+        MTB_最低比特率.WaterText = "-minrate"
+        MTB_最低比特率.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ' 
         ' JustEmptyControl3
         ' 
@@ -255,22 +258,22 @@ Partial Class Form_v6_参数面板_质量
         JustEmptyControl3.Size = New Size(10, 32)
         JustEmptyControl3.TabIndex = 14
         ' 
-        ' ModernTextBox2
+        ' MTB_基础比特率
         ' 
-        ModernTextBox2.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernTextBox2.BorderColor = Color.Transparent
-        ModernTextBox2.BorderColorFocus = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
-        ModernTextBox2.BorderRadius = 10
-        ModernTextBox2.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
-        ModernTextBox2.Dock = DockStyle.Left
-        ModernTextBox2.Location = New Point(0, 10)
-        ModernTextBox2.Margin = New Padding(2)
-        ModernTextBox2.Name = "ModernTextBox2"
-        ModernTextBox2.Padding = New Padding(10, 0, 10, 0)
-        ModernTextBox2.Size = New Size(125, 32)
-        ModernTextBox2.TabIndex = 13
-        ModernTextBox2.WaterText = "-b:v"
-        ModernTextBox2.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
+        MTB_基础比特率.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MTB_基础比特率.BorderColor = Color.Transparent
+        MTB_基础比特率.BorderColorFocus = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
+        MTB_基础比特率.BorderRadius = 10
+        MTB_基础比特率.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
+        MTB_基础比特率.Dock = DockStyle.Left
+        MTB_基础比特率.Location = New Point(0, 10)
+        MTB_基础比特率.Margin = New Padding(2)
+        MTB_基础比特率.Name = "MTB_基础比特率"
+        MTB_基础比特率.Padding = New Padding(10, 0, 10, 0)
+        MTB_基础比特率.Size = New Size(125, 32)
+        MTB_基础比特率.TabIndex = 13
+        MTB_基础比特率.WaterText = "-b:v"
+        MTB_基础比特率.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ' 
         ' Panel4
         ' 
@@ -365,11 +368,11 @@ Partial Class Form_v6_参数面板_质量
         ' 
         ' Panel2
         ' 
-        Panel2.Controls.Add(ModernTextBox1)
+        Panel2.Controls.Add(MTB_质量值)
         Panel2.Controls.Add(JustEmptyControl1)
-        Panel2.Controls.Add(ModernComboBox2)
+        Panel2.Controls.Add(MCB_质量参数名称)
         Panel2.Controls.Add(JustEmptyControl2)
-        Panel2.Controls.Add(ModernComboBox1)
+        Panel2.Controls.Add(MCB_全局质量控制方式)
         Panel2.Dock = DockStyle.Top
         Panel2.Location = New Point(20, 96)
         Panel2.Name = "Panel2"
@@ -377,22 +380,22 @@ Partial Class Form_v6_参数面板_质量
         Panel2.Size = New Size(807, 42)
         Panel2.TabIndex = 6
         ' 
-        ' ModernTextBox1
+        ' MTB_质量值
         ' 
-        ModernTextBox1.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernTextBox1.BorderColor = Color.Transparent
-        ModernTextBox1.BorderColorFocus = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
-        ModernTextBox1.BorderRadius = 10
-        ModernTextBox1.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
-        ModernTextBox1.Dock = DockStyle.Left
-        ModernTextBox1.Location = New Point(470, 10)
-        ModernTextBox1.Margin = New Padding(2)
-        ModernTextBox1.Name = "ModernTextBox1"
-        ModernTextBox1.Padding = New Padding(10, 0, 10, 0)
-        ModernTextBox1.Size = New Size(100, 32)
-        ModernTextBox1.TabIndex = 12
-        ModernTextBox1.WaterText = "质量值"
-        ModernTextBox1.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
+        MTB_质量值.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MTB_质量值.BorderColor = Color.Transparent
+        MTB_质量值.BorderColorFocus = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
+        MTB_质量值.BorderRadius = 10
+        MTB_质量值.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
+        MTB_质量值.Dock = DockStyle.Left
+        MTB_质量值.Location = New Point(470, 10)
+        MTB_质量值.Margin = New Padding(2)
+        MTB_质量值.Name = "MTB_质量值"
+        MTB_质量值.Padding = New Padding(10, 0, 10, 0)
+        MTB_质量值.Size = New Size(100, 32)
+        MTB_质量值.TabIndex = 12
+        MTB_质量值.WaterText = "质量值"
+        MTB_质量值.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ' 
         ' JustEmptyControl1
         ' 
@@ -402,36 +405,36 @@ Partial Class Form_v6_参数面板_质量
         JustEmptyControl1.Size = New Size(10, 32)
         JustEmptyControl1.TabIndex = 11
         ' 
-        ' ModernComboBox2
+        ' MCB_质量参数名称
         ' 
-        ModernComboBox2.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernComboBox2.BorderRadius = 10
-        ModernComboBox2.BorderSize = 0
-        ModernComboBox2.Dock = DockStyle.Left
-        ModernComboBox2.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
-        ModernComboBox2.DropDownHoverAnimationDuration = 0
-        ModernComboBox2.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
-        ModernComboBox2.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
-        ModernComboBox2.DropDownPadding = New Padding(10)
-        ModernComboBox2.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernComboBox2.DropDownSelectedForeColor = Color.White
-        ModernComboBox2.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
-        ModernComboBox2.Margin = New Padding(2, 2, 2, 2)
-        ModernComboBox2.Padding = New Padding(10, 0, 10, 0)
-        ModernComboBox2.ToolTipGap = -1
-        ModernComboBox2.ToolTipMaxWidth = 350
-        ModernComboBox2.ToolTipPadding = New Padding(15)
-        ModernComboBox2.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        ModernComboBox2.Items.Add("")
-        ModernComboBox2.Items.Add("-crf")
-        ModernComboBox2.Items.Add("-cq")
-        ModernComboBox2.Items.Add("-global_quality")
-        ModernComboBox2.Items.Add("-qp")
-        ModernComboBox2.Location = New Point(310, 10)
-        ModernComboBox2.Name = "ModernComboBox2"
-        ModernComboBox2.Size = New Size(150, 32)
-        ModernComboBox2.TabIndex = 10
-        ModernComboBox2.WaterText = "参数名"
+        MCB_质量参数名称.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MCB_质量参数名称.BorderRadius = 10
+        MCB_质量参数名称.BorderSize = 0
+        MCB_质量参数名称.Dock = DockStyle.Left
+        MCB_质量参数名称.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
+        MCB_质量参数名称.DropDownHoverAnimationDuration = 0
+        MCB_质量参数名称.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
+        MCB_质量参数名称.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
+        MCB_质量参数名称.DropDownPadding = New Padding(10)
+        MCB_质量参数名称.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MCB_质量参数名称.DropDownSelectedForeColor = Color.White
+        MCB_质量参数名称.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        MCB_质量参数名称.Items.Add("")
+        MCB_质量参数名称.Items.Add("-crf")
+        MCB_质量参数名称.Items.Add("-cq")
+        MCB_质量参数名称.Items.Add("-global_quality")
+        MCB_质量参数名称.Items.Add("-qp")
+        MCB_质量参数名称.Location = New Point(310, 10)
+        MCB_质量参数名称.Margin = New Padding(2, 2, 2, 2)
+        MCB_质量参数名称.Name = "MCB_质量参数名称"
+        MCB_质量参数名称.Padding = New Padding(10, 0, 10, 0)
+        MCB_质量参数名称.Size = New Size(150, 32)
+        MCB_质量参数名称.TabIndex = 10
+        MCB_质量参数名称.ToolTipGap = -1
+        MCB_质量参数名称.ToolTipMaxWidth = 350
+        MCB_质量参数名称.ToolTipPadding = New Padding(15)
+        MCB_质量参数名称.WaterText = "参数名"
+        MCB_质量参数名称.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ' 
         ' JustEmptyControl2
         ' 
@@ -441,39 +444,38 @@ Partial Class Form_v6_参数面板_质量
         JustEmptyControl2.Size = New Size(10, 32)
         JustEmptyControl2.TabIndex = 9
         ' 
-        ' ModernComboBox1
+        ' MCB_全局质量控制方式
         ' 
-        ModernComboBox1.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernComboBox1.BorderRadius = 10
-        ModernComboBox1.BorderSize = 0
-        ModernComboBox1.Dock = DockStyle.Left
-        ModernComboBox1.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
-        ModernComboBox1.DropDownHoverAnimationDuration = 0
-        ModernComboBox1.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
-        ModernComboBox1.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
-        ModernComboBox1.DropDownPadding = New Padding(10)
-        ModernComboBox1.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernComboBox1.DropDownSelectedForeColor = Color.White
-        ModernComboBox1.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
-        ModernComboBox1.Margin = New Padding(2, 2, 2, 2)
-        ModernComboBox1.Padding = New Padding(10, 0, 10, 0)
-        ModernComboBox1.ToolTipGap = -1
-        ModernComboBox1.ToolTipMaxWidth = 350
-        ModernComboBox1.ToolTipPadding = New Padding(15)
-        ModernComboBox1.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        ModernComboBox1.Items.Add("")
-        ModernComboBox1.Items.Add("恒定质量 CRF - CPU 编码首选")
-        ModernComboBox1.Items.Add("动态码率 VBR - GPU 编码首选")
-        ModernComboBox1.Items.Add("显卡特调 VBR HQ - NV 和部分卡支持")
-        ModernComboBox1.Items.Add("恒定量化 CQP - 不常用 / 不推荐")
-        ModernComboBox1.Items.Add("恒定速率 CBR - 仅旧场景")
-        ModernComboBox1.Items.Add("二次编码 TPE - 需要支持的 CPU 编码")
-        ModernComboBox1.Items.Add("三次编码 TPE - 需要支持的 CPU 编码")
-        ModernComboBox1.Location = New Point(0, 10)
-        ModernComboBox1.Name = "ModernComboBox1"
-        ModernComboBox1.Size = New Size(300, 32)
-        ModernComboBox1.TabIndex = 0
-        ModernComboBox1.WaterText = "选择控制方式 -rc"
+        MCB_全局质量控制方式.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MCB_全局质量控制方式.BorderRadius = 10
+        MCB_全局质量控制方式.BorderSize = 0
+        MCB_全局质量控制方式.Dock = DockStyle.Left
+        MCB_全局质量控制方式.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
+        MCB_全局质量控制方式.DropDownHoverAnimationDuration = 0
+        MCB_全局质量控制方式.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
+        MCB_全局质量控制方式.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
+        MCB_全局质量控制方式.DropDownPadding = New Padding(10)
+        MCB_全局质量控制方式.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MCB_全局质量控制方式.DropDownSelectedForeColor = Color.White
+        MCB_全局质量控制方式.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        MCB_全局质量控制方式.Items.Add("")
+        MCB_全局质量控制方式.Items.Add("恒定质量 CRF - CPU 编码首选")
+        MCB_全局质量控制方式.Items.Add("动态码率 VBR - GPU 编码首选")
+        MCB_全局质量控制方式.Items.Add("显卡特调 VBR HQ - NV 和部分卡支持")
+        MCB_全局质量控制方式.Items.Add("恒定量化 CQP - 不常用 / 不推荐")
+        MCB_全局质量控制方式.Items.Add("恒定速率 CBR - 仅旧场景")
+        MCB_全局质量控制方式.Items.Add("二次编码 TPE - 需要支持的 CPU 编码")
+        MCB_全局质量控制方式.Location = New Point(0, 10)
+        MCB_全局质量控制方式.Margin = New Padding(2, 2, 2, 2)
+        MCB_全局质量控制方式.Name = "MCB_全局质量控制方式"
+        MCB_全局质量控制方式.Padding = New Padding(10, 0, 10, 0)
+        MCB_全局质量控制方式.Size = New Size(300, 32)
+        MCB_全局质量控制方式.TabIndex = 0
+        MCB_全局质量控制方式.ToolTipGap = -1
+        MCB_全局质量控制方式.ToolTipMaxWidth = 350
+        MCB_全局质量控制方式.ToolTipPadding = New Padding(15)
+        MCB_全局质量控制方式.WaterText = "选择控制方式 -rc"
+        MCB_全局质量控制方式.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ' 
         ' HtmlColorLabel2
         ' 
@@ -502,6 +504,24 @@ Partial Class Form_v6_参数面板_质量
         HtmlColorLabel1.TabIndex = 5
         HtmlColorLabel1.Text = "<span style=""font-size:13; color:Silver"">全局质量控制</span>   <span style=""font-size:10pt; color:Goldenrod"">常规压制仅需在此设置全局质量即可满足需求</span>"
         ' 
+        ' 预制条目菜单
+        ' 
+        预制条目菜单.BackColor1 = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        预制条目菜单.BorderColor = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
+        预制条目菜单.BorderSize = 2
+        预制条目菜单.DescriptionFont = New Font("Microsoft YaHei UI", 9F)
+        预制条目菜单.HoverAnimationFPS = 0
+        预制条目菜单.HoverBackColor = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        预制条目菜单.IconSize = 0
+        预制条目菜单.ItemHeight = 35
+        预制条目菜单.ItemPadding = New Padding(10, 0, 10, 0)
+        预制条目菜单.MenuFont = New Font("Microsoft YaHei UI", 10F)
+        预制条目菜单.MenuPadding = New Padding(10)
+        预制条目菜单.PopupAnimationFPS = 0
+        预制条目菜单.PressedBackColor = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
+        预制条目菜单.SeparatorColor = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
+        预制条目菜单.SeparatorHeight = 14
+        ' 
         ' Form_v6_参数面板_质量
         ' 
         AutoScaleDimensions = New SizeF(96F, 96F)
@@ -526,22 +546,22 @@ Partial Class Form_v6_参数面板_质量
     Friend WithEvents ModernPanel1 As LakeUI.ModernPanel
     Friend WithEvents HtmlColorLabel1 As LakeUI.HtmlColorLabel
     Friend WithEvents Panel2 As Panel
-    Friend WithEvents ModernComboBox1 As LakeUI.ModernComboBox
+    Friend WithEvents MCB_全局质量控制方式 As LakeUI.ModernComboBox
     Friend WithEvents JustEmptyControl2 As LakeUI.JustEmptyControl
     Friend WithEvents JustEmptyControl1 As LakeUI.JustEmptyControl
-    Friend WithEvents ModernComboBox2 As LakeUI.ModernComboBox
-    Friend WithEvents ModernTextBox1 As LakeUI.ModernTextBox
+    Friend WithEvents MCB_质量参数名称 As LakeUI.ModernComboBox
+    Friend WithEvents MTB_质量值 As LakeUI.ModernTextBox
     Friend WithEvents HtmlColorLabel2 As LakeUI.HtmlColorLabel
     Friend WithEvents HtmlColorLabel3 As LakeUI.HtmlColorLabel
     Friend WithEvents Panel1 As Panel
-    Friend WithEvents ModernTextBox2 As LakeUI.ModernTextBox
+    Friend WithEvents MTB_基础比特率 As LakeUI.ModernTextBox
     Friend WithEvents Panel4 As Panel
     Friend WithEvents HtmlColorLabel4 As LakeUI.HtmlColorLabel
-    Friend WithEvents ModernTextBox5 As LakeUI.ModernTextBox
+    Friend WithEvents MTB_缓冲区 As LakeUI.ModernTextBox
     Friend WithEvents JustEmptyControl5 As LakeUI.JustEmptyControl
-    Friend WithEvents ModernTextBox4 As LakeUI.ModernTextBox
+    Friend WithEvents MTB_最高比特率 As LakeUI.ModernTextBox
     Friend WithEvents JustEmptyControl4 As LakeUI.JustEmptyControl
-    Friend WithEvents ModernTextBox3 As LakeUI.ModernTextBox
+    Friend WithEvents MTB_最低比特率 As LakeUI.ModernTextBox
     Friend WithEvents JustEmptyControl3 As LakeUI.JustEmptyControl
     Friend WithEvents HtmlColorLabel8 As LakeUI.HtmlColorLabel
     Friend WithEvents HtmlColorLabel7 As LakeUI.HtmlColorLabel
@@ -549,8 +569,9 @@ Partial Class Form_v6_参数面板_质量
     Friend WithEvents HtmlColorLabel5 As LakeUI.HtmlColorLabel
     Friend WithEvents HtmlColorLabel9 As LakeUI.HtmlColorLabel
     Friend WithEvents Panel3 As Panel
-    Friend WithEvents ModernButton1 As LakeUI.ModernButton
+    Friend WithEvents MB_插入预制条目 As LakeUI.ModernButton
     Friend WithEvents JustEmptyControl8 As LakeUI.JustEmptyControl
     Friend WithEvents ModernTextBox6 As LakeUI.ModernTextBox
     Friend WithEvents HtmlColorLabel10 As LakeUI.HtmlColorLabel
+    Friend WithEvents 预制条目菜单 As LakeUI.ModernContextMenu
 End Class

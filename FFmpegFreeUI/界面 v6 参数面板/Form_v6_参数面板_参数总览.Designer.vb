@@ -60,11 +60,13 @@ Partial Class Form_v6_参数面板_参数总览
         ModernTextBox1.BorderRadius = 10
         ModernTextBox1.BorderSize = 0
         ModernTextBox1.Dock = DockStyle.Fill
+        ModernTextBox1.Font = New Font("Microsoft YaHei UI", 11F)
+        ModernTextBox1.LineHeight = 20
         ModernTextBox1.Location = New Point(20, 60)
         ModernTextBox1.Margin = New Padding(2)
         ModernTextBox1.MultiLine = True
         ModernTextBox1.Name = "ModernTextBox1"
-        ModernTextBox1.Padding = New Padding(15, 10, 15, 10)
+        ModernTextBox1.Padding = New Padding(12, 10, 12, 10)
         ModernTextBox1.ReadOnly = True
         ModernTextBox1.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernTextBox1.Size = New Size(340, 481)
@@ -131,11 +133,13 @@ Partial Class Form_v6_参数面板_参数总览
         ModernTextBox2.BorderRadius = 10
         ModernTextBox2.BorderSize = 0
         ModernTextBox2.Dock = DockStyle.Fill
+        ModernTextBox2.Font = New Font("Microsoft YaHei UI", 11F)
+        ModernTextBox2.LineHeight = 20
         ModernTextBox2.Location = New Point(10, 60)
         ModernTextBox2.Margin = New Padding(2)
         ModernTextBox2.MultiLine = True
         ModernTextBox2.Name = "ModernTextBox2"
-        ModernTextBox2.Padding = New Padding(15, 10, 15, 10)
+        ModernTextBox2.Padding = New Padding(12, 10, 12, 10)
         ModernTextBox2.ReadOnly = True
         ModernTextBox2.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernTextBox2.Size = New Size(362, 481)
@@ -191,7 +195,6 @@ Partial Class Form_v6_参数面板_参数总览
         ModernPanel1.Dock = DockStyle.Fill
         ModernPanel1.Location = New Point(0, 0)
         ModernPanel1.Name = "ModernPanel1"
-        ModernPanel1.ScrollBarMode = LakeUI.ModernPanel.ScrollMode.None
         ModernPanel1.Size = New Size(762, 611)
         ModernPanel1.TabIndex = 2
         ' 

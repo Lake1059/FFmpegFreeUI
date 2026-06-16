@@ -30,16 +30,10 @@ Partial Class Form_v6_编码队列
         Dim ListColumn6 As LakeUI.UltraDetailListView.ListColumn = New LakeUI.UltraDetailListView.ListColumn()
         Dim ListColumn7 As LakeUI.UltraDetailListView.ListColumn = New LakeUI.UltraDetailListView.ListColumn()
         Dim ListColumn8 As LakeUI.UltraDetailListView.ListColumn = New LakeUI.UltraDetailListView.ListColumn()
-        Dim ListItem1 As LakeUI.UltraDetailListView.ListItem = New LakeUI.UltraDetailListView.ListItem()
-        Dim ListSubItem1 As LakeUI.UltraDetailListView.ListSubItem = New LakeUI.UltraDetailListView.ListSubItem()
-        Dim ListSubItem2 As LakeUI.UltraDetailListView.ListSubItem = New LakeUI.UltraDetailListView.ListSubItem()
-        Dim ListSubItem3 As LakeUI.UltraDetailListView.ListSubItem = New LakeUI.UltraDetailListView.ListSubItem()
-        Dim ListSubItem4 As LakeUI.UltraDetailListView.ListSubItem = New LakeUI.UltraDetailListView.ListSubItem()
-        Dim ListSubItem5 As LakeUI.UltraDetailListView.ListSubItem = New LakeUI.UltraDetailListView.ListSubItem()
-        Dim ListSubItem6 As LakeUI.UltraDetailListView.ListSubItem = New LakeUI.UltraDetailListView.ListSubItem()
-        Dim ListSubItem7 As LakeUI.UltraDetailListView.ListSubItem = New LakeUI.UltraDetailListView.ListSubItem()
-        Dim ListSubItem8 As LakeUI.UltraDetailListView.ListSubItem = New LakeUI.UltraDetailListView.ListSubItem()
+        任务菜单 = New LakeUI.ModernContextMenu()
+        右键菜单 = New LakeUI.ModernContextMenu()
         Panel1 = New Panel()
+        HtmlColorLabel1 = New LakeUI.HtmlColorLabel()
         ModernButton7 = New LakeUI.ModernButton()
         ModernButton6 = New LakeUI.ModernButton()
         ModernButton5 = New LakeUI.ModernButton()
@@ -47,7 +41,7 @@ Partial Class Form_v6_编码队列
         ModernButton3 = New LakeUI.ModernButton()
         ModernButton2 = New LakeUI.ModernButton()
         ModernButton1 = New LakeUI.ModernButton()
-        Label1 = New Label()
+        JustEmptyControl1 = New LakeUI.JustEmptyControl()
         ModernButton8 = New LakeUI.ModernButton()
         UltraDetailListView1 = New LakeUI.UltraDetailListView()
         ModernPanel1 = New LakeUI.ModernPanel()
@@ -55,8 +49,53 @@ Partial Class Form_v6_编码队列
         ModernPanel1.SuspendLayout()
         SuspendLayout()
         ' 
+        ' 任务菜单
+        ' 
+        任务菜单.BackdropBlurPasses = 1
+        任务菜单.BackdropBlurRadius = 12
+        任务菜单.BackdropMode = LakeUI.ModernContextMenu.BackdropModeEnum.Auto
+        任务菜单.BackdropNoiseOpacity = CByte(0)
+        任务菜单.BackdropTintColor = Color.FromArgb(CByte(40), CByte(0), CByte(0), CByte(0))
+        任务菜单.BorderColor = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
+        任务菜单.DescriptionFont = New Font("Microsoft YaHei UI", 9F)
+        任务菜单.HoverAnimationFPS = 120
+        任务菜单.HoverBackColor = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        任务菜单.HoverRadius = 5
+        任务菜单.IconSize = 0
+        任务菜单.ItemHeight = 28
+        任务菜单.ItemPadding = New Padding(10, 0, 10, 0)
+        任务菜单.MenuFont = New Font("Microsoft YaHei UI", 10F)
+        任务菜单.MenuPadding = New Padding(10)
+        任务菜单.PopupAnimationFPS = 0
+        任务菜单.PressedBackColor = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
+        任务菜单.SeparatorColor = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
+        任务菜单.SeparatorHeight = 20
+        ' 
+        ' 右键菜单
+        ' 
+        右键菜单.BackdropBlurPasses = 1
+        右键菜单.BackdropBlurRadius = 12
+        右键菜单.BackdropMode = LakeUI.ModernContextMenu.BackdropModeEnum.Auto
+        右键菜单.BackdropNoiseOpacity = CByte(0)
+        右键菜单.BackdropTintColor = Color.FromArgb(CByte(40), CByte(0), CByte(0), CByte(0))
+        右键菜单.BorderColor = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
+        右键菜单.DescriptionFont = New Font("Microsoft YaHei UI", 9F)
+        右键菜单.HoverAnimationFPS = 120
+        右键菜单.HoverBackColor = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        右键菜单.HoverRadius = 5
+        右键菜单.IconSize = 0
+        右键菜单.ItemHeight = 28
+        右键菜单.ItemPadding = New Padding(10, 0, 10, 0)
+        右键菜单.MenuFont = New Font("Microsoft YaHei UI", 10F)
+        右键菜单.MenuPadding = New Padding(10)
+        右键菜单.PopupAnimationFPS = 0
+        右键菜单.PressedBackColor = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
+        右键菜单.SeparatorColor = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
+        右键菜单.SeparatorHeight = 20
+        ' 
         ' Panel1
         ' 
+        Panel1.Controls.Add(HtmlColorLabel1)
         Panel1.Controls.Add(ModernButton7)
         Panel1.Controls.Add(ModernButton6)
         Panel1.Controls.Add(ModernButton5)
@@ -64,7 +103,7 @@ Partial Class Form_v6_编码队列
         Panel1.Controls.Add(ModernButton3)
         Panel1.Controls.Add(ModernButton2)
         Panel1.Controls.Add(ModernButton1)
-        Panel1.Controls.Add(Label1)
+        Panel1.Controls.Add(JustEmptyControl1)
         Panel1.Controls.Add(ModernButton8)
         Panel1.Dock = DockStyle.Top
         Panel1.Location = New Point(0, 0)
@@ -72,6 +111,18 @@ Partial Class Form_v6_编码队列
         Panel1.Padding = New Padding(10, 10, 0, 10)
         Panel1.Size = New Size(984, 55)
         Panel1.TabIndex = 0
+        ' 
+        ' HtmlColorLabel1
+        ' 
+        HtmlColorLabel1.AutoSizeMode = AutoSizeMode.GrowAndShrink
+        HtmlColorLabel1.Dock = DockStyle.Fill
+        HtmlColorLabel1.Location = New Point(733, 10)
+        HtmlColorLabel1.Margin = New Padding(2)
+        HtmlColorLabel1.Name = "HtmlColorLabel1"
+        HtmlColorLabel1.Padding = New Padding(10, 0, 10, 0)
+        HtmlColorLabel1.Size = New Size(251, 35)
+        HtmlColorLabel1.TabIndex = 9
+        HtmlColorLabel1.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleRight
         ' 
         ' ModernButton7
         ' 
@@ -84,7 +135,7 @@ Partial Class Form_v6_编码队列
         ModernButton7.ForeColor = Color.MediumPurple
         ModernButton7.HoverBackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernButton7.HoverBorderColor = Color.Transparent
-        ModernButton7.Location = New Point(664, 10)
+        ModernButton7.Location = New Point(673, 10)
         ModernButton7.Margin = New Padding(2)
         ModernButton7.Name = "ModernButton7"
         ModernButton7.PressedBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
@@ -104,7 +155,7 @@ Partial Class Form_v6_编码队列
         ModernButton6.ForeColor = Color.Goldenrod
         ModernButton6.HoverBackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernButton6.HoverBorderColor = Color.Transparent
-        ModernButton6.Location = New Point(604, 10)
+        ModernButton6.Location = New Point(613, 10)
         ModernButton6.Margin = New Padding(2)
         ModernButton6.Name = "ModernButton6"
         ModernButton6.PressedBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
@@ -124,7 +175,7 @@ Partial Class Form_v6_编码队列
         ModernButton5.ForeColor = Color.IndianRed
         ModernButton5.HoverBackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernButton5.HoverBorderColor = Color.Transparent
-        ModernButton5.Location = New Point(544, 10)
+        ModernButton5.Location = New Point(553, 10)
         ModernButton5.Margin = New Padding(2)
         ModernButton5.Name = "ModernButton5"
         ModernButton5.PressedBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
@@ -144,7 +195,7 @@ Partial Class Form_v6_编码队列
         ModernButton4.ForeColor = Color.IndianRed
         ModernButton4.HoverBackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernButton4.HoverBorderColor = Color.Transparent
-        ModernButton4.Location = New Point(484, 10)
+        ModernButton4.Location = New Point(493, 10)
         ModernButton4.Margin = New Padding(2)
         ModernButton4.Name = "ModernButton4"
         ModernButton4.PressedBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
@@ -164,7 +215,7 @@ Partial Class Form_v6_编码队列
         ModernButton3.ForeColor = Color.YellowGreen
         ModernButton3.HoverBackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernButton3.HoverBorderColor = Color.Transparent
-        ModernButton3.Location = New Point(424, 10)
+        ModernButton3.Location = New Point(433, 10)
         ModernButton3.Margin = New Padding(2)
         ModernButton3.Name = "ModernButton3"
         ModernButton3.PressedBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
@@ -184,7 +235,7 @@ Partial Class Form_v6_编码队列
         ModernButton2.ForeColor = Color.Goldenrod
         ModernButton2.HoverBackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernButton2.HoverBorderColor = Color.Transparent
-        ModernButton2.Location = New Point(364, 10)
+        ModernButton2.Location = New Point(373, 10)
         ModernButton2.Margin = New Padding(2)
         ModernButton2.Name = "ModernButton2"
         ModernButton2.PressedBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
@@ -204,7 +255,7 @@ Partial Class Form_v6_编码队列
         ModernButton1.ForeColor = Color.YellowGreen
         ModernButton1.HoverBackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernButton1.HoverBorderColor = Color.Transparent
-        ModernButton1.Location = New Point(304, 10)
+        ModernButton1.Location = New Point(313, 10)
         ModernButton1.Margin = New Padding(2)
         ModernButton1.Name = "ModernButton1"
         ModernButton1.PressedBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
@@ -213,13 +264,13 @@ Partial Class Form_v6_编码队列
         ModernButton1.TabIndex = 0
         ModernButton1.Text = "开始"
         ' 
-        ' Label1
+        ' JustEmptyControl1
         ' 
-        Label1.Dock = DockStyle.Left
-        Label1.Location = New Point(136, 10)
-        Label1.Name = "Label1"
-        Label1.Size = New Size(168, 35)
-        Label1.TabIndex = 8
+        JustEmptyControl1.Dock = DockStyle.Left
+        JustEmptyControl1.Location = New Point(136, 10)
+        JustEmptyControl1.Name = "JustEmptyControl1"
+        JustEmptyControl1.Size = New Size(177, 35)
+        JustEmptyControl1.TabIndex = 10
         ' 
         ' ModernButton8
         ' 
@@ -248,6 +299,7 @@ Partial Class Form_v6_编码队列
         ListColumn1.AllowLabelEdit = True
         ListColumn1.Text = "任务名称"
         ListColumn1.Width = 200
+        ListColumn1.WordWrapHeightFixed = True
         ListColumn2.Text = "状态"
         ListColumn3.Text = "进度"
         ListColumn3.Width = 80
@@ -278,23 +330,6 @@ Partial Class Form_v6_编码队列
         UltraDetailListView1.HeaderHeight = 36
         UltraDetailListView1.ItemCornerRadius = 10
         UltraDetailListView1.ItemPadding = New Padding(10, 5, 5, 5)
-        ListSubItem1.Text = "字体样式"
-        ListSubItem2.Text = "字体样式"
-        ListSubItem3.Text = "字体样式"
-        ListSubItem4.Text = "字体样式"
-        ListSubItem5.Text = "字体样式"
-        ListSubItem6.Text = "字体样式"
-        ListSubItem7.Text = "字体样式"
-        ListSubItem8.Text = "字体样式"
-        ListItem1.SubItems.Add(ListSubItem1)
-        ListItem1.SubItems.Add(ListSubItem2)
-        ListItem1.SubItems.Add(ListSubItem3)
-        ListItem1.SubItems.Add(ListSubItem4)
-        ListItem1.SubItems.Add(ListSubItem5)
-        ListItem1.SubItems.Add(ListSubItem6)
-        ListItem1.SubItems.Add(ListSubItem7)
-        ListItem1.SubItems.Add(ListSubItem8)
-        UltraDetailListView1.Items.Add(ListItem1)
         UltraDetailListView1.ItemSelectedBackColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         UltraDetailListView1.Location = New Point(0, 55)
         UltraDetailListView1.Margin = New Padding(2, 2, 2, 2)
@@ -315,7 +350,6 @@ Partial Class Form_v6_编码队列
         ModernPanel1.Dock = DockStyle.Fill
         ModernPanel1.Location = New Point(0, 0)
         ModernPanel1.Name = "ModernPanel1"
-        ModernPanel1.ScrollBarMode = LakeUI.ModernPanel.ScrollMode.None
         ModernPanel1.Size = New Size(984, 681)
         ModernPanel1.TabIndex = 2
         ' 
@@ -345,6 +379,9 @@ Partial Class Form_v6_编码队列
     Friend WithEvents ModernButton6 As LakeUI.ModernButton
     Friend WithEvents UltraDetailListView1 As LakeUI.UltraDetailListView
     Friend WithEvents ModernButton8 As LakeUI.ModernButton
-    Friend WithEvents Label1 As Label
     Friend WithEvents ModernPanel1 As LakeUI.ModernPanel
+    Friend WithEvents 任务菜单 As LakeUI.ModernContextMenu
+    Friend WithEvents 右键菜单 As LakeUI.ModernContextMenu
+    Friend WithEvents HtmlColorLabel1 As LakeUI.HtmlColorLabel
+    Friend WithEvents JustEmptyControl1 As LakeUI.JustEmptyControl
 End Class

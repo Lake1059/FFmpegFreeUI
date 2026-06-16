@@ -23,23 +23,23 @@ Partial Class FormMain_v6
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         components = New ComponentModel.Container()
-        Dim ModernTabPage18 As LakeUI.ModernTabListControl.ModernTabPage = New LakeUI.ModernTabListControl.ModernTabPage()
-        Dim ModernTabPage19 As LakeUI.ModernTabListControl.ModernTabPage = New LakeUI.ModernTabListControl.ModernTabPage()
-        Dim ModernTabPage20 As LakeUI.ModernTabListControl.ModernTabPage = New LakeUI.ModernTabListControl.ModernTabPage()
-        Dim ModernTabPage21 As LakeUI.ModernTabListControl.ModernTabPage = New LakeUI.ModernTabListControl.ModernTabPage()
-        Dim ModernTabPage22 As LakeUI.ModernTabListControl.ModernTabPage = New LakeUI.ModernTabListControl.ModernTabPage()
-        Dim ModernTabPage23 As LakeUI.ModernTabListControl.ModernTabPage = New LakeUI.ModernTabListControl.ModernTabPage()
-        Dim ModernTabPage24 As LakeUI.ModernTabListControl.ModernTabPage = New LakeUI.ModernTabListControl.ModernTabPage()
-        Dim ModernTabPage25 As LakeUI.ModernTabListControl.ModernTabPage = New LakeUI.ModernTabListControl.ModernTabPage()
-        Dim ModernTabPage26 As LakeUI.ModernTabListControl.ModernTabPage = New LakeUI.ModernTabListControl.ModernTabPage()
-        Dim ModernTabPage27 As LakeUI.ModernTabListControl.ModernTabPage = New LakeUI.ModernTabListControl.ModernTabPage()
-        Dim ModernTabPage28 As LakeUI.ModernTabListControl.ModernTabPage = New LakeUI.ModernTabListControl.ModernTabPage()
-        Dim ModernTabPage29 As LakeUI.ModernTabListControl.ModernTabPage = New LakeUI.ModernTabListControl.ModernTabPage()
-        Dim ModernTabPage30 As LakeUI.ModernTabListControl.ModernTabPage = New LakeUI.ModernTabListControl.ModernTabPage()
-        Dim ModernTabPage31 As LakeUI.ModernTabListControl.ModernTabPage = New LakeUI.ModernTabListControl.ModernTabPage()
-        Dim ModernTabPage32 As LakeUI.ModernTabListControl.ModernTabPage = New LakeUI.ModernTabListControl.ModernTabPage()
-        Dim ModernTabPage33 As LakeUI.ModernTabListControl.ModernTabPage = New LakeUI.ModernTabListControl.ModernTabPage()
-        Dim ModernTabPage34 As LakeUI.ModernTabListControl.ModernTabPage = New LakeUI.ModernTabListControl.ModernTabPage()
+        Dim ModernTabPage1 As LakeUI.ModernTabListControl.ModernTabPage = New LakeUI.ModernTabListControl.ModernTabPage()
+        Dim ModernTabPage2 As LakeUI.ModernTabListControl.ModernTabPage = New LakeUI.ModernTabListControl.ModernTabPage()
+        Dim ModernTabPage3 As LakeUI.ModernTabListControl.ModernTabPage = New LakeUI.ModernTabListControl.ModernTabPage()
+        Dim ModernTabPage4 As LakeUI.ModernTabListControl.ModernTabPage = New LakeUI.ModernTabListControl.ModernTabPage()
+        Dim ModernTabPage5 As LakeUI.ModernTabListControl.ModernTabPage = New LakeUI.ModernTabListControl.ModernTabPage()
+        Dim ModernTabPage6 As LakeUI.ModernTabListControl.ModernTabPage = New LakeUI.ModernTabListControl.ModernTabPage()
+        Dim ModernTabPage7 As LakeUI.ModernTabListControl.ModernTabPage = New LakeUI.ModernTabListControl.ModernTabPage()
+        Dim ModernTabPage8 As LakeUI.ModernTabListControl.ModernTabPage = New LakeUI.ModernTabListControl.ModernTabPage()
+        Dim ModernTabPage9 As LakeUI.ModernTabListControl.ModernTabPage = New LakeUI.ModernTabListControl.ModernTabPage()
+        Dim ModernTabPage10 As LakeUI.ModernTabListControl.ModernTabPage = New LakeUI.ModernTabListControl.ModernTabPage()
+        Dim ModernTabPage11 As LakeUI.ModernTabListControl.ModernTabPage = New LakeUI.ModernTabListControl.ModernTabPage()
+        Dim ModernTabPage12 As LakeUI.ModernTabListControl.ModernTabPage = New LakeUI.ModernTabListControl.ModernTabPage()
+        Dim ModernTabPage13 As LakeUI.ModernTabListControl.ModernTabPage = New LakeUI.ModernTabListControl.ModernTabPage()
+        Dim ModernTabPage14 As LakeUI.ModernTabListControl.ModernTabPage = New LakeUI.ModernTabListControl.ModernTabPage()
+        Dim ModernTabPage15 As LakeUI.ModernTabListControl.ModernTabPage = New LakeUI.ModernTabListControl.ModernTabPage()
+        Dim ModernTabPage16 As LakeUI.ModernTabListControl.ModernTabPage = New LakeUI.ModernTabListControl.ModernTabPage()
+        Dim ModernTabPage17 As LakeUI.ModernTabListControl.ModernTabPage = New LakeUI.ModernTabListControl.ModernTabPage()
         ModernTabListControl1 = New LakeUI.ModernTabListControl()
         ModernTextBox1 = New LakeUI.ModernTextBox()
         ThisIsYourWindow1 = New LakeUI.ThisIsYourWindow(components)
@@ -53,41 +53,41 @@ Partial Class FormMain_v6
         ModernTabListControl1.BackColor = Color.Transparent
         ModernTabListControl1.Controls.Add(ModernTextBox1)
         ModernTabListControl1.Dock = DockStyle.Fill
-        ModernTabPage18.IsDescription = True
-        ModernTabPage18.Text = "FFmpegFreeUI"
-        ModernTabPage19.Text = "起始页面"
-        ModernTabPage20.Text = "编码队列"
-        ModernTabPage21.IsSeparator = True
-        ModernTabPage22.Text = "准备文件"
-        ModernTabPage23.Text = "参数面板"
-        ModernTabPage24.Text = "Agent 智能体"
-        ModernTabPage25.Text = "浏览社区"
-        ModernTabPage26.IsSeparator = True
-        ModernTabPage27.Text = "ffprobe 媒体信息"
-        ModernTabPage28.Text = "ffplay 调试播放器"
-        ModernTabPage29.Text = "性能监控"
-        ModernTabPage30.Text = "集成的工具"
-        ModernTabPage31.IsSeparator = True
-        ModernTabPage32.Text = "软件设置"
-        ModernTabPage33.Text = "支持者"
-        ModernTabPage34.IsSeparator = True
-        ModernTabListControl1.Items.Add(ModernTabPage18)
-        ModernTabListControl1.Items.Add(ModernTabPage19)
-        ModernTabListControl1.Items.Add(ModernTabPage20)
-        ModernTabListControl1.Items.Add(ModernTabPage21)
-        ModernTabListControl1.Items.Add(ModernTabPage22)
-        ModernTabListControl1.Items.Add(ModernTabPage23)
-        ModernTabListControl1.Items.Add(ModernTabPage24)
-        ModernTabListControl1.Items.Add(ModernTabPage25)
-        ModernTabListControl1.Items.Add(ModernTabPage26)
-        ModernTabListControl1.Items.Add(ModernTabPage27)
-        ModernTabListControl1.Items.Add(ModernTabPage28)
-        ModernTabListControl1.Items.Add(ModernTabPage29)
-        ModernTabListControl1.Items.Add(ModernTabPage30)
-        ModernTabListControl1.Items.Add(ModernTabPage31)
-        ModernTabListControl1.Items.Add(ModernTabPage32)
-        ModernTabListControl1.Items.Add(ModernTabPage33)
-        ModernTabListControl1.Items.Add(ModernTabPage34)
+        ModernTabPage1.IsDescription = True
+        ModernTabPage1.Text = "FFmpegFreeUI"
+        ModernTabPage2.Text = "起始页面"
+        ModernTabPage3.Text = "编码队列"
+        ModernTabPage4.IsSeparator = True
+        ModernTabPage5.Text = "准备文件"
+        ModernTabPage6.Text = "参数面板"
+        ModernTabPage7.Text = "Agent 智能体"
+        ModernTabPage8.Text = "浏览社区"
+        ModernTabPage9.IsSeparator = True
+        ModernTabPage10.Text = "ffprobe 媒体信息"
+        ModernTabPage11.Text = "ffplay 调试播放器"
+        ModernTabPage12.Text = "性能监控"
+        ModernTabPage13.Text = "集成的工具"
+        ModernTabPage14.IsSeparator = True
+        ModernTabPage15.Text = "软件设置"
+        ModernTabPage16.Text = "支持者"
+        ModernTabPage17.IsSeparator = True
+        ModernTabListControl1.Items.Add(ModernTabPage1)
+        ModernTabListControl1.Items.Add(ModernTabPage2)
+        ModernTabListControl1.Items.Add(ModernTabPage3)
+        ModernTabListControl1.Items.Add(ModernTabPage4)
+        ModernTabListControl1.Items.Add(ModernTabPage5)
+        ModernTabListControl1.Items.Add(ModernTabPage6)
+        ModernTabListControl1.Items.Add(ModernTabPage7)
+        ModernTabListControl1.Items.Add(ModernTabPage8)
+        ModernTabListControl1.Items.Add(ModernTabPage9)
+        ModernTabListControl1.Items.Add(ModernTabPage10)
+        ModernTabListControl1.Items.Add(ModernTabPage11)
+        ModernTabListControl1.Items.Add(ModernTabPage12)
+        ModernTabListControl1.Items.Add(ModernTabPage13)
+        ModernTabListControl1.Items.Add(ModernTabPage14)
+        ModernTabListControl1.Items.Add(ModernTabPage15)
+        ModernTabListControl1.Items.Add(ModernTabPage16)
+        ModernTabListControl1.Items.Add(ModernTabPage17)
         ModernTabListControl1.Location = New Point(0, 0)
         ModernTabListControl1.Name = "ModernTabListControl1"
         ModernTabListControl1.ScrollBarThumbColor = Color.FromArgb(CByte(40), CByte(200), CByte(200), CByte(200))
@@ -126,6 +126,7 @@ Partial Class FormMain_v6
         ' 
         ThisIsYourWindow1.BackdropBlurPasses = 1
         ThisIsYourWindow1.BackdropBlurRadius = 1
+        ThisIsYourWindow1.BackdropFirstWindowOnly = True
         ThisIsYourWindow1.BackdropNoiseScale = 0.5F
         ThisIsYourWindow1.BackdropTintColor = Color.FromArgb(CByte(160), CByte(0), CByte(0), CByte(0))
         ThisIsYourWindow1.BackdropTintInactiveColor = Color.FromArgb(CByte(160), CByte(0), CByte(0), CByte(0))

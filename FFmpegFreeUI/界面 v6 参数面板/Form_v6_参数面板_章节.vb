@@ -1,6 +1,31 @@
-﻿Public Class Form_v6_参数面板_章节
+Public Class Form_v6_参数面板_章节
+
+    Public 所属参数面板对象 As Form_v6_参数面板
+
     Private Sub Form_v6_参数面板_章节_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
+    End Sub
+
+    Private Sub ModernComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ModernComboBox1.SelectedIndexChanged
+        通知参数面板刷新()
+    End Sub
+
+    Private Sub ModernTextBox2_TextChanged(sender As Object, e As EventArgs) Handles ModernTextBox2.TextChanged
+        通知参数面板刷新()
+    End Sub
+
+    Private Sub ModernTextBox2_DoubleClick(sender As Object, e As EventArgs) Handles ModernTextBox2.DoubleClick
+        选择章节文件()
+    End Sub
+
+    Private Sub 选择章节文件()
+        Dim filter = If(ModernComboBox1.SelectedIndex = 2,
+                        "媒体文件|*.mp4;*.mkv;*.mov;*.m4v;*.webm;*.mp3;*.m4a;*.flac;*.wav;*.ogg|所有文件|*.*",
+                        "FFmetadata 或文本文档|*.txt;*.ffmetadata;*.metadata|所有文件|*.*")
+        Using d As New OpenFileDialog With {.Filter = filter, .Multiselect = False}
+            If d.ShowDialog(Me) <> DialogResult.OK OrElse d.FileName = "" Then Exit Sub
+            ModernTextBox2.Text = d.FileName
+        End Using
     End Sub
 
     Private Sub MB_教程_Click(sender As Object, e As EventArgs) Handles MB_教程.Click
@@ -81,4 +106,10 @@ title=第一章
 章节还支持很多特性，可以直接问 AI 或者查阅 ffmpeg 官方文档。
 "
     End Sub
+
+    Private Sub 通知参数面板刷新()
+        If 所属参数面板对象 Is Nothing OrElse 所属参数面板对象.抑制自动刷新 Then Exit Sub
+        所属参数面板对象.请求刷新参数状态()
+    End Sub
+
 End Class

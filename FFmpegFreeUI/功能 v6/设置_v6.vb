@@ -36,6 +36,8 @@ Public Class 设置_v6
     Public Property 混淆任务名称 As Integer = 0
     Public Property 打开独立参数面板时自动切到预设管理页面 As Integer = 0
     Public Property 任务失败自动删除输出文件 As Integer = 0
+    Public Property 编码队列显示最新日志行 As Integer = 0
+    Public Property 任务日志保留行数选项 As Integer = 1
 
     Public Property 替代进程文件名 As String = ""
     Public Property 覆盖参数传递 As String = ""
@@ -148,6 +150,8 @@ Public Class 设置_v6
         Form_v6_设置_功能设定.MCB_任务名称混淆.SelectedIndex = 实例对象.混淆任务名称
         Form_v6_设置_功能设定.MCB_独立参数面板自动切预设管理.SelectedIndex = 实例对象.打开独立参数面板时自动切到预设管理页面
         Form_v6_设置_功能设定.MCB_任务失败删除文件.SelectedIndex = 实例对象.任务失败自动删除输出文件
+        Form_v6_设置_功能设定.MCB_编码队列显示最新日志行.SelectedIndex = Math.Min(Math.Max(实例对象.编码队列显示最新日志行, 0), 1)
+        Form_v6_设置_功能设定.MCB_任务日志保留行数.SelectedIndex = Math.Min(Math.Max(实例对象.任务日志保留行数选项, 0), 3)
 
         Form_v6_设置_转译辅助.MCB_替代进程的文件名.Text = 实例对象.替代进程文件名
         Form_v6_设置_转译辅助.MTB_覆盖参数传递.Text = 实例对象.覆盖参数传递

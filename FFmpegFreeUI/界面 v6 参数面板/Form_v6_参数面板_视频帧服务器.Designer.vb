@@ -89,17 +89,17 @@ Partial Class Form_v6_参数面板_视频帧服务器
         ModernComboBox2.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernComboBox2.DropDownSelectedForeColor = Color.White
         ModernComboBox2.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        ModernComboBox2.Items.Add("浏览 ...")
+        ModernComboBox2.Location = New Point(65, 10)
         ModernComboBox2.Margin = New Padding(2, 2, 2, 2)
+        ModernComboBox2.Name = "ModernComboBox2"
         ModernComboBox2.Padding = New Padding(10, 0, 10, 0)
+        ModernComboBox2.Size = New Size(659, 32)
+        ModernComboBox2.TabIndex = 1
         ModernComboBox2.ToolTipGap = -1
         ModernComboBox2.ToolTipMaxWidth = 350
         ModernComboBox2.ToolTipPadding = New Padding(15)
         ModernComboBox2.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        ModernComboBox2.Items.Add("浏览 ...")
-        ModernComboBox2.Location = New Point(65, 10)
-        ModernComboBox2.Name = "ModernComboBox2"
-        ModernComboBox2.Size = New Size(659, 32)
-        ModernComboBox2.TabIndex = 1
         ' 
         ' JustEmptyControl2
         ' 
@@ -111,13 +111,17 @@ Partial Class Form_v6_参数面板_视频帧服务器
         ' 
         ' BooleanSwitch2
         ' 
+        BooleanSwitch2.BorderColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
+        BooleanSwitch2.BorderSize = 2
         BooleanSwitch2.Dock = DockStyle.Left
         BooleanSwitch2.KnobColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
+        BooleanSwitch2.KnobPadding = 4
         BooleanSwitch2.Location = New Point(0, 10)
         BooleanSwitch2.Margin = New Padding(2, 2, 2, 2)
         BooleanSwitch2.Name = "BooleanSwitch2"
         BooleanSwitch2.Size = New Size(55, 32)
         BooleanSwitch2.TabIndex = 0
+        BooleanSwitch2.TrackColorOff = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         BooleanSwitch2.TrackColorOn = Color.MediumSlateBlue
         ' 
         ' HtmlColorLabel5
@@ -174,17 +178,17 @@ Partial Class Form_v6_参数面板_视频帧服务器
         ModernComboBox1.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernComboBox1.DropDownSelectedForeColor = Color.White
         ModernComboBox1.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        ModernComboBox1.Items.Add("浏览 ...")
+        ModernComboBox1.Location = New Point(65, 10)
         ModernComboBox1.Margin = New Padding(2, 2, 2, 2)
+        ModernComboBox1.Name = "ModernComboBox1"
         ModernComboBox1.Padding = New Padding(10, 0, 10, 0)
+        ModernComboBox1.Size = New Size(659, 32)
+        ModernComboBox1.TabIndex = 1
         ModernComboBox1.ToolTipGap = -1
         ModernComboBox1.ToolTipMaxWidth = 350
         ModernComboBox1.ToolTipPadding = New Padding(15)
         ModernComboBox1.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        ModernComboBox1.Items.Add("浏览 ...")
-        ModernComboBox1.Location = New Point(65, 10)
-        ModernComboBox1.Name = "ModernComboBox1"
-        ModernComboBox1.Size = New Size(659, 32)
-        ModernComboBox1.TabIndex = 1
         ' 
         ' JustEmptyControl1
         ' 
@@ -196,13 +200,17 @@ Partial Class Form_v6_参数面板_视频帧服务器
         ' 
         ' BooleanSwitch1
         ' 
+        BooleanSwitch1.BorderColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
+        BooleanSwitch1.BorderSize = 2
         BooleanSwitch1.Dock = DockStyle.Left
         BooleanSwitch1.KnobColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
+        BooleanSwitch1.KnobPadding = 4
         BooleanSwitch1.Location = New Point(0, 10)
         BooleanSwitch1.Margin = New Padding(2, 2, 2, 2)
         BooleanSwitch1.Name = "BooleanSwitch1"
         BooleanSwitch1.Size = New Size(55, 32)
         BooleanSwitch1.TabIndex = 0
+        BooleanSwitch1.TrackColorOff = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         BooleanSwitch1.TrackColorOn = Color.MediumSlateBlue
         ' 
         ' HtmlColorLabel4

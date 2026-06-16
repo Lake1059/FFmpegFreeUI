@@ -17,11 +17,16 @@ Public Class Form_v6_起始页面
             Case 0
                 GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced, True, True)
                 GC.WaitForPendingFinalizers()
-                MCB_清理内存.SelectedIndex = -1
             Case 1
                 Module1.EmptyWorkingSet(Process.GetCurrentProcess.Handle)
-                MCB_清理内存.SelectedIndex = -1
+            Case 2
+                D2DHelperV2.CleanupD2DResources(D2DCacheCleanupLevel.TrimToBudget)
+            Case 3
+                D2DHelperV2.CleanupD2DResources(D2DCacheCleanupLevel.ReleaseAllCaches)
+            Case 4
+                D2DHelperV2.CleanupD2DResources(D2DCacheCleanupLevel.ReleaseEverything)
         End Select
+        MCB_清理内存.SelectedIndex = -1
     End Sub
 
     Private Sub MB_软件本体更新_Click(sender As Object, e As EventArgs) Handles MB_软件本体更新.Click

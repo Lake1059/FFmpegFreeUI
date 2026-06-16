@@ -42,5 +42,15 @@ Public Class Form_v6_设置_功能设定
         设置_v6.实例对象.任务失败自动删除输出文件 = MCB_任务失败删除文件.SelectedIndex
     End Sub
 
+    Private Sub MCB_编码队列显示最新日志行_SelectedIndexChanged(sender As Object, e As EventArgs) Handles MCB_编码队列显示最新日志行.SelectedIndexChanged
+        设置_v6.实例对象.编码队列显示最新日志行 = MCB_编码队列显示最新日志行.SelectedIndex
+        编码队列_v6.刷新显示()
+    End Sub
+
+    Private Sub MCB_任务日志保留行数_SelectedIndexChanged(sender As Object, e As EventArgs) Handles MCB_任务日志保留行数.SelectedIndexChanged
+        设置_v6.实例对象.任务日志保留行数选项 = MCB_任务日志保留行数.SelectedIndex
+        编码队列_v6.刷新显示()
+    End Sub
+
 
 End Class

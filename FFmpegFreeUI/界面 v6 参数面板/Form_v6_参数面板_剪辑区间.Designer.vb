@@ -24,19 +24,19 @@ Partial Class Form_v6_参数面板_剪辑区间
     Private Sub InitializeComponent()
         ModernPanel1 = New LakeUI.ModernPanel()
         Panel1 = New Panel()
-        ModernComboBox2 = New LakeUI.ModernComboBox()
+        MCB_向前解码秒数 = New LakeUI.ModernComboBox()
         HtmlColorLabel4 = New LakeUI.HtmlColorLabel()
         Panel3 = New Panel()
-        ModernTextBox2 = New LakeUI.ModernTextBox()
+        MTB_出点 = New LakeUI.ModernTextBox()
         JustEmptyControl1 = New LakeUI.JustEmptyControl()
-        ModernTextBox1 = New LakeUI.ModernTextBox()
+        MTB_入点 = New LakeUI.ModernTextBox()
         Panel5 = New Panel()
         HtmlColorLabel6 = New LakeUI.HtmlColorLabel()
         HtmlColorLabel9 = New LakeUI.HtmlColorLabel()
         HtmlColorLabel3 = New LakeUI.HtmlColorLabel()
         HtmlColorLabel2 = New LakeUI.HtmlColorLabel()
         Panel2 = New Panel()
-        ModernComboBox1 = New LakeUI.ModernComboBox()
+        MCB_剪辑模式 = New LakeUI.ModernComboBox()
         HtmlColorLabel7 = New LakeUI.HtmlColorLabel()
         HtmlColorLabel1 = New LakeUI.HtmlColorLabel()
         ModernPanel1.SuspendLayout()
@@ -69,7 +69,7 @@ Partial Class Form_v6_参数面板_剪辑区间
         ' 
         ' Panel1
         ' 
-        Panel1.Controls.Add(ModernComboBox2)
+        Panel1.Controls.Add(MCB_向前解码秒数)
         Panel1.Dock = DockStyle.Top
         Panel1.Location = New Point(20, 306)
         Panel1.Name = "Panel1"
@@ -77,39 +77,39 @@ Partial Class Form_v6_参数面板_剪辑区间
         Panel1.Size = New Size(725, 42)
         Panel1.TabIndex = 14
         ' 
-        ' ModernComboBox2
+        ' MCB_向前解码秒数
         ' 
-        ModernComboBox2.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernComboBox2.BorderRadius = 10
-        ModernComboBox2.BorderSize = 0
-        ModernComboBox2.Dock = DockStyle.Left
-        ModernComboBox2.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
-        ModernComboBox2.DropDownHoverAnimationDuration = 0
-        ModernComboBox2.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
-        ModernComboBox2.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
-        ModernComboBox2.DropDownPadding = New Padding(10)
-        ModernComboBox2.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernComboBox2.DropDownSelectedForeColor = Color.White
-        ModernComboBox2.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
-        ModernComboBox2.Margin = New Padding(2, 2, 2, 2)
-        ModernComboBox2.Padding = New Padding(10, 0, 10, 0)
-        ModernComboBox2.ToolTipGap = -1
-        ModernComboBox2.ToolTipMaxWidth = 350
-        ModernComboBox2.ToolTipPadding = New Padding(15)
-        ModernComboBox2.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        ModernComboBox2.Items.Add("")
-        ModernComboBox2.Items.Add("10")
-        ModernComboBox2.Items.Add("20")
-        ModernComboBox2.Items.Add("30")
-        ModernComboBox2.Items.Add("60")
-        ModernComboBox2.Items.Add("120")
-        ModernComboBox2.Items.Add("360")
-        ModernComboBox2.Items.Add("600")
-        ModernComboBox2.Location = New Point(0, 10)
-        ModernComboBox2.Name = "ModernComboBox2"
-        ModernComboBox2.Size = New Size(100, 32)
-        ModernComboBox2.TabIndex = 0
-        ModernComboBox2.WaterText = "秒"
+        MCB_向前解码秒数.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MCB_向前解码秒数.BorderRadius = 10
+        MCB_向前解码秒数.BorderSize = 0
+        MCB_向前解码秒数.Dock = DockStyle.Left
+        MCB_向前解码秒数.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
+        MCB_向前解码秒数.DropDownHoverAnimationDuration = 0
+        MCB_向前解码秒数.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
+        MCB_向前解码秒数.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
+        MCB_向前解码秒数.DropDownPadding = New Padding(10)
+        MCB_向前解码秒数.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MCB_向前解码秒数.DropDownSelectedForeColor = Color.White
+        MCB_向前解码秒数.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        MCB_向前解码秒数.Items.Add("")
+        MCB_向前解码秒数.Items.Add("10")
+        MCB_向前解码秒数.Items.Add("20")
+        MCB_向前解码秒数.Items.Add("30")
+        MCB_向前解码秒数.Items.Add("60")
+        MCB_向前解码秒数.Items.Add("120")
+        MCB_向前解码秒数.Items.Add("360")
+        MCB_向前解码秒数.Items.Add("600")
+        MCB_向前解码秒数.Location = New Point(0, 10)
+        MCB_向前解码秒数.Margin = New Padding(2, 2, 2, 2)
+        MCB_向前解码秒数.Name = "MCB_向前解码秒数"
+        MCB_向前解码秒数.Padding = New Padding(10, 0, 10, 0)
+        MCB_向前解码秒数.Size = New Size(100, 32)
+        MCB_向前解码秒数.TabIndex = 0
+        MCB_向前解码秒数.ToolTipGap = -1
+        MCB_向前解码秒数.ToolTipMaxWidth = 350
+        MCB_向前解码秒数.ToolTipPadding = New Padding(15)
+        MCB_向前解码秒数.WaterText = "秒"
+        MCB_向前解码秒数.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ' 
         ' HtmlColorLabel4
         ' 
@@ -127,9 +127,9 @@ Partial Class Form_v6_参数面板_剪辑区间
         ' 
         ' Panel3
         ' 
-        Panel3.Controls.Add(ModernTextBox2)
+        Panel3.Controls.Add(MTB_出点)
         Panel3.Controls.Add(JustEmptyControl1)
-        Panel3.Controls.Add(ModernTextBox1)
+        Panel3.Controls.Add(MTB_入点)
         Panel3.Dock = DockStyle.Top
         Panel3.Location = New Point(20, 214)
         Panel3.Name = "Panel3"
@@ -137,22 +137,22 @@ Partial Class Form_v6_参数面板_剪辑区间
         Panel3.Size = New Size(725, 42)
         Panel3.TabIndex = 12
         ' 
-        ' ModernTextBox2
+        ' MTB_出点
         ' 
-        ModernTextBox2.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernTextBox2.BorderColor = Color.Transparent
-        ModernTextBox2.BorderColorFocus = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
-        ModernTextBox2.BorderRadius = 10
-        ModernTextBox2.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
-        ModernTextBox2.Dock = DockStyle.Left
-        ModernTextBox2.Location = New Point(160, 10)
-        ModernTextBox2.Margin = New Padding(2)
-        ModernTextBox2.Name = "ModernTextBox2"
-        ModernTextBox2.Padding = New Padding(10, 0, 10, 0)
-        ModernTextBox2.Size = New Size(150, 32)
-        ModernTextBox2.TabIndex = 6
-        ModernTextBox2.WaterText = "出点"
-        ModernTextBox2.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
+        MTB_出点.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MTB_出点.BorderColor = Color.Transparent
+        MTB_出点.BorderColorFocus = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
+        MTB_出点.BorderRadius = 10
+        MTB_出点.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
+        MTB_出点.Dock = DockStyle.Left
+        MTB_出点.Location = New Point(160, 10)
+        MTB_出点.Margin = New Padding(2)
+        MTB_出点.Name = "MTB_出点"
+        MTB_出点.Padding = New Padding(10, 0, 10, 0)
+        MTB_出点.Size = New Size(150, 32)
+        MTB_出点.TabIndex = 6
+        MTB_出点.WaterText = "出点"
+        MTB_出点.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ' 
         ' JustEmptyControl1
         ' 
@@ -162,22 +162,22 @@ Partial Class Form_v6_参数面板_剪辑区间
         JustEmptyControl1.Size = New Size(10, 32)
         JustEmptyControl1.TabIndex = 3
         ' 
-        ' ModernTextBox1
+        ' MTB_入点
         ' 
-        ModernTextBox1.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernTextBox1.BorderColor = Color.Transparent
-        ModernTextBox1.BorderColorFocus = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
-        ModernTextBox1.BorderRadius = 10
-        ModernTextBox1.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
-        ModernTextBox1.Dock = DockStyle.Left
-        ModernTextBox1.Location = New Point(0, 10)
-        ModernTextBox1.Margin = New Padding(2)
-        ModernTextBox1.Name = "ModernTextBox1"
-        ModernTextBox1.Padding = New Padding(10, 0, 10, 0)
-        ModernTextBox1.Size = New Size(150, 32)
-        ModernTextBox1.TabIndex = 5
-        ModernTextBox1.WaterText = "入点"
-        ModernTextBox1.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
+        MTB_入点.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MTB_入点.BorderColor = Color.Transparent
+        MTB_入点.BorderColorFocus = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
+        MTB_入点.BorderRadius = 10
+        MTB_入点.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
+        MTB_入点.Dock = DockStyle.Left
+        MTB_入点.Location = New Point(0, 10)
+        MTB_入点.Margin = New Padding(2)
+        MTB_入点.Name = "MTB_入点"
+        MTB_入点.Padding = New Padding(10, 0, 10, 0)
+        MTB_入点.Size = New Size(150, 32)
+        MTB_入点.TabIndex = 5
+        MTB_入点.WaterText = "入点"
+        MTB_入点.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ' 
         ' Panel5
         ' 
@@ -244,7 +244,7 @@ Partial Class Form_v6_参数面板_剪辑区间
         ' 
         ' Panel2
         ' 
-        Panel2.Controls.Add(ModernComboBox1)
+        Panel2.Controls.Add(MCB_剪辑模式)
         Panel2.Dock = DockStyle.Top
         Panel2.Location = New Point(20, 71)
         Panel2.Name = "Panel2"
@@ -252,37 +252,37 @@ Partial Class Form_v6_参数面板_剪辑区间
         Panel2.Size = New Size(725, 42)
         Panel2.TabIndex = 9
         ' 
-        ' ModernComboBox1
+        ' MCB_剪辑模式
         ' 
-        ModernComboBox1.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernComboBox1.BorderRadius = 10
-        ModernComboBox1.BorderSize = 0
-        ModernComboBox1.Dock = DockStyle.Left
-        ModernComboBox1.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
-        ModernComboBox1.DropDownHoverAnimationDuration = 0
-        ModernComboBox1.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
-        ModernComboBox1.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
-        ModernComboBox1.DropDownPadding = New Padding(10)
-        ModernComboBox1.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernComboBox1.DropDownSelectedForeColor = Color.White
-        ModernComboBox1.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
-        ModernComboBox1.Margin = New Padding(2, 2, 2, 2)
-        ModernComboBox1.Padding = New Padding(10, 0, 10, 0)
-        ModernComboBox1.ToolTipGap = -1
-        ModernComboBox1.ToolTipMaxWidth = 350
-        ModernComboBox1.ToolTipPadding = New Padding(15)
-        ModernComboBox1.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        ModernComboBox1.Items.Add("")
-        ModernComboBox1.Items.Add("粗剪（立即响应，最快，取关键帧）")
-        ModernComboBox1.Items.Add("精剪（从头解码，需要等，重编码才准）")
-        ModernComboBox1.Items.Add("精剪（空降解码，不怎么等，重编码才准）")
-        ModernComboBox1.Items.Add("Trim 滤镜（从头解码，必须重编码，最准，可剪掉要烧的字幕）")
-        ModernComboBox1.Items.Add("掐头去尾（额外需要 ffprobe，重编码才准）")
-        ModernComboBox1.Location = New Point(0, 10)
-        ModernComboBox1.Name = "ModernComboBox1"
-        ModernComboBox1.Size = New Size(500, 32)
-        ModernComboBox1.TabIndex = 0
-        ModernComboBox1.WaterText = "选择剪辑模式"
+        MCB_剪辑模式.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MCB_剪辑模式.BorderRadius = 10
+        MCB_剪辑模式.BorderSize = 0
+        MCB_剪辑模式.Dock = DockStyle.Left
+        MCB_剪辑模式.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
+        MCB_剪辑模式.DropDownHoverAnimationDuration = 0
+        MCB_剪辑模式.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
+        MCB_剪辑模式.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
+        MCB_剪辑模式.DropDownPadding = New Padding(10)
+        MCB_剪辑模式.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MCB_剪辑模式.DropDownSelectedForeColor = Color.White
+        MCB_剪辑模式.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        MCB_剪辑模式.Items.Add("")
+        MCB_剪辑模式.Items.Add("粗剪（立即响应，最快，取关键帧）")
+        MCB_剪辑模式.Items.Add("精剪（从头解码，需要等，重编码才准）")
+        MCB_剪辑模式.Items.Add("精剪（空降解码，不怎么等，重编码才准）")
+        MCB_剪辑模式.Items.Add("Trim 滤镜（从头解码，必须重编码，最准，可剪掉要烧的字幕）")
+        MCB_剪辑模式.Items.Add("掐头去尾（额外需要 ffprobe，重编码才准）")
+        MCB_剪辑模式.Location = New Point(0, 10)
+        MCB_剪辑模式.Margin = New Padding(2, 2, 2, 2)
+        MCB_剪辑模式.Name = "MCB_剪辑模式"
+        MCB_剪辑模式.Padding = New Padding(10, 0, 10, 0)
+        MCB_剪辑模式.Size = New Size(500, 32)
+        MCB_剪辑模式.TabIndex = 0
+        MCB_剪辑模式.ToolTipGap = -1
+        MCB_剪辑模式.ToolTipMaxWidth = 350
+        MCB_剪辑模式.ToolTipPadding = New Padding(15)
+        MCB_剪辑模式.WaterText = "选择剪辑模式"
+        MCB_剪辑模式.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ' 
         ' HtmlColorLabel7
         ' 
@@ -334,16 +334,16 @@ Partial Class Form_v6_参数面板_剪辑区间
     Friend WithEvents ModernPanel1 As LakeUI.ModernPanel
     Friend WithEvents HtmlColorLabel1 As LakeUI.HtmlColorLabel
     Friend WithEvents Panel2 As Panel
-    Friend WithEvents ModernComboBox1 As LakeUI.ModernComboBox
+    Friend WithEvents MCB_剪辑模式 As LakeUI.ModernComboBox
     Friend WithEvents HtmlColorLabel2 As LakeUI.HtmlColorLabel
     Friend WithEvents HtmlColorLabel3 As LakeUI.HtmlColorLabel
     Friend WithEvents HtmlColorLabel4 As LakeUI.HtmlColorLabel
     Friend WithEvents Panel3 As Panel
-    Friend WithEvents ModernTextBox2 As LakeUI.ModernTextBox
+    Friend WithEvents MTB_出点 As LakeUI.ModernTextBox
     Friend WithEvents JustEmptyControl1 As LakeUI.JustEmptyControl
-    Friend WithEvents ModernTextBox1 As LakeUI.ModernTextBox
+    Friend WithEvents MTB_入点 As LakeUI.ModernTextBox
     Friend WithEvents Panel1 As Panel
-    Friend WithEvents ModernComboBox2 As LakeUI.ModernComboBox
+    Friend WithEvents MCB_向前解码秒数 As LakeUI.ModernComboBox
     Friend WithEvents Panel5 As Panel
     Friend WithEvents HtmlColorLabel6 As LakeUI.HtmlColorLabel
     Friend WithEvents HtmlColorLabel9 As LakeUI.HtmlColorLabel

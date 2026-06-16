@@ -477,7 +477,6 @@ Partial Class Form_v6_参数面板_抽帧参数
         MinimizeBox = False
         MinimumSize = New Size(1000, 600)
         Name = "Form_v6_参数面板_抽帧参数"
-        ShowIcon = False
         ShowInTaskbar = False
         StartPosition = FormStartPosition.Manual
         Text = "视频抽帧"

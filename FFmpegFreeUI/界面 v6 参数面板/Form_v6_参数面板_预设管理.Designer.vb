@@ -72,7 +72,6 @@ Partial Class Form_v6_参数面板_预设管理
         ModernPanel1.Location = New Point(0, 0)
         ModernPanel1.Name = "ModernPanel1"
         ModernPanel1.Padding = New Padding(20)
-        ModernPanel1.ScrollBarMode = LakeUI.ModernPanel.ScrollMode.None
         ModernPanel1.Size = New Size(816, 633)
         ModernPanel1.TabIndex = 0
         ' 
@@ -98,11 +97,12 @@ Partial Class Form_v6_参数面板_预设管理
         ModernTextBox2.BorderRadius = 10
         ModernTextBox2.BorderSize = 0
         ModernTextBox2.Dock = DockStyle.Fill
+        ModernTextBox2.LineHeight = 20
         ModernTextBox2.Location = New Point(542, 10)
         ModernTextBox2.Margin = New Padding(2)
         ModernTextBox2.MultiLine = True
         ModernTextBox2.Name = "ModernTextBox2"
-        ModernTextBox2.Padding = New Padding(15, 10, 15, 10)
+        ModernTextBox2.Padding = New Padding(12, 10, 12, 10)
         ModernTextBox2.ReadOnly = True
         ModernTextBox2.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernTextBox2.Size = New Size(234, 432)
@@ -125,11 +125,12 @@ Partial Class Form_v6_参数面板_预设管理
         ModernTextBox1.BorderRadius = 10
         ModernTextBox1.BorderSize = 0
         ModernTextBox1.Dock = DockStyle.Left
+        ModernTextBox1.LineHeight = 20
         ModernTextBox1.Location = New Point(265, 10)
         ModernTextBox1.Margin = New Padding(2)
         ModernTextBox1.MultiLine = True
         ModernTextBox1.Name = "ModernTextBox1"
-        ModernTextBox1.Padding = New Padding(15, 10, 15, 10)
+        ModernTextBox1.Padding = New Padding(12, 10, 12, 10)
         ModernTextBox1.ReadOnly = True
         ModernTextBox1.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernTextBox1.Size = New Size(267, 432)
@@ -152,18 +153,16 @@ Partial Class Form_v6_参数面板_预设管理
         ModernListBox1.BorderRadius = 10
         ModernListBox1.BorderSize = 0
         ModernListBox1.Dock = DockStyle.Left
-        ModernListBox1.ItemHoverColor = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
-        ModernListBox1.ItemSelectedColor = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
+        ModernListBox1.ItemHoverColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
+        ModernListBox1.ItemPaddingLeft = 10
+        ModernListBox1.ItemSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernListBox1.Location = New Point(0, 10)
-        ModernListBox1.Margin = New Padding(2, 2, 2, 2)
         ModernListBox1.MultiSelect = False
         ModernListBox1.Name = "ModernListBox1"
-        ModernListBox1.Padding = New Padding(8, 8, 8, 8)
         ModernListBox1.Size = New Size(255, 432)
         ModernListBox1.TabIndex = 5
         ModernListBox1.ToolTipBorderSize = 2
         ModernListBox1.ToolTipMaxWidth = 350
-        ModernListBox1.ToolTipPadding = New Padding(12, 10, 12, 10)
         ' 
         ' Panel3
         ' 
@@ -248,7 +247,7 @@ Partial Class Form_v6_参数面板_预设管理
         ModernCheckBox1.BoxInnerPadding = 6
         ModernCheckBox1.BoxSize = 22
         ModernCheckBox1.BoxTextSpacing = 10
-        ModernCheckBox1.Checked = True
+        ModernCheckBox1.BoxUncheckedBackColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernCheckBox1.ClickAnywhere = True
         ModernCheckBox1.Dock = DockStyle.Left
         ModernCheckBox1.Location = New Point(570, 10)
@@ -394,20 +393,20 @@ Partial Class Form_v6_参数面板_预设管理
         ModernComboBox1.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernComboBox1.DropDownSelectedForeColor = Color.White
         ModernComboBox1.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
-        ModernComboBox1.Margin = New Padding(2, 2, 2, 2)
-        ModernComboBox1.Padding = New Padding(10, 0, 10, 0)
-        ModernComboBox1.ToolTipGap = -1
-        ModernComboBox1.ToolTipMaxWidth = 350
-        ModernComboBox1.ToolTipPadding = New Padding(15)
-        ModernComboBox1.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ModernComboBox1.Items.Add("开发者内置")
         ModernComboBox1.Items.Add("用户自定义")
         ModernComboBox1.Items.Add("从社区下载")
         ModernComboBox1.Location = New Point(0, 10)
+        ModernComboBox1.Margin = New Padding(2, 2, 2, 2)
         ModernComboBox1.Name = "ModernComboBox1"
+        ModernComboBox1.Padding = New Padding(10, 0, 10, 0)
         ModernComboBox1.Size = New Size(150, 32)
         ModernComboBox1.TabIndex = 0
+        ModernComboBox1.ToolTipGap = -1
+        ModernComboBox1.ToolTipMaxWidth = 350
+        ModernComboBox1.ToolTipPadding = New Padding(15)
         ModernComboBox1.WaterText = "选择预设来源"
+        ModernComboBox1.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ' 
         ' HtmlColorLabel1
         ' 
@@ -420,7 +419,7 @@ Partial Class Form_v6_参数面板_预设管理
         HtmlColorLabel1.Name = "HtmlColorLabel1"
         HtmlColorLabel1.Size = New Size(776, 25)
         HtmlColorLabel1.TabIndex = 7
-        HtmlColorLabel1.Text = "<span style=""font-size:13; color:Silver"">预设管理</span>   先选择预设来源，使用双击来加载，批量操作需求请直接去文件夹里操作"
+        HtmlColorLabel1.Text = "<span style=""font-size:13; color:Silver"">预设管理</span>   先选择预设来源，双击或读取来加载，用户和社区预设选中后按 Delete 删除到回收站"
         ' 
         ' Panel4
         ' 

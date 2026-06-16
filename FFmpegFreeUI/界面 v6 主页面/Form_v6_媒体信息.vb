@@ -1,5 +1,7 @@
 ﻿Public Class Form_v6_媒体信息
     Private Sub Form_v6_媒体信息_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        ModernTextBox1.SyntaxHighlighter = FFmpeg输出语法高亮器_v6.默认实例
+        ModernTextBox1.EnableSyntaxHighlight = True
         AddHandler ModernTextBox1.DragEnter, AddressOf 文件拖入事件
         AddHandler ModernTextBox1.DragDrop, AddressOf 文件放下事件
     End Sub
@@ -44,7 +46,7 @@
     Sub 显示媒体信息输出事件(sender As Object, e As DataReceivedEventArgs)
         If e.Data Is Nothing Then Exit Sub
         Try
-            界面线程执行(Sub() Me.ModernTextBox1.AppendLine(e.Data, 识别FF单行输出并调整文字颜色(e.Data, Me.ModernTextBox1.ForeColor)))
+            界面线程执行(Sub() Me.ModernTextBox1.AppendLine(e.Data))
         Catch ex As Exception
         End Try
     End Sub

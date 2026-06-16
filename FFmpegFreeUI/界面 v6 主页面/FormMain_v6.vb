@@ -60,8 +60,8 @@ Public Class FormMain_v6
 
     Private Sub FormMain_v6_Shown(sender As Object, e As EventArgs) Handles Me.Shown
         Me.ModernTabListControl1.Focus()
-
-        ExOverlayMsgBox(Me, $"{vbCrLf}3FUI 6.0 当前处于开发测试阶段，许多功能都未跟进，请耐心等待项目推进，现在的提前放出是为了公开测试新设计的兼容和性能问题，早发现早解决。现在开始使用 GPU 渲染，将使用显存，有任何问题请及时汇报。{vbCrLf & vbCrLf}请勿汇报首次切换选项卡的渲染等待问题，这是解决不了的，再次切换过去就没事了。要解决这个问题的难度不亚于我当上微软老总，极具挑战。",, "当前版本大量功能未实装，标准流程未实装")
+        Application.DoEvents()
+        ExOverlayMsgBox(Me, $"{vbCrLf}3FUI 6.0 当前处于开发测试阶段，许多功能都未跟进，请耐心等待项目推进，现在的提前放出是为了公开测试新设计的兼容和性能问题，早发现早解决。现在使用 GPU 渲染，将使用显存，有任何问题请及时汇报。{vbCrLf & vbCrLf}请勿汇报首次切换选项卡的渲染等待问题，这是解决不了的，再次切换过去就没事了。要解决这个问题的难度不亚于我当上微软老总，极具挑战。",, "编码队列和参数面板已经初步可用")
 
         If Not 设置_v6.实例对象.是否询问标记_下载服务器选择 Then
             If Globalization.RegionInfo.CurrentRegion.EnglishName.ToLower.Trim.Contains("china") Then

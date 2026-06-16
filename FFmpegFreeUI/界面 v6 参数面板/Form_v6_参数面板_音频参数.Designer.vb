@@ -38,57 +38,42 @@ Partial Class Form_v6_参数面板_音频参数
         ModernPanel1 = New LakeUI.ModernPanel()
         Panel7 = New Panel()
         Panel14 = New Panel()
-        ExcellentTrackBar3 = New LakeUI.ExcellentTrackBar()
-        Panel15 = New Panel()
-        ModernButton3 = New LakeUI.ModernButton()
-        Panel16 = New Panel()
-        BooleanSwitch3 = New LakeUI.BooleanSwitch()
+        ETB_峰值电平 = New LakeUI.ExcellentTrackBar()
+        MCB_峰值电平 = New LakeUI.ModernCheckBox()
         JustEmptyControl3 = New LakeUI.JustEmptyControl()
         Panel11 = New Panel()
-        ExcellentTrackBar2 = New LakeUI.ExcellentTrackBar()
-        Panel12 = New Panel()
-        ModernButton2 = New LakeUI.ModernButton()
-        Panel13 = New Panel()
-        BooleanSwitch2 = New LakeUI.BooleanSwitch()
+        ETB_动态范围 = New LakeUI.ExcellentTrackBar()
+        MCB_动态范围 = New LakeUI.ModernCheckBox()
         JustEmptyControl2 = New LakeUI.JustEmptyControl()
         Panel10 = New Panel()
-        ExcellentTrackBar1 = New LakeUI.ExcellentTrackBar()
-        Panel8 = New Panel()
-        ModernButton1 = New LakeUI.ModernButton()
-        Panel9 = New Panel()
-        BooleanSwitch1 = New LakeUI.BooleanSwitch()
+        ETB_目标响度 = New LakeUI.ExcellentTrackBar()
+        MCB_目标响度 = New LakeUI.ModernCheckBox()
         HtmlColorLabel7 = New LakeUI.HtmlColorLabel()
         Panel6 = New Panel()
         HtmlColorLabel5 = New LakeUI.HtmlColorLabel()
-        ModernComboBox6 = New LakeUI.ModernComboBox()
+        声道布局 = New LakeUI.ModernComboBox()
         Panel5 = New Panel()
         HtmlColorLabel4 = New LakeUI.HtmlColorLabel()
-        ModernComboBox5 = New LakeUI.ModernComboBox()
+        MCB_位深度 = New LakeUI.ModernComboBox()
         Panel4 = New Panel()
         HtmlColorLabel6 = New LakeUI.HtmlColorLabel()
-        ModernComboBox4 = New LakeUI.ModernComboBox()
+        MCB_采样率 = New LakeUI.ModernComboBox()
         HtmlColorLabel3 = New LakeUI.HtmlColorLabel()
         Panel3 = New Panel()
-        ModernTextBox1 = New LakeUI.ModernTextBox()
+        MCB_质量值 = New LakeUI.ModernTextBox()
         JustEmptyControl1 = New LakeUI.JustEmptyControl()
-        ModernComboBox3 = New LakeUI.ModernComboBox()
+        MCB_质量参数名 = New LakeUI.ModernComboBox()
         Panel1 = New Panel()
-        ModernComboBox2 = New LakeUI.ModernComboBox()
+        MCB_比特率 = New LakeUI.ModernComboBox()
         HtmlColorLabel2 = New LakeUI.HtmlColorLabel()
         Panel2 = New Panel()
-        ModernComboBox1 = New LakeUI.ModernComboBox()
+        MCB_音频编码器 = New LakeUI.ModernComboBox()
         HtmlColorLabel1 = New LakeUI.HtmlColorLabel()
         ModernPanel1.SuspendLayout()
         Panel7.SuspendLayout()
         Panel14.SuspendLayout()
-        Panel15.SuspendLayout()
-        Panel16.SuspendLayout()
         Panel11.SuspendLayout()
-        Panel12.SuspendLayout()
-        Panel13.SuspendLayout()
         Panel10.SuspendLayout()
-        Panel8.SuspendLayout()
-        Panel9.SuspendLayout()
         Panel6.SuspendLayout()
         Panel5.SuspendLayout()
         Panel4.SuspendLayout()
@@ -135,21 +120,21 @@ Partial Class Form_v6_参数面板_音频参数
         ' 
         ' Panel14
         ' 
-        Panel14.Controls.Add(ExcellentTrackBar3)
-        Panel14.Controls.Add(Panel15)
+        Panel14.Controls.Add(ETB_峰值电平)
+        Panel14.Controls.Add(MCB_峰值电平)
         Panel14.Dock = DockStyle.Left
         Panel14.Location = New Point(460, 0)
         Panel14.Name = "Panel14"
         Panel14.Size = New Size(200, 207)
         Panel14.TabIndex = 7
         ' 
-        ' ExcellentTrackBar3
+        ' ETB_峰值电平
         ' 
-        ExcellentTrackBar3.BackColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
-        ExcellentTrackBar3.Dock = DockStyle.Fill
-        ExcellentTrackBar3.LabelColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        ExcellentTrackBar3.LabelLineColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        ExcellentTrackBar3.LabelLineLength = 20
+        ETB_峰值电平.BackColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
+        ETB_峰值电平.Dock = DockStyle.Fill
+        ETB_峰值电平.LabelColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
+        ETB_峰值电平.LabelLineColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
+        ETB_峰值电平.LabelLineLength = 20
         TrackLabel14.Side = LakeUI.ExcellentTrackBar.LabelSideEnum.TopOrLeft
         TrackLabel14.Text = "理论最佳"
         TrackLabel15.Position = -1R
@@ -157,76 +142,49 @@ Partial Class Form_v6_参数面板_音频参数
         TrackLabel16.Position = -5R
         TrackLabel16.Side = LakeUI.ExcellentTrackBar.LabelSideEnum.TopOrLeft
         TrackLabel16.Text = "失真严重"
-        ExcellentTrackBar3.Labels.Add(TrackLabel14)
-        ExcellentTrackBar3.Labels.Add(TrackLabel15)
-        ExcellentTrackBar3.Labels.Add(TrackLabel16)
-        ExcellentTrackBar3.LargeChange = 0.1R
-        ExcellentTrackBar3.Location = New Point(0, 0)
-        ExcellentTrackBar3.Margin = New Padding(2, 2, 2, 2)
-        ExcellentTrackBar3.Maximum = 0R
-        ExcellentTrackBar3.Minimum = -5R
-        ExcellentTrackBar3.Name = "ExcellentTrackBar3"
-        ExcellentTrackBar3.Orientation = LakeUI.ExcellentTrackBar.TrackOrientationEnum.Vertical
-        ExcellentTrackBar3.Padding = New Padding(10)
-        ExcellentTrackBar3.Size = New Size(200, 157)
-        ExcellentTrackBar3.SmallChange = 0.1R
-        ExcellentTrackBar3.TabIndex = 1
-        ExcellentTrackBar3.ThumbBorderWidth = 0
-        ExcellentTrackBar3.ThumbColor = Color.CornflowerBlue
-        ExcellentTrackBar3.ThumbHeight = 30
-        ExcellentTrackBar3.ThumbTextDecimalPlaces = 1
-        ExcellentTrackBar3.ThumbTextMode = LakeUI.ExcellentTrackBar.ThumbTextModeEnum.Value
-        ExcellentTrackBar3.ThumbWidth = 42
-        ExcellentTrackBar3.TrackColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        ExcellentTrackBar3.TrackFillColor = Color.Transparent
-        ExcellentTrackBar3.Value = -1R
+        ETB_峰值电平.Labels.Add(TrackLabel14)
+        ETB_峰值电平.Labels.Add(TrackLabel15)
+        ETB_峰值电平.Labels.Add(TrackLabel16)
+        ETB_峰值电平.LargeChange = 0.1R
+        ETB_峰值电平.Location = New Point(0, 0)
+        ETB_峰值电平.Margin = New Padding(2, 2, 2, 2)
+        ETB_峰值电平.Maximum = 0R
+        ETB_峰值电平.Minimum = -5R
+        ETB_峰值电平.Name = "ETB_峰值电平"
+        ETB_峰值电平.Orientation = LakeUI.ExcellentTrackBar.TrackOrientationEnum.Vertical
+        ETB_峰值电平.Padding = New Padding(10)
+        ETB_峰值电平.Size = New Size(200, 165)
+        ETB_峰值电平.SmallChange = 0.1R
+        ETB_峰值电平.TabIndex = 1
+        ETB_峰值电平.ThumbBorderWidth = 0
+        ETB_峰值电平.ThumbColor = Color.CornflowerBlue
+        ETB_峰值电平.ThumbHeight = 30
+        ETB_峰值电平.ThumbTextDecimalPlaces = 1
+        ETB_峰值电平.ThumbTextMode = LakeUI.ExcellentTrackBar.ThumbTextModeEnum.Value
+        ETB_峰值电平.ThumbWidth = 42
+        ETB_峰值电平.TrackColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
+        ETB_峰值电平.TrackFillColor = Color.Transparent
+        ETB_峰值电平.Value = -1R
         ' 
-        ' Panel15
+        ' MCB_峰值电平
         ' 
-        Panel15.BackColor = Color.Transparent
-        Panel15.Controls.Add(ModernButton3)
-        Panel15.Controls.Add(Panel16)
-        Panel15.Dock = DockStyle.Bottom
-        Panel15.Location = New Point(0, 157)
-        Panel15.Name = "Panel15"
-        Panel15.Size = New Size(200, 50)
-        Panel15.TabIndex = 3
-        ' 
-        ' ModernButton3
-        ' 
-        ModernButton3.AnimationDuration = 0
-        ModernButton3.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernButton3.BorderSize = 0
-        ModernButton3.Dock = DockStyle.Fill
-        ModernButton3.Location = New Point(65, 0)
-        ModernButton3.Margin = New Padding(2)
-        ModernButton3.Name = "ModernButton3"
-        ModernButton3.Size = New Size(135, 50)
-        ModernButton3.SubText = "dBTP"
-        ModernButton3.TabIndex = 3
-        ModernButton3.Text = "峰值电平"
-        ' 
-        ' Panel16
-        ' 
-        Panel16.BackColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        Panel16.Controls.Add(BooleanSwitch3)
-        Panel16.Dock = DockStyle.Left
-        Panel16.Location = New Point(0, 0)
-        Panel16.Name = "Panel16"
-        Panel16.Padding = New Padding(10, 9, 0, 9)
-        Panel16.Size = New Size(65, 50)
-        Panel16.TabIndex = 4
-        ' 
-        ' BooleanSwitch3
-        ' 
-        BooleanSwitch3.BackgroundSource = Panel16
-        BooleanSwitch3.Dock = DockStyle.Fill
-        BooleanSwitch3.KnobColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
-        BooleanSwitch3.Location = New Point(10, 9)
-        BooleanSwitch3.Margin = New Padding(2, 2, 2, 2)
-        BooleanSwitch3.Name = "BooleanSwitch3"
-        BooleanSwitch3.Size = New Size(55, 32)
-        BooleanSwitch3.TabIndex = 0
+        MCB_峰值电平.AutoSize = True
+        MCB_峰值电平.BackColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MCB_峰值电平.BoxBorderRadius = 5
+        MCB_峰值电平.BoxBorderSize = 0
+        MCB_峰值电平.BoxCheckedBackColor = Color.CornflowerBlue
+        MCB_峰值电平.BoxInnerPadding = 6
+        MCB_峰值电平.BoxSize = 22
+        MCB_峰值电平.BoxTextSpacing = 10
+        MCB_峰值电平.BoxUncheckedBackColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MCB_峰值电平.ClickAnywhere = True
+        MCB_峰值电平.Dock = DockStyle.Bottom
+        MCB_峰值电平.Location = New Point(0, 165)
+        MCB_峰值电平.Name = "MCB_峰值电平"
+        MCB_峰值电平.Padding = New Padding(10)
+        MCB_峰值电平.Size = New Size(200, 42)
+        MCB_峰值电平.TabIndex = 16
+        MCB_峰值电平.Text = "峰值电平 dBTP"
         ' 
         ' JustEmptyControl3
         ' 
@@ -238,21 +196,21 @@ Partial Class Form_v6_参数面板_音频参数
         ' 
         ' Panel11
         ' 
-        Panel11.Controls.Add(ExcellentTrackBar2)
-        Panel11.Controls.Add(Panel12)
+        Panel11.Controls.Add(ETB_动态范围)
+        Panel11.Controls.Add(MCB_动态范围)
         Panel11.Dock = DockStyle.Left
         Panel11.Location = New Point(255, 0)
         Panel11.Name = "Panel11"
         Panel11.Size = New Size(200, 207)
         Panel11.TabIndex = 5
         ' 
-        ' ExcellentTrackBar2
+        ' ETB_动态范围
         ' 
-        ExcellentTrackBar2.BackColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
-        ExcellentTrackBar2.Dock = DockStyle.Fill
-        ExcellentTrackBar2.LabelColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        ExcellentTrackBar2.LabelLineColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        ExcellentTrackBar2.LabelLineLength = 20
+        ETB_动态范围.BackColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
+        ETB_动态范围.Dock = DockStyle.Fill
+        ETB_动态范围.LabelColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
+        ETB_动态范围.LabelLineColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
+        ETB_动态范围.LabelLineLength = 20
         TrackLabel17.Position = 40R
         TrackLabel17.Side = LakeUI.ExcellentTrackBar.LabelSideEnum.TopOrLeft
         TrackLabel17.Text = "3FUI 允许最大"
@@ -265,76 +223,49 @@ Partial Class Form_v6_参数面板_音频参数
         TrackLabel20.Position = 10R
         TrackLabel20.Side = LakeUI.ExcellentTrackBar.LabelSideEnum.TopOrLeft
         TrackLabel20.Text = "10~15 常规内容推荐"
-        ExcellentTrackBar2.Labels.Add(TrackLabel17)
-        ExcellentTrackBar2.Labels.Add(TrackLabel18)
-        ExcellentTrackBar2.Labels.Add(TrackLabel19)
-        ExcellentTrackBar2.Labels.Add(TrackLabel20)
-        ExcellentTrackBar2.LargeChange = 1R
-        ExcellentTrackBar2.Location = New Point(0, 0)
-        ExcellentTrackBar2.Margin = New Padding(2, 2, 2, 2)
-        ExcellentTrackBar2.Maximum = 40R
-        ExcellentTrackBar2.Minimum = 1R
-        ExcellentTrackBar2.Name = "ExcellentTrackBar2"
-        ExcellentTrackBar2.Orientation = LakeUI.ExcellentTrackBar.TrackOrientationEnum.Vertical
-        ExcellentTrackBar2.Padding = New Padding(10)
-        ExcellentTrackBar2.Size = New Size(200, 157)
-        ExcellentTrackBar2.TabIndex = 1
-        ExcellentTrackBar2.ThumbBorderWidth = 0
-        ExcellentTrackBar2.ThumbColor = Color.OliveDrab
-        ExcellentTrackBar2.ThumbHeight = 30
-        ExcellentTrackBar2.ThumbTextDecimalPlaces = 0
-        ExcellentTrackBar2.ThumbTextMode = LakeUI.ExcellentTrackBar.ThumbTextModeEnum.Value
-        ExcellentTrackBar2.ThumbWidth = 42
-        ExcellentTrackBar2.TrackColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        ExcellentTrackBar2.TrackFillColor = Color.Transparent
-        ExcellentTrackBar2.Value = 1R
+        ETB_动态范围.Labels.Add(TrackLabel17)
+        ETB_动态范围.Labels.Add(TrackLabel18)
+        ETB_动态范围.Labels.Add(TrackLabel19)
+        ETB_动态范围.Labels.Add(TrackLabel20)
+        ETB_动态范围.LargeChange = 1R
+        ETB_动态范围.Location = New Point(0, 0)
+        ETB_动态范围.Margin = New Padding(2, 2, 2, 2)
+        ETB_动态范围.Maximum = 40R
+        ETB_动态范围.Minimum = 1R
+        ETB_动态范围.Name = "ETB_动态范围"
+        ETB_动态范围.Orientation = LakeUI.ExcellentTrackBar.TrackOrientationEnum.Vertical
+        ETB_动态范围.Padding = New Padding(10)
+        ETB_动态范围.Size = New Size(200, 165)
+        ETB_动态范围.TabIndex = 1
+        ETB_动态范围.ThumbBorderWidth = 0
+        ETB_动态范围.ThumbColor = Color.OliveDrab
+        ETB_动态范围.ThumbHeight = 30
+        ETB_动态范围.ThumbTextDecimalPlaces = 0
+        ETB_动态范围.ThumbTextMode = LakeUI.ExcellentTrackBar.ThumbTextModeEnum.Value
+        ETB_动态范围.ThumbWidth = 42
+        ETB_动态范围.TrackColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
+        ETB_动态范围.TrackFillColor = Color.Transparent
+        ETB_动态范围.Value = 1R
         ' 
-        ' Panel12
+        ' MCB_动态范围
         ' 
-        Panel12.BackColor = Color.Transparent
-        Panel12.Controls.Add(ModernButton2)
-        Panel12.Controls.Add(Panel13)
-        Panel12.Dock = DockStyle.Bottom
-        Panel12.Location = New Point(0, 157)
-        Panel12.Name = "Panel12"
-        Panel12.Size = New Size(200, 50)
-        Panel12.TabIndex = 3
-        ' 
-        ' ModernButton2
-        ' 
-        ModernButton2.AnimationDuration = 0
-        ModernButton2.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernButton2.BorderSize = 0
-        ModernButton2.Dock = DockStyle.Fill
-        ModernButton2.Location = New Point(65, 0)
-        ModernButton2.Margin = New Padding(2)
-        ModernButton2.Name = "ModernButton2"
-        ModernButton2.Size = New Size(135, 50)
-        ModernButton2.SubText = "LU"
-        ModernButton2.TabIndex = 3
-        ModernButton2.Text = "动态范围"
-        ' 
-        ' Panel13
-        ' 
-        Panel13.BackColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        Panel13.Controls.Add(BooleanSwitch2)
-        Panel13.Dock = DockStyle.Left
-        Panel13.Location = New Point(0, 0)
-        Panel13.Name = "Panel13"
-        Panel13.Padding = New Padding(10, 9, 0, 9)
-        Panel13.Size = New Size(65, 50)
-        Panel13.TabIndex = 4
-        ' 
-        ' BooleanSwitch2
-        ' 
-        BooleanSwitch2.BackgroundSource = Panel13
-        BooleanSwitch2.Dock = DockStyle.Fill
-        BooleanSwitch2.KnobColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
-        BooleanSwitch2.Location = New Point(10, 9)
-        BooleanSwitch2.Margin = New Padding(2, 2, 2, 2)
-        BooleanSwitch2.Name = "BooleanSwitch2"
-        BooleanSwitch2.Size = New Size(55, 32)
-        BooleanSwitch2.TabIndex = 0
+        MCB_动态范围.AutoSize = True
+        MCB_动态范围.BackColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MCB_动态范围.BoxBorderRadius = 5
+        MCB_动态范围.BoxBorderSize = 0
+        MCB_动态范围.BoxCheckedBackColor = Color.OliveDrab
+        MCB_动态范围.BoxInnerPadding = 6
+        MCB_动态范围.BoxSize = 22
+        MCB_动态范围.BoxTextSpacing = 10
+        MCB_动态范围.BoxUncheckedBackColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MCB_动态范围.ClickAnywhere = True
+        MCB_动态范围.Dock = DockStyle.Bottom
+        MCB_动态范围.Location = New Point(0, 165)
+        MCB_动态范围.Name = "MCB_动态范围"
+        MCB_动态范围.Padding = New Padding(10)
+        MCB_动态范围.Size = New Size(200, 42)
+        MCB_动态范围.TabIndex = 15
+        MCB_动态范围.Text = "动态范围 LU"
         ' 
         ' JustEmptyControl2
         ' 
@@ -346,21 +277,21 @@ Partial Class Form_v6_参数面板_音频参数
         ' 
         ' Panel10
         ' 
-        Panel10.Controls.Add(ExcellentTrackBar1)
-        Panel10.Controls.Add(Panel8)
+        Panel10.Controls.Add(ETB_目标响度)
+        Panel10.Controls.Add(MCB_目标响度)
         Panel10.Dock = DockStyle.Left
         Panel10.Location = New Point(0, 0)
         Panel10.Name = "Panel10"
         Panel10.Size = New Size(250, 207)
         Panel10.TabIndex = 2
         ' 
-        ' ExcellentTrackBar1
+        ' ETB_目标响度
         ' 
-        ExcellentTrackBar1.BackColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
-        ExcellentTrackBar1.Dock = DockStyle.Fill
-        ExcellentTrackBar1.LabelColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        ExcellentTrackBar1.LabelLineColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        ExcellentTrackBar1.LabelLineLength = 20
+        ETB_目标响度.BackColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
+        ETB_目标响度.Dock = DockStyle.Fill
+        ETB_目标响度.LabelColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
+        ETB_目标响度.LabelLineColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
+        ETB_目标响度.LabelLineLength = 20
         TrackLabel21.Position = -8R
         TrackLabel21.Side = LakeUI.ExcellentTrackBar.LabelSideEnum.TopOrLeft
         TrackLabel21.Text = "3FUI 最响允许"
@@ -377,78 +308,51 @@ Partial Class Form_v6_参数面板_音频参数
         TrackLabel26.Position = -16R
         TrackLabel26.Side = LakeUI.ExcellentTrackBar.LabelSideEnum.TopOrLeft
         TrackLabel26.Text = "-16 综合推荐"
-        ExcellentTrackBar1.Labels.Add(TrackLabel21)
-        ExcellentTrackBar1.Labels.Add(TrackLabel22)
-        ExcellentTrackBar1.Labels.Add(TrackLabel23)
-        ExcellentTrackBar1.Labels.Add(TrackLabel24)
-        ExcellentTrackBar1.Labels.Add(TrackLabel25)
-        ExcellentTrackBar1.Labels.Add(TrackLabel26)
-        ExcellentTrackBar1.LargeChange = 1R
-        ExcellentTrackBar1.Location = New Point(0, 0)
-        ExcellentTrackBar1.Margin = New Padding(2, 2, 2, 2)
-        ExcellentTrackBar1.Maximum = -8R
-        ExcellentTrackBar1.Minimum = -36R
-        ExcellentTrackBar1.Name = "ExcellentTrackBar1"
-        ExcellentTrackBar1.Orientation = LakeUI.ExcellentTrackBar.TrackOrientationEnum.Vertical
-        ExcellentTrackBar1.Padding = New Padding(0, 10, 0, 10)
-        ExcellentTrackBar1.Size = New Size(250, 157)
-        ExcellentTrackBar1.TabIndex = 1
-        ExcellentTrackBar1.ThumbBorderWidth = 0
-        ExcellentTrackBar1.ThumbColor = Color.IndianRed
-        ExcellentTrackBar1.ThumbHeight = 30
-        ExcellentTrackBar1.ThumbTextDecimalPlaces = 0
-        ExcellentTrackBar1.ThumbTextMode = LakeUI.ExcellentTrackBar.ThumbTextModeEnum.Value
-        ExcellentTrackBar1.ThumbWidth = 42
-        ExcellentTrackBar1.TrackColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        ExcellentTrackBar1.TrackFillColor = Color.Transparent
-        ExcellentTrackBar1.Value = -24R
+        ETB_目标响度.Labels.Add(TrackLabel21)
+        ETB_目标响度.Labels.Add(TrackLabel22)
+        ETB_目标响度.Labels.Add(TrackLabel23)
+        ETB_目标响度.Labels.Add(TrackLabel24)
+        ETB_目标响度.Labels.Add(TrackLabel25)
+        ETB_目标响度.Labels.Add(TrackLabel26)
+        ETB_目标响度.LargeChange = 1R
+        ETB_目标响度.Location = New Point(0, 0)
+        ETB_目标响度.Margin = New Padding(2, 2, 2, 2)
+        ETB_目标响度.Maximum = -8R
+        ETB_目标响度.Minimum = -36R
+        ETB_目标响度.Name = "ETB_目标响度"
+        ETB_目标响度.Orientation = LakeUI.ExcellentTrackBar.TrackOrientationEnum.Vertical
+        ETB_目标响度.Padding = New Padding(0, 10, 0, 10)
+        ETB_目标响度.Size = New Size(250, 165)
+        ETB_目标响度.TabIndex = 1
+        ETB_目标响度.ThumbBorderWidth = 0
+        ETB_目标响度.ThumbColor = Color.IndianRed
+        ETB_目标响度.ThumbHeight = 30
+        ETB_目标响度.ThumbTextDecimalPlaces = 0
+        ETB_目标响度.ThumbTextMode = LakeUI.ExcellentTrackBar.ThumbTextModeEnum.Value
+        ETB_目标响度.ThumbWidth = 42
+        ETB_目标响度.TrackColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
+        ETB_目标响度.TrackFillColor = Color.Transparent
+        ETB_目标响度.Value = -24R
         ' 
-        ' Panel8
+        ' MCB_目标响度
         ' 
-        Panel8.BackColor = Color.Transparent
-        Panel8.Controls.Add(ModernButton1)
-        Panel8.Controls.Add(Panel9)
-        Panel8.Dock = DockStyle.Bottom
-        Panel8.Location = New Point(0, 157)
-        Panel8.Name = "Panel8"
-        Panel8.Size = New Size(250, 50)
-        Panel8.TabIndex = 3
-        ' 
-        ' ModernButton1
-        ' 
-        ModernButton1.AnimationDuration = 0
-        ModernButton1.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernButton1.BorderSize = 0
-        ModernButton1.Dock = DockStyle.Fill
-        ModernButton1.Location = New Point(65, 0)
-        ModernButton1.Margin = New Padding(2)
-        ModernButton1.Name = "ModernButton1"
-        ModernButton1.Size = New Size(185, 50)
-        ModernButton1.SubText = "LUFS"
-        ModernButton1.TabIndex = 3
-        ModernButton1.Text = "目标响度"
-        ' 
-        ' Panel9
-        ' 
-        Panel9.BackColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        Panel9.Controls.Add(BooleanSwitch1)
-        Panel9.Dock = DockStyle.Left
-        Panel9.Location = New Point(0, 0)
-        Panel9.Name = "Panel9"
-        Panel9.Padding = New Padding(10, 9, 0, 9)
-        Panel9.Size = New Size(65, 50)
-        Panel9.TabIndex = 4
-        ' 
-        ' BooleanSwitch1
-        ' 
-        BooleanSwitch1.BackgroundSource = Panel9
-        BooleanSwitch1.Dock = DockStyle.Fill
-        BooleanSwitch1.KnobColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
-        BooleanSwitch1.Location = New Point(10, 9)
-        BooleanSwitch1.Margin = New Padding(2, 2, 2, 2)
-        BooleanSwitch1.Name = "BooleanSwitch1"
-        BooleanSwitch1.Size = New Size(55, 32)
-        BooleanSwitch1.TabIndex = 0
+        MCB_目标响度.AutoSize = True
+        MCB_目标响度.BackColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MCB_目标响度.BoxBorderRadius = 5
+        MCB_目标响度.BoxBorderSize = 0
+        MCB_目标响度.BoxCheckedBackColor = Color.IndianRed
+        MCB_目标响度.BoxInnerPadding = 6
+        MCB_目标响度.BoxSize = 22
+        MCB_目标响度.BoxTextSpacing = 10
+        MCB_目标响度.BoxUncheckedBackColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MCB_目标响度.ClickAnywhere = True
+        MCB_目标响度.Dock = DockStyle.Bottom
+        MCB_目标响度.Location = New Point(0, 165)
+        MCB_目标响度.Name = "MCB_目标响度"
+        MCB_目标响度.Padding = New Padding(10)
+        MCB_目标响度.Size = New Size(250, 42)
+        MCB_目标响度.TabIndex = 14
+        MCB_目标响度.Text = "目标响度 LUFS"
         ' 
         ' HtmlColorLabel7
         ' 
@@ -462,12 +366,12 @@ Partial Class Form_v6_参数面板_音频参数
         HtmlColorLabel7.Padding = New Padding(0, 20, 0, 10)
         HtmlColorLabel7.Size = New Size(734, 55)
         HtmlColorLabel7.TabIndex = 16
-        HtmlColorLabel7.Text = "<span style=""font-size:13; color:Silver"">响度标准化</span>   歌曲细节少可适当拉响，电影细节多需要放静并提升动态；打开开关才有效"
+        HtmlColorLabel7.Text = "<span style=""font-size:13; color:Silver"">响度标准化</span>   歌曲细节少可适当拉响，电影细节多需要放静并提升动态；勾选上才有效"
         ' 
         ' Panel6
         ' 
         Panel6.Controls.Add(HtmlColorLabel5)
-        Panel6.Controls.Add(ModernComboBox6)
+        Panel6.Controls.Add(声道布局)
         Panel6.Dock = DockStyle.Top
         Panel6.Location = New Point(20, 345)
         Panel6.Name = "Panel6"
@@ -489,47 +393,47 @@ Partial Class Form_v6_参数面板_音频参数
         HtmlColorLabel5.Text = "<span style=""color:Silver"">声道布局</span>   如果使用 CBR 则需要注意增加比特率"
         HtmlColorLabel5.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
         ' 
-        ' ModernComboBox6
+        ' 声道布局
         ' 
-        ModernComboBox6.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernComboBox6.BorderRadius = 10
-        ModernComboBox6.BorderSize = 0
-        ModernComboBox6.Dock = DockStyle.Left
-        ModernComboBox6.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
-        ModernComboBox6.DropDownHoverAnimationDuration = 0
-        ModernComboBox6.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
-        ModernComboBox6.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
-        ModernComboBox6.DropDownPadding = New Padding(10)
-        ModernComboBox6.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernComboBox6.DropDownSelectedForeColor = Color.White
-        ModernComboBox6.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
-        ModernComboBox6.Items.Add("")
-        ModernComboBox6.Items.Add("mono")
-        ModernComboBox6.Items.Add("stereo")
-        ModernComboBox6.Items.Add("2.1")
-        ModernComboBox6.Items.Add("4.0")
-        ModernComboBox6.Items.Add("5.0")
-        ModernComboBox6.Items.Add("5.1")
-        ModernComboBox6.Items.Add("6.1")
-        ModernComboBox6.Items.Add("7.1")
-        ModernComboBox6.Items.Add("hexagonal")
-        ModernComboBox6.Items.Add("octagonal")
-        ModernComboBox6.Location = New Point(0, 10)
-        ModernComboBox6.Margin = New Padding(2, 2, 2, 2)
-        ModernComboBox6.Name = "ModernComboBox6"
-        ModernComboBox6.Padding = New Padding(10, 0, 10, 0)
-        ModernComboBox6.Size = New Size(160, 32)
-        ModernComboBox6.TabIndex = 0
-        ModernComboBox6.ToolTipGap = -1
-        ModernComboBox6.ToolTipMaxWidth = 350
-        ModernComboBox6.ToolTipPadding = New Padding(15)
-        ModernComboBox6.WaterText = "-channel_layout"
-        ModernComboBox6.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
+        声道布局.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        声道布局.BorderRadius = 10
+        声道布局.BorderSize = 0
+        声道布局.Dock = DockStyle.Left
+        声道布局.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
+        声道布局.DropDownHoverAnimationDuration = 0
+        声道布局.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
+        声道布局.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
+        声道布局.DropDownPadding = New Padding(10)
+        声道布局.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        声道布局.DropDownSelectedForeColor = Color.White
+        声道布局.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        声道布局.Items.Add("")
+        声道布局.Items.Add("mono")
+        声道布局.Items.Add("stereo")
+        声道布局.Items.Add("2.1")
+        声道布局.Items.Add("4.0")
+        声道布局.Items.Add("5.0")
+        声道布局.Items.Add("5.1")
+        声道布局.Items.Add("6.1")
+        声道布局.Items.Add("7.1")
+        声道布局.Items.Add("hexagonal")
+        声道布局.Items.Add("octagonal")
+        声道布局.Location = New Point(0, 10)
+        声道布局.Margin = New Padding(2, 2, 2, 2)
+        声道布局.Name = "声道布局"
+        声道布局.Padding = New Padding(10, 0, 10, 0)
+        声道布局.Size = New Size(160, 32)
+        声道布局.TabIndex = 0
+        声道布局.ToolTipGap = -1
+        声道布局.ToolTipMaxWidth = 350
+        声道布局.ToolTipPadding = New Padding(15)
+        声道布局.WaterText = "-channel_layout"
+        声道布局.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ' 
         ' Panel5
         ' 
         Panel5.Controls.Add(HtmlColorLabel4)
-        Panel5.Controls.Add(ModernComboBox5)
+        Panel5.Controls.Add(MCB_位深度)
         Panel5.Dock = DockStyle.Top
         Panel5.Location = New Point(20, 303)
         Panel5.Name = "Panel5"
@@ -551,42 +455,42 @@ Partial Class Form_v6_参数面板_音频参数
         HtmlColorLabel4.Text = "<span style=""color:Silver"">位深度</span>   注意查询编码器所支持的位深；WAV 是通过编码器名称选择的"
         HtmlColorLabel4.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
         ' 
-        ' ModernComboBox5
+        ' MCB_位深度
         ' 
-        ModernComboBox5.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernComboBox5.BorderRadius = 10
-        ModernComboBox5.BorderSize = 0
-        ModernComboBox5.Dock = DockStyle.Left
-        ModernComboBox5.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
-        ModernComboBox5.DropDownHoverAnimationDuration = 0
-        ModernComboBox5.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
-        ModernComboBox5.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
-        ModernComboBox5.DropDownPadding = New Padding(10)
-        ModernComboBox5.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernComboBox5.DropDownSelectedForeColor = Color.White
-        ModernComboBox5.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
-        ModernComboBox5.Items.Add("")
-        ModernComboBox5.Items.Add("s8")
-        ModernComboBox5.Items.Add("s16")
-        ModernComboBox5.Items.Add("s24")
-        ModernComboBox5.Items.Add("s32")
-        ModernComboBox5.Items.Add("s64")
-        ModernComboBox5.Location = New Point(0, 10)
-        ModernComboBox5.Margin = New Padding(2, 2, 2, 2)
-        ModernComboBox5.Name = "ModernComboBox5"
-        ModernComboBox5.Padding = New Padding(10, 0, 10, 0)
-        ModernComboBox5.Size = New Size(160, 32)
-        ModernComboBox5.TabIndex = 0
-        ModernComboBox5.ToolTipGap = -1
-        ModernComboBox5.ToolTipMaxWidth = 350
-        ModernComboBox5.ToolTipPadding = New Padding(15)
-        ModernComboBox5.WaterText = "-sample_fmt"
-        ModernComboBox5.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
+        MCB_位深度.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MCB_位深度.BorderRadius = 10
+        MCB_位深度.BorderSize = 0
+        MCB_位深度.Dock = DockStyle.Left
+        MCB_位深度.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
+        MCB_位深度.DropDownHoverAnimationDuration = 0
+        MCB_位深度.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
+        MCB_位深度.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
+        MCB_位深度.DropDownPadding = New Padding(10)
+        MCB_位深度.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MCB_位深度.DropDownSelectedForeColor = Color.White
+        MCB_位深度.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        MCB_位深度.Items.Add("")
+        MCB_位深度.Items.Add("s8")
+        MCB_位深度.Items.Add("s16")
+        MCB_位深度.Items.Add("s24")
+        MCB_位深度.Items.Add("s32")
+        MCB_位深度.Items.Add("s64")
+        MCB_位深度.Location = New Point(0, 10)
+        MCB_位深度.Margin = New Padding(2, 2, 2, 2)
+        MCB_位深度.Name = "MCB_位深度"
+        MCB_位深度.Padding = New Padding(10, 0, 10, 0)
+        MCB_位深度.Size = New Size(160, 32)
+        MCB_位深度.TabIndex = 0
+        MCB_位深度.ToolTipGap = -1
+        MCB_位深度.ToolTipMaxWidth = 350
+        MCB_位深度.ToolTipPadding = New Padding(15)
+        MCB_位深度.WaterText = "-sample_fmt"
+        MCB_位深度.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ' 
         ' Panel4
         ' 
         Panel4.Controls.Add(HtmlColorLabel6)
-        Panel4.Controls.Add(ModernComboBox4)
+        Panel4.Controls.Add(MCB_采样率)
         Panel4.Dock = DockStyle.Top
         Panel4.Location = New Point(20, 261)
         Panel4.Name = "Panel4"
@@ -608,42 +512,42 @@ Partial Class Form_v6_参数面板_音频参数
         HtmlColorLabel6.Text = "<span style=""color:Silver"">采样率</span>   采样并非越高越好，需要适配目标设备"
         HtmlColorLabel6.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
         ' 
-        ' ModernComboBox4
+        ' MCB_采样率
         ' 
-        ModernComboBox4.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernComboBox4.BorderRadius = 10
-        ModernComboBox4.BorderSize = 0
-        ModernComboBox4.Dock = DockStyle.Left
-        ModernComboBox4.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
-        ModernComboBox4.DropDownHoverAnimationDuration = 0
-        ModernComboBox4.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
-        ModernComboBox4.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
-        ModernComboBox4.DropDownPadding = New Padding(10)
-        ModernComboBox4.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernComboBox4.DropDownSelectedForeColor = Color.White
-        ModernComboBox4.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
-        ModernComboBox4.Items.Add("")
-        ModernComboBox4.Items.Add("192000")
-        ModernComboBox4.Items.Add("96000")
-        ModernComboBox4.Items.Add("48000")
-        ModernComboBox4.Items.Add("44100")
-        ModernComboBox4.Items.Add("32000")
-        ModernComboBox4.Items.Add("24000")
-        ModernComboBox4.Items.Add("22050")
-        ModernComboBox4.Items.Add("16000")
-        ModernComboBox4.Items.Add("11025")
-        ModernComboBox4.Items.Add("8000")
-        ModernComboBox4.Location = New Point(0, 10)
-        ModernComboBox4.Margin = New Padding(2, 2, 2, 2)
-        ModernComboBox4.Name = "ModernComboBox4"
-        ModernComboBox4.Padding = New Padding(10, 0, 10, 0)
-        ModernComboBox4.Size = New Size(160, 32)
-        ModernComboBox4.TabIndex = 0
-        ModernComboBox4.ToolTipGap = -1
-        ModernComboBox4.ToolTipMaxWidth = 350
-        ModernComboBox4.ToolTipPadding = New Padding(15)
-        ModernComboBox4.WaterText = "-ar"
-        ModernComboBox4.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
+        MCB_采样率.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MCB_采样率.BorderRadius = 10
+        MCB_采样率.BorderSize = 0
+        MCB_采样率.Dock = DockStyle.Left
+        MCB_采样率.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
+        MCB_采样率.DropDownHoverAnimationDuration = 0
+        MCB_采样率.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
+        MCB_采样率.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
+        MCB_采样率.DropDownPadding = New Padding(10)
+        MCB_采样率.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MCB_采样率.DropDownSelectedForeColor = Color.White
+        MCB_采样率.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        MCB_采样率.Items.Add("")
+        MCB_采样率.Items.Add("192000")
+        MCB_采样率.Items.Add("96000")
+        MCB_采样率.Items.Add("48000")
+        MCB_采样率.Items.Add("44100")
+        MCB_采样率.Items.Add("32000")
+        MCB_采样率.Items.Add("24000")
+        MCB_采样率.Items.Add("22050")
+        MCB_采样率.Items.Add("16000")
+        MCB_采样率.Items.Add("11025")
+        MCB_采样率.Items.Add("8000")
+        MCB_采样率.Location = New Point(0, 10)
+        MCB_采样率.Margin = New Padding(2, 2, 2, 2)
+        MCB_采样率.Name = "MCB_采样率"
+        MCB_采样率.Padding = New Padding(10, 0, 10, 0)
+        MCB_采样率.Size = New Size(160, 32)
+        MCB_采样率.TabIndex = 0
+        MCB_采样率.ToolTipGap = -1
+        MCB_采样率.ToolTipMaxWidth = 350
+        MCB_采样率.ToolTipPadding = New Padding(15)
+        MCB_采样率.WaterText = "-ar"
+        MCB_采样率.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ' 
         ' HtmlColorLabel3
         ' 
@@ -661,9 +565,9 @@ Partial Class Form_v6_参数面板_音频参数
         ' 
         ' Panel3
         ' 
-        Panel3.Controls.Add(ModernTextBox1)
+        Panel3.Controls.Add(MCB_质量值)
         Panel3.Controls.Add(JustEmptyControl1)
-        Panel3.Controls.Add(ModernComboBox3)
+        Panel3.Controls.Add(MCB_质量参数名)
         Panel3.Dock = DockStyle.Top
         Panel3.Location = New Point(20, 174)
         Panel3.Name = "Panel3"
@@ -671,23 +575,23 @@ Partial Class Form_v6_参数面板_音频参数
         Panel3.Size = New Size(734, 42)
         Panel3.TabIndex = 11
         ' 
-        ' ModernTextBox1
+        ' MCB_质量值
         ' 
-        ModernTextBox1.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernTextBox1.BorderColor = Color.Transparent
-        ModernTextBox1.BorderColorFocus = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
-        ModernTextBox1.BorderRadius = 10
-        ModernTextBox1.BorderSize = 2
-        ModernTextBox1.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
-        ModernTextBox1.Dock = DockStyle.Left
-        ModernTextBox1.Location = New Point(210, 10)
-        ModernTextBox1.Margin = New Padding(2)
-        ModernTextBox1.Name = "ModernTextBox1"
-        ModernTextBox1.Padding = New Padding(10, 0, 10, 0)
-        ModernTextBox1.Size = New Size(100, 32)
-        ModernTextBox1.TabIndex = 5
-        ModernTextBox1.WaterText = "质量值"
-        ModernTextBox1.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
+        MCB_质量值.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MCB_质量值.BorderColor = Color.Transparent
+        MCB_质量值.BorderColorFocus = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
+        MCB_质量值.BorderRadius = 10
+        MCB_质量值.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
+        MCB_质量值.Dock = DockStyle.Left
+        MCB_质量值.Location = New Point(210, 10)
+        MCB_质量值.Margin = New Padding(2)
+        MCB_质量值.Name = "MCB_质量值"
+        MCB_质量值.Padding = New Padding(10, 0, 10, 0)
+        MCB_质量值.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MCB_质量值.Size = New Size(100, 32)
+        MCB_质量值.TabIndex = 5
+        MCB_质量值.WaterText = "质量值"
+        MCB_质量值.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ' 
         ' JustEmptyControl1
         ' 
@@ -697,40 +601,40 @@ Partial Class Form_v6_参数面板_音频参数
         JustEmptyControl1.Size = New Size(10, 32)
         JustEmptyControl1.TabIndex = 3
         ' 
-        ' ModernComboBox3
+        ' MCB_质量参数名
         ' 
-        ModernComboBox3.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernComboBox3.BorderRadius = 10
-        ModernComboBox3.BorderSize = 0
-        ModernComboBox3.Dock = DockStyle.Left
-        ModernComboBox3.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
-        ModernComboBox3.DropDownHoverAnimationDuration = 0
-        ModernComboBox3.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
-        ModernComboBox3.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
-        ModernComboBox3.DropDownPadding = New Padding(10)
-        ModernComboBox3.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernComboBox3.DropDownSelectedForeColor = Color.White
-        ModernComboBox3.Editable = True
-        ModernComboBox3.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
-        ModernComboBox3.Items.Add("")
-        ModernComboBox3.Items.Add("-q:a")
-        ModernComboBox3.Items.Add("-vbr")
-        ModernComboBox3.Items.Add("-compression_level")
-        ModernComboBox3.Location = New Point(0, 10)
-        ModernComboBox3.Margin = New Padding(2, 2, 2, 2)
-        ModernComboBox3.Name = "ModernComboBox3"
-        ModernComboBox3.Padding = New Padding(10, 0, 10, 0)
-        ModernComboBox3.Size = New Size(200, 32)
-        ModernComboBox3.TabIndex = 0
-        ModernComboBox3.ToolTipGap = -1
-        ModernComboBox3.ToolTipMaxWidth = 350
-        ModernComboBox3.ToolTipPadding = New Padding(15)
-        ModernComboBox3.WaterText = "选择质量参数名"
-        ModernComboBox3.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
+        MCB_质量参数名.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MCB_质量参数名.BorderRadius = 10
+        MCB_质量参数名.BorderSize = 0
+        MCB_质量参数名.Dock = DockStyle.Left
+        MCB_质量参数名.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
+        MCB_质量参数名.DropDownHoverAnimationDuration = 0
+        MCB_质量参数名.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
+        MCB_质量参数名.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
+        MCB_质量参数名.DropDownPadding = New Padding(10)
+        MCB_质量参数名.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MCB_质量参数名.DropDownSelectedForeColor = Color.White
+        MCB_质量参数名.Editable = True
+        MCB_质量参数名.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        MCB_质量参数名.Items.Add("")
+        MCB_质量参数名.Items.Add("-q:a")
+        MCB_质量参数名.Items.Add("-vbr")
+        MCB_质量参数名.Items.Add("-compression_level")
+        MCB_质量参数名.Location = New Point(0, 10)
+        MCB_质量参数名.Margin = New Padding(2, 2, 2, 2)
+        MCB_质量参数名.Name = "MCB_质量参数名"
+        MCB_质量参数名.Padding = New Padding(10, 0, 10, 0)
+        MCB_质量参数名.Size = New Size(200, 32)
+        MCB_质量参数名.TabIndex = 0
+        MCB_质量参数名.ToolTipGap = -1
+        MCB_质量参数名.ToolTipMaxWidth = 350
+        MCB_质量参数名.ToolTipPadding = New Padding(15)
+        MCB_质量参数名.WaterText = "选择质量参数名"
+        MCB_质量参数名.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ' 
         ' Panel1
         ' 
-        Panel1.Controls.Add(ModernComboBox2)
+        Panel1.Controls.Add(MCB_比特率)
         Panel1.Dock = DockStyle.Top
         Panel1.Location = New Point(20, 132)
         Panel1.Name = "Panel1"
@@ -738,42 +642,42 @@ Partial Class Form_v6_参数面板_音频参数
         Panel1.Size = New Size(734, 42)
         Panel1.TabIndex = 10
         ' 
-        ' ModernComboBox2
+        ' MCB_比特率
         ' 
-        ModernComboBox2.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernComboBox2.BorderRadius = 10
-        ModernComboBox2.BorderSize = 0
-        ModernComboBox2.Dock = DockStyle.Left
-        ModernComboBox2.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
-        ModernComboBox2.DropDownHoverAnimationDuration = 0
-        ModernComboBox2.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
-        ModernComboBox2.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
-        ModernComboBox2.DropDownPadding = New Padding(10)
-        ModernComboBox2.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernComboBox2.DropDownSelectedForeColor = Color.White
-        ModernComboBox2.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
-        ModernComboBox2.Items.Add("")
-        ModernComboBox2.Items.Add("96k")
-        ModernComboBox2.Items.Add("128k")
-        ModernComboBox2.Items.Add("192k")
-        ModernComboBox2.Items.Add("256k")
-        ModernComboBox2.Items.Add("320k")
-        ModernComboBox2.Items.Add("384k")
-        ModernComboBox2.Items.Add("448k")
-        ModernComboBox2.Items.Add("512k")
-        ModernComboBox2.Items.Add("640k")
-        ModernComboBox2.Items.Add("1411k")
-        ModernComboBox2.Location = New Point(0, 10)
-        ModernComboBox2.Margin = New Padding(2, 2, 2, 2)
-        ModernComboBox2.Name = "ModernComboBox2"
-        ModernComboBox2.Padding = New Padding(10, 0, 10, 0)
-        ModernComboBox2.Size = New Size(200, 32)
-        ModernComboBox2.TabIndex = 0
-        ModernComboBox2.ToolTipGap = -1
-        ModernComboBox2.ToolTipMaxWidth = 350
-        ModernComboBox2.ToolTipPadding = New Padding(15)
-        ModernComboBox2.WaterText = "选择或填写比特率"
-        ModernComboBox2.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
+        MCB_比特率.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MCB_比特率.BorderRadius = 10
+        MCB_比特率.BorderSize = 0
+        MCB_比特率.Dock = DockStyle.Left
+        MCB_比特率.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
+        MCB_比特率.DropDownHoverAnimationDuration = 0
+        MCB_比特率.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
+        MCB_比特率.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
+        MCB_比特率.DropDownPadding = New Padding(10)
+        MCB_比特率.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MCB_比特率.DropDownSelectedForeColor = Color.White
+        MCB_比特率.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        MCB_比特率.Items.Add("")
+        MCB_比特率.Items.Add("96k")
+        MCB_比特率.Items.Add("128k")
+        MCB_比特率.Items.Add("192k")
+        MCB_比特率.Items.Add("256k")
+        MCB_比特率.Items.Add("320k")
+        MCB_比特率.Items.Add("384k")
+        MCB_比特率.Items.Add("448k")
+        MCB_比特率.Items.Add("512k")
+        MCB_比特率.Items.Add("640k")
+        MCB_比特率.Items.Add("1411k")
+        MCB_比特率.Location = New Point(0, 10)
+        MCB_比特率.Margin = New Padding(2, 2, 2, 2)
+        MCB_比特率.Name = "MCB_比特率"
+        MCB_比特率.Padding = New Padding(10, 0, 10, 0)
+        MCB_比特率.Size = New Size(200, 32)
+        MCB_比特率.TabIndex = 0
+        MCB_比特率.ToolTipGap = -1
+        MCB_比特率.ToolTipMaxWidth = 350
+        MCB_比特率.ToolTipPadding = New Padding(15)
+        MCB_比特率.WaterText = "选择或填写比特率"
+        MCB_比特率.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ' 
         ' HtmlColorLabel2
         ' 
@@ -791,7 +695,7 @@ Partial Class Form_v6_参数面板_音频参数
         ' 
         ' Panel2
         ' 
-        Panel2.Controls.Add(ModernComboBox1)
+        Panel2.Controls.Add(MCB_音频编码器)
         Panel2.Dock = DockStyle.Top
         Panel2.Location = New Point(20, 45)
         Panel2.Name = "Panel2"
@@ -799,58 +703,58 @@ Partial Class Form_v6_参数面板_音频参数
         Panel2.Size = New Size(734, 42)
         Panel2.TabIndex = 8
         ' 
-        ' ModernComboBox1
+        ' MCB_音频编码器
         ' 
-        ModernComboBox1.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernComboBox1.BorderRadius = 10
-        ModernComboBox1.BorderSize = 0
-        ModernComboBox1.Dock = DockStyle.Left
-        ModernComboBox1.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
-        ModernComboBox1.DropDownHoverAnimationDuration = 0
-        ModernComboBox1.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
-        ModernComboBox1.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
-        ModernComboBox1.DropDownPadding = New Padding(10)
-        ModernComboBox1.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernComboBox1.DropDownSelectedForeColor = Color.White
-        ModernComboBox1.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
-        ModernComboBox1.Items.Add("")
-        ModernComboBox1.Items.Add("复制流")
-        ModernComboBox1.Items.Add("禁用")
-        ModernComboBox1.Items.Add("AAC")
-        ModernComboBox1.Items.Add("FDK AAC")
-        ModernComboBox1.Items.Add("FDK AAC HE")
-        ModernComboBox1.Items.Add("FDK AAC HE v2")
-        ModernComboBox1.Items.Add("LAME MP3")
-        ModernComboBox1.Items.Add("Opus")
-        ModernComboBox1.Items.Add("FLAC")
-        ModernComboBox1.Items.Add("ALAC")
-        ModernComboBox1.Items.Add("WAV 16bit")
-        ModernComboBox1.Items.Add("WAV 24bit")
-        ModernComboBox1.Items.Add("WAV 32bit")
-        ModernComboBox1.Items.Add("WAV 64bit")
-        ModernComboBox1.Items.Add("ATSC A/52A (AC3)")
-        ModernComboBox1.Items.Add("ATSC A/52B (EAC3)")
-        ModernComboBox1.Items.Add("DTS Coherent Acoustics")
-        ModernComboBox1.Items.Add("TrueHD")
-        ModernComboBox1.Items.Add("True Audio")
-        ModernComboBox1.Items.Add("Vorbis (ogg)")
-        ModernComboBox1.Items.Add("RealAudio 1.0 (14.4K)")
-        ModernComboBox1.Items.Add("WavPack")
-        ModernComboBox1.Items.Add("LAME MP2")
-        ModernComboBox1.Items.Add("AMR-NB")
-        ModernComboBox1.Items.Add("AMR-WB")
-        ModernComboBox1.Location = New Point(0, 10)
-        ModernComboBox1.Margin = New Padding(2, 2, 2, 2)
-        ModernComboBox1.MaxDropDownItems = 15
-        ModernComboBox1.Name = "ModernComboBox1"
-        ModernComboBox1.Padding = New Padding(10, 0, 10, 0)
-        ModernComboBox1.Size = New Size(310, 32)
-        ModernComboBox1.TabIndex = 0
-        ModernComboBox1.ToolTipGap = -1
-        ModernComboBox1.ToolTipMaxWidth = 350
-        ModernComboBox1.ToolTipPadding = New Padding(15)
-        ModernComboBox1.WaterText = "选择音频编码器"
-        ModernComboBox1.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
+        MCB_音频编码器.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MCB_音频编码器.BorderRadius = 10
+        MCB_音频编码器.BorderSize = 0
+        MCB_音频编码器.Dock = DockStyle.Left
+        MCB_音频编码器.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
+        MCB_音频编码器.DropDownHoverAnimationDuration = 0
+        MCB_音频编码器.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
+        MCB_音频编码器.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
+        MCB_音频编码器.DropDownPadding = New Padding(10)
+        MCB_音频编码器.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MCB_音频编码器.DropDownSelectedForeColor = Color.White
+        MCB_音频编码器.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        MCB_音频编码器.Items.Add("")
+        MCB_音频编码器.Items.Add("复制流")
+        MCB_音频编码器.Items.Add("禁用")
+        MCB_音频编码器.Items.Add("AAC")
+        MCB_音频编码器.Items.Add("FDK AAC")
+        MCB_音频编码器.Items.Add("FDK AAC HE")
+        MCB_音频编码器.Items.Add("FDK AAC HE v2")
+        MCB_音频编码器.Items.Add("LAME MP3")
+        MCB_音频编码器.Items.Add("Opus")
+        MCB_音频编码器.Items.Add("FLAC")
+        MCB_音频编码器.Items.Add("ALAC")
+        MCB_音频编码器.Items.Add("WAV 16bit")
+        MCB_音频编码器.Items.Add("WAV 24bit")
+        MCB_音频编码器.Items.Add("WAV 32bit")
+        MCB_音频编码器.Items.Add("WAV 64bit")
+        MCB_音频编码器.Items.Add("ATSC A/52A (AC3)")
+        MCB_音频编码器.Items.Add("ATSC A/52B (EAC3)")
+        MCB_音频编码器.Items.Add("DTS Coherent Acoustics")
+        MCB_音频编码器.Items.Add("TrueHD")
+        MCB_音频编码器.Items.Add("True Audio")
+        MCB_音频编码器.Items.Add("Vorbis (ogg)")
+        MCB_音频编码器.Items.Add("RealAudio 1.0 (14.4K)")
+        MCB_音频编码器.Items.Add("WavPack")
+        MCB_音频编码器.Items.Add("LAME MP2")
+        MCB_音频编码器.Items.Add("AMR-NB")
+        MCB_音频编码器.Items.Add("AMR-WB")
+        MCB_音频编码器.Location = New Point(0, 10)
+        MCB_音频编码器.Margin = New Padding(2, 2, 2, 2)
+        MCB_音频编码器.MaxDropDownItems = 15
+        MCB_音频编码器.Name = "MCB_音频编码器"
+        MCB_音频编码器.Padding = New Padding(10, 0, 10, 0)
+        MCB_音频编码器.Size = New Size(310, 32)
+        MCB_音频编码器.TabIndex = 0
+        MCB_音频编码器.ToolTipGap = -1
+        MCB_音频编码器.ToolTipMaxWidth = 500
+        MCB_音频编码器.ToolTipPadding = New Padding(15)
+        MCB_音频编码器.WaterText = "选择音频编码器"
+        MCB_音频编码器.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ' 
         ' HtmlColorLabel1
         ' 
@@ -880,14 +784,11 @@ Partial Class Form_v6_参数面板_音频参数
         ModernPanel1.PerformLayout()
         Panel7.ResumeLayout(False)
         Panel14.ResumeLayout(False)
-        Panel15.ResumeLayout(False)
-        Panel16.ResumeLayout(False)
+        Panel14.PerformLayout()
         Panel11.ResumeLayout(False)
-        Panel12.ResumeLayout(False)
-        Panel13.ResumeLayout(False)
+        Panel11.PerformLayout()
         Panel10.ResumeLayout(False)
-        Panel8.ResumeLayout(False)
-        Panel9.ResumeLayout(False)
+        Panel10.PerformLayout()
         Panel6.ResumeLayout(False)
         Panel5.ResumeLayout(False)
         Panel4.ResumeLayout(False)
@@ -900,44 +801,35 @@ Partial Class Form_v6_参数面板_音频参数
     Friend WithEvents ModernPanel1 As LakeUI.ModernPanel
     Friend WithEvents HtmlColorLabel1 As LakeUI.HtmlColorLabel
     Friend WithEvents Panel2 As Panel
-    Friend WithEvents ModernComboBox1 As LakeUI.ModernComboBox
+    Friend WithEvents MCB_音频编码器 As LakeUI.ModernComboBox
     Friend WithEvents HtmlColorLabel2 As LakeUI.HtmlColorLabel
     Friend WithEvents Panel1 As Panel
-    Friend WithEvents ModernComboBox2 As LakeUI.ModernComboBox
+    Friend WithEvents MCB_比特率 As LakeUI.ModernComboBox
     Friend WithEvents Panel3 As Panel
-    Friend WithEvents ModernComboBox3 As LakeUI.ModernComboBox
+    Friend WithEvents MCB_质量参数名 As LakeUI.ModernComboBox
     Friend WithEvents JustEmptyControl1 As LakeUI.JustEmptyControl
     Friend WithEvents HtmlColorLabel3 As LakeUI.HtmlColorLabel
-    Friend WithEvents ModernTextBox1 As LakeUI.ModernTextBox
+    Friend WithEvents MCB_质量值 As LakeUI.ModernTextBox
     Friend WithEvents Panel4 As Panel
     Friend WithEvents HtmlColorLabel6 As LakeUI.HtmlColorLabel
-    Friend WithEvents ModernComboBox4 As LakeUI.ModernComboBox
+    Friend WithEvents MCB_采样率 As LakeUI.ModernComboBox
     Friend WithEvents HtmlColorLabel7 As LakeUI.HtmlColorLabel
     Friend WithEvents Panel6 As Panel
     Friend WithEvents HtmlColorLabel5 As LakeUI.HtmlColorLabel
-    Friend WithEvents ModernComboBox6 As LakeUI.ModernComboBox
+    Friend WithEvents 声道布局 As LakeUI.ModernComboBox
     Friend WithEvents Panel5 As Panel
     Friend WithEvents HtmlColorLabel4 As LakeUI.HtmlColorLabel
-    Friend WithEvents ModernComboBox5 As LakeUI.ModernComboBox
+    Friend WithEvents MCB_位深度 As LakeUI.ModernComboBox
     Friend WithEvents Panel7 As Panel
     Friend WithEvents Panel10 As Panel
-    Friend WithEvents ExcellentTrackBar1 As LakeUI.ExcellentTrackBar
-    Friend WithEvents Panel8 As Panel
-    Friend WithEvents ModernButton1 As LakeUI.ModernButton
-    Friend WithEvents Panel9 As Panel
-    Friend WithEvents BooleanSwitch1 As LakeUI.BooleanSwitch
+    Friend WithEvents ETB_目标响度 As LakeUI.ExcellentTrackBar
     Friend WithEvents JustEmptyControl3 As LakeUI.JustEmptyControl
     Friend WithEvents Panel11 As Panel
-    Friend WithEvents ExcellentTrackBar2 As LakeUI.ExcellentTrackBar
-    Friend WithEvents Panel12 As Panel
-    Friend WithEvents ModernButton2 As LakeUI.ModernButton
-    Friend WithEvents Panel13 As Panel
-    Friend WithEvents BooleanSwitch2 As LakeUI.BooleanSwitch
+    Friend WithEvents ETB_动态范围 As LakeUI.ExcellentTrackBar
     Friend WithEvents JustEmptyControl2 As LakeUI.JustEmptyControl
     Friend WithEvents Panel14 As Panel
-    Friend WithEvents ExcellentTrackBar3 As LakeUI.ExcellentTrackBar
-    Friend WithEvents Panel15 As Panel
-    Friend WithEvents ModernButton3 As LakeUI.ModernButton
-    Friend WithEvents Panel16 As Panel
-    Friend WithEvents BooleanSwitch3 As LakeUI.BooleanSwitch
+    Friend WithEvents ETB_峰值电平 As LakeUI.ExcellentTrackBar
+    Friend WithEvents MCB_峰值电平 As LakeUI.ModernCheckBox
+    Friend WithEvents MCB_动态范围 As LakeUI.ModernCheckBox
+    Friend WithEvents MCB_目标响度 As LakeUI.ModernCheckBox
 End Class
