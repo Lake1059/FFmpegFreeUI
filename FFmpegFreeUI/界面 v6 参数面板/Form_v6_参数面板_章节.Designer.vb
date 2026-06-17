@@ -24,7 +24,7 @@ Partial Class Form_v6_参数面板_章节
     Private Sub InitializeComponent()
         HtmlColorLabel1 = New LakeUI.HtmlColorLabel()
         Panel1 = New Panel()
-        ModernTextBox2 = New LakeUI.ModernTextBox()
+        ModernComboBox2 = New LakeUI.ModernComboBox()
         JustEmptyControl1 = New LakeUI.JustEmptyControl()
         ModernComboBox1 = New LakeUI.ModernComboBox()
         JustEmptyControl2 = New LakeUI.JustEmptyControl()
@@ -50,7 +50,7 @@ Partial Class Form_v6_参数面板_章节
         ' 
         ' Panel1
         ' 
-        Panel1.Controls.Add(ModernTextBox2)
+        Panel1.Controls.Add(ModernComboBox2)
         Panel1.Controls.Add(JustEmptyControl1)
         Panel1.Controls.Add(ModernComboBox1)
         Panel1.Controls.Add(JustEmptyControl2)
@@ -62,21 +62,33 @@ Partial Class Form_v6_参数面板_章节
         Panel1.Size = New Size(743, 52)
         Panel1.TabIndex = 12
         ' 
-        ' ModernTextBox2
+        ' ModernComboBox2
         ' 
-        ModernTextBox2.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernTextBox2.BorderColor = Color.Transparent
-        ModernTextBox2.BorderColorFocus = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
-        ModernTextBox2.BorderRadius = 10
-        ModernTextBox2.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
-        ModernTextBox2.Dock = DockStyle.Fill
-        ModernTextBox2.Location = New Point(160, 10)
-        ModernTextBox2.Margin = New Padding(2)
-        ModernTextBox2.Name = "ModernTextBox2"
-        ModernTextBox2.Padding = New Padding(10, 0, 10, 0)
-        ModernTextBox2.Size = New Size(503, 32)
-        ModernTextBox2.TabIndex = 11
-        ModernTextBox2.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
+        ModernComboBox2.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        ModernComboBox2.BorderRadius = 10
+        ModernComboBox2.BorderSize = 0
+        ModernComboBox2.Dock = DockStyle.Fill
+        ModernComboBox2.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
+        ModernComboBox2.DropDownHoverAnimationDuration = 0
+        ModernComboBox2.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
+        ModernComboBox2.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
+        ModernComboBox2.DropDownPadding = New Padding(10)
+        ModernComboBox2.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        ModernComboBox2.DropDownSelectedForeColor = Color.White
+        ModernComboBox2.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        ModernComboBox2.Items.Add("浏览 ...")
+        ModernComboBox2.Location = New Point(160, 10)
+        ModernComboBox2.Margin = New Padding(2, 2, 2, 2)
+        ModernComboBox2.MaxDropDownItems = 15
+        ModernComboBox2.Name = "ModernComboBox2"
+        ModernComboBox2.Padding = New Padding(10, 0, 10, 0)
+        ModernComboBox2.Size = New Size(503, 32)
+        ModernComboBox2.TabIndex = 11
+        ModernComboBox2.ToolTipGap = -1
+        ModernComboBox2.ToolTipMaxWidth = 350
+        ModernComboBox2.ToolTipPadding = New Padding(15)
+        ModernComboBox2.WaterText = "选择章节文件"
+        ModernComboBox2.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ' 
         ' JustEmptyControl1
         ' 
@@ -100,21 +112,21 @@ Partial Class Form_v6_参数面板_章节
         ModernComboBox1.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernComboBox1.DropDownSelectedForeColor = Color.White
         ModernComboBox1.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
-        ModernComboBox1.Margin = New Padding(2, 2, 2, 2)
-        ModernComboBox1.Padding = New Padding(10, 0, 10, 0)
-        ModernComboBox1.ToolTipGap = -1
-        ModernComboBox1.ToolTipMaxWidth = 350
-        ModernComboBox1.ToolTipPadding = New Padding(15)
-        ModernComboBox1.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ModernComboBox1.Items.Add("")
         ModernComboBox1.Items.Add("来自文本文档")
         ModernComboBox1.Items.Add("来自其他媒体")
         ModernComboBox1.Location = New Point(0, 10)
+        ModernComboBox1.Margin = New Padding(2, 2, 2, 2)
         ModernComboBox1.MaxDropDownItems = 15
         ModernComboBox1.Name = "ModernComboBox1"
+        ModernComboBox1.Padding = New Padding(10, 0, 10, 0)
         ModernComboBox1.Size = New Size(150, 32)
         ModernComboBox1.TabIndex = 10
+        ModernComboBox1.ToolTipGap = -1
+        ModernComboBox1.ToolTipMaxWidth = 350
+        ModernComboBox1.ToolTipPadding = New Padding(15)
         ModernComboBox1.WaterText = "选择章节来源"
+        ModernComboBox1.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ' 
         ' JustEmptyControl2
         ' 
@@ -141,7 +153,7 @@ Partial Class Form_v6_参数面板_章节
         ' 
         ' MarkDownViewer1
         ' 
-        MarkDownViewer1.BackColor1 = Color.FromArgb(CByte(48), CByte(48), CByte(48))
+        MarkDownViewer1.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MarkDownViewer1.BasePath = Nothing
         MarkDownViewer1.BlockQuoteForeColor = Color.FromArgb(CByte(160), CByte(160), CByte(160))
         MarkDownViewer1.BlockSpacing = 20
@@ -171,7 +183,6 @@ Partial Class Form_v6_参数面板_章节
         ModernPanel1.Location = New Point(0, 0)
         ModernPanel1.Name = "ModernPanel1"
         ModernPanel1.Padding = New Padding(20)
-        ModernPanel1.ScrollBarMode = LakeUI.ModernPanel.ScrollMode.None
         ModernPanel1.Size = New Size(783, 629)
         ModernPanel1.TabIndex = 14
         ' 
@@ -196,7 +207,7 @@ Partial Class Form_v6_参数面板_章节
     Friend WithEvents Panel1 As Panel
     Friend WithEvents JustEmptyControl1 As LakeUI.JustEmptyControl
     Friend WithEvents ModernComboBox1 As LakeUI.ModernComboBox
-    Friend WithEvents ModernTextBox2 As LakeUI.ModernTextBox
+    Friend WithEvents ModernComboBox2 As LakeUI.ModernComboBox
     Friend WithEvents MarkDownViewer1 As LakeUI.MarkDownViewer
     Friend WithEvents JustEmptyControl2 As LakeUI.JustEmptyControl
     Friend WithEvents MB_教程 As LakeUI.ModernButton

@@ -6,7 +6,7 @@ Public Class Form_v6_参数面板_输出文件设置
     Private 后缀菜单已初始化 As Boolean = False
 
     Private Sub Form_v6_参数面板_输出文件设置_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        MCB_输出位置.AllowDrop = True
+        绑定路径下拉框拖拽(MCB_输出位置, 路径下拉框拖拽模式.文件夹路径)
         If MCB_输出文件参数使用方法.SelectedIndex < 0 Then MCB_输出文件参数使用方法.SelectedIndex = 0
         If MCB_输出位置.SelectedIndex < 0 Then MCB_输出位置.SelectedIndex = 0
         初始化后缀菜单()
@@ -82,7 +82,7 @@ Public Class Form_v6_参数面板_输出文件设置
         If MCB_输出位置.SelectedIndex = 1 Then
             Dim dialog As New CommonOpenFileDialog With {.IsFolderPicker = True}
             If dialog.ShowDialog() = CommonFileDialogResult.Ok Then
-                MCB_输出位置.Text = "  " & dialog.FileName
+                MCB_输出位置.Text = 规范化文件夹路径(dialog.FileName)
             Else
                 MCB_输出位置.SelectedIndex = 0
             End If
@@ -91,24 +91,22 @@ Public Class Form_v6_参数面板_输出文件设置
         End If
     End Sub
 
-    Private Sub MCB_输出位置_DragEnter(sender As Object, e As DragEventArgs) Handles MCB_输出位置.DragEnter
-        e.Effect = If(e.Data.GetDataPresent(DataFormats.FileDrop), DragDropEffects.Copy, DragDropEffects.None)
-    End Sub
-
-    Private Sub MCB_输出位置_DragDrop(sender As Object, e As DragEventArgs) Handles MCB_输出位置.DragDrop
-        Dim files = TryCast(e.Data.GetData(DataFormats.FileDrop), String())
-        If files Is Nothing OrElse files.Length = 0 Then Exit Sub
-        Dim path = files(0)
-        If Directory.Exists(path) Then
-            MCB_输出位置.Text = "  " & path
-        ElseIf File.Exists(path) Then
-            MCB_输出位置.Text = "  " & System.IO.Path.GetDirectoryName(path)
-        End If
-    End Sub
-
     Private Sub MB_选择后缀_Click(sender As Object, e As EventArgs) Handles MB_选择后缀.Click
         初始化后缀菜单()
         后缀菜单.Show(MB_选择后缀, 0, MB_选择后缀.Height)
     End Sub
 
+    Private Sub Form_v6_参数面板_输出文件设置_FontChanged(sender As Object, e As EventArgs) Handles Me.FontChanged
+        后缀菜单.MenuFont = New Font(设置_v6.实例对象.字体, 后缀菜单.MenuFont.Size, 后缀菜单.MenuFont.Style)
+        后缀菜单.DescriptionFont = New Font(设置_v6.实例对象.字体, 后缀菜单.MenuFont.Size, 后缀菜单.MenuFont.Style)
+
+        视频菜单.MenuFont = New Font(设置_v6.实例对象.字体, 视频菜单.MenuFont.Size, 视频菜单.MenuFont.Style)
+        视频菜单.DescriptionFont = New Font(设置_v6.实例对象.字体, 视频菜单.MenuFont.Size, 视频菜单.MenuFont.Style)
+
+        音频菜单.MenuFont = New Font(设置_v6.实例对象.字体, 音频菜单.MenuFont.Size, 音频菜单.MenuFont.Style)
+        音频菜单.DescriptionFont = New Font(设置_v6.实例对象.字体, 音频菜单.MenuFont.Size, 音频菜单.MenuFont.Style)
+
+        图片菜单.MenuFont = New Font(设置_v6.实例对象.字体, 图片菜单.MenuFont.Size, 图片菜单.MenuFont.Style)
+        图片菜单.DescriptionFont = New Font(设置_v6.实例对象.字体, 图片菜单.MenuFont.Size, 图片菜单.MenuFont.Style)
+    End Sub
 End Class

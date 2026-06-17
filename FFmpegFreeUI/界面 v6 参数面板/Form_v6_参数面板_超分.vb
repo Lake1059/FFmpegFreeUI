@@ -9,7 +9,7 @@ Public Class Form_v6_参数面板_超分
     Private Sub Form_v6_参数面板_超分_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.Icon = FormMain_v6.Icon
         SetControlFont(设置_v6.实例对象.字体, Me, , True)
-        MCB_着色器文件路径.AllowDrop = True
+        绑定路径下拉框拖拽(MCB_着色器文件路径)
         刷新策略组列表()
         If FormMain_v6.ThisIsYourWindow1.AttachedForms.Count > 0 Then
             FormMain_v6.ThisIsYourWindow1.Attach(Me)
@@ -135,16 +135,6 @@ Public Class Form_v6_参数面板_超分
     Private Sub MCB_着色器文件路径_SelectedIndexChanged(sender As Object, e As EventArgs) Handles MCB_着色器文件路径.SelectedIndexChanged
         If _正在选择文件 Then Exit Sub
         If MCB_着色器文件路径.SelectedIndex = 0 Then 选择着色器文件()
-    End Sub
-
-    Private Sub MCB_着色器文件路径_DragEnter(sender As Object, e As DragEventArgs) Handles MCB_着色器文件路径.DragEnter
-        e.Effect = If(e.Data.GetDataPresent(DataFormats.FileDrop), DragDropEffects.Copy, DragDropEffects.None)
-    End Sub
-
-    Private Sub MCB_着色器文件路径_DragDrop(sender As Object, e As DragEventArgs) Handles MCB_着色器文件路径.DragDrop
-        Dim files = TryCast(e.Data.GetData(DataFormats.FileDrop), String())
-        If files Is Nothing OrElse files.Length = 0 Then Exit Sub
-        If File.Exists(files(0)) Then MCB_着色器文件路径.Text = files(0)
     End Sub
 
     Private Sub 选择着色器文件()

@@ -39,7 +39,7 @@ Public Class Form_v6_参数面板_画面区域选择窗口
         Try
             Using process As New Process()
                 process.StartInfo.FileName = "ffmpeg"
-                process.StartInfo.WorkingDirectory = If(用户设置.实例对象.工作目录 <> "", 用户设置.实例对象.工作目录, "")
+                process.StartInfo.WorkingDirectory = If(设置_v6.实例对象.工作目录 <> "", 设置_v6.实例对象.工作目录, "")
                 Dim timestamp As String = If(Not String.IsNullOrEmpty(ModernTextBox1.Text), ModernTextBox1.Text, "0:0:10")
                 Dim outputPath As String = Path.Combine(Application.StartupPath, "ScreenCropPreview.png")
                 process.StartInfo.Arguments = $"-ss {timestamp} -i ""{videoPath}"" -frames:v 1 -q:v 1 ""{outputPath}"" -y"

@@ -30,12 +30,13 @@ Module Module1
                                             ReleaseCapture()
                                             Dim unused = SendMessage(s1.FindForm().Handle, WM_NCLBUTTONDOWN, HTCAPTION, 0)
                                         Case MouseButtons.Right
-                                            If Form1.FormBorderStyle <> FormBorderStyle.None Then Exit Sub
-                                            Select Case Form1.WindowState
+                                            Dim form = s1.FindForm()
+                                            If form Is Nothing OrElse form.FormBorderStyle <> FormBorderStyle.None Then Exit Sub
+                                            Select Case form.WindowState
                                                 Case FormWindowState.Maximized
-                                                    Form1.WindowState = FormWindowState.Normal
+                                                    form.WindowState = FormWindowState.Normal
                                                 Case FormWindowState.Normal
-                                                    Form1.WindowState = FormWindowState.Maximized
+                                                    form.WindowState = FormWindowState.Maximized
                                             End Select
                                     End Select
                                 End Sub
@@ -47,10 +48,95 @@ Module Module1
         If UI同步上下文 IsNot Nothing Then
             UI同步上下文.Post(d, Nothing)
         Else
-            Form1.重新创建句柄()
-            Form1.Invoke(Sub() UI同步上下文 = SynchronizationContext.Current, Nothing)
-            UI同步上下文.Post(d, Nothing)
+            If FormMain_v6 IsNot Nothing AndAlso FormMain_v6.IsHandleCreated AndAlso Not FormMain_v6.IsDisposed Then
+                FormMain_v6.BeginInvoke(Sub() d(Nothing))
+            Else
+                d(Nothing)
+            End If
         End If
+    End Sub
+
+    Public Enum 路径下拉框拖拽模式
+        文件路径
+        文件夹路径
+    End Enum
+
+    Private Class 路径下拉框拖拽配置
+        Public Property 模式 As 路径下拉框拖拽模式
+        Public Property 拖拽完成 As Action(Of LakeUI.ModernComboBox, String)
+    End Class
+
+    Private ReadOnly 路径下拉框拖拽配置表 As New Dictionary(Of LakeUI.ModernComboBox, 路径下拉框拖拽配置)
+
+    Public Sub 绑定路径下拉框拖拽(下拉框 As LakeUI.ModernComboBox,
+                            Optional 模式 As 路径下拉框拖拽模式 = 路径下拉框拖拽模式.文件路径,
+                            Optional 拖拽完成 As Action(Of LakeUI.ModernComboBox, String) = Nothing)
+        If 下拉框 Is Nothing Then Exit Sub
+        下拉框.AllowDrop = True
+        路径下拉框拖拽配置表(下拉框) = New 路径下拉框拖拽配置 With {.模式 = 模式, .拖拽完成 = 拖拽完成}
+
+        RemoveHandler 下拉框.DragEnter, AddressOf 路径下拉框_DragEnter
+        RemoveHandler 下拉框.DragDrop, AddressOf 路径下拉框_DragDrop
+        RemoveHandler 下拉框.Disposed, AddressOf 路径下拉框_Disposed
+        AddHandler 下拉框.DragEnter, AddressOf 路径下拉框_DragEnter
+        AddHandler 下拉框.DragDrop, AddressOf 路径下拉框_DragDrop
+        AddHandler 下拉框.Disposed, AddressOf 路径下拉框_Disposed
+    End Sub
+
+    Public Function 规范化文件夹路径(路径 As String) As String
+        Dim result = If(路径, "").Trim()
+        If result = "" Then Return ""
+        Try
+            Dim root = Path.GetPathRoot(result)
+            If root <> "" AndAlso String.Equals(result, root, StringComparison.OrdinalIgnoreCase) AndAlso
+               root.Length = 3 AndAlso root(1) = ":"c AndAlso (root(2) = "\"c OrElse root(2) = "/"c) Then
+                Return root
+            End If
+        Catch
+        End Try
+        Return result.TrimEnd("\"c, "/"c)
+    End Function
+
+    Private Sub 路径下拉框_DragEnter(sender As Object, e As DragEventArgs)
+        e.Effect = If(e.Data IsNot Nothing AndAlso e.Data.GetDataPresent(DataFormats.FileDrop), DragDropEffects.Copy, DragDropEffects.None)
+    End Sub
+
+    Private Sub 路径下拉框_DragDrop(sender As Object, e As DragEventArgs)
+        Dim combo = TryCast(sender, LakeUI.ModernComboBox)
+        If combo Is Nothing OrElse e.Data Is Nothing Then Exit Sub
+
+        Dim files = TryCast(e.Data.GetData(DataFormats.FileDrop), String())
+        If files Is Nothing OrElse files.Length = 0 Then Exit Sub
+
+        Dim 配置 As 路径下拉框拖拽配置 = Nothing
+        If Not 路径下拉框拖拽配置表.TryGetValue(combo, 配置) Then
+            配置 = New 路径下拉框拖拽配置 With {.模式 = 路径下拉框拖拽模式.文件路径}
+        End If
+
+        Dim 路径 = 从拖拽数据获取路径(files(0), 配置.模式)
+        If 路径 = "" Then Exit Sub
+        combo.Text = 路径
+        配置.拖拽完成?.Invoke(combo, 路径)
+    End Sub
+
+    Private Function 从拖拽数据获取路径(原始路径 As String, 模式 As 路径下拉框拖拽模式) As String
+        Dim p = If(原始路径, "").Trim()
+        If p = "" Then Return ""
+
+        Select Case 模式
+            Case 路径下拉框拖拽模式.文件夹路径
+                If Directory.Exists(p) Then Return 规范化文件夹路径(p)
+                If File.Exists(p) Then Return 规范化文件夹路径(Path.GetDirectoryName(p))
+            Case Else
+                If File.Exists(p) Then Return p
+        End Select
+
+        Return ""
+    End Function
+
+    Private Sub 路径下拉框_Disposed(sender As Object, e As EventArgs)
+        Dim combo = TryCast(sender, LakeUI.ModernComboBox)
+        If combo IsNot Nothing Then 路径下拉框拖拽配置表.Remove(combo)
     End Sub
 
     Public 同时运行任务上限 As Integer = 1
@@ -142,7 +228,7 @@ Module Module1
     End Enum
 
     Public Sub 设定系统状态()
-        Select Case 用户设置.实例对象.有任务时系统保持状态选项
+        Select Case 设置_v6.实例对象.有任务时系统保持状态选项
             Case 0
                 SetThreadExecutionState(EXECUTION_STATE.ES_CONTINUOUS Or EXECUTION_STATE.ES_SYSTEM_REQUIRED)
             Case 1
@@ -160,7 +246,8 @@ Module Module1
         Using g As Graphics = 标签控件.CreateGraphics()
             Dim availableWidth As Integer = 标签控件.Width - 标签控件.Padding.Left - 标签控件.Padding.Right
             Dim size As SizeF = g.MeasureString(标签控件.Text, 标签控件.Font, availableWidth)
-            标签控件.Height = CInt(Math.Ceiling(size.Height)) + 标签控件.Padding.Top + 标签控件.Padding.Bottom + 2 * Form1.DPI + 用户设置.实例对象.界面修正_增加使用文字渲染尺寸来调节的标签的尺寸 * Form1.DPI
+            Dim dpiScale = If(标签控件.FindForm() IsNot Nothing, 标签控件.FindForm().DeviceDpi / 96.0F, 1.0F)
+            标签控件.Height = CInt(Math.Ceiling(size.Height)) + 标签控件.Padding.Top + 标签控件.Padding.Bottom + CInt(2 * dpiScale)
         End Using
     End Sub
 
@@ -248,10 +335,10 @@ Module Module1
 
     Public Function 截取画面_对话框背景专用() As Bitmap
         Try
-            Dim bounds As Rectangle = Form1.ClientRectangle
+            Dim bounds As Rectangle = FormMain_v6.ClientRectangle
             Dim bitmap As New Bitmap(bounds.Width, bounds.Height)
             Using g As Graphics = Graphics.FromImage(bitmap)
-                g.CopyFromScreen(Form1.PointToScreen(bounds.Location), Point.Empty, bounds.Size)
+                g.CopyFromScreen(FormMain_v6.PointToScreen(bounds.Location), Point.Empty, bounds.Size)
                 g.CompositingMode = Drawing2D.CompositingMode.SourceOver
                 Using brush As New SolidBrush(Color.FromArgb(180, 0, 0, 0))
                     g.FillRectangle(brush, 0, 0, bitmap.Width, bitmap.Height)
@@ -259,7 +346,7 @@ Module Module1
             End Using
             Return bitmap
         Catch ex As Exception
-            Return New Bitmap(Form1.Width, Form1.Height)
+            Return New Bitmap(FormMain_v6.Width, FormMain_v6.Height)
         End Try
     End Function
 
@@ -292,9 +379,10 @@ Module Module1
     End Function
 
     Public Sub 校准UiComboBox视觉(c As UIComboBox)
-        c.ItemHeight = 28 * Form1.DPI
-        c.SymbolSize = 24 * Form1.DPI
-        c.ScrollBarHandleWidth = 30 * Form1.DPI
+        Dim dpiScale = FormMain_v6.DeviceDpi / 96.0F
+        c.ItemHeight = CInt(28 * dpiScale)
+        c.SymbolSize = CInt(24 * dpiScale)
+        c.ScrollBarHandleWidth = CInt(30 * dpiScale)
         c.ScrollBarBackColor = Color.FromArgb(64, 64, 64)
         c.ScrollBarColor = SystemColors.WindowFrame
         c.DropDownWidth = c.Width
@@ -444,7 +532,7 @@ Module Module1
 
     Public Function 识别FF单行输出并调整文字颜色(单行输出 As String, 默认颜色 As Color) As Color
         If String.IsNullOrEmpty(单行输出) Then Return 默认颜色
-        If 编码任务.错误输出匹配字符串列表.Any(Function(keyword) 单行输出.Contains(keyword, StringComparison.OrdinalIgnoreCase)) Then
+        If 编码队列_v6.错误输出匹配字符串列表.Any(Function(keyword) 单行输出.Contains(keyword, StringComparison.OrdinalIgnoreCase)) Then
             Return Color.IndianRed
         End If
         Select Case True

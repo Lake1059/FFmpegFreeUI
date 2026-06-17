@@ -29,7 +29,7 @@
         Dim FFprobeProcess As New Process
         FFprobeProcess = New Process()
         FFprobeProcess.StartInfo.FileName = "ffprobe"
-        FFprobeProcess.StartInfo.WorkingDirectory = If(用户设置.实例对象.工作目录 <> "", 用户设置.实例对象.工作目录, "")
+        FFprobeProcess.StartInfo.WorkingDirectory = If(设置_v6.实例对象.工作目录 <> "", 设置_v6.实例对象.工作目录, "")
         FFprobeProcess.StartInfo.Arguments = $"-hide_banner ""{文件路径}"""
         FFprobeProcess.StartInfo.RedirectStandardOutput = True
         FFprobeProcess.StartInfo.RedirectStandardError = True
@@ -52,7 +52,7 @@
     End Sub
     Public Shared Function 识别FF单行输出并调整文字颜色(单行输出 As String, 默认颜色 As Color) As Color
         If String.IsNullOrEmpty(单行输出) Then Return 默认颜色
-        If 编码任务.错误输出匹配字符串列表.Any(Function(keyword) 单行输出.Contains(keyword, StringComparison.OrdinalIgnoreCase)) Then
+        If 编码队列_v6.错误输出匹配字符串列表.Any(Function(keyword) 单行输出.Contains(keyword, StringComparison.OrdinalIgnoreCase)) Then
             Return Color.IndianRed
         End If
         Select Case True

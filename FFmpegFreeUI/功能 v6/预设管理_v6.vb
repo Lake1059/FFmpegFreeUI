@@ -88,10 +88,11 @@ Public Class 预设管理_v6
         Dim 排序 = If(a.滤镜排序系统, Array.Empty(Of 预设数据_v6.滤镜排序单片结构)()).ToList()
         If Not String.IsNullOrWhiteSpace(a.自定义参数_视频滤镜) Then
             Dim 内容 = a.自定义参数_视频滤镜.Trim()
-            If Not 排序.Any(Function(x) x.是自定义滤镜 AndAlso x.滤镜目标流类型 = 预设数据_v6.滤镜排序单片结构.流类型.视频 AndAlso String.Equals(x.自定义滤镜内容, 内容, StringComparison.Ordinal)) Then
+            If Not 排序.Any(Function(x) x.滤镜标识符 = 预设数据_v6.滤镜排序单片结构.标识符枚举.自定义视频滤镜 AndAlso String.Equals(x.自定义滤镜内容, 内容, StringComparison.Ordinal)) Then
                 排序.Add(New 预设数据_v6.滤镜排序单片结构 With {
                     .显示名称 = "自定义视频滤镜",
                     .是自定义滤镜 = True,
+                    .允许在排序页直接编辑 = False,
                     .滤镜标识符 = 预设数据_v6.滤镜排序单片结构.标识符枚举.自定义视频滤镜,
                     .滤镜目标流类型 = 预设数据_v6.滤镜排序单片结构.流类型.视频,
                     .自定义滤镜内容 = 内容
@@ -101,10 +102,11 @@ Public Class 预设管理_v6
         End If
         If Not String.IsNullOrWhiteSpace(a.自定义参数_音频滤镜) Then
             Dim 内容 = a.自定义参数_音频滤镜.Trim()
-            If Not 排序.Any(Function(x) x.是自定义滤镜 AndAlso x.滤镜目标流类型 = 预设数据_v6.滤镜排序单片结构.流类型.音频 AndAlso String.Equals(x.自定义滤镜内容, 内容, StringComparison.Ordinal)) Then
+            If Not 排序.Any(Function(x) x.滤镜标识符 = 预设数据_v6.滤镜排序单片结构.标识符枚举.自定义音频滤镜 AndAlso String.Equals(x.自定义滤镜内容, 内容, StringComparison.Ordinal)) Then
                 排序.Add(New 预设数据_v6.滤镜排序单片结构 With {
                     .显示名称 = "自定义音频滤镜",
                     .是自定义滤镜 = True,
+                    .允许在排序页直接编辑 = False,
                     .滤镜标识符 = 预设数据_v6.滤镜排序单片结构.标识符枚举.自定义音频滤镜,
                     .滤镜目标流类型 = 预设数据_v6.滤镜排序单片结构.流类型.音频,
                     .自定义滤镜内容 = 内容
@@ -541,6 +543,7 @@ Public Class 预设管理_v6
         If Not String.IsNullOrWhiteSpace(a.音频参数_质量参数名) Then 添加总览文本行(sb, "音频质量控制：" & a.音频参数_质量参数名 & If(a.音频参数_质量值 = "", "（未填写值）", "=" & a.音频参数_质量值))
         If String.IsNullOrWhiteSpace(a.音频参数_质量参数名) AndAlso Not String.IsNullOrWhiteSpace(a.音频参数_质量值) Then 添加总览文本行(sb, "音频质量值：" & a.音频参数_质量值)
         添加总览文本行(sb, "声道布局：" & a.音频参数_声道数)
+        添加总览文本行(sb, "音频位深度：" & a.音频参数_位深度)
         添加总览文本行(sb, "采样率：" & a.音频参数_采样率)
         If a.音频参数_响度标准化_启用调整目标响度 Then 添加总览文本行(sb, "响度标准化目标：" & If(a.音频参数_响度标准化_目标响度 = "", "已启用", a.音频参数_响度标准化_目标响度))
         If a.音频参数_响度标准化_启用调整动态范围 Then 添加总览文本行(sb, "响度动态范围：" & If(a.音频参数_响度标准化_动态范围 = "", "已启用", a.音频参数_响度标准化_动态范围))
@@ -1028,8 +1031,14 @@ Public Class 预设管理_v6
 
     Private Shared Function 生成滤镜图(a As 预设数据_v6, Optional 仅视频 As Boolean = False, Optional 输入文件 As String = 输入占位符) As 滤镜图结果
         Dim 排序 = If(a.滤镜排序系统, Array.Empty(Of 预设数据_v6.滤镜排序单片结构)()).ToList()
-        Dim 视频链 = 排序.Where(Function(x) x.滤镜目标流类型 = 预设数据_v6.滤镜排序单片结构.流类型.视频).Select(Function(x) 获取滤镜片段(a, x, 输入文件)).Where(Function(x) x <> "").ToList()
-        Dim 音频链 = If(仅视频, New List(Of String), 排序.Where(Function(x) x.滤镜目标流类型 = 预设数据_v6.滤镜排序单片结构.流类型.音频).Select(Function(x) 获取滤镜片段(a, x, 输入文件)).Where(Function(x) x <> "").ToList())
+        Dim 视频链 = 排序.Where(Function(x) x.滤镜目标流类型 = 预设数据_v6.滤镜排序单片结构.流类型.视频).
+            Select(Function(x) 清理线性滤镜片段(获取滤镜片段(a, x, 输入文件))).
+            Where(Function(x) x <> "").
+            ToList()
+        Dim 音频链 = If(仅视频, New List(Of String), 排序.Where(Function(x) x.滤镜目标流类型 = 预设数据_v6.滤镜排序单片结构.流类型.音频).
+            Select(Function(x) 清理线性滤镜片段(获取滤镜片段(a, x, 输入文件))).
+            Where(Function(x) x <> "").
+            ToList())
 
         Dim 视频流 = 规范流列表(a.流控制_将视频参数应用于指定流, "v")
         Dim 音频流 = If(仅视频, New List(Of String), 规范流列表(a.流控制_将音频参数应用于指定流, "a"))
@@ -1052,7 +1061,7 @@ Public Class 预设管理_v6
             For i = 0 To 视频流.Count - 1
                 If 视频链.Count > 0 Then
                     Dim label = $"vout{i}"
-                    图段.Add($"[{视频流(i)}]{String.Join(",", 视频链)}[{label}]")
+                    添加线性滤镜链图段(图段, 视频流(i), 视频链, label, $"v{i}")
                     映射.Add($"-map [{label}]")
                 Else
                     映射.Add($"-map {视频流(i)}")
@@ -1069,7 +1078,7 @@ Public Class 预设管理_v6
             For i = 0 To 音频流.Count - 1
                 If 音频链.Count > 0 Then
                     Dim label = $"aout{i}"
-                    图段.Add($"[{音频流(i)}]{String.Join(",", 音频链)}[{label}]")
+                    添加线性滤镜链图段(图段, 音频流(i), 音频链, label, $"a{i}")
                     映射.Add($"-map [{label}]")
                 Else
                     映射.Add($"-map {音频流(i)}")
@@ -1143,6 +1152,26 @@ Public Class 预设管理_v6
             .音频输出来自滤镜 = 音频链.Count > 0
         }
     End Function
+
+    Private Shared Function 清理线性滤镜片段(片段 As String) As String
+        Dim result = If(片段, "").Trim()
+        While result.StartsWith(","c)
+            result = result.Substring(1).TrimStart()
+        End While
+        While result.EndsWith(","c)
+            result = result.Substring(0, result.Length - 1).TrimEnd()
+        End While
+        Return result
+    End Function
+
+    Private Shared Sub 添加线性滤镜链图段(图段 As List(Of String), 输入标签 As String, 滤镜链 As List(Of String), 输出标签 As String, 中间标签前缀 As String)
+        Dim 当前标签 = 输入标签
+        For i = 0 To 滤镜链.Count - 1
+            Dim 下一个标签 = If(i = 滤镜链.Count - 1, 输出标签, $"{中间标签前缀}step{i}")
+            图段.Add($"[{当前标签}]{滤镜链(i)}[{下一个标签}]")
+            当前标签 = 下一个标签
+        Next
+    End Sub
 
     Private Shared Function 获取保留映射输出流选择器(stream As String, 类型 As String) As String
         Dim s = If(stream, "").Trim().TrimEnd("?"c)
@@ -1225,6 +1254,7 @@ Public Class 预设管理_v6
             Next
             添加编码器参数(parts, "-b:a", a.音频参数_比特率, target)
             添加编码器参数(parts, a.音频参数_质量参数名, a.音频参数_质量值, target)
+            添加编码器参数(parts, "-sample_fmt", a.音频参数_位深度, target)
         Next
     End Sub
 
@@ -1962,8 +1992,12 @@ Public Class 预设管理_v6
     Private Shared Sub 显示视频编码器(a As 预设数据_v6, ui As Form_v6_参数面板)
         With ui.私有界面_视频编码器
             .MCB_视频编码器类型.SelectedIndex = EnumToIndex(a.视频参数_编码器_类型)
-            .MCB_视频编码器分类.Text = a.视频参数_编码器_分类名称
-            .MCB_具体编码器.Text = a.视频参数_编码器_具体编码
+            Dim 分类已选中 = 设置组合框文本并尝试选中(.MCB_视频编码器分类, a.视频参数_编码器_分类名称)
+            If 分类已选中 Then
+                设置组合框文本并尝试选中(.MCB_具体编码器, a.视频参数_编码器_具体编码)
+            Else
+                .MCB_具体编码器.Text = a.视频参数_编码器_具体编码
+            End If
             .MCB_编码预设.Text = a.视频参数_编码器_编码预设
             .MCB_配置文件.Text = a.视频参数_编码器_配置文件
             .MCB_场景优化.Text = a.视频参数_编码器_场景优化
@@ -1972,6 +2006,20 @@ Public Class 预设管理_v6
             .MTB_图片编码器质量值.Text = a.视频参数_编码器_图片编码器质量值
         End With
     End Sub
+
+    Private Shared Function 设置组合框文本并尝试选中(combo As ModernComboBox, text As String) As Boolean
+        If combo Is Nothing Then Return False
+        text = If(text, "")
+        For i = 0 To combo.Items.Count - 1
+            Dim itemText = If(combo.Items(i), "").ToString()
+            If String.Equals(itemText, text, StringComparison.Ordinal) Then
+                combo.SelectedIndex = i
+                Return True
+            End If
+        Next
+        combo.Text = text
+        Return False
+    End Function
 
     Private Shared Sub 储存画面帧(a As 预设数据_v6, ui As Form_v6_参数面板)
         With ui.私有界面_画面帧
@@ -2312,6 +2360,7 @@ Public Class 预设管理_v6
             a.音频参数_质量参数名 = .MCB_质量参数名.Text
             a.音频参数_质量值 = .MCB_质量值.Text
             a.音频参数_声道数 = .声道布局.Text
+            a.音频参数_位深度 = .MCB_位深度.Text
             a.音频参数_采样率 = .MCB_采样率.Text
             a.音频参数_响度标准化_启用调整目标响度 = .MCB_目标响度.Checked
             a.音频参数_响度标准化_目标响度 = TrackValue(.ETB_目标响度)
@@ -2324,12 +2373,14 @@ Public Class 预设管理_v6
 
     Private Shared Sub 显示音频参数(a As 预设数据_v6, ui As Form_v6_参数面板)
         With ui.私有界面_音频参数
-            .MCB_音频编码器.Text = 音频编码器数据库_v6.获取显示名称(a.音频参数_编码器_具体编码)
-            If .MCB_音频编码器.Text = "" Then .MCB_音频编码器.Text = a.音频参数_编码器_具体编码
+            Dim 音频编码器显示名称 = 音频编码器数据库_v6.获取显示名称(a.音频参数_编码器_具体编码)
+            If 音频编码器显示名称 = "" Then 音频编码器显示名称 = a.音频参数_编码器_具体编码
+            设置组合框文本并尝试选中(.MCB_音频编码器, 音频编码器显示名称)
             .MCB_比特率.Text = a.音频参数_比特率
-            .MCB_质量参数名.Text = a.音频参数_质量参数名
+            设置组合框文本并尝试选中(.MCB_质量参数名, a.音频参数_质量参数名)
             .MCB_质量值.Text = a.音频参数_质量值
             .声道布局.Text = a.音频参数_声道数
+            .MCB_位深度.Text = a.音频参数_位深度
             .MCB_采样率.Text = a.音频参数_采样率
             .MCB_目标响度.Checked = a.音频参数_响度标准化_启用调整目标响度
             SetTrackValue(.ETB_目标响度, a.音频参数_响度标准化_目标响度)
@@ -2401,7 +2452,7 @@ Public Class 预设管理_v6
         a.元数据_要写入的信息 = ui.私有界面_元数据.获取数据().ToArray()
         With ui.私有界面_章节
             a.章节_来源 = SelectedIndexToEnum(Of 预设数据_v6.章节来源)(Math.Max(0, .ModernComboBox1.SelectedIndex))
-            a.章节_文件路径 = .ModernTextBox2.Text.Trim()
+            a.章节_文件路径 = .ModernComboBox2.Text.Trim()
         End With
         a.附件_要写入的附件 = ui.私有界面_附件.获取数据().ToArray()
     End Sub
@@ -2410,7 +2461,7 @@ Public Class 预设管理_v6
         ui.私有界面_元数据.设置数据(a.元数据_要写入的信息)
         With ui.私有界面_章节
             .ModernComboBox1.SelectedIndex = EnumToIndex(a.章节_来源)
-            .ModernTextBox2.Text = a.章节_文件路径
+            .ModernComboBox2.Text = a.章节_文件路径
         End With
         ui.私有界面_附件.设置数据(a.附件_要写入的附件)
     End Sub

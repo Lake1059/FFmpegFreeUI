@@ -5,8 +5,12 @@ Public Class Form_v6_编码队列_任务日志
     Private 当前显示模式 As 编码任务日志显示模式_v6 = 编码任务日志显示模式_v6.全部输出
     Private 已显示最小序号 As Long = 0
     Private 已显示最大序号 As Long = 0
+    Private 已显示日志结构版本号 As Long = 0
     Private 当前阶段名 As String = ""
     Private 正在重载 As Boolean = False
+    Private 待刷新当前任务 As Boolean = False
+    Private 待强制重载 As Boolean = False
+    Private ReadOnly 刷新计时器 As New Timer With {.Interval = 200}
 
     Public Shared Sub 打开或激活(owner As IWin32Window, selectedIds As IEnumerable(Of String))
         If 当前实例 Is Nothing OrElse 当前实例.IsDisposed Then
@@ -40,6 +44,7 @@ Public Class Form_v6_编码队列_任务日志
         ModernTextBox1.EnableSyntaxHighlight = True
         ModernTextBox1.PreserveScrollPosition = Not ModernCheckBox1.Checked
         If MCB_显示模式.SelectedIndex < 0 Then MCB_显示模式.SelectedIndex = 0
+        AddHandler 刷新计时器.Tick, AddressOf 刷新计时器_Tick
         AddHandler 编码队列_v6.任务已更新, AddressOf 任务已更新
         AddHandler 编码队列_v6.队列已变化, AddressOf 队列已变化
         If 当前任务ID = "" Then
@@ -52,11 +57,14 @@ Public Class Form_v6_编码队列_任务日志
     Private Sub Form_v6_编码队列_任务日志_FormClosed(sender As Object, e As FormClosedEventArgs) Handles MyBase.FormClosed
         RemoveHandler 编码队列_v6.任务已更新, AddressOf 任务已更新
         RemoveHandler 编码队列_v6.队列已变化, AddressOf 队列已变化
+        RemoveHandler 刷新计时器.Tick, AddressOf 刷新计时器_Tick
+        刷新计时器.Stop()
+        刷新计时器.Dispose()
     End Sub
 
     Private Sub 任务已更新(任务 As 编码任务_v6)
         If 任务 Is Nothing OrElse 任务.ID <> 当前任务ID Then Exit Sub
-        UI执行(Sub() 刷新当前任务(False))
+        UI执行(Sub() 请求刷新当前任务(False))
     End Sub
 
     Private Sub 队列已变化()
@@ -76,6 +84,22 @@ Public Class Form_v6_编码队列_任务日志
         Else
             action()
         End If
+    End Sub
+
+    Private Sub 请求刷新当前任务(forceReload As Boolean)
+        If forceReload Then 待强制重载 = True
+        待刷新当前任务 = True
+        If Not 刷新计时器.Enabled Then 刷新计时器.Start()
+    End Sub
+
+    Private Sub 刷新计时器_Tick(sender As Object, e As EventArgs)
+        刷新计时器.Stop()
+        If Not 待刷新当前任务 Then Exit Sub
+
+        Dim forceReload = 待强制重载
+        待刷新当前任务 = False
+        待强制重载 = False
+        刷新当前任务(forceReload)
     End Sub
 
     Public Sub 同步选择(selectedIds As IEnumerable(Of String))
@@ -105,7 +129,11 @@ Public Class Form_v6_编码队列_任务日志
         当前任务ID = ""
         已显示最小序号 = 0
         已显示最大序号 = 0
+        已显示日志结构版本号 = 0
         当前阶段名 = ""
+        待刷新当前任务 = False
+        待强制重载 = False
+        刷新计时器.Stop()
         ModernTextBox1.Clear()
         Text = "编码队列任务日志"
     End Sub
@@ -127,7 +155,7 @@ Public Class Form_v6_编码队列_任务日志
         当前阶段名 = stageName
 
         Dim entries = task.获取日志快照(mode)
-        If forceReload OrElse (entries.Count = 0 AndAlso 已显示最大序号 > 0) OrElse (entries.Count > 0 AndAlso 已显示最小序号 > 0 AndAlso entries(0).序号 > 已显示最小序号) Then
+        If forceReload OrElse task.日志结构版本号 <> 已显示日志结构版本号 OrElse (entries.Count = 0 AndAlso 已显示最大序号 > 0) OrElse (entries.Count > 0 AndAlso 已显示最小序号 > 0 AndAlso entries(0).序号 > 已显示最小序号) Then
             重载日志(task, entries)
             Exit Sub
         End If
@@ -139,6 +167,7 @@ Public Class Form_v6_编码队列_任务日志
             If 已显示最小序号 = 0 Then 已显示最小序号 = entry.序号
             已显示最大序号 = Math.Max(已显示最大序号, entry.序号)
         Next
+        已显示日志结构版本号 = task.日志结构版本号
         更新标题与状态(task, entries.Count)
         If appended AndAlso ModernCheckBox1.Checked Then ModernTextBox1.ScrollToBottom()
     End Sub
@@ -154,6 +183,7 @@ Public Class Form_v6_编码队列_任务日志
                 If 已显示最小序号 = 0 Then 已显示最小序号 = entry.序号
                 已显示最大序号 = Math.Max(已显示最大序号, entry.序号)
             Next
+            已显示日志结构版本号 = task.日志结构版本号
             更新标题与状态(task, entries.Count)
             If ModernCheckBox1.Checked Then ModernTextBox1.ScrollToBottom()
         Finally
@@ -202,6 +232,9 @@ Public Class Form_v6_编码队列_任务日志
     End Function
 
     Private Sub MCB_显示模式_SelectedIndexChanged(sender As Object, e As EventArgs) Handles MCB_显示模式.SelectedIndexChanged
+        待刷新当前任务 = False
+        待强制重载 = False
+        刷新计时器.Stop()
         刷新当前任务(True)
     End Sub
 

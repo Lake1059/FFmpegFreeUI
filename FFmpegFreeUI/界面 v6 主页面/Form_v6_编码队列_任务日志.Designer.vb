@@ -37,7 +37,7 @@ Partial Class Form_v6_编码队列_任务日志
         ModernPanel1.Location = New Point(0, 0)
         ModernPanel1.Name = "ModernPanel1"
         ModernPanel1.Padding = New Padding(10)
-        ModernPanel1.Size = New Size(584, 461)
+        ModernPanel1.Size = New Size(634, 461)
         ModernPanel1.TabIndex = 0
         ' 
         ' ModernTextBox1
@@ -50,14 +50,14 @@ Partial Class Form_v6_编码队列_任务日志
         ModernTextBox1.Dock = DockStyle.Fill
         ModernTextBox1.Font = New Font("Microsoft YaHei UI", 11F)
         ModernTextBox1.LineHeight = 20
-        ModernTextBox1.Location = New Point(10, 55)
+        ModernTextBox1.Location = New Point(10, 52)
         ModernTextBox1.Margin = New Padding(2)
         ModernTextBox1.MultiLine = True
         ModernTextBox1.Name = "ModernTextBox1"
         ModernTextBox1.Padding = New Padding(10)
         ModernTextBox1.ReadOnly = True
         ModernTextBox1.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernTextBox1.Size = New Size(564, 396)
+        ModernTextBox1.Size = New Size(614, 399)
         ModernTextBox1.TabIndex = 3
         ' 
         ' Panel1
@@ -69,7 +69,7 @@ Partial Class Form_v6_编码队列_任务日志
         Panel1.Location = New Point(10, 10)
         Panel1.Name = "Panel1"
         Panel1.Padding = New Padding(0, 0, 0, 10)
-        Panel1.Size = New Size(564, 45)
+        Panel1.Size = New Size(614, 42)
         Panel1.TabIndex = 0
         ' 
         ' ModernCheckBox1
@@ -86,7 +86,7 @@ Partial Class Form_v6_编码队列_任务日志
         ModernCheckBox1.Location = New Point(130, 0)
         ModernCheckBox1.Name = "ModernCheckBox1"
         ModernCheckBox1.Padding = New Padding(10, 0, 10, 0)
-        ModernCheckBox1.Size = New Size(244, 35)
+        ModernCheckBox1.Size = New Size(294, 32)
         ModernCheckBox1.TabIndex = 13
         ModernCheckBox1.Text = "自动滚动到底部"
         ' 
@@ -101,7 +101,7 @@ Partial Class Form_v6_编码队列_任务日志
         ModernButton1.Margin = New Padding(2)
         ModernButton1.Name = "ModernButton1"
         ModernButton1.PressedBackColor1 = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
-        ModernButton1.Size = New Size(130, 35)
+        ModernButton1.Size = New Size(130, 32)
         ModernButton1.TabIndex = 3
         ModernButton1.Text = "复制当前视图"
         ' 
@@ -123,11 +123,11 @@ Partial Class Form_v6_编码队列_任务日志
         MCB_显示模式.Items.Add("最新输出（不含进度）")
         MCB_显示模式.Items.Add("仅错误信息")
         MCB_显示模式.Items.Add("当前阶段输出")
-        MCB_显示模式.Location = New Point(374, 0)
+        MCB_显示模式.Location = New Point(424, 0)
         MCB_显示模式.Margin = New Padding(2, 2, 2, 2)
         MCB_显示模式.Name = "MCB_显示模式"
         MCB_显示模式.Padding = New Padding(10, 0, 10, 0)
-        MCB_显示模式.Size = New Size(190, 35)
+        MCB_显示模式.Size = New Size(190, 32)
         MCB_显示模式.TabIndex = 1
         MCB_显示模式.ToolTipGap = -1
         MCB_显示模式.ToolTipMaxWidth = 350
@@ -139,11 +139,11 @@ Partial Class Form_v6_编码队列_任务日志
         AutoScaleDimensions = New SizeF(96F, 96F)
         AutoScaleMode = AutoScaleMode.Dpi
         BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
-        ClientSize = New Size(584, 461)
+        ClientSize = New Size(634, 461)
         Controls.Add(ModernPanel1)
         Font = New Font("Microsoft YaHei UI", 10F)
         ForeColor = Color.Silver
-        MinimumSize = New Size(600, 500)
+        MinimumSize = New Size(650, 500)
         Name = "Form_v6_编码队列_任务日志"
         ShowInTaskbar = False
         StartPosition = FormStartPosition.CenterParent

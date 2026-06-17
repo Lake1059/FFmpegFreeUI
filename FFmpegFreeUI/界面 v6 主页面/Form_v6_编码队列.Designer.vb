@@ -108,7 +108,7 @@ Partial Class Form_v6_编码队列
         Panel1.Dock = DockStyle.Top
         Panel1.Location = New Point(0, 0)
         Panel1.Name = "Panel1"
-        Panel1.Padding = New Padding(10, 10, 0, 10)
+        Panel1.Padding = New Padding(10)
         Panel1.Size = New Size(984, 55)
         Panel1.TabIndex = 0
         ' 
@@ -116,11 +116,11 @@ Partial Class Form_v6_编码队列
         ' 
         HtmlColorLabel1.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel1.Dock = DockStyle.Fill
-        HtmlColorLabel1.Location = New Point(733, 10)
+        HtmlColorLabel1.Location = New Point(727, 10)
         HtmlColorLabel1.Margin = New Padding(2)
         HtmlColorLabel1.Name = "HtmlColorLabel1"
         HtmlColorLabel1.Padding = New Padding(10, 0, 10, 0)
-        HtmlColorLabel1.Size = New Size(251, 35)
+        HtmlColorLabel1.Size = New Size(247, 35)
         HtmlColorLabel1.TabIndex = 9
         HtmlColorLabel1.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleRight
         ' 
@@ -135,7 +135,7 @@ Partial Class Form_v6_编码队列
         ModernButton7.ForeColor = Color.MediumPurple
         ModernButton7.HoverBackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernButton7.HoverBorderColor = Color.Transparent
-        ModernButton7.Location = New Point(673, 10)
+        ModernButton7.Location = New Point(667, 10)
         ModernButton7.Margin = New Padding(2)
         ModernButton7.Name = "ModernButton7"
         ModernButton7.PressedBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
@@ -155,7 +155,7 @@ Partial Class Form_v6_编码队列
         ModernButton6.ForeColor = Color.Goldenrod
         ModernButton6.HoverBackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernButton6.HoverBorderColor = Color.Transparent
-        ModernButton6.Location = New Point(613, 10)
+        ModernButton6.Location = New Point(607, 10)
         ModernButton6.Margin = New Padding(2)
         ModernButton6.Name = "ModernButton6"
         ModernButton6.PressedBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
@@ -175,7 +175,7 @@ Partial Class Form_v6_编码队列
         ModernButton5.ForeColor = Color.IndianRed
         ModernButton5.HoverBackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernButton5.HoverBorderColor = Color.Transparent
-        ModernButton5.Location = New Point(553, 10)
+        ModernButton5.Location = New Point(547, 10)
         ModernButton5.Margin = New Padding(2)
         ModernButton5.Name = "ModernButton5"
         ModernButton5.PressedBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
@@ -195,7 +195,7 @@ Partial Class Form_v6_编码队列
         ModernButton4.ForeColor = Color.IndianRed
         ModernButton4.HoverBackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernButton4.HoverBorderColor = Color.Transparent
-        ModernButton4.Location = New Point(493, 10)
+        ModernButton4.Location = New Point(487, 10)
         ModernButton4.Margin = New Padding(2)
         ModernButton4.Name = "ModernButton4"
         ModernButton4.PressedBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
@@ -215,7 +215,7 @@ Partial Class Form_v6_编码队列
         ModernButton3.ForeColor = Color.YellowGreen
         ModernButton3.HoverBackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernButton3.HoverBorderColor = Color.Transparent
-        ModernButton3.Location = New Point(433, 10)
+        ModernButton3.Location = New Point(427, 10)
         ModernButton3.Margin = New Padding(2)
         ModernButton3.Name = "ModernButton3"
         ModernButton3.PressedBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
@@ -235,7 +235,7 @@ Partial Class Form_v6_编码队列
         ModernButton2.ForeColor = Color.Goldenrod
         ModernButton2.HoverBackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernButton2.HoverBorderColor = Color.Transparent
-        ModernButton2.Location = New Point(373, 10)
+        ModernButton2.Location = New Point(367, 10)
         ModernButton2.Margin = New Padding(2)
         ModernButton2.Name = "ModernButton2"
         ModernButton2.PressedBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
@@ -255,7 +255,7 @@ Partial Class Form_v6_编码队列
         ModernButton1.ForeColor = Color.YellowGreen
         ModernButton1.HoverBackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernButton1.HoverBorderColor = Color.Transparent
-        ModernButton1.Location = New Point(313, 10)
+        ModernButton1.Location = New Point(307, 10)
         ModernButton1.Margin = New Padding(2)
         ModernButton1.Name = "ModernButton1"
         ModernButton1.PressedBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
@@ -267,7 +267,7 @@ Partial Class Form_v6_编码队列
         ' JustEmptyControl1
         ' 
         JustEmptyControl1.Dock = DockStyle.Left
-        JustEmptyControl1.Location = New Point(136, 10)
+        JustEmptyControl1.Location = New Point(130, 10)
         JustEmptyControl1.Name = "JustEmptyControl1"
         JustEmptyControl1.Size = New Size(177, 35)
         JustEmptyControl1.TabIndex = 10
@@ -288,7 +288,7 @@ Partial Class Form_v6_编码队列
         ModernButton8.Name = "ModernButton8"
         ModernButton8.PressedBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
         ModernButton8.PressedBorderColor = Color.CornflowerBlue
-        ModernButton8.Size = New Size(126, 35)
+        ModernButton8.Size = New Size(120, 35)
         ModernButton8.TabIndex = 7
         ModernButton8.Text = "任务管理菜单"
         ' 
@@ -305,12 +305,12 @@ Partial Class Form_v6_编码队列
         ListColumn3.Width = 80
         ListColumn4.Text = "效率"
         ListColumn4.Width = 80
-        ListColumn5.Text = "输出大小"
+        ListColumn5.Text = "输出大小 - 预估"
         ListColumn5.Width = 150
         ListColumn6.Text = "质量"
         ListColumn6.Width = 80
         ListColumn7.Text = "比特率"
-        ListColumn8.Text = "时间"
+        ListColumn8.Text = "预计剩余时间 - 已用"
         UltraDetailListView1.Columns.Add(ListColumn1)
         UltraDetailListView1.Columns.Add(ListColumn2)
         UltraDetailListView1.Columns.Add(ListColumn3)
@@ -334,7 +334,7 @@ Partial Class Form_v6_编码队列
         UltraDetailListView1.Location = New Point(0, 55)
         UltraDetailListView1.Margin = New Padding(2, 2, 2, 2)
         UltraDetailListView1.Name = "UltraDetailListView1"
-        UltraDetailListView1.Padding = New Padding(10, 0, 10, 0)
+        UltraDetailListView1.Padding = New Padding(10, 0, 10, 10)
         UltraDetailListView1.SelectionRectBorderColor = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
         UltraDetailListView1.SelectionRectFillColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         UltraDetailListView1.Size = New Size(984, 626)

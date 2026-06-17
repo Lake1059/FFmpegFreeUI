@@ -22,6 +22,11 @@ Public Class 设置_v6
     Public Property 启用性能计数器 As Integer = 0
 
     Public Property 字体 As String = SystemFonts.DefaultFont.FontFamily.Name
+    Public Property 语言 As String = "zh"
+    Public Property 界面修正_选项卡文字增加左侧空格 As Integer = 0
+    Public Property 界面修正_增加使用文字渲染尺寸来调节的标签的尺寸 As Integer = 0
+    Public Property 界面修正_校准列表视图的项高度 As Integer = 0
+    Public Property 界面修正_编码队列的列宽调整逻辑 As Integer = 0
     Public Property 编码队列的列宽调整逻辑 As Integer = 0
 
     Public Property 指定处理器核心 As String = ""
@@ -67,6 +72,13 @@ Public Class 设置_v6
     Public Property SP_窗口标题文字 As String = ""
     Public Property SP_起始页面顶栏标题 As String = ""
     Public Property SP_起始页面顶栏副标题 As String = ""
+    Public Property 个性化_软件图标 As String = ""
+    Public Property 个性化_任务完成音效 As String = ""
+    Public Property 个性化_任务失败音效 As String = ""
+    Public Property 个性化_起始页标题 As String = ""
+    Public Property 个性化_起始页副标题 As String = ""
+    Public Property 个性化_窗口标题栏 As String = ""
+    Public Property 个性化_起始页背景图 As String = ""
     Public Property SP_窗口边框颜色_A As Integer = 255
     Public Property SP_窗口边框颜色_R As Integer = Color.Gray.R
     Public Property SP_窗口边框颜色_G As Integer = Color.Gray.G
@@ -84,24 +96,10 @@ Public Class 设置_v6
     Public Property 是否询问标记_下载服务器选择 As Boolean = False
     Public Property 自定义视频编码器列表 As New List(Of String)
 
-    Enum 自动加载预设选项枚举
-        不自动加载预设 = 0
-        自动加载最后的预设文件 = 1
-        自动加载指定的预设文件 = 2
-        自动加载上次的全部改动 = 3
-    End Enum
-
     Private Shared ReadOnly 设置文件路径 As String = Path.Combine(Application.StartupPath, "Settings.json")
 
     Public Shared Sub 退出时保存设置()
         Try
-            'Select Case 实例对象.自动加载预设选项
-            '    Case 自动加载预设选项枚举.自动加载上次的全部改动
-            '        实例对象.最后的预设数据 = New 预设数据类型
-            '        预设管理.储存预设(实例对象.最后的预设数据, Form1.常规流程参数页面)
-            '    Case Else
-            '        实例对象.最后的预设数据 = Nothing
-            'End Select
             FileIO.FileSystem.WriteAllText(设置文件路径, JsonSerializer.Serialize(实例对象, JsonSO), False)
         Catch ex As Exception
             MsgBox($"保存设置失败：{ex.Message}", MsgBoxStyle.Critical)
@@ -115,7 +113,9 @@ Public Class 设置_v6
             End If
             退出时保存设置()
         Else
-            实例对象 = JsonSerializer.Deserialize(Of 设置_v6)(FileIO.FileSystem.ReadAllText(设置文件路径))
+            Dim 设置文本 = FileIO.FileSystem.ReadAllText(设置文件路径)
+            实例对象 = JsonSerializer.Deserialize(Of 设置_v6)(设置文本)
+            迁移旧设置字段(设置文本)
         End If
         Form_v6_设置_LakeUI性能选项.MCB_GPU抗锯齿.SelectedIndex = 实例对象.图形DX抗锯齿
         Form_v6_设置_LakeUI性能选项.MCB_文字渲染模式.SelectedIndex = 实例对象.图形DX文字渲染模式
@@ -211,6 +211,40 @@ Public Class 设置_v6
 
     End Sub
 
+    Private Shared Sub 迁移旧设置字段(设置文本 As String)
+        If String.IsNullOrWhiteSpace(设置文本) Then Exit Sub
+        Try
+            Using doc = JsonDocument.Parse(设置文本)
+                Dim root = doc.RootElement
+
+                Dim intValue As Integer
+                If 读取整数(root, "界面修正_编码队列的列宽调整逻辑", intValue) AndAlso 实例对象.编码队列的列宽调整逻辑 = 0 Then
+                    实例对象.编码队列的列宽调整逻辑 = intValue
+                End If
+
+                Dim textValue As String = ""
+                If String.IsNullOrWhiteSpace(实例对象.SP_窗口标题文字) AndAlso 读取文本(root, "个性化_窗口标题栏", textValue) Then 实例对象.SP_窗口标题文字 = textValue
+                If String.IsNullOrWhiteSpace(实例对象.SP_起始页面顶栏标题) AndAlso 读取文本(root, "个性化_起始页标题", textValue) Then 实例对象.SP_起始页面顶栏标题 = textValue
+                If String.IsNullOrWhiteSpace(实例对象.SP_起始页面顶栏副标题) AndAlso 读取文本(root, "个性化_起始页副标题", textValue) Then 实例对象.SP_起始页面顶栏副标题 = textValue
+            End Using
+        Catch
+        End Try
+    End Sub
+
+    Private Shared Function 读取整数(root As JsonElement, name As String, ByRef value As Integer) As Boolean
+        Dim element As JsonElement
+        If Not root.TryGetProperty(name, element) Then Return False
+        If element.ValueKind <> JsonValueKind.Number Then Return False
+        Return element.TryGetInt32(value)
+    End Function
+
+    Private Shared Function 读取文本(root As JsonElement, name As String, ByRef value As String) As Boolean
+        Dim element As JsonElement
+        If Not root.TryGetProperty(name, element) OrElse element.ValueKind <> JsonValueKind.String Then Return False
+        value = element.GetString()
+        Return Not String.IsNullOrWhiteSpace(value)
+    End Function
+
     Public Shared ReadOnly 自定义图标路径 As String = IO.Path.Combine(Application.StartupPath, "SP_Icon")
     Public Shared ReadOnly 自定义起始页顶栏背景图路径 As String = IO.Path.Combine(Application.StartupPath, "SP_MainTopPanel")
     Public Shared ReadOnly 自定义背景图路径 As String = IO.Path.Combine(Application.StartupPath, "SP_BackImage")
@@ -242,9 +276,6 @@ Public Class 设置_v6
     Public Shared Sub 启动时读取SP解锁器()
         Dim a As String = Path.Combine(Application.StartupPath, "FFmpegFreeUISupporter_v6.dll")
         If Not FileIO.FileSystem.FileExists(a) Then
-            Form1.加载自定义图标(Nothing)
-            Form1.设置页面.Panel1.Visible = True
-            Form1.设置页面.Panel3.Visible = False
             Exit Sub
         End If
         Dim targetType As Type = Assembly.LoadFile(a).GetType("FFmpegFreeUISupporter.Entry")

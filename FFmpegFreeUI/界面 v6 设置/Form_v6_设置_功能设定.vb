@@ -52,5 +52,4 @@ Public Class Form_v6_设置_功能设定
         编码队列_v6.刷新显示()
     End Sub
 
-
 End Class

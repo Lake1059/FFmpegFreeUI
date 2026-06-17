@@ -22,9 +22,9 @@ Partial Class Form_v6_参数面板_滤镜排序
     '不要使用代码编辑器修改它。
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim ListColumn4 As LakeUI.UltraDetailListView.ListColumn = New LakeUI.UltraDetailListView.ListColumn()
-        Dim ListColumn5 As LakeUI.UltraDetailListView.ListColumn = New LakeUI.UltraDetailListView.ListColumn()
-        Dim ListColumn6 As LakeUI.UltraDetailListView.ListColumn = New LakeUI.UltraDetailListView.ListColumn()
+        Dim ListColumn1 As LakeUI.UltraDetailListView.ListColumn = New LakeUI.UltraDetailListView.ListColumn()
+        Dim ListColumn2 As LakeUI.UltraDetailListView.ListColumn = New LakeUI.UltraDetailListView.ListColumn()
+        Dim ListColumn3 As LakeUI.UltraDetailListView.ListColumn = New LakeUI.UltraDetailListView.ListColumn()
         ModernPanel1 = New LakeUI.ModernPanel()
         UltraDetailListView1 = New LakeUI.UltraDetailListView()
         Panel1 = New Panel()
@@ -48,7 +48,7 @@ Partial Class Form_v6_参数面板_滤镜排序
         ModernPanel1.Name = "ModernPanel1"
         ModernPanel1.Padding = New Padding(20)
         ModernPanel1.ScrollBarMode = LakeUI.ModernPanel.ScrollMode.Vertical
-        ModernPanel1.Size = New Size(945, 614)
+        ModernPanel1.Size = New Size(795, 614)
         ModernPanel1.TabIndex = 0
         ' 
         ' UltraDetailListView1
@@ -57,15 +57,14 @@ Partial Class Form_v6_参数面板_滤镜排序
         UltraDetailListView1.BackgroundColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         UltraDetailListView1.BorderRadius = 10
         UltraDetailListView1.BorderSize = 0
-        ListColumn4.Text = "标识符"
-        ListColumn4.Width = 150
-        ListColumn5.Text = "流类型"
-        ListColumn6.AllowLabelEdit = True
-        ListColumn6.Text = "滤镜内容"
-        ListColumn6.Width = 450
-        UltraDetailListView1.Columns.Add(ListColumn4)
-        UltraDetailListView1.Columns.Add(ListColumn5)
-        UltraDetailListView1.Columns.Add(ListColumn6)
+        ListColumn1.Text = "标识符"
+        ListColumn1.Width = 150
+        ListColumn2.Text = "流类型"
+        ListColumn3.Text = "滤镜内容"
+        ListColumn3.Width = 450
+        UltraDetailListView1.Columns.Add(ListColumn1)
+        UltraDetailListView1.Columns.Add(ListColumn2)
+        UltraDetailListView1.Columns.Add(ListColumn3)
         UltraDetailListView1.Dock = DockStyle.Fill
         UltraDetailListView1.DragSelectZoneWidth = 200
         UltraDetailListView1.GroupBorderColor = Color.Silver
@@ -84,7 +83,7 @@ Partial Class Form_v6_参数面板_滤镜排序
         UltraDetailListView1.ScrollBarTrackColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
         UltraDetailListView1.SelectionRectBorderColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         UltraDetailListView1.SelectionRectFillColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        UltraDetailListView1.Size = New Size(905, 492)
+        UltraDetailListView1.Size = New Size(755, 492)
         UltraDetailListView1.TabIndex = 1
         ' 
         ' Panel1
@@ -96,7 +95,7 @@ Partial Class Form_v6_参数面板_滤镜排序
         Panel1.Location = New Point(20, 50)
         Panel1.Name = "Panel1"
         Panel1.Padding = New Padding(0, 10, 0, 10)
-        Panel1.Size = New Size(905, 52)
+        Panel1.Size = New Size(755, 52)
         Panel1.TabIndex = 11
         ' 
         ' MB_删除滤镜
@@ -160,7 +159,7 @@ Partial Class Form_v6_参数面板_滤镜排序
         HtmlColorLabel1.Margin = New Padding(2)
         HtmlColorLabel1.Name = "HtmlColorLabel1"
         HtmlColorLabel1.Padding = New Padding(0, 0, 0, 5)
-        HtmlColorLabel1.Size = New Size(905, 30)
+        HtmlColorLabel1.Size = New Size(755, 30)
         HtmlColorLabel1.TabIndex = 10
         HtmlColorLabel1.Text = "<span style=""font-size:13; color:Silver"">滤镜排序和自定义</span>   如果需要一行里写多个滤镜，使用英文逗号隔开即可"
         ' 
@@ -169,7 +168,7 @@ Partial Class Form_v6_参数面板_滤镜排序
         AutoScaleDimensions = New SizeF(96F, 96F)
         AutoScaleMode = AutoScaleMode.Dpi
         BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
-        ClientSize = New Size(945, 614)
+        ClientSize = New Size(795, 614)
         Controls.Add(ModernPanel1)
         Font = New Font("Microsoft YaHei UI", 10F)
         ForeColor = Color.Silver

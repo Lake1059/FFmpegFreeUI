@@ -300,6 +300,7 @@ Public Class 预设数据_v6
     Public Property 音频参数_质量参数名 As String = ""
     Public Property 音频参数_质量值 As String = ""
     Public Property 音频参数_声道数 As String = ""
+    Public Property 音频参数_位深度 As String = ""
     Public Property 音频参数_采样率 As String = ""
     Public Property 音频参数_响度标准化_启用调整目标响度 As Boolean = False
     Public Property 音频参数_响度标准化_目标响度 As String = ""
@@ -328,6 +329,7 @@ Public Class 预设数据_v6
         Public Property 实例ID As String = Guid.NewGuid().ToString("N")
         Public Property 显示名称 As String = ""
         Public Property 是自定义滤镜 As Boolean = False
+        Public Property 允许在排序页直接编辑 As Boolean = False
         Public Property 滤镜标识符 As 标识符枚举 = 标识符枚举.未设置
         Public Property 滤镜目标流类型 As 流类型 = 流类型.未设定
         Public Property 自定义滤镜内容 As String = ""

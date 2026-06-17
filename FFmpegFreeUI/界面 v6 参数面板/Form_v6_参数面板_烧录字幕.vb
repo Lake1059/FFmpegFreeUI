@@ -80,8 +80,8 @@ Public Class Form_v6_参数面板_烧录字幕
         Me.Icon = FormMain_v6.Icon
         SetControlFont(设置_v6.实例对象.字体, Me, , True)
         初始化状态按钮()
-        MCB_字幕文件路径.AllowDrop = True
-        MCB_字体文件夹路径.AllowDrop = True
+        绑定路径下拉框拖拽(MCB_字幕文件路径, 路径下拉框拖拽模式.文件夹路径)
+        绑定路径下拉框拖拽(MCB_字体文件夹路径, 路径下拉框拖拽模式.文件夹路径)
         If FormMain_v6.ThisIsYourWindow1.AttachedForms.Count > 0 Then
             FormMain_v6.ThisIsYourWindow1.Attach(Me)
             ModernPanel1.BackColor = Color.Transparent
@@ -316,23 +316,6 @@ Public Class Form_v6_参数面板_烧录字幕
     Private Sub MCB_字体文件夹路径_SelectedIndexChanged(sender As Object, e As EventArgs) Handles MCB_字体文件夹路径.SelectedIndexChanged
         If _正在选择路径 Then Exit Sub
         If MCB_字体文件夹路径.SelectedIndex = 0 Then 选择文件夹(MCB_字体文件夹路径)
-    End Sub
-
-    Private Sub 路径_DragEnter(sender As Object, e As DragEventArgs) Handles MCB_字幕文件路径.DragEnter, MCB_字体文件夹路径.DragEnter
-        e.Effect = If(e.Data.GetDataPresent(DataFormats.FileDrop), DragDropEffects.Copy, DragDropEffects.None)
-    End Sub
-
-    Private Sub 路径_DragDrop(sender As Object, e As DragEventArgs) Handles MCB_字幕文件路径.DragDrop, MCB_字体文件夹路径.DragDrop
-        Dim combo = TryCast(sender, ModernComboBox)
-        If combo Is Nothing Then Exit Sub
-        Dim files = TryCast(e.Data.GetData(DataFormats.FileDrop), String())
-        If files Is Nothing OrElse files.Length = 0 Then Exit Sub
-        Dim p = files(0)
-        If Directory.Exists(p) Then
-            combo.Text = p
-        ElseIf File.Exists(p) Then
-            combo.Text = Path.GetDirectoryName(p)
-        End If
     End Sub
 
     Private Sub 选择文件夹(combo As ModernComboBox)

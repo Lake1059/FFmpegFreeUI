@@ -32,13 +32,13 @@ Namespace My
                 End
             End If
             If e.CommandLine.Contains("fullscreen") Then
-                Form1.FormBorderStyle = FormBorderStyle.None
-                Form1.WindowState = FormWindowState.Maximized
+                FormMain_v6.FormBorderStyle = FormBorderStyle.None
+                FormMain_v6.WindowState = FormWindowState.Maximized
             End If
         End Sub
 
         Private Sub MyApplication_StartupNextInstance(sender As Object, e As StartupNextInstanceEventArgs) Handles Me.StartupNextInstance
-            启动参数响应.处理接收的参数(e.CommandLine.ToList)
+            启动参数响应_v6.处理接收的参数(e.CommandLine.ToList)
         End Sub
 
         Shared Function NormalizePath(path As String) As String

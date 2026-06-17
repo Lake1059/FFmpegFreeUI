@@ -9,9 +9,8 @@ Public Class Form_v6_参数面板_滤镜排序
         If UltraDetailListView1.Columns.Count = 3 Then
             UltraDetailListView1.Columns(0).AllowLabelEdit = False
             UltraDetailListView1.Columns(1).AllowLabelEdit = False
-            UltraDetailListView1.Columns(2).AllowLabelEdit = True
+            UltraDetailListView1.Columns(2).AllowLabelEdit = False
         End If
-        HtmlColorLabel1.Text = "<span style=""font-size:13; color:Silver"">滤镜排序和自定义</span>   每一项的滤镜链片段显示在列表的滤镜内容列，自定义项可直接编辑"
         RefreshList()
     End Sub
 
@@ -58,6 +57,7 @@ Public Class Form_v6_参数面板_滤镜排序
             .滤镜目标流类型 = target,
             .显示名称 = If(target = 预设数据_v6.滤镜排序单片结构.流类型.音频, "自定义音频滤镜", "自定义视频滤镜"),
             .是自定义滤镜 = True,
+            .允许在排序页直接编辑 = True,
             .自定义滤镜内容 = ""
         })
         RefreshList()
@@ -68,7 +68,7 @@ Public Class Form_v6_参数面板_滤镜排序
         If UltraDetailListView1.SelectedItem Is Nothing Then Exit Sub
         Dim item = TryCast(UltraDetailListView1.SelectedItem.Tag, 预设数据_v6.滤镜排序单片结构)
         If item Is Nothing Then Exit Sub
-        Dim 是内置项 = Not item.是自定义滤镜
+        Dim 是内置项 = Not 可直接编辑滤镜内容(item)
         Dim 标识符 = item.滤镜标识符
         _items.Remove(item)
         RefreshList()
@@ -101,13 +101,16 @@ Public Class Form_v6_参数面板_滤镜排序
         UltraDetailListView1.Items.Clear()
         For Each item In _items
             Dim lv As New UltraDetailListView.ListItem()
-            lv.SubItems.Add(New UltraDetailListView.ListSubItem With {.Text = If(item.显示名称 <> "", item.显示名称, item.滤镜标识符.ToString())})
+            Dim 标识符项 As New UltraDetailListView.ListSubItem With {.Text = If(item.显示名称 <> "", item.显示名称, item.滤镜标识符.ToString())}
+            If 可直接编辑滤镜内容(item) Then 标识符项.ForeColor = Color.Orange
+            lv.SubItems.Add(标识符项)
             lv.SubItems.Add(New UltraDetailListView.ListSubItem With {.Text = item.滤镜目标流类型.ToString()})
             lv.SubItems.Add(New UltraDetailListView.ListSubItem With {.Text = item.自定义滤镜内容})
             lv.Tag = item
-            If item.是自定义滤镜 Then lv.GroupName = "custom"
+            If 可直接编辑滤镜内容(item) Then lv.GroupName = "custom"
             UltraDetailListView1.Items.Add(lv)
         Next
+        校准列表列宽()
     End Sub
 
     Private Function CloneItem(src As 预设数据_v6.滤镜排序单片结构) As 预设数据_v6.滤镜排序单片结构
@@ -116,6 +119,7 @@ Public Class Form_v6_参数面板_滤镜排序
             .实例ID = If(src.实例ID, Guid.NewGuid().ToString("N")),
             .显示名称 = src.显示名称,
             .是自定义滤镜 = src.是自定义滤镜,
+            .允许在排序页直接编辑 = src.允许在排序页直接编辑,
             .滤镜标识符 = src.滤镜标识符,
             .滤镜目标流类型 = src.滤镜目标流类型,
             .自定义滤镜内容 = src.自定义滤镜内容
@@ -137,11 +141,11 @@ Public Class Form_v6_参数面板_滤镜排序
         Dim item = TryCast(e.Item.Tag, 预设数据_v6.滤镜排序单片结构)
         If item Is Nothing Then Exit Sub
         If e.ColumnIndex = 2 Then
-            If Not item.是自定义滤镜 Then
+            If Not 可直接编辑滤镜内容(item) Then
                 e.CancelEdit = True
                 Exit Sub
             End If
-            item.自定义滤镜内容 = e.Label.Trim()
+            item.自定义滤镜内容 = If(e.Label, "").Trim()
             通知参数面板刷新()
         End If
     End Sub
@@ -149,10 +153,13 @@ Public Class Form_v6_参数面板_滤镜排序
     Private Sub UltraDetailListView1_ItemDoubleClick(sender As Object, e As UltraDetailListView.ListItemEventArgs) Handles UltraDetailListView1.ItemDoubleClick
         Dim item = TryCast(e.Item.Tag, 预设数据_v6.滤镜排序单片结构)
         If item Is Nothing Then Exit Sub
-        If item.是自定义滤镜 Then
-            item.自定义滤镜内容 = If(item.自定义滤镜内容 = "", "eq=contrast=1.0", item.自定义滤镜内容)
-            RefreshList()
-            通知参数面板刷新()
+        If 可直接编辑滤镜内容(item) Then
+            UltraDetailListView1.Columns(2).AllowLabelEdit = True
+            Try
+                UltraDetailListView1.开始标签编辑(e.DisplayRowIndex, 2)
+            Finally
+                UltraDetailListView1.Columns(2).AllowLabelEdit = False
+            End Try
         End If
     End Sub
 
@@ -174,4 +181,32 @@ Public Class Form_v6_参数面板_滤镜排序
         预设管理_v6.刷新参数总览(所属参数面板对象)
     End Sub
 
+    Private Sub Form_v6_参数面板_滤镜排序_SizeChanged(sender As Object, e As EventArgs) Handles Me.SizeChanged
+        校准列表列宽()
+    End Sub
+
+    Private Sub UltraDetailListView1_SizeChanged(sender As Object, e As EventArgs) Handles UltraDetailListView1.SizeChanged
+        校准列表列宽()
+    End Sub
+
+    Private Function 可直接编辑滤镜内容(item As 预设数据_v6.滤镜排序单片结构) As Boolean
+        Return item IsNot Nothing AndAlso item.是自定义滤镜 AndAlso item.允许在排序页直接编辑
+    End Function
+
+    Private Sub 校准列表列宽()
+        If UltraDetailListView1 Is Nothing OrElse UltraDetailListView1.Columns.Count < 3 Then Exit Sub
+
+        Dim 可用宽度 = UltraDetailListView1.ClientSize.Width
+        If 可用宽度 <= 0 Then 可用宽度 = UltraDetailListView1.Width
+        If 可用宽度 <= 0 Then Exit Sub
+
+        可用宽度 = Math.Max(0, 可用宽度 - CInt(24 * DeviceDpi / 96.0))
+        Dim 标识符列宽 = Math.Min(CInt(220 * DeviceDpi / 96.0), Math.Max(CInt(130 * DeviceDpi / 96.0), CInt(可用宽度 * 0.22)))
+        Dim 流类型列宽 = Math.Min(CInt(120 * DeviceDpi / 96.0), Math.Max(CInt(80 * DeviceDpi / 96.0), CInt(可用宽度 * 0.12)))
+        Dim 内容列宽 = Math.Max(CInt(240 * DeviceDpi / 96.0), 可用宽度 - 标识符列宽 - 流类型列宽)
+
+        UltraDetailListView1.Columns(0).Width = 标识符列宽
+        UltraDetailListView1.Columns(1).Width = 流类型列宽
+        UltraDetailListView1.Columns(2).Width = 内容列宽
+    End Sub
 End Class

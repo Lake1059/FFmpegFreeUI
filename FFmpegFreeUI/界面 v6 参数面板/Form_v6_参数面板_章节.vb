@@ -1,31 +1,46 @@
 Public Class Form_v6_参数面板_章节
 
     Public 所属参数面板对象 As Form_v6_参数面板
+    Private _正在选择章节文件 As Boolean = False
 
     Private Sub Form_v6_参数面板_章节_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-
+        绑定路径下拉框拖拽(ModernComboBox2)
     End Sub
 
     Private Sub ModernComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ModernComboBox1.SelectedIndexChanged
         通知参数面板刷新()
     End Sub
 
-    Private Sub ModernTextBox2_TextChanged(sender As Object, e As EventArgs) Handles ModernTextBox2.TextChanged
-        通知参数面板刷新()
+    Private Sub ModernComboBox2_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ModernComboBox2.SelectedIndexChanged
+        If _正在选择章节文件 Then Exit Sub
+        If ModernComboBox2.SelectedIndex = 0 Then 选择章节文件()
     End Sub
 
-    Private Sub ModernTextBox2_DoubleClick(sender As Object, e As EventArgs) Handles ModernTextBox2.DoubleClick
+    Private Sub ModernComboBox2_TextChanged(sender As Object, e As EventArgs) Handles ModernComboBox2.TextChanged
+        If ModernComboBox2.Text.Trim() <> "浏览 ..." Then 通知参数面板刷新()
+    End Sub
+
+    Private Sub ModernComboBox2_DoubleClick(sender As Object, e As EventArgs) Handles ModernComboBox2.DoubleClick
         选择章节文件()
     End Sub
 
     Private Sub 选择章节文件()
-        Dim filter = If(ModernComboBox1.SelectedIndex = 2,
-                        "媒体文件|*.mp4;*.mkv;*.mov;*.m4v;*.webm;*.mp3;*.m4a;*.flac;*.wav;*.ogg|所有文件|*.*",
-                        "FFmetadata 或文本文档|*.txt;*.ffmetadata;*.metadata|所有文件|*.*")
-        Using d As New OpenFileDialog With {.Filter = filter, .Multiselect = False}
-            If d.ShowDialog(Me) <> DialogResult.OK OrElse d.FileName = "" Then Exit Sub
-            ModernTextBox2.Text = d.FileName
-        End Using
+        _正在选择章节文件 = True
+        Try
+            Dim filter = If(ModernComboBox1.SelectedIndex = 2,
+                            "媒体文件|*.mp4;*.mkv;*.mov;*.m4v;*.webm;*.mp3;*.m4a;*.flac;*.wav;*.ogg|所有文件|*.*",
+                            "FFmetadata 或文本文档|*.txt;*.ffmetadata;*.metadata|所有文件|*.*")
+            Using d As New OpenFileDialog With {.Filter = filter, .Multiselect = False}
+                If d.ShowDialog(Me) = DialogResult.OK AndAlso d.FileName <> "" Then
+                    ModernComboBox2.Text = d.FileName
+                Else
+                    ModernComboBox2.SelectedIndex = -1
+                    ModernComboBox2.Text = ""
+                End If
+            End Using
+        Finally
+            _正在选择章节文件 = False
+        End Try
     End Sub
 
     Private Sub MB_教程_Click(sender As Object, e As EventArgs) Handles MB_教程.Click

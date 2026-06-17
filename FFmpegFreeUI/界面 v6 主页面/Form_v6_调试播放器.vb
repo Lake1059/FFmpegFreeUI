@@ -62,7 +62,7 @@ Public Class Form_v6_调试播放器
 
         ffplayProcess = New Process
         ffplayProcess.StartInfo.FileName = "ffplay"
-        ffplayProcess.StartInfo.WorkingDirectory = If(用户设置.实例对象.工作目录 <> "", 用户设置.实例对象.工作目录, "")
+        ffplayProcess.StartInfo.WorkingDirectory = If(设置_v6.实例对象.工作目录 <> "", 设置_v6.实例对象.工作目录, "")
         ffplayProcess.StartInfo.Arguments = $"-x {ModernPanel2.Width} -y {ModernPanel2.Height} -noborder ""{文件路径}"""
         ffplayProcess.StartInfo.UseShellExecute = False
         ffplayProcess.StartInfo.CreateNoWindow = False
@@ -82,12 +82,12 @@ Public Class Form_v6_调试播放器
 
         SetParent(ffplayHandle, ModernPanel2.Handle)
         SetWindowPos(ffplayHandle, IntPtr.Zero, 0, 0, ModernPanel2.Width, ModernPanel2.Height, SWP_NOZORDER Or SWP_NOACTIVATE)
-        Form1.Focus()
+        FormMain_v6.Focus()
     End Sub
 
     Sub 视频容器尺寸变化事件()
-        If Form1.WindowState = FormWindowState.Minimized Then Exit Sub
-        If Form1.UiTabControlMenu1.SelectedTab IsNot Me Then Exit Sub
+        If FormMain_v6.WindowState = FormWindowState.Minimized Then Exit Sub
+        If FormMain_v6.ModernTabListControl1.SelectedIndex <> 10 Then Exit Sub
         If ffplayProcess IsNot Nothing Then
             SetWindowPos(ffplayHandle, IntPtr.Zero, 0, 0, ModernPanel2.Width, ModernPanel2.Height, SWP_NOZORDER Or SWP_NOACTIVATE)
         End If

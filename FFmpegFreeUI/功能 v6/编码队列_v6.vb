@@ -68,9 +68,10 @@ Public Class 编码队列_v6
         End SyncLock
     End Function
 
-    Public Shared Function 添加预设任务(输入文件 As String, 预设数据 As 预设数据_v6, Optional 任务名称 As String = "") As 编码任务_v6
+    Public Shared Function 添加预设任务(输入文件 As String, 预设数据 As 预设数据_v6, Optional 任务名称 As String = "", Optional 输出文件 As String = "") As 编码任务_v6
         Dim task As New 编码任务_v6 With {
             .输入文件 = 输入文件,
+            .输出文件 = 输出文件,
             .任务名称 = 应用任务名称混淆(If(String.IsNullOrWhiteSpace(任务名称), Path.GetFileName(输入文件), 任务名称)),
             .预设数据 = 预设数据
         }
@@ -489,12 +490,14 @@ Public Class 编码任务_v6
     Public Property 最新底部日志文本 As String = ""
     Public Property 最新底部日志是否错误 As Boolean = False
     Public Property 日志版本号 As Long = 0
+    Public Property 日志结构版本号 As Long = 0
 
     Private 当前进程 As Process
     Private ReadOnly 状态锁 As New Object
     Private ReadOnly 日志锁 As New Object
     Private ReadOnly 完整日志缓存 As New List(Of 编码任务日志条目_v6)
     Private 日志序号 As Long = 0
+    Private 进度日志数量 As Integer = 0
     Private 最新原始日志文本 As String = ""
     Private 最新原始日志是否错误 As Boolean = False
     Private 最新非进度日志文本 As String = ""
@@ -568,6 +571,7 @@ Public Class 编码任务_v6
                 .是否错误 = isError
             }
             完整日志缓存.Add(entry)
+            If entry.类别 = 编码任务日志类别_v6.进度 Then 进度日志数量 += 1
             日志版本号 += 1
             实时输出 = 文本
 
@@ -588,6 +592,7 @@ Public Class 编码任务_v6
     Public Sub 清空日志(Optional 通知更新 As Boolean = True)
         SyncLock 日志锁
             完整日志缓存.Clear()
+            进度日志数量 = 0
             错误列表.Clear()
             非进度输出列表.Clear()
             实时输出 = ""
@@ -599,6 +604,7 @@ Public Class 编码任务_v6
             最新非进度日志是否错误 = False
             上次进度日志提交时间 = DateTime.MinValue
             日志版本号 += 1
+            日志结构版本号 += 1
         End SyncLock
         If 通知更新 Then 编码队列_v6.通知任务更新(Me)
     End Sub
@@ -611,9 +617,24 @@ Public Class 编码任务_v6
     Private Sub 裁剪日志缓存()
         Dim limit = 获取日志保留行数()
         If limit <= 0 Then Exit Sub
-        If 完整日志缓存.Count > limit Then 完整日志缓存.RemoveRange(0, 完整日志缓存.Count - limit)
-        If 非进度输出列表.Count > limit Then 非进度输出列表.RemoveRange(0, 非进度输出列表.Count - limit)
-        If 错误列表.Count > limit Then 错误列表.RemoveRange(0, 错误列表.Count - limit)
+        If 完整日志缓存.Count <= limit OrElse 进度日志数量 <= 0 Then Exit Sub
+
+        Dim removeCount = Math.Min(完整日志缓存.Count - limit, 进度日志数量)
+        Dim removed As Integer = 0
+        Dim retained As New List(Of 编码任务日志条目_v6)(完整日志缓存.Count - removeCount)
+        For Each entry In 完整日志缓存
+            If removed < removeCount AndAlso entry.类别 = 编码任务日志类别_v6.进度 Then
+                removed += 1
+            Else
+                retained.Add(entry)
+            End If
+        Next
+        If removed = 0 Then Exit Sub
+
+        完整日志缓存.Clear()
+        完整日志缓存.AddRange(retained)
+        进度日志数量 -= removed
+        日志结构版本号 += 1
     End Sub
 
     Private Shared Function 获取日志保留行数() As Integer
@@ -712,7 +733,7 @@ Public Class 编码任务_v6
         If 预设数据 IsNot Nothing Then
             预设管理_v6.初始化空集合(预设数据)
             生成帧服务器脚本()
-            输出文件 = 编码队列_v6.计算输出位置_v6(输入文件, 预设数据)
+            If String.IsNullOrWhiteSpace(输出文件) Then 输出文件 = 编码队列_v6.计算输出位置_v6(输入文件, 预设数据)
             重建编码步骤()
         Else
             步骤.Clear()
@@ -784,7 +805,8 @@ Public Class 编码任务_v6
         stepItem.输出缓存.Add(line)
         If stepItem.输出缓存.Count > 2000 Then stepItem.输出缓存.RemoveRange(0, stepItem.输出缓存.Count - 1000)
         If line.Contains("Duration:", StringComparison.OrdinalIgnoreCase) Then 进度.解析FFmpeg输出(line, 计算当前总时长())
-        Dim isProgressLine = line.StartsWith("frame=", StringComparison.OrdinalIgnoreCase) OrElse line.StartsWith("size=", StringComparison.OrdinalIgnoreCase)
+        Dim trimmedLine = line.TrimStart()
+        Dim isProgressLine = trimmedLine.StartsWith("frame=", StringComparison.OrdinalIgnoreCase) OrElse trimmedLine.StartsWith("size=", StringComparison.OrdinalIgnoreCase)
         If isProgressLine Then
             进度.解析FFmpeg输出(line, 计算当前总时长())
         End If
@@ -1012,8 +1034,8 @@ Public Class 编码进度_v6
         Dim sm = SizePattern.Match(line)
         If sm.Success Then
             输出大小KB = 转换到KB(Long.Parse(sm.Groups("value").Value), sm.Groups("unit").Value)
-            输出大小文本 = 格式化大小KB(输出大小KB)
         End If
+        更新输出大小文本()
         Dim qm = QPattern.Match(line)
         If qm.Success Then 质量文本 = If(qm.Groups("value").Value = "0" OrElse qm.Groups("value").Value = "-1.0", "N/A", qm.Groups("value").Value)
         Dim bm = BitratePattern.Match(line)
@@ -1029,6 +1051,19 @@ Public Class 编码进度_v6
                 End If
             End If
         End If
+    End Sub
+
+    Private Sub 更新输出大小文本()
+        If 输出大小KB <= 0 Then
+            输出大小文本 = "N/A"
+            Exit Sub
+        End If
+
+        输出大小文本 = 格式化大小KB(输出大小KB)
+        If 百分比 <= 0 OrElse 百分比 >= 1 Then Exit Sub
+
+        Dim estimatedSizeKB = CLng(输出大小KB / 百分比)
+        输出大小文本 &= " - " & 格式化预估大小KB(estimatedSizeKB)
     End Sub
 
     Public Shared Function 转换时间(value As String) As TimeSpan
@@ -1050,6 +1085,12 @@ Public Class 编码进度_v6
 
     Public Shared Function 格式化大小KB(value As Long) As String
         If value >= 1024L * 1024L Then Return $"{value / 1024.0 / 1024.0:F2} GB"
+        If value >= 1024L Then Return $"{value / 1024.0:F0} MB"
+        Return $"{value} KB"
+    End Function
+
+    Private Shared Function 格式化预估大小KB(value As Long) As String
+        If value >= 1024L * 1024L Then Return $"{value / 1024.0 / 1024.0:F1} GB"
         If value >= 1024L Then Return $"{value / 1024.0:F0} MB"
         Return $"{value} KB"
     End Function

@@ -83,11 +83,13 @@ Partial Class Form_v6_参数面板_输出文件设置
         后缀菜单.PressedBackColor = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
         后缀菜单.SeparatorColor = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
         后缀菜单.SeparatorHeight = 20
+        后缀菜单.SubMenuHorizontalOffset = -2
         ' 
         ' 视频菜单
         ' 
         视频菜单.BackdropBlurPasses = 1
         视频菜单.BackdropBlurRadius = 12
+        视频菜单.BackdropMode = LakeUI.ModernContextMenu.BackdropModeEnum.Auto
         视频菜单.BackdropNoiseOpacity = CByte(0)
         视频菜单.BackdropTintColor = Color.FromArgb(CByte(40), CByte(0), CByte(0), CByte(0))
         视频菜单.BorderColor = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
@@ -109,6 +111,7 @@ Partial Class Form_v6_参数面板_输出文件设置
         ' 
         音频菜单.BackdropBlurPasses = 1
         音频菜单.BackdropBlurRadius = 12
+        音频菜单.BackdropMode = LakeUI.ModernContextMenu.BackdropModeEnum.Auto
         音频菜单.BackdropNoiseOpacity = CByte(0)
         音频菜单.BackdropTintColor = Color.FromArgb(CByte(40), CByte(0), CByte(0), CByte(0))
         音频菜单.BorderColor = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
@@ -130,6 +133,7 @@ Partial Class Form_v6_参数面板_输出文件设置
         ' 
         图片菜单.BackdropBlurPasses = 1
         图片菜单.BackdropBlurRadius = 12
+        图片菜单.BackdropMode = LakeUI.ModernContextMenu.BackdropModeEnum.Auto
         图片菜单.BackdropNoiseOpacity = CByte(0)
         图片菜单.BackdropTintColor = Color.FromArgb(CByte(40), CByte(0), CByte(0), CByte(0))
         图片菜单.BorderColor = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
@@ -179,7 +183,7 @@ Partial Class Form_v6_参数面板_输出文件设置
         MCB_保留访问时间.BoxInnerPadding = 6
         MCB_保留访问时间.BoxSize = 22
         MCB_保留访问时间.BoxTextSpacing = 10
-        MCB_保留访问时间.Checked = True
+        MCB_保留访问时间.BoxUncheckedBackColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_保留访问时间.Dock = DockStyle.Top
         MCB_保留访问时间.Location = New Point(20, 466)
         MCB_保留访问时间.Name = "MCB_保留访问时间"
@@ -197,7 +201,7 @@ Partial Class Form_v6_参数面板_输出文件设置
         MCB_保留修改时间.BoxInnerPadding = 6
         MCB_保留修改时间.BoxSize = 22
         MCB_保留修改时间.BoxTextSpacing = 10
-        MCB_保留修改时间.Checked = True
+        MCB_保留修改时间.BoxUncheckedBackColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_保留修改时间.Dock = DockStyle.Top
         MCB_保留修改时间.Location = New Point(20, 434)
         MCB_保留修改时间.Name = "MCB_保留修改时间"
@@ -215,7 +219,7 @@ Partial Class Form_v6_参数面板_输出文件设置
         MCB_保留创建时间.BoxInnerPadding = 6
         MCB_保留创建时间.BoxSize = 22
         MCB_保留创建时间.BoxTextSpacing = 10
-        MCB_保留创建时间.Checked = True
+        MCB_保留创建时间.BoxUncheckedBackColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_保留创建时间.Dock = DockStyle.Top
         MCB_保留创建时间.Location = New Point(20, 402)
         MCB_保留创建时间.Name = "MCB_保留创建时间"

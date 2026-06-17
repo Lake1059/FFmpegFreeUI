@@ -1,9 +1,15 @@
-﻿Public Class 字体控制
+﻿
+Public Class 字体控制
 
     Public Shared Sub 更新所有控件字体属性()
         SetControlFont(设置_v6.实例对象.字体, FormMain_v6, , True)
         SetControlFont(设置_v6.实例对象.字体, Form_v6_起始页面, , True)
         SetControlFont(设置_v6.实例对象.字体, Form_v6_编码队列, , True)
+        Form_v6_编码队列.任务菜单.MenuFont = New Font(设置_v6.实例对象.字体, Form_v6_编码队列.任务菜单.MenuFont.Size, Form_v6_编码队列.任务菜单.MenuFont.Style)
+        Form_v6_编码队列.任务菜单.DescriptionFont = New Font(设置_v6.实例对象.字体, Form_v6_编码队列.任务菜单.MenuFont.Size, Form_v6_编码队列.任务菜单.MenuFont.Style)
+        Form_v6_编码队列.右键菜单.MenuFont = New Font(设置_v6.实例对象.字体, Form_v6_编码队列.右键菜单.MenuFont.Size, Form_v6_编码队列.右键菜单.MenuFont.Style)
+        Form_v6_编码队列.右键菜单.DescriptionFont = New Font(设置_v6.实例对象.字体, Form_v6_编码队列.右键菜单.MenuFont.Size, Form_v6_编码队列.右键菜单.MenuFont.Style)
+
 
         SetControlFont(设置_v6.实例对象.字体, Form_v6_参数面板, , True)
         SetControlFont(设置_v6.实例对象.字体, Form_v6_参数面板.私有界面_参数总览, , True)

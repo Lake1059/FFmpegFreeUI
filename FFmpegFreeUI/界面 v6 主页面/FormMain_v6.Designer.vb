@@ -66,7 +66,7 @@ Partial Class FormMain_v6
         ModernTabPage10.Text = "ffprobe 媒体信息"
         ModernTabPage11.Text = "ffplay 调试播放器"
         ModernTabPage12.Text = "性能监控"
-        ModernTabPage13.Text = "集成的工具"
+        ModernTabPage13.Text = "集成工具"
         ModernTabPage14.IsSeparator = True
         ModernTabPage15.Text = "软件设置"
         ModernTabPage16.Text = "支持者"

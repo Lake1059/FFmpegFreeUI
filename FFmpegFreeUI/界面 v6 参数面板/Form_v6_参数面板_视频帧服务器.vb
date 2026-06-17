@@ -6,6 +6,14 @@ Public Class Form_v6_参数面板_视频帧服务器
     Private Sub Form_v6_参数面板_视频帧服务器_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         填充脚本列表(ModernComboBox1, "AviSynth", "*.avs")
         填充脚本列表(ModernComboBox2, "VapourSynth", "*.vpy;*.py")
+        绑定路径下拉框拖拽(ModernComboBox1, 路径下拉框拖拽模式.文件路径,
+                     Sub(combo, path)
+                         BooleanSwitch1.Checked = ModernComboBox1.Text.Trim() <> ""
+                     End Sub)
+        绑定路径下拉框拖拽(ModernComboBox2, 路径下拉框拖拽模式.文件路径,
+                     Sub(combo, path)
+                         BooleanSwitch2.Checked = ModernComboBox2.Text.Trim() <> ""
+                     End Sub)
     End Sub
 
     Private Sub 填充脚本列表(combo As LakeUI.ModernComboBox, folderName As String, patternList As String)
