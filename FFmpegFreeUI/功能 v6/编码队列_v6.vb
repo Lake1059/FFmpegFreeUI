@@ -1037,9 +1037,9 @@ Public Class 编码进度_v6
         End If
         更新输出大小文本()
         Dim qm = QPattern.Match(line)
-        If qm.Success Then 质量文本 = If(qm.Groups("value").Value = "0" OrElse qm.Groups("value").Value = "-1.0", "N/A", qm.Groups("value").Value)
+        If qm.Success Then 质量文本 = 格式化质量文本(qm.Groups("value").Value)
         Dim bm = BitratePattern.Match(line)
-        If bm.Success Then 比特率文本 = bm.Groups("value").Value & " kbps"
+        If bm.Success Then 比特率文本 = 格式化比特率文本(bm.Groups("value").Value)
         Dim sp = SpeedPattern.Match(line)
         If sp.Success Then
             Dim speed As Double
@@ -1052,6 +1052,19 @@ Public Class 编码进度_v6
             End If
         End If
     End Sub
+
+    Private Shared Function 格式化质量文本(value As String) As String
+        Dim q As Double
+        If Not Double.TryParse(value, NumberStyles.Any, CultureInfo.InvariantCulture, q) Then Return If(value, "")
+        If q = 0 OrElse q = -1 Then Return "N/A"
+        Return q.ToString("F0", CultureInfo.InvariantCulture)
+    End Function
+
+    Private Shared Function 格式化比特率文本(value As String) As String
+        Dim bitrate As Double
+        If Not Double.TryParse(value, NumberStyles.Any, CultureInfo.InvariantCulture, bitrate) Then Return If(value, "") & " kbps"
+        Return bitrate.ToString("F0", CultureInfo.InvariantCulture) & " kbps"
+    End Function
 
     Private Sub 更新输出大小文本()
         If 输出大小KB <= 0 Then

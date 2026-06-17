@@ -35,6 +35,11 @@ Public Class 字体控制
         SetControlFont(设置_v6.实例对象.字体, Form_v6_参数面板.私有界面_章节, , True)
         SetControlFont(设置_v6.实例对象.字体, Form_v6_参数面板.私有界面_附件, , True)
 
+        SetControlFont(设置_v6.实例对象.字体, Form_v6_集成工具, , True)
+        SetControlFont(设置_v6.实例对象.字体, Form_v6_集成工具_合并, , True)
+        SetControlFont(设置_v6.实例对象.字体, Form_v6_集成工具_混流, , True)
+        SetControlFont(设置_v6.实例对象.字体, Form_v6_集成工具_质量评测, , True)
+
         SetControlFont(设置_v6.实例对象.字体, Form_v6_设置, , True)
         SetControlFont(设置_v6.实例对象.字体, Form_v6_设置_LakeUI性能选项, , True)
         SetControlFont(设置_v6.实例对象.字体, Form_v6_设置_LakeUI视觉体验, , True)

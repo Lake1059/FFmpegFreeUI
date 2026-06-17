@@ -27,6 +27,8 @@ Public Class FormMain_v6
         绑定选项卡(Form_v6_调试播放器.ModernPanel1)
         Me.ModernTabListControl1.Items(11).BoundControl = Form_v6_性能监控
         绑定选项卡(Form_v6_性能监控.ModernPanel1)
+        Me.ModernTabListControl1.Items(12).BoundControl = Form_v6_集成工具
+        绑定选项卡(Form_v6_集成工具.ModernPanel1)
         Me.ModernTabListControl1.Items(14).BoundControl = Form_v6_设置
         绑定选项卡(Form_v6_设置.ModernPanel1)
         Me.ModernTabListControl1.Items(15).BoundControl = Form_v6_支持者
@@ -44,7 +46,8 @@ Public Class FormMain_v6
                         ModernTabListControl1.ContentBackColor = Color.Transparent
                         Form_v6_参数面板.ModernTabListControl1.TabStripBackColor = Color.Transparent
                         Form_v6_参数面板.ModernTabListControl1.ContentBackColor = Color.Transparent
-
+                        Form_v6_集成工具.ModernTabListControl1.TabStripBackColor = Color.Transparent
+                        Form_v6_集成工具.ModernTabListControl1.ContentBackColor = Color.Transparent
                         Form_v6_设置.ModernTabListControl1.TabStripBackColor = Color.Transparent
                         Form_v6_设置.ModernTabListControl1.ContentBackColor = Color.Transparent
 

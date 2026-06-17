@@ -82,6 +82,12 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resource1.resx</DependentUpon>
     </Compile>
+    <Compile Update="集成工具\Form_v6_集成工具_质量评测图表.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="集成工具\Form_v6_集成工具_质量评测图表.Designer.vb">
+      <DependentUpon>Form_v6_集成工具_质量评测图表.vb</DependentUpon>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
@@ -94,6 +100,9 @@
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resource1.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="集成工具\Form_v6_集成工具_质量评测图表.resx">
+      <DependentUpon>Form_v6_集成工具_质量评测图表.vb</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
 
