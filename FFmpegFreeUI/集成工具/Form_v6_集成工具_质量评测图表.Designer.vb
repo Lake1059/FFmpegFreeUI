@@ -61,9 +61,10 @@ Partial Class Form_v6_集成工具_质量评测图表
         Ultra2DChart1.Location = New Point(0, 0)
         Ultra2DChart1.Name = "Ultra2DChart1"
         Ultra2DChart1.Padding = New Padding(18, 16, 18, 12)
-        Ultra2DChart1.Palette.AddRange(New Color() {Color.FromArgb(CByte(68), CByte(114), CByte(196)), Color.FromArgb(CByte(237), CByte(125), CByte(49)), Color.FromArgb(CByte(165), CByte(165), CByte(165)), Color.FromArgb(CByte(255), CByte(192), CByte(0)), Color.FromArgb(CByte(91), CByte(155), CByte(213)), Color.FromArgb(CByte(112), CByte(173), CByte(71)), Color.FromArgb(CByte(38), CByte(68), CByte(120)), Color.FromArgb(CByte(158), CByte(72), CByte(14))})
+        Ultra2DChart1.Palette.AddRange(New Color() {Color.FromArgb(CByte(68), CByte(114), CByte(196)), Color.FromArgb(CByte(237), CByte(125), CByte(49)), Color.FromArgb(CByte(165), CByte(165), CByte(165)), Color.FromArgb(CByte(255), CByte(192), CByte(0)), Color.FromArgb(CByte(91), CByte(155), CByte(213)), Color.FromArgb(CByte(112), CByte(173), CByte(71)), Color.FromArgb(CByte(38), CByte(68), CByte(120)), Color.FromArgb(CByte(158), CByte(72), CByte(14)), Color.FromArgb(CByte(68), CByte(114), CByte(196)), Color.FromArgb(CByte(237), CByte(125), CByte(49)), Color.FromArgb(CByte(165), CByte(165), CByte(165)), Color.FromArgb(CByte(255), CByte(192), CByte(0)), Color.FromArgb(CByte(91), CByte(155), CByte(213)), Color.FromArgb(CByte(112), CByte(173), CByte(71)), Color.FromArgb(CByte(38), CByte(68), CByte(120)), Color.FromArgb(CByte(158), CByte(72), CByte(14))})
         Ultra2DChart1.PlotBackColor = Color.FromArgb(CByte(28), CByte(28), CByte(28))
         Ultra2DChart1.PlotBorderColor = Color.FromArgb(CByte(70), CByte(70), CByte(70))
+        Ultra2DChart1.ShowLineHoverCrosshair = True
         Ultra2DChart1.Size = New Size(920, 478)
         Ultra2DChart1.TabIndex = 0
         Ultra2DChart1.ValueLabelFormat = "0.###"

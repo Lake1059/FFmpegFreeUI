@@ -19,12 +19,21 @@ Public Class Form_v6_集成工具_质量评测
     Private 取消令牌源 As CancellationTokenSource = Nothing
     Private 正在评测 As Boolean = False
     Private 最后动态图表刷新Tick As Long = 0
+    Private ReadOnly 评测记录锁 As New Object()
+    Private 当前评测记录 As StringBuilder = Nothing
+    Private 最后评测记录 As String = ""
 
     Private Enum 指标类型
         PSNR
         SSIM
         VMAF
         XPSNR
+    End Enum
+
+    Private Enum 覆盖已有成绩决策
+        取消任务
+        覆盖
+        不覆盖
     End Enum
 
     Private Shared ReadOnly 全部指标 As 指标类型() = {指标类型.PSNR, 指标类型.SSIM, 指标类型.VMAF, 指标类型.XPSNR}
@@ -79,6 +88,7 @@ Public Class Form_v6_集成工具_质量评测
         绑定文件拖入(Panel6, False)
         调整列表交互区域()
         调整列宽()
+        调整底部按钮布局()
     End Sub
 
     Private Sub 初始化控件()
@@ -228,16 +238,31 @@ Public Class Form_v6_集成工具_质量评测
             取消当前评测()
             Exit Sub
         End If
-        If Not 验证评测参数() Then Exit Sub
+        If Not 验证评测参数() Then
+            Exit Sub
+        End If
 
+        Dim metrics = 获取选中指标()
+        Dim itemsToRun = 获取待评测项()
+        Dim overwriteDecision = 获取覆盖已有成绩决策(itemsToRun, metrics)
+        If overwriteDecision = 覆盖已有成绩决策.取消任务 Then Exit Sub
+
+        开始新的评测记录(metrics, itemsToRun)
         正在评测 = True
         取消令牌源 = New CancellationTokenSource()
         设置运行状态(True)
+        Dim runStatus = "完成"
         Try
-            Await 开始评测Async(取消令牌源.Token)
+            Await 开始评测Async(取消令牌源.Token, metrics, itemsToRun, overwriteDecision)
         Catch ex As OperationCanceledException
-            标记未完成项为已取消()
+            runStatus = "已取消"
+            追加评测记录("评测已取消")
+            标记未完成项为已取消(metrics)
+        Catch ex As Exception
+            runStatus = "失败"
+            追加评测记录($"评测异常：{ex.Message}")
         Finally
+            结束当前评测记录(runStatus, metrics, itemsToRun)
             清理当前进程()
             取消令牌源?.Dispose()
             取消令牌源 = Nothing
@@ -295,25 +320,154 @@ Public Class Form_v6_集成工具_质量评测
             ToList()
     End Function
 
-    Private Async Function 开始评测Async(token As CancellationToken) As Task
+    Private Function 获取评测起始索引() As Integer
+        If UltraDetailListView1.SelectedItems.Count = 0 Then Return 0
+
+        For i = 0 To UltraDetailListView1.Items.Count - 1
+            For Each selectedItem In UltraDetailListView1.SelectedItems
+                If Object.ReferenceEquals(selectedItem, UltraDetailListView1.Items(i)) Then Return i
+            Next
+        Next
+        Return 0
+    End Function
+
+    Private Function 获取待评测项() As List(Of UltraDetailListView.ListItem)
+        Dim result As New List(Of UltraDetailListView.ListItem)
+        If UltraDetailListView1.Items.Count = 0 Then Return result
+
+        For i = 获取评测起始索引() To UltraDetailListView1.Items.Count - 1
+            result.Add(UltraDetailListView1.Items(i))
+        Next
+        Return result
+    End Function
+
+    Private Shared Function 指标已有成绩(data As 评测文件数据, metric As 指标类型) As Boolean
+        If data Is Nothing Then Return False
+        Dim result As 指标结果数据 = Nothing
+        Return data.指标结果.TryGetValue(metric, result) AndAlso result IsNot Nothing AndAlso result.成功
+    End Function
+
+    Private Function 获取覆盖已有成绩决策(items As List(Of UltraDetailListView.ListItem), metrics As List(Of 指标类型)) As 覆盖已有成绩决策
+        Dim overwriteCount As Integer = 0
+        获取即将覆盖成绩签名(items, metrics, overwriteCount)
+        If overwriteCount = 0 Then Return 覆盖已有成绩决策.覆盖
+
+        Dim result = ExFloatingBox(
+            MB_开始评测,
+            $"检测到 {overwriteCount} 个已勾选项目已经有成绩。请选择是否覆盖已有对应成绩；点其他地方将取消本次任务。",
+            {"确认覆盖", "不覆盖"},
+            MsgBoxStyle.Question,
+            1)
+        Select Case result
+            Case 0
+                Return 覆盖已有成绩决策.覆盖
+            Case 1
+                Return 覆盖已有成绩决策.不覆盖
+            Case Else
+                Return 覆盖已有成绩决策.取消任务
+        End Select
+    End Function
+
+    Private Function 获取即将覆盖成绩签名(items As IEnumerable(Of UltraDetailListView.ListItem), metrics As IEnumerable(Of 指标类型), ByRef overwriteCount As Integer) As String
+        overwriteCount = 0
+        Dim result As New List(Of String)
+        If items Is Nothing OrElse metrics Is Nothing Then Return ""
+
+        Dim metricList = metrics.ToList()
+        For Each item In items
+            Dim data = 获取项数据(item)
+            For Each metric In metricList
+                If Not 指标已有成绩(data, metric) Then Continue For
+                result.Add($"{data.文件路径}{vbTab}{metric}")
+                overwriteCount += 1
+            Next
+        Next
+
+        Return String.Join(vbLf, result)
+    End Function
+
+    Private Sub 开始新的评测记录(metrics As IEnumerable(Of 指标类型), items As IEnumerable(Of UltraDetailListView.ListItem))
+        Dim sb As New StringBuilder()
+        sb.AppendLine("3FUI 质量评测记录")
+        sb.AppendLine($"开始时间：{DateTime.Now:yyyy-MM-dd HH:mm:ss}")
+        sb.AppendLine($"原视频：{MTB_原视频文件路径.Text.Trim()}")
+        sb.AppendLine($"评测项目：{String.Join(", ", metrics.Select(Function(metric) 获取指标名称(metric)))}")
+        sb.AppendLine($"开始时间参数：{If(String.IsNullOrWhiteSpace(MTB_从头开始.Text), "未设置", MTB_从头开始.Text.Trim())}")
+        sb.AppendLine($"评测长度参数：{If(String.IsNullOrWhiteSpace(MTB_评测时长.Text), "完整全片", MTB_评测时长.Text.Trim())}")
+        sb.AppendLine("待评测文件：")
+        For Each item In items
+            sb.AppendLine($"  {获取项数据(item).文件路径}")
+        Next
+        sb.AppendLine()
+
+        SyncLock 评测记录锁
+            当前评测记录 = sb
+            最后评测记录 = ""
+        End SyncLock
+    End Sub
+
+    Private Sub 追加评测记录(text As String)
+        SyncLock 评测记录锁
+            If 当前评测记录 Is Nothing Then Exit Sub
+            当前评测记录.AppendLine(text)
+        End SyncLock
+    End Sub
+
+    Private Sub 追加FFmpeg输出记录(line As String)
+        If line Is Nothing Then Exit Sub
+        追加评测记录(line)
+    End Sub
+
+    Private Sub 追加最终成绩记录(metrics As IEnumerable(Of 指标类型), items As IEnumerable(Of UltraDetailListView.ListItem))
+        追加评测记录("")
+        追加评测记录("最终成绩")
+        For Each item In items
+            Dim data = 获取项数据(item)
+            追加评测记录($"文件：{data.文件路径}")
+            追加评测记录($"状态：{data.状态}")
+            For Each metric In metrics
+                Dim result As 指标结果数据 = Nothing
+                If data.指标结果.TryGetValue(metric, result) AndAlso result IsNot Nothing AndAlso result.成功 Then
+                    追加评测记录($"  {获取指标名称(metric)}：{格式化分数(result.汇总值, metric)}")
+                ElseIf data.指标结果.TryGetValue(metric, result) AndAlso result IsNot Nothing AndAlso Not String.IsNullOrWhiteSpace(result.错误信息) Then
+                    追加评测记录($"  {获取指标名称(metric)}：失败，{result.错误信息}")
+                Else
+                    追加评测记录($"  {获取指标名称(metric)}：未评测")
+                End If
+            Next
+        Next
+    End Sub
+
+    Private Sub 结束当前评测记录(status As String, metrics As IEnumerable(Of 指标类型), items As IEnumerable(Of UltraDetailListView.ListItem))
+        If 当前评测记录 Is Nothing Then Exit Sub
+        追加评测记录("")
+        追加评测记录($"结束时间：{DateTime.Now:yyyy-MM-dd HH:mm:ss}")
+        追加评测记录($"结束状态：{status}")
+        追加最终成绩记录(metrics, items)
+        SyncLock 评测记录锁
+            最后评测记录 = 当前评测记录.ToString()
+            当前评测记录 = Nothing
+        End SyncLock
+    End Sub
+
+    Private Async Function 开始评测Async(token As CancellationToken, metrics As List(Of 指标类型), itemsToRun As List(Of UltraDetailListView.ListItem), overwriteDecision As 覆盖已有成绩决策) As Task
         Dim reference = MTB_原视频文件路径.Text.Trim()
-        Dim metrics = 获取选中指标()
         Dim startTime = MTB_从头开始.Text.Trim()
         Dim duration = MTB_评测时长.Text.Trim()
         Dim referenceInfo = Await 获取视频流信息Async(reference, token)
+        Dim overwriteExisting = overwriteDecision = 覆盖已有成绩决策.覆盖
 
-        For Each item In UltraDetailListView1.Items
+        For Each item In itemsToRun
             Dim data = 获取项数据(item)
             data.状态 = "等待"
             data.最近错误 = ""
             For Each metric In metrics
-                data.指标结果.Remove(metric)
-                设置指标文本(item, metric, "等待")
+                If overwriteExisting OrElse Not 指标已有成绩(data, metric) Then 设置指标文本(item, metric, "等待")
             Next
         Next
         刷新全部评分颜色()
 
-        For Each item In UltraDetailListView1.Items.ToArray()
+        For Each item In itemsToRun.ToArray()
             token.ThrowIfCancellationRequested()
             Dim data = 获取项数据(item)
             data.状态 = "处理中"
@@ -323,6 +477,15 @@ Public Class Form_v6_集成工具_质量评测
 
             For Each metric In metrics
                 token.ThrowIfCancellationRequested()
+                If Not overwriteExisting AndAlso 指标已有成绩(data, metric) Then
+                    恢复指标文本(item, metric)
+                    追加评测记录("")
+                    追加评测记录($"文件：{data.文件路径}")
+                    追加评测记录($"项目：{获取指标名称(metric)}")
+                    追加评测记录("跳过：已有成绩，用户选择不覆盖")
+                    Continue For
+                End If
+
                 设置指标文本(item, metric, "处理中")
                 刷新列表项显示()
                 Dim result As New 指标结果数据()
@@ -359,6 +522,11 @@ Public Class Form_v6_集成工具_质量评测
         Dim tempPath = Path.Combine(Path.GetTempPath(), $"3fui_quality_{Guid.NewGuid():N}_{metric.ToString().ToLowerInvariant()}.log")
         Dim vmafPool = If(metric = 指标类型.VMAF, 获取下拉框文本(MCB_Pooling, "mean"), "")
         Dim arguments = 构建指标命令(reference, distorted, metric, startTime, duration, tempPath, referenceInfo, distortedInfo)
+        追加评测记录("")
+        追加评测记录($"文件：{distorted}")
+        追加评测记录($"项目：{获取指标名称(metric)}")
+        追加评测记录($"命令行：{获取FFmpeg文件名()} {arguments}")
+        追加评测记录("FFmpeg 输出：")
         Dim pollCts As CancellationTokenSource = Nothing
         Dim pollTask As Task = Task.CompletedTask
         Dim canceledException As OperationCanceledException = Nothing
@@ -368,7 +536,11 @@ Public Class Form_v6_集成工具_质量评测
                 pollTask = 轮询Stats文件Async(tempPath, metric, item, result, pollCts.Token)
             End If
 
-            Dim processResult = Await 运行FFmpegAsync(arguments, token, Sub(line) 处理FFmpeg实时输出(line, metric, item, result))
+            Dim processResult = Await 运行FFmpegAsync(arguments, token,
+                Sub(line)
+                    追加FFmpeg输出记录(line)
+                    处理FFmpeg实时输出(line, metric, item, result)
+                End Sub)
             If token.IsCancellationRequested Then
                 result.错误信息 = "已取消"
             ElseIf processResult.ExitCode <> 0 Then
@@ -378,10 +550,20 @@ Public Class Form_v6_集成工具_质量评测
                 If Not parsed.成功 AndAlso String.IsNullOrWhiteSpace(parsed.错误信息) Then parsed.错误信息 = "未能解析评测结果"
                 覆盖指标结果(result, parsed)
             End If
+            If result.成功 Then
+                追加评测记录($"本项结果：{格式化分数(result.汇总值, metric)}")
+            ElseIf Not String.IsNullOrWhiteSpace(result.错误信息) Then
+                追加评测记录($"本项结果：失败，{result.错误信息}")
+            Else
+                追加评测记录("本项结果：失败")
+            End If
         Catch ex As OperationCanceledException
+            result.错误信息 = "已取消"
+            追加评测记录("本项结果：已取消")
             canceledException = ex
         Catch ex As Exception
             result.错误信息 = ex.Message
+            追加评测记录($"本项结果：失败，{ex.Message}")
         Finally
             If pollCts IsNot Nothing Then pollCts.Cancel()
         End Try
@@ -508,7 +690,7 @@ Public Class Form_v6_集成工具_质量评测
             Case 指标类型.SSIM
                 filter = $"{dist}{ref}[dist][ref]ssim=eof_action=endall:stats_file={引用过滤器参数(tempPath)}"
             Case 指标类型.XPSNR
-                filter = $"{dist}{ref}[dist][ref]xpsnr=eof_action=endall:stats_file={引用过滤器参数(tempPath)}"
+                filter = $"{dist}{ref}[ref][dist]xpsnr=eof_action=endall:stats_file={引用过滤器参数(tempPath)}"
             Case 指标类型.VMAF
                 Dim pool = 获取下拉框文本(MCB_Pooling, "mean")
                 Dim subsample = 获取下拉框文本(MCB_SubSample, "1")
@@ -813,13 +995,17 @@ Public Class Form_v6_集成工具_质量评测
         Return fallback
     End Function
 
+    Private Shared Function 获取FFmpeg文件名() As String
+        Return If(设置_v6.实例对象.替代进程文件名 <> "", 设置_v6.实例对象.替代进程文件名, "ffmpeg")
+    End Function
+
     Private Async Function 运行FFmpegAsync(arguments As String, token As CancellationToken, onLine As Action(Of String)) As Task(Of 进程运行结果)
         Dim tcs As New TaskCompletionSource(Of Integer)(TaskCreationOptions.RunContinuationsAsynchronously)
         Dim stdoutClosed As New TaskCompletionSource(Of Boolean)(TaskCreationOptions.RunContinuationsAsynchronously)
         Dim stderrClosed As New TaskCompletionSource(Of Boolean)(TaskCreationOptions.RunContinuationsAsynchronously)
         Dim output As New StringBuilder()
         Dim process As New Process()
-        process.StartInfo.FileName = If(设置_v6.实例对象.替代进程文件名 <> "", 设置_v6.实例对象.替代进程文件名, "ffmpeg")
+        process.StartInfo.FileName = 获取FFmpeg文件名()
         process.StartInfo.WorkingDirectory = If(设置_v6.实例对象.工作目录 <> "", 设置_v6.实例对象.工作目录, "")
         process.StartInfo.Arguments = arguments
         process.StartInfo.UseShellExecute = False
@@ -1090,6 +1276,7 @@ Public Class Form_v6_集成工具_质量评测
         MB_移除全部文件.Enabled = Not running
         MB_清除选中记录.Enabled = Not running
         MB_清除全部记录.Enabled = Not running
+        MB_导出记录.Enabled = Not running
         UltraDetailListView1.AllowDragReorder = Not running
     End Sub
 
@@ -1115,14 +1302,23 @@ Public Class Form_v6_集成工具_质量评测
         End SyncLock
     End Sub
 
-    Private Sub 标记未完成项为已取消()
+    Private Sub 标记未完成项为已取消(metrics As IEnumerable(Of 指标类型))
+        Dim metricList = If(metrics, Enumerable.Empty(Of 指标类型)()).ToList()
         For Each item In UltraDetailListView1.Items
             Dim data = 获取项数据(item)
             If data.状态 = "处理中" Then
                 data.状态 = "已取消"
                 data.最近错误 = "已取消"
-                For Each metric In 获取选中指标()
-                    If Not data.指标结果.ContainsKey(metric) Then 设置指标文本(item, metric, "已取消")
+                For Each metric In metricList
+                    Dim result As 指标结果数据 = Nothing
+                    If Not data.指标结果.TryGetValue(metric, result) OrElse result Is Nothing OrElse (Not result.成功 AndAlso String.IsNullOrWhiteSpace(result.错误信息)) OrElse String.Equals(result.错误信息, "已取消", StringComparison.Ordinal) Then
+                        设置指标文本(item, metric, "已取消")
+                    End If
+                Next
+            ElseIf data.状态 = "等待" Then
+                data.状态 = If(data.指标结果.Values.Any(Function(x) x.成功), "完成", "未评测")
+                For Each metric In metricList
+                    恢复指标文本(item, metric)
                 Next
             End If
         Next
@@ -1134,6 +1330,16 @@ Public Class Form_v6_集成工具_质量评测
         If item.SubItems.Count > index Then
             item.SubItems(index).Text = text
             item.SubItems(index).ForeColor = Color.Empty
+        End If
+    End Sub
+
+    Private Sub 恢复指标文本(item As UltraDetailListView.ListItem, metric As 指标类型)
+        Dim data = 获取项数据(item)
+        Dim result As 指标结果数据 = Nothing
+        If data.指标结果.TryGetValue(metric, result) AndAlso result IsNot Nothing AndAlso result.成功 Then
+            设置指标文本(item, metric, 格式化分数(result.汇总值, metric))
+        Else
+            设置指标文本(item, metric, "未评测")
         End If
     End Sub
 
@@ -1244,6 +1450,26 @@ Public Class Form_v6_集成工具_质量评测
         刷新图表()
     End Sub
 
+    Private Sub MB_导出记录_Click(sender As Object, e As EventArgs) Handles MB_导出记录.Click
+        If 正在评测 Then
+            ExFloatingTip(MB_导出记录, "评测结束后才能导出记录", 1800)
+            Exit Sub
+        End If
+        If String.IsNullOrWhiteSpace(最后评测记录) Then
+            ExFloatingTip(MB_导出记录, "没有可导出的最后一次评测记录", 1800)
+            Exit Sub
+        End If
+
+        Using d As New SaveFileDialog With {
+            .Filter = "文本文档|*.txt|所有文件|*.*",
+            .FileName = $"quality_report_{DateTime.Now:yyyyMMdd_HHmmss}.txt"
+        }
+            If d.ShowDialog(Me) <> DialogResult.OK Then Exit Sub
+            File.WriteAllText(d.FileName, 最后评测记录, New UTF8Encoding(False))
+            ExFloatingTip(MB_导出记录, "已导出记录", 1200)
+        End Using
+    End Sub
+
     Private Sub MB_清除选中记录_Click(sender As Object, e As EventArgs) Handles MB_清除选中记录.Click
         For Each item In UltraDetailListView1.SelectedItems
             清除记录(item)
@@ -1311,6 +1537,75 @@ Public Class Form_v6_集成工具_质量评测
     Private Sub UltraDetailListView1_SizeChanged(sender As Object, e As EventArgs) Handles UltraDetailListView1.SizeChanged
         调整列表交互区域()
         调整列宽()
+    End Sub
+
+    Private Sub Panel6_SizeChanged(sender As Object, e As EventArgs) Handles Panel6.SizeChanged
+        调整底部按钮布局()
+    End Sub
+
+    Private Sub 调整底部按钮布局()
+        If Panel6 Is Nothing Then Exit Sub
+
+        Dim buttons As Control() = {
+            MB_开始评测,
+            MB_清除选中记录,
+            MB_清除全部记录,
+            MB_移除选中文件,
+            MB_移除全部文件,
+            MB_导出记录,
+            MB_图表窗口
+        }
+        Dim gaps As Control() = {
+            JustEmptyControl6,
+            JustEmptyControl3,
+            JustEmptyControl4,
+            JustEmptyControl7,
+            JustEmptyControl8,
+            JustEmptyControl9
+        }
+        If buttons.Any(Function(button) button Is Nothing) Then Exit Sub
+
+        Panel6.SuspendLayout()
+        Try
+            Dim layoutOrder As Control() = {
+                MB_开始评测,
+                JustEmptyControl6,
+                MB_清除选中记录,
+                JustEmptyControl3,
+                MB_清除全部记录,
+                JustEmptyControl4,
+                MB_移除选中文件,
+                JustEmptyControl7,
+                MB_移除全部文件,
+                JustEmptyControl8,
+                MB_导出记录,
+                JustEmptyControl9,
+                MB_图表窗口
+            }
+            For i = 0 To layoutOrder.Length - 1
+                If layoutOrder(i) IsNot Nothing Then Panel6.Controls.SetChildIndex(layoutOrder(i), layoutOrder.Length - 1 - i)
+            Next
+
+            For Each button In buttons
+                button.Dock = DockStyle.Left
+            Next
+            For Each gap In gaps
+                If gap Is Nothing Then Continue For
+                gap.Dock = DockStyle.Left
+                gap.Width = CInt(10 * 获取Dpi比例())
+            Next
+
+            Dim gapWidth = gaps.Where(Function(gap) gap IsNot Nothing AndAlso gap.Visible).Sum(Function(gap) gap.Width)
+            Dim available = Math.Max(0, Panel6.ClientSize.Width - Panel6.Padding.Left - Panel6.Padding.Right - gapWidth)
+            Dim baseWidth = If(buttons.Length = 0, 0, available \ buttons.Length)
+            Dim remainder = If(buttons.Length = 0, 0, available Mod buttons.Length)
+
+            For i = 0 To buttons.Length - 1
+                buttons(i).Width = baseWidth + If(i < remainder, 1, 0)
+            Next
+        Finally
+            Panel6.ResumeLayout()
+        End Try
     End Sub
 
     Private Sub 调整列表交互区域()

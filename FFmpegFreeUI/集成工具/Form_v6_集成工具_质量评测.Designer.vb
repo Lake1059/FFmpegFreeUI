@@ -22,11 +22,11 @@ Partial Class Form_v6_集成工具_质量评测
     '不要使用代码编辑器修改它。
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim ListColumn1 As LakeUI.UltraDetailListView.ListColumn = New LakeUI.UltraDetailListView.ListColumn()
-        Dim ListColumn2 As LakeUI.UltraDetailListView.ListColumn = New LakeUI.UltraDetailListView.ListColumn()
-        Dim ListColumn3 As LakeUI.UltraDetailListView.ListColumn = New LakeUI.UltraDetailListView.ListColumn()
-        Dim ListColumn4 As LakeUI.UltraDetailListView.ListColumn = New LakeUI.UltraDetailListView.ListColumn()
-        Dim ListColumn5 As LakeUI.UltraDetailListView.ListColumn = New LakeUI.UltraDetailListView.ListColumn()
+        Dim ListColumn6 As LakeUI.UltraDetailListView.ListColumn = New LakeUI.UltraDetailListView.ListColumn()
+        Dim ListColumn7 As LakeUI.UltraDetailListView.ListColumn = New LakeUI.UltraDetailListView.ListColumn()
+        Dim ListColumn8 As LakeUI.UltraDetailListView.ListColumn = New LakeUI.UltraDetailListView.ListColumn()
+        Dim ListColumn9 As LakeUI.UltraDetailListView.ListColumn = New LakeUI.UltraDetailListView.ListColumn()
+        Dim ListColumn10 As LakeUI.UltraDetailListView.ListColumn = New LakeUI.UltraDetailListView.ListColumn()
         ModernPanel1 = New LakeUI.ModernPanel()
         UltraDetailListView1 = New LakeUI.UltraDetailListView()
         Panel6 = New Panel()
@@ -67,6 +67,9 @@ Partial Class Form_v6_集成工具_质量评测
         JustEmptyControl5 = New LakeUI.JustEmptyControl()
         ModernButton5 = New LakeUI.ModernButton()
         HtmlColorLabel1 = New LakeUI.HtmlColorLabel()
+        MB_导出记录 = New LakeUI.ModernButton()
+        JustEmptyControl8 = New LakeUI.JustEmptyControl()
+        JustEmptyControl9 = New LakeUI.JustEmptyControl()
         ModernPanel1.SuspendLayout()
         Panel6.SuspendLayout()
         Panel4.SuspendLayout()
@@ -93,7 +96,7 @@ Partial Class Form_v6_集成工具_质量评测
         ModernPanel1.Location = New Point(0, 0)
         ModernPanel1.Name = "ModernPanel1"
         ModernPanel1.Padding = New Padding(20)
-        ModernPanel1.Size = New Size(785, 596)
+        ModernPanel1.Size = New Size(817, 603)
         ModernPanel1.TabIndex = 0
         ' 
         ' UltraDetailListView1
@@ -102,21 +105,21 @@ Partial Class Form_v6_集成工具_质量评测
         UltraDetailListView1.BackgroundColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         UltraDetailListView1.BorderRadius = 10
         UltraDetailListView1.BorderSize = 0
-        ListColumn1.Text = "文件"
-        ListColumn1.Width = 350
-        ListColumn2.Text = "PSNR"
-        ListColumn2.Width = 80
-        ListColumn3.Text = "SSIM"
-        ListColumn3.Width = 80
-        ListColumn4.Text = "VMAF"
-        ListColumn4.Width = 80
-        ListColumn5.Text = "XPSNR"
-        ListColumn5.Width = 80
-        UltraDetailListView1.Columns.Add(ListColumn1)
-        UltraDetailListView1.Columns.Add(ListColumn2)
-        UltraDetailListView1.Columns.Add(ListColumn3)
-        UltraDetailListView1.Columns.Add(ListColumn4)
-        UltraDetailListView1.Columns.Add(ListColumn5)
+        ListColumn6.Text = "文件"
+        ListColumn6.Width = 350
+        ListColumn7.Text = "PSNR"
+        ListColumn7.Width = 80
+        ListColumn8.Text = "SSIM"
+        ListColumn8.Width = 80
+        ListColumn9.Text = "VMAF"
+        ListColumn9.Width = 80
+        ListColumn10.Text = "XPSNR"
+        ListColumn10.Width = 80
+        UltraDetailListView1.Columns.Add(ListColumn6)
+        UltraDetailListView1.Columns.Add(ListColumn7)
+        UltraDetailListView1.Columns.Add(ListColumn8)
+        UltraDetailListView1.Columns.Add(ListColumn9)
+        UltraDetailListView1.Columns.Add(ListColumn10)
         UltraDetailListView1.Dock = DockStyle.Fill
         UltraDetailListView1.DragSelectZoneWidth = 200
         UltraDetailListView1.GroupBorderColor = Color.Silver
@@ -135,11 +138,14 @@ Partial Class Form_v6_集成工具_质量评测
         UltraDetailListView1.ScrollBarTrackColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
         UltraDetailListView1.SelectionRectBorderColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         UltraDetailListView1.SelectionRectFillColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        UltraDetailListView1.Size = New Size(745, 223)
+        UltraDetailListView1.Size = New Size(777, 230)
         UltraDetailListView1.TabIndex = 13
         ' 
         ' Panel6
         ' 
+        Panel6.Controls.Add(MB_导出记录)
+        Panel6.Controls.Add(JustEmptyControl9)
+        Panel6.Controls.Add(JustEmptyControl8)
         Panel6.Controls.Add(MB_移除全部文件)
         Panel6.Controls.Add(JustEmptyControl7)
         Panel6.Controls.Add(MB_图表窗口)
@@ -151,10 +157,10 @@ Partial Class Form_v6_集成工具_质量评测
         Panel6.Controls.Add(JustEmptyControl6)
         Panel6.Controls.Add(MB_开始评测)
         Panel6.Dock = DockStyle.Bottom
-        Panel6.Location = New Point(20, 521)
+        Panel6.Location = New Point(20, 528)
         Panel6.Name = "Panel6"
         Panel6.Padding = New Padding(0, 20, 0, 0)
-        Panel6.Size = New Size(745, 55)
+        Panel6.Size = New Size(777, 55)
         Panel6.TabIndex = 12
         ' 
         ' MB_移除全部文件
@@ -187,9 +193,8 @@ Partial Class Form_v6_集成工具_质量评测
         MB_图表窗口.BorderRadius = 10
         MB_图表窗口.BorderSize = 0
         MB_图表窗口.Dock = DockStyle.Right
-        MB_图表窗口.ForeColor = Color.MediumPurple
         MB_图表窗口.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
-        MB_图表窗口.Location = New Point(645, 20)
+        MB_图表窗口.Location = New Point(677, 20)
         MB_图表窗口.Margin = New Padding(2)
         MB_图表窗口.Name = "MB_图表窗口"
         MB_图表窗口.PressedBackColor1 = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
@@ -293,7 +298,7 @@ Partial Class Form_v6_集成工具_质量评测
         HtmlColorLabel8.Margin = New Padding(2)
         HtmlColorLabel8.Name = "HtmlColorLabel8"
         HtmlColorLabel8.Padding = New Padding(0, 20, 0, 10)
-        HtmlColorLabel8.Size = New Size(745, 55)
+        HtmlColorLabel8.Size = New Size(777, 55)
         HtmlColorLabel8.TabIndex = 11
         HtmlColorLabel8.Text = "<span style=""font-size:13; color:Silver"">对比文件列表</span>   这里放编码之后的文件，原文件放最顶上那个文本框"
         ' 
@@ -308,7 +313,7 @@ Partial Class Form_v6_集成工具_质量评测
         Panel4.Location = New Point(20, 201)
         Panel4.Name = "Panel4"
         Panel4.Padding = New Padding(0, 10, 0, 0)
-        Panel4.Size = New Size(745, 42)
+        Panel4.Size = New Size(777, 42)
         Panel4.TabIndex = 9
         ' 
         ' MCB_SubSample
@@ -410,7 +415,7 @@ Partial Class Form_v6_集成工具_质量评测
         Panel5.Dock = DockStyle.Top
         Panel5.Location = New Point(20, 171)
         Panel5.Name = "Panel5"
-        Panel5.Size = New Size(745, 30)
+        Panel5.Size = New Size(777, 30)
         Panel5.TabIndex = 10
         ' 
         ' HtmlColorLabel7
@@ -460,7 +465,7 @@ Partial Class Form_v6_集成工具_质量评测
         Panel3.Location = New Point(20, 129)
         Panel3.Name = "Panel3"
         Panel3.Padding = New Padding(0, 10, 0, 0)
-        Panel3.Size = New Size(745, 42)
+        Panel3.Size = New Size(777, 42)
         Panel3.TabIndex = 7
         ' 
         ' MCB_XPSNR
@@ -558,7 +563,7 @@ Partial Class Form_v6_集成工具_质量评测
         Panel2.Location = New Point(20, 87)
         Panel2.Name = "Panel2"
         Panel2.Padding = New Padding(0, 10, 0, 0)
-        Panel2.Size = New Size(745, 42)
+        Panel2.Size = New Size(777, 42)
         Panel2.TabIndex = 6
         ' 
         ' MTB_从头开始
@@ -631,7 +636,7 @@ Partial Class Form_v6_集成工具_质量评测
         Panel1.Location = New Point(20, 45)
         Panel1.Name = "Panel1"
         Panel1.Padding = New Padding(0, 10, 0, 0)
-        Panel1.Size = New Size(745, 42)
+        Panel1.Size = New Size(777, 42)
         Panel1.TabIndex = 5
         ' 
         ' MTB_原视频文件路径
@@ -647,7 +652,7 @@ Partial Class Form_v6_集成工具_质量评测
         MTB_原视频文件路径.Name = "MTB_原视频文件路径"
         MTB_原视频文件路径.Padding = New Padding(10, 0, 10, 0)
         MTB_原视频文件路径.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        MTB_原视频文件路径.Size = New Size(615, 32)
+        MTB_原视频文件路径.Size = New Size(647, 32)
         MTB_原视频文件路径.TabIndex = 14
         MTB_原视频文件路径.WaterText = "原视频文件路径"
         MTB_原视频文件路径.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
@@ -684,16 +689,47 @@ Partial Class Form_v6_集成工具_质量评测
         HtmlColorLabel1.Location = New Point(20, 20)
         HtmlColorLabel1.Margin = New Padding(2)
         HtmlColorLabel1.Name = "HtmlColorLabel1"
-        HtmlColorLabel1.Size = New Size(745, 25)
+        HtmlColorLabel1.Size = New Size(777, 25)
         HtmlColorLabel1.TabIndex = 4
         HtmlColorLabel1.Text = "<span style=""font-size:13; color:Silver"">简易质量评测</span>   任何一种评测标准都不是万能的，请以人眼视觉感受为准"
+        ' 
+        ' MB_导出记录
+        ' 
+        MB_导出记录.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MB_导出记录.BorderRadius = 10
+        MB_导出记录.BorderSize = 0
+        MB_导出记录.Dock = DockStyle.Fill
+        MB_导出记录.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        MB_导出记录.Location = New Point(550, 20)
+        MB_导出记录.Margin = New Padding(2)
+        MB_导出记录.Name = "MB_导出记录"
+        MB_导出记录.PressedBackColor1 = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
+        MB_导出记录.Size = New Size(117, 35)
+        MB_导出记录.TabIndex = 16
+        MB_导出记录.Text = "导出记录"
+        ' 
+        ' JustEmptyControl8
+        ' 
+        JustEmptyControl8.Dock = DockStyle.Left
+        JustEmptyControl8.Location = New Point(540, 20)
+        JustEmptyControl8.Name = "JustEmptyControl8"
+        JustEmptyControl8.Size = New Size(10, 35)
+        JustEmptyControl8.TabIndex = 15
+        ' 
+        ' JustEmptyControl9
+        ' 
+        JustEmptyControl9.Dock = DockStyle.Right
+        JustEmptyControl9.Location = New Point(667, 20)
+        JustEmptyControl9.Name = "JustEmptyControl9"
+        JustEmptyControl9.Size = New Size(10, 35)
+        JustEmptyControl9.TabIndex = 17
         ' 
         ' Form_v6_集成工具_质量评测
         ' 
         AutoScaleDimensions = New SizeF(96F, 96F)
         AutoScaleMode = AutoScaleMode.Dpi
         BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
-        ClientSize = New Size(785, 596)
+        ClientSize = New Size(817, 603)
         Controls.Add(ModernPanel1)
         Font = New Font("Microsoft YaHei UI", 10F)
         ForeColor = Color.Silver
@@ -751,4 +787,7 @@ Partial Class Form_v6_集成工具_质量评测
     Friend WithEvents ModernButton5 As LakeUI.ModernButton
     Friend WithEvents MB_移除全部文件 As LakeUI.ModernButton
     Friend WithEvents JustEmptyControl7 As LakeUI.JustEmptyControl
+    Friend WithEvents MB_导出记录 As LakeUI.ModernButton
+    Friend WithEvents JustEmptyControl9 As LakeUI.JustEmptyControl
+    Friend WithEvents JustEmptyControl8 As LakeUI.JustEmptyControl
 End Class

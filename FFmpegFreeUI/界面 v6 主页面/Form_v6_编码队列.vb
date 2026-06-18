@@ -67,11 +67,11 @@ Public Class Form_v6_编码队列
     End Sub
 
     Private Function 创建任务行(task As 编码任务_v6) As UltraDetailListView.ListItem
-        Dim item As New UltraDetailListView.ListItem()
-        item.Tag = task.ID
+        Dim item As New UltraDetailListView.ListItem With {.Tag = task.ID}
         For i = 0 To 7
             item.SubItems.Add(New UltraDetailListView.ListSubItem())
         Next
+        展示策略.应用(task, item)
         Return item
     End Function
 
@@ -211,7 +211,7 @@ Public Class Form_v6_编码队列
         If ids.Count <> 1 Then Exit Sub
         Dim task = 编码队列_v6.根据ID获取任务(ids(0))
         If task Is Nothing Then Exit Sub
-        Dim target = If(task.状态 = 编码任务状态_v6.未处理 OrElse Not File.Exists(task.输出文件), task.输入文件, task.输出文件)
+        Dim target = If(task.状态 = 编码任务状态_v6.未处理, task.输入文件, task.输出文件)
         If File.Exists(target) Then Process.Start("explorer", "/select,""" & target & """")
     End Sub
 

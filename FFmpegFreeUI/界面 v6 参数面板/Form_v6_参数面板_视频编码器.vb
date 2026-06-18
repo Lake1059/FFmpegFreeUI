@@ -130,9 +130,10 @@ Public Class Form_v6_参数面板_视频编码器
         If 编码器.视觉体积均衡点 <> "" Then 片段.Add("视觉体积均衡点：" & 编码器.视觉体积均衡点)
         If 编码器.无损模式说明 <> "" Then 片段.Add("无损模式：" & 编码器.无损模式说明)
 
+        ' 编码预设、配置文件、场景优化和像素格式都有独立下拉框，不要重复写入编码器 tooltip。
         添加非空片段(片段, 格式化图片质量(编码器.图片质量))
         添加非空片段(片段, 格式化特殊参数列表("进阶质量参数", 编码器.特殊参数列表.Where(AddressOf 是主提示质量参数).ToList()))
-        添加非空片段(片段, 格式化特殊参数列表("其他特殊参数", 编码器.特殊参数列表.Where(Function(x) Not 是质量相关参数(x)).ToList()))
+        添加非空片段(片段, 格式化特殊参数列表("其他特殊参数", 编码器.特殊参数列表.Where(Function(x) Not 是主提示质量参数(x)).ToList()))
         添加非空片段(片段, 格式化特殊参数列表("必要/建议参数", 编码器.必要参数列表))
         添加非空片段(片段, 格式化特殊参数列表("默认附加参数", 编码器.默认附加参数列表))
 
@@ -186,7 +187,8 @@ Public Class Form_v6_参数面板_视频编码器
         If 图片质量 Is Nothing OrElse 图片质量.参数名 = "" Then Return ""
 
         Dim 说明 As New List(Of String)
-        If 图片质量.值范围说明 <> "" Then 说明.Add(图片质量.值范围说明)
+        Dim 值范围说明 = 补全通用值说明(图片质量.值范围说明)
+        If 值范围说明 <> "" Then 说明.Add(值范围说明)
         If 图片质量.默认值 <> "" Then 说明.Add("默认 " & 图片质量.默认值)
         Return "图片质量：" & 图片质量.参数名 & If(说明.Count > 0, "：" & String.Join("；", 说明), "")
     End Function
@@ -199,17 +201,31 @@ Public Class Form_v6_参数面板_视频编码器
             If 参数 Is Nothing OrElse 参数.参数名 = "" Then Continue For
 
             Dim 说明 As New List(Of String)
-            If 参数.值范围说明 <> "" Then 说明.Add(参数.值范围说明)
+            Dim 值范围说明 = 补全通用值说明(参数.值范围说明)
+            If 值范围说明 <> "" Then 说明.Add(值范围说明)
             If 参数.默认值 <> "" Then 说明.Add("默认 " & 参数.默认值)
             If 参数.是否必要 Then 说明.Add("必要")
             If 参数.说明 <> "" Then 说明.Add(参数.说明)
             If 参数.值列表.Count > 0 Then 说明.Add("可选 " & String.Join("、", 参数.值列表))
 
-            行.Add(参数.参数名 & If(说明.Count > 0, "：" & String.Join("；", 说明), ""))
+            行.Add("  " & 参数.参数名 & If(说明.Count > 0, "：" & String.Join("；", 说明), ""))
         Next
 
         If 行.Count = 1 Then Return ""
         Return String.Join(vbCrLf, 行)
+    End Function
+
+    Private Function 补全通用值说明(值范围说明 As String) As String
+        Dim 文本 = If(值范围说明, "").Trim()
+        If 文本 = "" Then Return ""
+        If 文本.Contains("0/1") AndAlso
+           Not 文本.Contains("0=关闭") AndAlso
+           Not 文本.Contains("0 关闭") AndAlso
+           Not 文本.Contains("0 无限") AndAlso
+           Not 文本.Contains("1 不循环") Then
+            文本 &= "；0=关闭，1=开启"
+        End If
+        Return 文本
     End Function
 
     Private Function 是质量相关参数(参数 As 视频编码器数据库_v6.编码器特殊参数数据) As Boolean
@@ -234,8 +250,8 @@ Public Class Form_v6_参数面板_视频编码器
                 Return True
         End Select
 
-        Return 参数名.IndexOf("qp", StringComparison.OrdinalIgnoreCase) >= 0 OrElse
-               参数名.IndexOf("quality", StringComparison.OrdinalIgnoreCase) >= 0
+        Return 参数名.Contains("qp", StringComparison.OrdinalIgnoreCase) OrElse
+               参数名.Contains("quality", StringComparison.OrdinalIgnoreCase)
     End Function
 
     Private Function 是主提示质量参数(参数 As 视频编码器数据库_v6.编码器特殊参数数据) As Boolean
@@ -261,16 +277,5 @@ Public Class Form_v6_参数面板_视频编码器
         })
     End Sub
 
-    Private Sub MCB_编码预设_SelectedIndexChanged(sender As Object, e As EventArgs) Handles MCB_编码预设.SelectedIndexChanged
-
-    End Sub
-
-    Private Sub MCB_配置文件_SelectedIndexChanged(sender As Object, e As EventArgs) Handles MCB_配置文件.SelectedIndexChanged
-
-    End Sub
-
-    Private Sub MCB_场景优化_SelectedIndexChanged(sender As Object, e As EventArgs) Handles MCB_场景优化.SelectedIndexChanged
-
-    End Sub
 
 End Class

@@ -4,6 +4,7 @@ Imports Microsoft.WindowsAPICodePack.Dialogs
 Public Class Form_v6_参数面板_输出文件设置
 
     Private 后缀菜单已初始化 As Boolean = False
+    Private 正在选择输出位置 As Boolean = False
 
     Private Sub Form_v6_参数面板_输出文件设置_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         绑定路径下拉框拖拽(MCB_输出位置, 路径下拉框拖拽模式.文件夹路径)
@@ -79,14 +80,20 @@ Public Class Form_v6_参数面板_输出文件设置
     End Sub
 
     Private Sub MCB_输出位置_SelectedIndexChanged(sender As Object, e As EventArgs) Handles MCB_输出位置.SelectedIndexChanged
+        If 正在选择输出位置 Then Exit Sub
         If MCB_输出位置.SelectedIndex = 1 Then
-            Dim dialog As New CommonOpenFileDialog With {.IsFolderPicker = True}
-            If dialog.ShowDialog() = CommonFileDialogResult.Ok Then
-                MCB_输出位置.Text = 规范化文件夹路径(dialog.FileName)
-            Else
-                MCB_输出位置.SelectedIndex = 0
-            End If
-        ElseIf MCB_输出位置.SelectedIndex < 0 Then
+            正在选择输出位置 = True
+            Try
+                Dim dialog As New CommonOpenFileDialog With {.IsFolderPicker = True}
+                If dialog.ShowDialog() = CommonFileDialogResult.Ok Then
+                    MCB_输出位置.Text = 规范化文件夹路径(dialog.FileName)
+                Else
+                    MCB_输出位置.SelectedIndex = 0
+                End If
+            Finally
+                正在选择输出位置 = False
+            End Try
+        ElseIf MCB_输出位置.SelectedIndex < 0 AndAlso MCB_输出位置.Text.Trim() = "" Then
             MCB_输出位置.SelectedIndex = 0
         End If
     End Sub

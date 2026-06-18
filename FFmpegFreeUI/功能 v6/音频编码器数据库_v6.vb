@@ -107,59 +107,59 @@ Public Class 音频编码器数据库_v6
             是否禁用:=True))
 
         加入编码器(基础("aac.native", "AAC", "aac", "FFmpeg 原生 AAC 编码器，兼容性好，适合作为通用默认选择。",
-            质量参数:=参数列表(参数("-q:a", "VBR 质量，常用 0.1 ~ 2.0，越高越好"), 参数("-b:a", "CBR/ABR 目标比特率")),
-            特殊参数:=参数列表(参数("-aac_coder", "twoloop/fast", "twoloop 质量优先，fast 速度优先"), 参数("-aac_ms", "auto/0/1", "强制 M/S 立体声编码"), 参数("-aac_pns", "0/1", "感知噪声替代")),
+            质量参数:=参数列表(参数("-q:a", "VBR 质量，常用 0.1 ~ 2.0；数值越高越清晰，体积也越大"), 参数("-b:a", "CBR/ABR 目标比特率；例如 128k、192k、320k")),
+            特殊参数:=参数列表(参数("-aac_coder", "twoloop/fast", "twoloop=质量优先，fast=速度优先"), 参数("-aac_ms", "auto/0/1", "M/S 立体声；auto=自动，0=禁用，1=强制启用"), 参数("-aac_pns", "0/1", "感知噪声替代；低码率可能有帮助")),
             VBR说明:="支持。使用 -q:a 设置 VBR 质量；填写 -b:a 时按目标比特率编码。",
             支持说明:="采样格式：fltp；采样率：7350/8000/11025/12000/16000/22050/24000/32000/44100/48000/64000/88200/96000。"))
 
         加入编码器(基础("aac.fdk", "FDK AAC", "libfdk_aac", "Fraunhofer FDK AAC，低码率表现好；需要当前 FFmpeg 编译启用 libfdk_aac。",
-            质量参数:=参数列表(参数("-vbr", "1 ~ 5，越高越好；0 关闭 VBR"), 参数("-b:a", "CBR/ABR 比特率")),
-            特殊参数:=参数列表(参数("-afterburner", "0/1", "提高质量，默认 1"), 参数("-signaling", "default/implicit/explicit_sbr/explicit_hierarchical", "SBR/PS 信令方式"), 参数("-latm", "0/1", "输出 LATM/LOAS"), 参数("-frame_length", "-1 或 1024", "帧长度")),
+            质量参数:=参数列表(参数("-vbr", "0 ~ 5；0=关闭 VBR，1 最低质量/最小体积，5 最高质量/最大体积"), 参数("-b:a", "CBR/ABR 比特率；例如 64k、96k、128k、192k")),
+            特殊参数:=参数列表(参数("-afterburner", "0/1", "后处理质量增强，默认 1"), 参数("-signaling", "default/implicit/explicit_sbr/explicit_hierarchical", "SBR/PS 信令；default=自动，implicit=隐式兼容，explicit_sbr=显式 SBR，explicit_hierarchical=显式分层"), 参数("-latm", "0/1", "输出 LATM/LOAS 封装流"), 参数("-frame_length", "-1 或 1024；-1=自动", "AAC 帧长度")),
             VBR说明:="支持。使用 -vbr 1 ~ 5，0 为关闭；也可用 -b:a 走目标比特率。",
             支持说明:="采样格式：s16；采样率：8000/11025/12000/16000/22050/24000/32000/44100/48000/64000/88200/96000；声道布局：mono、stereo、3.0、4.0、5.0、5.1、6.1(back)、7.1(wide)、7.1、5.1.2(back)。"))
 
         加入编码器(基础("aac.fdk.he", "FDK AAC HE", "libfdk_aac", "FDK AAC High-Efficiency 配置，适合低码率语音、直播或小体积音频。",
-            默认附加参数:=参数列表(参数("-profile:a", "aac_he", "固定使用 HE-AAC")),
-            质量参数:=参数列表(参数("-vbr", "1 ~ 5，越高越好；0 关闭 VBR"), 参数("-b:a", "CBR/ABR 比特率")),
-            特殊参数:=参数列表(参数("-afterburner", "0/1", "提高质量，默认 1"), 参数("-signaling", "default/implicit/explicit_sbr/explicit_hierarchical", "SBR/PS 信令方式"), 参数("-latm", "0/1", "输出 LATM/LOAS")),
+            默认附加参数:=参数列表(参数("-profile:a", "aac_he", "固定使用 HE-AAC", 默认值:="aac_he")),
+            质量参数:=参数列表(参数("-vbr", "0 ~ 5；0=关闭 VBR，1 最低质量/最小体积，5 最高质量/最大体积"), 参数("-b:a", "CBR/ABR 比特率；HE-AAC 常用 24k ~ 96k")),
+            特殊参数:=参数列表(参数("-afterburner", "0/1", "后处理质量增强，默认 1"), 参数("-signaling", "default/implicit/explicit_sbr/explicit_hierarchical", "SBR/PS 信令；default=自动，implicit=隐式兼容，explicit_sbr=显式 SBR，explicit_hierarchical=显式分层"), 参数("-latm", "0/1", "输出 LATM/LOAS 封装流")),
             VBR说明:="支持。使用 -vbr 1 ~ 5，0 为关闭；HE-AAC 主要面向低码率，建议结合 -b:a 做目标码率控制。",
             支持说明:="采样格式：s16；采样率：8000 ~ 96000；声道布局同 libfdk_aac，但 HE-AAC 常用于 mono/stereo 低码率场景。",
             旧版命令文本:="libfdk_aac -profile:a aac_he"))
 
         加入编码器(基础("aac.fdk.hev2", "FDK AAC HE v2", "libfdk_aac", "FDK AAC HE v2，面向更低码率的立体声场景。",
-            默认附加参数:=参数列表(参数("-profile:a", "aac_he_v2", "固定使用 HE-AAC v2")),
-            质量参数:=参数列表(参数("-vbr", "1 ~ 5，越高越好；0 关闭 VBR"), 参数("-b:a", "CBR/ABR 比特率")),
-            特殊参数:=参数列表(参数("-afterburner", "0/1", "提高质量，默认 1"), 参数("-signaling", "default/implicit/explicit_sbr/explicit_hierarchical", "SBR/PS 信令方式"), 参数("-latm", "0/1", "输出 LATM/LOAS")),
+            默认附加参数:=参数列表(参数("-profile:a", "aac_he_v2", "固定使用 HE-AAC v2", 默认值:="aac_he_v2")),
+            质量参数:=参数列表(参数("-vbr", "0 ~ 5；0=关闭 VBR，1 最低质量/最小体积，5 最高质量/最大体积"), 参数("-b:a", "CBR/ABR 比特率；HE v2 常用 16k ~ 64k")),
+            特殊参数:=参数列表(参数("-afterburner", "0/1", "后处理质量增强，默认 1"), 参数("-signaling", "default/implicit/explicit_sbr/explicit_hierarchical", "SBR/PS 信令；default=自动，implicit=隐式兼容，explicit_sbr=显式 SBR，explicit_hierarchical=显式分层"), 参数("-latm", "0/1", "输出 LATM/LOAS 封装流")),
             VBR说明:="支持。使用 -vbr 1 ~ 5，0 为关闭；HE v2 面向极低码率立体声，通常配合 -b:a 使用。",
             支持说明:="采样格式：s16；采样率：8000 ~ 96000；声道布局同 libfdk_aac，HE v2 主要用于 stereo。",
             旧版命令文本:="libfdk_aac -profile:a aac_he_v2"))
 
         加入编码器(基础("aac.audiotoolbox", "AudioToolbox AAC", "aac_at", "Apple AudioToolbox AAC，适合想要接近 qaac/Apple AAC 的输出时优先尝试。",
-            质量参数:=参数列表(参数("-q:a", "全局质量；FFmpeg 未枚举固定范围，给定时 auto 模式走 VBR"), 参数("-b:a", "CBR/ABR/CVBR 目标比特率")),
+            质量参数:=参数列表(参数("-q:a", "全局质量；FFmpeg 未枚举固定范围，给定时 auto 模式走 VBR"), 参数("-b:a", "CBR/ABR/CVBR 目标比特率；例如 128k、192k、256k")),
             特殊参数:=AudioToolbox参数(),
             VBR说明:="支持。使用 -aac_at_mode vbr/cvbr 指定模式；auto 模式下给定 -q:a 会走 VBR。",
             支持说明:="采样格式：s16/u8；声道布局：mono、stereo、3.0、4.0、5.0(side)、5.1(side)、6.0、6.1、7.0、7.1(wide)、quad、octagonal。"))
 
         加入编码器(基础("mp3.lame", "LAME MP3", "libmp3lame", "LAME MP3，老设备兼容性最好。",
-            质量参数:=参数列表(参数("-q:a", "VBR 质量 0 最高 ~ 9 最低"), 参数("-b:a", "CBR/ABR 目标比特率")),
-            特殊参数:=参数列表(参数("-abr", "0/1", "启用 ABR"), 参数("-joint_stereo", "0/1", "联合立体声"), 参数("-reservoir", "0/1", "比特储备")),
+            质量参数:=参数列表(参数("-q:a", "VBR 质量 0 最高 ~ 9 最低；常用 0 ~ 4"), 参数("-b:a", "CBR/ABR 目标比特率；例如 128k、192k、320k")),
+            特殊参数:=参数列表(参数("-abr", "0/1", "ABR 平均码率模式；启用后配合 -b:a"), 参数("-joint_stereo", "0/1", "联合立体声，通常有利于中低码率"), 参数("-reservoir", "0/1", "比特储备，允许帧间调配码率")),
             VBR说明:="支持。使用 -q:a 0 ~ 9；若要 ABR，使用 -abr 1 并填写 -b:a。",
             支持说明:="采样格式：s32p/fltp/s16p；采样率：8000/11025/12000/16000/22050/24000/32000/44100/48000；声道布局：mono、stereo。"))
 
         加入编码器(基础("opus.libopus", "Opus", "libopus", "Opus，适合语音、直播、低码率和现代网页播放。",
-            质量参数:=参数列表(参数("-b:a", "目标比特率；常用 24k ~ 256k，最高约 512k")),
-            特殊参数:=参数列表(参数("-vbr", "off/on/constrained", "VBR 模式"), 参数("-application", "voip/audio/lowdelay", "用途模式"), 参数("-frame_duration", "2.5 ~ 120 ms", "帧时长"), 参数("-packet_loss", "0 ~ 100", "预期丢包百分比"), 参数("-fec", "0/1", "带内前向纠错"), 参数("-dtx", "0/1", "非连续发送")),
+            质量参数:=参数列表(参数("-b:a", "目标比特率；语音常用 24k ~ 64k，音乐常用 96k ~ 256k，最高约 512k")),
+            特殊参数:=参数列表(参数("-vbr", "off/on/constrained", "off=CBR，on=VBR，constrained=受约束 VBR"), 参数("-application", "voip/audio/lowdelay", "voip=语音清晰度，audio=音乐保真，lowdelay=最低延迟"), 参数("-frame_duration", "2.5 ~ 120 ms；默认 20 ms", "帧时长；越短延迟越低但效率越差"), 参数("-packet_loss", "0 ~ 100；单位 %", "预期丢包百分比；用于 FEC/鲁棒性取舍"), 参数("-fec", "0/1", "带内前向纠错；通常需 packet_loss 非 0 才有意义"), 参数("-dtx", "0/1", "非连续发送；静音段减少码率")),
             VBR说明:="支持且默认 on。使用 -vbr on/off/constrained；质量主要由 -b:a 的目标码率决定。",
             支持说明:="采样格式：s16/flt；采样率：8000/12000/16000/24000/48000。"))
 
         加入编码器(基础("flac.native", "FLAC", "flac", "FLAC 无损压缩，适合音乐归档。",
-            质量参数:=参数列表(参数("-compression_level", "0 最快 ~ 12 最小")),
-            特殊参数:=参数列表(参数("-lpc_type", "none/fixed/levinson/cholesky", "LPC 算法"), 参数("-min_partition_order", "-1 ~ 8", "最小分区阶数"), 参数("-max_partition_order", "-1 ~ 8", "最大分区阶数"), 参数("-ch_mode", "auto/indep/left_side/right_side/mid_side", "立体声去相关模式")),
+            质量参数:=参数列表(参数("-compression_level", "0 最快/体积较大 ~ 12 最慢/体积较小")),
+            特殊参数:=参数列表(参数("-lpc_type", "none/fixed/levinson/cholesky", "LPC 算法；none=不用 LPC，fixed=固定预测，levinson/cholesky=更复杂搜索"), 参数("-min_partition_order", "-1 自动；0 ~ 8", "最小分区阶数"), 参数("-max_partition_order", "-1 自动；0 ~ 8", "最大分区阶数"), 参数("-ch_mode", "auto/indep/left_side/right_side/mid_side", "立体声去相关；auto=自动，indep=独立声道，mid_side=中侧编码")),
             VBR说明:="不支持有损 VBR。FLAC 是无损编码，使用 -compression_level 0 ~ 12 控制压缩强度。",
             支持说明:="采样格式：s16/s32。"))
 
         加入编码器(基础("alac.native", "ALAC", "alac", "Apple Lossless，无损压缩，适合苹果生态。",
-            特殊参数:=参数列表(参数("-min_prediction_order", "1 ~ 30", "最小预测阶数"), 参数("-max_prediction_order", "1 ~ 30", "最大预测阶数")),
+            特殊参数:=参数列表(参数("-min_prediction_order", "1 ~ 30；越高压缩搜索越复杂", "最小预测阶数"), 参数("-max_prediction_order", "1 ~ 30；越高压缩搜索越复杂", "最大预测阶数")),
             VBR说明:="不支持有损 VBR。ALAC 是无损编码，输出大小由源内容和预测参数决定。",
             支持说明:="采样格式：s16p/s32p；声道布局：mono、stereo、3.0、4.0、5.0、5.1、6.1(back)、7.1(wide)。"))
 
@@ -193,24 +193,24 @@ Public Class 音频编码器数据库_v6
 
         加入编码器(基础("ac3.native", "ATSC A/52A (AC3)", "ac3", "AC-3，常见于 DVD、电视广播和家庭影院兼容场景。",
             质量参数:=参数列表(参数("-b:a", "固定码率；常用 192k ~ 640k，AC-3 最高 640k")),
-            特殊参数:=参数列表(参数("-dialnorm", "-31 ~ -1", "对白归一化"), 参数("-dmix_mode", "notindicated/ltrt/loro/dplii", "首选立体声下混模式"), 参数("-dsur_mode", "notindicated/on/off", "Dolby Surround 标记"), 参数("-stereo_rematrixing", "0/1", "立体声重矩阵")),
+            特殊参数:=参数列表(参数("-dialnorm", "-31 ~ -1 dB；常用 -31 表示不主动衰减", "对白归一化"), 参数("-dmix_mode", "notindicated/ltrt/loro/dplii", "首选立体声下混；notindicated=不声明，ltrt=Lt/Rt，loro=Lo/Ro，dplii=杜比 Pro Logic II"), 参数("-dsur_mode", "notindicated/on/off", "Dolby Surround 标记；on=声明已编码，off=声明未编码"), 参数("-stereo_rematrixing", "0/1", "立体声重矩阵，通常默认开启")),
             VBR说明:="不支持。AC-3 使用固定码率，设置 -b:a。",
             支持说明:="采样格式：fltp；采样率：32000/44100/48000；声道布局：mono、stereo、3.0、quad、4.0、5.0、5.1 等。"))
 
         加入编码器(基础("eac3.native", "ATSC A/52B (EAC3)", "eac3", "E-AC-3，AC-3 的扩展版本，适合更高码率和流媒体场景。",
             质量参数:=参数列表(参数("-b:a", "固定码率；常用 384k ~ 1536k，更高码率视封装/播放器而定")),
-            特殊参数:=参数列表(参数("-dialnorm", "-31 ~ -1", "对白归一化"), 参数("-dmix_mode", "notindicated/ltrt/loro/dplii", "首选立体声下混模式"), 参数("-dsur_mode", "notindicated/on/off", "Dolby Surround 标记"), 参数("-stereo_rematrixing", "0/1", "立体声重矩阵")),
+            特殊参数:=参数列表(参数("-dialnorm", "-31 ~ -1 dB；常用 -31 表示不主动衰减", "对白归一化"), 参数("-dmix_mode", "notindicated/ltrt/loro/dplii", "首选立体声下混；notindicated=不声明，ltrt=Lt/Rt，loro=Lo/Ro，dplii=杜比 Pro Logic II"), 参数("-dsur_mode", "notindicated/on/off", "Dolby Surround 标记；on=声明已编码，off=声明未编码"), 参数("-stereo_rematrixing", "0/1", "立体声重矩阵，通常默认开启")),
             VBR说明:="不支持。E-AC-3 使用固定码率，设置 -b:a。",
             支持说明:="采样格式：fltp；采样率：32000/44100/48000；声道布局：mono、stereo、3.0、quad、4.0、5.0、5.1 等。"))
 
         加入编码器(基础("dts.dca", "DTS Coherent Acoustics", "dca", "DTS Coherent Acoustics；FFmpeg 标记为实验性编码器，必要时添加 -strict -2。",
             质量参数:=参数列表(参数("-b:a", "固定码率；常用 768k ~ 1536k")),
-            特殊参数:=参数列表(参数("-dca_adpcm", "0/1", "使用 ADPCM 编码"), 参数("-strict", "-2", "实验性编码器可能需要")),
+            特殊参数:=参数列表(参数("-dca_adpcm", "0/1", "ADPCM 编码模式；特殊兼容场景使用"), 参数("-strict", "-2", "实验性编码器可能需要")),
             VBR说明:="不支持。DCA 使用固定码率，设置 -b:a。",
             支持说明:="采样格式：s32；采样率：8000/11025/12000/16000/22050/24000/32000/44100/48000；声道布局：mono、stereo、quad(side)、5.0(side)、5.1(side)。"))
 
         加入编码器(基础("truehd.native", "TrueHD", "truehd", "Dolby TrueHD；FFmpeg 标记为实验性编码器，必要时添加 -strict -2。",
-            特殊参数:=参数列表(参数("-max_interval", "8 ~ 128", "新 header 最大间隔帧数"), 参数("-lpc_type", "levinson/cholesky", "LPC 算法"), 参数("-prediction_order", "0 ~ 4", "预测阶数搜索方法"), 参数("-strict", "-2", "实验性编码器可能需要")),
+            特殊参数:=参数列表(参数("-max_interval", "8 ~ 128；越大 header 越少", "新 header 最大间隔帧数"), 参数("-lpc_type", "levinson/cholesky", "LPC 算法；cholesky 搜索更复杂"), 参数("-prediction_order", "0 ~ 4；越高搜索越复杂", "预测阶数搜索方法"), 参数("-strict", "-2", "实验性编码器可能需要")),
             VBR说明:="不支持有损 VBR。TrueHD 是无损编码，输出大小由源内容决定。",
             支持说明:="采样格式：s16p/s32p；采样率：44100/48000/88200/96000/176400/192000；声道布局：mono、stereo、2.1、3.0、3.1、4.0、4.1、5.0(side)、5.1(side)。"))
 
@@ -224,8 +224,8 @@ Public Class 音频编码器数据库_v6
             支持说明:="采样格式：u8/s16/s32。"))
 
         加入编码器(基础("vorbis.libvorbis", "Vorbis (ogg)", "libvorbis", "libvorbis，适合 OGG/Vorbis 兼容场景。",
-            质量参数:=参数列表(参数("-q:a", "VBR 质量 -1 ~ 10，越高越好"), 参数("-b:a", "目标比特率；未给 -q:a 时用于码率管理")),
-            特殊参数:=参数列表(参数("-iblock", "-15 ~ 0", "瞬态块偏置")),
+            质量参数:=参数列表(参数("-q:a", "VBR 质量 -1 ~ 10；数值越高越清晰，体积也越大"), 参数("-b:a", "目标比特率；未给 -q:a 时用于码率管理")),
+            特殊参数:=参数列表(参数("-iblock", "-15 ~ 0；越低越偏向瞬态保护", "瞬态块偏置")),
             VBR说明:="支持。推荐使用 -q:a -1 ~ 10；填写 -b:a 时进入目标码率/码率管理路径。",
             支持说明:="采样格式：fltp。"))
 
@@ -234,25 +234,25 @@ Public Class 音频编码器数据库_v6
             支持说明:="用于旧 RealAudio 兼容，能力有限。"))
 
         加入编码器(基础("wavpack.native", "WavPack", "wavpack", "WavPack 无损/混合音频编码器。",
-            特殊参数:=参数列表(参数("-joint_stereo", "0/1/auto", "联合立体声"), 参数("-optimize_mono", "0/1", "优化单声道")),
+            特殊参数:=参数列表(参数("-joint_stereo", "0/1/auto", "联合立体声；auto=自动，0=禁用，1=启用"), 参数("-optimize_mono", "0/1", "单声道优化；仅单声道内容有意义")),
             VBR说明:="不使用常规 VBR。默认无损；混合/有损场景通常通过目标比特率或自定义参数控制。",
             支持说明:="采样格式：u8p/s16p/s32p/fltp。"))
 
         加入编码器(基础("mp2.twolame", "LAME MP2", "libtwolame", "libtwolame MP2，适合老式广播和兼容场景。",
             质量参数:=参数列表(参数("-b:a", "固定码率；常用 128k ~ 384k")),
-            特殊参数:=参数列表(参数("-mode", "auto/stereo/joint_stereo/dual_channel/mono", "声道模式"), 参数("-psymodel", "-1 ~ 4", "心理声学模型"), 参数("-error_protection", "0/1", "CRC 错误保护"), 参数("-energy_levels", "0/1", "写入能量级别")),
+            特殊参数:=参数列表(参数("-mode", "auto/stereo/joint_stereo/dual_channel/mono", "声道模式；auto=自动，joint_stereo=联合立体声，dual_channel=双单声道"), 参数("-psymodel", "-1 自动；0 ~ 4；通常越高模型越复杂", "心理声学模型"), 参数("-error_protection", "0/1", "CRC 错误保护，会略增体积"), 参数("-energy_levels", "0/1", "写入能量级别辅助信息")),
             VBR说明:="不支持。libtwolame MP2 使用固定码率，设置 -b:a。",
             支持说明:="采样格式：flt/fltp/s16/s16p；采样率：16000/22050/24000/32000/44100/48000；声道布局：mono、stereo。"))
 
         加入编码器(基础("amr.nb.opencore", "AMR-NB", "libopencore_amrnb", "AMR-NB 窄带语音编码器。",
             质量参数:=参数列表(参数("-b:a", "离散码率：4.75k/5.15k/5.9k/6.7k/7.4k/7.95k/10.2k/12.2k")),
-            特殊参数:=参数列表(参数("-dtx", "0/1", "舒适噪声/非连续发送")),
+            特殊参数:=参数列表(参数("-dtx", "0/1", "非连续发送；静音段使用舒适噪声以降低码率")),
             VBR说明:="不支持。AMR-NB 使用离散固定码率，设置 -b:a。",
             支持说明:="采样格式：s16；通常需要 8000 Hz mono。"))
 
         加入编码器(基础("amr.wb.vo", "AMR-WB", "libvo_amrwbenc", "AMR-WB 宽带语音编码器。",
             质量参数:=参数列表(参数("-b:a", "离散码率：6.6k/8.85k/12.65k/14.25k/15.85k/18.25k/19.85k/23.05k/23.85k")),
-            特殊参数:=参数列表(参数("-dtx", "0/1", "舒适噪声/非连续发送")),
+            特殊参数:=参数列表(参数("-dtx", "0/1", "非连续发送；静音段使用舒适噪声以降低码率")),
             VBR说明:="不支持。AMR-WB 使用离散固定码率，设置 -b:a。",
             支持说明:="采样格式：s16；通常需要 16000 Hz mono。"))
 
@@ -337,13 +337,24 @@ Public Class 音频编码器数据库_v6
                 If 命令行编码器名 <> "" Then 片段.Add(If(是否禁用, "命令：-an", $"命令：-c:a {命令行编码器名}"))
                 If 默认附加参数列表.Count > 0 Then 片段.Add("默认附加：" & String.Join(" ", 默认附加参数列表.Select(Function(x) x.转命令行文本())))
                 If VBR说明 <> "" Then 片段.Add("VBR：" & VBR说明)
-                If 质量参数列表.Count > 0 Then 片段.Add("质量/码率：" & String.Join("；", 质量参数列表.Select(Function(x) x.转说明文本())))
-                If 特殊参数列表.Count > 0 Then 片段.Add("参数：" & String.Join("；", 特殊参数列表.Select(Function(x) x.转说明文本())))
+                添加参数分组(片段, "质量/码率", 质量参数列表)
+                添加参数分组(片段, "进阶参数", 特殊参数列表)
                 If 支持说明 <> "" Then 片段.Add("支持：" & 支持说明)
                 If 私有ID <> "" Then 片段.Add("ID：" & 私有ID)
                 Return String.Join(vbCrLf & vbCrLf, 片段)
             End Get
         End Property
+
+        Private Shared Sub 添加参数分组(片段 As List(Of String), 标题 As String, 参数列表 As List(Of 音频编码器参数数据))
+            If 参数列表 Is Nothing OrElse 参数列表.Count = 0 Then Exit Sub
+            Dim 行 As New List(Of String) From {标题 & "："}
+            For Each 参数项 In 参数列表
+                If 参数项 Is Nothing Then Continue For
+                Dim 文本 = 参数项.转说明文本()
+                If 文本 <> "" Then 行.Add("  " & 文本)
+            Next
+            If 行.Count > 1 Then 片段.Add(String.Join(vbCrLf, 行))
+        End Sub
     End Class
 
     Public Class 音频编码器参数数据
@@ -353,7 +364,8 @@ Public Class 音频编码器数据库_v6
         Public Property 默认值 As String = ""
 
         Public Function 转说明文本() As String
-            Dim 文本 = $"{参数名} {值范围说明}".Trim()
+            Dim 范围说明 = 补全通用值说明(值范围说明)
+            Dim 文本 = $"{参数名} {范围说明}".Trim()
             If 说明 <> "" Then 文本 &= $"（{说明}）"
             Return 文本
         End Function
@@ -362,6 +374,18 @@ Public Class 音频编码器数据库_v6
             If 参数名 = "" Then Return ""
             If 默认值 = "" Then Return 参数名
             Return $"{参数名} {默认值}"
+        End Function
+
+        Private Shared Function 补全通用值说明(值范围说明 As String) As String
+            Dim 文本 = If(值范围说明, "").Trim()
+            If 文本 = "" Then Return ""
+            If 文本.Contains("0/1") AndAlso
+               Not 文本.Contains("0=关闭") AndAlso
+               Not 文本.Contains("0 关闭") AndAlso
+               Not 文本.Contains("1 不循环") Then
+                文本 &= "；0=关闭，1=开启"
+            End If
+            Return 文本
         End Function
     End Class
 

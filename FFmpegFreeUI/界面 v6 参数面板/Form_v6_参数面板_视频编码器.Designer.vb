@@ -60,9 +60,9 @@ Partial Class Form_v6_参数面板_视频编码器
         Panel7.SuspendLayout()
         Panel2.SuspendLayout()
         SuspendLayout()
-        '
+        ' 
         ' ModernPanel1
-        '
+        ' 
         ModernPanel1.BackColor1 = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         ModernPanel1.BorderSize = 0
         ModernPanel1.Controls.Add(Panel6)
@@ -359,7 +359,9 @@ Partial Class Form_v6_参数面板_视频编码器
         HtmlColorLabel7.TabIndex = 6
         HtmlColorLabel7.Text = "图片编码器质量值 / 其他定制参数"
         HtmlColorLabel7.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
+        ' 
         ' MTB_图片编码器质量值
+        ' 
         MTB_图片编码器质量值.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MTB_图片编码器质量值.BorderColor = Color.Transparent
         MTB_图片编码器质量值.BorderColorFocus = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
@@ -410,8 +412,9 @@ Partial Class Form_v6_参数面板_视频编码器
         MCB_具体编码器.Size = New Size(160, 32)
         MCB_具体编码器.TabIndex = 6
         MCB_具体编码器.ToolTipGap = -1
-        MCB_具体编码器.ToolTipMaxWidth = 350
+        MCB_具体编码器.ToolTipMaxWidth = 600
         MCB_具体编码器.ToolTipPadding = New Padding(15)
+        MCB_具体编码器.ToolTipSide = LakeUI.ModernComboBox.ToolTipSideEnum.Left
         MCB_具体编码器.WaterText = "具体编码"
         MCB_具体编码器.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ' 

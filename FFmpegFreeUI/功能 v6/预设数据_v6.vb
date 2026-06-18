@@ -295,7 +295,7 @@ Public Class 预设数据_v6
     Public Property 视频参数_视频帧服务器_使用VapourSynth As Boolean = False
     Public Property 视频参数_视频帧服务器_vpy脚本文件 As String = ""
     '==================================================
-    Public Property 音频参数_编码器_具体编码 As String = ""
+    Public Property 音频参数_编码器_代号 As String = ""
     Public Property 音频参数_比特率 As String = ""
     Public Property 音频参数_质量参数名 As String = ""
     Public Property 音频参数_质量值 As String = ""
@@ -350,6 +350,7 @@ Public Class 预设数据_v6
             烧录字幕 = 13
             色彩转换 = 14
             调色 = 15
+            像素格式预先转换 = 16
             音频响度标准化 = 51
             音频格式转换 = 52
             音频重采样 = 53

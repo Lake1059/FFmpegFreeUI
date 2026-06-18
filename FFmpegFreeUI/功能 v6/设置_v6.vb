@@ -180,7 +180,7 @@ Public Class 设置_v6
         Form_v6_设置_界面显示.MCB_全局字体.Items.AddRange(字体列表.ToArray)
         Form_v6_设置_界面显示.MCB_全局字体.Text = 实例对象.字体
 
-        Dim 起始页面顶栏默认标题 = $"<span style=""font-size:15pt"">FFmpegFreeUI {版本号.获取自身版本号} Dev.1 ReDesign With LakeUI</span>"
+        Dim 起始页面顶栏默认标题 = $"<span style=""font-size:15pt"">FFmpegFreeUI {版本号.获取自身版本号} ReDesign With LakeUI And 1st Anniversary</span>"
         Dim 起始页面顶栏副标题 = "<span style=""font-size:10pt; color:CornflowerBlue"">将 ffmpeg、ffplay、ffprobe 加入环境变量或放置于当前目录即可调用</span>"
         If 实例对象.SP_起始页面顶栏标题 <> "" AndAlso SP_UnLock Then
             Form_v6_起始页面.HtmlColorLabel1.Text = 实例对象.SP_起始页面顶栏标题

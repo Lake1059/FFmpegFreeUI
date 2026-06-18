@@ -538,7 +538,7 @@ Public Class 预设管理_v6
         If a.视频参数_色彩管理_启用调整饱和度 Then 添加总览文本行(sb, "饱和度调整：" & If(a.视频参数_色彩管理_饱和度 = "", "已启用", a.视频参数_色彩管理_饱和度))
         If a.视频参数_色彩管理_启用调整伽马 Then 添加总览文本行(sb, "伽马调整：" & If(a.视频参数_色彩管理_伽马 = "", "已启用", a.视频参数_色彩管理_伽马))
 
-        添加总览文本行(sb, "音频编码器：" & 获取音频编码器总览显示名(a.音频参数_编码器_具体编码))
+        添加总览文本行(sb, "音频编码器：" & 获取音频编码器总览显示名(a.音频参数_编码器_代号))
         添加总览文本行(sb, "音频比特率：" & a.音频参数_比特率)
         If Not String.IsNullOrWhiteSpace(a.音频参数_质量参数名) Then 添加总览文本行(sb, "音频质量控制：" & a.音频参数_质量参数名 & If(a.音频参数_质量值 = "", "（未填写值）", "=" & a.音频参数_质量值))
         If String.IsNullOrWhiteSpace(a.音频参数_质量参数名) AndAlso Not String.IsNullOrWhiteSpace(a.音频参数_质量值) Then 添加总览文本行(sb, "音频质量值：" & a.音频参数_质量值)
@@ -829,7 +829,8 @@ Public Class 预设管理_v6
         更新排序项(排序页, a, 预设数据_v6.滤镜排序单片结构.标识符枚举.扫描方式, a.视频参数_处理扫描方式 <> 预设数据_v6.扫描方式.未选择)
         更新排序项(排序页, a, 预设数据_v6.滤镜排序单片结构.标识符枚举.画面翻转, a.视频参数_画面翻转_角度翻转 <> 预设数据_v6.画面翻转角度.未选择 OrElse a.视频参数_画面翻转_镜像翻转 <> 预设数据_v6.画面翻转镜像.未选择)
         更新排序项(排序页, a, 预设数据_v6.滤镜排序单片结构.标识符枚举.烧录字幕, a.视频参数_烧录字幕_滤镜选择 <> 预设数据_v6.烧字幕滤镜.未选择 OrElse a.视频参数_烧录字幕_自己写滤镜取代所有设置 <> "")
-        更新排序项(排序页, a, 预设数据_v6.滤镜排序单片结构.标识符枚举.色彩转换, a.视频参数_色彩管理_滤镜选择 <> "" OrElse a.视频参数_色彩管理_像素格式预先转换 <> "")
+        更新排序项(排序页, a, 预设数据_v6.滤镜排序单片结构.标识符枚举.像素格式预先转换, a.视频参数_色彩管理_像素格式预先转换 <> "")
+        更新排序项(排序页, a, 预设数据_v6.滤镜排序单片结构.标识符枚举.色彩转换, a.视频参数_色彩管理_滤镜选择 <> "" OrElse a.视频参数_色彩管理_矩阵系数 <> "" OrElse a.视频参数_色彩管理_色域 <> "" OrElse a.视频参数_色彩管理_传输特性 <> "" OrElse a.视频参数_色彩管理_范围 <> "")
         更新排序项(排序页, a, 预设数据_v6.滤镜排序单片结构.标识符枚举.调色, a.视频参数_色彩管理_启用调整亮度 OrElse a.视频参数_色彩管理_启用调整对比度 OrElse a.视频参数_色彩管理_启用调整饱和度 OrElse a.视频参数_色彩管理_启用调整伽马)
         更新排序项(排序页, a, 预设数据_v6.滤镜排序单片结构.标识符枚举.音频响度标准化, a.音频参数_响度标准化_启用调整目标响度 OrElse a.音频参数_响度标准化_启用调整动态范围 OrElse a.音频参数_响度标准化_启用调整峰值电平)
         更新排序项(排序页, a, 预设数据_v6.滤镜排序单片结构.标识符枚举.音频格式转换, a.音频参数_声道数 <> "")
@@ -907,9 +908,10 @@ Public Class 预设管理_v6
                     .策略组数据.Clear()
                     .刷新策略组列表()
                 End With
+            Case 预设数据_v6.滤镜排序单片结构.标识符枚举.像素格式预先转换
+                ui.私有界面_色彩管理.MCB_像素格式预先转换.Text = ""
             Case 预设数据_v6.滤镜排序单片结构.标识符枚举.色彩转换
                 With ui.私有界面_色彩管理
-                    .MCB_像素格式预先转换.Text = ""
                     .MCB_色彩管理_选择滤镜.Text = ""
                     .MCB_色彩管理_矩阵系数.Text = ""
                     .MCB_色彩管理_色域.Text = ""
@@ -990,7 +992,7 @@ Public Class 预设管理_v6
 
         Select Case item.滤镜标识符
             Case 预设数据_v6.滤镜排序单片结构.标识符枚举.裁剪
-                Return a.视频参数_分辨率_裁剪滤镜参数.Trim()
+                Return 构造裁剪滤镜(a)
             Case 预设数据_v6.滤镜排序单片结构.标识符枚举.缩放
                 Return 构造缩放滤镜(a)
             Case 预设数据_v6.滤镜排序单片结构.标识符枚举.抽帧
@@ -1015,6 +1017,8 @@ Public Class 预设管理_v6
                 Return 构造翻转滤镜(a)
             Case 预设数据_v6.滤镜排序单片结构.标识符枚举.烧录字幕
                 Return 构造烧字幕滤镜(a, 输入文件)
+            Case 预设数据_v6.滤镜排序单片结构.标识符枚举.像素格式预先转换
+                Return 构造像素格式预先转换滤镜(a)
             Case 预设数据_v6.滤镜排序单片结构.标识符枚举.色彩转换
                 Return 构造色彩转换滤镜(a)
             Case 预设数据_v6.滤镜排序单片结构.标识符枚举.调色
@@ -1043,7 +1047,7 @@ Public Class 预设管理_v6
         Dim 视频流 = 规范流列表(a.流控制_将视频参数应用于指定流, "v")
         Dim 音频流 = If(仅视频, New List(Of String), 规范流列表(a.流控制_将音频参数应用于指定流, "a"))
         If 视频流.Count = 0 AndAlso (视频链.Count > 0 OrElse a.视频参数_编码器_具体编码 <> "") Then 视频流.Add("0:v:0")
-        If Not 仅视频 AndAlso 音频流.Count = 0 AndAlso (音频链.Count > 0 OrElse a.音频参数_编码器_具体编码 <> "") Then 音频流.Add("0:a:0")
+        If Not 仅视频 AndAlso 音频流.Count = 0 AndAlso (音频链.Count > 0 OrElse a.音频参数_编码器_代号 <> "") Then 音频流.Add("0:a:0")
 
         Dim 图段 As New List(Of String)
         Dim 映射 As New List(Of String)
@@ -1053,7 +1057,7 @@ Public Class 预设管理_v6
         Dim 保留其他音频 = Not 仅视频 AndAlso a.流控制_启用保留其他音频流
         Dim 保留其他字幕 = Not 仅视频 AndAlso a.流控制_启用保留其他字幕流
         Dim 视频编码器 = 视频编码器数据库_v6.获取编码器数据(a.视频参数_编码器_具体编码)
-        Dim 音频编码器 = 音频编码器数据库_v6.获取编码器数据(a.音频参数_编码器_具体编码)
+        Dim 音频编码器 = 音频编码器数据库_v6.获取编码器数据(a.音频参数_编码器_代号)
 
         Dim 字幕流 = If(仅视频, New List(Of String), 规范流列表(a.流控制_将字幕参数应用于指定流, "s"))
 
@@ -1064,7 +1068,7 @@ Public Class 预设管理_v6
                     添加线性滤镜链图段(图段, 视频流(i), 视频链, label, $"v{i}")
                     映射.Add($"-map [{label}]")
                 Else
-                    映射.Add($"-map {视频流(i)}")
+                    映射.Add($"-map {可选输入流映射(视频流(i))}")
                 End If
                 编码视频选择器.Add($"v:{i}")
             Next
@@ -1081,7 +1085,7 @@ Public Class 预设管理_v6
                     添加线性滤镜链图段(图段, 音频流(i), 音频链, label, $"a{i}")
                     映射.Add($"-map [{label}]")
                 Else
-                    映射.Add($"-map {音频流(i)}")
+                    映射.Add($"-map {可选输入流映射(音频流(i))}")
                 End If
                 编码音频选择器.Add($"a:{i}")
             Next
@@ -1093,7 +1097,7 @@ Public Class 预设管理_v6
 
         If Not 保留其他字幕 Then
             For Each s In 字幕流
-                映射.Add($"-map {s}")
+                映射.Add($"-map {可选输入流映射(s)}")
             Next
         End If
 
@@ -1101,7 +1105,7 @@ Public Class 预设管理_v6
             映射.Add("-map 0:v?")
             If 视频链.Count > 0 Then
                 For Each stream In 视频流
-                    映射.Add($"-map -{stream}?")
+                    映射.Add("-map " & 可选输入流映射("-" & stream))
                 Next
             End If
             If 视频链.Count = 0 OrElse (视频编码器 IsNot Nothing AndAlso Not 视频编码器.是否复制流 AndAlso Not 视频编码器.是否禁用 AndAlso 视频编码器.命令行编码器名 <> "") Then
@@ -1112,7 +1116,7 @@ Public Class 预设管理_v6
             映射.Add("-map 0:a?")
             If 音频链.Count > 0 Then
                 For Each stream In 音频流
-                    映射.Add($"-map -{stream}?")
+                    映射.Add("-map " & 可选输入流映射("-" & stream))
                 Next
             End If
             If 音频链.Count = 0 OrElse (音频编码器 IsNot Nothing AndAlso Not 音频编码器.是否复制流 AndAlso Not 音频编码器.是否禁用 AndAlso 音频编码器.命令行编码器名 <> "") Then
@@ -1123,10 +1127,10 @@ Public Class 预设管理_v6
             映射.Add("-map 0:s?")
             If 字幕流.Count > 0 Then
                 For Each stream In 字幕流
-                    映射.Add($"-map -{stream}?")
+                    映射.Add("-map " & 可选输入流映射("-" & stream))
                 Next
                 For Each stream In 字幕流
-                    映射.Add($"-map {stream}")
+                    映射.Add($"-map {可选输入流映射(stream)}")
                 Next
             End If
             映射.Add("-c:s copy")
@@ -1164,6 +1168,17 @@ Public Class 预设管理_v6
         Return result
     End Function
 
+    Private Shared Function 可选输入流映射(stream As String) As String
+        Dim s = If(stream, "").Trim()
+        If s = "" OrElse (s.StartsWith("[", StringComparison.Ordinal) AndAlso s.EndsWith("]", StringComparison.Ordinal)) Then Return s
+
+        Dim 排除映射 = s.StartsWith("-", StringComparison.Ordinal)
+        If 排除映射 Then s = s.Substring(1).TrimStart()
+        s = s.TrimEnd("?"c)
+        If s = "" Then Return ""
+        Return If(排除映射, "-", "") & s & "?"
+    End Function
+
     Private Shared Sub 添加线性滤镜链图段(图段 As List(Of String), 输入标签 As String, 滤镜链 As List(Of String), 输出标签 As String, 中间标签前缀 As String)
         Dim 当前标签 = 输入标签
         For i = 0 To 滤镜链.Count - 1
@@ -1196,7 +1211,7 @@ Public Class 预设管理_v6
         End If
         添加按流视频附加参数(parts, a, 阶段, If(视频选择器, New List(Of String)))
 
-        Dim 音频 = 音频编码器数据库_v6.获取编码器数据(a.音频参数_编码器_具体编码)
+        Dim 音频 = 音频编码器数据库_v6.获取编码器数据(a.音频参数_编码器_代号)
         If 音频 IsNot Nothing AndAlso 阶段 <> 预设数据_v6.命令行阶段.二次编码第一遍 Then
             添加按流音频编码参数(parts, 音频, a, If(音频选择器, New List(Of String)), 音频来自滤镜)
         End If
@@ -1627,6 +1642,11 @@ Public Class 预设管理_v6
         Return ""
     End Function
 
+    Private Shared Function 构造裁剪滤镜(a As 预设数据_v6) As String
+        Dim value = If(a.视频参数_分辨率_裁剪滤镜参数, "").Trim()
+        Return If(value <> "", "crop=" & value, "")
+    End Function
+
     Private Shared Function 构造抽帧滤镜(a As 预设数据_v6) As String
         Dim opts As New List(Of String)
         If a.视频参数_抽帧_max <> "" Then opts.Add("max=" & a.视频参数_抽帧_max)
@@ -1878,6 +1898,11 @@ Public Class 预设管理_v6
         If opts.Count = 0 Then Return ""
         Dim filterName = If(a.视频参数_色彩管理_滤镜选择 = "", "colorspace", a.视频参数_色彩管理_滤镜选择)
         Return filterName & "=" & String.Join(":", opts)
+    End Function
+
+    Private Shared Function 构造像素格式预先转换滤镜(a As 预设数据_v6) As String
+        Dim value = If(a.视频参数_色彩管理_像素格式预先转换, "").Trim()
+        Return If(value <> "", "format=" & value, "")
     End Function
 
     Private Shared Function 构造调色滤镜(a As 预设数据_v6) As String
@@ -2354,8 +2379,8 @@ Public Class 预设管理_v6
 
     Private Shared Sub 储存音频参数(a As 预设数据_v6, ui As Form_v6_参数面板)
         With ui.私有界面_音频参数
-            a.音频参数_编码器_具体编码 = 音频编码器数据库_v6.获取私有ID(.MCB_音频编码器.Text)
-            If a.音频参数_编码器_具体编码 = "" Then a.音频参数_编码器_具体编码 = .MCB_音频编码器.Text
+            a.音频参数_编码器_代号 = 音频编码器数据库_v6.获取私有ID(.MCB_音频编码器.Text)
+            If a.音频参数_编码器_代号 = "" Then a.音频参数_编码器_代号 = .MCB_音频编码器.Text
             a.音频参数_比特率 = .MCB_比特率.Text
             a.音频参数_质量参数名 = .MCB_质量参数名.Text
             a.音频参数_质量值 = .MCB_质量值.Text
@@ -2373,8 +2398,8 @@ Public Class 预设管理_v6
 
     Private Shared Sub 显示音频参数(a As 预设数据_v6, ui As Form_v6_参数面板)
         With ui.私有界面_音频参数
-            Dim 音频编码器显示名称 = 音频编码器数据库_v6.获取显示名称(a.音频参数_编码器_具体编码)
-            If 音频编码器显示名称 = "" Then 音频编码器显示名称 = a.音频参数_编码器_具体编码
+            Dim 音频编码器显示名称 = 音频编码器数据库_v6.获取显示名称(a.音频参数_编码器_代号)
+            If 音频编码器显示名称 = "" Then 音频编码器显示名称 = a.音频参数_编码器_代号
             设置组合框文本并尝试选中(.MCB_音频编码器, 音频编码器显示名称)
             .MCB_比特率.Text = a.音频参数_比特率
             设置组合框文本并尝试选中(.MCB_质量参数名, a.音频参数_质量参数名)

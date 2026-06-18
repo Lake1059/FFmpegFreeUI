@@ -19,6 +19,8 @@ Public Class FormMain_v6
         绑定选项卡(Form_v6_起始页面.ModernPanel1)
         Me.ModernTabListControl1.Items(2).BoundControl = Form_v6_编码队列
         绑定选项卡(Form_v6_编码队列.ModernPanel1)
+        Me.ModernTabListControl1.Items(4).BoundControl = Form_v6_准备文件
+        绑定选项卡(Form_v6_准备文件.ModernPanel1)
         Me.ModernTabListControl1.Items(5).BoundControl = Form_v6_参数面板
         绑定选项卡(Form_v6_参数面板.ModernPanel1)
         Me.ModernTabListControl1.Items(9).BoundControl = Form_v6_媒体信息
@@ -51,17 +53,18 @@ Public Class FormMain_v6
                         Form_v6_设置.ModernTabListControl1.TabStripBackColor = Color.Transparent
                         Form_v6_设置.ModernTabListControl1.ContentBackColor = Color.Transparent
 
-                        Form_v6_起始页面.ModernPanel1.Padding = New Padding(Form_v6_起始页面.ModernPanel1.Padding.Left, 10 * DeviceDpi / 96, Form_v6_起始页面.ModernPanel1.Padding.Right, Form_v6_起始页面.ModernPanel1.Padding.Bottom)
-                        Form_v6_媒体信息.ModernPanel1.Padding = New Padding(Form_v6_媒体信息.ModernPanel1.Padding.Left, 10 * DeviceDpi / 96, Form_v6_媒体信息.ModernPanel1.Padding.Right, Form_v6_媒体信息.ModernPanel1.Padding.Bottom)
-                        Form_v6_调试播放器.ModernPanel1.Padding = New Padding(Form_v6_调试播放器.ModernPanel1.Padding.Left, 10 * DeviceDpi / 96, Form_v6_调试播放器.ModernPanel1.Padding.Right, Form_v6_调试播放器.ModernPanel1.Padding.Bottom)
+                        Form_v6_起始页面.ModernPanel1.Padding = New Padding(10 * DeviceDpi / 96, 10 * DeviceDpi / 96, Form_v6_起始页面.ModernPanel1.Padding.Right, Form_v6_起始页面.ModernPanel1.Padding.Bottom)
+                        Form_v6_编码队列.ModernPanel1.Padding = New Padding(10 * DeviceDpi / 96, 0, Form_v6_编码队列.ModernPanel1.Padding.Right, Form_v6_编码队列.ModernPanel1.Padding.Bottom)
+                        Form_v6_准备文件.ModernPanel1.Padding = New Padding(10 * DeviceDpi / 96, 10 * DeviceDpi / 96, Form_v6_准备文件.ModernPanel1.Padding.Right, Form_v6_准备文件.ModernPanel1.Padding.Bottom)
+                        Form_v6_媒体信息.ModernPanel1.Padding = New Padding(10 * DeviceDpi / 96, 10 * DeviceDpi / 96, Form_v6_媒体信息.ModernPanel1.Padding.Right, Form_v6_媒体信息.ModernPanel1.Padding.Bottom)
+                        Form_v6_调试播放器.ModernPanel1.Padding = New Padding(10 * DeviceDpi / 96, 10 * DeviceDpi / 96, Form_v6_调试播放器.ModernPanel1.Padding.Right, Form_v6_调试播放器.ModernPanel1.Padding.Bottom)
                 End Select
         End Select
-
 
         Me.ModernTabListControl1.SelectedIndex = 1
         Me.ModernTextBox1.Parent = Me.ModernTabListControl1
 
-        其他初始化.启用全局消息框毛玻璃()
+        其他初始化.执行()
 
         插件管理.启动时加载插件()
         If 设置_v6.实例对象.是否监听端口 Then 端口监听_v6.启动客户端()
@@ -71,7 +74,6 @@ Public Class FormMain_v6
     Private Sub FormMain_v6_Shown(sender As Object, e As EventArgs) Handles Me.Shown
         Me.ModernTabListControl1.Focus()
         Application.DoEvents()
-        ExOverlayMsgBox(Me, $"{vbCrLf}3FUI 6.0 当前处于开发测试阶段，许多功能都未跟进，请耐心等待项目推进，现在的提前放出是为了公开测试新设计的兼容和性能问题，早发现早解决。现在使用 GPU 渲染，将使用显存，有任何问题请及时汇报。{vbCrLf & vbCrLf}请勿汇报首次切换选项卡的渲染等待问题，这是解决不了的，再次切换过去就没事了。要解决这个问题的难度不亚于我当上微软老总，极具挑战。",, "编码队列和参数面板已经初步可用")
 
         If Not 设置_v6.实例对象.是否询问标记_下载服务器选择 Then
             If Globalization.RegionInfo.CurrentRegion.EnglishName.ToLower.Trim.Contains("china") Then

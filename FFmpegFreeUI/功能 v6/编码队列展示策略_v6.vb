@@ -12,7 +12,7 @@ Public Class 旧版兼容编码队列展示策略_v6
         If task Is Nothing OrElse item Is Nothing Then Exit Sub
         确保子项数量(item, 8)
 
-        item.SubItems(0).Text = If(task.任务名称 <> "", task.任务名称, Path.GetFileName(task.输入文件))
+        item.SubItems(0).Text = 占位文本(If(task.任务名称 <> "", task.任务名称, Path.GetFileName(task.输入文件)))
         item.SubItems(1).Text = 状态文本(task.状态)
         item.SubItems(2).Text = task.进度.进度文本
         item.SubItems(3).Text = task.进度.效率文本
@@ -26,12 +26,6 @@ Public Class 旧版兼容编码队列展示策略_v6
 
         Select Case task.状态
             Case 编码任务状态_v6.未处理
-                item.SubItems(2).Text = ""
-                item.SubItems(3).Text = ""
-                item.SubItems(4).Text = ""
-                item.SubItems(5).Text = ""
-                item.SubItems(6).Text = ""
-                item.SubItems(7).Text = ""
                 item.SubItems(4).ForeColor = rowColor
 
             Case 编码任务状态_v6.正在处理
@@ -66,6 +60,11 @@ Public Class 旧版兼容编码队列展示策略_v6
         Next
     End Sub
 
+    Private Shared Function 占位文本(value As String) As String
+        If String.IsNullOrWhiteSpace(value) Then Return "N/A"
+        Return value
+    End Function
+
     Private Shared Function 状态文本(status As 编码任务状态_v6) As String
         Select Case status
             Case 编码任务状态_v6.未处理 : Return "未处理"
@@ -90,6 +89,7 @@ Public Class 旧版兼容编码队列展示策略_v6
     End Function
 
     Private Shared Function 默认时间文本(task As 编码任务_v6) As String
+        If task.状态 = 编码任务状态_v6.未处理 Then Return "N/A"
         Dim elapsedText = 编码进度_v6.格式化秒(task.任务耗时计时器.Elapsed.TotalSeconds)
         If task.状态 = 编码任务状态_v6.正在处理 AndAlso task.进度.时间文本 <> "" Then Return $"{task.进度.时间文本} - {elapsedText}"
         If task.状态 = 编码任务状态_v6.已暂停 Then Return elapsedText
@@ -119,7 +119,11 @@ Public Class 旧版兼容编码队列展示策略_v6
             Exit Sub
         End If
 
-        If Not File.Exists(task.输出文件) Then item.SubItems(4).Text = "N/A"
+        If task.进度.输出大小KB > 0 Then
+            item.SubItems(4).Text = 编码进度_v6.格式化大小KB(task.进度.输出大小KB)
+        Else
+            item.SubItems(4).Text = "N/A"
+        End If
     End Sub
 
     Private Shared Function 输出大小过大(task As 编码任务_v6) As Boolean

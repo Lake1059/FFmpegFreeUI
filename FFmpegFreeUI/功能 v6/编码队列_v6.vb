@@ -126,12 +126,27 @@ Public Class 编码队列_v6
     End Function
 
     Public Shared Sub 开始任务(ids As IEnumerable(Of String))
-        Dim selected = 获取指定任务(ids)
-        For Each task In selected
-            If task.状态 = 编码任务状态_v6.未处理 Then task.允许自动启动 = True
+        Dim idSet As New HashSet(Of String)(If(ids, Array.Empty(Of String)()))
+        If idSet.Count = 0 Then Exit Sub
+
+        Dim starting As New List(Of 编码任务_v6)
+        SyncLock 队列锁
+            For Each task In 队列
+                If idSet.Contains(task.ID) AndAlso task.状态 = 编码任务状态_v6.未处理 Then
+                    task.允许自动启动 = True
+                    task.状态 = 编码任务状态_v6.正在处理
+                    starting.Add(task)
+                End If
+            Next
+        End SyncLock
+
+        广播任务更新(starting)
+        For Each task In starting
+            Threading.Tasks.Task.Run(Async Function()
+                                         Await task.开始Async()
+                                         请求调度()
+                                     End Function)
         Next
-        请求调度()
-        广播任务更新(selected)
     End Sub
 
     Public Shared Sub 暂停任务(ids As IEnumerable(Of String))
@@ -148,7 +163,7 @@ Public Class 编码队列_v6
 
     Public Shared Sub 停止任务(ids As IEnumerable(Of String))
         For Each task In 获取指定任务(ids)
-            task.停止()
+            If task.可停止 Then task.停止()
         Next
         请求调度()
     End Sub
@@ -516,6 +531,12 @@ Public Class 编码任务_v6
         End Get
     End Property
 
+    Public ReadOnly Property 可停止 As Boolean
+        Get
+            Return 状态 = 编码任务状态_v6.正在处理 OrElse 状态 = 编码任务状态_v6.已暂停 OrElse 状态 = 编码任务状态_v6.错误
+        End Get
+    End Property
+
     Public ReadOnly Property 可排序 As Boolean
         Get
             Return 状态 <> 编码任务状态_v6.正在处理 AndAlso 状态 <> 编码任务状态_v6.已暂停
@@ -859,6 +880,7 @@ Public Class 编码任务_v6
 
     Public Sub 停止()
         Try
+            If Not 可停止 Then Exit Sub
             手动停止 = True
             If 当前进程 IsNot Nothing AndAlso Not 当前进程.HasExited Then 当前进程.Kill()
             状态 = 编码任务状态_v6.已停止

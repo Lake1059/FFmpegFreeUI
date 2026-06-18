@@ -8,6 +8,17 @@ Public Class Form_v6_集成工具_质量评测图表
     Private 数据提供器 As Func(Of String, Dictionary(Of String, List(Of Double))) = Nothing
     Private 分数提供器 As Func(Of String, Dictionary(Of String, String)) = Nothing
 
+    Private Shared ReadOnly 系列颜色表 As Color() = {
+        Color.FromArgb(230, 230, 230),
+        Color.FromArgb(230, 86, 86),
+        Color.FromArgb(232, 144, 63),
+        Color.FromArgb(222, 196, 68),
+        Color.FromArgb(99, 197, 95),
+        Color.FromArgb(70, 202, 196),
+        Color.FromArgb(88, 139, 232),
+        Color.FromArgb(170, 103, 224)
+    }
+
     Public Shared Sub 显示(owner As Form, dataProvider As Func(Of String, Dictionary(Of String, List(Of Double))), scoreProvider As Func(Of String, Dictionary(Of String, String)))
         If 当前窗体 Is Nothing OrElse 当前窗体.IsDisposed Then
             当前窗体 = New Form_v6_集成工具_质量评测图表()
@@ -89,7 +100,7 @@ Public Class Form_v6_集成工具_质量评测图表
         Try
             Ultra2DChart1.ClearData()
             Ultra2DChart1.XAxisTitle = "帧"
-            Ultra2DChart1.YAxisTitle = metric
+            Ultra2DChart1.YAxisTitle = ""
             设置坐标范围(metric)
 
             Dim maxCount = If(seriesData.Count = 0, 0, seriesData.Max(Function(x) If(x.Value Is Nothing, 0, x.Value.Count)))
@@ -155,10 +166,7 @@ Public Class Form_v6_集成工具_质量评测图表
     End Sub
 
     Private Function 获取系列颜色(index As Integer) As Color
-        If Ultra2DChart1 IsNot Nothing AndAlso Ultra2DChart1.Palette.Count > 0 Then
-            Return Ultra2DChart1.Palette(Math.Abs(index) Mod Ultra2DChart1.Palette.Count)
-        End If
-        Return Color.FromArgb(68, 114, 196)
+        Return 系列颜色表(Math.Abs(index) Mod 系列颜色表.Length)
     End Function
 
     Private Shared Function 颜色转Html(color As Color) As String
