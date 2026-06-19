@@ -720,6 +720,7 @@ Public Class 编码任务_v6
                     stepItem.状态 = 编码步骤状态_v6.已停止
                     状态 = 编码任务状态_v6.已停止
                     追加日志("[3FUI] 任务已手动停止", 编码任务日志类别_v6.系统, stepItem, False, False)
+                    手动停止后清理输出()
                     Exit While
                 End If
                 If exitCode <> 0 Then
@@ -987,18 +988,39 @@ Public Class 编码任务_v6
     End Sub
 
     Private Sub 失败后清理输出()
+        清理已报废MP4输出("失败")
+    End Sub
+
+    Private Sub 手动停止后清理输出()
+        清理已报废MP4输出("手动停止")
+    End Sub
+
+    Private Sub 清理已报废MP4输出(触发原因 As String)
         If String.IsNullOrWhiteSpace(输出文件) OrElse Not File.Exists(输出文件) Then Exit Sub
+        If Not Path.GetExtension(输出文件).Equals(".mp4", StringComparison.OrdinalIgnoreCase) Then Exit Sub
+        If 输出文件是否等于输入文件() Then Exit Sub
         Try
             Select Case 设置_v6.实例对象.任务失败自动删除输出文件
                 Case 0
-                    If Path.GetExtension(输出文件).Equals(".mp4", StringComparison.OrdinalIgnoreCase) AndAlso Not 输出文件.Equals(输入文件, StringComparison.CurrentCultureIgnoreCase) Then FileIO.FileSystem.DeleteFile(输出文件, FileIO.UIOption.OnlyErrorDialogs, FileIO.RecycleOption.SendToRecycleBin)
+                    FileIO.FileSystem.DeleteFile(输出文件, FileIO.UIOption.OnlyErrorDialogs, FileIO.RecycleOption.SendToRecycleBin)
+                    追加日志($"[3FUI] {触发原因}后已将报废 MP4 输出文件删除到回收站", 编码任务日志类别_v6.系统, 当前步骤, False, False)
                 Case 1
-                    If Not 输出文件.Equals(输入文件, StringComparison.CurrentCultureIgnoreCase) Then FileIO.FileSystem.DeleteFile(输出文件, FileIO.UIOption.OnlyErrorDialogs, FileIO.RecycleOption.SendToRecycleBin)
+                    FileIO.FileSystem.DeleteFile(输出文件, FileIO.UIOption.OnlyErrorDialogs, FileIO.RecycleOption.DeletePermanently)
+                    追加日志($"[3FUI] {触发原因}后已永久删除报废 MP4 输出文件", 编码任务日志类别_v6.系统, 当前步骤, False, False)
             End Select
         Catch ex As Exception
-            追加日志("[3FUI] 失败后删除输出文件失败：" & ex.Message, 编码任务日志类别_v6.错误, 当前步骤, True, False)
+            追加日志($"[3FUI] {触发原因}后删除报废 MP4 输出文件失败：" & ex.Message, 编码任务日志类别_v6.错误, 当前步骤, True, False)
         End Try
     End Sub
+
+    Private Function 输出文件是否等于输入文件() As Boolean
+        If String.IsNullOrWhiteSpace(输出文件) OrElse String.IsNullOrWhiteSpace(输入文件) Then Return False
+        Try
+            Return Path.GetFullPath(输出文件).Equals(Path.GetFullPath(输入文件), StringComparison.OrdinalIgnoreCase)
+        Catch
+            Return 输出文件.Equals(输入文件, StringComparison.OrdinalIgnoreCase)
+        End Try
+    End Function
 
     Private Shared Function 提取FFprobe时长(lines As IEnumerable(Of String)) As String
         For Each line In lines

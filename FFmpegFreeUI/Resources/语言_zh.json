@@ -25,7 +25,7 @@
   "Label.HelpInfoDescription1": "3FUI 的主要逻辑是先去参数面板设定好选项，再把文件拖进编码队列自动开始。遇到任何不懂的概念可直接问 AI，这些都是写在维基百科里的词汇。但不要相信 AI 给你的建议！",
   "Label.HelpInfoDescription2": "求助时请第一时间提供报错信息、任务命令行和参数总览，保持专注和成熟，不要发泄情绪，抱怨和算卦不会解决任何问题。",
   "Label.HighDPISupport": "高 DPI 支持",
-  "Label.HighDPISupportDescription": "请尽可能只在主显示器上使用；在不同缩放的显示器之间移动很容易导致 SunnyUI 出现字体过大的问题，其内部支持很有限；如果在主显示器上出现问题请直接汇报。",
+  "Label.HighDPISupportDescription": "请尽可能只在主显示器上使用；如果在不同缩放的显示器之间移动后出现字体或布局异常，请直接汇报。",
   "Label.News": "新闻列表",
   "String.GetNewsFailed": "获取新闻内容失败",
   "LinkLabel.GC": "清理 3FUI 内存 (GC+内核)",

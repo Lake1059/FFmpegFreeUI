@@ -25,7 +25,7 @@
   "Label.HelpInfoDescription1": "3FUI's main logic: Set options in parameter panel first, drag file into encoding queue and start. If you encounter any unfamiliar concepts, Ask the AI; But don't trust AI's suggestions!",
   "Label.HelpInfoDescription2": "When seeking help, please provide error detail, task command, and parameter overview immediately. Stay focused and mature, do not vent emotions. Complaining and fortune telling will not solve any problems.",
   "Label.HighDPISupport": "High DPI Support",
-  "Label.HighDPISupportDescription": "Just use only on main display; moving between different scaling displays maybe cause SunnyUI oversized fonts. If have issues on main display, report them directly.",
+  "Label.HighDPISupportDescription": "Use the main display when possible; if moving between displays with different scaling causes font or layout issues, report them directly.",
   "Label.News": "News List",
   "String.GetNewsFailed": "Get news failed.",
   "LinkLabel.GC": "CL 3FUI Mem (GC+Kernel)",

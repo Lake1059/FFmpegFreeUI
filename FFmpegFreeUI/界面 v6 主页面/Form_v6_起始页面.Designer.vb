@@ -74,7 +74,6 @@ Partial Class Form_v6_起始页面
         ModernPanel2.Name = "ModernPanel2"
         ModernPanel2.OverlayColor = Color.FromArgb(CByte(120), CByte(0), CByte(0), CByte(0))
         ModernPanel2.Padding = New Padding(15)
-        ModernPanel2.ScrollBarMode = LakeUI.ModernPanel.ScrollMode.None
         ModernPanel2.Size = New Size(934, 100)
         ModernPanel2.TabIndex = 0
         ' 
@@ -157,7 +156,6 @@ Partial Class Form_v6_起始页面
         ModernPanel3.Image = CType(resources.GetObject("ModernPanel3.Image"), Image)
         ModernPanel3.Location = New Point(20, 20)
         ModernPanel3.Name = "ModernPanel3"
-        ModernPanel3.ScrollBarMode = LakeUI.ModernPanel.ScrollMode.None
         ModernPanel3.Size = New Size(60, 60)
         ModernPanel3.TabIndex = 0
         ' 
@@ -178,7 +176,6 @@ Partial Class Form_v6_起始页面
         ModernPanel1.Location = New Point(0, 0)
         ModernPanel1.Name = "ModernPanel1"
         ModernPanel1.Padding = New Padding(15)
-        ModernPanel1.ScrollBarMode = LakeUI.ModernPanel.ScrollMode.None
         ModernPanel1.Size = New Size(964, 645)
         ModernPanel1.TabIndex = 1
         ' 
@@ -200,7 +197,6 @@ Partial Class Form_v6_起始页面
         ModernPanel5.Name = "ModernPanel5"
         ModernPanel5.OverlayColor = Color.FromArgb(CByte(120), CByte(0), CByte(0), CByte(0))
         ModernPanel5.Padding = New Padding(15)
-        ModernPanel5.ScrollBarMode = LakeUI.ModernPanel.ScrollMode.None
         ModernPanel5.Size = New Size(304, 500)
         ModernPanel5.TabIndex = 4
         ' 
@@ -258,7 +254,7 @@ Partial Class Form_v6_起始页面
         ModernButton15.SubText = "尚未准备好"
         ModernButton15.SubTextForeColor = Color.Peru
         ModernButton15.TabIndex = 23
-        ModernButton15.Text = "VLC | 可视化剪辑区间交互"
+        ModernButton15.Text = "可视化剪辑区间交互"
         ModernButton15.TextAlign = LakeUI.ModernButton.TextAlignEnum.Left
         ' 
         ' HtmlColorLabel5
@@ -350,7 +346,6 @@ Partial Class Form_v6_起始页面
         MP_新闻列表.Name = "MP_新闻列表"
         MP_新闻列表.OverlayColor = Color.FromArgb(CByte(120), CByte(0), CByte(0), CByte(0))
         MP_新闻列表.Padding = New Padding(15)
-        MP_新闻列表.ScrollBarMode = LakeUI.ModernPanel.ScrollMode.None
         MP_新闻列表.Size = New Size(300, 500)
         MP_新闻列表.TabIndex = 5
         ' 
@@ -397,7 +392,6 @@ Partial Class Form_v6_起始页面
         ModernPanel4.Name = "ModernPanel4"
         ModernPanel4.OverlayColor = Color.FromArgb(CByte(120), CByte(0), CByte(0), CByte(0))
         ModernPanel4.Padding = New Padding(15)
-        ModernPanel4.ScrollBarMode = LakeUI.ModernPanel.ScrollMode.None
         ModernPanel4.Size = New Size(300, 500)
         ModernPanel4.TabIndex = 2
         ' 

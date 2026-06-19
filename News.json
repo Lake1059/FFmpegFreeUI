@@ -35,10 +35,10 @@
         "Body": "https://github.com/Lake1059/3fuiVideoHelper"
     },
     {
-        "Title": "3FUI 6.0 计划正在进行中",
+        "Title": "新图标征集活动",
         "TitleColor": "yellow",
-        "SubTitle": "当前测试版无可用生产力功能，敬请期待",
-        "Type": "msgbox",
-        "Body": "6.0 是一个漫长的计划，就像是回到了0.X版本那时候，所以叫做测试开发版，这不是大版本升级，是完全重做，所有轮子自己重造，预计持续到今年9月。"
+        "SubTitle": "前往 GitHub 查看详情",
+        "Type": "link",
+        "Body": "https://github.com/Lake1059/FFmpegFreeUI#新图标征集活动"
     }
 ]

@@ -1,5 +1,3 @@
-﻿Imports Sunny.UI
-
 Public Class Form_v6_参数面板_质量
 
     Public 所属参数面板对象 As Form_v6_参数面板
@@ -115,7 +113,9 @@ Public Class Form_v6_参数面板_质量
 
     Private Sub MB_插入预制条目_Click(sender As Object, e As EventArgs) Handles MB_插入预制条目.Click
         初始化预制条目菜单()
-        预制条目菜单.Show(HtmlColorLabel1.ScreenLocation.X, FormMain_v6.ScreenLocation.Y)
+        Dim labelPoint = HtmlColorLabel1.PointToScreen(Point.Empty)
+        Dim formPoint = FormMain_v6.PointToScreen(Point.Empty)
+        预制条目菜单.Show(labelPoint.X, formPoint.Y)
     End Sub
 
     Private Sub 通知参数面板刷新()

@@ -404,10 +404,10 @@ Public Class 预设管理_v6
 
         If Not String.IsNullOrWhiteSpace(a.视频参数_插帧_目标帧率) Then
             添加总览文本行(sb, "插帧目标帧率：" & a.视频参数_插帧_目标帧率)
-            添加总览文本行(sb, "插帧模式：" & a.视频参数_插帧_插帧模式)
-            添加总览文本行(sb, "运动估计模式：" & a.视频参数_插帧_运动估计模式)
-            添加总览文本行(sb, "运动估计算法：" & a.视频参数_插帧_运动估计算法)
-            添加总览文本行(sb, "运动补偿模式：" & a.视频参数_插帧_运动补偿模式)
+            添加总览文本行(sb, "插帧模式：" & 插帧模式显示文本(a.视频参数_插帧_插帧模式))
+            添加总览文本行(sb, "运动估计模式：" & 运动估计模式显示文本(a.视频参数_插帧_运动估计模式))
+            添加总览文本行(sb, "运动估计算法：" & 运动估计算法显示文本(a.视频参数_插帧_运动估计算法))
+            添加总览文本行(sb, "运动补偿模式：" & 运动补偿模式显示文本(a.视频参数_插帧_运动补偿模式))
             If a.视频参数_插帧_可变块大小的运动补偿 Then 添加总览文本行(sb, "插帧：已启用可变块大小运动补偿")
             添加总览文本行(sb, "插帧块大小：" & a.视频参数_插帧_块大小)
             添加总览文本行(sb, "插帧搜索范围：" & a.视频参数_插帧_搜索范围)
@@ -1636,6 +1636,89 @@ Public Class 预设管理_v6
         If Double.TryParse(value, NumberStyles.Any, CultureInfo.InvariantCulture, d) OrElse Double.TryParse(value, d) Then p.SetValue(track, d)
     End Sub
 
+    Private Shared Function 标准化插帧选项值(value As String, ParamArray options() As (Text As String, Value As String)) As String
+        Dim text = If(value, "").Trim()
+        If text = "" Then Return ""
+        For Each item In options
+            If String.Equals(text, item.Text, StringComparison.Ordinal) OrElse
+               String.Equals(text, item.Value, StringComparison.OrdinalIgnoreCase) Then
+                Return item.Value
+            End If
+        Next
+        Return text
+    End Function
+
+    Private Shared Function 插帧选项显示文本(value As String, ParamArray options() As (Text As String, Value As String)) As String
+        Dim normalized = 标准化插帧选项值(value, options)
+        If normalized = "" Then Return ""
+        For Each item In options
+            If String.Equals(normalized, item.Value, StringComparison.OrdinalIgnoreCase) Then Return item.Text
+        Next
+        Return normalized
+    End Function
+
+    Private Shared Function 插帧模式参数值(value As String) As String
+        Return 标准化插帧选项值(value,
+            ("两帧加权平均", "blend"),
+            ("运动补偿插值", "mci"))
+    End Function
+
+    Private Shared Function 插帧模式显示文本(value As String) As String
+        Return 插帧选项显示文本(value,
+            ("两帧加权平均", "blend"),
+            ("运动补偿插值", "mci"))
+    End Function
+
+    Private Shared Function 运动估计模式参数值(value As String) As String
+        Return 标准化插帧选项值(value,
+            ("双向运动估计", "bidir"),
+            ("双侧运动估计", "bilat"))
+    End Function
+
+    Private Shared Function 运动估计模式显示文本(value As String) As String
+        Return 插帧选项显示文本(value,
+            ("双向运动估计", "bidir"),
+            ("双侧运动估计", "bilat"))
+    End Function
+
+    Private Shared Function 运动估计算法参数值(value As String) As String
+        Return 标准化插帧选项值(value,
+            ("穷举搜索", "esa"),
+            ("三步搜索", "tss"),
+            ("二维对数搜索", "tdls"),
+            ("新三步搜索", "ntss"),
+            ("四步搜索", "fss"),
+            ("菱形搜索", "ds"),
+            ("基于 Hexagon", "hexbs"),
+            ("增强的预测区域", "epzs"),
+            ("不均匀多六边形", "umh"))
+    End Function
+
+    Private Shared Function 运动估计算法显示文本(value As String) As String
+        Return 插帧选项显示文本(value,
+            ("穷举搜索", "esa"),
+            ("三步搜索", "tss"),
+            ("二维对数搜索", "tdls"),
+            ("新三步搜索", "ntss"),
+            ("四步搜索", "fss"),
+            ("菱形搜索", "ds"),
+            ("基于 Hexagon", "hexbs"),
+            ("增强的预测区域", "epzs"),
+            ("不均匀多六边形", "umh"))
+    End Function
+
+    Private Shared Function 运动补偿模式参数值(value As String) As String
+        Return 标准化插帧选项值(value,
+            ("重叠块运动补偿", "obmc"),
+            ("加权 obmc", "aobmc"))
+    End Function
+
+    Private Shared Function 运动补偿模式显示文本(value As String) As String
+        Return 插帧选项显示文本(value,
+            ("重叠块运动补偿", "obmc"),
+            ("加权 obmc", "aobmc"))
+    End Function
+
     Private Shared Function 构造缩放滤镜(a As 预设数据_v6) As String
         If a.视频参数_分辨率 <> "" Then Return $"scale={a.视频参数_分辨率.Replace("x", ":")}"
         If a.视频参数_分辨率自动计算_宽度 <> "" OrElse a.视频参数_分辨率自动计算_高度 <> "" Then Return $"scale={If(a.视频参数_分辨率自动计算_宽度 = "", "-2", a.视频参数_分辨率自动计算_宽度)}:{If(a.视频参数_分辨率自动计算_高度 = "", "-2", a.视频参数_分辨率自动计算_高度)}"
@@ -1660,10 +1743,15 @@ Public Class 预设管理_v6
     Private Shared Function 构造插帧滤镜(a As 预设数据_v6) As String
         If a.视频参数_插帧_目标帧率 = "" Then Return ""
         Dim opts As New List(Of String) From {$"fps={a.视频参数_插帧_目标帧率}"}
-        If a.视频参数_插帧_插帧模式 <> "" Then opts.Add("mi_mode=" & a.视频参数_插帧_插帧模式)
-        If a.视频参数_插帧_运动估计模式 <> "" Then opts.Add("me_mode=" & a.视频参数_插帧_运动估计模式)
-        If a.视频参数_插帧_运动估计算法 <> "" Then opts.Add("me=" & a.视频参数_插帧_运动估计算法)
-        If a.视频参数_插帧_运动补偿模式 <> "" Then opts.Add("mc_mode=" & a.视频参数_插帧_运动补偿模式)
+        Dim 插帧模式 = 插帧模式参数值(a.视频参数_插帧_插帧模式)
+        Dim 运动估计模式 = 运动估计模式参数值(a.视频参数_插帧_运动估计模式)
+        Dim 运动估计算法 = 运动估计算法参数值(a.视频参数_插帧_运动估计算法)
+        Dim 运动补偿模式 = 运动补偿模式参数值(a.视频参数_插帧_运动补偿模式)
+        If 插帧模式 <> "" Then opts.Add("mi_mode=" & 插帧模式)
+        If 运动估计模式 <> "" Then opts.Add("me_mode=" & 运动估计模式)
+        If 运动估计算法 <> "" Then opts.Add("me=" & 运动估计算法)
+        If 运动补偿模式 <> "" Then opts.Add("mc_mode=" & 运动补偿模式)
+        If a.视频参数_插帧_可变块大小的运动补偿 Then opts.Add("vsbmc=1")
         If a.视频参数_插帧_块大小 <> "" Then opts.Add("mb_size=" & a.视频参数_插帧_块大小)
         If a.视频参数_插帧_搜索范围 <> "" Then opts.Add("search_param=" & a.视频参数_插帧_搜索范围)
         If a.视频参数_插帧_场景变化检测强度 <> "" Then opts.Add("scd_threshold=" & a.视频参数_插帧_场景变化检测强度)
@@ -2088,10 +2176,10 @@ Public Class 预设管理_v6
         a.视频参数_抽帧_frac = 抽帧.ModernComboBox2.Text
 
         a.视频参数_插帧_目标帧率 = If(插帧.MCB_插帧总开关.Checked, 插帧.MTB_目标帧率.Text, "")
-        a.视频参数_插帧_插帧模式 = 插帧.MCB_插帧模式.Text
-        a.视频参数_插帧_运动估计模式 = 插帧.MCB_运动估计模式.Text
-        a.视频参数_插帧_运动估计算法 = 插帧.MCB_运动估计算法.Text
-        a.视频参数_插帧_运动补偿模式 = 插帧.MCB_运动补偿模式.Text
+        a.视频参数_插帧_插帧模式 = 插帧模式参数值(插帧.MCB_插帧模式.Text)
+        a.视频参数_插帧_运动估计模式 = 运动估计模式参数值(插帧.MCB_运动估计模式.Text)
+        a.视频参数_插帧_运动估计算法 = 运动估计算法参数值(插帧.MCB_运动估计算法.Text)
+        a.视频参数_插帧_运动补偿模式 = 运动补偿模式参数值(插帧.MCB_运动补偿模式.Text)
         a.视频参数_插帧_可变块大小的运动补偿 = 插帧.MCB_可变块大小的运动补偿.Checked
         a.视频参数_插帧_块大小 = 插帧.MTB_块大小.Text
         a.视频参数_插帧_搜索范围 = 插帧.MTB_搜索范围.Text
@@ -2211,10 +2299,10 @@ Public Class 预设管理_v6
 
         插帧.MCB_插帧总开关.Checked = a.视频参数_插帧_目标帧率 <> ""
         插帧.MTB_目标帧率.Text = a.视频参数_插帧_目标帧率
-        插帧.MCB_插帧模式.Text = a.视频参数_插帧_插帧模式
-        插帧.MCB_运动估计模式.Text = a.视频参数_插帧_运动估计模式
-        插帧.MCB_运动估计算法.Text = a.视频参数_插帧_运动估计算法
-        插帧.MCB_运动补偿模式.Text = a.视频参数_插帧_运动补偿模式
+        设置组合框文本并尝试选中(插帧.MCB_插帧模式, 插帧模式显示文本(a.视频参数_插帧_插帧模式))
+        设置组合框文本并尝试选中(插帧.MCB_运动估计模式, 运动估计模式显示文本(a.视频参数_插帧_运动估计模式))
+        设置组合框文本并尝试选中(插帧.MCB_运动估计算法, 运动估计算法显示文本(a.视频参数_插帧_运动估计算法))
+        设置组合框文本并尝试选中(插帧.MCB_运动补偿模式, 运动补偿模式显示文本(a.视频参数_插帧_运动补偿模式))
         插帧.MCB_可变块大小的运动补偿.Checked = a.视频参数_插帧_可变块大小的运动补偿
         插帧.MTB_块大小.Text = a.视频参数_插帧_块大小
         插帧.MTB_搜索范围.Text = a.视频参数_插帧_搜索范围

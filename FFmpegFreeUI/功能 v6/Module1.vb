@@ -6,7 +6,6 @@ Imports System.Runtime.InteropServices
 Imports System.Text
 Imports System.Text.Json
 Imports System.Threading
-Imports Sunny.UI
 
 Module Module1
 
@@ -377,27 +376,6 @@ Module Module1
         Next
         Return result.ToString()
     End Function
-
-    Public Sub 校准UiComboBox视觉(c As UIComboBox)
-        Dim dpiScale = FormMain_v6.DeviceDpi / 96.0F
-        c.ItemHeight = CInt(28 * dpiScale)
-        c.SymbolSize = CInt(24 * dpiScale)
-        c.ScrollBarHandleWidth = CInt(30 * dpiScale)
-        c.ScrollBarBackColor = Color.FromArgb(64, 64, 64)
-        c.ScrollBarColor = SystemColors.WindowFrame
-        c.DropDownWidth = c.Width
-    End Sub
-    Public Sub 绑定下拉框鼠标滚轮事件(下拉框 As UIComboBox)
-        AddHandler 下拉框.MouseWheel, AddressOf 下拉框鼠标滚轮事件
-    End Sub
-    Sub 下拉框鼠标滚轮事件(sender As Object, e As MouseEventArgs)
-        Select Case e.Delta
-            Case > 0 : If sender.SelectedIndex > 0 Then sender.SelectedIndex -= 1
-            Case < 0 : If sender.SelectedIndex < sender.Items.Count - 1 Then sender.SelectedIndex += 1
-        End Select
-    End Sub
-
-
 
     Public Function 将时间字符串转换为时间类型(timeStr As String) As TimeSpan
         Try

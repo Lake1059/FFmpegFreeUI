@@ -120,7 +120,7 @@ Partial Class Form_v6_设置_功能设定
         HtmlColorLabel8.Padding = New Padding(10, 0, 0, 0)
         HtmlColorLabel8.Size = New Size(502, 32)
         HtmlColorLabel8.TabIndex = 27
-        HtmlColorLabel8.Text = "任务失败时是否删除文件"
+        HtmlColorLabel8.Text = "任务失败或手动停止时是否删除报废 MP4"
         HtmlColorLabel8.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
         ' 
         ' MCB_任务失败删除文件
