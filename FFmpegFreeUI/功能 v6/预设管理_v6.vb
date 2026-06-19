@@ -1363,7 +1363,7 @@ Public Class 预设管理_v6
 
     Private Shared Function 生成解码参数(a As 预设数据_v6) As String
         Dim parts As New List(Of String)
-        If a.解码参数_解码器 <> "" Then parts.Add($"-c:v {a.解码参数_解码器}")
+        If a.解码参数_解码器 <> "" Then parts.Add($"-hwaccel {a.解码参数_解码器}")
         If a.解码参数_CPU解码线程数 <> "" Then parts.Add($"-threads {a.解码参数_CPU解码线程数}")
         If a.解码参数_解码数据格式 <> "" Then parts.Add($"-hwaccel_output_format {a.解码参数_解码数据格式}")
         If a.解码参数_指定硬件的参数名 <> "" AndAlso a.解码参数_指定硬件的参数 <> "" Then parts.Add($"{a.解码参数_指定硬件的参数名} {a.解码参数_指定硬件的参数}")

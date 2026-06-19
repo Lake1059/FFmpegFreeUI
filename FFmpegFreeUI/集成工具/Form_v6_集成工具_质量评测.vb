@@ -1525,6 +1525,53 @@ Public Class Form_v6_集成工具_质量评测
         End If
     End Sub
 
+    Private Sub UltraDetailListView1_ItemDoubleClick(sender As Object, e As UltraDetailListView.ListItemEventArgs) Handles UltraDetailListView1.ItemDoubleClick
+        复制鼠标位置分数(e)
+    End Sub
+
+    Private Sub 复制鼠标位置分数(e As UltraDetailListView.ListItemEventArgs)
+        Dim item = If(e?.Item, UltraDetailListView1.SelectedItem)
+        If item Is Nothing Then Exit Sub
+
+        Dim metric As 指标类型
+        If Not 尝试获取指标列类型(e.ColumnIndex, metric) Then Exit Sub
+
+        Dim result As 指标结果数据 = Nothing
+        If Not 获取项数据(item).指标结果.TryGetValue(metric, result) OrElse result Is Nothing OrElse Not result.成功 Then
+            ExFloatingTip(UltraDetailListView1, "此位置没有可复制的分数", 1200)
+            Exit Sub
+        End If
+
+        Dim scoreText = 格式化分数(result.汇总值, metric)
+        If String.IsNullOrWhiteSpace(scoreText) Then
+            ExFloatingTip(UltraDetailListView1, "此位置没有可复制的分数", 1200)
+            Exit Sub
+        End If
+
+        Try
+            Clipboard.SetText(scoreText)
+            ExFloatingTip(UltraDetailListView1, $"已复制{获取指标名称(metric)}分数：{scoreText}", 1200)
+        Catch ex As Exception
+            ExFloatingTip(UltraDetailListView1, $"复制失败：{ex.Message}", 1800)
+        End Try
+    End Sub
+
+    Private Shared Function 尝试获取指标列类型(columnIndex As Integer, ByRef metric As 指标类型) As Boolean
+        Select Case columnIndex
+            Case PSNR列
+                metric = 指标类型.PSNR
+            Case SSIM列
+                metric = 指标类型.SSIM
+            Case VMAF列
+                metric = 指标类型.VMAF
+            Case XPSNR列
+                metric = 指标类型.XPSNR
+            Case Else
+                Return False
+        End Select
+        Return True
+    End Function
+
     Private Sub UltraDetailListView1_ItemOrderChanged(sender As Object, e As EventArgs) Handles UltraDetailListView1.ItemOrderChanged
         调整列宽()
         刷新图表()

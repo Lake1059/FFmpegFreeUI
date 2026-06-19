@@ -10,6 +10,10 @@ Module Program
     Private Const 仓库名称 As String = "FFmpegFreeUI"
     Private Const 控制台行宽 As Integer = 92
     Private Const 进度条宽度 As Integer = 28
+    Private ReadOnly 架构主程序文件名列表 As String() = {
+        "FFmpegFreeUI.x64.exe",
+        "FFmpegFreeUI.arm64.exe"
+    }
 
 #Disable Warning IDE0060 ' 删除未使用的参数
     Function Main(args As String()) As Integer
@@ -97,6 +101,7 @@ Module Program
         End If
 
         输出成功($"共应用 {已应用} 个更新文件。")
+        清理架构主程序文件(程序目录)
         Console.WriteLine()
 
         Dim 需要重启 As Boolean = 强制重启 OrElse 询问是否重启()
@@ -279,6 +284,20 @@ Module Program
         Next
         Return 计数
     End Function
+
+    Private Sub 清理架构主程序文件(程序目录 As String)
+        For Each 文件名 In 架构主程序文件名列表
+            Dim 文件路径 = Path.Combine(程序目录, 文件名)
+            If Not File.Exists(文件路径) Then Continue For
+
+            Try
+                File.Delete(文件路径)
+                输出成功($"已删除旧的架构主程序：{文件名}")
+            Catch ex As Exception
+                输出警告($"无法删除旧的架构主程序 {文件名}：{ex.Message}")
+            End Try
+        Next
+    End Sub
 
     Private Function 存在待应用更新文件(程序目录 As String) As Boolean
         Try

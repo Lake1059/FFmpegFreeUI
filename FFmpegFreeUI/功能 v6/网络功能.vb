@@ -1,8 +1,13 @@
 ﻿Imports System.IO
 Imports System.Text.Json
 Imports System.Text.Json.Serialization
+Imports System.Threading
 
 Public Class 网络功能
+
+    Private Shared ReadOnly 联网请求超时时间 As TimeSpan = TimeSpan.FromSeconds(45)
+    Private Shared ReadOnly 下载无进展超时时间 As TimeSpan = TimeSpan.FromSeconds(90)
+    Private Shared ReadOnly 下载看门狗间隔 As TimeSpan = TimeSpan.FromSeconds(5)
 
 #Region "新闻列表"
 
@@ -22,11 +27,18 @@ Public Class 网络功能
         清空新闻列表()
         当前是否正在进行获取新闻列表 = True
 
-        Dim 新闻列表 As List(Of 新闻单片数据类) = Await 获取新闻列表数据Async()
-        If 新闻列表 Is Nothing Then Exit Sub
+        Try
+            Dim 新闻列表 As List(Of 新闻单片数据类) = Await 获取新闻列表数据Async()
+            If 新闻列表 Is Nothing Then
+                当前是否正在进行获取新闻列表 = False
+                Exit Sub
+            End If
 
-        添加新闻列表到界面(新闻列表)
-        当前是否正在进行获取新闻列表 = False
+            添加新闻列表到界面(新闻列表)
+            当前是否正在进行获取新闻列表 = False
+        Catch ex As Exception
+            设置新闻列表获取失败(获取异常消息(ex))
+        End Try
     End Sub
 
     Public Shared Sub 创建一个新闻内容(标题 As String, 标题颜色 As String, 副标题 As String, 行为 As String, 内容 As String)
@@ -76,9 +88,11 @@ Public Class 网络功能
         Dim 原始数据 As String
 
         Try
-            原始数据 = Await LakeUI.GitHub.GetFileTextAsync("Lake1059", "FFmpegFreeUI", "News.json")
+            Using cts As CancellationTokenSource = 创建联网请求取消源()
+                原始数据 = Await LakeUI.GitHub.GetFileTextAsync("Lake1059", "FFmpegFreeUI", "News.json", cancellationToken:=cts.Token)
+            End Using
         Catch ex As Exception
-            设置新闻列表获取失败(ex.Message)
+            设置新闻列表获取失败(获取异常消息(ex))
             Return Nothing
         End Try
 
@@ -396,11 +410,15 @@ Public Class 网络功能
 
         标记本体更新检查开始()
 
-        Dim 检查结果 As 更新检查结果 = Await 获取本体更新信息Async()
-        If Not 处理本体更新检查结果(检查结果) Then Exit Sub
-        If Not 清理旧本体更新文件() Then Exit Sub
+        Try
+            Dim 检查结果 As 更新检查结果 = Await 获取本体更新信息Async()
+            If Not 处理本体更新检查结果(检查结果) Then Exit Sub
+            If Not 清理旧本体更新文件() Then Exit Sub
 
-        Await 下载软件本体更新Async(检查结果)
+            Await 下载软件本体更新Async(检查结果)
+        Catch ex As Exception
+            设置本体更新失败("检查软件本体更新失败", "点此查看详情", 获取异常消息(ex))
+        End Try
     End Sub
 
     Private Shared Function 可以开始检查本体更新() As Boolean
@@ -467,9 +485,11 @@ Public Class 网络功能
         Dim 镜像数据 As 国内镜像源数据结构
 
         Try
-            镜像数据 = Await LakeUI.SRV_JsonSever.GetJsonAsync(Of 国内镜像源数据结构)(获取国内镜像源本体更新地址(), JsonSO, Nothing, "_ffui-update")
+            Using cts As CancellationTokenSource = 创建联网请求取消源()
+                镜像数据 = Await LakeUI.SRV_JsonSever.GetJsonAsync(Of 国内镜像源数据结构)(获取国内镜像源本体更新地址(), JsonSO, cts.Token, "_ffui-update")
+            End Using
         Catch ex As Exception
-            Return 更新检查结果.失败("检查软件本体更新失败", "点此查看详情", ex.Message)
+            Return 更新检查结果.失败("检查软件本体更新失败", "点此查看详情", 获取异常消息(ex))
         End Try
 
         If Not 国内镜像源数据有效(镜像数据) Then
@@ -498,9 +518,11 @@ Public Class 网络功能
 
         Dim 下载授权 As 国内镜像源授权DataInfo
         Try
-            下载授权 = Await 获取国内镜像源下载授权Async(下载资源.AssetId)
+            Using cts As CancellationTokenSource = 创建联网请求取消源()
+                下载授权 = Await 获取国内镜像源下载授权Async(下载资源.AssetId, cts.Token)
+            End Using
         Catch ex As Exception
-            Return 更新检查结果.失败("软件本体更新失败", "点此查看详情", ex.Message)
+            Return 更新检查结果.失败("软件本体更新失败", "点此查看详情", 获取异常消息(ex))
         End Try
 
         If 下载授权 Is Nothing OrElse String.IsNullOrWhiteSpace(下载授权.DownloadUrl) OrElse String.IsNullOrWhiteSpace(下载授权.DownloadToken) Then
@@ -581,9 +603,9 @@ Public Class 网络功能
         绑定本体下载事件(下载器, 检查结果.版本号)
 
         Try
-            Await 下载器.StartAsync()
+            Await 启动下载并监控Async(下载器)
         Catch ex As Exception
-            设置本体更新失败("下载软件本体更新失败", "点此查看详情", ex.Message)
+            设置本体更新失败("下载软件本体更新失败", "点此查看详情", 获取异常消息(ex))
         End Try
     End Function
 
@@ -628,11 +650,15 @@ Public Class 网络功能
 
         标记更新器更新检查开始()
 
-        Dim 检查结果 As 更新检查结果 = Await 获取更新器更新信息Async()
-        If Not 处理更新器更新检查结果(检查结果) Then Exit Sub
-        If Not 清理旧更新器文件() Then Exit Sub
+        Try
+            Dim 检查结果 As 更新检查结果 = Await 获取更新器更新信息Async()
+            If Not 处理更新器更新检查结果(检查结果) Then Exit Sub
+            If Not 清理旧更新器文件() Then Exit Sub
 
-        Await 下载更新器Async(检查结果)
+            Await 下载更新器Async(检查结果)
+        Catch ex As Exception
+            设置更新器更新失败("更新器更新失败", "点此查看详情", 获取异常消息(ex))
+        End Try
     End Sub
 
     Private Shared Function 可以开始检查更新器更新(强制更新 As Boolean) As Boolean
@@ -702,9 +728,11 @@ Public Class 网络功能
         Dim 镜像数据 As 国内镜像源数据结构
 
         Try
-            镜像数据 = Await LakeUI.SRV_JsonSever.GetJsonAsync(Of 国内镜像源数据结构)(获取国内镜像源本体更新地址(), JsonSO, Nothing, "_ffui-update")
+            Using cts As CancellationTokenSource = 创建联网请求取消源()
+                镜像数据 = Await LakeUI.SRV_JsonSever.GetJsonAsync(Of 国内镜像源数据结构)(获取国内镜像源本体更新地址(), JsonSO, cts.Token, "_ffui-update")
+            End Using
         Catch ex As Exception
-            Return 更新检查结果.失败("更新器更新失败", "点此查看详情", ex.Message)
+            Return 更新检查结果.失败("更新器更新失败", "点此查看详情", 获取异常消息(ex))
         End Try
 
         If Not 国内镜像源数据有效(镜像数据) Then
@@ -721,9 +749,11 @@ Public Class 网络功能
 
         Dim 下载授权 As 国内镜像源授权DataInfo
         Try
-            下载授权 = Await 获取国内镜像源下载授权Async(下载资源.AssetId)
+            Using cts As CancellationTokenSource = 创建联网请求取消源()
+                下载授权 = Await 获取国内镜像源下载授权Async(下载资源.AssetId, cts.Token)
+            End Using
         Catch ex As Exception
-            Return 更新检查结果.失败("更新器更新失败", "点此查看详情", ex.Message)
+            Return 更新检查结果.失败("更新器更新失败", "点此查看详情", 获取异常消息(ex))
         End Try
 
         If 下载授权 Is Nothing OrElse String.IsNullOrWhiteSpace(下载授权.DownloadUrl) OrElse String.IsNullOrWhiteSpace(下载授权.DownloadToken) Then
@@ -788,9 +818,9 @@ Public Class 网络功能
         绑定更新器下载事件(下载器)
 
         Try
-            Await 下载器.StartAsync()
+            Await 启动下载并监控Async(下载器)
         Catch ex As Exception
-            设置更新器更新失败("更新器更新失败", "点此查看详情", ex.Message)
+            设置更新器更新失败("更新器更新失败", "点此查看详情", 获取异常消息(ex))
         End Try
     End Function
 
@@ -829,7 +859,9 @@ Public Class 网络功能
 #Region "更新信息获取辅助"
 
     Private Shared Async Function 获取GitHub发布信息Async() As Task(Of LakeUI.GitHub.GitHubReleaseInfo)
-        Return Await LakeUI.GitHub.GetLatestReleaseAssetUrlsAsync("Lake1059", "FFmpegFreeUI", True)
+        Using cts As CancellationTokenSource = 创建联网请求取消源()
+            Return Await LakeUI.GitHub.GetLatestReleaseAssetUrlsAsync("Lake1059", "FFmpegFreeUI", True, cts.Token)
+        End Using
     End Function
 
     Private Shared Function 查找GitHub发布文件下载地址(发布信息 As LakeUI.GitHub.GitHubReleaseInfo, 文件名 As String) As String
@@ -844,17 +876,18 @@ Public Class 网络功能
         Return ""
     End Function
 
-    Private Shared Async Function 获取国内镜像源下载授权Async(资产ID As String) As Task(Of 国内镜像源授权DataInfo)
+    Private Shared Async Function 获取国内镜像源下载授权Async(资产ID As String, cancellationToken As CancellationToken) As Task(Of 国内镜像源授权DataInfo)
         If String.IsNullOrWhiteSpace(资产ID) Then Throw New InvalidOperationException("资产 ID 为空。")
 
         Dim 挑战响应 As 国内镜像源挑战数据结构 = Await LakeUI.SRV_JsonSever.PostJsonAsync(Of 国内镜像源创建挑战请求, 国内镜像源挑战数据结构)(
             获取国内镜像源创建挑战地址(),
             New 国内镜像源创建挑战请求 With {.AssetId = 资产ID},
-            JsonSO)
+            JsonSO,
+            cancellationToken)
 
         校验国内镜像源挑战数据(挑战响应)
 
-        Dim Nonce As String = Await Task.Run(Function() 求解国内镜像源PowNonce(挑战响应.Data))
+        Dim Nonce As String = Await Task.Run(Function() 求解国内镜像源PowNonce(挑战响应.Data, cancellationToken), cancellationToken)
         Dim 授权响应 As 国内镜像源授权数据结构 = Await LakeUI.SRV_JsonSever.PostJsonAsync(Of 国内镜像源创建授权请求, 国内镜像源授权数据结构)(
             获取国内镜像源创建授权地址(),
             New 国内镜像源创建授权请求 With {
@@ -862,7 +895,8 @@ Public Class 网络功能
                 .AssetId = 资产ID,
                 .Nonce = Nonce
             },
-            JsonSO)
+            JsonSO,
+            cancellationToken)
 
         校验国内镜像源授权数据(授权响应)
         Return 授权响应.Data
@@ -897,10 +931,11 @@ Public Class 网络功能
         End If
     End Sub
 
-    Private Shared Function 求解国内镜像源PowNonce(挑战数据 As 国内镜像源挑战DataInfo) As String
+    Private Shared Function 求解国内镜像源PowNonce(挑战数据 As 国内镜像源挑战DataInfo, cancellationToken As CancellationToken) As String
         Return LakeUI.Sha256ProofOfWork.Solve(
             Function(Nonce) 生成国内镜像源Pow规范文本(挑战数据, Nonce),
-            挑战数据.LeadingZeroBits)
+            挑战数据.LeadingZeroBits,
+            cancellationToken:=cancellationToken)
     End Function
 
     Private Shared Function 生成国内镜像源Pow规范文本(挑战数据 As 国内镜像源挑战DataInfo, Nonce As ULong) As String
@@ -914,11 +949,13 @@ Public Class 网络功能
 
     Private Shared Async Function 获取MirrorChyan数据Async(请求地址 As String) As Task(Of MirrorChyan数据结构)
         Try
-            Return Await LakeUI.SRV_JsonSever.GetJsonAsync(Of MirrorChyan数据结构)(请求地址)
+            Using cts As CancellationTokenSource = 创建联网请求取消源()
+                Return Await LakeUI.SRV_JsonSever.GetJsonAsync(Of MirrorChyan数据结构)(请求地址, cancellationToken:=cts.Token)
+            End Using
         Catch ex As Exception
             Return New MirrorChyan数据结构 With {
                 .Code = -1,
-                .Msg = ex.Message
+                .Msg = 获取异常消息(ex)
             }
         End Try
     End Function
@@ -1006,6 +1043,60 @@ Public Class 网络功能
 #End Region
 
 #Region "下载与进程辅助"
+
+    Private Shared Function 创建联网请求取消源() As CancellationTokenSource
+        Return New CancellationTokenSource(联网请求超时时间)
+    End Function
+
+    Private Shared Function 获取异常消息(ex As Exception) As String
+        If TypeOf ex Is OperationCanceledException Then
+            Return $"请求超过 {联网请求超时时间.TotalSeconds:F0} 秒未完成"
+        End If
+
+        Return ex.Message
+    End Function
+
+    Private Shared Async Function 启动下载并监控Async(下载器 As LakeUI.DownloadFile) As Task
+        Using cts As New CancellationTokenSource()
+            Dim 因无进展取消 As Boolean = False
+            Dim 下载任务 As Task = 下载器.StartAsync(cts.Token)
+
+            Dim 监控任务 As Task = Task.Run(Async Function()
+                                             Dim 上次字节 As Long = 下载器.BytesDownloaded
+                                             Dim 上次变化时间 As DateTime = DateTime.UtcNow
+
+                                             While Not 下载任务.IsCompleted
+                                                 Try
+                                                     Await Task.Delay(下载看门狗间隔, cts.Token).ConfigureAwait(False)
+                                                 Catch ex As OperationCanceledException
+                                                     Exit While
+                                                 End Try
+
+                                                 Dim 当前字节 As Long = 下载器.BytesDownloaded
+                                                 If 当前字节 <> 上次字节 Then
+                                                     上次字节 = 当前字节
+                                                     上次变化时间 = DateTime.UtcNow
+                                                 ElseIf DateTime.UtcNow - 上次变化时间 >= 下载无进展超时时间 Then
+                                                     因无进展取消 = True
+                                                     cts.Cancel()
+                                                     Exit While
+                                                 End If
+                                             End While
+                                         End Function)
+
+            Await 下载任务
+            cts.Cancel()
+
+            Try
+                Await 监控任务.ConfigureAwait(False)
+            Catch
+            End Try
+
+            If 因无进展取消 Then
+                Throw New TimeoutException($"下载超过 {下载无进展超时时间.TotalSeconds:F0} 秒没有收到新数据。")
+            End If
+        End Using
+    End Function
 
     Private Shared Sub 应用下载授权Header(下载器 As LakeUI.DownloadFile, 下载授权Token As String)
         If 下载器 Is Nothing OrElse String.IsNullOrWhiteSpace(下载授权Token) Then Return
