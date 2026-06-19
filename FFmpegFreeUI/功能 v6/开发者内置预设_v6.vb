@@ -55,15 +55,15 @@ Public Class 开发者内置预设_v6
 
         Dim RTX50_HEVC_UHQ As New 预设数据_v6
         RTX50_HEVC_UHQ.预设备注 = "老黄 HEVC UHQ 满分答案，参考 VMAF = 95~96，最推荐 RTX50 全系使用，压缩度大概能摸到 x265 medium 水平。此预设仅包含视频参数！"
-        RTX50_AV1_UHQ.视频参数_编码器_类型 = 预设数据_v6.视频编码器类型.视频
-        RTX50_AV1_UHQ.视频参数_编码器_分类名称 = "H.265/HEVC"
-        RTX50_AV1_UHQ.视频参数_编码器_具体编码 = "hevc_nvenc"
-        RTX50_AV1_UHQ.视频参数_编码器_编码预设 = "p7"
-        RTX50_AV1_UHQ.视频参数_编码器_场景优化 = "uhq"
-        RTX50_AV1_UHQ.视频参数_比特率_控制方式 = 预设数据_v6.视频全局质量控制方式.VBRHQ
-        RTX50_AV1_UHQ.视频参数_质量控制_参数名 = "cq"
-        RTX50_AV1_UHQ.视频参数_质量控制_值 = "28"
-        result.Add(New 预设项("RTX50 HEVC UHQ", RTX50_AV1_UHQ))
+        RTX50_HEVC_UHQ.视频参数_编码器_类型 = 预设数据_v6.视频编码器类型.视频
+        RTX50_HEVC_UHQ.视频参数_编码器_分类名称 = "H.265/HEVC"
+        RTX50_HEVC_UHQ.视频参数_编码器_具体编码 = "hevc_nvenc"
+        RTX50_HEVC_UHQ.视频参数_编码器_编码预设 = "p7"
+        RTX50_HEVC_UHQ.视频参数_编码器_场景优化 = "uhq"
+        RTX50_HEVC_UHQ.视频参数_比特率_控制方式 = 预设数据_v6.视频全局质量控制方式.VBRHQ
+        RTX50_HEVC_UHQ.视频参数_质量控制_参数名 = "cq"
+        RTX50_HEVC_UHQ.视频参数_质量控制_值 = "28"
+        result.Add(New 预设项("RTX50 HEVC UHQ", RTX50_HEVC_UHQ))
 
         Dim X265_Slow As New 预设数据_v6
         X265_Slow.预设备注 = "x265 默认推荐质量，选用 slow 预设可直接作为普通人的最终压制方案，参考 VMAF ≈ 95。此预设仅包含视频参数！"
@@ -90,6 +90,8 @@ Public Class 开发者内置预设_v6
         Dim M4A_HDAudio As New 预设数据_v6
         M4A_HDAudio.预设备注 = "在找全能音乐压制方案？别看了就这个！三个愿望一次满足：接近无损的质量 + 小体积 + 元数据支持（歌曲信息以及专辑图等）。代价是你需要去找个自编译带 FDK AAC 的 ffmpeg，而且好像只支持 16 位深，反正听歌是足够了。"
         M4A_HDAudio.输出容器 = ".m4a"
+        M4A_HDAudio.视频参数_编码器_分类名称 = "复制流"
+        M4A_HDAudio.视频参数_编码器_具体编码 = "copy"
         M4A_HDAudio.音频参数_编码器_代号 = "aac.fdk"
         M4A_HDAudio.音频参数_质量参数名 = "-vbr"
         M4A_HDAudio.音频参数_质量值 = "5"
