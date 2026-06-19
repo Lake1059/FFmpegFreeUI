@@ -152,6 +152,8 @@ Partial Class Form_v6_参数面板_流控制
         ModernComboBox4.BorderRadius = 10
         ModernComboBox4.BorderSize = 0
         ModernComboBox4.Dock = DockStyle.Left
+        ModernComboBox4.DropDownBackdropBlurPasses = 2
+        ModernComboBox4.DropDownBackdropBlurRadius = 30
         ModernComboBox4.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
         ModernComboBox4.DropDownHoverAnimationDuration = 0
         ModernComboBox4.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
@@ -160,19 +162,19 @@ Partial Class Form_v6_参数面板_流控制
         ModernComboBox4.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernComboBox4.DropDownSelectedForeColor = Color.White
         ModernComboBox4.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
-        ModernComboBox4.Margin = New Padding(2, 2, 2, 2)
-        ModernComboBox4.Padding = New Padding(10, 0, 10, 0)
-        ModernComboBox4.ToolTipGap = -1
-        ModernComboBox4.ToolTipMaxWidth = 350
-        ModernComboBox4.ToolTipPadding = New Padding(15)
-        ModernComboBox4.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ModernComboBox4.Items.Add("")
         ModernComboBox4.Items.Add("保留附件")
         ModernComboBox4.Location = New Point(320, 10)
+        ModernComboBox4.Margin = New Padding(2, 2, 2, 2)
         ModernComboBox4.Name = "ModernComboBox4"
+        ModernComboBox4.Padding = New Padding(10, 0, 10, 0)
         ModernComboBox4.Size = New Size(150, 32)
         ModernComboBox4.TabIndex = 9
+        ModernComboBox4.ToolTipGap = -1
+        ModernComboBox4.ToolTipMaxWidth = 350
+        ModernComboBox4.ToolTipPadding = New Padding(15)
         ModernComboBox4.WaterText = "附件选项"
+        ModernComboBox4.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ' 
         ' JustEmptyControl6
         ' 
@@ -188,6 +190,8 @@ Partial Class Form_v6_参数面板_流控制
         ModernComboBox3.BorderRadius = 10
         ModernComboBox3.BorderSize = 0
         ModernComboBox3.Dock = DockStyle.Left
+        ModernComboBox3.DropDownBackdropBlurPasses = 2
+        ModernComboBox3.DropDownBackdropBlurRadius = 30
         ModernComboBox3.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
         ModernComboBox3.DropDownHoverAnimationDuration = 0
         ModernComboBox3.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
@@ -196,20 +200,20 @@ Partial Class Form_v6_参数面板_流控制
         ModernComboBox3.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernComboBox3.DropDownSelectedForeColor = Color.White
         ModernComboBox3.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
-        ModernComboBox3.Margin = New Padding(2, 2, 2, 2)
-        ModernComboBox3.Padding = New Padding(10, 0, 10, 0)
-        ModernComboBox3.ToolTipGap = -1
-        ModernComboBox3.ToolTipMaxWidth = 350
-        ModernComboBox3.ToolTipPadding = New Padding(15)
-        ModernComboBox3.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ModernComboBox3.Items.Add("")
         ModernComboBox3.Items.Add("保留章节")
         ModernComboBox3.Items.Add("清除章节")
         ModernComboBox3.Location = New Point(160, 10)
+        ModernComboBox3.Margin = New Padding(2, 2, 2, 2)
         ModernComboBox3.Name = "ModernComboBox3"
+        ModernComboBox3.Padding = New Padding(10, 0, 10, 0)
         ModernComboBox3.Size = New Size(150, 32)
         ModernComboBox3.TabIndex = 7
+        ModernComboBox3.ToolTipGap = -1
+        ModernComboBox3.ToolTipMaxWidth = 350
+        ModernComboBox3.ToolTipPadding = New Padding(15)
         ModernComboBox3.WaterText = "章节选项"
+        ModernComboBox3.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ' 
         ' JustEmptyControl5
         ' 
@@ -225,6 +229,8 @@ Partial Class Form_v6_参数面板_流控制
         ModernComboBox1.BorderRadius = 10
         ModernComboBox1.BorderSize = 0
         ModernComboBox1.Dock = DockStyle.Left
+        ModernComboBox1.DropDownBackdropBlurPasses = 2
+        ModernComboBox1.DropDownBackdropBlurRadius = 30
         ModernComboBox1.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
         ModernComboBox1.DropDownHoverAnimationDuration = 0
         ModernComboBox1.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
@@ -233,21 +239,21 @@ Partial Class Form_v6_参数面板_流控制
         ModernComboBox1.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernComboBox1.DropDownSelectedForeColor = Color.White
         ModernComboBox1.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
-        ModernComboBox1.Margin = New Padding(2, 2, 2, 2)
-        ModernComboBox1.Padding = New Padding(10, 0, 10, 0)
-        ModernComboBox1.ToolTipGap = -1
-        ModernComboBox1.ToolTipMaxWidth = 350
-        ModernComboBox1.ToolTipPadding = New Padding(15)
-        ModernComboBox1.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ModernComboBox1.Items.Add("")
         ModernComboBox1.Items.Add("保留元数据")
         ModernComboBox1.Items.Add("清除元数据")
         ModernComboBox1.Items.Add("保留更多元数据")
         ModernComboBox1.Location = New Point(0, 10)
+        ModernComboBox1.Margin = New Padding(2, 2, 2, 2)
         ModernComboBox1.Name = "ModernComboBox1"
+        ModernComboBox1.Padding = New Padding(10, 0, 10, 0)
         ModernComboBox1.Size = New Size(150, 32)
         ModernComboBox1.TabIndex = 1
+        ModernComboBox1.ToolTipGap = -1
+        ModernComboBox1.ToolTipMaxWidth = 350
+        ModernComboBox1.ToolTipPadding = New Padding(15)
         ModernComboBox1.WaterText = "元数据选项"
+        ModernComboBox1.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ' 
         ' HtmlColorLabel11
         ' 
@@ -460,7 +466,7 @@ Partial Class Form_v6_参数面板_流控制
         HtmlColorLabel6.Name = "HtmlColorLabel6"
         HtmlColorLabel6.Size = New Size(635, 32)
         HtmlColorLabel6.TabIndex = 15
-        HtmlColorLabel6.Text = "格式：<span style=""color:Gainsboro"">文件索引</span>:<span style=""color:MediumPurple"">s</span>:<span style=""color:Gainsboro"">流索引</span>，例如：0:a 表示第一个文件的全部字幕流"
+        HtmlColorLabel6.Text = "格式：<span style=""color:Gainsboro"">文件索引</span>:<span style=""color:MediumPurple"">s</span>:<span style=""color:Gainsboro"">流索引</span>，例如：0:s 表示第一个文件的全部字幕流"
         HtmlColorLabel6.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
         ' 
         ' JustEmptyControl4
@@ -509,6 +515,8 @@ Partial Class Form_v6_参数面板_流控制
         ModernComboBox2.BorderRadius = 10
         ModernComboBox2.BorderSize = 0
         ModernComboBox2.Dock = DockStyle.Left
+        ModernComboBox2.DropDownBackdropBlurPasses = 2
+        ModernComboBox2.DropDownBackdropBlurRadius = 30
         ModernComboBox2.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
         ModernComboBox2.DropDownHoverAnimationDuration = 0
         ModernComboBox2.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
@@ -517,12 +525,6 @@ Partial Class Form_v6_参数面板_流控制
         ModernComboBox2.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernComboBox2.DropDownSelectedForeColor = Color.White
         ModernComboBox2.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
-        ModernComboBox2.Margin = New Padding(2, 2, 2, 2)
-        ModernComboBox2.Padding = New Padding(10, 0, 10, 0)
-        ModernComboBox2.ToolTipGap = -1
-        ModernComboBox2.ToolTipMaxWidth = 350
-        ModernComboBox2.ToolTipPadding = New Padding(15)
-        ModernComboBox2.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ModernComboBox2.Items.Add("")
         ModernComboBox2.Items.Add("复制流")
         ModernComboBox2.Items.Add("转为 mov_text")
@@ -530,10 +532,16 @@ Partial Class Form_v6_参数面板_流控制
         ModernComboBox2.Items.Add("转为 ass")
         ModernComboBox2.Items.Add("转为 ssa")
         ModernComboBox2.Location = New Point(210, 10)
+        ModernComboBox2.Margin = New Padding(2, 2, 2, 2)
         ModernComboBox2.Name = "ModernComboBox2"
+        ModernComboBox2.Padding = New Padding(10, 0, 10, 0)
         ModernComboBox2.Size = New Size(178, 32)
         ModernComboBox2.TabIndex = 15
+        ModernComboBox2.ToolTipGap = -1
+        ModernComboBox2.ToolTipMaxWidth = 350
+        ModernComboBox2.ToolTipPadding = New Padding(15)
         ModernComboBox2.WaterText = "如何操作"
+        ModernComboBox2.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ' 
         ' JustEmptyControl3
         ' 
@@ -555,8 +563,8 @@ Partial Class Form_v6_参数面板_流控制
         ModernTextBox3.Margin = New Padding(2)
         ModernTextBox3.Name = "ModernTextBox3"
         ModernTextBox3.Padding = New Padding(10, 0, 10, 0)
-        ModernTextBox3.Size = New Size(200, 32)
         ModernTextBox3.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        ModernTextBox3.Size = New Size(200, 32)
         ModernTextBox3.TabIndex = 4
         ModernTextBox3.WaterText = "多个用英文逗号隔开"
         ModernTextBox3.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
@@ -642,8 +650,8 @@ Partial Class Form_v6_参数面板_流控制
         ModernTextBox2.Margin = New Padding(2)
         ModernTextBox2.Name = "ModernTextBox2"
         ModernTextBox2.Padding = New Padding(10, 0, 10, 0)
-        ModernTextBox2.Size = New Size(200, 32)
         ModernTextBox2.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        ModernTextBox2.Size = New Size(200, 32)
         ModernTextBox2.TabIndex = 4
         ModernTextBox2.WaterText = "多个用英文逗号隔开"
         ModernTextBox2.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
@@ -729,8 +737,8 @@ Partial Class Form_v6_参数面板_流控制
         ModernTextBox1.Margin = New Padding(2)
         ModernTextBox1.Name = "ModernTextBox1"
         ModernTextBox1.Padding = New Padding(10, 0, 10, 0)
-        ModernTextBox1.Size = New Size(200, 32)
         ModernTextBox1.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        ModernTextBox1.Size = New Size(200, 32)
         ModernTextBox1.TabIndex = 4
         ModernTextBox1.WaterText = "多个用英文逗号隔开"
         ModernTextBox1.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
