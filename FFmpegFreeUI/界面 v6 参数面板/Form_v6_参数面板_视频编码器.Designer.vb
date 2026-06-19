@@ -202,6 +202,8 @@ Partial Class Form_v6_参数面板_视频编码器
         MCB_场景优化.BorderRadius = 10
         MCB_场景优化.BorderSize = 0
         MCB_场景优化.Dock = DockStyle.Left
+        MCB_场景优化.DropDownBackdropBlurPasses = 2
+        MCB_场景优化.DropDownBackdropBlurRadius = 30
         MCB_场景优化.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
         MCB_场景优化.DropDownHoverAnimationDuration = 0
         MCB_场景优化.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
@@ -216,7 +218,6 @@ Partial Class Form_v6_参数面板_视频编码器
         MCB_场景优化.Padding = New Padding(10, 0, 10, 0)
         MCB_场景优化.Size = New Size(150, 32)
         MCB_场景优化.TabIndex = 0
-        MCB_场景优化.ToolTipGap = -1
         MCB_场景优化.ToolTipMaxWidth = 350
         MCB_场景优化.ToolTipPadding = New Padding(15)
         MCB_场景优化.WaterText = "-tune"
@@ -252,6 +253,8 @@ Partial Class Form_v6_参数面板_视频编码器
         MCB_配置文件.BorderRadius = 10
         MCB_配置文件.BorderSize = 0
         MCB_配置文件.Dock = DockStyle.Left
+        MCB_配置文件.DropDownBackdropBlurPasses = 2
+        MCB_配置文件.DropDownBackdropBlurRadius = 30
         MCB_配置文件.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
         MCB_配置文件.DropDownHoverAnimationDuration = 0
         MCB_配置文件.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
@@ -266,7 +269,6 @@ Partial Class Form_v6_参数面板_视频编码器
         MCB_配置文件.Padding = New Padding(10, 0, 10, 0)
         MCB_配置文件.Size = New Size(150, 32)
         MCB_配置文件.TabIndex = 0
-        MCB_配置文件.ToolTipGap = -1
         MCB_配置文件.ToolTipMaxWidth = 350
         MCB_配置文件.ToolTipPadding = New Padding(15)
         MCB_配置文件.WaterText = "-profile"
@@ -302,6 +304,8 @@ Partial Class Form_v6_参数面板_视频编码器
         MCB_编码预设.BorderRadius = 10
         MCB_编码预设.BorderSize = 0
         MCB_编码预设.Dock = DockStyle.Left
+        MCB_编码预设.DropDownBackdropBlurPasses = 2
+        MCB_编码预设.DropDownBackdropBlurRadius = 30
         MCB_编码预设.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
         MCB_编码预设.DropDownHoverAnimationDuration = 0
         MCB_编码预设.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
@@ -316,7 +320,6 @@ Partial Class Form_v6_参数面板_视频编码器
         MCB_编码预设.Padding = New Padding(10, 0, 10, 0)
         MCB_编码预设.Size = New Size(150, 32)
         MCB_编码预设.TabIndex = 0
-        MCB_编码预设.ToolTipGap = -1
         MCB_编码预设.ToolTipMaxWidth = 350
         MCB_编码预设.ToolTipPadding = New Padding(15)
         MCB_编码预设.WaterText = "-preset"
@@ -399,6 +402,8 @@ Partial Class Form_v6_参数面板_视频编码器
         MCB_具体编码器.BorderRadius = 10
         MCB_具体编码器.BorderSize = 0
         MCB_具体编码器.Dock = DockStyle.Left
+        MCB_具体编码器.DropDownBackdropBlurPasses = 2
+        MCB_具体编码器.DropDownBackdropBlurRadius = 30
         MCB_具体编码器.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
         MCB_具体编码器.DropDownHoverAnimationDuration = 0
         MCB_具体编码器.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
@@ -415,7 +420,7 @@ Partial Class Form_v6_参数面板_视频编码器
         MCB_具体编码器.Size = New Size(160, 32)
         MCB_具体编码器.TabIndex = 6
         MCB_具体编码器.ToolTipGap = -1
-        MCB_具体编码器.ToolTipMaxWidth = 600
+        MCB_具体编码器.ToolTipMaxWidth = 500
         MCB_具体编码器.ToolTipPadding = New Padding(15)
         MCB_具体编码器.ToolTipSide = LakeUI.ModernComboBox.ToolTipSideEnum.Left
         MCB_具体编码器.WaterText = "具体编码"
@@ -435,6 +440,8 @@ Partial Class Form_v6_参数面板_视频编码器
         MCB_视频编码器分类.BorderRadius = 10
         MCB_视频编码器分类.BorderSize = 0
         MCB_视频编码器分类.Dock = DockStyle.Left
+        MCB_视频编码器分类.DropDownBackdropBlurPasses = 2
+        MCB_视频编码器分类.DropDownBackdropBlurRadius = 30
         MCB_视频编码器分类.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
         MCB_视频编码器分类.DropDownHoverAnimationDuration = 0
         MCB_视频编码器分类.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
@@ -450,7 +457,6 @@ Partial Class Form_v6_参数面板_视频编码器
         MCB_视频编码器分类.Padding = New Padding(10, 0, 10, 0)
         MCB_视频编码器分类.Size = New Size(200, 32)
         MCB_视频编码器分类.TabIndex = 4
-        MCB_视频编码器分类.ToolTipGap = -1
         MCB_视频编码器分类.ToolTipMaxWidth = 350
         MCB_视频编码器分类.ToolTipPadding = New Padding(15)
         MCB_视频编码器分类.WaterText = "分类"
@@ -470,6 +476,8 @@ Partial Class Form_v6_参数面板_视频编码器
         MCB_视频编码器类型.BorderRadius = 10
         MCB_视频编码器类型.BorderSize = 0
         MCB_视频编码器类型.Dock = DockStyle.Left
+        MCB_视频编码器类型.DropDownBackdropBlurPasses = 2
+        MCB_视频编码器类型.DropDownBackdropBlurRadius = 30
         MCB_视频编码器类型.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
         MCB_视频编码器类型.DropDownHoverAnimationDuration = 0
         MCB_视频编码器类型.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
@@ -487,7 +495,6 @@ Partial Class Form_v6_参数面板_视频编码器
         MCB_视频编码器类型.Padding = New Padding(10, 0, 10, 0)
         MCB_视频编码器类型.Size = New Size(100, 32)
         MCB_视频编码器类型.TabIndex = 0
-        MCB_视频编码器类型.ToolTipGap = -1
         MCB_视频编码器类型.ToolTipMaxWidth = 350
         MCB_视频编码器类型.ToolTipPadding = New Padding(15)
         MCB_视频编码器类型.WaterText = "类型"

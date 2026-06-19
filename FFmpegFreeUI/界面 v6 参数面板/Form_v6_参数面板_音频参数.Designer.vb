@@ -22,19 +22,19 @@ Partial Class Form_v6_参数面板_音频参数
     '不要使用代码编辑器修改它。
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim TrackLabel14 As LakeUI.ExcellentTrackBar.TrackLabel = New LakeUI.ExcellentTrackBar.TrackLabel()
-        Dim TrackLabel15 As LakeUI.ExcellentTrackBar.TrackLabel = New LakeUI.ExcellentTrackBar.TrackLabel()
-        Dim TrackLabel16 As LakeUI.ExcellentTrackBar.TrackLabel = New LakeUI.ExcellentTrackBar.TrackLabel()
-        Dim TrackLabel17 As LakeUI.ExcellentTrackBar.TrackLabel = New LakeUI.ExcellentTrackBar.TrackLabel()
-        Dim TrackLabel18 As LakeUI.ExcellentTrackBar.TrackLabel = New LakeUI.ExcellentTrackBar.TrackLabel()
-        Dim TrackLabel19 As LakeUI.ExcellentTrackBar.TrackLabel = New LakeUI.ExcellentTrackBar.TrackLabel()
-        Dim TrackLabel20 As LakeUI.ExcellentTrackBar.TrackLabel = New LakeUI.ExcellentTrackBar.TrackLabel()
-        Dim TrackLabel21 As LakeUI.ExcellentTrackBar.TrackLabel = New LakeUI.ExcellentTrackBar.TrackLabel()
-        Dim TrackLabel22 As LakeUI.ExcellentTrackBar.TrackLabel = New LakeUI.ExcellentTrackBar.TrackLabel()
-        Dim TrackLabel23 As LakeUI.ExcellentTrackBar.TrackLabel = New LakeUI.ExcellentTrackBar.TrackLabel()
-        Dim TrackLabel24 As LakeUI.ExcellentTrackBar.TrackLabel = New LakeUI.ExcellentTrackBar.TrackLabel()
-        Dim TrackLabel25 As LakeUI.ExcellentTrackBar.TrackLabel = New LakeUI.ExcellentTrackBar.TrackLabel()
-        Dim TrackLabel26 As LakeUI.ExcellentTrackBar.TrackLabel = New LakeUI.ExcellentTrackBar.TrackLabel()
+        Dim TrackLabel1 As LakeUI.ExcellentTrackBar.TrackLabel = New LakeUI.ExcellentTrackBar.TrackLabel()
+        Dim TrackLabel2 As LakeUI.ExcellentTrackBar.TrackLabel = New LakeUI.ExcellentTrackBar.TrackLabel()
+        Dim TrackLabel3 As LakeUI.ExcellentTrackBar.TrackLabel = New LakeUI.ExcellentTrackBar.TrackLabel()
+        Dim TrackLabel4 As LakeUI.ExcellentTrackBar.TrackLabel = New LakeUI.ExcellentTrackBar.TrackLabel()
+        Dim TrackLabel5 As LakeUI.ExcellentTrackBar.TrackLabel = New LakeUI.ExcellentTrackBar.TrackLabel()
+        Dim TrackLabel6 As LakeUI.ExcellentTrackBar.TrackLabel = New LakeUI.ExcellentTrackBar.TrackLabel()
+        Dim TrackLabel7 As LakeUI.ExcellentTrackBar.TrackLabel = New LakeUI.ExcellentTrackBar.TrackLabel()
+        Dim TrackLabel8 As LakeUI.ExcellentTrackBar.TrackLabel = New LakeUI.ExcellentTrackBar.TrackLabel()
+        Dim TrackLabel9 As LakeUI.ExcellentTrackBar.TrackLabel = New LakeUI.ExcellentTrackBar.TrackLabel()
+        Dim TrackLabel10 As LakeUI.ExcellentTrackBar.TrackLabel = New LakeUI.ExcellentTrackBar.TrackLabel()
+        Dim TrackLabel11 As LakeUI.ExcellentTrackBar.TrackLabel = New LakeUI.ExcellentTrackBar.TrackLabel()
+        Dim TrackLabel12 As LakeUI.ExcellentTrackBar.TrackLabel = New LakeUI.ExcellentTrackBar.TrackLabel()
+        Dim TrackLabel13 As LakeUI.ExcellentTrackBar.TrackLabel = New LakeUI.ExcellentTrackBar.TrackLabel()
         ModernPanel1 = New LakeUI.ModernPanel()
         Panel7 = New Panel()
         Panel14 = New Panel()
@@ -135,16 +135,16 @@ Partial Class Form_v6_参数面板_音频参数
         ETB_峰值电平.LabelColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ETB_峰值电平.LabelLineColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ETB_峰值电平.LabelLineLength = 20
-        TrackLabel14.Side = LakeUI.ExcellentTrackBar.LabelSideEnum.TopOrLeft
-        TrackLabel14.Text = "理论最佳"
-        TrackLabel15.Position = -1R
-        TrackLabel15.Text = "最常用 -1"
-        TrackLabel16.Position = -5R
-        TrackLabel16.Side = LakeUI.ExcellentTrackBar.LabelSideEnum.TopOrLeft
-        TrackLabel16.Text = "失真严重"
-        ETB_峰值电平.Labels.Add(TrackLabel14)
-        ETB_峰值电平.Labels.Add(TrackLabel15)
-        ETB_峰值电平.Labels.Add(TrackLabel16)
+        TrackLabel1.Side = LakeUI.ExcellentTrackBar.LabelSideEnum.TopOrLeft
+        TrackLabel1.Text = "理论最佳"
+        TrackLabel2.Position = -1R
+        TrackLabel2.Text = "最常用 -1"
+        TrackLabel3.Position = -5R
+        TrackLabel3.Side = LakeUI.ExcellentTrackBar.LabelSideEnum.TopOrLeft
+        TrackLabel3.Text = "失真严重"
+        ETB_峰值电平.Labels.Add(TrackLabel1)
+        ETB_峰值电平.Labels.Add(TrackLabel2)
+        ETB_峰值电平.Labels.Add(TrackLabel3)
         ETB_峰值电平.LargeChange = 0.1R
         ETB_峰值电平.Location = New Point(0, 0)
         ETB_峰值电平.Margin = New Padding(2, 2, 2, 2)
@@ -211,22 +211,22 @@ Partial Class Form_v6_参数面板_音频参数
         ETB_动态范围.LabelColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ETB_动态范围.LabelLineColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ETB_动态范围.LabelLineLength = 20
-        TrackLabel17.Position = 40R
-        TrackLabel17.Side = LakeUI.ExcellentTrackBar.LabelSideEnum.TopOrLeft
-        TrackLabel17.Text = "3FUI 允许最大"
-        TrackLabel18.Position = 1R
-        TrackLabel18.Side = LakeUI.ExcellentTrackBar.LabelSideEnum.TopOrLeft
-        TrackLabel18.Text = "3FUI 允许最小"
-        TrackLabel19.Position = 30R
-        TrackLabel19.Side = LakeUI.ExcellentTrackBar.LabelSideEnum.TopOrLeft
-        TrackLabel19.Text = "20~30 星际穿越"
-        TrackLabel20.Position = 10R
-        TrackLabel20.Side = LakeUI.ExcellentTrackBar.LabelSideEnum.TopOrLeft
-        TrackLabel20.Text = "10~15 常规内容推荐"
-        ETB_动态范围.Labels.Add(TrackLabel17)
-        ETB_动态范围.Labels.Add(TrackLabel18)
-        ETB_动态范围.Labels.Add(TrackLabel19)
-        ETB_动态范围.Labels.Add(TrackLabel20)
+        TrackLabel4.Position = 40R
+        TrackLabel4.Side = LakeUI.ExcellentTrackBar.LabelSideEnum.TopOrLeft
+        TrackLabel4.Text = "3FUI 允许最大"
+        TrackLabel5.Position = 1R
+        TrackLabel5.Side = LakeUI.ExcellentTrackBar.LabelSideEnum.TopOrLeft
+        TrackLabel5.Text = "3FUI 允许最小"
+        TrackLabel6.Position = 30R
+        TrackLabel6.Side = LakeUI.ExcellentTrackBar.LabelSideEnum.TopOrLeft
+        TrackLabel6.Text = "20~30 星际穿越"
+        TrackLabel7.Position = 10R
+        TrackLabel7.Side = LakeUI.ExcellentTrackBar.LabelSideEnum.TopOrLeft
+        TrackLabel7.Text = "10~15 常规内容推荐"
+        ETB_动态范围.Labels.Add(TrackLabel4)
+        ETB_动态范围.Labels.Add(TrackLabel5)
+        ETB_动态范围.Labels.Add(TrackLabel6)
+        ETB_动态范围.Labels.Add(TrackLabel7)
         ETB_动态范围.LargeChange = 1R
         ETB_动态范围.Location = New Point(0, 0)
         ETB_动态范围.Margin = New Padding(2, 2, 2, 2)
@@ -292,28 +292,28 @@ Partial Class Form_v6_参数面板_音频参数
         ETB_目标响度.LabelColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ETB_目标响度.LabelLineColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ETB_目标响度.LabelLineLength = 20
-        TrackLabel21.Position = -8R
-        TrackLabel21.Side = LakeUI.ExcellentTrackBar.LabelSideEnum.TopOrLeft
-        TrackLabel21.Text = "3FUI 最响允许"
-        TrackLabel22.Position = -12R
-        TrackLabel22.Text = "最响建议 -12"
-        TrackLabel23.Position = -36R
-        TrackLabel23.Side = LakeUI.ExcellentTrackBar.LabelSideEnum.TopOrLeft
-        TrackLabel23.Text = "3FUI 最静允许"
-        TrackLabel24.Position = -24R
-        TrackLabel24.Text = "我国标准 -24"
-        TrackLabel25.Position = -23R
-        TrackLabel25.Side = LakeUI.ExcellentTrackBar.LabelSideEnum.TopOrLeft
-        TrackLabel25.Text = "-23 国际标准"
-        TrackLabel26.Position = -16R
-        TrackLabel26.Side = LakeUI.ExcellentTrackBar.LabelSideEnum.TopOrLeft
-        TrackLabel26.Text = "-16 综合推荐"
-        ETB_目标响度.Labels.Add(TrackLabel21)
-        ETB_目标响度.Labels.Add(TrackLabel22)
-        ETB_目标响度.Labels.Add(TrackLabel23)
-        ETB_目标响度.Labels.Add(TrackLabel24)
-        ETB_目标响度.Labels.Add(TrackLabel25)
-        ETB_目标响度.Labels.Add(TrackLabel26)
+        TrackLabel8.Position = -8R
+        TrackLabel8.Side = LakeUI.ExcellentTrackBar.LabelSideEnum.TopOrLeft
+        TrackLabel8.Text = "3FUI 最响允许"
+        TrackLabel9.Position = -12R
+        TrackLabel9.Text = "最响建议 -12"
+        TrackLabel10.Position = -36R
+        TrackLabel10.Side = LakeUI.ExcellentTrackBar.LabelSideEnum.TopOrLeft
+        TrackLabel10.Text = "3FUI 最静允许"
+        TrackLabel11.Position = -24R
+        TrackLabel11.Text = "我国标准 -24"
+        TrackLabel12.Position = -23R
+        TrackLabel12.Side = LakeUI.ExcellentTrackBar.LabelSideEnum.TopOrLeft
+        TrackLabel12.Text = "-23 国际标准"
+        TrackLabel13.Position = -16R
+        TrackLabel13.Side = LakeUI.ExcellentTrackBar.LabelSideEnum.TopOrLeft
+        TrackLabel13.Text = "-16 综合推荐"
+        ETB_目标响度.Labels.Add(TrackLabel8)
+        ETB_目标响度.Labels.Add(TrackLabel9)
+        ETB_目标响度.Labels.Add(TrackLabel10)
+        ETB_目标响度.Labels.Add(TrackLabel11)
+        ETB_目标响度.Labels.Add(TrackLabel12)
+        ETB_目标响度.Labels.Add(TrackLabel13)
         ETB_目标响度.LargeChange = 1R
         ETB_目标响度.Location = New Point(0, 0)
         ETB_目标响度.Margin = New Padding(2, 2, 2, 2)
@@ -399,6 +399,8 @@ Partial Class Form_v6_参数面板_音频参数
         声道布局.BorderRadius = 10
         声道布局.BorderSize = 0
         声道布局.Dock = DockStyle.Left
+        声道布局.DropDownBackdropBlurPasses = 2
+        声道布局.DropDownBackdropBlurRadius = 30
         声道布局.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
         声道布局.DropDownHoverAnimationDuration = 0
         声道布局.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
@@ -424,7 +426,6 @@ Partial Class Form_v6_参数面板_音频参数
         声道布局.Padding = New Padding(10, 0, 10, 0)
         声道布局.Size = New Size(160, 32)
         声道布局.TabIndex = 0
-        声道布局.ToolTipGap = -1
         声道布局.ToolTipMaxWidth = 350
         声道布局.ToolTipPadding = New Padding(15)
         声道布局.WaterText = "-channel_layout"
@@ -461,6 +462,8 @@ Partial Class Form_v6_参数面板_音频参数
         MCB_位深度.BorderRadius = 10
         MCB_位深度.BorderSize = 0
         MCB_位深度.Dock = DockStyle.Left
+        MCB_位深度.DropDownBackdropBlurPasses = 2
+        MCB_位深度.DropDownBackdropBlurRadius = 30
         MCB_位深度.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
         MCB_位深度.DropDownHoverAnimationDuration = 0
         MCB_位深度.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
@@ -481,7 +484,6 @@ Partial Class Form_v6_参数面板_音频参数
         MCB_位深度.Padding = New Padding(10, 0, 10, 0)
         MCB_位深度.Size = New Size(160, 32)
         MCB_位深度.TabIndex = 0
-        MCB_位深度.ToolTipGap = -1
         MCB_位深度.ToolTipMaxWidth = 350
         MCB_位深度.ToolTipPadding = New Padding(15)
         MCB_位深度.WaterText = "-sample_fmt"
@@ -518,6 +520,8 @@ Partial Class Form_v6_参数面板_音频参数
         MCB_采样率.BorderRadius = 10
         MCB_采样率.BorderSize = 0
         MCB_采样率.Dock = DockStyle.Left
+        MCB_采样率.DropDownBackdropBlurPasses = 2
+        MCB_采样率.DropDownBackdropBlurRadius = 30
         MCB_采样率.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
         MCB_采样率.DropDownHoverAnimationDuration = 0
         MCB_采样率.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
@@ -543,7 +547,6 @@ Partial Class Form_v6_参数面板_音频参数
         MCB_采样率.Padding = New Padding(10, 0, 10, 0)
         MCB_采样率.Size = New Size(160, 32)
         MCB_采样率.TabIndex = 0
-        MCB_采样率.ToolTipGap = -1
         MCB_采样率.ToolTipMaxWidth = 350
         MCB_采样率.ToolTipPadding = New Padding(15)
         MCB_采样率.WaterText = "-ar"
@@ -607,6 +610,8 @@ Partial Class Form_v6_参数面板_音频参数
         MCB_质量参数名.BorderRadius = 10
         MCB_质量参数名.BorderSize = 0
         MCB_质量参数名.Dock = DockStyle.Left
+        MCB_质量参数名.DropDownBackdropBlurPasses = 2
+        MCB_质量参数名.DropDownBackdropBlurRadius = 30
         MCB_质量参数名.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
         MCB_质量参数名.DropDownHoverAnimationDuration = 0
         MCB_质量参数名.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
@@ -626,7 +631,6 @@ Partial Class Form_v6_参数面板_音频参数
         MCB_质量参数名.Padding = New Padding(10, 0, 10, 0)
         MCB_质量参数名.Size = New Size(200, 32)
         MCB_质量参数名.TabIndex = 0
-        MCB_质量参数名.ToolTipGap = -1
         MCB_质量参数名.ToolTipMaxWidth = 350
         MCB_质量参数名.ToolTipPadding = New Padding(15)
         MCB_质量参数名.WaterText = "选择质量参数名"
@@ -648,6 +652,8 @@ Partial Class Form_v6_参数面板_音频参数
         MCB_比特率.BorderRadius = 10
         MCB_比特率.BorderSize = 0
         MCB_比特率.Dock = DockStyle.Left
+        MCB_比特率.DropDownBackdropBlurPasses = 2
+        MCB_比特率.DropDownBackdropBlurRadius = 30
         MCB_比特率.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
         MCB_比特率.DropDownHoverAnimationDuration = 0
         MCB_比特率.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
@@ -673,7 +679,6 @@ Partial Class Form_v6_参数面板_音频参数
         MCB_比特率.Padding = New Padding(10, 0, 10, 0)
         MCB_比特率.Size = New Size(200, 32)
         MCB_比特率.TabIndex = 0
-        MCB_比特率.ToolTipGap = -1
         MCB_比特率.ToolTipMaxWidth = 350
         MCB_比特率.ToolTipPadding = New Padding(15)
         MCB_比特率.WaterText = "选择或填写比特率"
@@ -709,6 +714,8 @@ Partial Class Form_v6_参数面板_音频参数
         MCB_音频编码器.BorderRadius = 10
         MCB_音频编码器.BorderSize = 0
         MCB_音频编码器.Dock = DockStyle.Left
+        MCB_音频编码器.DropDownBackdropBlurPasses = 2
+        MCB_音频编码器.DropDownBackdropBlurRadius = 30
         MCB_音频编码器.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
         MCB_音频编码器.DropDownHoverAnimationDuration = 0
         MCB_音频编码器.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))

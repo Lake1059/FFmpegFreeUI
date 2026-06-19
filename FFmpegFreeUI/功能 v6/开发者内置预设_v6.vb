@@ -98,7 +98,7 @@ Public Class 开发者内置预设_v6
         result.Add(New 预设项("FDK AAC 压制音频到 M4A", M4A_HDAudio))
 
         Dim AVIF_AOMAV1 As New 预设数据_v6
-        AVIF_AOMAV1.预设备注 = "AVIF 是将 AV1 用于图片的超高压缩图，非常适合用它来压制你那巨量不再需要后期的图片."
+        AVIF_AOMAV1.预设备注 = "AVIF 是将 AV1 用于图片的超高压缩图，非常适合用它来压制你那巨量不再需要后期的图片。"
         AVIF_AOMAV1.输出容器 = ".avif"
         AVIF_AOMAV1.视频参数_编码器_分类名称 = "AV1"
         AVIF_AOMAV1.视频参数_编码器_具体编码 = "libaom-av1"
@@ -106,7 +106,8 @@ Public Class 开发者内置预设_v6
         AVIF_AOMAV1.视频参数_编码器_场景优化 = "ssim"
         AVIF_AOMAV1.视频参数_比特率_控制方式 = 预设数据_v6.视频全局质量控制方式.CRF
         AVIF_AOMAV1.视频参数_质量控制_参数名 = "crf"
-        AVIF_AOMAV1.视频参数_质量控制_值 = "16"
+        AVIF_AOMAV1.视频参数_质量控制_值 = "18"
+        AVIF_AOMAV1.视频参数_质量控制_进阶参数集 = "-aom-params tune=iq -b:v 0 -still-picture 1 -row-mt 1"
         result.Add(New 预设项("AVIF 高压缩图片 AOM AV1", AVIF_AOMAV1))
 
 

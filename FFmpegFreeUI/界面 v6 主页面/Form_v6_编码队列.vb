@@ -225,6 +225,10 @@ Public Class Form_v6_编码队列
         Form_v6_编码队列_任务日志.打开或激活(Me, 获取选中任务ID())
     End Sub
 
+    Private Sub 移除选中任务()
+        编码队列_v6.移除任务(获取选中任务ID())
+    End Sub
+
     Private Sub UltraDetailListView1_ItemOrderChanged(sender As Object, e As EventArgs) Handles UltraDetailListView1.ItemOrderChanged
         If 正在刷新列表 Then Exit Sub
         Dim ids = UltraDetailListView1.Items.Select(Function(x) TryCast(x.Tag, String)).Where(Function(x) Not String.IsNullOrWhiteSpace(x)).ToList()
@@ -263,6 +267,13 @@ Public Class Form_v6_编码队列
         End If
     End Sub
 
+    Private Sub UltraDetailListView1_KeyDown(sender As Object, e As KeyEventArgs) Handles UltraDetailListView1.KeyDown
+        If e.KeyCode <> Keys.Delete Then Exit Sub
+        移除选中任务()
+        e.Handled = True
+        e.SuppressKeyPress = True
+    End Sub
+
     Private Sub ModernButton1_Click(sender As Object, e As EventArgs) Handles ModernButton1.Click
         编码队列_v6.开始任务(获取选中任务ID())
     End Sub
@@ -280,7 +291,7 @@ Public Class Form_v6_编码队列
     End Sub
 
     Private Sub ModernButton5_Click(sender As Object, e As EventArgs) Handles ModernButton5.Click
-        编码队列_v6.移除任务(获取选中任务ID())
+        移除选中任务()
     End Sub
 
     Private Sub ModernButton6_Click(sender As Object, e As EventArgs) Handles ModernButton6.Click
