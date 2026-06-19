@@ -10,8 +10,6 @@ Public Class 字体控制
         Form_v6_编码队列.任务菜单.DescriptionFont = New Font(设置_v6.实例对象.字体, Form_v6_编码队列.任务菜单.MenuFont.Size, Form_v6_编码队列.任务菜单.MenuFont.Style)
         Form_v6_编码队列.右键菜单.MenuFont = New Font(设置_v6.实例对象.字体, Form_v6_编码队列.右键菜单.MenuFont.Size, Form_v6_编码队列.右键菜单.MenuFont.Style)
         Form_v6_编码队列.右键菜单.DescriptionFont = New Font(设置_v6.实例对象.字体, Form_v6_编码队列.右键菜单.MenuFont.Size, Form_v6_编码队列.右键菜单.MenuFont.Style)
-
-
         SetControlFont(设置_v6.实例对象.字体, Form_v6_参数面板, , True)
         SetControlFont(设置_v6.实例对象.字体, Form_v6_参数面板.私有界面_参数总览, , True)
         SetControlFont(设置_v6.实例对象.字体, Form_v6_参数面板.私有界面_预设管理, , True)
@@ -20,6 +18,8 @@ Public Class 字体控制
         SetControlFont(设置_v6.实例对象.字体, Form_v6_参数面板.私有界面_视频编码器, , True)
         SetControlFont(设置_v6.实例对象.字体, Form_v6_参数面板.私有界面_画面帧, , True)
         SetControlFont(设置_v6.实例对象.字体, Form_v6_参数面板.私有界面_质量, , True)
+        Form_v6_参数面板.私有界面_质量.预制条目菜单.MenuFont = New Font(设置_v6.实例对象.字体, Form_v6_参数面板.私有界面_质量.预制条目菜单.MenuFont.Size, Form_v6_参数面板.私有界面_质量.预制条目菜单.MenuFont.Style)
+        Form_v6_参数面板.私有界面_质量.预制条目菜单.DescriptionFont = New Font(设置_v6.实例对象.字体, Form_v6_参数面板.私有界面_质量.预制条目菜单.DescriptionFont.Size, Form_v6_参数面板.私有界面_质量.预制条目菜单.DescriptionFont.Style)
         SetControlFont(设置_v6.实例对象.字体, Form_v6_参数面板.私有界面_色彩管理, , True)
         SetControlFont(设置_v6.实例对象.字体, Form_v6_参数面板.私有界面_视频帧服务器, , True)
         SetControlFont(设置_v6.实例对象.字体, Form_v6_参数面板.私有界面_音频参数, , True)

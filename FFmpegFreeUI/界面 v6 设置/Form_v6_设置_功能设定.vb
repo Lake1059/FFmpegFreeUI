@@ -52,4 +52,9 @@ Public Class Form_v6_设置_功能设定
         编码队列_v6.刷新显示()
     End Sub
 
+    Private Sub MCB_任务日志性能计数器_SelectedIndexChanged(sender As Object, e As EventArgs) Handles MCB_任务日志性能计数器.SelectedIndexChanged
+        设置_v6.实例对象.任务日志性能计数器 = MCB_任务日志性能计数器.SelectedIndex
+        Form_v6_编码队列_任务日志.刷新任务性能计数器设置()
+    End Sub
+
 End Class

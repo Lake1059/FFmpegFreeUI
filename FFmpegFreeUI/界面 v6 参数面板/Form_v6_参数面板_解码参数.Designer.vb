@@ -94,6 +94,7 @@ Partial Class Form_v6_参数面板_解码参数
         ModernTextBox2.Name = "ModernTextBox2"
         ModernTextBox2.Padding = New Padding(10, 0, 10, 0)
         ModernTextBox2.Size = New Size(220, 32)
+        ModernTextBox2.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernTextBox2.TabIndex = 4
         ModernTextBox2.WaterText = "?"
         ModernTextBox2.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
@@ -244,6 +245,7 @@ Partial Class Form_v6_参数面板_解码参数
         ModernTextBox1.Name = "ModernTextBox1"
         ModernTextBox1.Padding = New Padding(10, 0, 10, 0)
         ModernTextBox1.Size = New Size(100, 32)
+        ModernTextBox1.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernTextBox1.TabIndex = 4
         ModernTextBox1.WaterText = "-threads"
         ModernTextBox1.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))

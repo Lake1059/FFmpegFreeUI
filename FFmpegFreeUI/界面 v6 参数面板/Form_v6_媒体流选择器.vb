@@ -199,7 +199,7 @@ Public Class Form_v6_媒体流选择器
             .BoxSize = 22,
             .BoxTextSpacing = 10,
             .Dock = DockStyle.Top,
-            .Padding = New Padding(0, 0, 0, 0)
+            .Padding = New Padding(0, 0, 0, 10)
         }
         绑定文件拖入(cb)
         list.Add(cb)

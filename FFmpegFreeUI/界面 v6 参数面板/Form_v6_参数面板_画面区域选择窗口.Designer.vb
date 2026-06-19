@@ -251,7 +251,7 @@ Partial Class Form_v6_参数面板_画面区域选择窗口
         HtmlColorLabel1.Name = "HtmlColorLabel1"
         HtmlColorLabel1.Size = New Size(732, 41)
         HtmlColorLabel1.TabIndex = 15
-        HtmlColorLabel1.Text = "鼠标左键移动视野，鼠标滚轮控制缩放，鼠标右键绘制新框选<br>默认取第 10 秒处截图，可以先自行设定再打开视频"
+        HtmlColorLabel1.Text = "可点击打开或拖入视频 / 图片；图片优先直接加载，视频默认取第 10 秒，可先指定时间戳<br>鼠标左键移动视野，滚轮缩放，鼠标右键绘制新框选；比例可选择或手写 16:9 / 1.777"
         ' 
         ' Form_v6_参数面板_画面区域选择窗口
         ' 

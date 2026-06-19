@@ -501,6 +501,7 @@ Partial Class Form_v6_参数面板_画面帧
         ModernTextBox1.Name = "ModernTextBox1"
         ModernTextBox1.Padding = New Padding(10, 0, 10, 0)
         ModernTextBox1.Size = New Size(150, 32)
+        ModernTextBox1.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernTextBox1.TabIndex = 5
         ModernTextBox1.WaterText = "crop"
         ModernTextBox1.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))

@@ -98,6 +98,7 @@ Partial Class Form_v6_设置_转译辅助
         MTB_覆盖参数传递.Name = "MTB_覆盖参数传递"
         MTB_覆盖参数传递.Padding = New Padding(10, 0, 10, 0)
         MTB_覆盖参数传递.Size = New Size(745, 32)
+        MTB_覆盖参数传递.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MTB_覆盖参数传递.TabIndex = 6
         ' 
         ' HtmlColorLabel2
@@ -137,6 +138,7 @@ Partial Class Form_v6_设置_转译辅助
         MCB_替代进程的文件名.Name = "MCB_替代进程的文件名"
         MCB_替代进程的文件名.Padding = New Padding(10, 0, 10, 0)
         MCB_替代进程的文件名.Size = New Size(745, 32)
+        MCB_替代进程的文件名.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_替代进程的文件名.TabIndex = 6
         ' 
         ' HtmlColorLabel6

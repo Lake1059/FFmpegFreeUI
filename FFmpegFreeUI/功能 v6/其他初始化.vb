@@ -2,7 +2,7 @@
 
     Public Shared Sub 执行()
         LakeUI.MessageDialogOptions.BackdropEnabled = True
-        LakeUI.FloatingToolTipForm.SelectionFocusColor = Color.FromArgb(40, 220, 220, 220)
+        LakeUI.FloatingToolTipForm.BackdropEnabled = True
     End Sub
 
 End Class

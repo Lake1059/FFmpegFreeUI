@@ -550,6 +550,32 @@ Public Class 编码任务_v6
         End Get
     End Property
 
+    Public ReadOnly Property 当前进程ID As Integer
+        Get
+            Try
+                Dim process = 当前进程
+                If process Is Nothing OrElse process.HasExited Then Return 0
+                Return process.Id
+            Catch
+                Return 0
+            End Try
+        End Get
+    End Property
+
+    Public ReadOnly Property 当前进程名称 As String
+        Get
+            Try
+                Dim process = 当前进程
+                If process Is Nothing OrElse process.HasExited Then Return ""
+                Dim fileName = If(process.StartInfo?.FileName, "")
+                If String.IsNullOrWhiteSpace(fileName) Then Return "ffmpeg"
+                Return Path.GetFileNameWithoutExtension(fileName)
+            Catch
+                Return ""
+            End Try
+        End Get
+    End Property
+
     Public Function 获取日志快照(Optional 显示模式 As 编码任务日志显示模式_v6 = 编码任务日志显示模式_v6.全部输出) As List(Of 编码任务日志条目_v6)
         SyncLock 日志锁
             Select Case 显示模式
@@ -813,6 +839,7 @@ Public Class 编码任务_v6
                                    End Sub
         追加日志($"[3FUI] 执行：{process.StartInfo.FileName} {process.StartInfo.Arguments}", 编码任务日志类别_v6.系统, stepItem, False, False)
         process.Start()
+        编码队列_v6.通知任务更新(Me)
         process.BeginOutputReadLine()
         process.BeginErrorReadLine()
         If 设置_v6.实例对象.指定处理器核心 <> "" Then

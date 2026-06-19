@@ -150,6 +150,7 @@ Partial Class Form_v6_参数面板_剪辑区间
         MTB_出点.Name = "MTB_出点"
         MTB_出点.Padding = New Padding(10, 0, 10, 0)
         MTB_出点.Size = New Size(150, 32)
+        MTB_出点.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MTB_出点.TabIndex = 6
         MTB_出点.WaterText = "出点"
         MTB_出点.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
@@ -175,6 +176,7 @@ Partial Class Form_v6_参数面板_剪辑区间
         MTB_入点.Name = "MTB_入点"
         MTB_入点.Padding = New Padding(10, 0, 10, 0)
         MTB_入点.Size = New Size(150, 32)
+        MTB_入点.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MTB_入点.TabIndex = 5
         MTB_入点.WaterText = "入点"
         MTB_入点.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))

@@ -19,12 +19,12 @@ Public Class Form_v6_设置_个性化
     End Sub
 
     Private Sub MB_图标_Click(sender As Object, e As EventArgs) Handles MB_图标.Click
-        Select Case ExMsgBox($"图标除了显示在窗口左上角，还会显示在起始页面顶栏左侧大图，因此推荐使用较为清晰的 png 透明背景图片，注意顶栏位置的图片为了确保质量使用 2x SSAA 渲染，所以分辨率不宜过高。{vbCrLf & vbCrLf}设置之后如果要取消，请直接删除当前目录下的 {Path.GetFileName(设置_v6.自定义图标路径)} 并重启软件即可。", New List(Of ExMsgBoxButton) From {New ExMsgBoxButton("选择图标", True), New ExMsgBoxButton("取消")}, , MsgBoxStyle.Information, FormMain_v6)
+        Select Case ExMsgBox($"图标除了显示在窗口左上角，还会显示在起始页面顶栏左侧大图，但分辨率不宜过高。{vbCrLf & vbCrLf}设置之后如果要取消，请直接删除当前目录下的 {Path.GetFileName(设置_v6.自定义图标路径)} 并重启软件即可。", New List(Of ExMsgBoxButton) From {New ExMsgBoxButton("选择图标", True), New ExMsgBoxButton("取消")}, , MsgBoxStyle.Information, FormMain_v6)
             Case 0
                 Dim a As New OpenFileDialog With {.Multiselect = False, .Filter = "支持的图片|*.png;*.jpg;*.gif"}
                 If a.ShowDialog(FormMain_v6) = DialogResult.OK Then
                     FileIO.FileSystem.CopyFile(a.FileName, 设置_v6.自定义图标路径, True)
-                    设置_v6.加载SP自定义图标()
+                    设置_v6.加载SP自定义图标
                 End If
         End Select
     End Sub
@@ -36,6 +36,28 @@ Public Class Form_v6_设置_个性化
                 If a.ShowDialog(FormMain_v6) = DialogResult.OK Then
                     FileIO.FileSystem.CopyFile(a.FileName, 设置_v6.自定义起始页顶栏背景图路径, True)
                     设置_v6.加载SP自定义起始页顶栏背景图()
+                End If
+        End Select
+    End Sub
+
+    Private Sub MB_任务完成音效_Click(sender As Object, e As EventArgs) Handles MB_任务完成音效.Click
+        Select Case ExMsgBox($"请选择 wav 音频文件作为任务全部完成时的提示音。{vbCrLf & vbCrLf}设置之后如果要取消，请清空 Settings.json 中的 个性化_任务完成音效 设置项并重启软件即可。", New List(Of ExMsgBoxButton) From {New ExMsgBoxButton("选择音效", True), New ExMsgBoxButton("取消")}, , MsgBoxStyle.Information, FormMain_v6)
+            Case 0
+                Dim a As New OpenFileDialog With {.Multiselect = False, .Filter = "WAV 音频|*.wav"}
+                If a.ShowDialog(FormMain_v6) = DialogResult.OK Then
+                    设置_v6.实例对象.个性化_任务完成音效 = a.FileName
+                    设置_v6.加载SP自定义任务完成音效()
+                End If
+        End Select
+    End Sub
+
+    Private Sub MB_任务失败音效_Click(sender As Object, e As EventArgs) Handles MB_任务失败音效.Click
+        Select Case ExMsgBox($"请选择 wav 音频文件作为任务全部完成且存在错误时的提示音。{vbCrLf & vbCrLf}设置之后如果要取消，请清空 Settings.json 中的 个性化_任务失败音效 设置项并重启软件即可。", New List(Of ExMsgBoxButton) From {New ExMsgBoxButton("选择音效", True), New ExMsgBoxButton("取消")}, , MsgBoxStyle.Information, FormMain_v6)
+            Case 0
+                Dim a As New OpenFileDialog With {.Multiselect = False, .Filter = "WAV 音频|*.wav"}
+                If a.ShowDialog(FormMain_v6) = DialogResult.OK Then
+                    设置_v6.实例对象.个性化_任务失败音效 = a.FileName
+                    设置_v6.加载SP自定义任务失败音效()
                 End If
         End Select
     End Sub

@@ -134,6 +134,7 @@ Public Class 旧版兼容编码队列展示策略_v6
     Private Shared Sub 应用底部日志行(task As 编码任务_v6, item As UltraDetailListView.ListItem)
         item.BottomLines.Clear()
         If 设置_v6.实例对象.编码队列显示最新日志行 <> 0 Then Exit Sub
+        If Not 应显示底部日志(task.状态) Then Exit Sub
         If String.IsNullOrWhiteSpace(task.最新底部日志文本) Then Exit Sub
 
         Dim text = task.最新底部日志文本.Replace(vbCr, " ").Replace(vbLf, " ").Trim()
@@ -146,6 +147,12 @@ Public Class 旧版兼容编码队列展示策略_v6
         End If
         item.BottomLines.Add(New UltraDetailListView.TextLine(text, Nothing, color))
     End Sub
+
+    Private Shared Function 应显示底部日志(status As 编码任务状态_v6) As Boolean
+        Return status = 编码任务状态_v6.正在处理 OrElse
+               status = 编码任务状态_v6.已暂停 OrElse
+               status = 编码任务状态_v6.错误
+    End Function
 
     Private Shared Function 格式化旧版耗时(elapsed As TimeSpan) As String
         Dim parts As New List(Of String)

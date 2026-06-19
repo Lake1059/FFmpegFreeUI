@@ -1,4 +1,6 @@
-﻿Public Class Form_v6_参数面板_质量
+﻿Imports Sunny.UI
+
+Public Class Form_v6_参数面板_质量
 
     Public 所属参数面板对象 As Form_v6_参数面板
     Private 正在同步质量控制方式 As Boolean = False
@@ -28,7 +30,6 @@
         添加预制条目("-rc-lookahead 前向参考帧数 适用于 Nvidia/libx264", "-rc-lookahead ")
         添加预制条目("-look_ahead_depth 前向参考帧数 适用于 Intel", "-look_ahead_depth ")
         添加预制条目("-la_depth 前向参考帧数 适用于 libsvtav1", "-la_depth ")
-        添加预制条目("-lookahead_level 前瞻质量级别 适用于 NVENC", "-lookahead_level ")
         添加分割线(预制条目菜单)
 
         添加说明项(预制条目菜单, "GOP 和帧类型")
@@ -45,21 +46,13 @@
         添加预制条目("-qmax 量化最大值（最低画质）", "-qmax ")
         添加预制条目("-qpmax 量化最大值（最低画质）", "-qpmax ")
         添加预制条目("-qcomp 量化系数非线性压缩因子 0.0~1.0", "-qcomp ")
-        添加预制条目("-cq NVENC VBR 恒定质量目标", "-cq ")
         添加预制条目("-qvbr_quality_level AMD QVBR 质量级别", "-qvbr_quality_level ")
-        添加预制条目("-global_quality Intel QSV 全局质量值", "-global_quality ")
-        添加预制条目("-lossless 1 启用明确支持的无损模式", "-lossless 1")
         添加分割线(预制条目菜单)
 
         添加说明项(预制条目菜单, "编码器专项")
         添加预制条目("-extbrc 1 启用激进比特率分配 适用于 Intel", "-extbrc 1")
         添加预制条目("-spatial-aq 1 启用 NVENC 空间 AQ", "-spatial-aq 1")
         添加预制条目("-temporal-aq 1 启用 NVENC 时间 AQ", "-temporal-aq 1")
-        添加预制条目("-aq-strength AQ 强度 1~15 适用于 NVENC", "-aq-strength ")
-        添加预制条目("-x265-params lossless=1 启用 x265 无损", "-x265-params lossless=1")
-        添加预制条目("-kvazaar-params lossless=1 启用 Kvazaar 无损", "-kvazaar-params lossless=1")
-        添加预制条目("-aq-mode 自适应量化模式 适用于 libaom-av1", "-aq-mode ")
-        添加预制条目("-arnr-strength 自适应降噪强度 0~6 适用于 libaom-av1", "-arnr-strength ")
         添加预制条目("-level 编码级别 较少使用", "-level ")
     End Sub
 
@@ -122,7 +115,7 @@
 
     Private Sub MB_插入预制条目_Click(sender As Object, e As EventArgs) Handles MB_插入预制条目.Click
         初始化预制条目菜单()
-        预制条目菜单.Show(MB_插入预制条目, 0, MB_插入预制条目.Height)
+        预制条目菜单.Show(HtmlColorLabel1.ScreenLocation.X, FormMain_v6.ScreenLocation.Y)
     End Sub
 
     Private Sub 通知参数面板刷新()

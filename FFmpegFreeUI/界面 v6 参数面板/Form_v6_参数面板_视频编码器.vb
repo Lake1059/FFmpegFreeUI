@@ -4,10 +4,16 @@ Public Class Form_v6_参数面板_视频编码器
     Private MCB_像素格式 As LakeUI.ModernComboBox
 
     Private Sub Form_v6_参数面板_视频编码器_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        MCB_像素格式 = 获取像素格式组合框()
+    End Sub
+
+    Private Function 获取像素格式组合框() As LakeUI.ModernComboBox
+        If MCB_像素格式 IsNot Nothing Then Return MCB_像素格式
         If 所属参数面板对象 IsNot Nothing AndAlso 所属参数面板对象.私有界面_色彩管理 IsNot Nothing Then
             MCB_像素格式 = 所属参数面板对象.私有界面_色彩管理.MCB_像素格式
         End If
-    End Sub
+        Return MCB_像素格式
+    End Function
 
     Private Sub MCB_视频编码器类型_SelectedIndexChanged(sender As Object, e As EventArgs) Handles MCB_视频编码器类型.SelectedIndexChanged
         清空分类()
@@ -40,6 +46,10 @@ Public Class Form_v6_参数面板_视频编码器
     End Sub
 
     Private Sub MCB_具体编码器_SelectedIndexChanged(sender As Object, e As EventArgs) Handles MCB_具体编码器.SelectedIndexChanged
+        刷新当前编码器参数列表()
+    End Sub
+
+    Public Sub 刷新当前编码器参数列表()
         清空编码器参数()
 
         Dim 编码器 = 视频编码器数据库_v6.获取编码器数据(MCB_具体编码器.Text)
@@ -48,7 +58,8 @@ Public Class Form_v6_参数面板_视频编码器
         填充参数列表(MCB_编码预设, 编码器.编码预设)
         填充参数列表(MCB_配置文件, 编码器.配置文件)
         填充参数列表(MCB_场景优化, 编码器.场景优化)
-        If MCB_像素格式 IsNot Nothing Then 填充参数列表(MCB_像素格式, 编码器.像素格式)
+        Dim 像素格式下拉框 = 获取像素格式组合框()
+        If 像素格式下拉框 IsNot Nothing Then 填充参数列表(像素格式下拉框, 编码器.像素格式)
 
         更新图片质量输入(编码器)
     End Sub
@@ -69,12 +80,13 @@ Public Class Form_v6_参数面板_视频编码器
         清空组合框(MCB_编码预设)
         清空组合框(MCB_配置文件)
         清空组合框(MCB_场景优化)
-        If MCB_像素格式 IsNot Nothing Then 清空组合框(MCB_像素格式)
+        Dim 像素格式下拉框 = 获取像素格式组合框()
+        If 像素格式下拉框 IsNot Nothing Then 清空组合框(像素格式下拉框)
 
         MCB_编码预设.WaterText = "-preset"
         MCB_配置文件.WaterText = "-profile:v"
         MCB_场景优化.WaterText = "-tune"
-        If MCB_像素格式 IsNot Nothing Then MCB_像素格式.WaterText = "-pix_fmt"
+        If 像素格式下拉框 IsNot Nothing Then 像素格式下拉框.WaterText = "-pix_fmt"
 
         Panel7.Visible = False
         MTB_图片编码器质量值.Text = ""

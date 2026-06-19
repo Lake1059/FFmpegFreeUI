@@ -161,7 +161,7 @@ Partial Class Form_v6_参数面板_预设管理
         ModernListBox1.Name = "ModernListBox1"
         ModernListBox1.Size = New Size(255, 432)
         ModernListBox1.TabIndex = 5
-        ModernListBox1.ToolTipBorderSize = 2
+        ModernListBox1.ToolTipBorderColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernListBox1.ToolTipMaxWidth = 350
         ' 
         ' Panel3
@@ -188,6 +188,7 @@ Partial Class Form_v6_参数面板_预设管理
         ModernTextBox3.Margin = New Padding(2)
         ModernTextBox3.Name = "ModernTextBox3"
         ModernTextBox3.Padding = New Padding(10, 0, 10, 0)
+        ModernTextBox3.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernTextBox3.Size = New Size(666, 32)
         ModernTextBox3.TabIndex = 5
         ModernTextBox3.WaterText = "这里显示选中的预设项名称，主用于显示完整名称，也可在此直接重命名"
@@ -445,6 +446,7 @@ Partial Class Form_v6_参数面板_预设管理
         ModernTextBox4.Margin = New Padding(2)
         ModernTextBox4.Name = "ModernTextBox4"
         ModernTextBox4.Padding = New Padding(10, 0, 10, 0)
+        ModernTextBox4.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernTextBox4.Size = New Size(666, 32)
         ModernTextBox4.TabIndex = 5
         ModernTextBox4.WaterText = "这里显示选中的预设项备注，备注会在鼠标移上时显示在侧边，如果有相同的名称则会显示一样的"

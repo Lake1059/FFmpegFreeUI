@@ -88,6 +88,7 @@ Partial Class Form_v6_设置_远程调用
         ModernTextBox1.Name = "ModernTextBox1"
         ModernTextBox1.Padding = New Padding(10, 0, 10, 0)
         ModernTextBox1.Size = New Size(100, 32)
+        ModernTextBox1.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernTextBox1.TabIndex = 14
         ModernTextBox1.WaterText = "10591"
         ' 

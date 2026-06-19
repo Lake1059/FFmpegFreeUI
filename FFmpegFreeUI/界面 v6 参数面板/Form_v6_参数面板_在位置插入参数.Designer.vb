@@ -62,6 +62,7 @@ Partial Class Form_v6_参数面板_在位置插入参数
         ModernTextBox1.Name = "ModernTextBox1"
         ModernTextBox1.Padding = New Padding(15, 10, 15, 10)
         ModernTextBox1.Size = New Size(726, 89)
+        ModernTextBox1.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernTextBox1.TabIndex = 11
         ModernTextBox1.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ' 
@@ -93,6 +94,7 @@ Partial Class Form_v6_参数面板_在位置插入参数
         ModernTextBox2.Name = "ModernTextBox2"
         ModernTextBox2.Padding = New Padding(15, 10, 15, 10)
         ModernTextBox2.Size = New Size(726, 89)
+        ModernTextBox2.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernTextBox2.TabIndex = 13
         ModernTextBox2.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ' 
@@ -124,6 +126,7 @@ Partial Class Form_v6_参数面板_在位置插入参数
         ModernTextBox3.Name = "ModernTextBox3"
         ModernTextBox3.Padding = New Padding(15, 10, 15, 10)
         ModernTextBox3.Size = New Size(726, 89)
+        ModernTextBox3.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernTextBox3.TabIndex = 15
         ModernTextBox3.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ' 
@@ -141,6 +144,7 @@ Partial Class Form_v6_参数面板_在位置插入参数
         ModernTextBox4.Name = "ModernTextBox4"
         ModernTextBox4.Padding = New Padding(15, 10, 15, 10)
         ModernTextBox4.Size = New Size(726, 89)
+        ModernTextBox4.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernTextBox4.TabIndex = 17
         ModernTextBox4.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ' 

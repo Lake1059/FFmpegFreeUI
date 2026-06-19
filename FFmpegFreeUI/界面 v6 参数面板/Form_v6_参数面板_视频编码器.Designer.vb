@@ -83,7 +83,7 @@ Partial Class Form_v6_参数面板_视频编码器
         ModernPanel1.Name = "ModernPanel1"
         ModernPanel1.Padding = New Padding(20)
         ModernPanel1.ScrollBarMode = LakeUI.ModernPanel.ScrollMode.Vertical
-        ModernPanel1.Size = New Size(902, 625)
+        ModernPanel1.Size = New Size(704, 625)
         ModernPanel1.TabIndex = 0
         ' 
         ' Panel6
@@ -94,7 +94,7 @@ Partial Class Form_v6_参数面板_视频编码器
         Panel6.Location = New Point(20, 528)
         Panel6.Name = "Panel6"
         Panel6.Padding = New Padding(0, 10, 0, 0)
-        Panel6.Size = New Size(862, 42)
+        Panel6.Size = New Size(664, 42)
         Panel6.TabIndex = 12
         ' 
         ' HtmlColorLabel9
@@ -106,7 +106,7 @@ Partial Class Form_v6_参数面板_视频编码器
         HtmlColorLabel9.Margin = New Padding(2)
         HtmlColorLabel9.Name = "HtmlColorLabel9"
         HtmlColorLabel9.Padding = New Padding(10, 0, 0, 0)
-        HtmlColorLabel9.Size = New Size(762, 32)
+        HtmlColorLabel9.Size = New Size(564, 32)
         HtmlColorLabel9.TabIndex = 8
         HtmlColorLabel9.Text = "指定 CPU 编码线程数，不一定有效，编码器有自己的逻辑"
         HtmlColorLabel9.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
@@ -123,6 +123,7 @@ Partial Class Form_v6_参数面板_视频编码器
         MTB_threads.Margin = New Padding(2)
         MTB_threads.Name = "MTB_threads"
         MTB_threads.Padding = New Padding(10, 0, 10, 0)
+        MTB_threads.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MTB_threads.Size = New Size(100, 32)
         MTB_threads.TabIndex = 4
         MTB_threads.WaterText = "-threads"
@@ -136,7 +137,7 @@ Partial Class Form_v6_参数面板_视频编码器
         Panel5.Location = New Point(20, 486)
         Panel5.Name = "Panel5"
         Panel5.Padding = New Padding(0, 10, 0, 0)
-        Panel5.Size = New Size(862, 42)
+        Panel5.Size = New Size(664, 42)
         Panel5.TabIndex = 11
         ' 
         ' HtmlColorLabel8
@@ -148,7 +149,7 @@ Partial Class Form_v6_参数面板_视频编码器
         HtmlColorLabel8.Margin = New Padding(2)
         HtmlColorLabel8.Name = "HtmlColorLabel8"
         HtmlColorLabel8.Padding = New Padding(10, 0, 0, 0)
-        HtmlColorLabel8.Size = New Size(762, 32)
+        HtmlColorLabel8.Size = New Size(564, 32)
         HtmlColorLabel8.TabIndex = 7
         HtmlColorLabel8.Text = "指定 NVIDIA 显卡索引号，其他卡请从系统硬件加速或驱动中设置"
         HtmlColorLabel8.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
@@ -165,6 +166,7 @@ Partial Class Form_v6_参数面板_视频编码器
         MTB_gpu.Margin = New Padding(2)
         MTB_gpu.Name = "MTB_gpu"
         MTB_gpu.Padding = New Padding(10, 0, 10, 0)
+        MTB_gpu.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MTB_gpu.Size = New Size(100, 32)
         MTB_gpu.TabIndex = 4
         MTB_gpu.WaterText = "-gpu"
@@ -180,7 +182,7 @@ Partial Class Form_v6_参数面板_视频编码器
         HtmlColorLabel5.Margin = New Padding(2)
         HtmlColorLabel5.Name = "HtmlColorLabel5"
         HtmlColorLabel5.Padding = New Padding(0, 20, 0, 5)
-        HtmlColorLabel5.Size = New Size(862, 50)
+        HtmlColorLabel5.Size = New Size(664, 50)
         HtmlColorLabel5.TabIndex = 10
         HtmlColorLabel5.Text = "<span style=""font-size:13; color:Silver"">性能选项</span>   通常不需要考虑，也不一定起作用"
         ' 
@@ -191,7 +193,7 @@ Partial Class Form_v6_参数面板_视频编码器
         Panel4.Location = New Point(20, 394)
         Panel4.Name = "Panel4"
         Panel4.Padding = New Padding(0, 10, 0, 0)
-        Panel4.Size = New Size(862, 42)
+        Panel4.Size = New Size(664, 42)
         Panel4.TabIndex = 9
         ' 
         ' MCB_场景优化
@@ -230,7 +232,7 @@ Partial Class Form_v6_参数面板_视频编码器
         HtmlColorLabel4.Margin = New Padding(2)
         HtmlColorLabel4.Name = "HtmlColorLabel4"
         HtmlColorLabel4.Padding = New Padding(0, 20, 0, 5)
-        HtmlColorLabel4.Size = New Size(862, 50)
+        HtmlColorLabel4.Size = New Size(664, 50)
         HtmlColorLabel4.TabIndex = 8
         HtmlColorLabel4.Text = "<span style=""font-size:13; color:Silver"">场景优化</span>   对特定需求的专项优化，例如 CPU 编码的颗粒保留或是 GPU 编码的特调模式"
         ' 
@@ -241,7 +243,7 @@ Partial Class Form_v6_参数面板_视频编码器
         Panel3.Location = New Point(20, 302)
         Panel3.Name = "Panel3"
         Panel3.Padding = New Padding(0, 10, 0, 0)
-        Panel3.Size = New Size(862, 42)
+        Panel3.Size = New Size(664, 42)
         Panel3.TabIndex = 7
         ' 
         ' MCB_配置文件
@@ -280,7 +282,7 @@ Partial Class Form_v6_参数面板_视频编码器
         HtmlColorLabel3.Margin = New Padding(2)
         HtmlColorLabel3.Name = "HtmlColorLabel3"
         HtmlColorLabel3.Padding = New Padding(0, 20, 0, 5)
-        HtmlColorLabel3.Size = New Size(862, 50)
+        HtmlColorLabel3.Size = New Size(664, 50)
         HtmlColorLabel3.TabIndex = 6
         HtmlColorLabel3.Text = "<span style=""font-size:13; color:Silver"">配置文件</span>   控制要支持怎样的技术规格和功能，一般不用指定"
         ' 
@@ -291,7 +293,7 @@ Partial Class Form_v6_参数面板_视频编码器
         Panel1.Location = New Point(20, 210)
         Panel1.Name = "Panel1"
         Panel1.Padding = New Padding(0, 10, 0, 0)
-        Panel1.Size = New Size(862, 42)
+        Panel1.Size = New Size(664, 42)
         Panel1.TabIndex = 5
         ' 
         ' MCB_编码预设
@@ -330,7 +332,7 @@ Partial Class Form_v6_参数面板_视频编码器
         HtmlColorLabel2.Margin = New Padding(2)
         HtmlColorLabel2.Name = "HtmlColorLabel2"
         HtmlColorLabel2.Padding = New Padding(0, 20, 0, 5)
-        HtmlColorLabel2.Size = New Size(862, 50)
+        HtmlColorLabel2.Size = New Size(664, 50)
         HtmlColorLabel2.TabIndex = 4
         HtmlColorLabel2.Text = "<span style=""font-size:13; color:Silver"">编码预设</span>   如何平衡压缩度和速度，往上越慢，往下越快"
         ' 
@@ -342,7 +344,7 @@ Partial Class Form_v6_参数面板_视频编码器
         Panel7.Location = New Point(20, 118)
         Panel7.Name = "Panel7"
         Panel7.Padding = New Padding(0, 10, 0, 0)
-        Panel7.Size = New Size(862, 42)
+        Panel7.Size = New Size(664, 42)
         Panel7.TabIndex = 14
         Panel7.Visible = False
         ' 
@@ -355,7 +357,7 @@ Partial Class Form_v6_参数面板_视频编码器
         HtmlColorLabel7.Margin = New Padding(2)
         HtmlColorLabel7.Name = "HtmlColorLabel7"
         HtmlColorLabel7.Padding = New Padding(10, 0, 0, 0)
-        HtmlColorLabel7.Size = New Size(712, 32)
+        HtmlColorLabel7.Size = New Size(514, 32)
         HtmlColorLabel7.TabIndex = 6
         HtmlColorLabel7.Text = "图片编码器质量值 / 其他定制参数"
         HtmlColorLabel7.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
@@ -372,6 +374,7 @@ Partial Class Form_v6_参数面板_视频编码器
         MTB_图片编码器质量值.Margin = New Padding(2)
         MTB_图片编码器质量值.Name = "MTB_图片编码器质量值"
         MTB_图片编码器质量值.Padding = New Padding(10, 0, 10, 0)
+        MTB_图片编码器质量值.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MTB_图片编码器质量值.Size = New Size(150, 32)
         MTB_图片编码器质量值.TabIndex = 5
         MTB_图片编码器质量值.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
@@ -387,7 +390,7 @@ Partial Class Form_v6_参数面板_视频编码器
         Panel2.Location = New Point(20, 76)
         Panel2.Name = "Panel2"
         Panel2.Padding = New Padding(0, 10, 0, 0)
-        Panel2.Size = New Size(862, 42)
+        Panel2.Size = New Size(664, 42)
         Panel2.TabIndex = 3
         ' 
         ' MCB_具体编码器
@@ -404,7 +407,7 @@ Partial Class Form_v6_参数面板_视频编码器
         MCB_具体编码器.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_具体编码器.DropDownSelectedForeColor = Color.White
         MCB_具体编码器.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
-        MCB_具体编码器.Location = New Point(370, 10)
+        MCB_具体编码器.Location = New Point(320, 10)
         MCB_具体编码器.Margin = New Padding(2, 2, 2, 2)
         MCB_具体编码器.MaxDropDownItems = 20
         MCB_具体编码器.Name = "MCB_具体编码器"
@@ -421,7 +424,7 @@ Partial Class Form_v6_参数面板_视频编码器
         ' JustEmptyControl2
         ' 
         JustEmptyControl2.Dock = DockStyle.Left
-        JustEmptyControl2.Location = New Point(360, 10)
+        JustEmptyControl2.Location = New Point(310, 10)
         JustEmptyControl2.Name = "JustEmptyControl2"
         JustEmptyControl2.Size = New Size(10, 32)
         JustEmptyControl2.TabIndex = 5
@@ -440,7 +443,7 @@ Partial Class Form_v6_参数面板_视频编码器
         MCB_视频编码器分类.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_视频编码器分类.DropDownSelectedForeColor = Color.White
         MCB_视频编码器分类.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
-        MCB_视频编码器分类.Location = New Point(160, 10)
+        MCB_视频编码器分类.Location = New Point(110, 10)
         MCB_视频编码器分类.Margin = New Padding(2, 2, 2, 2)
         MCB_视频编码器分类.MaxDropDownItems = 15
         MCB_视频编码器分类.Name = "MCB_视频编码器分类"
@@ -456,7 +459,7 @@ Partial Class Form_v6_参数面板_视频编码器
         ' JustEmptyControl1
         ' 
         JustEmptyControl1.Dock = DockStyle.Left
-        JustEmptyControl1.Location = New Point(150, 10)
+        JustEmptyControl1.Location = New Point(100, 10)
         JustEmptyControl1.Name = "JustEmptyControl1"
         JustEmptyControl1.Size = New Size(10, 32)
         JustEmptyControl1.TabIndex = 3
@@ -482,7 +485,7 @@ Partial Class Form_v6_参数面板_视频编码器
         MCB_视频编码器类型.Margin = New Padding(2, 2, 2, 2)
         MCB_视频编码器类型.Name = "MCB_视频编码器类型"
         MCB_视频编码器类型.Padding = New Padding(10, 0, 10, 0)
-        MCB_视频编码器类型.Size = New Size(150, 32)
+        MCB_视频编码器类型.Size = New Size(100, 32)
         MCB_视频编码器类型.TabIndex = 0
         MCB_视频编码器类型.ToolTipGap = -1
         MCB_视频编码器类型.ToolTipMaxWidth = 350
@@ -500,7 +503,7 @@ Partial Class Form_v6_参数面板_视频编码器
         HtmlColorLabel6.Margin = New Padding(2)
         HtmlColorLabel6.Name = "HtmlColorLabel6"
         HtmlColorLabel6.Padding = New Padding(0, 0, 0, 5)
-        HtmlColorLabel6.Size = New Size(862, 26)
+        HtmlColorLabel6.Size = New Size(664, 26)
         HtmlColorLabel6.TabIndex = 13
         HtmlColorLabel6.Text = resources.GetString("HtmlColorLabel6.Text")
         ' 
@@ -514,7 +517,7 @@ Partial Class Form_v6_参数面板_视频编码器
         HtmlColorLabel1.Margin = New Padding(2)
         HtmlColorLabel1.Name = "HtmlColorLabel1"
         HtmlColorLabel1.Padding = New Padding(0, 0, 0, 5)
-        HtmlColorLabel1.Size = New Size(862, 30)
+        HtmlColorLabel1.Size = New Size(664, 30)
         HtmlColorLabel1.TabIndex = 1
         HtmlColorLabel1.Text = "<span style=""font-size:13; color:Silver"">视频编码器</span>   依次选择类别，再选具体；可编辑设置文件添加自定义"
         ' 
@@ -523,7 +526,7 @@ Partial Class Form_v6_参数面板_视频编码器
         AutoScaleDimensions = New SizeF(96F, 96F)
         AutoScaleMode = AutoScaleMode.Dpi
         BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
-        ClientSize = New Size(902, 625)
+        ClientSize = New Size(704, 625)
         Controls.Add(ModernPanel1)
         Font = New Font("Microsoft YaHei UI", 10F)
         ForeColor = Color.Silver

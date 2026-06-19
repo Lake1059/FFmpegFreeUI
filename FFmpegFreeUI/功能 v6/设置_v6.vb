@@ -43,6 +43,7 @@ Public Class 设置_v6
     Public Property 任务失败自动删除输出文件 As Integer = 0
     Public Property 编码队列显示最新日志行 As Integer = 0
     Public Property 任务日志保留行数选项 As Integer = 1
+    Public Property 任务日志性能计数器 As Integer = 0
 
     Public Property 替代进程文件名 As String = ""
     Public Property 覆盖参数传递 As String = ""
@@ -152,6 +153,7 @@ Public Class 设置_v6
         Form_v6_设置_功能设定.MCB_任务失败删除文件.SelectedIndex = 实例对象.任务失败自动删除输出文件
         Form_v6_设置_功能设定.MCB_编码队列显示最新日志行.SelectedIndex = Math.Min(Math.Max(实例对象.编码队列显示最新日志行, 0), 1)
         Form_v6_设置_功能设定.MCB_任务日志保留行数.SelectedIndex = Math.Min(Math.Max(实例对象.任务日志保留行数选项, 0), 3)
+        Form_v6_设置_功能设定.MCB_任务日志性能计数器.SelectedIndex = Math.Min(Math.Max(实例对象.任务日志性能计数器, 0), 1)
 
         Form_v6_设置_转译辅助.MCB_替代进程的文件名.Text = 实例对象.替代进程文件名
         Form_v6_设置_转译辅助.MTB_覆盖参数传递.Text = 实例对象.覆盖参数传递
@@ -197,6 +199,9 @@ Public Class 设置_v6
 
         Form_v6_设置_个性化.HtmlColorLabel1.Text = "感谢您支持 FFmpegFreeUI Supporter Pack"
         Form_v6_设置_个性化.Panel4.Visible = False
+
+        加载SP自定义任务完成音效()
+        加载SP自定义任务失败音效()
 
         If 实例对象.SP_窗口标题文字 <> "" Then FormMain_v6.Text = 实例对象.SP_窗口标题文字
 
@@ -248,6 +253,37 @@ Public Class 设置_v6
     Public Shared ReadOnly 自定义图标路径 As String = IO.Path.Combine(Application.StartupPath, "SP_Icon")
     Public Shared ReadOnly 自定义起始页顶栏背景图路径 As String = IO.Path.Combine(Application.StartupPath, "SP_MainTopPanel")
     Public Shared ReadOnly 自定义背景图路径 As String = IO.Path.Combine(Application.StartupPath, "SP_BackImage")
+
+    Public Shared Sub 加载SP自定义任务完成音效()
+        If Not SP_UnLock Then Exit Sub
+        Sound_Finish = 加载自定义音效(实例对象.个性化_任务完成音效, My.Resources.Resource1.完成)
+    End Sub
+
+    Public Shared Sub 加载SP自定义任务失败音效()
+        If Not SP_UnLock Then Exit Sub
+        Sound_Error = 加载自定义音效(实例对象.个性化_任务失败音效, My.Resources.Resource1.错误)
+    End Sub
+
+    Private Shared Function 加载自定义音效(file As String, defaultSound As Stream) As Stream
+        If Not String.IsNullOrWhiteSpace(file) AndAlso FileIO.FileSystem.FileExists(file) Then
+            Try
+                Using fileStream As New FileStream(file, FileMode.Open, FileAccess.Read, FileShare.Read)
+                    Dim soundStream As New MemoryStream()
+                    fileStream.CopyTo(soundStream)
+                    soundStream.Position = 0
+                    Return soundStream
+                End Using
+            Catch ex As Exception
+                MsgBox($"加载自定义音效失败：{ex.Message}", MsgBoxStyle.Critical)
+            End Try
+        End If
+
+        Try
+            defaultSound.Position = 0
+        Catch
+        End Try
+        Return defaultSound
+    End Function
 
     Public Shared Sub 加载SP自定义图标()
         If Not SP_UnLock Then Exit Sub

@@ -29,6 +29,9 @@ Partial Class Form_v6_设置_功能设定
         Panel10 = New Panel()
         HtmlColorLabel10 = New LakeUI.HtmlColorLabel()
         MCB_任务日志保留行数 = New LakeUI.ModernComboBox()
+        Panel11 = New Panel()
+        HtmlColorLabel11 = New LakeUI.HtmlColorLabel()
+        MCB_任务日志性能计数器 = New LakeUI.ModernComboBox()
         Panel9 = New Panel()
         HtmlColorLabel9 = New LakeUI.HtmlColorLabel()
         MCB_编码队列显示最新日志行 = New LakeUI.ModernComboBox()
@@ -59,6 +62,7 @@ Partial Class Form_v6_设置_功能设定
         ModernPanel1.SuspendLayout()
         Panel8.SuspendLayout()
         Panel10.SuspendLayout()
+        Panel11.SuspendLayout()
         Panel9.SuspendLayout()
         Panel7.SuspendLayout()
         Panel6.SuspendLayout()
@@ -73,6 +77,7 @@ Partial Class Form_v6_设置_功能设定
         ' 
         ModernPanel1.BackColor1 = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         ModernPanel1.BorderSize = 0
+        ModernPanel1.Controls.Add(Panel11)
         ModernPanel1.Controls.Add(Panel10)
         ModernPanel1.Controls.Add(Panel9)
         ModernPanel1.Controls.Add(Panel8)
@@ -199,6 +204,58 @@ Partial Class Form_v6_设置_功能设定
         MCB_任务日志保留行数.ToolTipMaxWidth = 350
         MCB_任务日志保留行数.ToolTipPadding = New Padding(15)
         MCB_任务日志保留行数.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
+        ' 
+        ' Panel11
+        ' 
+        Panel11.Controls.Add(HtmlColorLabel11)
+        Panel11.Controls.Add(MCB_任务日志性能计数器)
+        Panel11.Dock = DockStyle.Top
+        Panel11.Location = New Point(20, 471)
+        Panel11.Name = "Panel11"
+        Panel11.Padding = New Padding(0, 10, 0, 0)
+        Panel11.Size = New Size(702, 42)
+        Panel11.TabIndex = 33
+        ' 
+        ' HtmlColorLabel11
+        ' 
+        HtmlColorLabel11.AutoSize = True
+        HtmlColorLabel11.AutoSizeMode = AutoSizeMode.GrowAndShrink
+        HtmlColorLabel11.Dock = DockStyle.Fill
+        HtmlColorLabel11.Location = New Point(200, 10)
+        HtmlColorLabel11.Margin = New Padding(2)
+        HtmlColorLabel11.Name = "HtmlColorLabel11"
+        HtmlColorLabel11.Padding = New Padding(10, 0, 0, 0)
+        HtmlColorLabel11.Size = New Size(502, 32)
+        HtmlColorLabel11.TabIndex = 33
+        HtmlColorLabel11.Text = "编码队列任务日志窗口底部显示当前任务性能计数器"
+        HtmlColorLabel11.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
+        ' 
+        ' MCB_任务日志性能计数器
+        ' 
+        MCB_任务日志性能计数器.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MCB_任务日志性能计数器.BorderRadius = 10
+        MCB_任务日志性能计数器.BorderSize = 0
+        MCB_任务日志性能计数器.Dock = DockStyle.Left
+        MCB_任务日志性能计数器.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
+        MCB_任务日志性能计数器.DropDownHoverAnimationDuration = 0
+        MCB_任务日志性能计数器.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
+        MCB_任务日志性能计数器.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
+        MCB_任务日志性能计数器.DropDownPadding = New Padding(10)
+        MCB_任务日志性能计数器.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MCB_任务日志性能计数器.DropDownSelectedForeColor = Color.White
+        MCB_任务日志性能计数器.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        MCB_任务日志性能计数器.Items.Add("显示")
+        MCB_任务日志性能计数器.Items.Add("隐藏")
+        MCB_任务日志性能计数器.Location = New Point(0, 10)
+        MCB_任务日志性能计数器.Margin = New Padding(2, 2, 2, 2)
+        MCB_任务日志性能计数器.Name = "MCB_任务日志性能计数器"
+        MCB_任务日志性能计数器.Padding = New Padding(10, 0, 10, 0)
+        MCB_任务日志性能计数器.Size = New Size(200, 32)
+        MCB_任务日志性能计数器.TabIndex = 0
+        MCB_任务日志性能计数器.ToolTipGap = -1
+        MCB_任务日志性能计数器.ToolTipMaxWidth = 350
+        MCB_任务日志性能计数器.ToolTipPadding = New Padding(15)
+        MCB_任务日志性能计数器.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ' 
         ' Panel9
         ' 
@@ -598,6 +655,7 @@ Partial Class Form_v6_设置_功能设定
         MTB_工作目录.Name = "MTB_工作目录"
         MTB_工作目录.Padding = New Padding(10, 0, 0, 0)
         MTB_工作目录.Size = New Size(612, 32)
+        MTB_工作目录.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MTB_工作目录.TabIndex = 19
         ' 
         ' JustEmptyControl2
@@ -652,6 +710,8 @@ Partial Class Form_v6_设置_功能设定
         Panel8.PerformLayout()
         Panel10.ResumeLayout(False)
         Panel10.PerformLayout()
+        Panel11.ResumeLayout(False)
+        Panel11.PerformLayout()
         Panel9.ResumeLayout(False)
         Panel9.PerformLayout()
         Panel7.ResumeLayout(False)
@@ -688,10 +748,13 @@ Partial Class Form_v6_设置_功能设定
     Friend WithEvents MCB_任务失败删除文件 As LakeUI.ModernComboBox
     Friend WithEvents Panel10 As Panel
     Friend WithEvents MCB_任务日志保留行数 As LakeUI.ModernComboBox
+    Friend WithEvents Panel11 As Panel
+    Friend WithEvents MCB_任务日志性能计数器 As LakeUI.ModernComboBox
     Friend WithEvents Panel9 As Panel
     Friend WithEvents MCB_编码队列显示最新日志行 As LakeUI.ModernComboBox
     Friend WithEvents HtmlColorLabel1 As LakeUI.HtmlColorLabel
     Friend WithEvents HtmlColorLabel10 As LakeUI.HtmlColorLabel
+    Friend WithEvents HtmlColorLabel11 As LakeUI.HtmlColorLabel
     Friend WithEvents HtmlColorLabel9 As LakeUI.HtmlColorLabel
     Friend WithEvents HtmlColorLabel8 As LakeUI.HtmlColorLabel
     Friend WithEvents HtmlColorLabel7 As LakeUI.HtmlColorLabel

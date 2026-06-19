@@ -54,7 +54,7 @@ Public Class 开发者内置预设_v6
         result.Add(New 预设项("RTX50 AV1 UHQ 超压", RTX50_AV1_UHQ_EX))
 
         Dim RTX50_HEVC_UHQ As New 预设数据_v6
-        RTX50_AV1_UHQ.预设备注 = "老黄 HEVC UHQ 满分答案，参考 VMAF = 95~96，最推荐 RTX50 全系使用，压缩度大概能摸到 x265 medium 水平。此预设仅包含视频参数！"
+        RTX50_HEVC_UHQ.预设备注 = "老黄 HEVC UHQ 满分答案，参考 VMAF = 95~96，最推荐 RTX50 全系使用，压缩度大概能摸到 x265 medium 水平。此预设仅包含视频参数！"
         RTX50_AV1_UHQ.视频参数_编码器_类型 = 预设数据_v6.视频编码器类型.视频
         RTX50_AV1_UHQ.视频参数_编码器_分类名称 = "H.265/HEVC"
         RTX50_AV1_UHQ.视频参数_编码器_具体编码 = "hevc_nvenc"
@@ -96,7 +96,7 @@ Public Class 开发者内置预设_v6
         result.Add(New 预设项("FDK AAC 压制音频到 M4A", M4A_HDAudio))
 
         Dim AVIF_AOMAV1 As New 预设数据_v6
-        AVIF_AOMAV1.预设备注 = "AVIF 是 AV1 用于图片的超高压缩图片，非常适合用它来压制你那巨量不再需要后期的图片."
+        AVIF_AOMAV1.预设备注 = "AVIF 是将 AV1 用于图片的超高压缩图，非常适合用它来压制你那巨量不再需要后期的图片."
         AVIF_AOMAV1.输出容器 = ".avif"
         AVIF_AOMAV1.视频参数_编码器_分类名称 = "AV1"
         AVIF_AOMAV1.视频参数_编码器_具体编码 = "libaom-av1"

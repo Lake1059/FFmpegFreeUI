@@ -214,6 +214,7 @@ Partial Class Form_v6_设置_性能调度
         ModernTextBox2.Name = "ModernTextBox2"
         ModernTextBox2.Padding = New Padding(10, 0, 10, 0)
         ModernTextBox2.Size = New Size(100, 32)
+        ModernTextBox2.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernTextBox2.TabIndex = 8
         ' 
         ' JustEmptyControl1
@@ -237,6 +238,7 @@ Partial Class Form_v6_设置_性能调度
         MTB_处理器线程.Name = "MTB_处理器线程"
         MTB_处理器线程.Padding = New Padding(10, 0, 10, 0)
         MTB_处理器线程.Size = New Size(200, 32)
+        MTB_处理器线程.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MTB_处理器线程.TabIndex = 6
         ' 
         ' HtmlColorLabel1

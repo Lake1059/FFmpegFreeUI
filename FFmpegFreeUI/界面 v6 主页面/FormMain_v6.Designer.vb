@@ -117,6 +117,7 @@ Partial Class FormMain_v6
         ModernTextBox1.Name = "ModernTextBox1"
         ModernTextBox1.Padding = New Padding(10, 0, 10, 0)
         ModernTextBox1.Size = New Size(180, 30)
+        ModernTextBox1.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernTextBox1.TabIndex = 13
         ModernTextBox1.TabStop = False
         ModernTextBox1.WaterText = "搜索选项卡标题"

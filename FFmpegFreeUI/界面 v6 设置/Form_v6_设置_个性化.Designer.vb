@@ -22,7 +22,7 @@ Partial Class Form_v6_设置_个性化
     '不要使用代码编辑器修改它。
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim ToolTipEntry1 As LakeUI.ModernComboBox.ToolTipEntry = New LakeUI.ModernComboBox.ToolTipEntry()
+        Dim ToolTipEntry2 As LakeUI.ModernComboBox.ToolTipEntry = New LakeUI.ModernComboBox.ToolTipEntry()
         ModernPanel1 = New LakeUI.ModernPanel()
         HtmlColorLabel7 = New LakeUI.HtmlColorLabel()
         Panel6 = New Panel()
@@ -45,7 +45,6 @@ Partial Class Form_v6_设置_个性化
         MB_起始页顶栏背景图 = New LakeUI.ModernButton()
         JustEmptyControl3 = New LakeUI.JustEmptyControl()
         MB_图标 = New LakeUI.ModernButton()
-        HtmlColorLabel4 = New LakeUI.HtmlColorLabel()
         Panel2 = New Panel()
         MB_起始页面顶栏副标题 = New LakeUI.ModernButton()
         JustEmptyControl2 = New LakeUI.JustEmptyControl()
@@ -59,6 +58,10 @@ Partial Class Form_v6_设置_个性化
         MB_前往购买 = New LakeUI.ModernButton()
         HtmlColorLabel2 = New LakeUI.HtmlColorLabel()
         HtmlColorLabel1 = New LakeUI.HtmlColorLabel()
+        Panel7 = New Panel()
+        MB_任务失败音效 = New LakeUI.ModernButton()
+        JustEmptyControl7 = New LakeUI.JustEmptyControl()
+        MB_任务完成音效 = New LakeUI.ModernButton()
         ModernPanel1.SuspendLayout()
         Panel6.SuspendLayout()
         Panel5.SuspendLayout()
@@ -67,6 +70,7 @@ Partial Class Form_v6_设置_个性化
         Panel2.SuspendLayout()
         ModernPanel2.SuspendLayout()
         Panel4.SuspendLayout()
+        Panel7.SuspendLayout()
         SuspendLayout()
         ' 
         ' ModernPanel1
@@ -79,8 +83,8 @@ Partial Class Form_v6_设置_个性化
         ModernPanel1.Controls.Add(HtmlColorLabel6)
         ModernPanel1.Controls.Add(Panel3)
         ModernPanel1.Controls.Add(HtmlColorLabel5)
+        ModernPanel1.Controls.Add(Panel7)
         ModernPanel1.Controls.Add(Panel1)
-        ModernPanel1.Controls.Add(HtmlColorLabel4)
         ModernPanel1.Controls.Add(Panel2)
         ModernPanel1.Controls.Add(HtmlColorLabel3)
         ModernPanel1.Controls.Add(ModernPanel2)
@@ -97,7 +101,7 @@ Partial Class Form_v6_设置_个性化
         HtmlColorLabel7.AutoSize = True
         HtmlColorLabel7.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel7.Dock = DockStyle.Top
-        HtmlColorLabel7.Location = New Point(20, 589)
+        HtmlColorLabel7.Location = New Point(20, 586)
         HtmlColorLabel7.Margin = New Padding(2)
         HtmlColorLabel7.Name = "HtmlColorLabel7"
         HtmlColorLabel7.Padding = New Padding(0, 10, 0, 0)
@@ -110,7 +114,7 @@ Partial Class Form_v6_设置_个性化
         ' 
         Panel6.Controls.Add(MB_选择背景图)
         Panel6.Dock = DockStyle.Top
-        Panel6.Location = New Point(20, 547)
+        Panel6.Location = New Point(20, 544)
         Panel6.Name = "Panel6"
         Panel6.Padding = New Padding(0, 10, 0, 0)
         Panel6.Size = New Size(738, 42)
@@ -139,7 +143,7 @@ Partial Class Form_v6_设置_个性化
         Panel5.Controls.Add(JustEmptyControl4)
         Panel5.Controls.Add(MCB_毛玻璃模式)
         Panel5.Dock = DockStyle.Top
-        Panel5.Location = New Point(20, 505)
+        Panel5.Location = New Point(20, 502)
         Panel5.Name = "Panel5"
         Panel5.Padding = New Padding(0, 10, 0, 0)
         Panel5.Size = New Size(738, 42)
@@ -197,9 +201,9 @@ Partial Class Form_v6_设置_个性化
         MCB_背景来源.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
         MCB_背景来源.Items.Add("背景图（推荐）")
         MCB_背景来源.Items.Add("窗口穿透")
-        ToolTipEntry1.ItemText = "窗口穿透"
-        ToolTipEntry1.ToolTipText = "受限于 WinForms 的性能限制和特性，窗口穿透不会实时更新，仅依靠事件触发来更新，且子控件也是这样"
-        MCB_背景来源.ItemToolTips.AddRange(New LakeUI.ModernComboBox.ToolTipEntry() {ToolTipEntry1})
+        ToolTipEntry2.ItemText = "窗口穿透"
+        ToolTipEntry2.ToolTipText = "受限于 WinForms 的性能限制和特性，窗口穿透不会实时更新，仅依靠事件触发来更新，且子控件也是这样"
+        MCB_背景来源.ItemToolTips.AddRange(New LakeUI.ModernComboBox.ToolTipEntry() {ToolTipEntry2})
         MCB_背景来源.Location = New Point(160, 10)
         MCB_背景来源.Margin = New Padding(2, 2, 2, 2)
         MCB_背景来源.Name = "MCB_背景来源"
@@ -255,7 +259,7 @@ Partial Class Form_v6_设置_个性化
         HtmlColorLabel6.AutoSize = True
         HtmlColorLabel6.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel6.Dock = DockStyle.Top
-        HtmlColorLabel6.Location = New Point(20, 454)
+        HtmlColorLabel6.Location = New Point(20, 451)
         HtmlColorLabel6.Margin = New Padding(2)
         HtmlColorLabel6.Name = "HtmlColorLabel6"
         HtmlColorLabel6.Padding = New Padding(0, 10, 0, 0)
@@ -271,7 +275,7 @@ Partial Class Form_v6_设置_个性化
         Panel3.Controls.Add(JustEmptyControl6)
         Panel3.Controls.Add(MB_窗口边框颜色)
         Panel3.Dock = DockStyle.Top
-        Panel3.Location = New Point(20, 412)
+        Panel3.Location = New Point(20, 409)
         Panel3.Name = "Panel3"
         Panel3.Padding = New Padding(0, 10, 0, 0)
         Panel3.Size = New Size(738, 42)
@@ -358,7 +362,7 @@ Partial Class Form_v6_设置_个性化
         HtmlColorLabel5.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel5.Dock = DockStyle.Top
         HtmlColorLabel5.Font = New Font("Microsoft YaHei UI", 13F)
-        HtmlColorLabel5.Location = New Point(20, 367)
+        HtmlColorLabel5.Location = New Point(20, 364)
         HtmlColorLabel5.Margin = New Padding(2)
         HtmlColorLabel5.Name = "HtmlColorLabel5"
         HtmlColorLabel5.Padding = New Padding(0, 20, 0, 0)
@@ -372,7 +376,7 @@ Partial Class Form_v6_设置_个性化
         Panel1.Controls.Add(JustEmptyControl3)
         Panel1.Controls.Add(MB_图标)
         Panel1.Dock = DockStyle.Top
-        Panel1.Location = New Point(20, 325)
+        Panel1.Location = New Point(20, 280)
         Panel1.Name = "Panel1"
         Panel1.Padding = New Padding(0, 10, 0, 0)
         Panel1.Size = New Size(738, 42)
@@ -415,20 +419,6 @@ Partial Class Form_v6_设置_个性化
         MB_图标.Size = New Size(360, 32)
         MB_图标.TabIndex = 3
         MB_图标.Text = "图标（用于起始页面顶栏左图和各窗口图标）"
-        ' 
-        ' HtmlColorLabel4
-        ' 
-        HtmlColorLabel4.AutoSize = True
-        HtmlColorLabel4.AutoSizeMode = AutoSizeMode.GrowAndShrink
-        HtmlColorLabel4.Dock = DockStyle.Top
-        HtmlColorLabel4.Font = New Font("Microsoft YaHei UI", 13F)
-        HtmlColorLabel4.Location = New Point(20, 280)
-        HtmlColorLabel4.Margin = New Padding(2)
-        HtmlColorLabel4.Name = "HtmlColorLabel4"
-        HtmlColorLabel4.Padding = New Padding(0, 20, 0, 0)
-        HtmlColorLabel4.Size = New Size(738, 45)
-        HtmlColorLabel4.TabIndex = 17
-        HtmlColorLabel4.Text = "可定制的图片"
         ' 
         ' Panel2
         ' 
@@ -517,7 +507,7 @@ Partial Class Form_v6_设置_个性化
         HtmlColorLabel3.Padding = New Padding(0, 20, 0, 0)
         HtmlColorLabel3.Size = New Size(738, 45)
         HtmlColorLabel3.TabIndex = 15
-        HtmlColorLabel3.Text = "可定制的文字"
+        HtmlColorLabel3.Text = "可定制内容"
         ' 
         ' ModernPanel2
         ' 
@@ -533,7 +523,6 @@ Partial Class Form_v6_设置_个性化
         ModernPanel2.Location = New Point(20, 20)
         ModernPanel2.Name = "ModernPanel2"
         ModernPanel2.Padding = New Padding(10)
-        ModernPanel2.ScrollBarMode = LakeUI.ModernPanel.ScrollMode.None
         ModernPanel2.Size = New Size(738, 173)
         ModernPanel2.TabIndex = 0
         ' 
@@ -606,6 +595,56 @@ Partial Class Form_v6_设置_个性化
         HtmlColorLabel1.TabIndex = 11
         HtmlColorLabel1.Text = "购买 FFmpegFreeUI Supporter Pack 以解锁个性化设置"
         ' 
+        ' Panel7
+        ' 
+        Panel7.Controls.Add(MB_任务失败音效)
+        Panel7.Controls.Add(JustEmptyControl7)
+        Panel7.Controls.Add(MB_任务完成音效)
+        Panel7.Dock = DockStyle.Top
+        Panel7.Location = New Point(20, 322)
+        Panel7.Name = "Panel7"
+        Panel7.Padding = New Padding(0, 10, 0, 0)
+        Panel7.Size = New Size(738, 42)
+        Panel7.TabIndex = 25
+        ' 
+        ' MB_任务失败音效
+        ' 
+        MB_任务失败音效.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MB_任务失败音效.BorderRadius = 10
+        MB_任务失败音效.BorderSize = 0
+        MB_任务失败音效.Dock = DockStyle.Left
+        MB_任务失败音效.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        MB_任务失败音效.Location = New Point(160, 10)
+        MB_任务失败音效.Margin = New Padding(2)
+        MB_任务失败音效.Name = "MB_任务失败音效"
+        MB_任务失败音效.PressedBackColor1 = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
+        MB_任务失败音效.Size = New Size(150, 32)
+        MB_任务失败音效.TabIndex = 4
+        MB_任务失败音效.Text = "任务失败音效"
+        ' 
+        ' JustEmptyControl7
+        ' 
+        JustEmptyControl7.Dock = DockStyle.Left
+        JustEmptyControl7.Location = New Point(150, 10)
+        JustEmptyControl7.Name = "JustEmptyControl7"
+        JustEmptyControl7.Size = New Size(10, 32)
+        JustEmptyControl7.TabIndex = 7
+        ' 
+        ' MB_任务完成音效
+        ' 
+        MB_任务完成音效.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MB_任务完成音效.BorderRadius = 10
+        MB_任务完成音效.BorderSize = 0
+        MB_任务完成音效.Dock = DockStyle.Left
+        MB_任务完成音效.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        MB_任务完成音效.Location = New Point(0, 10)
+        MB_任务完成音效.Margin = New Padding(2)
+        MB_任务完成音效.Name = "MB_任务完成音效"
+        MB_任务完成音效.PressedBackColor1 = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
+        MB_任务完成音效.Size = New Size(150, 32)
+        MB_任务完成音效.TabIndex = 3
+        MB_任务完成音效.Text = "任务完成音效"
+        ' 
         ' Form_v6_设置_个性化
         ' 
         AutoScaleDimensions = New SizeF(96F, 96F)
@@ -628,6 +667,7 @@ Partial Class Form_v6_设置_个性化
         ModernPanel2.PerformLayout()
         Panel4.ResumeLayout(False)
         Panel4.PerformLayout()
+        Panel7.ResumeLayout(False)
         ResumeLayout(False)
     End Sub
 
@@ -639,7 +679,6 @@ Partial Class Form_v6_设置_个性化
     Friend WithEvents MB_前往购买 As LakeUI.ModernButton
     Friend WithEvents HtmlColorLabel3 As LakeUI.HtmlColorLabel
     Friend WithEvents Panel2 As Panel
-    Friend WithEvents HtmlColorLabel4 As LakeUI.HtmlColorLabel
     Friend WithEvents MB_起始页面顶栏副标题 As LakeUI.ModernButton
     Friend WithEvents JustEmptyControl2 As LakeUI.JustEmptyControl
     Friend WithEvents MB_起始页面顶栏标题 As LakeUI.ModernButton
@@ -667,4 +706,8 @@ Partial Class Form_v6_设置_个性化
     Friend WithEvents HtmlColorLabel8 As LakeUI.HtmlColorLabel
     Friend WithEvents MCB_边框宽度 As LakeUI.ModernComboBox
     Friend WithEvents JustEmptyControl8 As LakeUI.JustEmptyControl
+    Friend WithEvents Panel7 As Panel
+    Friend WithEvents MB_任务失败音效 As LakeUI.ModernButton
+    Friend WithEvents JustEmptyControl7 As LakeUI.JustEmptyControl
+    Friend WithEvents MB_任务完成音效 As LakeUI.ModernButton
 End Class

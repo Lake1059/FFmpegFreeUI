@@ -45,6 +45,7 @@ Public Class Form_v6_编码队列
     Private Sub 刷新整表()
         If 正在刷新列表 Then Exit Sub
         正在刷新列表 = True
+        UltraDetailListView1.BeginUpdate()
         Try
             Dim selectedIds = 获取选中任务ID()
             UltraDetailListView1.Items.Clear()
@@ -62,6 +63,7 @@ Public Class Form_v6_编码队列
             更新标题()
             Form_v6_编码队列_任务日志.同步队列选择(获取选中任务ID())
         Finally
+            UltraDetailListView1.EndUpdate()
             正在刷新列表 = False
         End Try
     End Sub
@@ -83,9 +85,13 @@ Public Class Form_v6_编码队列
             Exit Sub
         End If
 
-        展示策略.应用(task, item)
-        item.InvalidateCache()
-        UltraDetailListView1.Invalidate()
+        UltraDetailListView1.BeginUpdate()
+        Try
+            展示策略.应用(task, item)
+            item.InvalidateCache()
+        Finally
+            UltraDetailListView1.EndUpdate()
+        End Try
         更新标题()
     End Sub
 

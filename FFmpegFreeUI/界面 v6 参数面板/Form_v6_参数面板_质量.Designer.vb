@@ -22,8 +22,8 @@ Partial Class Form_v6_参数面板_质量
     '不要使用代码编辑器修改它。
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form_v6_参数面板_质量))
+        预制条目菜单 = New LakeUI.ModernContextMenu()
         ModernPanel1 = New LakeUI.ModernPanel()
         ModernTextBox6 = New LakeUI.ModernTextBox()
         JustEmptyControl8 = New LakeUI.JustEmptyControl()
@@ -54,14 +54,32 @@ Partial Class Form_v6_参数面板_质量
         MCB_全局质量控制方式 = New LakeUI.ModernComboBox()
         HtmlColorLabel2 = New LakeUI.HtmlColorLabel()
         HtmlColorLabel1 = New LakeUI.HtmlColorLabel()
-        预制条目菜单 = New LakeUI.ModernContextMenu()
-        components.Add(预制条目菜单)
         ModernPanel1.SuspendLayout()
         Panel3.SuspendLayout()
         Panel1.SuspendLayout()
         Panel4.SuspendLayout()
         Panel2.SuspendLayout()
         SuspendLayout()
+        ' 
+        ' 预制条目菜单
+        ' 
+        预制条目菜单.BackdropBlurPasses = 1
+        预制条目菜单.BackdropBlurRadius = 10
+        预制条目菜单.BackdropMode = LakeUI.ModernContextMenu.BackdropModeEnum.Auto
+        预制条目菜单.BackdropNoiseOpacity = CByte(0)
+        预制条目菜单.BorderColor = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
+        预制条目菜单.HoverAnimationFPS = 0
+        预制条目菜单.HoverBackColor = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        预制条目菜单.HoverRadius = 5
+        预制条目菜单.IconSize = 0
+        预制条目菜单.ItemHeight = 26
+        预制条目菜单.ItemPadding = New Padding(10, 0, 10, 0)
+        预制条目菜单.MenuFont = New Font("Microsoft YaHei UI", 10F)
+        预制条目菜单.MenuPadding = New Padding(10)
+        预制条目菜单.PopupAnimationFPS = 0
+        预制条目菜单.PressedBackColor = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
+        预制条目菜单.SeparatorColor = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
+        预制条目菜单.SeparatorHeight = 20
         ' 
         ' ModernPanel1
         ' 
@@ -99,6 +117,7 @@ Partial Class Form_v6_参数面板_质量
         ModernTextBox6.MultiLine = True
         ModernTextBox6.Name = "ModernTextBox6"
         ModernTextBox6.Padding = New Padding(13, 10, 13, 10)
+        ModernTextBox6.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernTextBox6.Size = New Size(807, 273)
         ModernTextBox6.TabIndex = 17
         ModernTextBox6.WaterText = "如果要写滤镜，请用滤镜排序功能，现在强制使用滤镜图，单独写必报错"
@@ -195,6 +214,7 @@ Partial Class Form_v6_参数面板_质量
         MTB_缓冲区.Margin = New Padding(2)
         MTB_缓冲区.Name = "MTB_缓冲区"
         MTB_缓冲区.Padding = New Padding(10, 0, 10, 0)
+        MTB_缓冲区.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MTB_缓冲区.Size = New Size(125, 32)
         MTB_缓冲区.TabIndex = 19
         MTB_缓冲区.WaterText = "-bufsize"
@@ -220,6 +240,7 @@ Partial Class Form_v6_参数面板_质量
         MTB_最高比特率.Margin = New Padding(2)
         MTB_最高比特率.Name = "MTB_最高比特率"
         MTB_最高比特率.Padding = New Padding(10, 0, 10, 0)
+        MTB_最高比特率.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MTB_最高比特率.Size = New Size(125, 32)
         MTB_最高比特率.TabIndex = 17
         MTB_最高比特率.WaterText = "-maxrate"
@@ -245,6 +266,7 @@ Partial Class Form_v6_参数面板_质量
         MTB_最低比特率.Margin = New Padding(2)
         MTB_最低比特率.Name = "MTB_最低比特率"
         MTB_最低比特率.Padding = New Padding(10, 0, 10, 0)
+        MTB_最低比特率.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MTB_最低比特率.Size = New Size(125, 32)
         MTB_最低比特率.TabIndex = 15
         MTB_最低比特率.WaterText = "-minrate"
@@ -270,6 +292,7 @@ Partial Class Form_v6_参数面板_质量
         MTB_基础比特率.Margin = New Padding(2)
         MTB_基础比特率.Name = "MTB_基础比特率"
         MTB_基础比特率.Padding = New Padding(10, 0, 10, 0)
+        MTB_基础比特率.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MTB_基础比特率.Size = New Size(125, 32)
         MTB_基础比特率.TabIndex = 13
         MTB_基础比特率.WaterText = "-b:v"
@@ -392,6 +415,7 @@ Partial Class Form_v6_参数面板_质量
         MTB_质量值.Margin = New Padding(2)
         MTB_质量值.Name = "MTB_质量值"
         MTB_质量值.Padding = New Padding(10, 0, 10, 0)
+        MTB_质量值.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MTB_质量值.Size = New Size(100, 32)
         MTB_质量值.TabIndex = 12
         MTB_质量值.WaterText = "质量值"
@@ -503,24 +527,6 @@ Partial Class Form_v6_参数面板_质量
         HtmlColorLabel1.Size = New Size(807, 30)
         HtmlColorLabel1.TabIndex = 5
         HtmlColorLabel1.Text = "<span style=""font-size:13; color:Silver"">全局质量控制</span>   <span style=""font-size:10pt; color:Goldenrod"">常规压制仅需在此设置全局质量即可满足需求</span>"
-        ' 
-        ' 预制条目菜单
-        ' 
-        预制条目菜单.BackColor1 = Color.FromArgb(CByte(36), CByte(36), CByte(36))
-        预制条目菜单.BorderColor = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
-        预制条目菜单.BorderSize = 2
-        预制条目菜单.DescriptionFont = New Font("Microsoft YaHei UI", 9F)
-        预制条目菜单.HoverAnimationFPS = 0
-        预制条目菜单.HoverBackColor = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
-        预制条目菜单.IconSize = 0
-        预制条目菜单.ItemHeight = 35
-        预制条目菜单.ItemPadding = New Padding(10, 0, 10, 0)
-        预制条目菜单.MenuFont = New Font("Microsoft YaHei UI", 10F)
-        预制条目菜单.MenuPadding = New Padding(10)
-        预制条目菜单.PopupAnimationFPS = 0
-        预制条目菜单.PressedBackColor = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
-        预制条目菜单.SeparatorColor = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
-        预制条目菜单.SeparatorHeight = 14
         ' 
         ' Form_v6_参数面板_质量
         ' 

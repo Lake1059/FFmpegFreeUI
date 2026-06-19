@@ -207,7 +207,7 @@ Public Class FormMain_v6
         Dim t1 As String = "<Title>"
         t1 &= $"   |   CPU {MainAppUsageCounter.GetCpuUsagePercent():F1}%"
         t1 &= $"   |   RAM {MainAppUsageCounter.GetActivePrivateWorkingSetBytes() / 1024 / 1024:F0}M / {MainAppUsageCounter.GetCommitSizeBytes() / 1024 / 1024:F0}M"
-        t1 &= $"   |   GPU {MainAppUsageCounter.GetGpu3DUsagePercent():F1}% {MainAppUsageCounter.GetGpuDedicatedMemoryBytes() / 1024 / 1024:F0}M + {MainAppUsageCounter.GetGpuSharedMemoryBytes() / 1024 / 1024:F0}M"
+        t1 &= $"   |   GPU {MainAppUsageCounter.GetGpuUsagePercent():F1}% {MainAppUsageCounter.GetGpuDedicatedMemoryBytes() / 1024 / 1024:F0}M + {MainAppUsageCounter.GetGpuSharedMemoryBytes() / 1024 / 1024:F0}M"
         Me.ThisIsYourWindow1.TitleTextPrivateProtocol = t1
     End Sub
 End Class

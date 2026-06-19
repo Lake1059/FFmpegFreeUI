@@ -21,18 +21,23 @@ Public Class Form_v6_参数面板_附件
 
     Public Sub 设置数据(items As IEnumerable(Of 预设数据_v6.附件单片结构))
         UltraDetailListView1.Items.Clear()
-        If items Is Nothing Then Exit Sub
+        If items Is Nothing Then
+            校准列表列宽()
+            Exit Sub
+        End If
         For Each item In items
             If item Is Nothing OrElse item.类型 = 预设数据_v6.附件单片结构.附件类型.未选择 Then Continue For
-            添加列表项(item.类型, If(item.文件路径, ""))
+            添加列表项(item.类型, If(item.文件路径, ""), False)
         Next
+        校准列表列宽()
     End Sub
 
-    Private Sub 添加列表项(类型 As 预设数据_v6.附件单片结构.附件类型, 文件路径 As String)
+    Private Sub 添加列表项(类型 As 预设数据_v6.附件单片结构.附件类型, 文件路径 As String, Optional 校准列宽 As Boolean = True)
         Dim lv As New UltraDetailListView.ListItem()
         lv.SubItems.Add(New UltraDetailListView.ListSubItem With {.Text = 附件类型显示名(类型)})
         lv.SubItems.Add(New UltraDetailListView.ListSubItem With {.Text = 文件路径})
         UltraDetailListView1.Items.Add(lv)
+        If 校准列宽 Then 校准列表列宽()
     End Sub
 
     Private Sub 添加附件(displayText As String)
@@ -95,12 +100,14 @@ Public Class Form_v6_参数面板_附件
         For Each item In UltraDetailListView1.SelectedItems.ToArray()
             UltraDetailListView1.Items.Remove(item)
         Next
+        校准列表列宽()
         通知参数面板刷新()
     End Sub
 
     Private Sub 清空全部()
         If UltraDetailListView1.Items.Count = 0 Then Exit Sub
         UltraDetailListView1.Items.Clear()
+        校准列表列宽()
         通知参数面板刷新()
     End Sub
 
@@ -156,6 +163,46 @@ Public Class Form_v6_参数面板_附件
     Private Sub UltraDetailListView1_ItemOrderChanged(sender As Object, e As EventArgs) Handles UltraDetailListView1.ItemOrderChanged
         通知参数面板刷新()
     End Sub
+
+    Private Sub Form_v6_参数面板_附件_SizeChanged(sender As Object, e As EventArgs) Handles Me.SizeChanged
+        校准列表列宽()
+    End Sub
+
+    Private Sub UltraDetailListView1_SizeChanged(sender As Object, e As EventArgs) Handles UltraDetailListView1.SizeChanged
+        校准列表列宽()
+    End Sub
+
+    Private Sub 校准列表列宽()
+        If UltraDetailListView1 Is Nothing OrElse UltraDetailListView1.Columns.Count < 2 Then Exit Sub
+
+        Dim 可用宽度 = UltraDetailListView1.ClientSize.Width
+        If 可用宽度 <= 0 Then 可用宽度 = UltraDetailListView1.Width
+        If 可用宽度 <= 0 Then Exit Sub
+
+        Dim dpi = DeviceDpi / 96.0
+        可用宽度 = Math.Max(0, 可用宽度 - UltraDetailListView1.Padding.Left - UltraDetailListView1.Padding.Right - CInt(24 * dpi))
+
+        Dim 类型列宽 = 限制列宽(测量列宽(0, CInt(42 * dpi)), CInt(110 * dpi), Math.Min(CInt(210 * dpi), CInt(可用宽度 * 0.32)))
+        Dim 文件路径列宽 = Math.Max(CInt(260 * dpi), 可用宽度 - 类型列宽)
+
+        UltraDetailListView1.Columns(0).Width = 类型列宽
+        UltraDetailListView1.Columns(1).Width = 文件路径列宽
+    End Sub
+
+    Private Function 测量列宽(columnIndex As Integer, horizontalPadding As Integer) As Integer
+        Dim maxWidth = TextRenderer.MeasureText(If(UltraDetailListView1.Columns(columnIndex).Text, ""), UltraDetailListView1.Font).Width + horizontalPadding
+        For Each item In UltraDetailListView1.Items
+            If item.SubItems.Count <= columnIndex Then Continue For
+            Dim width = TextRenderer.MeasureText(If(item.SubItems(columnIndex).Text, ""), UltraDetailListView1.Font).Width + horizontalPadding
+            If width > maxWidth Then maxWidth = width
+        Next
+        Return maxWidth
+    End Function
+
+    Private Function 限制列宽(value As Integer, minWidth As Integer, maxWidth As Integer) As Integer
+        If maxWidth < minWidth Then maxWidth = minWidth
+        Return Math.Min(maxWidth, Math.Max(minWidth, value))
+    End Function
 
     Private Sub 通知参数面板刷新()
         If 所属参数面板对象 Is Nothing OrElse 所属参数面板对象.抑制自动刷新 Then Exit Sub
