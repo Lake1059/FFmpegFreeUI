@@ -165,19 +165,9 @@ Public Class Form_v6_参数面板_视频编码器
 
         Dim 参数 As New List(Of String)
         If 编码器.命令行编码器名 <> "" Then 参数.Add("-c:v " & 编码器.命令行编码器名)
-        For Each 单项参数 In 编码器.默认附加参数列表
-            Dim 文本 = 格式化命令行参数(单项参数)
-            If 文本 <> "" Then 参数.Add(文本)
-        Next
 
         If 参数.Count = 0 Then Return ""
         Return "命令：" & String.Join(" ", 参数)
-    End Function
-
-    Private Function 格式化命令行参数(参数 As 视频编码器数据库_v6.编码器特殊参数数据) As String
-        If 参数 Is Nothing OrElse 参数.参数名 = "" Then Return ""
-        If 参数.默认值 = "" Then Return 参数.参数名
-        Return 参数.参数名 & " " & 参数.默认值
     End Function
 
     Private Function 格式化参数列表数据(标题 As String, 参数数据 As 视频编码器数据库_v6.编码器参数列表数据) As String
@@ -211,16 +201,7 @@ Public Class Form_v6_参数面板_视频编码器
         Dim 行 As New List(Of String) From {标题 & "："}
         For Each 参数 In 参数列表
             If 参数 Is Nothing OrElse 参数.参数名 = "" Then Continue For
-
-            Dim 说明 As New List(Of String)
-            Dim 值范围说明 = 补全通用值说明(参数.值范围说明)
-            If 值范围说明 <> "" Then 说明.Add(值范围说明)
-            If 参数.默认值 <> "" Then 说明.Add("默认 " & 参数.默认值)
-            If 参数.是否必要 Then 说明.Add("必要")
-            If 参数.说明 <> "" Then 说明.Add(参数.说明)
-            If 参数.值列表.Count > 0 Then 说明.Add("可选 " & String.Join("、", 参数.值列表))
-
-            行.Add("  " & 参数.参数名 & If(说明.Count > 0, "：" & String.Join("；", 说明), ""))
+            行.Add("  " & 参数.参数名 & If(参数.描述 <> "", " " & 参数.描述, ""))
         Next
 
         If 行.Count = 1 Then Return ""

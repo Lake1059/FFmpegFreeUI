@@ -210,7 +210,7 @@ Public Class 视频编码器数据库_v6
         加入编码器(基础("libvvenc", "VVC/H.266 软件编码器。", "H.266/VVC", 预设数据_v6.视频编码器类型.视频,
             编码预设:=参数("-preset", "slower 最慢 ~ faster 最快", "faster", "slower", "slow", "medium", "fast", "faster"),
             像素格式:=像素("yuv420p10le"),
-            特殊参数:=特殊列表(特殊("-qp", "-1 自动；0 ~ 63；数值越低越清晰", "恒定量化", False), 特殊("-qpa", "0/1", "感知自适应量化，默认开启", False), 特殊("-vvenc-params", "key=value:key=value", "vvenc 原生参数", False)),
+            特殊参数:=特殊列表(特殊("-qp 恒定量化，-1 自动，0~63，数值越低越清晰"), 特殊("-qpa 感知自适应量化，默认开启，0/1"), 特殊("-vvenc-params vvenc 原生参数，key=value:key=value")),
             支持二次编码:=True))
 
         加入编码器(基础("libaom-av1", "AOM AV1 软件编码器，压缩能力强但速度较慢。", "AV1", 预设数据_v6.视频编码器类型.视频,
@@ -218,7 +218,7 @@ Public Class 视频编码器数据库_v6
             配置文件:=参数("-profile:v", "0 main / 1 high / 2 professional", "", "0", "1", "2"),
             场景优化:=参数("-tune", "psnr 或 ssim", "", "psnr", "ssim"),
             像素格式:=像素("yuv420p yuv422p yuv444p gbrp yuv420p10le yuv422p10le yuv444p10le yuv420p12le yuv422p12le yuv444p12le gbrp10le gbrp12le gray gray10le gray12le"),
-            特殊参数:=特殊列表(特殊("-crf", "-1 自动；0 ~ 63；数值越低越清晰", "恒定质量", False), 特殊("-usage", "good/realtime/allintra", "good=质量优先，realtime=实时速度，allintra=全帧内", False, "good", "realtime", "allintra"), 特殊("-lag-in-frames", "-1 自动；0 起；越大可用前瞻越多但延迟更高", "alt-ref 前瞻帧数", False), 特殊("-aq-mode", "-1 自动；0=关闭，1=方差 AQ，2=复杂度 AQ，3=循环刷新 AQ，4=保留/随版本变化", "自适应量化模式", False), 特殊("-arnr-strength", "-1 自动；0 ~ 6；越高降噪越强", "alt-ref 降噪强度", False), 特殊("-aom-params", "key=value:key=value", "libaom 原生参数", False)),
+            特殊参数:=特殊列表(特殊("-crf 恒定质量，-1 自动，0~63，数值越低越清晰"), 特殊("-usage good=质量优先，realtime=实时速度，allintra=全帧内，good/realtime/allintra"), 特殊("-lag-in-frames alt-ref 前瞻帧数，-1 自动，0 起，越大可用前瞻越多但延迟更高"), 特殊("-aq-mode 自适应量化模式，-1 自动，0=关闭，1=方差 AQ，2=复杂度 AQ，3=循环刷新 AQ，4=保留/随版本变化"), 特殊("-arnr-strength alt-ref 降噪强度，-1 自动，0~6，越高降噪越强"), 特殊("-aom-params libaom 原生参数，key=value:key=value")),
             无损模式说明:="支持：使用 -crf 0 -b:v 0；同时避免有损像素格式转换。",
             支持二次编码:=True))
 
@@ -226,14 +226,14 @@ Public Class 视频编码器数据库_v6
             编码预设:=参数("-preset", "-2 自动；0 最慢 ~ 13 最快", "6", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13"),
             配置文件:=参数("-profile:v", "main/high/professional", "", "main", "high", "professional"),
             像素格式:=像素("yuv420p yuv420p10le"),
-            特殊参数:=特殊列表(特殊("-crf", "0 ~ 63；数值越低越清晰", "恒定质量", False), 特殊("-qp", "0 ~ 63；数值越低越清晰", "初始量化值/CQP", False), 特殊("-svtav1-params", "key=value:key=value", "SVT-AV1 原生参数", False)),
+            特殊参数:=特殊列表(特殊("-crf 恒定质量，0~63，数值越低越清晰"), 特殊("-qp 初始量化值/CQP，0~63，数值越低越清晰"), 特殊("-svtav1-params SVT-AV1 原生参数，key=value:key=value")),
             无损模式说明:="不支持"))
 
         加入编码器(基础("av1_nvenc", "NVIDIA NVENC AV1 硬件编码器。", "AV1", 预设数据_v6.视频编码器类型.视频,
             编码预设:=参数("-preset", "p7 最慢最好 ~ p1 最快", "p7", "p7", "p6", "p5", "p4", "p3", "p2", "p1"),
             场景优化:=参数("-tune", "hq/uhq/ll/ull/lossless", "", "hq", "uhq", "ll", "ull", "lossless"),
             像素格式:=像素("yuv420p nv12 p010le yuv444p p016le nv16 p210le p216le yuv444p10msble yuv444p16le bgr0 bgra rgb0 rgba x2rgb10le x2bgr10le gbrp gbrp10msble gbrp16le cuda d3d11"),
-            特殊参数:=合并特殊列表(特殊列表(特殊("-gpu", "-2=list 列出设备；-1=any 自动选择；0 起为 GPU 编号", "NVIDIA GPU 索引", False)), NVENC质量参数("0 自动；1 ~ 63；数值越低越清晰", "-1 自动；0 ~ 255；数值越低越清晰")),
+            特殊参数:=合并特殊列表(特殊列表(特殊("-gpu NVIDIA GPU 索引，-2=list 列出设备，-1=any 自动选择，0 起为 GPU 编号")), NVENC质量参数("0 自动；1 ~ 63；数值越低越清晰", "-1 自动；0 ~ 255；数值越低越清晰")),
             视觉体积均衡点:="基于 RTX50 系列，常规模式 cq = 36，UHQ 模式 cq = 38，场景极简例如动漫极限 cq = 42",
             无损模式说明:="支持：使用 -tune lossless；也可尝试 -rc constqp -qp 0，实际可用性取决于 NVENC 硬件和驱动。"))
 
@@ -241,7 +241,7 @@ Public Class 视频编码器数据库_v6
             编码预设:=参数("-preset", "veryslow 最慢 ~ veryfast 最快", "veryslow", "veryslow", "slower", "slow", "medium", "fast", "faster", "veryfast"),
             配置文件:=参数("-profile:v", "main", "", "main"),
             像素格式:=像素("nv12 p010le qsv"),
-            特殊参数:=合并特殊列表(QSV质量参数(), 特殊列表(特殊("-qsv_params", "key=value:key=value", "QSV 原生参数", False)))))
+            特殊参数:=合并特殊列表(QSV质量参数(), 特殊列表(特殊("-qsv_params QSV 原生参数，key=value:key=value")))))
 
         加入编码器(基础("av1_amf", "AMD AMF AV1 硬件编码器。", "AV1", 预设数据_v6.视频编码器类型.视频,
             编码预设:=参数("-quality", "high_quality 最好 ~ speed 最快", "high_quality", "high_quality", "quality", "balanced", "speed"),
@@ -258,7 +258,7 @@ Public Class 视频编码器数据库_v6
         加入编码器(基础("librav1e", "rav1e AV1 软件编码器。", "AV1", 预设数据_v6.视频编码器类型.视频,
             编码预设:=参数("-speed", "0 最慢 ~ 10 最快", "", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"),
             像素格式:=像素("yuv420p yuvj420p yuv420p10le yuv420p12le yuv422p yuvj422p yuv422p10le yuv422p12le yuv444p yuvj444p yuv444p10le yuv444p12le"),
-            特殊参数:=特殊列表(特殊("-qp", "-1 自动；0 ~ 255；数值越低越清晰", "恒定量化值", False), 特殊("-rav1e-params", "key=value:key=value", "rav1e 原生参数", False)),
+            特殊参数:=特殊列表(特殊("-qp 恒定量化值，-1 自动，0~255，数值越低越清晰"), 特殊("-rav1e-params rav1e 原生参数，key=value:key=value")),
             无损模式说明:="支持：使用 -qp 0；同时避免有损像素格式转换。"))
 
         加入编码器(基础("av1_vulkan", "Vulkan AV1 硬件编码器。", "AV1", 预设数据_v6.视频编码器类型.视频,
@@ -266,7 +266,7 @@ Public Class 视频编码器数据库_v6
             配置文件:=参数("-profile:v", "main/high/professional", "", "main", "high", "professional"),
             场景优化:=参数("-tune", "default/hq/ll/ull/lossless", "", "default", "hq", "ll", "ull", "lossless"),
             像素格式:=像素("vulkan"),
-            特殊参数:=合并特殊列表(Vulkan质量参数("-1 自动；0 ~ 255；数值越低越清晰"), 特殊列表(特殊("-usage", "transcode/stream/record/conference", "用途标志；transcode=转码，stream=直播流，record=录制，conference=会议", False, "transcode", "stream", "record", "conference"))),
+            特殊参数:=合并特殊列表(Vulkan质量参数("-1 自动；0 ~ 255；数值越低越清晰"), 特殊列表(特殊("-usage 用途标志，transcode=转码，stream=直播流，record=录制，conference=会议，transcode/stream/record/conference"))),
             无损模式说明:="支持：使用 -tune lossless；建议配合 -rc_mode cqp -qp 0，实际可用性取决于 Vulkan 驱动。"))
 
         加入编码器(基础("libx265", "x265 HEVC 软件编码器。", "H.265/HEVC", 预设数据_v6.视频编码器类型.视频,
@@ -274,7 +274,7 @@ Public Class 视频编码器数据库_v6
             配置文件:=参数("-profile:v", "main/main10/main12/mainstillpicture", "", "main", "main10", "main12", "mainstillpicture"),
             场景优化:=参数("-tune", "psnr/ssim/grain/fastdecode/zerolatency", "", "psnr", "ssim", "grain", "fastdecode", "zerolatency", "animation", "stillimage"),
             像素格式:=像素("yuv420p yuvj420p yuv422p yuvj422p yuv444p yuvj444p gbrp yuv420p10le yuv422p10le yuv444p10le gbrp10le yuv420p12le yuv422p12le yuv444p12le gbrp12le gray gray10le gray12le yuva420p yuva420p10le"),
-            特殊参数:=特殊列表(特殊("-crf", "-1 自动；常用 0 ~ 51；数值越低越清晰", "恒定质量", False), 特殊("-qp", "-1 自动；0 起；数值越低越清晰", "恒定 QP", False), 特殊("-x265-params", "key=value:key=value", "x265 原生参数", False)),
+            特殊参数:=特殊列表(特殊("-crf 恒定质量，-1 自动，常用 0~51，数值越低越清晰"), 特殊("-qp 恒定 QP，-1 自动，0 起，数值越低越清晰"), 特殊("-x265-params x265 原生参数，key=value:key=value")),
             无损模式说明:="支持：使用 -x265-params lossless=1。",
             支持二次编码:=True))
 
@@ -283,7 +283,7 @@ Public Class 视频编码器数据库_v6
             配置文件:=参数("-profile:v", "main/main10/rext", "", "main", "main10", "rext"),
             场景优化:=参数("-tune", "hq/uhq/ll/ull/lossless", "", "hq", "uhq", "ll", "ull", "lossless"),
             像素格式:=像素("yuv420p nv12 p010le yuv444p p016le nv16 p210le p216le yuv444p10msble yuv444p16le bgr0 bgra rgb0 rgba x2rgb10le x2bgr10le gbrp gbrp10msble gbrp16le cuda d3d11"),
-            特殊参数:=合并特殊列表(特殊列表(特殊("-gpu", "-2=list 列出设备；-1=any 自动选择；0 起为 GPU 编号", "NVIDIA GPU 索引", False), 特殊("-tier", "main/high", "HEVC tier；main=主层级，high=高层级", False, "main", "high")), NVENC质量参数("0 自动；1 ~ 51；数值越低越清晰", "-1 自动；0 ~ 51；数值越低越清晰")),
+            特殊参数:=合并特殊列表(特殊列表(特殊("-gpu NVIDIA GPU 索引，-2=list 列出设备，-1=any 自动选择，0 起为 GPU 编号"), 特殊("-tier HEVC tier，main=主层级，high=高层级，main/high")), NVENC质量参数("0 自动；1 ~ 51；数值越低越清晰", "-1 自动；0 ~ 51；数值越低越清晰")),
             视觉体积均衡点:="基于 RTX50 系列，常规模式 cq = 26，UHQ 模式 cq = 28",
             无损模式说明:="支持：使用 -tune lossless，或 -preset lossless/losslesshp；也可尝试 -rc constqp -qp 0。"))
 
@@ -291,14 +291,14 @@ Public Class 视频编码器数据库_v6
             编码预设:=参数("-preset", "veryslow 最慢 ~ veryfast 最快", "veryslow", "veryslow", "slower", "slow", "medium", "fast", "faster", "veryfast"),
             配置文件:=参数("-profile:v", "main/main10/mainsp/rext/scc", "", "main", "main10", "mainsp", "rext", "scc"),
             像素格式:=像素("nv12 p010le p012le yuyv422 y210le qsv bgra x2rgb10le vuyx xv30le"),
-            特殊参数:=合并特殊列表(QSV质量参数(), 特殊列表(特殊("-tier", "main/high", "HEVC tier", False, "main", "high")))))
+            特殊参数:=合并特殊列表(QSV质量参数(), 特殊列表(特殊("-tier HEVC tier，main/high")))))
 
         加入编码器(基础("hevc_amf", "AMD AMF HEVC 硬件编码器。", "H.265/HEVC", 预设数据_v6.视频编码器类型.视频,
             编码预设:=参数("-quality", "quality 最好 ~ speed 最快", "quality", "quality", "balanced", "speed"),
             配置文件:=参数("-profile:v", "main/main10", "", "main", "main10"),
             场景优化:=参数("-usage", "transcoding/low latency/high quality", "", "transcoding", "ultralowlatency", "lowlatency", "webcam", "high_quality", "lowlatency_high_quality"),
             像素格式:=像素("nv12 yuv420p d3d11 dxva2_vld p010le amf bgr0 rgb0 bgra argb rgba x2bgr10le rgbaf16le"),
-            特殊参数:=合并特殊列表(AMF质量参数("-1 自动；0 ~ 51；数值越低越清晰", False), 特殊列表(特殊("-profile_tier", "main/high", "HEVC tier；main=主层级，high=高层级", False, "main", "high"))),
+            特殊参数:=合并特殊列表(AMF质量参数("-1 自动；0 ~ 51；数值越低越清晰", False), 特殊列表(特殊("-profile_tier HEVC tier，main=主层级，high=高层级，main/high"))),
             无损模式说明:="不支持；最低量化可写 -rc cqp -qp_i 0 -qp_p 0。"))
 
         加入编码器(基础("hevc_d3d12va", "D3D12VA HEVC 硬件编码器。", "H.265/HEVC", 预设数据_v6.视频编码器类型.视频,
@@ -316,7 +316,7 @@ Public Class 视频编码器数据库_v6
 
         加入编码器(基础("libkvazaar", "Kvazaar HEVC 软件编码器。", "H.265/HEVC", 预设数据_v6.视频编码器类型.视频,
             像素格式:=像素("yuv420p"),
-            特殊参数:=特殊列表(特殊("-kvazaar-params", "key=value,key=value", "Kvazaar 原生参数", False)),
+            特殊参数:=特殊列表(特殊("-kvazaar-params Kvazaar 原生参数，key=value,key=value")),
             无损模式说明:="支持：使用 -kvazaar-params lossless=1。"))
 
         加入编码器(基础("libsvt_hevc", "SVT-HEVC 软件编码器。", "H.265/HEVC", 预设数据_v6.视频编码器类型.视频,
@@ -324,14 +324,14 @@ Public Class 视频编码器数据库_v6
             配置文件:=参数("-profile:v", "1 ~ 4", "", "1", "2", "3", "4"),
             场景优化:=参数("-tune", "sq/oq/vmaf", "", "sq", "oq", "vmaf"),
             像素格式:=像素("yuv420p yuv420p10le yuv422p yuv422p10le yuv444p yuv444p10le"),
-            特殊参数:=特殊列表(特殊("-qp", "0 ~ 51；数值越低越清晰", "QP 值", False), 特殊("-rc", "cqp/vbr", "码率控制；cqp=固定 QP，vbr=可变码率", False, "cqp", "vbr"), 特殊("-la_depth", "-1 自动；0 ~ 256；越大前瞻越多但延迟/内存越高", "前瞻距离", False), 特殊("-thread_count", "0 自动；1 起为固定线程数", "SVT-HEVC 线程数", False))))
+            特殊参数:=特殊列表(特殊("-qp QP 值，0~51，数值越低越清晰"), 特殊("-rc 码率控制，cqp=固定 QP，vbr=可变码率，cqp/vbr"), 特殊("-la_depth 前瞻距离，-1 自动，0~256，越大前瞻越多但延迟/内存越高"), 特殊("-thread_count SVT-HEVC 线程数，0 自动，1 起为固定线程数"))))
 
         加入编码器(基础("libx264", "x264 H.264 软件编码器。", "H.264/AVC", 预设数据_v6.视频编码器类型.视频,
             编码预设:=参数("-preset", "veryslow 最慢 ~ ultrafast 最快", "slower", "veryslow", "slower", "slow", "medium", "fast", "faster", "veryfast", "superfast", "ultrafast"),
             配置文件:=参数("-profile:v", "baseline/main/high/high10/high422/high444", "", "baseline", "main", "high", "high10", "high422", "high444"),
             场景优化:=参数("-tune", "film/animation/grain/stillimage/psnr/ssim/fastdecode/zerolatency", "", "film", "animation", "grain", "stillimage", "psnr", "ssim", "fastdecode", "zerolatency"),
             像素格式:=像素("yuv420p yuvj420p yuv422p yuvj422p yuv444p yuvj444p nv12 nv16 nv21 yuv420p10le yuv422p10le yuv444p10le nv20le gray gray10le"),
-            特殊参数:=特殊列表(特殊("-crf", "-1 自动；0 ~ 51 常用；数值越低越清晰", "恒定质量", False), 特殊("-crf_max", "-1 自动；0 ~ 51 常用；数值越低代表允许的最低质量越高", "CRF+VBV 时限制最低质量", False), 特殊("-qp", "-1 自动；0 起；数值越低越清晰", "恒定 QP", False), 特殊("-aq-mode", "-1 自动；0=关闭，1=方差 AQ，2=自动方差 AQ，3=偏暗场景自动方差 AQ", "自适应量化模式", False), 特殊("-aq-strength", "-1 自动；0 起；越高 AQ 越强", "AQ 强度", False), 特殊("-x264-params", "key=value:key=value", "x264 原生参数", False)),
+            特殊参数:=特殊列表(特殊("-crf 恒定质量，-1 自动，0~51 常用，数值越低越清晰"), 特殊("-crf_max CRF+VBV 时限制最低质量，-1 自动，0~51 常用，数值越低代表允许的最低质量越高"), 特殊("-qp 恒定 QP，-1 自动，0 起，数值越低越清晰"), 特殊("-aq-mode 自适应量化模式，-1 自动，0=关闭，1=方差 AQ，2=自动方差 AQ，3=偏暗场景自动方差 AQ"), 特殊("-aq-strength AQ 强度，-1 自动，0 起，越高 AQ 越强"), 特殊("-x264-params x264 原生参数，key=value:key=value")),
             无损模式说明:="支持：使用 -qp 0；也可使用 -crf 0。",
             支持二次编码:=True))
 
@@ -340,21 +340,21 @@ Public Class 视频编码器数据库_v6
             配置文件:=参数("-profile:v", "high/high444", "", "high", "high444"),
             场景优化:=参数("-tune", "film/animation/grain/stillimage/psnr/ssim/fastdecode/zerolatency", "", "film", "animation", "grain", "stillimage", "psnr", "ssim", "fastdecode", "zerolatency"),
             像素格式:=像素("bgr0 bgr24 rgb24"),
-            特殊参数:=特殊列表(特殊("-crf", "-1 自动；0 ~ 51 常用；数值越低越清晰", "恒定质量", False), 特殊("-crf_max", "-1 自动；0 ~ 51 常用；数值越低代表允许的最低质量越高", "CRF+VBV 时限制最低质量", False), 特殊("-qp", "-1 自动；0 起；数值越低越清晰", "恒定 QP", False), 特殊("-aq-mode", "-1 自动；0=关闭，1=方差 AQ，2=自动方差 AQ，3=偏暗场景自动方差 AQ", "自适应量化模式", False), 特殊("-aq-strength", "-1 自动；0 起；越高 AQ 越强", "AQ 强度", False), 特殊("-x264-params", "key=value:key=value", "x264 原生参数", False)),
+            特殊参数:=特殊列表(特殊("-crf 恒定质量，-1 自动，0~51 常用，数值越低越清晰"), 特殊("-crf_max CRF+VBV 时限制最低质量，-1 自动，0~51 常用，数值越低代表允许的最低质量越高"), 特殊("-qp 恒定 QP，-1 自动，0 起，数值越低越清晰"), 特殊("-aq-mode 自适应量化模式，-1 自动，0=关闭，1=方差 AQ，2=自动方差 AQ，3=偏暗场景自动方差 AQ"), 特殊("-aq-strength AQ 强度，-1 自动，0 起，越高 AQ 越强"), 特殊("-x264-params x264 原生参数，key=value:key=value")),
             无损模式说明:="支持：使用 -qp 0；也可使用 -crf 0。",
             支持二次编码:=True))
 
         加入编码器(基础("libopenh264", "OpenH264 编码器，适合基础兼容需求。", "H.264/AVC", 预设数据_v6.视频编码器类型.视频,
             配置文件:=参数("-profile:v", "constrained_baseline/main/high", "", "constrained_baseline", "main", "high"),
             像素格式:=像素("yuv420p yuvj420p"),
-            特殊参数:=特殊列表(特殊("-rc_mode", "quality/bitrate/buffer/timestamp", "码率控制；quality=质量优先，bitrate=目标码率，buffer=缓冲约束，timestamp=按时间戳调节", False, "quality", "bitrate", "buffer", "timestamp"))))
+            特殊参数:=特殊列表(特殊("-rc_mode 码率控制，quality=质量优先，bitrate=目标码率，buffer=缓冲约束，timestamp=按时间戳调节，quality/bitrate/buffer/timestamp"))))
 
         加入编码器(基础("h264_nvenc", "NVIDIA NVENC H.264 硬件编码器。", "H.264/AVC", 预设数据_v6.视频编码器类型.视频,
             编码预设:=参数("-preset", "p7 最慢最好 ~ p1 最快；lossless/losslesshp 为无损模式", "p7", "p7", "p6", "p5", "p4", "p3", "p2", "p1", "lossless", "losslesshp"),
             配置文件:=参数("-profile:v", "baseline/main/high/high10/high422/high444p", "", "baseline", "main", "high", "high10", "high422", "high444p"),
             场景优化:=参数("-tune", "hq/ll/ull/lossless", "", "hq", "ll", "ull", "lossless"),
             像素格式:=像素("yuv420p nv12 p010le yuv444p p016le nv16 p210le p216le yuv444p10msble yuv444p16le bgr0 bgra rgb0 rgba x2rgb10le x2bgr10le gbrp gbrp10msble gbrp16le cuda d3d11"),
-            特殊参数:=合并特殊列表(特殊列表(特殊("-gpu", "-2=list 列出设备；-1=any 自动选择；0 起为 GPU 编号", "NVIDIA GPU 索引", False)), NVENC质量参数("0 自动；1 ~ 51；数值越低越清晰", "-1 自动；0 ~ 51；数值越低越清晰")),
+            特殊参数:=合并特殊列表(特殊列表(特殊("-gpu NVIDIA GPU 索引，-2=list 列出设备，-1=any 自动选择，0 起为 GPU 编号")), NVENC质量参数("0 自动；1 ~ 51；数值越低越清晰", "-1 自动；0 ~ 51；数值越低越清晰")),
             无损模式说明:="支持：使用 -tune lossless，或 -preset lossless/losslesshp；也可尝试 -rc constqp -qp 0。"))
 
         加入编码器(基础("h264_qsv", "Intel Quick Sync H.264 硬件编码器。", "H.264/AVC", 预设数据_v6.视频编码器类型.视频,
@@ -374,7 +374,7 @@ Public Class 视频编码器数据库_v6
         加入编码器(基础("h264_d3d12va", "D3D12VA H.264 硬件编码器。", "H.264/AVC", 预设数据_v6.视频编码器类型.视频,
             配置文件:=参数("-profile:v", "main/high/high10", "", "main", "high", "high10"),
             像素格式:=像素("d3d12"),
-            特殊参数:=合并特殊列表(D3D12VA质量参数("0 ~ 52；数值越低越清晰"), 特殊列表(特殊("-coder", "cabac/cavlc", "熵编码器；cabac=压缩更好但更耗解码，cavlc=兼容/低复杂度", False, "cabac", "cavlc")))))
+            特殊参数:=合并特殊列表(D3D12VA质量参数("0 ~ 52；数值越低越清晰"), 特殊列表(特殊("-coder 熵编码器，cabac=压缩更好但更耗解码，cavlc=兼容/低复杂度，cabac/cavlc")))))
 
         加入编码器(基础("h264_vulkan", "Vulkan H.264 硬件编码器。", "H.264/AVC", 预设数据_v6.视频编码器类型.视频,
             编码预设:=参数("-quality", "5 最慢 ~ 0 最快", "", "5", "4", "3", "2", "1", "0"),
@@ -387,7 +387,7 @@ Public Class 视频编码器数据库_v6
         加入编码器(基础("prores_ks", "Apple ProRes 编码器，剪辑中间格式。", "ProRes", 预设数据_v6.视频编码器类型.视频,
             配置文件:=参数("-profile:v", "proxy/lt/standard/hq/4444/4444xq", "", "auto", "proxy", "lt", "standard", "hq", "4444", "4444xq"),
             像素格式:=像素("yuv422p10le yuv444p10le yuva444p10le"),
-            特殊参数:=特殊列表(特殊("-quant_mat", "auto/default/proxy/lt/standard/hq", "ProRes 量化矩阵", False, "auto", "default", "proxy", "lt", "standard", "hq"))))
+            特殊参数:=特殊列表(特殊("-quant_mat ProRes 量化矩阵，auto/default/proxy/lt/standard/hq"))))
 
         加入编码器(基础("prores_aw", "Apple ProRes 编码器，功能较简。", "ProRes", 预设数据_v6.视频编码器类型.视频,
             像素格式:=像素("yuv422p10le yuv444p10le yuva444p10le")))
@@ -396,7 +396,7 @@ Public Class 视频编码器数据库_v6
             编码预设:=参数("-cpu-used", "-8 最慢 ~ 8 最快", "", "0", "1", "2", "3", "4", "5", "6", "7", "8"),
             场景优化:=参数("-tune", "psnr 或 ssim", "", "psnr", "ssim"),
             像素格式:=像素("yuv420p yuva420p yuv422p yuva422p yuv440p yuv444p yuva444p yuv420p10le yuva420p10le yuv422p10le yuva422p10le yuv440p10le yuv444p10le yuva444p10le yuv420p12le yuv422p12le yuv440p12le yuv444p12le yuva444p12le gbrp gbrap gbrp10le gbrap10le gbrp12le gbrap12le"),
-            特殊参数:=特殊列表(特殊("-crf", "-1 自动；0 ~ 63；数值越低越清晰；通常配合 -b:v 0", "恒定质量", False), 特殊("-lossless", "-1 自动；0/1", "VP9 无损模式；1=启用无损", False, "0", "1"), 特殊("-deadline", "best/good/realtime", "编码耗时策略；best=最慢最好，good=均衡，realtime=实时速度", False, "best", "good", "realtime"), 特殊("-lag-in-frames", "-1 自动；0 起；越大前瞻越多但延迟更高", "alt-ref 前瞻帧数", False), 特殊("-auto-alt-ref", "-1 自动；0=关闭，1/2/更多=启用不同 alt-ref 策略，二次编码常用", "alt-ref 帧", False), 特殊("-aq-mode", "-1 自动；0=关闭，1=方差 AQ，2=复杂度 AQ，3=循环刷新 AQ，4=保留/随版本变化", "自适应量化模式", False), 特殊("-arnr-strength", "-1 自动；0 起；越高降噪越强", "alt-ref 降噪强度", False), 特殊("-tune-content", "default/screen", "内容类型；default=常规视频，screen=屏幕内容", False, "default", "screen")),
+            特殊参数:=特殊列表(特殊("-crf 恒定质量，-1 自动，0~63，数值越低越清晰，通常配合 -b:v 0"), 特殊("-lossless VP9 无损模式，1=启用无损，-1 自动，0/1"), 特殊("-deadline 编码耗时策略，best=最慢最好，good=均衡，realtime=实时速度，best/good/realtime"), 特殊("-lag-in-frames alt-ref 前瞻帧数，-1 自动，0 起，越大前瞻越多但延迟更高"), 特殊("-auto-alt-ref alt-ref 帧，-1 自动，0=关闭，1/2/更多=启用不同 alt-ref 策略，二次编码常用"), 特殊("-aq-mode 自适应量化模式，-1 自动，0=关闭，1=方差 AQ，2=复杂度 AQ，3=循环刷新 AQ，4=保留/随版本变化"), 特殊("-arnr-strength alt-ref 降噪强度，-1 自动，0 起，越高降噪越强"), 特殊("-tune-content 内容类型，default=常规视频，screen=屏幕内容，default/screen")),
             无损模式说明:="支持：使用 -lossless 1"))
 
         加入编码器(基础("libsvt_vp9", "SVT-VP9 软件编码器。", "VP9 # VP8", 预设数据_v6.视频编码器类型.视频,
@@ -414,54 +414,54 @@ Public Class 视频编码器数据库_v6
             编码预设:=参数("-cpu-used", "-16 最慢 ~ 16 最快", "", "0", "1", "2", "3", "4", "5", "6", "7", "8"),
             场景优化:=参数("-tune", "psnr 或 ssim", "", "psnr", "ssim"),
             像素格式:=像素("yuv420p yuva420p"),
-            特殊参数:=特殊列表(特殊("-crf", "-1 自动；0 ~ 63；数值越低越清晰；通常配合 -b:v 0", "恒定质量", False), 特殊("-deadline", "best/good/realtime", "编码耗时策略；best=最慢最好，good=均衡，realtime=实时速度", False, "best", "good", "realtime"), 特殊("-lag-in-frames", "-1 自动；0 起；越大前瞻越多但延迟更高", "alt-ref 前瞻帧数", False), 特殊("-auto-alt-ref", "-1 自动；0=关闭，1/2=启用不同 alt-ref 策略，二次编码常用", "alt-ref 帧", False), 特殊("-arnr-strength", "-1 自动；0 起；越高降噪越强", "alt-ref 降噪强度", False)),
+            特殊参数:=特殊列表(特殊("-crf 恒定质量，-1 自动，0~63，数值越低越清晰，通常配合 -b:v 0"), 特殊("-deadline 编码耗时策略，best=最慢最好，good=均衡，realtime=实时速度，best/good/realtime"), 特殊("-lag-in-frames alt-ref 前瞻帧数，-1 自动，0 起，越大前瞻越多但延迟更高"), 特殊("-auto-alt-ref alt-ref 帧，-1 自动，0=关闭，1/2=启用不同 alt-ref 策略，二次编码常用"), 特殊("-arnr-strength alt-ref 降噪强度，-1 自动，0 起，越高降噪越强")),
             无损模式说明:="不支持"))
 
         加入编码器(基础("ffv1 -level 3", "FFv1 level 3，无损存档推荐级别。", "FFv1", 预设数据_v6.视频编码器类型.视频,
             命令行编码器名:="ffv1",
-            默认附加参数:=特殊列表(特殊("-level", "3", "FFv1 level", True, "3")),
+            默认附加参数:=特殊列表(特殊("-level FFv1 level，3，必要")),
             像素格式:=像素("yuv420p yuva420p yuva422p yuv444p yuva444p yuv440p yuv422p yuv411p yuv410p bgr0 bgra yuv420p16le yuv422p16le yuv444p16le yuv444p9le yuv422p9le yuv420p9le yuv420p10le yuv422p10le yuv444p10le yuv420p12le yuv422p12le yuv444p12le yuva444p16le yuva422p16le yuva420p16le gray16le gray gbrp9le gbrp10le gbrp12le gbrp14le gbrp16le rgb48le rgba64le gray10le gray12le gray14le"),
-            特殊参数:=特殊列表(特殊("-coder", "rice/range_def/range_tab", "熵编码器", False, "rice", "range_def", "range_tab"), 特殊("-qtable", "default/8bit/greater8bit", "无损量化表选择", False))))
+            特殊参数:=特殊列表(特殊("-coder 熵编码器，rice/range_def/range_tab"), 特殊("-qtable 无损量化表选择，default/8bit/greater8bit"))))
 
         加入编码器(基础("ffv1 -level 1", "FFv1 level 1，旧版兼容选项。", "FFv1", 预设数据_v6.视频编码器类型.视频,
             命令行编码器名:="ffv1",
-            默认附加参数:=特殊列表(特殊("-level", "1", "FFv1 level", True, "1")),
+            默认附加参数:=特殊列表(特殊("-level FFv1 level，1，必要")),
             像素格式:=像素("yuv420p yuva420p yuv444p bgr0 bgra yuv420p16le yuv444p16le gray16le gray"),
-            特殊参数:=特殊列表(特殊("-coder", "rice/range_def/range_tab", "熵编码器", False, "rice", "range_def", "range_tab"), 特殊("-qtable", "default/8bit/greater8bit", "无损量化表选择", False))))
+            特殊参数:=特殊列表(特殊("-coder 熵编码器，rice/range_def/range_tab"), 特殊("-qtable 无损量化表选择，default/8bit/greater8bit"))))
 
         加入编码器(基础("ffv1_vulkan", "FFv1 Vulkan 硬件路径编码器。", "FFv1", 预设数据_v6.视频编码器类型.视频,
             像素格式:=像素("vulkan"),
-            特殊参数:=特殊列表(特殊("-level", "1/3/4", "FFv1 level；3 常用于现代无损存档，1 用于旧兼容", False, "1", "3", "4"), 特殊("-coder", "rice/range_def/range_tab", "熵编码器；rice=简单快速，range_def/range_tab=范围编码", False, "rice", "range_def", "range_tab"), 特殊("-qtable", "default/8bit/greater8bit", "无损量化表选择；default=自动", False), 特殊("-force_pcm", "0/1", "全部切片使用 PCM，通常只用于特殊兼容", False, "0", "1"))))
+            特殊参数:=特殊列表(特殊("-level FFv1 level，3 常用于现代无损存档，1 用于旧兼容，1/3/4"), 特殊("-coder 熵编码器，rice=简单快速，range_def/range_tab=范围编码，rice/range_def/range_tab"), 特殊("-qtable 无损量化表选择，default=自动，default/8bit/greater8bit"), 特殊("-force_pcm 全部切片使用 PCM，通常只用于特殊兼容，0/1"))))
 
         加入编码器(基础("libxeve", "MPEG-5 EVC 软件编码器。", "其他现代编码", 预设数据_v6.视频编码器类型.视频,
             编码预设:=参数("-preset", "placebo 最慢 ~ fast 最快", "", "placebo", "slow", "medium", "fast"),
             配置文件:=参数("-profile:v", "baseline/main", "", "baseline", "main"),
             场景优化:=参数("-tune", "none/zerolatency/psnr", "", "none", "zerolatency", "psnr"),
             像素格式:=像素("yuv420p yuv420p10le"),
-            特殊参数:=特殊列表(特殊("-rc_mode", "CQP/ABR/CRF", "码率控制；CQP=固定量化，ABR=平均码率，CRF=恒定质量", False, "CQP", "ABR", "CRF"), 特殊("-qp", "0 ~ 51；数值越低越清晰", "CQP 量化值", False), 特殊("-crf", "10 ~ 49；数值越低越清晰", "CRF 质量值", False), 特殊("-xeve-params", "key=value:key=value", "xeve 原生参数", False)),
+            特殊参数:=特殊列表(特殊("-rc_mode 码率控制，CQP=固定量化，ABR=平均码率，CRF=恒定质量，CQP/ABR/CRF"), 特殊("-qp CQP 量化值，0~51，数值越低越清晰"), 特殊("-crf CRF 质量值，10~49，数值越低越清晰"), 特殊("-xeve-params xeve 原生参数，key=value:key=value")),
             无损模式说明:="不支持；最低量化可写 -qp 0。"))
 
         加入编码器(基础("libxavs", "AVS 软件编码器。", "其他现代编码", 预设数据_v6.视频编码器类型.视频,
             像素格式:=像素("yuv420p"),
-            特殊参数:=特殊列表(特殊("-crf", "-1 自动；数值越低越清晰", "恒定质量", False), 特殊("-qp", "-1 自动；0 起；数值越低越清晰", "恒定 QP", False), 特殊("-cplxblur", "-1 自动；0 起；越高码率曲线越平滑", "QP 曲线平滑", False)),
+            特殊参数:=特殊列表(特殊("-crf 恒定质量，-1 自动，数值越低越清晰"), 特殊("-qp 恒定 QP，-1 自动，0 起，数值越低越清晰"), 特殊("-cplxblur QP 曲线平滑，-1 自动，0 起，越高码率曲线越平滑")),
             无损模式说明:="不支持；最低量化可写 -qp 0。"))
 
         加入编码器(基础("libxavs2", "AVS2 软件编码器。", "其他现代编码", 预设数据_v6.视频编码器类型.视频,
             编码预设:=参数("-speed_level", "9 最慢 ~ 0 最快", "", "9", "8", "7", "6", "5", "4", "3", "2", "1", "0"),
             像素格式:=像素("yuv420p"),
-            特殊参数:=特殊列表(特殊("-initial_qp", "1 ~ 63；数值越低越清晰", "初始量化参数", False), 特殊("-qp", "1 ~ 63；数值越低越清晰", "量化参数", False), 特殊("-min_qp", "0 ~ 63；限制允许的最低 QP/最高质量", "码率控制最小 QP", False), 特殊("-max_qp", "0 ~ 63；限制允许的最高 QP/最低质量", "码率控制最大 QP", False), 特殊("-xavs2-params", "key=value:key=value", "xavs2 原生参数", False)),
+            特殊参数:=特殊列表(特殊("-initial_qp 初始量化参数，1~63，数值越低越清晰"), 特殊("-qp 量化参数，1~63，数值越低越清晰"), 特殊("-min_qp 码率控制最小 QP，0~63，限制允许的最低 QP/最高质量"), 特殊("-max_qp 码率控制最大 QP，0~63，限制允许的最高 QP/最低质量"), 特殊("-xavs2-params xavs2 原生参数，key=value:key=value")),
             无损模式说明:="不支持；-qp 范围 1 ~ 63。"))
 
         加入编码器(基础("libuavs3e", "AVS3 软件编码器。", "其他现代编码", 预设数据_v6.视频编码器类型.视频,
             编码预设:=参数("-speed", "0 最慢 ~ 6 最快", "", "0", "1", "2", "3", "4", "5", "6"),
             像素格式:=像素("yuv420p yuv420p10le"),
-            特殊参数:=特殊列表(特殊("-rc_type", "0/1/2", "码率控制类型；0=默认/固定量化，其他模式随 libuavs3e 版本定义", False, "0", "1", "2"), 特殊("-crf", "1 ~ 63；数值越低越清晰", "恒定质量", False), 特殊("-qp", "1 ~ 63；数值越低越清晰", "量化参数", False)),
+            特殊参数:=特殊列表(特殊("-rc_type 码率控制类型，0=默认/固定量化，其他模式随 libuavs3e 版本定义，0/1/2"), 特殊("-crf 恒定质量，1~63，数值越低越清晰"), 特殊("-qp 量化参数，1~63，数值越低越清晰")),
             无损模式说明:="不支持；-qp/-crf 范围 1 ~ 63。"))
 
         加入编码器(基础("liboapv", "APV 软件编码器。", "其他现代编码", 预设数据_v6.视频编码器类型.视频,
             编码预设:=参数("-preset", "placebo 最慢 ~ fastest 最快", "", "placebo", "slow", "medium", "fast", "fastest"),
             像素格式:=像素("gray10le yuv422p10le yuv422p12le yuv444p10le yuv444p12le yuva444p10le yuva444p12le"),
-            特殊参数:=特殊列表(特殊("-qp", "0 ~ 63；数值越低越清晰", "量化参数", False), 特殊("-oapv-params", "key=value:key=value", "APV 原生参数", False)),
+            特殊参数:=特殊列表(特殊("-qp 量化参数，0~63，数值越低越清晰"), 特殊("-oapv-params APV 原生参数，key=value:key=value")),
             无损模式说明:="不支持；最低量化可写 -qp 0。"))
 
         For Each 名称 In New String() {"mpeg4", "libxvid", "rv20", "rv10", "wmv2", "wmv1"}
@@ -476,12 +476,12 @@ Public Class 视频编码器数据库_v6
         加入编码器(基础("png", "PNG 无损图片编码器。", "PNG", 预设数据_v6.视频编码器类型.图片,
             像素格式:=像素("rgb24 rgba rgb48be rgba64be pal8 gray ya8 gray16be ya16be monob"),
             图片质量:=图片质量("-compression_level", "0 最快 ~ 9 最小", "6"),
-            特殊参数:=特殊列表(特殊("-pred", "none/sub/up/avg/paeth/mixed", "PNG 预测方式", False, "none", "sub", "up", "avg", "paeth", "mixed"))))
+            特殊参数:=特殊列表(特殊("-pred PNG 预测方式，none/sub/up/avg/paeth/mixed"))))
 
         加入编码器(基础("apng", "APNG 动图编码器。", "APNG", 预设数据_v6.视频编码器类型.图片,
             像素格式:=像素("rgb24 rgba rgb48be rgba64be pal8 gray ya8 gray16be ya16be"),
             图片质量:=图片质量("-compression_level", "0 最快 ~ 9 最小", "6"),
-            必要参数:=特殊列表(特殊("-plays", "0 无限；1 不循环", "APNG 循环次数", True), 特殊("-final_delay", "0 ~ 65535", "末帧延迟", False))))
+            必要参数:=特殊列表(特殊("-plays APNG 循环次数，0 无限，1 不循环，必要"), 特殊("-final_delay 末帧延迟，0~65535"))))
 
         加入编码器(基础("mjpeg", "JPEG/JPG 图片编码器。", "JPEG\JPG", 预设数据_v6.视频编码器类型.图片,
             像素格式:=像素("yuvj420p yuvj422p yuvj444p yuv420p yuv422p yuv444p"),
@@ -490,18 +490,18 @@ Public Class 视频编码器数据库_v6
         加入编码器(基础("libwebp", "WebP 静图编码器。", "WEBP 静图", 预设数据_v6.视频编码器类型.图片,
             像素格式:=像素("bgra yuv420p yuva420p"),
             图片质量:=图片质量("-quality", "0 模糊 ~ 100 清晰", "75"),
-            特殊参数:=特殊列表(特殊("-lossless", "0/1", "无损模式；1=启用无损，启用后 quality 控制压缩努力程度", False, "0", "1"), 特殊("-preset", "default/photo/picture/drawing/icon/text", "WebP 用途预设；photo=照片，picture=图片，drawing=线稿，icon=图标，text=文字", False, "default", "photo", "picture", "drawing", "icon", "text"))))
+            特殊参数:=特殊列表(特殊("-lossless 无损模式，1=启用无损，启用后 quality 控制压缩努力程度，0/1"), 特殊("-preset WebP 用途预设，photo=照片，picture=图片，drawing=线稿，icon=图标，text=文字，default/photo/picture/drawing/icon/text"))))
 
         加入编码器(基础("libwebp_anim", "WebP 动图编码器。", "WEBP 动图", 预设数据_v6.视频编码器类型.图片,
             像素格式:=像素("bgra yuv420p yuva420p"),
             图片质量:=图片质量("-quality", "0 模糊 ~ 100 清晰", "75"),
-            必要参数:=特殊列表(特殊("-loop", "0 无限；1 播放一次", "WebP muxer 循环次数", True)),
-            特殊参数:=特殊列表(特殊("-lossless", "0/1", "无损模式；1=启用无损，启用后 quality 控制压缩努力程度", False, "0", "1"))))
+            必要参数:=特殊列表(特殊("-loop WebP muxer 循环次数，0 无限，1 播放一次，必要")),
+            特殊参数:=特殊列表(特殊("-lossless 无损模式，1=启用无损，启用后 quality 控制压缩努力程度，0/1"))))
 
         加入编码器(基础("gif", "GIF 动图编码器。", "GIF", 预设数据_v6.视频编码器类型.图片,
             像素格式:=像素("rgb8 bgr8 rgb4_byte bgr4_byte gray pal8"),
             图片质量:=图片质量("调色板滤镜", "1 启用 palettegen/paletteuse", ""),
-            必要参数:=特殊列表(特殊("-loop", "-1 不循环；0 无限", "GIF muxer 循环次数", True), 特殊("palettegen/paletteuse", "建议启用", "高质量 GIF 调色板滤镜", True))))
+            必要参数:=特殊列表(特殊("-loop GIF muxer 循环次数，-1 不循环，0 无限，必要"), 特殊("palettegen/paletteuse 高质量 GIF 调色板滤镜，建议启用，必要"))))
 
         加入编码器(基础("bmp", "BMP 位图编码器。", "BMP", 预设数据_v6.视频编码器类型.图片,
             像素格式:=像素("bgra bgr24 rgb565le rgb555le rgb444le rgb8 bgr8 rgb4_byte bgr4_byte gray pal8 monob")))
@@ -510,11 +510,11 @@ Public Class 视频编码器数据库_v6
             像素格式:=像素("rgb24 rgba rgb48le rgba64le gbrp gbrp9le gbrp10le gbrp12le gbrp14le gbrp16le gray ya8 gray16le ya16le gray10le gray12le gray14le yuv420p yuv422p yuva420p yuv440p yuv444p yuva422p yuv411p yuv410p yuva444p yuv420p10le yuv422p10le yuv444p10le yuv420p12le yuv422p12le yuv444p12le xyz12le"),
             图片质量:=图片质量("-q:v", "0.0 全损 ~ 1.0 无损", ""),
             配置文件:=参数("-profile:v", "jpeg2000/cinema2k/cinema4k", "", "jpeg2000", "cinema2k", "cinema4k"),
-            特殊参数:=特殊列表(特殊("-format", "j2k/jp2", "封装格式；j2k=裸码流，jp2=JP2 文件封装", False, "j2k", "jp2"), 特殊("-irreversible", "0/1", "不可逆小波；0=可逆/无损路径，1=不可逆/有损路径", False, "0", "1"))))
+            特殊参数:=特殊列表(特殊("-format 封装格式，j2k=裸码流，jp2=JP2 文件封装，j2k/jp2"), 特殊("-irreversible 不可逆小波，0=可逆/无损路径，1=不可逆/有损路径，0/1"))))
 
         加入编码器(基础("jpegls", "JPEG-LS 编码器。", "JPEG-LS", 预设数据_v6.视频编码器类型.图片,
             像素格式:=像素("bgr24 rgb24 gray gray16le"),
-            特殊参数:=特殊列表(特殊("-pred", "left/plane/median", "预测方式", False, "left", "plane", "median"))))
+            特殊参数:=特殊列表(特殊("-pred 预测方式，left/plane/median"))))
 
         加入编码器(基础("libsvtjpegxs", "SVT JPEG XS 编码器占位项。", "SVT JPEG XS", 预设数据_v6.视频编码器类型.图片))
 
@@ -523,14 +523,14 @@ Public Class 视频编码器数据库_v6
 
         加入编码器(基础("tiff", "TIFF 图片编码器。", "TIFF", 预设数据_v6.视频编码器类型.图片,
             像素格式:=像素("rgb24 rgb48le pal8 rgba rgba64le gray ya8 gray16le ya16le monob monow yuv420p yuv422p yuv440p yuv444p yuv410p yuv411p"),
-            特殊参数:=特殊列表(特殊("-compression_algo", "packbits/raw/lzw/deflate", "TIFF 压缩算法", False, "packbits", "raw", "lzw", "deflate"))))
+            特殊参数:=特殊列表(特殊("-compression_algo TIFF 压缩算法，packbits/raw/lzw/deflate"))))
 
         加入编码器(基础("dpx", "DPX 图片编码器。", "DPX", 预设数据_v6.视频编码器类型.图片,
             像素格式:=像素("gray rgb24 rgba abgr gray16le gray16be rgb48le rgb48be rgba64le rgba64be gbrp10le gbrp10be gbrp12le gbrp12be")))
 
         加入编码器(基础("exr", "OpenEXR 图片编码器。", "OpenEXR", 预设数据_v6.视频编码器类型.图片,
             像素格式:=像素("grayf32le gbrpf32le gbrapf32le"),
-            特殊参数:=特殊列表(特殊("-compression", "none/rle/zips/zip", "EXR 压缩方式", False, "none", "rle", "zips", "zip"), 特殊("-format", "half/float", "像素类型", False, "half", "float"))))
+            特殊参数:=特殊列表(特殊("-compression EXR 压缩方式，none/rle/zips/zip"), 特殊("-format 像素类型，half/float"))))
     End Sub
 
     Private Shared Sub 加入分类(类型 As 预设数据_v6.视频编码器类型, 名称 As String, 描述 As String, ParamArray 编码器名称列表() As String)
@@ -672,14 +672,43 @@ Public Class 视频编码器数据库_v6
         }
     End Function
 
-    Private Shared Function 特殊(参数名 As String, 值范围说明 As String, 说明 As String, 是否必要 As Boolean, ParamArray 值列表() As String) As 编码器特殊参数数据
+    Private Shared Function 特殊(描述 As String) As 编码器特殊参数数据
+        Dim 标准描述 = 规范化特殊参数描述(描述)
+        Dim 参数名 = 提取特殊参数名(标准描述)
         Return New 编码器特殊参数数据 With {
             .参数名 = 参数名,
-            .值范围说明 = 值范围说明,
-            .说明 = 说明,
-            .是否必要 = 是否必要,
-            .值列表 = New List(Of String)(值列表)
+            .描述 = 提取特殊参数说明(标准描述, 参数名)
         }
+    End Function
+
+    Private Shared Function 规范化特殊参数描述(描述 As String) As String
+        Dim 文本 = If(描述, "").Trim()
+        If 文本 = "" Then Return ""
+
+        文本 = 文本.Replace("；", "，").Replace(";", "，")
+        文本 = System.Text.RegularExpressions.Regex.Replace(文本, "\s*~\s*", "~")
+        文本 = System.Text.RegularExpressions.Regex.Replace(文本, "\s+", " ")
+
+        Do While 文本.Contains("，，")
+            文本 = 文本.Replace("，，", "，")
+        Loop
+
+        Return 文本.Trim(" "c, "，"c)
+    End Function
+
+    Private Shared Function 提取特殊参数名(描述 As String) As String
+        Dim 文本 = If(描述, "").Trim()
+        If 文本 = "" Then Return ""
+
+        Dim 分隔位置 = 文本.IndexOfAny({" "c, ControlChars.Tab})
+        If 分隔位置 < 0 Then Return 文本
+        Return 文本.Substring(0, 分隔位置).Trim()
+    End Function
+
+    Private Shared Function 提取特殊参数说明(描述 As String, 参数名 As String) As String
+        Dim 文本 = If(描述, "").Trim()
+        If 文本 = "" OrElse 参数名 = "" OrElse 文本.Length <= 参数名.Length Then Return ""
+        Return 文本.Substring(参数名.Length).Trim()
     End Function
 
     Private Shared Function 特殊列表(ParamArray 数据() As 编码器特殊参数数据) As List(Of 编码器特殊参数数据)
@@ -696,57 +725,57 @@ Public Class 视频编码器数据库_v6
 
     Private Shared Function NVENC质量参数(cq范围 As String, qp范围 As String) As List(Of 编码器特殊参数数据)
         Return 特殊列表(
-            特殊("-rc", "constqp/vbr/cbr/vbr_hq 等；constqp=固定 QP，vbr=可变码率，cbr=固定码率，vbr_hq=高质量 VBR", "码率控制模式；-cq 需要 VBR 类模式，-qp 需要 constqp", False, "constqp", "vbr", "cbr", "vbr_hq"),
-            特殊("-cq", cq范围, "VBR 恒定质量目标", False),
-            特殊("-qmin", qp范围, "码率控制最小 QP，限制最高质量", False),
-            特殊("-qmax", qp范围, "码率控制最大 QP，限制最低质量", False),
-            特殊("-rc-lookahead", "0 起；越大前瞻越多但延迟/显存占用越高", "码率控制前瞻帧数", False),
-            特殊("-multipass", "disabled/qres/fullres", "NVENC 多遍内部分析；disabled=单遍，qres=四分之一分辨率分析，fullres=全分辨率分析", False, "disabled", "qres", "fullres"),
-            特殊("-spatial-aq", "0/1", "空间自适应量化；通常可改善平坦区域观感", False, "0", "1"),
-            特殊("-temporal-aq", "0/1", "时间自适应量化；可能提升运动场景码率分配", False, "0", "1"),
-            特殊("-aq-strength", "1 ~ 15；默认 8；越高 AQ 越激进", "空间 AQ 强度", False),
-            特殊("-lookahead_level", "-1 自动；0 ~ 15；越高前瞻分析越强但更慢", "前瞻质量级别", False),
-            特殊("-tf_level", "-1 自动；0 起；越高时间滤波越强", "时间滤波强度", False))
+            特殊("-rc 码率控制模式，-cq 需要 VBR 类模式，-qp 需要 constqp，constqp/vbr/cbr/vbr_hq 等，constqp=固定 QP，vbr=可变码率，cbr=固定码率，vbr_hq=高质量 VBR"),
+            特殊("-cq VBR 恒定质量目标，" & cq范围),
+            特殊("-qmin 码率控制最小 QP，限制最高质量，" & qp范围),
+            特殊("-qmax 码率控制最大 QP，限制最低质量，" & qp范围),
+            特殊("-rc-lookahead 码率控制前瞻帧数，0 起，越大前瞻越多但延迟/显存占用越高"),
+            特殊("-multipass NVENC 多遍内部分析，disabled=单遍，qres=四分之一分辨率分析，fullres=全分辨率分析，disabled/qres/fullres"),
+            特殊("-spatial-aq 空间自适应量化，通常可改善平坦区域观感，0/1"),
+            特殊("-temporal-aq 时间自适应量化，可能提升运动场景码率分配，0/1"),
+            特殊("-aq-strength 空间 AQ 强度，1~15，默认 8，越高 AQ 越激进"),
+            特殊("-lookahead_level 前瞻质量级别，-1 自动，0~15，越高前瞻分析越强但更慢"),
+            特殊("-tf_level 时间滤波强度，-1 自动，0 起，越高时间滤波越强"))
     End Function
 
     Private Shared Function QSV质量参数(Optional 是否H264 As Boolean = False) As List(Of 编码器特殊参数数据)
         Dim 结果 = 特殊列表(
-            特殊("-global_quality", "1 ~ 51 常见；数值越低越清晰", "QSV 全局质量目标，通常用于 ICQ/LA_ICQ 等模式", False),
-            特殊("-extbrc", "-1 自动；0/1", "扩展码率控制，通常用于改善 VBR/LA 模式稳定性", False, "-1", "0", "1"),
-            特殊("-look_ahead_depth", "0 ~ 100；越大前瞻越多但延迟/显存占用越高", "前瞻深度；部分编码器要求启用 extbrc 或 look_ahead", False))
+            特殊("-global_quality QSV 全局质量目标，通常用于 ICQ/LA_ICQ 等模式，1~51 常见，数值越低越清晰"),
+            特殊("-extbrc 扩展码率控制，通常用于改善 VBR/LA 模式稳定性，-1 自动，0/1，可选 -1、0、1"),
+            特殊("-look_ahead_depth 前瞻深度，部分编码器要求启用 extbrc 或 look_ahead，0~100，越大前瞻越多但延迟/显存占用越高"))
         If 是否H264 Then
-            结果.Add(特殊("-look_ahead", "0/1", "H.264 QSV 前瞻 VBR 算法开关；启用后可配合 look_ahead_depth", False, "0", "1"))
+            结果.Add(特殊("-look_ahead H.264 QSV 前瞻 VBR 算法开关，启用后可配合 look_ahead_depth，0/1"))
         End If
         Return 结果
     End Function
 
     Private Shared Function AMF质量参数(qp范围 As String, Optional 含B帧QP As Boolean = True) As List(Of 编码器特殊参数数据)
         Dim 结果 = 特殊列表(
-            特殊("-rc", "cqp/cbr/vbr/qvbr/hqvbr/hqcbr；cqp=固定 QP，cbr=固定码率，vbr=可变码率，qvbr=质量 VBR，hqvbr/hqcbr=高质量模式", "AMF 码率控制模式", False, "cqp", "cbr", "vbr", "qvbr", "hqvbr", "hqcbr"),
-            特殊("-qvbr_quality_level", "-1 自动；0 ~ 51；数值越低越清晰", "QVBR 质量级别，配合 -rc qvbr/hqvbr", False),
-            特殊("-qp_i", qp范围, "I 帧 QP", False),
-            特殊("-qp_p", qp范围, "P 帧 QP", False),
-            特殊("-vbaq", "auto/0/1", "基于方差的自适应量化；auto=驱动决定", False, "0", "1"),
-            特殊("-high_motion_quality_boost_enable", "auto/0/1", "高运动质量增强；auto=驱动决定", False, "0", "1"),
-            特殊("-pa_paq_mode", "-1 自动；0=关闭，1=内容自适应量化", "感知自适应量化", False),
-            特殊("-pa_taq_mode", "-1 自动；0=关闭，1/2=时间自适应量化模式", "时间自适应量化", False),
-            特殊("-pa_caq_strength", "-1 自动；0=低，1=中，2=高", "内容自适应量化强度", False),
-            特殊("-pa_lookahead_buffer_depth", "-1 自动；0 ~ 41；越大前瞻越多但延迟/显存占用越高", "PA 前瞻缓冲深度", False))
-        If 含B帧QP Then 结果.Add(特殊("-qp_b", qp范围, "B 帧 QP", False))
+            特殊("-rc AMF 码率控制模式，cqp/cbr/vbr/qvbr/hqvbr/hqcbr，cqp=固定 QP，cbr=固定码率，vbr=可变码率，qvbr=质量 VBR，hqvbr/hqcbr=高质量模式"),
+            特殊("-qvbr_quality_level QVBR 质量级别，配合 -rc qvbr/hqvbr，-1 自动，0~51，数值越低越清晰"),
+            特殊("-qp_i I 帧 QP，" & qp范围),
+            特殊("-qp_p P 帧 QP，" & qp范围),
+            特殊("-vbaq 基于方差的自适应量化，auto=驱动决定，auto/0/1"),
+            特殊("-high_motion_quality_boost_enable 高运动质量增强，auto=驱动决定，auto/0/1"),
+            特殊("-pa_paq_mode 感知自适应量化，-1 自动，0=关闭，1=内容自适应量化"),
+            特殊("-pa_taq_mode 时间自适应量化，-1 自动，0=关闭，1/2=时间自适应量化模式"),
+            特殊("-pa_caq_strength 内容自适应量化强度，-1 自动，0=低，1=中，2=高"),
+            特殊("-pa_lookahead_buffer_depth PA 前瞻缓冲深度，-1 自动，0~41，越大前瞻越多但延迟/显存占用越高"))
+        If 含B帧QP Then 结果.Add(特殊("-qp_b B 帧 QP，" & qp范围))
         Return 结果
     End Function
 
     Private Shared Function D3D12VA质量参数(qp范围 As String) As List(Of 编码器特殊参数数据)
         Return 特殊列表(
-            特殊("-rc_mode", "auto/CQP/CBR/VBR/QVBR；CQP=固定 QP，CBR=固定码率，VBR=可变码率，QVBR=质量 VBR", "码率控制模式", False, "auto", "CQP", "CBR", "VBR", "QVBR"),
-            特殊("-qp", qp范围, "恒定 QP；通常配合 CQP 模式", False))
+            特殊("-rc_mode 码率控制模式，auto/CQP/CBR/VBR/QVBR，CQP=固定 QP，CBR=固定码率，VBR=可变码率，QVBR=质量 VBR"),
+            特殊("-qp 恒定 QP，通常配合 CQP 模式，" & qp范围))
     End Function
 
     Private Shared Function Vulkan质量参数(qp范围 As String) As List(Of 编码器特殊参数数据)
         Return 特殊列表(
-            特殊("-quality", "0 起；数值越高通常越慢、压缩搜索越充分", "Vulkan 编码质量/速度取舍", False),
-            特殊("-rc_mode", "auto/CQP/CBR/VBR 等；具体可用值随驱动实现变化", "码率控制模式；CQP=固定 QP，CBR=固定码率，VBR=可变码率", False),
-            特殊("-qp", qp范围, "显式恒定量化值；通常配合 CQP 模式", False))
+            特殊("-quality Vulkan 编码质量/速度取舍，0 起，数值越高通常越慢、压缩搜索越充分"),
+            特殊("-rc_mode 码率控制模式，CQP=固定 QP，CBR=固定码率，VBR=可变码率，auto/CQP/CBR/VBR 等，具体可用值随驱动实现变化"),
+            特殊("-qp 显式恒定量化值，通常配合 CQP 模式，" & qp范围))
     End Function
 
     Private Shared Function 拆分空格列表(值 As String) As List(Of String)
@@ -821,11 +850,7 @@ Public Class 视频编码器数据库_v6
 
     Public Class 编码器特殊参数数据
         Public Property 参数名 As String = ""
-        Public Property 值列表 As New List(Of String)
-        Public Property 默认值 As String = ""
-        Public Property 值范围说明 As String = ""
-        Public Property 说明 As String = ""
-        Public Property 是否必要 As Boolean = False
+        Public Property 描述 As String = ""
     End Class
 
 End Class

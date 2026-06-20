@@ -62,7 +62,21 @@ Public Class 预设管理_v6
     Public Shared Sub 写入预设文件(文件路径 As String, 数据 As 预设数据_v6)
         初始化空集合(数据)
         Directory.CreateDirectory(Path.GetDirectoryName(文件路径))
-        File.WriteAllText(文件路径, JsonSerializer.Serialize(数据, JsonSO), Encoding.UTF8)
+        Dim 原计算机名称 = 数据.计算机名称
+        Dim 原输出位置 = 数据.输出位置
+        Dim 原运行时使用输出位置 = 数据.运行时使用输出位置
+        Try
+            数据.运行时使用输出位置 = False
+            If Not 数据.额外保存输出位置 Then
+                数据.计算机名称 = ""
+                数据.输出位置 = ""
+            End If
+            File.WriteAllText(文件路径, JsonSerializer.Serialize(数据, JsonSO), Encoding.UTF8)
+        Finally
+            数据.计算机名称 = 原计算机名称
+            数据.输出位置 = 原输出位置
+            数据.运行时使用输出位置 = 原运行时使用输出位置
+        End Try
     End Sub
 
     Public Shared Sub 初始化空集合(a As 预设数据_v6)
@@ -1170,9 +1184,9 @@ Public Class 预设管理_v6
 
     Private Shared Function 可选输入流映射(stream As String) As String
         Dim s = If(stream, "").Trim()
-        If s = "" OrElse (s.StartsWith("[", StringComparison.Ordinal) AndAlso s.EndsWith("]", StringComparison.Ordinal)) Then Return s
+        If s = "" OrElse (s.StartsWith("["c) AndAlso s.EndsWith("]"c, StringComparison.Ordinal)) Then Return s
 
-        Dim 排除映射 = s.StartsWith("-", StringComparison.Ordinal)
+        Dim 排除映射 = s.StartsWith("-"c, StringComparison.Ordinal)
         If 排除映射 Then s = s.Substring(1).TrimStart()
         s = s.TrimEnd("?"c)
         If s = "" Then Return ""
@@ -2039,12 +2053,14 @@ Public Class 预设管理_v6
             a.输出命名_保留修改时间 = .MCB_保留修改时间.Checked
             a.输出命名_保留访问时间 = .MCB_保留访问时间.Checked
             Dim 输出位置文本 = .MCB_输出位置.Text.Trim()
-            If a.额外保存输出位置 AndAlso Directory.Exists(输出位置文本) Then
+            If Directory.Exists(输出位置文本) Then
                 a.计算机名称 = Environment.MachineName
                 a.输出位置 = 输出位置文本
+                a.运行时使用输出位置 = True
             Else
                 a.计算机名称 = ""
                 a.输出位置 = ""
+                a.运行时使用输出位置 = False
             End If
         End With
     End Sub

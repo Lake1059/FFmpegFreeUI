@@ -457,6 +457,7 @@ Partial Class Form_v6_参数面板_视频编码器
         MCB_视频编码器分类.Padding = New Padding(10, 0, 10, 0)
         MCB_视频编码器分类.Size = New Size(200, 32)
         MCB_视频编码器分类.TabIndex = 4
+        MCB_视频编码器分类.ToolTipGap = -1
         MCB_视频编码器分类.ToolTipMaxWidth = 350
         MCB_视频编码器分类.ToolTipPadding = New Padding(15)
         MCB_视频编码器分类.WaterText = "分类"

@@ -122,6 +122,7 @@ Public Class 编码队列_v6
         Dim json = Text.Json.JsonSerializer.Serialize(source, JsonSO)
         Dim result = Text.Json.JsonSerializer.Deserialize(Of 预设数据_v6)(json, JsonSO)
         预设管理_v6.初始化空集合(result)
+        If result IsNot Nothing Then result.运行时使用输出位置 = source.运行时使用输出位置
         Return result
     End Function
 
@@ -360,7 +361,7 @@ Public Class 编码队列_v6
         Dim 输入目录 = Path.GetDirectoryName(输入文件)
         If String.IsNullOrWhiteSpace(输入目录) Then 输入目录 = Environment.CurrentDirectory
         Dim 输出目录 = 输入目录
-        If 预设数据.额外保存输出位置 AndAlso
+        If (预设数据.额外保存输出位置 OrElse 预设数据.运行时使用输出位置) AndAlso
            String.Equals(预设数据.计算机名称, Environment.MachineName, StringComparison.OrdinalIgnoreCase) AndAlso
            Directory.Exists(预设数据.输出位置) Then
             输出目录 = 预设数据.输出位置

@@ -433,5 +433,7 @@ Public Class 预设数据_v6
     '==================================================
     Public Property 计算机名称 As String = ""
     Public Property 输出位置 As String = ""
+    <System.Text.Json.Serialization.JsonIgnore()>
+    Public Property 运行时使用输出位置 As Boolean = False
 
 End Class
