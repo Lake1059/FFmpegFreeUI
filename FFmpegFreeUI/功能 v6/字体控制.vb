@@ -1,5 +1,4 @@
-﻿
-Public Class 字体控制
+﻿Public Class 字体控制
 
     Public Shared Sub 更新所有控件字体属性()
         SetControlFont(设置_v6.实例对象.字体, FormMain_v6, , True)
@@ -39,6 +38,7 @@ Public Class 字体控制
         SetControlFont(设置_v6.实例对象.字体, Form_v6_集成工具, , True)
         SetControlFont(设置_v6.实例对象.字体, Form_v6_集成工具_合并, , True)
         SetControlFont(设置_v6.实例对象.字体, Form_v6_集成工具_混流, , True)
+        SetControlFont(设置_v6.实例对象.字体, Form_v6_集成工具_抽流, , True)
         SetControlFont(设置_v6.实例对象.字体, Form_v6_集成工具_质量评测, , True)
 
         SetControlFont(设置_v6.实例对象.字体, Form_v6_设置, , True)

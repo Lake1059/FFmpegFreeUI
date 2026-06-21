@@ -1,11 +1,20 @@
 Imports System.IO
-Imports System.Text
 Imports LakeUI
 
 Public Class Form_v6_编码队列
     Dim DPI As Single = Me.DeviceDpi / 96
+    Private Shared ReadOnly 非任务列理想宽度基准 As Integer() = {82, 70, 66, 136, 54, 98, 145}
+    Private Shared ReadOnly 非任务列最小宽度基准 As Integer() = {72, 60, 56, 112, 46, 82, 118}
+    Private Shared ReadOnly 非任务列常用文本 As String() = {"正在处理", "100.0%", "1000%", "999 MB - 999 MB", "99", "100.00 Mbps", "9h99m99s - 9h99m99s"}
+    Private Const 任务名称列最小宽度基准 As Integer = 96
+    Private Const 列宽滚动条预留宽度基准 As Integer = 18
+    Private Const 列宽文本预留宽度基准 As Integer = 20
+
     Private ReadOnly 任务行 As New Dictionary(Of String, UltraDetailListView.ListItem)
     Private ReadOnly 展示策略 As I编码队列展示策略_v6 = New 旧版兼容编码队列展示策略_v6()
+    Private WithEvents 列宽调整计时器 As New System.Windows.Forms.Timer With {.Interval = 80}
+    Private 上次列宽有效总宽度 As Integer = -1
+    Private 上次列宽Dpi As Single = -1
     Private 菜单已初始化 As Boolean = False
     Private 正在刷新列表 As Boolean = False
 
@@ -18,10 +27,24 @@ Public Class Form_v6_编码队列
         AddHandler 编码队列_v6.队列已变化, AddressOf 队列已变化
         AddHandler 编码队列_v6.任务已更新, AddressOf 任务已更新
         刷新整表()
+        请求校准编码队列列宽()
     End Sub
 
     Private Sub Form_v6_编码队列_Shown(sender As Object, e As EventArgs) Handles Me.Shown
         DPI = Me.DeviceDpi / 96
+        上次列宽有效总宽度 = -1
+        请求校准编码队列列宽()
+    End Sub
+
+    Private Sub Form_v6_编码队列_DpiChanged(sender As Object, e As DpiChangedEventArgs) Handles Me.DpiChanged
+        DPI = Me.DeviceDpi / 96
+        上次列宽有效总宽度 = -1
+        请求校准编码队列列宽()
+    End Sub
+
+    Private Sub Form_v6_编码队列_FormClosed(sender As Object, e As FormClosedEventArgs) Handles Me.FormClosed
+        列宽调整计时器.Stop()
+        列宽调整计时器.Dispose()
     End Sub
 
     Private Sub 队列已变化()
@@ -109,7 +132,7 @@ Public Class Form_v6_编码队列
         HtmlColorLabel1.Text =
             $"<span style=""color:DarkGray"">总数 </span><span style=""font-size:14pt; font-weight:bold; color:CornflowerBlue"">{items.Count}</span>" &
             $"   <span style=""color:DarkGray"">运行 </span><span style=""font-size:14pt; font-weight:bold; color:YellowGreen"">{running}</span>" &
-            $"   <span style=""color:DarkGray"">错误 </span><span style=""font-size:14pt; font-weight:bold; color:IndianRed"">{errors}</span>"
+            $"   <span style=""color:DarkGray"">错误 </span><span style=""font-size:14pt; font-weight:bold; color:{界面配色_v6.错误文本色Html}"">{errors}</span>"
     End Sub
 
     Private Sub Panel1_SizeChanged(sender As Object, e As EventArgs) Handles Panel1.SizeChanged
@@ -308,29 +331,112 @@ Public Class Form_v6_编码队列
     End Sub
 
     Private Sub UltraDetailListView1_SizeChanged(sender As Object, e As EventArgs) Handles UltraDetailListView1.SizeChanged
-        Dim 有效总宽度 As Integer = UltraDetailListView1.Width - UltraDetailListView1.Padding.Left - UltraDetailListView1.Padding.Right
-        Select Case 设置_v6.实例对象.编码队列的列宽调整逻辑
-            Case 0
-                UltraDetailListView1.Columns(1).Width = 80 * DPI
-                UltraDetailListView1.Columns(2).Width = 70 * DPI
-                UltraDetailListView1.Columns(3).Width = 80 * DPI
-                UltraDetailListView1.Columns(4).Width = 150 * DPI
-                UltraDetailListView1.Columns(5).Width = 55 * DPI
-                UltraDetailListView1.Columns(6).Width = 115 * DPI
-                UltraDetailListView1.Columns(7).Width = 200 * DPI
-            Case 1
-                UltraDetailListView1.Columns(1).Width = 有效总宽度 * 0.076
-                UltraDetailListView1.Columns(2).Width = 有效总宽度 * 0.071
-                UltraDetailListView1.Columns(3).Width = 有效总宽度 * 0.076
-                UltraDetailListView1.Columns(4).Width = 有效总宽度 * 0.143
-                UltraDetailListView1.Columns(5).Width = 有效总宽度 * 0.053
-                UltraDetailListView1.Columns(6).Width = 有效总宽度 * 0.113
-                UltraDetailListView1.Columns(7).Width = 有效总宽度 * 0.186
-        End Select
-        Dim a1 As Integer = 0
-        For i = 1 To UltraDetailListView1.Columns.Count - 1
-            a1 += UltraDetailListView1.Columns(i).Width
+        请求校准编码队列列宽()
+    End Sub
+
+    Private Sub 列宽调整计时器_Tick(sender As Object, e As EventArgs) Handles 列宽调整计时器.Tick
+        列宽调整计时器.Stop()
+        校准编码队列列宽()
+    End Sub
+
+    Private Sub 请求校准编码队列列宽()
+        If IsDisposed OrElse UltraDetailListView1 Is Nothing Then Exit Sub
+        列宽调整计时器.Stop()
+        列宽调整计时器.Start()
+    End Sub
+
+    Private Sub 校准编码队列列宽()
+        If IsDisposed OrElse UltraDetailListView1 Is Nothing OrElse UltraDetailListView1.Columns.Count < 8 Then Exit Sub
+
+        DPI = CSng(Me.DeviceDpi / 96.0F)
+        Dim 有效总宽度 = UltraDetailListView1.ClientSize.Width -
+                          UltraDetailListView1.Padding.Left -
+                          UltraDetailListView1.Padding.Right -
+                          缩放宽度(列宽滚动条预留宽度基准, DPI)
+
+        If 有效总宽度 <= 0 Then Exit Sub
+        If 有效总宽度 = 上次列宽有效总宽度 AndAlso Math.Abs(DPI - 上次列宽Dpi) < 0.001F Then Exit Sub
+        上次列宽有效总宽度 = 有效总宽度
+        上次列宽Dpi = DPI
+
+        Dim 非任务列宽 = 获取非任务列理想宽度()
+        Dim 非任务列最小宽度 = 获取非任务列最小宽度()
+        Dim 任务名称列最小宽度 = 缩放宽度(任务名称列最小宽度基准, DPI)
+        Dim 非任务列总宽度 = 非任务列宽.Sum()
+
+        If 有效总宽度 - 非任务列总宽度 < 任务名称列最小宽度 Then
+            Dim 非任务列目标宽度 = Math.Max(0, 有效总宽度 - 任务名称列最小宽度)
+            非任务列宽 = 压缩列宽(非任务列宽, 非任务列最小宽度, 非任务列目标宽度)
+            非任务列总宽度 = 非任务列宽.Sum()
+        End If
+
+        UltraDetailListView1.BeginUpdate()
+        Try
+            设置列宽(0, Math.Max(缩放宽度(60, DPI), 有效总宽度 - 非任务列总宽度))
+            For i = 0 To 非任务列宽.Length - 1
+                设置列宽(i + 1, 非任务列宽(i))
+            Next
+        Finally
+            UltraDetailListView1.EndUpdate()
+        End Try
+    End Sub
+
+    Private Function 获取非任务列理想宽度() As Integer()
+        Dim result(非任务列理想宽度基准.Length - 1) As Integer
+        For i = 0 To 非任务列理想宽度基准.Length - 1
+            Dim 文本宽度 = Math.Max(
+                测量列文本宽度(If(UltraDetailListView1.Columns(i + 1).Text, "")),
+                测量列文本宽度(非任务列常用文本(i)))
+            result(i) = Math.Max(缩放宽度(非任务列理想宽度基准(i), DPI), 文本宽度)
         Next
-        UltraDetailListView1.Columns(0).Width = 有效总宽度 - a1 - 30 * DPI
+        Return result
+    End Function
+
+    Private Function 获取非任务列最小宽度() As Integer()
+        Dim result(非任务列最小宽度基准.Length - 1) As Integer
+        For i = 0 To 非任务列最小宽度基准.Length - 1
+            result(i) = Math.Max(缩放宽度(非任务列最小宽度基准(i), DPI), 测量列文本宽度(If(UltraDetailListView1.Columns(i + 1).Text, "")))
+        Next
+        Return result
+    End Function
+
+    Private Function 测量列文本宽度(text As String) As Integer
+        Return TextRenderer.MeasureText(If(text, ""), UltraDetailListView1.Font).Width + 缩放宽度(列宽文本预留宽度基准, DPI)
+    End Function
+
+    Private Shared Function 压缩列宽(理想宽度 As Integer(), 最小宽度 As Integer(), 目标总宽度 As Integer) As Integer()
+        Dim result = DirectCast(理想宽度.Clone(), Integer())
+        Dim 理想总宽度 = result.Sum()
+        Dim 最小总宽度 = 最小宽度.Sum()
+
+        If 目标总宽度 >= 理想总宽度 Then Return result
+        If 目标总宽度 <= 最小总宽度 Then Return DirectCast(最小宽度.Clone(), Integer())
+
+        Dim 需要压缩宽度 = 理想总宽度 - 目标总宽度
+        Dim 可压缩宽度 = 理想总宽度 - 最小总宽度
+        For i = 0 To result.Length - 1
+            Dim 当前可压缩宽度 = result(i) - 最小宽度(i)
+            result(i) -= CInt(Math.Floor(当前可压缩宽度 * 需要压缩宽度 / 可压缩宽度))
+        Next
+
+        Dim 当前总宽度 = result.Sum()
+        Dim index = result.Length - 1
+        While 当前总宽度 > 目标总宽度
+            If result(index) > 最小宽度(index) Then
+                result(index) -= 1
+                当前总宽度 -= 1
+            End If
+            index = If(index = 0, result.Length - 1, index - 1)
+        End While
+
+        Return result
+    End Function
+
+    Private Shared Function 缩放宽度(value As Integer, dpi As Single) As Integer
+        Return Math.Max(1, CInt(Math.Round(value * dpi)))
+    End Function
+
+    Private Sub 设置列宽(columnIndex As Integer, width As Integer)
+        If UltraDetailListView1.Columns(columnIndex).Width <> width Then UltraDetailListView1.Columns(columnIndex).Width = width
     End Sub
 End Class

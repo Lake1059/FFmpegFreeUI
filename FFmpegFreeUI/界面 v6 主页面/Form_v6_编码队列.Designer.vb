@@ -51,8 +51,8 @@ Partial Class Form_v6_编码队列
         ' 
         ' 任务菜单
         ' 
-        任务菜单.BackdropBlurPasses = 1
-        任务菜单.BackdropBlurRadius = 12
+        任务菜单.BackdropBlurPasses = 2
+        任务菜单.BackdropBlurRadius = 30
         任务菜单.BackdropMode = LakeUI.ModernContextMenu.BackdropModeEnum.Auto
         任务菜单.BackdropNoiseOpacity = CByte(0)
         任务菜单.BackdropTintColor = Color.FromArgb(CByte(40), CByte(0), CByte(0), CByte(0))
@@ -73,8 +73,8 @@ Partial Class Form_v6_编码队列
         ' 
         ' 右键菜单
         ' 
-        右键菜单.BackdropBlurPasses = 1
-        右键菜单.BackdropBlurRadius = 12
+        右键菜单.BackdropBlurPasses = 2
+        右键菜单.BackdropBlurRadius = 30
         右键菜单.BackdropMode = LakeUI.ModernContextMenu.BackdropModeEnum.Auto
         右键菜单.BackdropNoiseOpacity = CByte(0)
         右键菜单.BackdropTintColor = Color.FromArgb(CByte(40), CByte(0), CByte(0), CByte(0))
@@ -305,12 +305,12 @@ Partial Class Form_v6_编码队列
         ListColumn3.Width = 80
         ListColumn4.Text = "效率"
         ListColumn4.Width = 80
-        ListColumn5.Text = "输出大小 - 预估"
+        ListColumn5.Text = "大小/预估"
         ListColumn5.Width = 150
         ListColumn6.Text = "质量"
         ListColumn6.Width = 80
         ListColumn7.Text = "比特率"
-        ListColumn8.Text = "预计剩余时间 - 已用"
+        ListColumn8.Text = "剩余/已用"
         UltraDetailListView1.Columns.Add(ListColumn1)
         UltraDetailListView1.Columns.Add(ListColumn2)
         UltraDetailListView1.Columns.Add(ListColumn3)

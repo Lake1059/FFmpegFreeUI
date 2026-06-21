@@ -62,6 +62,8 @@ Partial Class Form_v6_参数面板_参数总览
         ModernTextBox1.Dock = DockStyle.Fill
         ModernTextBox1.Font = New Font("Microsoft YaHei UI", 11F)
         ModernTextBox1.LineHeight = 20
+        ModernTextBox1.LineNumberBackColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        ModernTextBox1.LineNumberForeColor = Color.Silver
         ModernTextBox1.Location = New Point(20, 60)
         ModernTextBox1.Margin = New Padding(2)
         ModernTextBox1.MultiLine = True
@@ -69,6 +71,7 @@ Partial Class Form_v6_参数面板_参数总览
         ModernTextBox1.Padding = New Padding(12, 10, 12, 10)
         ModernTextBox1.ReadOnly = True
         ModernTextBox1.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        ModernTextBox1.ShowLineNumbers = True
         ModernTextBox1.Size = New Size(340, 481)
         ModernTextBox1.TabIndex = 1
         ModernTextBox1.Text = "ModernTextBox1"

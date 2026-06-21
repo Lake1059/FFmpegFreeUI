@@ -56,13 +56,16 @@ Partial Class Form_v6_参数面板_在位置插入参数
         ModernTextBox1.BorderRadius = 10
         ModernTextBox1.BorderSize = 0
         ModernTextBox1.Dock = DockStyle.Top
+        ModernTextBox1.LineNumberBackColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        ModernTextBox1.LineNumberForeColor = Color.Silver
         ModernTextBox1.Location = New Point(20, 55)
         ModernTextBox1.Margin = New Padding(2)
         ModernTextBox1.MultiLine = True
         ModernTextBox1.Name = "ModernTextBox1"
         ModernTextBox1.Padding = New Padding(15, 10, 15, 10)
-        ModernTextBox1.Size = New Size(726, 89)
         ModernTextBox1.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        ModernTextBox1.ShowLineNumbers = True
+        ModernTextBox1.Size = New Size(726, 89)
         ModernTextBox1.TabIndex = 11
         ModernTextBox1.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ' 
@@ -88,13 +91,16 @@ Partial Class Form_v6_参数面板_在位置插入参数
         ModernTextBox2.BorderRadius = 10
         ModernTextBox2.BorderSize = 0
         ModernTextBox2.Dock = DockStyle.Top
+        ModernTextBox2.LineNumberBackColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        ModernTextBox2.LineNumberForeColor = Color.Silver
         ModernTextBox2.Location = New Point(20, 199)
         ModernTextBox2.Margin = New Padding(2)
         ModernTextBox2.MultiLine = True
         ModernTextBox2.Name = "ModernTextBox2"
         ModernTextBox2.Padding = New Padding(15, 10, 15, 10)
-        ModernTextBox2.Size = New Size(726, 89)
         ModernTextBox2.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        ModernTextBox2.ShowLineNumbers = True
+        ModernTextBox2.Size = New Size(726, 89)
         ModernTextBox2.TabIndex = 13
         ModernTextBox2.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ' 
@@ -120,13 +126,16 @@ Partial Class Form_v6_参数面板_在位置插入参数
         ModernTextBox3.BorderRadius = 10
         ModernTextBox3.BorderSize = 0
         ModernTextBox3.Dock = DockStyle.Top
+        ModernTextBox3.LineNumberBackColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        ModernTextBox3.LineNumberForeColor = Color.Silver
         ModernTextBox3.Location = New Point(20, 343)
         ModernTextBox3.Margin = New Padding(2)
         ModernTextBox3.MultiLine = True
         ModernTextBox3.Name = "ModernTextBox3"
         ModernTextBox3.Padding = New Padding(15, 10, 15, 10)
-        ModernTextBox3.Size = New Size(726, 89)
         ModernTextBox3.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        ModernTextBox3.ShowLineNumbers = True
+        ModernTextBox3.Size = New Size(726, 89)
         ModernTextBox3.TabIndex = 15
         ModernTextBox3.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ' 
@@ -138,13 +147,16 @@ Partial Class Form_v6_参数面板_在位置插入参数
         ModernTextBox4.BorderRadius = 10
         ModernTextBox4.BorderSize = 0
         ModernTextBox4.Dock = DockStyle.Top
+        ModernTextBox4.LineNumberBackColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        ModernTextBox4.LineNumberForeColor = Color.Silver
         ModernTextBox4.Location = New Point(20, 487)
         ModernTextBox4.Margin = New Padding(2)
         ModernTextBox4.MultiLine = True
         ModernTextBox4.Name = "ModernTextBox4"
         ModernTextBox4.Padding = New Padding(15, 10, 15, 10)
-        ModernTextBox4.Size = New Size(726, 89)
         ModernTextBox4.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        ModernTextBox4.ShowLineNumbers = True
+        ModernTextBox4.Size = New Size(726, 89)
         ModernTextBox4.TabIndex = 17
         ModernTextBox4.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ' 
@@ -178,7 +190,6 @@ Partial Class Form_v6_参数面板_在位置插入参数
         ModernPanel1.Location = New Point(0, 0)
         ModernPanel1.Name = "ModernPanel1"
         ModernPanel1.Padding = New Padding(20)
-        ModernPanel1.ScrollBarMode = LakeUI.ModernPanel.ScrollMode.None
         ModernPanel1.Size = New Size(766, 642)
         ModernPanel1.TabIndex = 18
         ' 

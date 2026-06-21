@@ -29,7 +29,7 @@ Public Class 旧版兼容编码队列展示策略_v6
                 item.SubItems(4).ForeColor = rowColor
 
             Case 编码任务状态_v6.正在处理
-                If 输出大小过大(task) Then item.SubItems(4).ForeColor = Color.IndianRed
+                If 输出大小过大(task) Then item.SubItems(4).ForeColor = 界面配色_v6.错误文本色
 
             Case 编码任务状态_v6.已完成
                 item.SubItems(2).Text = "100%"
@@ -38,7 +38,7 @@ Public Class 旧版兼容编码队列展示策略_v6
                 item.SubItems(7).Text = "耗时 " & 格式化旧版耗时(task.任务耗时计时器.Elapsed)
 
             Case 编码任务状态_v6.已暂停
-                If 输出大小过大(task) OrElse item.SubItems(4).ForeColor = Color.IndianRed Then item.SubItems(4).ForeColor = Color.IndianRed
+                If 输出大小过大(task) OrElse item.SubItems(4).ForeColor = 界面配色_v6.错误文本色 Then item.SubItems(4).ForeColor = 界面配色_v6.错误文本色
 
             Case 编码任务状态_v6.已停止, 编码任务状态_v6.错误
                 item.SubItems(5).Text = ""
@@ -83,7 +83,7 @@ Public Class 旧版兼容编码队列展示策略_v6
             Case 编码任务状态_v6.正在处理 : Return Color.YellowGreen
             Case 编码任务状态_v6.已暂停 : Return Color.Goldenrod
             Case 编码任务状态_v6.已完成 : Return Color.FromArgb(210, 132, 184, 72)
-            Case 编码任务状态_v6.已停止, 编码任务状态_v6.错误 : Return Color.IndianRed
+            Case 编码任务状态_v6.已停止, 编码任务状态_v6.错误 : Return 界面配色_v6.错误文本色
             Case Else : Return Color.Silver
         End Select
     End Function
@@ -106,7 +106,7 @@ Public Class 旧版兼容编码队列展示策略_v6
             If inputSize > 0 Then
                 Dim ratio = outputSize / inputSize
                 item.SubItems(4).Text = $"{sizeText} ({ratio * 100:F0}%)"
-                item.SubItems(4).ForeColor = If(ratio >= 1, Color.IndianRed, rowColor)
+                item.SubItems(4).ForeColor = If(ratio >= 1, 界面配色_v6.错误文本色, rowColor)
             Else
                 item.SubItems(4).Text = sizeText
             End If
@@ -141,7 +141,7 @@ Public Class 旧版兼容编码队列展示策略_v6
         If text = "" Then Exit Sub
         Dim color As Color
         If task.最新底部日志是否错误 Then
-            color = Color.IndianRed
+            color = 界面配色_v6.错误文本色
         Else
             color = Color.FromArgb(150, 220, 220, 220)
         End If

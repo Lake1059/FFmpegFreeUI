@@ -113,12 +113,15 @@ Partial Class Form_v6_参数面板_质量
         ModernTextBox6.BorderRadius = 10
         ModernTextBox6.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
         ModernTextBox6.Dock = DockStyle.Fill
+        ModernTextBox6.LineNumberBackColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        ModernTextBox6.LineNumberForeColor = Color.Silver
         ModernTextBox6.Location = New Point(20, 383)
         ModernTextBox6.Margin = New Padding(2)
         ModernTextBox6.MultiLine = True
         ModernTextBox6.Name = "ModernTextBox6"
         ModernTextBox6.Padding = New Padding(13, 10, 13, 10)
         ModernTextBox6.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        ModernTextBox6.ShowLineNumbers = True
         ModernTextBox6.Size = New Size(807, 273)
         ModernTextBox6.TabIndex = 17
         ModernTextBox6.WaterText = "如果要写滤镜，请用滤镜排序功能，现在强制使用滤镜图，单独写必报错"

@@ -142,7 +142,7 @@ Public Class Form_v6_媒体流选择器
             If s.分辨率 <> "" Then text &= " | " & s.分辨率
             If s.帧率 <> "" Then text &= " | " & s.帧率
             If s.比特率 <> "" Then text &= " | " & s.比特率
-            添加流复选框(列表控件, 视频复选框, text, i, 视频全选 OrElse 视频已选.Contains(i), Color.CornflowerBlue)
+            添加流复选框(列表控件, 视频复选框, text, s.元数据标题, i, 视频全选 OrElse 视频已选.Contains(i), Color.CornflowerBlue)
         Next
 
         添加分组(列表控件, "音频流")
@@ -152,14 +152,14 @@ Public Class Form_v6_媒体流选择器
             If s.声道布局 <> "" Then text &= " | " & s.声道布局
             If s.采样率 <> "" Then text &= " | " & s.采样率
             If s.比特率 <> "" Then text &= " | " & s.比特率
-            添加流复选框(列表控件, 音频复选框, text, i, 音频全选 OrElse 音频已选.Contains(i), Color.MediumPurple)
+            添加流复选框(列表控件, 音频复选框, text, s.元数据标题, i, 音频全选 OrElse 音频已选.Contains(i), Color.MediumPurple)
         Next
 
         添加分组(列表控件, "字幕流")
         For i = 0 To info.字幕流.Count - 1
             Dim s = info.字幕流(i)
             Dim text = $"{文件索引}:s:{i}  {If(s.流语言 <> "", "[" & s.流语言 & "] ", "")}{s.编码器}"
-            添加流复选框(列表控件, 字幕复选框, text, i, 字幕全选 OrElse 字幕已选.Contains(i), Color.OliveDrab)
+            添加流复选框(列表控件, 字幕复选框, text, s.元数据标题, i, 字幕全选 OrElse 字幕已选.Contains(i), Color.OliveDrab)
         Next
 
         呈现列表控件(列表控件)
@@ -183,18 +183,22 @@ Public Class Form_v6_媒体流选择器
         }
     End Function
 
-    Private Sub 添加流复选框(目标控件 As List(Of Control), list As List(Of ModernCheckBox), text As String, index As Integer, checked As Boolean, Optional 选中颜色 As Color = Nothing)
+    Private Sub 添加流复选框(目标控件 As List(Of Control), list As List(Of ModernCheckBox), text As String, subText As String, index As Integer, checked As Boolean, Optional 选中颜色 As Color = Nothing)
         If 选中颜色.IsEmpty Then 选中颜色 = ForeColor
         Dim cb As New ModernCheckBox With {
             .AllowDrop = True,
             .AutoSize = True,
             .Text = text,
+            .SubText = subText,
+            .SubTextForeColor = Color.FromArgb(120, 255, 255, 255),
+            .MainSubTextSpacing = 3,
             .Tag = index,
             .Checked = checked,
             .ClickAnywhere = True,
             .BoxBorderRadius = 5,
             .BoxBorderSize = 0,
             .BoxCheckedBackColor = 选中颜色,
+            .BoxUncheckedBackColor = Color.FromArgb(40, 220, 220, 220),
             .BoxInnerPadding = 6,
             .BoxSize = 22,
             .BoxTextSpacing = 10,

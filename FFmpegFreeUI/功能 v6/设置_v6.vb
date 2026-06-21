@@ -26,8 +26,6 @@ Public Class 设置_v6
     Public Property 界面修正_选项卡文字增加左侧空格 As Integer = 0
     Public Property 界面修正_增加使用文字渲染尺寸来调节的标签的尺寸 As Integer = 0
     Public Property 界面修正_校准列表视图的项高度 As Integer = 0
-    Public Property 界面修正_编码队列的列宽调整逻辑 As Integer = 0
-    Public Property 编码队列的列宽调整逻辑 As Integer = 0
 
     Public Property 指定处理器核心 As String = ""
     Public Property 自动同时运行任务数量选项 As Integer = 0
@@ -133,8 +131,6 @@ Public Class 设置_v6
         Form_v6_设置_LakeUI视觉体验.MCB_窗口样式.SelectedIndex = 实例对象.窗口样式
         Form_v6_设置_LakeUI视觉体验.MCB_性能计数器.SelectedIndex = 实例对象.启用性能计数器
 
-        Form_v6_设置_界面显示.MCB_编码队列列宽调整模式.SelectedIndex = 实例对象.编码队列的列宽调整逻辑
-
         Form_v6_设置_性能调度.MTB_处理器线程.Text = 实例对象.指定处理器核心
         Form_v6_设置_性能调度.MCB_自动开始数量.SelectedIndex = 实例对象.自动同时运行任务数量选项
         Form_v6_设置_性能调度.MCB_编码队列刷新速度.SelectedIndex = 实例对象.编码队列刷新速度
@@ -195,7 +191,10 @@ Public Class 设置_v6
             Form_v6_起始页面.HtmlColorLabel1.Text &= "<br>" & 起始页面顶栏副标题
         End If
 
-        If Not SP_UnLock Then Exit Sub
+        If Not SP_UnLock Then
+            FormMain_v6.Icon = Icon.FromHandle(My.Resources.Resource1.AppIcon.GetHicon())
+            Exit Sub
+        End If
 
         Form_v6_设置_个性化.HtmlColorLabel1.Text = "感谢您支持 FFmpegFreeUI Supporter Pack"
         Form_v6_设置_个性化.Panel4.Visible = False
@@ -222,11 +221,6 @@ Public Class 设置_v6
             Using doc = JsonDocument.Parse(设置文本)
                 Dim root = doc.RootElement
 
-                Dim intValue As Integer
-                If 读取整数(root, "界面修正_编码队列的列宽调整逻辑", intValue) AndAlso 实例对象.编码队列的列宽调整逻辑 = 0 Then
-                    实例对象.编码队列的列宽调整逻辑 = intValue
-                End If
-
                 Dim textValue As String = ""
                 If String.IsNullOrWhiteSpace(实例对象.SP_窗口标题文字) AndAlso 读取文本(root, "个性化_窗口标题栏", textValue) Then 实例对象.SP_窗口标题文字 = textValue
                 If String.IsNullOrWhiteSpace(实例对象.SP_起始页面顶栏标题) AndAlso 读取文本(root, "个性化_起始页标题", textValue) Then 实例对象.SP_起始页面顶栏标题 = textValue
@@ -235,13 +229,6 @@ Public Class 设置_v6
         Catch
         End Try
     End Sub
-
-    Private Shared Function 读取整数(root As JsonElement, name As String, ByRef value As Integer) As Boolean
-        Dim element As JsonElement
-        If Not root.TryGetProperty(name, element) Then Return False
-        If element.ValueKind <> JsonValueKind.Number Then Return False
-        Return element.TryGetInt32(value)
-    End Function
 
     Private Shared Function 读取文本(root As JsonElement, name As String, ByRef value As String) As Boolean
         Dim element As JsonElement

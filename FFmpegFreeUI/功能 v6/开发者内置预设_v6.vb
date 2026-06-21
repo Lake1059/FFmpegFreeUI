@@ -14,6 +14,7 @@ Public Class 开发者内置预设_v6
     End Class
 
     <CodeAnalysis.SuppressMessage("Style", "IDE0017:简化对象初始化", Justification:="<挂起>")>
+    <CodeAnalysis.SuppressMessage("Performance", "CA1861:不要将常量数组作为参数", Justification:="<挂起>")>
     Public Shared Function 获取全部() As List(Of 预设项)
         Dim result As New List(Of 预设项)
 
@@ -109,6 +110,21 @@ Public Class 开发者内置预设_v6
         AVIF_AOMAV1.视频参数_质量控制_值 = "18"
         AVIF_AOMAV1.视频参数_质量控制_进阶参数集 = "-aom-params tune=iq -b:v 0 -still-picture 1 -row-mt 1"
         result.Add(New 预设项("AVIF 高压缩图片 AOM AV1", AVIF_AOMAV1))
+
+        Dim WindowsICO As New 预设数据_v6
+        WindowsICO.预设备注 = "从一张图片生成符合 Windows 使用习惯的多尺寸 ICO，内含 16、24、32、48、64、128、256 七个尺寸。小尺寸使用 BMP + BGRA 保留透明通道，256 尺寸使用 PNG + RGBA 压缩体积；非正方形输入会等比缩放并透明补边。"
+        WindowsICO.输出容器 = ".ico"
+        WindowsICO.自定义参数_完全自己写 = String.Join(" ", New String() {
+            "-hide_banner -y",
+            "-i ""<InputFile>""",
+            "-filter_complex ""[0:v]split=7[s16][s24][s32][s48][s64][s128][s256];[s16]scale=w=16:h=16:force_original_aspect_ratio=decrease:flags=lanczos,pad=16:16:(ow-iw)/2:(oh-ih)/2:color=black@0,format=bgra[v16];[s24]scale=w=24:h=24:force_original_aspect_ratio=decrease:flags=lanczos,pad=24:24:(ow-iw)/2:(oh-ih)/2:color=black@0,format=bgra[v24];[s32]scale=w=32:h=32:force_original_aspect_ratio=decrease:flags=lanczos,pad=32:32:(ow-iw)/2:(oh-ih)/2:color=black@0,format=bgra[v32];[s48]scale=w=48:h=48:force_original_aspect_ratio=decrease:flags=lanczos,pad=48:48:(ow-iw)/2:(oh-ih)/2:color=black@0,format=bgra[v48];[s64]scale=w=64:h=64:force_original_aspect_ratio=decrease:flags=lanczos,pad=64:64:(ow-iw)/2:(oh-ih)/2:color=black@0,format=bgra[v64];[s128]scale=w=128:h=128:force_original_aspect_ratio=decrease:flags=lanczos,pad=128:128:(ow-iw)/2:(oh-ih)/2:color=black@0,format=bgra[v128];[s256]scale=w=256:h=256:force_original_aspect_ratio=decrease:flags=lanczos,pad=256:256:(ow-iw)/2:(oh-ih)/2:color=black@0,format=rgba[v256]""",
+            "-map ""[v16]"" -map ""[v24]"" -map ""[v32]"" -map ""[v48]"" -map ""[v64]"" -map ""[v128]"" -map ""[v256]""",
+            "-frames:v 1",
+            "-c:v:0 bmp -c:v:1 bmp -c:v:2 bmp -c:v:3 bmp -c:v:4 bmp -c:v:5 bmp -c:v:6 png",
+            "-f ico",
+            """<OutputFile>"""
+        })
+        result.Add(New 预设项("Windows 标准多尺寸 ICO 图标", WindowsICO))
 
 
         Return result

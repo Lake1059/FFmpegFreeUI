@@ -52,12 +52,15 @@ Partial Class Form_v6_参数面板_流自定义参数
         ModernTextBox1.BorderColorFocus = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
         ModernTextBox1.BorderRadius = 10
         ModernTextBox1.Dock = DockStyle.Top
+        ModernTextBox1.LineNumberBackColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        ModernTextBox1.LineNumberForeColor = Color.Silver
         ModernTextBox1.Location = New Point(20, 55)
         ModernTextBox1.Margin = New Padding(2)
         ModernTextBox1.MultiLine = True
         ModernTextBox1.Name = "ModernTextBox1"
         ModernTextBox1.Padding = New Padding(15, 10, 15, 10)
         ModernTextBox1.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        ModernTextBox1.ShowLineNumbers = True
         ModernTextBox1.Size = New Size(722, 256)
         ModernTextBox1.TabIndex = 10
         ModernTextBox1.WaterText = "拼接在已生成部分的末尾，图片参数也是用这个"
@@ -98,12 +101,15 @@ Partial Class Form_v6_参数面板_流自定义参数
         ModernTextBox2.BorderColorFocus = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
         ModernTextBox2.BorderRadius = 10
         ModernTextBox2.Dock = DockStyle.Fill
+        ModernTextBox2.LineNumberBackColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        ModernTextBox2.LineNumberForeColor = Color.Silver
         ModernTextBox2.Location = New Point(20, 366)
         ModernTextBox2.Margin = New Padding(2)
         ModernTextBox2.MultiLine = True
         ModernTextBox2.Name = "ModernTextBox2"
         ModernTextBox2.Padding = New Padding(15, 10, 15, 10)
         ModernTextBox2.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        ModernTextBox2.ShowLineNumbers = True
         ModernTextBox2.Size = New Size(722, 192)
         ModernTextBox2.TabIndex = 13
         ModernTextBox2.WaterText = "拼接在已生成部分的末尾"
@@ -122,7 +128,6 @@ Partial Class Form_v6_参数面板_流自定义参数
         ModernPanel1.Location = New Point(0, 0)
         ModernPanel1.Name = "ModernPanel1"
         ModernPanel1.Padding = New Padding(20)
-        ModernPanel1.ScrollBarMode = LakeUI.ModernPanel.ScrollMode.None
         ModernPanel1.Size = New Size(762, 623)
         ModernPanel1.TabIndex = 14
         ' 

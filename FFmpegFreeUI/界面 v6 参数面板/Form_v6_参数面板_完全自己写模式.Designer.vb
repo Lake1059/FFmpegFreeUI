@@ -55,6 +55,8 @@ Partial Class Form_v6_参数面板_完全自己写模式
         ModernTextBox1.BorderColorFocus = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
         ModernTextBox1.BorderRadius = 10
         ModernTextBox1.Dock = DockStyle.Fill
+        ModernTextBox1.LineNumberBackColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        ModernTextBox1.LineNumberForeColor = Color.Silver
         ModernTextBox1.Location = New Point(20, 173)
         ModernTextBox1.Margin = New Padding(2)
         ModernTextBox1.MultiLine = True
@@ -63,8 +65,9 @@ Partial Class Form_v6_参数面板_完全自己写模式
         ModernTextBox1.ScrollBarColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernTextBox1.ScrollBarHoverColor = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
         ModernTextBox1.ScrollBarTrackColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
-        ModernTextBox1.Size = New Size(770, 471)
         ModernTextBox1.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        ModernTextBox1.ShowLineNumbers = True
+        ModernTextBox1.Size = New Size(770, 471)
         ModernTextBox1.TabIndex = 11
         ModernTextBox1.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ' 
@@ -144,7 +147,6 @@ Partial Class Form_v6_参数面板_完全自己写模式
         ModernPanel1.Location = New Point(0, 0)
         ModernPanel1.Name = "ModernPanel1"
         ModernPanel1.Padding = New Padding(20)
-        ModernPanel1.ScrollBarMode = LakeUI.ModernPanel.ScrollMode.None
         ModernPanel1.Size = New Size(810, 664)
         ModernPanel1.TabIndex = 16
         ' 

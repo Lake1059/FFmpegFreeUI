@@ -555,7 +555,7 @@ Partial Class Form_v6_参数面板_输出文件设置
         MTB_后缀.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MTB_后缀.Size = New Size(100, 32)
         MTB_后缀.TabIndex = 3
-        MTB_后缀.WaterText = "输入后缀"
+        MTB_后缀.WaterText = "后缀"
         MTB_后缀.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ' 
         ' JustEmptyControl1

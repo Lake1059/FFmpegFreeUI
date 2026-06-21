@@ -23,14 +23,10 @@ Partial Class Form_v6_设置_界面显示
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         ModernPanel1 = New LakeUI.ModernPanel()
-        Panel1 = New Panel()
-        MCB_编码队列列宽调整模式 = New LakeUI.ModernComboBox()
-        HtmlColorLabel2 = New LakeUI.HtmlColorLabel()
         Panel2 = New Panel()
         MCB_全局字体 = New LakeUI.ModernComboBox()
         HtmlColorLabel1 = New LakeUI.HtmlColorLabel()
         ModernPanel1.SuspendLayout()
-        Panel1.SuspendLayout()
         Panel2.SuspendLayout()
         SuspendLayout()
         ' 
@@ -38,8 +34,6 @@ Partial Class Form_v6_设置_界面显示
         ' 
         ModernPanel1.BackColor1 = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         ModernPanel1.BorderSize = 0
-        ModernPanel1.Controls.Add(Panel1)
-        ModernPanel1.Controls.Add(HtmlColorLabel2)
         ModernPanel1.Controls.Add(Panel2)
         ModernPanel1.Controls.Add(HtmlColorLabel1)
         ModernPanel1.Dock = DockStyle.Fill
@@ -49,57 +43,6 @@ Partial Class Form_v6_设置_界面显示
         ModernPanel1.ScrollBarMode = LakeUI.ModernPanel.ScrollMode.Vertical
         ModernPanel1.Size = New Size(752, 625)
         ModernPanel1.TabIndex = 0
-        ' 
-        ' Panel1
-        ' 
-        Panel1.Controls.Add(MCB_编码队列列宽调整模式)
-        Panel1.Dock = DockStyle.Top
-        Panel1.Location = New Point(20, 132)
-        Panel1.Name = "Panel1"
-        Panel1.Padding = New Padding(0, 10, 0, 0)
-        Panel1.Size = New Size(712, 42)
-        Panel1.TabIndex = 13
-        ' 
-        ' MCB_编码队列列宽调整模式
-        ' 
-        MCB_编码队列列宽调整模式.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        MCB_编码队列列宽调整模式.BorderRadius = 10
-        MCB_编码队列列宽调整模式.BorderSize = 0
-        MCB_编码队列列宽调整模式.Dock = DockStyle.Left
-        MCB_编码队列列宽调整模式.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
-        MCB_编码队列列宽调整模式.DropDownHoverAnimationDuration = 0
-        MCB_编码队列列宽调整模式.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
-        MCB_编码队列列宽调整模式.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
-        MCB_编码队列列宽调整模式.DropDownPadding = New Padding(10)
-        MCB_编码队列列宽调整模式.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        MCB_编码队列列宽调整模式.DropDownSelectedForeColor = Color.White
-        MCB_编码队列列宽调整模式.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
-        MCB_编码队列列宽调整模式.Items.Add("DPI（控件默认行为）")
-        MCB_编码队列列宽调整模式.Items.Add("百分比（计算比例）")
-        MCB_编码队列列宽调整模式.Location = New Point(0, 10)
-        MCB_编码队列列宽调整模式.Margin = New Padding(2, 2, 2, 2)
-        MCB_编码队列列宽调整模式.MaxDropDownItems = 15
-        MCB_编码队列列宽调整模式.Name = "MCB_编码队列列宽调整模式"
-        MCB_编码队列列宽调整模式.Padding = New Padding(10, 0, 10, 0)
-        MCB_编码队列列宽调整模式.Size = New Size(200, 32)
-        MCB_编码队列列宽调整模式.TabIndex = 0
-        MCB_编码队列列宽调整模式.ToolTipGap = -1
-        MCB_编码队列列宽调整模式.ToolTipMaxWidth = 350
-        MCB_编码队列列宽调整模式.ToolTipPadding = New Padding(15)
-        MCB_编码队列列宽调整模式.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        ' 
-        ' HtmlColorLabel2
-        ' 
-        HtmlColorLabel2.AutoSize = True
-        HtmlColorLabel2.AutoSizeMode = AutoSizeMode.GrowAndShrink
-        HtmlColorLabel2.Dock = DockStyle.Top
-        HtmlColorLabel2.Location = New Point(20, 87)
-        HtmlColorLabel2.Margin = New Padding(2)
-        HtmlColorLabel2.Name = "HtmlColorLabel2"
-        HtmlColorLabel2.Padding = New Padding(0, 20, 0, 0)
-        HtmlColorLabel2.Size = New Size(712, 45)
-        HtmlColorLabel2.TabIndex = 12
-        HtmlColorLabel2.Text = "<span style=""font-size:13"">编码队列 - 列宽调整模式</span>"
         ' 
         ' Panel2
         ' 
@@ -163,7 +106,6 @@ Partial Class Form_v6_设置_界面显示
         Text = "Form_v6_设置_界面显示"
         ModernPanel1.ResumeLayout(False)
         ModernPanel1.PerformLayout()
-        Panel1.ResumeLayout(False)
         Panel2.ResumeLayout(False)
         ResumeLayout(False)
     End Sub
@@ -172,7 +114,4 @@ Partial Class Form_v6_设置_界面显示
     Friend WithEvents HtmlColorLabel1 As LakeUI.HtmlColorLabel
     Friend WithEvents Panel2 As Panel
     Friend WithEvents MCB_全局字体 As LakeUI.ModernComboBox
-    Friend WithEvents HtmlColorLabel2 As LakeUI.HtmlColorLabel
-    Friend WithEvents Panel1 As Panel
-    Friend WithEvents MCB_编码队列列宽调整模式 As LakeUI.ModernComboBox
 End Class

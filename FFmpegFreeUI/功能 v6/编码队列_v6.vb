@@ -9,6 +9,8 @@ Public Class 编码队列_v6
     Private Shared ReadOnly 队列锁 As New Object
     Private Shared 调度中 As Boolean = False
     Private Shared 全部任务已完成是否有错误 As Boolean = False
+    Private Shared ReadOnly FFmpeg状态进度输出正则 As New Regex("^\s*(?:frame|size)\s*=\s*\S+.*\b(?:time|bitrate|speed)\s*=", RegexOptions.Compiled Or RegexOptions.IgnoreCase)
+    Private Shared ReadOnly FFmpegProgress键值输出正则 As New Regex("^\s*(?:frame|fps|stream_\d+_\d+_q|bitrate|total_size|out_time(?:_ms|_us)?|dup_frames|drop_frames|speed|progress)\s*=", RegexOptions.Compiled Or RegexOptions.IgnoreCase)
 
     Public Shared Event 队列已变化()
     Public Shared Event 任务已更新(任务 As 编码任务_v6)
@@ -41,6 +43,11 @@ Public Class 编码队列_v6
     Public Shared Function 是否错误输出(line As String) As Boolean
         If String.IsNullOrEmpty(line) Then Return False
         Return 错误输出匹配字符串列表.Any(Function(keyword) line.Contains(keyword, StringComparison.OrdinalIgnoreCase))
+    End Function
+
+    Public Shared Function 是否进度输出(line As String) As Boolean
+        If String.IsNullOrWhiteSpace(line) Then Return False
+        Return FFmpeg状态进度输出正则.IsMatch(line) OrElse FFmpegProgress键值输出正则.IsMatch(line)
     End Function
 
     Public Shared Function 应用任务名称混淆(原始任务名称 As String) As String
@@ -856,8 +863,7 @@ Public Class 编码任务_v6
         stepItem.输出缓存.Add(line)
         If stepItem.输出缓存.Count > 2000 Then stepItem.输出缓存.RemoveRange(0, stepItem.输出缓存.Count - 1000)
         If line.Contains("Duration:", StringComparison.OrdinalIgnoreCase) Then 进度.解析FFmpeg输出(line, 计算当前总时长())
-        Dim trimmedLine = line.TrimStart()
-        Dim isProgressLine = trimmedLine.StartsWith("frame=", StringComparison.OrdinalIgnoreCase) OrElse trimmedLine.StartsWith("size=", StringComparison.OrdinalIgnoreCase)
+        Dim isProgressLine = 编码队列_v6.是否进度输出(line)
         If isProgressLine Then
             进度.解析FFmpeg输出(line, 计算当前总时长())
         End If
@@ -1118,7 +1124,7 @@ Public Class 编码进度_v6
         If sp.Success Then
             Dim speed As Double
             If Double.TryParse(sp.Groups("value").Value, NumberStyles.Any, CultureInfo.InvariantCulture, speed) Then
-                效率文本 = $"{speed * 100:F0}%"
+                效率文本 = 格式化效率文本(speed)
                 If 总时长.TotalSeconds > 0 AndAlso 当前时间.TotalSeconds > 0 AndAlso speed > 0 Then
                     Dim remain = Math.Max(0, (总时长.TotalSeconds - 当前时间.TotalSeconds) / speed)
                     时间文本 = 格式化秒(remain)
@@ -1134,9 +1140,15 @@ Public Class 编码进度_v6
         Return q.ToString("F0", CultureInfo.InvariantCulture)
     End Function
 
+    Private Shared Function 格式化效率文本(speed As Double) As String
+        If speed * 100 >= 10000 Then Return speed.ToString("F0", CultureInfo.InvariantCulture) & "x"
+        Return $"{speed * 100:F0}%"
+    End Function
+
     Private Shared Function 格式化比特率文本(value As String) As String
         Dim bitrate As Double
         If Not Double.TryParse(value, NumberStyles.Any, CultureInfo.InvariantCulture, bitrate) Then Return If(value, "") & " kbps"
+        If bitrate >= 10000 Then Return (bitrate / 1000).ToString("F2", CultureInfo.InvariantCulture) & " Mbps"
         Return bitrate.ToString("F0", CultureInfo.InvariantCulture) & " kbps"
     End Function
 

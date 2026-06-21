@@ -6,7 +6,7 @@ Public Class FFmpeg输出语法高亮器_v6
 
     Public Shared ReadOnly 默认实例 As New FFmpeg输出语法高亮器_v6()
 
-    Private Shared ReadOnly 颜色_错误 As Color = Color.FromArgb(232, 116, 116)
+    Private Shared ReadOnly 颜色_错误 As Color = 界面配色_v6.错误文本色
     Private Shared ReadOnly 颜色_警告 As Color = Color.FromArgb(215, 174, 101)
     Private Shared ReadOnly 颜色_系统 As Color = Color.FromArgb(132, 170, 232)
     Private Shared ReadOnly 颜色_输入 As Color = Color.FromArgb(142, 205, 156)

@@ -511,7 +511,7 @@ Module Module1
     Public Function 识别FF单行输出并调整文字颜色(单行输出 As String, 默认颜色 As Color) As Color
         If String.IsNullOrEmpty(单行输出) Then Return 默认颜色
         If 编码队列_v6.错误输出匹配字符串列表.Any(Function(keyword) 单行输出.Contains(keyword, StringComparison.OrdinalIgnoreCase)) Then
-            Return Color.IndianRed
+            Return 界面配色_v6.错误文本色
         End If
         Select Case True
             Case 单行输出.Contains("Input #", StringComparison.OrdinalIgnoreCase)
