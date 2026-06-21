@@ -112,7 +112,7 @@ Public Class 音频编码器数据库_v6
             VBR说明:="支持。使用 -q:a 设置 VBR 质量；填写 -b:a 时按目标比特率编码。",
             支持说明:="采样格式：fltp；采样率：7350/8000/11025/12000/16000/22050/24000/32000/44100/48000/64000/88200/96000。"))
 
-        加入编码器(基础("aac.fdk", "FDK AAC", "libfdk_aac", "Fraunhofer FDK AAC，低码率表现好；需要当前 FFmpeg 编译启用 libfdk_aac。",
+        加入编码器(基础("aac.fdk", "FDK AAC", "libfdk_aac", "Fraunhofer FDK AAC，低码率表现好；需要 FFmpeg 构建包含 libfdk_aac。",
             质量参数:=参数列表(参数("-vbr", "0 ~ 5；0=关闭 VBR，1 最低质量/最小体积，5 最高质量/最大体积"), 参数("-b:a", "CBR/ABR 比特率；例如 64k、96k、128k、192k")),
             特殊参数:=参数列表(参数("-afterburner", "0/1", "后处理质量增强，默认 1"), 参数("-signaling", "default/implicit/explicit_sbr/explicit_hierarchical", "SBR/PS 信令；default=自动，implicit=隐式兼容，explicit_sbr=显式 SBR，explicit_hierarchical=显式分层"), 参数("-latm", "0/1", "输出 LATM/LOAS 封装流"), 参数("-frame_length", "-1 或 1024；-1=自动", "AAC 帧长度")),
             VBR说明:="支持。使用 -vbr 1 ~ 5，0 为关闭；也可用 -b:a 走目标比特率。",

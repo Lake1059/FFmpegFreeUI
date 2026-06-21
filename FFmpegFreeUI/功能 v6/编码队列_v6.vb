@@ -797,7 +797,7 @@ Public Class 编码任务_v6
 
     Private Sub 重建编码步骤()
         If 预设数据 Is Nothing Then Exit Sub
-        Dim generated = 预设管理_v6.生成阶段化命令行(预设数据, 输入文件, 输出文件, 媒体总时长)
+        Dim generated = 预设管理_v6.生成阶段化命令行(预设数据, 输入文件, 输出文件, 媒体总时长, ID)
         步骤.Clear()
         For Each item In generated
             If item.阶段 = 预设数据_v6.命令行阶段.FFprobe获取时长 AndAlso Not String.IsNullOrWhiteSpace(媒体总时长) Then Continue For
@@ -806,6 +806,7 @@ Public Class 编码任务_v6
                 .命令行 = item.命令行,
                 .滤镜图 = item.滤镜图,
                 .映射参数 = item.映射参数,
+                .输出滤镜参数 = item.输出滤镜参数,
                 .需要媒体总时长 = item.需要媒体总时长,
                 .说明 = item.说明,
                 .显示名称 = 获取阶段显示名称(item.阶段)
@@ -956,13 +957,13 @@ Public Class 编码任务_v6
         If 预设数据.视频参数_视频帧服务器_使用AviSynth Then
             If Not File.Exists(预设数据.视频参数_视频帧服务器_avs脚本文件) Then Throw New FileNotFoundException("AviSynth 脚本模板文件不存在", 预设数据.视频参数_视频帧服务器_avs脚本文件)
             Dim content = File.ReadAllText(预设数据.视频参数_视频帧服务器_avs脚本文件).Replace("<FilePath>", 输入文件)
-            AviSynthCachePath = Path.Combine(Path.GetDirectoryName(输入文件), Path.GetFileNameWithoutExtension(输入文件) & ".avs")
+            AviSynthCachePath = 预设管理_v6.派生帧服务器脚本路径(输入文件, ".avs", ID)
             File.WriteAllText(AviSynthCachePath, content, New UTF8Encoding(False))
         End If
         If 预设数据.视频参数_视频帧服务器_使用VapourSynth Then
             If Not File.Exists(预设数据.视频参数_视频帧服务器_vpy脚本文件) Then Throw New FileNotFoundException("VapourSynth 脚本模板文件不存在", 预设数据.视频参数_视频帧服务器_vpy脚本文件)
             Dim content = File.ReadAllText(预设数据.视频参数_视频帧服务器_vpy脚本文件).Replace("<FilePath>", 输入文件)
-            VapourSynthCachePath = Path.Combine(Path.GetDirectoryName(输入文件), Path.GetFileNameWithoutExtension(输入文件) & Path.GetExtension(预设数据.视频参数_视频帧服务器_vpy脚本文件))
+            VapourSynthCachePath = 预设管理_v6.派生帧服务器脚本路径(输入文件, Path.GetExtension(预设数据.视频参数_视频帧服务器_vpy脚本文件), ID)
             File.WriteAllText(VapourSynthCachePath, content, New UTF8Encoding(False))
         End If
     End Sub
@@ -1062,6 +1063,7 @@ Public Class 编码步骤_v6
     Public Property 命令行 As String = ""
     Public Property 滤镜图 As String = ""
     Public Property 映射参数 As String = ""
+    Public Property 输出滤镜参数 As String = ""
     Public Property 需要媒体总时长 As Boolean = False
     Public Property 说明 As String = ""
     Public Property 状态 As 编码步骤状态_v6 = 编码步骤状态_v6.未处理

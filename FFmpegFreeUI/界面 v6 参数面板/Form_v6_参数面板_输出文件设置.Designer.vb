@@ -64,8 +64,8 @@ Partial Class Form_v6_参数面板_输出文件设置
         ' 
         ' 后缀菜单
         ' 
-        后缀菜单.BackdropBlurPasses = 1
-        后缀菜单.BackdropBlurRadius = 12
+        后缀菜单.BackdropBlurPasses = 2
+        后缀菜单.BackdropBlurRadius = 30
         后缀菜单.BackdropMode = LakeUI.ModernContextMenu.BackdropModeEnum.Auto
         后缀菜单.BackdropNoiseOpacity = CByte(0)
         后缀菜单.BackdropTintColor = Color.FromArgb(CByte(40), CByte(0), CByte(0), CByte(0))
@@ -87,8 +87,8 @@ Partial Class Form_v6_参数面板_输出文件设置
         ' 
         ' 视频菜单
         ' 
-        视频菜单.BackdropBlurPasses = 1
-        视频菜单.BackdropBlurRadius = 12
+        视频菜单.BackdropBlurPasses = 2
+        视频菜单.BackdropBlurRadius = 30
         视频菜单.BackdropMode = LakeUI.ModernContextMenu.BackdropModeEnum.Auto
         视频菜单.BackdropNoiseOpacity = CByte(0)
         视频菜单.BackdropTintColor = Color.FromArgb(CByte(40), CByte(0), CByte(0), CByte(0))
@@ -109,8 +109,8 @@ Partial Class Form_v6_参数面板_输出文件设置
         ' 
         ' 音频菜单
         ' 
-        音频菜单.BackdropBlurPasses = 1
-        音频菜单.BackdropBlurRadius = 12
+        音频菜单.BackdropBlurPasses = 2
+        音频菜单.BackdropBlurRadius = 30
         音频菜单.BackdropMode = LakeUI.ModernContextMenu.BackdropModeEnum.Auto
         音频菜单.BackdropNoiseOpacity = CByte(0)
         音频菜单.BackdropTintColor = Color.FromArgb(CByte(40), CByte(0), CByte(0), CByte(0))
@@ -131,8 +131,8 @@ Partial Class Form_v6_参数面板_输出文件设置
         ' 
         ' 图片菜单
         ' 
-        图片菜单.BackdropBlurPasses = 1
-        图片菜单.BackdropBlurRadius = 12
+        图片菜单.BackdropBlurPasses = 2
+        图片菜单.BackdropBlurRadius = 30
         图片菜单.BackdropMode = LakeUI.ModernContextMenu.BackdropModeEnum.Auto
         图片菜单.BackdropNoiseOpacity = CByte(0)
         图片菜单.BackdropTintColor = Color.FromArgb(CByte(40), CByte(0), CByte(0), CByte(0))
@@ -402,6 +402,8 @@ Partial Class Form_v6_参数面板_输出文件设置
         MCB_自动命名方式.BorderRadius = 10
         MCB_自动命名方式.BorderSize = 0
         MCB_自动命名方式.Dock = DockStyle.Left
+        MCB_自动命名方式.DropDownBackdropBlurPasses = 2
+        MCB_自动命名方式.DropDownBackdropBlurRadius = 30
         MCB_自动命名方式.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
         MCB_自动命名方式.DropDownHoverAnimationDuration = 0
         MCB_自动命名方式.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
@@ -461,6 +463,8 @@ Partial Class Form_v6_参数面板_输出文件设置
         MCB_输出位置.BorderRadius = 10
         MCB_输出位置.BorderSize = 0
         MCB_输出位置.Dock = DockStyle.Fill
+        MCB_输出位置.DropDownBackdropBlurPasses = 2
+        MCB_输出位置.DropDownBackdropBlurRadius = 30
         MCB_输出位置.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
         MCB_输出位置.DropDownHoverAnimationDuration = 0
         MCB_输出位置.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
@@ -503,6 +507,8 @@ Partial Class Form_v6_参数面板_输出文件设置
         MCB_输出文件参数使用方法.BorderRadius = 10
         MCB_输出文件参数使用方法.BorderSize = 0
         MCB_输出文件参数使用方法.Dock = DockStyle.Fill
+        MCB_输出文件参数使用方法.DropDownBackdropBlurPasses = 2
+        MCB_输出文件参数使用方法.DropDownBackdropBlurRadius = 30
         MCB_输出文件参数使用方法.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
         MCB_输出文件参数使用方法.DropDownHoverAnimationDuration = 0
         MCB_输出文件参数使用方法.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))

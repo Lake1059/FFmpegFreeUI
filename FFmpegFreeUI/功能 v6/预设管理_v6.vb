@@ -14,7 +14,68 @@ Public Class 预设管理_v6
     Private Class 附加输出片段
         Public Property 额外输入 As New List(Of String)
         Public Property 输出前 As New List(Of String)
+        Public Property 包含显式流映射 As Boolean = False
+        Public Property 附加封面图数量 As Integer = 0
+        Public Property 自动混流字幕数量 As Integer = 0
+
+        Public Sub 重设附加封面图视频序号(起始序号 As Integer)
+            If 附加封面图数量 <= 0 Then Exit Sub
+            Dim index = 0
+            For i = 0 To 输出前.Count - 1
+                Dim line = 输出前(i)
+                If line.StartsWith("-c:v:", StringComparison.Ordinal) Then
+                    输出前(i) = $"-c:v:{起始序号 + index} copy"
+                ElseIf line.StartsWith("-disposition:v:", StringComparison.Ordinal) Then
+                    输出前(i) = $"-disposition:v:{起始序号 + index} attached_pic"
+                    index += 1
+                    If index >= 附加封面图数量 Then Exit For
+                End If
+            Next
+        End Sub
+
+        Public Sub 重设自动混流字幕序号(起始序号 As Integer)
+            If 自动混流字幕数量 <= 0 Then Exit Sub
+            Dim index = 0
+            For i = 0 To 输出前.Count - 1
+                Dim line = 输出前(i)
+                If line.StartsWith("-c:s:", StringComparison.Ordinal) Then
+                    Dim firstSpace = line.IndexOf(" "c)
+                    If firstSpace > 0 Then
+                        输出前(i) = $"-c:s:{起始序号 + index}{line.Substring(firstSpace)}"
+                        index += 1
+                        If index >= 自动混流字幕数量 Then Exit For
+                    End If
+                End If
+            Next
+        End Sub
     End Class
+
+    Private Class 剪辑参数片段
+        Public Property 输入前 As String = ""
+        Public Property 输出前 As String = ""
+    End Class
+
+    Private Shared ReadOnly 内置滤镜默认顺序 As New Dictionary(Of 预设数据_v6.滤镜排序单片结构.标识符枚举, Integer) From {
+        {预设数据_v6.滤镜排序单片结构.标识符枚举.像素格式预先转换, 0},
+        {预设数据_v6.滤镜排序单片结构.标识符枚举.裁剪, 100},
+        {预设数据_v6.滤镜排序单片结构.标识符枚举.缩放, 110},
+        {预设数据_v6.滤镜排序单片结构.标识符枚举.抽帧, 120},
+        {预设数据_v6.滤镜排序单片结构.标识符枚举.插帧, 130},
+        {预设数据_v6.滤镜排序单片结构.标识符枚举.动态模糊, 140},
+        {预设数据_v6.滤镜排序单片结构.标识符枚举.超分, 150},
+        {预设数据_v6.滤镜排序单片结构.标识符枚举.降噪, 160},
+        {预设数据_v6.滤镜排序单片结构.标识符枚举.锐化, 170},
+        {预设数据_v6.滤镜排序单片结构.标识符枚举.胶片颗粒, 180},
+        {预设数据_v6.滤镜排序单片结构.标识符枚举.平滑断层, 190},
+        {预设数据_v6.滤镜排序单片结构.标识符枚举.扫描方式, 200},
+        {预设数据_v6.滤镜排序单片结构.标识符枚举.画面翻转, 210},
+        {预设数据_v6.滤镜排序单片结构.标识符枚举.烧录字幕, 220},
+        {预设数据_v6.滤镜排序单片结构.标识符枚举.色彩转换, 300},
+        {预设数据_v6.滤镜排序单片结构.标识符枚举.调色, 310},
+        {预设数据_v6.滤镜排序单片结构.标识符枚举.音频响度标准化, 1000},
+        {预设数据_v6.滤镜排序单片结构.标识符枚举.音频格式转换, 1010},
+        {预设数据_v6.滤镜排序单片结构.标识符枚举.音频重采样, 1020}
+    }
 
     Public Shared ReadOnly Property 音频编码器排序表 As List(Of String)
         Get
@@ -95,6 +156,7 @@ Public Class 预设管理_v6
         If a.视频参数_烧录字幕_描边颜色 Is Nothing Then a.视频参数_烧录字幕_描边颜色 = New 预设数据_v6.烧字幕专用颜色类型
         If a.视频参数_烧录字幕_背景颜色 Is Nothing Then a.视频参数_烧录字幕_背景颜色 = New 预设数据_v6.烧字幕专用颜色类型
         迁移旧自定义滤镜字段到排序系统(a)
+        同步内置滤镜排序数据(a)
     End Sub
 
     Private Shared Sub 迁移旧自定义滤镜字段到排序系统(a As 预设数据_v6)
@@ -130,6 +192,81 @@ Public Class 预设管理_v6
         End If
         a.滤镜排序系统 = 排序.ToArray()
     End Sub
+
+    Private Shared Sub 同步内置滤镜排序数据(a As 预设数据_v6)
+        If a Is Nothing Then Exit Sub
+        Dim 排序 = If(a.滤镜排序系统, Array.Empty(Of 预设数据_v6.滤镜排序单片结构)()).
+            Where(Function(x) x IsNot Nothing).
+            ToList()
+
+        更新内置滤镜排序项(排序, a, 预设数据_v6.滤镜排序单片结构.标识符枚举.裁剪, Not String.IsNullOrWhiteSpace(a.视频参数_分辨率_裁剪滤镜参数))
+        更新内置滤镜排序项(排序, a, 预设数据_v6.滤镜排序单片结构.标识符枚举.缩放, Not String.IsNullOrWhiteSpace(a.视频参数_分辨率) OrElse Not String.IsNullOrWhiteSpace(a.视频参数_分辨率自动计算_宽度) OrElse Not String.IsNullOrWhiteSpace(a.视频参数_分辨率自动计算_高度))
+        更新内置滤镜排序项(排序, a, 预设数据_v6.滤镜排序单片结构.标识符枚举.抽帧, 抽帧参数已设置(a))
+        更新内置滤镜排序项(排序, a, 预设数据_v6.滤镜排序单片结构.标识符枚举.插帧, Not String.IsNullOrWhiteSpace(a.视频参数_插帧_目标帧率))
+        更新内置滤镜排序项(排序, a, 预设数据_v6.滤镜排序单片结构.标识符枚举.动态模糊, Not String.IsNullOrWhiteSpace(a.视频参数_动态模糊_连续混合帧数))
+        更新内置滤镜排序项(排序, a, 预设数据_v6.滤镜排序单片结构.标识符枚举.超分, 超分单片有设置(a.视频参数_超分_直接面板) OrElse a.视频参数_超分_滤镜叠加策略组.Length > 0)
+        更新内置滤镜排序项(排序, a, 预设数据_v6.滤镜排序单片结构.标识符枚举.降噪, a.视频参数_降噪_方式 <> 预设数据_v6.降噪方式.未选择)
+        更新内置滤镜排序项(排序, a, 预设数据_v6.滤镜排序单片结构.标识符枚举.锐化, a.视频参数_锐化_方式 <> 预设数据_v6.锐化方式.未选择)
+        更新内置滤镜排序项(排序, a, 预设数据_v6.滤镜排序单片结构.标识符枚举.胶片颗粒, a.视频参数_胶片颗粒_方式 <> 预设数据_v6.胶片颗粒方式.未选择)
+        更新内置滤镜排序项(排序, a, 预设数据_v6.滤镜排序单片结构.标识符枚举.平滑断层, a.视频参数_平滑断层_方式 <> 预设数据_v6.平滑断层方式.未选择)
+        更新内置滤镜排序项(排序, a, 预设数据_v6.滤镜排序单片结构.标识符枚举.扫描方式, a.视频参数_处理扫描方式 <> 预设数据_v6.扫描方式.未选择)
+        更新内置滤镜排序项(排序, a, 预设数据_v6.滤镜排序单片结构.标识符枚举.画面翻转, a.视频参数_画面翻转_角度翻转 <> 预设数据_v6.画面翻转角度.未选择 OrElse a.视频参数_画面翻转_镜像翻转 <> 预设数据_v6.画面翻转镜像.未选择)
+        更新内置滤镜排序项(排序, a, 预设数据_v6.滤镜排序单片结构.标识符枚举.烧录字幕, 烧字幕滤镜已设置(a))
+        更新内置滤镜排序项(排序, a, 预设数据_v6.滤镜排序单片结构.标识符枚举.像素格式预先转换, Not String.IsNullOrWhiteSpace(a.视频参数_色彩管理_像素格式预先转换))
+        更新内置滤镜排序项(排序, a, 预设数据_v6.滤镜排序单片结构.标识符枚举.色彩转换, 色彩转换滤镜已设置(a))
+        更新内置滤镜排序项(排序, a, 预设数据_v6.滤镜排序单片结构.标识符枚举.调色, a.视频参数_色彩管理_启用调整亮度 OrElse a.视频参数_色彩管理_启用调整对比度 OrElse a.视频参数_色彩管理_启用调整饱和度 OrElse a.视频参数_色彩管理_启用调整伽马)
+        更新内置滤镜排序项(排序, a, 预设数据_v6.滤镜排序单片结构.标识符枚举.音频响度标准化, a.音频参数_响度标准化_启用调整目标响度 OrElse a.音频参数_响度标准化_启用调整动态范围 OrElse a.音频参数_响度标准化_启用调整峰值电平)
+        更新内置滤镜排序项(排序, a, 预设数据_v6.滤镜排序单片结构.标识符枚举.音频格式转换, Not String.IsNullOrWhiteSpace(a.音频参数_声道数))
+        更新内置滤镜排序项(排序, a, 预设数据_v6.滤镜排序单片结构.标识符枚举.音频重采样, False)
+
+        a.滤镜排序系统 = 排序.ToArray()
+    End Sub
+
+    Private Shared Sub 更新内置滤镜排序项(排序 As List(Of 预设数据_v6.滤镜排序单片结构),
+                                  a As 预设数据_v6,
+                                  标识符 As 预设数据_v6.滤镜排序单片结构.标识符枚举,
+                                  启用 As Boolean)
+        Dim item = 排序.FirstOrDefault(Function(x) Not x.是自定义滤镜 AndAlso x.滤镜标识符 = 标识符)
+        If Not 启用 Then
+            If item IsNot Nothing Then 排序.Remove(item)
+            Exit Sub
+        End If
+
+        If item Is Nothing Then
+            item = New 预设数据_v6.滤镜排序单片结构 With {.滤镜标识符 = 标识符}
+            Dim insertIndex = 获取内置滤镜插入位置(排序, 标识符, 获取目标流类型(标识符))
+            If insertIndex >= 0 AndAlso insertIndex < 排序.Count Then
+                排序.Insert(insertIndex, item)
+            Else
+                排序.Add(item)
+            End If
+        End If
+
+        item.滤镜标识符 = 标识符
+        item.滤镜目标流类型 = 获取目标流类型(标识符)
+        item.显示名称 = 获取滤镜显示名称(标识符)
+        item.自定义滤镜内容 = 获取滤镜片段(a, New 预设数据_v6.滤镜排序单片结构 With {.滤镜标识符 = 标识符})
+        item.是自定义滤镜 = False
+        item.允许在排序页直接编辑 = False
+    End Sub
+
+    Private Shared Function 获取内置滤镜插入位置(排序 As List(Of 预设数据_v6.滤镜排序单片结构),
+                                        标识符 As 预设数据_v6.滤镜排序单片结构.标识符枚举,
+                                        target As 预设数据_v6.滤镜排序单片结构.流类型) As Integer
+        Dim newPriority = 获取内置滤镜默认顺序(标识符)
+        For i = 0 To 排序.Count - 1
+            Dim current = 排序(i)
+            If current Is Nothing OrElse current.是自定义滤镜 OrElse current.滤镜目标流类型 <> target Then Continue For
+            If 获取内置滤镜默认顺序(current.滤镜标识符) > newPriority Then Return i
+        Next
+        Return 排序.Count
+    End Function
+
+    Private Shared Function 获取内置滤镜默认顺序(标识符 As 预设数据_v6.滤镜排序单片结构.标识符枚举) As Integer
+        Dim value As Integer
+        If 内置滤镜默认顺序.TryGetValue(标识符, value) Then Return value
+        Return Integer.MaxValue
+    End Function
 
     Public Shared Sub 显示预设(a As 预设数据_v6, ui As Form_v6_参数面板)
         If a Is Nothing OrElse ui Is Nothing Then Exit Sub
@@ -183,6 +320,7 @@ Public Class 预设管理_v6
         储存附加内容(a, ui)
         ui.私有界面_滤镜排序.刷新局部预览(a)
         a.滤镜排序系统 = ui.私有界面_滤镜排序.获取排序数据().ToArray()
+        同步内置滤镜排序数据(a)
     End Sub
 
     Public Shared Function 从面板创建预设(ui As Form_v6_参数面板) As 预设数据_v6
@@ -213,28 +351,47 @@ Public Class 预设管理_v6
         Return String.Join(vbCrLf, lines)
     End Function
 
-    Private Shared Function 获取命令行进程名(阶段 As 预设数据_v6.命令行阶段) As String
+    Public Shared Function 获取命令行进程名(阶段 As 预设数据_v6.命令行阶段) As String
         If 阶段 = 预设数据_v6.命令行阶段.FFprobe获取时长 Then Return "ffprobe"
-        Return "ffmpeg"
+        Return 格式化命令行进程名(获取当前FFmpeg进程文件名())
+    End Function
+
+    Private Shared Function 获取当前FFmpeg进程文件名() As String
+        Dim processName = If(设置_v6.实例对象?.替代进程文件名, "").Trim()
+        Return If(processName = "", "ffmpeg", processName)
+    End Function
+
+    Private Shared Function 格式化命令行进程名(value As String) As String
+        Dim processName = If(value, "").Trim()
+        If processName = "" Then processName = "ffmpeg"
+        If processName.Any(Function(c) Char.IsWhiteSpace(c)) AndAlso Not (processName.StartsWith("""", StringComparison.Ordinal) AndAlso processName.EndsWith("""", StringComparison.Ordinal)) Then
+            Return Q(processName)
+        End If
+        Return processName
     End Function
 
     Public Shared Function 生成阶段化命令行(a As 预设数据_v6,
                                   输入文件 As String,
                                   输出文件 As String,
-                                  Optional 媒体总时长 As String = "") As List(Of 预设数据_v6.命令行生成结果)
+                                  Optional 媒体总时长 As String = "",
+                                  Optional 帧服务器脚本后缀 As String = "") As List(Of 预设数据_v6.命令行生成结果)
         初始化空集合(a)
         Dim 结果 As New List(Of 预设数据_v6.命令行生成结果)
         If a Is Nothing Then Return 结果
+        If Not String.IsNullOrWhiteSpace(a.自定义参数_完全自己写) Then
+            结果.Add(生成命令行(a, 输入文件, 输出文件, 预设数据_v6.命令行阶段.普通单次, 媒体总时长, 帧服务器脚本后缀))
+            Return 结果
+        End If
 
         If a.剪辑区间_方法 = 预设数据_v6.剪辑方法.掐头去尾 AndAlso String.IsNullOrWhiteSpace(媒体总时长) Then
-            结果.Add(生成命令行(a, 输入文件, 输出文件, 预设数据_v6.命令行阶段.FFprobe获取时长))
+            结果.Add(生成命令行(a, 输入文件, 输出文件, 预设数据_v6.命令行阶段.FFprobe获取时长, 帧服务器脚本后缀:=帧服务器脚本后缀))
         End If
 
         If 可以生成二次编码(a) Then
-            结果.Add(生成命令行(a, 输入文件, 输出文件, 预设数据_v6.命令行阶段.二次编码第一遍, 媒体总时长))
-            结果.Add(生成命令行(a, 输入文件, 输出文件, 预设数据_v6.命令行阶段.二次编码第二遍, 媒体总时长))
+            结果.Add(生成命令行(a, 输入文件, 输出文件, 预设数据_v6.命令行阶段.二次编码第一遍, 媒体总时长, 帧服务器脚本后缀))
+            结果.Add(生成命令行(a, 输入文件, 输出文件, 预设数据_v6.命令行阶段.二次编码第二遍, 媒体总时长, 帧服务器脚本后缀))
         Else
-            结果.Add(生成命令行(a, 输入文件, 输出文件, 预设数据_v6.命令行阶段.普通单次, 媒体总时长))
+            结果.Add(生成命令行(a, 输入文件, 输出文件, 预设数据_v6.命令行阶段.普通单次, 媒体总时长, 帧服务器脚本后缀))
         End If
 
         Return 结果
@@ -244,7 +401,8 @@ Public Class 预设管理_v6
                                   输入文件 As String,
                                   输出文件 As String,
                                   Optional 阶段 As 预设数据_v6.命令行阶段 = 预设数据_v6.命令行阶段.普通单次,
-                                  Optional 媒体总时长 As String = "") As 预设数据_v6.命令行生成结果
+                                  Optional 媒体总时长 As String = "",
+                                  Optional 帧服务器脚本后缀 As String = "") As 预设数据_v6.命令行生成结果
         Dim 结果 As New 预设数据_v6.命令行生成结果 With {.阶段 = 阶段}
         If a Is Nothing Then Return 结果
         初始化空集合(a)
@@ -265,45 +423,61 @@ Public Class 预设管理_v6
         End If
 
         Dim 前置 As New List(Of String)
-        Dim 输入后 As New List(Of String)
+        Dim 输入前 As New List(Of String)
+        Dim 主输入后 As New List(Of String)
         Dim 额外输入 As New List(Of String)
         Dim 输出前 As New List(Of String)
         Dim 输出后 As New List(Of String)
 
         AddRaw(前置, a.自定义参数_开头参数)
-        AddRaw(输入后, a.自定义参数_之前参数)
+        AddRaw(主输入后, a.自定义参数_之前参数)
         AddRaw(输出前, a.自定义参数_之后参数)
         AddRaw(输出后, a.自定义参数_最后参数)
-        AddRaw(输入后, 生成剪辑输入参数(a, 阶段, 媒体总时长, 结果))
-        AddRaw(输入后, 生成解码参数(a))
-        Dim 主输入参数 = 生成主输入参数(a, 输入文件)
+        Dim 剪辑参数 = 生成剪辑参数(a, 阶段, 媒体总时长, 结果)
+        AddRaw(输入前, 剪辑参数.输入前)
+        AddRaw(输入前, 生成解码参数(a))
+        Dim 主输入参数 = 生成主输入参数(a, 输入文件, 帧服务器脚本后缀)
 
-        If (阶段 = 预设数据_v6.命令行阶段.二次编码第一遍 OrElse 阶段 = 预设数据_v6.命令行阶段.二次编码第二遍) AndAlso Not 当前编码器支持二次编码(a) Then
-            结果.说明 = "当前视频编码器未标记支持二次编码，已按普通单次生成。"
-            阶段 = 预设数据_v6.命令行阶段.普通单次
-            结果.阶段 = 阶段
-        End If
         If (阶段 = 预设数据_v6.命令行阶段.二次编码第一遍 OrElse 阶段 = 预设数据_v6.命令行阶段.二次编码第二遍) AndAlso Not 二次编码基础码率有效(a) Then
             结果.说明 = "二次编码需要填写基础码率，已按普通单次生成。"
             阶段 = 预设数据_v6.命令行阶段.普通单次
             结果.阶段 = 阶段
         End If
+        If (阶段 = 预设数据_v6.命令行阶段.二次编码第一遍 OrElse 阶段 = 预设数据_v6.命令行阶段.二次编码第二遍) AndAlso 二次编码明显不兼容(a) Then
+            结果.说明 = "二次编码需要实际重编码视频流，当前视频编码设置不适用，已按普通单次生成。"
+            阶段 = 预设数据_v6.命令行阶段.普通单次
+            结果.阶段 = 阶段
+        End If
 
-        Dim 滤镜图 = 生成滤镜图(a, 阶段 = 预设数据_v6.命令行阶段.二次编码第一遍, 输入文件)
+        Dim 滤镜图 = 生成滤镜图(a, 仅视频:=(阶段 = 预设数据_v6.命令行阶段.二次编码第一遍), 输入文件:=输入文件, 输出文件:=输出文件)
         结果.滤镜图 = 滤镜图.滤镜图
         结果.映射参数 = 滤镜图.映射参数
+        结果.输出滤镜参数 = 滤镜图.输出滤镜参数
+        AddRaw(输出前, 剪辑参数.输出前)
         If 滤镜图.滤镜图 <> "" Then
             输出前.Add($"-filter_complex {Q(滤镜图.滤镜图)}")
         End If
         AddRaw(输出前, 滤镜图.映射参数)
+        AddRaw(输出前, 滤镜图.输出滤镜参数)
 
-        Dim 编码参数 = 生成编码参数(a, 阶段, 滤镜图.编码视频选择器, 滤镜图.编码音频选择器, 滤镜图.视频输出来自滤镜, 滤镜图.音频输出来自滤镜, 输入文件)
+        Dim 编码参数 = 生成编码参数(a, 阶段, 滤镜图.编码视频选择器, 滤镜图.编码音频选择器, 滤镜图.请求视频输出, 滤镜图.请求音频输出, 滤镜图.视频输出来自滤镜, 滤镜图.音频输出来自滤镜, 输入文件, 输出文件)
         AddRaw(输出前, 编码参数)
         If 阶段 = 预设数据_v6.命令行阶段.二次编码第一遍 Then 输出前.Add("-an")
 
-        Dim 附加片段 = 生成元数据章节附件片段(a, 滤镜图.编码视频选择器.Count)
-        额外输入.AddRange(附加片段.额外输入)
-        输出前.AddRange(附加片段.输出前)
+        If 阶段 <> 预设数据_v6.命令行阶段.二次编码第一遍 Then
+            Dim 附加片段 = 生成元数据章节附件片段(a, 滤镜图.视频输出数量, 输入文件, 输出文件, 滤镜图.字幕输出数量)
+            If 附加片段.包含显式流映射 AndAlso String.IsNullOrWhiteSpace(滤镜图.映射参数) Then
+                Dim 视频编码器 = 视频编码器数据库_v6.获取编码器数据(a.视频参数_编码器_具体编码)
+                Dim 音频编码器 = 音频编码器数据库_v6.获取编码器数据(a.音频参数_编码器_代号)
+                Dim 补默认主视频 = Not (视频编码器 IsNot Nothing AndAlso 视频编码器.是否禁用) AndAlso 附加片段默认映射主视频(a, 输出文件)
+                If 补默认主视频 Then 输出前.Add("-map 0:v:0?")
+                If Not (音频编码器 IsNot Nothing AndAlso 音频编码器.是否禁用) AndAlso 附加片段默认映射主音频(a, 输出文件) Then 输出前.Add("-map 0:a:0?")
+                If 附加片段.附加封面图数量 > 0 Then 附加片段.重设附加封面图视频序号(If(补默认主视频, 1, 0))
+                If 附加片段.自动混流字幕数量 > 0 Then 附加片段.重设自动混流字幕序号(0)
+            End If
+            额外输入.AddRange(附加片段.额外输入)
+            输出前.AddRange(附加片段.输出前)
+        End If
         AddRaw(输出前, a.自定义参数_视频参数)
         AddRaw(输出前, a.自定义参数_音频参数)
 
@@ -313,8 +487,9 @@ Public Class 预设管理_v6
         命令.AddRange(前置.Where(Function(x) x <> ""))
         命令.Add("-hide_banner")
         命令.Add("-y")
-        命令.AddRange(输入后.Where(Function(x) x <> ""))
+        命令.AddRange(输入前.Where(Function(x) x <> ""))
         命令.AddRange(主输入参数.Where(Function(x) x <> ""))
+        命令.AddRange(主输入后.Where(Function(x) x <> ""))
         命令.AddRange(额外输入.Where(Function(x) x <> ""))
         命令.AddRange(输出前.Where(Function(x) x <> ""))
         If 丢弃输出 Then
@@ -331,10 +506,13 @@ Public Class 预设管理_v6
     End Function
 
     Public Shared Function 生成排序页预览(a As 预设数据_v6) As String
+        If a Is Nothing Then Return ""
+        初始化空集合(a)
         Dim 图 = 生成滤镜图(a)
         Dim 片段 As New List(Of String)
         If 图.滤镜图 <> "" Then 片段.Add($"-filter_complex {Q(图.滤镜图)}")
         If 图.映射参数 <> "" Then 片段.Add(图.映射参数)
+        If 图.输出滤镜参数 <> "" Then 片段.Add(图.输出滤镜参数)
         Return String.Join(" ", 片段)
     End Function
 
@@ -390,7 +568,7 @@ Public Class 预设管理_v6
         添加总览文本行(sb, "解码数据格式：" & a.解码参数_解码数据格式)
         If Not String.IsNullOrWhiteSpace(a.解码参数_指定硬件的参数名) Then
             If Not String.IsNullOrWhiteSpace(a.解码参数_指定硬件的参数) Then
-                添加总览文本行(sb, "指定解码硬件参数：-" & a.解码参数_指定硬件的参数名.TrimStart("-"c) & " " & a.解码参数_指定硬件的参数)
+                添加总览文本行(sb, "指定解码硬件参数：" & 规范FFmpeg参数名(a.解码参数_指定硬件的参数名) & " " & a.解码参数_指定硬件的参数)
             Else
                 添加总览文本行(sb, "必须指定解码硬件的参数，那不是选了就能用的")
             End If
@@ -513,6 +691,7 @@ Public Class 预设管理_v6
             If a.视频参数_烧录字幕_补充样式 <> "" Then 字幕.Add("补充样式：" & a.视频参数_烧录字幕_补充样式)
             If a.视频参数_烧录字幕_自己写滤镜取代所有设置 <> "" Then 字幕.Add("自己写滤镜：" & a.视频参数_烧录字幕_自己写滤镜取代所有设置)
             If 字幕.Count > 0 Then 添加总览文本行(sb, "烧录字幕：" & String.Join("；", 字幕))
+            If 内置烧字幕缺少必要来源设置(a) Then 添加总览文本行(sb, "警告：烧录字幕未指定可用字幕来源；内置 subtitles/ass 滤镜不会写入命令")
         End If
 
         If a.视频参数_比特率_控制方式 <> 预设数据_v6.视频全局质量控制方式.未选择 Then 添加总览文本行(sb, "质量/比特率控制方法：" & 格式化质量控制方式(a.视频参数_比特率_控制方式))
@@ -521,6 +700,9 @@ Public Class 预设管理_v6
         End If
         If a.视频参数_比特率_控制方式 = 预设数据_v6.视频全局质量控制方式.TPE AndAlso Not 二次编码基础码率有效(a) Then
             添加总览文本行(sb, "警告：二次编码需要填写基础码率；未填写时会按普通单次编码生成命令")
+        End If
+        If a.视频参数_比特率_控制方式 = 预设数据_v6.视频全局质量控制方式.TPE AndAlso 二次编码明显不兼容(a) Then
+            添加总览文本行(sb, "警告：二次编码需要实际重编码视频流；复制流、禁用视频或图片编码不会生成二次编码命令")
         End If
         If Not String.IsNullOrWhiteSpace(a.视频参数_质量控制_参数名) Then
             Dim 参数名 = a.视频参数_质量控制_参数名.TrimStart("-"c)
@@ -562,6 +744,9 @@ Public Class 预设管理_v6
         If a.音频参数_响度标准化_启用调整目标响度 Then 添加总览文本行(sb, "响度标准化目标：" & If(a.音频参数_响度标准化_目标响度 = "", "已启用", a.音频参数_响度标准化_目标响度))
         If a.音频参数_响度标准化_启用调整动态范围 Then 添加总览文本行(sb, "响度动态范围：" & If(a.音频参数_响度标准化_动态范围 = "", "已启用", a.音频参数_响度标准化_动态范围))
         If a.音频参数_响度标准化_启用调整峰值电平 Then 添加总览文本行(sb, "响度峰值电平：" & If(a.音频参数_响度标准化_峰值电平 = "", "已启用", a.音频参数_响度标准化_峰值电平))
+        添加复制流兼容性总览(sb, a)
+        添加CUDA滤镜兼容性总览(sb, a)
+        添加音视频容器兼容性总览(sb, a)
 
         If a.剪辑区间_方法 <> 预设数据_v6.剪辑方法.未知 Then 添加总览文本行(sb, "剪辑区间方法：" & 格式化剪辑方法(a.剪辑区间_方法))
         If a.剪辑区间_方法 = 预设数据_v6.剪辑方法.未知 AndAlso (a.剪辑区间_入点 <> "" OrElse a.剪辑区间_出点 <> "") Then 添加总览文本行(sb, "警告：指定了剪辑范围却没有指定剪辑方法，不会进行剪辑")
@@ -591,6 +776,7 @@ Public Class 预设管理_v6
         If a.流控制_自动混流ASS Then 添加总览文本行(sb, "自动混流同名 ASS 字幕文件")
         If a.流控制_自动混流SSA Then 添加总览文本行(sb, "自动混流同名 SSA 字幕文件")
         If a.流控制_自动混流的字幕转为MOVTEXT Then 添加总览文本行(sb, "自动混流的字幕转为 mov_text 编码")
+        添加字幕容器兼容性总览(sb, a)
         If a.流控制_元数据选项 > 0 Then 添加总览文本行(sb, "元数据选项：" & 格式化元数据选项(a.流控制_元数据选项))
         If a.流控制_章节选项 > 0 Then 添加总览文本行(sb, "章节选项：" & 格式化章节选项(a.流控制_章节选项))
         If a.流控制_附件选项 > 0 Then 添加总览文本行(sb, "附件选项：" & 格式化附件选项(a.流控制_附件选项))
@@ -601,6 +787,7 @@ Public Class 预设管理_v6
         添加总览文本行(sb, "章节文件：" & a.章节_文件路径)
         Dim 附件文本 = 格式化附件总览(a.附件_要写入的附件)
         If 附件文本 <> "" Then 添加总览文本行(sb, "写入附件：" & 附件文本)
+        添加附件容器兼容性总览(sb, a)
 
         If a.滤镜排序系统 IsNot Nothing AndAlso a.滤镜排序系统.Length > 0 Then
             Dim index = 1
@@ -647,6 +834,11 @@ Public Class 预设管理_v6
 
     Private Shared Function 已设置(ParamArray 值() As String) As Boolean
         Return 值 IsNot Nothing AndAlso 值.Any(Function(x) Not String.IsNullOrWhiteSpace(x))
+    End Function
+
+    Private Shared Function 抽帧参数已设置(a As 预设数据_v6) As Boolean
+        If a Is Nothing Then Return False
+        Return 已设置(a.视频参数_抽帧_max, a.视频参数_抽帧_keep, a.视频参数_抽帧_hi, a.视频参数_抽帧_lo, a.视频参数_抽帧_frac)
     End Function
 
     Private Shared Function 格式化枚举名称(value As [Enum]) As String
@@ -817,6 +1009,259 @@ Public Class 预设管理_v6
         Return String.Join("；", 片段)
     End Function
 
+    Private Shared Sub 添加附件容器兼容性总览(sb As StringBuilder, a As 预设数据_v6)
+        If a Is Nothing OrElse String.IsNullOrWhiteSpace(a.输出容器) Then Exit Sub
+
+        Dim 支持常规附件 = 输出容器支持附件(a, 输出占位符)
+        Dim 支持附加封面图 = 输出容器支持附加封面图(a, 输出占位符)
+        If a.流控制_附件选项 = 1 AndAlso Not 支持常规附件 Then
+            添加总览文本行(sb, "警告：当前输出容器不支持常规附件，保留附件不会写入命令")
+        End If
+
+        Dim 列表 = If(a.附件_要写入的附件, Array.Empty(Of 预设数据_v6.附件单片结构)())
+        If 列表.Any(Function(x) x IsNot Nothing AndAlso x.类型 = 预设数据_v6.附件单片结构.附件类型.MP4封面图 AndAlso Not String.IsNullOrWhiteSpace(x.文件路径)) AndAlso Not 支持附加封面图 Then
+            添加总览文本行(sb, "警告：当前输出容器不支持 attached_pic 封面图，已配置的 MP4 封面图会被跳过")
+        End If
+        If a.流控制_启用保留其他视频流 AndAlso 列表.Any(Function(x) x IsNot Nothing AndAlso x.类型 = 预设数据_v6.附件单片结构.附件类型.MP4封面图 AndAlso Not String.IsNullOrWhiteSpace(x.文件路径)) Then
+            添加总览文本行(sb, "警告：保留其他视频流时无法静态确定 attached_pic 封面图的输出流序号，已配置的 MP4 封面图会被跳过")
+        End If
+        If 列表.Any(Function(x) 附件项是常规附件(x)) AndAlso Not 支持常规附件 Then
+            添加总览文本行(sb, "警告：当前输出容器不支持 -attach 附件，已配置的图片、字体或文档附件会被跳过")
+        End If
+    End Sub
+
+    Private Shared Function 附件项是常规附件(item As 预设数据_v6.附件单片结构) As Boolean
+        If item Is Nothing OrElse String.IsNullOrWhiteSpace(item.文件路径) Then Return False
+        Select Case item.类型
+            Case 预设数据_v6.附件单片结构.附件类型.MKV封面图,
+                 预设数据_v6.附件单片结构.附件类型.图片,
+                 预设数据_v6.附件单片结构.附件类型.字体文件,
+                 预设数据_v6.附件单片结构.附件类型.文本文档
+                Return True
+            Case Else
+                Return False
+        End Select
+    End Function
+
+    Private Shared Sub 添加字幕容器兼容性总览(sb As StringBuilder, a As 预设数据_v6)
+        If a Is Nothing OrElse String.IsNullOrWhiteSpace(a.输出容器) Then Exit Sub
+
+        Dim ext = 获取输出容器扩展名(a, 输出占位符)
+        Dim 自动混流 = a.流控制_自动混流SRT OrElse a.流控制_自动混流ASS OrElse a.流控制_自动混流SSA
+        If 自动混流 Then
+            If 输出容器支持MovText字幕(a, 输出占位符) AndAlso Not a.流控制_自动混流的字幕转为MOVTEXT Then
+                添加总览文本行(sb, "提示：当前输出容器使用 mov_text 字幕，自动混流字幕不会直接复制为 SRT/ASS/SSA")
+            ElseIf 输出容器支持WebVtt字幕(a, 输出占位符) Then
+                添加总览文本行(sb, "提示：当前输出容器使用 webvtt 字幕，自动混流字幕会转为 webvtt")
+            ElseIf a.流控制_自动混流的字幕转为MOVTEXT AndAlso Not 输出容器支持MovText字幕(a, 输出占位符) Then
+                添加总览文本行(sb, "警告：当前输出容器不支持 mov_text，自动混流字幕不会按 mov_text 写入")
+            End If
+        End If
+
+        Dim 请求字幕编码 = 获取字幕编码参数(a.流控制_如何操作指定的字幕)
+        If 请求字幕编码 = "copy" AndAlso 字幕复制需要源流兼容(a, 输出占位符) Then
+            添加总览文本行(sb, $"警告：当前输出容器 {ext} 复制字幕要求源字幕本身已兼容容器，否则 FFmpeg 可能封装失败")
+        ElseIf 请求字幕编码 <> "" AndAlso 请求字幕编码 <> "copy" Then
+            Dim 实际字幕编码 = 获取容器兼容字幕编码(请求字幕编码, a, 输出占位符, False)
+            If 实际字幕编码 <> 请求字幕编码 Then
+                添加总览文本行(sb, $"警告：当前输出容器 {ext} 不支持 {请求字幕编码} 字幕，指定字幕操作会改用 {实际字幕编码}")
+            End If
+        End If
+    End Sub
+
+    Private Shared Function 字幕复制需要源流兼容(a As 预设数据_v6, 输出文件 As String) As Boolean
+        Return 输出容器支持MovText字幕(a, 输出文件) OrElse 输出容器支持WebVtt字幕(a, 输出文件)
+    End Function
+
+    Private Shared Sub 添加复制流兼容性总览(sb As StringBuilder, a As 预设数据_v6)
+        If a Is Nothing Then Exit Sub
+        Dim 视频编码器 = 视频编码器数据库_v6.获取编码器数据(a.视频参数_编码器_具体编码)
+        If 视频编码器 IsNot Nothing AndAlso 视频编码器.是否复制流 AndAlso 视频滤镜参数已设置(a) Then
+            添加总览文本行(sb, "警告：视频选择复制流但配置了视频滤镜；过滤后的流不能直接复制，命令会交给 FFmpeg 选择默认视频编码器")
+        End If
+        If 视频编码器 IsNot Nothing AndAlso 视频编码器.是否复制流 AndAlso 视频复制流会跳过重编码参数(a) Then
+            添加总览文本行(sb, "警告：视频选择复制流，编码预设、配置文件、像素格式、码率/质量、GPU 和线程等重编码参数不会写入命令")
+        End If
+
+        Dim 音频编码器 = 音频编码器数据库_v6.获取编码器数据(a.音频参数_编码器_代号)
+        If 音频编码器 IsNot Nothing AndAlso 音频编码器.是否复制流 AndAlso 音频滤镜参数已设置(a) Then
+            添加总览文本行(sb, "警告：音频选择复制流但配置了音频滤镜；过滤后的流不能直接复制，命令会交给 FFmpeg 选择默认音频编码器")
+        End If
+        If 音频编码器 IsNot Nothing AndAlso 音频编码器.是否复制流 AndAlso 音频复制流会跳过重编码参数(a) Then
+            添加总览文本行(sb, "警告：音频选择复制流，音频比特率、质量参数、位深度和采样率不会写入命令")
+        End If
+    End Sub
+
+    Private Shared Sub 添加CUDA滤镜兼容性总览(sb As StringBuilder, a As 预设数据_v6)
+        If a Is Nothing Then Exit Sub
+        Dim 滤镜 = 获取CUDA视频滤镜名称(a)
+        If 滤镜.Count = 0 Then Exit Sub
+
+        添加总览文本行(sb, "警告：已选择 CUDA/NPP 滤镜（" & String.Join("、", 滤镜) & "），请确保输入视频帧位于 CUDA 硬件帧域；与普通 CPU 滤镜混用时需要自行处理 hwupload_cuda/hwdownload/format")
+        If Not CUDA硬件帧输入已配置(a) Then
+            添加总览文本行(sb, "警告：当前未设置 -hwaccel_output_format cuda，也没有在自定义视频滤镜中显式使用 hwupload_cuda，CUDA/NPP 滤镜可能因输入不是 CUDA 硬件帧而失败")
+        End If
+    End Sub
+
+    Private Shared Function 获取CUDA视频滤镜名称(a As 预设数据_v6) As List(Of String)
+        Dim result As New List(Of String)
+        If a Is Nothing Then Return result
+
+        If a.视频参数_降噪_方式 = 预设数据_v6.降噪方式.bilateral_cuda Then 添加唯一滤镜名称(result, "bilateral_cuda")
+        If a.视频参数_锐化_方式 = 预设数据_v6.锐化方式.sharpen_npp Then 添加唯一滤镜名称(result, "sharpen_npp")
+        Select Case a.视频参数_处理扫描方式
+            Case 预设数据_v6.扫描方式.yadif_cuda_自动场序
+                添加唯一滤镜名称(result, "yadif_cuda")
+            Case 预设数据_v6.扫描方式.bwdif_cuda_自动场序
+                添加唯一滤镜名称(result, "bwdif_cuda")
+        End Select
+
+        For Each filterText In 获取视频滤镜文本(a)
+            If filterText.IndexOf("bilateral_cuda", StringComparison.OrdinalIgnoreCase) >= 0 Then 添加唯一滤镜名称(result, "bilateral_cuda")
+            If filterText.IndexOf("sharpen_npp", StringComparison.OrdinalIgnoreCase) >= 0 Then 添加唯一滤镜名称(result, "sharpen_npp")
+            If filterText.IndexOf("yadif_cuda", StringComparison.OrdinalIgnoreCase) >= 0 Then 添加唯一滤镜名称(result, "yadif_cuda")
+            If filterText.IndexOf("bwdif_cuda", StringComparison.OrdinalIgnoreCase) >= 0 Then 添加唯一滤镜名称(result, "bwdif_cuda")
+        Next
+
+        Return result
+    End Function
+
+    Private Shared Sub 添加唯一滤镜名称(list As List(Of String), name As String)
+        If list Is Nothing OrElse String.IsNullOrWhiteSpace(name) Then Exit Sub
+        If Not list.Any(Function(x) String.Equals(x, name, StringComparison.OrdinalIgnoreCase)) Then list.Add(name)
+    End Sub
+
+    Private Shared Function CUDA硬件帧输入已配置(a As 预设数据_v6) As Boolean
+        If a Is Nothing Then Return False
+        If String.Equals(If(a.解码参数_解码数据格式, "").Trim(), "cuda", StringComparison.OrdinalIgnoreCase) Then Return True
+        Return 获取视频滤镜文本(a).Any(Function(x) x.IndexOf("hwupload_cuda", StringComparison.OrdinalIgnoreCase) >= 0)
+    End Function
+
+    Private Shared Function 获取视频滤镜文本(a As 预设数据_v6) As List(Of String)
+        Dim result As New List(Of String)
+        If a Is Nothing Then Return result
+        If Not String.IsNullOrWhiteSpace(a.自定义参数_视频滤镜) Then result.Add(a.自定义参数_视频滤镜)
+        For Each item In If(a.滤镜排序系统, Array.Empty(Of 预设数据_v6.滤镜排序单片结构)())
+            If item Is Nothing OrElse item.滤镜目标流类型 <> 预设数据_v6.滤镜排序单片结构.流类型.视频 Then Continue For
+            If Not String.IsNullOrWhiteSpace(item.自定义滤镜内容) Then result.Add(item.自定义滤镜内容)
+        Next
+        Return result
+    End Function
+
+    Private Shared Function 视频复制流会跳过重编码参数(a As 预设数据_v6) As Boolean
+        If a Is Nothing Then Return False
+        Return Not String.IsNullOrWhiteSpace(a.视频参数_编码器_编码预设) OrElse
+               Not String.IsNullOrWhiteSpace(a.视频参数_编码器_配置文件) OrElse
+               Not String.IsNullOrWhiteSpace(a.视频参数_编码器_场景优化) OrElse
+               Not String.IsNullOrWhiteSpace(a.视频参数_编码器_图片编码器质量值) OrElse
+               Not String.IsNullOrWhiteSpace(a.视频参数_色彩管理_像素格式) OrElse
+               Not String.IsNullOrWhiteSpace(a.视频参数_编码器_gpu) OrElse
+               Not String.IsNullOrWhiteSpace(a.视频参数_编码器_threads) OrElse
+               a.视频参数_比特率_控制方式 <> 预设数据_v6.视频全局质量控制方式.未选择 OrElse
+               Not String.IsNullOrWhiteSpace(a.视频参数_比特率_基础) OrElse
+               Not String.IsNullOrWhiteSpace(a.视频参数_比特率_最低值) OrElse
+               Not String.IsNullOrWhiteSpace(a.视频参数_比特率_最高值) OrElse
+               Not String.IsNullOrWhiteSpace(a.视频参数_比特率_缓冲区) OrElse
+               全局质量参数已设置(a) OrElse
+               Not String.IsNullOrWhiteSpace(a.视频参数_质量控制_进阶参数集)
+    End Function
+
+    Private Shared Function 音频复制流会跳过重编码参数(a As 预设数据_v6) As Boolean
+        If a Is Nothing Then Return False
+        Return Not String.IsNullOrWhiteSpace(a.音频参数_比特率) OrElse
+               Not String.IsNullOrWhiteSpace(a.音频参数_质量参数名) OrElse
+               Not String.IsNullOrWhiteSpace(a.音频参数_质量值) OrElse
+               Not String.IsNullOrWhiteSpace(a.音频参数_位深度) OrElse
+               Not String.IsNullOrWhiteSpace(a.音频参数_采样率)
+    End Function
+
+    Private Shared Function 视频滤镜参数已设置(a As 预设数据_v6) As Boolean
+        If a Is Nothing Then Return False
+        Return Not String.IsNullOrWhiteSpace(a.视频参数_分辨率) OrElse
+               Not String.IsNullOrWhiteSpace(a.视频参数_分辨率自动计算_宽度) OrElse
+               Not String.IsNullOrWhiteSpace(a.视频参数_分辨率自动计算_高度) OrElse
+               Not String.IsNullOrWhiteSpace(a.视频参数_分辨率_裁剪滤镜参数) OrElse
+               已设置(a.视频参数_抽帧_max, a.视频参数_抽帧_keep, a.视频参数_抽帧_hi, a.视频参数_抽帧_lo, a.视频参数_抽帧_frac) OrElse
+               Not String.IsNullOrWhiteSpace(a.视频参数_插帧_目标帧率) OrElse
+               Not String.IsNullOrWhiteSpace(a.视频参数_动态模糊_连续混合帧数) OrElse
+               超分单片有设置(a.视频参数_超分_直接面板) OrElse
+               If(a.视频参数_超分_滤镜叠加策略组, Array.Empty(Of 预设数据_v6.超分数据单片结构)()).Length > 0 OrElse
+               a.视频参数_降噪_方式 <> 预设数据_v6.降噪方式.未选择 OrElse
+               a.视频参数_锐化_方式 <> 预设数据_v6.锐化方式.未选择 OrElse
+               a.视频参数_胶片颗粒_方式 <> 预设数据_v6.胶片颗粒方式.未选择 OrElse
+               a.视频参数_平滑断层_方式 <> 预设数据_v6.平滑断层方式.未选择 OrElse
+               a.视频参数_处理扫描方式 <> 预设数据_v6.扫描方式.未选择 OrElse
+               a.视频参数_画面翻转_角度翻转 <> 预设数据_v6.画面翻转角度.未选择 OrElse
+               a.视频参数_画面翻转_镜像翻转 <> 预设数据_v6.画面翻转镜像.未选择 OrElse
+               烧字幕滤镜已设置(a) OrElse
+               Not String.IsNullOrWhiteSpace(a.视频参数_色彩管理_像素格式预先转换) OrElse
+               色彩转换滤镜已设置(a) OrElse
+               a.视频参数_色彩管理_启用调整亮度 OrElse
+               a.视频参数_色彩管理_启用调整对比度 OrElse
+               a.视频参数_色彩管理_启用调整饱和度 OrElse
+               a.视频参数_色彩管理_启用调整伽马 OrElse
+               If(a.滤镜排序系统, Array.Empty(Of 预设数据_v6.滤镜排序单片结构)()).Any(Function(x) x IsNot Nothing AndAlso x.滤镜目标流类型 = 预设数据_v6.滤镜排序单片结构.流类型.视频 AndAlso Not String.IsNullOrWhiteSpace(x.自定义滤镜内容))
+    End Function
+
+    Private Shared Function 音频滤镜参数已设置(a As 预设数据_v6) As Boolean
+        If a Is Nothing Then Return False
+        Return a.音频参数_响度标准化_启用调整目标响度 OrElse
+               a.音频参数_响度标准化_启用调整动态范围 OrElse
+               a.音频参数_响度标准化_启用调整峰值电平 OrElse
+               Not String.IsNullOrWhiteSpace(a.音频参数_声道数) OrElse
+               If(a.滤镜排序系统, Array.Empty(Of 预设数据_v6.滤镜排序单片结构)()).Any(Function(x) x IsNot Nothing AndAlso x.滤镜目标流类型 = 预设数据_v6.滤镜排序单片结构.流类型.音频 AndAlso Not String.IsNullOrWhiteSpace(x.自定义滤镜内容))
+    End Function
+
+    Private Shared Sub 添加音视频容器兼容性总览(sb As StringBuilder, a As 预设数据_v6)
+        If a Is Nothing Then Exit Sub
+        Dim ext = 获取输出容器扩展名(a, 输出占位符)
+        If ext <> "webm" Then Exit Sub
+
+        Dim 视频编码器 = 视频编码器数据库_v6.获取编码器数据(a.视频参数_编码器_具体编码)
+        If 视频编码器 IsNot Nothing AndAlso Not 视频编码器.是否禁用 Then
+            If 视频编码器.是否复制流 Then
+                添加总览文本行(sb, "警告：WebM 复制视频流要求源视频本身为 VP8、VP9 或 AV1，否则 FFmpeg 可能封装失败")
+            ElseIf 视频编码器.命令行编码器名 <> "" AndAlso Not WebM支持视频编码器(视频编码器.命令行编码器名) Then
+                添加总览文本行(sb, $"警告：WebM 不支持视频编码器 {首个命令词(视频编码器.命令行编码器名)}，请选择 VP8、VP9 或 AV1 编码")
+            End If
+        End If
+
+        Dim 音频编码器 = 音频编码器数据库_v6.获取编码器数据(a.音频参数_编码器_代号)
+        If 音频编码器 IsNot Nothing AndAlso Not 音频编码器.是否禁用 Then
+            If 音频编码器.是否复制流 Then
+                添加总览文本行(sb, "警告：WebM 复制音频流要求源音频本身为 Opus 或 Vorbis，否则 FFmpeg 可能封装失败")
+            ElseIf 音频编码器.命令行编码器名 <> "" AndAlso Not WebM支持音频编码器(音频编码器.命令行编码器名) Then
+                添加总览文本行(sb, $"警告：WebM 不支持音频编码器 {首个命令词(音频编码器.命令行编码器名)}，请选择 Opus 或 Vorbis 编码")
+            End If
+        End If
+    End Sub
+
+    Private Shared Function WebM支持视频编码器(codec As String) As Boolean
+        Select Case 首个命令词(codec)
+            Case "libvpx", "libvpx-vp9", "libsvt_vp9", "vp9_qsv",
+                 "libaom-av1", "libsvtav1", "librav1e",
+                 "av1_nvenc", "av1_qsv", "av1_amf", "av1_d3d12va", "av1_vulkan"
+                Return True
+            Case Else
+                Return False
+        End Select
+    End Function
+
+    Private Shared Function WebM支持音频编码器(codec As String) As Boolean
+        Select Case 首个命令词(codec)
+            Case "libopus", "opus", "libvorbis", "vorbis"
+                Return True
+            Case Else
+                Return False
+        End Select
+    End Function
+
+    Private Shared Function 首个命令词(value As String) As String
+        Dim raw = If(value, "").Trim()
+        If raw = "" Then Return ""
+        Return raw.Split({" "c, ControlChars.Tab}, StringSplitOptions.RemoveEmptyEntries)(0).ToLowerInvariant()
+    End Function
+
     Public Shared Sub 刷新参数总览(ui As Form_v6_参数面板)
         If ui Is Nothing Then Exit Sub
         Dim a = 从面板创建预设(ui)
@@ -832,7 +1277,7 @@ Public Class 预设管理_v6
 
         更新排序项(排序页, a, 预设数据_v6.滤镜排序单片结构.标识符枚举.裁剪, Not String.IsNullOrWhiteSpace(a.视频参数_分辨率_裁剪滤镜参数))
         更新排序项(排序页, a, 预设数据_v6.滤镜排序单片结构.标识符枚举.缩放, Not String.IsNullOrWhiteSpace(a.视频参数_分辨率) OrElse Not String.IsNullOrWhiteSpace(a.视频参数_分辨率自动计算_宽度) OrElse Not String.IsNullOrWhiteSpace(a.视频参数_分辨率自动计算_高度))
-        更新排序项(排序页, a, 预设数据_v6.滤镜排序单片结构.标识符枚举.抽帧, Not String.IsNullOrWhiteSpace(a.视频参数_抽帧_max) OrElse Not String.IsNullOrWhiteSpace(a.视频参数_抽帧_keep) OrElse Not String.IsNullOrWhiteSpace(a.视频参数_抽帧_hi) OrElse Not String.IsNullOrWhiteSpace(a.视频参数_抽帧_lo) OrElse Not String.IsNullOrWhiteSpace(a.视频参数_抽帧_frac))
+        更新排序项(排序页, a, 预设数据_v6.滤镜排序单片结构.标识符枚举.抽帧, 抽帧参数已设置(a))
         更新排序项(排序页, a, 预设数据_v6.滤镜排序单片结构.标识符枚举.插帧, Not String.IsNullOrWhiteSpace(a.视频参数_插帧_目标帧率))
         更新排序项(排序页, a, 预设数据_v6.滤镜排序单片结构.标识符枚举.动态模糊, Not String.IsNullOrWhiteSpace(a.视频参数_动态模糊_连续混合帧数))
         更新排序项(排序页, a, 预设数据_v6.滤镜排序单片结构.标识符枚举.超分, 超分单片有设置(a.视频参数_超分_直接面板) OrElse a.视频参数_超分_滤镜叠加策略组.Length > 0)
@@ -842,13 +1287,13 @@ Public Class 预设管理_v6
         更新排序项(排序页, a, 预设数据_v6.滤镜排序单片结构.标识符枚举.平滑断层, a.视频参数_平滑断层_方式 <> 预设数据_v6.平滑断层方式.未选择)
         更新排序项(排序页, a, 预设数据_v6.滤镜排序单片结构.标识符枚举.扫描方式, a.视频参数_处理扫描方式 <> 预设数据_v6.扫描方式.未选择)
         更新排序项(排序页, a, 预设数据_v6.滤镜排序单片结构.标识符枚举.画面翻转, a.视频参数_画面翻转_角度翻转 <> 预设数据_v6.画面翻转角度.未选择 OrElse a.视频参数_画面翻转_镜像翻转 <> 预设数据_v6.画面翻转镜像.未选择)
-        更新排序项(排序页, a, 预设数据_v6.滤镜排序单片结构.标识符枚举.烧录字幕, a.视频参数_烧录字幕_滤镜选择 <> 预设数据_v6.烧字幕滤镜.未选择 OrElse a.视频参数_烧录字幕_自己写滤镜取代所有设置 <> "")
+        更新排序项(排序页, a, 预设数据_v6.滤镜排序单片结构.标识符枚举.烧录字幕, 烧字幕滤镜已设置(a))
         更新排序项(排序页, a, 预设数据_v6.滤镜排序单片结构.标识符枚举.像素格式预先转换, a.视频参数_色彩管理_像素格式预先转换 <> "")
-        更新排序项(排序页, a, 预设数据_v6.滤镜排序单片结构.标识符枚举.色彩转换, a.视频参数_色彩管理_滤镜选择 <> "" OrElse a.视频参数_色彩管理_矩阵系数 <> "" OrElse a.视频参数_色彩管理_色域 <> "" OrElse a.视频参数_色彩管理_传输特性 <> "" OrElse a.视频参数_色彩管理_范围 <> "")
+        更新排序项(排序页, a, 预设数据_v6.滤镜排序单片结构.标识符枚举.色彩转换, 色彩转换滤镜已设置(a))
         更新排序项(排序页, a, 预设数据_v6.滤镜排序单片结构.标识符枚举.调色, a.视频参数_色彩管理_启用调整亮度 OrElse a.视频参数_色彩管理_启用调整对比度 OrElse a.视频参数_色彩管理_启用调整饱和度 OrElse a.视频参数_色彩管理_启用调整伽马)
         更新排序项(排序页, a, 预设数据_v6.滤镜排序单片结构.标识符枚举.音频响度标准化, a.音频参数_响度标准化_启用调整目标响度 OrElse a.音频参数_响度标准化_启用调整动态范围 OrElse a.音频参数_响度标准化_启用调整峰值电平)
         更新排序项(排序页, a, 预设数据_v6.滤镜排序单片结构.标识符枚举.音频格式转换, a.音频参数_声道数 <> "")
-        更新排序项(排序页, a, 预设数据_v6.滤镜排序单片结构.标识符枚举.音频重采样, a.音频参数_采样率 <> "")
+        更新排序项(排序页, a, 预设数据_v6.滤镜排序单片结构.标识符枚举.音频重采样, False)
 
         If 刷新 Then 刷新参数总览(ui)
     End Sub
@@ -863,11 +1308,14 @@ Public Class 预设管理_v6
                 ui.私有界面_画面帧.ModernComboBox2.Text = ""
                 ui.私有界面_画面帧.ModernComboBox3.Text = ""
             Case 预设数据_v6.滤镜排序单片结构.标识符枚举.抽帧
-                ui.私有界面_画面帧.私有窗口_抽帧参数.ModernTextBox1.Text = ""
-                ui.私有界面_画面帧.私有窗口_抽帧参数.ModernTextBox2.Text = ""
-                ui.私有界面_画面帧.私有窗口_抽帧参数.ModernTextBox3.Text = ""
-                ui.私有界面_画面帧.私有窗口_抽帧参数.ModernComboBox1.Text = ""
-                ui.私有界面_画面帧.私有窗口_抽帧参数.ModernComboBox2.Text = ""
+                With ui.私有界面_画面帧.私有窗口_抽帧参数
+                    .ModernCheckBox1.Checked = False
+                    .ModernTextBox1.Text = ""
+                    .ModernTextBox2.Text = ""
+                    .ModernTextBox3.Text = ""
+                    .ModernComboBox1.Text = ""
+                    .ModernComboBox2.Text = ""
+                End With
             Case 预设数据_v6.滤镜排序单片结构.标识符枚举.插帧
                 With ui.私有界面_画面帧.私有窗口_插帧参数
                     .MCB_插帧总开关.Checked = False
@@ -890,17 +1338,40 @@ Public Class 预设管理_v6
                     .MTB_处理哪些颜色平面.Text = ""
                 End With
             Case 预设数据_v6.滤镜排序单片结构.标识符枚举.降噪
-                ui.私有界面_画面帧.私有窗口_降噪.MCB_插帧总开关.Checked = False
-                ui.私有界面_画面帧.私有窗口_降噪.MCB_滤镜选择.SelectedIndex = -1
+                With ui.私有界面_画面帧.私有窗口_降噪
+                    .MCB_插帧总开关.Checked = False
+                    .MCB_滤镜选择.SelectedIndex = -1
+                    ResetTrackValue(.ETB_降噪参数1)
+                    ResetTrackValue(.ETB_降噪参数2)
+                    ResetTrackValue(.ETB_降噪参数3)
+                    ResetTrackValue(.ETB_降噪参数4)
+                End With
             Case 预设数据_v6.滤镜排序单片结构.标识符枚举.锐化
-                ui.私有界面_画面帧.私有窗口_锐化.MCB_锐化总开关.Checked = False
-                ui.私有界面_画面帧.私有窗口_锐化.MCB_滤镜选择.SelectedIndex = -1
+                With ui.私有界面_画面帧.私有窗口_锐化
+                    .MCB_锐化总开关.Checked = False
+                    .MCB_滤镜选择.SelectedIndex = -1
+                    ResetTrackValue(.ETB_锐化参数1)
+                    ResetTrackValue(.ETB_锐化参数2)
+                    ResetTrackValue(.ETB_锐化参数3)
+                End With
             Case 预设数据_v6.滤镜排序单片结构.标识符枚举.胶片颗粒
-                ui.私有界面_画面帧.私有窗口_胶片颗粒.MCB_胶片颗粒总开关.Checked = False
-                ui.私有界面_画面帧.私有窗口_胶片颗粒.MCB_滤镜选择.SelectedIndex = -1
+                With ui.私有界面_画面帧.私有窗口_胶片颗粒
+                    .MCB_胶片颗粒总开关.Checked = False
+                    .MCB_滤镜选择.SelectedIndex = -1
+                    ResetTrackValue(.ETB_胶片颗粒参数1)
+                    ResetTrackValue(.ETB_胶片颗粒参数2)
+                    ResetTrackValue(.ETB_胶片颗粒参数3)
+                    ResetTrackValue(.ETB_胶片颗粒参数4)
+                End With
             Case 预设数据_v6.滤镜排序单片结构.标识符枚举.平滑断层
-                ui.私有界面_画面帧.私有窗口_平滑断层.MCB_平滑断层总开关.Checked = False
-                ui.私有界面_画面帧.私有窗口_平滑断层.MCB_滤镜选择.SelectedIndex = -1
+                With ui.私有界面_画面帧.私有窗口_平滑断层
+                    .MCB_平滑断层总开关.Checked = False
+                    .MCB_滤镜选择.SelectedIndex = -1
+                    ResetTrackValue(.ETB_平滑断层参数1)
+                    ResetTrackValue(.ETB_平滑断层参数2)
+                    ResetTrackValue(.ETB_平滑断层参数3)
+                    ResetTrackValue(.ETB_平滑断层参数4)
+                End With
             Case 预设数据_v6.滤镜排序单片结构.标识符枚举.扫描方式
                 ui.私有界面_画面帧.私有窗口_扫描方式.MCB_扫描方式总开关.Checked = False
                 ui.私有界面_画面帧.私有窗口_扫描方式.MCB_扫描方式.SelectedIndex = -1
@@ -940,12 +1411,19 @@ Public Class 预设管理_v6
                     .MCB_对比度.Checked = False
                     .MCB_饱和度.Checked = False
                     .MCB_伽马.Checked = False
+                    ResetTrackValue(.ETB_亮度)
+                    ResetTrackValue(.ETB_对比度, 1)
+                    ResetTrackValue(.ETB_饱和度, 1)
+                    ResetTrackValue(.ETB_伽马, 1)
                 End With
             Case 预设数据_v6.滤镜排序单片结构.标识符枚举.音频响度标准化
                 With ui.私有界面_音频参数
                     .MCB_目标响度.Checked = False
                     .MCB_动态范围.Checked = False
                     .MCB_峰值电平.Checked = False
+                    ResetTrackValue(.ETB_目标响度, -24)
+                    ResetTrackValue(.ETB_动态范围, 1)
+                    ResetTrackValue(.ETB_峰值电平, -1)
                 End With
             Case 预设数据_v6.滤镜排序单片结构.标识符枚举.音频格式转换
                 ui.私有界面_音频参数.声道布局.Text = ""
@@ -1042,12 +1520,12 @@ Public Class 预设管理_v6
             Case 预设数据_v6.滤镜排序单片结构.标识符枚举.音频格式转换
                 Return If(a.音频参数_声道数 <> "", $"aformat=channel_layouts={a.音频参数_声道数}", "")
             Case 预设数据_v6.滤镜排序单片结构.标识符枚举.音频重采样
-                Return If(a.音频参数_采样率 <> "", $"aresample={a.音频参数_采样率}", "")
+                Return ""
         End Select
         Return ""
     End Function
 
-    Private Shared Function 生成滤镜图(a As 预设数据_v6, Optional 仅视频 As Boolean = False, Optional 输入文件 As String = 输入占位符) As 滤镜图结果
+    Private Shared Function 生成滤镜图(a As 预设数据_v6, Optional 仅视频 As Boolean = False, Optional 输入文件 As String = 输入占位符, Optional 输出文件 As String = 输出占位符) As 滤镜图结果
         Dim 排序 = If(a.滤镜排序系统, Array.Empty(Of 预设数据_v6.滤镜排序单片结构)()).ToList()
         Dim 视频链 = 排序.Where(Function(x) x.滤镜目标流类型 = 预设数据_v6.滤镜排序单片结构.流类型.视频).
             Select(Function(x) 清理线性滤镜片段(获取滤镜片段(a, x, 输入文件))).
@@ -1060,62 +1538,126 @@ Public Class 预设管理_v6
 
         Dim 视频流 = 规范流列表(a.流控制_将视频参数应用于指定流, "v")
         Dim 音频流 = If(仅视频, New List(Of String), 规范流列表(a.流控制_将音频参数应用于指定流, "a"))
-        If 视频流.Count = 0 AndAlso (视频链.Count > 0 OrElse a.视频参数_编码器_具体编码 <> "") Then 视频流.Add("0:v:0")
-        If Not 仅视频 AndAlso 音频流.Count = 0 AndAlso (音频链.Count > 0 OrElse a.音频参数_编码器_代号 <> "") Then 音频流.Add("0:a:0")
+        Dim 视频Trim = 构造Trim滤镜(a, False)
+        If 视频Trim <> "" Then 视频链.Insert(0, 视频Trim)
+        Dim 音频Trim = If(仅视频 OrElse (音频流.Count = 0 AndAlso 音频链.Count = 0 AndAlso String.IsNullOrWhiteSpace(a.音频参数_编码器_代号)), "", 构造Trim滤镜(a, True))
+        If 音频Trim <> "" Then 音频链.Insert(0, 音频Trim)
+        Dim 视频附加参数已设置 = 视频输出附加参数已设置(a)
+        Dim 音频附加参数已设置 = 音频输出附加参数已设置(a)
+        If 视频流.Count = 0 AndAlso (视频链.Count > 0 OrElse a.视频参数_编码器_具体编码 <> "" OrElse 视频附加参数已设置) Then 视频流.Add("0:v:0")
+        If Not 仅视频 AndAlso 音频流.Count = 0 AndAlso (音频链.Count > 0 OrElse a.音频参数_编码器_代号 <> "" OrElse 音频附加参数已设置) Then 音频流.Add("0:a:0")
 
         Dim 图段 As New List(Of String)
         Dim 映射 As New List(Of String)
+        Dim 输出滤镜 As New List(Of String)
         Dim 编码视频选择器 As New List(Of String)
         Dim 编码音频选择器 As New List(Of String)
+        Dim 视频输出数量 As Integer = 0
+        Dim 音频输出数量 As Integer = 0
         Dim 保留其他视频 = a.流控制_启用保留其他视频流
         Dim 保留其他音频 = Not 仅视频 AndAlso a.流控制_启用保留其他音频流
         Dim 保留其他字幕 = Not 仅视频 AndAlso a.流控制_启用保留其他字幕流
         Dim 视频编码器 = 视频编码器数据库_v6.获取编码器数据(a.视频参数_编码器_具体编码)
         Dim 音频编码器 = 音频编码器数据库_v6.获取编码器数据(a.音频参数_编码器_代号)
-
         Dim 字幕流 = If(仅视频, New List(Of String), 规范流列表(a.流控制_将字幕参数应用于指定流, "s"))
+        Dim 禁用视频 = 视频编码器 IsNot Nothing AndAlso 视频编码器.是否禁用
+        Dim 禁用音频 = 音频编码器 IsNot Nothing AndAlso 音频编码器.是否禁用
+        Dim 请求视频输出 = Not 禁用视频 AndAlso (视频链.Count > 0 OrElse 视频流.Count > 0 OrElse 保留其他视频 OrElse 视频附加参数已设置 OrElse 编码器请求输出(视频编码器))
+        Dim 请求音频输出 = Not 仅视频 AndAlso Not 禁用音频 AndAlso (音频链.Count > 0 OrElse 音频流.Count > 0 OrElse 保留其他音频 OrElse 音频附加参数已设置 OrElse 编码器请求输出(音频编码器))
+        Dim 请求字幕输出 = Not 仅视频 AndAlso (字幕流.Count > 0 OrElse 保留其他字幕)
+        Dim 视频链使用输出滤镜 = 视频链.Count > 0 AndAlso Not 保留其他视频 AndAlso 可作为输出滤镜链(视频链)
+        Dim 音频链使用输出滤镜 = 音频链.Count > 0 AndAlso Not 保留其他音频 AndAlso 可作为输出滤镜链(音频链)
+        Dim 视频链含完整滤镜图 = 视频链.Any(Function(x) Not 可作为输出滤镜片段(x))
+        Dim 音频链含完整滤镜图 = 音频链.Any(Function(x) Not 可作为输出滤镜片段(x))
 
-        If 视频链.Count > 0 OrElse Not 保留其他视频 Then
-            For i = 0 To 视频流.Count - 1
-                If 视频链.Count > 0 Then
+        If 请求视频输出 AndAlso Not 保留其他视频 AndAlso 视频链.Count > 0 AndAlso 视频链含完整滤镜图 Then
+            Dim 完整图输出 As New List(Of String)
+            If 添加完整滤镜图链(图段, 视频链, "vout0", "v0", 完整图输出) Then
+                添加完整滤镜图输出映射(映射, 编码视频选择器, 完整图输出, "v")
+            Else
+                For i = 0 To 视频流.Count - 1
                     Dim label = $"vout{i}"
                     添加线性滤镜链图段(图段, 视频流(i), 视频链, label, $"v{i}")
-                    映射.Add($"-map [{label}]")
+                    映射.Add($"-map [{label}]?")
+                    编码视频选择器.Add($"v:{i}")
+                Next
+            End If
+        ElseIf 请求视频输出 AndAlso Not 保留其他视频 Then
+            For i = 0 To 视频流.Count - 1
+                If 视频链.Count > 0 Then
+                    If 视频链使用输出滤镜 Then
+                        映射.Add($"-map {可选输入流映射(视频流(i))}")
+                    Else
+                        Dim label = $"vout{i}"
+                        添加线性滤镜链图段(图段, 视频流(i), 视频链, label, $"v{i}")
+                        映射.Add($"-map [{label}]?")
+                    End If
                 Else
                     映射.Add($"-map {可选输入流映射(视频流(i))}")
                 End If
                 编码视频选择器.Add($"v:{i}")
             Next
-        Else
+            If 视频链使用输出滤镜 Then 输出滤镜.Add($"-filter:v {Q(String.Join(",", 视频链))}")
+        ElseIf 请求视频输出 AndAlso 视频链.Count = 0 Then
             For Each stream In 视频流
                 编码视频选择器.Add(获取保留映射输出流选择器(stream, "v"))
             Next
         End If
 
-        If 音频链.Count > 0 OrElse Not 保留其他音频 Then
-            For i = 0 To 音频流.Count - 1
-                If 音频链.Count > 0 Then
+        If 请求音频输出 AndAlso Not 保留其他音频 AndAlso 音频链.Count > 0 AndAlso 音频链含完整滤镜图 Then
+            Dim 完整图输出 As New List(Of String)
+            If 添加完整滤镜图链(图段, 音频链, "aout0", "a0", 完整图输出) Then
+                添加完整滤镜图输出映射(映射, 编码音频选择器, 完整图输出, "a")
+            Else
+                For i = 0 To 音频流.Count - 1
                     Dim label = $"aout{i}"
                     添加线性滤镜链图段(图段, 音频流(i), 音频链, label, $"a{i}")
-                    映射.Add($"-map [{label}]")
+                    映射.Add($"-map [{label}]?")
+                    编码音频选择器.Add($"a:{i}")
+                Next
+            End If
+        ElseIf 请求音频输出 AndAlso Not 保留其他音频 Then
+            For i = 0 To 音频流.Count - 1
+                If 音频链.Count > 0 Then
+                    If 音频链使用输出滤镜 Then
+                        映射.Add($"-map {可选输入流映射(音频流(i))}")
+                    Else
+                        Dim label = $"aout{i}"
+                        添加线性滤镜链图段(图段, 音频流(i), 音频链, label, $"a{i}")
+                        映射.Add($"-map [{label}]?")
+                    End If
                 Else
                     映射.Add($"-map {可选输入流映射(音频流(i))}")
                 End If
                 编码音频选择器.Add($"a:{i}")
             Next
-        Else
+            If 音频链使用输出滤镜 Then 输出滤镜.Add($"-filter:a {Q(String.Join(",", 音频链))}")
+        ElseIf 请求音频输出 AndAlso 音频链.Count = 0 Then
             For Each stream In 音频流
                 编码音频选择器.Add(获取保留映射输出流选择器(stream, "a"))
             Next
         End If
 
-        If Not 保留其他字幕 Then
+        If 请求字幕输出 AndAlso Not 保留其他字幕 Then
             For Each s In 字幕流
                 映射.Add($"-map {可选输入流映射(s)}")
             Next
         End If
 
-        If 保留其他视频 Then
+        If 请求视频输出 AndAlso 保留其他视频 Then
+            If 视频链.Count > 0 Then
+                Dim 完整图输出 As New List(Of String)
+                If 视频链含完整滤镜图 AndAlso 添加完整滤镜图链(图段, 视频链, "vkeep0", "vkeep", 完整图输出) Then
+                    添加完整滤镜图输出映射(映射, 编码视频选择器, 完整图输出, "v")
+                Else
+                    For i = 0 To 视频流.Count - 1
+                        Dim label = $"vkeep{i}"
+                        添加线性滤镜链图段(图段, 视频流(i), 视频链, label, $"vkeep{i}")
+                        映射.Add($"-map [{label}]?")
+                        编码视频选择器.Add($"v:{i}")
+                    Next
+                End If
+            End If
             映射.Add("-map 0:v?")
             If 视频链.Count > 0 Then
                 For Each stream In 视频流
@@ -1126,7 +1668,23 @@ Public Class 预设管理_v6
                 映射.Add("-c:v copy")
             End If
         End If
-        If 保留其他音频 Then
+        If 请求视频输出 Then
+            视频输出数量 = If(保留其他视频, -1, If(编码视频选择器.Count > 0, 编码视频选择器.Count, 视频流.Count))
+        End If
+        If 请求音频输出 AndAlso 保留其他音频 Then
+            If 音频链.Count > 0 Then
+                Dim 完整图输出 As New List(Of String)
+                If 音频链含完整滤镜图 AndAlso 添加完整滤镜图链(图段, 音频链, "akeep0", "akeep", 完整图输出) Then
+                    添加完整滤镜图输出映射(映射, 编码音频选择器, 完整图输出, "a")
+                Else
+                    For i = 0 To 音频流.Count - 1
+                        Dim label = $"akeep{i}"
+                        添加线性滤镜链图段(图段, 音频流(i), 音频链, label, $"akeep{i}")
+                        映射.Add($"-map [{label}]?")
+                        编码音频选择器.Add($"a:{i}")
+                    Next
+                End If
+            End If
             映射.Add("-map 0:a?")
             If 音频链.Count > 0 Then
                 For Each stream In 音频流
@@ -1137,21 +1695,16 @@ Public Class 预设管理_v6
                 映射.Add("-c:a copy")
             End If
         End If
-        If 保留其他字幕 Then
+        If 请求音频输出 Then
+            音频输出数量 = If(保留其他音频, -1, If(编码音频选择器.Count > 0, 编码音频选择器.Count, 音频流.Count))
+        End If
+        If 请求字幕输出 AndAlso 保留其他字幕 Then
             映射.Add("-map 0:s?")
-            If 字幕流.Count > 0 Then
-                For Each stream In 字幕流
-                    映射.Add("-map " & 可选输入流映射("-" & stream))
-                Next
-                For Each stream In 字幕流
-                    映射.Add($"-map {可选输入流映射(stream)}")
-                Next
-            End If
             映射.Add("-c:s copy")
         End If
 
-        Dim 字幕参数 = 获取字幕编码参数(a.流控制_如何操作指定的字幕)
-        If 字幕参数 <> "" AndAlso 字幕流.Count > 0 Then
+        Dim 字幕参数 = 获取容器兼容字幕编码(获取字幕编码参数(a.流控制_如何操作指定的字幕), a, 输出文件, False)
+        If 请求字幕输出 AndAlso 字幕参数 <> "" AndAlso 字幕流.Count > 0 Then
             If 保留其他字幕 Then
                 For Each selector In 字幕流.Select(Function(x) 获取保留映射输出流选择器(x, "s")).Distinct(StringComparer.OrdinalIgnoreCase)
                     映射.Add($"-c:{selector} {字幕参数}")
@@ -1164,11 +1717,114 @@ Public Class 预设管理_v6
         Return New 滤镜图结果 With {
             .滤镜图 = String.Join(";", 图段),
             .映射参数 = String.Join(" ", 映射.Distinct(StringComparer.Ordinal)),
+            .输出滤镜参数 = String.Join(" ", 输出滤镜.Distinct(StringComparer.Ordinal)),
             .编码视频选择器 = 编码视频选择器.Where(Function(x) x <> "").Distinct(StringComparer.OrdinalIgnoreCase).ToList(),
             .编码音频选择器 = 编码音频选择器.Where(Function(x) x <> "").Distinct(StringComparer.OrdinalIgnoreCase).ToList(),
+            .视频输出数量 = 视频输出数量,
+            .音频输出数量 = 音频输出数量,
+            .字幕输出数量 = If(仅视频, 0, If(保留其他字幕, -1, 字幕流.Count)),
+            .请求视频输出 = 请求视频输出,
+            .请求音频输出 = 请求音频输出,
+            .请求字幕输出 = 请求字幕输出,
             .视频输出来自滤镜 = 视频链.Count > 0,
             .音频输出来自滤镜 = 音频链.Count > 0
         }
+    End Function
+
+    Private Shared Function 编码器请求输出(编码器 As Object) As Boolean
+        If 编码器 Is Nothing Then Return False
+        Dim p = 编码器.GetType().GetProperty("命令行编码器名")
+        If p Is Nothing Then Return False
+        Return Not String.IsNullOrWhiteSpace(Convert.ToString(p.GetValue(编码器), CultureInfo.InvariantCulture))
+    End Function
+
+    Private Shared Function 可作为输出滤镜链(滤镜链 As List(Of String)) As Boolean
+        If 滤镜链 Is Nothing OrElse 滤镜链.Count = 0 Then Return False
+        Return 滤镜链.All(Function(x) 可作为输出滤镜片段(x))
+    End Function
+
+    Private Shared Function 可作为输出滤镜片段(片段 As String) As Boolean
+        Dim value = If(片段, "").Trim()
+        If value = "" Then Return False
+        Return Not value.Contains("["c) AndAlso Not value.Contains("]"c) AndAlso Not value.Contains(";"c)
+    End Function
+
+    Private Shared Function 添加完整滤镜图链(图段 As List(Of String),
+                                      滤镜链 As List(Of String),
+                                      输出标签 As String,
+                                      中间标签前缀 As String,
+                                      输出标签集合 As List(Of String)) As Boolean
+        If 滤镜链 Is Nothing OrElse 滤镜链.Count = 0 Then Return False
+        If 滤镜链.Count = 1 AndAlso Not 可作为输出滤镜片段(滤镜链(0)) Then
+            图段.Add(滤镜链(0))
+            输出标签集合.AddRange(获取完整滤镜图输出标签(滤镜链(0)))
+            Return True
+        End If
+
+        If 可作为输出滤镜片段(滤镜链(0)) OrElse Not 滤镜链.Skip(1).All(Function(x) 可作为输出滤镜片段(x)) Then Return False
+
+        Dim labels = 获取完整滤镜图输出标签(滤镜链(0))
+        If labels.Count = 0 Then
+            Dim 后续线性滤镜 = 滤镜链.Skip(1).Where(Function(x) 可作为输出滤镜片段(x)).ToList()
+            图段.Add(滤镜链(0) & If(后续线性滤镜.Count > 0, "," & String.Join(",", 后续线性滤镜), ""))
+            Return True
+        End If
+        If labels.Count <> 1 Then
+            添加完整滤镜图原样片段(图段, 滤镜链, 输出标签集合)
+            Return True
+        End If
+
+        图段.Add(滤镜链(0))
+        Dim 当前标签 = labels(0)
+        For i = 1 To 滤镜链.Count - 1
+            Dim 下一个标签 = If(i = 滤镜链.Count - 1, 输出标签, $"{中间标签前缀}step{i}")
+            图段.Add($"[{当前标签}]{滤镜链(i)}[{下一个标签}]")
+            当前标签 = 下一个标签
+        Next
+        输出标签集合.Add(输出标签)
+        Return True
+    End Function
+
+    Private Shared Sub 添加完整滤镜图原样片段(图段 As List(Of String), 滤镜链 As List(Of String), 输出标签集合 As List(Of String))
+        For Each 片段 In 滤镜链.Where(Function(x) Not 可作为输出滤镜片段(x))
+            图段.Add(片段)
+            输出标签集合.AddRange(获取完整滤镜图输出标签(片段))
+        Next
+    End Sub
+
+    Private Shared Sub 添加完整滤镜图输出映射(映射 As List(Of String), 编码选择器 As List(Of String), 输出标签集合 As List(Of String), 流类型 As String)
+        If 输出标签集合 Is Nothing OrElse 输出标签集合.Count = 0 Then
+            编码选择器.Add($"{流类型}:0")
+            Exit Sub
+        End If
+
+        Dim index = 0
+        For Each label In 输出标签集合.Where(Function(x) Not String.IsNullOrWhiteSpace(x)).Distinct(StringComparer.Ordinal)
+            映射.Add($"-map [{label}]?")
+            编码选择器.Add($"{流类型}:{index}")
+            index += 1
+        Next
+    End Sub
+
+    Private Shared Function 获取完整滤镜图输出标签(滤镜图 As String) As List(Of String)
+        Dim counts As New Dictionary(Of String, Integer)(StringComparer.Ordinal)
+        For Each m As System.Text.RegularExpressions.Match In System.Text.RegularExpressions.Regex.Matches(If(滤镜图, ""), "\[([^\[\]]+)\]")
+            Dim label = m.Groups(1).Value.Trim()
+            If label = "" OrElse 是输入流标签(label) Then Continue For
+            If counts.ContainsKey(label) Then
+                counts(label) += 1
+            Else
+                counts(label) = 1
+            End If
+        Next
+        Return counts.Where(Function(x) x.Value = 1).Select(Function(x) x.Key).ToList()
+    End Function
+
+    Private Shared Function 是输入流标签(label As String) As Boolean
+        Dim value = If(label, "").Trim()
+        If value = "" Then Return False
+        If value.Any(Function(c) c = ":"c) Then Return True
+        Return value.All(Function(c) Char.IsDigit(c))
     End Function
 
     Private Shared Function 清理线性滤镜片段(片段 As String) As String
@@ -1182,13 +1838,37 @@ Public Class 预设管理_v6
         Return result
     End Function
 
+    Private Shared Function 构造Trim滤镜(a As 预设数据_v6, 音频 As Boolean) As String
+        If a.剪辑区间_方法 <> 预设数据_v6.剪辑方法.Trim滤镜 Then Return ""
+        Dim 入点 = If(a.剪辑区间_入点, "").Trim()
+        Dim 出点 = If(a.剪辑区间_出点, "").Trim()
+        Dim startValue = 转换Trim时间值(入点)
+        Dim endValue = 转换Trim时间值(出点)
+        Dim opts As New List(Of String)
+        If startValue <> "" Then opts.Add("start=" & startValue)
+        If endValue <> "" Then opts.Add("end=" & endValue)
+        If opts.Count = 0 Then Return ""
+        Return If(音频, "atrim=", "trim=") & String.Join(":", opts) & If(音频, ",asetpts=PTS-STARTPTS", ",setpts=PTS-STARTPTS")
+    End Function
+
+    Private Shared Function 转换Trim时间值(value As String) As String
+        Dim raw = If(value, "").Trim()
+        If raw = "" Then Return ""
+        Dim seconds As Double
+        If TryParseTimeSeconds(raw, seconds) Then Return FormatSeconds(seconds)
+        If raw.Contains(":"c) Then Return ""
+        Return raw
+    End Function
+
     Private Shared Function 可选输入流映射(stream As String) As String
         Dim s = If(stream, "").Trim()
-        If s = "" OrElse (s.StartsWith("["c) AndAlso s.EndsWith("]"c, StringComparison.Ordinal)) Then Return s
+        If s = "" Then Return s
+        If s.StartsWith("["c) AndAlso s.EndsWith("]"c, StringComparison.Ordinal) Then Return s & "?"
 
         Dim 排除映射 = s.StartsWith("-"c, StringComparison.Ordinal)
         If 排除映射 Then s = s.Substring(1).TrimStart()
         s = s.TrimEnd("?"c)
+        If s.StartsWith("["c) AndAlso s.EndsWith("]"c, StringComparison.Ordinal) Then Return If(排除映射, "-", "") & s & "?"
         If s = "" Then Return ""
         Return If(排除映射, "-", "") & s & "?"
     End Function
@@ -1213,7 +1893,7 @@ Public Class 预设管理_v6
         Return 类型
     End Function
 
-    Private Shared Function 生成编码参数(a As 预设数据_v6, 阶段 As 预设数据_v6.命令行阶段, 视频选择器 As List(Of String), 音频选择器 As List(Of String), 视频来自滤镜 As Boolean, 音频来自滤镜 As Boolean, 输入文件 As String) As String
+    Private Shared Function 生成编码参数(a As 预设数据_v6, 阶段 As 预设数据_v6.命令行阶段, 视频选择器 As List(Of String), 音频选择器 As List(Of String), 请求视频输出 As Boolean, 请求音频输出 As Boolean, 视频来自滤镜 As Boolean, 音频来自滤镜 As Boolean, 输入文件 As String, 输出文件 As String) As String
         Dim parts As New List(Of String)
         Dim 编码器 = 视频编码器数据库_v6.获取编码器数据(a.视频参数_编码器_具体编码)
         If 编码器 IsNot Nothing AndAlso 编码器.命令行编码器名 <> "" Then
@@ -1223,16 +1903,19 @@ Public Class 预设管理_v6
                 添加按流视频编码参数(parts, 编码器, If(视频选择器, New List(Of String)), 视频来自滤镜)
             End If
         End If
-        添加按流视频附加参数(parts, a, 阶段, If(视频选择器, New List(Of String)))
+        If 请求视频输出 Then 添加按流视频附加参数(parts, a, 阶段, If(视频选择器, New List(Of String)), 视频来自滤镜)
 
         Dim 音频 = 音频编码器数据库_v6.获取编码器数据(a.音频参数_编码器_代号)
         If 音频 IsNot Nothing AndAlso 阶段 <> 预设数据_v6.命令行阶段.二次编码第一遍 Then
-            添加按流音频编码参数(parts, 音频, a, If(音频选择器, New List(Of String)), 音频来自滤镜)
+            添加按流音频编码参数(parts, 音频, If(音频选择器, New List(Of String)), 音频来自滤镜)
+        End If
+        If 请求音频输出 AndAlso 阶段 <> 预设数据_v6.命令行阶段.二次编码第一遍 Then
+            添加按流音频附加参数(parts, a, 音频, If(音频选择器, New List(Of String)), 音频来自滤镜)
         End If
 
         If 阶段 = 预设数据_v6.命令行阶段.二次编码第一遍 OrElse 阶段 = 预设数据_v6.命令行阶段.二次编码第二遍 Then
             parts.Add(If(阶段 = 预设数据_v6.命令行阶段.二次编码第一遍, "-pass 1", "-pass 2"))
-            parts.Add("-passlogfile " & Q(生成二次编码日志路径(输入文件)))
+            parts.Add("-passlogfile " & Q(生成二次编码日志路径(输入文件, 输出文件)))
         End If
 
         Return String.Join(" ", parts.Where(Function(x) x <> ""))
@@ -1250,24 +1933,30 @@ Public Class 预设管理_v6
         Next
     End Sub
 
-    Private Shared Sub 添加按流视频附加参数(parts As List(Of String), a As 预设数据_v6, 阶段 As 预设数据_v6.命令行阶段, 选择器 As List(Of String))
+    Private Shared Sub 添加按流视频附加参数(parts As List(Of String), a As 预设数据_v6, 阶段 As 预设数据_v6.命令行阶段, 选择器 As List(Of String), 来自滤镜 As Boolean)
         Dim targets = 规范输出流选择器列表(选择器, True)
         Dim 编码器 = 视频编码器数据库_v6.获取编码器数据(a.视频参数_编码器_具体编码)
+        If 编码器 IsNot Nothing AndAlso 编码器.是否禁用 Then Exit Sub
+        Dim 选择复制流编码器 = 编码器 IsNot Nothing AndAlso 编码器.是否复制流
         For Each target In targets
-            If 编码器 IsNot Nothing Then
+            If 编码器 IsNot Nothing AndAlso Not 选择复制流编码器 Then
                 添加编码器参数(parts, 编码器.编码预设.参数名, a.视频参数_编码器_编码预设, target)
                 添加编码器参数(parts, 编码器.配置文件.参数名, a.视频参数_编码器_配置文件, target)
                 添加编码器参数(parts, 编码器.场景优化.参数名, a.视频参数_编码器_场景优化, target)
                 添加编码器参数(parts, 编码器.图片质量.参数名, a.视频参数_编码器_图片编码器质量值, target)
             End If
-            添加编码器参数(parts, "-pix_fmt", a.视频参数_色彩管理_像素格式, target)
-            添加编码器参数(parts, "-gpu", a.视频参数_编码器_gpu, target)
-            添加编码器参数(parts, "-threads", a.视频参数_编码器_threads, target)
-            parts.AddRange(生成质量参数(a, 阶段, target))
+            If Not 选择复制流编码器 Then 添加编码器参数(parts, "-r", a.视频参数_帧速率, target)
+            If Not 选择复制流编码器 Then 添加编码器参数(parts, "-pix_fmt", a.视频参数_色彩管理_像素格式, target)
+            parts.AddRange(生成色彩元数据参数(a, target))
+            If Not 选择复制流编码器 Then
+                添加编码器参数(parts, "-gpu", a.视频参数_编码器_gpu, target)
+                添加编码器参数(parts, "-threads", a.视频参数_编码器_threads, target)
+                parts.AddRange(生成质量参数(a, 阶段, target))
+            End If
         Next
     End Sub
 
-    Private Shared Sub 添加按流音频编码参数(parts As List(Of String), 音频 As 音频编码器数据库_v6.音频编码器数据, a As 预设数据_v6, 选择器 As List(Of String), 来自滤镜 As Boolean)
+    Private Shared Sub 添加按流音频编码参数(parts As List(Of String), 音频 As 音频编码器数据库_v6.音频编码器数据, 选择器 As List(Of String), 来自滤镜 As Boolean)
         If 音频.是否禁用 Then
             parts.Add("-an")
             Exit Sub
@@ -1278,22 +1967,35 @@ Public Class 预设管理_v6
             If 音频.命令行编码器名 <> "" Then
                 parts.Add($"{应用输出流选择器("-c:a", target)} {音频.命令行编码器名}")
             End If
+            If 音频.是否复制流 Then Continue For
             For Each 单项参数 In 音频.默认附加参数列表
                 添加音频编码器默认参数(parts, 单项参数, target)
             Next
+        Next
+    End Sub
+
+    Private Shared Sub 添加按流音频附加参数(parts As List(Of String), a As 预设数据_v6, 音频 As 音频编码器数据库_v6.音频编码器数据, 选择器 As List(Of String), 来自滤镜 As Boolean)
+        If 音频 IsNot Nothing AndAlso 音频.是否禁用 Then Exit Sub
+        Dim 选择复制流编码器 = 音频 IsNot Nothing AndAlso 音频.是否复制流
+        Dim targets = 规范输出流选择器列表(选择器, True)
+        For Each target In targets
+            If 选择复制流编码器 Then Continue For
             添加编码器参数(parts, "-b:a", a.音频参数_比特率, target)
             添加编码器参数(parts, a.音频参数_质量参数名, a.音频参数_质量值, target)
             添加编码器参数(parts, "-sample_fmt", a.音频参数_位深度, target)
+            添加编码器参数(parts, "-ar", a.音频参数_采样率, target)
         Next
     End Sub
 
     Private Shared Function 生成质量参数(a As 预设数据_v6, 阶段 As 预设数据_v6.命令行阶段, Optional 输出流选择器 As String = "") As List(Of String)
         Dim parts As New List(Of String)
         Select Case a.视频参数_比特率_控制方式
+            Case 预设数据_v6.视频全局质量控制方式.未选择
+                添加视频质量参数(parts, a, 输出流选择器)
             Case 预设数据_v6.视频全局质量控制方式.CRF
-                添加编码器参数(parts, $"-{If(a.视频参数_质量控制_参数名 = "", "crf", a.视频参数_质量控制_参数名)}", a.视频参数_质量控制_值, 输出流选择器)
+                添加编码器参数(parts, 获取视频质量参数名(a.视频参数_质量控制_参数名, "crf"), a.视频参数_质量控制_值, 输出流选择器)
             Case 预设数据_v6.视频全局质量控制方式.CQP
-                添加编码器参数(parts, $"-{If(a.视频参数_质量控制_参数名 = "", "qp", a.视频参数_质量控制_参数名)}", a.视频参数_质量控制_值, 输出流选择器)
+                添加编码器参数(parts, 获取视频质量参数名(a.视频参数_质量控制_参数名, "qp"), a.视频参数_质量控制_值, 输出流选择器)
             Case 预设数据_v6.视频全局质量控制方式.VBR, 预设数据_v6.视频全局质量控制方式.VBRHQ, 预设数据_v6.视频全局质量控制方式.CBR
                 添加视频质量参数(parts, a, 输出流选择器)
                 添加编码器参数(parts, "-b:v", a.视频参数_比特率_基础, 输出流选择器)
@@ -1316,19 +2018,67 @@ Public Class 预设管理_v6
 
     Private Shared Sub 添加视频质量参数(parts As List(Of String), a As 预设数据_v6, 输出流选择器 As String)
         If String.IsNullOrWhiteSpace(a.视频参数_质量控制_参数名) OrElse String.IsNullOrWhiteSpace(a.视频参数_质量控制_值) Then Exit Sub
-        添加编码器参数(parts, $"-{a.视频参数_质量控制_参数名.TrimStart("-"c)}", a.视频参数_质量控制_值, 输出流选择器)
+        添加编码器参数(parts, 获取视频质量参数名(a.视频参数_质量控制_参数名, ""), a.视频参数_质量控制_值, 输出流选择器)
     End Sub
 
-    Public Shared Function 当前编码器支持二次编码(a As 预设数据_v6) As Boolean
-        Dim 编码器 = 视频编码器数据库_v6.获取编码器数据(If(a?.视频参数_编码器_具体编码, ""))
-        Return 编码器 IsNot Nothing AndAlso 编码器.支持二次编码
+    Private Shared Function 获取视频质量参数名(参数名 As String, 默认名 As String) As String
+        Dim value = If(参数名, "").Trim()
+        If value = "" Then value = 默认名
+        Return 规范FFmpeg参数名(value)
+    End Function
+
+    Private Shared Function 生成色彩元数据参数(a As 预设数据_v6, 输出流选择器 As String) As List(Of String)
+        Dim parts As New List(Of String)
+        If Not 色彩元数据已设置(a) Then Return parts
+        添加编码器参数(parts, "-colorspace", 标准化色彩值(a.视频参数_色彩管理_矩阵系数, False), 输出流选择器)
+        添加编码器参数(parts, "-color_primaries", 标准化色彩值(a.视频参数_色彩管理_色域, False), 输出流选择器)
+        添加编码器参数(parts, "-color_trc", 标准化色彩值(a.视频参数_色彩管理_传输特性, False), 输出流选择器)
+        添加编码器参数(parts, "-color_range", 标准化色彩范围(a.视频参数_色彩管理_范围, False), 输出流选择器)
+        Return parts
+    End Function
+
+    Private Shared Function 色彩元数据已设置(a As 预设数据_v6) As Boolean
+        If a Is Nothing Then Return False
+        Dim mode = If(a.视频参数_色彩管理_处理方式, "").Trim()
+        If Not String.Equals(mode, "写入元数据并转换", StringComparison.Ordinal) AndAlso
+           Not String.Equals(mode, "仅写入元数据", StringComparison.Ordinal) Then Return False
+        Return 标准化色彩值(a.视频参数_色彩管理_矩阵系数, False) <> "" OrElse
+               标准化色彩值(a.视频参数_色彩管理_色域, False) <> "" OrElse
+               标准化色彩值(a.视频参数_色彩管理_传输特性, False) <> "" OrElse
+               标准化色彩范围(a.视频参数_色彩管理_范围, False) <> ""
+    End Function
+
+    Private Shared Function 色彩转换滤镜已设置(a As 预设数据_v6) As Boolean
+        Return 构造色彩转换滤镜(a) <> ""
+    End Function
+
+    Private Shared Function 标准化色彩值(value As String, 允许Auto As Boolean) As String
+        Dim raw = If(value, "").Trim()
+        If raw = "" Then Return ""
+        If String.Equals(raw, "auto", StringComparison.OrdinalIgnoreCase) Then Return If(允许Auto, "auto", "")
+        Return raw
+    End Function
+
+    Private Shared Function 标准化色彩范围(value As String, 允许Auto As Boolean) As String
+        Dim raw = 标准化色彩值(value, 允许Auto)
+        If raw = "" Then Return ""
+        If raw.StartsWith("tv", StringComparison.OrdinalIgnoreCase) OrElse raw.Contains("有限", StringComparison.Ordinal) OrElse raw.Contains("limited", StringComparison.OrdinalIgnoreCase) Then Return "tv"
+        If raw.StartsWith("pc", StringComparison.OrdinalIgnoreCase) OrElse raw.Contains("全范围", StringComparison.Ordinal) OrElse raw.Contains("full", StringComparison.OrdinalIgnoreCase) Then Return "pc"
+        Return raw
     End Function
 
     Private Shared Function 可以生成二次编码(a As 预设数据_v6) As Boolean
         Return a IsNot Nothing AndAlso
                a.视频参数_比特率_控制方式 = 预设数据_v6.视频全局质量控制方式.TPE AndAlso
-               当前编码器支持二次编码(a) AndAlso
-               二次编码基础码率有效(a)
+               二次编码基础码率有效(a) AndAlso
+               Not 二次编码明显不兼容(a)
+    End Function
+
+    Private Shared Function 二次编码明显不兼容(a As 预设数据_v6) As Boolean
+        If a Is Nothing Then Return False
+        If a.视频参数_编码器_类型 = 预设数据_v6.视频编码器类型.图片 Then Return True
+        Dim 编码器 = 视频编码器数据库_v6.获取编码器数据(If(a.视频参数_编码器_具体编码, ""))
+        Return 编码器 IsNot Nothing AndAlso (编码器.是否复制流 OrElse 编码器.是否禁用)
     End Function
 
     Private Shared Function 二次编码基础码率有效(a As 预设数据_v6) As Boolean
@@ -1341,15 +2091,51 @@ Public Class 预设管理_v6
                 Not String.IsNullOrWhiteSpace(a.视频参数_质量控制_值))
     End Function
 
-    Private Shared Function 生成二次编码日志路径(输入文件 As String) As String
+    Private Shared Function 视频输出附加参数已设置(a As 预设数据_v6) As Boolean
+        If a Is Nothing Then Return False
+        Return Not String.IsNullOrWhiteSpace(a.视频参数_编码器_编码预设) OrElse
+               Not String.IsNullOrWhiteSpace(a.视频参数_编码器_配置文件) OrElse
+               Not String.IsNullOrWhiteSpace(a.视频参数_编码器_场景优化) OrElse
+               Not String.IsNullOrWhiteSpace(a.视频参数_编码器_图片编码器质量值) OrElse
+               Not String.IsNullOrWhiteSpace(a.视频参数_帧速率) OrElse
+               Not String.IsNullOrWhiteSpace(a.视频参数_色彩管理_像素格式) OrElse
+               色彩元数据已设置(a) OrElse
+               Not String.IsNullOrWhiteSpace(a.视频参数_编码器_gpu) OrElse
+               Not String.IsNullOrWhiteSpace(a.视频参数_编码器_threads) OrElse
+               a.视频参数_比特率_控制方式 <> 预设数据_v6.视频全局质量控制方式.未选择 OrElse
+               Not String.IsNullOrWhiteSpace(a.视频参数_比特率_基础) OrElse
+               Not String.IsNullOrWhiteSpace(a.视频参数_比特率_最低值) OrElse
+               Not String.IsNullOrWhiteSpace(a.视频参数_比特率_最高值) OrElse
+               Not String.IsNullOrWhiteSpace(a.视频参数_比特率_缓冲区) OrElse
+               全局质量参数已设置(a) OrElse
+               Not String.IsNullOrWhiteSpace(a.视频参数_质量控制_进阶参数集)
+    End Function
+
+    Private Shared Function 音频输出附加参数已设置(a As 预设数据_v6) As Boolean
+        If a Is Nothing Then Return False
+        Return Not String.IsNullOrWhiteSpace(a.音频参数_比特率) OrElse
+               Not String.IsNullOrWhiteSpace(a.音频参数_质量参数名) OrElse
+               Not String.IsNullOrWhiteSpace(a.音频参数_质量值) OrElse
+               Not String.IsNullOrWhiteSpace(a.音频参数_位深度) OrElse
+               Not String.IsNullOrWhiteSpace(a.音频参数_采样率)
+    End Function
+
+    Private Shared Function 生成二次编码日志路径(输入文件 As String, 输出文件 As String) As String
         Dim source = If(输入文件, "").Trim()
-        If source = "" OrElse (source.StartsWith("<"c) AndAlso source.EndsWith(">"c)) Then Return "3fui-v6-passlog"
+        Dim target = If(输出文件, "").Trim()
+        Dim token = 短路径哈希(source & "|" & target)
+        If source = "" OrElse (source.StartsWith("<"c) AndAlso source.EndsWith(">"c)) Then Return $"3fui-v6-passlog-{token}"
 
         Dim dir = Path.GetDirectoryName(source)
         If String.IsNullOrWhiteSpace(dir) Then dir = Environment.CurrentDirectory
         Dim baseName = Path.GetFileNameWithoutExtension(source)
         If String.IsNullOrWhiteSpace(baseName) Then baseName = "input"
-        Return Path.Combine(dir, "3fui-v6-passlog-" & 清理二次编码日志文件名(baseName))
+        Return Path.Combine(dir, $"3fui-v6-passlog-{清理二次编码日志文件名(baseName)}-{token}")
+    End Function
+
+    Private Shared Function 短路径哈希(value As String) As String
+        Dim bytes = System.Security.Cryptography.SHA256.HashData(Encoding.UTF8.GetBytes(If(value, "")))
+        Return Convert.ToHexString(bytes, 0, 6).ToLowerInvariant()
     End Function
 
     Private Shared Function 清理二次编码日志文件名(value As String) As String
@@ -1361,18 +2147,93 @@ Public Class 预设管理_v6
         Return result
     End Function
 
-    Private Shared Function 生成剪辑输入参数(a As 预设数据_v6, 阶段 As 预设数据_v6.命令行阶段, 媒体总时长 As String, 结果 As 预设数据_v6.命令行生成结果) As String
+    Private Shared Function 生成剪辑参数(a As 预设数据_v6, 阶段 As 预设数据_v6.命令行阶段, 媒体总时长 As String, 结果 As 预设数据_v6.命令行生成结果) As 剪辑参数片段
+        Dim clip As New 剪辑参数片段
+        Dim 入点 = If(a.剪辑区间_入点, "").Trim()
+        Dim 出点 = If(a.剪辑区间_出点, "").Trim()
+        If 入点 = "" AndAlso 出点 = "" Then Return clip
+
         Select Case a.剪辑区间_方法
-            Case 预设数据_v6.剪辑方法.粗剪, 预设数据_v6.剪辑方法.精剪空降解码
-                Return $"{If(a.剪辑区间_入点 <> "", "-ss " & a.剪辑区间_入点, "")} {If(a.剪辑区间_出点 <> "", "-to " & a.剪辑区间_出点, "")}".Trim()
+            Case 预设数据_v6.剪辑方法.粗剪
+                clip.输入前 = 生成常规剪辑参数(入点, 出点)
+            Case 预设数据_v6.剪辑方法.精剪从头解码
+                clip.输出前 = 生成常规剪辑参数(入点, 出点)
+            Case 预设数据_v6.剪辑方法.精剪空降解码
+                生成空降精剪参数(a, 入点, 出点, clip)
             Case 预设数据_v6.剪辑方法.掐头去尾
                 结果.需要媒体总时长 = True
-                Dim duration = If(String.IsNullOrWhiteSpace(媒体总时长), 媒体总时长占位符, 媒体总时长)
-                Dim t = $"({duration}-{If(a.剪辑区间_入点 = "", "0", a.剪辑区间_入点)}-{If(a.剪辑区间_出点 = "", "0", a.剪辑区间_出点)})"
-                Return $"{If(a.剪辑区间_入点 <> "", "-ss " & a.剪辑区间_入点, "")} -t {t}".Trim()
-            Case Else
-                Return ""
+                clip.输入前 = 生成掐头去尾参数(入点, 出点, 媒体总时长, 结果)
         End Select
+
+        Return clip
+    End Function
+
+    Private Shared Function 生成常规剪辑参数(入点 As String, 出点 As String) As String
+        Dim parts As New List(Of String)
+        If 入点 <> "" Then parts.Add("-ss " & 入点)
+        If 出点 <> "" Then parts.Add("-to " & 出点)
+        Return String.Join(" ", parts)
+    End Function
+
+    Private Shared Sub 生成空降精剪参数(a As 预设数据_v6, 入点 As String, 出点 As String, clip As 剪辑参数片段)
+        Dim startSeconds As Double
+        Dim decodeBackSeconds As Double
+        If 入点 <> "" AndAlso TryParseTimeSeconds(入点, startSeconds) AndAlso
+           TryParseTimeSeconds(If(a.剪辑区间_向前解码多久秒, "").Trim(), decodeBackSeconds) AndAlso
+           decodeBackSeconds > 0 Then
+            Dim inputSeek = Math.Max(0, startSeconds - decodeBackSeconds)
+            Dim outputStart = startSeconds - inputSeek
+            Dim outputEnd As Double
+
+            clip.输入前 = "-ss " & FormatSeconds(inputSeek)
+            Dim outputParts As New List(Of String) From {"-ss " & FormatSeconds(outputStart)}
+            If 出点 <> "" AndAlso TryParseTimeSeconds(出点, outputEnd) Then
+                outputParts.Add("-to " & FormatSeconds(Math.Max(0, outputEnd - inputSeek)))
+            ElseIf 出点 <> "" Then
+                outputParts.Add("-to " & 出点)
+            End If
+            clip.输出前 = String.Join(" ", outputParts)
+            Exit Sub
+        End If
+
+        clip.输入前 = 生成常规剪辑参数(入点, 出点)
+    End Sub
+
+    Private Shared Function 生成掐头去尾参数(入点 As String, 出点 As String, 媒体总时长 As String, 结果 As 预设数据_v6.命令行生成结果) As String
+        Dim parts As New List(Of String)
+        If 入点 <> "" Then parts.Add("-ss " & 入点)
+
+        Dim durationSeconds As Double
+        If Not TryParseTimeSeconds(媒体总时长, durationSeconds) Then
+            parts.Add("-t " & 媒体总时长占位符)
+            Return String.Join(" ", parts)
+        End If
+
+        Dim trimHead As Double
+        Dim trimTail As Double
+        If 入点 <> "" AndAlso Not TryParseTimeSeconds(入点, trimHead) Then trimHead = 0
+        If 出点 <> "" AndAlso Not TryParseTimeSeconds(出点, trimTail) Then trimTail = 0
+        Dim keepDuration = Math.Max(0, durationSeconds - trimHead - trimTail)
+        parts.Add("-t " & FormatSeconds(keepDuration))
+        Return String.Join(" ", parts)
+    End Function
+
+    Private Shared Function TryParseTimeSeconds(value As String, ByRef seconds As Double) As Boolean
+        seconds = 0
+        Dim raw = If(value, "").Trim()
+        If raw = "" OrElse raw.StartsWith("<"c) Then Return False
+
+        Dim t As TimeSpan
+        If TimeSpan.TryParse(raw, CultureInfo.InvariantCulture, t) Then
+            seconds = t.TotalSeconds
+            Return True
+        End If
+
+        Return Double.TryParse(raw, NumberStyles.Float, CultureInfo.InvariantCulture, seconds)
+    End Function
+
+    Private Shared Function FormatSeconds(seconds As Double) As String
+        Return seconds.ToString("0.######", CultureInfo.InvariantCulture)
     End Function
 
     Private Shared Function 生成解码参数(a As 预设数据_v6) As String
@@ -1380,19 +2241,19 @@ Public Class 预设管理_v6
         If a.解码参数_解码器 <> "" Then parts.Add($"-hwaccel {a.解码参数_解码器}")
         If a.解码参数_CPU解码线程数 <> "" Then parts.Add($"-threads {a.解码参数_CPU解码线程数}")
         If a.解码参数_解码数据格式 <> "" Then parts.Add($"-hwaccel_output_format {a.解码参数_解码数据格式}")
-        If a.解码参数_指定硬件的参数名 <> "" AndAlso a.解码参数_指定硬件的参数 <> "" Then parts.Add($"{a.解码参数_指定硬件的参数名} {a.解码参数_指定硬件的参数}")
+        If a.解码参数_指定硬件的参数名 <> "" AndAlso a.解码参数_指定硬件的参数 <> "" Then parts.Add($"{规范FFmpeg参数名(a.解码参数_指定硬件的参数名)} {a.解码参数_指定硬件的参数}")
         Return String.Join(" ", parts)
     End Function
 
-    Private Shared Function 生成主输入参数(a As 预设数据_v6, 输入文件 As String) As List(Of String)
+    Private Shared Function 生成主输入参数(a As 预设数据_v6, 输入文件 As String, 帧服务器脚本后缀 As String) As List(Of String)
         Dim parts As New List(Of String)
         If a.视频参数_视频帧服务器_使用AviSynth AndAlso a.视频参数_视频帧服务器_avs脚本文件.Trim() <> "" Then
             parts.Add("-i")
-            parts.Add(Q(派生脚本路径(输入文件, ".avs")))
+            parts.Add(Q(派生脚本路径(输入文件, ".avs", 帧服务器脚本后缀)))
         ElseIf a.视频参数_视频帧服务器_使用VapourSynth AndAlso a.视频参数_视频帧服务器_vpy脚本文件.Trim() <> "" Then
             parts.Add("-f vapoursynth")
             parts.Add("-i")
-            parts.Add(Q(派生脚本路径(输入文件, Path.GetExtension(a.视频参数_视频帧服务器_vpy脚本文件))))
+            parts.Add(Q(派生脚本路径(输入文件, Path.GetExtension(a.视频参数_视频帧服务器_vpy脚本文件), 帧服务器脚本后缀)))
         Else
             parts.Add("-i")
             parts.Add(Q(输入文件))
@@ -1400,17 +2261,24 @@ Public Class 预设管理_v6
         Return parts
     End Function
 
-    Private Shared Function 派生脚本路径(输入文件 As String, ext As String) As String
+    Public Shared Function 派生帧服务器脚本路径(输入文件 As String, ext As String, Optional 后缀 As String = "") As String
+        Return 派生脚本路径(输入文件, ext, 后缀)
+    End Function
+
+    Private Shared Function 派生脚本路径(输入文件 As String, ext As String, 后缀 As String) As String
+        Dim safeSuffix = 清理二次编码日志文件名(If(后缀, "").Trim())
+        Dim suffixPart = If(safeSuffix = "", "", "." & safeSuffix)
+        Dim finalExt = If(String.IsNullOrWhiteSpace(ext), ".vpy", ext)
         If 输入文件 = 输入占位符 OrElse 输入文件 = "<InputFile>" Then
-            Return "<InputFileWithOutExtension>" & If(String.IsNullOrWhiteSpace(ext), ".vpy", ext)
+            Return "<InputFileWithOutExtension>" & suffixPart & finalExt
         End If
         Dim dir = Path.GetDirectoryName(输入文件)
         Dim name = Path.GetFileNameWithoutExtension(输入文件)
-        If String.IsNullOrWhiteSpace(dir) Then Return name & If(String.IsNullOrWhiteSpace(ext), ".vpy", ext)
-        Return Path.Combine(dir, name & If(String.IsNullOrWhiteSpace(ext), ".vpy", ext))
+        If String.IsNullOrWhiteSpace(dir) Then Return name & suffixPart & finalExt
+        Return Path.Combine(dir, name & suffixPart & finalExt)
     End Function
 
-    Private Shared Function 生成元数据章节附件片段(a As 预设数据_v6, 当前视频输出数量 As Integer) As 附加输出片段
+    Private Shared Function 生成元数据章节附件片段(a As 预设数据_v6, 当前视频输出数量 As Integer, 输入文件 As String, 输出文件 As String, 当前字幕输出数量 As Integer) As 附加输出片段
         Dim result As New 附加输出片段
         Select Case a.流控制_元数据选项
             Case 1
@@ -1422,8 +2290,10 @@ Public Class 预设管理_v6
         End Select
 
         For Each item In If(a.元数据_要写入的信息, Array.Empty(Of 预设数据_v6.元数据单片结构)())
-            If item Is Nothing OrElse item.字段.Trim() = "" Then Continue For
-            result.输出前.Add($"-metadata {item.字段.Trim()}={QMetadata(item.值)}")
+            If item Is Nothing Then Continue For
+            Dim 字段 = item.字段.Trim()
+            If 字段 = "" Then Continue For
+            result.输出前.Add($"-metadata {QMetadata(字段 & "=" & If(item.值, ""))}")
         Next
 
         Select Case a.流控制_章节选项
@@ -1449,34 +2319,49 @@ Public Class 预设管理_v6
             End Select
         End If
 
+        Dim 允许常规附件 = 输出容器支持附件(a, 输出文件)
+        Dim 允许附加封面图 = 输出容器支持附加封面图(a, 输出文件)
         Select Case a.流控制_附件选项
             Case 1
-                result.输出前.Add("-map 0:t? -c:t copy")
+                If 允许常规附件 Then
+                    result.输出前.Add("-map 0:t? -c:t copy")
+                    result.包含显式流映射 = True
+                End If
         End Select
 
         Dim 额外输入索引 = 1 + result.额外输入.Where(Function(x) x = "-i").Count()
+        添加自动混流字幕片段(a, 输入文件, 输出文件, result, 额外输入索引, 当前字幕输出数量)
+
         Dim 封面序号 As Integer = 0
         Dim 附件序号 As Integer = 0
         For Each item In If(a.附件_要写入的附件, Array.Empty(Of 预设数据_v6.附件单片结构)())
             If item Is Nothing OrElse item.文件路径.Trim() = "" OrElse item.类型 = 预设数据_v6.附件单片结构.附件类型.未选择 Then Continue For
             Select Case item.类型
                 Case 预设数据_v6.附件单片结构.附件类型.MP4封面图
+                    If Not 允许附加封面图 Then Continue For
+                    If 当前视频输出数量 < 0 Then Continue For
                     result.额外输入.Add("-i")
                     result.额外输入.Add(Q(item.文件路径.Trim()))
                     Dim 输出视频序号 = 当前视频输出数量 + 封面序号
-                    result.输出前.Add($"-map {额外输入索引}:v:0")
+                    Dim 封面视频流 = $"{额外输入索引}:v:0"
+                    result.输出前.Add($"-map {可选输入流映射(封面视频流)}")
+                    result.包含显式流映射 = True
                     result.输出前.Add($"-c:v:{输出视频序号} copy")
                     result.输出前.Add($"-disposition:v:{输出视频序号} attached_pic")
+                    result.附加封面图数量 += 1
                     额外输入索引 += 1
                     封面序号 += 1
                 Case 预设数据_v6.附件单片结构.附件类型.MKV封面图,
                      预设数据_v6.附件单片结构.附件类型.图片,
                      预设数据_v6.附件单片结构.附件类型.字体文件,
                      预设数据_v6.附件单片结构.附件类型.文本文档
+                    If Not 允许常规附件 Then Continue For
                     result.输出前.Add($"-attach {Q(item.文件路径.Trim())}")
                     result.输出前.Add($"-metadata:s:t:{附件序号} mimetype={获取附件Mimetype(item.文件路径.Trim(), item.类型)}")
                     If item.类型 = 预设数据_v6.附件单片结构.附件类型.MKV封面图 Then
                         result.输出前.Add($"-metadata:s:t:{附件序号} filename=cover{Path.GetExtension(item.文件路径.Trim())}")
+                    Else
+                        result.输出前.Add($"-metadata:s:t:{附件序号} {QMetadata("filename=" & Path.GetFileName(item.文件路径.Trim()))}")
                     End If
                     附件序号 += 1
             End Select
@@ -1485,14 +2370,138 @@ Public Class 预设管理_v6
         Return result
     End Function
 
+    Private Shared Function 输出容器支持附件(a As 预设数据_v6, 输出文件 As String) As Boolean
+        Select Case 获取输出容器扩展名(a, 输出文件)
+            Case "mkv", "mka", "mks", "mk3d"
+                Return True
+            Case Else
+                Return False
+        End Select
+    End Function
+
+    Private Shared Function 输出容器支持附加封面图(a As 预设数据_v6, 输出文件 As String) As Boolean
+        Select Case 获取输出容器扩展名(a, 输出文件)
+            Case "mp4", "m4v", "m4a", "mov", "3gp", "3g2", "mkv", "mka", "mks", "mk3d"
+                Return True
+            Case Else
+                Return False
+        End Select
+    End Function
+
+    Private Shared Function 输出容器支持MovText字幕(a As 预设数据_v6, 输出文件 As String) As Boolean
+        Select Case 获取输出容器扩展名(a, 输出文件)
+            Case "mp4", "m4v", "m4a", "mov", "3gp", "3g2"
+                Return True
+            Case Else
+                Return False
+        End Select
+    End Function
+
+    Private Shared Function 输出容器支持WebVtt字幕(a As 预设数据_v6, 输出文件 As String) As Boolean
+        Select Case 获取输出容器扩展名(a, 输出文件)
+            Case "webm"
+                Return True
+            Case Else
+                Return False
+        End Select
+    End Function
+
+    Private Shared Function 附加片段默认映射主视频(a As 预设数据_v6, 输出文件 As String) As Boolean
+        Select Case 获取输出容器扩展名(a, 输出文件)
+            Case "mp3", "m4a", "aac", "flac", "wav", "ogg", "opus", "wma", "mka", "srt", "ass", "ssa", "vtt", "sup", "jpg", "jpeg", "png", "webp", "bmp", "gif", "raw", "yuv", "h264", "h265", "hevc", "av1", "ivf"
+                Return False
+            Case Else
+                Return True
+        End Select
+    End Function
+
+    Private Shared Function 附加片段默认映射主音频(a As 预设数据_v6, 输出文件 As String) As Boolean
+        Select Case 获取输出容器扩展名(a, 输出文件)
+            Case "jpg", "jpeg", "png", "webp", "bmp", "gif", "srt", "ass", "ssa", "vtt", "sup", "raw", "yuv", "h264", "h265", "hevc", "av1", "ivf"
+                Return False
+            Case Else
+                Return True
+        End Select
+    End Function
+
+    Private Shared Function 获取输出容器扩展名(a As 预设数据_v6, 输出文件 As String) As String
+        Dim ext = Path.GetExtension(If(输出文件, "")).TrimStart("."c).ToLowerInvariant()
+        If ext = "" OrElse 输出文件 = 输出占位符 OrElse 输出文件 = "<OutputFile>" Then ext = If(a?.输出容器, "").Trim().TrimStart("."c).ToLowerInvariant()
+        Return ext
+    End Function
+
+    Private Shared Sub 添加自动混流字幕片段(a As 预设数据_v6, 输入文件 As String, 输出文件 As String, result As 附加输出片段, ByRef 额外输入索引 As Integer, 当前字幕输出数量 As Integer)
+        If Not a.流控制_自动混流SRT AndAlso Not a.流控制_自动混流ASS AndAlso Not a.流控制_自动混流SSA Then Exit Sub
+
+        Dim 自动字幕序号 As Integer = 0
+        For Each 字幕文件 In 获取自动混流字幕文件(a, 输入文件)
+            result.额外输入.Add("-i")
+            result.额外输入.Add(Q(字幕文件))
+            result.输出前.Add($"-map {可选输入流映射($"{额外输入索引}:0")}")
+            result.包含显式流映射 = True
+
+            Dim 字幕编码 = 获取自动混流字幕编码(a, 输出文件)
+            If 当前字幕输出数量 >= 0 AndAlso 字幕编码 <> "" Then
+                result.输出前.Add($"-c:s:{当前字幕输出数量 + 自动字幕序号} {字幕编码}")
+                result.自动混流字幕数量 += 1
+            ElseIf 当前字幕输出数量 < 0 AndAlso 字幕编码 <> "" Then
+                result.输出前.Add($"-c:s {字幕编码}")
+            End If
+
+            额外输入索引 += 1
+            自动字幕序号 += 1
+        Next
+    End Sub
+
+    Private Shared Function 获取自动混流字幕编码(a As 预设数据_v6, 输出文件 As String) As String
+        If 输出容器支持MovText字幕(a, 输出文件) Then Return "mov_text"
+        If 输出容器支持WebVtt字幕(a, 输出文件) Then Return "webvtt"
+        Return 获取容器兼容字幕编码(If(a.流控制_自动混流的字幕转为MOVTEXT, "mov_text", "copy"), a, 输出文件, True)
+    End Function
+
+    Private Shared Function 获取自动混流字幕文件(a As 预设数据_v6, 输入文件 As String) As List(Of String)
+        Dim result As New List(Of String)
+        If a.流控制_自动混流SRT Then 添加自动混流字幕候选(result, 输入文件, ".srt")
+        If a.流控制_自动混流ASS Then 添加自动混流字幕候选(result, 输入文件, ".ass")
+        If a.流控制_自动混流SSA Then 添加自动混流字幕候选(result, 输入文件, ".ssa")
+        Return result.Distinct(StringComparer.OrdinalIgnoreCase).ToList()
+    End Function
+
+    Private Shared Sub 添加自动混流字幕候选(result As List(Of String), 输入文件 As String, ext As String)
+        Dim path = 派生同名字幕路径(输入文件, ext)
+        If path = "" Then Exit Sub
+        If 是输入文件占位符(输入文件) OrElse File.Exists(path) Then result.Add(path)
+    End Sub
+
+    Private Shared Function 派生同名字幕路径(输入文件 As String, ext As String) As String
+        If 是输入文件占位符(输入文件) Then Return "<InputFileWithOutExtension>" & ext
+        Dim name = Path.GetFileNameWithoutExtension(If(输入文件, ""))
+        If String.IsNullOrWhiteSpace(name) Then Return ""
+        Dim dir = Path.GetDirectoryName(输入文件)
+        If String.IsNullOrWhiteSpace(dir) Then Return name & ext
+        Return Path.Combine(dir, name & ext)
+    End Function
+
+    Private Shared Function 是输入文件占位符(输入文件 As String) As Boolean
+        Dim value = If(输入文件, "").Trim()
+        Return value = 输入占位符 OrElse value = "<InputFile>"
+    End Function
+
     Private Shared Sub 添加编码器参数(parts As List(Of String), 参数名 As String, 值 As String)
         添加编码器参数(parts, 参数名, 值, "")
     End Sub
 
     Private Shared Sub 添加编码器参数(parts As List(Of String), 参数名 As String, 值 As String, 输出流选择器 As String)
         If String.IsNullOrWhiteSpace(参数名) OrElse String.IsNullOrWhiteSpace(值) Then Exit Sub
-        parts.Add($"{应用输出流选择器(参数名, 输出流选择器)} {值}")
+        parts.Add($"{应用输出流选择器(规范FFmpeg参数名(参数名), 输出流选择器)} {值}")
     End Sub
+
+    Private Shared Function 规范FFmpeg参数名(参数名 As String) As String
+        Dim value = If(参数名, "").Trim()
+        If value = "" Then Return ""
+        If value.StartsWith("-", StringComparison.Ordinal) Then Return value
+        Return "-" & value
+    End Function
 
     Private Shared Sub 添加音频编码器默认参数(parts As List(Of String), 单项参数 As 音频编码器数据库_v6.音频编码器参数数据, 输出流选择器 As String)
         If 单项参数 Is Nothing OrElse String.IsNullOrWhiteSpace(单项参数.参数名) Then Exit Sub
@@ -1513,8 +2522,9 @@ Public Class 预设管理_v6
     End Function
 
     Private Shared Function 应用输出流选择器(参数名 As String, 输出流选择器 As String) As String
-        If String.IsNullOrWhiteSpace(参数名) OrElse String.IsNullOrWhiteSpace(输出流选择器) Then Return 参数名
-        Dim p = 参数名.Trim()
+        If String.IsNullOrWhiteSpace(参数名) Then Return ""
+        Dim p = 规范FFmpeg参数名(参数名)
+        If String.IsNullOrWhiteSpace(输出流选择器) Then Return p
         If Not p.StartsWith("-", StringComparison.Ordinal) Then Return p
         Dim firstSpace = p.IndexOf(" "c)
         Dim head = If(firstSpace >= 0, p.Substring(0, firstSpace), p)
@@ -1642,12 +2652,23 @@ Public Class 预设管理_v6
         Return Convert.ToString(v, CultureInfo.InvariantCulture)
     End Function
 
-    Private Shared Sub SetTrackValue(track As Object, value As String)
-        If track Is Nothing OrElse value = "" Then Exit Sub
+    Private Shared Sub SetTrackValue(track As Object, value As String, Optional 默认值 As Double = 0)
+        If track Is Nothing Then Exit Sub
+        If String.IsNullOrWhiteSpace(value) Then
+            ResetTrackValue(track, 默认值)
+            Exit Sub
+        End If
         Dim p = track.GetType().GetProperty("Value")
         If p Is Nothing Then Exit Sub
         Dim d As Double
         If Double.TryParse(value, NumberStyles.Any, CultureInfo.InvariantCulture, d) OrElse Double.TryParse(value, d) Then p.SetValue(track, d)
+    End Sub
+
+    Private Shared Sub ResetTrackValue(track As Object, Optional 默认值 As Double = 0)
+        If track Is Nothing Then Exit Sub
+        Dim p = track.GetType().GetProperty("Value")
+        If p Is Nothing Then Exit Sub
+        p.SetValue(track, 默认值)
     End Sub
 
     Private Shared Function 标准化插帧选项值(value As String, ParamArray options() As (Text As String, Value As String)) As String
@@ -1832,7 +2853,7 @@ Public Class 预设管理_v6
             Case 预设数据_v6.锐化方式.unsharp
                 Return $"unsharp={JoinNonEmpty(":", a.视频参数_锐化_参数1, a.视频参数_锐化_参数2, a.视频参数_锐化_参数3)}".TrimEnd("="c)
             Case 预设数据_v6.锐化方式.sharpen_npp
-                Return If(a.视频参数_锐化_参数1 <> "", $"sharpen_npp={a.视频参数_锐化_参数1}", "sharpen_npp")
+                Return "sharpen_npp=border_type=replicate"
         End Select
         Return ""
     End Function
@@ -1840,25 +2861,70 @@ Public Class 预设管理_v6
     Private Shared Function 构造胶片颗粒滤镜(a As 预设数据_v6) As String
         Select Case a.视频参数_胶片颗粒_方式
             Case 预设数据_v6.胶片颗粒方式.noise_全平面动态均匀颗粒
-                Return $"noise=alls={a.视频参数_胶片颗粒_参数1}:allf=t+u:all_seed={a.视频参数_胶片颗粒_参数2}"
+                Return 构造命名滤镜("noise",
+                    ("alls", a.视频参数_胶片颗粒_参数1),
+                    ("allf", If(a.视频参数_胶片颗粒_参数1 <> "", "t+u", "")),
+                    ("all_seed", a.视频参数_胶片颗粒_参数2))
             Case 预设数据_v6.胶片颗粒方式.noise_亮度为主动态颗粒
-                Return $"noise=c0s={a.视频参数_胶片颗粒_参数1}:c0f=t+u:c1s={a.视频参数_胶片颗粒_参数2}:c1f=t+u:c2s={a.视频参数_胶片颗粒_参数2}:c2f=t+u:all_seed={a.视频参数_胶片颗粒_参数3}"
+                Return 构造命名滤镜("noise",
+                    ("c0s", a.视频参数_胶片颗粒_参数1),
+                    ("c0f", If(a.视频参数_胶片颗粒_参数1 <> "", "t+u", "")),
+                    ("c1s", a.视频参数_胶片颗粒_参数2),
+                    ("c1f", If(a.视频参数_胶片颗粒_参数2 <> "", "t+u", "")),
+                    ("c2s", a.视频参数_胶片颗粒_参数2),
+                    ("c2f", If(a.视频参数_胶片颗粒_参数2 <> "", "t+u", "")),
+                    ("all_seed", a.视频参数_胶片颗粒_参数3))
             Case 预设数据_v6.胶片颗粒方式.noise_柔和平均颗粒
-                Return $"noise=alls={a.视频参数_胶片颗粒_参数1}:allf=t+a+u:all_seed={a.视频参数_胶片颗粒_参数2}"
+                Return 构造命名滤镜("noise",
+                    ("alls", a.视频参数_胶片颗粒_参数1),
+                    ("allf", If(a.视频参数_胶片颗粒_参数1 <> "", "t+a+u", "")),
+                    ("all_seed", a.视频参数_胶片颗粒_参数2))
             Case 预设数据_v6.胶片颗粒方式.libplacebo_应用片源胶片颗粒元数据
                 Return "libplacebo=apply_filmgrain=true"
         End Select
         Return ""
     End Function
 
+    Private Shared Function 获取容器兼容字幕编码(字幕编码 As String, a As 预设数据_v6, 输出文件 As String, 自动混流 As Boolean) As String
+        Dim codec = If(字幕编码, "").Trim()
+        If codec = "" Then Return ""
+
+        If 输出容器支持MovText字幕(a, 输出文件) Then
+            If codec = "copy" AndAlso Not 自动混流 Then Return codec
+            Return "mov_text"
+        End If
+
+        If 输出容器支持WebVtt字幕(a, 输出文件) Then
+            If codec = "copy" AndAlso Not 自动混流 Then Return codec
+            Return "webvtt"
+        End If
+
+        If 输出容器支持附件(a, 输出文件) AndAlso String.Equals(codec, "mov_text", StringComparison.OrdinalIgnoreCase) Then Return "copy"
+        Return codec
+    End Function
+
     Private Shared Function 构造平滑断层滤镜(a As 预设数据_v6) As String
         Select Case a.视频参数_平滑断层_方式
             Case 预设数据_v6.平滑断层方式.deband_标准去色带, 预设数据_v6.平滑断层方式.deband_强力去色带
-                Return $"deband=1thr={a.视频参数_平滑断层_参数1}:2thr={a.视频参数_平滑断层_参数1}:3thr={a.视频参数_平滑断层_参数1}:range={a.视频参数_平滑断层_参数2}:direction={a.视频参数_平滑断层_参数3}:blur=1:coupling={a.视频参数_平滑断层_参数4}"
+                Return 构造命名滤镜("deband",
+                    ("1thr", a.视频参数_平滑断层_参数1),
+                    ("2thr", a.视频参数_平滑断层_参数1),
+                    ("3thr", a.视频参数_平滑断层_参数1),
+                    ("range", a.视频参数_平滑断层_参数2),
+                    ("direction", a.视频参数_平滑断层_参数3),
+                    ("blur", "1"),
+                    ("coupling", a.视频参数_平滑断层_参数4))
             Case 预设数据_v6.平滑断层方式.gradfun_快速渐变平滑
-                Return $"gradfun=strength={a.视频参数_平滑断层_参数1}:radius={a.视频参数_平滑断层_参数2}"
+                Return 构造命名滤镜("gradfun",
+                    ("strength", a.视频参数_平滑断层_参数1),
+                    ("radius", a.视频参数_平滑断层_参数2))
             Case 预设数据_v6.平滑断层方式.libplacebo_GPU去色带加颗粒
-                Return $"libplacebo=deband=true:deband_iterations={a.视频参数_平滑断层_参数1}:deband_threshold={a.视频参数_平滑断层_参数2}:deband_radius={a.视频参数_平滑断层_参数3}:deband_grain={a.视频参数_平滑断层_参数4}"
+                Return 构造命名滤镜("libplacebo",
+                    ("deband", "true"),
+                    ("deband_iterations", a.视频参数_平滑断层_参数1),
+                    ("deband_threshold", a.视频参数_平滑断层_参数2),
+                    ("deband_radius", a.视频参数_平滑断层_参数3),
+                    ("deband_grain", a.视频参数_平滑断层_参数4))
         End Select
         Return ""
     End Function
@@ -1913,19 +2979,27 @@ Public Class 预设管理_v6
     Private Shared Function 构造烧字幕滤镜(a As 预设数据_v6, 输入文件 As String) As String
         If a.视频参数_烧录字幕_自己写滤镜取代所有设置 <> "" Then Return a.视频参数_烧录字幕_自己写滤镜取代所有设置
         If a.视频参数_烧录字幕_滤镜选择 = 预设数据_v6.烧字幕滤镜.未选择 Then Return ""
-        Dim name = If(a.视频参数_烧录字幕_滤镜选择 = 预设数据_v6.烧字幕滤镜.ass, "ass", "subtitles")
 
         Dim 滤镜参数列表 As New List(Of String)
         Dim 样式参数列表 As New List(Of String)
+        Dim 字幕文件 As String = ""
+        Dim 需要内嵌流 As Boolean = False
+        Dim 有字幕来源 As Boolean = False
 
         If a.视频参数_烧录字幕_字幕来源是外部文件 = 预设数据_v6.烧字幕来源.外部字幕文件 Then
-            Dim 字幕文件 = 解析外部字幕文件(a, 输入文件)
-            If 字幕文件 <> "" Then 滤镜参数列表.Add($"filename='{转义字幕滤镜值(字幕文件)}'")
+            字幕文件 = 解析外部字幕文件(a, 输入文件)
+            If 字幕文件 <> "" Then
+                有字幕来源 = True
+                滤镜参数列表.Add($"filename='{转义字幕滤镜值(字幕文件)}'")
+            End If
         End If
         If a.视频参数_烧录字幕_字幕来源是外部文件 = 预设数据_v6.烧字幕来源.内嵌的流 AndAlso a.视频参数_烧录字幕_指定内嵌的流 <> "" Then
+            需要内嵌流 = True
+            有字幕来源 = True
             滤镜参数列表.Add($"filename='{转义字幕滤镜值(输入文件)}'")
             滤镜参数列表.Add($"stream_index={a.视频参数_烧录字幕_指定内嵌的流}")
         End If
+        If Not 有字幕来源 Then Return ""
 
         If a.视频参数_烧录字幕_字体文件夹 <> "" Then 滤镜参数列表.Add($"fontsdir='{转义字幕滤镜值(a.视频参数_烧录字幕_字体文件夹)}'")
         If a.视频参数_烧录字幕_基本样式_名称 <> "" Then 样式参数列表.Add($"FontName={a.视频参数_烧录字幕_基本样式_名称}")
@@ -1953,7 +3027,18 @@ Public Class 预设管理_v6
         If a.视频参数_烧录字幕_补充样式 <> "" Then 样式参数列表.Add(a.视频参数_烧录字幕_补充样式)
         If 样式参数列表.Count > 0 Then 滤镜参数列表.Add($"force_style='{String.Join(",", 样式参数列表).Replace("'", "\'")}'")
 
+        Dim name = 获取烧字幕滤镜名(a, 字幕文件, 需要内嵌流, 样式参数列表.Count > 0)
         Return If(滤镜参数列表.Count > 0, $"{name}={String.Join(":", 滤镜参数列表)}", name)
+    End Function
+
+    Private Shared Function 获取烧字幕滤镜名(a As 预设数据_v6, 字幕文件 As String, 需要内嵌流 As Boolean, 需要强制样式 As Boolean) As String
+        If a.视频参数_烧录字幕_滤镜选择 <> 预设数据_v6.烧字幕滤镜.ass Then Return "subtitles"
+        If 需要内嵌流 OrElse 需要强制样式 Then Return "subtitles"
+
+        Dim ext = Path.GetExtension(If(字幕文件, "")).ToLowerInvariant()
+        If ext = ".ass" OrElse ext = ".ssa" Then Return "ass"
+        If 是输入文件占位符(字幕文件) OrElse ext = "" Then Return "ass"
+        Return "subtitles"
     End Function
 
     Private Shared Function 解析外部字幕文件(a As 预设数据_v6, 输入文件 As String) As String
@@ -1977,7 +3062,25 @@ Public Class 预设管理_v6
             候选.Add(If(String.IsNullOrWhiteSpace(字幕位置), 字幕文件名 & ext, Path.Combine(字幕位置, 字幕文件名 & ext)))
         Next
         Dim 已存在 = 候选.FirstOrDefault(Function(x) File.Exists(x))
-        Return If(已存在, 候选.FirstOrDefault())
+        Return If(已存在, "")
+    End Function
+
+    Private Shared Function 烧字幕滤镜已设置(a As 预设数据_v6, Optional 输入文件 As String = 输入占位符) As Boolean
+        Return Not String.IsNullOrWhiteSpace(构造烧字幕滤镜(a, 输入文件))
+    End Function
+
+    Private Shared Function 内置烧字幕缺少必要来源设置(a As 预设数据_v6) As Boolean
+        If a Is Nothing Then Return False
+        If Not String.IsNullOrWhiteSpace(a.视频参数_烧录字幕_自己写滤镜取代所有设置) Then Return False
+        If a.视频参数_烧录字幕_滤镜选择 = 预设数据_v6.烧字幕滤镜.未选择 Then Return False
+        Select Case a.视频参数_烧录字幕_字幕来源是外部文件
+            Case 预设数据_v6.烧字幕来源.外部字幕文件
+                Return False
+            Case 预设数据_v6.烧字幕来源.内嵌的流
+                Return String.IsNullOrWhiteSpace(a.视频参数_烧录字幕_指定内嵌的流)
+            Case Else
+                Return True
+        End Select
     End Function
 
     Private Shared Sub 添加字幕颜色样式(列表 As List(Of String), 名称 As String, 颜色 As 预设数据_v6.烧字幕专用颜色类型)
@@ -1992,14 +3095,59 @@ Public Class 预设管理_v6
     End Function
 
     Private Shared Function 构造色彩转换滤镜(a As 预设数据_v6) As String
+        If a Is Nothing Then Return ""
+        If String.Equals(If(a.视频参数_色彩管理_处理方式, "").Trim(), "仅写入元数据", StringComparison.Ordinal) Then Return ""
+        Dim filterName = 获取色彩转换滤镜名(a)
         Dim opts As New List(Of String)
-        If a.视频参数_色彩管理_矩阵系数 <> "" Then opts.Add("matrix=" & a.视频参数_色彩管理_矩阵系数)
-        If a.视频参数_色彩管理_色域 <> "" Then opts.Add("primaries=" & a.视频参数_色彩管理_色域)
-        If a.视频参数_色彩管理_传输特性 <> "" Then opts.Add("transfer=" & a.视频参数_色彩管理_传输特性)
-        If a.视频参数_色彩管理_范围 <> "" Then opts.Add("range=" & a.视频参数_色彩管理_范围)
+        Dim 矩阵系数 = 标准化色彩滤镜矩阵值(a.视频参数_色彩管理_矩阵系数, filterName)
+        Dim 色域 = 标准化色彩值(a.视频参数_色彩管理_色域, False)
+        Dim 传输特性 = 标准化色彩值(a.视频参数_色彩管理_传输特性, False)
+        Dim 色彩范围 = 标准化色彩范围(a.视频参数_色彩管理_范围, False)
+        Dim 色调映射算法 = 标准化色彩值(a.视频参数_色彩管理_色调映射算法, False)
+
+        Select Case filterName.ToLowerInvariant()
+            Case "colorspace"
+                If 矩阵系数 <> "" Then opts.Add("space=" & 矩阵系数)
+                If 色域 <> "" Then opts.Add("primaries=" & 色域)
+                If 传输特性 <> "" Then opts.Add("trc=" & 传输特性)
+                If 色彩范围 <> "" Then opts.Add("range=" & 色彩范围)
+            Case "zscale"
+                If 矩阵系数 <> "" Then opts.Add("matrix=" & 矩阵系数)
+                If 色域 <> "" Then opts.Add("primaries=" & 色域)
+                If 传输特性 <> "" Then opts.Add("transfer=" & 传输特性)
+                If 色彩范围 <> "" Then opts.Add("range=" & 色彩范围)
+            Case "libplacebo"
+                If 矩阵系数 <> "" Then opts.Add("colorspace=" & 矩阵系数)
+                If 色域 <> "" Then opts.Add("color_primaries=" & 色域)
+                If 传输特性 <> "" Then opts.Add("color_trc=" & 传输特性)
+                If 色彩范围 <> "" Then opts.Add("range=" & 色彩范围)
+                If 色调映射算法 <> "" Then opts.Add("tonemapping=" & 色调映射算法)
+            Case Else
+                If 矩阵系数 <> "" Then opts.Add("matrix=" & 矩阵系数)
+                If 色域 <> "" Then opts.Add("primaries=" & 色域)
+                If 传输特性 <> "" Then opts.Add("transfer=" & 传输特性)
+                If 色彩范围 <> "" Then opts.Add("range=" & 色彩范围)
+        End Select
         If opts.Count = 0 Then Return ""
-        Dim filterName = If(a.视频参数_色彩管理_滤镜选择 = "", "colorspace", a.视频参数_色彩管理_滤镜选择)
         Return filterName & "=" & String.Join(":", opts)
+    End Function
+
+    Private Shared Function 获取色彩转换滤镜名(a As 预设数据_v6) As String
+        Dim filterName = If(a?.视频参数_色彩管理_滤镜选择, "").Trim()
+        If filterName <> "" Then Return filterName
+        If 标准化色彩值(a?.视频参数_色彩管理_色域, False) <> "" OrElse
+           标准化色彩值(a?.视频参数_色彩管理_传输特性, False) <> "" OrElse
+           标准化色彩范围(a?.视频参数_色彩管理_范围, False) <> "" OrElse
+           标准化色彩值(a?.视频参数_色彩管理_色调映射算法, False) <> "" Then Return "libplacebo"
+        If 标准化色彩值(a?.视频参数_色彩管理_矩阵系数, False) <> "" Then Return "colorspace"
+        Return "libplacebo"
+    End Function
+
+    Private Shared Function 标准化色彩滤镜矩阵值(value As String, filterName As String) As String
+        Dim raw = 标准化色彩值(value, False)
+        If raw = "" Then Return ""
+        If String.Equals(raw, "rgb", StringComparison.OrdinalIgnoreCase) Then Return "gbr"
+        Return raw
     End Function
 
     Private Shared Function 构造像素格式预先转换滤镜(a As 预设数据_v6) As String
@@ -2032,11 +3180,23 @@ Public Class 预设管理_v6
         Return String.Join(delimiter, values.Where(Function(x) Not String.IsNullOrWhiteSpace(x.Value)).Select(Function(x) $"{x.Name}={x.Value}"))
     End Function
 
+    Private Shared Function 构造命名滤镜(名称 As String, ParamArray values() As (Name As String, Value As String)) As String
+        Dim opts = JoinNamed(":", values)
+        Return If(opts = "", 名称, 名称 & "=" & opts)
+    End Function
+
     Private Class 滤镜图结果
         Public Property 滤镜图 As String = ""
         Public Property 映射参数 As String = ""
+        Public Property 输出滤镜参数 As String = ""
         Public Property 编码视频选择器 As New List(Of String)
         Public Property 编码音频选择器 As New List(Of String)
+        Public Property 视频输出数量 As Integer = 0
+        Public Property 音频输出数量 As Integer = 0
+        Public Property 字幕输出数量 As Integer = 0
+        Public Property 请求视频输出 As Boolean = False
+        Public Property 请求音频输出 As Boolean = False
+        Public Property 请求字幕输出 As Boolean = False
         Public Property 视频输出来自滤镜 As Boolean = False
         Public Property 音频输出来自滤镜 As Boolean = False
     End Class
@@ -2185,11 +3345,19 @@ Public Class 预设管理_v6
                                   扫描 As Form_v6_参数面板_扫描方式,
                                   翻转 As Form_v6_参数面板_画面翻转,
                                   烧字幕 As Form_v6_参数面板_烧录字幕)
-        a.视频参数_抽帧_max = 抽帧.ModernTextBox1.Text
-        a.视频参数_抽帧_keep = 抽帧.ModernTextBox2.Text
-        a.视频参数_抽帧_hi = 抽帧.ModernTextBox3.Text
-        a.视频参数_抽帧_lo = 抽帧.ModernComboBox1.Text
-        a.视频参数_抽帧_frac = 抽帧.ModernComboBox2.Text
+        If 抽帧.ModernCheckBox1.Checked Then
+            a.视频参数_抽帧_max = 抽帧.ModernTextBox1.Text
+            a.视频参数_抽帧_keep = 抽帧.ModernTextBox2.Text
+            a.视频参数_抽帧_hi = 抽帧.ModernTextBox3.Text
+            a.视频参数_抽帧_lo = 抽帧.ModernComboBox1.Text
+            a.视频参数_抽帧_frac = 抽帧.ModernComboBox2.Text
+        Else
+            a.视频参数_抽帧_max = ""
+            a.视频参数_抽帧_keep = ""
+            a.视频参数_抽帧_hi = ""
+            a.视频参数_抽帧_lo = ""
+            a.视频参数_抽帧_frac = ""
+        End If
 
         a.视频参数_插帧_目标帧率 = If(插帧.MCB_插帧总开关.Checked, 插帧.MTB_目标帧率.Text, "")
         a.视频参数_插帧_插帧模式 = 插帧模式参数值(插帧.MCB_插帧模式.Text)
@@ -2208,10 +3376,11 @@ Public Class 预设管理_v6
 
         If 超分.MCB_超分总开关.Checked Then
             a.视频参数_超分_直接面板 = New 预设数据_v6.超分数据单片结构 With {.目标宽度 = 超分.MTB_宽度.Text, .目标高度 = 超分.MTB_高度.Text, .上采样算法 = 超分.MCB_上采样算法.Text, .下采样算法 = 超分.MCB_下采样算法.Text, .抗振铃强度 = 超分.MTB_抗振铃强度.Text, .着色器文件路径 = 超分.MCB_着色器文件路径.Text}
+            a.视频参数_超分_滤镜叠加策略组 = 超分.策略组数据.ToArray()
         Else
             a.视频参数_超分_直接面板 = New 预设数据_v6.超分数据单片结构
+            a.视频参数_超分_滤镜叠加策略组 = Array.Empty(Of 预设数据_v6.超分数据单片结构)()
         End If
-        a.视频参数_超分_滤镜叠加策略组 = 超分.策略组数据.ToArray()
 
         a.视频参数_降噪_方式 = If(降噪.MCB_插帧总开关.Checked, SelectedIndexToEnum(Of 预设数据_v6.降噪方式)(Math.Max(0, 降噪.MCB_滤镜选择.SelectedIndex)), 预设数据_v6.降噪方式.未选择)
         a.视频参数_降噪_参数1 = TrackValue(降噪.ETB_降噪参数1)
@@ -2293,6 +3462,7 @@ Public Class 预设管理_v6
         a.视频参数_烧录字幕_行距 = 烧字幕.MTB_行距.Text
         a.视频参数_烧录字幕_补充样式 = 烧字幕.MTB_补充样式.Text
         a.视频参数_烧录字幕_自己写滤镜取代所有设置 = 烧字幕.MTB_自己写整个滤镜.Text
+        If Not 烧字幕.MCB_插帧总开关.Checked Then a.视频参数_烧录字幕_自己写滤镜取代所有设置 = ""
     End Sub
 
     Private Shared Sub 显示滤镜子窗口(a As 预设数据_v6,
@@ -2307,6 +3477,7 @@ Public Class 预设管理_v6
                                   扫描 As Form_v6_参数面板_扫描方式,
                                   翻转 As Form_v6_参数面板_画面翻转,
                                   烧字幕 As Form_v6_参数面板_烧录字幕)
+        抽帧.ModernCheckBox1.Checked = 抽帧参数已设置(a)
         抽帧.ModernTextBox1.Text = a.视频参数_抽帧_max
         抽帧.ModernTextBox2.Text = a.视频参数_抽帧_keep
         抽帧.ModernTextBox3.Text = a.视频参数_抽帧_hi
@@ -2330,7 +3501,7 @@ Public Class 预设管理_v6
         动态模糊.MTB_输出缩放系数.Text = a.视频参数_动态模糊_输出缩放系数
         动态模糊.MTB_处理哪些颜色平面.Text = a.视频参数_动态模糊_处理颜色平面
 
-        超分.MCB_超分总开关.Checked = 超分单片有设置(a.视频参数_超分_直接面板)
+        超分.MCB_超分总开关.Checked = 超分单片有设置(a.视频参数_超分_直接面板) OrElse If(a.视频参数_超分_滤镜叠加策略组, Array.Empty(Of 预设数据_v6.超分数据单片结构)()).Length > 0
         If a.视频参数_超分_直接面板 IsNot Nothing Then
             超分.MTB_宽度.Text = a.视频参数_超分_直接面板.目标宽度
             超分.MTB_高度.Text = a.视频参数_超分_直接面板.目标高度
@@ -2375,7 +3546,7 @@ Public Class 预设管理_v6
         翻转.MCB_角度翻转.SelectedIndex = EnumToIndex(a.视频参数_画面翻转_角度翻转)
         翻转.MCB_镜像翻转.SelectedIndex = EnumToIndex(a.视频参数_画面翻转_镜像翻转)
 
-        烧字幕.MCB_插帧总开关.Checked = a.视频参数_烧录字幕_滤镜选择 <> 预设数据_v6.烧字幕滤镜.未选择
+        烧字幕.MCB_插帧总开关.Checked = a.视频参数_烧录字幕_滤镜选择 <> 预设数据_v6.烧字幕滤镜.未选择 OrElse Not String.IsNullOrWhiteSpace(a.视频参数_烧录字幕_自己写滤镜取代所有设置)
         烧字幕.MCB_滤镜选择.SelectedIndex = EnumToIndex(a.视频参数_烧录字幕_滤镜选择)
         烧字幕.MCB_字幕来源.SelectedIndex = EnumToIndex(a.视频参数_烧录字幕_字幕来源是外部文件)
         Dim 字幕格式 = If(a.视频参数_烧录字幕_字幕格式优先级, New List(Of 预设数据_v6.烧字幕格式))
@@ -2420,9 +3591,6 @@ Public Class 预设管理_v6
             a.视频参数_比特率_缓冲区 = .MTB_缓冲区.Text
             a.视频参数_质量控制_进阶参数集 = .ModernTextBox6.Text
         End With
-        If a.视频参数_比特率_控制方式 = 预设数据_v6.视频全局质量控制方式.TPE AndAlso Not 当前编码器支持二次编码(a) Then
-            a.视频参数_比特率_控制方式 = 预设数据_v6.视频全局质量控制方式.未选择
-        End If
     End Sub
 
     Private Shared Sub 显示质量(a As 预设数据_v6, ui As Form_v6_参数面板)
@@ -2474,11 +3642,11 @@ Public Class 预设管理_v6
             .MCB_亮度.Checked = a.视频参数_色彩管理_启用调整亮度
             SetTrackValue(.ETB_亮度, a.视频参数_色彩管理_亮度)
             .MCB_对比度.Checked = a.视频参数_色彩管理_启用调整对比度
-            SetTrackValue(.ETB_对比度, a.视频参数_色彩管理_对比度)
+            SetTrackValue(.ETB_对比度, a.视频参数_色彩管理_对比度, 1)
             .MCB_饱和度.Checked = a.视频参数_色彩管理_启用调整饱和度
-            SetTrackValue(.ETB_饱和度, a.视频参数_色彩管理_饱和度)
+            SetTrackValue(.ETB_饱和度, a.视频参数_色彩管理_饱和度, 1)
             .MCB_伽马.Checked = a.视频参数_色彩管理_启用调整伽马
-            SetTrackValue(.ETB_伽马, a.视频参数_色彩管理_伽马)
+            SetTrackValue(.ETB_伽马, a.视频参数_色彩管理_伽马, 1)
         End With
     End Sub
 
@@ -2513,11 +3681,11 @@ Public Class 预设管理_v6
             .MCB_位深度.Text = a.音频参数_位深度
             .MCB_采样率.Text = a.音频参数_采样率
             .MCB_目标响度.Checked = a.音频参数_响度标准化_启用调整目标响度
-            SetTrackValue(.ETB_目标响度, a.音频参数_响度标准化_目标响度)
+            SetTrackValue(.ETB_目标响度, a.音频参数_响度标准化_目标响度, -24)
             .MCB_动态范围.Checked = a.音频参数_响度标准化_启用调整动态范围
-            SetTrackValue(.ETB_动态范围, a.音频参数_响度标准化_动态范围)
+            SetTrackValue(.ETB_动态范围, a.音频参数_响度标准化_动态范围, 1)
             .MCB_峰值电平.Checked = a.音频参数_响度标准化_启用调整峰值电平
-            SetTrackValue(.ETB_峰值电平, a.音频参数_响度标准化_峰值电平)
+            SetTrackValue(.ETB_峰值电平, a.音频参数_响度标准化_峰值电平, -1)
         End With
     End Sub
 

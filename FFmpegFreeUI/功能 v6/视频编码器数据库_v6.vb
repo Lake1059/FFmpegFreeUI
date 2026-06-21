@@ -195,7 +195,7 @@ Public Class 视频编码器数据库_v6
         加入分类(预设数据_v6.视频编码器类型.图片, "BMP", "无压缩位图格式，体积大但兼容性好。", "bmp")
         加入分类(预设数据_v6.视频编码器类型.图片, "OpenJPEG", "JPEG 2000 编码器，适合特殊归档和影院规格。", "libopenjpeg")
         加入分类(预设数据_v6.视频编码器类型.图片, "JPEG-LS", "JPEG-LS 无损或近无损编码。", "jpegls")
-        加入分类(预设数据_v6.视频编码器类型.图片, "SVT JPEG XS", "当前自编译 FFmpeg 未识别 libsvtjpegxs，保留条目用于未来构建。", "libsvtjpegxs")
+        加入分类(预设数据_v6.视频编码器类型.图片, "SVT JPEG XS", "保留给带有 libsvtjpegxs 的 FFmpeg 构建使用。", "libsvtjpegxs")
         加入分类(预设数据_v6.视频编码器类型.图片, "HDR (Radiance RGBE)", "Radiance RGBE HDR 图片格式。", "hdr")
         加入分类(预设数据_v6.视频编码器类型.图片, "TIFF", "TIFF 图片格式；压缩算法可另行指定。", "tiff")
         加入分类(预设数据_v6.视频编码器类型.图片, "DPX", "电影工业常用图像序列格式。", "dpx")
@@ -659,7 +659,7 @@ Public Class 视频编码器数据库_v6
     Private Shared Function 像素(值 As String) As 编码器参数列表数据
         Return New 编码器参数列表数据 With {
             .参数名 = "-pix_fmt",
-            .值范围说明 = "仅列出 FFmpeg 当前编码器支持的像素格式",
+            .值范围说明 = "列出该编码器常用/已知的像素格式",
             .值列表 = 拆分空格列表(值)
         }
     End Function

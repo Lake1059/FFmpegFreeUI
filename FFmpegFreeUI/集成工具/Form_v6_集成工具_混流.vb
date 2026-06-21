@@ -379,7 +379,8 @@ Public Class Form_v6_集成工具_混流
         For Each token In 切分流索引(value)
             Dim parsed = 解析流索引(token)
             If parsed.局部流索引 = "" Then Continue For
-            arg.Append("-map ").Append(fallbackInputIndex).Append(":").Append(kind).Append(":").Append(parsed.局部流索引).Append(" ")
+            Dim inputIndex = If(parsed.输入索引 >= 0, parsed.输入索引, fallbackInputIndex)
+            arg.Append("-map ").Append(inputIndex).Append(":").Append(kind).Append(":").Append(parsed.局部流索引).Append("? ")
             count += 1
         Next
         Return count

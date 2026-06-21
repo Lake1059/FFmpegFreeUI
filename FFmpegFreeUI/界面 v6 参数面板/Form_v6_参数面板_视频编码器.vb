@@ -149,10 +149,6 @@ Public Class Form_v6_参数面板_视频编码器
         添加非空片段(片段, 格式化特殊参数列表("必要/建议参数", 编码器.必要参数列表))
         添加非空片段(片段, 格式化特殊参数列表("默认附加参数", 编码器.默认附加参数列表))
 
-        If 编码器.类型 = 预设数据_v6.视频编码器类型.视频 AndAlso Not 编码器.是否复制流 AndAlso Not 编码器.是否禁用 Then
-            片段.Add("二次编码：" & If(编码器.支持二次编码, "支持。", "未标记为支持。"))
-        End If
-
         Return String.Join(vbCrLf & vbCrLf, 片段.Where(Function(x) x <> ""))
     End Function
 

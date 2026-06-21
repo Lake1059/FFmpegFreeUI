@@ -793,11 +793,37 @@ Public Class Form_v6_集成工具_质量评测
                 If Not String.IsNullOrWhiteSpace(directory) Then
                     Dim candidate = Path.Combine(directory, probeName)
                     If File.Exists(candidate) Then Return candidate
+                    Return "ffprobe"
                 End If
-                Return probeName
+                If 查找可执行文件(probeName) <> "" Then Return probeName
             End If
         End If
         Return "ffprobe"
+    End Function
+
+    Private Shared Function 查找可执行文件(fileName As String) As String
+        Dim name = If(fileName, "").Trim()
+        If name = "" Then Return ""
+
+        Dim searchDirs As New List(Of String)
+        If Not String.IsNullOrWhiteSpace(Application.StartupPath) Then searchDirs.Add(Application.StartupPath)
+
+        Dim pathValue = Environment.GetEnvironmentVariable("PATH")
+        If Not String.IsNullOrWhiteSpace(pathValue) Then
+            searchDirs.AddRange(pathValue.Split(Path.PathSeparator, StringSplitOptions.RemoveEmptyEntries))
+        End If
+
+        For Each rawDir In searchDirs
+            Dim dir = If(rawDir, "").Trim().Trim(""""c)
+            If dir = "" Then Continue For
+            Try
+                Dim candidate = Path.Combine(dir, name)
+                If File.Exists(candidate) Then Return candidate
+            Catch
+            End Try
+        Next
+
+        Return ""
     End Function
 
     Private Shared Function 获取指标像素格式(referenceInfo As 视频流信息) As String

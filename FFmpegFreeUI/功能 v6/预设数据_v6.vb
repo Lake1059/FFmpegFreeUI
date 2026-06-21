@@ -321,6 +321,7 @@ Public Class 预设数据_v6
         Public Property 命令行 As String = ""
         Public Property 滤镜图 As String = ""
         Public Property 映射参数 As String = ""
+        Public Property 输出滤镜参数 As String = ""
         Public Property 需要媒体总时长 As Boolean = False
         Public Property 说明 As String = ""
     End Class

@@ -77,6 +77,7 @@ Partial Class Form_v6_参数面板_元数据
         UltraDetailListView1.HeaderBorderColor = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
         UltraDetailListView1.HeaderHeight = 40
         UltraDetailListView1.ItemPadding = New Padding(10, 6, 10, 6)
+        UltraDetailListView1.ItemSelectedBackColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         UltraDetailListView1.Location = New Point(20, 102)
         UltraDetailListView1.Margin = New Padding(2, 2, 2, 2)
         UltraDetailListView1.Name = "UltraDetailListView1"
@@ -199,6 +200,8 @@ Partial Class Form_v6_参数面板_元数据
         ModernComboBox1.BorderRadius = 10
         ModernComboBox1.BorderSize = 0
         ModernComboBox1.Dock = DockStyle.Left
+        ModernComboBox1.DropDownBackdropBlurPasses = 2
+        ModernComboBox1.DropDownBackdropBlurRadius = 30
         ModernComboBox1.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
         ModernComboBox1.DropDownHoverAnimationDuration = 0
         ModernComboBox1.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
@@ -207,12 +210,6 @@ Partial Class Form_v6_参数面板_元数据
         ModernComboBox1.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernComboBox1.DropDownSelectedForeColor = Color.White
         ModernComboBox1.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
-        ModernComboBox1.Margin = New Padding(2, 2, 2, 2)
-        ModernComboBox1.Padding = New Padding(10, 0, 10, 0)
-        ModernComboBox1.ToolTipGap = -1
-        ModernComboBox1.ToolTipMaxWidth = 350
-        ModernComboBox1.ToolTipPadding = New Padding(15)
-        ModernComboBox1.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ModernComboBox1.Items.Add("标题")
         ModernComboBox1.Items.Add("参与创作的艺术家")
         ModernComboBox1.Items.Add("专辑")
@@ -226,11 +223,17 @@ Partial Class Form_v6_参数面板_元数据
         ModernComboBox1.Items.Add("编码器")
         ModernComboBox1.Items.Add("软件")
         ModernComboBox1.Location = New Point(0, 10)
+        ModernComboBox1.Margin = New Padding(2, 2, 2, 2)
         ModernComboBox1.MaxDropDownItems = 15
         ModernComboBox1.Name = "ModernComboBox1"
+        ModernComboBox1.Padding = New Padding(10, 0, 10, 0)
         ModernComboBox1.Size = New Size(200, 32)
         ModernComboBox1.TabIndex = 10
+        ModernComboBox1.ToolTipGap = -1
+        ModernComboBox1.ToolTipMaxWidth = 350
+        ModernComboBox1.ToolTipPadding = New Padding(15)
         ModernComboBox1.WaterText = "添加预制项"
+        ModernComboBox1.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ' 
         ' HtmlColorLabel1
         ' 

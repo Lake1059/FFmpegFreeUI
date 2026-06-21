@@ -53,6 +53,7 @@ Public Class Form_v6_编码队列_任务日志
         BeginInvoke(Sub() 居中到v6主窗口())
         ModernTextBox1.SyntaxHighlighter = FFmpeg输出语法高亮器_v6.默认实例
         ModernTextBox1.EnableSyntaxHighlight = True
+        ModernTextBox1.MaxUndoCount = 0
         ModernTextBox1.PreserveScrollPosition = Not ModernCheckBox1.Checked
         If MCB_显示模式.SelectedIndex < 0 Then MCB_显示模式.SelectedIndex = 1
         应用任务性能计数器可见性()
@@ -175,7 +176,7 @@ Public Class Form_v6_编码队列_任务日志
 
         Dim entries = task.获取日志快照(mode)
         If forceReload OrElse task.日志结构版本号 <> 已显示日志结构版本号 OrElse (entries.Count = 0 AndAlso 已显示最大序号 > 0) OrElse (entries.Count > 0 AndAlso 已显示最小序号 > 0 AndAlso entries(0).序号 > 已显示最小序号) Then
-            重载日志(task, entries)
+            重载日志(task, entries, Not forceReload AndAlso Not ModernCheckBox1.Checked)
             Exit Sub
         End If
 
@@ -191,14 +192,15 @@ Public Class Form_v6_编码队列_任务日志
         If appended AndAlso ModernCheckBox1.Checked Then ModernTextBox1.ScrollToBottom()
     End Sub
 
-    Private Sub 重载日志(task As 编码任务_v6, entries As List(Of 编码任务日志条目_v6))
+    Private Sub 重载日志(task As 编码任务_v6, entries As List(Of 编码任务日志条目_v6), preserveScrollPosition As Boolean)
         正在重载 = True
+        Dim originalPreserveScrollPosition = ModernTextBox1.PreserveScrollPosition
         Try
-            ModernTextBox1.Clear()
+            ModernTextBox1.PreserveScrollPosition = preserveScrollPosition
+            ModernTextBox1.Text = String.Join(vbCrLf, entries.Select(Function(entry) 获取日志条目显示文本(entry)))
             已显示最小序号 = 0
             已显示最大序号 = 0
             For Each entry In entries
-                ModernTextBox1.AppendLine(entry.文本)
                 If 已显示最小序号 = 0 Then 已显示最小序号 = entry.序号
                 已显示最大序号 = Math.Max(已显示最大序号, entry.序号)
             Next
@@ -206,9 +208,14 @@ Public Class Form_v6_编码队列_任务日志
             更新标题与状态(task, entries.Count)
             If ModernCheckBox1.Checked Then ModernTextBox1.ScrollToBottom()
         Finally
+            ModernTextBox1.PreserveScrollPosition = originalPreserveScrollPosition
             正在重载 = False
         End Try
     End Sub
+
+    Private Shared Function 获取日志条目显示文本(entry As 编码任务日志条目_v6) As String
+        Return If(entry?.文本, "").Replace(vbCr, "").Replace(vbLf, "")
+    End Function
 
     Private Sub 更新标题与状态(task As 编码任务_v6, lineCount As Integer)
         Text = "任务日志 - " & 获取任务显示名称(task)

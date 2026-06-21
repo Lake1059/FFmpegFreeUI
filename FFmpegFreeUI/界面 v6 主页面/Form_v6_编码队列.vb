@@ -177,12 +177,12 @@ Public Class Form_v6_编码队列
             Dim task = 编码队列_v6.根据ID获取任务(id)
             If task Is Nothing Then Continue For
             If task.步骤.Count > 0 Then
-                lines.AddRange(task.步骤.Select(Function(x) $"{If(x.阶段 = 预设数据_v6.命令行阶段.FFprobe获取时长, "ffprobe", "ffmpeg")} {x.命令行}"))
+                lines.AddRange(task.步骤.Select(Function(x) $"{预设管理_v6.获取命令行进程名(x.阶段)} {x.命令行}"))
             ElseIf task.预设数据 IsNot Nothing Then
                 Dim output = If(task.输出文件 <> "", task.输出文件, 编码队列_v6.计算输出位置_v6(task.输入文件, task.预设数据))
-                lines.AddRange(预设管理_v6.生成阶段化命令行(task.预设数据, task.输入文件, output).Select(Function(x) $"{If(x.阶段 = 预设数据_v6.命令行阶段.FFprobe获取时长, "ffprobe", "ffmpeg")} {x.命令行}"))
+                lines.AddRange(预设管理_v6.生成阶段化命令行(task.预设数据, task.输入文件, output, 帧服务器脚本后缀:=task.ID).Select(Function(x) $"{预设管理_v6.获取命令行进程名(x.阶段)} {x.命令行}"))
             ElseIf task.命令行 <> "" Then
-                lines.Add("ffmpeg " & task.命令行)
+                lines.Add($"{预设管理_v6.获取命令行进程名(预设数据_v6.命令行阶段.普通单次)} {task.命令行}")
             End If
         Next
         If lines.Count > 0 Then
