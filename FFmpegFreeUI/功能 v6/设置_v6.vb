@@ -59,14 +59,20 @@ Public Class 设置_v6
     Public Property 是否监听端口 As Boolean = False
     Public Property 监听的端口 As String = "10591"
 
-    Public Property Agent模型来源 As String = ""
     Public Property AgentEndPoint As String = ""
     Public Property AgentApiKey As String = ""
+    Public Property Agent附加请求头 As String = ""
     Public Property AgentModelId As String = ""
+    Public Property Agent推理级别 As String = ""
+    ''' <summary>
+    ''' 0=本地联网；1=端点联网；2=禁用联网
+    ''' </summary>
+    Public Property Agent联网设置 As Integer = 0
+    Public Property Agent权限级别 As Integer = 0
 
     Public Property Agent权限_编辑参数面板 As Boolean = True
-    Public Property Agent权限_添加和编辑任务 As Boolean = True
-    Public Property Agent权限_访问编码队列 As Boolean = True
+    Public Property Agent权限_添加和编辑任务 As Boolean = False
+    Public Property Agent权限_访问编码队列 As Boolean = False
 
     Public Property SP_窗口标题文字 As String = ""
     Public Property SP_起始页面顶栏标题 As String = ""
@@ -165,6 +171,13 @@ Public Class 设置_v6
         Form_v6_设置_远程调用.BooleanSwitch1.Checked = 实例对象.是否监听端口
         Form_v6_设置_远程调用.ModernTextBox1.Text = 实例对象.监听的端口
 
+        Form_v6_设置_Agent.MTB_自定义地址.Text = 实例对象.AgentEndPoint
+        Form_v6_设置_Agent.MTB_APIKEY.Text = 实例对象.AgentApiKey
+        Form_v6_设置_Agent.MTB_附加请求头.Text = 实例对象.Agent附加请求头
+        Form_v6_设置_Agent.刷新SPAgent端点列表()
+        Form_v6_Agent.MCB_联网设置.SelectedIndex = Math.Min(Math.Max(AgentNetworkMode.Normalize(实例对象.Agent联网设置), 0), Math.Max(0, Form_v6_Agent.MCB_联网设置.Items.Count - 1))
+        Form_v6_Agent.MCB_权限控制.SelectedIndex = Math.Min(Math.Max(实例对象.Agent权限级别, 0), Math.Max(0, Form_v6_Agent.MCB_权限控制.Items.Count - 1))
+
         Dim 字体列表 As New List(Of String)
         For Each 字体 As FontFamily In FontFamily.Families
             字体列表.Add(字体.Name)
@@ -225,6 +238,16 @@ Public Class 设置_v6
                 If String.IsNullOrWhiteSpace(实例对象.SP_窗口标题文字) AndAlso 读取文本(root, "个性化_窗口标题栏", textValue) Then 实例对象.SP_窗口标题文字 = textValue
                 If String.IsNullOrWhiteSpace(实例对象.SP_起始页面顶栏标题) AndAlso 读取文本(root, "个性化_起始页标题", textValue) Then 实例对象.SP_起始页面顶栏标题 = textValue
                 If String.IsNullOrWhiteSpace(实例对象.SP_起始页面顶栏副标题) AndAlso 读取文本(root, "个性化_起始页副标题", textValue) Then 实例对象.SP_起始页面顶栏副标题 = textValue
+
+                If 实例对象.Agent权限级别 = 0 Then
+                    Dim boolValue As Boolean
+                    If 读取布尔(root, "Agent权限_访问编码队列", boolValue) AndAlso boolValue Then
+                        实例对象.Agent权限级别 = 1
+                    End If
+                    If 读取布尔(root, "Agent权限_添加和编辑任务", boolValue) AndAlso boolValue Then
+                        实例对象.Agent权限级别 = 1
+                    End If
+                End If
             End Using
         Catch
         End Try
@@ -235,6 +258,13 @@ Public Class 设置_v6
         If Not root.TryGetProperty(name, element) OrElse element.ValueKind <> JsonValueKind.String Then Return False
         value = element.GetString()
         Return Not String.IsNullOrWhiteSpace(value)
+    End Function
+
+    Private Shared Function 读取布尔(root As JsonElement, name As String, ByRef value As Boolean) As Boolean
+        Dim element As JsonElement
+        If Not root.TryGetProperty(name, element) OrElse element.ValueKind <> JsonValueKind.True AndAlso element.ValueKind <> JsonValueKind.False Then Return False
+        value = element.GetBoolean()
+        Return True
     End Function
 
     Public Shared ReadOnly 自定义图标路径 As String = IO.Path.Combine(Application.StartupPath, "SP_Icon")
@@ -251,7 +281,7 @@ Public Class 设置_v6
         Sound_Error = 加载自定义音效(实例对象.个性化_任务失败音效, My.Resources.Resource1.错误)
     End Sub
 
-    Private Shared Function 加载自定义音效(file As String, defaultSound As Stream) As Stream
+    Private Shared Function 加载自定义音效(file As String, defaultSound As UnmanagedMemoryStream) As Stream
         If Not String.IsNullOrWhiteSpace(file) AndAlso FileIO.FileSystem.FileExists(file) Then
             Try
                 Using fileStream As New FileStream(file, FileMode.Open, FileAccess.Read, FileShare.Read)

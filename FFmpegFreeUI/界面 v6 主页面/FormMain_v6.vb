@@ -10,6 +10,7 @@ Public Class FormMain_v6
         UI同步上下文 = Threading.SynchronizationContext.Current
         设置_v6.启动时读取SP解锁器()
         设置_v6.启动时加载设置()
+        网络功能.启动时后台获取SPAgent端点()
 
         设置_v6.加载SP自定义图标()
         设置_v6.加载SP自定义起始页顶栏背景图()
@@ -23,6 +24,8 @@ Public Class FormMain_v6
         绑定选项卡(Form_v6_准备文件.ModernPanel1)
         Me.ModernTabListControl1.Items(5).BoundControl = Form_v6_参数面板
         绑定选项卡(Form_v6_参数面板.ModernPanel1)
+        Me.ModernTabListControl1.Items(6).BoundControl = Form_v6_Agent
+        绑定选项卡(Form_v6_Agent.ModernPanel1)
         Me.ModernTabListControl1.Items(9).BoundControl = Form_v6_媒体信息
         绑定选项卡(Form_v6_媒体信息.ModernPanel1)
         Me.ModernTabListControl1.Items(10).BoundControl = Form_v6_调试播放器

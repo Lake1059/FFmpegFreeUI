@@ -31,7 +31,6 @@ Partial Class Form_v6_起始页面
         ModernPanel3 = New LakeUI.ModernPanel()
         ModernPanel1 = New LakeUI.ModernPanel()
         ModernPanel5 = New LakeUI.ModernPanel()
-        ModernButton5 = New LakeUI.ModernButton()
         ModernButton16 = New LakeUI.ModernButton()
         ModernButton15 = New LakeUI.ModernButton()
         HtmlColorLabel5 = New LakeUI.HtmlColorLabel()
@@ -93,6 +92,8 @@ Partial Class Form_v6_起始页面
         MCB_清理内存.BorderRadius = 10
         MCB_清理内存.BorderSize = 0
         MCB_清理内存.Dock = DockStyle.Bottom
+        MCB_清理内存.DropDownBackdropBlurPasses = 2
+        MCB_清理内存.DropDownBackdropBlurRadius = 30
         MCB_清理内存.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
         MCB_清理内存.DropDownHoverAnimationDuration = 0
         MCB_清理内存.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
@@ -185,7 +186,6 @@ Partial Class Form_v6_起始页面
         ModernPanel5.BorderColor = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
         ModernPanel5.BorderRadius = 10
         ModernPanel5.BorderSize = 0
-        ModernPanel5.Controls.Add(ModernButton5)
         ModernPanel5.Controls.Add(ModernButton16)
         ModernPanel5.Controls.Add(ModernButton15)
         ModernPanel5.Controls.Add(HtmlColorLabel5)
@@ -199,25 +199,6 @@ Partial Class Form_v6_起始页面
         ModernPanel5.Padding = New Padding(15)
         ModernPanel5.Size = New Size(304, 500)
         ModernPanel5.TabIndex = 4
-        ' 
-        ' ModernButton5
-        ' 
-        ModernButton5.AnimationDuration = 0
-        ModernButton5.BackColor1 = Color.Transparent
-        ModernButton5.BorderRadius = 10
-        ModernButton5.BorderSize = 0
-        ModernButton5.Dock = DockStyle.Top
-        ModernButton5.HoverBackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernButton5.Location = New Point(20, 304)
-        ModernButton5.Margin = New Padding(2)
-        ModernButton5.Name = "ModernButton5"
-        ModernButton5.PressedBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
-        ModernButton5.Size = New Size(264, 50)
-        ModernButton5.SubText = "尚未准备好"
-        ModernButton5.SubTextForeColor = Color.Peru
-        ModernButton5.TabIndex = 26
-        ModernButton5.Text = "Agent 智能体组件"
-        ModernButton5.TextAlign = LakeUI.ModernButton.TextAlignEnum.Left
         ' 
         ' ModernButton16
         ' 
@@ -630,6 +611,5 @@ Partial Class Form_v6_起始页面
     Friend WithEvents ModernButton16 As LakeUI.ModernButton
     Friend WithEvents ModernButton15 As LakeUI.ModernButton
     Friend WithEvents MB_更新器更新 As LakeUI.ModernButton
-    Friend WithEvents ModernButton5 As LakeUI.ModernButton
     Friend WithEvents MB_FFmpegFull As LakeUI.ModernButton
 End Class

@@ -23,7 +23,9 @@ Public Class Form_v6_设置_功能设定
     End Sub
 
     Private Sub MCB_是否自动开始任务_SelectedIndexChanged(sender As Object, e As EventArgs) Handles MCB_是否自动开始任务.SelectedIndexChanged
+        If MCB_是否自动开始任务.SelectedIndex < 0 Then Exit Sub
         设置_v6.实例对象.自动开始任务选项 = MCB_是否自动开始任务.SelectedIndex
+        编码队列_v6.应用自动开始任务设置(MCB_是否自动开始任务.SelectedIndex = 0)
     End Sub
 
     Private Sub MCB_是否自动重置参数面板到第一个页面_SelectedIndexChanged(sender As Object, e As EventArgs) Handles MCB_是否自动重置参数面板到第一个页面.SelectedIndexChanged

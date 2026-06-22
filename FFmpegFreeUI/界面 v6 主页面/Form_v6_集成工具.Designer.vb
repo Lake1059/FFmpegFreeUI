@@ -27,6 +27,7 @@ Partial Class Form_v6_集成工具
         Dim ModernTabPage3 As LakeUI.ModernTabListControl.ModernTabPage = New LakeUI.ModernTabListControl.ModernTabPage()
         Dim ModernTabPage4 As LakeUI.ModernTabListControl.ModernTabPage = New LakeUI.ModernTabListControl.ModernTabPage()
         Dim ModernTabPage5 As LakeUI.ModernTabListControl.ModernTabPage = New LakeUI.ModernTabListControl.ModernTabPage()
+        Dim ModernTabPage6 As LakeUI.ModernTabListControl.ModernTabPage = New LakeUI.ModernTabListControl.ModernTabPage()
         ModernPanel1 = New LakeUI.ModernPanel()
         ModernTabListControl1 = New LakeUI.ModernTabListControl()
         ModernPanel1.SuspendLayout()
@@ -52,11 +53,13 @@ Partial Class Form_v6_集成工具
         ModernTabPage3.Text = "抽流（取出纯流）"
         ModernTabPage4.IsSeparator = True
         ModernTabPage5.Text = "质量评测"
+        ModernTabPage6.Text = "Whisper 字幕生成"
         ModernTabListControl1.Items.Add(ModernTabPage1)
         ModernTabListControl1.Items.Add(ModernTabPage2)
         ModernTabListControl1.Items.Add(ModernTabPage3)
         ModernTabListControl1.Items.Add(ModernTabPage4)
         ModernTabListControl1.Items.Add(ModernTabPage5)
+        ModernTabListControl1.Items.Add(ModernTabPage6)
         ModernTabListControl1.Location = New Point(0, 0)
         ModernTabListControl1.Name = "ModernTabListControl1"
         ModernTabListControl1.ScrollBarThumbColor = Color.FromArgb(CByte(40), CByte(200), CByte(200), CByte(200))

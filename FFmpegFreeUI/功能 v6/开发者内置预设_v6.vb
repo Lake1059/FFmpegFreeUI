@@ -126,6 +126,65 @@ Public Class 开发者内置预设_v6
         })
         result.Add(New 预设项("Windows 标准多尺寸 ICO 图标", WindowsICO))
 
+        Dim HDR4000_To_HDR1000 As New 预设数据_v6
+        HDR4000_To_HDR1000.预设备注 = $"电影 HDR 源专用的最低滤镜预设，用于类似《星际穿越》这类现代专业电影片源：PQ 传输、BT.2020 色域、limited range、母版峰值约 4000 nit。默认将 4000 nit 高光通过 linear-light tonemap 压到 1000 nit HDR10，并保留 BT.2020/PQ 输出链路。{vbCrLf & vbCrLf}自定义目标最大亮度时，只改滤镜排序中的两个 npl 和 tonemap 的 peak：目标 1000 nit 时 npl=1000、peak=4000/1000=4；目标 400 nit 时 npl=400、peak=4000/400=10；若源峰值不是 4000，则按 源峰值/目标峰值 重新计算 peak。{vbCrLf & vbCrLf}需要改成 HLG 时只改传输特性：HLG 输入把第一段 zscale 的 transferin=smpte2084 改为 transferin=arib-std-b67；HLG 输出把倒数第二段 zscale 的 transfer=smpte2084 改为 transfer=arib-std-b67；若输入输出都用 HLG，则两处都改，BT.2020、bt2020nc、limited range 通常保持不变。{vbCrLf & vbCrLf}此预设故意使用 zscale 明确声明输入/输出 transfer、matrix、primaries、range，并使用 gbrpf32le 作为 tonemap 的 32 位浮点线性 RGB 工作格式，以适配电影级 HDR10 片源。此预设只通过滤镜排序加入自定义视频滤镜，不设置编码器、码率、容器或 HDR 元数据；输出的 master-display / max-cll 请在其他参数中按目标亮度单独填写。"
+        HDR4000_To_HDR1000.视频参数_色彩管理_矩阵系数 = "bt2020nc"
+        HDR4000_To_HDR1000.视频参数_色彩管理_色域 = "bt2020"
+        HDR4000_To_HDR1000.视频参数_色彩管理_传输特性 = "smpte2084"
+        HDR4000_To_HDR1000.视频参数_色彩管理_范围 = "tv"
+        HDR4000_To_HDR1000.视频参数_色彩管理_处理方式 = "仅写入元数据"
+        HDR4000_To_HDR1000.滤镜排序系统 = New 预设数据_v6.滤镜排序单片结构() {
+            New 预设数据_v6.滤镜排序单片结构 With {
+                .显示名称 = "HDR 转线性 RGB",
+                .是自定义滤镜 = True,
+                .允许在排序页直接编辑 = True,
+                .滤镜标识符 = 预设数据_v6.滤镜排序单片结构.标识符枚举.自定义视频滤镜,
+                .滤镜目标流类型 = 预设数据_v6.滤镜排序单片结构.流类型.视频,
+                .自定义滤镜内容 = "zscale=transferin=smpte2084:matrixin=bt2020nc:primariesin=bt2020:rangein=tv:transfer=linear:matrix=gbr:primaries=bt2020:npl=1000"
+            },
+            New 预设数据_v6.滤镜排序单片结构 With {
+                .显示名称 = "转 32 位浮点 RGB",
+                .是自定义滤镜 = True,
+                .允许在排序页直接编辑 = True,
+                .滤镜标识符 = 预设数据_v6.滤镜排序单片结构.标识符枚举.自定义视频滤镜,
+                .滤镜目标流类型 = 预设数据_v6.滤镜排序单片结构.流类型.视频,
+                .自定义滤镜内容 = "format=gbrpf32le"
+            },
+            New 预设数据_v6.滤镜排序单片结构 With {
+                .显示名称 = "压缩亮度",
+                .是自定义滤镜 = True,
+                .允许在排序页直接编辑 = True,
+                .滤镜标识符 = 预设数据_v6.滤镜排序单片结构.标识符枚举.自定义视频滤镜,
+                .滤镜目标流类型 = 预设数据_v6.滤镜排序单片结构.流类型.视频,
+                .自定义滤镜内容 = "tonemap=tonemap=mobius:peak=4:param=0.3:desat=0"
+            },
+            New 预设数据_v6.滤镜排序单片结构 With {
+                .显示名称 = "线性 RGB 转 HDR",
+                .是自定义滤镜 = True,
+                .允许在排序页直接编辑 = True,
+                .滤镜标识符 = 预设数据_v6.滤镜排序单片结构.标识符枚举.自定义视频滤镜,
+                .滤镜目标流类型 = 预设数据_v6.滤镜排序单片结构.流类型.视频,
+                .自定义滤镜内容 = "zscale=transferin=linear:matrixin=gbr:primariesin=bt2020:transfer=smpte2084:matrix=bt2020nc:primaries=bt2020:range=tv:npl=1000"
+            },
+            New 预设数据_v6.滤镜排序单片结构 With {
+                .显示名称 = "输出 10bit 4:2:0",
+                .是自定义滤镜 = True,
+                .允许在排序页直接编辑 = True,
+                .滤镜标识符 = 预设数据_v6.滤镜排序单片结构.标识符枚举.自定义视频滤镜,
+                .滤镜目标流类型 = 预设数据_v6.滤镜排序单片结构.流类型.视频,
+                .自定义滤镜内容 = "format=yuv420p10le"
+            },
+            New 预设数据_v6.滤镜排序单片结构 With {
+                .显示名称 = "清除旧 HDR 静态元数据",
+                .是自定义滤镜 = True,
+                .允许在排序页直接编辑 = True,
+                .滤镜标识符 = 预设数据_v6.滤镜排序单片结构.标识符枚举.自定义视频滤镜,
+                .滤镜目标流类型 = 预设数据_v6.滤镜排序单片结构.流类型.视频,
+                .自定义滤镜内容 = "sidedata=delete:type=MASTERING_DISPLAY_METADATA,sidedata=delete:type=CONTENT_LIGHT_LEVEL"
+            }
+        }
+        result.Add(New 预设项("HDR 电影 4000nit 转 1000nit", HDR4000_To_HDR1000))
+
 
         Return result
     End Function

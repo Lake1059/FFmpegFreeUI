@@ -120,7 +120,7 @@ Partial Class Form_v6_集成工具_混流
         UltraDetailListView1.ItemCornerRadius = 10
         UltraDetailListView1.ItemPadding = New Padding(10, 5, 10, 5)
         UltraDetailListView1.ItemSelectedBackColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        UltraDetailListView1.Location = New Point(20, 102)
+        UltraDetailListView1.Location = New Point(20, 97)
         UltraDetailListView1.Margin = New Padding(2, 2, 2, 2)
         UltraDetailListView1.Name = "UltraDetailListView1"
         UltraDetailListView1.Padding = New Padding(5, 0, 5, 5)
@@ -129,7 +129,7 @@ Partial Class Form_v6_集成工具_混流
         UltraDetailListView1.ScrollBarTrackColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
         UltraDetailListView1.SelectionRectBorderColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         UltraDetailListView1.SelectionRectFillColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        UltraDetailListView1.Size = New Size(801, 400)
+        UltraDetailListView1.Size = New Size(801, 405)
         UltraDetailListView1.TabIndex = 8
         ' 
         ' Panel4
@@ -422,7 +422,7 @@ Partial Class Form_v6_集成工具_混流
         Panel1.Controls.Add(JustEmptyControl1)
         Panel1.Controls.Add(MB_添加文件)
         Panel1.Dock = DockStyle.Top
-        Panel1.Location = New Point(20, 50)
+        Panel1.Location = New Point(20, 45)
         Panel1.Name = "Panel1"
         Panel1.Padding = New Padding(0, 10, 0, 10)
         Panel1.Size = New Size(801, 52)
@@ -563,8 +563,7 @@ Partial Class Form_v6_集成工具_混流
         HtmlColorLabel1.Location = New Point(20, 20)
         HtmlColorLabel1.Margin = New Padding(2)
         HtmlColorLabel1.Name = "HtmlColorLabel1"
-        HtmlColorLabel1.Padding = New Padding(0, 0, 0, 5)
-        HtmlColorLabel1.Size = New Size(801, 30)
+        HtmlColorLabel1.Size = New Size(801, 25)
         HtmlColorLabel1.TabIndex = 3
         HtmlColorLabel1.Text = "<span style=""font-size:13; color:Silver"">拆出各文件的指定流进行合成</span>   如果你的需求不是这个那么你可能指的是合并"
         ' 

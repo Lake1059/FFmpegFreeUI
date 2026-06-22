@@ -215,6 +215,21 @@ Public Class 编码队列_v6
         RaiseEvent 队列已变化()
     End Sub
 
+    Public Shared Sub 应用自动开始任务设置(自动开始 As Boolean)
+        Dim changed As New List(Of 编码任务_v6)
+        SyncLock 队列锁
+            For Each task In 队列
+                If task.状态 = 编码任务状态_v6.未处理 AndAlso task.允许自动启动 <> 自动开始 Then
+                    task.允许自动启动 = 自动开始
+                    changed.Add(task)
+                End If
+            Next
+        End SyncLock
+
+        广播任务更新(changed)
+        If 自动开始 Then 请求调度()
+    End Sub
+
     Public Shared Function 重新排序(idsInOrder As IEnumerable(Of String)) As Boolean
         Dim ids = If(idsInOrder, Array.Empty(Of String)()).Where(Function(x) Not String.IsNullOrWhiteSpace(x)).ToList()
         If ids.Count = 0 Then Return False
