@@ -5,6 +5,12 @@ Imports System.Text.RegularExpressions
 
 Public Class 编码队列_v6
 
+    Public Class 预设同步结果
+        Public Property 已更新 As Integer
+        Public Property 已跳过非预设任务 As Integer
+        Public Property 已跳过不可修改任务 As Integer
+    End Class
+
     Public Shared ReadOnly Property 队列 As New List(Of 编码任务_v6)
     Private Shared ReadOnly 队列锁 As New Object
     Private Shared 调度中 As Boolean = False
@@ -122,6 +128,42 @@ Public Class 编码队列_v6
             End If
         Next
         Return count
+    End Function
+
+    Public Shared Function 同步未处理预设任务(预设数据 As 预设数据_v6) As 预设同步结果
+        Dim result As New 预设同步结果
+        If 预设数据 Is Nothing Then Return result
+
+        Dim changed As New List(Of 编码任务_v6)
+        SyncLock 队列锁
+            For Each task In 队列
+                If task.预设数据 Is Nothing Then
+                    result.已跳过非预设任务 += 1
+                    Continue For
+                End If
+
+                If task.状态 <> 编码任务状态_v6.未处理 Then
+                    result.已跳过不可修改任务 += 1
+                    Continue For
+                End If
+
+                task.预设数据 = 克隆预设(预设数据)
+                task.步骤.Clear()
+                task.当前步骤索引 = -1
+                task.媒体总时长 = ""
+                task.AviSynthCachePath = ""
+                task.VapourSynthCachePath = ""
+                task.进度 = New 编码进度_v6
+                changed.Add(task)
+                result.已更新 += 1
+            Next
+        End SyncLock
+
+        If changed.Count > 0 Then
+            广播任务更新(changed)
+            RaiseEvent 队列已变化()
+        End If
+        Return result
     End Function
 
     Public Shared Function 克隆预设(source As 预设数据_v6) As 预设数据_v6

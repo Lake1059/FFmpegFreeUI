@@ -187,8 +187,13 @@ Public Class FormMain_v6
 
     Private Sub ModernTabListControl1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ModernTabListControl1.SelectedIndexChanged
         Select Case ModernTabListControl1.SelectedIndex
-            Case 11 : Form_v6_性能监控.开始()
-            Case Else : Form_v6_性能监控.停止()
+            Case 6
+                Form_v6_性能监控.停止()
+                Form_v6_Agent.检查并刷新模型列表()
+            Case 11
+                Form_v6_性能监控.开始()
+            Case Else
+                Form_v6_性能监控.停止()
         End Select
     End Sub
 

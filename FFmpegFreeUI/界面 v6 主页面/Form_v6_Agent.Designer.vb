@@ -89,7 +89,7 @@ Partial Class Form_v6_Agent
         AgentRoom1.CardPadding = New Padding(10)
         AgentRoom1.CardRadius = 10
         AgentRoom1.Dock = DockStyle.Fill
-        AgentRoom1.Location = New Point(270, 62)
+        AgentRoom1.Location = New Point(280, 62)
         AgentRoom1.Name = "AgentRoom1"
         AgentRoom1.Padding = New Padding(10)
         AgentRoom1.ScrollBarThumbColor = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
@@ -97,7 +97,7 @@ Partial Class Form_v6_Agent
         AgentRoom1.ScrollBarTrackColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         AgentRoom1.ScrollBarWidth = 10
         AgentRoom1.SelectionBackColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        AgentRoom1.Size = New Size(706, 452)
+        AgentRoom1.Size = New Size(696, 452)
         AgentRoom1.TabIndex = 7
         AgentRoom1.Text = "AgentRoom1"
         AgentRoom1.UserBubbleBackColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
@@ -106,9 +106,9 @@ Partial Class Form_v6_Agent
         ' JustEmptyControl7
         ' 
         JustEmptyControl7.Dock = DockStyle.Bottom
-        JustEmptyControl7.Location = New Point(270, 514)
+        JustEmptyControl7.Location = New Point(280, 514)
         JustEmptyControl7.Name = "JustEmptyControl7"
-        JustEmptyControl7.Size = New Size(706, 10)
+        JustEmptyControl7.Size = New Size(696, 10)
         JustEmptyControl7.TabIndex = 6
         ' 
         ' Panel1
@@ -119,10 +119,10 @@ Partial Class Form_v6_Agent
         Panel1.Controls.Add(JustEmptyControl5)
         Panel1.Controls.Add(MB_新对话)
         Panel1.Dock = DockStyle.Top
-        Panel1.Location = New Point(270, 20)
+        Panel1.Location = New Point(280, 20)
         Panel1.Name = "Panel1"
         Panel1.Padding = New Padding(0, 0, 0, 10)
-        Panel1.Size = New Size(706, 42)
+        Panel1.Size = New Size(696, 42)
         Panel1.TabIndex = 5
         ' 
         ' MB_页面用量
@@ -137,7 +137,7 @@ Partial Class Form_v6_Agent
         MB_页面用量.Margin = New Padding(2)
         MB_页面用量.Name = "MB_页面用量"
         MB_页面用量.PressedBackColor1 = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
-        MB_页面用量.Size = New Size(486, 32)
+        MB_页面用量.Size = New Size(476, 32)
         MB_页面用量.TabIndex = 17
         MB_页面用量.Text = "页面用量"
         ' 
@@ -200,13 +200,13 @@ Partial Class Form_v6_Agent
         ModernTextBox1.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
         ModernTextBox1.Dock = DockStyle.Bottom
         ModernTextBox1.LineHeight = 20
-        ModernTextBox1.Location = New Point(270, 524)
+        ModernTextBox1.Location = New Point(280, 524)
         ModernTextBox1.Margin = New Padding(2)
         ModernTextBox1.MultiLine = True
         ModernTextBox1.Name = "ModernTextBox1"
         ModernTextBox1.Padding = New Padding(10, 8, 10, 8)
         ModernTextBox1.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernTextBox1.Size = New Size(706, 80)
+        ModernTextBox1.Size = New Size(696, 80)
         ModernTextBox1.TabIndex = 17
         ModernTextBox1.WaterText = "按 Enter 键发送，按 Shift + Enter 输入回车"
         ModernTextBox1.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
@@ -224,10 +224,10 @@ Partial Class Form_v6_Agent
         Panel2.Controls.Add(JustEmptyControl2)
         Panel2.Controls.Add(MCB_联网设置)
         Panel2.Dock = DockStyle.Bottom
-        Panel2.Location = New Point(270, 604)
+        Panel2.Location = New Point(280, 604)
         Panel2.Name = "Panel2"
         Panel2.Padding = New Padding(0, 10, 0, 0)
-        Panel2.Size = New Size(706, 42)
+        Panel2.Size = New Size(696, 42)
         Panel2.TabIndex = 16
         ' 
         ' MCB_模型选择
@@ -250,7 +250,7 @@ Partial Class Form_v6_Agent
         MCB_模型选择.Margin = New Padding(2, 2, 2, 2)
         MCB_模型选择.Name = "MCB_模型选择"
         MCB_模型选择.Padding = New Padding(10, 0, 10, 0)
-        MCB_模型选择.Size = New Size(226, 32)
+        MCB_模型选择.Size = New Size(216, 32)
         MCB_模型选择.TabIndex = 19
         MCB_模型选择.ToolTipGap = -1
         MCB_模型选择.ToolTipMaxWidth = 350
@@ -308,7 +308,7 @@ Partial Class Form_v6_Agent
         ' 
         JustEmptyControl3.BackColor = Color.Transparent
         JustEmptyControl3.Dock = DockStyle.Right
-        JustEmptyControl3.Location = New Point(616, 10)
+        JustEmptyControl3.Location = New Point(606, 10)
         JustEmptyControl3.Name = "JustEmptyControl3"
         JustEmptyControl3.Size = New Size(10, 32)
         JustEmptyControl3.TabIndex = 18
@@ -321,7 +321,7 @@ Partial Class Form_v6_Agent
         MB_发送.BorderSize = 0
         MB_发送.Dock = DockStyle.Right
         MB_发送.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
-        MB_发送.Location = New Point(626, 10)
+        MB_发送.Location = New Point(616, 10)
         MB_发送.Margin = New Padding(2)
         MB_发送.Name = "MB_发送"
         MB_发送.PressedBackColor1 = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
@@ -396,11 +396,11 @@ Partial Class Form_v6_Agent
         MCB_联网设置.Items.Add("端点联网")
         MCB_联网设置.Items.Add("禁用联网")
         ToolTipEntry4.ItemText = "本地联网"
-        ToolTipEntry4.ToolTipText = "AI 通过 3FUI 在本机发起 HTTP 请求访问网络。"
+        ToolTipEntry4.ToolTipText = "AI 通过 3FUI 在本机发起 HTTP 请求访问网络"
         ToolTipEntry5.ItemText = "端点联网"
-        ToolTipEntry5.ToolTipText = "AI 只通过模型端点的原生联网能力访问网络，不使用本地 HTTP 回退。"
+        ToolTipEntry5.ToolTipText = "AI 通过模型端点的原生联网能力访问网络"
         ToolTipEntry6.ItemText = "禁用联网"
-        ToolTipEntry6.ToolTipText = "不向 AI 暴露任何联网工具。"
+        ToolTipEntry6.ToolTipText = "不向 AI 暴露任何联网工具"
         MCB_联网设置.ItemToolTips.AddRange(New LakeUI.ModernComboBox.ToolTipEntry() {ToolTipEntry4, ToolTipEntry5, ToolTipEntry6})
         MCB_联网设置.Location = New Point(0, 10)
         MCB_联网设置.Margin = New Padding(2, 2, 2, 2)
@@ -417,22 +417,27 @@ Partial Class Form_v6_Agent
         ' JustEmptyControl1
         ' 
         JustEmptyControl1.Dock = DockStyle.Left
-        JustEmptyControl1.Location = New Point(250, 20)
+        JustEmptyControl1.Location = New Point(270, 20)
         JustEmptyControl1.Name = "JustEmptyControl1"
-        JustEmptyControl1.Size = New Size(20, 626)
+        JustEmptyControl1.Size = New Size(10, 626)
         JustEmptyControl1.TabIndex = 1
         ' 
         ' ModernListBox1
         ' 
-        ModernListBox1.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        ModernListBox1.AllowDragReorder = True
+        ModernListBox1.BackColor1 = Color.Transparent
+        ModernListBox1.BorderColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        ModernListBox1.BorderColorFocus = Color.Empty
         ModernListBox1.BorderRadius = 10
-        ModernListBox1.BorderSize = 0
+        ModernListBox1.BorderSize = 2
         ModernListBox1.Dock = DockStyle.Left
         ModernListBox1.ItemHoverColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
+        ModernListBox1.ItemPaddingLeft = 10
         ModernListBox1.ItemSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernListBox1.Location = New Point(20, 20)
+        ModernListBox1.MultiSelect = False
         ModernListBox1.Name = "ModernListBox1"
-        ModernListBox1.Size = New Size(230, 626)
+        ModernListBox1.Size = New Size(250, 626)
         ModernListBox1.TabIndex = 8
         ' 
         ' Form_v6_Agent

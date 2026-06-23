@@ -635,23 +635,195 @@ Public Class AgentEndpointClient
 End Class
 
 Public Class AgentCapabilityCache
-    Private Shared ReadOnly Cache As New Dictionary(Of String, List(Of String))(StringComparer.OrdinalIgnoreCase)
+    Private Shared ReadOnly SyncRoot As New Object
     Private Shared ReadOnly DefaultReasoningEfforts As String() = {"low", "medium", "high"}
+    Private Shared ReadOnly CacheDirectory As String = Path.Combine(Application.StartupPath, "Agent")
+    Private Shared ReadOnly ReasoningEffortCachePath As String = Path.Combine(CacheDirectory, "ReasoningEfforts.cache.json")
+    Private Shared _cacheFile As AgentReasoningEffortCacheFile = Nothing
+    Private Shared _cacheLoaded As Boolean = False
+
+    Private Class AgentReasoningEffortCacheFile
+        Public Property Version As Integer = 1
+        Public Property Entries As New List(Of AgentReasoningEffortCacheEntry)
+        Public Property EndpointRefreshes As New List(Of AgentReasoningEffortEndpointRefresh)
+    End Class
+
+    Private Class AgentReasoningEffortCacheEntry
+        Public Property EndpointKey As String = ""
+        Public Property ModelId As String = ""
+        Public Property ReasoningEfforts As New List(Of String)
+        Public Property UpdatedAt As DateTime = DateTime.Now
+    End Class
+
+    Private Class AgentReasoningEffortEndpointRefresh
+        Public Property EndpointKey As String = ""
+        Public Property RefreshedDate As String = ""
+        Public Property RefreshedAt As DateTime = DateTime.MinValue
+    End Class
 
     Public Shared Function GetReasoningEffortsAsync(client As AgentEndpointClient,
                                                     model As AgentModelInfo,
                                                     Optional cancellationToken As Threading.CancellationToken = Nothing) As Task(Of List(Of String))
         cancellationToken.ThrowIfCancellationRequested()
         If model Is Nothing OrElse String.IsNullOrWhiteSpace(model.Id) Then Return Task.FromResult(New List(Of String))
-        If model.ReasoningEfforts IsNot Nothing AndAlso model.ReasoningEfforts.Count > 0 Then Return Task.FromResult(model.ReasoningEfforts)
+        If model.ReasoningEfforts IsNot Nothing AndAlso model.ReasoningEfforts.Count > 0 Then
+            Dim efforts = NormalizeReasoningEfforts(model.ReasoningEfforts)
+            model.ReasoningEfforts = efforts
+            SaveReasoningEfforts(client, model.Id, efforts)
+            Return Task.FromResult(efforts)
+        End If
 
-        Dim key = $"{If(client?.Endpoint, "")}|{model.Id}"
-        Dim cached As List(Of String) = Nothing
-        If Cache.TryGetValue(key, cached) Then Return Task.FromResult(cached)
+        Dim cached = GetCachedReasoningEfforts(client, model.Id)
+        If cached.Count > 0 Then
+            model.ReasoningEfforts = cached
+            Return Task.FromResult(cached)
+        End If
 
         Dim result = DefaultReasoningEfforts.ToList()
-        Cache(key) = result
         Return Task.FromResult(result)
+    End Function
+
+    Public Shared Function BuildEndpointSignature(client As AgentEndpointClient) As String
+        If client Is Nothing Then Return ""
+        Return String.Join(vbLf, {
+            If(client.Endpoint, "").Trim(),
+            If(client.ApiKey, "").Trim(),
+            If(client.ExtraHeaders Is Nothing, "", String.Join(vbLf, client.ExtraHeaders.OrderBy(Function(x) x.Key).Select(Function(x) x.Key & ":" & x.Value)))
+        })
+    End Function
+
+    Public Shared Function IsDailyReasoningRefreshDue(client As AgentEndpointClient) As Boolean
+        Dim endpointKey = BuildEndpointKey(client)
+        If endpointKey = "" Then Return False
+
+        SyncLock SyncRoot
+            Dim cacheFile = LoadCacheFile()
+            Dim today = GetTodayKey()
+            Dim refresh = cacheFile.EndpointRefreshes.FirstOrDefault(Function(x) String.Equals(x.EndpointKey, endpointKey, StringComparison.OrdinalIgnoreCase))
+            Return refresh Is Nothing OrElse Not String.Equals(If(refresh.RefreshedDate, ""), today, StringComparison.Ordinal)
+        End SyncLock
+    End Function
+
+    Public Shared Sub ImportReasoningEfforts(client As AgentEndpointClient, models As IEnumerable(Of AgentModelInfo))
+        Dim endpointKey = BuildEndpointKey(client)
+        If endpointKey = "" Then Return
+
+        SyncLock SyncRoot
+            Dim cacheFile = LoadCacheFile()
+            If models IsNot Nothing Then
+                For Each model In models
+                    If model Is Nothing OrElse String.IsNullOrWhiteSpace(model.Id) Then Continue For
+                    Dim efforts = NormalizeReasoningEfforts(model.ReasoningEfforts)
+                    If efforts.Count = 0 Then Continue For
+                    model.ReasoningEfforts = efforts
+                    UpsertReasoningEffortEntry(cacheFile, endpointKey, model.Id, efforts)
+                Next
+            End If
+            MarkEndpointRefreshed(cacheFile, endpointKey)
+            SaveCacheFile()
+        End SyncLock
+    End Sub
+
+    Private Shared Function GetCachedReasoningEfforts(client As AgentEndpointClient, modelId As String) As List(Of String)
+        Dim endpointKey = BuildEndpointKey(client)
+        If endpointKey = "" OrElse String.IsNullOrWhiteSpace(modelId) Then Return New List(Of String)
+
+        SyncLock SyncRoot
+            Dim cacheFile = LoadCacheFile()
+            Dim entry = cacheFile.Entries.FirstOrDefault(Function(x) String.Equals(x.EndpointKey, endpointKey, StringComparison.OrdinalIgnoreCase) AndAlso
+                                                                    String.Equals(x.ModelId, modelId, StringComparison.OrdinalIgnoreCase))
+            If entry Is Nothing Then Return New List(Of String)
+            Return NormalizeReasoningEfforts(entry.ReasoningEfforts)
+        End SyncLock
+    End Function
+
+    Private Shared Sub SaveReasoningEfforts(client As AgentEndpointClient, modelId As String, efforts As IEnumerable(Of String))
+        Dim endpointKey = BuildEndpointKey(client)
+        Dim normalized = NormalizeReasoningEfforts(efforts)
+        If endpointKey = "" OrElse String.IsNullOrWhiteSpace(modelId) OrElse normalized.Count = 0 Then Return
+
+        SyncLock SyncRoot
+            Dim cacheFile = LoadCacheFile()
+            UpsertReasoningEffortEntry(cacheFile, endpointKey, modelId, normalized)
+            SaveCacheFile()
+        End SyncLock
+    End Sub
+
+    Private Shared Sub UpsertReasoningEffortEntry(cacheFile As AgentReasoningEffortCacheFile,
+                                                  endpointKey As String,
+                                                  modelId As String,
+                                                  efforts As List(Of String))
+        If cacheFile.Entries Is Nothing Then cacheFile.Entries = New List(Of AgentReasoningEffortCacheEntry)
+        Dim entry = cacheFile.Entries.FirstOrDefault(Function(x) String.Equals(x.EndpointKey, endpointKey, StringComparison.OrdinalIgnoreCase) AndAlso
+                                                                String.Equals(x.ModelId, modelId, StringComparison.OrdinalIgnoreCase))
+        If entry Is Nothing Then
+            entry = New AgentReasoningEffortCacheEntry With {
+                .EndpointKey = endpointKey,
+                .ModelId = modelId
+            }
+            cacheFile.Entries.Add(entry)
+        End If
+
+        entry.ReasoningEfforts = efforts
+        entry.UpdatedAt = DateTime.Now
+    End Sub
+
+    Private Shared Sub MarkEndpointRefreshed(cacheFile As AgentReasoningEffortCacheFile, endpointKey As String)
+        If cacheFile.EndpointRefreshes Is Nothing Then cacheFile.EndpointRefreshes = New List(Of AgentReasoningEffortEndpointRefresh)
+        Dim refresh = cacheFile.EndpointRefreshes.FirstOrDefault(Function(x) String.Equals(x.EndpointKey, endpointKey, StringComparison.OrdinalIgnoreCase))
+        If refresh Is Nothing Then
+            refresh = New AgentReasoningEffortEndpointRefresh With {.EndpointKey = endpointKey}
+            cacheFile.EndpointRefreshes.Add(refresh)
+        End If
+
+        refresh.RefreshedDate = GetTodayKey()
+        refresh.RefreshedAt = DateTime.Now
+    End Sub
+
+    Private Shared Function LoadCacheFile() As AgentReasoningEffortCacheFile
+        If _cacheLoaded AndAlso _cacheFile IsNot Nothing Then Return _cacheFile
+
+        Try
+            If IO.File.Exists(ReasoningEffortCachePath) Then
+                _cacheFile = JsonSerializer.Deserialize(Of AgentReasoningEffortCacheFile)(IO.File.ReadAllText(ReasoningEffortCachePath, Encoding.UTF8), JsonSO)
+            End If
+        Catch
+            _cacheFile = Nothing
+        End Try
+
+        If _cacheFile Is Nothing Then _cacheFile = New AgentReasoningEffortCacheFile
+        If _cacheFile.Entries Is Nothing Then _cacheFile.Entries = New List(Of AgentReasoningEffortCacheEntry)
+        If _cacheFile.EndpointRefreshes Is Nothing Then _cacheFile.EndpointRefreshes = New List(Of AgentReasoningEffortEndpointRefresh)
+        _cacheLoaded = True
+        Return _cacheFile
+    End Function
+
+    Private Shared Sub SaveCacheFile()
+        Try
+            Directory.CreateDirectory(CacheDirectory)
+            IO.File.WriteAllText(ReasoningEffortCachePath, JsonSerializer.Serialize(LoadCacheFile(), JsonSO), Encoding.UTF8)
+        Catch
+        End Try
+    End Sub
+
+    Private Shared Function BuildEndpointKey(client As AgentEndpointClient) As String
+        If client Is Nothing OrElse String.IsNullOrWhiteSpace(client.Endpoint) Then Return ""
+        Dim signature = BuildEndpointSignature(client)
+        If String.IsNullOrWhiteSpace(signature) Then Return ""
+        Return Convert.ToHexString(System.Security.Cryptography.SHA256.HashData(Encoding.UTF8.GetBytes(signature)))
+    End Function
+
+    Private Shared Function NormalizeReasoningEfforts(efforts As IEnumerable(Of String)) As List(Of String)
+        If efforts Is Nothing Then Return New List(Of String)
+        Return efforts.
+            Where(Function(x) Not String.IsNullOrWhiteSpace(x)).
+            Select(Function(x) x.Trim()).
+            Distinct(StringComparer.OrdinalIgnoreCase).
+            ToList()
+    End Function
+
+    Private Shared Function GetTodayKey() As String
+        Return DateTime.Today.ToString("yyyy-MM-dd", Globalization.CultureInfo.InvariantCulture)
     End Function
 End Class
 
@@ -825,7 +997,12 @@ Public Class AgentLocalTools
     Public Shared Function BuildToolDefinitions(permissionLevel As Integer, networkMode As Integer) As List(Of Dictionary(Of String, Object))
         Dim tools As New List(Of Dictionary(Of String, Object)) From {
             FunctionTool("get_parameter_panel_state", "读取当前 3FUI 参数面板的结构化预设 JSON 和人类可读总览。", New Dictionary(Of String, Object)),
-            FunctionTool("apply_parameter_panel_patch", "修改当前 3FUI 参数面板。优先传 changes 对象，键为 预设数据_v6 的属性名；也可传 preset_json 应用完整预设。", New Dictionary(Of String, Object) From {
+            FunctionTool("get_parameter_field_info", "按字段名或关键词查询参数面板字段的类型、当前值、候选值和格式规则。填写不熟悉的参数前优先调用，避免猜字段值。", New Dictionary(Of String, Object) From {
+            {"fields", New Dictionary(Of String, Object) From {{"type", "array"}, {"items", New Dictionary(Of String, Object) From {{"type", "string"}}}}},
+            {"query", New Dictionary(Of String, Object) From {{"type", "string"}, {"description", "可选关键词，用于模糊查找字段名"}}},
+            {"include_current_values", New Dictionary(Of String, Object) From {{"type", "boolean"}}}
+        }),
+            FunctionTool("apply_parameter_panel_patch", "只修改当前 3FUI 参数面板，不会同步编码队列。优先传 changes 对象，键为 预设数据_v6 的属性名；也可传 preset_json 应用完整预设。", New Dictionary(Of String, Object) From {
             {"changes", New Dictionary(Of String, Object) From {{"type", "object"}, {"additionalProperties", True}}},
             {"preset_json", New Dictionary(Of String, Object) From {{"type", "string"}}},
             {"note", New Dictionary(Of String, Object) From {{"type", "string"}}}
@@ -834,6 +1011,7 @@ Public Class AgentLocalTools
 
         If permissionLevel >= PermissionEnvironment Then
             tools.Add(FunctionTool("get_queue_summary", "读取 3FUI 编码队列概要。", New Dictionary(Of String, Object)))
+            tools.Add(FunctionTool("sync_parameter_panel_to_queue", "将当前参数面板预设同步到编码队列中尚未开始的预设任务。只有用户明确要求同步队列时才能调用。", New Dictionary(Of String, Object)))
         End If
 
         Select Case AgentNetworkMode.Normalize(networkMode)
@@ -882,11 +1060,16 @@ Public Class AgentLocalTools
             Select Case callInfo?.Name
                 Case "get_parameter_panel_state"
                     Return GetParameterPanelState()
+                Case "get_parameter_field_info"
+                    Return GetParameterFieldInfo(args)
                 Case "apply_parameter_panel_patch"
                     Return ApplyParameterPanelPatch(args)
                 Case "get_queue_summary"
                     If permissionLevel < PermissionEnvironment Then Return "权限不足：需要环境控制"
                     Return GetQueueSummary()
+                Case "sync_parameter_panel_to_queue"
+                    If permissionLevel < PermissionEnvironment Then Return "权限不足：需要环境控制"
+                    Return SyncParameterPanelToQueue()
                 Case "web_search"
                     If Not AgentNetworkMode.IsEnabled(networkMode) Then Return "联网已禁用"
                     Return Await WebSearchAsync(GetStringArg(args, "query"), networkMode, endpointClient, modelId, reasoningEffort, cancellationToken)
@@ -981,6 +1164,253 @@ Public Class AgentLocalTools
 
         预设管理_v6.显示预设(preset, Form_v6_参数面板)
         Return "已应用参数面板修改" & vbCrLf & BuildParameterOverview(preset)
+    End Function
+
+    Private Shared Function SyncParameterPanelToQueue() As String
+        Dim preset = 预设管理_v6.从面板创建预设(Form_v6_参数面板)
+        Dim queueSync = 编码队列_v6.同步未处理预设任务(preset)
+        Return BuildQueueSyncSummary(queueSync)
+    End Function
+
+    Private Shared Function BuildQueueSyncSummary(result As 编码队列_v6.预设同步结果) As String
+        If result Is Nothing Then Return "编码队列同步：未更新任务"
+        Dim parts As New List(Of String) From {$"已更新 {result.已更新} 个未处理预设任务"}
+        If result.已跳过非预设任务 > 0 Then parts.Add($"跳过 {result.已跳过非预设任务} 个命令行任务")
+        If result.已跳过不可修改任务 > 0 Then parts.Add($"跳过 {result.已跳过不可修改任务} 个已开始或已结束任务")
+        Return "编码队列同步：" & String.Join("，", parts)
+    End Function
+
+    Private Shared Function GetParameterFieldInfo(args As JsonElement) As String
+        Dim preset = 预设管理_v6.从面板创建预设(Form_v6_参数面板)
+        Dim includeCurrentValues = GetBooleanArg(args, "include_current_values", True)
+        Dim requestedFields = GetStringArrayArg(args, "fields")
+        Dim query = GetStringArg(args, "query").Trim()
+        Dim props = GetType(预设数据_v6).GetProperties().
+            Where(Function(x) x.CanRead AndAlso x.CanWrite).
+            OrderBy(Function(x) x.Name, StringComparer.CurrentCultureIgnoreCase).
+            ToList()
+
+        Dim candidateProps As New List(Of Reflection.PropertyInfo)
+        Dim matchedProps As New List(Of Reflection.PropertyInfo)
+        Dim missingFields As New List(Of String)
+        If requestedFields.Count > 0 Then
+            For Each field In requestedFields
+                Dim prop = props.FirstOrDefault(Function(x) String.Equals(x.Name, field, StringComparison.OrdinalIgnoreCase))
+                If prop Is Nothing Then
+                    missingFields.Add(field)
+                ElseIf Not matchedProps.Contains(prop) Then
+                    matchedProps.Add(prop)
+                End If
+            Next
+        ElseIf query <> "" Then
+            candidateProps = props.
+                Where(Function(x) x.Name.Contains(query, StringComparison.OrdinalIgnoreCase)).
+                ToList()
+            matchedProps = candidateProps.Take(30).ToList()
+        Else
+            candidateProps = props
+            matchedProps = candidateProps.Take(30).ToList()
+        End If
+
+        Dim items = matchedProps.Select(Function(prop) BuildParameterFieldInfoItem(prop, preset, includeCurrentValues)).ToList()
+        Dim payload As New Dictionary(Of String, Object) From {
+            {"fields", items},
+            {"missing_fields", missingFields},
+            {"truncated", requestedFields.Count = 0 AndAlso candidateProps.Count > matchedProps.Count},
+            {"hint", "字段值必须传给 apply_parameter_panel_patch 的 changes；本工具只查询候选和规则，不修改参数面板。"}
+        }
+        Return JsonSerializer.Serialize(payload, JsonSO)
+    End Function
+
+    Private Shared Function GetBooleanArg(args As JsonElement, name As String, defaultValue As Boolean) As Boolean
+        Dim value As JsonElement
+        If args.ValueKind = JsonValueKind.Object AndAlso args.TryGetProperty(name, value) Then
+            Select Case value.ValueKind
+                Case JsonValueKind.True
+                    Return True
+                Case JsonValueKind.False
+                    Return False
+            End Select
+        End If
+        Return defaultValue
+    End Function
+
+    Private Shared Function GetStringArrayArg(args As JsonElement, name As String) As List(Of String)
+        Dim result As New List(Of String)
+        Dim value As JsonElement
+        If args.ValueKind <> JsonValueKind.Object OrElse Not args.TryGetProperty(name, value) Then Return result
+        If value.ValueKind <> JsonValueKind.Array Then Return result
+
+        For Each item In value.EnumerateArray()
+            If item.ValueKind <> JsonValueKind.String Then Continue For
+            Dim text = If(item.GetString(), "").Trim()
+            If text <> "" AndAlso Not result.Contains(text, StringComparer.OrdinalIgnoreCase) Then result.Add(text)
+        Next
+        Return result
+    End Function
+
+    Private Shared Function BuildParameterFieldInfoItem(prop As Reflection.PropertyInfo, preset As 预设数据_v6, includeCurrentValue As Boolean) As Dictionary(Of String, Object)
+        Dim info As New Dictionary(Of String, Object) From {
+            {"name", prop.Name},
+            {"type", GetFriendlyTypeName(prop.PropertyType)}
+        }
+
+        If includeCurrentValue Then
+            info("current_value") = prop.GetValue(preset)
+        End If
+
+        Dim enumValues = GetEnumValues(prop.PropertyType)
+        If enumValues.Count > 0 Then info("enum_values") = enumValues
+
+        If prop.PropertyType Is GetType(Boolean) Then
+            info("candidates") = New String() {"true", "false"}
+        End If
+
+        Dim candidates = GetKnownParameterCandidates(prop.Name, preset)
+        If candidates.Count > 0 Then info("candidates") = candidates
+
+        Dim rules = GetKnownParameterRules(prop.Name)
+        If rules.Count > 0 Then info("rules") = rules
+
+        Dim notes = GetKnownParameterNotes(prop.Name, preset)
+        If notes.Count > 0 Then info("notes") = notes
+
+        Return info
+    End Function
+
+    Private Shared Function GetFriendlyTypeName(type As Type) As String
+        If type Is GetType(String) Then Return "string"
+        If type Is GetType(Boolean) Then Return "boolean"
+        If type Is GetType(Integer) Then Return "integer"
+        If type Is GetType(Double) Then Return "number"
+        If type.IsEnum Then Return "enum:" & type.Name
+        If type.IsArray Then Return "array:" & GetFriendlyTypeName(type.GetElementType())
+        If type.IsGenericType AndAlso type.GetGenericTypeDefinition() Is GetType(List(Of )) Then Return "array:" & GetFriendlyTypeName(type.GetGenericArguments()(0))
+        Return type.Name
+    End Function
+
+    Private Shared Function GetEnumValues(type As Type) As List(Of Dictionary(Of String, Object))
+        Dim result As New List(Of Dictionary(Of String, Object))
+        If Not type.IsEnum Then Return result
+
+        For Each value In [Enum].GetValues(type)
+            result.Add(New Dictionary(Of String, Object) From {
+                {"name", [Enum].GetName(type, value)},
+                {"value", CInt(value)}
+            })
+        Next
+        Return result
+    End Function
+
+    Private Shared Function GetKnownParameterCandidates(fieldName As String, preset As 预设数据_v6) As List(Of Object)
+        Select Case fieldName
+            Case NameOf(预设数据_v6.输出容器)
+                Return {".mp4", ".mkv", ".mov", ".webm", ".flv", ".avi", ".mp3", ".m4a", ".opus", ".flac", ".wav", ".png", ".jpg", ".webp", ".gif"}.Cast(Of Object).ToList()
+            Case NameOf(预设数据_v6.视频参数_编码器_分类名称)
+                Return 视频编码器数据库_v6.获取分类列表(preset.视频参数_编码器_类型).
+                    Select(Function(x) CType(New Dictionary(Of String, Object) From {
+                        {"value", x.名称},
+                        {"description", x.描述}
+                    }, Object)).
+                    ToList()
+            Case NameOf(预设数据_v6.视频参数_编码器_具体编码)
+                Return 视频编码器数据库_v6.获取编码器列表(preset.视频参数_编码器_分类名称).
+                    Select(Function(x) CType(New Dictionary(Of String, Object) From {
+                        {"value", x.名称},
+                        {"command", x.命令行编码器名},
+                        {"type", x.类型.ToString()}
+                    }, Object)).
+                    ToList()
+            Case NameOf(预设数据_v6.视频参数_编码器_编码预设)
+                Return BuildVideoParameterListCandidates(preset, 视频编码器数据库_v6.编码器参数角色.编码预设)
+            Case NameOf(预设数据_v6.视频参数_编码器_配置文件)
+                Return BuildVideoParameterListCandidates(preset, 视频编码器数据库_v6.编码器参数角色.配置文件)
+            Case NameOf(预设数据_v6.视频参数_编码器_场景优化)
+                Return BuildVideoParameterListCandidates(preset, 视频编码器数据库_v6.编码器参数角色.场景优化)
+            Case NameOf(预设数据_v6.视频参数_色彩管理_像素格式)
+                Return BuildVideoParameterListCandidates(preset, 视频编码器数据库_v6.编码器参数角色.像素格式)
+            Case NameOf(预设数据_v6.视频参数_色彩管理_像素格式预先转换)
+                Return {"", "yuv420p", "yuv420p10le", "yuv422p", "yuv422p10le", "yuv444p", "yuv444p10le", "p010le"}.Cast(Of Object).ToList()
+            Case NameOf(预设数据_v6.视频参数_质量控制_参数名)
+                Return 视频编码器数据库_v6.获取质量参数名列表().Cast(Of Object).ToList()
+            Case NameOf(预设数据_v6.音频参数_编码器_代号)
+                Return 音频编码器数据库_v6.全部编码器.
+                    Select(Function(x) CType(New Dictionary(Of String, Object) From {
+                        {"value", x.私有ID},
+                        {"label", x.显示名称},
+                        {"command", x.命令行编码器名}
+                    }, Object)).
+                    ToList()
+            Case NameOf(预设数据_v6.音频参数_质量参数名)
+                Return 音频编码器数据库_v6.获取质量参数名列表().Cast(Of Object).ToList()
+        End Select
+        Return New List(Of Object)
+    End Function
+
+    Private Shared Function BuildVideoParameterListCandidates(preset As 预设数据_v6, role As 视频编码器数据库_v6.编码器参数角色) As List(Of Object)
+        Dim encoder = 视频编码器数据库_v6.获取编码器数据(preset.视频参数_编码器_具体编码)
+        Dim data As 视频编码器数据库_v6.编码器参数列表数据 = Nothing
+        If encoder Is Nothing Then Return New List(Of Object)
+
+        Select Case role
+            Case 视频编码器数据库_v6.编码器参数角色.编码预设
+                data = encoder.编码预设
+            Case 视频编码器数据库_v6.编码器参数角色.配置文件
+                data = encoder.配置文件
+            Case 视频编码器数据库_v6.编码器参数角色.场景优化
+                data = encoder.场景优化
+            Case 视频编码器数据库_v6.编码器参数角色.像素格式
+                data = encoder.像素格式
+        End Select
+
+        If data Is Nothing Then Return New List(Of Object)
+        Dim result As New List(Of Object)
+        result.Add("")
+        If data.默认值 <> "" Then
+            result.Add(New Dictionary(Of String, Object) From {
+                {"value", data.默认值},
+                {"is_default", True}
+            })
+        End If
+        For Each value In data.值列表
+            Dim candidate As New Dictionary(Of String, Object) From {
+                {"value", value}
+            }
+            Dim description As String = Nothing
+            If data.值说明 IsNot Nothing AndAlso data.值说明.TryGetValue(value, description) AndAlso description <> "" Then candidate("description") = description
+            If Not result.OfType(Of Dictionary(Of String, Object)).Any(Function(x) String.Equals(CStr(x("value")), value, StringComparison.OrdinalIgnoreCase)) Then result.Add(candidate)
+        Next
+        Return result
+    End Function
+
+    Private Shared Function GetKnownParameterRules(fieldName As String) As List(Of String)
+        Select Case fieldName
+            Case NameOf(预设数据_v6.输出容器)
+                Return New List(Of String) From {"后缀必须包含点号，例如 .mp4；空字符串表示不指定或由输出路径决定。"}
+            Case NameOf(预设数据_v6.视频参数_质量控制_参数名)
+                Return New List(Of String) From {"面板显示带横杠的 FFmpeg 参数名；保存预设时会自动去掉开头横杠，changes 中可传 crf 或 -crf。"}
+            Case NameOf(预设数据_v6.音频参数_编码器_代号)
+                Return New List(Of String) From {"changes 中优先传 value 的私有 ID，不要传显示名称；界面会自动显示对应名称。"}
+            Case NameOf(预设数据_v6.音频参数_质量参数名)
+                Return New List(Of String) From {"音频质量参数名保存时保留横杠，例如 -q:a、-b:a。"}
+        End Select
+        Return New List(Of String)
+    End Function
+
+    Private Shared Function GetKnownParameterNotes(fieldName As String, preset As 预设数据_v6) As List(Of String)
+        Dim notes As New List(Of String)
+        Select Case fieldName
+            Case NameOf(预设数据_v6.视频参数_编码器_分类名称)
+                notes.Add($"候选取决于 {NameOf(预设数据_v6.视频参数_编码器_类型)}，当前为 {preset.视频参数_编码器_类型}。")
+            Case NameOf(预设数据_v6.视频参数_编码器_具体编码)
+                notes.Add($"候选取决于 {NameOf(预设数据_v6.视频参数_编码器_分类名称)}，当前为 {preset.视频参数_编码器_分类名称}。")
+            Case NameOf(预设数据_v6.视频参数_编码器_编码预设),
+                 NameOf(预设数据_v6.视频参数_编码器_配置文件),
+                 NameOf(预设数据_v6.视频参数_编码器_场景优化),
+                 NameOf(预设数据_v6.视频参数_色彩管理_像素格式)
+                notes.Add($"候选取决于 {NameOf(预设数据_v6.视频参数_编码器_具体编码)}，当前为 {preset.视频参数_编码器_具体编码}。")
+        End Select
+        Return notes
     End Function
 
     Private Shared Sub ApplyTopLevelChanges(preset As 预设数据_v6, changes As JsonElement)
