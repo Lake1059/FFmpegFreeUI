@@ -427,7 +427,7 @@ Partial Class Form_v6_Agent
         ModernListBox1.AllowDragReorder = True
         ModernListBox1.BackColor1 = Color.Transparent
         ModernListBox1.BorderColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernListBox1.BorderColorFocus = Color.Empty
+        ModernListBox1.BorderColorFocus = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernListBox1.BorderRadius = 10
         ModernListBox1.BorderSize = 2
         ModernListBox1.Dock = DockStyle.Left
