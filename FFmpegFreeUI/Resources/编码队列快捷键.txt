@@ -1,9 +1,0 @@
-﻿Enter  -->  开始
-Space  -->  暂停
-Ctrl + A  -->  全选
-Alt + A  -->  反选
-Delete  -->  移除
-Esc  -->  重置
-End  -->  停止
-F3  -->  上移
-F4  -->  下移

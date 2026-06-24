@@ -245,6 +245,17 @@ Public Class 编码队列_v6
         请求调度()
     End Sub
 
+    Public Shared Sub 取消自动开始任务(ids As IEnumerable(Of String))
+        Dim changed As New List(Of 编码任务_v6)
+        For Each task In 获取指定任务(ids)
+            If task.状态 = 编码任务状态_v6.未处理 AndAlso task.允许自动启动 Then
+                task.允许自动启动 = False
+                changed.Add(task)
+            End If
+        Next
+        广播任务更新(changed)
+    End Sub
+
     Public Shared Sub 重置任务(ids As IEnumerable(Of String))
         Dim changed As New List(Of 编码任务_v6)
         For Each task In 获取指定任务(ids)

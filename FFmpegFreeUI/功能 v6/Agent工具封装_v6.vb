@@ -1,4 +1,3 @@
-Imports System.IO
 Imports System.Management
 Imports System.Text.Json
 Imports LakeUI
@@ -379,12 +378,12 @@ Public NotInheritable Class Agent工具封装_v6
         If FormMain_v6 IsNot Nothing AndAlso FormMain_v6.IsHandleCreated AndAlso FormMain_v6.InvokeRequired Then
             Dim tcs As New TaskCompletionSource(Of T)(TaskCreationOptions.RunContinuationsAsynchronously)
             FormMain_v6.BeginInvoke(Async Sub()
-                                      Try
-                                          tcs.SetResult(Await func())
-                                      Catch ex As Exception
-                                          tcs.SetException(ex)
-                                      End Try
-                                  End Sub)
+                                        Try
+                                            tcs.SetResult(Await func())
+                                        Catch ex As Exception
+                                            tcs.SetException(ex)
+                                        End Try
+                                    End Sub)
             Return tcs.Task
         End If
         Return func()

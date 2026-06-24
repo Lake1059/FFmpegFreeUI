@@ -149,17 +149,18 @@ Public Class AgentLocalTools
             Dim workingDirectory = If(initialWorkingDirectory, "").Trim()
             If workingDirectory = "" OrElse Not Directory.Exists(workingDirectory) Then workingDirectory = Application.StartupPath
 
-            Dim process As New Process()
-            process.StartInfo = New ProcessStartInfo With {
-                .FileName = "powershell.exe",
-                .WorkingDirectory = workingDirectory,
-                .UseShellExecute = False,
-                .RedirectStandardInput = True,
-                .RedirectStandardOutput = True,
-                .RedirectStandardError = True,
-                .CreateNoWindow = True,
-                .StandardOutputEncoding = Encoding.UTF8,
-                .StandardErrorEncoding = Encoding.UTF8
+            Dim process As New Process With {
+                .StartInfo = New ProcessStartInfo With {
+                    .FileName = "powershell.exe",
+                    .WorkingDirectory = workingDirectory,
+                    .UseShellExecute = False,
+                    .RedirectStandardInput = True,
+                    .RedirectStandardOutput = True,
+                    .RedirectStandardError = True,
+                    .CreateNoWindow = True,
+                    .StandardOutputEncoding = Encoding.UTF8,
+                    .StandardErrorEncoding = Encoding.UTF8
+                }
             }
             process.StartInfo.ArgumentList.Add("-NoLogo")
             process.StartInfo.ArgumentList.Add("-NoProfile")
@@ -365,7 +366,7 @@ Public Class AgentLocalTools
             {"query", New Dictionary(Of String, Object) From {{"type", "string"}, {"description", "可选关键词，用于模糊查找字段名"}}},
             {"include_current_values", New Dictionary(Of String, Object) From {{"type", "boolean"}}}
         }),
-            FunctionTool("apply_parameter_panel_patch", "只修改当前 3FUI 参数面板，不会同步编码队列。优先传 changes 对象，键为 预设数据_v6 的属性名；也可传 preset_json 应用完整预设。", New Dictionary(Of String, Object) From {
+            FunctionTool("apply_parameter_panel_patch", "修改当前 3FUI 参数面板。优先传 changes 对象，键为 预设数据_v6 的属性名；也可传 preset_json 应用完整预设。", New Dictionary(Of String, Object) From {
             {"changes", New Dictionary(Of String, Object) From {{"type", "object"}, {"additionalProperties", True}}},
             {"preset_json", New Dictionary(Of String, Object) From {{"type", "string"}}},
             {"note", New Dictionary(Of String, Object) From {{"type", "string"}}}
@@ -373,7 +374,28 @@ Public Class AgentLocalTools
         }
 
         If permissionLevel >= PermissionEnvironment Then
-            tools.Add(FunctionTool("get_queue_summary", "读取 3FUI 编码队列概要。", New Dictionary(Of String, Object)))
+            tools.Add(FunctionTool("get_queue_summary", "读取 3FUI 编码队列任务信息。默认返回全部任务摘要；可用 id/ids 或 1-based index/indexes 查询指定任务，detail=true 返回完整任务信息，target=all 返回全部。", New Dictionary(Of String, Object) From {
+                {"id", New Dictionary(Of String, Object) From {{"type", "string"}, {"description", "单个任务 ID"}}},
+                {"ids", New Dictionary(Of String, Object) From {{"type", "array"}, {"items", New Dictionary(Of String, Object) From {{"type", "string"}}}, {"description", "任务 ID 列表"}}},
+                {"index", New Dictionary(Of String, Object) From {{"type", "integer"}, {"description", "队列中的 1-based 序号"}}},
+                {"indexes", New Dictionary(Of String, Object) From {{"type", "array"}, {"items", New Dictionary(Of String, Object) From {{"type", "integer"}}}, {"description", "队列中的 1-based 序号列表"}}},
+                {"target", New Dictionary(Of String, Object) From {{"type", "string"}, {"description", "all/全部 表示读取全部任务；不传目标时默认读取全部摘要"}}},
+                {"detail", New Dictionary(Of String, Object) From {{"type", "boolean"}, {"description", "是否返回完整任务信息；查询指定任务时默认 true"}}},
+                {"include_logs", New Dictionary(Of String, Object) From {{"type", "boolean"}, {"description", "是否附带任务日志，默认 false"}}},
+                {"log_limit", New Dictionary(Of String, Object) From {{"type", "integer"}, {"description", "每个任务返回的最新日志条数，1-200，默认 20"}}},
+                {"log_mode", New Dictionary(Of String, Object) From {{"type", "string"}, {"description", "all/latest_non_progress/errors/current_stage，默认 all"}}},
+                {"include_commands", New Dictionary(Of String, Object) From {{"type", "boolean"}, {"description", "是否附带可执行命令行，默认 false"}}},
+                {"include_preset_json", New Dictionary(Of String, Object) From {{"type", "boolean"}, {"description", "是否附带任务预设 JSON，可能很大，默认 false"}}}
+            }))
+            tools.Add(FunctionTool("control_queue_tasks", "控制 3FUI 编码队列任务。action 支持 start/pause/resume/stop/remove/reset；用 id/ids 或 1-based index/indexes 指定任务，或 target=all 控制全部任务。停止或移除全部只应在用户明确要求时使用。", New Dictionary(Of String, Object) From {
+                {"action", New Dictionary(Of String, Object) From {{"type", "string"}, {"description", "start、pause、resume、stop、remove、reset"}}},
+                {"id", New Dictionary(Of String, Object) From {{"type", "string"}, {"description", "单个任务 ID"}}},
+                {"ids", New Dictionary(Of String, Object) From {{"type", "array"}, {"items", New Dictionary(Of String, Object) From {{"type", "string"}}}, {"description", "任务 ID 列表"}}},
+                {"index", New Dictionary(Of String, Object) From {{"type", "integer"}, {"description", "队列中的 1-based 序号"}}},
+                {"indexes", New Dictionary(Of String, Object) From {{"type", "array"}, {"items", New Dictionary(Of String, Object) From {{"type", "integer"}}}, {"description", "队列中的 1-based 序号列表"}}},
+                {"target", New Dictionary(Of String, Object) From {{"type", "string"}, {"description", "all/全部 表示控制全部任务"}}},
+                {"detail", New Dictionary(Of String, Object) From {{"type", "boolean"}, {"description", "返回控制前后详情，默认 false"}}}
+            }, {"action"}))
             tools.Add(FunctionTool("sync_parameter_panel_to_queue", "将当前参数面板预设同步到编码队列中尚未开始的预设任务。只有用户明确要求同步队列时才能调用。", New Dictionary(Of String, Object)))
             tools.Add(FunctionTool("get_ui_tabs", "读取 3FUI 主页面、参数面板、集成工具或嵌套页的选项卡列表和当前选中项。", New Dictionary(Of String, Object) From {
                 {"scope", New Dictionary(Of String, Object) From {{"type", "string"}, {"description", "main、parameter、integrated、settings、custom_parameters、attachments"}}}
@@ -424,7 +446,7 @@ Public Class AgentLocalTools
 
         Select Case AgentNetworkMode.Normalize(networkMode)
             Case AgentNetworkMode.Endpoint
-                tools.Add(FunctionTool("web_search", "联网搜索。只使用端点原生 web_search_preview，不回退到本地网页请求。", New Dictionary(Of String, Object) From {
+                tools.Add(FunctionTool("web_search", "联网搜索。使用端点原生 web_search_preview。", New Dictionary(Of String, Object) From {
                     {"query", New Dictionary(Of String, Object) From {{"type", "string"}, {"description", "要搜索的问题"}}}
                 }, {"query"}))
             Case AgentNetworkMode.Local
@@ -475,7 +497,10 @@ Public Class AgentLocalTools
                     Return ApplyParameterPanelPatch(args)
                 Case "get_queue_summary"
                     If permissionLevel < PermissionEnvironment Then Return "权限不足：需要环境控制"
-                    Return GetQueueSummary()
+                    Return GetQueueSummary(args)
+                Case "control_queue_tasks"
+                    If permissionLevel < PermissionEnvironment Then Return "权限不足：需要环境控制"
+                    Return ControlQueueTasks(args)
                 Case "sync_parameter_panel_to_queue"
                     If permissionLevel < PermissionEnvironment Then Return "权限不足：需要环境控制"
                     Return SyncParameterPanelToQueue()
@@ -707,6 +732,7 @@ Public Class AgentLocalTools
         Return result
     End Function
 
+    <CodeAnalysis.SuppressMessage("Performance", "CA1861:不要将常量数组作为参数", Justification:="<挂起>")>
     Private Shared Function GetKnownParameterCandidates(fieldName As String, preset As 预设数据_v6) As List(Of Object)
         Select Case fieldName
             Case NameOf(预设数据_v6.输出容器)
@@ -769,8 +795,7 @@ Public Class AgentLocalTools
         End Select
 
         If data Is Nothing Then Return New List(Of Object)
-        Dim result As New List(Of Object)
-        result.Add("")
+        Dim result As New List(Of Object) From {""}
         If data.默认值 <> "" Then
             result.Add(New Dictionary(Of String, Object) From {
                 {"value", data.默认值},
@@ -849,17 +874,462 @@ Public Class AgentLocalTools
         End Using
     End Function
 
-    Private Shared Function GetQueueSummary() As String
+    Private Class QueueTargetResolution
+        Public Property RequestedAll As Boolean = False
+        Public Property UsedDefaultAll As Boolean = False
+        Public Property HasSpecificSelectors As Boolean = False
+        Public Property Tasks As New List(Of 编码任务_v6)
+        Public Property MissingIds As New List(Of String)
+        Public Property MissingIndexes As New List(Of Integer)
+        Public Property Errors As New List(Of String)
+    End Class
+
+    Private Shared Function GetQueueSummary(args As JsonElement) As String
         Dim snapshot = 编码队列_v6.获取队列快照()
-        Dim items = snapshot.Select(Function(t) New Dictionary(Of String, Object) From {
-            {"id", t.ID},
-            {"name", t.任务名称},
-            {"input", t.输入文件},
-            {"output", t.输出文件},
-            {"status", t.状态.ToString()},
-            {"progress", If(t.进度 Is Nothing, "", t.进度.进度文本)}
+        Dim resolution = ResolveQueueTarget(args, snapshot, True)
+        Dim includeLogs = Agent通用工具_v6.GetJsonBoolean(args, "include_logs", False)
+        Dim includeCommands = Agent通用工具_v6.GetJsonBoolean(args, "include_commands", False)
+        Dim includePresetJson = Agent通用工具_v6.GetJsonBoolean(args, "include_preset_json", False)
+        Dim detail = Agent通用工具_v6.GetJsonBoolean(args, "detail", resolution.HasSpecificSelectors OrElse includeLogs OrElse includeCommands OrElse includePresetJson)
+        Dim logLimit = NormalizeLogLimit(Agent通用工具_v6.GetJsonInteger(args, "log_limit", 20))
+        Dim logMode = Agent通用工具_v6.GetJsonString(args, "log_mode", "all")
+
+        Dim items = resolution.Tasks.
+            Select(Function(t) BuildQueueTaskPayload(t, QueueIndexOf(snapshot, t.ID), detail, includeLogs, logLimit, logMode, includeCommands, includePresetJson)).
+            ToList()
+
+        If Not HasQueueQueryArguments(args) AndAlso resolution.Errors.Count = 0 Then
+            Return JsonSerializer.Serialize(items, JsonSO)
+        End If
+
+        Dim payload As New Dictionary(Of String, Object) From {
+            {"queue_count", snapshot.Count},
+            {"returned_count", items.Count},
+            {"target_all", resolution.RequestedAll},
+            {"used_default_all", resolution.UsedDefaultAll},
+            {"tasks", items},
+            {"missing_ids", resolution.MissingIds},
+            {"missing_indexes", resolution.MissingIndexes},
+            {"errors", resolution.Errors}
+        }
+        Return JsonSerializer.Serialize(payload, JsonSO)
+    End Function
+
+    Private Shared Function ControlQueueTasks(args As JsonElement) As String
+        Dim action = NormalizeQueueAction(Agent通用工具_v6.GetJsonString(args, "action"))
+        If action = "" Then
+            Return JsonSerializer.Serialize(New Dictionary(Of String, Object) From {
+                {"success", False},
+                {"error", "未知或缺少 action。可用：start、pause、resume、stop、remove、reset"}
+            }, JsonSO)
+        End If
+
+        Dim snapshotBefore = 编码队列_v6.获取队列快照()
+        Dim resolution = ResolveQueueTarget(args, snapshotBefore, False)
+        Dim detail = Agent通用工具_v6.GetJsonBoolean(args, "detail", False)
+        If resolution.Tasks.Count = 0 AndAlso (resolution.MissingIds.Count > 0 OrElse resolution.MissingIndexes.Count > 0) Then
+            resolution.Errors.Add("没有匹配到可控制的任务")
+        End If
+        Dim ids = resolution.Tasks.Select(Function(t) t.ID).ToList()
+        Dim beforeItems = resolution.Tasks.
+            Select(Function(t) BuildQueueTaskPayload(t, QueueIndexOf(snapshotBefore, t.ID), detail, False, 0, "all", False, False)).
+            ToList()
+        Dim eligibleCount = resolution.Tasks.Where(Function(t) IsQueueActionAvailable(t, action)).Count()
+
+        If resolution.Errors.Count = 0 AndAlso ids.Count > 0 Then
+            ApplyQueueAction(action, ids, resolution.RequestedAll)
+        End If
+
+        Dim snapshotAfter = 编码队列_v6.获取队列快照()
+        Dim afterItems As New List(Of Dictionary(Of String, Object))
+        For Each id In ids
+            Dim task = snapshotAfter.FirstOrDefault(Function(t) t.ID = id)
+            If task Is Nothing Then
+                afterItems.Add(New Dictionary(Of String, Object) From {
+                    {"id", id},
+                    {"removed", True}
+                })
+            Else
+                afterItems.Add(BuildQueueTaskPayload(task, QueueIndexOf(snapshotAfter, id), detail, False, 0, "all", False, False))
+            End If
+        Next
+
+        Dim payload As New Dictionary(Of String, Object) From {
+            {"success", resolution.Errors.Count = 0},
+            {"action", action},
+            {"action_text", QueueActionDisplayName(action)},
+            {"target_all", resolution.RequestedAll},
+            {"requested_count", ids.Count},
+            {"eligible_count", eligibleCount},
+            {"queue_count_before", snapshotBefore.Count},
+            {"queue_count_after", snapshotAfter.Count},
+            {"matched_ids", ids},
+            {"missing_ids", resolution.MissingIds},
+            {"missing_indexes", resolution.MissingIndexes},
+            {"errors", resolution.Errors},
+            {"before", beforeItems},
+            {"after", afterItems},
+            {"message", BuildQueueActionMessage(action, ids.Count, eligibleCount, resolution.Errors)}
+        }
+        Return JsonSerializer.Serialize(payload, JsonSO)
+    End Function
+
+    Private Shared Function ResolveQueueTarget(args As JsonElement, snapshot As List(Of 编码任务_v6), defaultAll As Boolean) As QueueTargetResolution
+        Dim result As New QueueTargetResolution
+        Dim target = Agent通用工具_v6.GetJsonString(args, "target").Trim().ToLowerInvariant()
+        Dim requestedIds As New List(Of String)
+        Dim requestedIndexes As New List(Of Integer)
+        Dim seen As New HashSet(Of String)(StringComparer.OrdinalIgnoreCase)
+
+        Dim singleId = Agent通用工具_v6.GetJsonString(args, "id").Trim()
+        If singleId <> "" Then requestedIds.Add(singleId)
+        requestedIds.AddRange(Agent通用工具_v6.GetJsonStringArray(args, "ids"))
+
+        If HasJsonProperty(args, "index") Then requestedIndexes.Add(Agent通用工具_v6.GetJsonInteger(args, "index", 0))
+        requestedIndexes.AddRange(GetJsonIntegerArray(args, "indexes"))
+
+        result.HasSpecificSelectors = requestedIds.Count > 0 OrElse requestedIndexes.Count > 0
+
+        Select Case target
+            Case "", "specified", "指定"
+            Case "all", "*", "全部", "所有"
+                result.RequestedAll = True
+            Case Else
+                result.Errors.Add("未知 target：" & target)
+        End Select
+
+        Dim addTask =
+            Sub(task As 编码任务_v6)
+                If task Is Nothing OrElse seen.Contains(task.ID) Then Exit Sub
+                seen.Add(task.ID)
+                result.Tasks.Add(task)
+            End Sub
+
+        If result.RequestedAll Then
+            For Each task In snapshot
+                addTask(task)
+            Next
+            Return result
+        End If
+
+        For Each id In requestedIds
+            Dim task = snapshot.FirstOrDefault(Function(t) String.Equals(t.ID, id, StringComparison.OrdinalIgnoreCase))
+            If task Is Nothing Then
+                If Not result.MissingIds.Contains(id, StringComparer.OrdinalIgnoreCase) Then result.MissingIds.Add(id)
+            Else
+                addTask(task)
+            End If
+        Next
+
+        For Each index In requestedIndexes
+            If index <= 0 OrElse index > snapshot.Count Then
+                If Not result.MissingIndexes.Contains(index) Then result.MissingIndexes.Add(index)
+            Else
+                addTask(snapshot(index - 1))
+            End If
+        Next
+
+        If result.Tasks.Count = 0 AndAlso requestedIds.Count = 0 AndAlso requestedIndexes.Count = 0 Then
+            If defaultAll Then
+                result.RequestedAll = True
+                result.UsedDefaultAll = True
+                For Each task In snapshot
+                    addTask(task)
+                Next
+            Else
+                result.Errors.Add("缺少目标：请传 id/ids/index/indexes 或 target=all")
+            End If
+        End If
+
+        Return result
+    End Function
+
+    Private Shared Function BuildQueueTaskPayload(task As 编码任务_v6,
+                                                  index As Integer,
+                                                  detail As Boolean,
+                                                  includeLogs As Boolean,
+                                                  logLimit As Integer,
+                                                  logMode As String,
+                                                  includeCommands As Boolean,
+                                                  includePresetJson As Boolean) As Dictionary(Of String, Object)
+        Dim item = BuildQueueTaskSummary(task, index)
+        If task Is Nothing Then Return item
+        If Not detail AndAlso Not includeLogs AndAlso Not includeCommands AndAlso Not includePresetJson Then Return item
+
+        item("status_code") = CInt(task.状态)
+        item("task_type") = If(task.预设数据 Is Nothing, "command_line", "preset")
+        item("command_line_task") = task.预设数据 Is Nothing
+        item("allow_auto_start") = task.允许自动启动
+        item("can_start") = task.状态 = 编码任务状态_v6.未处理
+        item("can_pause") = task.状态 = 编码任务状态_v6.正在处理
+        item("can_resume") = task.状态 = 编码任务状态_v6.已暂停
+        item("can_stop") = task.可停止 OrElse (task.状态 = 编码任务状态_v6.未处理 AndAlso task.允许自动启动)
+        item("can_remove") = task.可移除
+        item("can_reset") = task.可重置
+        item("can_sort") = task.可排序
+        item("elapsed_seconds") = Math.Round(task.任务耗时计时器.Elapsed.TotalSeconds, 3)
+        item("elapsed_text") = 编码进度_v6.格式化秒(task.任务耗时计时器.Elapsed.TotalSeconds)
+        item("input_size_bytes") = task.输入文件大小
+        item("media_duration_seconds") = task.媒体总时长
+        item("current_step_index") = task.当前步骤索引 + 1
+        item("step_count") = task.步骤.Count
+        item("current_step") = If(task.当前步骤 Is Nothing, Nothing, BuildQueueStepPayload(task.当前步骤, task.当前步骤索引 + 1, False))
+        item("steps") = task.步骤.Select(Function(s, i) BuildQueueStepPayload(s, i + 1, includeCommands)).ToList()
+        item("progress_detail") = BuildQueueProgressPayload(task.进度)
+        item("process") = New Dictionary(Of String, Object) From {
+            {"id", task.当前进程ID},
+            {"name", task.当前进程名称}
+        }
+        item("latest_log") = New Dictionary(Of String, Object) From {
+            {"text", task.最新底部日志文本},
+            {"is_error", task.最新底部日志是否错误},
+            {"raw_text", task.实时输出}
+        }
+        item("error_count") = If(task.错误列表 Is Nothing, 0, task.错误列表.Count)
+        item("non_progress_output_count") = If(task.非进度输出列表 Is Nothing, 0, task.非进度输出列表.Count)
+        item("log_version") = task.日志版本号
+
+        If includeLogs Then item("logs") = BuildQueueLogPayload(task, logLimit, logMode)
+        If includeCommands Then item("commands") = BuildQueueCommandPayload(task)
+        If includePresetJson Then item("preset_json") = If(task.预设数据 Is Nothing, "", JsonSerializer.Serialize(task.预设数据, JsonSO))
+        Return item
+    End Function
+
+    Private Shared Function BuildQueueTaskSummary(task As 编码任务_v6, index As Integer) As Dictionary(Of String, Object)
+        If task Is Nothing Then Return New Dictionary(Of String, Object)
+        Return New Dictionary(Of String, Object) From {
+            {"index", index},
+            {"id", task.ID},
+            {"name", task.任务名称},
+            {"input", task.输入文件},
+            {"output", task.输出文件},
+            {"status", task.状态.ToString()},
+            {"progress", If(task.进度 Is Nothing, "", task.进度.进度文本)}
+        }
+    End Function
+
+    Private Shared Function BuildQueueProgressPayload(progress As 编码进度_v6) As Dictionary(Of String, Object)
+        If progress Is Nothing Then Return New Dictionary(Of String, Object)
+        Return New Dictionary(Of String, Object) From {
+            {"stage", progress.当前阶段},
+            {"total_seconds", Math.Round(progress.总时长.TotalSeconds, 3)},
+            {"current_seconds", Math.Round(progress.当前时间.TotalSeconds, 3)},
+            {"percent", Math.Round(progress.百分比, 4)},
+            {"text", progress.进度文本},
+            {"speed", progress.效率文本},
+            {"output_size_text", progress.输出大小文本},
+            {"output_size_kb", progress.输出大小KB},
+            {"quality", progress.质量文本},
+            {"bitrate", progress.比特率文本},
+            {"eta_text", progress.时间文本}
+        }
+    End Function
+
+    Private Shared Function BuildQueueStepPayload(stepItem As 编码步骤_v6, index As Integer, includeCommand As Boolean) As Dictionary(Of String, Object)
+        If stepItem Is Nothing Then Return New Dictionary(Of String, Object)
+        Dim item As New Dictionary(Of String, Object) From {
+            {"index", index},
+            {"name", stepItem.显示名称},
+            {"stage", stepItem.阶段.ToString()},
+            {"status", stepItem.状态.ToString()},
+            {"status_code", CInt(stepItem.状态)},
+            {"description", stepItem.说明},
+            {"requires_media_duration", stepItem.需要媒体总时长},
+            {"output_cache_count", If(stepItem.输出缓存 Is Nothing, 0, stepItem.输出缓存.Count)}
+        }
+        If stepItem.输出缓存 IsNot Nothing AndAlso stepItem.输出缓存.Count > 0 Then item("latest_output") = stepItem.输出缓存(stepItem.输出缓存.Count - 1)
+        If includeCommand Then
+            item("process") = 预设管理_v6.获取命令行进程名(stepItem.阶段)
+            item("arguments") = stepItem.命令行
+            item("command_line") = 预设管理_v6.获取命令行进程名(stepItem.阶段) & " " & stepItem.命令行
+        End If
+        Return item
+    End Function
+
+    Private Shared Function BuildQueueLogPayload(task As 编码任务_v6, logLimit As Integer, logMode As String) As List(Of Dictionary(Of String, Object))
+        Dim logs = task.获取日志快照(ParseQueueLogMode(logMode))
+        If logLimit > 0 AndAlso logs.Count > logLimit Then logs = logs.Skip(logs.Count - logLimit).ToList()
+        Return logs.Select(Function(entry) New Dictionary(Of String, Object) From {
+            {"sequence", entry.序号},
+            {"time", entry.时间.ToString("yyyy-MM-dd HH:mm:ss")},
+            {"stage", entry.阶段名},
+            {"category", entry.类别.ToString()},
+            {"is_error", entry.是否错误},
+            {"text", entry.文本}
         }).ToList()
-        Return JsonSerializer.Serialize(items, JsonSO)
+    End Function
+
+    Private Shared Function BuildQueueCommandPayload(task As 编码任务_v6) As List(Of Dictionary(Of String, Object))
+        Dim result As New List(Of Dictionary(Of String, Object))
+        Try
+            If task.步骤 IsNot Nothing AndAlso task.步骤.Count > 0 Then
+                For i = 0 To task.步骤.Count - 1
+                    Dim stepItem = task.步骤(i)
+                    result.Add(BuildQueueCommandItem(i + 1, stepItem.阶段, stepItem.显示名称, stepItem.命令行))
+                Next
+            ElseIf task.预设数据 IsNot Nothing Then
+                Dim output = If(task.输出文件 <> "", task.输出文件, 编码队列_v6.计算输出位置_v6(task.输入文件, task.预设数据))
+                Dim generated = 预设管理_v6.生成阶段化命令行(task.预设数据, task.输入文件, output, 帧服务器脚本后缀:=task.ID)
+                For i = 0 To generated.Count - 1
+                    Dim command = generated(i)
+                    result.Add(BuildQueueCommandItem(i + 1, command.阶段, command.阶段.ToString(), command.命令行))
+                Next
+            ElseIf task.命令行 <> "" Then
+                result.Add(BuildQueueCommandItem(1, 预设数据_v6.命令行阶段.普通单次, "命令行", task.命令行))
+            End If
+        Catch ex As Exception
+            result.Add(New Dictionary(Of String, Object) From {{"error", ex.Message}})
+        End Try
+        Return result
+    End Function
+
+    Private Shared Function BuildQueueCommandItem(index As Integer,
+                                                  stage As 预设数据_v6.命令行阶段,
+                                                  displayName As String,
+                                                  arguments As String) As Dictionary(Of String, Object)
+        Dim processName = 预设管理_v6.获取命令行进程名(stage)
+        Return New Dictionary(Of String, Object) From {
+            {"index", index},
+            {"stage", stage.ToString()},
+            {"name", displayName},
+            {"process", processName},
+            {"arguments", arguments},
+            {"command_line", processName & " " & arguments}
+        }
+    End Function
+
+    Private Shared Sub ApplyQueueAction(action As String, ids As List(Of String), requestedAll As Boolean)
+        Select Case action
+            Case "start"
+                编码队列_v6.开始任务(ids)
+            Case "pause"
+                编码队列_v6.取消自动开始任务(ids)
+                编码队列_v6.暂停任务(ids)
+            Case "resume"
+                编码队列_v6.恢复任务(ids)
+            Case "stop"
+                If requestedAll Then
+                    编码队列_v6.停止所有进行中任务()
+                Else
+                    编码队列_v6.取消自动开始任务(ids)
+                    编码队列_v6.停止任务(ids)
+                End If
+            Case "remove"
+                编码队列_v6.移除任务(ids)
+            Case "reset"
+                编码队列_v6.重置任务(ids)
+        End Select
+    End Sub
+
+    Private Shared Function IsQueueActionAvailable(task As 编码任务_v6, action As String) As Boolean
+        If task Is Nothing Then Return False
+        Select Case action
+            Case "start"
+                Return task.状态 = 编码任务状态_v6.未处理
+            Case "pause"
+                Return task.状态 = 编码任务状态_v6.正在处理 OrElse (task.状态 = 编码任务状态_v6.未处理 AndAlso task.允许自动启动)
+            Case "resume"
+                Return task.状态 = 编码任务状态_v6.已暂停
+            Case "stop"
+                Return task.可停止 OrElse (task.状态 = 编码任务状态_v6.未处理 AndAlso task.允许自动启动)
+            Case "remove"
+                Return task.可移除
+            Case "reset"
+                Return task.可重置
+            Case Else
+                Return False
+        End Select
+    End Function
+
+    Private Shared Function NormalizeQueueAction(value As String) As String
+        Select Case If(value, "").Trim().ToLowerInvariant()
+            Case "start", "run", "begin", "开始", "启动"
+                Return "start"
+            Case "pause", "暂停"
+                Return "pause"
+            Case "resume", "continue", "恢复", "继续"
+                Return "resume"
+            Case "stop", "cancel", "terminate", "停止", "终止", "取消"
+                Return "stop"
+            Case "remove", "delete", "移除", "删除"
+                Return "remove"
+            Case "reset", "restartable", "重置"
+                Return "reset"
+            Case Else
+                Return ""
+        End Select
+    End Function
+
+    Private Shared Function QueueActionDisplayName(action As String) As String
+        Select Case action
+            Case "start" : Return "开始"
+            Case "pause" : Return "暂停"
+            Case "resume" : Return "恢复"
+            Case "stop" : Return "停止"
+            Case "remove" : Return "移除"
+            Case "reset" : Return "重置"
+            Case Else : Return action
+        End Select
+    End Function
+
+    Private Shared Function BuildQueueActionMessage(action As String, requestedCount As Integer, eligibleCount As Integer, errors As List(Of String)) As String
+        If errors IsNot Nothing AndAlso errors.Count > 0 Then Return "队列控制未执行：" & String.Join("；", errors)
+        Return $"已请求{QueueActionDisplayName(action)} {requestedCount} 个任务，其中当前可执行 {eligibleCount} 个。"
+    End Function
+
+    Private Shared Function ParseQueueLogMode(value As String) As 编码任务日志显示模式_v6
+        Select Case If(value, "").Trim().ToLowerInvariant()
+            Case "latest_non_progress", "non_progress", "latest", "latest_output", "最新非进度"
+                Return 编码任务日志显示模式_v6.最新输出不含进度
+            Case "errors", "error", "错误"
+                Return 编码任务日志显示模式_v6.仅错误信息
+            Case "current_stage", "stage", "当前阶段"
+                Return 编码任务日志显示模式_v6.当前阶段输出
+            Case Else
+                Return 编码任务日志显示模式_v6.全部输出
+        End Select
+    End Function
+
+    Private Shared Function NormalizeLogLimit(value As Integer) As Integer
+        If value <= 0 Then Return 20
+        Return Math.Min(value, 200)
+    End Function
+
+    Private Shared Function QueueIndexOf(snapshot As List(Of 编码任务_v6), id As String) As Integer
+        If snapshot Is Nothing OrElse String.IsNullOrWhiteSpace(id) Then Return 0
+        For i = 0 To snapshot.Count - 1
+            If String.Equals(snapshot(i).ID, id, StringComparison.OrdinalIgnoreCase) Then Return i + 1
+        Next
+        Return 0
+    End Function
+
+    Private Shared Function HasQueueQueryArguments(args As JsonElement) As Boolean
+        Return HasJsonProperty(args, "id", "ids", "index", "indexes", "target", "detail", "include_logs", "log_limit", "log_mode", "include_commands", "include_preset_json")
+    End Function
+
+    Private Shared Function HasJsonProperty(root As JsonElement, ParamArray names As String()) As Boolean
+        If root.ValueKind <> JsonValueKind.Object Then Return False
+        Dim value As JsonElement
+        For Each name In names
+            If root.TryGetProperty(name, value) Then Return True
+        Next
+        Return False
+    End Function
+
+    Private Shared Function GetJsonIntegerArray(root As JsonElement, name As String) As List(Of Integer)
+        Dim result As New List(Of Integer)
+        Dim value As JsonElement
+        If root.ValueKind <> JsonValueKind.Object OrElse Not root.TryGetProperty(name, value) OrElse value.ValueKind <> JsonValueKind.Array Then Return result
+
+        For Each item In value.EnumerateArray()
+            Dim n As Integer
+            If item.ValueKind = JsonValueKind.Number AndAlso item.TryGetInt32(n) Then
+                If Not result.Contains(n) Then result.Add(n)
+            ElseIf item.ValueKind = JsonValueKind.String AndAlso Integer.TryParse(item.GetString(), n) Then
+                If Not result.Contains(n) Then result.Add(n)
+            End If
+        Next
+        Return result
     End Function
 
     Private Shared Async Function WebSearchAsync(query As String,
@@ -930,7 +1400,7 @@ Public Class AgentLocalTools
         If Not Uri.TryCreate(url, UriKind.Absolute, uri) Then Return "URL 无效"
         Using http As New HttpClient With {.Timeout = TimeSpan.FromSeconds(45)}
             Using request As New HttpRequestMessage(HttpMethod.Get, uri)
-                request.Headers.UserAgent.ParseAdd("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0 Safari/537.36")
+                request.Headers.UserAgent.ParseAdd("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36 Edg/148.0.0.0")
                 request.Headers.Accept.ParseAdd("text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8")
                 request.Headers.AcceptLanguage.ParseAdd("zh-CN,zh;q=0.9,en;q=0.8")
 
