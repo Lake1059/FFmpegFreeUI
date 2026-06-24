@@ -155,6 +155,58 @@ Public Class Form_v6_集成工具_抽流
         End Try
     End Function
 
+    Public Function Agent获取状态() As Dictionary(Of String, Object)
+        Dim streams = 流列表.Select(Function(x) New Dictionary(Of String, Object) From {
+            {"global_index", x.全局索引},
+            {"type", x.类型.ToString()},
+            {"type_index", x.类型序号},
+            {"codec", x.编码器},
+            {"language", x.流语言},
+            {"title", x.元数据标题},
+            {"extension", x.默认扩展名},
+            {"selected", x.复选框 IsNot Nothing AndAlso x.复选框.Checked},
+            {"text", x.主文本}
+        }).Cast(Of Object).ToList()
+        Return New Dictionary(Of String, Object) From {
+            {"file", 当前文件},
+            {"output_location", MCB_输出位置.Text},
+            {"running", 正在运行},
+            {"streams", streams}
+        }
+    End Function
+
+    Public Async Function Agent配置Async(file As String, outputLocation As String, selectedStreams As IEnumerable(Of String)) As Task(Of String)
+        If Not String.IsNullOrWhiteSpace(file) Then Await 打开媒体文件Async(file)
+        If outputLocation IsNot Nothing Then MCB_输出位置.Text = outputLocation
+
+        Dim requested = If(selectedStreams, Enumerable.Empty(Of String)()).
+            Select(Function(x) If(x, "").Trim()).
+            Where(Function(x) x <> "").
+            ToList()
+        If requested.Count > 0 Then
+            For Each info In 流列表
+                If info.复选框 Is Nothing Then Continue For
+                info.复选框.Checked = requested.Any(Function(x) Agent匹配流选择(x, info))
+            Next
+        End If
+
+        Return $"抽流工具：{Path.GetFileName(当前文件)}，已选 {流列表.Where(Function(x) x.复选框 IsNot Nothing AndAlso x.复选框.Checked).Count()} / {流列表.Count} 个流"
+    End Function
+
+    Public Async Function Agent运行Async(Optional forceAutoName As Boolean = True) As Task(Of String)
+        Await 提取所选Async(forceAutoName)
+        Return "已请求执行抽流工具"
+    End Function
+
+    Private Function Agent匹配流选择(value As String, info As 抽流流信息) As Boolean
+        If info Is Nothing Then Return False
+        Dim s = value.Trim().ToLowerInvariant()
+        If s = info.全局索引.ToString(Globalization.CultureInfo.InvariantCulture) Then Return True
+        If s = 获取类型短名(info.类型) & ":" & info.类型序号.ToString(Globalization.CultureInfo.InvariantCulture) Then Return True
+        If s = info.类型.ToString().ToLowerInvariant() & ":" & info.类型序号.ToString(Globalization.CultureInfo.InvariantCulture) Then Return True
+        Return False
+    End Function
+
     Private Shared Function 构建FFprobe参数(file As String) As String
         Return "-v error -show_entries format=duration:stream=index,codec_type,codec_name,codec_long_name,width,height,r_frame_rate,avg_frame_rate,bit_rate,sample_rate,channels,channel_layout:stream_tags=language,title,filename,mimetype -of json " & 引用参数(file)
     End Function

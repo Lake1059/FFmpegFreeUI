@@ -1,4 +1,5 @@
 Imports System.IO
+Imports System.Text.Json
 Imports LakeUI
 
 Public Class Form_v6_参数面板_预设管理
@@ -237,6 +238,108 @@ Public Class Form_v6_参数面板_预设管理
 
     Private Function 当前是社区下载来源() As Boolean
         Return String.Equals(当前来源名称(), "从社区下载", StringComparison.Ordinal)
+    End Function
+
+    Public Function Agent列出预设(source As String) As List(Of Dictionary(Of String, Object))
+        Agent选择来源(source)
+        Return _预设列表项.Select(Function(item) New Dictionary(Of String, Object) From {
+            {"name", item.名称},
+            {"source", 当前来源名称()},
+            {"built_in", item.是内置},
+            {"path", If(item.是内置, "", item.文件路径)}
+        }).ToList()
+    End Function
+
+    Public Function Agent读取预设(source As String, name As String) As Dictionary(Of String, Object)
+        Dim item = Agent查找预设(source, name)
+        If item Is Nothing Then Throw New InvalidOperationException("找不到预设：" & name)
+        Dim data = If(item.是内置, 开发者内置预设_v6.克隆预设数据(item.数据), 预设管理_v6.读取预设文件(item.文件路径))
+        If data Is Nothing Then Throw New InvalidOperationException("预设读取失败：" & name)
+        Return New Dictionary(Of String, Object) From {
+            {"name", item.名称},
+            {"source", 当前来源名称()},
+            {"built_in", item.是内置},
+            {"path", If(item.是内置, "", item.文件路径)},
+            {"note", data.预设备注},
+            {"overview", Agent构建预设总览(data)},
+            {"command", 预设管理_v6.生成命令行展示文本(data, 预设管理_v6.输入占位符, 预设管理_v6.输出占位符)},
+            {"preset_json", JsonSerializer.Serialize(data, JsonSO)}
+        }
+    End Function
+
+    Public Function Agent应用预设(source As String, name As String) As String
+        If 所属参数面板对象 Is Nothing Then Return "参数面板不可用"
+        Dim item = Agent查找预设(source, name)
+        If item Is Nothing Then Return "找不到预设：" & name
+        Dim data = If(item.是内置, 开发者内置预设_v6.克隆预设数据(item.数据), 预设管理_v6.读取预设文件(item.文件路径))
+        If data Is Nothing Then Return "预设读取失败：" & name
+        预设管理_v6.显示预设(data, 所属参数面板对象)
+        Return "已读取预设：" & item.名称
+    End Function
+
+    Public Function Agent保存预设(source As String, name As String, presetJson As String, note As String) As String
+        Dim sourceName = Agent规范来源(source)
+        If String.Equals(sourceName, "开发者内置", StringComparison.Ordinal) Then Return "开发者内置预设只允许读取，不能保存或删除"
+        If name Is Nothing OrElse name.Trim() = "" Then Return "缺少预设名称"
+
+        Dim data As 预设数据_v6
+        If Not String.IsNullOrWhiteSpace(presetJson) Then
+            data = JsonSerializer.Deserialize(Of 预设数据_v6)(presetJson, JsonSO)
+        ElseIf 所属参数面板对象 IsNot Nothing Then
+            data = 预设管理_v6.从面板创建预设(所属参数面板对象)
+        Else
+            Return "缺少 preset_json，且参数面板不可用"
+        End If
+        If note IsNot Nothing Then data.预设备注 = note
+
+        Dim dir = 预设管理_v6.获取预设目录(sourceName)
+        Directory.CreateDirectory(dir)
+        Dim file = Path.Combine(dir, 预设管理_v6.安全文件名(name) & ".json")
+        Dim isNewUserPreset = String.Equals(sourceName, "用户自定义", StringComparison.Ordinal) AndAlso Not System.IO.File.Exists(file)
+        预设管理_v6.写入预设文件(file, data)
+        If isNewUserPreset Then 添加用户预设到排序末尾(file)
+        Agent选择来源(sourceName)
+        Return "已保存预设：" & Path.GetFileNameWithoutExtension(file)
+    End Function
+
+    Private Function Agent查找预设(source As String, name As String) As 预设列表项
+        Agent选择来源(source)
+        Dim key = If(name, "").Trim()
+        If key = "" Then Return 当前选中列表项()
+        Return _预设列表项.FirstOrDefault(Function(x) String.Equals(x.名称, key, StringComparison.OrdinalIgnoreCase) OrElse
+                                                     String.Equals(Path.GetFileNameWithoutExtension(x.文件路径), key, StringComparison.OrdinalIgnoreCase))
+    End Function
+
+    Private Sub Agent选择来源(source As String)
+        Dim sourceName = Agent规范来源(source)
+        Dim index = ModernComboBox1.Items.IndexOf(sourceName)
+        If index >= 0 AndAlso ModernComboBox1.SelectedIndex <> index Then
+            ModernComboBox1.SelectedIndex = index
+        Else
+            刷新预设列表()
+        End If
+    End Sub
+
+    Private Function Agent规范来源(source As String) As String
+        Dim value = If(source, "").Trim()
+        If value = "" Then Return 当前来源名称()
+        Select Case value.ToLowerInvariant()
+            Case "user", "用户", "用户自定义"
+                Return "用户自定义"
+            Case "community", "社区", "从社区下载"
+                Return "从社区下载"
+            Case "built_in", "builtin", "内置", "开发者内置"
+                Return "开发者内置"
+            Case Else
+                Return value
+        End Select
+    End Function
+
+    Private Function Agent构建预设总览(data As 预设数据_v6) As String
+        Using box As New LakeUI.ModernTextBox
+            预设管理_v6.显示参数总览(box, data)
+            Return box.Text
+        End Using
     End Function
 
     Private Function 当前来源目录() As String

@@ -1,5 +1,6 @@
 Imports System.Text
 Imports System.Text.Json
+Imports System.IO
 Imports LakeUI
 
 Public Class Form_v6_Agent
@@ -24,12 +25,17 @@ Public Class Form_v6_Agent
     Private _modelEndpointSignature As String = ""
     Private _refreshingModels As Boolean = False
     Private _pendingModelRefresh As Boolean = False
+    Private _agentPageActivated As Boolean = False
+    Private ReadOnly _pendingFiles As New List(Of String)
+    Private _refreshingSubmittedFiles As Boolean = False
 
     Private Const MaxRequestMessages As Integer = 60
     Private Const MaxRequestCharacters As Integer = 48000
     Private Const KeepRecentMessages As Integer = 40
     Private Const StreamFlushIntervalMs As Integer = 35
     Private Const StreamFlushCharacters As Integer = 96
+    Private Const SubmittedTextFileLimitBytes As Long = 128 * 1024
+    Private Const SubmittedTextLimitCharacters As Integer = 12000
 
     Private Class ToolRunLog
         Public Property Round As Integer
@@ -114,11 +120,13 @@ Public Class Form_v6_Agent
         End Sub
     End Class
 
-    Private Async Sub Form_v6_Agent_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    Private Sub Form_v6_Agent_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         _loading = True
         Try
             ModernListBox1.AllowDragReorder = True
             ModernListBox1.TabStop = True
+            InitializeSubmittedFileList()
+            ApplyAgentButtonPanelLayout()
             If MCB_联网设置.SelectedIndex < 0 Then MCB_联网设置.SelectedIndex = Math.Min(Math.Max(AgentNetworkMode.Normalize(设置_v6.实例对象.Agent联网设置), 0), MCB_联网设置.Items.Count - 1)
             If MCB_权限控制.SelectedIndex < 0 Then MCB_权限控制.SelectedIndex = Math.Min(Math.Max(设置_v6.实例对象.Agent权限级别, 0), MCB_权限控制.Items.Count - 1)
 
@@ -130,8 +138,13 @@ Public Class Form_v6_Agent
         Finally
             _loading = False
         End Try
+    End Sub
 
-        Await RefreshModelsIfEndpointChangedAsync(False)
+    Private Sub InitializeSubmittedFileList()
+        ModernListBox2.AllowDragReorder = True
+        ModernListBox2.TabStop = True
+        ModernListBox2.AllowDrop = True
+        RefreshSubmittedFileList()
     End Sub
 
     Private Function CreateClient() As AgentEndpointClient
@@ -143,12 +156,154 @@ Public Class Form_v6_Agent
     End Function
 
     Public Async Sub 请求刷新模型列表()
+        If Not _agentPageActivated Then Return
         Await RefreshModelsIfEndpointChangedAsync(True)
     End Sub
 
     Public Async Sub 检查并刷新模型列表()
+        _agentPageActivated = True
         Await RefreshModelsIfEndpointChangedAsync(False)
     End Sub
+
+    Private Async Function RefreshAllReasoningEffortsForCurrentEndpointAsync() As Task
+        If _refreshingModels Then
+            _pendingModelRefresh = True
+            Return
+        End If
+
+        _refreshingModels = True
+        Dim oldLoading = _loading
+        Dim selectedModel = If(MCB_模型选择.SelectedItem, 设置_v6.实例对象.AgentModelId)
+        Dim client As AgentEndpointClient = Nothing
+        Dim useDefaultAfterCatch As Boolean = False
+        _loading = True
+        Try
+            client = CreateClient()
+            If String.IsNullOrWhiteSpace(client.Endpoint) Then
+                ShowStatus("请先在 Agent 设置中选择或填写端点。", True)
+                ExFloatingTip(MCB_模型选择, "请先选择或填写 Agent 端点", 1800)
+                Return
+            End If
+
+            ShowStatus("正在刷新当前端点全部模型的推理级别")
+            Dim modelResult As AgentClientResult(Of List(Of AgentModelInfo))
+            Do
+                modelResult = Await client.TryGetModelsAsync()
+                If modelResult.Success Then Exit Do
+
+                ShowStatus("刷新推理级别失败：" & modelResult.ErrorMessage, True)
+                ExFloatingTip(MCB_推理级别, modelResult.ErrorMessage, 2600)
+                If ShouldRetryReasoningRefresh(modelResult.ErrorMessage, selectedModel) Then
+                    ShowStatus("正在重新刷新当前端点全部模型的推理级别")
+                    Continue Do
+                End If
+
+                Await UseDefaultReasoningEffortsAfterRefreshFailureAsync(client, selectedModel)
+                Return
+            Loop
+
+            _models = If(modelResult.Value, New List(Of AgentModelInfo))
+            AgentCapabilityCache.ImportReasoningEfforts(client, _models)
+            MCB_模型选择.Items.Clear()
+            MCB_模型选择.Items.AddRange(_models.Select(Function(x) x.Id))
+
+            If _models.Count = 0 Then
+                ShowStatus("端点没有返回可用模型。", True)
+                Return
+            End If
+
+            Dim index = _models.FindIndex(Function(x) String.Equals(x.Id, selectedModel, StringComparison.OrdinalIgnoreCase))
+            If index < 0 Then index = 0
+            MCB_模型选择.SelectedIndex = index
+            设置_v6.实例对象.AgentModelId = If(MCB_模型选择.SelectedItem, "")
+            Await RefreshReasoningEffortsAsync()
+            _modelEndpointSignature = AgentCapabilityCache.BuildEndpointSignature(client)
+            ShowStatus($"推理级别已刷新：{_models.Count} 个模型")
+        Catch ex As Exception
+            ShowStatus("系统故障：刷新推理级别失败：" & ex.Message, True)
+            ExFloatingTip(MCB_推理级别, ex.Message, 2600)
+            If ShouldRetryReasoningRefresh(ex.Message, selectedModel) Then
+                _pendingModelRefresh = True
+            Else
+                useDefaultAfterCatch = True
+            End If
+        Finally
+            _loading = oldLoading
+            _refreshingModels = False
+            MCB_模型选择.WaterText = "模型选择"
+            MCB_推理级别.WaterText = "推理级别"
+        End Try
+
+        If useDefaultAfterCatch Then
+            Await UseDefaultReasoningEffortsAfterRefreshFailureAsync(client, selectedModel)
+        End If
+
+        If _pendingModelRefresh Then
+            _pendingModelRefresh = False
+            Await RefreshModelsIfEndpointChangedAsync(True)
+        End If
+    End Function
+
+    Private Function ShouldRetryReasoningRefresh(errorMessage As String, Optional modelId As String = "") As Boolean
+        Dim detail = If(String.IsNullOrWhiteSpace(errorMessage), "未知错误", errorMessage)
+        Dim defaultEfforts = String.Join("、", AgentCapabilityCache.GetDefaultReasoningEfforts(modelId))
+        Dim message = "拉取可用推理级别失败：" & detail & vbCrLf & vbCrLf &
+            "选择 是 重新拉取；选择 否 使用默认级别：" & defaultEfforts & "。"
+        Dim confirm = ExMsgBox(FormMain_v6, message, MsgBoxStyle.YesNo Or MsgBoxStyle.Question, "推理级别刷新失败")
+        Return confirm = MsgBoxResult.Yes
+    End Function
+
+    Private Async Function UseDefaultReasoningEffortsAfterRefreshFailureAsync(client As AgentEndpointClient,
+                                                                              selectedModel As String) As Task
+        Dim oldLoading = _loading
+        _loading = True
+        Try
+            Dim fallbackModels As List(Of AgentModelInfo)
+            Dim currentSignature = AgentCapabilityCache.BuildEndpointSignature(client)
+            Dim canReuseCurrentModels =
+                _models IsNot Nothing AndAlso
+                _models.Count > 0 AndAlso
+                String.Equals(_modelEndpointSignature, currentSignature, StringComparison.Ordinal)
+
+            If canReuseCurrentModels Then
+                fallbackModels = _models
+            Else
+                fallbackModels = New List(Of AgentModelInfo)
+                If Not String.IsNullOrWhiteSpace(selectedModel) Then
+                    fallbackModels.Add(New AgentModelInfo With {.Id = selectedModel.Trim()})
+                End If
+            End If
+
+            AgentCapabilityCache.UseDefaultReasoningEfforts(client, fallbackModels, selectedModel)
+
+            If fallbackModels.Count > 0 Then
+                _models = fallbackModels
+                MCB_模型选择.Items.Clear()
+                MCB_模型选择.Items.AddRange(_models.Select(Function(x) x.Id))
+
+                Dim index = _models.FindIndex(Function(x) String.Equals(x.Id, selectedModel, StringComparison.OrdinalIgnoreCase))
+                If index < 0 Then index = 0
+                MCB_模型选择.SelectedIndex = index
+                设置_v6.实例对象.AgentModelId = If(MCB_模型选择.SelectedItem, "")
+                Await RefreshReasoningEffortsAsync()
+            Else
+                Dim efforts = AgentCapabilityCache.GetDefaultReasoningEfforts(selectedModel)
+                MCB_推理级别.Items.Clear()
+                MCB_推理级别.Items.AddRange(efforts)
+
+                Dim selected = If(设置_v6.实例对象.Agent推理级别, "")
+                Dim index = efforts.FindIndex(Function(x) String.Equals(x, selected, StringComparison.OrdinalIgnoreCase))
+                If index < 0 AndAlso efforts.Count > 0 Then index = Math.Min(1, efforts.Count - 1)
+                If index >= 0 Then MCB_推理级别.SelectedIndex = index
+                设置_v6.实例对象.Agent推理级别 = If(MCB_推理级别.SelectedItem, "")
+            End If
+
+            _modelEndpointSignature = currentSignature
+            ShowStatus("推理级别使用默认值：" & String.Join("、", AgentCapabilityCache.GetDefaultReasoningEfforts(selectedModel)))
+        Finally
+            _loading = oldLoading
+        End Try
+    End Function
 
     Private Function BuildModelEndpointSignature() As String
         Return AgentCapabilityCache.BuildEndpointSignature(CreateClient())
@@ -171,10 +326,11 @@ Public Class Form_v6_Agent
             Not dailyReasoningRefreshDue AndAlso
             String.Equals(signature, _modelEndpointSignature, StringComparison.Ordinal) Then Return
 
-        Await RefreshModelsAsync(signature)
+        Await RefreshModelsAsync(signature, force OrElse dailyReasoningRefreshDue)
     End Function
 
-    Private Async Function RefreshModelsAsync(Optional expectedSignature As String = Nothing) As Task
+    Private Async Function RefreshModelsAsync(Optional expectedSignature As String = Nothing,
+                                              Optional allowReasoningFallback As Boolean = False) As Task
         If _refreshingModels Then
             _pendingModelRefresh = True
             Return
@@ -189,10 +345,13 @@ Public Class Form_v6_Agent
 
         _refreshingModels = True
         Dim oldLoading = _loading
+        Dim selectedModel = If(MCB_模型选择.SelectedItem, 设置_v6.实例对象.AgentModelId)
+        Dim client As AgentEndpointClient = Nothing
+        Dim useDefaultAfterCatch As Boolean = False
         _loading = True
         Try
-            Dim client = CreateClient()
-            Dim actualSignature = BuildModelEndpointSignature()
+            client = CreateClient()
+            Dim actualSignature = AgentCapabilityCache.BuildEndpointSignature(client)
             expectedSignature = actualSignature
             If String.IsNullOrWhiteSpace(client.Endpoint) Then
                 _modelEndpointSignature = actualSignature
@@ -205,12 +364,22 @@ Public Class Form_v6_Agent
             MCB_模型选择.Items.Clear()
             MCB_模型选择.Text = ""
             MCB_模型选择.WaterText = "正在获取模型"
-            Dim modelResult = Await client.TryGetModelsAsync()
-            If Not modelResult.Success Then
+            Dim modelResult As AgentClientResult(Of List(Of AgentModelInfo))
+            Do
+                modelResult = Await client.TryGetModelsAsync()
+                If modelResult.Success Then Exit Do
+
                 ShowStatus("获取模型列表失败：" & modelResult.ErrorMessage, True)
                 ExFloatingTip(MCB_模型选择, modelResult.ErrorMessage, 2600)
+                If Not allowReasoningFallback Then Return
+                If ShouldRetryReasoningRefresh(modelResult.ErrorMessage, selectedModel) Then
+                    ShowStatus("正在重新连接端点并获取模型列表")
+                    Continue Do
+                End If
+
+                Await UseDefaultReasoningEffortsAfterRefreshFailureAsync(client, selectedModel)
                 Return
-            End If
+            Loop
             If Not String.Equals(expectedSignature, BuildModelEndpointSignature(), StringComparison.Ordinal) Then
                 _pendingModelRefresh = True
                 Return
@@ -237,15 +406,26 @@ Public Class Form_v6_Agent
         Catch ex As Exception
             ShowStatus("系统故障：获取模型列表失败：" & ex.Message, True)
             ExFloatingTip(MCB_模型选择, ex.Message, 2600)
+            If allowReasoningFallback Then
+                If ShouldRetryReasoningRefresh(ex.Message, selectedModel) Then
+                    _pendingModelRefresh = True
+                Else
+                    useDefaultAfterCatch = True
+                End If
+            End If
         Finally
             _loading = oldLoading
             _refreshingModels = False
             MCB_模型选择.WaterText = "模型选择"
         End Try
 
+        If useDefaultAfterCatch Then
+            Await UseDefaultReasoningEffortsAfterRefreshFailureAsync(client, selectedModel)
+        End If
+
         If _pendingModelRefresh Then
             _pendingModelRefresh = False
-            Await RefreshModelsIfEndpointChangedAsync(False)
+            Await RefreshModelsIfEndpointChangedAsync(True)
         End If
     End Function
 
@@ -360,8 +540,8 @@ Public Class Form_v6_Agent
     End Sub
 
     Private Function IsToolSummaryMessage(message As AgentMessageData) As Boolean
-        Return message IsNot Nothing AndAlso _
-            String.Equals(message.Role, "card", StringComparison.OrdinalIgnoreCase) AndAlso _
+        Return message IsNot Nothing AndAlso
+            String.Equals(message.Role, "card", StringComparison.OrdinalIgnoreCase) AndAlso
             String.Equals(If(message.Name, ""), "tool_summary", StringComparison.OrdinalIgnoreCase)
     End Function
 
@@ -495,6 +675,34 @@ Public Class Form_v6_Agent
                 Return "读取队列状态"
             Case "sync_parameter_panel_to_queue"
                 Return "同步参数到队列"
+            Case "get_ui_tabs"
+                Return "读取选项卡"
+            Case "switch_ui_tab"
+                Return "切换页面"
+            Case "get_prepare_files"
+                Return "读取准备文件"
+            Case "set_prepare_files"
+                Return "设置准备文件"
+            Case "submit_prepare_files_to_queue"
+                Return "准备文件入队"
+            Case "get_integrated_tool_state"
+                Return "读取集成工具"
+            Case "configure_integrated_tool"
+                Return "配置集成工具"
+            Case "run_integrated_tool"
+                Return "运行集成工具"
+            Case "get_system_hardware"
+                Return "读取硬件信息"
+            Case "get_parameter_panel_controls"
+                Return "读取参数控件"
+            Case "list_parameter_presets"
+                Return "列出参数预设"
+            Case "read_parameter_preset"
+                Return "读取参数预设"
+            Case "apply_parameter_preset"
+                Return "应用参数预设"
+            Case "save_parameter_preset"
+                Return "保存参数预设"
             Case "web_search"
                 Return "联网搜索"
             Case "fetch_url"
@@ -514,7 +722,7 @@ Public Class Form_v6_Agent
 
     Private Sub UpdateUsageButton()
         Dim currentUsage = If(_current?.Usage, New AgentUsageInfo)
-        MB_页面用量.Text = $"当前 {currentUsage.TotalTokens} / 页面 {_pageUsage.TotalTokens} tokens"
+        MB_页面用量.Text = $"{currentUsage.TotalTokens} / {_pageUsage.TotalTokens}"
     End Sub
 
     Private Sub UpdateSendButtonState()
@@ -723,8 +931,9 @@ Public Class Form_v6_Agent
 
         If _current Is Nothing Then _current = CreateConversationFromCurrentSettings()
         ApplyConversationSnapshot()
-        AppendUserMessage(text)
+        AppendUserMessage(text, BuildSubmittedFilesContext())
         ModernTextBox1.Text = ""
+        ClearSubmittedFiles()
         SaveCurrent()
 
         Await StartAgentRunAsync(_current)
@@ -746,8 +955,9 @@ Public Class Form_v6_Agent
 
         If _current Is Nothing Then _current = CreateConversationFromCurrentSettings()
         ApplyConversationSnapshot()
-        AppendUserMessage(text)
+        AppendUserMessage(text, BuildSubmittedFilesContext())
         ModernTextBox1.Text = ""
+        ClearSubmittedFiles()
         _restartAfterCancel = True
         _restartRunConversation = _current
         ShowRunStatus(_restartRunConversation, "已添加引导消息，正在停止当前响应")
@@ -763,11 +973,15 @@ Public Class Form_v6_Agent
         Return False
     End Function
 
-    Private Sub AppendUserMessage(text As String)
-        Dim userMessage As New AgentMessageData With {.Role = "user", .Content = text}
+    Private Sub AppendUserMessage(text As String, Optional fileContext As String = "")
+        Dim content = text
+        If Not String.IsNullOrWhiteSpace(fileContext) Then
+            content &= vbCrLf & vbCrLf & fileContext.Trim()
+        End If
+        Dim userMessage As New AgentMessageData With {.Role = "user", .Content = content}
         _current.Messages.Add(userMessage)
         If _current.Title = "新对话" OrElse String.IsNullOrWhiteSpace(_current.Title) Then _current.Title = BuildTitle(text)
-        AgentRoom1.AddUserMessage(text)
+        AgentRoom1.AddUserMessage(content)
     End Sub
 
     Private Sub RequestStopAgentTask(restartAfterCancel As Boolean)
@@ -883,6 +1097,7 @@ Public Class Form_v6_Agent
         Dim messages = BuildRequestMessages(conversation)
         Dim round As Integer = 0
 
+        Using powerShellSession As New AgentLocalTools.PowerShellRunSession()
         Do
             cancellationToken.ThrowIfCancellationRequested()
             round += 1
@@ -950,10 +1165,10 @@ Public Class Form_v6_Agent
 
                 Dim started = DateTime.Now
                 ShowRunStatus(conversation, "正在调用工具：" & callInfo.Name)
-                Dim toolResult = Await AgentLocalTools.ExecuteAsync(callInfo, permissionLevel, networkMode, client, modelId, reasoning, cancellationToken)
+                Dim toolResult = Await AgentLocalTools.ExecuteAsync(callInfo, permissionLevel, networkMode, client, modelId, reasoning, powerShellSession, cancellationToken)
                 cancellationToken.ThrowIfCancellationRequested()
                 Dim elapsed = DateTime.Now - started
-                toolResult = LimitText(toolResult, 16000)
+                toolResult = Agent通用工具_v6.LimitText(toolResult, 16000)
                 callLog.ElapsedMilliseconds = elapsed.TotalMilliseconds
                 callLog.ResultText = toolResult
                 RefreshActiveToolSummaryCard(conversation)
@@ -968,6 +1183,7 @@ Public Class Form_v6_Agent
                 ShowRunStatus(conversation, $"工具完成：{callInfo.Name}，耗时 {FormatElapsedMilliseconds(elapsed.TotalMilliseconds)}")
             Next
         Loop
+        End Using
     End Function
 
     Private Function BuildRequestMessages(conversation As AgentConversationData) As List(Of AgentMessageData)
@@ -1022,10 +1238,137 @@ Public Class Form_v6_Agent
         UpdateUsageButton()
     End Sub
 
-    Private Function LimitText(text As String, maxLength As Integer) As String
-        text = If(text, "")
-        If text.Length <= maxLength Then Return text
-        Return text.Substring(0, maxLength) & "..."
+    Private Sub AddSubmittedFiles(paths As IEnumerable(Of String))
+        If paths Is Nothing Then Return
+
+        For Each pathValue In ExpandSubmittedFilePaths(paths)
+            If _pendingFiles.Any(Function(x) String.Equals(x, pathValue, StringComparison.OrdinalIgnoreCase)) Then Continue For
+            _pendingFiles.Add(pathValue)
+        Next
+        RefreshSubmittedFileList()
+    End Sub
+
+    Private Function ExpandSubmittedFilePaths(paths As IEnumerable(Of String)) As List(Of String)
+        Dim result As New List(Of String)
+        If paths Is Nothing Then Return result
+
+        For Each raw In paths
+            If String.IsNullOrWhiteSpace(raw) Then Continue For
+            Try
+                If Directory.Exists(raw) Then
+                    result.AddRange(Directory.EnumerateFiles(raw, "*", SearchOption.TopDirectoryOnly).
+                                    OrderBy(Function(x) x, StringComparer.CurrentCultureIgnoreCase).
+                                    Select(Function(x) Path.GetFullPath(x)))
+                ElseIf File.Exists(raw) Then
+                    result.Add(Path.GetFullPath(raw))
+                End If
+            Catch ex As Exception
+                ExFloatingTip(ModernListBox2, "读取路径失败：" & ex.Message, 2200)
+            End Try
+        Next
+
+        Return result
+    End Function
+
+    Private Sub RefreshSubmittedFileList()
+        If ModernListBox2 Is Nothing Then Return
+        Dim selectedPath = If(ModernListBox2.SelectedIndex >= 0 AndAlso ModernListBox2.SelectedIndex < _pendingFiles.Count, _pendingFiles(ModernListBox2.SelectedIndex), "")
+        _refreshingSubmittedFiles = True
+        Try
+            ModernListBox2.Items.Clear()
+            ModernListBox2.ItemToolTips.Clear()
+            For Each file In _pendingFiles
+                Dim display = BuildSubmittedFileDisplayName(file)
+                ModernListBox2.Items.Add(display)
+                ModernListBox2.ItemToolTips.Add(New LakeUI.ModernListBox.ToolTipEntry(display, file))
+            Next
+            If selectedPath <> "" Then
+                Dim index = _pendingFiles.FindIndex(Function(x) String.Equals(x, selectedPath, StringComparison.OrdinalIgnoreCase))
+                If index >= 0 Then ModernListBox2.SelectedIndex = index
+            End If
+        Finally
+            _refreshingSubmittedFiles = False
+        End Try
+    End Sub
+
+    Private Function BuildSubmittedFileDisplayName(file As String) As String
+        Dim name = Path.GetFileName(file)
+        If name = "" Then Return file
+        Dim sameNameCount = _pendingFiles.Where(Function(x) String.Equals(Path.GetFileName(x), name, StringComparison.CurrentCultureIgnoreCase)).Count()
+        If sameNameCount <= 1 Then Return name
+        Dim parent = Path.GetFileName(Path.GetDirectoryName(file))
+        If parent = "" Then parent = Path.GetDirectoryName(file)
+        Return $"{name}  ({parent})"
+    End Function
+
+    Private Sub RemoveSelectedSubmittedFile()
+        If ModernListBox2.SelectedIndex < 0 OrElse ModernListBox2.SelectedIndex >= _pendingFiles.Count Then Return
+        _pendingFiles.RemoveAt(ModernListBox2.SelectedIndex)
+        RefreshSubmittedFileList()
+    End Sub
+
+    Private Sub ClearSubmittedFiles()
+        If _pendingFiles.Count = 0 Then Return
+        _pendingFiles.Clear()
+        RefreshSubmittedFileList()
+    End Sub
+
+    Private Function BuildSubmittedFilesContext() As String
+        If _pendingFiles.Count = 0 Then Return ""
+
+        Dim sb As New StringBuilder
+        sb.AppendLine("用户提交的文件上下文：")
+        For i = 0 To _pendingFiles.Count - 1
+            sb.AppendLine(BuildSubmittedFileContextItem(i + 1, _pendingFiles(i)))
+        Next
+        Return sb.ToString().Trim()
+    End Function
+
+    Private Function BuildSubmittedFileContextItem(index As Integer, file As String) As String
+        Try
+            If Not System.IO.File.Exists(file) Then Return $"{index}. 文件不存在：{file}"
+            Dim info As New FileInfo(file)
+            Dim sb As New StringBuilder
+            sb.AppendLine($"{index}. {info.Name}")
+            sb.AppendLine($"路径：{info.FullName}")
+            sb.AppendLine($"大小：{Agent通用工具_v6.FormatFileSize(info.Length)}")
+            sb.AppendLine($"扩展名：{If(info.Extension = "", "(无)", info.Extension)}")
+
+            If Agent通用工具_v6.IsImageExtension(info.Extension) Then
+                Try
+                    Using img = Image.FromFile(file)
+                        sb.AppendLine($"图片：{img.Width}x{img.Height}")
+                    End Using
+                Catch ex As Exception
+                    sb.AppendLine("图片信息读取失败：" & ex.Message)
+                End Try
+            ElseIf IsLikelyTextFile(info) Then
+                sb.AppendLine("文本内容：")
+                sb.AppendLine(Agent通用工具_v6.LimitText(Agent通用工具_v6.DecodeTextBytes(System.IO.File.ReadAllBytes(file)), SubmittedTextLimitCharacters))
+            Else
+                sb.AppendLine("内容：二进制或大文件，未内嵌。")
+            End If
+
+            Return sb.ToString().TrimEnd()
+        Catch ex As Exception
+            Return $"{index}. 读取失败：{file}，{ex.Message}"
+        End Try
+    End Function
+
+    Private Function IsLikelyTextFile(info As FileInfo) As Boolean
+        If info Is Nothing OrElse info.Length > SubmittedTextFileLimitBytes Then Return False
+        Dim ext = info.Extension.ToLowerInvariant()
+        Dim textExts = {".txt", ".log", ".md", ".json", ".xml", ".csv", ".tsv", ".ini", ".cfg", ".conf", ".avs", ".vpy", ".bat", ".cmd", ".ps1", ".sh", ".py", ".js", ".ts", ".vb", ".cs", ".cpp", ".c", ".h", ".hpp", ".yml", ".yaml", ".srt", ".ass", ".ssa", ".vtt"}
+        If textExts.Contains(ext) Then Return True
+
+        Try
+            Dim sample = System.IO.File.ReadAllBytes(info.FullName).Take(4096).ToArray()
+            If sample.Length = 0 Then Return True
+            Dim zeroCount = sample.Count(Function(x) x = 0)
+            Return zeroCount = 0
+        Catch
+            Return False
+        End Try
     End Function
 
     Private Sub ModernListBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ModernListBox1.SelectedIndexChanged
@@ -1075,6 +1418,51 @@ Public Class Form_v6_Agent
         ShowStatus("已保存对话排序")
     End Sub
 
+    Private Sub ModernListBox2_DragEnter(sender As Object, e As DragEventArgs) Handles ModernListBox2.DragEnter
+        e.Effect = If(e.Data IsNot Nothing AndAlso e.Data.GetDataPresent(DataFormats.FileDrop), DragDropEffects.Copy, DragDropEffects.None)
+    End Sub
+
+    Private Sub ModernListBox2_DragDrop(sender As Object, e As DragEventArgs) Handles ModernListBox2.DragDrop
+        If e.Data Is Nothing OrElse Not e.Data.GetDataPresent(DataFormats.FileDrop) Then Return
+        Dim files = TryCast(e.Data.GetData(DataFormats.FileDrop), String())
+        AddSubmittedFiles(files)
+    End Sub
+
+    Private Sub ModernListBox2_MouseUp(sender As Object, e As MouseEventArgs) Handles ModernListBox2.MouseUp
+        If e.Button <> MouseButtons.Right Then Return
+        Using d As New OpenFileDialog With {.Multiselect = True, .Filter = "所有文件|*.*"}
+            If d.ShowDialog(Me) = DialogResult.OK Then AddSubmittedFiles(d.FileNames)
+        End Using
+    End Sub
+
+    Private Sub ModernListBox2_ItemDoubleClick(sender As Object, e As LakeUI.ModernListBox.ItemEventArgs) Handles ModernListBox2.ItemDoubleClick
+        RemoveSelectedSubmittedFile()
+    End Sub
+
+    Private Sub ModernListBox2_KeyDown(sender As Object, e As KeyEventArgs) Handles ModernListBox2.KeyDown
+        If e.KeyCode <> Keys.Delete Then Return
+        RemoveSelectedSubmittedFile()
+        e.Handled = True
+        e.SuppressKeyPress = True
+    End Sub
+
+    Private Sub ModernListBox2_ItemOrderChanged(sender As Object, e As EventArgs) Handles ModernListBox2.ItemOrderChanged
+        If _refreshingSubmittedFiles Then Return
+        If ModernListBox2.Items.Count <> _pendingFiles.Count Then Return
+        Dim remaining As New List(Of String)(_pendingFiles)
+        Dim reordered As New List(Of String)
+        For Each rawItem In ModernListBox2.Items
+            Dim text = If(rawItem, "").ToString()
+            Dim index = remaining.FindIndex(Function(x) String.Equals(BuildSubmittedFileDisplayName(x), text, StringComparison.Ordinal))
+            If index < 0 Then Continue For
+            reordered.Add(remaining(index))
+            remaining.RemoveAt(index)
+        Next
+        If reordered.Count <> _pendingFiles.Count Then Return
+        _pendingFiles.Clear()
+        _pendingFiles.AddRange(reordered)
+    End Sub
+
     Private Async Sub MCB_模型选择_SelectedIndexChanged(sender As Object, e As EventArgs) Handles MCB_模型选择.SelectedIndexChanged
         If _loading OrElse MCB_模型选择.SelectedIndex < 0 Then Return
         设置_v6.实例对象.AgentModelId = If(MCB_模型选择.SelectedItem, "")
@@ -1100,6 +1488,43 @@ Public Class Form_v6_Agent
         If _current IsNot Nothing Then _current.PermissionLevel = 设置_v6.实例对象.Agent权限级别
     End Sub
 
+    Private Async Sub MB_重载连接_Click(sender As Object, e As EventArgs) Handles MB_重载连接.Click
+        Await RefreshModelsIfEndpointChangedAsync(True)
+    End Sub
+
+    Private Async Sub MB_刷新推理级别_Click(sender As Object, e As EventArgs) Handles MB_刷新推理级别.Click
+        Await RefreshAllReasoningEffortsForCurrentEndpointAsync()
+    End Sub
+
+    Private Sub Panel4_SizeChanged(sender As Object, e As EventArgs) Handles Panel4.SizeChanged
+        EqualizeTwoButtons(Panel4, MB_新对话, MB_删除对话, JustEmptyControl5)
+    End Sub
+
+    Private Sub Panel1_SizeChanged(sender As Object, e As EventArgs) Handles Panel1.SizeChanged
+        EqualizeTwoButtons(Panel1, MB_重载连接, MB_刷新推理级别, JustEmptyControl6)
+    End Sub
+
+    Private Sub JustEmptyControl5_SizeChanged(sender As Object, e As EventArgs) Handles JustEmptyControl5.SizeChanged
+        EqualizeTwoButtons(Panel4, MB_新对话, MB_删除对话, JustEmptyControl5)
+    End Sub
+
+    Private Sub JustEmptyControl6_SizeChanged(sender As Object, e As EventArgs) Handles JustEmptyControl6.SizeChanged
+        EqualizeTwoButtons(Panel1, MB_重载连接, MB_刷新推理级别, JustEmptyControl6)
+    End Sub
+
+    Private Sub ApplyAgentButtonPanelLayout()
+        EqualizeTwoButtons(Panel4, MB_新对话, MB_删除对话, JustEmptyControl5)
+        EqualizeTwoButtons(Panel1, MB_重载连接, MB_刷新推理级别, JustEmptyControl6)
+    End Sub
+
+    Private Sub EqualizeTwoButtons(panel As Panel, leftButton As Control, rightButton As Control, gap As Control)
+        If panel Is Nothing OrElse leftButton Is Nothing OrElse rightButton Is Nothing Then Return
+        Dim gapWidth = If(gap Is Nothing OrElse Not gap.Visible, 0, gap.Width)
+        Dim available = Math.Max(0, panel.DisplayRectangle.Width - gapWidth)
+        Dim leftWidth = available \ 2
+        If leftButton.Width <> leftWidth Then leftButton.Width = leftWidth
+    End Sub
+
     Private Sub MB_页面用量_Click(sender As Object, e As EventArgs) Handles MB_页面用量.Click
         Dim currentUsage = If(_current?.Usage, New AgentUsageInfo)
         ExMsgBox(FormMain_v6, $"当前会话：{FormatUsage(currentUsage)}{vbCrLf}本页累计：{FormatUsage(_pageUsage)}", MsgBoxStyle.Information, "页面用量")
@@ -1108,4 +1533,10 @@ Public Class Form_v6_Agent
     Private Function FormatUsage(usage As AgentUsageInfo) As String
         Return $"总 {usage.TotalTokens}，输入 {usage.PromptTokens + usage.InputTokens}，输出 {usage.CompletionTokens + usage.OutputTokens}，缓存 {usage.CachedTokens}，推理 {usage.ReasoningTokens}"
     End Function
+
+    Private Sub AgentRoom1_LinkClicked(sender As Object, e As AgentRoom.LinkClickedEventArgs) Handles AgentRoom1.LinkClicked
+        If ExFloatingBox("确定打开此链接？", MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
+            Process.Start(New ProcessStartInfo With {.FileName = e.Url, .UseShellExecute = True})
+        End If
+    End Sub
 End Class

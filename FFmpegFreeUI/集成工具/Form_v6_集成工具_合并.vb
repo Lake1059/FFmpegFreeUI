@@ -86,6 +86,33 @@ Public Class Form_v6_集成工具_合并
         调整列宽()
     End Sub
 
+    Public Function Agent获取状态() As Dictionary(Of String, Object)
+        Return New Dictionary(Of String, Object) From {
+            {"files", UltraDetailListView1.Items.Select(Function(item) 获取项路径(item)).ToList()},
+            {"output", MTB_输出目标文件.Text}
+        }
+    End Function
+
+    Public Function Agent配置(files As IEnumerable(Of String), output As String, mode As String) As String
+        Select Case If(mode, "").Trim().ToLowerInvariant()
+            Case "replace", "替换"
+                UltraDetailListView1.Items.Clear()
+                添加文件(files)
+            Case "clear", "清空"
+                UltraDetailListView1.Items.Clear()
+            Case Else
+                添加文件(files)
+        End Select
+        If output IsNot Nothing Then MTB_输出目标文件.Text = output
+        调整列宽()
+        Return $"合并工具：{UltraDetailListView1.Items.Count} 个输入，输出 {MTB_输出目标文件.Text}"
+    End Function
+
+    Public Function Agent运行() As String
+        MB_启动合并_Click(MB_启动合并, EventArgs.Empty)
+        Return "已请求执行合并工具"
+    End Function
+
     Private Function 创建文件项(file As String) As UltraDetailListView.ListItem
         Return New UltraDetailListView.ListItem(
             New UltraDetailListView.ListSubItem(Path.GetFileName(file)),

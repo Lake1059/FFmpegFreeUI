@@ -158,6 +158,30 @@ Public Class Form_v6_准备文件
         调整列宽()
     End Sub
 
+    Public Function Agent获取文件列表() As List(Of String)
+        Return UltraDetailListView1.Items.Select(Function(item) 获取项路径(item)).Where(Function(x) x <> "").ToList()
+    End Function
+
+    Public Function Agent设置文件列表(files As IEnumerable(Of String), mode As String) As String
+        Select Case If(mode, "").Trim().ToLowerInvariant()
+            Case "clear", "清空"
+                UltraDetailListView1.Items.Clear()
+            Case "replace", "替换"
+                UltraDetailListView1.Items.Clear()
+                添加文件(files)
+            Case Else
+                添加文件(files)
+        End Select
+        调整列宽()
+        Return $"准备文件列表：{UltraDetailListView1.Items.Count} 个文件"
+    End Function
+
+    Public Function Agent加入编码队列() As String
+        Dim beforeCount = UltraDetailListView1.Items.Count
+        MB_加入编码队列_Click(MB_加入编码队列, EventArgs.Empty)
+        Return $"已请求将准备文件加入编码队列，原列表 {beforeCount} 个文件，当前剩余 {UltraDetailListView1.Items.Count} 个文件"
+    End Function
+
     Private Function 创建文件项(file As String) As UltraDetailListView.ListItem
         Dim info As New FileInfo(file)
         Return New UltraDetailListView.ListItem(

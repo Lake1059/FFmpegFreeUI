@@ -1298,7 +1298,7 @@ Public Partial Class 预设管理_v6
             a.输出命名_保留创建时间 = .MCB_保留创建时间.Checked
             a.输出命名_保留修改时间 = .MCB_保留修改时间.Checked
             a.输出命名_保留访问时间 = .MCB_保留访问时间.Checked
-            Dim 输出位置文本 = .MCB_输出位置.Text.Trim()
+            Dim 输出位置文本 = 规范化文件夹路径(.MCB_输出位置.Text)
             If Directory.Exists(输出位置文本) Then
                 a.计算机名称 = Environment.MachineName
                 a.输出位置 = 输出位置文本
@@ -1322,8 +1322,10 @@ Public Partial Class 预设管理_v6
             .MCB_保留创建时间.Checked = a.输出命名_保留创建时间
             .MCB_保留修改时间.Checked = a.输出命名_保留修改时间
             .MCB_保留访问时间.Checked = a.输出命名_保留访问时间
-            If a.额外保存输出位置 AndAlso a.计算机名称 = Environment.MachineName AndAlso Directory.Exists(a.输出位置) Then
-                .MCB_输出位置.Text = a.输出位置
+            If a.额外保存输出位置 AndAlso
+               String.Equals(a.计算机名称, Environment.MachineName, StringComparison.OrdinalIgnoreCase) AndAlso
+               Directory.Exists(a.输出位置) Then
+                .设置自定义输出位置(a.输出位置)
             Else
                 .MCB_输出位置.SelectedIndex = 0
             End If

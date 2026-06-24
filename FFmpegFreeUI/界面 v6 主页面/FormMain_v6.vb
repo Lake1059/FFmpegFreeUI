@@ -199,14 +199,28 @@ Public Class FormMain_v6
 
     Private Sub FormMain_v6_Closing(sender As Object, e As CancelEventArgs) Handles Me.FormClosing
         e.Cancel = False
+        Dim updaterPath = Path.Combine(Application.StartupPath, "Updater.exe")
+        Dim 启动更新器 = UpdateAvailable AndAlso FileIO.FileSystem.FileExists(updaterPath)
+        Dim 进行中任务数量 = 编码队列_v6.获取进行中任务数量()
+        If 进行中任务数量 > 0 Then
+            If ExOverlayMsgBox(Me, $"当前仍有 {进行中任务数量} 个任务正在处理、暂停或等待自动开始。是否结束所有任务并退出？", MsgBoxStyle.YesNo Or MsgBoxStyle.Question, "确认退出") <> MsgBoxResult.Yes Then
+                e.Cancel = True
+                Exit Sub
+            End If
+        End If
+
+        If UpdateAvailable AndAlso Not 启动更新器 Then
+            If ExOverlayMsgBox(Me, "程序目录下没有更新器，这是意外情况，仍旧退出？", MsgBoxStyle.YesNo) <> MsgBoxResult.Yes Then
+                e.Cancel = True
+                Exit Sub
+            End If
+        End If
+
+        If 进行中任务数量 > 0 Then 编码队列_v6.停止所有进行中任务()
         端口监听_v6.停止客户端()
         设置_v6.退出时保存设置()
-        If UpdateAvailable Then
-            If FileIO.FileSystem.FileExists(Path.Combine(Application.StartupPath, "Updater.exe")) Then
-                Process.Start(Path.Combine(Application.StartupPath, "Updater.exe"))
-            Else
-                If ExOverlayMsgBox(Me, "程序目录下没有更新器，这是意外情况，仍旧退出？", MsgBoxStyle.YesNo) <> MsgBoxResult.Yes Then e.Cancel = True
-            End If
+        If 启动更新器 Then
+            Process.Start(updaterPath)
         End If
     End Sub
 

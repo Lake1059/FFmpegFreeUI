@@ -100,6 +100,75 @@ Public Class Form_v6_集成工具_混流
         调整列宽()
     End Sub
 
+    Public Function Agent获取状态() As Dictionary(Of String, Object)
+        Dim files = UltraDetailListView1.Items.Select(Function(item) New Dictionary(Of String, Object) From {
+            {"path", 获取项路径(item)},
+            {"video", 获取子项文本(item, 视频列)},
+            {"audio", 获取子项文本(item, 音频列)},
+            {"subtitle", 获取子项文本(item, 字幕列)},
+            {"chapters", 获取子项文本(item, 章节列) = 使用此},
+            {"metadata", 获取子项文本(item, 元数据列) = 使用此}
+        }).Cast(Of Object).ToList()
+        Return New Dictionary(Of String, Object) From {
+            {"files", files},
+            {"output", MTB_输出目标文件.Text}
+        }
+    End Function
+
+    Public Function Agent配置(fileSpecs As IEnumerable(Of Dictionary(Of String, Object)), output As String, mode As String) As String
+        Select Case If(mode, "").Trim().ToLowerInvariant()
+            Case "replace", "替换"
+                UltraDetailListView1.Items.Clear()
+            Case "clear", "清空"
+                UltraDetailListView1.Items.Clear()
+                同步属性面板()
+                调整列宽()
+                Return "混流工具：已清空"
+        End Select
+
+        If fileSpecs IsNot Nothing Then
+            For Each spec In fileSpecs
+                If spec Is Nothing OrElse Not spec.ContainsKey("path") Then Continue For
+                Dim pathValue = If(spec("path"), "").ToString()
+                If pathValue = "" OrElse Not File.Exists(pathValue) Then Continue For
+                Dim item = 创建文件项(pathValue)
+                设置项文本(item, 视频列, 获取字典文本(spec, "video"))
+                设置项文本(item, 音频列, 获取字典文本(spec, "audio"))
+                设置项文本(item, 字幕列, 获取字典文本(spec, "subtitle"))
+                If 获取字典布尔(spec, "chapters") Then 设置项文本(item, 章节列, 使用此)
+                If 获取字典布尔(spec, "metadata") Then 设置项文本(item, 元数据列, 使用此)
+                UltraDetailListView1.Items.Add(item)
+            Next
+        End If
+
+        If output IsNot Nothing Then MTB_输出目标文件.Text = output
+        同步属性面板()
+        调整列宽()
+        Return $"混流工具：{UltraDetailListView1.Items.Count} 个输入，输出 {MTB_输出目标文件.Text}"
+    End Function
+
+    Public Function Agent运行() As String
+        MB_启动合并_Click(MB_启动合并, EventArgs.Empty)
+        Return "已请求执行混流工具"
+    End Function
+
+    Private Sub 设置项文本(item As UltraDetailListView.ListItem, columnIndex As Integer, value As String)
+        If item Is Nothing OrElse item.SubItems.Count <= columnIndex Then Return
+        item.SubItems(columnIndex).Text = If(value, "").Trim()
+    End Sub
+
+    Private Shared Function 获取字典文本(spec As Dictionary(Of String, Object), key As String) As String
+        If spec Is Nothing OrElse Not spec.ContainsKey(key) OrElse spec(key) Is Nothing Then Return ""
+        Return spec(key).ToString()
+    End Function
+
+    Private Shared Function 获取字典布尔(spec As Dictionary(Of String, Object), key As String) As Boolean
+        If spec Is Nothing OrElse Not spec.ContainsKey(key) OrElse spec(key) Is Nothing Then Return False
+        If TypeOf spec(key) Is Boolean Then Return CBool(spec(key))
+        Dim text = spec(key).ToString()
+        Return String.Equals(text, "true", StringComparison.OrdinalIgnoreCase) OrElse text = "1" OrElse text = "是"
+    End Function
+
     Private Function 创建文件项(file As String) As UltraDetailListView.ListItem
         Return New UltraDetailListView.ListItem(
             New UltraDetailListView.ListSubItem(Path.GetFileName(file)),

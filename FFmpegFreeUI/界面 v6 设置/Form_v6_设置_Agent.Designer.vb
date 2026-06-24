@@ -23,6 +23,10 @@ Partial Class Form_v6_设置_Agent
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         ModernPanel1 = New LakeUI.ModernPanel()
+        HtmlColorLabel4 = New LakeUI.HtmlColorLabel()
+        Panel2 = New Panel()
+        ModernComboBox1 = New LakeUI.ModernComboBox()
+        HtmlColorLabel3 = New LakeUI.HtmlColorLabel()
         HtmlColorLabel2 = New LakeUI.HtmlColorLabel()
         Panel4 = New Panel()
         HtmlColorLabel9 = New LakeUI.HtmlColorLabel()
@@ -33,17 +37,13 @@ Partial Class Form_v6_设置_Agent
         Panel1 = New Panel()
         HtmlColorLabel7 = New LakeUI.HtmlColorLabel()
         MTB_自定义地址 = New LakeUI.ModernTextBox()
-        Panel2 = New Panel()
-        ModernComboBox1 = New LakeUI.ModernComboBox()
-        HtmlColorLabel3 = New LakeUI.HtmlColorLabel()
         HtmlColorLabel1 = New LakeUI.HtmlColorLabel()
         HtmlColorLabel6 = New LakeUI.HtmlColorLabel()
-        HtmlColorLabel4 = New LakeUI.HtmlColorLabel()
         ModernPanel1.SuspendLayout()
+        Panel2.SuspendLayout()
         Panel4.SuspendLayout()
         Panel3.SuspendLayout()
         Panel1.SuspendLayout()
-        Panel2.SuspendLayout()
         SuspendLayout()
         ' 
         ' ModernPanel1
@@ -66,6 +66,72 @@ Partial Class Form_v6_设置_Agent
         ModernPanel1.Padding = New Padding(20)
         ModernPanel1.Size = New Size(809, 591)
         ModernPanel1.TabIndex = 0
+        ' 
+        ' HtmlColorLabel4
+        ' 
+        HtmlColorLabel4.AutoSize = True
+        HtmlColorLabel4.AutoSizeMode = AutoSizeMode.GrowAndShrink
+        HtmlColorLabel4.Dock = DockStyle.Top
+        HtmlColorLabel4.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
+        HtmlColorLabel4.Location = New Point(20, 329)
+        HtmlColorLabel4.Margin = New Padding(2)
+        HtmlColorLabel4.Name = "HtmlColorLabel4"
+        HtmlColorLabel4.Padding = New Padding(0, 20, 0, 0)
+        HtmlColorLabel4.Size = New Size(769, 65)
+        HtmlColorLabel4.TabIndex = 36
+        HtmlColorLabel4.Text = "<span style=""font-size:13; color:Silver"">免责声明</span>   开发者不承担任何 AI 导致的任何损失<br>使用即代表同意此条款"
+        ' 
+        ' Panel2
+        ' 
+        Panel2.Controls.Add(ModernComboBox1)
+        Panel2.Dock = DockStyle.Top
+        Panel2.Location = New Point(20, 287)
+        Panel2.Name = "Panel2"
+        Panel2.Padding = New Padding(0, 10, 0, 0)
+        Panel2.Size = New Size(769, 42)
+        Panel2.TabIndex = 27
+        ' 
+        ' ModernComboBox1
+        ' 
+        ModernComboBox1.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        ModernComboBox1.BorderRadius = 10
+        ModernComboBox1.BorderSize = 0
+        ModernComboBox1.Dock = DockStyle.Left
+        ModernComboBox1.DropDownBackdropBlurPasses = 2
+        ModernComboBox1.DropDownBackdropBlurRadius = 30
+        ModernComboBox1.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
+        ModernComboBox1.DropDownHoverAnimationDuration = 0
+        ModernComboBox1.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
+        ModernComboBox1.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
+        ModernComboBox1.DropDownPadding = New Padding(10)
+        ModernComboBox1.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        ModernComboBox1.DropDownSelectedForeColor = Color.White
+        ModernComboBox1.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        ModernComboBox1.Items.Add("使用上面的自定义端点")
+        ModernComboBox1.Location = New Point(0, 10)
+        ModernComboBox1.Margin = New Padding(2, 2, 2, 2)
+        ModernComboBox1.Name = "ModernComboBox1"
+        ModernComboBox1.Padding = New Padding(10, 0, 10, 0)
+        ModernComboBox1.Size = New Size(400, 32)
+        ModernComboBox1.TabIndex = 0
+        ModernComboBox1.ToolTipGap = -1
+        ModernComboBox1.ToolTipMaxWidth = 350
+        ModernComboBox1.ToolTipPadding = New Padding(15)
+        ModernComboBox1.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
+        ' 
+        ' HtmlColorLabel3
+        ' 
+        HtmlColorLabel3.AutoSize = True
+        HtmlColorLabel3.AutoSizeMode = AutoSizeMode.GrowAndShrink
+        HtmlColorLabel3.Dock = DockStyle.Top
+        HtmlColorLabel3.ForeColor = Color.IndianRed
+        HtmlColorLabel3.Location = New Point(20, 261)
+        HtmlColorLabel3.Margin = New Padding(2)
+        HtmlColorLabel3.Name = "HtmlColorLabel3"
+        HtmlColorLabel3.Padding = New Padding(0, 5, 0, 0)
+        HtmlColorLabel3.Size = New Size(769, 26)
+        HtmlColorLabel3.TabIndex = 35
+        HtmlColorLabel3.Text = "将会严格监控用量，随时拉闸，滥用（包括偷渡检测）将直接封禁公网 IP"
         ' 
         ' HtmlColorLabel2
         ' 
@@ -201,58 +267,6 @@ Partial Class Form_v6_设置_Agent
         MTB_自定义地址.TabIndex = 18
         MTB_自定义地址.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ' 
-        ' Panel2
-        ' 
-        Panel2.Controls.Add(ModernComboBox1)
-        Panel2.Dock = DockStyle.Top
-        Panel2.Location = New Point(20, 287)
-        Panel2.Name = "Panel2"
-        Panel2.Padding = New Padding(0, 10, 0, 0)
-        Panel2.Size = New Size(769, 42)
-        Panel2.TabIndex = 27
-        ' 
-        ' ModernComboBox1
-        ' 
-        ModernComboBox1.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernComboBox1.BorderRadius = 10
-        ModernComboBox1.BorderSize = 0
-        ModernComboBox1.Dock = DockStyle.Left
-        ModernComboBox1.DropDownBackdropBlurPasses = 2
-        ModernComboBox1.DropDownBackdropBlurRadius = 30
-        ModernComboBox1.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
-        ModernComboBox1.DropDownHoverAnimationDuration = 0
-        ModernComboBox1.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
-        ModernComboBox1.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
-        ModernComboBox1.DropDownPadding = New Padding(10)
-        ModernComboBox1.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernComboBox1.DropDownSelectedForeColor = Color.White
-        ModernComboBox1.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
-        ModernComboBox1.Items.Add("使用上面的自定义端点")
-        ModernComboBox1.Location = New Point(0, 10)
-        ModernComboBox1.Margin = New Padding(2, 2, 2, 2)
-        ModernComboBox1.Name = "ModernComboBox1"
-        ModernComboBox1.Padding = New Padding(10, 0, 10, 0)
-        ModernComboBox1.Size = New Size(400, 32)
-        ModernComboBox1.TabIndex = 0
-        ModernComboBox1.ToolTipGap = -1
-        ModernComboBox1.ToolTipMaxWidth = 350
-        ModernComboBox1.ToolTipPadding = New Padding(15)
-        ModernComboBox1.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        ' 
-        ' HtmlColorLabel3
-        ' 
-        HtmlColorLabel3.AutoSize = True
-        HtmlColorLabel3.AutoSizeMode = AutoSizeMode.GrowAndShrink
-        HtmlColorLabel3.Dock = DockStyle.Top
-        HtmlColorLabel3.ForeColor = Color.IndianRed
-        HtmlColorLabel3.Location = New Point(20, 261)
-        HtmlColorLabel3.Margin = New Padding(2)
-        HtmlColorLabel3.Name = "HtmlColorLabel3"
-        HtmlColorLabel3.Padding = New Padding(0, 5, 0, 0)
-        HtmlColorLabel3.Size = New Size(769, 26)
-        HtmlColorLabel3.TabIndex = 35
-        HtmlColorLabel3.Text = "将会严格监控用量，滥用（包括偷渡检测）将直接封禁公网 IP"
-        ' 
         ' HtmlColorLabel1
         ' 
         HtmlColorLabel1.AutoSize = True
@@ -280,20 +294,6 @@ Partial Class Form_v6_设置_Agent
         HtmlColorLabel6.TabIndex = 25
         HtmlColorLabel6.Text = "<span style=""font-size:13; color:Silver"">3FUI Agent</span>   专属于 3FUI 的副驾驶！不止聊天，AI 可以操作参数面板并使用 3FUI 文档"
         ' 
-        ' HtmlColorLabel4
-        ' 
-        HtmlColorLabel4.AutoSize = True
-        HtmlColorLabel4.AutoSizeMode = AutoSizeMode.GrowAndShrink
-        HtmlColorLabel4.Dock = DockStyle.Top
-        HtmlColorLabel4.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        HtmlColorLabel4.Location = New Point(20, 329)
-        HtmlColorLabel4.Margin = New Padding(2)
-        HtmlColorLabel4.Name = "HtmlColorLabel4"
-        HtmlColorLabel4.Padding = New Padding(0, 20, 0, 0)
-        HtmlColorLabel4.Size = New Size(769, 65)
-        HtmlColorLabel4.TabIndex = 36
-        HtmlColorLabel4.Text = "<span style=""font-size:13; color:Silver"">免责声明</span>   开发者不承担任何 AI 导致的任何损失<br>使用即代表同意此条款"
-        ' 
         ' Form_v6_设置_Agent
         ' 
         AutoScaleDimensions = New SizeF(96F, 96F)
@@ -307,10 +307,10 @@ Partial Class Form_v6_设置_Agent
         Text = "Form_v6_设置_Agent"
         ModernPanel1.ResumeLayout(False)
         ModernPanel1.PerformLayout()
+        Panel2.ResumeLayout(False)
         Panel4.ResumeLayout(False)
         Panel3.ResumeLayout(False)
         Panel1.ResumeLayout(False)
-        Panel2.ResumeLayout(False)
         ResumeLayout(False)
     End Sub
 

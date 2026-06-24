@@ -6,6 +6,18 @@ Public Class Form_v6_参数面板_输出文件设置
     Private 后缀菜单已初始化 As Boolean = False
     Private 正在选择输出位置 As Boolean = False
 
+    Public Sub 设置自定义输出位置(路径 As String)
+        Dim value = 规范化文件夹路径(路径)
+        正在选择输出位置 = True
+        Try
+            MCB_输出位置.Text = value
+            MCB_输出位置.SelectedIndex = -1
+            If MCB_输出位置.Text <> value Then MCB_输出位置.Text = value
+        Finally
+            正在选择输出位置 = False
+        End Try
+    End Sub
+
     Private Sub Form_v6_参数面板_输出文件设置_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         绑定路径下拉框拖拽(MCB_输出位置, 路径下拉框拖拽模式.文件夹路径)
         If MCB_输出文件参数使用方法.SelectedIndex < 0 Then MCB_输出文件参数使用方法.SelectedIndex = 0
@@ -86,7 +98,7 @@ Public Class Form_v6_参数面板_输出文件设置
             Try
                 Dim dialog As New CommonOpenFileDialog With {.IsFolderPicker = True}
                 If dialog.ShowDialog() = CommonFileDialogResult.Ok Then
-                    MCB_输出位置.Text = 规范化文件夹路径(dialog.FileName)
+                    设置自定义输出位置(dialog.FileName)
                 Else
                     MCB_输出位置.SelectedIndex = 0
                 End If

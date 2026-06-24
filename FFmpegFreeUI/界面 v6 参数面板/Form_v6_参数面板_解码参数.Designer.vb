@@ -93,8 +93,8 @@ Partial Class Form_v6_参数面板_解码参数
         ModernTextBox2.Margin = New Padding(2)
         ModernTextBox2.Name = "ModernTextBox2"
         ModernTextBox2.Padding = New Padding(10, 0, 10, 0)
-        ModernTextBox2.Size = New Size(220, 32)
         ModernTextBox2.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        ModernTextBox2.Size = New Size(220, 32)
         ModernTextBox2.TabIndex = 4
         ModernTextBox2.WaterText = "?"
         ModernTextBox2.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
@@ -115,6 +115,8 @@ Partial Class Form_v6_参数面板_解码参数
         ModernComboBox3.BorderRadius = 10
         ModernComboBox3.BorderSize = 0
         ModernComboBox3.Dock = DockStyle.Left
+        ModernComboBox3.DropDownBackdropBlurPasses = 2
+        ModernComboBox3.DropDownBackdropBlurRadius = 30
         ModernComboBox3.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
         ModernComboBox3.DropDownHoverAnimationDuration = 0
         ModernComboBox3.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
@@ -122,22 +124,23 @@ Partial Class Form_v6_参数面板_解码参数
         ModernComboBox3.DropDownPadding = New Padding(10)
         ModernComboBox3.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernComboBox3.DropDownSelectedForeColor = Color.White
+        ModernComboBox3.Editable = True
         ModernComboBox3.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
-        ModernComboBox3.Margin = New Padding(2, 2, 2, 2)
-        ModernComboBox3.Padding = New Padding(10, 0, 10, 0)
-        ModernComboBox3.ToolTipGap = -1
-        ModernComboBox3.ToolTipMaxWidth = 350
-        ModernComboBox3.ToolTipPadding = New Padding(15)
-        ModernComboBox3.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ModernComboBox3.Items.Add("")
         ModernComboBox3.Items.Add("-hwaccel_device")
         ModernComboBox3.Items.Add("-init_hw_device")
         ModernComboBox3.Items.Add("-qsv_device")
         ModernComboBox3.Location = New Point(0, 10)
+        ModernComboBox3.Margin = New Padding(2, 2, 2, 2)
         ModernComboBox3.Name = "ModernComboBox3"
+        ModernComboBox3.Padding = New Padding(10, 0, 10, 0)
         ModernComboBox3.Size = New Size(220, 32)
         ModernComboBox3.TabIndex = 0
+        ModernComboBox3.ToolTipGap = -1
+        ModernComboBox3.ToolTipMaxWidth = 350
+        ModernComboBox3.ToolTipPadding = New Padding(15)
         ModernComboBox3.WaterText = "选择参数"
+        ModernComboBox3.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ' 
         ' HtmlColorLabel5
         ' 
@@ -169,6 +172,8 @@ Partial Class Form_v6_参数面板_解码参数
         ModernComboBox2.BorderRadius = 10
         ModernComboBox2.BorderSize = 0
         ModernComboBox2.Dock = DockStyle.Left
+        ModernComboBox2.DropDownBackdropBlurPasses = 2
+        ModernComboBox2.DropDownBackdropBlurRadius = 30
         ModernComboBox2.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
         ModernComboBox2.DropDownHoverAnimationDuration = 0
         ModernComboBox2.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
@@ -176,23 +181,24 @@ Partial Class Form_v6_参数面板_解码参数
         ModernComboBox2.DropDownPadding = New Padding(10)
         ModernComboBox2.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernComboBox2.DropDownSelectedForeColor = Color.White
+        ModernComboBox2.Editable = True
         ModernComboBox2.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
-        ModernComboBox2.Margin = New Padding(2, 2, 2, 2)
-        ModernComboBox2.Padding = New Padding(10, 0, 10, 0)
-        ModernComboBox2.ToolTipGap = -1
-        ModernComboBox2.ToolTipMaxWidth = 350
-        ModernComboBox2.ToolTipPadding = New Padding(15)
-        ModernComboBox2.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ModernComboBox2.Items.Add("")
         ModernComboBox2.Items.Add("nv12")
         ModernComboBox2.Items.Add("yuv420p")
         ModernComboBox2.Items.Add("p010")
         ModernComboBox2.Items.Add("d3d11")
         ModernComboBox2.Location = New Point(0, 10)
+        ModernComboBox2.Margin = New Padding(2, 2, 2, 2)
         ModernComboBox2.Name = "ModernComboBox2"
+        ModernComboBox2.Padding = New Padding(10, 0, 10, 0)
         ModernComboBox2.Size = New Size(220, 32)
         ModernComboBox2.TabIndex = 0
+        ModernComboBox2.ToolTipGap = -1
+        ModernComboBox2.ToolTipMaxWidth = 350
+        ModernComboBox2.ToolTipPadding = New Padding(15)
         ModernComboBox2.WaterText = "-hwaccel_output_format"
+        ModernComboBox2.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ' 
         ' HtmlColorLabel4
         ' 
@@ -244,8 +250,8 @@ Partial Class Form_v6_参数面板_解码参数
         ModernTextBox1.Margin = New Padding(2)
         ModernTextBox1.Name = "ModernTextBox1"
         ModernTextBox1.Padding = New Padding(10, 0, 10, 0)
-        ModernTextBox1.Size = New Size(100, 32)
         ModernTextBox1.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        ModernTextBox1.Size = New Size(100, 32)
         ModernTextBox1.TabIndex = 4
         ModernTextBox1.WaterText = "-threads"
         ModernTextBox1.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
@@ -280,6 +286,8 @@ Partial Class Form_v6_参数面板_解码参数
         ModernComboBox1.BorderRadius = 10
         ModernComboBox1.BorderSize = 0
         ModernComboBox1.Dock = DockStyle.Left
+        ModernComboBox1.DropDownBackdropBlurPasses = 2
+        ModernComboBox1.DropDownBackdropBlurRadius = 30
         ModernComboBox1.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
         ModernComboBox1.DropDownHoverAnimationDuration = 0
         ModernComboBox1.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
@@ -287,13 +295,8 @@ Partial Class Form_v6_参数面板_解码参数
         ModernComboBox1.DropDownPadding = New Padding(10)
         ModernComboBox1.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernComboBox1.DropDownSelectedForeColor = Color.White
+        ModernComboBox1.Editable = True
         ModernComboBox1.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
-        ModernComboBox1.Margin = New Padding(2, 2, 2, 2)
-        ModernComboBox1.Padding = New Padding(10, 0, 10, 0)
-        ModernComboBox1.ToolTipGap = -1
-        ModernComboBox1.ToolTipMaxWidth = 350
-        ModernComboBox1.ToolTipPadding = New Padding(15)
-        ModernComboBox1.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ModernComboBox1.Items.Add("")
         ModernComboBox1.Items.Add("d3d11va")
         ModernComboBox1.Items.Add("d3d12va")
@@ -305,10 +308,16 @@ Partial Class Form_v6_参数面板_解码参数
         ModernComboBox1.Items.Add("vaapi")
         ModernComboBox1.Items.Add("opencl")
         ModernComboBox1.Location = New Point(0, 10)
+        ModernComboBox1.Margin = New Padding(2, 2, 2, 2)
         ModernComboBox1.Name = "ModernComboBox1"
+        ModernComboBox1.Padding = New Padding(10, 0, 10, 0)
         ModernComboBox1.Size = New Size(150, 32)
         ModernComboBox1.TabIndex = 0
+        ModernComboBox1.ToolTipGap = -1
+        ModernComboBox1.ToolTipMaxWidth = 350
+        ModernComboBox1.ToolTipPadding = New Padding(15)
         ModernComboBox1.WaterText = "-hwaccel"
+        ModernComboBox1.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ' 
         ' HtmlColorLabel6
         ' 

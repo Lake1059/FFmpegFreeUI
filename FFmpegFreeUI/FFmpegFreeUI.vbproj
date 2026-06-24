@@ -14,9 +14,9 @@
     <!--<EnableCompressionInSingleFile>True</EnableCompressionInSingleFile>-->
     <Authors>1059 Studio</Authors>
 	<Company>1059 Studio</Company>
-	<AssemblyVersion>6.0.11</AssemblyVersion>
-	<FileVersion>6.0.11</FileVersion>
-	<Version>6.0.11</Version>
+	<AssemblyVersion>6.0.12</AssemblyVersion>
+	<FileVersion>6.0.12</FileVersion>
+	<Version>6.0.12</Version>
     <SupportedOSPlatformVersion>7.0</SupportedOSPlatformVersion>
     <ApplicationIcon>ico.ico</ApplicationIcon>
     <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
@@ -55,10 +55,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft-WindowsAPICodePack-Shell" Version="1.1.5" />
     <PackageReference Include="LibreHardwareMonitorLib" Version="0.9.6" />
-	<PackageReference Include="Microsoft.Agents.AI.OpenAI" Version="1.10.0" />
-	<PackageReference Include="Microsoft.Extensions.AI.OpenAI" Version="10.7.0" />
-	<PackageReference Include="OpenAI" Version="2.11.0" />
-	<PackageReference Include="System.ClientModel" Version="1.14.0" />
+	<PackageReference Include="System.Management" Version="10.0.2" />
     <PackageReference Include="Vortice.Direct2D1" Version="3.8.3" />
     <PackageReference Include="Vortice.Direct3D11" Version="3.8.3" />
   </ItemGroup>

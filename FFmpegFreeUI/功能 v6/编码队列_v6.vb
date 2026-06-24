@@ -81,6 +81,33 @@ Public Class 编码队列_v6
         End SyncLock
     End Function
 
+    Public Shared Function 获取进行中任务数量() As Integer
+        SyncLock 队列锁
+            Return 队列.Where(Function(x) 是否进行中任务(x)).Count()
+        End SyncLock
+    End Function
+
+    Public Shared Sub 停止所有进行中任务()
+        Dim stopping As New List(Of 编码任务_v6)
+        Dim changed As New List(Of 编码任务_v6)
+
+        SyncLock 队列锁
+            For Each task In 队列
+                If task.状态 = 编码任务状态_v6.未处理 AndAlso task.允许自动启动 Then
+                    task.允许自动启动 = False
+                    changed.Add(task)
+                ElseIf task.状态 = 编码任务状态_v6.正在处理 OrElse task.状态 = 编码任务状态_v6.已暂停 Then
+                    stopping.Add(task)
+                End If
+            Next
+        End SyncLock
+
+        广播任务更新(changed)
+        For Each task In stopping
+            task.停止()
+        Next
+    End Sub
+
     Public Shared Function 添加预设任务(输入文件 As String, 预设数据 As 预设数据_v6, Optional 任务名称 As String = "", Optional 输出文件 As String = "") As 编码任务_v6
         Dim task As New 编码任务_v6 With {
             .输入文件 = 输入文件,
@@ -374,6 +401,13 @@ Public Class 编码队列_v6
         SyncLock 队列锁
             Return 队列.Where(Function(x) idSet.Contains(x.ID)).ToList()
         End SyncLock
+    End Function
+
+    Private Shared Function 是否进行中任务(task As 编码任务_v6) As Boolean
+        If task Is Nothing Then Return False
+        Return task.状态 = 编码任务状态_v6.正在处理 OrElse
+               task.状态 = 编码任务状态_v6.已暂停 OrElse
+               (task.状态 = 编码任务状态_v6.未处理 AndAlso task.允许自动启动)
     End Function
 
     Private Shared Sub 广播任务更新(tasks As IEnumerable(Of 编码任务_v6))

@@ -31,12 +31,6 @@ Partial Class Form_v6_Agent
         ModernPanel1 = New LakeUI.ModernPanel()
         AgentRoom1 = New LakeUI.AgentRoom()
         JustEmptyControl7 = New LakeUI.JustEmptyControl()
-        Panel1 = New Panel()
-        MB_页面用量 = New LakeUI.ModernButton()
-        JustEmptyControl6 = New LakeUI.JustEmptyControl()
-        MB_删除对话 = New LakeUI.ModernButton()
-        JustEmptyControl5 = New LakeUI.JustEmptyControl()
-        MB_新对话 = New LakeUI.ModernButton()
         ModernTextBox1 = New LakeUI.ModernTextBox()
         Panel2 = New Panel()
         MCB_模型选择 = New LakeUI.ModernComboBox()
@@ -49,10 +43,29 @@ Partial Class Form_v6_Agent
         JustEmptyControl2 = New LakeUI.JustEmptyControl()
         MCB_联网设置 = New LakeUI.ModernComboBox()
         JustEmptyControl1 = New LakeUI.JustEmptyControl()
+        Panel3 = New Panel()
+        ModernPanel2 = New LakeUI.ModernPanel()
         ModernListBox1 = New LakeUI.ModernListBox()
+        HtmlColorLabel2 = New LakeUI.HtmlColorLabel()
+        HtmlColorLabel1 = New LakeUI.HtmlColorLabel()
+        ModernListBox2 = New LakeUI.ModernListBox()
+        Panel4 = New Panel()
+        MB_删除对话 = New LakeUI.ModernButton()
+        JustEmptyControl5 = New LakeUI.JustEmptyControl()
+        MB_新对话 = New LakeUI.ModernButton()
+        Panel1 = New Panel()
+        MB_刷新推理级别 = New LakeUI.ModernButton()
+        JustEmptyControl6 = New LakeUI.JustEmptyControl()
+        MB_重载连接 = New LakeUI.ModernButton()
+        Panel5 = New Panel()
+        MB_页面用量 = New LakeUI.ModernButton()
         ModernPanel1.SuspendLayout()
-        Panel1.SuspendLayout()
         Panel2.SuspendLayout()
+        Panel3.SuspendLayout()
+        ModernPanel2.SuspendLayout()
+        Panel4.SuspendLayout()
+        Panel1.SuspendLayout()
+        Panel5.SuspendLayout()
         SuspendLayout()
         ' 
         ' ModernPanel1
@@ -60,15 +73,14 @@ Partial Class Form_v6_Agent
         ModernPanel1.BorderSize = 0
         ModernPanel1.Controls.Add(AgentRoom1)
         ModernPanel1.Controls.Add(JustEmptyControl7)
-        ModernPanel1.Controls.Add(Panel1)
         ModernPanel1.Controls.Add(ModernTextBox1)
         ModernPanel1.Controls.Add(Panel2)
         ModernPanel1.Controls.Add(JustEmptyControl1)
-        ModernPanel1.Controls.Add(ModernListBox1)
+        ModernPanel1.Controls.Add(Panel3)
         ModernPanel1.Dock = DockStyle.Fill
         ModernPanel1.Location = New Point(0, 0)
         ModernPanel1.Name = "ModernPanel1"
-        ModernPanel1.Padding = New Padding(20)
+        ModernPanel1.Padding = New Padding(10)
         ModernPanel1.Size = New Size(996, 666)
         ModernPanel1.TabIndex = 0
         ' 
@@ -77,19 +89,20 @@ Partial Class Form_v6_Agent
         AgentRoom1.AssistantBubbleBackColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         AgentRoom1.AssistantBubbleForeColor = Color.Silver
         AgentRoom1.BackColor = Color.Transparent
-        AgentRoom1.BackColor1 = Color.Transparent
+        AgentRoom1.BackColor1 = Color.FromArgb(CByte(40), CByte(0), CByte(0), CByte(0))
         AgentRoom1.BorderColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         AgentRoom1.BorderRadius = 10
         AgentRoom1.BorderSize = 2
         AgentRoom1.BubblePadding = New Padding(10)
         AgentRoom1.BubbleRadius = 10
-        AgentRoom1.CardBackColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        AgentRoom1.CardBorderColor = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
+        AgentRoom1.CardBackColor = Color.FromArgb(CByte(40), CByte(0), CByte(0), CByte(0))
+        AgentRoom1.CardBorderColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         AgentRoom1.CardForeColor = Color.Silver
         AgentRoom1.CardPadding = New Padding(10)
         AgentRoom1.CardRadius = 10
         AgentRoom1.Dock = DockStyle.Fill
-        AgentRoom1.Location = New Point(280, 62)
+        AgentRoom1.Location = New Point(270, 10)
+        AgentRoom1.MarkdownBasePath = Nothing
         AgentRoom1.Name = "AgentRoom1"
         AgentRoom1.Padding = New Padding(10)
         AgentRoom1.ScrollBarThumbColor = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
@@ -97,7 +110,7 @@ Partial Class Form_v6_Agent
         AgentRoom1.ScrollBarTrackColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         AgentRoom1.ScrollBarWidth = 10
         AgentRoom1.SelectionBackColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        AgentRoom1.Size = New Size(696, 452)
+        AgentRoom1.Size = New Size(716, 520)
         AgentRoom1.TabIndex = 7
         AgentRoom1.Text = "AgentRoom1"
         AgentRoom1.UserBubbleBackColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
@@ -106,90 +119,10 @@ Partial Class Form_v6_Agent
         ' JustEmptyControl7
         ' 
         JustEmptyControl7.Dock = DockStyle.Bottom
-        JustEmptyControl7.Location = New Point(280, 514)
+        JustEmptyControl7.Location = New Point(270, 530)
         JustEmptyControl7.Name = "JustEmptyControl7"
-        JustEmptyControl7.Size = New Size(696, 10)
+        JustEmptyControl7.Size = New Size(716, 10)
         JustEmptyControl7.TabIndex = 6
-        ' 
-        ' Panel1
-        ' 
-        Panel1.Controls.Add(MB_页面用量)
-        Panel1.Controls.Add(JustEmptyControl6)
-        Panel1.Controls.Add(MB_删除对话)
-        Panel1.Controls.Add(JustEmptyControl5)
-        Panel1.Controls.Add(MB_新对话)
-        Panel1.Dock = DockStyle.Top
-        Panel1.Location = New Point(280, 20)
-        Panel1.Name = "Panel1"
-        Panel1.Padding = New Padding(0, 0, 0, 10)
-        Panel1.Size = New Size(696, 42)
-        Panel1.TabIndex = 5
-        ' 
-        ' MB_页面用量
-        ' 
-        MB_页面用量.BackColor = Color.Transparent
-        MB_页面用量.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        MB_页面用量.BorderRadius = 10
-        MB_页面用量.BorderSize = 0
-        MB_页面用量.Dock = DockStyle.Fill
-        MB_页面用量.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
-        MB_页面用量.Location = New Point(220, 0)
-        MB_页面用量.Margin = New Padding(2)
-        MB_页面用量.Name = "MB_页面用量"
-        MB_页面用量.PressedBackColor1 = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
-        MB_页面用量.Size = New Size(476, 32)
-        MB_页面用量.TabIndex = 17
-        MB_页面用量.Text = "页面用量"
-        ' 
-        ' JustEmptyControl6
-        ' 
-        JustEmptyControl6.BackColor = Color.Transparent
-        JustEmptyControl6.Dock = DockStyle.Left
-        JustEmptyControl6.Location = New Point(210, 0)
-        JustEmptyControl6.Name = "JustEmptyControl6"
-        JustEmptyControl6.Size = New Size(10, 32)
-        JustEmptyControl6.TabIndex = 16
-        ' 
-        ' MB_删除对话
-        ' 
-        MB_删除对话.BackColor = Color.Transparent
-        MB_删除对话.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        MB_删除对话.BorderRadius = 10
-        MB_删除对话.BorderSize = 0
-        MB_删除对话.Dock = DockStyle.Left
-        MB_删除对话.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
-        MB_删除对话.Location = New Point(110, 0)
-        MB_删除对话.Margin = New Padding(2)
-        MB_删除对话.Name = "MB_删除对话"
-        MB_删除对话.PressedBackColor1 = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
-        MB_删除对话.Size = New Size(100, 32)
-        MB_删除对话.TabIndex = 15
-        MB_删除对话.Text = "删除对话"
-        ' 
-        ' JustEmptyControl5
-        ' 
-        JustEmptyControl5.BackColor = Color.Transparent
-        JustEmptyControl5.Dock = DockStyle.Left
-        JustEmptyControl5.Location = New Point(100, 0)
-        JustEmptyControl5.Name = "JustEmptyControl5"
-        JustEmptyControl5.Size = New Size(10, 32)
-        JustEmptyControl5.TabIndex = 14
-        ' 
-        ' MB_新对话
-        ' 
-        MB_新对话.BackColor = Color.Transparent
-        MB_新对话.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        MB_新对话.BorderRadius = 10
-        MB_新对话.BorderSize = 0
-        MB_新对话.Dock = DockStyle.Left
-        MB_新对话.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
-        MB_新对话.Location = New Point(0, 0)
-        MB_新对话.Margin = New Padding(2)
-        MB_新对话.Name = "MB_新对话"
-        MB_新对话.PressedBackColor1 = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
-        MB_新对话.Size = New Size(100, 32)
-        MB_新对话.TabIndex = 13
-        MB_新对话.Text = "新对话"
         ' 
         ' ModernTextBox1
         ' 
@@ -200,15 +133,15 @@ Partial Class Form_v6_Agent
         ModernTextBox1.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
         ModernTextBox1.Dock = DockStyle.Bottom
         ModernTextBox1.LineHeight = 20
-        ModernTextBox1.Location = New Point(280, 524)
+        ModernTextBox1.Location = New Point(270, 540)
         ModernTextBox1.Margin = New Padding(2)
         ModernTextBox1.MultiLine = True
         ModernTextBox1.Name = "ModernTextBox1"
         ModernTextBox1.Padding = New Padding(10, 8, 10, 8)
         ModernTextBox1.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernTextBox1.Size = New Size(696, 80)
+        ModernTextBox1.Size = New Size(716, 74)
         ModernTextBox1.TabIndex = 17
-        ModernTextBox1.WaterText = "按 Enter 键发送，按 Shift + Enter 输入回车"
+        ModernTextBox1.WaterText = "按 Enter 键发送，按 Shift + Enter 进行换行"
         ModernTextBox1.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ' 
         ' Panel2
@@ -224,10 +157,10 @@ Partial Class Form_v6_Agent
         Panel2.Controls.Add(JustEmptyControl2)
         Panel2.Controls.Add(MCB_联网设置)
         Panel2.Dock = DockStyle.Bottom
-        Panel2.Location = New Point(280, 604)
+        Panel2.Location = New Point(270, 614)
         Panel2.Name = "Panel2"
         Panel2.Padding = New Padding(0, 10, 0, 0)
-        Panel2.Size = New Size(696, 42)
+        Panel2.Size = New Size(716, 42)
         Panel2.TabIndex = 16
         ' 
         ' MCB_模型选择
@@ -250,7 +183,7 @@ Partial Class Form_v6_Agent
         MCB_模型选择.Margin = New Padding(2, 2, 2, 2)
         MCB_模型选择.Name = "MCB_模型选择"
         MCB_模型选择.Padding = New Padding(10, 0, 10, 0)
-        MCB_模型选择.Size = New Size(216, 32)
+        MCB_模型选择.Size = New Size(236, 32)
         MCB_模型选择.TabIndex = 19
         MCB_模型选择.ToolTipGap = -1
         MCB_模型选择.ToolTipMaxWidth = 350
@@ -308,7 +241,7 @@ Partial Class Form_v6_Agent
         ' 
         JustEmptyControl3.BackColor = Color.Transparent
         JustEmptyControl3.Dock = DockStyle.Right
-        JustEmptyControl3.Location = New Point(606, 10)
+        JustEmptyControl3.Location = New Point(626, 10)
         JustEmptyControl3.Name = "JustEmptyControl3"
         JustEmptyControl3.Size = New Size(10, 32)
         JustEmptyControl3.TabIndex = 18
@@ -321,7 +254,7 @@ Partial Class Form_v6_Agent
         MB_发送.BorderSize = 0
         MB_发送.Dock = DockStyle.Right
         MB_发送.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
-        MB_发送.Location = New Point(616, 10)
+        MB_发送.Location = New Point(636, 10)
         MB_发送.Margin = New Padding(2)
         MB_发送.Name = "MB_发送"
         MB_发送.PressedBackColor1 = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
@@ -417,28 +350,242 @@ Partial Class Form_v6_Agent
         ' JustEmptyControl1
         ' 
         JustEmptyControl1.Dock = DockStyle.Left
-        JustEmptyControl1.Location = New Point(270, 20)
+        JustEmptyControl1.Location = New Point(260, 10)
         JustEmptyControl1.Name = "JustEmptyControl1"
-        JustEmptyControl1.Size = New Size(10, 626)
+        JustEmptyControl1.Size = New Size(10, 646)
         JustEmptyControl1.TabIndex = 1
+        ' 
+        ' Panel3
+        ' 
+        Panel3.Controls.Add(ModernPanel2)
+        Panel3.Controls.Add(HtmlColorLabel1)
+        Panel3.Controls.Add(ModernListBox2)
+        Panel3.Controls.Add(Panel4)
+        Panel3.Controls.Add(Panel1)
+        Panel3.Controls.Add(Panel5)
+        Panel3.Dock = DockStyle.Left
+        Panel3.Location = New Point(10, 10)
+        Panel3.Name = "Panel3"
+        Panel3.Size = New Size(250, 646)
+        Panel3.TabIndex = 18
+        ' 
+        ' ModernPanel2
+        ' 
+        ModernPanel2.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        ModernPanel2.BorderRadius = 10
+        ModernPanel2.BorderSize = 0
+        ModernPanel2.Controls.Add(ModernListBox1)
+        ModernPanel2.Controls.Add(HtmlColorLabel2)
+        ModernPanel2.Dock = DockStyle.Fill
+        ModernPanel2.Location = New Point(0, 0)
+        ModernPanel2.Name = "ModernPanel2"
+        ModernPanel2.Padding = New Padding(5)
+        ModernPanel2.Size = New Size(250, 362)
+        ModernPanel2.TabIndex = 1
         ' 
         ' ModernListBox1
         ' 
         ModernListBox1.AllowDragReorder = True
+        ModernListBox1.BackColor = Color.Transparent
         ModernListBox1.BackColor1 = Color.Transparent
-        ModernListBox1.BorderColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernListBox1.BorderColorFocus = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernListBox1.BorderRadius = 10
-        ModernListBox1.BorderSize = 2
-        ModernListBox1.Dock = DockStyle.Left
+        ModernListBox1.BorderSize = 0
+        ModernListBox1.Dock = DockStyle.Fill
         ModernListBox1.ItemHoverColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
         ModernListBox1.ItemPaddingLeft = 10
         ModernListBox1.ItemSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernListBox1.Location = New Point(20, 20)
+        ModernListBox1.Location = New Point(10, 38)
         ModernListBox1.MultiSelect = False
         ModernListBox1.Name = "ModernListBox1"
-        ModernListBox1.Size = New Size(250, 626)
+        ModernListBox1.Padding = New Padding(0, 10, 0, 10)
+        ModernListBox1.Size = New Size(230, 314)
         ModernListBox1.TabIndex = 8
+        ' 
+        ' HtmlColorLabel2
+        ' 
+        HtmlColorLabel2.AutoSize = True
+        HtmlColorLabel2.AutoSizeMode = AutoSizeMode.GrowAndShrink
+        HtmlColorLabel2.BackColor = Color.Transparent
+        HtmlColorLabel2.Dock = DockStyle.Top
+        HtmlColorLabel2.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
+        HtmlColorLabel2.Location = New Point(10, 10)
+        HtmlColorLabel2.Margin = New Padding(2)
+        HtmlColorLabel2.Name = "HtmlColorLabel2"
+        HtmlColorLabel2.Padding = New Padding(0, 0, 0, 7)
+        HtmlColorLabel2.Size = New Size(230, 28)
+        HtmlColorLabel2.TabIndex = 19
+        HtmlColorLabel2.Text = "Agent 对话列表"
+        HtmlColorLabel2.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.Center
+        HtmlColorLabel2.ToolTipText = "按 F2 重命名，按 Delete 删除，可直接拖动排序"
+        ' 
+        ' HtmlColorLabel1
+        ' 
+        HtmlColorLabel1.AutoSize = True
+        HtmlColorLabel1.AutoSizeMode = AutoSizeMode.GrowAndShrink
+        HtmlColorLabel1.Dock = DockStyle.Bottom
+        HtmlColorLabel1.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
+        HtmlColorLabel1.Location = New Point(0, 362)
+        HtmlColorLabel1.Margin = New Padding(2)
+        HtmlColorLabel1.Name = "HtmlColorLabel1"
+        HtmlColorLabel1.Padding = New Padding(0, 10, 0, 7)
+        HtmlColorLabel1.Size = New Size(250, 38)
+        HtmlColorLabel1.TabIndex = 17
+        HtmlColorLabel1.Text = "向 AI 发送文件"
+        HtmlColorLabel1.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.Center
+        HtmlColorLabel1.ToolTipText = "将文件拖至下方列表来添加，右键任何项或空白区域打开对话框，双击或按 Delete 来移除，可直接拖拽排序"
+        ' 
+        ' ModernListBox2
+        ' 
+        ModernListBox2.AllowDragReorder = True
+        ModernListBox2.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        ModernListBox2.BorderRadius = 10
+        ModernListBox2.BorderSize = 0
+        ModernListBox2.Dock = DockStyle.Bottom
+        ModernListBox2.ItemHeight = 26
+        ModernListBox2.ItemHoverColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
+        ModernListBox2.ItemPaddingLeft = 10
+        ModernListBox2.ItemSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        ModernListBox2.Location = New Point(0, 400)
+        ModernListBox2.MultiSelect = False
+        ModernListBox2.Name = "ModernListBox2"
+        ModernListBox2.Padding = New Padding(0, 10, 0, 10)
+        ModernListBox2.Size = New Size(250, 120)
+        ModernListBox2.TabIndex = 16
+        ' 
+        ' Panel4
+        ' 
+        Panel4.Controls.Add(MB_删除对话)
+        Panel4.Controls.Add(JustEmptyControl5)
+        Panel4.Controls.Add(MB_新对话)
+        Panel4.Dock = DockStyle.Bottom
+        Panel4.Location = New Point(0, 520)
+        Panel4.Name = "Panel4"
+        Panel4.Padding = New Padding(0, 10, 0, 0)
+        Panel4.Size = New Size(250, 42)
+        Panel4.TabIndex = 9
+        ' 
+        ' MB_删除对话
+        ' 
+        MB_删除对话.BackColor = Color.Transparent
+        MB_删除对话.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MB_删除对话.BorderRadius = 10
+        MB_删除对话.BorderSize = 0
+        MB_删除对话.Dock = DockStyle.Fill
+        MB_删除对话.ForeColor = Color.IndianRed
+        MB_删除对话.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        MB_删除对话.Location = New Point(130, 10)
+        MB_删除对话.Margin = New Padding(2)
+        MB_删除对话.Name = "MB_删除对话"
+        MB_删除对话.PressedBackColor1 = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
+        MB_删除对话.Size = New Size(120, 32)
+        MB_删除对话.TabIndex = 15
+        MB_删除对话.Text = "删除对话"
+        ' 
+        ' JustEmptyControl5
+        ' 
+        JustEmptyControl5.BackColor = Color.Transparent
+        JustEmptyControl5.Dock = DockStyle.Left
+        JustEmptyControl5.Location = New Point(120, 10)
+        JustEmptyControl5.Name = "JustEmptyControl5"
+        JustEmptyControl5.Size = New Size(10, 32)
+        JustEmptyControl5.TabIndex = 14
+        ' 
+        ' MB_新对话
+        ' 
+        MB_新对话.BackColor = Color.Transparent
+        MB_新对话.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MB_新对话.BorderRadius = 10
+        MB_新对话.BorderSize = 0
+        MB_新对话.Dock = DockStyle.Left
+        MB_新对话.ForeColor = Color.YellowGreen
+        MB_新对话.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        MB_新对话.Location = New Point(0, 10)
+        MB_新对话.Margin = New Padding(2)
+        MB_新对话.Name = "MB_新对话"
+        MB_新对话.PressedBackColor1 = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
+        MB_新对话.Size = New Size(120, 32)
+        MB_新对话.TabIndex = 13
+        MB_新对话.Text = "新建对话"
+        ' 
+        ' Panel1
+        ' 
+        Panel1.Controls.Add(MB_刷新推理级别)
+        Panel1.Controls.Add(JustEmptyControl6)
+        Panel1.Controls.Add(MB_重载连接)
+        Panel1.Dock = DockStyle.Bottom
+        Panel1.Location = New Point(0, 562)
+        Panel1.Name = "Panel1"
+        Panel1.Padding = New Padding(0, 10, 0, 0)
+        Panel1.Size = New Size(250, 42)
+        Panel1.TabIndex = 11
+        ' 
+        ' MB_刷新推理级别
+        ' 
+        MB_刷新推理级别.BackColor = Color.Transparent
+        MB_刷新推理级别.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MB_刷新推理级别.BorderRadius = 10
+        MB_刷新推理级别.BorderSize = 0
+        MB_刷新推理级别.Dock = DockStyle.Fill
+        MB_刷新推理级别.ForeColor = Color.CornflowerBlue
+        MB_刷新推理级别.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        MB_刷新推理级别.Location = New Point(130, 10)
+        MB_刷新推理级别.Margin = New Padding(2)
+        MB_刷新推理级别.Name = "MB_刷新推理级别"
+        MB_刷新推理级别.PressedBackColor1 = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
+        MB_刷新推理级别.Size = New Size(120, 32)
+        MB_刷新推理级别.TabIndex = 15
+        MB_刷新推理级别.Text = "刷新级别"
+        ' 
+        ' JustEmptyControl6
+        ' 
+        JustEmptyControl6.BackColor = Color.Transparent
+        JustEmptyControl6.Dock = DockStyle.Left
+        JustEmptyControl6.Location = New Point(120, 10)
+        JustEmptyControl6.Name = "JustEmptyControl6"
+        JustEmptyControl6.Size = New Size(10, 32)
+        JustEmptyControl6.TabIndex = 14
+        ' 
+        ' MB_重载连接
+        ' 
+        MB_重载连接.BackColor = Color.Transparent
+        MB_重载连接.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MB_重载连接.BorderRadius = 10
+        MB_重载连接.BorderSize = 0
+        MB_重载连接.Dock = DockStyle.Left
+        MB_重载连接.ForeColor = Color.CornflowerBlue
+        MB_重载连接.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        MB_重载连接.Location = New Point(0, 10)
+        MB_重载连接.Margin = New Padding(2)
+        MB_重载连接.Name = "MB_重载连接"
+        MB_重载连接.PressedBackColor1 = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
+        MB_重载连接.Size = New Size(120, 32)
+        MB_重载连接.TabIndex = 13
+        MB_重载连接.Text = "重载连接"
+        ' 
+        ' Panel5
+        ' 
+        Panel5.Controls.Add(MB_页面用量)
+        Panel5.Dock = DockStyle.Bottom
+        Panel5.Location = New Point(0, 604)
+        Panel5.Name = "Panel5"
+        Panel5.Padding = New Padding(0, 10, 0, 0)
+        Panel5.Size = New Size(250, 42)
+        Panel5.TabIndex = 10
+        ' 
+        ' MB_页面用量
+        ' 
+        MB_页面用量.BackColor = Color.Transparent
+        MB_页面用量.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MB_页面用量.BorderRadius = 10
+        MB_页面用量.BorderSize = 0
+        MB_页面用量.Dock = DockStyle.Fill
+        MB_页面用量.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        MB_页面用量.Location = New Point(0, 10)
+        MB_页面用量.Margin = New Padding(2)
+        MB_页面用量.Name = "MB_页面用量"
+        MB_页面用量.PressedBackColor1 = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
+        MB_页面用量.Size = New Size(250, 32)
+        MB_页面用量.TabIndex = 17
+        MB_页面用量.Text = "页面用量"
         ' 
         ' Form_v6_Agent
         ' 
@@ -452,14 +599,19 @@ Partial Class Form_v6_Agent
         Name = "Form_v6_Agent"
         Text = "Form_v6_Agent"
         ModernPanel1.ResumeLayout(False)
-        Panel1.ResumeLayout(False)
         Panel2.ResumeLayout(False)
+        Panel3.ResumeLayout(False)
+        Panel3.PerformLayout()
+        ModernPanel2.ResumeLayout(False)
+        ModernPanel2.PerformLayout()
+        Panel4.ResumeLayout(False)
+        Panel1.ResumeLayout(False)
+        Panel5.ResumeLayout(False)
         ResumeLayout(False)
     End Sub
 
     Friend WithEvents ModernPanel1 As LakeUI.ModernPanel
     Friend WithEvents JustEmptyControl1 As LakeUI.JustEmptyControl
-    Friend WithEvents Panel1 As Panel
     Friend WithEvents JustEmptyControl5 As LakeUI.JustEmptyControl
     Friend WithEvents MB_新对话 As LakeUI.ModernButton
     Friend WithEvents AgentRoom1 As LakeUI.AgentRoom
@@ -476,7 +628,17 @@ Partial Class Form_v6_Agent
     Friend WithEvents MCB_权限控制 As LakeUI.ModernComboBox
     Friend WithEvents JustEmptyControl2 As LakeUI.JustEmptyControl
     Friend WithEvents MCB_联网设置 As LakeUI.ModernComboBox
-    Friend WithEvents JustEmptyControl6 As LakeUI.JustEmptyControl
     Friend WithEvents MB_页面用量 As LakeUI.ModernButton
     Friend WithEvents JustEmptyControl8 As LakeUI.JustEmptyControl
+    Friend WithEvents Panel3 As Panel
+    Friend WithEvents Panel4 As Panel
+    Friend WithEvents Panel5 As Panel
+    Friend WithEvents Panel1 As Panel
+    Friend WithEvents MB_刷新推理级别 As LakeUI.ModernButton
+    Friend WithEvents JustEmptyControl6 As LakeUI.JustEmptyControl
+    Friend WithEvents MB_重载连接 As LakeUI.ModernButton
+    Friend WithEvents HtmlColorLabel1 As LakeUI.HtmlColorLabel
+    Friend WithEvents ModernListBox2 As LakeUI.ModernListBox
+    Friend WithEvents ModernPanel2 As LakeUI.ModernPanel
+    Friend WithEvents HtmlColorLabel2 As LakeUI.HtmlColorLabel
 End Class
