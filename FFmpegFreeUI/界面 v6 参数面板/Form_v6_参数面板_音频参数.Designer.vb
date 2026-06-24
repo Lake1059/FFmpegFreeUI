@@ -661,6 +661,7 @@ Partial Class Form_v6_参数面板_音频参数
         MCB_比特率.DropDownPadding = New Padding(10)
         MCB_比特率.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_比特率.DropDownSelectedForeColor = Color.White
+        MCB_比特率.Editable = True
         MCB_比特率.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
         MCB_比特率.Items.Add("")
         MCB_比特率.Items.Add("96k")
