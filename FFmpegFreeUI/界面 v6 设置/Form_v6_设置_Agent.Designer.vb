@@ -28,6 +28,9 @@ Partial Class Form_v6_设置_Agent
         ModernComboBox1 = New LakeUI.ModernComboBox()
         HtmlColorLabel3 = New LakeUI.HtmlColorLabel()
         HtmlColorLabel2 = New LakeUI.HtmlColorLabel()
+        Panel5 = New Panel()
+        HtmlColorLabel10 = New LakeUI.HtmlColorLabel()
+        MTB_附加请求Body = New LakeUI.ModernTextBox()
         Panel4 = New Panel()
         HtmlColorLabel9 = New LakeUI.HtmlColorLabel()
         MTB_附加请求头 = New LakeUI.ModernTextBox()
@@ -41,6 +44,7 @@ Partial Class Form_v6_设置_Agent
         HtmlColorLabel6 = New LakeUI.HtmlColorLabel()
         ModernPanel1.SuspendLayout()
         Panel2.SuspendLayout()
+        Panel5.SuspendLayout()
         Panel4.SuspendLayout()
         Panel3.SuspendLayout()
         Panel1.SuspendLayout()
@@ -55,6 +59,7 @@ Partial Class Form_v6_设置_Agent
         ModernPanel1.Controls.Add(Panel2)
         ModernPanel1.Controls.Add(HtmlColorLabel3)
         ModernPanel1.Controls.Add(HtmlColorLabel2)
+        ModernPanel1.Controls.Add(Panel5)
         ModernPanel1.Controls.Add(Panel4)
         ModernPanel1.Controls.Add(Panel3)
         ModernPanel1.Controls.Add(Panel1)
@@ -146,7 +151,52 @@ Partial Class Form_v6_设置_Agent
         HtmlColorLabel2.Size = New Size(769, 45)
         HtmlColorLabel2.TabIndex = 31
         HtmlColorLabel2.Text = "<span style=""font-size:13; color:Silver"">SP 用户专属端点</span>   开发者可能会提供一些便宜量大的端点供 SP 用户免费使用"
-        ' 
+        '
+        ' Panel5
+        '
+        Panel5.Controls.Add(HtmlColorLabel10)
+        Panel5.Controls.Add(MTB_附加请求Body)
+        Panel5.Dock = DockStyle.Top
+        Panel5.Location = New Point(20, 216)
+        Panel5.Name = "Panel5"
+        Panel5.Padding = New Padding(0, 10, 0, 0)
+        Panel5.Size = New Size(769, 82)
+        Panel5.TabIndex = 37
+        '
+        ' HtmlColorLabel10
+        '
+        HtmlColorLabel10.AutoSizeMode = AutoSizeMode.GrowAndShrink
+        HtmlColorLabel10.Dock = DockStyle.Fill
+        HtmlColorLabel10.Location = New Point(400, 10)
+        HtmlColorLabel10.Margin = New Padding(2)
+        HtmlColorLabel10.Name = "HtmlColorLabel10"
+        HtmlColorLabel10.Padding = New Padding(10, 0, 0, 0)
+        HtmlColorLabel10.Size = New Size(369, 72)
+        HtmlColorLabel10.TabIndex = 18
+        HtmlColorLabel10.Text = "附加请求 Body (extra_body)"
+        HtmlColorLabel10.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
+        HtmlColorLabel10.ToolTipText = "格式：JSON 对象，会合并到 chat/completions 请求体顶层。例如：{""thinking"":{""type"":""enabled""}}"
+        '
+        ' MTB_附加请求Body
+        '
+        MTB_附加请求Body.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MTB_附加请求Body.BorderColor = Color.Transparent
+        MTB_附加请求Body.BorderColorFocus = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
+        MTB_附加请求Body.BorderRadius = 10
+        MTB_附加请求Body.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
+        MTB_附加请求Body.Dock = DockStyle.Left
+        MTB_附加请求Body.LineHeight = 20
+        MTB_附加请求Body.Location = New Point(0, 10)
+        MTB_附加请求Body.Margin = New Padding(2)
+        MTB_附加请求Body.MultiLine = True
+        MTB_附加请求Body.Name = "MTB_附加请求Body"
+        MTB_附加请求Body.Padding = New Padding(10, 6, 10, 6)
+        MTB_附加请求Body.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MTB_附加请求Body.Size = New Size(400, 72)
+        MTB_附加请求Body.TabIndex = 19
+        MTB_附加请求Body.WaterText = "{""thinking"":{""type"":""enabled""}}"
+        MTB_附加请求Body.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
+        '
         ' Panel4
         ' 
         Panel4.Controls.Add(HtmlColorLabel9)
@@ -155,7 +205,7 @@ Partial Class Form_v6_设置_Agent
         Panel4.Location = New Point(20, 174)
         Panel4.Name = "Panel4"
         Panel4.Padding = New Padding(0, 10, 0, 0)
-        Panel4.Size = New Size(769, 42)
+        Panel4.Size = New Size(769, 82)
         Panel4.TabIndex = 30
         ' 
         ' HtmlColorLabel9
@@ -166,10 +216,11 @@ Partial Class Form_v6_设置_Agent
         HtmlColorLabel9.Margin = New Padding(2)
         HtmlColorLabel9.Name = "HtmlColorLabel9"
         HtmlColorLabel9.Padding = New Padding(10, 0, 0, 0)
-        HtmlColorLabel9.Size = New Size(369, 32)
+        HtmlColorLabel9.Size = New Size(369, 72)
         HtmlColorLabel9.TabIndex = 18
         HtmlColorLabel9.Text = "附加请求头"
         HtmlColorLabel9.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
+        HtmlColorLabel9.ToolTipText = "格式：每行一个请求头，写作 名称: 值。例如：HTTP-Referer: https://example.com"
         ' 
         ' MTB_附加请求头
         ' 
@@ -177,14 +228,18 @@ Partial Class Form_v6_设置_Agent
         MTB_附加请求头.BorderColor = Color.Transparent
         MTB_附加请求头.BorderColorFocus = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
         MTB_附加请求头.BorderRadius = 10
+        MTB_附加请求头.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
         MTB_附加请求头.Dock = DockStyle.Left
+        MTB_附加请求头.LineHeight = 20
         MTB_附加请求头.Location = New Point(0, 10)
         MTB_附加请求头.Margin = New Padding(2)
+        MTB_附加请求头.MultiLine = True
         MTB_附加请求头.Name = "MTB_附加请求头"
-        MTB_附加请求头.Padding = New Padding(10, 0, 0, 0)
+        MTB_附加请求头.Padding = New Padding(10, 6, 10, 6)
         MTB_附加请求头.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        MTB_附加请求头.Size = New Size(400, 32)
+        MTB_附加请求头.Size = New Size(400, 72)
         MTB_附加请求头.TabIndex = 19
+        MTB_附加请求头.WaterText = "Header-Name: value"
         MTB_附加请求头.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ' 
         ' Panel3
@@ -308,6 +363,7 @@ Partial Class Form_v6_设置_Agent
         ModernPanel1.ResumeLayout(False)
         ModernPanel1.PerformLayout()
         Panel2.ResumeLayout(False)
+        Panel5.ResumeLayout(False)
         Panel4.ResumeLayout(False)
         Panel3.ResumeLayout(False)
         Panel1.ResumeLayout(False)
@@ -319,6 +375,9 @@ Partial Class Form_v6_设置_Agent
     Friend WithEvents HtmlColorLabel1 As LakeUI.HtmlColorLabel
     Friend WithEvents Panel2 As Panel
     Friend WithEvents ModernComboBox1 As LakeUI.ModernComboBox
+    Friend WithEvents Panel5 As Panel
+    Friend WithEvents HtmlColorLabel10 As LakeUI.HtmlColorLabel
+    Friend WithEvents MTB_附加请求Body As LakeUI.ModernTextBox
     Friend WithEvents Panel4 As Panel
     Friend WithEvents HtmlColorLabel9 As LakeUI.HtmlColorLabel
     Friend WithEvents Panel3 As Panel

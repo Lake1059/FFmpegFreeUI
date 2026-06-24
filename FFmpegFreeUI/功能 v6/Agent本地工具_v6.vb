@@ -374,18 +374,25 @@ Public Class AgentLocalTools
         }
 
         If permissionLevel >= PermissionEnvironment Then
-            tools.Add(FunctionTool("get_queue_summary", "读取 3FUI 编码队列任务信息。默认返回全部任务摘要；可用 id/ids 或 1-based index/indexes 查询指定任务，detail=true 返回完整任务信息，target=all 返回全部。", New Dictionary(Of String, Object) From {
+            tools.Add(FunctionTool("get_queue_summary", "读取 3FUI 编码队列任务信息。默认返回全部任务摘要；可用 id/ids 或 1-based index/indexes 查询指定任务，detail=true 返回完整任务信息，target=all 返回全部。日志请另用 get_queue_task_logs。", New Dictionary(Of String, Object) From {
                 {"id", New Dictionary(Of String, Object) From {{"type", "string"}, {"description", "单个任务 ID"}}},
                 {"ids", New Dictionary(Of String, Object) From {{"type", "array"}, {"items", New Dictionary(Of String, Object) From {{"type", "string"}}}, {"description", "任务 ID 列表"}}},
                 {"index", New Dictionary(Of String, Object) From {{"type", "integer"}, {"description", "队列中的 1-based 序号"}}},
                 {"indexes", New Dictionary(Of String, Object) From {{"type", "array"}, {"items", New Dictionary(Of String, Object) From {{"type", "integer"}}}, {"description", "队列中的 1-based 序号列表"}}},
                 {"target", New Dictionary(Of String, Object) From {{"type", "string"}, {"description", "all/全部 表示读取全部任务；不传目标时默认读取全部摘要"}}},
                 {"detail", New Dictionary(Of String, Object) From {{"type", "boolean"}, {"description", "是否返回完整任务信息；查询指定任务时默认 true"}}},
-                {"include_logs", New Dictionary(Of String, Object) From {{"type", "boolean"}, {"description", "是否附带任务日志，默认 false"}}},
-                {"log_limit", New Dictionary(Of String, Object) From {{"type", "integer"}, {"description", "每个任务返回的最新日志条数，1-200，默认 20"}}},
-                {"log_mode", New Dictionary(Of String, Object) From {{"type", "string"}, {"description", "all/latest_non_progress/errors/current_stage，默认 all"}}},
                 {"include_commands", New Dictionary(Of String, Object) From {{"type", "boolean"}, {"description", "是否附带可执行命令行，默认 false"}}},
                 {"include_preset_json", New Dictionary(Of String, Object) From {{"type", "boolean"}, {"description", "是否附带任务预设 JSON，可能很大，默认 false"}}}
+            }))
+            tools.Add(FunctionTool("get_queue_task_logs", "读取指定编码队列任务日志。先用 get_queue_summary 获取任务 ID 或序号；默认一次返回四档：all、latest_non_progress、errors、current_stage。", New Dictionary(Of String, Object) From {
+                {"id", New Dictionary(Of String, Object) From {{"type", "string"}, {"description", "单个任务 ID"}}},
+                {"ids", New Dictionary(Of String, Object) From {{"type", "array"}, {"items", New Dictionary(Of String, Object) From {{"type", "string"}}}, {"description", "任务 ID 列表"}}},
+                {"index", New Dictionary(Of String, Object) From {{"type", "integer"}, {"description", "队列中的 1-based 序号"}}},
+                {"indexes", New Dictionary(Of String, Object) From {{"type", "array"}, {"items", New Dictionary(Of String, Object) From {{"type", "integer"}}}, {"description", "队列中的 1-based 序号列表"}}},
+                {"target", New Dictionary(Of String, Object) From {{"type", "string"}, {"description", "all/全部 表示读取全部任务日志，可能很大"}}},
+                {"mode", New Dictionary(Of String, Object) From {{"type", "string"}, {"description", "单个日志档位：all、latest_non_progress、errors、current_stage；不传则返回四档"}}},
+                {"modes", New Dictionary(Of String, Object) From {{"type", "array"}, {"items", New Dictionary(Of String, Object) From {{"type", "string"}}}, {"description", "多个日志档位；可传 all_modes 返回四档"}}},
+                {"log_limit", New Dictionary(Of String, Object) From {{"type", "integer"}, {"description", "每个任务每档返回的最新日志条数，1-200，默认 20"}}}
             }))
             tools.Add(FunctionTool("control_queue_tasks", "控制 3FUI 编码队列任务。action 支持 start/pause/resume/stop/remove/reset；用 id/ids 或 1-based index/indexes 指定任务，或 target=all 控制全部任务。停止或移除全部只应在用户明确要求时使用。", New Dictionary(Of String, Object) From {
                 {"action", New Dictionary(Of String, Object) From {{"type", "string"}, {"description", "start、pause、resume、stop、remove、reset"}}},
@@ -498,6 +505,9 @@ Public Class AgentLocalTools
                 Case "get_queue_summary"
                     If permissionLevel < PermissionEnvironment Then Return "权限不足：需要环境控制"
                     Return GetQueueSummary(args)
+                Case "get_queue_task_logs"
+                    If permissionLevel < PermissionEnvironment Then Return "权限不足：需要环境控制"
+                    Return GetQueueTaskLogs(args)
                 Case "control_queue_tasks"
                     If permissionLevel < PermissionEnvironment Then Return "权限不足：需要环境控制"
                     Return ControlQueueTasks(args)
@@ -887,15 +897,12 @@ Public Class AgentLocalTools
     Private Shared Function GetQueueSummary(args As JsonElement) As String
         Dim snapshot = 编码队列_v6.获取队列快照()
         Dim resolution = ResolveQueueTarget(args, snapshot, True)
-        Dim includeLogs = Agent通用工具_v6.GetJsonBoolean(args, "include_logs", False)
         Dim includeCommands = Agent通用工具_v6.GetJsonBoolean(args, "include_commands", False)
         Dim includePresetJson = Agent通用工具_v6.GetJsonBoolean(args, "include_preset_json", False)
-        Dim detail = Agent通用工具_v6.GetJsonBoolean(args, "detail", resolution.HasSpecificSelectors OrElse includeLogs OrElse includeCommands OrElse includePresetJson)
-        Dim logLimit = NormalizeLogLimit(Agent通用工具_v6.GetJsonInteger(args, "log_limit", 20))
-        Dim logMode = Agent通用工具_v6.GetJsonString(args, "log_mode", "all")
+        Dim detail = Agent通用工具_v6.GetJsonBoolean(args, "detail", resolution.HasSpecificSelectors OrElse includeCommands OrElse includePresetJson)
 
         Dim items = resolution.Tasks.
-            Select(Function(t) BuildQueueTaskPayload(t, QueueIndexOf(snapshot, t.ID), detail, includeLogs, logLimit, logMode, includeCommands, includePresetJson)).
+            Select(Function(t) BuildQueueTaskPayload(t, QueueIndexOf(snapshot, t.ID), detail, includeCommands, includePresetJson)).
             ToList()
 
         If Not HasQueueQueryArguments(args) AndAlso resolution.Errors.Count = 0 Then
@@ -907,6 +914,30 @@ Public Class AgentLocalTools
             {"returned_count", items.Count},
             {"target_all", resolution.RequestedAll},
             {"used_default_all", resolution.UsedDefaultAll},
+            {"tasks", items},
+            {"missing_ids", resolution.MissingIds},
+            {"missing_indexes", resolution.MissingIndexes},
+            {"errors", resolution.Errors}
+        }
+        Return JsonSerializer.Serialize(payload, JsonSO)
+    End Function
+
+    Private Shared Function GetQueueTaskLogs(args As JsonElement) As String
+        Dim snapshot = 编码队列_v6.获取队列快照()
+        Dim resolution = ResolveQueueTarget(args, snapshot, False)
+        Dim logLimit = NormalizeLogLimit(Agent通用工具_v6.GetJsonInteger(args, "log_limit", 20))
+        Dim modes = ResolveQueueLogModes(args)
+
+        Dim items = resolution.Tasks.
+            Select(Function(t) BuildQueueTaskLogsPayload(t, QueueIndexOf(snapshot, t.ID), modes, logLimit)).
+            ToList()
+
+        Dim payload As New Dictionary(Of String, Object) From {
+            {"queue_count", snapshot.Count},
+            {"returned_count", items.Count},
+            {"target_all", resolution.RequestedAll},
+            {"modes", modes},
+            {"log_limit", logLimit},
             {"tasks", items},
             {"missing_ids", resolution.MissingIds},
             {"missing_indexes", resolution.MissingIndexes},
@@ -932,7 +963,7 @@ Public Class AgentLocalTools
         End If
         Dim ids = resolution.Tasks.Select(Function(t) t.ID).ToList()
         Dim beforeItems = resolution.Tasks.
-            Select(Function(t) BuildQueueTaskPayload(t, QueueIndexOf(snapshotBefore, t.ID), detail, False, 0, "all", False, False)).
+            Select(Function(t) BuildQueueTaskPayload(t, QueueIndexOf(snapshotBefore, t.ID), detail, False, False)).
             ToList()
         Dim eligibleCount = resolution.Tasks.Where(Function(t) IsQueueActionAvailable(t, action)).Count()
 
@@ -950,7 +981,7 @@ Public Class AgentLocalTools
                     {"removed", True}
                 })
             Else
-                afterItems.Add(BuildQueueTaskPayload(task, QueueIndexOf(snapshotAfter, id), detail, False, 0, "all", False, False))
+                afterItems.Add(BuildQueueTaskPayload(task, QueueIndexOf(snapshotAfter, id), detail, False, False))
             End If
         Next
 
@@ -1047,14 +1078,11 @@ Public Class AgentLocalTools
     Private Shared Function BuildQueueTaskPayload(task As 编码任务_v6,
                                                   index As Integer,
                                                   detail As Boolean,
-                                                  includeLogs As Boolean,
-                                                  logLimit As Integer,
-                                                  logMode As String,
                                                   includeCommands As Boolean,
                                                   includePresetJson As Boolean) As Dictionary(Of String, Object)
         Dim item = BuildQueueTaskSummary(task, index)
         If task Is Nothing Then Return item
-        If Not detail AndAlso Not includeLogs AndAlso Not includeCommands AndAlso Not includePresetJson Then Return item
+        If Not detail AndAlso Not includeCommands AndAlso Not includePresetJson Then Return item
 
         item("status_code") = CInt(task.状态)
         item("task_type") = If(task.预设数据 Is Nothing, "command_line", "preset")
@@ -1089,7 +1117,6 @@ Public Class AgentLocalTools
         item("non_progress_output_count") = If(task.非进度输出列表 Is Nothing, 0, task.非进度输出列表.Count)
         item("log_version") = task.日志版本号
 
-        If includeLogs Then item("logs") = BuildQueueLogPayload(task, logLimit, logMode)
         If includeCommands Then item("commands") = BuildQueueCommandPayload(task)
         If includePresetJson Then item("preset_json") = If(task.预设数据 Is Nothing, "", JsonSerializer.Serialize(task.预设数据, JsonSO))
         Return item
@@ -1143,6 +1170,25 @@ Public Class AgentLocalTools
             item("arguments") = stepItem.命令行
             item("command_line") = 预设管理_v6.获取命令行进程名(stepItem.阶段) & " " & stepItem.命令行
         End If
+        Return item
+    End Function
+
+    Private Shared Function BuildQueueTaskLogsPayload(task As 编码任务_v6,
+                                                      index As Integer,
+                                                      modes As List(Of String),
+                                                      logLimit As Integer) As Dictionary(Of String, Object)
+        Dim item = BuildQueueTaskSummary(task, index)
+        If task Is Nothing Then Return item
+
+        item("current_step") = If(task.当前步骤 Is Nothing, "", task.当前步骤.显示名称)
+        item("log_version") = task.日志版本号
+        item("log_structure_version") = task.日志结构版本号
+
+        Dim logsByMode As New Dictionary(Of String, Object)(StringComparer.OrdinalIgnoreCase)
+        For Each mode In modes
+            logsByMode(mode) = BuildQueueLogPayload(task, logLimit, mode)
+        Next
+        item("logs") = logsByMode
         Return item
     End Function
 
@@ -1278,7 +1324,7 @@ Public Class AgentLocalTools
     End Function
 
     Private Shared Function ParseQueueLogMode(value As String) As 编码任务日志显示模式_v6
-        Select Case If(value, "").Trim().ToLowerInvariant()
+        Select Case NormalizeQueueLogModeName(value)
             Case "latest_non_progress", "non_progress", "latest", "latest_output", "最新非进度"
                 Return 编码任务日志显示模式_v6.最新输出不含进度
             Case "errors", "error", "错误"
@@ -1287,6 +1333,54 @@ Public Class AgentLocalTools
                 Return 编码任务日志显示模式_v6.当前阶段输出
             Case Else
                 Return 编码任务日志显示模式_v6.全部输出
+        End Select
+    End Function
+
+    Private Shared Function ResolveQueueLogModes(args As JsonElement) As List(Of String)
+        Dim requested As New List(Of String)
+        Dim singleMode = Agent通用工具_v6.GetJsonString(args, "mode").Trim()
+        If singleMode <> "" Then requested.Add(singleMode)
+        requested.AddRange(Agent通用工具_v6.GetJsonStringArray(args, "modes", False))
+
+        If requested.Count = 0 OrElse requested.Any(Function(x) IsAllQueueLogModesToken(x)) Then
+            Return DefaultQueueLogModes()
+        End If
+
+        Dim result As New List(Of String)
+        For Each item In requested
+            Dim normalized = NormalizeQueueLogModeName(item)
+            If normalized = "" Then Continue For
+            If Not result.Contains(normalized, StringComparer.OrdinalIgnoreCase) Then result.Add(normalized)
+        Next
+        If result.Count = 0 Then Return DefaultQueueLogModes()
+        Return result
+    End Function
+
+    Private Shared Function DefaultQueueLogModes() As List(Of String)
+        Return New List(Of String) From {"all", "latest_non_progress", "errors", "current_stage"}
+    End Function
+
+    Private Shared Function IsAllQueueLogModesToken(value As String) As Boolean
+        Select Case If(value, "").Trim().ToLowerInvariant()
+            Case "all_modes", "all_modes_default", "four", "四档", "全部档位"
+                Return True
+            Case Else
+                Return False
+        End Select
+    End Function
+
+    Private Shared Function NormalizeQueueLogModeName(value As String) As String
+        Select Case If(value, "").Trim().ToLowerInvariant()
+            Case "all", "full", "全部", "全部输出"
+                Return "all"
+            Case "latest_non_progress", "non_progress", "latest", "latest_output", "最新非进度", "最新输出不含进度"
+                Return "latest_non_progress"
+            Case "errors", "error", "err", "错误", "仅错误信息"
+                Return "errors"
+            Case "current_stage", "stage", "current", "当前阶段", "当前阶段输出"
+                Return "current_stage"
+            Case Else
+                Return ""
         End Select
     End Function
 
@@ -1304,7 +1398,7 @@ Public Class AgentLocalTools
     End Function
 
     Private Shared Function HasQueueQueryArguments(args As JsonElement) As Boolean
-        Return HasJsonProperty(args, "id", "ids", "index", "indexes", "target", "detail", "include_logs", "log_limit", "log_mode", "include_commands", "include_preset_json")
+        Return HasJsonProperty(args, "id", "ids", "index", "indexes", "target", "detail", "include_commands", "include_preset_json")
     End Function
 
     Private Shared Function HasJsonProperty(root As JsonElement, ParamArray names As String()) As Boolean

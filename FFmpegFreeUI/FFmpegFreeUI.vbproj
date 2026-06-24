@@ -14,9 +14,9 @@
     <!--<EnableCompressionInSingleFile>True</EnableCompressionInSingleFile>-->
     <Authors>1059 Studio</Authors>
 	<Company>1059 Studio</Company>
-	<AssemblyVersion>6.0.12</AssemblyVersion>
-	<FileVersion>6.0.12</FileVersion>
-	<Version>6.0.12</Version>
+	<AssemblyVersion>6.0.13</AssemblyVersion>
+	<FileVersion>6.0.13</FileVersion>
+	<Version>6.0.13</Version>
     <SupportedOSPlatformVersion>7.0</SupportedOSPlatformVersion>
     <ApplicationIcon>ico.ico</ApplicationIcon>
     <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
@@ -55,7 +55,8 @@
   <ItemGroup>
     <PackageReference Include="Microsoft-WindowsAPICodePack-Shell" Version="1.1.5" />
     <PackageReference Include="LibreHardwareMonitorLib" Version="0.9.6" />
-	<PackageReference Include="System.Management" Version="10.0.2" />
+	<PackageReference Include="Microsoft.Agents.AI.OpenAI" Version="1.11.0" />
+	<PackageReference Include="System.Management" Version="10.0.9" />
     <PackageReference Include="Vortice.Direct2D1" Version="3.8.3" />
     <PackageReference Include="Vortice.Direct3D11" Version="3.8.3" />
   </ItemGroup>
@@ -82,12 +83,6 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resource1.resx</DependentUpon>
     </Compile>
-    <Compile Update="集成工具\Form_v6_集成工具_质量评测图表.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="集成工具\Form_v6_集成工具_质量评测图表.Designer.vb">
-      <DependentUpon>Form_v6_集成工具_质量评测图表.vb</DependentUpon>
-    </Compile>
   </ItemGroup>
 
   <ItemGroup>
@@ -100,9 +95,6 @@
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resource1.Designer.vb</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Update="集成工具\Form_v6_集成工具_质量评测图表.resx">
-      <DependentUpon>Form_v6_集成工具_质量评测图表.vb</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
 

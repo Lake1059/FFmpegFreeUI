@@ -27,6 +27,7 @@ Public Class 开发者内置预设_v6
         RTX50_AV1.视频参数_比特率_控制方式 = 预设数据_v6.视频全局质量控制方式.VBR
         RTX50_AV1.视频参数_质量控制_参数名 = "cq"
         RTX50_AV1.视频参数_质量控制_值 = "36"
+        RTX50_AV1.视频参数_色彩管理_像素格式 = "p010le"
         result.Add(New 预设项("RTX50 AV1", RTX50_AV1))
 
         Dim RTX50_AV1_UHQ As New 预设数据_v6
@@ -39,6 +40,7 @@ Public Class 开发者内置预设_v6
         RTX50_AV1_UHQ.视频参数_比特率_控制方式 = 预设数据_v6.视频全局质量控制方式.VBRHQ
         RTX50_AV1_UHQ.视频参数_质量控制_参数名 = "cq"
         RTX50_AV1_UHQ.视频参数_质量控制_值 = "38"
+        RTX50_AV1_UHQ.视频参数_色彩管理_像素格式 = "p010le"
         result.Add(New 预设项("RTX50 AV1 UHQ", RTX50_AV1_UHQ))
 
         Dim RTX50_AV1_UHQ_EX As New 预设数据_v6
@@ -52,6 +54,7 @@ Public Class 开发者内置预设_v6
         RTX50_AV1_UHQ_EX.视频参数_质量控制_参数名 = "cq"
         RTX50_AV1_UHQ_EX.视频参数_质量控制_值 = "38"
         RTX50_AV1_UHQ_EX.视频参数_质量控制_进阶参数集 = "-multipass fullres -rc-lookahead 240 -spatial-aq 1 -temporal-aq 1 -aq-strength 15 -tf_level -1"
+        RTX50_AV1_UHQ_EX.视频参数_色彩管理_像素格式 = "p010le"
         result.Add(New 预设项("RTX50 AV1 UHQ 超压", RTX50_AV1_UHQ_EX))
 
         Dim RTX50_HEVC_UHQ As New 预设数据_v6
@@ -64,6 +67,7 @@ Public Class 开发者内置预设_v6
         RTX50_HEVC_UHQ.视频参数_比特率_控制方式 = 预设数据_v6.视频全局质量控制方式.VBRHQ
         RTX50_HEVC_UHQ.视频参数_质量控制_参数名 = "cq"
         RTX50_HEVC_UHQ.视频参数_质量控制_值 = "28"
+        RTX50_HEVC_UHQ.视频参数_色彩管理_像素格式 = "p010le"
         result.Add(New 预设项("RTX50 HEVC UHQ", RTX50_HEVC_UHQ))
 
         Dim X265_Slow As New 预设数据_v6
@@ -75,6 +79,7 @@ Public Class 开发者内置预设_v6
         X265_Slow.视频参数_比特率_控制方式 = 预设数据_v6.视频全局质量控制方式.CRF
         X265_Slow.视频参数_质量控制_参数名 = "crf"
         X265_Slow.视频参数_质量控制_值 = "24"
+        X265_Slow.视频参数_色彩管理_像素格式 = "yuv420p10le"
         result.Add(New 预设项("x265 默认推荐最终压制方案", X265_Slow))
 
         Dim X264_Slower As New 预设数据_v6
@@ -86,6 +91,7 @@ Public Class 开发者内置预设_v6
         X264_Slower.视频参数_比特率_控制方式 = 预设数据_v6.视频全局质量控制方式.CRF
         X264_Slower.视频参数_质量控制_参数名 = "crf"
         X264_Slower.视频参数_质量控制_值 = "23"
+        X264_Slower.视频参数_色彩管理_像素格式 = "yuv420p10le"
         result.Add(New 预设项("x264 slower", X264_Slower))
 
         Dim M4A_HDAudio As New 预设数据_v6
@@ -104,7 +110,6 @@ Public Class 开发者内置预设_v6
         AVIF_AOMAV1.视频参数_编码器_分类名称 = "AV1"
         AVIF_AOMAV1.视频参数_编码器_具体编码 = "libaom-av1"
         AVIF_AOMAV1.视频参数_编码器_编码预设 = "1"
-        AVIF_AOMAV1.视频参数_编码器_场景优化 = "ssim"
         AVIF_AOMAV1.视频参数_比特率_控制方式 = 预设数据_v6.视频全局质量控制方式.CRF
         AVIF_AOMAV1.视频参数_质量控制_参数名 = "crf"
         AVIF_AOMAV1.视频参数_质量控制_值 = "18"

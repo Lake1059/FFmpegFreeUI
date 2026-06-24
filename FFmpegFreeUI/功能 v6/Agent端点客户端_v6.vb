@@ -11,11 +11,13 @@ Public Class AgentEndpointClient
     Public Property Endpoint As String
     Public Property ApiKey As String
     Public Property ExtraHeaders As IReadOnlyDictionary(Of String, String)
+    Public Property ExtraBody As IReadOnlyDictionary(Of String, Object)
 
-    Public Sub New(endpoint As String, apiKey As String, extraHeadersText As String)
+    Public Sub New(endpoint As String, apiKey As String, extraHeadersText As String, Optional extraBodyText As String = "")
         Me.Endpoint = NormalizeEndpoint(endpoint)
         Me.ApiKey = If(apiKey, "").Trim()
         Me.ExtraHeaders = ParseAdditionalHeaders(extraHeadersText)
+        Me.ExtraBody = ParseExtraBody(extraBodyText)
     End Sub
 
     Public Shared Function NormalizeEndpoint(endpoint As String) As String
@@ -41,6 +43,28 @@ Public Class AgentEndpointClient
             If name.Contains(ControlChars.Cr) OrElse name.Contains(ControlChars.Lf) Then Throw New FormatException($"附加请求头第 {lineNumber} 行名称无效")
             result(name) = value
         Next
+
+        Return result
+    End Function
+
+    Public Shared Function ParseExtraBody(text As String) As IReadOnlyDictionary(Of String, Object)
+        Dim result As New Dictionary(Of String, Object)(StringComparer.OrdinalIgnoreCase)
+        If String.IsNullOrWhiteSpace(text) Then Return result
+
+        Try
+            Using doc = JsonDocument.Parse(text)
+                If doc.RootElement.ValueKind <> JsonValueKind.Object Then
+                    Throw New FormatException("附加请求 Body 必须是 JSON 对象")
+                End If
+
+                For Each prop In doc.RootElement.EnumerateObject()
+                    If String.IsNullOrWhiteSpace(prop.Name) Then Throw New FormatException("附加请求 Body 中存在空字段名")
+                    result(prop.Name) = prop.Value.Clone()
+                Next
+            End Using
+        Catch ex As JsonException
+            Throw New FormatException("附加请求 Body 不是有效 JSON：" & ex.Message, ex)
+        End Try
 
         Return result
     End Function
@@ -76,6 +100,7 @@ Public Class AgentEndpointClient
             payload("tools") = tools
             payload("tool_choice") = "auto"
         End If
+        MergeExtraBodyIntoPayload(payload)
 
         Try
             Using response = Await SendJsonAsync(HttpMethod.Post, "chat/completions", payload, cancellationToken)
@@ -113,6 +138,7 @@ Public Class AgentEndpointClient
             payload("tools") = tools
             payload("tool_choice") = "auto"
         End If
+        MergeExtraBodyIntoPayload(payload)
 
         Dim result As New AgentChatResult
         Dim content As New StringBuilder
@@ -220,7 +246,6 @@ Public Class AgentEndpointClient
         If Not String.IsNullOrWhiteSpace(reasoningEffort) Then
             payload("reasoning") = New Dictionary(Of String, Object) From {{"effort", reasoningEffort.Trim()}}
         End If
-
         Try
             Using response = Await SendJsonAsync(HttpMethod.Post, "responses", payload, cancellationToken)
                 Dim raw = Await response.Content.ReadAsStringAsync(cancellationToken)
@@ -244,6 +269,24 @@ Public Class AgentEndpointClient
                                          payload As Object,
                                          cancellationToken As Threading.CancellationToken) As Task(Of HttpResponseMessage)
         Return Await Http.SendAsync(CreateJsonRequest(method, relativePath, payload), cancellationToken)
+    End Function
+
+    Private Sub MergeExtraBodyIntoPayload(payload As Dictionary(Of String, Object))
+        If payload Is Nothing OrElse ExtraBody Is Nothing OrElse ExtraBody.Count = 0 Then Return
+
+        For Each item In ExtraBody
+            If IsProtectedExtraBodyKey(item.Key) Then Continue For
+            payload(item.Key) = item.Value
+        Next
+    End Sub
+
+    Private Shared Function IsProtectedExtraBodyKey(key As String) As Boolean
+        Select Case If(key, "").Trim().ToLowerInvariant()
+            Case "model", "messages", "tools", "tool_choice", "stream", "stream_options"
+                Return True
+            Case Else
+                Return False
+        End Select
     End Function
 
     Private Function CreateJsonRequest(method As HttpMethod,

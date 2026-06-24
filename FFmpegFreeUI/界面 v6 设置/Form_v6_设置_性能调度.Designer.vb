@@ -75,6 +75,8 @@ Partial Class Form_v6_设置_性能调度
         MCB_编码队列刷新速度.BorderRadius = 10
         MCB_编码队列刷新速度.BorderSize = 0
         MCB_编码队列刷新速度.Dock = DockStyle.Left
+        MCB_编码队列刷新速度.DropDownBackdropBlurPasses = 2
+        MCB_编码队列刷新速度.DropDownBackdropBlurRadius = 30
         MCB_编码队列刷新速度.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
         MCB_编码队列刷新速度.DropDownHoverAnimationDuration = 0
         MCB_编码队列刷新速度.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
@@ -130,6 +132,8 @@ Partial Class Form_v6_设置_性能调度
         MCB_自动开始数量.BorderRadius = 10
         MCB_自动开始数量.BorderSize = 0
         MCB_自动开始数量.Dock = DockStyle.Left
+        MCB_自动开始数量.DropDownBackdropBlurPasses = 2
+        MCB_自动开始数量.DropDownBackdropBlurRadius = 30
         MCB_自动开始数量.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
         MCB_自动开始数量.DropDownHoverAnimationDuration = 0
         MCB_自动开始数量.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))

@@ -58,7 +58,8 @@ Public Class AgentCapabilityCache
         Return String.Join(vbLf, {
             If(client.Endpoint, "").Trim(),
             If(client.ApiKey, "").Trim(),
-            If(client.ExtraHeaders Is Nothing, "", String.Join(vbLf, client.ExtraHeaders.OrderBy(Function(x) x.Key).Select(Function(x) x.Key & ":" & x.Value)))
+            If(client.ExtraHeaders Is Nothing, "", String.Join(vbLf, client.ExtraHeaders.OrderBy(Function(x) x.Key).Select(Function(x) x.Key & ":" & x.Value))),
+            If(client.ExtraBody Is Nothing, "", String.Join(vbLf, client.ExtraBody.OrderBy(Function(x) x.Key).Select(Function(x) x.Key & ":" & JsonSerializer.Serialize(x.Value, JsonSO))))
         })
     End Function
 

@@ -155,6 +155,8 @@ Partial Class Form_v6_设置_个性化
         MCB_噪点颗粒.BorderRadius = 10
         MCB_噪点颗粒.BorderSize = 0
         MCB_噪点颗粒.Dock = DockStyle.Left
+        MCB_噪点颗粒.DropDownBackdropBlurPasses = 2
+        MCB_噪点颗粒.DropDownBackdropBlurRadius = 30
         MCB_噪点颗粒.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
         MCB_噪点颗粒.DropDownHoverAnimationDuration = 0
         MCB_噪点颗粒.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
@@ -191,6 +193,8 @@ Partial Class Form_v6_设置_个性化
         MCB_背景来源.BorderRadius = 10
         MCB_背景来源.BorderSize = 0
         MCB_背景来源.Dock = DockStyle.Left
+        MCB_背景来源.DropDownBackdropBlurPasses = 2
+        MCB_背景来源.DropDownBackdropBlurRadius = 30
         MCB_背景来源.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
         MCB_背景来源.DropDownHoverAnimationDuration = 0
         MCB_背景来源.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
@@ -230,6 +234,8 @@ Partial Class Form_v6_设置_个性化
         MCB_毛玻璃模式.BorderRadius = 10
         MCB_毛玻璃模式.BorderSize = 0
         MCB_毛玻璃模式.Dock = DockStyle.Left
+        MCB_毛玻璃模式.DropDownBackdropBlurPasses = 2
+        MCB_毛玻璃模式.DropDownBackdropBlurRadius = 30
         MCB_毛玻璃模式.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
         MCB_毛玻璃模式.DropDownHoverAnimationDuration = 0
         MCB_毛玻璃模式.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
@@ -287,6 +293,8 @@ Partial Class Form_v6_设置_个性化
         MCB_边框宽度.BorderRadius = 10
         MCB_边框宽度.BorderSize = 0
         MCB_边框宽度.Dock = DockStyle.Left
+        MCB_边框宽度.DropDownBackdropBlurPasses = 2
+        MCB_边框宽度.DropDownBackdropBlurRadius = 30
         MCB_边框宽度.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
         MCB_边框宽度.DropDownHoverAnimationDuration = 0
         MCB_边框宽度.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))

@@ -129,6 +129,8 @@ Partial Class Form_v6_设置_功能设定
         MCB_任务失败删除文件.BorderRadius = 10
         MCB_任务失败删除文件.BorderSize = 0
         MCB_任务失败删除文件.Dock = DockStyle.Left
+        MCB_任务失败删除文件.DropDownBackdropBlurPasses = 2
+        MCB_任务失败删除文件.DropDownBackdropBlurRadius = 30
         MCB_任务失败删除文件.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
         MCB_任务失败删除文件.DropDownHoverAnimationDuration = 0
         MCB_任务失败删除文件.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
@@ -182,6 +184,8 @@ Partial Class Form_v6_设置_功能设定
         MCB_任务日志保留行数.BorderRadius = 10
         MCB_任务日志保留行数.BorderSize = 0
         MCB_任务日志保留行数.Dock = DockStyle.Left
+        MCB_任务日志保留行数.DropDownBackdropBlurPasses = 2
+        MCB_任务日志保留行数.DropDownBackdropBlurRadius = 30
         MCB_任务日志保留行数.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
         MCB_任务日志保留行数.DropDownHoverAnimationDuration = 0
         MCB_任务日志保留行数.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
@@ -236,6 +240,8 @@ Partial Class Form_v6_设置_功能设定
         MCB_任务日志性能计数器.BorderRadius = 10
         MCB_任务日志性能计数器.BorderSize = 0
         MCB_任务日志性能计数器.Dock = DockStyle.Left
+        MCB_任务日志性能计数器.DropDownBackdropBlurPasses = 2
+        MCB_任务日志性能计数器.DropDownBackdropBlurRadius = 30
         MCB_任务日志性能计数器.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
         MCB_任务日志性能计数器.DropDownHoverAnimationDuration = 0
         MCB_任务日志性能计数器.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
@@ -288,6 +294,8 @@ Partial Class Form_v6_设置_功能设定
         MCB_编码队列显示最新日志行.BorderRadius = 10
         MCB_编码队列显示最新日志行.BorderSize = 0
         MCB_编码队列显示最新日志行.Dock = DockStyle.Left
+        MCB_编码队列显示最新日志行.DropDownBackdropBlurPasses = 2
+        MCB_编码队列显示最新日志行.DropDownBackdropBlurRadius = 30
         MCB_编码队列显示最新日志行.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
         MCB_编码队列显示最新日志行.DropDownHoverAnimationDuration = 0
         MCB_编码队列显示最新日志行.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
@@ -340,6 +348,8 @@ Partial Class Form_v6_设置_功能设定
         MCB_独立参数面板自动切预设管理.BorderRadius = 10
         MCB_独立参数面板自动切预设管理.BorderSize = 0
         MCB_独立参数面板自动切预设管理.Dock = DockStyle.Left
+        MCB_独立参数面板自动切预设管理.DropDownBackdropBlurPasses = 2
+        MCB_独立参数面板自动切预设管理.DropDownBackdropBlurRadius = 30
         MCB_独立参数面板自动切预设管理.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
         MCB_独立参数面板自动切预设管理.DropDownHoverAnimationDuration = 0
         MCB_独立参数面板自动切预设管理.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
@@ -392,6 +402,8 @@ Partial Class Form_v6_设置_功能设定
         MCB_任务名称混淆.BorderRadius = 10
         MCB_任务名称混淆.BorderSize = 0
         MCB_任务名称混淆.Dock = DockStyle.Left
+        MCB_任务名称混淆.DropDownBackdropBlurPasses = 2
+        MCB_任务名称混淆.DropDownBackdropBlurRadius = 30
         MCB_任务名称混淆.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
         MCB_任务名称混淆.DropDownHoverAnimationDuration = 0
         MCB_任务名称混淆.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
@@ -445,6 +457,8 @@ Partial Class Form_v6_设置_功能设定
         MCB_是否自动重置参数面板到第一个页面.BorderRadius = 10
         MCB_是否自动重置参数面板到第一个页面.BorderSize = 0
         MCB_是否自动重置参数面板到第一个页面.Dock = DockStyle.Left
+        MCB_是否自动重置参数面板到第一个页面.DropDownBackdropBlurPasses = 2
+        MCB_是否自动重置参数面板到第一个页面.DropDownBackdropBlurRadius = 30
         MCB_是否自动重置参数面板到第一个页面.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
         MCB_是否自动重置参数面板到第一个页面.DropDownHoverAnimationDuration = 0
         MCB_是否自动重置参数面板到第一个页面.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
@@ -497,6 +511,8 @@ Partial Class Form_v6_设置_功能设定
         MCB_是否自动开始任务.BorderRadius = 10
         MCB_是否自动开始任务.BorderSize = 0
         MCB_是否自动开始任务.Dock = DockStyle.Left
+        MCB_是否自动开始任务.DropDownBackdropBlurPasses = 2
+        MCB_是否自动开始任务.DropDownBackdropBlurRadius = 30
         MCB_是否自动开始任务.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
         MCB_是否自动开始任务.DropDownHoverAnimationDuration = 0
         MCB_是否自动开始任务.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
@@ -549,6 +565,8 @@ Partial Class Form_v6_设置_功能设定
         MCB_是否启用提示音.BorderRadius = 10
         MCB_是否启用提示音.BorderSize = 0
         MCB_是否启用提示音.Dock = DockStyle.Left
+        MCB_是否启用提示音.DropDownBackdropBlurPasses = 2
+        MCB_是否启用提示音.DropDownBackdropBlurRadius = 30
         MCB_是否启用提示音.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
         MCB_是否启用提示音.DropDownHoverAnimationDuration = 0
         MCB_是否启用提示音.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
@@ -601,6 +619,8 @@ Partial Class Form_v6_设置_功能设定
         MCB_有任务时系统状态.BorderRadius = 10
         MCB_有任务时系统状态.BorderSize = 0
         MCB_有任务时系统状态.Dock = DockStyle.Left
+        MCB_有任务时系统状态.DropDownBackdropBlurPasses = 2
+        MCB_有任务时系统状态.DropDownBackdropBlurRadius = 30
         MCB_有任务时系统状态.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
         MCB_有任务时系统状态.DropDownHoverAnimationDuration = 0
         MCB_有任务时系统状态.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))

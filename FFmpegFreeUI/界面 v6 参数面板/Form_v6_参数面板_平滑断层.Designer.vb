@@ -266,6 +266,8 @@ Partial Class Form_v6_参数面板_平滑断层
         MCB_滤镜选择.BorderRadius = 10
         MCB_滤镜选择.BorderSize = 0
         MCB_滤镜选择.Dock = DockStyle.Fill
+        MCB_滤镜选择.DropDownBackdropBlurPasses = 2
+        MCB_滤镜选择.DropDownBackdropBlurRadius = 30
         MCB_滤镜选择.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
         MCB_滤镜选择.DropDownHoverAnimationDuration = 0
         MCB_滤镜选择.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))

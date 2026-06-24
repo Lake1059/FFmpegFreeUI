@@ -322,6 +322,8 @@ Partial Class Form_v6_集成工具_质量评测
         MCB_SubSample.BorderRadius = 10
         MCB_SubSample.BorderSize = 0
         MCB_SubSample.Dock = DockStyle.Left
+        MCB_SubSample.DropDownBackdropBlurPasses = 2
+        MCB_SubSample.DropDownBackdropBlurRadius = 30
         MCB_SubSample.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
         MCB_SubSample.DropDownHoverAnimationDuration = 0
         MCB_SubSample.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
@@ -355,6 +357,8 @@ Partial Class Form_v6_集成工具_质量评测
         MCB_Pooling.BorderRadius = 10
         MCB_Pooling.BorderSize = 0
         MCB_Pooling.Dock = DockStyle.Left
+        MCB_Pooling.DropDownBackdropBlurPasses = 2
+        MCB_Pooling.DropDownBackdropBlurRadius = 30
         MCB_Pooling.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
         MCB_Pooling.DropDownHoverAnimationDuration = 0
         MCB_Pooling.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
@@ -388,6 +392,8 @@ Partial Class Form_v6_集成工具_质量评测
         MCB_模型选择.BorderRadius = 10
         MCB_模型选择.BorderSize = 0
         MCB_模型选择.Dock = DockStyle.Left
+        MCB_模型选择.DropDownBackdropBlurPasses = 2
+        MCB_模型选择.DropDownBackdropBlurRadius = 30
         MCB_模型选择.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
         MCB_模型选择.DropDownHoverAnimationDuration = 0
         MCB_模型选择.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))

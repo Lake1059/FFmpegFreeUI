@@ -75,6 +75,8 @@ Partial Class Form_v6_设置_LakeUI视觉体验
         MCB_性能计数器.BorderRadius = 10
         MCB_性能计数器.BorderSize = 0
         MCB_性能计数器.Dock = DockStyle.Left
+        MCB_性能计数器.DropDownBackdropBlurPasses = 2
+        MCB_性能计数器.DropDownBackdropBlurRadius = 30
         MCB_性能计数器.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
         MCB_性能计数器.DropDownHoverAnimationDuration = 0
         MCB_性能计数器.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
@@ -168,6 +170,8 @@ Partial Class Form_v6_设置_LakeUI视觉体验
         MCB_窗口样式.BorderRadius = 10
         MCB_窗口样式.BorderSize = 0
         MCB_窗口样式.Dock = DockStyle.Left
+        MCB_窗口样式.DropDownBackdropBlurPasses = 2
+        MCB_窗口样式.DropDownBackdropBlurRadius = 30
         MCB_窗口样式.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
         MCB_窗口样式.DropDownHoverAnimationDuration = 0
         MCB_窗口样式.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))

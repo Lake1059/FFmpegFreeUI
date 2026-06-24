@@ -490,6 +490,8 @@ Partial Class Form_v6_参数面板_烧录字幕
         MCB_对齐方位.BorderRadius = 10
         MCB_对齐方位.BorderSize = 0
         MCB_对齐方位.Dock = DockStyle.Fill
+        MCB_对齐方位.DropDownBackdropBlurPasses = 2
+        MCB_对齐方位.DropDownBackdropBlurRadius = 30
         MCB_对齐方位.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
         MCB_对齐方位.DropDownHoverAnimationDuration = 0
         MCB_对齐方位.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
@@ -569,6 +571,8 @@ Partial Class Form_v6_参数面板_烧录字幕
         MCB_字体文件夹路径.BorderRadius = 10
         MCB_字体文件夹路径.BorderSize = 0
         MCB_字体文件夹路径.Dock = DockStyle.Fill
+        MCB_字体文件夹路径.DropDownBackdropBlurPasses = 2
+        MCB_字体文件夹路径.DropDownBackdropBlurRadius = 30
         MCB_字体文件夹路径.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
         MCB_字体文件夹路径.DropDownHoverAnimationDuration = 0
         MCB_字体文件夹路径.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
@@ -838,6 +842,8 @@ Partial Class Form_v6_参数面板_烧录字幕
         MCB_边框类型.BorderRadius = 10
         MCB_边框类型.BorderSize = 0
         MCB_边框类型.Dock = DockStyle.Fill
+        MCB_边框类型.DropDownBackdropBlurPasses = 2
+        MCB_边框类型.DropDownBackdropBlurRadius = 30
         MCB_边框类型.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
         MCB_边框类型.DropDownHoverAnimationDuration = 0
         MCB_边框类型.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
@@ -1124,6 +1130,8 @@ Partial Class Form_v6_参数面板_烧录字幕
         MCB_字幕文件路径.BorderRadius = 10
         MCB_字幕文件路径.BorderSize = 0
         MCB_字幕文件路径.Dock = DockStyle.Fill
+        MCB_字幕文件路径.DropDownBackdropBlurPasses = 2
+        MCB_字幕文件路径.DropDownBackdropBlurRadius = 30
         MCB_字幕文件路径.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
         MCB_字幕文件路径.DropDownHoverAnimationDuration = 0
         MCB_字幕文件路径.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
@@ -1221,6 +1229,8 @@ Partial Class Form_v6_参数面板_烧录字幕
         MCB_后缀优先级3.BorderRadius = 10
         MCB_后缀优先级3.BorderSize = 0
         MCB_后缀优先级3.Dock = DockStyle.Fill
+        MCB_后缀优先级3.DropDownBackdropBlurPasses = 2
+        MCB_后缀优先级3.DropDownBackdropBlurRadius = 30
         MCB_后缀优先级3.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
         MCB_后缀优先级3.DropDownHoverAnimationDuration = 0
         MCB_后缀优先级3.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
@@ -1258,6 +1268,8 @@ Partial Class Form_v6_参数面板_烧录字幕
         MCB_后缀优先级2.BorderRadius = 10
         MCB_后缀优先级2.BorderSize = 0
         MCB_后缀优先级2.Dock = DockStyle.Left
+        MCB_后缀优先级2.DropDownBackdropBlurPasses = 2
+        MCB_后缀优先级2.DropDownBackdropBlurRadius = 30
         MCB_后缀优先级2.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
         MCB_后缀优先级2.DropDownHoverAnimationDuration = 0
         MCB_后缀优先级2.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
@@ -1295,6 +1307,8 @@ Partial Class Form_v6_参数面板_烧录字幕
         MCB_后缀优先级1.BorderRadius = 10
         MCB_后缀优先级1.BorderSize = 0
         MCB_后缀优先级1.Dock = DockStyle.Left
+        MCB_后缀优先级1.DropDownBackdropBlurPasses = 2
+        MCB_后缀优先级1.DropDownBackdropBlurRadius = 30
         MCB_后缀优先级1.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
         MCB_后缀优先级1.DropDownHoverAnimationDuration = 0
         MCB_后缀优先级1.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
@@ -1364,6 +1378,8 @@ Partial Class Form_v6_参数面板_烧录字幕
         MCB_字幕来源.BorderRadius = 10
         MCB_字幕来源.BorderSize = 0
         MCB_字幕来源.Dock = DockStyle.Fill
+        MCB_字幕来源.DropDownBackdropBlurPasses = 2
+        MCB_字幕来源.DropDownBackdropBlurRadius = 30
         MCB_字幕来源.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
         MCB_字幕来源.DropDownHoverAnimationDuration = 0
         MCB_字幕来源.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
@@ -1400,6 +1416,8 @@ Partial Class Form_v6_参数面板_烧录字幕
         MCB_滤镜选择.BorderRadius = 10
         MCB_滤镜选择.BorderSize = 0
         MCB_滤镜选择.Dock = DockStyle.Left
+        MCB_滤镜选择.DropDownBackdropBlurPasses = 2
+        MCB_滤镜选择.DropDownBackdropBlurRadius = 30
         MCB_滤镜选择.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
         MCB_滤镜选择.DropDownHoverAnimationDuration = 0
         MCB_滤镜选择.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))

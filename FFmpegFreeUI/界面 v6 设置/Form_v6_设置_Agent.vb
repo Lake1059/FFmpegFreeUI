@@ -11,6 +11,7 @@ Public Class Form_v6_设置_Agent
             MTB_APIKEY.Text = 设置_v6.实例对象.AgentApiKey
             MTB_APIKEY.PasswordChar = "●"c
             MTB_附加请求头.Text = 设置_v6.实例对象.Agent附加请求头
+            MTB_附加请求Body.Text = 设置_v6.实例对象.Agent附加请求Body
             刷新SPAgent端点列表()
         Finally
             _正在加载 = False
@@ -51,11 +52,24 @@ Public Class Form_v6_设置_Agent
         设置_v6.实例对象.Agent附加请求头 = MTB_附加请求头.Text
     End Sub
 
+    Private Sub MTB_附加请求Body_TextChanged(sender As Object, e As EventArgs) Handles MTB_附加请求Body.TextChanged
+        If _正在加载 Then Exit Sub
+        设置_v6.实例对象.Agent附加请求Body = MTB_附加请求Body.Text
+    End Sub
+
     Private Sub MTB_附加请求头_LostFocus(sender As Object, e As EventArgs) Handles MTB_附加请求头.LostFocus
         Try
             Dim unused = AgentEndpointClient.ParseAdditionalHeaders(MTB_附加请求头.Text)
         Catch ex As Exception
             ExFloatingTip(MTB_附加请求头, ex.Message, 2600)
+        End Try
+    End Sub
+
+    Private Sub MTB_附加请求Body_LostFocus(sender As Object, e As EventArgs) Handles MTB_附加请求Body.LostFocus
+        Try
+            Dim unused = AgentEndpointClient.ParseExtraBody(MTB_附加请求Body.Text)
+        Catch ex As Exception
+            ExFloatingTip(MTB_附加请求Body, ex.Message, 2600)
         End Try
     End Sub
 

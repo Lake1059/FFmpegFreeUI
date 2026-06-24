@@ -125,6 +125,8 @@ Partial Class Form_v6_设置_更新选项
         MCB_更新服务器.BorderRadius = 10
         MCB_更新服务器.BorderSize = 0
         MCB_更新服务器.Dock = DockStyle.Left
+        MCB_更新服务器.DropDownBackdropBlurPasses = 2
+        MCB_更新服务器.DropDownBackdropBlurRadius = 30
         MCB_更新服务器.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
         MCB_更新服务器.DropDownHoverAnimationDuration = 0
         MCB_更新服务器.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))

@@ -1,5 +1,4 @@
 Imports System.Text
-Imports System.Text.Json
 Imports System.IO
 Imports LakeUI
 
@@ -673,6 +672,8 @@ Public Class Form_v6_Agent
                 Return "修改参数面板"
             Case "get_queue_summary"
                 Return "读取队列信息"
+            Case "get_queue_task_logs"
+                Return "读取任务日志"
             Case "control_queue_tasks"
                 Return "控制队列任务"
             Case "sync_parameter_panel_to_queue"
@@ -1100,15 +1101,15 @@ Public Class Form_v6_Agent
         Dim round As Integer = 0
 
         Using powerShellSession As New AgentLocalTools.PowerShellRunSession()
-        Do
-            cancellationToken.ThrowIfCancellationRequested()
-            round += 1
-            Dim streamedAny As Boolean = False
-            Dim result As AgentChatResult = Nothing
-            Dim streamBuffer As New StreamingTextBuffer(AgentRoom1, Nothing, Sub(value) SetRunResponseText(conversation, value))
+            Do
+                cancellationToken.ThrowIfCancellationRequested()
+                round += 1
+                Dim streamedAny As Boolean = False
+                Dim result As AgentChatResult = Nothing
+                Dim streamBuffer As New StreamingTextBuffer(AgentRoom1, Nothing, Sub(value) SetRunResponseText(conversation, value))
 
-            ShowRunStatus(conversation, $"正在思考：第 {round} 轮")
-            result = Await client.TryCreateChatCompletionStreamingAsync(
+                ShowRunStatus(conversation, $"正在思考：第 {round} 轮")
+                result = Await client.TryCreateChatCompletionStreamingAsync(
                 modelId,
                 messages,
                 tools,
@@ -1118,73 +1119,73 @@ Public Class Form_v6_Agent
                     streamBuffer.Append(delta)
                 End Sub,
                 cancellationToken)
-            streamBuffer.Flush(True)
-            cancellationToken.ThrowIfCancellationRequested()
+                streamBuffer.Flush(True)
+                cancellationToken.ThrowIfCancellationRequested()
 
-            If Not result.Success Then
-                ShowRunStatus(conversation, "重新连接：流式响应不可用，切换非流式。" & result.ErrorMessage)
-                If Not streamedAny Then SetRunResponseText(conversation, "正在重新连接...")
-                result = Await client.TryCreateChatCompletionAsync(modelId, messages, tools, reasoning, cancellationToken)
                 If Not result.Success Then
-                    Dim errorText = "系统故障：请求失败：" & result.ErrorMessage
-                    SetRunResponseText(conversation, errorText)
-                    conversation.Messages.Add(New AgentMessageData With {.Role = "assistant", .Content = errorText})
-                    ShowRunStatus(conversation, errorText, True)
-                    ExFloatingTip(MB_发送, result.ErrorMessage, 2600)
+                    ShowRunStatus(conversation, "重新连接：流式响应不可用，切换非流式。" & result.ErrorMessage)
+                    If Not streamedAny Then SetRunResponseText(conversation, "正在重新连接...")
+                    result = Await client.TryCreateChatCompletionAsync(modelId, messages, tools, reasoning, cancellationToken)
+                    If Not result.Success Then
+                        Dim errorText = "系统故障：请求失败：" & result.ErrorMessage
+                        SetRunResponseText(conversation, errorText)
+                        conversation.Messages.Add(New AgentMessageData With {.Role = "assistant", .Content = errorText})
+                        ShowRunStatus(conversation, errorText, True)
+                        ExFloatingTip(MB_发送, result.ErrorMessage, 2600)
+                        Exit Function
+                    End If
+                End If
+                AddUsage(conversation, result.Usage)
+
+                If result.ToolCalls Is Nothing OrElse result.ToolCalls.Count = 0 Then
+                    Dim content = If(result.Content, "").Trim()
+                    If content = "" Then content = "模型没有返回内容。"
+                    SetRunResponseText(conversation, content)
+                    conversation.Messages.Add(New AgentMessageData With {.Role = "assistant", .Content = content})
+                    ShowRunStatus(conversation, "响应完成")
                     Exit Function
                 End If
-            End If
-            AddUsage(conversation, result.Usage)
 
-            If result.ToolCalls Is Nothing OrElse result.ToolCalls.Count = 0 Then
-                Dim content = If(result.Content, "").Trim()
-                If content = "" Then content = "模型没有返回内容。"
-                SetRunResponseText(conversation, content)
-                conversation.Messages.Add(New AgentMessageData With {.Role = "assistant", .Content = content})
-                ShowRunStatus(conversation, "响应完成")
-                Exit Function
-            End If
-
-            SetRunResponseText(conversation, "正在调用工具：" & String.Join("、", result.ToolCalls.Select(Function(x) x.Name)))
-            ShowRunStatus(conversation, _activeResponseText)
-            Dim assistantToolMessage As New AgentMessageData With {
+                SetRunResponseText(conversation, "正在调用工具：" & String.Join("、", result.ToolCalls.Select(Function(x) x.Name)))
+                ShowRunStatus(conversation, _activeResponseText)
+                Dim assistantToolMessage As New AgentMessageData With {
                 .Role = "assistant",
                 .Content = If(result.Content, ""),
                 .ToolCalls = result.ToolCalls
             }
-            messages.Add(assistantToolMessage)
+                messages.Add(assistantToolMessage)
 
-            Dim currentRoundLog As New ToolRoundLog With {.Round = round}
-            toolRoundLogs.Add(currentRoundLog)
-            For Each callInfo In result.ToolCalls
-                cancellationToken.ThrowIfCancellationRequested()
-                Dim callLog As New ToolRunLog With {
+                Dim currentRoundLog As New ToolRoundLog With {.Round = round}
+                toolRoundLogs.Add(currentRoundLog)
+                For Each callInfo In result.ToolCalls
+                    cancellationToken.ThrowIfCancellationRequested()
+                    Dim callLog As New ToolRunLog With {
                     .Round = round,
                     .ToolName = callInfo.Name
                 }
-                currentRoundLog.Calls.Add(callLog)
-                RefreshActiveToolSummaryCard(conversation)
+                    currentRoundLog.Calls.Add(callLog)
+                    RefreshActiveToolSummaryCard(conversation)
 
-                Dim started = DateTime.Now
-                ShowRunStatus(conversation, "正在调用工具：" & callInfo.Name)
-                Dim toolResult = Await AgentLocalTools.ExecuteAsync(callInfo, permissionLevel, networkMode, client, modelId, reasoning, powerShellSession, cancellationToken)
-                cancellationToken.ThrowIfCancellationRequested()
-                Dim elapsed = DateTime.Now - started
-                toolResult = Agent通用工具_v6.LimitText(toolResult, 16000)
-                callLog.ElapsedMilliseconds = elapsed.TotalMilliseconds
-                callLog.ResultText = toolResult
-                RefreshActiveToolSummaryCard(conversation)
+                    Dim started = DateTime.Now
+                    ShowRunStatus(conversation, "正在调用工具：" & callInfo.Name)
+                    Dim toolResult = Await AgentLocalTools.ExecuteAsync(callInfo, permissionLevel, networkMode, client, modelId, reasoning, powerShellSession, cancellationToken)
+                    cancellationToken.ThrowIfCancellationRequested()
+                    Dim elapsed = DateTime.Now - started
+                    toolResult = Agent通用工具_v6.LimitText(toolResult, 16000)
+                    callLog.ElapsedMilliseconds = elapsed.TotalMilliseconds
+                    callLog.ResultText = toolResult
+                    RefreshActiveToolSummaryCard(conversation)
 
-                Dim toolMessage As New AgentMessageData With {
+                    Dim toolMessage As New AgentMessageData With {
                     .Role = "tool",
                     .Name = callInfo.Name,
                     .ToolCallId = callInfo.Id,
                     .Content = toolResult
                 }
-                messages.Add(toolMessage)
-                ShowRunStatus(conversation, $"工具完成：{callInfo.Name}，耗时 {FormatElapsedMilliseconds(elapsed.TotalMilliseconds)}")
-            Next
-        Loop
+                    messages.Add(toolMessage)
+                    ShowRunStatus(conversation, $"工具完成：{callInfo.Name}，耗时 {FormatElapsedMilliseconds(elapsed.TotalMilliseconds)}")
+                Next
+            Loop
         End Using
     End Function
 

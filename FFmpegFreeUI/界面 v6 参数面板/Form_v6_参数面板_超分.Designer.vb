@@ -248,6 +248,8 @@ Partial Class Form_v6_参数面板_超分
         MCB_着色器文件路径.BorderRadius = 10
         MCB_着色器文件路径.BorderSize = 0
         MCB_着色器文件路径.Dock = DockStyle.Left
+        MCB_着色器文件路径.DropDownBackdropBlurPasses = 2
+        MCB_着色器文件路径.DropDownBackdropBlurRadius = 30
         MCB_着色器文件路径.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
         MCB_着色器文件路径.DropDownHoverAnimationDuration = 0
         MCB_着色器文件路径.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
@@ -329,6 +331,8 @@ Partial Class Form_v6_参数面板_超分
         MCB_下采样算法.BorderRadius = 10
         MCB_下采样算法.BorderSize = 0
         MCB_下采样算法.Dock = DockStyle.Left
+        MCB_下采样算法.DropDownBackdropBlurPasses = 2
+        MCB_下采样算法.DropDownBackdropBlurRadius = 30
         MCB_下采样算法.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
         MCB_下采样算法.DropDownHoverAnimationDuration = 0
         MCB_下采样算法.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
@@ -391,6 +395,8 @@ Partial Class Form_v6_参数面板_超分
         MCB_上采样算法.BorderRadius = 10
         MCB_上采样算法.BorderSize = 0
         MCB_上采样算法.Dock = DockStyle.Left
+        MCB_上采样算法.DropDownBackdropBlurPasses = 2
+        MCB_上采样算法.DropDownBackdropBlurRadius = 30
         MCB_上采样算法.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
         MCB_上采样算法.DropDownHoverAnimationDuration = 0
         MCB_上采样算法.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))

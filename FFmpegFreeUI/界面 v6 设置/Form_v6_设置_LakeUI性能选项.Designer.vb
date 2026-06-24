@@ -127,6 +127,8 @@ Partial Class Form_v6_设置_LakeUI性能选项
         MCB_动画帧率.BorderRadius = 10
         MCB_动画帧率.BorderSize = 0
         MCB_动画帧率.Dock = DockStyle.Left
+        MCB_动画帧率.DropDownBackdropBlurPasses = 2
+        MCB_动画帧率.DropDownBackdropBlurRadius = 30
         MCB_动画帧率.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
         MCB_动画帧率.DropDownHoverAnimationDuration = 0
         MCB_动画帧率.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
@@ -199,6 +201,8 @@ Partial Class Form_v6_设置_LakeUI性能选项
         MCB_超容器背景映射条目预算.BorderRadius = 10
         MCB_超容器背景映射条目预算.BorderSize = 0
         MCB_超容器背景映射条目预算.Dock = DockStyle.Left
+        MCB_超容器背景映射条目预算.DropDownBackdropBlurPasses = 2
+        MCB_超容器背景映射条目预算.DropDownBackdropBlurRadius = 30
         MCB_超容器背景映射条目预算.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
         MCB_超容器背景映射条目预算.DropDownHoverAnimationDuration = 0
         MCB_超容器背景映射条目预算.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
@@ -258,6 +262,8 @@ Partial Class Form_v6_设置_LakeUI性能选项
         MCB_超容器背景映射脏区策略极限.BorderRadius = 10
         MCB_超容器背景映射脏区策略极限.BorderSize = 0
         MCB_超容器背景映射脏区策略极限.Dock = DockStyle.Left
+        MCB_超容器背景映射脏区策略极限.DropDownBackdropBlurPasses = 2
+        MCB_超容器背景映射脏区策略极限.DropDownBackdropBlurRadius = 30
         MCB_超容器背景映射脏区策略极限.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
         MCB_超容器背景映射脏区策略极限.DropDownHoverAnimationDuration = 0
         MCB_超容器背景映射脏区策略极限.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
@@ -317,6 +323,8 @@ Partial Class Form_v6_设置_LakeUI性能选项
         MCB_超容器背景映射源位图缓存.BorderRadius = 10
         MCB_超容器背景映射源位图缓存.BorderSize = 0
         MCB_超容器背景映射源位图缓存.Dock = DockStyle.Left
+        MCB_超容器背景映射源位图缓存.DropDownBackdropBlurPasses = 2
+        MCB_超容器背景映射源位图缓存.DropDownBackdropBlurRadius = 30
         MCB_超容器背景映射源位图缓存.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
         MCB_超容器背景映射源位图缓存.DropDownHoverAnimationDuration = 0
         MCB_超容器背景映射源位图缓存.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
@@ -372,6 +380,8 @@ Partial Class Form_v6_设置_LakeUI性能选项
         MCB_DW字体相关预算.BorderRadius = 10
         MCB_DW字体相关预算.BorderSize = 0
         MCB_DW字体相关预算.Dock = DockStyle.Left
+        MCB_DW字体相关预算.DropDownBackdropBlurPasses = 2
+        MCB_DW字体相关预算.DropDownBackdropBlurRadius = 30
         MCB_DW字体相关预算.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
         MCB_DW字体相关预算.DropDownHoverAnimationDuration = 0
         MCB_DW字体相关预算.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
@@ -427,6 +437,8 @@ Partial Class Form_v6_设置_LakeUI性能选项
         MCB_D2D每对象画刷缓存数量.BorderRadius = 10
         MCB_D2D每对象画刷缓存数量.BorderSize = 0
         MCB_D2D每对象画刷缓存数量.Dock = DockStyle.Left
+        MCB_D2D每对象画刷缓存数量.DropDownBackdropBlurPasses = 2
+        MCB_D2D每对象画刷缓存数量.DropDownBackdropBlurRadius = 30
         MCB_D2D每对象画刷缓存数量.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
         MCB_D2D每对象画刷缓存数量.DropDownHoverAnimationDuration = 0
         MCB_D2D每对象画刷缓存数量.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
@@ -484,6 +496,8 @@ Partial Class Form_v6_设置_LakeUI性能选项
         MCB_D2DImage缓存预算.BorderRadius = 10
         MCB_D2DImage缓存预算.BorderSize = 0
         MCB_D2DImage缓存预算.Dock = DockStyle.Left
+        MCB_D2DImage缓存预算.DropDownBackdropBlurPasses = 2
+        MCB_D2DImage缓存预算.DropDownBackdropBlurRadius = 30
         MCB_D2DImage缓存预算.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
         MCB_D2DImage缓存预算.DropDownHoverAnimationDuration = 0
         MCB_D2DImage缓存预算.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
@@ -555,6 +569,8 @@ Partial Class Form_v6_设置_LakeUI性能选项
         MCB_SSAA.BorderRadius = 10
         MCB_SSAA.BorderSize = 0
         MCB_SSAA.Dock = DockStyle.Left
+        MCB_SSAA.DropDownBackdropBlurPasses = 2
+        MCB_SSAA.DropDownBackdropBlurRadius = 30
         MCB_SSAA.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
         MCB_SSAA.DropDownHoverAnimationDuration = 0
         MCB_SSAA.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
@@ -612,6 +628,8 @@ Partial Class Form_v6_设置_LakeUI性能选项
         MCB_文字渲染模式.BorderRadius = 10
         MCB_文字渲染模式.BorderSize = 0
         MCB_文字渲染模式.Dock = DockStyle.Left
+        MCB_文字渲染模式.DropDownBackdropBlurPasses = 2
+        MCB_文字渲染模式.DropDownBackdropBlurRadius = 30
         MCB_文字渲染模式.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
         MCB_文字渲染模式.DropDownHoverAnimationDuration = 0
         MCB_文字渲染模式.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
@@ -669,6 +687,8 @@ Partial Class Form_v6_设置_LakeUI性能选项
         MCB_GPU抗锯齿.BorderRadius = 10
         MCB_GPU抗锯齿.BorderSize = 0
         MCB_GPU抗锯齿.Dock = DockStyle.Left
+        MCB_GPU抗锯齿.DropDownBackdropBlurPasses = 2
+        MCB_GPU抗锯齿.DropDownBackdropBlurRadius = 30
         MCB_GPU抗锯齿.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
         MCB_GPU抗锯齿.DropDownHoverAnimationDuration = 0
         MCB_GPU抗锯齿.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))

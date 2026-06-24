@@ -62,6 +62,7 @@ Public Class 设置_v6
     Public Property AgentEndPoint As String = ""
     Public Property AgentApiKey As String = ""
     Public Property Agent附加请求头 As String = ""
+    Public Property Agent附加请求Body As String = ""
     Public Property AgentModelId As String = ""
     Public Property Agent推理级别 As String = ""
     ''' <summary>
@@ -174,6 +175,7 @@ Public Class 设置_v6
         Form_v6_设置_Agent.MTB_自定义地址.Text = 实例对象.AgentEndPoint
         Form_v6_设置_Agent.MTB_APIKEY.Text = 实例对象.AgentApiKey
         Form_v6_设置_Agent.MTB_附加请求头.Text = 实例对象.Agent附加请求头
+        Form_v6_设置_Agent.MTB_附加请求Body.Text = 实例对象.Agent附加请求Body
         Form_v6_设置_Agent.刷新SPAgent端点列表()
         Form_v6_Agent.MCB_联网设置.SelectedIndex = Math.Min(Math.Max(AgentNetworkMode.Normalize(实例对象.Agent联网设置), 0), Math.Max(0, Form_v6_Agent.MCB_联网设置.Items.Count - 1))
         Form_v6_Agent.MCB_权限控制.SelectedIndex = Math.Min(Math.Max(实例对象.Agent权限级别, 0), Math.Max(0, Form_v6_Agent.MCB_权限控制.Items.Count - 1))

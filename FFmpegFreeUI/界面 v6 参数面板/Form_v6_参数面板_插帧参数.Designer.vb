@@ -269,6 +269,8 @@ Partial Class Form_v6_参数面板_插帧参数
         MCB_运动补偿模式.BorderRadius = 10
         MCB_运动补偿模式.BorderSize = 0
         MCB_运动补偿模式.Dock = DockStyle.Left
+        MCB_运动补偿模式.DropDownBackdropBlurPasses = 2
+        MCB_运动补偿模式.DropDownBackdropBlurRadius = 30
         MCB_运动补偿模式.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
         MCB_运动补偿模式.DropDownHoverAnimationDuration = 0
         MCB_运动补偿模式.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
@@ -334,6 +336,8 @@ Partial Class Form_v6_参数面板_插帧参数
         MCB_运动估计算法.BorderRadius = 10
         MCB_运动估计算法.BorderSize = 0
         MCB_运动估计算法.Dock = DockStyle.Left
+        MCB_运动估计算法.DropDownBackdropBlurPasses = 2
+        MCB_运动估计算法.DropDownBackdropBlurRadius = 30
         MCB_运动估计算法.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
         MCB_运动估计算法.DropDownHoverAnimationDuration = 0
         MCB_运动估计算法.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
@@ -378,6 +382,8 @@ Partial Class Form_v6_参数面板_插帧参数
         MCB_运动估计模式.BorderRadius = 10
         MCB_运动估计模式.BorderSize = 0
         MCB_运动估计模式.Dock = DockStyle.Left
+        MCB_运动估计模式.DropDownBackdropBlurPasses = 2
+        MCB_运动估计模式.DropDownBackdropBlurRadius = 30
         MCB_运动估计模式.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
         MCB_运动估计模式.DropDownHoverAnimationDuration = 0
         MCB_运动估计模式.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
@@ -415,6 +421,8 @@ Partial Class Form_v6_参数面板_插帧参数
         MCB_插帧模式.BorderRadius = 10
         MCB_插帧模式.BorderSize = 0
         MCB_插帧模式.Dock = DockStyle.Left
+        MCB_插帧模式.DropDownBackdropBlurPasses = 2
+        MCB_插帧模式.DropDownBackdropBlurRadius = 30
         MCB_插帧模式.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
         MCB_插帧模式.DropDownHoverAnimationDuration = 0
         MCB_插帧模式.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))

@@ -377,6 +377,8 @@ Partial Class Form_v6_性能监控
         ModernComboBox3.BorderRadius = 10
         ModernComboBox3.BorderSize = 0
         ModernComboBox3.Dock = DockStyle.Fill
+        ModernComboBox3.DropDownBackdropBlurPasses = 2
+        ModernComboBox3.DropDownBackdropBlurRadius = 30
         ModernComboBox3.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
         ModernComboBox3.DropDownHoverAnimationDuration = 0
         ModernComboBox3.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
@@ -411,6 +413,8 @@ Partial Class Form_v6_性能监控
         ModernComboBox2.BorderRadius = 10
         ModernComboBox2.BorderSize = 0
         ModernComboBox2.Dock = DockStyle.Left
+        ModernComboBox2.DropDownBackdropBlurPasses = 2
+        ModernComboBox2.DropDownBackdropBlurRadius = 30
         ModernComboBox2.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
         ModernComboBox2.DropDownHoverAnimationDuration = 0
         ModernComboBox2.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
@@ -485,6 +489,8 @@ Partial Class Form_v6_性能监控
         ModernComboBox1.BorderRadius = 10
         ModernComboBox1.BorderSize = 0
         ModernComboBox1.Dock = DockStyle.Top
+        ModernComboBox1.DropDownBackdropBlurPasses = 2
+        ModernComboBox1.DropDownBackdropBlurRadius = 30
         ModernComboBox1.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
         ModernComboBox1.DropDownHoverAnimationDuration = 0
         ModernComboBox1.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))

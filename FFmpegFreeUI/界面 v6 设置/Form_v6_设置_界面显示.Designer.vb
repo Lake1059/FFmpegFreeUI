@@ -60,6 +60,8 @@ Partial Class Form_v6_设置_界面显示
         MCB_全局字体.BorderRadius = 10
         MCB_全局字体.BorderSize = 0
         MCB_全局字体.Dock = DockStyle.Left
+        MCB_全局字体.DropDownBackdropBlurPasses = 2
+        MCB_全局字体.DropDownBackdropBlurRadius = 30
         MCB_全局字体.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
         MCB_全局字体.DropDownHoverAnimationDuration = 0
         MCB_全局字体.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))

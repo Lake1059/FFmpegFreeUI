@@ -39,12 +39,16 @@ Public Class 网络功能
         <JsonPropertyName("extra_headers")>
         Public Property ExtraHeaders As String = ""
 
+        <JsonPropertyName("extra_body")>
+        Public Property ExtraBody As String = ""
+
         Public Function Clone() As AgentSpEndpointInfo
             Return New AgentSpEndpointInfo With {
                 .DisplayName = If(DisplayName, ""),
                 .Address = If(Address, ""),
                 .ApiKey = If(ApiKey, ""),
-                .ExtraHeaders = If(ExtraHeaders, "")
+                .ExtraHeaders = If(ExtraHeaders, ""),
+                .ExtraBody = If(ExtraBody, "")
             }
         End Function
     End Class
@@ -121,10 +125,10 @@ Public Class 网络功能
     Public Shared Function 创建Agent端点客户端() As AgentEndpointClient
         Dim spEndpoint As AgentSpEndpointInfo = 获取当前SPAgent端点()
         If spEndpoint IsNot Nothing Then
-            Return New AgentEndpointClient(spEndpoint.Address, spEndpoint.ApiKey, spEndpoint.ExtraHeaders)
+            Return New AgentEndpointClient(spEndpoint.Address, spEndpoint.ApiKey, spEndpoint.ExtraHeaders, spEndpoint.ExtraBody)
         End If
 
-        Return New AgentEndpointClient(设置_v6.实例对象.AgentEndPoint, 设置_v6.实例对象.AgentApiKey, 设置_v6.实例对象.Agent附加请求头)
+        Return New AgentEndpointClient(设置_v6.实例对象.AgentEndPoint, 设置_v6.实例对象.AgentApiKey, 设置_v6.实例对象.Agent附加请求头, 设置_v6.实例对象.Agent附加请求Body)
     End Function
 
     Private Shared Sub 设置SPAgent端点获取结果(端点列表 As List(Of AgentSpEndpointInfo), 错误 As String)
@@ -240,6 +244,11 @@ Public Class 网络功能
             Catch
                 Continue For
             End Try
+            Try
+                Dim unused = AgentEndpointClient.ParseExtraBody(item.ExtraBody)
+            Catch
+                Continue For
+            End Try
 
             Dim key As String = displayName & ControlChars.NullChar & address
             If Not keys.Add(key) Then Continue For
@@ -248,7 +257,8 @@ Public Class 网络功能
                 .DisplayName = displayName,
                 .Address = address,
                 .ApiKey = If(item.ApiKey, "").Trim(),
-                .ExtraHeaders = If(item.ExtraHeaders, "")
+                .ExtraHeaders = If(item.ExtraHeaders, ""),
+                .ExtraBody = If(item.ExtraBody, "")
             })
         Next
 
