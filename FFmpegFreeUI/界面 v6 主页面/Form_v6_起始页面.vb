@@ -62,7 +62,7 @@ Public Class Form_v6_起始页面
     End Sub
 
     Private Sub MB_终末诗_Click(sender As Object, e As EventArgs) Handles MB_终末诗.Click
-        Process.Start(New ProcessStartInfo With {.FileName = "https://zhuanlan.zhihu.com/p/1943079795341623993", .UseShellExecute = True})
+        Process.Start(New ProcessStartInfo With {.FileName = "https://zhuanlan.zhihu.com/p/2051408462114977461", .UseShellExecute = True})
     End Sub
 
     Private Sub MB_FFmpegFull_Click(sender As Object, e As EventArgs) Handles MB_FFmpegFull.Click

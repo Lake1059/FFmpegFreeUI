@@ -20,6 +20,8 @@ Public Class Form_v6_Agent
     Private _activeRunStatusItem As LakeUI.AgentRoom.ChatItem = Nothing
     Private _activeResponseText As String = ""
     Private _activeRunStatusText As String = ""
+    Private _activeRunStartedAtUtc As DateTime = DateTime.MinValue
+    Private _activeRunElapsedTimer As System.Windows.Forms.Timer = Nothing
     Private _restartRunConversation As AgentConversationData = Nothing
     Private _modelEndpointSignature As String = ""
     Private _refreshingModels As Boolean = False
@@ -103,15 +105,7 @@ Public Class Form_v6_Agent
                 _lastFlushUtc = DateTime.UtcNow
                 Return
             End If
-            If Not _started Then
-                If _item.Text = "正在思考..." OrElse
-                    _item.Text = "正在重新连接..." OrElse
-                    _item.Text.StartsWith("正在调用工具：") Then
-                    _item.Text = ""
-                End If
-                _started = True
-            End If
-
+            If Not _started Then _started = True
             _item.Text &= _pendingText.ToString()
             _pendingText.Clear()
             _lastFlushUtc = DateTime.UtcNow
@@ -549,6 +543,46 @@ Public Class Form_v6_Agent
         AgentRoom1.AddCard(message.Content)
     End Sub
 
+    Private Function FormatRunOverviewCard(roundLogs As IEnumerable(Of ToolRoundLog)) As String
+        Dim sb As New StringBuilder
+        sb.AppendLine("已用时间：" & FormatRunElapsed())
+
+        Dim toolSummary = FormatToolSummaryCard(roundLogs)
+        If String.IsNullOrWhiteSpace(toolSummary) Then
+            sb.AppendLine("工具调用：暂无")
+        Else
+            sb.Append(toolSummary)
+        End If
+
+        Return sb.ToString().Trim()
+    End Function
+
+    Private Function FormatRunElapsed() As String
+        If _activeRunStartedAtUtc = DateTime.MinValue Then Return "0 毫秒"
+        Return FormatElapsedMilliseconds((DateTime.UtcNow - _activeRunStartedAtUtc).TotalMilliseconds)
+    End Function
+
+    Private Function IsRunResponsePlaceholder(text As String) As Boolean
+        text = If(text, "").Trim()
+        Return text = "" OrElse
+            text = "正在思考..." OrElse
+            text = "正在重新连接..." OrElse
+            text.StartsWith("正在调用工具：", StringComparison.Ordinal)
+    End Function
+
+    Private Function GetVisibleRunResponsePrefix() As String
+        Dim text = If(_activeResponseText, "").Trim()
+        Return If(IsRunResponsePlaceholder(text), "", text)
+    End Function
+
+    Private Function CombineRunResponseText(prefix As String, currentText As String) As String
+        prefix = If(prefix, "").Trim()
+        currentText = If(currentText, "").Trim()
+        If prefix = "" Then Return currentText
+        If currentText = "" Then Return prefix
+        Return prefix & vbCrLf & vbCrLf & currentText
+    End Function
+
     Private Function FormatToolSummaryCard(roundLogs As IEnumerable(Of ToolRoundLog)) As String
         Dim calls As New List(Of ToolRunLog)
         If roundLogs IsNot Nothing Then
@@ -626,24 +660,58 @@ Public Class Form_v6_Agent
         Return $"{CInt(Math.Floor(span.TotalHours))} 小时 {span.Minutes} 分钟"
     End Function
 
-    Private Sub UpdateToolSummaryCard(roundLogs As List(Of ToolRoundLog),
-                                      ByRef cardItem As LakeUI.AgentRoom.ChatItem,
-                                      Optional beforeItem As LakeUI.AgentRoom.ChatItem = Nothing)
-        Dim content = FormatToolSummaryCard(roundLogs)
-        If String.IsNullOrWhiteSpace(content) Then Return
+    Private Sub UpdateActiveRunOverviewCard(conversation As AgentConversationData)
+        If Not ReferenceEquals(conversation, _activeRunConversation) Then Return
+        If Not IsConversationSelected(conversation) Then Return
 
-        If cardItem Is Nothing Then
-            cardItem = New LakeUI.AgentRoom.ChatItem(LakeUI.AgentRoom.ChatItemKind.Card, content)
-            Dim insertIndex = If(beforeItem Is Nothing, -1, AgentRoom1.Items.IndexOf(beforeItem))
-            If insertIndex >= 0 Then
-                AgentRoom1.Items.Insert(insertIndex, cardItem)
-            Else
-                AgentRoom1.Items.Add(cardItem)
-            End If
+        Dim content = FormatRunOverviewCard(_activeToolRoundLogs)
+        If _activeToolSummaryItem Is Nothing OrElse Not AgentRoom1.Items.Contains(_activeToolSummaryItem) Then
+            _activeToolSummaryItem = New LakeUI.AgentRoom.ChatItem(LakeUI.AgentRoom.ChatItemKind.Card, content)
+            AgentRoom1.Items.Add(_activeToolSummaryItem)
         Else
-            cardItem.Text = content
+            _activeToolSummaryItem.Text = content
         End If
+
+        EnsureActiveRunItemOrder()
         AgentRoom1.ScrollToBottom()
+    End Sub
+
+    Private Sub UpdateActiveRunStatusCard(conversation As AgentConversationData, content As String, keepRecord As Boolean)
+        If Not IsConversationSelected(conversation) Then Return
+
+        If keepRecord OrElse _activeRunStatusItem Is Nothing OrElse Not AgentRoom1.Items.Contains(_activeRunStatusItem) Then
+            _activeRunStatusItem = New LakeUI.AgentRoom.ChatItem(LakeUI.AgentRoom.ChatItemKind.Card, content)
+            AgentRoom1.Items.Add(_activeRunStatusItem)
+        Else
+            _activeRunStatusItem.Text = content
+        End If
+
+        EnsureActiveRunItemOrder()
+        AgentRoom1.ScrollToBottom()
+    End Sub
+
+    Private Sub EnsureActiveRunItemOrder()
+        Dim orderedItems As New List(Of LakeUI.AgentRoom.ChatItem)
+        If _activeToolSummaryItem IsNot Nothing AndAlso AgentRoom1.Items.Contains(_activeToolSummaryItem) Then orderedItems.Add(_activeToolSummaryItem)
+        If _activeResponseItem IsNot Nothing AndAlso AgentRoom1.Items.Contains(_activeResponseItem) Then orderedItems.Add(_activeResponseItem)
+        If _activeRunStatusItem IsNot Nothing AndAlso AgentRoom1.Items.Contains(_activeRunStatusItem) Then orderedItems.Add(_activeRunStatusItem)
+        If orderedItems.Count = 0 Then Return
+
+        Dim insertIndex = AgentRoom1.Items.Count
+        For Each item In orderedItems
+            Dim itemIndex = AgentRoom1.Items.IndexOf(item)
+            If itemIndex >= 0 Then insertIndex = Math.Min(insertIndex, itemIndex)
+        Next
+
+        For Each item In orderedItems
+            AgentRoom1.Items.Remove(item)
+        Next
+
+        If insertIndex > AgentRoom1.Items.Count Then insertIndex = AgentRoom1.Items.Count
+        For Each item In orderedItems
+            AgentRoom1.Items.Insert(insertIndex, item)
+            insertIndex += 1
+        Next
     End Sub
 
     Private Sub AddToolSummaryMessage(conversation As AgentConversationData, roundLogs As List(Of ToolRoundLog))
@@ -748,21 +816,23 @@ Public Class Form_v6_Agent
     End Sub
 
     Private Sub ShowRunStatus(conversation As AgentConversationData, text As String, Optional keepRecord As Boolean = False)
-        Dim content = $"状态 {DateTime.Now:HH:mm:ss}{vbCrLf}{If(text, "").Trim()}"
+        Dim content = If(text, "").Trim()
         If ReferenceEquals(conversation, _activeRunConversation) Then _activeRunStatusText = content
-        If Not IsConversationSelected(conversation) Then Return
-
-        If keepRecord OrElse _activeRunStatusItem Is Nothing OrElse Not AgentRoom1.Items.Contains(_activeRunStatusItem) Then
-            _activeRunStatusItem = AddCardBeforeActiveResponse(content)
-        Else
-            _activeRunStatusItem.Text = content
+        If ReferenceEquals(conversation, _activeRunConversation) Then
+            UpdateActiveRunOverviewCard(conversation)
+            UpdateActiveRunStatusCard(conversation, content, keepRecord)
+            Return
         End If
+
+        If Not IsConversationSelected(conversation) Then Return
+        AgentRoom1.AddCard(content)
         AgentRoom1.ScrollToBottom()
     End Sub
 
     Private Function AddCardBeforeActiveResponse(content As String) As LakeUI.AgentRoom.ChatItem
         Dim item As New LakeUI.AgentRoom.ChatItem(LakeUI.AgentRoom.ChatItemKind.Card, content)
-        Dim insertIndex = If(_activeResponseItem Is Nothing, -1, AgentRoom1.Items.IndexOf(_activeResponseItem))
+        Dim anchor = If(_activeToolSummaryItem, _activeResponseItem)
+        Dim insertIndex = If(anchor Is Nothing, -1, AgentRoom1.Items.IndexOf(anchor))
         If insertIndex >= 0 Then
             AgentRoom1.Items.Insert(insertIndex, item)
         Else
@@ -779,19 +849,28 @@ Public Class Form_v6_Agent
         If ReferenceEquals(conversation, _activeRunConversation) Then _activeResponseText = If(text, "")
         If Not IsConversationSelected(conversation) Then Return
 
+        If IsRunResponsePlaceholder(_activeResponseText) Then
+            If _activeResponseItem IsNot Nothing AndAlso AgentRoom1.Items.Contains(_activeResponseItem) Then
+                AgentRoom1.Items.Remove(_activeResponseItem)
+            End If
+            _activeResponseItem = Nothing
+            EnsureActiveRunItemOrder()
+            AgentRoom1.ScrollToBottom()
+            Return
+        End If
+
         If _activeResponseItem Is Nothing OrElse Not AgentRoom1.Items.Contains(_activeResponseItem) Then
-            _activeResponseItem = AgentRoom1.AddAssistantMessage(_activeResponseText)
+            _activeResponseItem = New LakeUI.AgentRoom.ChatItem(LakeUI.AgentRoom.ChatItemKind.AssistantMessage, _activeResponseText)
+            AgentRoom1.Items.Add(_activeResponseItem)
         Else
             _activeResponseItem.Text = _activeResponseText
         End If
+        EnsureActiveRunItemOrder()
         AgentRoom1.ScrollToBottom()
     End Sub
 
     Private Sub RefreshActiveToolSummaryCard(conversation As AgentConversationData)
-        If Not ReferenceEquals(conversation, _activeRunConversation) Then Return
-        If _activeToolRoundLogs Is Nothing Then Return
-        If Not IsConversationSelected(conversation) Then Return
-        UpdateToolSummaryCard(_activeToolRoundLogs, _activeToolSummaryItem, _activeResponseItem)
+        UpdateActiveRunOverviewCard(conversation)
     End Sub
 
     Private Sub RenderActiveRunOverlay()
@@ -800,27 +879,20 @@ Public Class Form_v6_Agent
         _activeResponseItem = Nothing
         If _activeRunConversation Is Nothing OrElse Not IsConversationSelected(_activeRunConversation) Then Return
 
+        _activeToolSummaryItem = AgentRoom1.AddCard(FormatRunOverviewCard(_activeToolRoundLogs))
+        If Not IsRunResponsePlaceholder(_activeResponseText) Then
+            _activeResponseItem = AgentRoom1.AddAssistantMessage(_activeResponseText)
+        End If
+
         If Not String.IsNullOrWhiteSpace(_activeRunStatusText) Then
             _activeRunStatusItem = AgentRoom1.AddCard(_activeRunStatusText)
         End If
 
-        _activeResponseItem = AgentRoom1.AddAssistantMessage(If(String.IsNullOrWhiteSpace(_activeResponseText), "正在思考...", _activeResponseText))
-
-        If _activeToolRoundLogs IsNot Nothing AndAlso _activeToolRoundLogs.Count > 0 Then
-            Dim content = FormatToolSummaryCard(_activeToolRoundLogs)
-            If Not String.IsNullOrWhiteSpace(content) Then
-                _activeToolSummaryItem = New LakeUI.AgentRoom.ChatItem(LakeUI.AgentRoom.ChatItemKind.Card, content)
-                Dim insertIndex = AgentRoom1.Items.IndexOf(_activeResponseItem)
-                If insertIndex >= 0 Then
-                    AgentRoom1.Items.Insert(insertIndex, _activeToolSummaryItem)
-                Else
-                    AgentRoom1.Items.Add(_activeToolSummaryItem)
-                End If
-            End If
-        End If
+        EnsureActiveRunItemOrder()
     End Sub
 
     Private Sub ClearActiveRunState()
+        StopActiveRunElapsedTimer()
         _activeResponseItem = Nothing
         _activeRunConversation = Nothing
         _activeToolRoundLogs = Nothing
@@ -828,6 +900,26 @@ Public Class Form_v6_Agent
         _activeRunStatusItem = Nothing
         _activeResponseText = ""
         _activeRunStatusText = ""
+        _activeRunStartedAtUtc = DateTime.MinValue
+    End Sub
+
+    Private Sub StartActiveRunElapsedTimer()
+        StopActiveRunElapsedTimer()
+        _activeRunElapsedTimer = New System.Windows.Forms.Timer With {.Interval = 1000}
+        AddHandler _activeRunElapsedTimer.Tick, AddressOf ActiveRunElapsedTimer_Tick
+        _activeRunElapsedTimer.Start()
+    End Sub
+
+    Private Sub StopActiveRunElapsedTimer()
+        If _activeRunElapsedTimer Is Nothing Then Return
+        RemoveHandler _activeRunElapsedTimer.Tick, AddressOf ActiveRunElapsedTimer_Tick
+        _activeRunElapsedTimer.Stop()
+        _activeRunElapsedTimer.Dispose()
+        _activeRunElapsedTimer = Nothing
+    End Sub
+
+    Private Sub ActiveRunElapsedTimer_Tick(sender As Object, e As EventArgs)
+        UpdateActiveRunOverviewCard(_activeRunConversation)
     End Sub
 
     Private Sub SaveCurrent()
@@ -1014,15 +1106,20 @@ Public Class Form_v6_Agent
         Dim localCts As New Threading.CancellationTokenSource()
         _requestCts = localCts
         _activeRunConversation = runConversation
+        _activeRunStartedAtUtc = DateTime.UtcNow
         _activeResponseText = "正在思考..."
         _activeRunStatusText = ""
         _activeRunStatusItem = Nothing
         _activeResponseItem = Nothing
-        If IsConversationSelected(runConversation) Then _activeResponseItem = AgentRoom1.AddAssistantMessage("正在思考...")
         UpdateSendButtonState()
         Dim toolRoundLogs As New List(Of ToolRoundLog)
         _activeToolRoundLogs = toolRoundLogs
         _activeToolSummaryItem = Nothing
+        If IsConversationSelected(runConversation) Then
+            UpdateActiveRunOverviewCard(runConversation)
+            SetRunResponseText(runConversation, "正在思考...")
+        End If
+        StartActiveRunElapsedTimer()
         Dim shouldRestart As Boolean = False
         Try
             ShowRunStatus(runConversation, "正在准备上下文")
@@ -1106,7 +1203,8 @@ Public Class Form_v6_Agent
                 round += 1
                 Dim streamedAny As Boolean = False
                 Dim result As AgentChatResult = Nothing
-                Dim streamBuffer As New StreamingTextBuffer(AgentRoom1, Nothing, Sub(value) SetRunResponseText(conversation, value))
+                Dim responsePrefix = GetVisibleRunResponsePrefix()
+                Dim streamBuffer As New StreamingTextBuffer(AgentRoom1, Nothing, Sub(value) SetRunResponseText(conversation, CombineRunResponseText(responsePrefix, value)))
 
                 ShowRunStatus(conversation, $"正在思考：第 {round} 轮")
                 result = Await client.TryCreateChatCompletionStreamingAsync(
@@ -1146,8 +1244,8 @@ Public Class Form_v6_Agent
                     Exit Function
                 End If
 
-                SetRunResponseText(conversation, "正在调用工具：" & String.Join("、", result.ToolCalls.Select(Function(x) x.Name)))
-                ShowRunStatus(conversation, _activeResponseText)
+                SetRunResponseText(conversation, CombineRunResponseText(responsePrefix, result.Content))
+                ShowRunStatus(conversation, "正在调用工具：" & String.Join("、", result.ToolCalls.Select(Function(x) x.Name)))
                 Dim assistantToolMessage As New AgentMessageData With {
                 .Role = "assistant",
                 .Content = If(result.Content, ""),
