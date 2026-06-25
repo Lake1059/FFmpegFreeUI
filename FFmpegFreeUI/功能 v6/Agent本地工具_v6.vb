@@ -366,7 +366,7 @@ Public Class AgentLocalTools
             {"query", New Dictionary(Of String, Object) From {{"type", "string"}, {"description", "可选关键词，用于模糊查找字段名"}}},
             {"include_current_values", New Dictionary(Of String, Object) From {{"type", "boolean"}}}
         }),
-            FunctionTool("apply_parameter_panel_patch", "修改当前 3FUI 参数面板。优先传 changes 对象，键为 预设数据_v6 的属性名；也可传 preset_json 应用完整预设。", New Dictionary(Of String, Object) From {
+            FunctionTool("apply_parameter_panel_patch", "修改当前 3FUI 参数面板。优先传 changes 对象，键为 预设数据_v6 的属性名；也可传 preset_json 应用完整预设。修改 滤镜排序系统 时必须传完整排序列表，删除内置滤镜会同步清空对应参数页。", New Dictionary(Of String, Object) From {
             {"changes", New Dictionary(Of String, Object) From {{"type", "object"}, {"additionalProperties", True}}},
             {"preset_json", New Dictionary(Of String, Object) From {{"type", "string"}}},
             {"note", New Dictionary(Of String, Object) From {{"type", "string"}}}
@@ -617,18 +617,23 @@ Public Class AgentLocalTools
     Private Shared Function ApplyParameterPanelPatch(args As JsonElement) As String
         Dim presetJson As JsonElement
         Dim preset As 预设数据_v6
+        Dim previousPreset = 预设管理_v6.从面板创建预设(Form_v6_参数面板)
+        Dim explicitFilterOrderChange As Boolean = False
         If args.ValueKind = JsonValueKind.Object AndAlso args.TryGetProperty("preset_json", presetJson) AndAlso presetJson.ValueKind = JsonValueKind.String AndAlso presetJson.GetString() <> "" Then
             preset = JsonSerializer.Deserialize(Of 预设数据_v6)(presetJson.GetString(), JsonSO)
+            explicitFilterOrderChange = JsonObjectHasProperty(presetJson.GetString(), NameOf(预设数据_v6.滤镜排序系统))
         Else
-            preset = 预设管理_v6.从面板创建预设(Form_v6_参数面板)
+            preset = ClonePresetData(previousPreset)
             Dim changes As JsonElement
             If args.ValueKind = JsonValueKind.Object AndAlso args.TryGetProperty("changes", changes) AndAlso changes.ValueKind = JsonValueKind.Object Then
+                explicitFilterOrderChange = HasJsonProperty(changes, NameOf(预设数据_v6.滤镜排序系统))
                 ApplyTopLevelChanges(preset, changes)
             Else
                 Return "没有提供 changes 或 preset_json"
             End If
         End If
 
+        If explicitFilterOrderChange Then 预设管理_v6.应用Agent滤镜排序请求(preset, previousPreset)
         预设管理_v6.显示预设(preset, Form_v6_参数面板)
         Return "已应用参数面板修改" & vbCrLf & BuildParameterOverview(preset)
     End Function
@@ -875,6 +880,24 @@ Public Class AgentLocalTools
             Return [Enum].ToObject(targetType, element.GetInt32())
         End If
         Return JsonSerializer.Deserialize(element.GetRawText(), targetType, JsonSO)
+    End Function
+
+    Private Shared Function JsonObjectHasProperty(json As String, propertyName As String) As Boolean
+        If String.IsNullOrWhiteSpace(json) OrElse String.IsNullOrWhiteSpace(propertyName) Then Return False
+        Try
+            Using doc = JsonDocument.Parse(json)
+                If doc.RootElement.ValueKind <> JsonValueKind.Object Then Return False
+                Dim value As JsonElement
+                Return doc.RootElement.TryGetProperty(propertyName, value)
+            End Using
+        Catch
+            Return False
+        End Try
+    End Function
+
+    Private Shared Function ClonePresetData(source As 预设数据_v6) As 预设数据_v6
+        If source Is Nothing Then Return New 预设数据_v6
+        Return JsonSerializer.Deserialize(Of 预设数据_v6)(JsonSerializer.Serialize(source, JsonSO), JsonSO)
     End Function
 
     Private Shared Function BuildParameterOverview(preset As 预设数据_v6) As String

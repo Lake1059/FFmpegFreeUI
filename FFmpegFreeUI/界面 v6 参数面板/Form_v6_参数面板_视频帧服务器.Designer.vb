@@ -138,7 +138,7 @@ Partial Class Form_v6_参数面板_视频帧服务器
         HtmlColorLabel5.Padding = New Padding(0, 0, 0, 5)
         HtmlColorLabel5.Size = New Size(724, 46)
         HtmlColorLabel5.TabIndex = 13
-        HtmlColorLabel5.Text = "<span style=""font-size:10pt; color:Gray"">在 .vpy/.py 脚本文件中使用 &lt;FilePath&gt; 来表示输入文件路径</span><br><span style=""font-size:10pt; color:Gray"">创建 AviSynth 文件夹并放置 .vpy/.py 文件就可以在下拉框快速选择</span>"
+        HtmlColorLabel5.Text = "<span style=""font-size:10pt; color:Gray"">在 .vpy/.py 脚本文件中使用 &lt;FilePath&gt; 来表示输入文件路径</span><br><span style=""font-size:10pt; color:Gray"">创建 VapourSynth 文件夹并放置 .vpy/.py 文件就可以在下拉框快速选择</span>"
         ' 
         ' HtmlColorLabel6
         ' 

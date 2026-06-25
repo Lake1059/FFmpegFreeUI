@@ -2,7 +2,7 @@ Imports System.IO
 Imports LakeUI
 
 Public Class Form_v6_编码队列
-    Dim DPI As Single = Me.DeviceDpi / 96
+    Private DPI As Single = 1.0F
     Private Shared ReadOnly 非任务列理想宽度基准 As Integer() = {82, 70, 66, 136, 54, 98, 145}
     Private Shared ReadOnly 非任务列最小宽度基准 As Integer() = {72, 60, 56, 112, 46, 82, 118}
     Private Shared ReadOnly 非任务列常用文本 As String() = {"正在处理", "100.0%", "1000%", "999 MB - 999 MB", "99", "100.00 Mbps", "9h99m99s - 9h99m99s"}
@@ -31,14 +31,14 @@ Public Class Form_v6_编码队列
     End Sub
 
     Private Sub Form_v6_编码队列_Shown(sender As Object, e As EventArgs) Handles Me.Shown
-        DPI = Me.DeviceDpi / 96
-        上次列宽有效总宽度 = -1
+        DPI = 获取列宽Dpi比例()
+        重置列宽校准缓存()
         请求校准编码队列列宽()
     End Sub
 
     Private Sub Form_v6_编码队列_DpiChanged(sender As Object, e As DpiChangedEventArgs) Handles Me.DpiChanged
-        DPI = Me.DeviceDpi / 96
-        上次列宽有效总宽度 = -1
+        DPI = 获取列宽Dpi比例()
+        重置列宽校准缓存()
         请求校准编码队列列宽()
     End Sub
 
@@ -334,6 +334,17 @@ Public Class Form_v6_编码队列
         请求校准编码队列列宽()
     End Sub
 
+    Private Sub UltraDetailListView1_DpiChangedAfterParent(sender As Object, e As EventArgs) Handles UltraDetailListView1.DpiChangedAfterParent
+        DPI = 获取列宽Dpi比例()
+        重置列宽校准缓存()
+        请求校准编码队列列宽()
+    End Sub
+
+    Private Sub UltraDetailListView1_FontChanged(sender As Object, e As EventArgs) Handles UltraDetailListView1.FontChanged
+        重置列宽校准缓存()
+        请求校准编码队列列宽()
+    End Sub
+
     Private Sub 列宽调整计时器_Tick(sender As Object, e As EventArgs) Handles 列宽调整计时器.Tick
         列宽调整计时器.Stop()
         校准编码队列列宽()
@@ -345,10 +356,19 @@ Public Class Form_v6_编码队列
         列宽调整计时器.Start()
     End Sub
 
+    Private Sub 重置列宽校准缓存()
+        上次列宽有效总宽度 = -1
+        上次列宽Dpi = -1
+    End Sub
+
+    Private Function 获取列宽Dpi比例() As Single
+        Return D2DGlobals.GetCurrentDpiScale(UltraDetailListView1)
+    End Function
+
     Private Sub 校准编码队列列宽()
         If IsDisposed OrElse UltraDetailListView1 Is Nothing OrElse UltraDetailListView1.Columns.Count < 8 Then Exit Sub
 
-        DPI = CSng(Me.DeviceDpi / 96.0F)
+        DPI = 获取列宽Dpi比例()
         Dim 有效总宽度 = UltraDetailListView1.ClientSize.Width -
                           UltraDetailListView1.Padding.Left -
                           UltraDetailListView1.Padding.Right -
@@ -401,7 +421,7 @@ Public Class Form_v6_编码队列
     End Function
 
     Private Function 测量列文本宽度(text As String) As Integer
-        Return TextRenderer.MeasureText(If(text, ""), UltraDetailListView1.Font).Width + 缩放宽度(列宽文本预留宽度基准, DPI)
+        Return D2DTextRenderer.MeasureWidth(If(text, ""), UltraDetailListView1.Font, DPI) + 缩放宽度(列宽文本预留宽度基准, DPI)
     End Function
 
     Private Shared Function 压缩列宽(理想宽度 As Integer(), 最小宽度 As Integer(), 目标总宽度 As Integer) As Integer()
