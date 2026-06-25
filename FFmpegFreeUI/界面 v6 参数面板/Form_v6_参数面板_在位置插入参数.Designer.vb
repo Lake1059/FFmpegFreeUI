@@ -116,7 +116,7 @@ Partial Class Form_v6_参数面板_在位置插入参数
         HtmlColorLabel3.Padding = New Padding(0, 20, 0, 10)
         HtmlColorLabel3.Size = New Size(726, 55)
         HtmlColorLabel3.TabIndex = 14
-        HtmlColorLabel3.Text = "<span style=""font-size:13; color:Silver"">之后参数</span>   拼接在输出文件之前"
+        HtmlColorLabel3.Text = "<span style=""font-size:13; color:Silver"">之后参数</span>   拼接在输出文件之前，在前面所有参数之后"
         ' 
         ' ModernTextBox3
         ' 

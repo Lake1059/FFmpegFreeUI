@@ -149,7 +149,6 @@ Partial Public Class 预设管理_v6
 
         AddRaw(前置, a.自定义参数_开头参数)
         AddRaw(主输入后, a.自定义参数_之前参数)
-        AddRaw(输出前, a.自定义参数_之后参数)
         AddRaw(输出后, a.自定义参数_最后参数)
         Dim 剪辑参数 = 生成剪辑参数(a, 阶段, 媒体总时长, 结果)
         AddRaw(输入前, 剪辑参数.输入前)
@@ -198,6 +197,7 @@ Partial Public Class 预设管理_v6
         End If
         AddRaw(输出前, a.自定义参数_视频参数)
         AddRaw(输出前, a.自定义参数_音频参数)
+        AddRaw(输出前, a.自定义参数_之后参数)
 
         Dim 丢弃输出 = 阶段 = 预设数据_v6.命令行阶段.二次编码第一遍 OrElse a.输出_输出文件参数使用方法 = 预设数据_v6.输出文件参数使用方法.声明丢弃输出
         Dim 输出目标 = If(丢弃输出, "NUL", 输出文件)
@@ -504,7 +504,7 @@ Partial Public Class 预设管理_v6
     Private Shared Function 可作为输出滤镜片段(片段 As String) As Boolean
         Dim value = If(片段, "").Trim()
         If value = "" Then Return False
-        Return Not value.Contains("["c) AndAlso Not value.Contains("]"c) AndAlso Not value.Contains(";"c)
+        Return Not 包含未引用滤镜结构字符(value, "[];")
     End Function
 
     Private Shared Function 添加完整滤镜图链(图段 As List(Of String),
@@ -566,8 +566,8 @@ Partial Public Class 预设管理_v6
 
     Private Shared Function 获取完整滤镜图输出标签(滤镜图 As String) As List(Of String)
         Dim counts As New Dictionary(Of String, Integer)(StringComparer.Ordinal)
-        For Each m As System.Text.RegularExpressions.Match In System.Text.RegularExpressions.Regex.Matches(If(滤镜图, ""), "\[([^\[\]]+)\]")
-            Dim label = m.Groups(1).Value.Trim()
+        For Each rawLabel In 获取未引用滤镜标签(滤镜图)
+            Dim label = rawLabel.Trim()
             If label = "" OrElse 是输入流标签(label) Then Continue For
             If counts.ContainsKey(label) Then
                 counts(label) += 1
@@ -576,6 +576,72 @@ Partial Public Class 预设管理_v6
             End If
         Next
         Return counts.Where(Function(x) x.Value = 1).Select(Function(x) x.Key).ToList()
+    End Function
+
+    Private Shared Function 包含未引用滤镜结构字符(value As String, chars As String) As Boolean
+        Dim inSingleQuote = False
+        Dim inDoubleQuote = False
+        Dim escaped = False
+        For Each c In If(value, "")
+            If escaped Then
+                escaped = False
+                Continue For
+            End If
+            If c = "\"c Then
+                escaped = True
+                Continue For
+            End If
+            If c = "'"c AndAlso Not inDoubleQuote Then
+                inSingleQuote = Not inSingleQuote
+                Continue For
+            End If
+            If c = """"c AndAlso Not inSingleQuote Then
+                inDoubleQuote = Not inDoubleQuote
+                Continue For
+            End If
+            If Not inSingleQuote AndAlso Not inDoubleQuote AndAlso chars.IndexOf(c) >= 0 Then Return True
+        Next
+        Return False
+    End Function
+
+    Private Shared Function 获取未引用滤镜标签(滤镜图 As String) As List(Of String)
+        Dim result As New List(Of String)
+        Dim value = If(滤镜图, "")
+        Dim inSingleQuote = False
+        Dim inDoubleQuote = False
+        Dim escaped = False
+        Dim labelStart = -1
+
+        For i = 0 To value.Length - 1
+            Dim c = value(i)
+            If escaped Then
+                escaped = False
+                Continue For
+            End If
+            If c = "\"c Then
+                escaped = True
+                Continue For
+            End If
+            If labelStart >= 0 Then
+                If c = "]"c Then
+                    result.Add(value.Substring(labelStart + 1, i - labelStart - 1))
+                    labelStart = -1
+                End If
+                Continue For
+            End If
+            If c = "'"c AndAlso Not inDoubleQuote Then
+                inSingleQuote = Not inSingleQuote
+                Continue For
+            End If
+            If c = """"c AndAlso Not inSingleQuote Then
+                inDoubleQuote = Not inDoubleQuote
+                Continue For
+            End If
+            If inSingleQuote OrElse inDoubleQuote Then Continue For
+            If c = "["c Then labelStart = i
+        Next
+
+        Return result
     End Function
 
     Private Shared Function 是输入流标签(label As String) As Boolean
