@@ -159,32 +159,17 @@ Partial Class Form_v6_参数面板_章节
         ' 
         MarkDownViewer1.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MarkDownViewer1.BasePath = Nothing
-        MarkDownViewer1.BlockQuoteBarColor = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
-        MarkDownViewer1.BlockQuoteForeColor = Color.FromArgb(CByte(100), CByte(255), CByte(255), CByte(255))
-        MarkDownViewer1.BlockSpacing = 20
         MarkDownViewer1.BorderRadius = 10
-        MarkDownViewer1.CodeBackColor = Color.FromArgb(CByte(120), CByte(0), CByte(0), CByte(0))
-        MarkDownViewer1.CodeBlockBackColor = Color.FromArgb(CByte(120), CByte(0), CByte(0), CByte(0))
-        MarkDownViewer1.CodeBlockForeColor = Color.Silver
-        MarkDownViewer1.CodeBlockPadding = New Padding(7, 5, 7, 5)
         MarkDownViewer1.Dock = DockStyle.Fill
         MarkDownViewer1.Font = New Font("Microsoft YaHei UI", 10F)
         MarkDownViewer1.ForeColor = Color.Silver
-        MarkDownViewer1.HeadingColor = Color.Silver
-        MarkDownViewer1.HeadingSeparatorColor = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
-        MarkDownViewer1.HeadingSeparatorThickness = 2
-        MarkDownViewer1.ImagePlaceholderBorderColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        MarkDownViewer1.ImagePlaceholderTextColor = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
-        MarkDownViewer1.InlineCodeBackColor = Color.FromArgb(CByte(120), CByte(0), CByte(0), CByte(0))
-        MarkDownViewer1.InlineCodePadding = New Padding(5, 3, 5, 3)
+        MarkDownViewer1.HorizontalRuleColor = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
+        MarkDownViewer1.HorizontalRuleThickness = 2
         MarkDownViewer1.Location = New Point(20, 102)
         MarkDownViewer1.Name = "MarkDownViewer1"
         MarkDownViewer1.Padding = New Padding(20)
         MarkDownViewer1.Size = New Size(743, 507)
         MarkDownViewer1.TabIndex = 13
-        MarkDownViewer1.TableBorderColor = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
-        MarkDownViewer1.TableCellPadding = 7
-        MarkDownViewer1.TableHeaderBackColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MarkDownViewer1.Text = "MarkDownViewer1"
         MarkDownViewer1.Visible = False
         ' 

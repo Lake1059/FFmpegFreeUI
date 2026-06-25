@@ -3,6 +3,7 @@ Imports LakeUI
 Public Class Form_v6_参数面板_滤镜排序
 
     Private ReadOnly _items As New List(Of 预设数据_v6.滤镜排序单片结构)
+    Private _isRefreshingList As Boolean
     Public 所属参数面板对象 As Form_v6_参数面板
     Private Shared ReadOnly 内置滤镜优先级表 As New Dictionary(Of 预设数据_v6.滤镜排序单片结构.标识符枚举, Integer) From {
         {预设数据_v6.滤镜排序单片结构.标识符枚举.像素格式预先转换, 0},
@@ -47,10 +48,12 @@ Public Class Form_v6_参数面板_滤镜排序
                 _items.Add(CloneItem(item))
             Next
         End If
+        规范化流类型顺序()
         If refreshUi Then RefreshList()
     End Sub
 
     Public Function 获取排序数据() As List(Of 预设数据_v6.滤镜排序单片结构)
+        规范化流类型顺序()
         Return _items.Select(Function(x) CloneItem(x)).ToList()
     End Function
 
@@ -72,6 +75,7 @@ Public Class Form_v6_参数面板_滤镜排序
         item.显示名称 = name
         item.自定义滤镜内容 = content
         item.是自定义滤镜 = False
+        规范化流类型顺序()
         RefreshList()
     End Sub
 
@@ -91,20 +95,38 @@ Public Class Form_v6_参数面板_滤镜排序
             .允许在排序页直接编辑 = True,
             .自定义滤镜内容 = ""
         })
+        规范化流类型顺序()
         RefreshList()
         通知参数面板刷新()
     End Sub
 
     Public Sub 删除所选()
-        If UltraDetailListView1.SelectedItem Is Nothing Then Exit Sub
-        Dim item = TryCast(UltraDetailListView1.SelectedItem.Tag, 预设数据_v6.滤镜排序单片结构)
-        If item Is Nothing Then Exit Sub
-        Dim 是内置项 = Not 可直接编辑滤镜内容(item)
-        Dim 标识符 = item.滤镜标识符
-        _items.Remove(item)
+        Dim selectedItems = UltraDetailListView1.SelectedItems.Cast(Of UltraDetailListView.ListItem)().ToList()
+        If selectedItems.Count = 0 Then Exit Sub
+
+        Dim itemsToDelete = selectedItems.
+            Select(Function(x) TryCast(x.Tag, 预设数据_v6.滤镜排序单片结构)).
+            Where(Function(x) x IsNot Nothing).
+            Distinct().
+            ToList()
+        If itemsToDelete.Count = 0 Then Exit Sub
+
+        Dim resetIds = itemsToDelete.
+            Where(Function(x) Not 可直接编辑滤镜内容(x)).
+            Select(Function(x) x.滤镜标识符).
+            Distinct().
+            ToList()
+
+        For Each item In itemsToDelete
+            _items.Remove(item)
+        Next
         RefreshList()
-        If 是内置项 AndAlso 所属参数面板对象 IsNot Nothing Then
-            预设管理_v6.重置滤镜对应页面(所属参数面板对象, 标识符)
+
+        If resetIds.Count > 0 AndAlso 所属参数面板对象 IsNot Nothing Then
+            For Each 标识符 In resetIds
+                预设管理_v6.重置滤镜对应页面(所属参数面板对象, 标识符, False)
+            Next
+            通知参数面板刷新()
         Else
             通知参数面板刷新()
         End If
@@ -118,7 +140,6 @@ Public Class Form_v6_参数面板_滤镜排序
                 End If
             Next
         End If
-        HtmlColorLabel1.Text = "<span style=""font-size:13; color:Silver"">滤镜排序和自定义</span>   每一项的滤镜链片段显示在列表的滤镜内容列，自定义项可直接编辑"
         RefreshList()
     End Sub
 
@@ -129,18 +150,25 @@ Public Class Form_v6_参数面板_滤镜排序
     End Sub
 
     Private Sub RefreshList()
-        UltraDetailListView1.Items.Clear()
-        For Each item In _items
-            Dim lv As New UltraDetailListView.ListItem()
-            Dim 标识符项 As New UltraDetailListView.ListSubItem With {.Text = If(item.显示名称 <> "", item.显示名称, item.滤镜标识符.ToString())}
-            If 可直接编辑滤镜内容(item) Then 标识符项.ForeColor = Color.Orange
-            lv.SubItems.Add(标识符项)
-            lv.SubItems.Add(New UltraDetailListView.ListSubItem With {.Text = item.滤镜目标流类型.ToString()})
-            lv.SubItems.Add(New UltraDetailListView.ListSubItem With {.Text = item.自定义滤镜内容})
-            lv.Tag = item
-            If 可直接编辑滤镜内容(item) Then lv.GroupName = "custom"
-            UltraDetailListView1.Items.Add(lv)
-        Next
+        规范化流类型顺序()
+        _isRefreshingList = True
+        UltraDetailListView1.BeginUpdate()
+        Try
+            UltraDetailListView1.Items.Clear()
+            For Each item In _items
+                Dim lv As New UltraDetailListView.ListItem()
+                Dim 标识符项 As New UltraDetailListView.ListSubItem With {.Text = If(item.显示名称 <> "", item.显示名称, item.滤镜标识符.ToString())}
+                If 可直接编辑滤镜内容(item) Then 标识符项.ForeColor = Color.Orange
+                lv.SubItems.Add(标识符项)
+                lv.SubItems.Add(New UltraDetailListView.ListSubItem With {.Text = item.滤镜目标流类型.ToString()})
+                lv.SubItems.Add(New UltraDetailListView.ListSubItem With {.Text = item.自定义滤镜内容})
+                lv.Tag = item
+                UltraDetailListView1.Items.Add(lv)
+            Next
+        Finally
+            UltraDetailListView1.EndUpdate()
+            _isRefreshingList = False
+        End Try
         校准列表列宽()
     End Sub
 
@@ -158,6 +186,7 @@ Public Class Form_v6_参数面板_滤镜排序
     End Function
 
     Private Sub UltraDetailListView1_ItemOrderChanged(sender As Object, e As EventArgs) Handles UltraDetailListView1.ItemOrderChanged
+        If _isRefreshingList Then Exit Sub
         同步列表项到排序数据()
         通知参数面板刷新()
     End Sub
@@ -170,6 +199,7 @@ Public Class Form_v6_参数面板_滤镜排序
         Next
         _items.Clear()
         _items.AddRange(reordered)
+        If 规范化流类型顺序() Then RefreshList()
     End Sub
 
     Private Sub 移动选中项(direction As Integer)
@@ -216,6 +246,10 @@ Public Class Form_v6_参数面板_滤镜排序
                 e.SuppressKeyPress = True
             Case Keys.F4
                 移动选中项(1)
+                e.Handled = True
+                e.SuppressKeyPress = True
+            Case Keys.Delete
+                删除所选()
                 e.Handled = True
                 e.SuppressKeyPress = True
         End Select
@@ -284,15 +318,45 @@ Public Class Form_v6_参数面板_滤镜排序
         Dim newPriority As Integer
         If Not 内置滤镜优先级表.TryGetValue(newItem.滤镜标识符, newPriority) Then Return _items.Count
 
+        Dim lastSameTypeIndex = -1
         For i = 0 To _items.Count - 1
             Dim current = _items(i)
             If current Is Nothing Then Continue For
             If current.滤镜目标流类型 <> newItem.滤镜目标流类型 Then Continue For
+            lastSameTypeIndex = i
             Dim currentPriority As Integer
             If Not 内置滤镜优先级表.TryGetValue(current.滤镜标识符, currentPriority) Then Continue For
             If currentPriority > newPriority Then Return i
         Next
+        If lastSameTypeIndex >= 0 Then Return lastSameTypeIndex + 1
         Return _items.Count
+    End Function
+
+    Private Function 规范化流类型顺序() As Boolean
+        Dim normalized = _items.
+            Where(Function(x) x IsNot Nothing).
+            OrderBy(Function(x) 获取流类型排序权重(x)).
+            ToList()
+
+        Dim changed = normalized.Count <> _items.Count
+        If Not changed Then
+            For i = 0 To _items.Count - 1
+                If Not Object.ReferenceEquals(_items(i), normalized(i)) Then
+                    changed = True
+                    Exit For
+                End If
+            Next
+        End If
+        If Not changed Then Return False
+
+        _items.Clear()
+        _items.AddRange(normalized)
+        Return True
+    End Function
+
+    Private Shared Function 获取流类型排序权重(item As 预设数据_v6.滤镜排序单片结构) As Integer
+        If item IsNot Nothing AndAlso item.滤镜目标流类型 = 预设数据_v6.滤镜排序单片结构.流类型.音频 Then Return 1
+        Return 0
     End Function
 
     Private Sub 调整列表交互区域()

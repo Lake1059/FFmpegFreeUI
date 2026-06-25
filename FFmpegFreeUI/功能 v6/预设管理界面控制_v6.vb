@@ -141,7 +141,7 @@ Public Partial Class 预设管理_v6
             End If
             a.自定义参数_音频滤镜 = ""
         End If
-        a.滤镜排序系统 = 排序.ToArray()
+        a.滤镜排序系统 = 规范化滤镜流类型顺序(排序).ToArray()
     End Sub
 
     Private Shared Sub 同步内置滤镜排序数据(a As 预设数据_v6)
@@ -170,7 +170,7 @@ Public Partial Class 预设管理_v6
         更新内置滤镜排序项(排序, a, 预设数据_v6.滤镜排序单片结构.标识符枚举.音频格式转换, Not String.IsNullOrWhiteSpace(a.音频参数_声道数))
         更新内置滤镜排序项(排序, a, 预设数据_v6.滤镜排序单片结构.标识符枚举.音频重采样, False)
 
-        a.滤镜排序系统 = 排序.ToArray()
+        a.滤镜排序系统 = 规范化滤镜流类型顺序(排序).ToArray()
     End Sub
 
     Private Shared Sub 更新内置滤镜排序项(排序 As List(Of 预设数据_v6.滤镜排序单片结构),
@@ -205,11 +205,15 @@ Public Partial Class 预设管理_v6
                                         标识符 As 预设数据_v6.滤镜排序单片结构.标识符枚举,
                                         target As 预设数据_v6.滤镜排序单片结构.流类型) As Integer
         Dim newPriority = 获取内置滤镜默认顺序(标识符)
+        Dim lastSameTypeIndex = -1
         For i = 0 To 排序.Count - 1
             Dim current = 排序(i)
-            If current Is Nothing OrElse current.是自定义滤镜 OrElse current.滤镜目标流类型 <> target Then Continue For
+            If current Is Nothing OrElse current.滤镜目标流类型 <> target Then Continue For
+            lastSameTypeIndex = i
+            If current.是自定义滤镜 Then Continue For
             If 获取内置滤镜默认顺序(current.滤镜标识符) > newPriority Then Return i
         Next
+        If lastSameTypeIndex >= 0 Then Return lastSameTypeIndex + 1
         Return 排序.Count
     End Function
 
@@ -217,6 +221,19 @@ Public Partial Class 预设管理_v6
         Dim value As Integer
         If 内置滤镜默认顺序.TryGetValue(标识符, value) Then Return value
         Return Integer.MaxValue
+    End Function
+
+    Private Shared Function 规范化滤镜流类型顺序(items As IEnumerable(Of 预设数据_v6.滤镜排序单片结构)) As List(Of 预设数据_v6.滤镜排序单片结构)
+        If items Is Nothing Then Return New List(Of 预设数据_v6.滤镜排序单片结构)
+        Return items.
+            Where(Function(x) x IsNot Nothing).
+            OrderBy(Function(x) 获取滤镜流类型排序权重(x)).
+            ToList()
+    End Function
+
+    Private Shared Function 获取滤镜流类型排序权重(item As 预设数据_v6.滤镜排序单片结构) As Integer
+        If item IsNot Nothing AndAlso item.滤镜目标流类型 = 预设数据_v6.滤镜排序单片结构.流类型.音频 Then Return 1
+        Return 0
     End Function
 
     Public Shared Sub 显示预设(a As 预设数据_v6, ui As Form_v6_参数面板)
@@ -1068,7 +1085,7 @@ Public Partial Class 预设管理_v6
         If 刷新 Then 刷新参数总览(ui)
     End Sub
 
-    Public Shared Sub 重置滤镜对应页面(ui As Form_v6_参数面板, 标识符 As 预设数据_v6.滤镜排序单片结构.标识符枚举)
+    Public Shared Sub 重置滤镜对应页面(ui As Form_v6_参数面板, 标识符 As 预设数据_v6.滤镜排序单片结构.标识符枚举, Optional 刷新 As Boolean = True)
         If ui Is Nothing Then Exit Sub
         Select Case 标识符
             Case 预设数据_v6.滤镜排序单片结构.标识符枚举.裁剪
@@ -1200,7 +1217,7 @@ Public Partial Class 预设管理_v6
             Case 预设数据_v6.滤镜排序单片结构.标识符枚举.音频重采样
                 ui.私有界面_音频参数.MCB_采样率.Text = ""
         End Select
-        刷新参数总览(ui)
+        If 刷新 Then 刷新参数总览(ui)
     End Sub
 
     Private Shared Function 从面板创建预设但不读排序(ui As Form_v6_参数面板) As 预设数据_v6

@@ -22,12 +22,12 @@ Partial Class Form_v6_Agent
     '不要使用代码编辑器修改它。
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim ToolTipEntry1 As LakeUI.ModernComboBox.ToolTipEntry = New LakeUI.ModernComboBox.ToolTipEntry()
-        Dim ToolTipEntry2 As LakeUI.ModernComboBox.ToolTipEntry = New LakeUI.ModernComboBox.ToolTipEntry()
-        Dim ToolTipEntry3 As LakeUI.ModernComboBox.ToolTipEntry = New LakeUI.ModernComboBox.ToolTipEntry()
-        Dim ToolTipEntry4 As LakeUI.ModernComboBox.ToolTipEntry = New LakeUI.ModernComboBox.ToolTipEntry()
-        Dim ToolTipEntry5 As LakeUI.ModernComboBox.ToolTipEntry = New LakeUI.ModernComboBox.ToolTipEntry()
-        Dim ToolTipEntry6 As LakeUI.ModernComboBox.ToolTipEntry = New LakeUI.ModernComboBox.ToolTipEntry()
+        Dim ToolTipEntry7 As LakeUI.ModernComboBox.ToolTipEntry = New LakeUI.ModernComboBox.ToolTipEntry()
+        Dim ToolTipEntry8 As LakeUI.ModernComboBox.ToolTipEntry = New LakeUI.ModernComboBox.ToolTipEntry()
+        Dim ToolTipEntry9 As LakeUI.ModernComboBox.ToolTipEntry = New LakeUI.ModernComboBox.ToolTipEntry()
+        Dim ToolTipEntry10 As LakeUI.ModernComboBox.ToolTipEntry = New LakeUI.ModernComboBox.ToolTipEntry()
+        Dim ToolTipEntry11 As LakeUI.ModernComboBox.ToolTipEntry = New LakeUI.ModernComboBox.ToolTipEntry()
+        Dim ToolTipEntry12 As LakeUI.ModernComboBox.ToolTipEntry = New LakeUI.ModernComboBox.ToolTipEntry()
         ModernPanel1 = New LakeUI.ModernPanel()
         AgentRoom1 = New LakeUI.AgentRoom()
         JustEmptyControl7 = New LakeUI.JustEmptyControl()
@@ -101,6 +101,8 @@ Partial Class Form_v6_Agent
         AgentRoom1.CardPadding = New Padding(10)
         AgentRoom1.CardRadius = 10
         AgentRoom1.Dock = DockStyle.Fill
+        AgentRoom1.HorizontalRuleColor = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
+        AgentRoom1.HorizontalRuleThickness = 2
         AgentRoom1.Location = New Point(270, 10)
         AgentRoom1.MarkdownBasePath = Nothing
         AgentRoom1.Name = "AgentRoom1"
@@ -281,13 +283,13 @@ Partial Class Form_v6_Agent
         MCB_权限控制.Items.Add("安全区域")
         MCB_权限控制.Items.Add("环境控制")
         MCB_权限控制.Items.Add("系统访问")
-        ToolTipEntry1.ItemText = "安全区域"
-        ToolTipEntry1.ToolTipText = "仅向 AI 开放参数面板的操作，这通常是最安全的"
-        ToolTipEntry2.ItemText = "环境控制"
-        ToolTipEntry2.ToolTipText = "AI 将可以控制整个 3FUI 环境，包括但不限于：编码队列、页面切换、修改设置。但仍旧在 3FUI 程序之内，不会对系统造成任何影响。"
-        ToolTipEntry3.ItemText = "系统访问"
-        ToolTipEntry3.ToolTipText = "AI 将获得当前权限下的操作系统访问能力，如果模型能力较差，可能会导致用户数据损失！"
-        MCB_权限控制.ItemToolTips.AddRange(New LakeUI.ModernComboBox.ToolTipEntry() {ToolTipEntry1, ToolTipEntry2, ToolTipEntry3})
+        ToolTipEntry7.ItemText = "安全区域"
+        ToolTipEntry7.ToolTipText = "仅向 AI 开放参数面板的操作，这通常是最安全的"
+        ToolTipEntry8.ItemText = "环境控制"
+        ToolTipEntry8.ToolTipText = "AI 将可以控制整个 3FUI 环境，包括但不限于：编码队列、页面切换、修改设置。但仍旧在 3FUI 程序之内，不会对系统造成任何影响。"
+        ToolTipEntry9.ItemText = "系统访问"
+        ToolTipEntry9.ToolTipText = "AI 将获得当前权限下的操作系统访问能力，如果模型能力较差，可能会导致用户数据损失！"
+        MCB_权限控制.ItemToolTips.AddRange(New LakeUI.ModernComboBox.ToolTipEntry() {ToolTipEntry7, ToolTipEntry8, ToolTipEntry9})
         MCB_权限控制.Location = New Point(130, 10)
         MCB_权限控制.Margin = New Padding(2, 2, 2, 2)
         MCB_权限控制.Name = "MCB_权限控制"
@@ -328,13 +330,13 @@ Partial Class Form_v6_Agent
         MCB_联网设置.Items.Add("本地联网")
         MCB_联网设置.Items.Add("端点联网")
         MCB_联网设置.Items.Add("禁用联网")
-        ToolTipEntry4.ItemText = "本地联网"
-        ToolTipEntry4.ToolTipText = "AI 通过 3FUI 在本机发起 HTTP 请求访问网络"
-        ToolTipEntry5.ItemText = "端点联网"
-        ToolTipEntry5.ToolTipText = "AI 通过模型端点的原生联网能力访问网络"
-        ToolTipEntry6.ItemText = "禁用联网"
-        ToolTipEntry6.ToolTipText = "不向 AI 暴露任何联网工具"
-        MCB_联网设置.ItemToolTips.AddRange(New LakeUI.ModernComboBox.ToolTipEntry() {ToolTipEntry4, ToolTipEntry5, ToolTipEntry6})
+        ToolTipEntry10.ItemText = "本地联网"
+        ToolTipEntry10.ToolTipText = "AI 通过 3FUI 在本机发起 HTTP 请求访问网络"
+        ToolTipEntry11.ItemText = "端点联网"
+        ToolTipEntry11.ToolTipText = "AI 通过模型端点的原生联网能力访问网络"
+        ToolTipEntry12.ItemText = "禁用联网"
+        ToolTipEntry12.ToolTipText = "不向 AI 暴露任何联网工具"
+        MCB_联网设置.ItemToolTips.AddRange(New LakeUI.ModernComboBox.ToolTipEntry() {ToolTipEntry10, ToolTipEntry11, ToolTipEntry12})
         MCB_联网设置.Location = New Point(0, 10)
         MCB_联网设置.Margin = New Padding(2, 2, 2, 2)
         MCB_联网设置.Name = "MCB_联网设置"
@@ -393,11 +395,11 @@ Partial Class Form_v6_Agent
         ModernListBox1.ItemHoverColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
         ModernListBox1.ItemPaddingLeft = 10
         ModernListBox1.ItemSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernListBox1.Location = New Point(10, 38)
+        ModernListBox1.Location = New Point(10, 36)
         ModernListBox1.MultiSelect = False
         ModernListBox1.Name = "ModernListBox1"
         ModernListBox1.Padding = New Padding(0, 10, 0, 10)
-        ModernListBox1.Size = New Size(230, 314)
+        ModernListBox1.Size = New Size(230, 316)
         ModernListBox1.TabIndex = 8
         ' 
         ' HtmlColorLabel2
@@ -410,8 +412,8 @@ Partial Class Form_v6_Agent
         HtmlColorLabel2.Location = New Point(10, 10)
         HtmlColorLabel2.Margin = New Padding(2)
         HtmlColorLabel2.Name = "HtmlColorLabel2"
-        HtmlColorLabel2.Padding = New Padding(0, 0, 0, 7)
-        HtmlColorLabel2.Size = New Size(230, 28)
+        HtmlColorLabel2.Padding = New Padding(0, 0, 0, 5)
+        HtmlColorLabel2.Size = New Size(230, 26)
         HtmlColorLabel2.TabIndex = 19
         HtmlColorLabel2.Text = "Agent 对话列表"
         HtmlColorLabel2.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.Center
