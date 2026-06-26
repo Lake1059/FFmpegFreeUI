@@ -33,9 +33,6 @@ Public Class Form_v6_参数面板_锐化
                 配置锐化参数(1, "横向矩阵尺寸 luma_msize_x 默认 5，范围 3~23", 3, 23, 5, 0, 1)
                 配置锐化参数(2, "纵向矩阵尺寸 luma_msize_y 默认 5，范围 3~23", 3, 23, 5, 0, 1)
                 配置锐化参数(3, "锐化强度 luma_amount 默认 1，范围 -2~5", -2, 5, 1)
-
-            Case 3  'sharpen_npp - NVIDIA NPP，ffmpegcuda 中只有固定 border_type
-                配置锐化参数(1, "边界处理 border_type 固定 replicate=2，范围 2~2", 2, 2, 2, 0, 1)
         End Select
     End Sub
 

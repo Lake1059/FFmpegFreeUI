@@ -851,10 +851,9 @@ Public Partial Class 预设管理_v6
     End Function
 
     Private Shared Function 格式化质量控制方式(value As 预设数据_v6.视频全局质量控制方式) As String
-        Select Case value
+        Select Case 标准化视频全局质量控制方式(value)
             Case 预设数据_v6.视频全局质量控制方式.CRF : Return "CRF"
             Case 预设数据_v6.视频全局质量控制方式.VBR : Return "VBR"
-            Case 预设数据_v6.视频全局质量控制方式.VBRHQ : Return "VBR HQ"
             Case 预设数据_v6.视频全局质量控制方式.CQP : Return "CQP"
             Case 预设数据_v6.视频全局质量控制方式.CBR : Return "CBR"
             Case 预设数据_v6.视频全局质量控制方式.TPE : Return "TPE"
@@ -1101,9 +1100,9 @@ Public Partial Class 预设管理_v6
         Dim 滤镜 = 获取CUDA视频滤镜名称(a)
         If 滤镜.Count = 0 Then Exit Sub
 
-        添加总览文本行(sb, "警告：已选择 CUDA/NPP 滤镜（" & String.Join("、", 滤镜) & "），请确保输入视频帧位于 CUDA 硬件帧域；与普通 CPU 滤镜混用时需要自行处理 hwupload_cuda/hwdownload/format")
+        添加总览文本行(sb, "警告：已选择 CUDA 滤镜（" & String.Join("、", 滤镜) & "），请确保输入视频帧位于 CUDA 硬件帧域；与普通 CPU 滤镜混用时需要自行处理 hwupload_cuda/hwdownload/format")
         If Not CUDA硬件帧输入已配置(a) Then
-            添加总览文本行(sb, "警告：当前未设置 -hwaccel_output_format cuda，也没有在自定义视频滤镜中显式使用 hwupload_cuda，CUDA/NPP 滤镜可能因输入不是 CUDA 硬件帧而失败")
+            添加总览文本行(sb, "警告：当前未设置 -hwaccel_output_format cuda，也没有在自定义视频滤镜中显式使用 hwupload_cuda，CUDA 滤镜可能因输入不是 CUDA 硬件帧而失败")
         End If
     End Sub
 
@@ -1112,7 +1111,6 @@ Public Partial Class 预设管理_v6
         If a Is Nothing Then Return result
 
         If a.视频参数_降噪_方式 = 预设数据_v6.降噪方式.bilateral_cuda Then 添加唯一滤镜名称(result, "bilateral_cuda")
-        If a.视频参数_锐化_方式 = 预设数据_v6.锐化方式.sharpen_npp Then 添加唯一滤镜名称(result, "sharpen_npp")
         Select Case a.视频参数_处理扫描方式
             Case 预设数据_v6.扫描方式.yadif_cuda_自动场序
                 添加唯一滤镜名称(result, "yadif_cuda")
@@ -1122,7 +1120,6 @@ Public Partial Class 预设管理_v6
 
         For Each filterText In 获取视频滤镜文本(a)
             If filterText.Contains("bilateral_cuda", StringComparison.OrdinalIgnoreCase) Then 添加唯一滤镜名称(result, "bilateral_cuda")
-            If filterText.Contains("sharpen_npp", StringComparison.OrdinalIgnoreCase) Then 添加唯一滤镜名称(result, "sharpen_npp")
             If filterText.Contains("yadif_cuda", StringComparison.OrdinalIgnoreCase) Then 添加唯一滤镜名称(result, "yadif_cuda")
             If filterText.Contains("bwdif_cuda", StringComparison.OrdinalIgnoreCase) Then 添加唯一滤镜名称(result, "bwdif_cuda")
         Next
@@ -1492,6 +1489,40 @@ Public Partial Class 预设管理_v6
 
     Private Shared Function EnumToIndex(value As [Enum]) As Integer
         Return Convert.ToInt32(value, CultureInfo.InvariantCulture)
+    End Function
+
+    Private Shared Function 质量控制方式SelectedIndexToEnum(index As Integer) As 预设数据_v6.视频全局质量控制方式
+        Select Case index
+            Case 1
+                Return 预设数据_v6.视频全局质量控制方式.CRF
+            Case 2
+                Return 预设数据_v6.视频全局质量控制方式.VBR
+            Case 3
+                Return 预设数据_v6.视频全局质量控制方式.CQP
+            Case 4
+                Return 预设数据_v6.视频全局质量控制方式.CBR
+            Case 5
+                Return 预设数据_v6.视频全局质量控制方式.TPE
+            Case Else
+                Return 预设数据_v6.视频全局质量控制方式.未选择
+        End Select
+    End Function
+
+    Private Shared Function 质量控制方式ToSelectedIndex(value As 预设数据_v6.视频全局质量控制方式) As Integer
+        Select Case 标准化视频全局质量控制方式(value)
+            Case 预设数据_v6.视频全局质量控制方式.CRF
+                Return 1
+            Case 预设数据_v6.视频全局质量控制方式.VBR
+                Return 2
+            Case 预设数据_v6.视频全局质量控制方式.CQP
+                Return 3
+            Case 预设数据_v6.视频全局质量控制方式.CBR
+                Return 4
+            Case 预设数据_v6.视频全局质量控制方式.TPE
+                Return 5
+            Case Else
+                Return 0
+        End Select
     End Function
 
     Private Shared Function TrackValue(track As Object) As String
@@ -1904,7 +1935,7 @@ Public Partial Class 预设管理_v6
 
     Private Shared Sub 储存质量(a As 预设数据_v6, ui As Form_v6_参数面板)
         With ui.私有界面_质量
-            a.视频参数_比特率_控制方式 = SelectedIndexToEnum(Of 预设数据_v6.视频全局质量控制方式)(Math.Max(0, .MCB_全局质量控制方式.SelectedIndex))
+            a.视频参数_比特率_控制方式 = 质量控制方式SelectedIndexToEnum(Math.Max(0, .MCB_全局质量控制方式.SelectedIndex))
             a.视频参数_质量控制_参数名 = .MCB_质量参数名称.Text.TrimStart("-"c)
             a.视频参数_质量控制_值 = .MTB_质量值.Text
             a.视频参数_比特率_基础 = .MTB_基础比特率.Text
@@ -1917,7 +1948,7 @@ Public Partial Class 预设管理_v6
 
     Private Shared Sub 显示质量(a As 预设数据_v6, ui As Form_v6_参数面板)
         With ui.私有界面_质量
-            .MCB_全局质量控制方式.SelectedIndex = EnumToIndex(a.视频参数_比特率_控制方式)
+            .MCB_全局质量控制方式.SelectedIndex = 质量控制方式ToSelectedIndex(a.视频参数_比特率_控制方式)
             .MCB_质量参数名称.Text = If(a.视频参数_质量控制_参数名 <> "" AndAlso Not a.视频参数_质量控制_参数名.StartsWith("-"c), "-" & a.视频参数_质量控制_参数名, a.视频参数_质量控制_参数名)
             .MTB_质量值.Text = a.视频参数_质量控制_值
             .MTB_基础比特率.Text = a.视频参数_比特率_基础

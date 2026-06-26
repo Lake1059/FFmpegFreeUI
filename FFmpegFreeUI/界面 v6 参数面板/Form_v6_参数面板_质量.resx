@@ -121,6 +121,6 @@
     <value>17, 17</value>
   </metadata>
   <data name="HtmlColorLabel2.Text" xml:space="preserve">
-    <value>CPU 编码首选 &lt;span style="color:Gainsboro"&gt;CRF&lt;/span&gt; 对应 -crf；GPU 编码首选 &lt;span style="color:Gainsboro"&gt;VBR&lt;/span&gt;；VBR HQ 仅 NVIDIA 和部分卡支持&lt;br&gt;&lt;span style="color:YellowGreen"&gt;NVIDIA&lt;/span&gt; 使用专属 -cq；&lt;span style="color:CornflowerBlue"&gt;Intel&lt;/span&gt; 使用 -global_quality；&lt;span style="color:IndianRed"&gt;AMD&lt;/span&gt; 使用 -qp 相关</value>
+    <value>CPU 编码首选 &lt;span style="color:Gainsboro"&gt;CRF&lt;/span&gt; 对应 -crf；GPU 编码首选 &lt;span style="color:Gainsboro"&gt;VBR&lt;/span&gt;&lt;br&gt;&lt;span style="color:YellowGreen"&gt;NVIDIA&lt;/span&gt; 使用专属 -cq，并会按 VBR / CBR / CQP 自动补充 -rc；&lt;span style="color:CornflowerBlue"&gt;Intel&lt;/span&gt; 使用 -global_quality；&lt;span style="color:IndianRed"&gt;AMD&lt;/span&gt; 使用 -qp 相关</value>
   </data>
 </root>

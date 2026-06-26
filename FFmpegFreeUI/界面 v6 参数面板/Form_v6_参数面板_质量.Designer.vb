@@ -493,7 +493,6 @@ Partial Class Form_v6_参数面板_质量
         MCB_全局质量控制方式.Items.Add("")
         MCB_全局质量控制方式.Items.Add("恒定质量 CRF - CPU 编码首选")
         MCB_全局质量控制方式.Items.Add("动态码率 VBR - GPU 编码首选")
-        MCB_全局质量控制方式.Items.Add("显卡特调 VBR HQ - NV 和部分卡支持")
         MCB_全局质量控制方式.Items.Add("恒定量化 CQP - 不常用 / 不推荐")
         MCB_全局质量控制方式.Items.Add("恒定速率 CBR - 仅旧场景")
         MCB_全局质量控制方式.Items.Add("二次编码 TPE - 使用基础码率")

@@ -231,7 +231,6 @@ Partial Class Form_v6_参数面板_锐化
         MCB_滤镜选择.Items.Add("")
         MCB_滤镜选择.Items.Add("cas - 自适应对比度锐化")
         MCB_滤镜选择.Items.Add("unsharp - 传统反遮罩锐化")
-        MCB_滤镜选择.Items.Add("sharpen_npp - NVIDIA Performance Primitives（需要专门编译的 ffmpeg）")
         MCB_滤镜选择.Location = New Point(0, 20)
         MCB_滤镜选择.Margin = New Padding(2, 2, 2, 2)
         MCB_滤镜选择.Name = "MCB_滤镜选择"

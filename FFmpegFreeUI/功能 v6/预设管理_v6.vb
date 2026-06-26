@@ -1,6 +1,7 @@
 Imports System.Globalization
 Imports System.IO
 Imports System.Text
+Imports System.Text.RegularExpressions
 
 Partial Public Class 预设管理_v6
 
@@ -126,16 +127,12 @@ Partial Public Class 预设管理_v6
         初始化空集合(a)
 
         If a.自定义参数_完全自己写.Trim() <> "" Then
-            结果.命令行 = 规范命令行换行(a.自定义参数_完全自己写.
-                Replace("<InputFile>", 输入文件).
-                Replace("<OutputFile>", 输出文件).
-                Replace(输入占位符, 输入文件).
-                Replace(输出占位符, 输出文件))
+            结果.命令行 = 规范命令行换行(应用自定义参数通配字符串(a.自定义参数_完全自己写, 输入文件, 输出文件))
             Return 结果
         End If
 
         If 阶段 = 预设数据_v6.命令行阶段.FFprobe获取时长 Then
-            结果.命令行 = $"-v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 {Q(输入文件)}"
+            结果.命令行 = $"-v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 {Q(应用转译模式路径(输入文件))}"
             结果.说明 = "获取媒体总时长"
             Return 结果
         End If
@@ -147,9 +144,9 @@ Partial Public Class 预设管理_v6
         Dim 输出前 As New List(Of String)
         Dim 输出后 As New List(Of String)
 
-        AddRaw(前置, a.自定义参数_开头参数)
-        AddRaw(主输入后, a.自定义参数_之前参数)
-        AddRaw(输出后, a.自定义参数_最后参数)
+        AddRaw(前置, 应用自定义参数通配字符串(a.自定义参数_开头参数, 输入文件, 输出文件))
+        AddRaw(主输入后, 应用自定义参数通配字符串(a.自定义参数_之前参数, 输入文件, 输出文件))
+        AddRaw(输出后, 应用自定义参数通配字符串(a.自定义参数_最后参数, 输入文件, 输出文件))
         Dim 剪辑参数 = 生成剪辑参数(a, 阶段, 媒体总时长, 结果)
         AddRaw(输入前, 剪辑参数.输入前)
         AddRaw(输入前, 生成解码参数(a))
@@ -195,9 +192,9 @@ Partial Public Class 预设管理_v6
             额外输入.AddRange(附加片段.额外输入)
             输出前.AddRange(附加片段.输出前)
         End If
-        AddRaw(输出前, a.自定义参数_视频参数)
-        AddRaw(输出前, a.自定义参数_音频参数)
-        AddRaw(输出前, a.自定义参数_之后参数)
+        AddRaw(输出前, 应用自定义参数通配字符串(a.自定义参数_视频参数, 输入文件, 输出文件))
+        AddRaw(输出前, 应用自定义参数通配字符串(a.自定义参数_音频参数, 输入文件, 输出文件))
+        AddRaw(输出前, 应用自定义参数通配字符串(a.自定义参数_之后参数, 输入文件, 输出文件))
 
         Dim 丢弃输出 = 阶段 = 预设数据_v6.命令行阶段.二次编码第一遍 OrElse a.输出_输出文件参数使用方法 = 预设数据_v6.输出文件参数使用方法.声明丢弃输出
         Dim 输出目标 = If(丢弃输出, "NUL", 输出文件)
@@ -215,7 +212,7 @@ Partial Public Class 预设管理_v6
             命令.Add("NUL")
         Else
             If a.输出_输出文件参数使用方法 <> 预设数据_v6.输出文件参数使用方法.不附加 Then
-                命令.Add(Q(输出目标))
+                命令.Add(Q(应用转译模式路径(输出目标)))
             End If
         End If
         命令.AddRange(输出后.Where(Function(x) x <> ""))
@@ -234,10 +231,10 @@ Partial Public Class 预设管理_v6
         Return String.Join(" ", 片段)
     End Function
 
-    Public Shared Function 获取滤镜片段(a As 预设数据_v6, item As 预设数据_v6.滤镜排序单片结构, Optional 输入文件 As String = 输入占位符) As String
+    Public Shared Function 获取滤镜片段(a As 预设数据_v6, item As 预设数据_v6.滤镜排序单片结构, Optional 输入文件 As String = 输入占位符, Optional 输出文件 As String = 输出占位符) As String
         If item Is Nothing Then Return ""
         If item.是自定义滤镜 OrElse item.滤镜标识符 = 预设数据_v6.滤镜排序单片结构.标识符枚举.自定义视频滤镜 OrElse item.滤镜标识符 = 预设数据_v6.滤镜排序单片结构.标识符枚举.自定义音频滤镜 Then
-            Return item.自定义滤镜内容.Trim()
+            Return 应用自定义参数通配字符串(item.自定义滤镜内容, 输入文件, 输出文件).Trim()
         End If
 
         Select Case item.滤镜标识符
@@ -286,11 +283,11 @@ Partial Public Class 预设管理_v6
     Private Shared Function 生成滤镜图(a As 预设数据_v6, Optional 仅视频 As Boolean = False, Optional 输入文件 As String = 输入占位符, Optional 输出文件 As String = 输出占位符) As 滤镜图结果
         Dim 排序 = If(a.滤镜排序系统, Array.Empty(Of 预设数据_v6.滤镜排序单片结构)()).ToList()
         Dim 视频链 = 排序.Where(Function(x) x.滤镜目标流类型 = 预设数据_v6.滤镜排序单片结构.流类型.视频).
-            Select(Function(x) 清理线性滤镜片段(获取滤镜片段(a, x, 输入文件))).
+            Select(Function(x) 清理线性滤镜片段(获取滤镜片段(a, x, 输入文件, 输出文件))).
             Where(Function(x) x <> "").
             ToList()
         Dim 音频链 = If(仅视频, New List(Of String), 排序.Where(Function(x) x.滤镜目标流类型 = 预设数据_v6.滤镜排序单片结构.流类型.音频).
-            Select(Function(x) 清理线性滤镜片段(获取滤镜片段(a, x, 输入文件))).
+            Select(Function(x) 清理线性滤镜片段(获取滤镜片段(a, x, 输入文件, 输出文件))).
             Where(Function(x) x <> "").
             ToList())
 
@@ -813,14 +810,17 @@ Partial Public Class 预设管理_v6
 
     Private Shared Function 生成质量参数(a As 预设数据_v6, 阶段 As 预设数据_v6.命令行阶段, Optional 输出流选择器 As String = "") As List(Of String)
         Dim parts As New List(Of String)
-        Select Case a.视频参数_比特率_控制方式
+        Dim 控制方式 = 标准化视频全局质量控制方式(a.视频参数_比特率_控制方式)
+        Select Case 控制方式
             Case 预设数据_v6.视频全局质量控制方式.未选择
                 添加视频质量参数(parts, a, 输出流选择器)
             Case 预设数据_v6.视频全局质量控制方式.CRF
                 添加编码器参数(parts, 获取视频质量参数名(a.视频参数_质量控制_参数名, "crf"), a.视频参数_质量控制_值, 输出流选择器)
             Case 预设数据_v6.视频全局质量控制方式.CQP
+                添加NVENC码率控制参数(parts, a, 控制方式, 输出流选择器)
                 添加编码器参数(parts, 获取视频质量参数名(a.视频参数_质量控制_参数名, "qp"), a.视频参数_质量控制_值, 输出流选择器)
-            Case 预设数据_v6.视频全局质量控制方式.VBR, 预设数据_v6.视频全局质量控制方式.VBRHQ, 预设数据_v6.视频全局质量控制方式.CBR
+            Case 预设数据_v6.视频全局质量控制方式.VBR, 预设数据_v6.视频全局质量控制方式.CBR
+                添加NVENC码率控制参数(parts, a, 控制方式, 输出流选择器)
                 添加视频质量参数(parts, a, 输出流选择器)
                 添加编码器参数(parts, "-b:v", a.视频参数_比特率_基础, 输出流选择器)
                 添加编码器参数(parts, "-minrate", a.视频参数_比特率_最低值, 输出流选择器)
@@ -840,6 +840,29 @@ Partial Public Class 预设管理_v6
         Return parts
     End Function
 
+    Private Shared Sub 添加NVENC码率控制参数(parts As List(Of String), a As 预设数据_v6, 控制方式 As 预设数据_v6.视频全局质量控制方式, 输出流选择器 As String)
+        If Not 是NVENC编码器(a.视频参数_编码器_具体编码) Then Exit Sub
+        If 已显式设置码率控制(a.视频参数_质量控制_进阶参数集) Then Exit Sub
+
+        Select Case 控制方式
+            Case 预设数据_v6.视频全局质量控制方式.CQP
+                添加编码器参数(parts, "-rc", "constqp", 输出流选择器)
+            Case 预设数据_v6.视频全局质量控制方式.VBR
+                添加编码器参数(parts, "-rc", "vbr", 输出流选择器)
+            Case 预设数据_v6.视频全局质量控制方式.CBR
+                添加编码器参数(parts, "-rc", "cbr", 输出流选择器)
+        End Select
+    End Sub
+
+    Private Shared Function 是NVENC编码器(编码器 As String) As Boolean
+        Dim value = If(编码器, "").Trim()
+        Return value.EndsWith("_nvenc", StringComparison.OrdinalIgnoreCase)
+    End Function
+
+    Private Shared Function 已显式设置码率控制(value As String) As Boolean
+        Return Regex.IsMatch(If(value, ""), "(^|\s)-rc(?::\S+)?(?=\s|$)", RegexOptions.IgnoreCase)
+    End Function
+
     Private Shared Sub 添加视频质量参数(parts As List(Of String), a As 预设数据_v6, 输出流选择器 As String)
         If String.IsNullOrWhiteSpace(a.视频参数_质量控制_参数名) OrElse String.IsNullOrWhiteSpace(a.视频参数_质量控制_值) Then Exit Sub
         添加编码器参数(parts, 获取视频质量参数名(a.视频参数_质量控制_参数名, ""), a.视频参数_质量控制_值, 输出流选择器)
@@ -849,6 +872,13 @@ Partial Public Class 预设管理_v6
         Dim value = If(参数名, "").Trim()
         If value = "" Then value = 默认名
         Return 规范FFmpeg参数名(value)
+    End Function
+
+    Private Shared Function 标准化视频全局质量控制方式(value As 预设数据_v6.视频全局质量控制方式) As 预设数据_v6.视频全局质量控制方式
+        Dim raw = Convert.ToInt32(value, CultureInfo.InvariantCulture)
+        If raw = 3 Then Return 预设数据_v6.视频全局质量控制方式.VBR
+        If [Enum].IsDefined(GetType(预设数据_v6.视频全局质量控制方式), value) Then Return value
+        Return 预设数据_v6.视频全局质量控制方式.未选择
     End Function
 
     Private Shared Function 生成色彩元数据参数(a As 预设数据_v6, 输出流选择器 As String) As List(Of String)
@@ -945,16 +975,16 @@ Partial Public Class 预设管理_v6
     End Function
 
     Private Shared Function 生成二次编码日志路径(输入文件 As String, 输出文件 As String) As String
-        Dim source = If(输入文件, "").Trim()
-        Dim target = If(输出文件, "").Trim()
+        Dim source = 应用转译模式路径(If(输入文件, "").Trim())
+        Dim target = 应用转译模式路径(If(输出文件, "").Trim())
         Dim token = 短路径哈希(source & "|" & target)
         If source = "" OrElse (source.StartsWith("<"c) AndAlso source.EndsWith(">"c)) Then Return $"3fui-v6-passlog-{token}"
 
-        Dim dir = Path.GetDirectoryName(source)
+        Dim dir = 获取路径目录保持分隔符(source)
         If String.IsNullOrWhiteSpace(dir) Then dir = Environment.CurrentDirectory
-        Dim baseName = Path.GetFileNameWithoutExtension(source)
+        Dim baseName = 获取路径文件名不含扩展名保持分隔符(source)
         If String.IsNullOrWhiteSpace(baseName) Then baseName = "input"
-        Return Path.Combine(dir, $"3fui-v6-passlog-{清理二次编码日志文件名(baseName)}-{token}")
+        Return 合并路径保持分隔符(dir, $"3fui-v6-passlog-{清理二次编码日志文件名(baseName)}-{token}", source)
     End Function
 
     Private Shared Function 短路径哈希(value As String) As String
@@ -1073,14 +1103,14 @@ Partial Public Class 预设管理_v6
         Dim parts As New List(Of String)
         If a.视频参数_视频帧服务器_使用AviSynth AndAlso a.视频参数_视频帧服务器_avs脚本文件.Trim() <> "" Then
             parts.Add("-i")
-            parts.Add(Q(派生脚本路径(输入文件, ".avs", 帧服务器脚本后缀)))
+            parts.Add(Q(应用转译模式路径(派生脚本路径(输入文件, ".avs", 帧服务器脚本后缀))))
         ElseIf a.视频参数_视频帧服务器_使用VapourSynth AndAlso a.视频参数_视频帧服务器_vpy脚本文件.Trim() <> "" Then
             parts.Add("-f vapoursynth")
             parts.Add("-i")
-            parts.Add(Q(派生脚本路径(输入文件, Path.GetExtension(a.视频参数_视频帧服务器_vpy脚本文件), 帧服务器脚本后缀)))
+            parts.Add(Q(应用转译模式路径(派生脚本路径(输入文件, Path.GetExtension(a.视频参数_视频帧服务器_vpy脚本文件), 帧服务器脚本后缀))))
         Else
             parts.Add("-i")
-            parts.Add(Q(输入文件))
+            parts.Add(Q(应用转译模式路径(输入文件)))
         End If
         Return parts
     End Function
@@ -1096,10 +1126,9 @@ Partial Public Class 预设管理_v6
         If 输入文件 = 输入占位符 OrElse 输入文件 = "<InputFile>" Then
             Return "<InputFileWithOutExtension>" & suffixPart & finalExt
         End If
-        Dim dir = Path.GetDirectoryName(输入文件)
-        Dim name = Path.GetFileNameWithoutExtension(输入文件)
-        If String.IsNullOrWhiteSpace(dir) Then Return name & suffixPart & finalExt
-        Return Path.Combine(dir, name & suffixPart & finalExt)
+        Dim stem = 获取路径不含扩展名保持分隔符(输入文件)
+        If String.IsNullOrWhiteSpace(stem) Then Return ""
+        Return stem & suffixPart & finalExt
     End Function
 
     Private Shared Function 生成元数据章节附件片段(a As 预设数据_v6, 当前视频输出数量 As Integer, 输入文件 As String, 输出文件 As String, 当前字幕输出数量 As Integer) As 附加输出片段
@@ -1133,12 +1162,12 @@ Partial Public Class 预设管理_v6
                 Case 预设数据_v6.章节来源.文本文档
                     result.额外输入.Add("-f ffmetadata")
                     result.额外输入.Add("-i")
-                    result.额外输入.Add(Q(a.章节_文件路径.Trim()))
+                    result.额外输入.Add(Q(应用转译模式路径(a.章节_文件路径.Trim())))
                     result.输出前.Add($"-map_metadata {inputIndex}")
                     result.输出前.Add($"-map_chapters {inputIndex}")
                 Case 预设数据_v6.章节来源.媒体文件
                     result.额外输入.Add("-i")
-                    result.额外输入.Add(Q(a.章节_文件路径.Trim()))
+                    result.额外输入.Add(Q(应用转译模式路径(a.章节_文件路径.Trim())))
                     result.输出前.Add($"-map_chapters {inputIndex}")
             End Select
         End If
@@ -1160,12 +1189,13 @@ Partial Public Class 预设管理_v6
         Dim 附件序号 As Integer = 0
         For Each item In If(a.附件_要写入的附件, Array.Empty(Of 预设数据_v6.附件单片结构)())
             If item Is Nothing OrElse item.文件路径.Trim() = "" OrElse item.类型 = 预设数据_v6.附件单片结构.附件类型.未选择 Then Continue For
+            Dim 附件路径 = 应用转译模式路径(item.文件路径.Trim())
             Select Case item.类型
                 Case 预设数据_v6.附件单片结构.附件类型.MP4封面图
                     If Not 允许附加封面图 Then Continue For
                     If 当前视频输出数量 < 0 Then Continue For
                     result.额外输入.Add("-i")
-                    result.额外输入.Add(Q(item.文件路径.Trim()))
+                    result.额外输入.Add(Q(附件路径))
                     Dim 输出视频序号 = 当前视频输出数量 + 封面序号
                     Dim 封面视频流 = $"{额外输入索引}:v:0"
                     result.输出前.Add($"-map {可选输入流映射(封面视频流)}")
@@ -1180,12 +1210,12 @@ Partial Public Class 预设管理_v6
                      预设数据_v6.附件单片结构.附件类型.字体文件,
                      预设数据_v6.附件单片结构.附件类型.文本文档
                     If Not 允许常规附件 Then Continue For
-                    result.输出前.Add($"-attach {Q(item.文件路径.Trim())}")
-                    result.输出前.Add($"-metadata:s:t:{附件序号} mimetype={获取附件Mimetype(item.文件路径.Trim(), item.类型)}")
+                    result.输出前.Add($"-attach {Q(附件路径)}")
+                    result.输出前.Add($"-metadata:s:t:{附件序号} mimetype={获取附件Mimetype(附件路径, item.类型)}")
                     If item.类型 = 预设数据_v6.附件单片结构.附件类型.MKV封面图 Then
-                        result.输出前.Add($"-metadata:s:t:{附件序号} filename=cover{Path.GetExtension(item.文件路径.Trim())}")
+                        result.输出前.Add($"-metadata:s:t:{附件序号} filename=cover{Path.GetExtension(附件路径)}")
                     Else
-                        result.输出前.Add($"-metadata:s:t:{附件序号} {QMetadata("filename=" & Path.GetFileName(item.文件路径.Trim()))}")
+                        result.输出前.Add($"-metadata:s:t:{附件序号} {QMetadata("filename=" & 获取路径文件名保持分隔符(附件路径))}")
                     End If
                     附件序号 += 1
             End Select
@@ -1260,7 +1290,7 @@ Partial Public Class 预设管理_v6
         Dim 自动字幕序号 As Integer = 0
         For Each 字幕文件 In 获取自动混流字幕文件(a, 输入文件)
             result.额外输入.Add("-i")
-            result.额外输入.Add(Q(字幕文件))
+            result.额外输入.Add(Q(应用转译模式路径(字幕文件)))
             result.输出前.Add($"-map {可选输入流映射($"{额外输入索引}:0")}")
             result.包含显式流映射 = True
 
@@ -1299,11 +1329,9 @@ Partial Public Class 预设管理_v6
 
     Private Shared Function 派生同名字幕路径(输入文件 As String, ext As String) As String
         If 是输入文件占位符(输入文件) Then Return "<InputFileWithOutExtension>" & ext
-        Dim name = Path.GetFileNameWithoutExtension(If(输入文件, ""))
-        If String.IsNullOrWhiteSpace(name) Then Return ""
-        Dim dir = Path.GetDirectoryName(输入文件)
-        If String.IsNullOrWhiteSpace(dir) Then Return name & ext
-        Return Path.Combine(dir, name & ext)
+        Dim stem = 获取路径不含扩展名保持分隔符(输入文件)
+        If String.IsNullOrWhiteSpace(stem) Then Return ""
+        Return stem & ext
     End Function
 
     Private Shared Function 是输入文件占位符(输入文件 As String) As Boolean
@@ -1380,6 +1408,96 @@ Partial Public Class 预设管理_v6
     Private Shared Sub AddRaw(parts As List(Of String), value As String)
         If Not String.IsNullOrWhiteSpace(value) Then parts.Add(规范命令行换行(value))
     End Sub
+
+    Private Shared Function 应用自定义参数通配字符串(value As String, 输入文件 As String, 输出文件 As String) As String
+        If value Is Nothing Then Return ""
+
+        Dim inputPath = 应用转译模式路径(If(输入文件, ""))
+        Dim outputPath = 应用转译模式路径(If(输出文件, ""))
+        Dim inputIsPlaceholder = 是输入文件占位符(inputPath)
+        Dim inputWithoutExtension = If(inputIsPlaceholder, "<InputFileWithOutExtension>", 获取路径不含扩展名保持分隔符(inputPath))
+        Dim inputPathOnly = If(inputIsPlaceholder, "<InputFilePath>", 获取路径目录保持分隔符(inputPath))
+        Dim inputFileName = If(inputIsPlaceholder, "<InputFileName>", 获取路径文件名保持分隔符(inputPath))
+        Dim inputFileNameWithoutExtension = If(inputIsPlaceholder, "<InputFileNameWithOutExtension>", 获取路径文件名不含扩展名保持分隔符(inputPath))
+        Dim escapedInputWithoutExtension = If(inputIsPlaceholder, "<\InputFileWithOutExtension>", 转换通配路径为滤镜路径(inputWithoutExtension))
+        Dim escapedInputPath = If(inputIsPlaceholder, "<\InputFilePath>", 转换通配路径为滤镜路径(inputPathOnly))
+
+        Return value.
+            Replace("<\InputFileWithOutExtension>", escapedInputWithoutExtension).
+            Replace("<\InputFilePath>", escapedInputPath).
+            Replace("<InputFileWithOutExtension>", inputWithoutExtension).
+            Replace("<InputFileNameWithOutExtension>", inputFileNameWithoutExtension).
+            Replace("<InputFilePath>", inputPathOnly).
+            Replace("<InputFileName>", inputFileName).
+            Replace("<InputFile>", inputPath).
+            Replace("<OutputFile>", outputPath).
+            Replace(输入占位符, inputPath).
+            Replace(输出占位符, outputPath)
+    End Function
+
+    Private Shared Function 转换通配路径为滤镜路径(value As String) As String
+        If String.IsNullOrWhiteSpace(value) Then Return ""
+        Return 将路径转换为FFmpeg滤镜接受的格式(value)
+    End Function
+
+    Private Shared Function 应用转译模式路径(value As String) As String
+        Dim raw = If(value, "")
+        If raw = "" OrElse Not 设置_v6.实例对象.转译模式 Then Return raw
+        If raw.StartsWith("<"c) AndAlso raw.EndsWith(">"c) Then Return raw
+        If String.Equals(raw, "NUL", StringComparison.OrdinalIgnoreCase) Then Return raw
+        If raw.StartsWith("/"c) AndAlso Not raw.StartsWith("//", StringComparison.Ordinal) Then Return raw
+        Return 转译模式处理路径(raw)
+    End Function
+
+    Private Shared Function 获取路径目录保持分隔符(value As String) As String
+        Dim raw = If(value, "")
+        If raw = "" Then Return ""
+        Dim index = 最后路径分隔符索引(raw)
+        If index < 0 Then Return ""
+        If index = 0 Then Return raw.Substring(0, 1)
+        Return raw.Substring(0, index)
+    End Function
+
+    Private Shared Function 获取路径文件名保持分隔符(value As String) As String
+        Dim raw = If(value, "")
+        If raw = "" Then Return ""
+        Dim index = 最后路径分隔符索引(raw)
+        If index < 0 OrElse index >= raw.Length - 1 Then Return If(index >= 0, "", raw)
+        Return raw.Substring(index + 1)
+    End Function
+
+    Private Shared Function 获取路径文件名不含扩展名保持分隔符(value As String) As String
+        Dim fileName = 获取路径文件名保持分隔符(value)
+        If fileName = "" Then Return ""
+        Dim dot = fileName.LastIndexOf("."c)
+        If dot <= 0 Then Return fileName
+        Return fileName.Substring(0, dot)
+    End Function
+
+    Private Shared Function 获取路径不含扩展名保持分隔符(value As String) As String
+        Dim raw = If(value, "")
+        If raw = "" Then Return ""
+        Dim dir = 获取路径目录保持分隔符(raw)
+        Dim name = 获取路径文件名不含扩展名保持分隔符(raw)
+        If name = "" Then Return ""
+        If dir = "" Then Return name
+        Return 合并路径保持分隔符(dir, name, raw)
+    End Function
+
+    Private Shared Function 合并路径保持分隔符(dir As String, fileName As String, styleSource As String) As String
+        Dim folder = If(dir, "")
+        Dim name = If(fileName, "")
+        If folder = "" Then Return name
+        If name = "" Then Return folder
+        If folder.EndsWith("/"c) OrElse folder.EndsWith("\"c) Then Return folder & name
+        Dim separator = If(If(styleSource, "").Contains("/"c) AndAlso Not If(styleSource, "").Contains("\"c), "/"c, "\"c)
+        Return folder & separator & name
+    End Function
+
+    Private Shared Function 最后路径分隔符索引(value As String) As Integer
+        If String.IsNullOrEmpty(value) Then Return -1
+        Return Math.Max(value.LastIndexOf("/"c), value.LastIndexOf("\"c))
+    End Function
 
     Private Shared Function 规范命令行换行(value As String) As String
         If value Is Nothing Then Return ""
@@ -1606,7 +1724,7 @@ Partial Public Class 预设管理_v6
             If s.上采样算法 <> "" Then libplaceboOpts.Add("upscaler=" & s.上采样算法)
             If s.下采样算法 <> "" Then libplaceboOpts.Add("downscaler=" & s.下采样算法)
             If s.抗振铃强度 <> "" Then libplaceboOpts.Add("antiringing=" & s.抗振铃强度)
-            If s.着色器文件路径 <> "" Then libplaceboOpts.Add($"custom_shader_path='{转义字幕滤镜值(s.着色器文件路径)}'")
+            If s.着色器文件路径 <> "" Then libplaceboOpts.Add($"custom_shader_path='{转义字幕滤镜值(应用转译模式路径(s.着色器文件路径))}'")
             If libplaceboOpts.Any(Function(x) x.StartsWith("upscaler=", StringComparison.Ordinal) OrElse x.StartsWith("downscaler=", StringComparison.Ordinal) OrElse x.StartsWith("antiringing=", StringComparison.Ordinal) OrElse x.StartsWith("custom_shader_path=", StringComparison.Ordinal)) Then
                 filters.Add("libplacebo=" & String.Join(":", libplaceboOpts))
             ElseIf s.目标宽度 <> "" OrElse s.目标高度 <> "" Then
@@ -1638,8 +1756,6 @@ Partial Public Class 预设管理_v6
                 Return $"cas={JoinNamed(":", ("strength", a.视频参数_锐化_参数1), ("planes", a.视频参数_锐化_参数2))}".TrimEnd("="c)
             Case 预设数据_v6.锐化方式.unsharp
                 Return $"unsharp={JoinNonEmpty(":", a.视频参数_锐化_参数1, a.视频参数_锐化_参数2, a.视频参数_锐化_参数3)}".TrimEnd("="c)
-            Case 预设数据_v6.锐化方式.sharpen_npp
-                Return "sharpen_npp=border_type=replicate"
         End Select
         Return ""
     End Function
@@ -1764,7 +1880,7 @@ Partial Public Class 预设管理_v6
     End Function
 
     Private Shared Function 构造烧字幕滤镜(a As 预设数据_v6, 输入文件 As String) As String
-        If a.视频参数_烧录字幕_自己写滤镜取代所有设置 <> "" Then Return a.视频参数_烧录字幕_自己写滤镜取代所有设置
+        If a.视频参数_烧录字幕_自己写滤镜取代所有设置 <> "" Then Return 应用自定义参数通配字符串(a.视频参数_烧录字幕_自己写滤镜取代所有设置, 输入文件, 输出占位符)
         If a.视频参数_烧录字幕_滤镜选择 = 预设数据_v6.烧字幕滤镜.未选择 Then Return ""
 
         Dim 滤镜参数列表 As New List(Of String)
@@ -1777,18 +1893,18 @@ Partial Public Class 预设管理_v6
             字幕文件 = 解析外部字幕文件(a, 输入文件)
             If 字幕文件 <> "" Then
                 有字幕来源 = True
-                滤镜参数列表.Add($"filename='{转义字幕滤镜值(字幕文件)}'")
+                滤镜参数列表.Add($"filename='{转义字幕滤镜值(应用转译模式路径(字幕文件))}'")
             End If
         End If
         If a.视频参数_烧录字幕_字幕来源是外部文件 = 预设数据_v6.烧字幕来源.内嵌的流 AndAlso a.视频参数_烧录字幕_指定内嵌的流 <> "" Then
             需要内嵌流 = True
             有字幕来源 = True
-            滤镜参数列表.Add($"filename='{转义字幕滤镜值(输入文件)}'")
+            滤镜参数列表.Add($"filename='{转义字幕滤镜值(应用转译模式路径(输入文件))}'")
             滤镜参数列表.Add($"stream_index={a.视频参数_烧录字幕_指定内嵌的流}")
         End If
         If Not 有字幕来源 Then Return ""
 
-        If a.视频参数_烧录字幕_字体文件夹 <> "" Then 滤镜参数列表.Add($"fontsdir='{转义字幕滤镜值(a.视频参数_烧录字幕_字体文件夹)}'")
+        If a.视频参数_烧录字幕_字体文件夹 <> "" Then 滤镜参数列表.Add($"fontsdir='{转义字幕滤镜值(应用转译模式路径(a.视频参数_烧录字幕_字体文件夹))}'")
         If a.视频参数_烧录字幕_基本样式_名称 <> "" Then 样式参数列表.Add($"FontName={a.视频参数_烧录字幕_基本样式_名称}")
         If a.视频参数_烧录字幕_基本样式_大小 <> 0 Then 样式参数列表.Add($"FontSize={a.视频参数_烧录字幕_基本样式_大小.ToString(CultureInfo.InvariantCulture)}")
         If a.视频参数_烧录字幕_基本样式_粗体 Then 样式参数列表.Add("Bold=-1")
@@ -1833,8 +1949,8 @@ Partial Public Class 预设管理_v6
             Return "<字幕文件 | 预览模式专用字符>"
         End If
 
-        Dim 字幕位置 = If(String.IsNullOrWhiteSpace(a.视频参数_烧录字幕_外部字幕文件夹位置), Path.GetDirectoryName(输入文件), a.视频参数_烧录字幕_外部字幕文件夹位置)
-        Dim 字幕文件名 = If(String.IsNullOrWhiteSpace(a.视频参数_烧录字幕_外部字幕文件名), Path.GetFileNameWithoutExtension(输入文件), a.视频参数_烧录字幕_外部字幕文件名)
+        Dim 字幕位置 = If(String.IsNullOrWhiteSpace(a.视频参数_烧录字幕_外部字幕文件夹位置), 获取路径目录保持分隔符(输入文件), a.视频参数_烧录字幕_外部字幕文件夹位置)
+        Dim 字幕文件名 = If(String.IsNullOrWhiteSpace(a.视频参数_烧录字幕_外部字幕文件名), 获取路径文件名不含扩展名保持分隔符(输入文件), a.视频参数_烧录字幕_外部字幕文件名)
         If String.IsNullOrWhiteSpace(字幕文件名) Then Return ""
 
         Dim 格式列表 = If(a.视频参数_烧录字幕_字幕格式优先级, New List(Of 预设数据_v6.烧字幕格式)).
@@ -1846,7 +1962,7 @@ Partial Public Class 预设管理_v6
         Dim 候选 As New List(Of String)
         For Each 格式 In 格式列表
             Dim ext = "." & 格式.ToString().ToLowerInvariant()
-            候选.Add(If(String.IsNullOrWhiteSpace(字幕位置), 字幕文件名 & ext, Path.Combine(字幕位置, 字幕文件名 & ext)))
+            候选.Add(If(String.IsNullOrWhiteSpace(字幕位置), 字幕文件名 & ext, 合并路径保持分隔符(字幕位置, 字幕文件名 & ext, 字幕位置)))
         Next
         Dim 已存在 = 候选.FirstOrDefault(Function(x) File.Exists(x))
         Return If(已存在, "")

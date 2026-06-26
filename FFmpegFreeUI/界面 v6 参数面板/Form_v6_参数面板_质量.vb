@@ -96,11 +96,11 @@ Public Class Form_v6_参数面板_质量
                     MTB_质量值.Text = ""
                 Case 1
                     MCB_质量参数名称.Text = "-crf"
-                Case 2, 3
+                Case 2
                     MCB_质量参数名称.Text = "-cq"
-                Case 4
+                Case 3
                     MCB_质量参数名称.Text = "-qp"
-                Case 5, 6
+                Case 4, 5
                     MCB_质量参数名称.Text = ""
                     MTB_质量值.Text = ""
             End Select

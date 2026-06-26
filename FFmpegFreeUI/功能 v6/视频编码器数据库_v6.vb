@@ -82,7 +82,7 @@ Public Class 视频编码器数据库_v6
 
     Private Shared Sub 初始化分类()
         加入分类(预设数据_v6.视频编码器类型.视频, "复制流", "复制流可以解决多数因为元数据或轻度数据异常问题导致的播放故障，常见于进度条无法拖动、无法获取时长等经典问题。在 ffmpeg 的定义中，图片也是视频，如果你正在编码音乐文件，也要选择这里的复制流来保留专辑图等图像信息。", "copy")
-        加入分类(预设数据_v6.视频编码器类型.视频, "AV2", "等待 FFmpeg 添加支持。", "libaom-av2")
+        加入分类(预设数据_v6.视频编码器类型.视频, "AV2", "等待 FFmpeg 添加支持。", "av2", "avmenc")
         加入分类(预设数据_v6.视频编码器类型.视频, "H.266/VVC", "超前，默秒全，代价是极高的性能要求，名副其实的国家电网战略合作伙伴；截止 2026 年，libx266 仍未发布，只有 libvvenc 一个选择。", "libvvenc")
         加入分类(预设数据_v6.视频编码器类型.视频, "AV1", "AOMedia Video 1 作为完全免费开源的高压缩编码，在当前非常适合个人存储，其压缩度比 HEVC 更高，但相应的性能消耗也更大。此编码格式强烈建议优先考虑最新显卡编码。", "libaom-av1", "libsvtav1", "av1_nvenc", "av1_qsv", "av1_amf", "av1_d3d12va", "librav1e", "av1_vulkan")
         加入分类(预设数据_v6.视频编码器类型.视频, "H.265/HEVC", "HEVC 作为当前最主流最全能的编码，正在被全球压制组、视频平台等渠道广泛使用。截止 2026 年，红绿蓝三家的 HEVC 压缩度距离最新版本的 x265 还有非常明显的距离。", "libx265", "hevc_nvenc", "hevc_qsv", "hevc_amf", "hevc_d3d12va", "hevc_vulkan", "libkvazaar", "libsvt_hevc")
@@ -114,7 +114,9 @@ Public Class 视频编码器数据库_v6
     Private Shared Sub 初始化编码器()
         加入编码器(基础("copy", "复制视频流，不重新编码。", "复制流", 预设数据_v6.视频编码器类型.视频, 是否复制流:=True))
         加入编码器(基础("-vn", "禁用视频流输出。", "禁用", 预设数据_v6.视频编码器类型.视频, 是否禁用:=True))
-        加入编码器(基础("libaom-av2", "", "AV2", 预设数据_v6.视频编码器类型.视频))
+
+        加入编码器(基础("av2", "", "AV2", 预设数据_v6.视频编码器类型.视频))
+        加入编码器(基础("avmenc", "", "AV2", 预设数据_v6.视频编码器类型.视频))
 
         加入编码器(基础("libvvenc", "VVC/H.266 软件编码器。", "H.266/VVC", 预设数据_v6.视频编码器类型.视频,
             编码预设:=参数("-preset", "slower 最慢 ~ faster 最快", "faster", "slower", "slow", "medium", "fast", "faster"),
@@ -634,7 +636,7 @@ Public Class 视频编码器数据库_v6
 
     Private Shared Function NVENC质量参数(cq范围 As String, qp范围 As String) As List(Of 编码器特殊参数数据)
         Return 特殊列表(
-            特殊("-rc 码率控制模式，-cq 需要 VBR 类模式，-qp 需要 constqp，constqp/vbr/cbr/vbr_hq 等，constqp=固定 QP，vbr=可变码率，cbr=固定码率，vbr_hq=高质量 VBR"),
+            特殊("-rc 码率控制模式，-cq 需要 vbr，-qp 需要 constqp，可选 constqp/vbr/cbr；constqp=固定 QP，vbr=可变码率，cbr=固定码率"),
             特殊("-cq VBR 恒定质量目标，" & cq范围),
             特殊("-qmin 码率控制最小 QP，限制最高质量，" & qp范围),
             特殊("-qmax 码率控制最大 QP，限制最低质量，" & qp范围),

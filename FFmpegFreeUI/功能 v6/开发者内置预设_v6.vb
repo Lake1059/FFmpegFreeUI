@@ -37,7 +37,7 @@ Public Class 开发者内置预设_v6
         RTX50_AV1_UHQ.视频参数_编码器_具体编码 = "av1_nvenc"
         RTX50_AV1_UHQ.视频参数_编码器_编码预设 = "p7"
         RTX50_AV1_UHQ.视频参数_编码器_场景优化 = "uhq"
-        RTX50_AV1_UHQ.视频参数_比特率_控制方式 = 预设数据_v6.视频全局质量控制方式.VBRHQ
+        RTX50_AV1_UHQ.视频参数_比特率_控制方式 = 预设数据_v6.视频全局质量控制方式.VBR
         RTX50_AV1_UHQ.视频参数_质量控制_参数名 = "cq"
         RTX50_AV1_UHQ.视频参数_质量控制_值 = "38"
         RTX50_AV1_UHQ.视频参数_色彩管理_像素格式 = "p010le"
@@ -50,7 +50,7 @@ Public Class 开发者内置预设_v6
         RTX50_AV1_UHQ_EX.视频参数_编码器_具体编码 = "av1_nvenc"
         RTX50_AV1_UHQ_EX.视频参数_编码器_编码预设 = "p7"
         RTX50_AV1_UHQ_EX.视频参数_编码器_场景优化 = "uhq"
-        RTX50_AV1_UHQ_EX.视频参数_比特率_控制方式 = 预设数据_v6.视频全局质量控制方式.VBRHQ
+        RTX50_AV1_UHQ_EX.视频参数_比特率_控制方式 = 预设数据_v6.视频全局质量控制方式.VBR
         RTX50_AV1_UHQ_EX.视频参数_质量控制_参数名 = "cq"
         RTX50_AV1_UHQ_EX.视频参数_质量控制_值 = "38"
         RTX50_AV1_UHQ_EX.视频参数_质量控制_进阶参数集 = "-multipass fullres -rc-lookahead 240 -spatial-aq 1 -temporal-aq 1 -aq-strength 15 -tf_level -1"
@@ -64,7 +64,7 @@ Public Class 开发者内置预设_v6
         RTX50_HEVC_UHQ.视频参数_编码器_具体编码 = "hevc_nvenc"
         RTX50_HEVC_UHQ.视频参数_编码器_编码预设 = "p7"
         RTX50_HEVC_UHQ.视频参数_编码器_场景优化 = "uhq"
-        RTX50_HEVC_UHQ.视频参数_比特率_控制方式 = 预设数据_v6.视频全局质量控制方式.VBRHQ
+        RTX50_HEVC_UHQ.视频参数_比特率_控制方式 = 预设数据_v6.视频全局质量控制方式.VBR
         RTX50_HEVC_UHQ.视频参数_质量控制_参数名 = "cq"
         RTX50_HEVC_UHQ.视频参数_质量控制_值 = "28"
         RTX50_HEVC_UHQ.视频参数_色彩管理_像素格式 = "p010le"

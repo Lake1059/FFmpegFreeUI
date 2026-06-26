@@ -115,7 +115,6 @@ Public Class 预设数据_v6
         未选择 = 0
         cas = 1
         unsharp = 2
-        sharpen_npp = 3
     End Enum
     Public Property 视频参数_锐化_方式 As 锐化方式 = 锐化方式.未选择
     Public Property 视频参数_锐化_参数1 As String = ""
@@ -257,7 +256,6 @@ Public Class 预设数据_v6
         未选择 = 0
         CRF = 1
         VBR = 2
-        VBRHQ = 3
         CQP = 4
         CBR = 5
         TPE = 6
