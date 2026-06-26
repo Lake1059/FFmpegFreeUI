@@ -15,8 +15,8 @@ Public Class Form_v6_参数面板_扫描方式
         Me.Hide()
     End Sub
 
-    Private Sub MCB_扫描方式总开关_CheckedChanged(sender As Object, e As EventArgs) Handles MCB_扫描方式总开关.CheckedChanged
-        If MCB_扫描方式总开关.Checked = False Then
+    Private Sub MCB_扫描方式总开关_CheckedChanged(sender As Object, e As EventArgs) Handles MCK_扫描方式总开关.CheckedChanged
+        If MCK_扫描方式总开关.Checked = False Then
             MCB_扫描方式.SelectedIndex = -1
         End If
     End Sub

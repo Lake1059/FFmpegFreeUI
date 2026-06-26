@@ -20,19 +20,19 @@ Partial Class Form_v6_参数面板_胶片颗粒
         ModernPanel1 = New LakeUI.ModernPanel()
         Panel4 = New Panel()
         ETB_胶片颗粒参数4 = New LakeUI.ExcellentTrackBar()
-        HtmlColorLabel4 = New LakeUI.HtmlColorLabel()
+        HCL_胶片颗粒参数名称4 = New LakeUI.HtmlColorLabel()
         Panel3 = New Panel()
         ETB_胶片颗粒参数3 = New LakeUI.ExcellentTrackBar()
-        HtmlColorLabel3 = New LakeUI.HtmlColorLabel()
+        HCL_胶片颗粒参数名称3 = New LakeUI.HtmlColorLabel()
         Panel2 = New Panel()
         ETB_胶片颗粒参数2 = New LakeUI.ExcellentTrackBar()
-        HtmlColorLabel2 = New LakeUI.HtmlColorLabel()
+        HCL_胶片颗粒参数名称2 = New LakeUI.HtmlColorLabel()
         Panel1 = New Panel()
         ETB_胶片颗粒参数1 = New LakeUI.ExcellentTrackBar()
-        HtmlColorLabel1 = New LakeUI.HtmlColorLabel()
+        HCL_胶片颗粒参数名称1 = New LakeUI.HtmlColorLabel()
         Panel5 = New Panel()
         MCB_滤镜选择 = New LakeUI.ModernComboBox()
-        MCB_胶片颗粒总开关 = New LakeUI.ModernCheckBox()
+        MCK_胶片颗粒总开关 = New LakeUI.ModernCheckBox()
         ModernPanel1.SuspendLayout()
         Panel4.SuspendLayout()
         Panel3.SuspendLayout()
@@ -40,9 +40,9 @@ Partial Class Form_v6_参数面板_胶片颗粒
         Panel1.SuspendLayout()
         Panel5.SuspendLayout()
         SuspendLayout()
-        ' 
+        '
         ' ModernPanel1
-        ' 
+        '
         ModernPanel1.BackColor1 = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         ModernPanel1.BorderSize = 0
         ModernPanel1.Controls.Add(Panel4)
@@ -50,28 +50,28 @@ Partial Class Form_v6_参数面板_胶片颗粒
         ModernPanel1.Controls.Add(Panel2)
         ModernPanel1.Controls.Add(Panel1)
         ModernPanel1.Controls.Add(Panel5)
-        ModernPanel1.Controls.Add(MCB_胶片颗粒总开关)
+        ModernPanel1.Controls.Add(MCK_胶片颗粒总开关)
         ModernPanel1.Dock = DockStyle.Fill
         ModernPanel1.Location = New Point(0, 0)
         ModernPanel1.Name = "ModernPanel1"
         ModernPanel1.Padding = New Padding(20)
         ModernPanel1.Size = New Size(584, 521)
         ModernPanel1.TabIndex = 0
-        ' 
+        '
         ' Panel4
-        ' 
+        '
         Panel4.AutoSize = True
         Panel4.Controls.Add(ETB_胶片颗粒参数4)
-        Panel4.Controls.Add(HtmlColorLabel4)
+        Panel4.Controls.Add(HCL_胶片颗粒参数名称4)
         Panel4.Dock = DockStyle.Top
         Panel4.Location = New Point(20, 399)
         Panel4.Name = "Panel4"
         Panel4.Padding = New Padding(0, 20, 0, 0)
         Panel4.Size = New Size(544, 101)
         Panel4.TabIndex = 37
-        ' 
+        '
         ' ETB_胶片颗粒参数4
-        ' 
+        '
         ETB_胶片颗粒参数4.BackColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
         ETB_胶片颗粒参数4.Dock = DockStyle.Top
         ETB_胶片颗粒参数4.LabelColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
@@ -92,34 +92,34 @@ Partial Class Form_v6_参数面板_胶片颗粒
         ETB_胶片颗粒参数4.ThumbWidth = 38
         ETB_胶片颗粒参数4.TrackColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ETB_胶片颗粒参数4.TrackFillColor = Color.Transparent
-        ' 
-        ' HtmlColorLabel4
-        ' 
-        HtmlColorLabel4.AutoSize = True
-        HtmlColorLabel4.AutoSizeMode = AutoSizeMode.GrowAndShrink
-        HtmlColorLabel4.Dock = DockStyle.Top
-        HtmlColorLabel4.Location = New Point(0, 20)
-        HtmlColorLabel4.Margin = New Padding(2)
-        HtmlColorLabel4.Name = "HtmlColorLabel4"
-        HtmlColorLabel4.Padding = New Padding(0, 0, 0, 10)
-        HtmlColorLabel4.Size = New Size(544, 31)
-        HtmlColorLabel4.TabIndex = 26
-        HtmlColorLabel4.Text = "胶片颗粒参数名称4"
-        ' 
+        '
+        ' HCL_胶片颗粒参数名称4
+        '
+        HCL_胶片颗粒参数名称4.AutoSize = True
+        HCL_胶片颗粒参数名称4.AutoSizeMode = AutoSizeMode.GrowAndShrink
+        HCL_胶片颗粒参数名称4.Dock = DockStyle.Top
+        HCL_胶片颗粒参数名称4.Location = New Point(0, 20)
+        HCL_胶片颗粒参数名称4.Margin = New Padding(2)
+        HCL_胶片颗粒参数名称4.Name = "HCL_胶片颗粒参数名称4"
+        HCL_胶片颗粒参数名称4.Padding = New Padding(0, 0, 0, 10)
+        HCL_胶片颗粒参数名称4.Size = New Size(544, 31)
+        HCL_胶片颗粒参数名称4.TabIndex = 26
+        HCL_胶片颗粒参数名称4.Text = "胶片颗粒参数名称4"
+        '
         ' Panel3
-        ' 
+        '
         Panel3.AutoSize = True
         Panel3.Controls.Add(ETB_胶片颗粒参数3)
-        Panel3.Controls.Add(HtmlColorLabel3)
+        Panel3.Controls.Add(HCL_胶片颗粒参数名称3)
         Panel3.Dock = DockStyle.Top
         Panel3.Location = New Point(20, 298)
         Panel3.Name = "Panel3"
         Panel3.Padding = New Padding(0, 20, 0, 0)
         Panel3.Size = New Size(544, 101)
         Panel3.TabIndex = 36
-        ' 
+        '
         ' ETB_胶片颗粒参数3
-        ' 
+        '
         ETB_胶片颗粒参数3.BackColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
         ETB_胶片颗粒参数3.Dock = DockStyle.Top
         ETB_胶片颗粒参数3.LabelColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
@@ -140,34 +140,34 @@ Partial Class Form_v6_参数面板_胶片颗粒
         ETB_胶片颗粒参数3.ThumbWidth = 38
         ETB_胶片颗粒参数3.TrackColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ETB_胶片颗粒参数3.TrackFillColor = Color.Transparent
-        ' 
-        ' HtmlColorLabel3
-        ' 
-        HtmlColorLabel3.AutoSize = True
-        HtmlColorLabel3.AutoSizeMode = AutoSizeMode.GrowAndShrink
-        HtmlColorLabel3.Dock = DockStyle.Top
-        HtmlColorLabel3.Location = New Point(0, 20)
-        HtmlColorLabel3.Margin = New Padding(2)
-        HtmlColorLabel3.Name = "HtmlColorLabel3"
-        HtmlColorLabel3.Padding = New Padding(0, 0, 0, 10)
-        HtmlColorLabel3.Size = New Size(544, 31)
-        HtmlColorLabel3.TabIndex = 26
-        HtmlColorLabel3.Text = "胶片颗粒参数名称3"
-        ' 
+        '
+        ' HCL_胶片颗粒参数名称3
+        '
+        HCL_胶片颗粒参数名称3.AutoSize = True
+        HCL_胶片颗粒参数名称3.AutoSizeMode = AutoSizeMode.GrowAndShrink
+        HCL_胶片颗粒参数名称3.Dock = DockStyle.Top
+        HCL_胶片颗粒参数名称3.Location = New Point(0, 20)
+        HCL_胶片颗粒参数名称3.Margin = New Padding(2)
+        HCL_胶片颗粒参数名称3.Name = "HCL_胶片颗粒参数名称3"
+        HCL_胶片颗粒参数名称3.Padding = New Padding(0, 0, 0, 10)
+        HCL_胶片颗粒参数名称3.Size = New Size(544, 31)
+        HCL_胶片颗粒参数名称3.TabIndex = 26
+        HCL_胶片颗粒参数名称3.Text = "胶片颗粒参数名称3"
+        '
         ' Panel2
-        ' 
+        '
         Panel2.AutoSize = True
         Panel2.Controls.Add(ETB_胶片颗粒参数2)
-        Panel2.Controls.Add(HtmlColorLabel2)
+        Panel2.Controls.Add(HCL_胶片颗粒参数名称2)
         Panel2.Dock = DockStyle.Top
         Panel2.Location = New Point(20, 197)
         Panel2.Name = "Panel2"
         Panel2.Padding = New Padding(0, 20, 0, 0)
         Panel2.Size = New Size(544, 101)
         Panel2.TabIndex = 35
-        ' 
+        '
         ' ETB_胶片颗粒参数2
-        ' 
+        '
         ETB_胶片颗粒参数2.BackColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
         ETB_胶片颗粒参数2.Dock = DockStyle.Top
         ETB_胶片颗粒参数2.LabelColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
@@ -188,34 +188,34 @@ Partial Class Form_v6_参数面板_胶片颗粒
         ETB_胶片颗粒参数2.ThumbWidth = 38
         ETB_胶片颗粒参数2.TrackColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ETB_胶片颗粒参数2.TrackFillColor = Color.Transparent
-        ' 
-        ' HtmlColorLabel2
-        ' 
-        HtmlColorLabel2.AutoSize = True
-        HtmlColorLabel2.AutoSizeMode = AutoSizeMode.GrowAndShrink
-        HtmlColorLabel2.Dock = DockStyle.Top
-        HtmlColorLabel2.Location = New Point(0, 20)
-        HtmlColorLabel2.Margin = New Padding(2)
-        HtmlColorLabel2.Name = "HtmlColorLabel2"
-        HtmlColorLabel2.Padding = New Padding(0, 0, 0, 10)
-        HtmlColorLabel2.Size = New Size(544, 31)
-        HtmlColorLabel2.TabIndex = 26
-        HtmlColorLabel2.Text = "胶片颗粒参数名称2"
-        ' 
+        '
+        ' HCL_胶片颗粒参数名称2
+        '
+        HCL_胶片颗粒参数名称2.AutoSize = True
+        HCL_胶片颗粒参数名称2.AutoSizeMode = AutoSizeMode.GrowAndShrink
+        HCL_胶片颗粒参数名称2.Dock = DockStyle.Top
+        HCL_胶片颗粒参数名称2.Location = New Point(0, 20)
+        HCL_胶片颗粒参数名称2.Margin = New Padding(2)
+        HCL_胶片颗粒参数名称2.Name = "HCL_胶片颗粒参数名称2"
+        HCL_胶片颗粒参数名称2.Padding = New Padding(0, 0, 0, 10)
+        HCL_胶片颗粒参数名称2.Size = New Size(544, 31)
+        HCL_胶片颗粒参数名称2.TabIndex = 26
+        HCL_胶片颗粒参数名称2.Text = "胶片颗粒参数名称2"
+        '
         ' Panel1
-        ' 
+        '
         Panel1.AutoSize = True
         Panel1.Controls.Add(ETB_胶片颗粒参数1)
-        Panel1.Controls.Add(HtmlColorLabel1)
+        Panel1.Controls.Add(HCL_胶片颗粒参数名称1)
         Panel1.Dock = DockStyle.Top
         Panel1.Location = New Point(20, 96)
         Panel1.Name = "Panel1"
         Panel1.Padding = New Padding(0, 20, 0, 0)
         Panel1.Size = New Size(544, 101)
         Panel1.TabIndex = 34
-        ' 
+        '
         ' ETB_胶片颗粒参数1
-        ' 
+        '
         ETB_胶片颗粒参数1.BackColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
         ETB_胶片颗粒参数1.Dock = DockStyle.Top
         ETB_胶片颗粒参数1.LabelColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
@@ -236,22 +236,22 @@ Partial Class Form_v6_参数面板_胶片颗粒
         ETB_胶片颗粒参数1.ThumbWidth = 38
         ETB_胶片颗粒参数1.TrackColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ETB_胶片颗粒参数1.TrackFillColor = Color.Transparent
-        ' 
-        ' HtmlColorLabel1
-        ' 
-        HtmlColorLabel1.AutoSize = True
-        HtmlColorLabel1.AutoSizeMode = AutoSizeMode.GrowAndShrink
-        HtmlColorLabel1.Dock = DockStyle.Top
-        HtmlColorLabel1.Location = New Point(0, 20)
-        HtmlColorLabel1.Margin = New Padding(2)
-        HtmlColorLabel1.Name = "HtmlColorLabel1"
-        HtmlColorLabel1.Padding = New Padding(0, 0, 0, 10)
-        HtmlColorLabel1.Size = New Size(544, 31)
-        HtmlColorLabel1.TabIndex = 26
-        HtmlColorLabel1.Text = "胶片颗粒参数名称1"
-        ' 
+        '
+        ' HCL_胶片颗粒参数名称1
+        '
+        HCL_胶片颗粒参数名称1.AutoSize = True
+        HCL_胶片颗粒参数名称1.AutoSizeMode = AutoSizeMode.GrowAndShrink
+        HCL_胶片颗粒参数名称1.Dock = DockStyle.Top
+        HCL_胶片颗粒参数名称1.Location = New Point(0, 20)
+        HCL_胶片颗粒参数名称1.Margin = New Padding(2)
+        HCL_胶片颗粒参数名称1.Name = "HCL_胶片颗粒参数名称1"
+        HCL_胶片颗粒参数名称1.Padding = New Padding(0, 0, 0, 10)
+        HCL_胶片颗粒参数名称1.Size = New Size(544, 31)
+        HCL_胶片颗粒参数名称1.TabIndex = 26
+        HCL_胶片颗粒参数名称1.Text = "胶片颗粒参数名称1"
+        '
         ' Panel5
-        ' 
+        '
         Panel5.Controls.Add(MCB_滤镜选择)
         Panel5.Dock = DockStyle.Top
         Panel5.Location = New Point(20, 44)
@@ -259,9 +259,9 @@ Partial Class Form_v6_参数面板_胶片颗粒
         Panel5.Padding = New Padding(0, 20, 0, 0)
         Panel5.Size = New Size(544, 52)
         Panel5.TabIndex = 33
-        ' 
+        '
         ' MCB_滤镜选择
-        ' 
+        '
         MCB_滤镜选择.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_滤镜选择.BorderRadius = 10
         MCB_滤镜选择.BorderSize = 0
@@ -291,27 +291,27 @@ Partial Class Form_v6_参数面板_胶片颗粒
         MCB_滤镜选择.ToolTipMaxWidth = 420
         MCB_滤镜选择.ToolTipPadding = New Padding(15)
         MCB_滤镜选择.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        ' 
-        ' MCB_胶片颗粒总开关
-        ' 
-        MCB_胶片颗粒总开关.AutoSize = True
-        MCB_胶片颗粒总开关.BoxBorderRadius = 5
-        MCB_胶片颗粒总开关.BoxBorderSize = 0
-        MCB_胶片颗粒总开关.BoxCheckedBackColor = Color.OliveDrab
-        MCB_胶片颗粒总开关.BoxInnerPadding = 6
-        MCB_胶片颗粒总开关.BoxSize = 24
-        MCB_胶片颗粒总开关.BoxTextSpacing = 10
-        MCB_胶片颗粒总开关.BoxUncheckedBackColor = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
-        MCB_胶片颗粒总开关.CheckMarkWidth = 3F
-        MCB_胶片颗粒总开关.Dock = DockStyle.Top
-        MCB_胶片颗粒总开关.Location = New Point(20, 20)
-        MCB_胶片颗粒总开关.Name = "MCB_胶片颗粒总开关"
-        MCB_胶片颗粒总开关.Size = New Size(544, 24)
-        MCB_胶片颗粒总开关.TabIndex = 25
-        MCB_胶片颗粒总开关.Text = "胶片颗粒总开关 / 勾选才会启用"
-        ' 
+        '
+        ' MCK_胶片颗粒总开关
+        '
+        MCK_胶片颗粒总开关.AutoSize = True
+        MCK_胶片颗粒总开关.BoxBorderRadius = 5
+        MCK_胶片颗粒总开关.BoxBorderSize = 0
+        MCK_胶片颗粒总开关.BoxCheckedBackColor = Color.OliveDrab
+        MCK_胶片颗粒总开关.BoxInnerPadding = 6
+        MCK_胶片颗粒总开关.BoxSize = 24
+        MCK_胶片颗粒总开关.BoxTextSpacing = 10
+        MCK_胶片颗粒总开关.BoxUncheckedBackColor = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        MCK_胶片颗粒总开关.CheckMarkWidth = 3F
+        MCK_胶片颗粒总开关.Dock = DockStyle.Top
+        MCK_胶片颗粒总开关.Location = New Point(20, 20)
+        MCK_胶片颗粒总开关.Name = "MCK_胶片颗粒总开关"
+        MCK_胶片颗粒总开关.Size = New Size(544, 24)
+        MCK_胶片颗粒总开关.TabIndex = 25
+        MCK_胶片颗粒总开关.Text = "胶片颗粒总开关 / 勾选才会启用"
+        '
         ' Form_v6_参数面板_胶片颗粒
-        ' 
+        '
         AutoScaleDimensions = New SizeF(96F, 96F)
         AutoScaleMode = AutoScaleMode.Dpi
         BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
@@ -340,19 +340,19 @@ Partial Class Form_v6_参数面板_胶片颗粒
     End Sub
 
     Friend WithEvents ModernPanel1 As LakeUI.ModernPanel
-    Friend WithEvents MCB_胶片颗粒总开关 As LakeUI.ModernCheckBox
+    Friend WithEvents MCK_胶片颗粒总开关 As LakeUI.ModernCheckBox
     Friend WithEvents Panel5 As Panel
     Friend WithEvents MCB_滤镜选择 As LakeUI.ModernComboBox
     Friend WithEvents Panel1 As Panel
-    Friend WithEvents HtmlColorLabel1 As LakeUI.HtmlColorLabel
+    Friend WithEvents HCL_胶片颗粒参数名称1 As LakeUI.HtmlColorLabel
     Friend WithEvents ETB_胶片颗粒参数1 As LakeUI.ExcellentTrackBar
     Friend WithEvents Panel4 As Panel
     Friend WithEvents ETB_胶片颗粒参数4 As LakeUI.ExcellentTrackBar
-    Friend WithEvents HtmlColorLabel4 As LakeUI.HtmlColorLabel
+    Friend WithEvents HCL_胶片颗粒参数名称4 As LakeUI.HtmlColorLabel
     Friend WithEvents Panel3 As Panel
     Friend WithEvents ETB_胶片颗粒参数3 As LakeUI.ExcellentTrackBar
-    Friend WithEvents HtmlColorLabel3 As LakeUI.HtmlColorLabel
+    Friend WithEvents HCL_胶片颗粒参数名称3 As LakeUI.HtmlColorLabel
     Friend WithEvents Panel2 As Panel
     Friend WithEvents ETB_胶片颗粒参数2 As LakeUI.ExcellentTrackBar
-    Friend WithEvents HtmlColorLabel2 As LakeUI.HtmlColorLabel
+    Friend WithEvents HCL_胶片颗粒参数名称2 As LakeUI.HtmlColorLabel
 End Class

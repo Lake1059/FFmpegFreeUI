@@ -1,4 +1,4 @@
-﻿Public Class Form_v6_参数面板_音频参数
+Public Class Form_v6_参数面板_音频参数
     Private Sub Form_v6_参数面板_音频参数_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         初始化音频编码器下拉框()
         初始化质量参数名下拉框()

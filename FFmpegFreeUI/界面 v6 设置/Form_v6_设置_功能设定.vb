@@ -1,4 +1,4 @@
-﻿Imports Microsoft.WindowsAPICodePack.Dialogs
+Imports Microsoft.WindowsAPICodePack.Dialogs
 
 Public Class Form_v6_设置_功能设定
     Private Sub MTB_工作目录_TextChanged(sender As Object, e As EventArgs) Handles MTB_工作目录.TextChanged

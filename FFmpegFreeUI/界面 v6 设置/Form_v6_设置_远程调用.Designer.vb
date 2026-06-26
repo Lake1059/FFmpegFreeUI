@@ -1,4 +1,4 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class Form_v6_设置_远程调用
     Inherits System.Windows.Forms.Form
 
@@ -33,9 +33,9 @@ Partial Class Form_v6_设置_远程调用
         ModernPanel1.SuspendLayout()
         Panel2.SuspendLayout()
         SuspendLayout()
-        ' 
+        '
         ' ModernPanel1
-        ' 
+        '
         ModernPanel1.BackColor1 = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         ModernPanel1.BorderSize = 0
         ModernPanel1.Controls.Add(HtmlColorLabel3)
@@ -49,9 +49,9 @@ Partial Class Form_v6_设置_远程调用
         ModernPanel1.ScrollBarMode = LakeUI.ModernPanel.ScrollMode.Vertical
         ModernPanel1.Size = New Size(695, 595)
         ModernPanel1.TabIndex = 3
-        ' 
+        '
         ' HtmlColorLabel3
-        ' 
+        '
         HtmlColorLabel3.AutoSize = True
         HtmlColorLabel3.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel3.Dock = DockStyle.Bottom
@@ -62,9 +62,9 @@ Partial Class Form_v6_设置_远程调用
         HtmlColorLabel3.Size = New Size(655, 21)
         HtmlColorLabel3.TabIndex = 13
         HtmlColorLabel3.Text = "你不能使用 10590 端口，因为我的其他项目已经占用了"
-        ' 
+        '
         ' Panel2
-        ' 
+        '
         Panel2.Controls.Add(ModernTextBox1)
         Panel2.Controls.Add(JustEmptyControl1)
         Panel2.Controls.Add(BooleanSwitch1)
@@ -74,9 +74,9 @@ Partial Class Form_v6_设置_远程调用
         Panel2.Padding = New Padding(0, 10, 0, 0)
         Panel2.Size = New Size(655, 42)
         Panel2.TabIndex = 11
-        ' 
+        '
         ' ModernTextBox1
-        ' 
+        '
         ModernTextBox1.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernTextBox1.BorderColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernTextBox1.BorderColorFocus = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
@@ -91,17 +91,17 @@ Partial Class Form_v6_设置_远程调用
         ModernTextBox1.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernTextBox1.TabIndex = 14
         ModernTextBox1.WaterText = "10591"
-        ' 
+        '
         ' JustEmptyControl1
-        ' 
+        '
         JustEmptyControl1.Dock = DockStyle.Left
         JustEmptyControl1.Location = New Point(55, 10)
         JustEmptyControl1.Name = "JustEmptyControl1"
         JustEmptyControl1.Size = New Size(10, 32)
         JustEmptyControl1.TabIndex = 13
-        ' 
+        '
         ' BooleanSwitch1
-        ' 
+        '
         BooleanSwitch1.Dock = DockStyle.Left
         BooleanSwitch1.KnobColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
         BooleanSwitch1.Location = New Point(0, 10)
@@ -111,9 +111,9 @@ Partial Class Form_v6_设置_远程调用
         BooleanSwitch1.TabIndex = 0
         BooleanSwitch1.TrackColorOff = Color.IndianRed
         BooleanSwitch1.TrackColorOn = Color.OliveDrab
-        ' 
+        '
         ' HtmlColorLabel2
-        ' 
+        '
         HtmlColorLabel2.AutoSize = True
         HtmlColorLabel2.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel2.Dock = DockStyle.Top
@@ -124,9 +124,9 @@ Partial Class Form_v6_设置_远程调用
         HtmlColorLabel2.Size = New Size(655, 41)
         HtmlColorLabel2.TabIndex = 12
         HtmlColorLabel2.Text = "3FUI 会启动一个 UDP 服务器来负责接收指定端口的数据<br>数据格式就是 3FUI 的启动参数，在仓库上查看功能列表"
-        ' 
+        '
         ' HtmlColorLabel1
-        ' 
+        '
         HtmlColorLabel1.AutoSize = True
         HtmlColorLabel1.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel1.Dock = DockStyle.Top
@@ -137,9 +137,9 @@ Partial Class Form_v6_设置_远程调用
         HtmlColorLabel1.Size = New Size(655, 30)
         HtmlColorLabel1.TabIndex = 10
         HtmlColorLabel1.Text = "<span style=""font-size:13"">远程调用</span>"
-        ' 
+        '
         ' Form_v6_设置_远程调用
-        ' 
+        '
         AutoScaleDimensions = New SizeF(96F, 96F)
         AutoScaleMode = AutoScaleMode.Dpi
         BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))

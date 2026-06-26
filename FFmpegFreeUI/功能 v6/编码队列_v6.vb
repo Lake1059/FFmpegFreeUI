@@ -1063,18 +1063,31 @@ Public Class 编码任务_v6
     Private Sub 生成帧服务器脚本()
         If 预设数据 Is Nothing Then Exit Sub
         If 预设数据.视频参数_视频帧服务器_使用AviSynth Then
-            If Not File.Exists(预设数据.视频参数_视频帧服务器_avs脚本文件) Then Throw New FileNotFoundException("AviSynth 脚本模板文件不存在", 预设数据.视频参数_视频帧服务器_avs脚本文件)
-            Dim content = File.ReadAllText(预设数据.视频参数_视频帧服务器_avs脚本文件).Replace("<FilePath>", 输入文件)
+            Dim scriptPath = 解析帧服务器模板路径(预设数据.视频参数_视频帧服务器_avs脚本文件)
+            If Not File.Exists(scriptPath) Then Throw New FileNotFoundException("AviSynth 脚本模板文件不存在", scriptPath)
+            Dim content = File.ReadAllText(scriptPath).Replace("<FilePath>", 输入文件)
             AviSynthCachePath = 预设管理_v6.派生帧服务器脚本路径(输入文件, ".avs", ID)
             File.WriteAllText(AviSynthCachePath, content, New UTF8Encoding(False))
         End If
         If 预设数据.视频参数_视频帧服务器_使用VapourSynth Then
-            If Not File.Exists(预设数据.视频参数_视频帧服务器_vpy脚本文件) Then Throw New FileNotFoundException("VapourSynth 脚本模板文件不存在", 预设数据.视频参数_视频帧服务器_vpy脚本文件)
-            Dim content = File.ReadAllText(预设数据.视频参数_视频帧服务器_vpy脚本文件).Replace("<FilePath>", 输入文件)
-            VapourSynthCachePath = 预设管理_v6.派生帧服务器脚本路径(输入文件, Path.GetExtension(预设数据.视频参数_视频帧服务器_vpy脚本文件), ID)
+            Dim scriptPath = 解析帧服务器模板路径(预设数据.视频参数_视频帧服务器_vpy脚本文件)
+            If Not File.Exists(scriptPath) Then Throw New FileNotFoundException("VapourSynth 脚本模板文件不存在", scriptPath)
+            Dim content = File.ReadAllText(scriptPath).Replace("<FilePath>", 输入文件)
+            VapourSynthCachePath = 预设管理_v6.派生帧服务器脚本路径(输入文件, Path.GetExtension(scriptPath), ID)
             File.WriteAllText(VapourSynthCachePath, content, New UTF8Encoding(False))
         End If
     End Sub
+
+    Private Shared Function 解析帧服务器模板路径(pathText As String) As String
+        Dim raw = If(pathText, "").Trim()
+        If raw = "" Then Return raw
+        Try
+            If Path.IsPathRooted(raw) Then Return raw
+            Return Path.GetFullPath(Path.Combine(Application.StartupPath, raw))
+        Catch
+            Return raw
+        End Try
+    End Function
 
     Private Sub 清理帧服务器缓存()
         Try

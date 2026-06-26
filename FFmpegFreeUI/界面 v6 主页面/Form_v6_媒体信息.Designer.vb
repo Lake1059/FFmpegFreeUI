@@ -1,4 +1,4 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class Form_v6_媒体信息
     Inherits System.Windows.Forms.Form
 
@@ -29,9 +29,9 @@ Partial Class Form_v6_媒体信息
         ModernPanel1.SuspendLayout()
         Panel2.SuspendLayout()
         SuspendLayout()
-        ' 
+        '
         ' ModernPanel1
-        ' 
+        '
         ModernPanel1.BorderSize = 0
         ModernPanel1.Controls.Add(ModernTextBox1)
         ModernPanel1.Controls.Add(Panel2)
@@ -42,9 +42,9 @@ Partial Class Form_v6_媒体信息
         ModernPanel1.ScrollBarMode = LakeUI.ModernPanel.ScrollMode.None
         ModernPanel1.Size = New Size(883, 645)
         ModernPanel1.TabIndex = 0
-        ' 
+        '
         ' ModernTextBox1
-        ' 
+        '
         ModernTextBox1.AllowDrop = True
         ModernTextBox1.BackColor1 = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
         ModernTextBox1.BorderColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
@@ -68,9 +68,9 @@ Partial Class Form_v6_媒体信息
         ModernTextBox1.Size = New Size(843, 563)
         ModernTextBox1.TabIndex = 15
         ModernTextBox1.Text = "ModernTextBox1"
-        ' 
+        '
         ' Panel2
-        ' 
+        '
         Panel2.Controls.Add(MB_打开文件)
         Panel2.Dock = DockStyle.Top
         Panel2.Location = New Point(20, 20)
@@ -78,9 +78,9 @@ Partial Class Form_v6_媒体信息
         Panel2.Padding = New Padding(0, 0, 0, 10)
         Panel2.Size = New Size(843, 42)
         Panel2.TabIndex = 14
-        ' 
+        '
         ' MB_打开文件
-        ' 
+        '
         MB_打开文件.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MB_打开文件.BorderRadius = 10
         MB_打开文件.BorderSize = 0
@@ -93,9 +93,9 @@ Partial Class Form_v6_媒体信息
         MB_打开文件.Size = New Size(843, 32)
         MB_打开文件.TabIndex = 6
         MB_打开文件.Text = "调用 ffprobe.exe 直接展示输出信息，可以把文件直接拖到下方区域；此功能不兼容转译模式！"
-        ' 
+        '
         ' Form_v6_媒体信息
-        ' 
+        '
         AutoScaleDimensions = New SizeF(96F, 96F)
         AutoScaleMode = AutoScaleMode.Dpi
         BackColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))

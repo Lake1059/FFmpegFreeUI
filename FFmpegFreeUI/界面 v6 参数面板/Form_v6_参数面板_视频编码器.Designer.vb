@@ -1,4 +1,4 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class Form_v6_参数面板_视频编码器
     Inherits System.Windows.Forms.Form
 
@@ -25,23 +25,23 @@ Partial Class Form_v6_参数面板_视频编码器
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form_v6_参数面板_视频编码器))
         ModernPanel1 = New LakeUI.ModernPanel()
         Panel6 = New Panel()
-        HtmlColorLabel9 = New LakeUI.HtmlColorLabel()
-        MTB_threads = New LakeUI.ModernTextBox()
+        HCL_GPU编号说明 = New LakeUI.HtmlColorLabel()
+        MTB_编码线程数 = New LakeUI.ModernTextBox()
         Panel5 = New Panel()
-        HtmlColorLabel8 = New LakeUI.HtmlColorLabel()
-        MTB_gpu = New LakeUI.ModernTextBox()
-        HtmlColorLabel5 = New LakeUI.HtmlColorLabel()
+        HCL_编码线程数说明 = New LakeUI.HtmlColorLabel()
+        MTB_GPU编号 = New LakeUI.ModernTextBox()
+        HCL_性能选项 = New LakeUI.HtmlColorLabel()
         Panel4 = New Panel()
         MCB_场景优化 = New LakeUI.ModernComboBox()
-        HtmlColorLabel4 = New LakeUI.HtmlColorLabel()
+        HCL_场景优化 = New LakeUI.HtmlColorLabel()
         Panel3 = New Panel()
         MCB_配置文件 = New LakeUI.ModernComboBox()
-        HtmlColorLabel3 = New LakeUI.HtmlColorLabel()
+        HCL_配置文件 = New LakeUI.HtmlColorLabel()
         Panel1 = New Panel()
         MCB_编码预设 = New LakeUI.ModernComboBox()
-        HtmlColorLabel2 = New LakeUI.HtmlColorLabel()
+        HCL_编码预设 = New LakeUI.HtmlColorLabel()
         Panel7 = New Panel()
-        HtmlColorLabel7 = New LakeUI.HtmlColorLabel()
+        HCL_图片编码器质量值 = New LakeUI.HtmlColorLabel()
         MTB_图片编码器质量值 = New LakeUI.ModernTextBox()
         Panel2 = New Panel()
         MCB_具体编码器 = New LakeUI.ModernComboBox()
@@ -49,8 +49,8 @@ Partial Class Form_v6_参数面板_视频编码器
         MCB_视频编码器分类 = New LakeUI.ModernComboBox()
         JustEmptyControl1 = New LakeUI.JustEmptyControl()
         MCB_视频编码器类型 = New LakeUI.ModernComboBox()
-        HtmlColorLabel6 = New LakeUI.HtmlColorLabel()
-        HtmlColorLabel1 = New LakeUI.HtmlColorLabel()
+        HCL_视频编码器 = New LakeUI.HtmlColorLabel()
+        HCL_视频编码器2 = New LakeUI.HtmlColorLabel()
         ModernPanel1.SuspendLayout()
         Panel6.SuspendLayout()
         Panel5.SuspendLayout()
@@ -60,24 +60,24 @@ Partial Class Form_v6_参数面板_视频编码器
         Panel7.SuspendLayout()
         Panel2.SuspendLayout()
         SuspendLayout()
-        ' 
+        '
         ' ModernPanel1
-        ' 
+        '
         ModernPanel1.BackColor1 = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         ModernPanel1.BorderSize = 0
         ModernPanel1.Controls.Add(Panel6)
         ModernPanel1.Controls.Add(Panel5)
-        ModernPanel1.Controls.Add(HtmlColorLabel5)
+        ModernPanel1.Controls.Add(HCL_性能选项)
         ModernPanel1.Controls.Add(Panel4)
-        ModernPanel1.Controls.Add(HtmlColorLabel4)
+        ModernPanel1.Controls.Add(HCL_场景优化)
         ModernPanel1.Controls.Add(Panel3)
-        ModernPanel1.Controls.Add(HtmlColorLabel3)
+        ModernPanel1.Controls.Add(HCL_配置文件)
         ModernPanel1.Controls.Add(Panel1)
-        ModernPanel1.Controls.Add(HtmlColorLabel2)
+        ModernPanel1.Controls.Add(HCL_编码预设)
         ModernPanel1.Controls.Add(Panel7)
         ModernPanel1.Controls.Add(Panel2)
-        ModernPanel1.Controls.Add(HtmlColorLabel6)
-        ModernPanel1.Controls.Add(HtmlColorLabel1)
+        ModernPanel1.Controls.Add(HCL_视频编码器)
+        ModernPanel1.Controls.Add(HCL_视频编码器2)
         ModernPanel1.Dock = DockStyle.Fill
         ModernPanel1.Location = New Point(0, 0)
         ModernPanel1.Name = "ModernPanel1"
@@ -85,109 +85,109 @@ Partial Class Form_v6_参数面板_视频编码器
         ModernPanel1.ScrollBarMode = LakeUI.ModernPanel.ScrollMode.Vertical
         ModernPanel1.Size = New Size(704, 625)
         ModernPanel1.TabIndex = 0
-        ' 
+        '
         ' Panel6
-        ' 
-        Panel6.Controls.Add(HtmlColorLabel9)
-        Panel6.Controls.Add(MTB_threads)
+        '
+        Panel6.Controls.Add(HCL_GPU编号说明)
+        Panel6.Controls.Add(MTB_编码线程数)
         Panel6.Dock = DockStyle.Top
         Panel6.Location = New Point(20, 528)
         Panel6.Name = "Panel6"
         Panel6.Padding = New Padding(0, 10, 0, 0)
         Panel6.Size = New Size(664, 42)
         Panel6.TabIndex = 12
-        ' 
-        ' HtmlColorLabel9
-        ' 
-        HtmlColorLabel9.AutoSizeMode = AutoSizeMode.GrowAndShrink
-        HtmlColorLabel9.Dock = DockStyle.Fill
-        HtmlColorLabel9.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        HtmlColorLabel9.Location = New Point(100, 10)
-        HtmlColorLabel9.Margin = New Padding(2)
-        HtmlColorLabel9.Name = "HtmlColorLabel9"
-        HtmlColorLabel9.Padding = New Padding(10, 0, 0, 0)
-        HtmlColorLabel9.Size = New Size(564, 32)
-        HtmlColorLabel9.TabIndex = 8
-        HtmlColorLabel9.Text = "指定 CPU 编码线程数，不一定有效，编码器有自己的逻辑"
-        HtmlColorLabel9.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
-        ' 
-        ' MTB_threads
-        ' 
-        MTB_threads.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        MTB_threads.BorderColor = Color.Transparent
-        MTB_threads.BorderColorFocus = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
-        MTB_threads.BorderRadius = 10
-        MTB_threads.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
-        MTB_threads.Dock = DockStyle.Left
-        MTB_threads.Location = New Point(0, 10)
-        MTB_threads.Margin = New Padding(2)
-        MTB_threads.Name = "MTB_threads"
-        MTB_threads.Padding = New Padding(10, 0, 10, 0)
-        MTB_threads.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        MTB_threads.Size = New Size(100, 32)
-        MTB_threads.TabIndex = 4
-        MTB_threads.WaterText = "-threads"
-        MTB_threads.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        ' 
+        '
+        ' HCL_GPU编号说明
+        '
+        HCL_GPU编号说明.AutoSizeMode = AutoSizeMode.GrowAndShrink
+        HCL_GPU编号说明.Dock = DockStyle.Fill
+        HCL_GPU编号说明.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
+        HCL_GPU编号说明.Location = New Point(100, 10)
+        HCL_GPU编号说明.Margin = New Padding(2)
+        HCL_GPU编号说明.Name = "HCL_GPU编号说明"
+        HCL_GPU编号说明.Padding = New Padding(10, 0, 0, 0)
+        HCL_GPU编号说明.Size = New Size(564, 32)
+        HCL_GPU编号说明.TabIndex = 8
+        HCL_GPU编号说明.Text = "指定 CPU 编码线程数，不一定有效，编码器有自己的逻辑"
+        HCL_GPU编号说明.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
+        '
+        ' MTB_编码线程数
+        '
+        MTB_编码线程数.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MTB_编码线程数.BorderColor = Color.Transparent
+        MTB_编码线程数.BorderColorFocus = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
+        MTB_编码线程数.BorderRadius = 10
+        MTB_编码线程数.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
+        MTB_编码线程数.Dock = DockStyle.Left
+        MTB_编码线程数.Location = New Point(0, 10)
+        MTB_编码线程数.Margin = New Padding(2)
+        MTB_编码线程数.Name = "MTB_编码线程数"
+        MTB_编码线程数.Padding = New Padding(10, 0, 10, 0)
+        MTB_编码线程数.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MTB_编码线程数.Size = New Size(100, 32)
+        MTB_编码线程数.TabIndex = 4
+        MTB_编码线程数.WaterText = "-threads"
+        MTB_编码线程数.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
+        '
         ' Panel5
-        ' 
-        Panel5.Controls.Add(HtmlColorLabel8)
-        Panel5.Controls.Add(MTB_gpu)
+        '
+        Panel5.Controls.Add(HCL_编码线程数说明)
+        Panel5.Controls.Add(MTB_GPU编号)
         Panel5.Dock = DockStyle.Top
         Panel5.Location = New Point(20, 486)
         Panel5.Name = "Panel5"
         Panel5.Padding = New Padding(0, 10, 0, 0)
         Panel5.Size = New Size(664, 42)
         Panel5.TabIndex = 11
-        ' 
-        ' HtmlColorLabel8
-        ' 
-        HtmlColorLabel8.AutoSizeMode = AutoSizeMode.GrowAndShrink
-        HtmlColorLabel8.Dock = DockStyle.Fill
-        HtmlColorLabel8.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        HtmlColorLabel8.Location = New Point(100, 10)
-        HtmlColorLabel8.Margin = New Padding(2)
-        HtmlColorLabel8.Name = "HtmlColorLabel8"
-        HtmlColorLabel8.Padding = New Padding(10, 0, 0, 0)
-        HtmlColorLabel8.Size = New Size(564, 32)
-        HtmlColorLabel8.TabIndex = 7
-        HtmlColorLabel8.Text = "指定 NVIDIA 显卡索引号，其他卡请从系统硬件加速或驱动中设置"
-        HtmlColorLabel8.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
-        ' 
-        ' MTB_gpu
-        ' 
-        MTB_gpu.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        MTB_gpu.BorderColor = Color.Transparent
-        MTB_gpu.BorderColorFocus = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
-        MTB_gpu.BorderRadius = 10
-        MTB_gpu.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
-        MTB_gpu.Dock = DockStyle.Left
-        MTB_gpu.Location = New Point(0, 10)
-        MTB_gpu.Margin = New Padding(2)
-        MTB_gpu.Name = "MTB_gpu"
-        MTB_gpu.Padding = New Padding(10, 0, 10, 0)
-        MTB_gpu.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        MTB_gpu.Size = New Size(100, 32)
-        MTB_gpu.TabIndex = 4
-        MTB_gpu.WaterText = "-gpu"
-        MTB_gpu.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        ' 
-        ' HtmlColorLabel5
-        ' 
-        HtmlColorLabel5.AutoSize = True
-        HtmlColorLabel5.AutoSizeMode = AutoSizeMode.GrowAndShrink
-        HtmlColorLabel5.Dock = DockStyle.Top
-        HtmlColorLabel5.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        HtmlColorLabel5.Location = New Point(20, 436)
-        HtmlColorLabel5.Margin = New Padding(2)
-        HtmlColorLabel5.Name = "HtmlColorLabel5"
-        HtmlColorLabel5.Padding = New Padding(0, 20, 0, 5)
-        HtmlColorLabel5.Size = New Size(664, 50)
-        HtmlColorLabel5.TabIndex = 10
-        HtmlColorLabel5.Text = "<span style=""font-size:13; color:Silver"">性能选项</span>   通常不需要考虑，也不一定起作用"
-        ' 
+        '
+        ' HCL_编码线程数说明
+        '
+        HCL_编码线程数说明.AutoSizeMode = AutoSizeMode.GrowAndShrink
+        HCL_编码线程数说明.Dock = DockStyle.Fill
+        HCL_编码线程数说明.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
+        HCL_编码线程数说明.Location = New Point(100, 10)
+        HCL_编码线程数说明.Margin = New Padding(2)
+        HCL_编码线程数说明.Name = "HCL_编码线程数说明"
+        HCL_编码线程数说明.Padding = New Padding(10, 0, 0, 0)
+        HCL_编码线程数说明.Size = New Size(564, 32)
+        HCL_编码线程数说明.TabIndex = 7
+        HCL_编码线程数说明.Text = "指定 NVIDIA 显卡索引号，其他卡请从系统硬件加速或驱动中设置"
+        HCL_编码线程数说明.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
+        '
+        ' MTB_GPU编号
+        '
+        MTB_GPU编号.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MTB_GPU编号.BorderColor = Color.Transparent
+        MTB_GPU编号.BorderColorFocus = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
+        MTB_GPU编号.BorderRadius = 10
+        MTB_GPU编号.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
+        MTB_GPU编号.Dock = DockStyle.Left
+        MTB_GPU编号.Location = New Point(0, 10)
+        MTB_GPU编号.Margin = New Padding(2)
+        MTB_GPU编号.Name = "MTB_GPU编号"
+        MTB_GPU编号.Padding = New Padding(10, 0, 10, 0)
+        MTB_GPU编号.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MTB_GPU编号.Size = New Size(100, 32)
+        MTB_GPU编号.TabIndex = 4
+        MTB_GPU编号.WaterText = "-gpu"
+        MTB_GPU编号.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
+        '
+        ' HCL_性能选项
+        '
+        HCL_性能选项.AutoSize = True
+        HCL_性能选项.AutoSizeMode = AutoSizeMode.GrowAndShrink
+        HCL_性能选项.Dock = DockStyle.Top
+        HCL_性能选项.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
+        HCL_性能选项.Location = New Point(20, 436)
+        HCL_性能选项.Margin = New Padding(2)
+        HCL_性能选项.Name = "HCL_性能选项"
+        HCL_性能选项.Padding = New Padding(0, 20, 0, 5)
+        HCL_性能选项.Size = New Size(664, 50)
+        HCL_性能选项.TabIndex = 10
+        HCL_性能选项.Text = "<span style=""font-size:13; color:Silver"">性能选项</span>   通常不需要考虑，也不一定起作用"
+        '
         ' Panel4
-        ' 
+        '
         Panel4.Controls.Add(MCB_场景优化)
         Panel4.Dock = DockStyle.Top
         Panel4.Location = New Point(20, 394)
@@ -195,9 +195,9 @@ Partial Class Form_v6_参数面板_视频编码器
         Panel4.Padding = New Padding(0, 10, 0, 0)
         Panel4.Size = New Size(664, 42)
         Panel4.TabIndex = 9
-        ' 
+        '
         ' MCB_场景优化
-        ' 
+        '
         MCB_场景优化.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_场景优化.BorderRadius = 10
         MCB_场景优化.BorderSize = 0
@@ -222,23 +222,23 @@ Partial Class Form_v6_参数面板_视频编码器
         MCB_场景优化.ToolTipPadding = New Padding(15)
         MCB_场景优化.WaterText = "-tune"
         MCB_场景优化.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        ' 
-        ' HtmlColorLabel4
-        ' 
-        HtmlColorLabel4.AutoSize = True
-        HtmlColorLabel4.AutoSizeMode = AutoSizeMode.GrowAndShrink
-        HtmlColorLabel4.Dock = DockStyle.Top
-        HtmlColorLabel4.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        HtmlColorLabel4.Location = New Point(20, 344)
-        HtmlColorLabel4.Margin = New Padding(2)
-        HtmlColorLabel4.Name = "HtmlColorLabel4"
-        HtmlColorLabel4.Padding = New Padding(0, 20, 0, 5)
-        HtmlColorLabel4.Size = New Size(664, 50)
-        HtmlColorLabel4.TabIndex = 8
-        HtmlColorLabel4.Text = "<span style=""font-size:13; color:Silver"">场景优化</span>   对特定需求的专项优化，例如 CPU 编码的颗粒保留或是 GPU 编码的特调模式"
-        ' 
+        '
+        ' HCL_场景优化
+        '
+        HCL_场景优化.AutoSize = True
+        HCL_场景优化.AutoSizeMode = AutoSizeMode.GrowAndShrink
+        HCL_场景优化.Dock = DockStyle.Top
+        HCL_场景优化.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
+        HCL_场景优化.Location = New Point(20, 344)
+        HCL_场景优化.Margin = New Padding(2)
+        HCL_场景优化.Name = "HCL_场景优化"
+        HCL_场景优化.Padding = New Padding(0, 20, 0, 5)
+        HCL_场景优化.Size = New Size(664, 50)
+        HCL_场景优化.TabIndex = 8
+        HCL_场景优化.Text = "<span style=""font-size:13; color:Silver"">场景优化</span>   对特定需求的专项优化，例如 CPU 编码的颗粒保留或是 GPU 编码的特调模式"
+        '
         ' Panel3
-        ' 
+        '
         Panel3.Controls.Add(MCB_配置文件)
         Panel3.Dock = DockStyle.Top
         Panel3.Location = New Point(20, 302)
@@ -246,9 +246,9 @@ Partial Class Form_v6_参数面板_视频编码器
         Panel3.Padding = New Padding(0, 10, 0, 0)
         Panel3.Size = New Size(664, 42)
         Panel3.TabIndex = 7
-        ' 
+        '
         ' MCB_配置文件
-        ' 
+        '
         MCB_配置文件.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_配置文件.BorderRadius = 10
         MCB_配置文件.BorderSize = 0
@@ -273,23 +273,23 @@ Partial Class Form_v6_参数面板_视频编码器
         MCB_配置文件.ToolTipPadding = New Padding(15)
         MCB_配置文件.WaterText = "-profile"
         MCB_配置文件.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        ' 
-        ' HtmlColorLabel3
-        ' 
-        HtmlColorLabel3.AutoSize = True
-        HtmlColorLabel3.AutoSizeMode = AutoSizeMode.GrowAndShrink
-        HtmlColorLabel3.Dock = DockStyle.Top
-        HtmlColorLabel3.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        HtmlColorLabel3.Location = New Point(20, 252)
-        HtmlColorLabel3.Margin = New Padding(2)
-        HtmlColorLabel3.Name = "HtmlColorLabel3"
-        HtmlColorLabel3.Padding = New Padding(0, 20, 0, 5)
-        HtmlColorLabel3.Size = New Size(664, 50)
-        HtmlColorLabel3.TabIndex = 6
-        HtmlColorLabel3.Text = "<span style=""font-size:13; color:Silver"">配置文件</span>   控制要支持怎样的技术规格和功能，一般不用指定"
-        ' 
+        '
+        ' HCL_配置文件
+        '
+        HCL_配置文件.AutoSize = True
+        HCL_配置文件.AutoSizeMode = AutoSizeMode.GrowAndShrink
+        HCL_配置文件.Dock = DockStyle.Top
+        HCL_配置文件.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
+        HCL_配置文件.Location = New Point(20, 252)
+        HCL_配置文件.Margin = New Padding(2)
+        HCL_配置文件.Name = "HCL_配置文件"
+        HCL_配置文件.Padding = New Padding(0, 20, 0, 5)
+        HCL_配置文件.Size = New Size(664, 50)
+        HCL_配置文件.TabIndex = 6
+        HCL_配置文件.Text = "<span style=""font-size:13; color:Silver"">配置文件</span>   控制要支持怎样的技术规格和功能，一般不用指定"
+        '
         ' Panel1
-        ' 
+        '
         Panel1.Controls.Add(MCB_编码预设)
         Panel1.Dock = DockStyle.Top
         Panel1.Location = New Point(20, 210)
@@ -297,9 +297,9 @@ Partial Class Form_v6_参数面板_视频编码器
         Panel1.Padding = New Padding(0, 10, 0, 0)
         Panel1.Size = New Size(664, 42)
         Panel1.TabIndex = 5
-        ' 
+        '
         ' MCB_编码预设
-        ' 
+        '
         MCB_编码预设.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_编码预设.BorderRadius = 10
         MCB_编码预设.BorderSize = 0
@@ -324,24 +324,24 @@ Partial Class Form_v6_参数面板_视频编码器
         MCB_编码预设.ToolTipPadding = New Padding(15)
         MCB_编码预设.WaterText = "-preset"
         MCB_编码预设.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        ' 
-        ' HtmlColorLabel2
-        ' 
-        HtmlColorLabel2.AutoSize = True
-        HtmlColorLabel2.AutoSizeMode = AutoSizeMode.GrowAndShrink
-        HtmlColorLabel2.Dock = DockStyle.Top
-        HtmlColorLabel2.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        HtmlColorLabel2.Location = New Point(20, 160)
-        HtmlColorLabel2.Margin = New Padding(2)
-        HtmlColorLabel2.Name = "HtmlColorLabel2"
-        HtmlColorLabel2.Padding = New Padding(0, 20, 0, 5)
-        HtmlColorLabel2.Size = New Size(664, 50)
-        HtmlColorLabel2.TabIndex = 4
-        HtmlColorLabel2.Text = "<span style=""font-size:13; color:Silver"">编码预设</span>   如何平衡压缩度和速度，往上越慢，往下越快"
-        ' 
+        '
+        ' HCL_编码预设
+        '
+        HCL_编码预设.AutoSize = True
+        HCL_编码预设.AutoSizeMode = AutoSizeMode.GrowAndShrink
+        HCL_编码预设.Dock = DockStyle.Top
+        HCL_编码预设.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
+        HCL_编码预设.Location = New Point(20, 160)
+        HCL_编码预设.Margin = New Padding(2)
+        HCL_编码预设.Name = "HCL_编码预设"
+        HCL_编码预设.Padding = New Padding(0, 20, 0, 5)
+        HCL_编码预设.Size = New Size(664, 50)
+        HCL_编码预设.TabIndex = 4
+        HCL_编码预设.Text = "<span style=""font-size:13; color:Silver"">编码预设</span>   如何平衡压缩度和速度，往上越慢，往下越快"
+        '
         ' Panel7
-        ' 
-        Panel7.Controls.Add(HtmlColorLabel7)
+        '
+        Panel7.Controls.Add(HCL_图片编码器质量值)
         Panel7.Controls.Add(MTB_图片编码器质量值)
         Panel7.Dock = DockStyle.Top
         Panel7.Location = New Point(20, 118)
@@ -350,23 +350,23 @@ Partial Class Form_v6_参数面板_视频编码器
         Panel7.Size = New Size(664, 42)
         Panel7.TabIndex = 14
         Panel7.Visible = False
-        ' 
-        ' HtmlColorLabel7
-        ' 
-        HtmlColorLabel7.AutoSizeMode = AutoSizeMode.GrowAndShrink
-        HtmlColorLabel7.Dock = DockStyle.Fill
-        HtmlColorLabel7.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        HtmlColorLabel7.Location = New Point(150, 10)
-        HtmlColorLabel7.Margin = New Padding(2)
-        HtmlColorLabel7.Name = "HtmlColorLabel7"
-        HtmlColorLabel7.Padding = New Padding(10, 0, 0, 0)
-        HtmlColorLabel7.Size = New Size(514, 32)
-        HtmlColorLabel7.TabIndex = 6
-        HtmlColorLabel7.Text = "图片编码器质量值 / 其他定制参数"
-        HtmlColorLabel7.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
-        ' 
+        '
+        ' HCL_图片编码器质量值
+        '
+        HCL_图片编码器质量值.AutoSizeMode = AutoSizeMode.GrowAndShrink
+        HCL_图片编码器质量值.Dock = DockStyle.Fill
+        HCL_图片编码器质量值.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
+        HCL_图片编码器质量值.Location = New Point(150, 10)
+        HCL_图片编码器质量值.Margin = New Padding(2)
+        HCL_图片编码器质量值.Name = "HCL_图片编码器质量值"
+        HCL_图片编码器质量值.Padding = New Padding(10, 0, 0, 0)
+        HCL_图片编码器质量值.Size = New Size(514, 32)
+        HCL_图片编码器质量值.TabIndex = 6
+        HCL_图片编码器质量值.Text = "图片编码器质量值 / 其他定制参数"
+        HCL_图片编码器质量值.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
+        '
         ' MTB_图片编码器质量值
-        ' 
+        '
         MTB_图片编码器质量值.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MTB_图片编码器质量值.BorderColor = Color.Transparent
         MTB_图片编码器质量值.BorderColorFocus = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
@@ -381,9 +381,9 @@ Partial Class Form_v6_参数面板_视频编码器
         MTB_图片编码器质量值.Size = New Size(150, 32)
         MTB_图片编码器质量值.TabIndex = 5
         MTB_图片编码器质量值.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        ' 
+        '
         ' Panel2
-        ' 
+        '
         Panel2.Controls.Add(MCB_具体编码器)
         Panel2.Controls.Add(JustEmptyControl2)
         Panel2.Controls.Add(MCB_视频编码器分类)
@@ -395,9 +395,9 @@ Partial Class Form_v6_参数面板_视频编码器
         Panel2.Padding = New Padding(0, 10, 0, 0)
         Panel2.Size = New Size(664, 42)
         Panel2.TabIndex = 3
-        ' 
+        '
         ' MCB_具体编码器
-        ' 
+        '
         MCB_具体编码器.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_具体编码器.BorderRadius = 10
         MCB_具体编码器.BorderSize = 0
@@ -425,17 +425,17 @@ Partial Class Form_v6_参数面板_视频编码器
         MCB_具体编码器.ToolTipSide = LakeUI.ModernComboBox.ToolTipSideEnum.Left
         MCB_具体编码器.WaterText = "具体编码"
         MCB_具体编码器.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        ' 
+        '
         ' JustEmptyControl2
-        ' 
+        '
         JustEmptyControl2.Dock = DockStyle.Left
         JustEmptyControl2.Location = New Point(310, 10)
         JustEmptyControl2.Name = "JustEmptyControl2"
         JustEmptyControl2.Size = New Size(10, 32)
         JustEmptyControl2.TabIndex = 5
-        ' 
+        '
         ' MCB_视频编码器分类
-        ' 
+        '
         MCB_视频编码器分类.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_视频编码器分类.BorderRadius = 10
         MCB_视频编码器分类.BorderSize = 0
@@ -462,17 +462,17 @@ Partial Class Form_v6_参数面板_视频编码器
         MCB_视频编码器分类.ToolTipPadding = New Padding(15)
         MCB_视频编码器分类.WaterText = "分类"
         MCB_视频编码器分类.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        ' 
+        '
         ' JustEmptyControl1
-        ' 
+        '
         JustEmptyControl1.Dock = DockStyle.Left
         JustEmptyControl1.Location = New Point(100, 10)
         JustEmptyControl1.Name = "JustEmptyControl1"
         JustEmptyControl1.Size = New Size(10, 32)
         JustEmptyControl1.TabIndex = 3
-        ' 
+        '
         ' MCB_视频编码器类型
-        ' 
+        '
         MCB_视频编码器类型.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_视频编码器类型.BorderRadius = 10
         MCB_视频编码器类型.BorderSize = 0
@@ -500,37 +500,37 @@ Partial Class Form_v6_参数面板_视频编码器
         MCB_视频编码器类型.ToolTipPadding = New Padding(15)
         MCB_视频编码器类型.WaterText = "类型"
         MCB_视频编码器类型.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        ' 
-        ' HtmlColorLabel6
-        ' 
-        HtmlColorLabel6.AutoSize = True
-        HtmlColorLabel6.AutoSizeMode = AutoSizeMode.GrowAndShrink
-        HtmlColorLabel6.Dock = DockStyle.Top
-        HtmlColorLabel6.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        HtmlColorLabel6.Location = New Point(20, 50)
-        HtmlColorLabel6.Margin = New Padding(2)
-        HtmlColorLabel6.Name = "HtmlColorLabel6"
-        HtmlColorLabel6.Padding = New Padding(0, 0, 0, 5)
-        HtmlColorLabel6.Size = New Size(664, 26)
-        HtmlColorLabel6.TabIndex = 13
-        HtmlColorLabel6.Text = resources.GetString("HtmlColorLabel6.Text")
-        ' 
-        ' HtmlColorLabel1
-        ' 
-        HtmlColorLabel1.AutoSize = True
-        HtmlColorLabel1.AutoSizeMode = AutoSizeMode.GrowAndShrink
-        HtmlColorLabel1.Dock = DockStyle.Top
-        HtmlColorLabel1.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        HtmlColorLabel1.Location = New Point(20, 20)
-        HtmlColorLabel1.Margin = New Padding(2)
-        HtmlColorLabel1.Name = "HtmlColorLabel1"
-        HtmlColorLabel1.Padding = New Padding(0, 0, 0, 5)
-        HtmlColorLabel1.Size = New Size(664, 30)
-        HtmlColorLabel1.TabIndex = 1
-        HtmlColorLabel1.Text = "<span style=""font-size:13; color:Silver"">视频编码器</span>   依次选择类别，再选具体；可编辑设置文件添加自定义"
-        ' 
+        '
+        ' HCL_视频编码器
+        '
+        HCL_视频编码器.AutoSize = True
+        HCL_视频编码器.AutoSizeMode = AutoSizeMode.GrowAndShrink
+        HCL_视频编码器.Dock = DockStyle.Top
+        HCL_视频编码器.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
+        HCL_视频编码器.Location = New Point(20, 50)
+        HCL_视频编码器.Margin = New Padding(2)
+        HCL_视频编码器.Name = "HCL_视频编码器"
+        HCL_视频编码器.Padding = New Padding(0, 0, 0, 5)
+        HCL_视频编码器.Size = New Size(664, 26)
+        HCL_视频编码器.TabIndex = 13
+        HCL_视频编码器.Text = resources.GetString("HCL_视频编码器.Text")
+        '
+        ' HCL_视频编码器2
+        '
+        HCL_视频编码器2.AutoSize = True
+        HCL_视频编码器2.AutoSizeMode = AutoSizeMode.GrowAndShrink
+        HCL_视频编码器2.Dock = DockStyle.Top
+        HCL_视频编码器2.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
+        HCL_视频编码器2.Location = New Point(20, 20)
+        HCL_视频编码器2.Margin = New Padding(2)
+        HCL_视频编码器2.Name = "HCL_视频编码器2"
+        HCL_视频编码器2.Padding = New Padding(0, 0, 0, 5)
+        HCL_视频编码器2.Size = New Size(664, 30)
+        HCL_视频编码器2.TabIndex = 1
+        HCL_视频编码器2.Text = "<span style=""font-size:13; color:Silver"">视频编码器</span>   依次选择类别，再选具体；可编辑设置文件添加自定义"
+        '
         ' Form_v6_参数面板_视频编码器
-        ' 
+        '
         AutoScaleDimensions = New SizeF(96F, 96F)
         AutoScaleMode = AutoScaleMode.Dpi
         BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
@@ -553,31 +553,31 @@ Partial Class Form_v6_参数面板_视频编码器
     End Sub
 
     Friend WithEvents ModernPanel1 As LakeUI.ModernPanel
-    Friend WithEvents HtmlColorLabel1 As LakeUI.HtmlColorLabel
+    Friend WithEvents HCL_视频编码器2 As LakeUI.HtmlColorLabel
     Friend WithEvents Panel2 As Panel
     Friend WithEvents MCB_视频编码器类型 As LakeUI.ModernComboBox
     Friend WithEvents MCB_具体编码器 As LakeUI.ModernComboBox
     Friend WithEvents JustEmptyControl2 As LakeUI.JustEmptyControl
     Friend WithEvents MCB_视频编码器分类 As LakeUI.ModernComboBox
     Friend WithEvents JustEmptyControl1 As LakeUI.JustEmptyControl
-    Friend WithEvents HtmlColorLabel2 As LakeUI.HtmlColorLabel
+    Friend WithEvents HCL_编码预设 As LakeUI.HtmlColorLabel
     Friend WithEvents Panel1 As Panel
     Friend WithEvents MCB_编码预设 As LakeUI.ModernComboBox
     Friend WithEvents Panel3 As Panel
     Friend WithEvents MCB_配置文件 As LakeUI.ModernComboBox
-    Friend WithEvents HtmlColorLabel3 As LakeUI.HtmlColorLabel
+    Friend WithEvents HCL_配置文件 As LakeUI.HtmlColorLabel
     Friend WithEvents Panel4 As Panel
     Friend WithEvents MCB_场景优化 As LakeUI.ModernComboBox
-    Friend WithEvents HtmlColorLabel4 As LakeUI.HtmlColorLabel
-    Friend WithEvents HtmlColorLabel5 As LakeUI.HtmlColorLabel
+    Friend WithEvents HCL_场景优化 As LakeUI.HtmlColorLabel
+    Friend WithEvents HCL_性能选项 As LakeUI.HtmlColorLabel
     Friend WithEvents Panel5 As Panel
-    Friend WithEvents MTB_gpu As LakeUI.ModernTextBox
+    Friend WithEvents MTB_GPU编号 As LakeUI.ModernTextBox
     Friend WithEvents Panel6 As Panel
-    Friend WithEvents MTB_threads As LakeUI.ModernTextBox
-    Friend WithEvents HtmlColorLabel6 As LakeUI.HtmlColorLabel
+    Friend WithEvents MTB_编码线程数 As LakeUI.ModernTextBox
+    Friend WithEvents HCL_视频编码器 As LakeUI.HtmlColorLabel
     Friend WithEvents Panel7 As Panel
     Friend WithEvents MTB_图片编码器质量值 As LakeUI.ModernTextBox
-    Friend WithEvents HtmlColorLabel7 As LakeUI.HtmlColorLabel
-    Friend WithEvents HtmlColorLabel9 As LakeUI.HtmlColorLabel
-    Friend WithEvents HtmlColorLabel8 As LakeUI.HtmlColorLabel
+    Friend WithEvents HCL_图片编码器质量值 As LakeUI.HtmlColorLabel
+    Friend WithEvents HCL_GPU编号说明 As LakeUI.HtmlColorLabel
+    Friend WithEvents HCL_编码线程数说明 As LakeUI.HtmlColorLabel
 End Class

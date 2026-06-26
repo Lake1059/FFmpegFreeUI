@@ -20,7 +20,7 @@ Public Class Form_v6_参数面板_画面区域选择窗口
     Private Sub Form_v6_参数面板_画面区域选择窗口_Shown(sender As Object, e As EventArgs) Handles Me.Shown
         _正在同步框选文本 = True
         Try
-            ModernTextBox1.Text = If(目标控件?.Text, "")
+            MTB_裁剪参数.Text = If(目标控件?.Text, "")
         Finally
             _正在同步框选文本 = False
         End Try
@@ -31,7 +31,7 @@ Public Class Form_v6_参数面板_画面区域选择窗口
     End Sub
 
     Private Sub MB_完成_Click(sender As Object, e As EventArgs) Handles MB_完成.Click
-        目标控件.Text = ModernTextBox1.Text
+        目标控件.Text = MTB_裁剪参数.Text
         关闭窗体流程()
     End Sub
 
@@ -77,14 +77,14 @@ Public Class Form_v6_参数面板_画面区域选择窗口
     End Function
 
     Private Function 获取视频截图时间戳() As String
-        Dim timestamp = ModernTextBox2.Text.Trim()
+        Dim timestamp = MTB_预览时间戳.Text.Trim()
         Return If(timestamp <> "", timestamp, "0:0:10")
     End Function
 
     Sub 打开媒体获取画面(媒体文件 As String)
         If String.IsNullOrWhiteSpace(媒体文件) Then Exit Sub
         If Not File.Exists(媒体文件) Then
-            ExFloatingTip(PixelPictureBox1, "文件不存在", 1800)
+            ExFloatingTip(PPB_画面区域预览, "文件不存在", 1800)
             Exit Sub
         End If
 
@@ -98,7 +98,7 @@ Public Class Form_v6_参数面板_画面区域选择窗口
         Try
             Dim useTimestamp = Not 是图片扩展(媒体文件)
             If Not ExtractFrameFromMedia(媒体文件, previewPath, useTimestamp) Then
-                ExFloatingTip(PixelPictureBox1, "无法读取媒体画面", 2200)
+                ExFloatingTip(PPB_画面区域预览, "无法读取媒体画面", 2200)
                 Exit Sub
             End If
 
@@ -106,7 +106,7 @@ Public Class Form_v6_参数面板_画面区域选择窗口
             If TryLoadImageDirectly(previewPath, previewImage) Then
                 设置预览图像(previewImage)
             Else
-                ExFloatingTip(PixelPictureBox1, "无法加载预览图像", 2200)
+                ExFloatingTip(PPB_画面区域预览, "无法加载预览图像", 2200)
             End If
         Finally
             Try
@@ -132,17 +132,17 @@ Public Class Form_v6_参数面板_画面区域选择窗口
 
     Private Sub 设置预览图像(image As Image)
         清空预览图像()
-        PixelPictureBox1.Image = image
+        PPB_画面区域预览.Image = image
         应用裁剪文本到框选(False)
     End Sub
 
     Private Sub 清空预览图像()
         _正在同步框选文本 = True
         Try
-            Dim oldImage = PixelPictureBox1.Image
-            PixelPictureBox1.Image = Nothing
+            Dim oldImage = PPB_画面区域预览.Image
+            PPB_画面区域预览.Image = Nothing
             oldImage?.Dispose()
-            PixelPictureBox1.ClearSelection()
+            PPB_画面区域预览.ClearSelection()
         Finally
             _正在同步框选文本 = False
         End Try
@@ -207,34 +207,34 @@ Public Class Form_v6_参数面板_画面区域选择窗口
         Return ""
     End Function
 
-    Private Sub PixelPictureBox1_SelectionChanged(sender As Object, e As EventArgs) Handles PixelPictureBox1.SelectionChanged
+    Private Sub PixelPictureBox1_SelectionChanged(sender As Object, e As EventArgs) Handles PPB_画面区域预览.SelectionChanged
         If _正在同步框选文本 Then Exit Sub
 
-        Dim r = PixelPictureBox1.SelectionRect
+        Dim r = PPB_画面区域预览.SelectionRect
         _正在同步框选文本 = True
         Try
-            ModernTextBox1.Text = If(r.Width > 0 AndAlso r.Height > 0, $"{r.Width}:{r.Height}:{r.X}:{r.Y}", "")
+            MTB_裁剪参数.Text = If(r.Width > 0 AndAlso r.Height > 0, $"{r.Width}:{r.Height}:{r.X}:{r.Y}", "")
         Finally
             _正在同步框选文本 = False
         End Try
     End Sub
 
-    Private Sub ModernTextBox1_KeyDown(sender As Object, e As KeyEventArgs) Handles ModernTextBox1.KeyDown
+    Private Sub ModernTextBox1_KeyDown(sender As Object, e As KeyEventArgs) Handles MTB_裁剪参数.KeyDown
         If e.KeyCode <> Keys.Enter Then Exit Sub
         If 应用裁剪文本到框选(True) Then e.Handled = True
     End Sub
 
-    Private Sub ModernTextBox1_Leave(sender As Object, e As EventArgs) Handles ModernTextBox1.Leave
+    Private Sub ModernTextBox1_Leave(sender As Object, e As EventArgs) Handles MTB_裁剪参数.Leave
         应用裁剪文本到框选(False)
     End Sub
 
     Private Function 应用裁剪文本到框选(showTip As Boolean) As Boolean
-        If _正在同步框选文本 OrElse PixelPictureBox1.Image Is Nothing Then Return False
+        If _正在同步框选文本 OrElse PPB_画面区域预览.Image Is Nothing Then Return False
 
         Dim rect As Rectangle
-        If Not 尝试解析裁剪参数(ModernTextBox1.Text, rect) Then
-            If showTip AndAlso ModernTextBox1.Text.Trim() <> "" Then
-                ExFloatingTip(ModernTextBox1, "格式应为 宽:高:左上X:左上Y", 1800)
+        If Not 尝试解析裁剪参数(MTB_裁剪参数.Text, rect) Then
+            If showTip AndAlso MTB_裁剪参数.Text.Trim() <> "" Then
+                ExFloatingTip(MTB_裁剪参数, "格式应为 宽:高:左上X:左上Y", 1800)
             End If
             Return False
         End If
@@ -242,8 +242,8 @@ Public Class Form_v6_参数面板_画面区域选择窗口
         rect = 约束裁剪区域到图像(rect)
         _正在同步框选文本 = True
         Try
-            PixelPictureBox1.SelectionRect = rect
-            ModernTextBox1.Text = $"{rect.Width}:{rect.Height}:{rect.X}:{rect.Y}"
+            PPB_画面区域预览.SelectionRect = rect
+            MTB_裁剪参数.Text = $"{rect.Width}:{rect.Height}:{rect.X}:{rect.Y}"
         Finally
             _正在同步框选文本 = False
         End Try
@@ -267,7 +267,7 @@ Public Class Form_v6_参数面板_画面区域选择窗口
     End Function
 
     Private Function 约束裁剪区域到图像(rect As Rectangle) As Rectangle
-        Dim image = PixelPictureBox1.Image
+        Dim image = PPB_画面区域预览.Image
         If image Is Nothing Then Return rect
 
         Dim x = Math.Max(0, Math.Min(rect.X, image.Width - 1))
@@ -277,37 +277,37 @@ Public Class Form_v6_参数面板_画面区域选择窗口
         Return New Rectangle(x, y, w, h)
     End Function
 
-    Private Sub ModernCheckBox4_CheckedChanged(sender As Object, e As EventArgs) Handles ModernCheckBox4.CheckedChanged
-        PixelPictureBox1.SelectionForceCenter = ModernCheckBox4.Checked
-        PixelPictureBox1_SelectionChanged(PixelPictureBox1, EventArgs.Empty)
+    Private Sub ModernCheckBox4_CheckedChanged(sender As Object, e As EventArgs) Handles MCK_居中裁剪框.CheckedChanged
+        PPB_画面区域预览.SelectionForceCenter = MCK_居中裁剪框.Checked
+        PixelPictureBox1_SelectionChanged(PPB_画面区域预览, EventArgs.Empty)
     End Sub
 
-    Private Sub ModernComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ModernComboBox1.SelectedIndexChanged
+    Private Sub ModernComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles MCB_裁剪比例.SelectedIndexChanged
         应用比例文本(False)
     End Sub
 
-    Private Sub ModernComboBox1_TextChanged(sender As Object, e As EventArgs) Handles ModernComboBox1.TextChanged
+    Private Sub ModernComboBox1_TextChanged(sender As Object, e As EventArgs) Handles MCB_裁剪比例.TextChanged
         应用比例文本(False)
     End Sub
 
-    Private Sub ModernComboBox1_Leave(sender As Object, e As EventArgs) Handles ModernComboBox1.Leave
+    Private Sub ModernComboBox1_Leave(sender As Object, e As EventArgs) Handles MCB_裁剪比例.Leave
         应用比例文本(True)
     End Sub
 
-    Private Sub ModernComboBox1_KeyDown(sender As Object, e As KeyEventArgs) Handles ModernComboBox1.KeyDown
+    Private Sub ModernComboBox1_KeyDown(sender As Object, e As KeyEventArgs) Handles MCB_裁剪比例.KeyDown
         If e.KeyCode <> Keys.Enter Then Exit Sub
         If 应用比例文本(True) Then e.Handled = True
     End Sub
 
     Private Function 应用比例文本(showTip As Boolean) As Boolean
         Dim ratio As Single
-        If 尝试解析比例文本(ModernComboBox1.Text, ratio) Then
-            PixelPictureBox1.SelectionAspectRatio = ratio
+        If 尝试解析比例文本(MCB_裁剪比例.Text, ratio) Then
+            PPB_画面区域预览.SelectionAspectRatio = ratio
             Return True
         End If
 
-        If showTip AndAlso ModernComboBox1.Text.Trim() <> "" Then
-            ExFloatingTip(ModernComboBox1, "比例格式可写 16:9、16/9 或 1.777", 1800)
+        If showTip AndAlso MCB_裁剪比例.Text.Trim() <> "" Then
+            ExFloatingTip(MCB_裁剪比例, "比例格式可写 16:9、16/9 或 1.777", 1800)
         End If
         Return False
     End Function

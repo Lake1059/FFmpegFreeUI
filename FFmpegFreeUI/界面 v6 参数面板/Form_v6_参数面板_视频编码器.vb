@@ -91,7 +91,7 @@ Public Class Form_v6_参数面板_视频编码器
         Panel7.Visible = False
         MTB_图片编码器质量值.Text = ""
         MTB_图片编码器质量值.WaterText = ""
-        HtmlColorLabel7.Text = "图片编码器质量值 / 其他定制参数"
+        HCL_图片编码器质量值.Text = "图片编码器质量值 / 其他定制参数"
     End Sub
 
     Private Sub 清空组合框(MCB As LakeUI.ModernComboBox)
@@ -122,13 +122,13 @@ Public Class Form_v6_参数面板_视频编码器
         If 编码器.图片质量.参数名 <> "" Then
             Panel7.Visible = True
             MTB_图片编码器质量值.WaterText = If(编码器.图片质量.默认值 <> "", 编码器.图片质量.默认值, 编码器.图片质量.参数名)
-            HtmlColorLabel7.Text = $"{编码器.图片质量.参数名}：{编码器.图片质量.值范围说明}"
-            If 编码器.必要参数列表.Count > 0 Then HtmlColorLabel7.Text &= "；必要参数见下拉提示"
+            HCL_图片编码器质量值.Text = $"{编码器.图片质量.参数名}：{编码器.图片质量.值范围说明}"
+            If 编码器.必要参数列表.Count > 0 Then HCL_图片编码器质量值.Text &= "；必要参数见下拉提示"
         End If
 
         If 编码器.必要参数列表.Count > 0 AndAlso 编码器.图片质量.参数名 = "" Then
             Panel7.Visible = True
-            HtmlColorLabel7.Text = "必要/建议参数见编码器下拉提示"
+            HCL_图片编码器质量值.Text = "必要/建议参数见编码器下拉提示"
         End If
     End Sub
 

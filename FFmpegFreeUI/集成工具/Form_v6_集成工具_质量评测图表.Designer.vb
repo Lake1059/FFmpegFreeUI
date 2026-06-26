@@ -27,9 +27,9 @@ Partial Class Form_v6_集成工具_质量评测图表
         Panel2.SuspendLayout()
         Panel1.SuspendLayout()
         SuspendLayout()
-        ' 
+        '
         ' ModernPanel1
-        ' 
+        '
         ModernPanel1.BackColor1 = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         ModernPanel1.BorderSize = 0
         ModernPanel1.Controls.Add(Panel2)
@@ -40,9 +40,9 @@ Partial Class Form_v6_集成工具_质量评测图表
         ModernPanel1.Padding = New Padding(20)
         ModernPanel1.Size = New Size(960, 560)
         ModernPanel1.TabIndex = 0
-        ' 
+        '
         ' Panel2
-        ' 
+        '
         Panel2.BackColor = Color.Transparent
         Panel2.Controls.Add(Ultra2DChart1)
         Panel2.Dock = DockStyle.Fill
@@ -50,9 +50,9 @@ Partial Class Form_v6_集成工具_质量评测图表
         Panel2.Name = "Panel2"
         Panel2.Size = New Size(920, 478)
         Panel2.TabIndex = 1
-        ' 
+        '
         ' Ultra2DChart1
-        ' 
+        '
         Ultra2DChart1.BackColor = Color.Transparent
         Ultra2DChart1.BackgroundSource = ModernPanel1
         Ultra2DChart1.Dock = DockStyle.Fill
@@ -69,9 +69,9 @@ Partial Class Form_v6_集成工具_质量评测图表
         Ultra2DChart1.TabIndex = 0
         Ultra2DChart1.ValueLabelFormat = "0.###"
         Ultra2DChart1.YAxisLabelFormat = "0.###"
-        ' 
+        '
         ' Panel1
-        ' 
+        '
         Panel1.BackColor = Color.Transparent
         Panel1.Controls.Add(HtmlColorLabel1)
         Panel1.Controls.Add(MCB_指标选择)
@@ -81,9 +81,9 @@ Partial Class Form_v6_集成工具_质量评测图表
         Panel1.Padding = New Padding(0, 0, 0, 10)
         Panel1.Size = New Size(920, 42)
         Panel1.TabIndex = 0
-        ' 
+        '
         ' HtmlColorLabel1
-        ' 
+        '
         HtmlColorLabel1.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel1.Dock = DockStyle.Fill
         HtmlColorLabel1.ForeColor = Color.FromArgb(CByte(180), CByte(255), CByte(255), CByte(255))
@@ -95,9 +95,9 @@ Partial Class Form_v6_集成工具_质量评测图表
         HtmlColorLabel1.TabIndex = 1
         HtmlColorLabel1.Text = "暂无帧级数据"
         HtmlColorLabel1.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
-        ' 
+        '
         ' MCB_指标选择
-        ' 
+        '
         MCB_指标选择.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_指标选择.BorderRadius = 10
         MCB_指标选择.BorderSize = 0
@@ -123,9 +123,9 @@ Partial Class Form_v6_集成工具_质量评测图表
         MCB_指标选择.TabIndex = 0
         MCB_指标选择.Text = "PSNR"
         MCB_指标选择.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        ' 
+        '
         ' Form_v6_集成工具_质量评测图表
-        ' 
+        '
         AutoScaleDimensions = New SizeF(96F, 96F)
         AutoScaleMode = AutoScaleMode.Dpi
         BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))

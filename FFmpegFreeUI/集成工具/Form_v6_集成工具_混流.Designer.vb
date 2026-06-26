@@ -1,4 +1,4 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class Form_v6_集成工具_混流
     Inherits System.Windows.Forms.Form
 
@@ -68,9 +68,9 @@ Partial Class Form_v6_集成工具_混流
         Panel2.SuspendLayout()
         Panel1.SuspendLayout()
         SuspendLayout()
-        ' 
+        '
         ' ModernPanel1
-        ' 
+        '
         ModernPanel1.BackColor1 = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         ModernPanel1.BorderSize = 0
         ModernPanel1.Controls.Add(UltraDetailListView1)
@@ -85,9 +85,9 @@ Partial Class Form_v6_集成工具_混流
         ModernPanel1.Padding = New Padding(20)
         ModernPanel1.Size = New Size(841, 648)
         ModernPanel1.TabIndex = 0
-        ' 
+        '
         ' UltraDetailListView1
-        ' 
+        '
         UltraDetailListView1.AllowDragReorder = True
         UltraDetailListView1.BackgroundColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         UltraDetailListView1.BorderRadius = 10
@@ -131,9 +131,9 @@ Partial Class Form_v6_集成工具_混流
         UltraDetailListView1.SelectionRectFillColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         UltraDetailListView1.Size = New Size(801, 405)
         UltraDetailListView1.TabIndex = 8
-        ' 
+        '
         ' Panel4
-        ' 
+        '
         Panel4.Controls.Add(MTB_字幕流索引)
         Panel4.Controls.Add(HtmlColorLabel5)
         Panel4.Controls.Add(MTB_音频流索引)
@@ -147,9 +147,9 @@ Partial Class Form_v6_集成工具_混流
         Panel4.Padding = New Padding(0, 10, 0, 0)
         Panel4.Size = New Size(801, 42)
         Panel4.TabIndex = 7
-        ' 
+        '
         ' MTB_字幕流索引
-        ' 
+        '
         MTB_字幕流索引.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MTB_字幕流索引.BorderColor = Color.Transparent
         MTB_字幕流索引.BorderColorFocus = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
@@ -164,9 +164,9 @@ Partial Class Form_v6_集成工具_混流
         MTB_字幕流索引.Size = New Size(100, 32)
         MTB_字幕流索引.TabIndex = 16
         MTB_字幕流索引.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        ' 
+        '
         ' HtmlColorLabel5
-        ' 
+        '
         HtmlColorLabel5.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel5.Dock = DockStyle.Left
         HtmlColorLabel5.Location = New Point(440, 10)
@@ -177,9 +177,9 @@ Partial Class Form_v6_集成工具_混流
         HtmlColorLabel5.TabIndex = 15
         HtmlColorLabel5.Text = "字幕流索引："
         HtmlColorLabel5.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
-        ' 
+        '
         ' MTB_音频流索引
-        ' 
+        '
         MTB_音频流索引.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MTB_音频流索引.BorderColor = Color.Transparent
         MTB_音频流索引.BorderColorFocus = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
@@ -194,9 +194,9 @@ Partial Class Form_v6_集成工具_混流
         MTB_音频流索引.Size = New Size(100, 32)
         MTB_音频流索引.TabIndex = 14
         MTB_音频流索引.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        ' 
+        '
         ' HtmlColorLabel4
-        ' 
+        '
         HtmlColorLabel4.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel4.Dock = DockStyle.Left
         HtmlColorLabel4.Location = New Point(220, 10)
@@ -207,9 +207,9 @@ Partial Class Form_v6_集成工具_混流
         HtmlColorLabel4.TabIndex = 13
         HtmlColorLabel4.Text = "音频流索引："
         HtmlColorLabel4.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
-        ' 
+        '
         ' MTB_视频流索引
-        ' 
+        '
         MTB_视频流索引.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MTB_视频流索引.BorderColor = Color.Transparent
         MTB_视频流索引.BorderColorFocus = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
@@ -224,9 +224,9 @@ Partial Class Form_v6_集成工具_混流
         MTB_视频流索引.Size = New Size(100, 32)
         MTB_视频流索引.TabIndex = 12
         MTB_视频流索引.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        ' 
+        '
         ' HtmlColorLabel3
-        ' 
+        '
         HtmlColorLabel3.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel3.Dock = DockStyle.Left
         HtmlColorLabel3.Location = New Point(0, 10)
@@ -236,17 +236,17 @@ Partial Class Form_v6_集成工具_混流
         HtmlColorLabel3.TabIndex = 11
         HtmlColorLabel3.Text = "视频流索引："
         HtmlColorLabel3.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
-        ' 
+        '
         ' JustEmptyControl8
-        ' 
+        '
         JustEmptyControl8.Dock = DockStyle.Right
         JustEmptyControl8.Location = New Point(791, 10)
         JustEmptyControl8.Name = "JustEmptyControl8"
         JustEmptyControl8.Size = New Size(10, 32)
         JustEmptyControl8.TabIndex = 4
-        ' 
+        '
         ' Panel3
-        ' 
+        '
         Panel3.Controls.Add(HtmlColorLabel7)
         Panel3.Controls.Add(MCB_使用此文件的元数据)
         Panel3.Controls.Add(MCB_使用此文件的章节)
@@ -258,9 +258,9 @@ Partial Class Form_v6_集成工具_混流
         Panel3.Padding = New Padding(0, 10, 0, 0)
         Panel3.Size = New Size(801, 42)
         Panel3.TabIndex = 6
-        ' 
+        '
         ' HtmlColorLabel7
-        ' 
+        '
         HtmlColorLabel7.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel7.Dock = DockStyle.Fill
         HtmlColorLabel7.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
@@ -271,9 +271,9 @@ Partial Class Form_v6_集成工具_混流
         HtmlColorLabel7.TabIndex = 15
         HtmlColorLabel7.Text = "填写流索引时，多个流用英文逗号个隔开"
         HtmlColorLabel7.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
-        ' 
+        '
         ' MCB_使用此文件的元数据
-        ' 
+        '
         MCB_使用此文件的元数据.AutoSize = True
         MCB_使用此文件的元数据.BoxBorderRadius = 5
         MCB_使用此文件的元数据.BoxBorderSize = 0
@@ -289,9 +289,9 @@ Partial Class Form_v6_集成工具_混流
         MCB_使用此文件的元数据.Size = New Size(178, 32)
         MCB_使用此文件的元数据.TabIndex = 14
         MCB_使用此文件的元数据.Text = "使用此文件的元数据"
-        ' 
+        '
         ' MCB_使用此文件的章节
-        ' 
+        '
         MCB_使用此文件的章节.AutoSize = True
         MCB_使用此文件的章节.BoxBorderRadius = 5
         MCB_使用此文件的章节.BoxBorderSize = 0
@@ -307,9 +307,9 @@ Partial Class Form_v6_集成工具_混流
         MCB_使用此文件的章节.Size = New Size(164, 32)
         MCB_使用此文件的章节.TabIndex = 13
         MCB_使用此文件的章节.Text = "使用此文件的章节"
-        ' 
+        '
         ' HtmlColorLabel6
-        ' 
+        '
         HtmlColorLabel6.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel6.Dock = DockStyle.Left
         HtmlColorLabel6.Location = New Point(0, 10)
@@ -320,17 +320,17 @@ Partial Class Form_v6_集成工具_混流
         HtmlColorLabel6.TabIndex = 12
         HtmlColorLabel6.Text = "章节和元数据"
         HtmlColorLabel6.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
-        ' 
+        '
         ' JustEmptyControl7
-        ' 
+        '
         JustEmptyControl7.Dock = DockStyle.Right
         JustEmptyControl7.Location = New Point(791, 10)
         JustEmptyControl7.Name = "JustEmptyControl7"
         JustEmptyControl7.Size = New Size(10, 32)
         JustEmptyControl7.TabIndex = 4
-        ' 
+        '
         ' Panel2
-        ' 
+        '
         Panel2.Controls.Add(MTB_输出目标文件)
         Panel2.Controls.Add(JustEmptyControl5)
         Panel2.Controls.Add(JustEmptyControl6)
@@ -342,9 +342,9 @@ Partial Class Form_v6_集成工具_混流
         Panel2.Padding = New Padding(0, 10, 0, 0)
         Panel2.Size = New Size(801, 42)
         Panel2.TabIndex = 5
-        ' 
+        '
         ' MTB_输出目标文件
-        ' 
+        '
         MTB_输出目标文件.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MTB_输出目标文件.BorderColor = Color.Transparent
         MTB_输出目标文件.BorderColorFocus = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
@@ -360,25 +360,25 @@ Partial Class Form_v6_集成工具_混流
         MTB_输出目标文件.TabIndex = 3
         MTB_输出目标文件.WaterText = "输出目标文件路径"
         MTB_输出目标文件.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        ' 
+        '
         ' JustEmptyControl5
-        ' 
+        '
         JustEmptyControl5.Dock = DockStyle.Right
         JustEmptyControl5.Location = New Point(691, 10)
         JustEmptyControl5.Name = "JustEmptyControl5"
         JustEmptyControl5.Size = New Size(10, 32)
         JustEmptyControl5.TabIndex = 4
-        ' 
+        '
         ' JustEmptyControl6
-        ' 
+        '
         JustEmptyControl6.Dock = DockStyle.Left
         JustEmptyControl6.Location = New Point(100, 10)
         JustEmptyControl6.Name = "JustEmptyControl6"
         JustEmptyControl6.Size = New Size(10, 32)
         JustEmptyControl6.TabIndex = 2
-        ' 
+        '
         ' MB_选择位置
-        ' 
+        '
         MB_选择位置.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MB_选择位置.BorderRadius = 10
         MB_选择位置.BorderSize = 0
@@ -392,9 +392,9 @@ Partial Class Form_v6_集成工具_混流
         MB_选择位置.Size = New Size(100, 32)
         MB_选择位置.TabIndex = 0
         MB_选择位置.Text = "选择位置"
-        ' 
+        '
         ' MB_启动合并
-        ' 
+        '
         MB_启动合并.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MB_启动合并.BorderRadius = 10
         MB_启动合并.BorderSize = 0
@@ -408,9 +408,9 @@ Partial Class Form_v6_集成工具_混流
         MB_启动合并.Size = New Size(100, 32)
         MB_启动合并.TabIndex = 5
         MB_启动合并.Text = "启动混流"
-        ' 
+        '
         ' Panel1
-        ' 
+        '
         Panel1.Controls.Add(HtmlColorLabel2)
         Panel1.Controls.Add(MB_移除全部)
         Panel1.Controls.Add(JustEmptyControl4)
@@ -427,9 +427,9 @@ Partial Class Form_v6_集成工具_混流
         Panel1.Padding = New Padding(0, 10, 0, 10)
         Panel1.Size = New Size(801, 52)
         Panel1.TabIndex = 4
-        ' 
+        '
         ' HtmlColorLabel2
-        ' 
+        '
         HtmlColorLabel2.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel2.Dock = DockStyle.Fill
         HtmlColorLabel2.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
@@ -441,9 +441,9 @@ Partial Class Form_v6_集成工具_混流
         HtmlColorLabel2.TabIndex = 10
         HtmlColorLabel2.Text = "操作同理，双击使用可视化选择器"
         HtmlColorLabel2.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
-        ' 
+        '
         ' MB_移除全部
-        ' 
+        '
         MB_移除全部.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MB_移除全部.BorderRadius = 10
         MB_移除全部.BorderSize = 0
@@ -457,17 +457,17 @@ Partial Class Form_v6_集成工具_混流
         MB_移除全部.Size = New Size(100, 32)
         MB_移除全部.TabIndex = 9
         MB_移除全部.Text = "移除全部"
-        ' 
+        '
         ' JustEmptyControl4
-        ' 
+        '
         JustEmptyControl4.Dock = DockStyle.Left
         JustEmptyControl4.Location = New Point(350, 10)
         JustEmptyControl4.Name = "JustEmptyControl4"
         JustEmptyControl4.Size = New Size(10, 32)
         JustEmptyControl4.TabIndex = 8
-        ' 
+        '
         ' MB_移除选中
-        ' 
+        '
         MB_移除选中.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MB_移除选中.BorderRadius = 10
         MB_移除选中.BorderSize = 0
@@ -481,17 +481,17 @@ Partial Class Form_v6_集成工具_混流
         MB_移除选中.Size = New Size(100, 32)
         MB_移除选中.TabIndex = 7
         MB_移除选中.Text = "移除选中"
-        ' 
+        '
         ' JustEmptyControl3
-        ' 
+        '
         JustEmptyControl3.Dock = DockStyle.Left
         JustEmptyControl3.Location = New Point(240, 10)
         JustEmptyControl3.Name = "JustEmptyControl3"
         JustEmptyControl3.Size = New Size(10, 32)
         JustEmptyControl3.TabIndex = 6
-        ' 
+        '
         ' MB_下移
-        ' 
+        '
         MB_下移.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MB_下移.BorderRadius = 10
         MB_下移.BorderSize = 0
@@ -505,17 +505,17 @@ Partial Class Form_v6_集成工具_混流
         MB_下移.Size = New Size(60, 32)
         MB_下移.TabIndex = 5
         MB_下移.Text = "下移"
-        ' 
+        '
         ' JustEmptyControl2
-        ' 
+        '
         JustEmptyControl2.Dock = DockStyle.Left
         JustEmptyControl2.Location = New Point(170, 10)
         JustEmptyControl2.Name = "JustEmptyControl2"
         JustEmptyControl2.Size = New Size(10, 32)
         JustEmptyControl2.TabIndex = 4
-        ' 
+        '
         ' MB_上移
-        ' 
+        '
         MB_上移.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MB_上移.BorderRadius = 10
         MB_上移.BorderSize = 0
@@ -529,17 +529,17 @@ Partial Class Form_v6_集成工具_混流
         MB_上移.Size = New Size(60, 32)
         MB_上移.TabIndex = 3
         MB_上移.Text = "上移"
-        ' 
+        '
         ' JustEmptyControl1
-        ' 
+        '
         JustEmptyControl1.Dock = DockStyle.Left
         JustEmptyControl1.Location = New Point(100, 10)
         JustEmptyControl1.Name = "JustEmptyControl1"
         JustEmptyControl1.Size = New Size(10, 32)
         JustEmptyControl1.TabIndex = 2
-        ' 
+        '
         ' MB_添加文件
-        ' 
+        '
         MB_添加文件.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MB_添加文件.BorderRadius = 10
         MB_添加文件.BorderSize = 0
@@ -553,9 +553,9 @@ Partial Class Form_v6_集成工具_混流
         MB_添加文件.Size = New Size(100, 32)
         MB_添加文件.TabIndex = 0
         MB_添加文件.Text = "添加文件"
-        ' 
+        '
         ' HtmlColorLabel1
-        ' 
+        '
         HtmlColorLabel1.AutoSize = True
         HtmlColorLabel1.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel1.Dock = DockStyle.Top
@@ -566,9 +566,9 @@ Partial Class Form_v6_集成工具_混流
         HtmlColorLabel1.Size = New Size(801, 25)
         HtmlColorLabel1.TabIndex = 3
         HtmlColorLabel1.Text = "<span style=""font-size:13; color:Silver"">拆出各文件的指定流进行合成</span>   如果你的需求不是这个那么你可能指的是合并"
-        ' 
+        '
         ' Form_v6_集成工具_混流
-        ' 
+        '
         AutoScaleDimensions = New SizeF(96F, 96F)
         AutoScaleMode = AutoScaleMode.Dpi
         BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))

@@ -174,7 +174,7 @@ Public Class Form_v6_参数面板_烧录字幕
     End Sub
 
     Public Sub 重置所有选项()
-        MCB_插帧总开关.Checked = False
+        MCK_烧录字幕总开关.Checked = False
         MCB_滤镜选择.SelectedIndex = 0
         MCB_字幕来源.SelectedIndex = 0
         MCB_后缀优先级1.SelectedIndex = 0

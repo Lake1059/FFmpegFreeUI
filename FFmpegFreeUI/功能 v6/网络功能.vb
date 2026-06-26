@@ -1,4 +1,4 @@
-﻿Imports System.IO
+Imports System.IO
 Imports System.Net.Http
 Imports System.Security.Cryptography
 Imports System.Text.Json

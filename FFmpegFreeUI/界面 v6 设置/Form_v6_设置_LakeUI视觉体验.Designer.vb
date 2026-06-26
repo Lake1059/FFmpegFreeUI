@@ -1,4 +1,4 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class Form_v6_设置_LakeUI视觉体验
     Inherits System.Windows.Forms.Form
 
@@ -38,9 +38,9 @@ Partial Class Form_v6_设置_LakeUI视觉体验
         Panel1.SuspendLayout()
         Panel2.SuspendLayout()
         SuspendLayout()
-        ' 
+        '
         ' ModernPanel1
-        ' 
+        '
         ModernPanel1.BackColor1 = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         ModernPanel1.BorderSize = 0
         ModernPanel1.Controls.Add(Panel1)
@@ -57,9 +57,9 @@ Partial Class Form_v6_设置_LakeUI视觉体验
         ModernPanel1.ScrollBarMode = LakeUI.ModernPanel.ScrollMode.Vertical
         ModernPanel1.Size = New Size(742, 632)
         ModernPanel1.TabIndex = 1
-        ' 
+        '
         ' Panel1
-        ' 
+        '
         Panel1.Controls.Add(HtmlColorLabel4)
         Panel1.Controls.Add(MCB_性能计数器)
         Panel1.Dock = DockStyle.Top
@@ -68,9 +68,9 @@ Partial Class Form_v6_设置_LakeUI视觉体验
         Panel1.Padding = New Padding(0, 10, 0, 0)
         Panel1.Size = New Size(702, 42)
         Panel1.TabIndex = 29
-        ' 
+        '
         ' MCB_性能计数器
-        ' 
+        '
         MCB_性能计数器.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_性能计数器.BorderRadius = 10
         MCB_性能计数器.BorderSize = 0
@@ -97,9 +97,9 @@ Partial Class Form_v6_设置_LakeUI视觉体验
         MCB_性能计数器.ToolTipMaxWidth = 350
         MCB_性能计数器.ToolTipPadding = New Padding(15)
         MCB_性能计数器.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        ' 
+        '
         ' HtmlColorLabel6
-        ' 
+        '
         HtmlColorLabel6.AutoSize = True
         HtmlColorLabel6.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel6.Dock = DockStyle.Top
@@ -111,9 +111,9 @@ Partial Class Form_v6_设置_LakeUI视觉体验
         HtmlColorLabel6.Size = New Size(702, 45)
         HtmlColorLabel6.TabIndex = 28
         HtmlColorLabel6.Text = "<span style=""font-size:13; color:Silver"">LakeUI 性能计数器</span>   在标题栏追加实时硬件性能，仅统计 3FUI 自身，不包含任务"
-        ' 
+        '
         ' HtmlColorLabel3
-        ' 
+        '
         HtmlColorLabel3.AutoSize = True
         HtmlColorLabel3.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel3.Dock = DockStyle.Top
@@ -124,9 +124,9 @@ Partial Class Form_v6_设置_LakeUI视觉体验
         HtmlColorLabel3.Size = New Size(702, 26)
         HtmlColorLabel3.TabIndex = 27
         HtmlColorLabel3.Text = "ThisIsYourWindow 提供了大量可定制项，如需在 3FUI 中完全发挥实力，请自行制作插件来调整。"
-        ' 
+        '
         ' HtmlColorLabel2
-        ' 
+        '
         HtmlColorLabel2.AutoSize = True
         HtmlColorLabel2.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel2.Dock = DockStyle.Top
@@ -138,9 +138,9 @@ Partial Class Form_v6_设置_LakeUI视觉体验
         HtmlColorLabel2.Size = New Size(702, 45)
         HtmlColorLabel2.TabIndex = 14
         HtmlColorLabel2.Text = "关于特别呈现"
-        ' 
+        '
         ' Panel2
-        ' 
+        '
         Panel2.Controls.Add(HtmlColorLabel7)
         Panel2.Controls.Add(MCB_窗口样式)
         Panel2.Dock = DockStyle.Top
@@ -149,9 +149,9 @@ Partial Class Form_v6_设置_LakeUI视觉体验
         Panel2.Padding = New Padding(0, 10, 0, 0)
         Panel2.Size = New Size(702, 42)
         Panel2.TabIndex = 13
-        ' 
+        '
         ' HtmlColorLabel7
-        ' 
+        '
         HtmlColorLabel7.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel7.Dock = DockStyle.Fill
         HtmlColorLabel7.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
@@ -163,9 +163,9 @@ Partial Class Form_v6_设置_LakeUI视觉体验
         HtmlColorLabel7.TabIndex = 19
         HtmlColorLabel7.Text = "默认使用特别呈现，可以在此切回 Windows 原生样式"
         HtmlColorLabel7.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
-        ' 
+        '
         ' MCB_窗口样式
-        ' 
+        '
         MCB_窗口样式.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_窗口样式.BorderRadius = 10
         MCB_窗口样式.BorderSize = 0
@@ -193,9 +193,9 @@ Partial Class Form_v6_设置_LakeUI视觉体验
         MCB_窗口样式.ToolTipMaxWidth = 350
         MCB_窗口样式.ToolTipPadding = New Padding(15)
         MCB_窗口样式.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        ' 
+        '
         ' HtmlColorLabel1
-        ' 
+        '
         HtmlColorLabel1.AutoSize = True
         HtmlColorLabel1.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel1.Dock = DockStyle.Top
@@ -206,9 +206,9 @@ Partial Class Form_v6_设置_LakeUI视觉体验
         HtmlColorLabel1.Size = New Size(702, 25)
         HtmlColorLabel1.TabIndex = 8
         HtmlColorLabel1.Text = "<span style=""font-size:13; color:Silver"">窗口样式</span>   特别呈现完全体需要 Windows 11 以及更新版本，需要重启软件"
-        ' 
+        '
         ' HtmlColorLabel5
-        ' 
+        '
         HtmlColorLabel5.AutoSize = True
         HtmlColorLabel5.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel5.Dock = DockStyle.Top
@@ -220,9 +220,9 @@ Partial Class Form_v6_设置_LakeUI视觉体验
         HtmlColorLabel5.Size = New Size(702, 45)
         HtmlColorLabel5.TabIndex = 26
         HtmlColorLabel5.Text = "<span style=""font-size:13; color:Silver"">Win32 COM 传统窗口重写</span>   由 ThisIsYourWindow 控件特别呈现"
-        ' 
+        '
         ' HtmlColorLabel4
-        ' 
+        '
         HtmlColorLabel4.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel4.Dock = DockStyle.Fill
         HtmlColorLabel4.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
@@ -234,9 +234,9 @@ Partial Class Form_v6_设置_LakeUI视觉体验
         HtmlColorLabel4.TabIndex = 20
         HtmlColorLabel4.Text = "需要重启软件"
         HtmlColorLabel4.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
-        ' 
+        '
         ' Form_v6_设置_LakeUI视觉体验
-        ' 
+        '
         AutoScaleDimensions = New SizeF(96F, 96F)
         AutoScaleMode = AutoScaleMode.Dpi
         BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))

@@ -1,4 +1,4 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class Form_v6_设置_LakeUI性能选项
     Inherits System.Windows.Forms.Form
 
@@ -70,9 +70,9 @@ Partial Class Form_v6_设置_LakeUI性能选项
         Panel7.SuspendLayout()
         Panel8.SuspendLayout()
         SuspendLayout()
-        ' 
+        '
         ' ModernPanel1
-        ' 
+        '
         ModernPanel1.BackColor1 = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         ModernPanel1.BorderSize = 0
         ModernPanel1.Controls.Add(Panel6)
@@ -95,9 +95,9 @@ Partial Class Form_v6_设置_LakeUI性能选项
         ModernPanel1.ScrollBarMode = LakeUI.ModernPanel.ScrollMode.Vertical
         ModernPanel1.Size = New Size(742, 641)
         ModernPanel1.TabIndex = 0
-        ' 
+        '
         ' Panel6
-        ' 
+        '
         Panel6.Controls.Add(HtmlColorLabel5)
         Panel6.Controls.Add(MCB_动画帧率)
         Panel6.Dock = DockStyle.Top
@@ -106,9 +106,9 @@ Partial Class Form_v6_设置_LakeUI性能选项
         Panel6.Padding = New Padding(0, 10, 0, 0)
         Panel6.Size = New Size(702, 42)
         Panel6.TabIndex = 23
-        ' 
+        '
         ' HtmlColorLabel5
-        ' 
+        '
         HtmlColorLabel5.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel5.Dock = DockStyle.Fill
         HtmlColorLabel5.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
@@ -120,9 +120,9 @@ Partial Class Form_v6_设置_LakeUI性能选项
         HtmlColorLabel5.TabIndex = 19
         HtmlColorLabel5.Text = "LakeUI 2.6+ 使用统一调度器来优化体验，无需特意高刷"
         HtmlColorLabel5.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
-        ' 
+        '
         ' MCB_动画帧率
-        ' 
+        '
         MCB_动画帧率.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_动画帧率.BorderRadius = 10
         MCB_动画帧率.BorderSize = 0
@@ -155,9 +155,9 @@ Partial Class Form_v6_设置_LakeUI性能选项
         MCB_动画帧率.ToolTipMaxWidth = 350
         MCB_动画帧率.ToolTipPadding = New Padding(15)
         MCB_动画帧率.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        ' 
+        '
         ' HtmlColorLabel3
-        ' 
+        '
         HtmlColorLabel3.AutoSize = True
         HtmlColorLabel3.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel3.Dock = DockStyle.Top
@@ -169,9 +169,9 @@ Partial Class Form_v6_设置_LakeUI性能选项
         HtmlColorLabel3.Size = New Size(702, 45)
         HtmlColorLabel3.TabIndex = 22
         HtmlColorLabel3.Text = "<span style=""font-size:13; color:Silver"">动画帧率</span>   帧率属性的更新与字体更新绑定，动一下字体或者重启来应用"
-        ' 
+        '
         ' Panel3
-        ' 
+        '
         Panel3.Controls.Add(HtmlColorLabel9)
         Panel3.Controls.Add(MCB_超容器背景映射条目预算)
         Panel3.Dock = DockStyle.Top
@@ -180,9 +180,9 @@ Partial Class Form_v6_设置_LakeUI性能选项
         Panel3.Padding = New Padding(0, 10, 0, 0)
         Panel3.Size = New Size(702, 42)
         Panel3.TabIndex = 31
-        ' 
+        '
         ' HtmlColorLabel9
-        ' 
+        '
         HtmlColorLabel9.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel9.Dock = DockStyle.Fill
         HtmlColorLabel9.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
@@ -194,9 +194,9 @@ Partial Class Form_v6_设置_LakeUI性能选项
         HtmlColorLabel9.TabIndex = 17
         HtmlColorLabel9.Text = "<span style=""color:Silver"">超容器背景映射   显存总量和单源条目</span>   预算越少计算越多"
         HtmlColorLabel9.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
-        ' 
+        '
         ' MCB_超容器背景映射条目预算
-        ' 
+        '
         MCB_超容器背景映射条目预算.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_超容器背景映射条目预算.BorderRadius = 10
         MCB_超容器背景映射条目预算.BorderSize = 0
@@ -230,9 +230,9 @@ Partial Class Form_v6_设置_LakeUI性能选项
         MCB_超容器背景映射条目预算.ToolTipMaxWidth = 350
         MCB_超容器背景映射条目预算.ToolTipPadding = New Padding(15)
         MCB_超容器背景映射条目预算.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        ' 
+        '
         ' Panel11
-        ' 
+        '
         Panel11.Controls.Add(HtmlColorLabel10)
         Panel11.Controls.Add(MCB_超容器背景映射脏区策略极限)
         Panel11.Dock = DockStyle.Top
@@ -241,9 +241,9 @@ Partial Class Form_v6_设置_LakeUI性能选项
         Panel11.Padding = New Padding(0, 10, 0, 0)
         Panel11.Size = New Size(702, 42)
         Panel11.TabIndex = 39
-        ' 
+        '
         ' HtmlColorLabel10
-        ' 
+        '
         HtmlColorLabel10.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel10.Dock = DockStyle.Fill
         HtmlColorLabel10.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
@@ -255,9 +255,9 @@ Partial Class Form_v6_设置_LakeUI性能选项
         HtmlColorLabel10.TabIndex = 17
         HtmlColorLabel10.Text = "<span style=""color:Silver"">超容器背景映射   脏区策略极限</span>   阈值越大越浪费计算性能"
         HtmlColorLabel10.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
-        ' 
+        '
         ' MCB_超容器背景映射脏区策略极限
-        ' 
+        '
         MCB_超容器背景映射脏区策略极限.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_超容器背景映射脏区策略极限.BorderRadius = 10
         MCB_超容器背景映射脏区策略极限.BorderSize = 0
@@ -291,9 +291,9 @@ Partial Class Form_v6_设置_LakeUI性能选项
         MCB_超容器背景映射脏区策略极限.ToolTipMaxWidth = 350
         MCB_超容器背景映射脏区策略极限.ToolTipPadding = New Padding(15)
         MCB_超容器背景映射脏区策略极限.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        ' 
+        '
         ' Panel10
-        ' 
+        '
         Panel10.Controls.Add(HtmlColorLabel6)
         Panel10.Controls.Add(MCB_超容器背景映射源位图缓存)
         Panel10.Dock = DockStyle.Top
@@ -302,9 +302,9 @@ Partial Class Form_v6_设置_LakeUI性能选项
         Panel10.Padding = New Padding(0, 10, 0, 0)
         Panel10.Size = New Size(702, 42)
         Panel10.TabIndex = 38
-        ' 
+        '
         ' HtmlColorLabel6
-        ' 
+        '
         HtmlColorLabel6.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel6.Dock = DockStyle.Fill
         HtmlColorLabel6.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
@@ -316,9 +316,9 @@ Partial Class Form_v6_设置_LakeUI性能选项
         HtmlColorLabel6.TabIndex = 17
         HtmlColorLabel6.Text = "<span style=""color:Silver"">超容器背景映射   源位图缓存</span>   直接影响 RAM 占用"
         HtmlColorLabel6.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
-        ' 
+        '
         ' MCB_超容器背景映射源位图缓存
-        ' 
+        '
         MCB_超容器背景映射源位图缓存.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_超容器背景映射源位图缓存.BorderRadius = 10
         MCB_超容器背景映射源位图缓存.BorderSize = 0
@@ -348,9 +348,9 @@ Partial Class Form_v6_设置_LakeUI性能选项
         MCB_超容器背景映射源位图缓存.ToolTipMaxWidth = 350
         MCB_超容器背景映射源位图缓存.ToolTipPadding = New Padding(15)
         MCB_超容器背景映射源位图缓存.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        ' 
+        '
         ' Panel5
-        ' 
+        '
         Panel5.Controls.Add(HtmlColorLabel4)
         Panel5.Controls.Add(MCB_DW字体相关预算)
         Panel5.Dock = DockStyle.Top
@@ -359,9 +359,9 @@ Partial Class Form_v6_设置_LakeUI性能选项
         Panel5.Padding = New Padding(0, 10, 0, 0)
         Panel5.Size = New Size(702, 42)
         Panel5.TabIndex = 37
-        ' 
+        '
         ' HtmlColorLabel4
-        ' 
+        '
         HtmlColorLabel4.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel4.Dock = DockStyle.Fill
         HtmlColorLabel4.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
@@ -373,9 +373,9 @@ Partial Class Form_v6_设置_LakeUI性能选项
         HtmlColorLabel4.TabIndex = 17
         HtmlColorLabel4.Text = "<span style=""color:Silver"">DWrite 字体相关预算</span>   "
         HtmlColorLabel4.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
-        ' 
+        '
         ' MCB_DW字体相关预算
-        ' 
+        '
         MCB_DW字体相关预算.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_DW字体相关预算.BorderRadius = 10
         MCB_DW字体相关预算.BorderSize = 0
@@ -405,9 +405,9 @@ Partial Class Form_v6_设置_LakeUI性能选项
         MCB_DW字体相关预算.ToolTipMaxWidth = 350
         MCB_DW字体相关预算.ToolTipPadding = New Padding(15)
         MCB_DW字体相关预算.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        ' 
+        '
         ' Panel4
-        ' 
+        '
         Panel4.Controls.Add(HtmlColorLabel2)
         Panel4.Controls.Add(MCB_D2D每对象画刷缓存数量)
         Panel4.Dock = DockStyle.Top
@@ -416,9 +416,9 @@ Partial Class Form_v6_设置_LakeUI性能选项
         Panel4.Padding = New Padding(0, 10, 0, 0)
         Panel4.Size = New Size(702, 42)
         Panel4.TabIndex = 36
-        ' 
+        '
         ' HtmlColorLabel2
-        ' 
+        '
         HtmlColorLabel2.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel2.Dock = DockStyle.Fill
         HtmlColorLabel2.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
@@ -430,9 +430,9 @@ Partial Class Form_v6_设置_LakeUI性能选项
         HtmlColorLabel2.TabIndex = 17
         HtmlColorLabel2.Text = "<span style=""color:Silver"">D2D 每对象画刷缓存数量</span>   "
         HtmlColorLabel2.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
-        ' 
+        '
         ' MCB_D2D每对象画刷缓存数量
-        ' 
+        '
         MCB_D2D每对象画刷缓存数量.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_D2D每对象画刷缓存数量.BorderRadius = 10
         MCB_D2D每对象画刷缓存数量.BorderSize = 0
@@ -464,9 +464,9 @@ Partial Class Form_v6_设置_LakeUI性能选项
         MCB_D2D每对象画刷缓存数量.ToolTipMaxWidth = 350
         MCB_D2D每对象画刷缓存数量.ToolTipPadding = New Padding(15)
         MCB_D2D每对象画刷缓存数量.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        ' 
+        '
         ' Panel1
-        ' 
+        '
         Panel1.Controls.Add(HtmlColorLabel8)
         Panel1.Controls.Add(MCB_D2DImage缓存预算)
         Panel1.Dock = DockStyle.Top
@@ -475,9 +475,9 @@ Partial Class Form_v6_设置_LakeUI性能选项
         Panel1.Padding = New Padding(0, 10, 0, 0)
         Panel1.Size = New Size(702, 42)
         Panel1.TabIndex = 30
-        ' 
+        '
         ' HtmlColorLabel8
-        ' 
+        '
         HtmlColorLabel8.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel8.Dock = DockStyle.Fill
         HtmlColorLabel8.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
@@ -489,9 +489,9 @@ Partial Class Form_v6_设置_LakeUI性能选项
         HtmlColorLabel8.TabIndex = 17
         HtmlColorLabel8.Text = "<span style=""color:Silver"">D2D Image 缓存预算</span>   预算越多，显存越多，计算越少"
         HtmlColorLabel8.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
-        ' 
+        '
         ' MCB_D2DImage缓存预算
-        ' 
+        '
         MCB_D2DImage缓存预算.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_D2DImage缓存预算.BorderRadius = 10
         MCB_D2DImage缓存预算.BorderSize = 0
@@ -523,9 +523,9 @@ Partial Class Form_v6_设置_LakeUI性能选项
         MCB_D2DImage缓存预算.ToolTipMaxWidth = 350
         MCB_D2DImage缓存预算.ToolTipPadding = New Padding(15)
         MCB_D2DImage缓存预算.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        ' 
+        '
         ' HtmlColorLabel7
-        ' 
+        '
         HtmlColorLabel7.AutoSize = True
         HtmlColorLabel7.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel7.Dock = DockStyle.Top
@@ -537,9 +537,9 @@ Partial Class Form_v6_设置_LakeUI性能选项
         HtmlColorLabel7.Size = New Size(702, 45)
         HtmlColorLabel7.TabIndex = 29
         HtmlColorLabel7.Text = "<span style=""font-size:13; color:Silver"">DirectX 开销平衡</span>   在计算量、内存、显存之间互相平衡"
-        ' 
+        '
         ' Panel9
-        ' 
+        '
         Panel9.Controls.Add(HtmlColorLabel14)
         Panel9.Controls.Add(MCB_SSAA)
         Panel9.Dock = DockStyle.Top
@@ -548,9 +548,9 @@ Partial Class Form_v6_设置_LakeUI性能选项
         Panel9.Padding = New Padding(0, 10, 0, 0)
         Panel9.Size = New Size(702, 42)
         Panel9.TabIndex = 34
-        ' 
+        '
         ' HtmlColorLabel14
-        ' 
+        '
         HtmlColorLabel14.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel14.Dock = DockStyle.Fill
         HtmlColorLabel14.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
@@ -562,9 +562,9 @@ Partial Class Form_v6_设置_LakeUI性能选项
         HtmlColorLabel14.TabIndex = 18
         HtmlColorLabel14.Text = "<span style=""color:Silver"">SSAA 超采样抗锯齿</span>   性能消耗指数级增加，通常没必要使用"
         HtmlColorLabel14.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
-        ' 
+        '
         ' MCB_SSAA
-        ' 
+        '
         MCB_SSAA.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_SSAA.BorderRadius = 10
         MCB_SSAA.BorderSize = 0
@@ -596,9 +596,9 @@ Partial Class Form_v6_设置_LakeUI性能选项
         MCB_SSAA.ToolTipMaxWidth = 350
         MCB_SSAA.ToolTipPadding = New Padding(15)
         MCB_SSAA.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        ' 
+        '
         ' Panel7
-        ' 
+        '
         Panel7.Controls.Add(HtmlColorLabel12)
         Panel7.Controls.Add(MCB_文字渲染模式)
         Panel7.Dock = DockStyle.Top
@@ -607,9 +607,9 @@ Partial Class Form_v6_设置_LakeUI性能选项
         Panel7.Padding = New Padding(0, 10, 0, 0)
         Panel7.Size = New Size(702, 42)
         Panel7.TabIndex = 27
-        ' 
+        '
         ' HtmlColorLabel12
-        ' 
+        '
         HtmlColorLabel12.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel12.Dock = DockStyle.Fill
         HtmlColorLabel12.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
@@ -621,9 +621,9 @@ Partial Class Form_v6_设置_LakeUI性能选项
         HtmlColorLabel12.TabIndex = 18
         HtmlColorLabel12.Text = "<span style=""color:Silver"">文字渲染模式</span>   ClearType 模式支持 MacType 这类软件"
         HtmlColorLabel12.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
-        ' 
+        '
         ' MCB_文字渲染模式
-        ' 
+        '
         MCB_文字渲染模式.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_文字渲染模式.BorderRadius = 10
         MCB_文字渲染模式.BorderSize = 0
@@ -655,9 +655,9 @@ Partial Class Form_v6_设置_LakeUI性能选项
         MCB_文字渲染模式.ToolTipMaxWidth = 350
         MCB_文字渲染模式.ToolTipPadding = New Padding(15)
         MCB_文字渲染模式.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        ' 
+        '
         ' Panel8
-        ' 
+        '
         Panel8.Controls.Add(HtmlColorLabel13)
         Panel8.Controls.Add(MCB_GPU抗锯齿)
         Panel8.Dock = DockStyle.Top
@@ -666,9 +666,9 @@ Partial Class Form_v6_设置_LakeUI性能选项
         Panel8.Padding = New Padding(0, 10, 0, 0)
         Panel8.Size = New Size(702, 42)
         Panel8.TabIndex = 26
-        ' 
+        '
         ' HtmlColorLabel13
-        ' 
+        '
         HtmlColorLabel13.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel13.Dock = DockStyle.Fill
         HtmlColorLabel13.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
@@ -680,9 +680,9 @@ Partial Class Form_v6_设置_LakeUI性能选项
         HtmlColorLabel13.TabIndex = 17
         HtmlColorLabel13.Text = "<span style=""color:Silver"">GPU 抗锯齿</span>   建议开启，或者你可能喜欢曲线锯齿"
         HtmlColorLabel13.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
-        ' 
+        '
         ' MCB_GPU抗锯齿
-        ' 
+        '
         MCB_GPU抗锯齿.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_GPU抗锯齿.BorderRadius = 10
         MCB_GPU抗锯齿.BorderSize = 0
@@ -709,9 +709,9 @@ Partial Class Form_v6_设置_LakeUI性能选项
         MCB_GPU抗锯齿.ToolTipMaxWidth = 350
         MCB_GPU抗锯齿.ToolTipPadding = New Padding(15)
         MCB_GPU抗锯齿.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        ' 
+        '
         ' HtmlColorLabel11
-        ' 
+        '
         HtmlColorLabel11.AutoSize = True
         HtmlColorLabel11.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel11.Dock = DockStyle.Top
@@ -722,9 +722,9 @@ Partial Class Form_v6_设置_LakeUI性能选项
         HtmlColorLabel11.Size = New Size(702, 25)
         HtmlColorLabel11.TabIndex = 25
         HtmlColorLabel11.Text = "<span style=""font-size:13; color:Silver"">LakeUI DirectX 图形质量</span>   由 Vortice 提供支持"
-        ' 
+        '
         ' Form_v6_设置_LakeUI性能选项
-        ' 
+        '
         AutoScaleDimensions = New SizeF(96F, 96F)
         AutoScaleMode = AutoScaleMode.Dpi
         BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))

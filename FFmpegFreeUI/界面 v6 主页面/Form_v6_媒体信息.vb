@@ -1,4 +1,4 @@
-﻿Public Class Form_v6_媒体信息
+Public Class Form_v6_媒体信息
     Private Sub Form_v6_媒体信息_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ModernTextBox1.SyntaxHighlighter = FFmpeg输出语法高亮器_v6.默认实例
         ModernTextBox1.EnableSyntaxHighlight = True

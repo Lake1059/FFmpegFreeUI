@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
@@ -14,9 +14,9 @@
     <!--<EnableCompressionInSingleFile>True</EnableCompressionInSingleFile>-->
     <Authors>1059 Studio</Authors>
 	<Company>1059 Studio</Company>
-	<AssemblyVersion>6.0.19</AssemblyVersion>
-	<FileVersion>6.0.19</FileVersion>
-	<Version>6.0.19</Version>
+	<AssemblyVersion>6.0.20</AssemblyVersion>
+	<FileVersion>6.0.20</FileVersion>
+	<Version>6.0.20</Version>
     <SupportedOSPlatformVersion>7.0</SupportedOSPlatformVersion>
     <ApplicationIcon>ico.ico</ApplicationIcon>
     <ApplicationManifest>My Project\app.manifest</ApplicationManifest>

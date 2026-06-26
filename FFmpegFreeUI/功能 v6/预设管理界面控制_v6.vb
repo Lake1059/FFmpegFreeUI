@@ -43,7 +43,7 @@ Public Partial Class 预设管理_v6
     Public Shared Function 获取预设目录(来源 As String) As String
         Select Case If(来源, "").Trim()
             Case "开发者内置"
-                Return Path.Combine(预设根目录, "BuiltIn")
+                Return ""
             Case "从社区下载"
                 Return Path.Combine(预设根目录, "Community")
             Case Else
@@ -476,8 +476,8 @@ Public Partial Class 预设管理_v6
                 ui.私有界面_滤镜排序.设置排序数据(a.滤镜排序系统.ToList(), False)
             End If
             同步全部内置滤镜到排序(ui, False)
-            ui.私有界面_预设管理.ModernTextBox4.Text = a.预设备注
-            ui.私有界面_预设管理.ModernCheckBox1.Checked = a.额外保存输出位置
+            ui.私有界面_预设管理.MTB_预设备注.Text = a.预设备注
+            ui.私有界面_预设管理.MCK_额外保存输出位置.Checked = a.额外保存输出位置
             刷新参数总览(ui)
         Finally
             ui.抑制自动刷新 = oldSuppress
@@ -488,8 +488,8 @@ Public Partial Class 预设管理_v6
         If a Is Nothing Then a = New 预设数据_v6
         If ui Is Nothing Then Exit Sub
         初始化空集合(a)
-        a.预设备注 = ui.私有界面_预设管理.ModernTextBox4.Text.Trim()
-        a.额外保存输出位置 = ui.私有界面_预设管理.ModernCheckBox1.Checked
+        a.预设备注 = ui.私有界面_预设管理.MTB_预设备注.Text.Trim()
+        a.额外保存输出位置 = ui.私有界面_预设管理.MCK_额外保存输出位置.Checked
 
         储存输出文件设置(a, ui)
         储存解码参数(a, ui)
@@ -517,7 +517,7 @@ Public Partial Class 预设管理_v6
     Public Shared Sub 重置面板(ui As Form_v6_参数面板)
         If ui Is Nothing Then Exit Sub
         显示预设(New 预设数据_v6, ui)
-        ui.私有界面_预设管理.ModernTextBox3.Text = ""
+        ui.私有界面_预设管理.MTB_预设名称.Text = ""
     End Sub
 
     Public Shared Sub 显示参数总览(MTB As ModernTextBox, a As 预设数据_v6)
@@ -1266,8 +1266,8 @@ Public Partial Class 预设管理_v6
     Public Shared Sub 刷新参数总览(ui As Form_v6_参数面板)
         If ui Is Nothing Then Exit Sub
         Dim a = 从面板创建预设(ui)
-        显示参数总览(ui.私有界面_参数总览.ModernTextBox1, a)
-        ui.私有界面_参数总览.ModernTextBox2.Text = 生成命令行展示文本(a, 输入占位符, 输出占位符)
+        显示参数总览(ui.私有界面_参数总览.MTB_参数总览, a)
+        ui.私有界面_参数总览.MTB_命令行模板.Text = 生成命令行展示文本(a, 输入占位符, 输出占位符)
         ui.私有界面_滤镜排序.刷新局部预览(a)
     End Sub
 
@@ -1303,36 +1303,36 @@ Public Partial Class 预设管理_v6
         If ui Is Nothing Then Exit Sub
         Select Case 标识符
             Case 预设数据_v6.滤镜排序单片结构.标识符枚举.裁剪
-                ui.私有界面_画面帧.ModernTextBox1.Text = ""
+                ui.私有界面_画面帧.MTB_画面裁剪参数.Text = ""
             Case 预设数据_v6.滤镜排序单片结构.标识符枚举.缩放
-                ui.私有界面_画面帧.ModernComboBox1.Text = ""
-                ui.私有界面_画面帧.ModernComboBox2.Text = ""
-                ui.私有界面_画面帧.ModernComboBox3.Text = ""
+                ui.私有界面_画面帧.MCB_直接指定分辨率.Text = ""
+                ui.私有界面_画面帧.MCB_宽度缩放.Text = ""
+                ui.私有界面_画面帧.MCB_高度缩放.Text = ""
             Case 预设数据_v6.滤镜排序单片结构.标识符枚举.抽帧
                 With ui.私有界面_画面帧.私有窗口_抽帧参数
-                    .ModernCheckBox1.Checked = False
-                    .ModernTextBox1.Text = ""
-                    .ModernTextBox2.Text = ""
-                    .ModernTextBox3.Text = ""
-                    .ModernComboBox1.Text = ""
-                    .ModernComboBox2.Text = ""
+                    .MCK_抽帧总开关.Checked = False
+                    .MTB_连续丢帧数量.Text = ""
+                    .MTB_连续相似要求.Text = ""
+                    .MTB_最大变化占比.Text = ""
+                    .MCB_高阈值.Text = ""
+                    .MCB_低阈值.Text = ""
                 End With
             Case 预设数据_v6.滤镜排序单片结构.标识符枚举.插帧
                 With ui.私有界面_画面帧.私有窗口_插帧参数
-                    .MCB_插帧总开关.Checked = False
+                    .MCK_插帧总开关.Checked = False
                     .MTB_目标帧率.Text = ""
                     .MCB_插帧模式.Text = ""
                     .MCB_运动估计模式.Text = ""
                     .MCB_运动估计算法.Text = ""
                     .MCB_运动补偿模式.Text = ""
-                    .MCB_可变块大小的运动补偿.Checked = False
+                    .MCK_可变块大小的运动补偿.Checked = False
                     .MTB_块大小.Text = ""
                     .MTB_搜索范围.Text = ""
                     .MTB_场景变化检测强度.Text = ""
                 End With
             Case 预设数据_v6.滤镜排序单片结构.标识符枚举.动态模糊
                 With ui.私有界面_画面帧.私有窗口_动态模糊
-                    .MCB_动态模糊总开关.Checked = False
+                    .MCK_动态模糊总开关.Checked = False
                     .MTB_连续混合帧数.Text = ""
                     .MTB_每帧的权重.Text = ""
                     .MTB_输出缩放系数.Text = ""
@@ -1340,7 +1340,7 @@ Public Partial Class 预设管理_v6
                 End With
             Case 预设数据_v6.滤镜排序单片结构.标识符枚举.降噪
                 With ui.私有界面_画面帧.私有窗口_降噪
-                    .MCB_插帧总开关.Checked = False
+                    .MCK_降噪总开关.Checked = False
                     .MCB_滤镜选择.SelectedIndex = -1
                     ResetTrackValue(.ETB_降噪参数1)
                     ResetTrackValue(.ETB_降噪参数2)
@@ -1349,7 +1349,7 @@ Public Partial Class 预设管理_v6
                 End With
             Case 预设数据_v6.滤镜排序单片结构.标识符枚举.锐化
                 With ui.私有界面_画面帧.私有窗口_锐化
-                    .MCB_锐化总开关.Checked = False
+                    .MCK_锐化总开关.Checked = False
                     .MCB_滤镜选择.SelectedIndex = -1
                     ResetTrackValue(.ETB_锐化参数1)
                     ResetTrackValue(.ETB_锐化参数2)
@@ -1357,7 +1357,7 @@ Public Partial Class 预设管理_v6
                 End With
             Case 预设数据_v6.滤镜排序单片结构.标识符枚举.胶片颗粒
                 With ui.私有界面_画面帧.私有窗口_胶片颗粒
-                    .MCB_胶片颗粒总开关.Checked = False
+                    .MCK_胶片颗粒总开关.Checked = False
                     .MCB_滤镜选择.SelectedIndex = -1
                     ResetTrackValue(.ETB_胶片颗粒参数1)
                     ResetTrackValue(.ETB_胶片颗粒参数2)
@@ -1366,7 +1366,7 @@ Public Partial Class 预设管理_v6
                 End With
             Case 预设数据_v6.滤镜排序单片结构.标识符枚举.平滑断层
                 With ui.私有界面_画面帧.私有窗口_平滑断层
-                    .MCB_平滑断层总开关.Checked = False
+                    .MCK_平滑断层总开关.Checked = False
                     .MCB_滤镜选择.SelectedIndex = -1
                     ResetTrackValue(.ETB_平滑断层参数1)
                     ResetTrackValue(.ETB_平滑断层参数2)
@@ -1374,17 +1374,17 @@ Public Partial Class 预设管理_v6
                     ResetTrackValue(.ETB_平滑断层参数4)
                 End With
             Case 预设数据_v6.滤镜排序单片结构.标识符枚举.扫描方式
-                ui.私有界面_画面帧.私有窗口_扫描方式.MCB_扫描方式总开关.Checked = False
+                ui.私有界面_画面帧.私有窗口_扫描方式.MCK_扫描方式总开关.Checked = False
                 ui.私有界面_画面帧.私有窗口_扫描方式.MCB_扫描方式.SelectedIndex = -1
             Case 预设数据_v6.滤镜排序单片结构.标识符枚举.画面翻转
-                ui.私有界面_画面帧.私有窗口_画面翻转.MCB_画面翻转总开关.Checked = False
+                ui.私有界面_画面帧.私有窗口_画面翻转.MCK_画面翻转总开关.Checked = False
                 ui.私有界面_画面帧.私有窗口_画面翻转.MCB_角度翻转.SelectedIndex = -1
                 ui.私有界面_画面帧.私有窗口_画面翻转.MCB_镜像翻转.SelectedIndex = -1
             Case 预设数据_v6.滤镜排序单片结构.标识符枚举.烧录字幕
                 ui.私有界面_画面帧.私有窗口_烧录字幕.重置所有选项()
             Case 预设数据_v6.滤镜排序单片结构.标识符枚举.超分
                 With ui.私有界面_画面帧.私有窗口_着色器超分
-                    .MCB_超分总开关.Checked = False
+                    .MCK_超分总开关.Checked = False
                     .MTB_宽度.Text = ""
                     .MTB_高度.Text = ""
                     .MCB_上采样算法.Text = ""
@@ -1408,10 +1408,10 @@ Public Partial Class 预设管理_v6
                 End With
             Case 预设数据_v6.滤镜排序单片结构.标识符枚举.调色
                 With ui.私有界面_色彩管理
-                    .MCB_亮度.Checked = False
-                    .MCB_对比度.Checked = False
-                    .MCB_饱和度.Checked = False
-                    .MCB_伽马.Checked = False
+                    .MCK_启用亮度调整.Checked = False
+                    .MCK_启用对比度调整.Checked = False
+                    .MCK_启用饱和度调整.Checked = False
+                    .MCK_启用伽马调整.Checked = False
                     ResetTrackValue(.ETB_亮度)
                     ResetTrackValue(.ETB_对比度, 1)
                     ResetTrackValue(.ETB_饱和度, 1)
@@ -1419,15 +1419,15 @@ Public Partial Class 预设管理_v6
                 End With
             Case 预设数据_v6.滤镜排序单片结构.标识符枚举.音频响度标准化
                 With ui.私有界面_音频参数
-                    .MCB_目标响度.Checked = False
-                    .MCB_动态范围.Checked = False
-                    .MCB_峰值电平.Checked = False
+                    .MCK_启用目标响度.Checked = False
+                    .MCK_启用动态范围.Checked = False
+                    .MCK_启用峰值电平.Checked = False
                     ResetTrackValue(.ETB_目标响度, -24)
                     ResetTrackValue(.ETB_动态范围, 1)
                     ResetTrackValue(.ETB_峰值电平, -1)
                 End With
             Case 预设数据_v6.滤镜排序单片结构.标识符枚举.音频格式转换
-                ui.私有界面_音频参数.声道布局.Text = ""
+                ui.私有界面_音频参数.MCB_声道布局.Text = ""
             Case 预设数据_v6.滤镜排序单片结构.标识符枚举.音频重采样
                 ui.私有界面_音频参数.MCB_采样率.Text = ""
         End Select
@@ -1560,9 +1560,9 @@ Public Partial Class 预设管理_v6
             a.输出命名_开头文本 = .MTB_开头文本.Text
             a.输出命名_替代文本 = .MTB_替代文件名.Text
             a.输出命名_结尾文本 = .MTB_结尾文本.Text
-            a.输出命名_保留创建时间 = .MCB_保留创建时间.Checked
-            a.输出命名_保留修改时间 = .MCB_保留修改时间.Checked
-            a.输出命名_保留访问时间 = .MCB_保留访问时间.Checked
+            a.输出命名_保留创建时间 = .MCK_保留创建时间.Checked
+            a.输出命名_保留修改时间 = .MCK_保留修改时间.Checked
+            a.输出命名_保留访问时间 = .MCK_保留访问时间.Checked
             Dim 输出位置文本 = 规范化文件夹路径(.MCB_输出位置.Text)
             If Directory.Exists(输出位置文本) Then
                 a.计算机名称 = Environment.MachineName
@@ -1584,9 +1584,9 @@ Public Partial Class 预设管理_v6
             .MTB_开头文本.Text = a.输出命名_开头文本
             .MTB_替代文件名.Text = a.输出命名_替代文本
             .MTB_结尾文本.Text = a.输出命名_结尾文本
-            .MCB_保留创建时间.Checked = a.输出命名_保留创建时间
-            .MCB_保留修改时间.Checked = a.输出命名_保留修改时间
-            .MCB_保留访问时间.Checked = a.输出命名_保留访问时间
+            .MCK_保留创建时间.Checked = a.输出命名_保留创建时间
+            .MCK_保留修改时间.Checked = a.输出命名_保留修改时间
+            .MCK_保留访问时间.Checked = a.输出命名_保留访问时间
             If a.额外保存输出位置 AndAlso
                String.Equals(a.计算机名称, Environment.MachineName, StringComparison.OrdinalIgnoreCase) AndAlso
                Directory.Exists(a.输出位置) Then
@@ -1599,21 +1599,21 @@ Public Partial Class 预设管理_v6
 
     Private Shared Sub 储存解码参数(a As 预设数据_v6, ui As Form_v6_参数面板)
         With ui.私有界面_解码参数
-            a.解码参数_解码器 = .ModernComboBox1.Text
-            a.解码参数_CPU解码线程数 = .ModernTextBox1.Text
-            a.解码参数_解码数据格式 = .ModernComboBox2.Text
-            a.解码参数_指定硬件的参数名 = .ModernComboBox3.Text
-            a.解码参数_指定硬件的参数 = .ModernTextBox2.Text
+            a.解码参数_解码器 = .MCB_硬件加速解码方式.Text
+            a.解码参数_CPU解码线程数 = .MTB_CPU解码线程数.Text
+            a.解码参数_解码数据格式 = .MCB_硬件解码输出格式.Text
+            a.解码参数_指定硬件的参数名 = .MCB_硬件解码设备参数名.Text
+            a.解码参数_指定硬件的参数 = .MTB_硬件解码设备参数值.Text
         End With
     End Sub
 
     Private Shared Sub 显示解码参数(a As 预设数据_v6, ui As Form_v6_参数面板)
         With ui.私有界面_解码参数
-            .ModernComboBox1.Text = a.解码参数_解码器
-            .ModernTextBox1.Text = a.解码参数_CPU解码线程数
-            .ModernComboBox2.Text = a.解码参数_解码数据格式
-            .ModernComboBox3.Text = a.解码参数_指定硬件的参数名
-            .ModernTextBox2.Text = a.解码参数_指定硬件的参数
+            .MCB_硬件加速解码方式.Text = a.解码参数_解码器
+            .MTB_CPU解码线程数.Text = a.解码参数_CPU解码线程数
+            .MCB_硬件解码输出格式.Text = a.解码参数_解码数据格式
+            .MCB_硬件解码设备参数名.Text = a.解码参数_指定硬件的参数名
+            .MTB_硬件解码设备参数值.Text = a.解码参数_指定硬件的参数
         End With
     End Sub
 
@@ -1625,8 +1625,8 @@ Public Partial Class 预设管理_v6
             a.视频参数_编码器_编码预设 = .MCB_编码预设.Text
             a.视频参数_编码器_配置文件 = .MCB_配置文件.Text
             a.视频参数_编码器_场景优化 = .MCB_场景优化.Text
-            a.视频参数_编码器_gpu = .MTB_gpu.Text
-            a.视频参数_编码器_threads = .MTB_threads.Text
+            a.视频参数_编码器_gpu = .MTB_GPU编号.Text
+            a.视频参数_编码器_threads = .MTB_编码线程数.Text
             a.视频参数_编码器_图片编码器质量值 = .MTB_图片编码器质量值.Text
         End With
     End Sub
@@ -1644,8 +1644,8 @@ Public Partial Class 预设管理_v6
             .MCB_编码预设.Text = a.视频参数_编码器_编码预设
             .MCB_配置文件.Text = a.视频参数_编码器_配置文件
             .MCB_场景优化.Text = a.视频参数_编码器_场景优化
-            .MTB_gpu.Text = a.视频参数_编码器_gpu
-            .MTB_threads.Text = a.视频参数_编码器_threads
+            .MTB_GPU编号.Text = a.视频参数_编码器_gpu
+            .MTB_编码线程数.Text = a.视频参数_编码器_threads
             .MTB_图片编码器质量值.Text = a.视频参数_编码器_图片编码器质量值
         End With
     End Sub
@@ -1666,22 +1666,22 @@ Public Partial Class 预设管理_v6
 
     Private Shared Sub 储存画面帧(a As 预设数据_v6, ui As Form_v6_参数面板)
         With ui.私有界面_画面帧
-            a.视频参数_分辨率 = .ModernComboBox1.Text
-            a.视频参数_分辨率自动计算_宽度 = .ModernComboBox2.Text
-            a.视频参数_分辨率自动计算_高度 = .ModernComboBox3.Text
-            a.视频参数_帧速率 = .ModernComboBox4.Text
-            a.视频参数_分辨率_裁剪滤镜参数 = .ModernTextBox1.Text
+            a.视频参数_分辨率 = .MCB_直接指定分辨率.Text
+            a.视频参数_分辨率自动计算_宽度 = .MCB_宽度缩放.Text
+            a.视频参数_分辨率自动计算_高度 = .MCB_高度缩放.Text
+            a.视频参数_帧速率 = .MCB_直接指定帧率.Text
+            a.视频参数_分辨率_裁剪滤镜参数 = .MTB_画面裁剪参数.Text
             储存滤镜子窗口(a, .私有窗口_抽帧参数, .私有窗口_插帧参数, .私有窗口_动态模糊, .私有窗口_着色器超分, .私有窗口_降噪, .私有窗口_锐化, .私有窗口_胶片颗粒, .私有窗口_平滑断层, .私有窗口_扫描方式, .私有窗口_画面翻转, .私有窗口_烧录字幕)
         End With
     End Sub
 
     Private Shared Sub 显示画面帧(a As 预设数据_v6, ui As Form_v6_参数面板)
         With ui.私有界面_画面帧
-            .ModernComboBox1.Text = a.视频参数_分辨率
-            .ModernComboBox2.Text = a.视频参数_分辨率自动计算_宽度
-            .ModernComboBox3.Text = a.视频参数_分辨率自动计算_高度
-            .ModernComboBox4.Text = a.视频参数_帧速率
-            .ModernTextBox1.Text = a.视频参数_分辨率_裁剪滤镜参数
+            .MCB_直接指定分辨率.Text = a.视频参数_分辨率
+            .MCB_宽度缩放.Text = a.视频参数_分辨率自动计算_宽度
+            .MCB_高度缩放.Text = a.视频参数_分辨率自动计算_高度
+            .MCB_直接指定帧率.Text = a.视频参数_帧速率
+            .MTB_画面裁剪参数.Text = a.视频参数_分辨率_裁剪滤镜参数
             显示滤镜子窗口(a, .私有窗口_抽帧参数, .私有窗口_插帧参数, .私有窗口_动态模糊, .私有窗口_着色器超分, .私有窗口_降噪, .私有窗口_锐化, .私有窗口_胶片颗粒, .私有窗口_平滑断层, .私有窗口_扫描方式, .私有窗口_画面翻转, .私有窗口_烧录字幕)
         End With
     End Sub
@@ -1698,12 +1698,12 @@ Public Partial Class 预设管理_v6
                                   扫描 As Form_v6_参数面板_扫描方式,
                                   翻转 As Form_v6_参数面板_画面翻转,
                                   烧字幕 As Form_v6_参数面板_烧录字幕)
-        If 抽帧.ModernCheckBox1.Checked Then
-            a.视频参数_抽帧_max = 抽帧.ModernTextBox1.Text
-            a.视频参数_抽帧_keep = 抽帧.ModernTextBox2.Text
-            a.视频参数_抽帧_hi = 抽帧.ModernTextBox3.Text
-            a.视频参数_抽帧_lo = 抽帧.ModernComboBox1.Text
-            a.视频参数_抽帧_frac = 抽帧.ModernComboBox2.Text
+        If 抽帧.MCK_抽帧总开关.Checked Then
+            a.视频参数_抽帧_max = 抽帧.MTB_连续丢帧数量.Text
+            a.视频参数_抽帧_keep = 抽帧.MTB_连续相似要求.Text
+            a.视频参数_抽帧_hi = 抽帧.MCB_高阈值.Text
+            a.视频参数_抽帧_lo = 抽帧.MCB_低阈值.Text
+            a.视频参数_抽帧_frac = 抽帧.MTB_最大变化占比.Text
         Else
             a.视频参数_抽帧_max = ""
             a.视频参数_抽帧_keep = ""
@@ -1712,22 +1712,22 @@ Public Partial Class 预设管理_v6
             a.视频参数_抽帧_frac = ""
         End If
 
-        a.视频参数_插帧_目标帧率 = If(插帧.MCB_插帧总开关.Checked, 插帧.MTB_目标帧率.Text, "")
+        a.视频参数_插帧_目标帧率 = If(插帧.MCK_插帧总开关.Checked, 插帧.MTB_目标帧率.Text, "")
         a.视频参数_插帧_插帧模式 = 插帧模式参数值(插帧.MCB_插帧模式.Text)
         a.视频参数_插帧_运动估计模式 = 运动估计模式参数值(插帧.MCB_运动估计模式.Text)
         a.视频参数_插帧_运动估计算法 = 运动估计算法参数值(插帧.MCB_运动估计算法.Text)
         a.视频参数_插帧_运动补偿模式 = 运动补偿模式参数值(插帧.MCB_运动补偿模式.Text)
-        a.视频参数_插帧_可变块大小的运动补偿 = 插帧.MCB_可变块大小的运动补偿.Checked
+        a.视频参数_插帧_可变块大小的运动补偿 = 插帧.MCK_可变块大小的运动补偿.Checked
         a.视频参数_插帧_块大小 = 插帧.MTB_块大小.Text
         a.视频参数_插帧_搜索范围 = 插帧.MTB_搜索范围.Text
         a.视频参数_插帧_场景变化检测强度 = 插帧.MTB_场景变化检测强度.Text
 
-        a.视频参数_动态模糊_连续混合帧数 = If(动态模糊.MCB_动态模糊总开关.Checked, 动态模糊.MTB_连续混合帧数.Text, "")
+        a.视频参数_动态模糊_连续混合帧数 = If(动态模糊.MCK_动态模糊总开关.Checked, 动态模糊.MTB_连续混合帧数.Text, "")
         a.视频参数_动态模糊_每帧权重 = 动态模糊.MTB_每帧的权重.Text
         a.视频参数_动态模糊_输出缩放系数 = 动态模糊.MTB_输出缩放系数.Text
         a.视频参数_动态模糊_处理颜色平面 = 动态模糊.MTB_处理哪些颜色平面.Text
 
-        If 超分.MCB_超分总开关.Checked Then
+        If 超分.MCK_超分总开关.Checked Then
             a.视频参数_超分_直接面板 = New 预设数据_v6.超分数据单片结构 With {.目标宽度 = 超分.MTB_宽度.Text, .目标高度 = 超分.MTB_高度.Text, .上采样算法 = 超分.MCB_上采样算法.Text, .下采样算法 = 超分.MCB_下采样算法.Text, .抗振铃强度 = 超分.MTB_抗振铃强度.Text, .着色器文件路径 = 超分.MCB_着色器文件路径.Text}
             a.视频参数_超分_滤镜叠加策略组 = 超分.策略组数据.ToArray()
         Else
@@ -1735,34 +1735,34 @@ Public Partial Class 预设管理_v6
             a.视频参数_超分_滤镜叠加策略组 = Array.Empty(Of 预设数据_v6.超分数据单片结构)()
         End If
 
-        a.视频参数_降噪_方式 = If(降噪.MCB_插帧总开关.Checked, SelectedIndexToEnum(Of 预设数据_v6.降噪方式)(Math.Max(0, 降噪.MCB_滤镜选择.SelectedIndex)), 预设数据_v6.降噪方式.未选择)
+        a.视频参数_降噪_方式 = If(降噪.MCK_降噪总开关.Checked, SelectedIndexToEnum(Of 预设数据_v6.降噪方式)(Math.Max(0, 降噪.MCB_滤镜选择.SelectedIndex)), 预设数据_v6.降噪方式.未选择)
         a.视频参数_降噪_参数1 = TrackValue(降噪.ETB_降噪参数1)
         a.视频参数_降噪_参数2 = TrackValue(降噪.ETB_降噪参数2)
         a.视频参数_降噪_参数3 = TrackValue(降噪.ETB_降噪参数3)
         a.视频参数_降噪_参数4 = TrackValue(降噪.ETB_降噪参数4)
 
-        a.视频参数_锐化_方式 = If(锐化.MCB_锐化总开关.Checked, SelectedIndexToEnum(Of 预设数据_v6.锐化方式)(Math.Max(0, 锐化.MCB_滤镜选择.SelectedIndex)), 预设数据_v6.锐化方式.未选择)
+        a.视频参数_锐化_方式 = If(锐化.MCK_锐化总开关.Checked, SelectedIndexToEnum(Of 预设数据_v6.锐化方式)(Math.Max(0, 锐化.MCB_滤镜选择.SelectedIndex)), 预设数据_v6.锐化方式.未选择)
         a.视频参数_锐化_参数1 = TrackValue(锐化.ETB_锐化参数1)
         a.视频参数_锐化_参数2 = TrackValue(锐化.ETB_锐化参数2)
         a.视频参数_锐化_参数3 = TrackValue(锐化.ETB_锐化参数3)
 
-        a.视频参数_胶片颗粒_方式 = If(胶片颗粒.MCB_胶片颗粒总开关.Checked, SelectedIndexToEnum(Of 预设数据_v6.胶片颗粒方式)(Math.Max(0, 胶片颗粒.MCB_滤镜选择.SelectedIndex)), 预设数据_v6.胶片颗粒方式.未选择)
+        a.视频参数_胶片颗粒_方式 = If(胶片颗粒.MCK_胶片颗粒总开关.Checked, SelectedIndexToEnum(Of 预设数据_v6.胶片颗粒方式)(Math.Max(0, 胶片颗粒.MCB_滤镜选择.SelectedIndex)), 预设数据_v6.胶片颗粒方式.未选择)
         a.视频参数_胶片颗粒_参数1 = TrackValue(胶片颗粒.ETB_胶片颗粒参数1)
         a.视频参数_胶片颗粒_参数2 = TrackValue(胶片颗粒.ETB_胶片颗粒参数2)
         a.视频参数_胶片颗粒_参数3 = TrackValue(胶片颗粒.ETB_胶片颗粒参数3)
         a.视频参数_胶片颗粒_参数4 = TrackValue(胶片颗粒.ETB_胶片颗粒参数4)
 
-        a.视频参数_平滑断层_方式 = If(平滑断层.MCB_平滑断层总开关.Checked, SelectedIndexToEnum(Of 预设数据_v6.平滑断层方式)(Math.Max(0, 平滑断层.MCB_滤镜选择.SelectedIndex)), 预设数据_v6.平滑断层方式.未选择)
+        a.视频参数_平滑断层_方式 = If(平滑断层.MCK_平滑断层总开关.Checked, SelectedIndexToEnum(Of 预设数据_v6.平滑断层方式)(Math.Max(0, 平滑断层.MCB_滤镜选择.SelectedIndex)), 预设数据_v6.平滑断层方式.未选择)
         a.视频参数_平滑断层_参数1 = TrackValue(平滑断层.ETB_平滑断层参数1)
         a.视频参数_平滑断层_参数2 = TrackValue(平滑断层.ETB_平滑断层参数2)
         a.视频参数_平滑断层_参数3 = TrackValue(平滑断层.ETB_平滑断层参数3)
         a.视频参数_平滑断层_参数4 = TrackValue(平滑断层.ETB_平滑断层参数4)
 
-        a.视频参数_处理扫描方式 = If(扫描.MCB_扫描方式总开关.Checked, SelectedIndexToEnum(Of 预设数据_v6.扫描方式)(Math.Max(0, 扫描.MCB_扫描方式.SelectedIndex)), 预设数据_v6.扫描方式.未选择)
-        a.视频参数_画面翻转_角度翻转 = If(翻转.MCB_画面翻转总开关.Checked, SelectedIndexToEnum(Of 预设数据_v6.画面翻转角度)(Math.Max(0, 翻转.MCB_角度翻转.SelectedIndex)), 预设数据_v6.画面翻转角度.未选择)
-        a.视频参数_画面翻转_镜像翻转 = If(翻转.MCB_画面翻转总开关.Checked, SelectedIndexToEnum(Of 预设数据_v6.画面翻转镜像)(Math.Max(0, 翻转.MCB_镜像翻转.SelectedIndex)), 预设数据_v6.画面翻转镜像.未选择)
+        a.视频参数_处理扫描方式 = If(扫描.MCK_扫描方式总开关.Checked, SelectedIndexToEnum(Of 预设数据_v6.扫描方式)(Math.Max(0, 扫描.MCB_扫描方式.SelectedIndex)), 预设数据_v6.扫描方式.未选择)
+        a.视频参数_画面翻转_角度翻转 = If(翻转.MCK_画面翻转总开关.Checked, SelectedIndexToEnum(Of 预设数据_v6.画面翻转角度)(Math.Max(0, 翻转.MCB_角度翻转.SelectedIndex)), 预设数据_v6.画面翻转角度.未选择)
+        a.视频参数_画面翻转_镜像翻转 = If(翻转.MCK_画面翻转总开关.Checked, SelectedIndexToEnum(Of 预设数据_v6.画面翻转镜像)(Math.Max(0, 翻转.MCB_镜像翻转.SelectedIndex)), 预设数据_v6.画面翻转镜像.未选择)
 
-        a.视频参数_烧录字幕_滤镜选择 = If(烧字幕.MCB_插帧总开关.Checked, SelectedIndexToEnum(Of 预设数据_v6.烧字幕滤镜)(Math.Max(0, 烧字幕.MCB_滤镜选择.SelectedIndex)), 预设数据_v6.烧字幕滤镜.未选择)
+        a.视频参数_烧录字幕_滤镜选择 = If(烧字幕.MCK_烧录字幕总开关.Checked, SelectedIndexToEnum(Of 预设数据_v6.烧字幕滤镜)(Math.Max(0, 烧字幕.MCB_滤镜选择.SelectedIndex)), 预设数据_v6.烧字幕滤镜.未选择)
         a.视频参数_烧录字幕_字幕来源是外部文件 = SelectedIndexToEnum(Of 预设数据_v6.烧字幕来源)(Math.Max(0, 烧字幕.MCB_字幕来源.SelectedIndex))
         a.视频参数_烧录字幕_字幕格式优先级 = New List(Of 预设数据_v6.烧字幕格式) From {
             SelectedIndexToEnum(Of 预设数据_v6.烧字幕格式)(Math.Max(0, 烧字幕.MCB_后缀优先级1.SelectedIndex)),
@@ -1815,7 +1815,7 @@ Public Partial Class 预设管理_v6
         a.视频参数_烧录字幕_行距 = 烧字幕.MTB_行距.Text
         a.视频参数_烧录字幕_补充样式 = 烧字幕.MTB_补充样式.Text
         a.视频参数_烧录字幕_自己写滤镜取代所有设置 = 烧字幕.MTB_自己写整个滤镜.Text
-        If Not 烧字幕.MCB_插帧总开关.Checked Then a.视频参数_烧录字幕_自己写滤镜取代所有设置 = ""
+        If Not 烧字幕.MCK_烧录字幕总开关.Checked Then a.视频参数_烧录字幕_自己写滤镜取代所有设置 = ""
     End Sub
 
     Private Shared Sub 显示滤镜子窗口(a As 预设数据_v6,
@@ -1830,31 +1830,31 @@ Public Partial Class 预设管理_v6
                                   扫描 As Form_v6_参数面板_扫描方式,
                                   翻转 As Form_v6_参数面板_画面翻转,
                                   烧字幕 As Form_v6_参数面板_烧录字幕)
-        抽帧.ModernCheckBox1.Checked = 抽帧参数已设置(a)
-        抽帧.ModernTextBox1.Text = a.视频参数_抽帧_max
-        抽帧.ModernTextBox2.Text = a.视频参数_抽帧_keep
-        抽帧.ModernTextBox3.Text = a.视频参数_抽帧_hi
-        抽帧.ModernComboBox1.Text = a.视频参数_抽帧_lo
-        抽帧.ModernComboBox2.Text = a.视频参数_抽帧_frac
+        抽帧.MCK_抽帧总开关.Checked = 抽帧参数已设置(a)
+        抽帧.MTB_连续丢帧数量.Text = a.视频参数_抽帧_max
+        抽帧.MTB_连续相似要求.Text = a.视频参数_抽帧_keep
+        抽帧.MCB_高阈值.Text = a.视频参数_抽帧_hi
+        抽帧.MCB_低阈值.Text = a.视频参数_抽帧_lo
+        抽帧.MTB_最大变化占比.Text = a.视频参数_抽帧_frac
 
-        插帧.MCB_插帧总开关.Checked = a.视频参数_插帧_目标帧率 <> ""
+        插帧.MCK_插帧总开关.Checked = a.视频参数_插帧_目标帧率 <> ""
         插帧.MTB_目标帧率.Text = a.视频参数_插帧_目标帧率
         设置组合框文本并尝试选中(插帧.MCB_插帧模式, 插帧模式显示文本(a.视频参数_插帧_插帧模式))
         设置组合框文本并尝试选中(插帧.MCB_运动估计模式, 运动估计模式显示文本(a.视频参数_插帧_运动估计模式))
         设置组合框文本并尝试选中(插帧.MCB_运动估计算法, 运动估计算法显示文本(a.视频参数_插帧_运动估计算法))
         设置组合框文本并尝试选中(插帧.MCB_运动补偿模式, 运动补偿模式显示文本(a.视频参数_插帧_运动补偿模式))
-        插帧.MCB_可变块大小的运动补偿.Checked = a.视频参数_插帧_可变块大小的运动补偿
+        插帧.MCK_可变块大小的运动补偿.Checked = a.视频参数_插帧_可变块大小的运动补偿
         插帧.MTB_块大小.Text = a.视频参数_插帧_块大小
         插帧.MTB_搜索范围.Text = a.视频参数_插帧_搜索范围
         插帧.MTB_场景变化检测强度.Text = a.视频参数_插帧_场景变化检测强度
 
-        动态模糊.MCB_动态模糊总开关.Checked = a.视频参数_动态模糊_连续混合帧数 <> ""
+        动态模糊.MCK_动态模糊总开关.Checked = a.视频参数_动态模糊_连续混合帧数 <> ""
         动态模糊.MTB_连续混合帧数.Text = a.视频参数_动态模糊_连续混合帧数
         动态模糊.MTB_每帧的权重.Text = a.视频参数_动态模糊_每帧权重
         动态模糊.MTB_输出缩放系数.Text = a.视频参数_动态模糊_输出缩放系数
         动态模糊.MTB_处理哪些颜色平面.Text = a.视频参数_动态模糊_处理颜色平面
 
-        超分.MCB_超分总开关.Checked = 超分单片有设置(a.视频参数_超分_直接面板) OrElse If(a.视频参数_超分_滤镜叠加策略组, Array.Empty(Of 预设数据_v6.超分数据单片结构)()).Length > 0
+        超分.MCK_超分总开关.Checked = 超分单片有设置(a.视频参数_超分_直接面板) OrElse If(a.视频参数_超分_滤镜叠加策略组, Array.Empty(Of 预设数据_v6.超分数据单片结构)()).Length > 0
         If a.视频参数_超分_直接面板 IsNot Nothing Then
             超分.MTB_宽度.Text = a.视频参数_超分_直接面板.目标宽度
             超分.MTB_高度.Text = a.视频参数_超分_直接面板.目标高度
@@ -1866,40 +1866,40 @@ Public Partial Class 预设管理_v6
         超分.策略组数据 = If(a.视频参数_超分_滤镜叠加策略组, Array.Empty(Of 预设数据_v6.超分数据单片结构)()).ToList()
         超分.刷新策略组列表()
 
-        降噪.MCB_插帧总开关.Checked = a.视频参数_降噪_方式 <> 预设数据_v6.降噪方式.未选择
+        降噪.MCK_降噪总开关.Checked = a.视频参数_降噪_方式 <> 预设数据_v6.降噪方式.未选择
         降噪.MCB_滤镜选择.SelectedIndex = EnumToIndex(a.视频参数_降噪_方式)
         SetTrackValue(降噪.ETB_降噪参数1, a.视频参数_降噪_参数1)
         SetTrackValue(降噪.ETB_降噪参数2, a.视频参数_降噪_参数2)
         SetTrackValue(降噪.ETB_降噪参数3, a.视频参数_降噪_参数3)
         SetTrackValue(降噪.ETB_降噪参数4, a.视频参数_降噪_参数4)
 
-        锐化.MCB_锐化总开关.Checked = a.视频参数_锐化_方式 <> 预设数据_v6.锐化方式.未选择
+        锐化.MCK_锐化总开关.Checked = a.视频参数_锐化_方式 <> 预设数据_v6.锐化方式.未选择
         锐化.MCB_滤镜选择.SelectedIndex = EnumToIndex(a.视频参数_锐化_方式)
         SetTrackValue(锐化.ETB_锐化参数1, a.视频参数_锐化_参数1)
         SetTrackValue(锐化.ETB_锐化参数2, a.视频参数_锐化_参数2)
         SetTrackValue(锐化.ETB_锐化参数3, a.视频参数_锐化_参数3)
 
-        胶片颗粒.MCB_胶片颗粒总开关.Checked = a.视频参数_胶片颗粒_方式 <> 预设数据_v6.胶片颗粒方式.未选择
+        胶片颗粒.MCK_胶片颗粒总开关.Checked = a.视频参数_胶片颗粒_方式 <> 预设数据_v6.胶片颗粒方式.未选择
         胶片颗粒.MCB_滤镜选择.SelectedIndex = EnumToIndex(a.视频参数_胶片颗粒_方式)
         SetTrackValue(胶片颗粒.ETB_胶片颗粒参数1, a.视频参数_胶片颗粒_参数1)
         SetTrackValue(胶片颗粒.ETB_胶片颗粒参数2, a.视频参数_胶片颗粒_参数2)
         SetTrackValue(胶片颗粒.ETB_胶片颗粒参数3, a.视频参数_胶片颗粒_参数3)
         SetTrackValue(胶片颗粒.ETB_胶片颗粒参数4, a.视频参数_胶片颗粒_参数4)
 
-        平滑断层.MCB_平滑断层总开关.Checked = a.视频参数_平滑断层_方式 <> 预设数据_v6.平滑断层方式.未选择
+        平滑断层.MCK_平滑断层总开关.Checked = a.视频参数_平滑断层_方式 <> 预设数据_v6.平滑断层方式.未选择
         平滑断层.MCB_滤镜选择.SelectedIndex = EnumToIndex(a.视频参数_平滑断层_方式)
         SetTrackValue(平滑断层.ETB_平滑断层参数1, a.视频参数_平滑断层_参数1)
         SetTrackValue(平滑断层.ETB_平滑断层参数2, a.视频参数_平滑断层_参数2)
         SetTrackValue(平滑断层.ETB_平滑断层参数3, a.视频参数_平滑断层_参数3)
         SetTrackValue(平滑断层.ETB_平滑断层参数4, a.视频参数_平滑断层_参数4)
 
-        扫描.MCB_扫描方式总开关.Checked = a.视频参数_处理扫描方式 <> 预设数据_v6.扫描方式.未选择
+        扫描.MCK_扫描方式总开关.Checked = a.视频参数_处理扫描方式 <> 预设数据_v6.扫描方式.未选择
         扫描.MCB_扫描方式.SelectedIndex = EnumToIndex(a.视频参数_处理扫描方式)
-        翻转.MCB_画面翻转总开关.Checked = a.视频参数_画面翻转_角度翻转 <> 预设数据_v6.画面翻转角度.未选择 OrElse a.视频参数_画面翻转_镜像翻转 <> 预设数据_v6.画面翻转镜像.未选择
+        翻转.MCK_画面翻转总开关.Checked = a.视频参数_画面翻转_角度翻转 <> 预设数据_v6.画面翻转角度.未选择 OrElse a.视频参数_画面翻转_镜像翻转 <> 预设数据_v6.画面翻转镜像.未选择
         翻转.MCB_角度翻转.SelectedIndex = EnumToIndex(a.视频参数_画面翻转_角度翻转)
         翻转.MCB_镜像翻转.SelectedIndex = EnumToIndex(a.视频参数_画面翻转_镜像翻转)
 
-        烧字幕.MCB_插帧总开关.Checked = a.视频参数_烧录字幕_滤镜选择 <> 预设数据_v6.烧字幕滤镜.未选择 OrElse Not String.IsNullOrWhiteSpace(a.视频参数_烧录字幕_自己写滤镜取代所有设置)
+        烧字幕.MCK_烧录字幕总开关.Checked = a.视频参数_烧录字幕_滤镜选择 <> 预设数据_v6.烧字幕滤镜.未选择 OrElse Not String.IsNullOrWhiteSpace(a.视频参数_烧录字幕_自己写滤镜取代所有设置)
         烧字幕.MCB_滤镜选择.SelectedIndex = EnumToIndex(a.视频参数_烧录字幕_滤镜选择)
         烧字幕.MCB_字幕来源.SelectedIndex = EnumToIndex(a.视频参数_烧录字幕_字幕来源是外部文件)
         Dim 字幕格式 = If(a.视频参数_烧录字幕_字幕格式优先级, New List(Of 预设数据_v6.烧字幕格式))
@@ -1942,7 +1942,7 @@ Public Partial Class 预设管理_v6
             a.视频参数_比特率_最低值 = .MTB_最低比特率.Text
             a.视频参数_比特率_最高值 = .MTB_最高比特率.Text
             a.视频参数_比特率_缓冲区 = .MTB_缓冲区.Text
-            a.视频参数_质量控制_进阶参数集 = .ModernTextBox6.Text
+            a.视频参数_质量控制_进阶参数集 = .MTB_进阶质量控制参数.Text
         End With
     End Sub
 
@@ -1955,7 +1955,7 @@ Public Partial Class 预设管理_v6
             .MTB_最低比特率.Text = a.视频参数_比特率_最低值
             .MTB_最高比特率.Text = a.视频参数_比特率_最高值
             .MTB_缓冲区.Text = a.视频参数_比特率_缓冲区
-            .ModernTextBox6.Text = a.视频参数_质量控制_进阶参数集
+            .MTB_进阶质量控制参数.Text = a.视频参数_质量控制_进阶参数集
         End With
     End Sub
 
@@ -1970,13 +1970,13 @@ Public Partial Class 预设管理_v6
             a.视频参数_色彩管理_范围 = .MCB_色彩管理_色彩范围.Text
             a.视频参数_色彩管理_色调映射算法 = .MCB_色彩管理_色调映射算法.Text
             a.视频参数_色彩管理_处理方式 = .MCB_色彩管理_色彩空间操作方式.Text
-            a.视频参数_色彩管理_启用调整亮度 = .MCB_亮度.Checked
+            a.视频参数_色彩管理_启用调整亮度 = .MCK_启用亮度调整.Checked
             a.视频参数_色彩管理_亮度 = TrackValue(.ETB_亮度)
-            a.视频参数_色彩管理_启用调整对比度 = .MCB_对比度.Checked
+            a.视频参数_色彩管理_启用调整对比度 = .MCK_启用对比度调整.Checked
             a.视频参数_色彩管理_对比度 = TrackValue(.ETB_对比度)
-            a.视频参数_色彩管理_启用调整饱和度 = .MCB_饱和度.Checked
+            a.视频参数_色彩管理_启用调整饱和度 = .MCK_启用饱和度调整.Checked
             a.视频参数_色彩管理_饱和度 = TrackValue(.ETB_饱和度)
-            a.视频参数_色彩管理_启用调整伽马 = .MCB_伽马.Checked
+            a.视频参数_色彩管理_启用调整伽马 = .MCK_启用伽马调整.Checked
             a.视频参数_色彩管理_伽马 = TrackValue(.ETB_伽马)
         End With
     End Sub
@@ -1992,13 +1992,13 @@ Public Partial Class 预设管理_v6
             .MCB_色彩管理_色彩范围.Text = a.视频参数_色彩管理_范围
             .MCB_色彩管理_色调映射算法.Text = a.视频参数_色彩管理_色调映射算法
             .MCB_色彩管理_色彩空间操作方式.Text = a.视频参数_色彩管理_处理方式
-            .MCB_亮度.Checked = a.视频参数_色彩管理_启用调整亮度
+            .MCK_启用亮度调整.Checked = a.视频参数_色彩管理_启用调整亮度
             SetTrackValue(.ETB_亮度, a.视频参数_色彩管理_亮度)
-            .MCB_对比度.Checked = a.视频参数_色彩管理_启用调整对比度
+            .MCK_启用对比度调整.Checked = a.视频参数_色彩管理_启用调整对比度
             SetTrackValue(.ETB_对比度, a.视频参数_色彩管理_对比度, 1)
-            .MCB_饱和度.Checked = a.视频参数_色彩管理_启用调整饱和度
+            .MCK_启用饱和度调整.Checked = a.视频参数_色彩管理_启用调整饱和度
             SetTrackValue(.ETB_饱和度, a.视频参数_色彩管理_饱和度, 1)
-            .MCB_伽马.Checked = a.视频参数_色彩管理_启用调整伽马
+            .MCK_启用伽马调整.Checked = a.视频参数_色彩管理_启用调整伽马
             SetTrackValue(.ETB_伽马, a.视频参数_色彩管理_伽马, 1)
         End With
     End Sub
@@ -2009,15 +2009,15 @@ Public Partial Class 预设管理_v6
             If a.音频参数_编码器_代号 = "" Then a.音频参数_编码器_代号 = .MCB_音频编码器.Text
             a.音频参数_比特率 = .MCB_比特率.Text
             a.音频参数_质量参数名 = .MCB_质量参数名.Text
-            a.音频参数_质量值 = .MCB_质量值.Text
-            a.音频参数_声道数 = .声道布局.Text
+            a.音频参数_质量值 = .MTB_质量值.Text
+            a.音频参数_声道数 = .MCB_声道布局.Text
             a.音频参数_位深度 = .MCB_位深度.Text
             a.音频参数_采样率 = .MCB_采样率.Text
-            a.音频参数_响度标准化_启用调整目标响度 = .MCB_目标响度.Checked
+            a.音频参数_响度标准化_启用调整目标响度 = .MCK_启用目标响度.Checked
             a.音频参数_响度标准化_目标响度 = TrackValue(.ETB_目标响度)
-            a.音频参数_响度标准化_启用调整动态范围 = .MCB_动态范围.Checked
+            a.音频参数_响度标准化_启用调整动态范围 = .MCK_启用动态范围.Checked
             a.音频参数_响度标准化_动态范围 = TrackValue(.ETB_动态范围)
-            a.音频参数_响度标准化_启用调整峰值电平 = .MCB_峰值电平.Checked
+            a.音频参数_响度标准化_启用调整峰值电平 = .MCK_启用峰值电平.Checked
             a.音频参数_响度标准化_峰值电平 = TrackValue(.ETB_峰值电平)
         End With
     End Sub
@@ -2029,15 +2029,15 @@ Public Partial Class 预设管理_v6
             设置组合框文本并尝试选中(.MCB_音频编码器, 音频编码器显示名称)
             .MCB_比特率.Text = a.音频参数_比特率
             设置组合框文本并尝试选中(.MCB_质量参数名, a.音频参数_质量参数名)
-            .MCB_质量值.Text = a.音频参数_质量值
-            .声道布局.Text = a.音频参数_声道数
+            .MTB_质量值.Text = a.音频参数_质量值
+            .MCB_声道布局.Text = a.音频参数_声道数
             .MCB_位深度.Text = a.音频参数_位深度
             .MCB_采样率.Text = a.音频参数_采样率
-            .MCB_目标响度.Checked = a.音频参数_响度标准化_启用调整目标响度
+            .MCK_启用目标响度.Checked = a.音频参数_响度标准化_启用调整目标响度
             SetTrackValue(.ETB_目标响度, a.音频参数_响度标准化_目标响度, -24)
-            .MCB_动态范围.Checked = a.音频参数_响度标准化_启用调整动态范围
+            .MCK_启用动态范围.Checked = a.音频参数_响度标准化_启用调整动态范围
             SetTrackValue(.ETB_动态范围, a.音频参数_响度标准化_动态范围, 1)
-            .MCB_峰值电平.Checked = a.音频参数_响度标准化_启用调整峰值电平
+            .MCK_启用峰值电平.Checked = a.音频参数_响度标准化_启用调整峰值电平
             SetTrackValue(.ETB_峰值电平, a.音频参数_响度标准化_峰值电平, -1)
         End With
     End Sub
@@ -2061,49 +2061,49 @@ Public Partial Class 预设管理_v6
     End Sub
 
     Private Shared Sub 储存自定义参数(a As 预设数据_v6, ui As Form_v6_参数面板)
-        a.自定义参数_视频参数 = ui.私有界面_流自定义参数.ModernTextBox1.Text
-        a.自定义参数_音频参数 = ui.私有界面_流自定义参数.ModernTextBox2.Text
-        a.自定义参数_开头参数 = ui.私有界面_在位置插入参数.ModernTextBox1.Text
-        a.自定义参数_之前参数 = ui.私有界面_在位置插入参数.ModernTextBox2.Text
-        a.自定义参数_之后参数 = ui.私有界面_在位置插入参数.ModernTextBox3.Text
-        a.自定义参数_最后参数 = ui.私有界面_在位置插入参数.ModernTextBox4.Text
-        a.自定义参数_完全自己写 = ui.私有界面_完全自己写模式.ModernTextBox1.Text
+        a.自定义参数_视频参数 = ui.私有界面_流自定义参数.MTB_视频流自定义参数.Text
+        a.自定义参数_音频参数 = ui.私有界面_流自定义参数.MTB_音频流自定义参数.Text
+        a.自定义参数_开头参数 = ui.私有界面_在位置插入参数.MTB_开头参数.Text
+        a.自定义参数_之前参数 = ui.私有界面_在位置插入参数.MTB_之前参数.Text
+        a.自定义参数_之后参数 = ui.私有界面_在位置插入参数.MTB_之后参数.Text
+        a.自定义参数_最后参数 = ui.私有界面_在位置插入参数.MTB_最后参数.Text
+        a.自定义参数_完全自己写 = ui.私有界面_完全自己写模式.MTB_完整命令行参数.Text
     End Sub
 
     Private Shared Sub 显示自定义参数(a As 预设数据_v6, ui As Form_v6_参数面板)
-        ui.私有界面_流自定义参数.ModernTextBox1.Text = a.自定义参数_视频参数
-        ui.私有界面_流自定义参数.ModernTextBox2.Text = a.自定义参数_音频参数
-        ui.私有界面_在位置插入参数.ModernTextBox1.Text = a.自定义参数_开头参数
-        ui.私有界面_在位置插入参数.ModernTextBox2.Text = a.自定义参数_之前参数
-        ui.私有界面_在位置插入参数.ModernTextBox3.Text = a.自定义参数_之后参数
-        ui.私有界面_在位置插入参数.ModernTextBox4.Text = a.自定义参数_最后参数
-        ui.私有界面_完全自己写模式.ModernTextBox1.Text = a.自定义参数_完全自己写
+        ui.私有界面_流自定义参数.MTB_视频流自定义参数.Text = a.自定义参数_视频参数
+        ui.私有界面_流自定义参数.MTB_音频流自定义参数.Text = a.自定义参数_音频参数
+        ui.私有界面_在位置插入参数.MTB_开头参数.Text = a.自定义参数_开头参数
+        ui.私有界面_在位置插入参数.MTB_之前参数.Text = a.自定义参数_之前参数
+        ui.私有界面_在位置插入参数.MTB_之后参数.Text = a.自定义参数_之后参数
+        ui.私有界面_在位置插入参数.MTB_最后参数.Text = a.自定义参数_最后参数
+        ui.私有界面_完全自己写模式.MTB_完整命令行参数.Text = a.自定义参数_完全自己写
     End Sub
 
     Private Shared Sub 储存视频帧服务器(a As 预设数据_v6, ui As Form_v6_参数面板)
         With ui.私有界面_视频帧服务器
-            a.视频参数_视频帧服务器_使用AviSynth = .BooleanSwitch1.Checked AndAlso .ModernComboBox1.Text.Trim() <> ""
-            a.视频参数_视频帧服务器_avs脚本文件 = .ModernComboBox1.Text.Trim()
-            a.视频参数_视频帧服务器_使用VapourSynth = .BooleanSwitch2.Checked AndAlso .ModernComboBox2.Text.Trim() <> ""
-            a.视频参数_视频帧服务器_vpy脚本文件 = .ModernComboBox2.Text.Trim()
+            a.视频参数_视频帧服务器_使用AviSynth = .BS_使用AviSynth.Checked AndAlso .MCB_AviSynth脚本文件.Text.Trim() <> ""
+            a.视频参数_视频帧服务器_avs脚本文件 = .MCB_AviSynth脚本文件.Text.Trim()
+            a.视频参数_视频帧服务器_使用VapourSynth = .BS_使用VapourSynth.Checked AndAlso .MCB_VapourSynth脚本文件.Text.Trim() <> ""
+            a.视频参数_视频帧服务器_vpy脚本文件 = .MCB_VapourSynth脚本文件.Text.Trim()
             If a.视频参数_视频帧服务器_使用AviSynth Then a.视频参数_视频帧服务器_使用VapourSynth = False
         End With
     End Sub
 
     Private Shared Sub 显示视频帧服务器(a As 预设数据_v6, ui As Form_v6_参数面板)
         With ui.私有界面_视频帧服务器
-            .BooleanSwitch1.Checked = a.视频参数_视频帧服务器_使用AviSynth
-            .ModernComboBox1.Text = a.视频参数_视频帧服务器_avs脚本文件
-            .BooleanSwitch2.Checked = a.视频参数_视频帧服务器_使用VapourSynth AndAlso Not a.视频参数_视频帧服务器_使用AviSynth
-            .ModernComboBox2.Text = a.视频参数_视频帧服务器_vpy脚本文件
+            .BS_使用AviSynth.Checked = a.视频参数_视频帧服务器_使用AviSynth
+            .MCB_AviSynth脚本文件.Text = a.视频参数_视频帧服务器_avs脚本文件
+            .BS_使用VapourSynth.Checked = a.视频参数_视频帧服务器_使用VapourSynth AndAlso Not a.视频参数_视频帧服务器_使用AviSynth
+            .MCB_VapourSynth脚本文件.Text = a.视频参数_视频帧服务器_vpy脚本文件
         End With
     End Sub
 
     Private Shared Sub 储存附加内容(a As 预设数据_v6, ui As Form_v6_参数面板)
         a.元数据_要写入的信息 = ui.私有界面_元数据.获取数据().ToArray()
         With ui.私有界面_章节
-            a.章节_来源 = SelectedIndexToEnum(Of 预设数据_v6.章节来源)(Math.Max(0, .ModernComboBox1.SelectedIndex))
-            a.章节_文件路径 = .ModernComboBox2.Text.Trim()
+            a.章节_来源 = SelectedIndexToEnum(Of 预设数据_v6.章节来源)(Math.Max(0, .MCB_章节来源.SelectedIndex))
+            a.章节_文件路径 = .MCB_章节文件.Text.Trim()
         End With
         a.附件_要写入的附件 = ui.私有界面_附件.获取数据().ToArray()
     End Sub
@@ -2111,47 +2111,47 @@ Public Partial Class 预设管理_v6
     Private Shared Sub 显示附加内容(a As 预设数据_v6, ui As Form_v6_参数面板)
         ui.私有界面_元数据.设置数据(a.元数据_要写入的信息)
         With ui.私有界面_章节
-            .ModernComboBox1.SelectedIndex = EnumToIndex(a.章节_来源)
-            .ModernComboBox2.Text = a.章节_文件路径
+            .MCB_章节来源.SelectedIndex = EnumToIndex(a.章节_来源)
+            .MCB_章节文件.Text = a.章节_文件路径
         End With
         ui.私有界面_附件.设置数据(a.附件_要写入的附件)
     End Sub
 
     Private Shared Sub 储存流控制(a As 预设数据_v6, ui As Form_v6_参数面板)
         With ui.私有界面_流控制
-            a.流控制_将视频参数应用于指定流 = SplitTextList(.ModernTextBox1.Text)
-            a.流控制_启用保留其他视频流 = .ModernCheckBox1.Checked
-            a.流控制_将音频参数应用于指定流 = SplitTextList(.ModernTextBox2.Text)
-            a.流控制_启用保留其他音频流 = .ModernCheckBox2.Checked
-            a.流控制_将字幕参数应用于指定流 = SplitTextList(.ModernTextBox3.Text)
-            a.流控制_如何操作指定的字幕 = Math.Max(0, .ModernComboBox2.SelectedIndex)
-            a.流控制_启用保留其他字幕流 = .ModernCheckBox3.Checked
-            a.流控制_自动混流SRT = .ModernCheckBox4.Checked
-            a.流控制_自动混流ASS = .ModernCheckBox5.Checked
-            a.流控制_自动混流SSA = .ModernCheckBox6.Checked
-            a.流控制_自动混流的字幕转为MOVTEXT = .ModernCheckBox7.Checked
-            a.流控制_元数据选项 = Math.Max(0, .ModernComboBox1.SelectedIndex)
-            a.流控制_章节选项 = Math.Max(0, .ModernComboBox3.SelectedIndex)
-            a.流控制_附件选项 = Math.Max(0, .ModernComboBox4.SelectedIndex)
+            a.流控制_将视频参数应用于指定流 = SplitTextList(.MTB_视频流选择.Text)
+            a.流控制_启用保留其他视频流 = .MCK_保留其他视频流.Checked
+            a.流控制_将音频参数应用于指定流 = SplitTextList(.MTB_音频流选择.Text)
+            a.流控制_启用保留其他音频流 = .MCK_保留其他音频流.Checked
+            a.流控制_将字幕参数应用于指定流 = SplitTextList(.MTB_字幕流选择.Text)
+            a.流控制_如何操作指定的字幕 = Math.Max(0, .MCB_字幕流操作.SelectedIndex)
+            a.流控制_启用保留其他字幕流 = .MCK_保留其他字幕流.Checked
+            a.流控制_自动混流SRT = .MCK_混流同名SRT字幕.Checked
+            a.流控制_自动混流ASS = .MCK_混流同名ASS字幕.Checked
+            a.流控制_自动混流SSA = .MCK_混流同名SSA字幕.Checked
+            a.流控制_自动混流的字幕转为MOVTEXT = .MCK_字幕转为mov_text.Checked
+            a.流控制_元数据选项 = Math.Max(0, .MCB_元数据选项.SelectedIndex)
+            a.流控制_章节选项 = Math.Max(0, .MCB_章节选项.SelectedIndex)
+            a.流控制_附件选项 = Math.Max(0, .MCB_附件选项.SelectedIndex)
         End With
     End Sub
 
     Private Shared Sub 显示流控制(a As 预设数据_v6, ui As Form_v6_参数面板)
         With ui.私有界面_流控制
-            .ModernTextBox1.Text = String.Join(",", a.流控制_将视频参数应用于指定流)
-            .ModernCheckBox1.Checked = a.流控制_启用保留其他视频流
-            .ModernTextBox2.Text = String.Join(",", a.流控制_将音频参数应用于指定流)
-            .ModernCheckBox2.Checked = a.流控制_启用保留其他音频流
-            .ModernTextBox3.Text = String.Join(",", a.流控制_将字幕参数应用于指定流)
-            .ModernComboBox2.SelectedIndex = a.流控制_如何操作指定的字幕
-            .ModernCheckBox3.Checked = a.流控制_启用保留其他字幕流
-            .ModernCheckBox4.Checked = a.流控制_自动混流SRT
-            .ModernCheckBox5.Checked = a.流控制_自动混流ASS
-            .ModernCheckBox6.Checked = a.流控制_自动混流SSA
-            .ModernCheckBox7.Checked = a.流控制_自动混流的字幕转为MOVTEXT
-            .ModernComboBox1.SelectedIndex = a.流控制_元数据选项
-            .ModernComboBox3.SelectedIndex = a.流控制_章节选项
-            .ModernComboBox4.SelectedIndex = a.流控制_附件选项
+            .MTB_视频流选择.Text = String.Join(",", a.流控制_将视频参数应用于指定流)
+            .MCK_保留其他视频流.Checked = a.流控制_启用保留其他视频流
+            .MTB_音频流选择.Text = String.Join(",", a.流控制_将音频参数应用于指定流)
+            .MCK_保留其他音频流.Checked = a.流控制_启用保留其他音频流
+            .MTB_字幕流选择.Text = String.Join(",", a.流控制_将字幕参数应用于指定流)
+            .MCB_字幕流操作.SelectedIndex = a.流控制_如何操作指定的字幕
+            .MCK_保留其他字幕流.Checked = a.流控制_启用保留其他字幕流
+            .MCK_混流同名SRT字幕.Checked = a.流控制_自动混流SRT
+            .MCK_混流同名ASS字幕.Checked = a.流控制_自动混流ASS
+            .MCK_混流同名SSA字幕.Checked = a.流控制_自动混流SSA
+            .MCK_字幕转为mov_text.Checked = a.流控制_自动混流的字幕转为MOVTEXT
+            .MCB_元数据选项.SelectedIndex = a.流控制_元数据选项
+            .MCB_章节选项.SelectedIndex = a.流控制_章节选项
+            .MCB_附件选项.SelectedIndex = a.流控制_附件选项
         End With
     End Sub
 

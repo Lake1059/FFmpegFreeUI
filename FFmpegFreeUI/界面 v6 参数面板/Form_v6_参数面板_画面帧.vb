@@ -1,4 +1,4 @@
-﻿Public Class Form_v6_参数面板_画面帧
+Public Class Form_v6_参数面板_画面帧
 
     Public 所属参数面板对象 As Form_v6_参数面板
 
@@ -15,7 +15,7 @@
     End Sub
 
     Private Sub MB_画面裁剪交互_Click(sender As Object, e As EventArgs) Handles MB_画面裁剪交互.Click
-        Form_v6_参数面板.弹出画面区域选择窗口(ModernTextBox1, "画面裁剪")
+        Form_v6_参数面板.弹出画面区域选择窗口(MTB_画面裁剪参数, "画面裁剪")
     End Sub
 
     Public 私有窗口_抽帧参数 As New Form_v6_参数面板_抽帧参数

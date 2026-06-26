@@ -1,4 +1,4 @@
-﻿Write-Host "========================================" -ForegroundColor Cyan
+Write-Host "========================================" -ForegroundColor Cyan
 Write-Host "  适用于 FFmpegFreeUI 的输出文件时间戳清理工具" -ForegroundColor Cyan
 Write-Host "========================================" -ForegroundColor Cyan
 Write-Host ""

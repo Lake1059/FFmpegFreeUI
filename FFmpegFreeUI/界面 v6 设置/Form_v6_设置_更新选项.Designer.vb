@@ -1,4 +1,4 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class Form_v6_设置_更新选项
     Inherits System.Windows.Forms.Form
 
@@ -33,9 +33,9 @@ Partial Class Form_v6_设置_更新选项
         ModernPanel1.SuspendLayout()
         Panel2.SuspendLayout()
         SuspendLayout()
-        ' 
+        '
         ' ModernPanel1
-        ' 
+        '
         ModernPanel1.BackColor1 = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         ModernPanel1.BorderSize = 0
         ModernPanel1.Controls.Add(HtmlColorLabel5)
@@ -51,9 +51,9 @@ Partial Class Form_v6_设置_更新选项
         ModernPanel1.ScrollBarMode = LakeUI.ModernPanel.ScrollMode.Vertical
         ModernPanel1.Size = New Size(780, 630)
         ModernPanel1.TabIndex = 1
-        ' 
+        '
         ' HtmlColorLabel5
-        ' 
+        '
         HtmlColorLabel5.AutoSize = True
         HtmlColorLabel5.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel5.Dock = DockStyle.Top
@@ -65,9 +65,9 @@ Partial Class Form_v6_设置_更新选项
         HtmlColorLabel5.Size = New Size(740, 41)
         HtmlColorLabel5.TabIndex = 17
         HtmlColorLabel5.Text = "如何解锁神秘的更新服务器？不妨去翻翻设置文件"
-        ' 
+        '
         ' HtmlColorLabel4
-        ' 
+        '
         HtmlColorLabel4.AutoSize = True
         HtmlColorLabel4.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel4.Dock = DockStyle.Top
@@ -80,9 +80,9 @@ Partial Class Form_v6_设置_更新选项
         HtmlColorLabel4.TabIndex = 16
         HtmlColorLabel4.Text = "<span style=""font-size:13; color:Silver"">MirrorChyan CDK 已填入</span>   现在你可以使用Mirror酱的付费CDN线路了"
         HtmlColorLabel4.Visible = False
-        ' 
+        '
         ' HtmlColorLabel3
-        ' 
+        '
         HtmlColorLabel3.AutoSize = True
         HtmlColorLabel3.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel3.Dock = DockStyle.Top
@@ -94,9 +94,9 @@ Partial Class Form_v6_设置_更新选项
         HtmlColorLabel3.Size = New Size(740, 106)
         HtmlColorLabel3.TabIndex = 15
         HtmlColorLabel3.Text = "为了保障我们的服务质量，枫源镜像使用 PoW 挑战来对抗网络攻击<br>这是一种基于工作量证明的验证码，不需要用户进行额外操作<br>所有人只需要消耗必要的算力即可过关，所需的算力工作量可在云端控制<br>挑战时间取决于你的 CPU 性能，3FUI 会自动尝试多线程来加速计算<br>此过程不会涉及任何隐私，计算结果仅用于向服务器提交答案，不会进行任何保留"
-        ' 
+        '
         ' HtmlColorLabel2
-        ' 
+        '
         HtmlColorLabel2.AutoSize = True
         HtmlColorLabel2.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel2.Dock = DockStyle.Top
@@ -108,9 +108,9 @@ Partial Class Form_v6_设置_更新选项
         HtmlColorLabel2.Size = New Size(740, 45)
         HtmlColorLabel2.TabIndex = 14
         HtmlColorLabel2.Text = "<span style=""font-size:13; color:Silver"">枫源镜像</span>   本群指定合作镜像源"
-        ' 
+        '
         ' Panel2
-        ' 
+        '
         Panel2.Controls.Add(MCB_更新服务器)
         Panel2.Dock = DockStyle.Top
         Panel2.Location = New Point(20, 45)
@@ -118,9 +118,9 @@ Partial Class Form_v6_设置_更新选项
         Panel2.Padding = New Padding(0, 10, 0, 0)
         Panel2.Size = New Size(740, 42)
         Panel2.TabIndex = 13
-        ' 
+        '
         ' MCB_更新服务器
-        ' 
+        '
         MCB_更新服务器.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_更新服务器.BorderRadius = 10
         MCB_更新服务器.BorderSize = 0
@@ -149,9 +149,9 @@ Partial Class Form_v6_设置_更新选项
         MCB_更新服务器.ToolTipMaxWidth = 350
         MCB_更新服务器.ToolTipPadding = New Padding(15)
         MCB_更新服务器.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        ' 
+        '
         ' HtmlColorLabel1
-        ' 
+        '
         HtmlColorLabel1.AutoSize = True
         HtmlColorLabel1.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel1.Dock = DockStyle.Top
@@ -162,9 +162,9 @@ Partial Class Form_v6_设置_更新选项
         HtmlColorLabel1.Size = New Size(740, 25)
         HtmlColorLabel1.TabIndex = 8
         HtmlColorLabel1.Text = "<span style=""font-size:13; color:Silver"">更新服务器</span>   选择所有的下载更新使用什么服务器"
-        ' 
+        '
         ' Form_v6_设置_更新选项
-        ' 
+        '
         AutoScaleDimensions = New SizeF(96F, 96F)
         AutoScaleMode = AutoScaleMode.Dpi
         BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))

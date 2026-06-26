@@ -1,4 +1,4 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class FormMain_v6
     Inherits System.Windows.Forms.Form
 
@@ -46,9 +46,9 @@ Partial Class FormMain_v6
         PrecisionTimer1 = New LakeUI.PrecisionTimer()
         ModernTabListControl1.SuspendLayout()
         SuspendLayout()
-        ' 
+        '
         ' ModernTabListControl1
-        ' 
+        '
         ModernTabListControl1.AnimationDuration = 0
         ModernTabListControl1.BackColor = Color.Transparent
         ModernTabListControl1.Controls.Add(ModernTextBox1)
@@ -103,9 +103,9 @@ Partial Class FormMain_v6
         ModernTabListControl1.TabItemSelectedBackColor = Color.FromArgb(CByte(80), CByte(200), CByte(200), CByte(200))
         ModernTabListControl1.TabItemSpacing = 0
         ModernTabListControl1.TabStripWidth = 200
-        ' 
+        '
         ' ModernTextBox1
-        ' 
+        '
         ModernTextBox1.BackColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
         ModernTextBox1.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernTextBox1.BorderColor = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
@@ -122,9 +122,9 @@ Partial Class FormMain_v6
         ModernTextBox1.TabStop = False
         ModernTextBox1.WaterText = "搜索选项卡标题"
         ModernTextBox1.WaterTextForeColor = Color.DarkGray
-        ' 
+        '
         ' ThisIsYourWindow1
-        ' 
+        '
         ThisIsYourWindow1.BackdropBlurPasses = 1
         ThisIsYourWindow1.BackdropBlurRadius = 1
         ThisIsYourWindow1.BackdropFirstWindowOnly = True
@@ -152,15 +152,15 @@ Partial Class FormMain_v6
         ThisIsYourWindow1.TitleAlign = LakeUI.ThisIsYourWindow.TitleAlignEnum.Center
         ThisIsYourWindow1.TitleForeColor = Color.Silver
         ThisIsYourWindow1.TitleInactiveForeColor = Color.DarkGray
-        ' 
+        '
         ' PrecisionTimer1
-        ' 
+        '
         PrecisionTimer1.DispatchMode = LakeUI.PrecisionTimer.DispatchModeEnum.NonBlocking
         PrecisionTimer1.Interval = 1000
         PrecisionTimer1.SynchronizingObject = Me
-        ' 
+        '
         ' FormMain_v6
-        ' 
+        '
         AutoScaleDimensions = New SizeF(96F, 96F)
         AutoScaleMode = AutoScaleMode.Dpi
         BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))

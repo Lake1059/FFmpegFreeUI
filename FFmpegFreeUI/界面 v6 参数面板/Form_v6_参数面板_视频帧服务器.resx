@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!--
     Microsoft ResX Schema
@@ -117,7 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="HtmlColorLabel2.Text" xml:space="preserve">
+  <data name="HCL_视频帧服务器说明.Text" xml:space="preserve">
     <value>又称为 &lt;span style="color:MediumPurple"&gt;视频脚本处理框架&lt;/span&gt;，或称为 &lt;span style="color:MediumPurple"&gt;预处理软件&lt;/span&gt;&lt;br&gt;旨在对视频帧（或者也包含音频）进行预处理，并将处理后的帧直接传递到编码器进行编码&lt;br&gt;常见于压制组用以提升画质、修复内容等&lt;br&gt;3FUI 通过替换输入文件和脚本模板来向使用这些工具提供便利&lt;br&gt;框架软件的文件请自行下载并与 ffmpeg 放在一起</value>
   </data>
 </root>

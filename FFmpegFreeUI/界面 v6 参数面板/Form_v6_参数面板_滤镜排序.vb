@@ -31,12 +31,12 @@ Public Class Form_v6_参数面板_滤镜排序
     }
 
     Private Sub Form_v6_参数面板_滤镜排序_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        UltraDetailListView1.MultiSelect = True
+        UDLV_滤镜排序列表.MultiSelect = True
         调整列表交互区域()
-        If UltraDetailListView1.Columns.Count = 3 Then
-            UltraDetailListView1.Columns(0).AllowLabelEdit = False
-            UltraDetailListView1.Columns(1).AllowLabelEdit = False
-            UltraDetailListView1.Columns(2).AllowLabelEdit = False
+        If UDLV_滤镜排序列表.Columns.Count = 3 Then
+            UDLV_滤镜排序列表.Columns(0).AllowLabelEdit = False
+            UDLV_滤镜排序列表.Columns(1).AllowLabelEdit = False
+            UDLV_滤镜排序列表.Columns(2).AllowLabelEdit = False
         End If
         RefreshList()
     End Sub
@@ -101,7 +101,7 @@ Public Class Form_v6_参数面板_滤镜排序
     End Sub
 
     Public Sub 删除所选()
-        Dim selectedItems = UltraDetailListView1.SelectedItems.Cast(Of UltraDetailListView.ListItem)().ToList()
+        Dim selectedItems = UDLV_滤镜排序列表.SelectedItems.Cast(Of UltraDetailListView.ListItem)().ToList()
         If selectedItems.Count = 0 Then Exit Sub
 
         Dim itemsToDelete = selectedItems.
@@ -152,9 +152,9 @@ Public Class Form_v6_参数面板_滤镜排序
     Private Sub RefreshList()
         规范化流类型顺序()
         _isRefreshingList = True
-        UltraDetailListView1.BeginUpdate()
+        UDLV_滤镜排序列表.BeginUpdate()
         Try
-            UltraDetailListView1.Items.Clear()
+            UDLV_滤镜排序列表.Items.Clear()
             For Each item In _items
                 Dim lv As New UltraDetailListView.ListItem()
                 Dim 标识符项 As New UltraDetailListView.ListSubItem With {.Text = If(item.显示名称 <> "", item.显示名称, item.滤镜标识符.ToString())}
@@ -163,10 +163,10 @@ Public Class Form_v6_参数面板_滤镜排序
                 lv.SubItems.Add(New UltraDetailListView.ListSubItem With {.Text = item.滤镜目标流类型.ToString()})
                 lv.SubItems.Add(New UltraDetailListView.ListSubItem With {.Text = item.自定义滤镜内容})
                 lv.Tag = item
-                UltraDetailListView1.Items.Add(lv)
+                UDLV_滤镜排序列表.Items.Add(lv)
             Next
         Finally
-            UltraDetailListView1.EndUpdate()
+            UDLV_滤镜排序列表.EndUpdate()
             _isRefreshingList = False
         End Try
         校准列表列宽()
@@ -185,7 +185,7 @@ Public Class Form_v6_参数面板_滤镜排序
         }
     End Function
 
-    Private Sub UltraDetailListView1_ItemOrderChanged(sender As Object, e As EventArgs) Handles UltraDetailListView1.ItemOrderChanged
+    Private Sub UltraDetailListView1_ItemOrderChanged(sender As Object, e As EventArgs) Handles UDLV_滤镜排序列表.ItemOrderChanged
         If _isRefreshingList Then Exit Sub
         同步列表项到排序数据()
         通知参数面板刷新()
@@ -193,7 +193,7 @@ Public Class Form_v6_参数面板_滤镜排序
 
     Private Sub 同步列表项到排序数据()
         Dim reordered As New List(Of 预设数据_v6.滤镜排序单片结构)
-        For Each uiItem In UltraDetailListView1.Items
+        For Each uiItem In UDLV_滤镜排序列表.Items
             Dim item = TryCast(uiItem.Tag, 预设数据_v6.滤镜排序单片结构)
             If item IsNot Nothing Then reordered.Add(item)
         Next
@@ -203,34 +203,34 @@ Public Class Form_v6_参数面板_滤镜排序
     End Sub
 
     Private Sub 移动选中项(direction As Integer)
-        Dim selected = UltraDetailListView1.SelectedItems
+        Dim selected = UDLV_滤镜排序列表.SelectedItems
         If selected.Count = 0 OrElse direction = 0 Then Exit Sub
 
         Dim changed = False
         Dim selectedSet As New HashSet(Of UltraDetailListView.ListItem)(selected)
-        UltraDetailListView1.BeginUpdate()
+        UDLV_滤镜排序列表.BeginUpdate()
         Try
             If direction < 0 Then
-                For i = 1 To UltraDetailListView1.Items.Count - 1
-                    If selectedSet.Contains(UltraDetailListView1.Items(i)) AndAlso Not selectedSet.Contains(UltraDetailListView1.Items(i - 1)) Then
-                        Dim moving = UltraDetailListView1.Items(i)
-                        UltraDetailListView1.Items.RemoveAt(i)
-                        UltraDetailListView1.Items.Insert(i - 1, moving)
+                For i = 1 To UDLV_滤镜排序列表.Items.Count - 1
+                    If selectedSet.Contains(UDLV_滤镜排序列表.Items(i)) AndAlso Not selectedSet.Contains(UDLV_滤镜排序列表.Items(i - 1)) Then
+                        Dim moving = UDLV_滤镜排序列表.Items(i)
+                        UDLV_滤镜排序列表.Items.RemoveAt(i)
+                        UDLV_滤镜排序列表.Items.Insert(i - 1, moving)
                         changed = True
                     End If
                 Next
             Else
-                For i = UltraDetailListView1.Items.Count - 2 To 0 Step -1
-                    If selectedSet.Contains(UltraDetailListView1.Items(i)) AndAlso Not selectedSet.Contains(UltraDetailListView1.Items(i + 1)) Then
-                        Dim moving = UltraDetailListView1.Items(i)
-                        UltraDetailListView1.Items.RemoveAt(i)
-                        UltraDetailListView1.Items.Insert(i + 1, moving)
+                For i = UDLV_滤镜排序列表.Items.Count - 2 To 0 Step -1
+                    If selectedSet.Contains(UDLV_滤镜排序列表.Items(i)) AndAlso Not selectedSet.Contains(UDLV_滤镜排序列表.Items(i + 1)) Then
+                        Dim moving = UDLV_滤镜排序列表.Items(i)
+                        UDLV_滤镜排序列表.Items.RemoveAt(i)
+                        UDLV_滤镜排序列表.Items.Insert(i + 1, moving)
                         changed = True
                     End If
                 Next
             End If
         Finally
-            UltraDetailListView1.EndUpdate()
+            UDLV_滤镜排序列表.EndUpdate()
         End Try
         If Not changed Then Exit Sub
 
@@ -238,7 +238,7 @@ Public Class Form_v6_参数面板_滤镜排序
         通知参数面板刷新()
     End Sub
 
-    Private Sub UltraDetailListView1_KeyDown(sender As Object, e As KeyEventArgs) Handles UltraDetailListView1.KeyDown
+    Private Sub UltraDetailListView1_KeyDown(sender As Object, e As KeyEventArgs) Handles UDLV_滤镜排序列表.KeyDown
         Select Case e.KeyCode
             Case Keys.F3
                 移动选中项(-1)
@@ -255,7 +255,7 @@ Public Class Form_v6_参数面板_滤镜排序
         End Select
     End Sub
 
-    Private Sub UltraDetailListView1_AfterLabelEdit(sender As Object, e As UltraDetailListView.LabelEditEventArgs) Handles UltraDetailListView1.AfterLabelEdit
+    Private Sub UltraDetailListView1_AfterLabelEdit(sender As Object, e As UltraDetailListView.LabelEditEventArgs) Handles UDLV_滤镜排序列表.AfterLabelEdit
         Dim item = TryCast(e.Item.Tag, 预设数据_v6.滤镜排序单片结构)
         If item Is Nothing Then Exit Sub
         If e.ColumnIndex = 2 Then
@@ -268,26 +268,26 @@ Public Class Form_v6_参数面板_滤镜排序
         End If
     End Sub
 
-    Private Sub UltraDetailListView1_ItemDoubleClick(sender As Object, e As UltraDetailListView.ListItemEventArgs) Handles UltraDetailListView1.ItemDoubleClick
+    Private Sub UltraDetailListView1_ItemDoubleClick(sender As Object, e As UltraDetailListView.ListItemEventArgs) Handles UDLV_滤镜排序列表.ItemDoubleClick
         Dim item = TryCast(e.Item.Tag, 预设数据_v6.滤镜排序单片结构)
         If item Is Nothing Then Exit Sub
         If 可直接编辑滤镜内容(item) Then
-            UltraDetailListView1.Columns(2).AllowLabelEdit = True
+            UDLV_滤镜排序列表.Columns(2).AllowLabelEdit = True
             Try
-                UltraDetailListView1.开始标签编辑(e.DisplayRowIndex, 2)
+                UDLV_滤镜排序列表.开始标签编辑(e.DisplayRowIndex, 2)
             Finally
-                UltraDetailListView1.Columns(2).AllowLabelEdit = False
+                UDLV_滤镜排序列表.Columns(2).AllowLabelEdit = False
             End Try
         End If
     End Sub
 
-    Private Sub ModernComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ModernComboBox1.SelectedIndexChanged
-        If ModernComboBox1.SelectedIndex = 0 Then
+    Private Sub ModernComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles MCB_添加新滤镜.SelectedIndexChanged
+        If MCB_添加新滤镜.SelectedIndex = 0 Then
             添加自定义滤镜(预设数据_v6.滤镜排序单片结构.流类型.视频)
-        ElseIf ModernComboBox1.SelectedIndex = 1 Then
+        ElseIf MCB_添加新滤镜.SelectedIndex = 1 Then
             添加自定义滤镜(预设数据_v6.滤镜排序单片结构.流类型.音频)
         End If
-        ModernComboBox1.SelectedIndex = -1
+        MCB_添加新滤镜.SelectedIndex = -1
     End Sub
 
     Private Sub MB_删除滤镜_Click(sender As Object, e As EventArgs) Handles MB_删除滤镜.Click
@@ -303,7 +303,7 @@ Public Class Form_v6_参数面板_滤镜排序
         校准列表列宽()
     End Sub
 
-    Private Sub UltraDetailListView1_SizeChanged(sender As Object, e As EventArgs) Handles UltraDetailListView1.SizeChanged
+    Private Sub UltraDetailListView1_SizeChanged(sender As Object, e As EventArgs) Handles UDLV_滤镜排序列表.SizeChanged
         调整列表交互区域()
         校准列表列宽()
     End Sub
@@ -360,15 +360,15 @@ Public Class Form_v6_参数面板_滤镜排序
     End Function
 
     Private Sub 调整列表交互区域()
-        If UltraDetailListView1 Is Nothing Then Exit Sub
-        UltraDetailListView1.DragSelectZoneWidth = Math.Max(0, UltraDetailListView1.Size.Width \ 2)
+        If UDLV_滤镜排序列表 Is Nothing Then Exit Sub
+        UDLV_滤镜排序列表.DragSelectZoneWidth = Math.Max(0, UDLV_滤镜排序列表.Size.Width \ 2)
     End Sub
 
     Private Sub 校准列表列宽()
-        If UltraDetailListView1 Is Nothing OrElse UltraDetailListView1.Columns.Count < 3 Then Exit Sub
+        If UDLV_滤镜排序列表 Is Nothing OrElse UDLV_滤镜排序列表.Columns.Count < 3 Then Exit Sub
 
-        Dim 可用宽度 = UltraDetailListView1.ClientSize.Width
-        If 可用宽度 <= 0 Then 可用宽度 = UltraDetailListView1.Width
+        Dim 可用宽度 = UDLV_滤镜排序列表.ClientSize.Width
+        If 可用宽度 <= 0 Then 可用宽度 = UDLV_滤镜排序列表.Width
         If 可用宽度 <= 0 Then Exit Sub
 
         可用宽度 = Math.Max(0, 可用宽度 - CInt(24 * DeviceDpi / 96.0))
@@ -376,8 +376,8 @@ Public Class Form_v6_参数面板_滤镜排序
         Dim 流类型列宽 = Math.Min(CInt(120 * DeviceDpi / 96.0), Math.Max(CInt(80 * DeviceDpi / 96.0), CInt(可用宽度 * 0.12)))
         Dim 内容列宽 = Math.Max(CInt(240 * DeviceDpi / 96.0), 可用宽度 - 标识符列宽 - 流类型列宽)
 
-        UltraDetailListView1.Columns(0).Width = 标识符列宽
-        UltraDetailListView1.Columns(1).Width = 流类型列宽
-        UltraDetailListView1.Columns(2).Width = 内容列宽
+        UDLV_滤镜排序列表.Columns(0).Width = 标识符列宽
+        UDLV_滤镜排序列表.Columns(1).Width = 流类型列宽
+        UDLV_滤镜排序列表.Columns(2).Width = 内容列宽
     End Sub
 End Class

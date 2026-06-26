@@ -1,6 +1,6 @@
-﻿Public Class Form_v6_参数面板_自定义参数说明
+Public Class Form_v6_参数面板_自定义参数说明
     Private Sub Form_v6_参数面板_自定义参数说明_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        Me.MarkDownViewer1.Text =
+        Me.MDV_自定义参数说明.Text =
 "## 通配字符串说明
 界面交互提供的需求有限，其余高级需求使用自定义参数来实现<br>通配字符串为各种细分领域和深度专业人士提供最大程度的自由
 

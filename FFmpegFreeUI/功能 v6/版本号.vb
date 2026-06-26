@@ -1,4 +1,4 @@
-﻿Public Class 版本号
+Public Class 版本号
 
     Public Shared Function 获取自身版本号() As String
         Dim EntryAssembly = System.Reflection.Assembly.GetEntryAssembly()

@@ -262,12 +262,14 @@ Public NotInheritable Class Agent工具封装_v6
         Dim typeName = control.GetType().Name
         Dim text = If(control.Text, "")
         Dim name = If(control.Name, "")
-        Dim isInteresting = TypeOf control Is ModernComboBox OrElse TypeOf control Is Label OrElse TypeOf control Is HtmlColorLabel
+        Dim isInteresting = 是参数面板可读控件(control)
         If isInteresting AndAlso (query = "" OrElse name.Contains(query, StringComparison.CurrentCultureIgnoreCase) OrElse text.Contains(query, StringComparison.CurrentCultureIgnoreCase)) Then
             Dim item As New Dictionary(Of String, Object) From {
                 {"name", name},
                 {"type", typeName},
-                {"text", text}
+                {"text", 截断控件文本(text)},
+                {"enabled", control.Enabled},
+                {"visible", control.Visible}
             }
             Dim combo = TryCast(control, ModernComboBox)
             If combo IsNot Nothing Then
@@ -275,12 +277,85 @@ Public NotInheritable Class Agent工具封装_v6
                 item("selected_index") = combo.SelectedIndex
                 item("selected_text") = If(combo.SelectedItem, combo.Text)
             End If
+
+            Dim textBox = TryCast(control, ModernTextBox)
+            If textBox IsNot Nothing Then
+                item("value") = 截断控件文本(textBox.Text)
+                item("water_text") = 截断控件文本(textBox.WaterText)
+                item("read_only") = textBox.ReadOnly
+                item("multiline") = textBox.MultiLine
+            End If
+
+            Dim checkBox = TryCast(control, ModernCheckBox)
+            If checkBox IsNot Nothing Then item("checked") = checkBox.Checked
+
+            Dim switchBox = TryCast(control, BooleanSwitch)
+            If switchBox IsNot Nothing Then item("checked") = switchBox.Checked
+
+            Dim trackBar = TryCast(control, ExcellentTrackBar)
+            If trackBar IsNot Nothing Then
+                item("value") = trackBar.Value
+                item("minimum") = trackBar.Minimum
+                item("maximum") = trackBar.Maximum
+            End If
+
+            Dim listBox = TryCast(control, ModernListBox)
+            If listBox IsNot Nothing Then
+                item("items") = listBox.Items.Cast(Of Object).Select(Function(x) If(x, "").ToString()).ToList()
+                item("selected_index") = listBox.SelectedIndex
+                item("selected_text") = If(listBox.SelectedIndex >= 0 AndAlso listBox.SelectedIndex < listBox.Items.Count, If(listBox.Items(listBox.SelectedIndex), "").ToString(), "")
+                item("allow_drag_reorder") = listBox.AllowDragReorder
+            End If
+
+            Dim detailList = TryCast(control, UltraDetailListView)
+            If detailList IsNot Nothing Then
+                item("row_count") = detailList.Items.Count
+                item("selected_count") = detailList.SelectedItems.Count
+                item("rows") = detailList.Items.
+                    Cast(Of UltraDetailListView.ListItem)().
+                    Take(30).
+                    Select(Function(row) row.SubItems.Cast(Of UltraDetailListView.ListSubItem)().Select(Function(subItem) 截断控件文本(subItem.Text, 500)).ToList()).
+                    ToList()
+            End If
             result.Add(item)
         End If
         For Each child As Control In control.Controls
             扫描控件递归(child, query, result)
         Next
     End Sub
+
+    Private Shared Function 是参数面板可读控件(control As Control) As Boolean
+        Dim name = If(control?.Name, "")
+        If name.StartsWith("MCB_", StringComparison.Ordinal) OrElse
+           name.StartsWith("MCK_", StringComparison.Ordinal) OrElse
+           name.StartsWith("MTB_", StringComparison.Ordinal) OrElse
+           name.StartsWith("MB_", StringComparison.Ordinal) OrElse
+           name.StartsWith("HCL_", StringComparison.Ordinal) OrElse
+           name.StartsWith("ETB_", StringComparison.Ordinal) OrElse
+           name.StartsWith("BS_", StringComparison.Ordinal) OrElse
+           name.StartsWith("MLB_", StringComparison.Ordinal) OrElse
+           name.StartsWith("UDLV_", StringComparison.Ordinal) OrElse
+           name.StartsWith("PPB_", StringComparison.Ordinal) OrElse
+           name.StartsWith("MDV_", StringComparison.Ordinal) OrElse
+           name.StartsWith("LB_", StringComparison.Ordinal) Then Return True
+
+        Return TypeOf control Is ModernComboBox OrElse
+               TypeOf control Is ModernTextBox OrElse
+               TypeOf control Is ModernCheckBox OrElse
+               TypeOf control Is ModernButton OrElse
+               TypeOf control Is HtmlColorLabel OrElse
+               TypeOf control Is Label OrElse
+               TypeOf control Is BooleanSwitch OrElse
+               TypeOf control Is ExcellentTrackBar OrElse
+               TypeOf control Is ModernListBox OrElse
+               TypeOf control Is UltraDetailListView
+    End Function
+
+    Private Shared Function 截断控件文本(value As String, Optional maxLength As Integer = 4000) As String
+        Dim text = If(value, "")
+        If text.Length <= maxLength Then Return text
+        Return text.Substring(0, maxLength) & "..."
+    End Function
 
     Private Shared Function 规范集成工具名(tool As String) As String
         Select Case If(tool, "").Trim().ToLowerInvariant()

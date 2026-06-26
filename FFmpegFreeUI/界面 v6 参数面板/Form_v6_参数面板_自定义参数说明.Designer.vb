@@ -1,4 +1,4 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class Form_v6_参数面板_自定义参数说明
     Inherits System.Windows.Forms.Form
 
@@ -22,37 +22,37 @@ Partial Class Form_v6_参数面板_自定义参数说明
     '不要使用代码编辑器修改它。
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        MarkDownViewer1 = New LakeUI.MarkDownViewer()
+        MDV_自定义参数说明 = New LakeUI.MarkDownViewer()
         ModernPanel1 = New LakeUI.ModernPanel()
         ModernPanel1.SuspendLayout()
         SuspendLayout()
-        ' 
-        ' MarkDownViewer1
-        ' 
-        MarkDownViewer1.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        MarkDownViewer1.BasePath = Nothing
-        MarkDownViewer1.BlockQuoteForeColor = Color.FromArgb(CByte(160), CByte(160), CByte(160))
-        MarkDownViewer1.BlockSpacing = 20
-        MarkDownViewer1.BorderRadius = 10
-        MarkDownViewer1.CodeBackColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
-        MarkDownViewer1.Dock = DockStyle.Fill
-        MarkDownViewer1.Font = New Font("Microsoft YaHei UI", 10F)
-        MarkDownViewer1.ForeColor = Color.Silver
-        MarkDownViewer1.HeadingColor = Color.Silver
-        MarkDownViewer1.HeadingSeparatorColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        MarkDownViewer1.HeadingSeparatorThickness = 2
-        MarkDownViewer1.Location = New Point(20, 20)
-        MarkDownViewer1.Name = "MarkDownViewer1"
-        MarkDownViewer1.Padding = New Padding(20)
-        MarkDownViewer1.Size = New Size(697, 570)
-        MarkDownViewer1.TabIndex = 0
-        MarkDownViewer1.Text = "MarkDownViewer1"
-        ' 
+        '
+        ' MDV_自定义参数说明
+        '
+        MDV_自定义参数说明.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MDV_自定义参数说明.BasePath = Nothing
+        MDV_自定义参数说明.BlockQuoteForeColor = Color.FromArgb(CByte(160), CByte(160), CByte(160))
+        MDV_自定义参数说明.BlockSpacing = 20
+        MDV_自定义参数说明.BorderRadius = 10
+        MDV_自定义参数说明.CodeBackColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        MDV_自定义参数说明.Dock = DockStyle.Fill
+        MDV_自定义参数说明.Font = New Font("Microsoft YaHei UI", 10F)
+        MDV_自定义参数说明.ForeColor = Color.Silver
+        MDV_自定义参数说明.HeadingColor = Color.Silver
+        MDV_自定义参数说明.HeadingSeparatorColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MDV_自定义参数说明.HeadingSeparatorThickness = 2
+        MDV_自定义参数说明.Location = New Point(20, 20)
+        MDV_自定义参数说明.Name = "MDV_自定义参数说明"
+        MDV_自定义参数说明.Padding = New Padding(20)
+        MDV_自定义参数说明.Size = New Size(697, 570)
+        MDV_自定义参数说明.TabIndex = 0
+        MDV_自定义参数说明.Text = ""
+        '
         ' ModernPanel1
-        ' 
+        '
         ModernPanel1.BackColor1 = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         ModernPanel1.BorderSize = 0
-        ModernPanel1.Controls.Add(MarkDownViewer1)
+        ModernPanel1.Controls.Add(MDV_自定义参数说明)
         ModernPanel1.Dock = DockStyle.Fill
         ModernPanel1.Location = New Point(0, 0)
         ModernPanel1.Name = "ModernPanel1"
@@ -60,9 +60,9 @@ Partial Class Form_v6_参数面板_自定义参数说明
         ModernPanel1.ScrollBarMode = LakeUI.ModernPanel.ScrollMode.None
         ModernPanel1.Size = New Size(737, 610)
         ModernPanel1.TabIndex = 1
-        ' 
+        '
         ' Form_v6_参数面板_自定义参数说明
-        ' 
+        '
         AutoScaleDimensions = New SizeF(96F, 96F)
         AutoScaleMode = AutoScaleMode.Dpi
         BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
@@ -76,6 +76,6 @@ Partial Class Form_v6_参数面板_自定义参数说明
         ResumeLayout(False)
     End Sub
 
-    Friend WithEvents MarkDownViewer1 As LakeUI.MarkDownViewer
+    Friend WithEvents MDV_自定义参数说明 As LakeUI.MarkDownViewer
     Friend WithEvents ModernPanel1 As LakeUI.ModernPanel
 End Class

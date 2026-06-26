@@ -1,4 +1,4 @@
-﻿Imports LakeUI
+Imports LakeUI
 
 Public Class Form_v6_起始页面
 

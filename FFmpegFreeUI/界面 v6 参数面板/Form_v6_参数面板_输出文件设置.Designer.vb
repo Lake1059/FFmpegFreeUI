@@ -1,4 +1,4 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class Form_v6_参数面板_输出文件设置
     Inherits System.Windows.Forms.Form
 
@@ -27,23 +27,23 @@ Partial Class Form_v6_参数面板_输出文件设置
         音频菜单 = New LakeUI.ModernContextMenu()
         图片菜单 = New LakeUI.ModernContextMenu()
         ModernPanel1 = New LakeUI.ModernPanel()
-        MCB_保留访问时间 = New LakeUI.ModernCheckBox()
-        MCB_保留修改时间 = New LakeUI.ModernCheckBox()
-        MCB_保留创建时间 = New LakeUI.ModernCheckBox()
-        HtmlColorLabel3 = New LakeUI.HtmlColorLabel()
+        MCK_保留访问时间 = New LakeUI.ModernCheckBox()
+        MCK_保留修改时间 = New LakeUI.ModernCheckBox()
+        MCK_保留创建时间 = New LakeUI.ModernCheckBox()
+        HCL_文件时间 = New LakeUI.HtmlColorLabel()
         Panel6 = New Panel()
-        HtmlColorLabel6 = New LakeUI.HtmlColorLabel()
+        HCL_结尾文本 = New LakeUI.HtmlColorLabel()
         MTB_结尾文本 = New LakeUI.ModernTextBox()
         Panel5 = New Panel()
-        HtmlColorLabel5 = New LakeUI.HtmlColorLabel()
+        HCL_替代文件名 = New LakeUI.HtmlColorLabel()
         MTB_替代文件名 = New LakeUI.ModernTextBox()
         Panel4 = New Panel()
-        HtmlColorLabel4 = New LakeUI.HtmlColorLabel()
+        HCL_开头文本 = New LakeUI.HtmlColorLabel()
         MTB_开头文本 = New LakeUI.ModernTextBox()
         Panel3 = New Panel()
-        HtmlColorLabel7 = New LakeUI.HtmlColorLabel()
+        HCL_自动命名方式 = New LakeUI.HtmlColorLabel()
         MCB_自动命名方式 = New LakeUI.ModernComboBox()
-        HtmlColorLabel2 = New LakeUI.HtmlColorLabel()
+        HCL_命名方式 = New LakeUI.HtmlColorLabel()
         Panel2 = New Panel()
         MCB_输出位置 = New LakeUI.ModernComboBox()
         Panel1 = New Panel()
@@ -52,7 +52,7 @@ Partial Class Form_v6_参数面板_输出文件设置
         MTB_后缀 = New LakeUI.ModernTextBox()
         JustEmptyControl1 = New LakeUI.JustEmptyControl()
         MB_选择后缀 = New LakeUI.ModernButton()
-        HtmlColorLabel1 = New LakeUI.HtmlColorLabel()
+        HCL_后缀和位置 = New LakeUI.HtmlColorLabel()
         ModernPanel1.SuspendLayout()
         Panel6.SuspendLayout()
         Panel5.SuspendLayout()
@@ -61,9 +61,9 @@ Partial Class Form_v6_参数面板_输出文件设置
         Panel2.SuspendLayout()
         Panel1.SuspendLayout()
         SuspendLayout()
-        ' 
+        '
         ' 后缀菜单
-        ' 
+        '
         后缀菜单.BackdropBlurPasses = 2
         后缀菜单.BackdropBlurRadius = 30
         后缀菜单.BackdropMode = LakeUI.ModernContextMenu.BackdropModeEnum.Auto
@@ -84,9 +84,9 @@ Partial Class Form_v6_参数面板_输出文件设置
         后缀菜单.SeparatorColor = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
         后缀菜单.SeparatorHeight = 20
         后缀菜单.SubMenuHorizontalOffset = -2
-        ' 
+        '
         ' 视频菜单
-        ' 
+        '
         视频菜单.BackdropBlurPasses = 2
         视频菜单.BackdropBlurRadius = 30
         视频菜单.BackdropMode = LakeUI.ModernContextMenu.BackdropModeEnum.Auto
@@ -106,9 +106,9 @@ Partial Class Form_v6_参数面板_输出文件设置
         视频菜单.PressedBackColor = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
         视频菜单.SeparatorColor = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
         视频菜单.SeparatorHeight = 20
-        ' 
+        '
         ' 音频菜单
-        ' 
+        '
         音频菜单.BackdropBlurPasses = 2
         音频菜单.BackdropBlurRadius = 30
         音频菜单.BackdropMode = LakeUI.ModernContextMenu.BackdropModeEnum.Auto
@@ -128,9 +128,9 @@ Partial Class Form_v6_参数面板_输出文件设置
         音频菜单.PressedBackColor = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
         音频菜单.SeparatorColor = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
         音频菜单.SeparatorHeight = 20
-        ' 
+        '
         ' 图片菜单
-        ' 
+        '
         图片菜单.BackdropBlurPasses = 2
         图片菜单.BackdropBlurRadius = 30
         图片菜单.BackdropMode = LakeUI.ModernContextMenu.BackdropModeEnum.Auto
@@ -150,101 +150,101 @@ Partial Class Form_v6_参数面板_输出文件设置
         图片菜单.PressedBackColor = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
         图片菜单.SeparatorColor = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
         图片菜单.SeparatorHeight = 20
-        ' 
+        '
         ' ModernPanel1
-        ' 
+        '
         ModernPanel1.BackColor1 = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         ModernPanel1.BorderSize = 0
-        ModernPanel1.Controls.Add(MCB_保留访问时间)
-        ModernPanel1.Controls.Add(MCB_保留修改时间)
-        ModernPanel1.Controls.Add(MCB_保留创建时间)
-        ModernPanel1.Controls.Add(HtmlColorLabel3)
+        ModernPanel1.Controls.Add(MCK_保留访问时间)
+        ModernPanel1.Controls.Add(MCK_保留修改时间)
+        ModernPanel1.Controls.Add(MCK_保留创建时间)
+        ModernPanel1.Controls.Add(HCL_文件时间)
         ModernPanel1.Controls.Add(Panel6)
         ModernPanel1.Controls.Add(Panel5)
         ModernPanel1.Controls.Add(Panel4)
         ModernPanel1.Controls.Add(Panel3)
-        ModernPanel1.Controls.Add(HtmlColorLabel2)
+        ModernPanel1.Controls.Add(HCL_命名方式)
         ModernPanel1.Controls.Add(Panel2)
         ModernPanel1.Controls.Add(Panel1)
-        ModernPanel1.Controls.Add(HtmlColorLabel1)
+        ModernPanel1.Controls.Add(HCL_后缀和位置)
         ModernPanel1.Dock = DockStyle.Fill
         ModernPanel1.Location = New Point(0, 0)
         ModernPanel1.Name = "ModernPanel1"
         ModernPanel1.Padding = New Padding(20)
         ModernPanel1.Size = New Size(700, 587)
         ModernPanel1.TabIndex = 0
-        ' 
-        ' MCB_保留访问时间
-        ' 
-        MCB_保留访问时间.AutoSize = True
-        MCB_保留访问时间.BoxBorderRadius = 5
-        MCB_保留访问时间.BoxBorderSize = 0
-        MCB_保留访问时间.BoxCheckedBackColor = Color.OliveDrab
-        MCB_保留访问时间.BoxInnerPadding = 6
-        MCB_保留访问时间.BoxSize = 22
-        MCB_保留访问时间.BoxTextSpacing = 10
-        MCB_保留访问时间.BoxUncheckedBackColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        MCB_保留访问时间.Dock = DockStyle.Top
-        MCB_保留访问时间.Location = New Point(20, 466)
-        MCB_保留访问时间.Name = "MCB_保留访问时间"
-        MCB_保留访问时间.Padding = New Padding(0, 5, 0, 5)
-        MCB_保留访问时间.Size = New Size(660, 32)
-        MCB_保留访问时间.TabIndex = 14
-        MCB_保留访问时间.Text = "保留访问时间"
-        ' 
-        ' MCB_保留修改时间
-        ' 
-        MCB_保留修改时间.AutoSize = True
-        MCB_保留修改时间.BoxBorderRadius = 5
-        MCB_保留修改时间.BoxBorderSize = 0
-        MCB_保留修改时间.BoxCheckedBackColor = Color.OliveDrab
-        MCB_保留修改时间.BoxInnerPadding = 6
-        MCB_保留修改时间.BoxSize = 22
-        MCB_保留修改时间.BoxTextSpacing = 10
-        MCB_保留修改时间.BoxUncheckedBackColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        MCB_保留修改时间.Dock = DockStyle.Top
-        MCB_保留修改时间.Location = New Point(20, 434)
-        MCB_保留修改时间.Name = "MCB_保留修改时间"
-        MCB_保留修改时间.Padding = New Padding(0, 5, 0, 5)
-        MCB_保留修改时间.Size = New Size(660, 32)
-        MCB_保留修改时间.TabIndex = 13
-        MCB_保留修改时间.Text = "保留修改时间"
-        ' 
-        ' MCB_保留创建时间
-        ' 
-        MCB_保留创建时间.AutoSize = True
-        MCB_保留创建时间.BoxBorderRadius = 5
-        MCB_保留创建时间.BoxBorderSize = 0
-        MCB_保留创建时间.BoxCheckedBackColor = Color.OliveDrab
-        MCB_保留创建时间.BoxInnerPadding = 6
-        MCB_保留创建时间.BoxSize = 22
-        MCB_保留创建时间.BoxTextSpacing = 10
-        MCB_保留创建时间.BoxUncheckedBackColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        MCB_保留创建时间.Dock = DockStyle.Top
-        MCB_保留创建时间.Location = New Point(20, 402)
-        MCB_保留创建时间.Name = "MCB_保留创建时间"
-        MCB_保留创建时间.Padding = New Padding(0, 5, 0, 5)
-        MCB_保留创建时间.Size = New Size(660, 32)
-        MCB_保留创建时间.TabIndex = 12
-        MCB_保留创建时间.Text = "保留创建时间"
-        ' 
-        ' HtmlColorLabel3
-        ' 
-        HtmlColorLabel3.AutoSize = True
-        HtmlColorLabel3.AutoSizeMode = AutoSizeMode.GrowAndShrink
-        HtmlColorLabel3.Dock = DockStyle.Top
-        HtmlColorLabel3.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        HtmlColorLabel3.Location = New Point(20, 352)
-        HtmlColorLabel3.Margin = New Padding(2)
-        HtmlColorLabel3.Name = "HtmlColorLabel3"
-        HtmlColorLabel3.Padding = New Padding(0, 20, 0, 5)
-        HtmlColorLabel3.Size = New Size(660, 50)
-        HtmlColorLabel3.TabIndex = 8
-        HtmlColorLabel3.Text = "<span style=""font-size:13; color:Silver"">文件时间</span>   这些功能在任务结束时由 3FUI 处理，与 ffmpeg 无关"
-        ' 
+        '
+        ' MCK_保留访问时间
+        '
+        MCK_保留访问时间.AutoSize = True
+        MCK_保留访问时间.BoxBorderRadius = 5
+        MCK_保留访问时间.BoxBorderSize = 0
+        MCK_保留访问时间.BoxCheckedBackColor = Color.OliveDrab
+        MCK_保留访问时间.BoxInnerPadding = 6
+        MCK_保留访问时间.BoxSize = 22
+        MCK_保留访问时间.BoxTextSpacing = 10
+        MCK_保留访问时间.BoxUncheckedBackColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MCK_保留访问时间.Dock = DockStyle.Top
+        MCK_保留访问时间.Location = New Point(20, 466)
+        MCK_保留访问时间.Name = "MCK_保留访问时间"
+        MCK_保留访问时间.Padding = New Padding(0, 5, 0, 5)
+        MCK_保留访问时间.Size = New Size(660, 32)
+        MCK_保留访问时间.TabIndex = 14
+        MCK_保留访问时间.Text = "保留访问时间"
+        '
+        ' MCK_保留修改时间
+        '
+        MCK_保留修改时间.AutoSize = True
+        MCK_保留修改时间.BoxBorderRadius = 5
+        MCK_保留修改时间.BoxBorderSize = 0
+        MCK_保留修改时间.BoxCheckedBackColor = Color.OliveDrab
+        MCK_保留修改时间.BoxInnerPadding = 6
+        MCK_保留修改时间.BoxSize = 22
+        MCK_保留修改时间.BoxTextSpacing = 10
+        MCK_保留修改时间.BoxUncheckedBackColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MCK_保留修改时间.Dock = DockStyle.Top
+        MCK_保留修改时间.Location = New Point(20, 434)
+        MCK_保留修改时间.Name = "MCK_保留修改时间"
+        MCK_保留修改时间.Padding = New Padding(0, 5, 0, 5)
+        MCK_保留修改时间.Size = New Size(660, 32)
+        MCK_保留修改时间.TabIndex = 13
+        MCK_保留修改时间.Text = "保留修改时间"
+        '
+        ' MCK_保留创建时间
+        '
+        MCK_保留创建时间.AutoSize = True
+        MCK_保留创建时间.BoxBorderRadius = 5
+        MCK_保留创建时间.BoxBorderSize = 0
+        MCK_保留创建时间.BoxCheckedBackColor = Color.OliveDrab
+        MCK_保留创建时间.BoxInnerPadding = 6
+        MCK_保留创建时间.BoxSize = 22
+        MCK_保留创建时间.BoxTextSpacing = 10
+        MCK_保留创建时间.BoxUncheckedBackColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MCK_保留创建时间.Dock = DockStyle.Top
+        MCK_保留创建时间.Location = New Point(20, 402)
+        MCK_保留创建时间.Name = "MCK_保留创建时间"
+        MCK_保留创建时间.Padding = New Padding(0, 5, 0, 5)
+        MCK_保留创建时间.Size = New Size(660, 32)
+        MCK_保留创建时间.TabIndex = 12
+        MCK_保留创建时间.Text = "保留创建时间"
+        '
+        ' HCL_文件时间
+        '
+        HCL_文件时间.AutoSize = True
+        HCL_文件时间.AutoSizeMode = AutoSizeMode.GrowAndShrink
+        HCL_文件时间.Dock = DockStyle.Top
+        HCL_文件时间.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
+        HCL_文件时间.Location = New Point(20, 352)
+        HCL_文件时间.Margin = New Padding(2)
+        HCL_文件时间.Name = "HCL_文件时间"
+        HCL_文件时间.Padding = New Padding(0, 20, 0, 5)
+        HCL_文件时间.Size = New Size(660, 50)
+        HCL_文件时间.TabIndex = 8
+        HCL_文件时间.Text = "<span style=""font-size:13; color:Silver"">文件时间</span>   这些功能在任务结束时由 3FUI 处理，与 ffmpeg 无关"
+        '
         ' Panel6
-        ' 
-        Panel6.Controls.Add(HtmlColorLabel6)
+        '
+        Panel6.Controls.Add(HCL_结尾文本)
         Panel6.Controls.Add(MTB_结尾文本)
         Panel6.Dock = DockStyle.Top
         Panel6.Location = New Point(20, 310)
@@ -252,23 +252,23 @@ Partial Class Form_v6_参数面板_输出文件设置
         Panel6.Padding = New Padding(0, 10, 0, 0)
         Panel6.Size = New Size(660, 42)
         Panel6.TabIndex = 7
-        ' 
-        ' HtmlColorLabel6
-        ' 
-        HtmlColorLabel6.AutoSizeMode = AutoSizeMode.GrowAndShrink
-        HtmlColorLabel6.Dock = DockStyle.Fill
-        HtmlColorLabel6.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        HtmlColorLabel6.Location = New Point(350, 10)
-        HtmlColorLabel6.Margin = New Padding(2)
-        HtmlColorLabel6.Name = "HtmlColorLabel6"
-        HtmlColorLabel6.Padding = New Padding(10, 0, 0, 0)
-        HtmlColorLabel6.Size = New Size(310, 32)
-        HtmlColorLabel6.TabIndex = 5
-        HtmlColorLabel6.Text = "结尾文本"
-        HtmlColorLabel6.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
-        ' 
+        '
+        ' HCL_结尾文本
+        '
+        HCL_结尾文本.AutoSizeMode = AutoSizeMode.GrowAndShrink
+        HCL_结尾文本.Dock = DockStyle.Fill
+        HCL_结尾文本.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
+        HCL_结尾文本.Location = New Point(350, 10)
+        HCL_结尾文本.Margin = New Padding(2)
+        HCL_结尾文本.Name = "HCL_结尾文本"
+        HCL_结尾文本.Padding = New Padding(10, 0, 0, 0)
+        HCL_结尾文本.Size = New Size(310, 32)
+        HCL_结尾文本.TabIndex = 5
+        HCL_结尾文本.Text = "结尾文本"
+        HCL_结尾文本.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
+        '
         ' MTB_结尾文本
-        ' 
+        '
         MTB_结尾文本.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MTB_结尾文本.BorderColor = Color.Transparent
         MTB_结尾文本.BorderColorFocus = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
@@ -284,10 +284,10 @@ Partial Class Form_v6_参数面板_输出文件设置
         MTB_结尾文本.TabIndex = 3
         MTB_结尾文本.WaterText = "输出文件以什么结尾"
         MTB_结尾文本.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        ' 
+        '
         ' Panel5
-        ' 
-        Panel5.Controls.Add(HtmlColorLabel5)
+        '
+        Panel5.Controls.Add(HCL_替代文件名)
         Panel5.Controls.Add(MTB_替代文件名)
         Panel5.Dock = DockStyle.Top
         Panel5.Location = New Point(20, 268)
@@ -295,23 +295,23 @@ Partial Class Form_v6_参数面板_输出文件设置
         Panel5.Padding = New Padding(0, 10, 0, 0)
         Panel5.Size = New Size(660, 42)
         Panel5.TabIndex = 6
-        ' 
-        ' HtmlColorLabel5
-        ' 
-        HtmlColorLabel5.AutoSizeMode = AutoSizeMode.GrowAndShrink
-        HtmlColorLabel5.Dock = DockStyle.Fill
-        HtmlColorLabel5.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        HtmlColorLabel5.Location = New Point(350, 10)
-        HtmlColorLabel5.Margin = New Padding(2)
-        HtmlColorLabel5.Name = "HtmlColorLabel5"
-        HtmlColorLabel5.Padding = New Padding(10, 0, 0, 0)
-        HtmlColorLabel5.Size = New Size(310, 32)
-        HtmlColorLabel5.TabIndex = 5
-        HtmlColorLabel5.Text = "替代文件名"
-        HtmlColorLabel5.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
-        ' 
+        '
+        ' HCL_替代文件名
+        '
+        HCL_替代文件名.AutoSizeMode = AutoSizeMode.GrowAndShrink
+        HCL_替代文件名.Dock = DockStyle.Fill
+        HCL_替代文件名.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
+        HCL_替代文件名.Location = New Point(350, 10)
+        HCL_替代文件名.Margin = New Padding(2)
+        HCL_替代文件名.Name = "HCL_替代文件名"
+        HCL_替代文件名.Padding = New Padding(10, 0, 0, 0)
+        HCL_替代文件名.Size = New Size(310, 32)
+        HCL_替代文件名.TabIndex = 5
+        HCL_替代文件名.Text = "替代文件名"
+        HCL_替代文件名.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
+        '
         ' MTB_替代文件名
-        ' 
+        '
         MTB_替代文件名.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MTB_替代文件名.BorderColor = Color.Transparent
         MTB_替代文件名.BorderColorFocus = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
@@ -327,10 +327,10 @@ Partial Class Form_v6_参数面板_输出文件设置
         MTB_替代文件名.TabIndex = 3
         MTB_替代文件名.WaterText = "不使用输入文件的名称，而是使用这里的"
         MTB_替代文件名.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        ' 
+        '
         ' Panel4
-        ' 
-        Panel4.Controls.Add(HtmlColorLabel4)
+        '
+        Panel4.Controls.Add(HCL_开头文本)
         Panel4.Controls.Add(MTB_开头文本)
         Panel4.Dock = DockStyle.Top
         Panel4.Location = New Point(20, 226)
@@ -338,23 +338,23 @@ Partial Class Form_v6_参数面板_输出文件设置
         Panel4.Padding = New Padding(0, 10, 0, 0)
         Panel4.Size = New Size(660, 42)
         Panel4.TabIndex = 5
-        ' 
-        ' HtmlColorLabel4
-        ' 
-        HtmlColorLabel4.AutoSizeMode = AutoSizeMode.GrowAndShrink
-        HtmlColorLabel4.Dock = DockStyle.Fill
-        HtmlColorLabel4.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        HtmlColorLabel4.Location = New Point(350, 10)
-        HtmlColorLabel4.Margin = New Padding(2)
-        HtmlColorLabel4.Name = "HtmlColorLabel4"
-        HtmlColorLabel4.Padding = New Padding(10, 0, 0, 0)
-        HtmlColorLabel4.Size = New Size(310, 32)
-        HtmlColorLabel4.TabIndex = 4
-        HtmlColorLabel4.Text = "开头文本"
-        HtmlColorLabel4.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
-        ' 
+        '
+        ' HCL_开头文本
+        '
+        HCL_开头文本.AutoSizeMode = AutoSizeMode.GrowAndShrink
+        HCL_开头文本.Dock = DockStyle.Fill
+        HCL_开头文本.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
+        HCL_开头文本.Location = New Point(350, 10)
+        HCL_开头文本.Margin = New Padding(2)
+        HCL_开头文本.Name = "HCL_开头文本"
+        HCL_开头文本.Padding = New Padding(10, 0, 0, 0)
+        HCL_开头文本.Size = New Size(310, 32)
+        HCL_开头文本.TabIndex = 4
+        HCL_开头文本.Text = "开头文本"
+        HCL_开头文本.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
+        '
         ' MTB_开头文本
-        ' 
+        '
         MTB_开头文本.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MTB_开头文本.BorderColor = Color.Transparent
         MTB_开头文本.BorderColorFocus = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
@@ -370,10 +370,10 @@ Partial Class Form_v6_参数面板_输出文件设置
         MTB_开头文本.TabIndex = 3
         MTB_开头文本.WaterText = "输出文件以什么开头"
         MTB_开头文本.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        ' 
+        '
         ' Panel3
-        ' 
-        Panel3.Controls.Add(HtmlColorLabel7)
+        '
+        Panel3.Controls.Add(HCL_自动命名方式)
         Panel3.Controls.Add(MCB_自动命名方式)
         Panel3.Dock = DockStyle.Top
         Panel3.Location = New Point(20, 184)
@@ -381,23 +381,23 @@ Partial Class Form_v6_参数面板_输出文件设置
         Panel3.Padding = New Padding(0, 10, 0, 0)
         Panel3.Size = New Size(660, 42)
         Panel3.TabIndex = 4
-        ' 
-        ' HtmlColorLabel7
-        ' 
-        HtmlColorLabel7.AutoSizeMode = AutoSizeMode.GrowAndShrink
-        HtmlColorLabel7.Dock = DockStyle.Fill
-        HtmlColorLabel7.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        HtmlColorLabel7.Location = New Point(350, 10)
-        HtmlColorLabel7.Margin = New Padding(2)
-        HtmlColorLabel7.Name = "HtmlColorLabel7"
-        HtmlColorLabel7.Padding = New Padding(10, 0, 0, 0)
-        HtmlColorLabel7.Size = New Size(310, 32)
-        HtmlColorLabel7.TabIndex = 7
-        HtmlColorLabel7.Text = "自动命名方式"
-        HtmlColorLabel7.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
-        ' 
+        '
+        ' HCL_自动命名方式
+        '
+        HCL_自动命名方式.AutoSizeMode = AutoSizeMode.GrowAndShrink
+        HCL_自动命名方式.Dock = DockStyle.Fill
+        HCL_自动命名方式.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
+        HCL_自动命名方式.Location = New Point(350, 10)
+        HCL_自动命名方式.Margin = New Padding(2)
+        HCL_自动命名方式.Name = "HCL_自动命名方式"
+        HCL_自动命名方式.Padding = New Padding(10, 0, 0, 0)
+        HCL_自动命名方式.Size = New Size(310, 32)
+        HCL_自动命名方式.TabIndex = 7
+        HCL_自动命名方式.Text = "自动命名方式"
+        HCL_自动命名方式.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
+        '
         ' MCB_自动命名方式
-        ' 
+        '
         MCB_自动命名方式.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_自动命名方式.BorderRadius = 10
         MCB_自动命名方式.BorderSize = 0
@@ -433,22 +433,22 @@ Partial Class Form_v6_参数面板_输出文件设置
         MCB_自动命名方式.ToolTipMaxWidth = 350
         MCB_自动命名方式.ToolTipPadding = New Padding(15)
         MCB_自动命名方式.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        ' 
-        ' HtmlColorLabel2
-        ' 
-        HtmlColorLabel2.AutoSize = True
-        HtmlColorLabel2.AutoSizeMode = AutoSizeMode.GrowAndShrink
-        HtmlColorLabel2.Dock = DockStyle.Top
-        HtmlColorLabel2.Location = New Point(20, 134)
-        HtmlColorLabel2.Margin = New Padding(2)
-        HtmlColorLabel2.Name = "HtmlColorLabel2"
-        HtmlColorLabel2.Padding = New Padding(0, 20, 0, 5)
-        HtmlColorLabel2.Size = New Size(660, 50)
-        HtmlColorLabel2.TabIndex = 3
-        HtmlColorLabel2.Text = "<span style=""font-size:13"">命名方式</span>   <span style=""color:IndianRed"">新手请保持附加时间戳的自动命名以避免重大损失！</span>"
-        ' 
+        '
+        ' HCL_命名方式
+        '
+        HCL_命名方式.AutoSize = True
+        HCL_命名方式.AutoSizeMode = AutoSizeMode.GrowAndShrink
+        HCL_命名方式.Dock = DockStyle.Top
+        HCL_命名方式.Location = New Point(20, 134)
+        HCL_命名方式.Margin = New Padding(2)
+        HCL_命名方式.Name = "HCL_命名方式"
+        HCL_命名方式.Padding = New Padding(0, 20, 0, 5)
+        HCL_命名方式.Size = New Size(660, 50)
+        HCL_命名方式.TabIndex = 3
+        HCL_命名方式.Text = "<span style=""font-size:13"">命名方式</span>   <span style=""color:IndianRed"">新手请保持附加时间戳的自动命名以避免重大损失！</span>"
+        '
         ' Panel2
-        ' 
+        '
         Panel2.Controls.Add(MCB_输出位置)
         Panel2.Dock = DockStyle.Top
         Panel2.Location = New Point(20, 92)
@@ -456,9 +456,9 @@ Partial Class Form_v6_参数面板_输出文件设置
         Panel2.Padding = New Padding(0, 10, 0, 0)
         Panel2.Size = New Size(660, 42)
         Panel2.TabIndex = 2
-        ' 
+        '
         ' MCB_输出位置
-        ' 
+        '
         MCB_输出位置.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_输出位置.BorderRadius = 10
         MCB_输出位置.BorderSize = 0
@@ -486,9 +486,9 @@ Partial Class Form_v6_参数面板_输出文件设置
         MCB_输出位置.ToolTipPadding = New Padding(15)
         MCB_输出位置.WaterText = "输出位置，将文件或文件夹拖至此来直接获取位置"
         MCB_输出位置.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        ' 
+        '
         ' Panel1
-        ' 
+        '
         Panel1.Controls.Add(MCB_输出文件参数使用方法)
         Panel1.Controls.Add(JustEmptyControl2)
         Panel1.Controls.Add(MTB_后缀)
@@ -500,9 +500,9 @@ Partial Class Form_v6_参数面板_输出文件设置
         Panel1.Padding = New Padding(0, 10, 0, 0)
         Panel1.Size = New Size(660, 42)
         Panel1.TabIndex = 1
-        ' 
+        '
         ' MCB_输出文件参数使用方法
-        ' 
+        '
         MCB_输出文件参数使用方法.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_输出文件参数使用方法.BorderRadius = 10
         MCB_输出文件参数使用方法.BorderSize = 0
@@ -531,17 +531,17 @@ Partial Class Form_v6_参数面板_输出文件设置
         MCB_输出文件参数使用方法.ToolTipPadding = New Padding(15)
         MCB_输出文件参数使用方法.WaterText = "输出文件参数使用方法"
         MCB_输出文件参数使用方法.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        ' 
+        '
         ' JustEmptyControl2
-        ' 
+        '
         JustEmptyControl2.Dock = DockStyle.Left
         JustEmptyControl2.Location = New Point(210, 10)
         JustEmptyControl2.Name = "JustEmptyControl2"
         JustEmptyControl2.Size = New Size(10, 32)
         JustEmptyControl2.TabIndex = 4
-        ' 
+        '
         ' MTB_后缀
-        ' 
+        '
         MTB_后缀.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MTB_后缀.BorderColor = Color.Transparent
         MTB_后缀.BorderColorFocus = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
@@ -557,17 +557,17 @@ Partial Class Form_v6_参数面板_输出文件设置
         MTB_后缀.TabIndex = 3
         MTB_后缀.WaterText = "后缀"
         MTB_后缀.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        ' 
+        '
         ' JustEmptyControl1
-        ' 
+        '
         JustEmptyControl1.Dock = DockStyle.Left
         JustEmptyControl1.Location = New Point(100, 10)
         JustEmptyControl1.Name = "JustEmptyControl1"
         JustEmptyControl1.Size = New Size(10, 32)
         JustEmptyControl1.TabIndex = 2
-        ' 
+        '
         ' MB_选择后缀
-        ' 
+        '
         MB_选择后缀.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MB_选择后缀.BorderRadius = 10
         MB_选择后缀.BorderSize = 0
@@ -580,23 +580,23 @@ Partial Class Form_v6_参数面板_输出文件设置
         MB_选择后缀.Size = New Size(100, 32)
         MB_选择后缀.TabIndex = 0
         MB_选择后缀.Text = "选择后缀"
-        ' 
-        ' HtmlColorLabel1
-        ' 
-        HtmlColorLabel1.AutoSize = True
-        HtmlColorLabel1.AutoSizeMode = AutoSizeMode.GrowAndShrink
-        HtmlColorLabel1.Dock = DockStyle.Top
-        HtmlColorLabel1.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        HtmlColorLabel1.Location = New Point(20, 20)
-        HtmlColorLabel1.Margin = New Padding(2)
-        HtmlColorLabel1.Name = "HtmlColorLabel1"
-        HtmlColorLabel1.Padding = New Padding(0, 0, 0, 5)
-        HtmlColorLabel1.Size = New Size(660, 30)
-        HtmlColorLabel1.TabIndex = 0
-        HtmlColorLabel1.Text = "<span style=""font-size:13; color:Silver"">后缀和位置</span>   输出目录默认不会保存到预设中，需要额外打开保存开关"
-        ' 
+        '
+        ' HCL_后缀和位置
+        '
+        HCL_后缀和位置.AutoSize = True
+        HCL_后缀和位置.AutoSizeMode = AutoSizeMode.GrowAndShrink
+        HCL_后缀和位置.Dock = DockStyle.Top
+        HCL_后缀和位置.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
+        HCL_后缀和位置.Location = New Point(20, 20)
+        HCL_后缀和位置.Margin = New Padding(2)
+        HCL_后缀和位置.Name = "HCL_后缀和位置"
+        HCL_后缀和位置.Padding = New Padding(0, 0, 0, 5)
+        HCL_后缀和位置.Size = New Size(660, 30)
+        HCL_后缀和位置.TabIndex = 0
+        HCL_后缀和位置.Text = "<span style=""font-size:13; color:Silver"">后缀和位置</span>   输出目录默认不会保存到预设中，需要额外打开保存开关"
+        '
         ' Form_v6_参数面板_输出文件设置
-        ' 
+        '
         AutoScaleDimensions = New SizeF(96F, 96F)
         AutoScaleMode = AutoScaleMode.Dpi
         BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
@@ -618,13 +618,13 @@ Partial Class Form_v6_参数面板_输出文件设置
     End Sub
 
     Friend WithEvents ModernPanel1 As LakeUI.ModernPanel
-    Friend WithEvents HtmlColorLabel1 As LakeUI.HtmlColorLabel
+    Friend WithEvents HCL_后缀和位置 As LakeUI.HtmlColorLabel
     Friend WithEvents Panel1 As Panel
     Friend WithEvents MB_选择后缀 As LakeUI.ModernButton
     Friend WithEvents MTB_后缀 As LakeUI.ModernTextBox
     Friend WithEvents JustEmptyControl1 As LakeUI.JustEmptyControl
     Friend WithEvents Panel2 As Panel
-    Friend WithEvents HtmlColorLabel2 As LakeUI.HtmlColorLabel
+    Friend WithEvents HCL_命名方式 As LakeUI.HtmlColorLabel
     Friend WithEvents MCB_输出文件参数使用方法 As LakeUI.ModernComboBox
     Friend WithEvents JustEmptyControl2 As LakeUI.JustEmptyControl
     Friend WithEvents Panel3 As Panel
@@ -635,15 +635,15 @@ Partial Class Form_v6_参数面板_输出文件设置
     Friend WithEvents MTB_结尾文本 As LakeUI.ModernTextBox
     Friend WithEvents Panel5 As Panel
     Friend WithEvents MTB_替代文件名 As LakeUI.ModernTextBox
-    Friend WithEvents HtmlColorLabel3 As LakeUI.HtmlColorLabel
-    Friend WithEvents MCB_保留访问时间 As LakeUI.ModernCheckBox
-    Friend WithEvents MCB_保留修改时间 As LakeUI.ModernCheckBox
-    Friend WithEvents MCB_保留创建时间 As LakeUI.ModernCheckBox
+    Friend WithEvents HCL_文件时间 As LakeUI.HtmlColorLabel
+    Friend WithEvents MCK_保留访问时间 As LakeUI.ModernCheckBox
+    Friend WithEvents MCK_保留修改时间 As LakeUI.ModernCheckBox
+    Friend WithEvents MCK_保留创建时间 As LakeUI.ModernCheckBox
     Friend WithEvents MCB_输出位置 As LakeUI.ModernComboBox
-    Friend WithEvents HtmlColorLabel6 As LakeUI.HtmlColorLabel
-    Friend WithEvents HtmlColorLabel5 As LakeUI.HtmlColorLabel
-    Friend WithEvents HtmlColorLabel4 As LakeUI.HtmlColorLabel
-    Friend WithEvents HtmlColorLabel7 As LakeUI.HtmlColorLabel
+    Friend WithEvents HCL_结尾文本 As LakeUI.HtmlColorLabel
+    Friend WithEvents HCL_替代文件名 As LakeUI.HtmlColorLabel
+    Friend WithEvents HCL_开头文本 As LakeUI.HtmlColorLabel
+    Friend WithEvents HCL_自动命名方式 As LakeUI.HtmlColorLabel
     Friend WithEvents 后缀菜单 As LakeUI.ModernContextMenu
     Friend WithEvents 视频菜单 As LakeUI.ModernContextMenu
     Friend WithEvents 音频菜单 As LakeUI.ModernContextMenu

@@ -1,4 +1,4 @@
-﻿Imports LakeUI
+Imports LakeUI
 
 Public Class Form_v6_设置_更新选项
     Private Sub MCB_更新服务器_SelectedIndexChanged(sender As Object, e As EventArgs) Handles MCB_更新服务器.SelectedIndexChanged

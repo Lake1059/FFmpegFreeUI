@@ -1,4 +1,4 @@
-﻿Public Class Form_v6_参数面板_降噪
+Public Class Form_v6_参数面板_降噪
     Private Sub Form_v6_参数面板_降噪_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.Icon = FormMain_v6.Icon
         SetControlFont(设置_v6.实例对象.字体, Me, , True)
@@ -15,8 +15,8 @@
         Me.Hide()
     End Sub
 
-    Private Sub MCB_插帧总开关_CheckedChanged(sender As Object, e As EventArgs) Handles MCB_插帧总开关.CheckedChanged
-        If MCB_插帧总开关.Checked = False Then
+    Private Sub MCB_插帧总开关_CheckedChanged(sender As Object, e As EventArgs) Handles MCK_降噪总开关.CheckedChanged
+        If MCK_降噪总开关.Checked = False Then
             MCB_滤镜选择.SelectedIndex = -1
         End If
     End Sub
@@ -57,10 +57,10 @@
     End Sub
 
     Private Sub 隐藏全部降噪参数()
-        重置降噪参数(Panel1, HtmlColorLabel1, ETB_降噪参数1)
-        重置降噪参数(Panel2, HtmlColorLabel2, ETB_降噪参数2)
-        重置降噪参数(Panel3, HtmlColorLabel3, ETB_降噪参数3)
-        重置降噪参数(Panel4, HtmlColorLabel4, ETB_降噪参数4)
+        重置降噪参数(Panel1, HCL_降噪参数名称1, ETB_降噪参数1)
+        重置降噪参数(Panel2, HCL_降噪参数名称2, ETB_降噪参数2)
+        重置降噪参数(Panel3, HCL_降噪参数名称3, ETB_降噪参数3)
+        重置降噪参数(Panel4, HCL_降噪参数名称4, ETB_降噪参数4)
     End Sub
 
     Private Sub 重置降噪参数(参数面板 As Panel, 参数名称 As LakeUI.HtmlColorLabel, 参数滑块 As LakeUI.ExcellentTrackBar)
@@ -81,19 +81,19 @@
         Select Case 序号
             Case 1
                 参数面板 = Panel1
-                参数名称 = HtmlColorLabel1
+                参数名称 = HCL_降噪参数名称1
                 参数滑块 = ETB_降噪参数1
             Case 2
                 参数面板 = Panel2
-                参数名称 = HtmlColorLabel2
+                参数名称 = HCL_降噪参数名称2
                 参数滑块 = ETB_降噪参数2
             Case 3
                 参数面板 = Panel3
-                参数名称 = HtmlColorLabel3
+                参数名称 = HCL_降噪参数名称3
                 参数滑块 = ETB_降噪参数3
             Case 4
                 参数面板 = Panel4
-                参数名称 = HtmlColorLabel4
+                参数名称 = HCL_降噪参数名称4
                 参数滑块 = ETB_降噪参数4
             Case Else
                 Exit Sub

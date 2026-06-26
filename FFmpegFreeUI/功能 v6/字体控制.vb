@@ -1,4 +1,4 @@
-﻿Public Class 字体控制
+Public Class 字体控制
 
     Public Shared Sub 更新所有控件字体属性()
         SetControlFont(设置_v6.实例对象.字体, FormMain_v6, , True)

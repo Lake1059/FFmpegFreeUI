@@ -1,4 +1,4 @@
-﻿Imports LakeUI
+Imports LakeUI
 Imports Microsoft.VisualBasic.ApplicationServices
 
 Namespace My

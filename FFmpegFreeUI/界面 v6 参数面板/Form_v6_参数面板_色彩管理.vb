@@ -1,4 +1,4 @@
-﻿Public Class Form_v6_参数面板_色彩管理
+Public Class Form_v6_参数面板_色彩管理
 
     Private Sub Form_v6_参数面板_色彩管理_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         初始化下拉框浮动提示()

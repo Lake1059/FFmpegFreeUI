@@ -1,4 +1,4 @@
-﻿Imports System.Globalization
+Imports System.Globalization
 Imports System.IO
 Imports System.Reflection
 Imports System.Runtime.CompilerServices

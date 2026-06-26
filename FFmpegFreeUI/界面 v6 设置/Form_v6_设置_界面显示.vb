@@ -1,4 +1,4 @@
-﻿Public Class Form_v6_设置_界面显示
+Public Class Form_v6_设置_界面显示
     Private Sub Form_v6_设置_界面显示_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
     End Sub

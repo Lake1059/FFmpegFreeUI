@@ -110,7 +110,7 @@ Public Class 启动参数响应_v6
         If fileName = "" Then Return ""
         If Not fileName.EndsWith(".json", StringComparison.OrdinalIgnoreCase) Then fileName &= ".json"
 
-        For Each source In {"用户自定义", "从社区下载", "开发者内置"}
+        For Each source In {"用户自定义", "从社区下载"}
             Dim candidate = Path.Combine(预设管理_v6.获取预设目录(source), fileName)
             If File.Exists(candidate) Then Return candidate
         Next

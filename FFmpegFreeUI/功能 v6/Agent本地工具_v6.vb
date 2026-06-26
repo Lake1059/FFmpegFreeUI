@@ -360,13 +360,13 @@ Public Class AgentLocalTools
     <CodeAnalysis.SuppressMessage("Performance", "CA1861:不要将常量数组作为参数", Justification:="<挂起>")>
     Public Shared Function BuildToolDefinitions(permissionLevel As Integer, networkMode As Integer) As List(Of Dictionary(Of String, Object))
         Dim tools As New List(Of Dictionary(Of String, Object)) From {
-            FunctionTool("get_parameter_panel_state", "读取当前 3FUI 参数面板的结构化预设 JSON 和人类可读总览。", New Dictionary(Of String, Object)),
+            FunctionTool("get_parameter_panel_state", "读取当前 3FUI 参数面板的结构化预设 JSON、人类可读总览和命令行预览。", New Dictionary(Of String, Object)),
             FunctionTool("get_parameter_field_info", "按字段名或关键词查询参数面板字段的类型、当前值、候选值和格式规则。填写不熟悉的参数前优先调用，避免猜字段值。", New Dictionary(Of String, Object) From {
             {"fields", New Dictionary(Of String, Object) From {{"type", "array"}, {"items", New Dictionary(Of String, Object) From {{"type", "string"}}}}},
             {"query", New Dictionary(Of String, Object) From {{"type", "string"}, {"description", "可选关键词，用于模糊查找字段名"}}},
             {"include_current_values", New Dictionary(Of String, Object) From {{"type", "boolean"}}}
         }),
-            FunctionTool("apply_parameter_panel_patch", "修改当前 3FUI 参数面板。优先传 changes 对象，键为 预设数据_v6 的属性名；也可传 preset_json 应用完整预设。修改 滤镜排序系统 时必须传完整排序列表，删除内置滤镜会同步清空对应参数页。", New Dictionary(Of String, Object) From {
+            FunctionTool("apply_parameter_panel_patch", "修改当前 3FUI 参数面板，并返回结构化结果、总览和命令行预览。优先传 changes 对象，键为 预设数据_v6 的属性名；也可传 preset_json 应用完整预设。修改 滤镜排序系统 时必须传完整排序列表，删除内置滤镜会同步清空对应参数页。", New Dictionary(Of String, Object) From {
             {"changes", New Dictionary(Of String, Object) From {{"type", "object"}, {"additionalProperties", True}}},
             {"preset_json", New Dictionary(Of String, Object) From {{"type", "string"}}},
             {"note", New Dictionary(Of String, Object) From {{"type", "string"}}}
@@ -429,8 +429,8 @@ Public Class AgentLocalTools
                 {"payload", New Dictionary(Of String, Object) From {{"type", "object"}, {"additionalProperties", True}}}
             }, {"tool"}))
             tools.Add(FunctionTool("get_system_hardware", "读取系统硬件概要：处理器名称、内存、显卡名称。", New Dictionary(Of String, Object)))
-            tools.Add(FunctionTool("get_parameter_panel_controls", "读取参数面板上的下拉框可选值，以及 Label/HtmlColorLabel 文本。", New Dictionary(Of String, Object) From {
-                {"query", New Dictionary(Of String, Object) From {{"type", "string"}, {"description", "可选控件名或文本关键词"}}}
+            tools.Add(FunctionTool("get_parameter_panel_controls", "读取参数面板上的用户直接操作控件和说明控件，包括控件名、类型、文本、当前值、候选项等。", New Dictionary(Of String, Object) From {
+                {"query", New Dictionary(Of String, Object) From {{"type", "string"}, {"description", "可选控件名或文本关键词，例如 MCB_视频编码器分类、MCB_输出位置、HCL_质量"}}}
             }))
             tools.Add(FunctionTool("list_parameter_presets", "列出参数面板预设，来源可为用户自定义、从社区下载、开发者内置。", New Dictionary(Of String, Object) From {
                 {"source", New Dictionary(Of String, Object) From {{"type", "string"}}}
@@ -609,6 +609,7 @@ Public Class AgentLocalTools
         Dim overview = BuildParameterOverview(preset)
         Dim payload As New Dictionary(Of String, Object) From {
             {"overview", overview},
+            {"command_preview", BuildParameterCommandPreview(preset)},
             {"preset_json", JsonSerializer.Serialize(preset, JsonSO)}
         }
         Return JsonSerializer.Serialize(payload, JsonSO)
@@ -619,23 +620,49 @@ Public Class AgentLocalTools
         Dim preset As 预设数据_v6
         Dim previousPreset = 预设管理_v6.从面板创建预设(Form_v6_参数面板)
         Dim explicitFilterOrderChange As Boolean = False
+        Dim requestedChanges As New List(Of Dictionary(Of String, Object))
         If args.ValueKind = JsonValueKind.Object AndAlso args.TryGetProperty("preset_json", presetJson) AndAlso presetJson.ValueKind = JsonValueKind.String AndAlso presetJson.GetString() <> "" Then
             preset = JsonSerializer.Deserialize(Of 预设数据_v6)(presetJson.GetString(), JsonSO)
             explicitFilterOrderChange = JsonObjectHasProperty(presetJson.GetString(), NameOf(预设数据_v6.滤镜排序系统))
+            requestedChanges.Add(New Dictionary(Of String, Object) From {
+                {"field", "preset_json"},
+                {"mode", "replace_all"}
+            })
         Else
             preset = ClonePresetData(previousPreset)
             Dim changes As JsonElement
             If args.ValueKind = JsonValueKind.Object AndAlso args.TryGetProperty("changes", changes) AndAlso changes.ValueKind = JsonValueKind.Object Then
                 explicitFilterOrderChange = HasJsonProperty(changes, NameOf(预设数据_v6.滤镜排序系统))
-                ApplyTopLevelChanges(preset, changes)
+                requestedChanges = ApplyTopLevelChanges(preset, changes)
             Else
                 Return "没有提供 changes 或 preset_json"
             End If
         End If
 
+        Dim noteElement As JsonElement
+        If args.ValueKind = JsonValueKind.Object AndAlso args.TryGetProperty("note", noteElement) Then
+            Dim oldNote = preset.预设备注
+            preset.预设备注 = If(noteElement.ValueKind = JsonValueKind.Null OrElse noteElement.ValueKind = JsonValueKind.Undefined, "", Agent通用工具_v6.GetJsonString(args, "note"))
+            requestedChanges.Add(New Dictionary(Of String, Object) From {
+                {"field", NameOf(预设数据_v6.预设备注)},
+                {"before", oldNote},
+                {"requested", preset.预设备注}
+            })
+        End If
+
         If explicitFilterOrderChange Then 预设管理_v6.应用Agent滤镜排序请求(preset, previousPreset)
         预设管理_v6.显示预设(preset, Form_v6_参数面板)
-        Return "已应用参数面板修改" & vbCrLf & BuildParameterOverview(preset)
+        Dim actualPreset = 预设管理_v6.从面板创建预设(Form_v6_参数面板)
+        Dim payload As New Dictionary(Of String, Object) From {
+            {"message", "已应用参数面板修改"},
+            {"requested_changes", requestedChanges},
+            {"effective_changed_fields", BuildChangedFieldList(previousPreset, actualPreset)},
+            {"filter_order_requested", explicitFilterOrderChange},
+            {"overview", BuildParameterOverview(actualPreset)},
+            {"command_preview", BuildParameterCommandPreview(actualPreset)},
+            {"preset_json", JsonSerializer.Serialize(actualPreset, JsonSO)}
+        }
+        Return JsonSerializer.Serialize(payload, JsonSO)
     End Function
 
     Private Shared Function SyncParameterPanelToQueue() As String
@@ -676,7 +703,11 @@ Public Class AgentLocalTools
             Next
         ElseIf query <> "" Then
             candidateProps = props.
-                Where(Function(x) x.Name.Contains(query, StringComparison.OrdinalIgnoreCase)).
+                Select(Function(prop) New With {.Prop = prop, .Score = GetPropertyMatchScore(query, prop.Name)}).
+                Where(Function(x) x.Score > 0).
+                OrderByDescending(Function(x) x.Score).
+                ThenBy(Function(x) x.Prop.Name, StringComparer.CurrentCultureIgnoreCase).
+                Select(Function(x) x.Prop).
                 ToList()
             matchedProps = candidateProps.Take(30).ToList()
         Else
@@ -858,28 +889,131 @@ Public Class AgentLocalTools
         Return notes
     End Function
 
-    Private Shared Sub ApplyTopLevelChanges(preset As 预设数据_v6, changes As JsonElement)
+    Private Shared Function ApplyTopLevelChanges(preset As 预设数据_v6, changes As JsonElement) As List(Of Dictionary(Of String, Object))
         Dim type = GetType(预设数据_v6)
+        Dim props = type.GetProperties().Where(Function(x) x.CanRead AndAlso x.CanWrite).ToList()
+        Dim result As New List(Of Dictionary(Of String, Object))
         For Each item In changes.EnumerateObject()
-            Dim prop = type.GetProperty(item.Name)
-            If prop Is Nothing OrElse Not prop.CanWrite Then Throw New InvalidOperationException($"未知或不可写属性：{item.Name}")
+            Dim prop = ResolvePresetProperty(item.Name, props)
+            If prop Is Nothing Then
+                Dim suggestions = GetPropertySuggestions(item.Name, props)
+                Dim suffix = If(suggestions.Count = 0, "", "。相近字段：" & String.Join("、", suggestions))
+                Throw New InvalidOperationException($"未知或不可写属性：{item.Name}{suffix}")
+            End If
+            Dim before = prop.GetValue(preset)
             Dim value = DeserializeJsonElement(item.Value, prop.PropertyType)
             prop.SetValue(preset, value)
+            result.Add(New Dictionary(Of String, Object) From {
+                {"field", prop.Name},
+                {"before", before},
+                {"requested", value}
+            })
         Next
-    End Sub
+        Return result
+    End Function
 
     Private Shared Function DeserializeJsonElement(element As JsonElement, targetType As Type) As Object
+        If element.ValueKind = JsonValueKind.Null OrElse element.ValueKind = JsonValueKind.Undefined Then
+            Return GetDefaultJsonPatchValue(targetType)
+        End If
+
         If targetType Is GetType(String) Then
             If element.ValueKind = JsonValueKind.String Then Return element.GetString()
             Return element.GetRawText()
         End If
-        If targetType Is GetType(Boolean) Then Return element.GetBoolean()
-        If targetType Is GetType(Integer) Then Return element.GetInt32()
+        If targetType Is GetType(Boolean) Then
+            If element.ValueKind = JsonValueKind.True OrElse element.ValueKind = JsonValueKind.False Then Return element.GetBoolean()
+            If element.ValueKind = JsonValueKind.String Then
+                Dim boolValue As Boolean
+                If Boolean.TryParse(element.GetString(), boolValue) Then Return boolValue
+            End If
+            If element.ValueKind = JsonValueKind.Number Then
+                Dim intValue As Integer
+                If element.TryGetInt32(intValue) Then Return intValue <> 0
+            End If
+            Throw New InvalidOperationException("布尔字段必须传 true/false。")
+        End If
+        If targetType Is GetType(Integer) Then
+            If element.ValueKind = JsonValueKind.Number Then Return element.GetInt32()
+            If element.ValueKind = JsonValueKind.String Then
+                Dim intValue As Integer
+                If Integer.TryParse(element.GetString(), intValue) Then Return intValue
+            End If
+            Throw New InvalidOperationException("整数字段必须传数字或可解析的数字字符串。")
+        End If
+        If targetType Is GetType(Double) Then
+            If element.ValueKind = JsonValueKind.Number Then Return element.GetDouble()
+            If element.ValueKind = JsonValueKind.String Then
+                Dim doubleValue As Double
+                If Double.TryParse(element.GetString(), Globalization.NumberStyles.Float, Globalization.CultureInfo.InvariantCulture, doubleValue) Then Return doubleValue
+            End If
+            Throw New InvalidOperationException("数字字段必须传数字或可解析的数字字符串。")
+        End If
         If targetType.IsEnum Then
-            If element.ValueKind = JsonValueKind.String Then Return [Enum].Parse(targetType, element.GetString(), True)
+            If element.ValueKind = JsonValueKind.String Then
+                Dim text = element.GetString()
+                Dim intValue As Integer
+                If Integer.TryParse(text, intValue) Then Return [Enum].ToObject(targetType, intValue)
+                Try
+                    Return [Enum].Parse(targetType, text, True)
+                Catch ex As Exception
+                    Throw New InvalidOperationException($"枚举字段 {targetType.Name} 不包含值：{text}。可用值：{String.Join("、", [Enum].GetNames(targetType))}")
+                End Try
+            End If
             Return [Enum].ToObject(targetType, element.GetInt32())
         End If
         Return JsonSerializer.Deserialize(element.GetRawText(), targetType, JsonSO)
+    End Function
+
+    Private Shared Function GetDefaultJsonPatchValue(targetType As Type) As Object
+        If targetType Is GetType(String) Then Return ""
+        If Not targetType.IsValueType Then Return Nothing
+        Return Activator.CreateInstance(targetType)
+    End Function
+
+    Private Shared Function ResolvePresetProperty(name As String, props As List(Of Reflection.PropertyInfo)) As Reflection.PropertyInfo
+        If String.IsNullOrWhiteSpace(name) OrElse props Is Nothing Then Return Nothing
+        Return props.FirstOrDefault(Function(x) String.Equals(x.Name, name, StringComparison.OrdinalIgnoreCase))
+    End Function
+
+    Private Shared Function GetPropertySuggestions(name As String, props As List(Of Reflection.PropertyInfo)) As List(Of String)
+        If String.IsNullOrWhiteSpace(name) OrElse props Is Nothing Then Return New List(Of String)
+        Return props.
+            Select(Function(prop) New With {.Name = prop.Name, .Score = GetPropertyMatchScore(name, prop.Name)}).
+            Where(Function(x) x.Score > 0).
+            OrderByDescending(Function(x) x.Score).
+            ThenBy(Function(x) x.Name, StringComparer.CurrentCultureIgnoreCase).
+            Take(8).
+            Select(Function(x) x.Name).
+            ToList()
+    End Function
+
+    Private Shared Function GetPropertyMatchScore(query As String, propertyName As String) As Integer
+        Dim q = If(query, "").Trim()
+        Dim p = If(propertyName, "").Trim()
+        If q = "" OrElse p = "" Then Return 0
+        If String.Equals(q, p, StringComparison.OrdinalIgnoreCase) Then Return 10000
+        If p.Contains(q, StringComparison.OrdinalIgnoreCase) Then Return 8000 + q.Length
+        If q.Contains(p, StringComparison.OrdinalIgnoreCase) Then Return 7000 + p.Length
+
+        Dim qParts = q.Split({"_"c, " "c, ControlChars.Tab}, StringSplitOptions.RemoveEmptyEntries)
+        Dim score = 0
+        For Each part In qParts
+            If part.Length > 0 AndAlso p.Contains(part, StringComparison.OrdinalIgnoreCase) Then score += 200 + part.Length
+        Next
+
+        Dim common = CountCommonCharacters(q, p)
+        If common >= Math.Min(3, Math.Min(q.Length, p.Length)) Then score += common
+        Return score
+    End Function
+
+    Private Shared Function CountCommonCharacters(a As String, b As String) As Integer
+        Dim setB = New HashSet(Of Char)(If(b, "").ToLowerInvariant())
+        Dim count = 0
+        For Each ch In If(a, "").ToLowerInvariant()
+            If setB.Contains(ch) Then count += 1
+        Next
+        Return count
     End Function
 
     Private Shared Function JsonObjectHasProperty(json As String, propertyName As String) As Boolean
@@ -905,6 +1039,25 @@ Public Class AgentLocalTools
             预设管理_v6.显示参数总览(box, preset)
             Return box.Text
         End Using
+    End Function
+
+    Private Shared Function BuildParameterCommandPreview(preset As 预设数据_v6) As String
+        Return 预设管理_v6.生成命令行展示文本(preset, 预设管理_v6.输入占位符, 预设管理_v6.输出占位符)
+    End Function
+
+    Private Shared Function BuildChangedFieldList(beforePreset As 预设数据_v6, afterPreset As 预设数据_v6) As List(Of String)
+        Dim result As New List(Of String)
+        If beforePreset Is Nothing OrElse afterPreset Is Nothing Then Return result
+        For Each prop In GetType(预设数据_v6).GetProperties().Where(Function(x) x.CanRead)
+            Dim beforeValue = prop.GetValue(beforePreset)
+            Dim afterValue = prop.GetValue(afterPreset)
+            If Not JsonValuesEqual(beforeValue, afterValue) Then result.Add(prop.Name)
+        Next
+        Return result
+    End Function
+
+    Private Shared Function JsonValuesEqual(left As Object, right As Object) As Boolean
+        Return String.Equals(JsonSerializer.Serialize(left, JsonSO), JsonSerializer.Serialize(right, JsonSO), StringComparison.Ordinal)
     End Function
 
     Private Class QueueTargetResolution

@@ -15,8 +15,8 @@ Public Class Form_v6_参数面板_画面翻转
         Me.Hide()
     End Sub
 
-    Private Sub MCB_画面翻转总开关_CheckedChanged(sender As Object, e As EventArgs) Handles MCB_画面翻转总开关.CheckedChanged
-        If MCB_画面翻转总开关.Checked = False Then
+    Private Sub MCB_画面翻转总开关_CheckedChanged(sender As Object, e As EventArgs) Handles MCK_画面翻转总开关.CheckedChanged
+        If MCK_画面翻转总开关.Checked = False Then
             MCB_角度翻转.SelectedIndex = -1
             MCB_镜像翻转.SelectedIndex = -1
         End If

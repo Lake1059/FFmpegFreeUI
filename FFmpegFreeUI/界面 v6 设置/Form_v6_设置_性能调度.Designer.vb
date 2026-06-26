@@ -1,4 +1,4 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class Form_v6_设置_性能调度
     Inherits System.Windows.Forms.Form
 
@@ -40,9 +40,9 @@ Partial Class Form_v6_设置_性能调度
         Panel1.SuspendLayout()
         Panel2.SuspendLayout()
         SuspendLayout()
-        ' 
+        '
         ' ModernPanel1
-        ' 
+        '
         ModernPanel1.BackColor1 = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         ModernPanel1.BorderSize = 0
         ModernPanel1.Controls.Add(Panel3)
@@ -58,9 +58,9 @@ Partial Class Form_v6_设置_性能调度
         ModernPanel1.ScrollBarMode = LakeUI.ModernPanel.ScrollMode.Vertical
         ModernPanel1.Size = New Size(739, 636)
         ModernPanel1.TabIndex = 1
-        ' 
+        '
         ' Panel3
-        ' 
+        '
         Panel3.Controls.Add(MCB_编码队列刷新速度)
         Panel3.Dock = DockStyle.Top
         Panel3.Location = New Point(20, 219)
@@ -68,9 +68,9 @@ Partial Class Form_v6_设置_性能调度
         Panel3.Padding = New Padding(0, 10, 0, 0)
         Panel3.Size = New Size(699, 42)
         Panel3.TabIndex = 15
-        ' 
+        '
         ' MCB_编码队列刷新速度
-        ' 
+        '
         MCB_编码队列刷新速度.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_编码队列刷新速度.BorderRadius = 10
         MCB_编码队列刷新速度.BorderSize = 0
@@ -101,9 +101,9 @@ Partial Class Form_v6_设置_性能调度
         MCB_编码队列刷新速度.ToolTipMaxWidth = 350
         MCB_编码队列刷新速度.ToolTipPadding = New Padding(15)
         MCB_编码队列刷新速度.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        ' 
+        '
         ' HtmlColorLabel3
-        ' 
+        '
         HtmlColorLabel3.AutoSize = True
         HtmlColorLabel3.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel3.Dock = DockStyle.Top
@@ -115,9 +115,9 @@ Partial Class Form_v6_设置_性能调度
         HtmlColorLabel3.Size = New Size(699, 45)
         HtmlColorLabel3.TabIndex = 14
         HtmlColorLabel3.Text = "<span style=""font-size:13; color:Silver"">编码队列刷新速度</span>   低性能设备可以降低来节约不必要的开支"
-        ' 
+        '
         ' Panel1
-        ' 
+        '
         Panel1.Controls.Add(MCB_自动开始数量)
         Panel1.Dock = DockStyle.Top
         Panel1.Location = New Point(20, 132)
@@ -125,9 +125,9 @@ Partial Class Form_v6_设置_性能调度
         Panel1.Padding = New Padding(0, 10, 0, 0)
         Panel1.Size = New Size(699, 42)
         Panel1.TabIndex = 13
-        ' 
+        '
         ' MCB_自动开始数量
-        ' 
+        '
         MCB_自动开始数量.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_自动开始数量.BorderRadius = 10
         MCB_自动开始数量.BorderSize = 0
@@ -163,9 +163,9 @@ Partial Class Form_v6_设置_性能调度
         MCB_自动开始数量.ToolTipMaxWidth = 350
         MCB_自动开始数量.ToolTipPadding = New Padding(15)
         MCB_自动开始数量.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        ' 
+        '
         ' HtmlColorLabel2
-        ' 
+        '
         HtmlColorLabel2.AutoSize = True
         HtmlColorLabel2.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel2.Dock = DockStyle.Top
@@ -177,9 +177,9 @@ Partial Class Form_v6_设置_性能调度
         HtmlColorLabel2.Size = New Size(699, 45)
         HtmlColorLabel2.TabIndex = 12
         HtmlColorLabel2.Text = "<span style=""font-size:13; color:Silver"">自动开始数量</span>   视频建议 1，音频或图片可以尝试按照 CPU 核心数量"
-        ' 
+        '
         ' Panel2
-        ' 
+        '
         Panel2.Controls.Add(HtmlColorLabel6)
         Panel2.Controls.Add(ModernTextBox2)
         Panel2.Controls.Add(JustEmptyControl1)
@@ -190,9 +190,9 @@ Partial Class Form_v6_设置_性能调度
         Panel2.Padding = New Padding(0, 10, 0, 0)
         Panel2.Size = New Size(699, 42)
         Panel2.TabIndex = 11
-        ' 
+        '
         ' HtmlColorLabel6
-        ' 
+        '
         HtmlColorLabel6.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel6.Dock = DockStyle.Fill
         HtmlColorLabel6.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
@@ -204,9 +204,9 @@ Partial Class Form_v6_设置_性能调度
         HtmlColorLabel6.TabIndex = 9
         HtmlColorLabel6.Text = "短文本框：输入 ?~? 然后 Enter 来快速填写"
         HtmlColorLabel6.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
-        ' 
+        '
         ' ModernTextBox2
-        ' 
+        '
         ModernTextBox2.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernTextBox2.BorderColor = Color.Empty
         ModernTextBox2.BorderColorFocus = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
@@ -220,17 +220,17 @@ Partial Class Form_v6_设置_性能调度
         ModernTextBox2.Size = New Size(100, 32)
         ModernTextBox2.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernTextBox2.TabIndex = 8
-        ' 
+        '
         ' JustEmptyControl1
-        ' 
+        '
         JustEmptyControl1.Dock = DockStyle.Left
         JustEmptyControl1.Location = New Point(200, 10)
         JustEmptyControl1.Name = "JustEmptyControl1"
         JustEmptyControl1.Size = New Size(10, 32)
         JustEmptyControl1.TabIndex = 7
-        ' 
+        '
         ' MTB_处理器线程
-        ' 
+        '
         MTB_处理器线程.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MTB_处理器线程.BorderColor = Color.Empty
         MTB_处理器线程.BorderColorFocus = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
@@ -244,9 +244,9 @@ Partial Class Form_v6_设置_性能调度
         MTB_处理器线程.Size = New Size(200, 32)
         MTB_处理器线程.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MTB_处理器线程.TabIndex = 6
-        ' 
+        '
         ' HtmlColorLabel1
-        ' 
+        '
         HtmlColorLabel1.AutoSize = True
         HtmlColorLabel1.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel1.Dock = DockStyle.Top
@@ -257,9 +257,9 @@ Partial Class Form_v6_设置_性能调度
         HtmlColorLabel1.Size = New Size(699, 25)
         HtmlColorLabel1.TabIndex = 10
         HtmlColorLabel1.Text = "<span style=""font-size:13; color:Silver"">处理器核心</span>   任务处理器里的处理器相关性，仅对新任务生效"
-        ' 
+        '
         ' Form_v6_设置_性能调度
-        ' 
+        '
         AutoScaleDimensions = New SizeF(96F, 96F)
         AutoScaleMode = AutoScaleMode.Dpi
         BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))

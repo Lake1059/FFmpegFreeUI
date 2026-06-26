@@ -1,4 +1,4 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class Form_v6_设置_功能设定
     Inherits System.Windows.Forms.Form
 
@@ -72,9 +72,9 @@ Partial Class Form_v6_设置_功能设定
         Panel1.SuspendLayout()
         Panel2.SuspendLayout()
         SuspendLayout()
-        ' 
+        '
         ' ModernPanel1
-        ' 
+        '
         ModernPanel1.BackColor1 = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         ModernPanel1.BorderSize = 0
         ModernPanel1.Controls.Add(Panel11)
@@ -97,9 +97,9 @@ Partial Class Form_v6_设置_功能设定
         ModernPanel1.ScrollBarMode = LakeUI.ModernPanel.ScrollMode.Vertical
         ModernPanel1.Size = New Size(742, 651)
         ModernPanel1.TabIndex = 2
-        ' 
+        '
         ' Panel8
-        ' 
+        '
         Panel8.Controls.Add(HtmlColorLabel8)
         Panel8.Controls.Add(MCB_任务失败删除文件)
         Panel8.Dock = DockStyle.Top
@@ -108,9 +108,9 @@ Partial Class Form_v6_设置_功能设定
         Panel8.Padding = New Padding(0, 10, 0, 0)
         Panel8.Size = New Size(702, 42)
         Panel8.TabIndex = 27
-        ' 
+        '
         ' HtmlColorLabel8
-        ' 
+        '
         HtmlColorLabel8.AutoSize = True
         HtmlColorLabel8.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel8.Dock = DockStyle.Fill
@@ -122,9 +122,9 @@ Partial Class Form_v6_设置_功能设定
         HtmlColorLabel8.TabIndex = 27
         HtmlColorLabel8.Text = "任务失败或手动停止时是否删除报废 MP4"
         HtmlColorLabel8.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
-        ' 
+        '
         ' MCB_任务失败删除文件
-        ' 
+        '
         MCB_任务失败删除文件.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_任务失败删除文件.BorderRadius = 10
         MCB_任务失败删除文件.BorderSize = 0
@@ -152,9 +152,9 @@ Partial Class Form_v6_设置_功能设定
         MCB_任务失败删除文件.ToolTipMaxWidth = 350
         MCB_任务失败删除文件.ToolTipPadding = New Padding(15)
         MCB_任务失败删除文件.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        ' 
+        '
         ' Panel10
-        ' 
+        '
         Panel10.Controls.Add(HtmlColorLabel10)
         Panel10.Controls.Add(MCB_任务日志保留行数)
         Panel10.Dock = DockStyle.Top
@@ -163,9 +163,9 @@ Partial Class Form_v6_设置_功能设定
         Panel10.Padding = New Padding(0, 10, 0, 0)
         Panel10.Size = New Size(702, 42)
         Panel10.TabIndex = 31
-        ' 
+        '
         ' HtmlColorLabel10
-        ' 
+        '
         HtmlColorLabel10.AutoSize = True
         HtmlColorLabel10.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel10.Dock = DockStyle.Fill
@@ -177,9 +177,9 @@ Partial Class Form_v6_设置_功能设定
         HtmlColorLabel10.TabIndex = 31
         HtmlColorLabel10.Text = "编码队列任务日志保留行数"
         HtmlColorLabel10.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
-        ' 
+        '
         ' MCB_任务日志保留行数
-        ' 
+        '
         MCB_任务日志保留行数.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_任务日志保留行数.BorderRadius = 10
         MCB_任务日志保留行数.BorderSize = 0
@@ -208,9 +208,9 @@ Partial Class Form_v6_设置_功能设定
         MCB_任务日志保留行数.ToolTipMaxWidth = 350
         MCB_任务日志保留行数.ToolTipPadding = New Padding(15)
         MCB_任务日志保留行数.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        ' 
+        '
         ' Panel11
-        ' 
+        '
         Panel11.Controls.Add(HtmlColorLabel11)
         Panel11.Controls.Add(MCB_任务日志性能计数器)
         Panel11.Dock = DockStyle.Top
@@ -219,9 +219,9 @@ Partial Class Form_v6_设置_功能设定
         Panel11.Padding = New Padding(0, 10, 0, 0)
         Panel11.Size = New Size(702, 42)
         Panel11.TabIndex = 33
-        ' 
+        '
         ' HtmlColorLabel11
-        ' 
+        '
         HtmlColorLabel11.AutoSize = True
         HtmlColorLabel11.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel11.Dock = DockStyle.Fill
@@ -233,9 +233,9 @@ Partial Class Form_v6_设置_功能设定
         HtmlColorLabel11.TabIndex = 33
         HtmlColorLabel11.Text = "编码队列任务日志窗口底部显示当前任务性能计数器"
         HtmlColorLabel11.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
-        ' 
+        '
         ' MCB_任务日志性能计数器
-        ' 
+        '
         MCB_任务日志性能计数器.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_任务日志性能计数器.BorderRadius = 10
         MCB_任务日志性能计数器.BorderSize = 0
@@ -262,9 +262,9 @@ Partial Class Form_v6_设置_功能设定
         MCB_任务日志性能计数器.ToolTipMaxWidth = 350
         MCB_任务日志性能计数器.ToolTipPadding = New Padding(15)
         MCB_任务日志性能计数器.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        ' 
+        '
         ' Panel9
-        ' 
+        '
         Panel9.Controls.Add(HtmlColorLabel9)
         Panel9.Controls.Add(MCB_编码队列显示最新日志行)
         Panel9.Dock = DockStyle.Top
@@ -273,9 +273,9 @@ Partial Class Form_v6_设置_功能设定
         Panel9.Padding = New Padding(0, 10, 0, 0)
         Panel9.Size = New Size(702, 42)
         Panel9.TabIndex = 29
-        ' 
+        '
         ' HtmlColorLabel9
-        ' 
+        '
         HtmlColorLabel9.AutoSize = True
         HtmlColorLabel9.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel9.Dock = DockStyle.Fill
@@ -287,9 +287,9 @@ Partial Class Form_v6_设置_功能设定
         HtmlColorLabel9.TabIndex = 29
         HtmlColorLabel9.Text = "编码队列项底部显示最新日志"
         HtmlColorLabel9.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
-        ' 
+        '
         ' MCB_编码队列显示最新日志行
-        ' 
+        '
         MCB_编码队列显示最新日志行.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_编码队列显示最新日志行.BorderRadius = 10
         MCB_编码队列显示最新日志行.BorderSize = 0
@@ -316,9 +316,9 @@ Partial Class Form_v6_设置_功能设定
         MCB_编码队列显示最新日志行.ToolTipMaxWidth = 350
         MCB_编码队列显示最新日志行.ToolTipPadding = New Padding(15)
         MCB_编码队列显示最新日志行.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        ' 
+        '
         ' Panel7
-        ' 
+        '
         Panel7.Controls.Add(HtmlColorLabel7)
         Panel7.Controls.Add(MCB_独立参数面板自动切预设管理)
         Panel7.Dock = DockStyle.Top
@@ -327,9 +327,9 @@ Partial Class Form_v6_设置_功能设定
         Panel7.Padding = New Padding(0, 10, 0, 0)
         Panel7.Size = New Size(702, 42)
         Panel7.TabIndex = 25
-        ' 
+        '
         ' HtmlColorLabel7
-        ' 
+        '
         HtmlColorLabel7.AutoSize = True
         HtmlColorLabel7.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel7.Dock = DockStyle.Fill
@@ -341,9 +341,9 @@ Partial Class Form_v6_设置_功能设定
         HtmlColorLabel7.TabIndex = 25
         HtmlColorLabel7.Text = "打开独立参数面板时要自动切到预设管理吗？"
         HtmlColorLabel7.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
-        ' 
+        '
         ' MCB_独立参数面板自动切预设管理
-        ' 
+        '
         MCB_独立参数面板自动切预设管理.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_独立参数面板自动切预设管理.BorderRadius = 10
         MCB_独立参数面板自动切预设管理.BorderSize = 0
@@ -370,9 +370,9 @@ Partial Class Form_v6_设置_功能设定
         MCB_独立参数面板自动切预设管理.ToolTipMaxWidth = 350
         MCB_独立参数面板自动切预设管理.ToolTipPadding = New Padding(15)
         MCB_独立参数面板自动切预设管理.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        ' 
+        '
         ' Panel6
-        ' 
+        '
         Panel6.Controls.Add(HtmlColorLabel6)
         Panel6.Controls.Add(MCB_任务名称混淆)
         Panel6.Dock = DockStyle.Top
@@ -381,9 +381,9 @@ Partial Class Form_v6_设置_功能设定
         Panel6.Padding = New Padding(0, 10, 0, 0)
         Panel6.Size = New Size(702, 42)
         Panel6.TabIndex = 23
-        ' 
+        '
         ' HtmlColorLabel6
-        ' 
+        '
         HtmlColorLabel6.AutoSize = True
         HtmlColorLabel6.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel6.Dock = DockStyle.Fill
@@ -395,9 +395,9 @@ Partial Class Form_v6_设置_功能设定
         HtmlColorLabel6.TabIndex = 23
         HtmlColorLabel6.Text = "你这任务正经吗？"
         HtmlColorLabel6.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
-        ' 
+        '
         ' MCB_任务名称混淆
-        ' 
+        '
         MCB_任务名称混淆.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_任务名称混淆.BorderRadius = 10
         MCB_任务名称混淆.BorderSize = 0
@@ -425,9 +425,9 @@ Partial Class Form_v6_设置_功能设定
         MCB_任务名称混淆.ToolTipMaxWidth = 350
         MCB_任务名称混淆.ToolTipPadding = New Padding(15)
         MCB_任务名称混淆.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        ' 
+        '
         ' Panel5
-        ' 
+        '
         Panel5.Controls.Add(HtmlColorLabel5)
         Panel5.Controls.Add(MCB_是否自动重置参数面板到第一个页面)
         Panel5.Dock = DockStyle.Top
@@ -436,9 +436,9 @@ Partial Class Form_v6_设置_功能设定
         Panel5.Padding = New Padding(0, 10, 0, 0)
         Panel5.Size = New Size(702, 42)
         Panel5.TabIndex = 21
-        ' 
+        '
         ' HtmlColorLabel5
-        ' 
+        '
         HtmlColorLabel5.AutoSize = True
         HtmlColorLabel5.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel5.Dock = DockStyle.Fill
@@ -450,9 +450,9 @@ Partial Class Form_v6_设置_功能设定
         HtmlColorLabel5.TabIndex = 21
         HtmlColorLabel5.Text = "从主选项卡切回参数面板是否需要重置到第一个页面"
         HtmlColorLabel5.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
-        ' 
+        '
         ' MCB_是否自动重置参数面板到第一个页面
-        ' 
+        '
         MCB_是否自动重置参数面板到第一个页面.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_是否自动重置参数面板到第一个页面.BorderRadius = 10
         MCB_是否自动重置参数面板到第一个页面.BorderSize = 0
@@ -479,9 +479,9 @@ Partial Class Form_v6_设置_功能设定
         MCB_是否自动重置参数面板到第一个页面.ToolTipMaxWidth = 350
         MCB_是否自动重置参数面板到第一个页面.ToolTipPadding = New Padding(15)
         MCB_是否自动重置参数面板到第一个页面.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        ' 
+        '
         ' Panel4
-        ' 
+        '
         Panel4.Controls.Add(HtmlColorLabel4)
         Panel4.Controls.Add(MCB_是否自动开始任务)
         Panel4.Dock = DockStyle.Top
@@ -490,9 +490,9 @@ Partial Class Form_v6_设置_功能设定
         Panel4.Padding = New Padding(0, 10, 0, 0)
         Panel4.Size = New Size(702, 42)
         Panel4.TabIndex = 19
-        ' 
+        '
         ' HtmlColorLabel4
-        ' 
+        '
         HtmlColorLabel4.AutoSize = True
         HtmlColorLabel4.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel4.Dock = DockStyle.Fill
@@ -504,9 +504,9 @@ Partial Class Form_v6_设置_功能设定
         HtmlColorLabel4.TabIndex = 19
         HtmlColorLabel4.Text = "是否自动开始任务"
         HtmlColorLabel4.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
-        ' 
+        '
         ' MCB_是否自动开始任务
-        ' 
+        '
         MCB_是否自动开始任务.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_是否自动开始任务.BorderRadius = 10
         MCB_是否自动开始任务.BorderSize = 0
@@ -533,9 +533,9 @@ Partial Class Form_v6_设置_功能设定
         MCB_是否自动开始任务.ToolTipMaxWidth = 350
         MCB_是否自动开始任务.ToolTipPadding = New Padding(15)
         MCB_是否自动开始任务.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        ' 
+        '
         ' Panel3
-        ' 
+        '
         Panel3.Controls.Add(HtmlColorLabel3)
         Panel3.Controls.Add(MCB_是否启用提示音)
         Panel3.Dock = DockStyle.Top
@@ -544,9 +544,9 @@ Partial Class Form_v6_设置_功能设定
         Panel3.Padding = New Padding(0, 10, 0, 0)
         Panel3.Size = New Size(702, 42)
         Panel3.TabIndex = 17
-        ' 
+        '
         ' HtmlColorLabel3
-        ' 
+        '
         HtmlColorLabel3.AutoSize = True
         HtmlColorLabel3.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel3.Dock = DockStyle.Fill
@@ -558,9 +558,9 @@ Partial Class Form_v6_设置_功能设定
         HtmlColorLabel3.TabIndex = 17
         HtmlColorLabel3.Text = "是否启用提示音"
         HtmlColorLabel3.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
-        ' 
+        '
         ' MCB_是否启用提示音
-        ' 
+        '
         MCB_是否启用提示音.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_是否启用提示音.BorderRadius = 10
         MCB_是否启用提示音.BorderSize = 0
@@ -587,9 +587,9 @@ Partial Class Form_v6_设置_功能设定
         MCB_是否启用提示音.ToolTipMaxWidth = 350
         MCB_是否启用提示音.ToolTipPadding = New Padding(15)
         MCB_是否启用提示音.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        ' 
+        '
         ' Panel1
-        ' 
+        '
         Panel1.Controls.Add(HtmlColorLabel2)
         Panel1.Controls.Add(MCB_有任务时系统状态)
         Panel1.Dock = DockStyle.Top
@@ -598,9 +598,9 @@ Partial Class Form_v6_设置_功能设定
         Panel1.Padding = New Padding(0, 10, 0, 0)
         Panel1.Size = New Size(702, 42)
         Panel1.TabIndex = 15
-        ' 
+        '
         ' HtmlColorLabel2
-        ' 
+        '
         HtmlColorLabel2.AutoSize = True
         HtmlColorLabel2.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel2.Dock = DockStyle.Fill
@@ -612,9 +612,9 @@ Partial Class Form_v6_设置_功能设定
         HtmlColorLabel2.TabIndex = 15
         HtmlColorLabel2.Text = "有任务时系统要保持什么状态"
         HtmlColorLabel2.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
-        ' 
+        '
         ' MCB_有任务时系统状态
-        ' 
+        '
         MCB_有任务时系统状态.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_有任务时系统状态.BorderRadius = 10
         MCB_有任务时系统状态.BorderSize = 0
@@ -642,17 +642,17 @@ Partial Class Form_v6_设置_功能设定
         MCB_有任务时系统状态.ToolTipMaxWidth = 350
         MCB_有任务时系统状态.ToolTipPadding = New Padding(15)
         MCB_有任务时系统状态.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        ' 
+        '
         ' JustEmptyControl1
-        ' 
+        '
         JustEmptyControl1.Dock = DockStyle.Top
         JustEmptyControl1.Location = New Point(20, 83)
         JustEmptyControl1.Name = "JustEmptyControl1"
         JustEmptyControl1.Size = New Size(702, 10)
         JustEmptyControl1.TabIndex = 28
-        ' 
+        '
         ' Panel2
-        ' 
+        '
         Panel2.Controls.Add(MTB_工作目录)
         Panel2.Controls.Add(JustEmptyControl2)
         Panel2.Controls.Add(MB_浏览文件夹)
@@ -662,9 +662,9 @@ Partial Class Form_v6_设置_功能设定
         Panel2.Padding = New Padding(0, 10, 0, 0)
         Panel2.Size = New Size(702, 42)
         Panel2.TabIndex = 13
-        ' 
+        '
         ' MTB_工作目录
-        ' 
+        '
         MTB_工作目录.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MTB_工作目录.BorderColor = Color.Empty
         MTB_工作目录.BorderColorFocus = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
@@ -677,17 +677,17 @@ Partial Class Form_v6_设置_功能设定
         MTB_工作目录.Size = New Size(612, 32)
         MTB_工作目录.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MTB_工作目录.TabIndex = 19
-        ' 
+        '
         ' JustEmptyControl2
-        ' 
+        '
         JustEmptyControl2.Dock = DockStyle.Right
         JustEmptyControl2.Location = New Point(612, 10)
         JustEmptyControl2.Name = "JustEmptyControl2"
         JustEmptyControl2.Size = New Size(10, 32)
         JustEmptyControl2.TabIndex = 7
-        ' 
+        '
         ' MB_浏览文件夹
-        ' 
+        '
         MB_浏览文件夹.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MB_浏览文件夹.BorderRadius = 10
         MB_浏览文件夹.BorderSize = 0
@@ -700,9 +700,9 @@ Partial Class Form_v6_设置_功能设定
         MB_浏览文件夹.Size = New Size(80, 32)
         MB_浏览文件夹.TabIndex = 6
         MB_浏览文件夹.Text = "浏览"
-        ' 
+        '
         ' HtmlColorLabel1
-        ' 
+        '
         HtmlColorLabel1.AutoSize = True
         HtmlColorLabel1.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel1.Dock = DockStyle.Top
@@ -712,9 +712,9 @@ Partial Class Form_v6_设置_功能设定
         HtmlColorLabel1.Size = New Size(702, 21)
         HtmlColorLabel1.TabIndex = 8
         HtmlColorLabel1.Text = "设置工作目录"
-        ' 
+        '
         ' Form_v6_设置_功能设定
-        ' 
+        '
         AutoScaleDimensions = New SizeF(96F, 96F)
         AutoScaleMode = AutoScaleMode.Dpi
         BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))

@@ -1,4 +1,4 @@
-﻿Public Class Form_v6_参数面板_插帧参数
+Public Class Form_v6_参数面板_插帧参数
     Private Sub Form_v6_参数面板_插帧参数_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.Icon = FormMain_v6.Icon
         SetControlFont(设置_v6.实例对象.字体, Me, , True)

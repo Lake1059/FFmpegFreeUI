@@ -74,14 +74,14 @@ Public Class Form_v6_参数面板_质量
         If String.IsNullOrEmpty(text) Then Exit Sub
 
         Dim insertText = text
-        If ModernTextBox6.Text <> "" Then
-            Dim caret = ModernTextBox6.SelectionStart
-            Dim needsSpace = caret > 0 AndAlso Not Char.IsWhiteSpace(ModernTextBox6.Text(caret - 1))
+        If MTB_进阶质量控制参数.Text <> "" Then
+            Dim caret = MTB_进阶质量控制参数.SelectionStart
+            Dim needsSpace = caret > 0 AndAlso Not Char.IsWhiteSpace(MTB_进阶质量控制参数.Text(caret - 1))
             If needsSpace Then insertText = " " & insertText
         End If
 
-        ModernTextBox6.SelectedText = insertText
-        ModernTextBox6.Focus()
+        MTB_进阶质量控制参数.SelectedText = insertText
+        MTB_进阶质量控制参数.Focus()
         通知参数面板刷新()
     End Sub
 
@@ -113,7 +113,7 @@ Public Class Form_v6_参数面板_质量
 
     Private Sub MB_插入预制条目_Click(sender As Object, e As EventArgs) Handles MB_插入预制条目.Click
         初始化预制条目菜单()
-        Dim labelPoint = HtmlColorLabel1.PointToScreen(Point.Empty)
+        Dim labelPoint = HCL_全局质量控制.PointToScreen(Point.Empty)
         Dim formPoint = FormMain_v6.PointToScreen(Point.Empty)
         预制条目菜单.Show(labelPoint.X, formPoint.Y)
     End Sub

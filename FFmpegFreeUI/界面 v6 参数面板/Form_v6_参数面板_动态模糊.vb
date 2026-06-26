@@ -1,4 +1,4 @@
-﻿Public Class Form_v6_参数面板_动态模糊
+Public Class Form_v6_参数面板_动态模糊
     'tmix滤镜
     Private Sub Form_v6_参数面板_动态模糊_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.Icon = FormMain_v6.Icon

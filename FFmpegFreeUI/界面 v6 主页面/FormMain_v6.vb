@@ -1,4 +1,4 @@
-﻿Imports System.ComponentModel
+Imports System.ComponentModel
 Imports System.IO
 Imports System.Reflection
 Imports LakeUI

@@ -1,4 +1,4 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class Form_v6_准备文件
     Inherits System.Windows.Forms.Form
 
@@ -44,9 +44,9 @@ Partial Class Form_v6_准备文件
         ModernPanel1.SuspendLayout()
         Panel1.SuspendLayout()
         SuspendLayout()
-        ' 
+        '
         ' ModernPanel1
-        ' 
+        '
         ModernPanel1.BorderSize = 0
         ModernPanel1.Controls.Add(UltraDetailListView1)
         ModernPanel1.Controls.Add(HtmlColorLabel1)
@@ -57,9 +57,9 @@ Partial Class Form_v6_准备文件
         ModernPanel1.Padding = New Padding(20)
         ModernPanel1.Size = New Size(897, 647)
         ModernPanel1.TabIndex = 0
-        ' 
+        '
         ' UltraDetailListView1
-        ' 
+        '
         UltraDetailListView1.AllowDragReorder = True
         UltraDetailListView1.BackgroundColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         UltraDetailListView1.BorderRadius = 10
@@ -92,9 +92,9 @@ Partial Class Form_v6_准备文件
         UltraDetailListView1.SelectionRectFillColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         UltraDetailListView1.Size = New Size(857, 536)
         UltraDetailListView1.TabIndex = 3
-        ' 
+        '
         ' HtmlColorLabel1
-        ' 
+        '
         HtmlColorLabel1.AutoSize = True
         HtmlColorLabel1.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel1.Dock = DockStyle.Bottom
@@ -105,9 +105,9 @@ Partial Class Form_v6_准备文件
         HtmlColorLabel1.Size = New Size(857, 31)
         HtmlColorLabel1.TabIndex = 2
         HtmlColorLabel1.Text = "可以直接把文件拖进编码队列来开始，如果文件很多或者有其他需求再用这个页面"
-        ' 
+        '
         ' Panel1
-        ' 
+        '
         Panel1.AllowDrop = True
         Panel1.Controls.Add(MCB_排序)
         Panel1.Controls.Add(JustEmptyControl5)
@@ -126,9 +126,9 @@ Partial Class Form_v6_准备文件
         Panel1.Padding = New Padding(0, 0, 0, 10)
         Panel1.Size = New Size(857, 40)
         Panel1.TabIndex = 1
-        ' 
+        '
         ' MCB_排序
-        ' 
+        '
         MCB_排序.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_排序.BorderRadius = 10
         MCB_排序.BorderSize = 0
@@ -158,17 +158,17 @@ Partial Class Form_v6_准备文件
         MCB_排序.ToolTipPadding = New Padding(15)
         MCB_排序.WaterText = "排序"
         MCB_排序.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        ' 
+        '
         ' JustEmptyControl5
-        ' 
+        '
         JustEmptyControl5.Dock = DockStyle.Left
         JustEmptyControl5.Location = New Point(640, 0)
         JustEmptyControl5.Name = "JustEmptyControl5"
         JustEmptyControl5.Size = New Size(10, 30)
         JustEmptyControl5.TabIndex = 9
-        ' 
+        '
         ' MB_移除全部
-        ' 
+        '
         MB_移除全部.AllowDrop = True
         MB_移除全部.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MB_移除全部.BorderRadius = 8
@@ -182,17 +182,17 @@ Partial Class Form_v6_准备文件
         MB_移除全部.Size = New Size(100, 30)
         MB_移除全部.TabIndex = 8
         MB_移除全部.Text = "移除全部"
-        ' 
+        '
         ' JustEmptyControl4
-        ' 
+        '
         JustEmptyControl4.Dock = DockStyle.Left
         JustEmptyControl4.Location = New Point(530, 0)
         JustEmptyControl4.Name = "JustEmptyControl4"
         JustEmptyControl4.Size = New Size(10, 30)
         JustEmptyControl4.TabIndex = 7
-        ' 
+        '
         ' MB_移除选中
-        ' 
+        '
         MB_移除选中.AllowDrop = True
         MB_移除选中.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MB_移除选中.BorderRadius = 8
@@ -206,17 +206,17 @@ Partial Class Form_v6_准备文件
         MB_移除选中.Size = New Size(100, 30)
         MB_移除选中.TabIndex = 6
         MB_移除选中.Text = "移除选中"
-        ' 
+        '
         ' JustEmptyControl3
-        ' 
+        '
         JustEmptyControl3.Dock = DockStyle.Left
         JustEmptyControl3.Location = New Point(420, 0)
         JustEmptyControl3.Name = "JustEmptyControl3"
         JustEmptyControl3.Size = New Size(10, 30)
         JustEmptyControl3.TabIndex = 5
-        ' 
+        '
         ' MB_添加文件夹及子目录
-        ' 
+        '
         MB_添加文件夹及子目录.AllowDrop = True
         MB_添加文件夹及子目录.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MB_添加文件夹及子目录.BorderRadius = 8
@@ -230,17 +230,17 @@ Partial Class Form_v6_准备文件
         MB_添加文件夹及子目录.Size = New Size(170, 30)
         MB_添加文件夹及子目录.TabIndex = 4
         MB_添加文件夹及子目录.Text = "添加文件夹及子目录"
-        ' 
+        '
         ' JustEmptyControl2
-        ' 
+        '
         JustEmptyControl2.Dock = DockStyle.Left
         JustEmptyControl2.Location = New Point(240, 0)
         JustEmptyControl2.Name = "JustEmptyControl2"
         JustEmptyControl2.Size = New Size(10, 30)
         JustEmptyControl2.TabIndex = 3
-        ' 
+        '
         ' MB_添加文件
-        ' 
+        '
         MB_添加文件.AllowDrop = True
         MB_添加文件.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MB_添加文件.BorderRadius = 8
@@ -254,17 +254,17 @@ Partial Class Form_v6_准备文件
         MB_添加文件.Size = New Size(100, 30)
         MB_添加文件.TabIndex = 2
         MB_添加文件.Text = "添加文件"
-        ' 
+        '
         ' JustEmptyControl1
-        ' 
+        '
         JustEmptyControl1.Dock = DockStyle.Left
         JustEmptyControl1.Location = New Point(130, 0)
         JustEmptyControl1.Name = "JustEmptyControl1"
         JustEmptyControl1.Size = New Size(10, 30)
         JustEmptyControl1.TabIndex = 1
-        ' 
+        '
         ' MB_加入编码队列
-        ' 
+        '
         MB_加入编码队列.AllowDrop = True
         MB_加入编码队列.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MB_加入编码队列.BorderRadius = 8
@@ -278,9 +278,9 @@ Partial Class Form_v6_准备文件
         MB_加入编码队列.Size = New Size(130, 30)
         MB_加入编码队列.TabIndex = 0
         MB_加入编码队列.Text = "加入编码队列"
-        ' 
+        '
         ' Form_v6_准备文件
-        ' 
+        '
         AutoScaleDimensions = New SizeF(96F, 96F)
         AutoScaleMode = AutoScaleMode.Dpi
         BackColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))

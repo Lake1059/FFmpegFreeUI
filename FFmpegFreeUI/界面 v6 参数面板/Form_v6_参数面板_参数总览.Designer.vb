@@ -1,4 +1,4 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class Form_v6_参数面板_参数总览
     Inherits System.Windows.Forms.Form
 
@@ -23,15 +23,15 @@ Partial Class Form_v6_参数面板_参数总览
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Panel1 = New Panel()
-        ModernTextBox1 = New LakeUI.ModernTextBox()
+        MTB_参数总览 = New LakeUI.ModernTextBox()
         Panel3 = New Panel()
-        ModernButton1 = New LakeUI.ModernButton()
-        HtmlColorLabel1 = New LakeUI.HtmlColorLabel()
+        MB_复制参数总览 = New LakeUI.ModernButton()
+        HCL_参数总览标题 = New LakeUI.HtmlColorLabel()
         Panel2 = New Panel()
-        ModernTextBox2 = New LakeUI.ModernTextBox()
+        MTB_命令行模板 = New LakeUI.ModernTextBox()
         Panel70 = New Panel()
-        ModernButton2 = New LakeUI.ModernButton()
-        HtmlColorLabel2 = New LakeUI.HtmlColorLabel()
+        MB_复制命令行模板 = New LakeUI.ModernButton()
+        HCL_命令行模板标题 = New LakeUI.HtmlColorLabel()
         ModernPanel1 = New LakeUI.ModernPanel()
         Panel1.SuspendLayout()
         Panel3.SuspendLayout()
@@ -39,158 +39,158 @@ Partial Class Form_v6_参数面板_参数总览
         Panel70.SuspendLayout()
         ModernPanel1.SuspendLayout()
         SuspendLayout()
-        ' 
+        '
         ' Panel1
-        ' 
-        Panel1.Controls.Add(ModernTextBox1)
+        '
+        Panel1.Controls.Add(MTB_参数总览)
         Panel1.Controls.Add(Panel3)
-        Panel1.Controls.Add(HtmlColorLabel1)
+        Panel1.Controls.Add(HCL_参数总览标题)
         Panel1.Dock = DockStyle.Left
         Panel1.Location = New Point(0, 0)
         Panel1.Name = "Panel1"
         Panel1.Padding = New Padding(20, 20, 10, 20)
         Panel1.Size = New Size(370, 611)
         Panel1.TabIndex = 0
-        ' 
-        ' ModernTextBox1
-        ' 
-        ModernTextBox1.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernTextBox1.BorderColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernTextBox1.BorderColorFocus = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernTextBox1.BorderRadius = 10
-        ModernTextBox1.BorderSize = 0
-        ModernTextBox1.Dock = DockStyle.Fill
-        ModernTextBox1.Font = New Font("Microsoft YaHei UI", 11F)
-        ModernTextBox1.LineHeight = 20
-        ModernTextBox1.LineNumberBackColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernTextBox1.LineNumberForeColor = Color.Silver
-        ModernTextBox1.Location = New Point(20, 60)
-        ModernTextBox1.Margin = New Padding(2)
-        ModernTextBox1.MultiLine = True
-        ModernTextBox1.Name = "ModernTextBox1"
-        ModernTextBox1.Padding = New Padding(12, 10, 12, 10)
-        ModernTextBox1.ReadOnly = True
-        ModernTextBox1.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernTextBox1.ShowLineNumbers = True
-        ModernTextBox1.Size = New Size(340, 481)
-        ModernTextBox1.TabIndex = 1
-        ModernTextBox1.Text = "ModernTextBox1"
-        ' 
+        '
+        ' MTB_参数总览
+        '
+        MTB_参数总览.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MTB_参数总览.BorderColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MTB_参数总览.BorderColorFocus = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MTB_参数总览.BorderRadius = 10
+        MTB_参数总览.BorderSize = 0
+        MTB_参数总览.Dock = DockStyle.Fill
+        MTB_参数总览.Font = New Font("Microsoft YaHei UI", 11F)
+        MTB_参数总览.LineHeight = 20
+        MTB_参数总览.LineNumberBackColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MTB_参数总览.LineNumberForeColor = Color.Silver
+        MTB_参数总览.Location = New Point(20, 60)
+        MTB_参数总览.Margin = New Padding(2)
+        MTB_参数总览.MultiLine = True
+        MTB_参数总览.Name = "MTB_参数总览"
+        MTB_参数总览.Padding = New Padding(12, 10, 12, 10)
+        MTB_参数总览.ReadOnly = True
+        MTB_参数总览.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MTB_参数总览.ShowLineNumbers = True
+        MTB_参数总览.Size = New Size(340, 481)
+        MTB_参数总览.TabIndex = 1
+        MTB_参数总览.Text = ""
+        '
         ' Panel3
-        ' 
-        Panel3.Controls.Add(ModernButton1)
+        '
+        Panel3.Controls.Add(MB_复制参数总览)
         Panel3.Dock = DockStyle.Bottom
         Panel3.Location = New Point(20, 541)
         Panel3.Name = "Panel3"
         Panel3.Padding = New Padding(0, 15, 0, 0)
         Panel3.Size = New Size(340, 50)
         Panel3.TabIndex = 40
-        ' 
-        ' ModernButton1
-        ' 
-        ModernButton1.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernButton1.BorderRadius = 10
-        ModernButton1.BorderSize = 0
-        ModernButton1.Dock = DockStyle.Fill
-        ModernButton1.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
-        ModernButton1.Location = New Point(0, 15)
-        ModernButton1.Margin = New Padding(2)
-        ModernButton1.Name = "ModernButton1"
-        ModernButton1.PressedBackColor1 = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
-        ModernButton1.Size = New Size(340, 35)
-        ModernButton1.TabIndex = 2
-        ModernButton1.Text = "复制参数总览"
-        ' 
-        ' HtmlColorLabel1
-        ' 
-        HtmlColorLabel1.AutoSize = True
-        HtmlColorLabel1.AutoSizeMode = AutoSizeMode.GrowAndShrink
-        HtmlColorLabel1.Dock = DockStyle.Top
-        HtmlColorLabel1.Font = New Font("Microsoft YaHei UI", 13F)
-        HtmlColorLabel1.Location = New Point(20, 20)
-        HtmlColorLabel1.Margin = New Padding(2)
-        HtmlColorLabel1.Name = "HtmlColorLabel1"
-        HtmlColorLabel1.Padding = New Padding(0, 0, 0, 15)
-        HtmlColorLabel1.Size = New Size(340, 40)
-        HtmlColorLabel1.TabIndex = 0
-        HtmlColorLabel1.Text = "参数总览"
-        HtmlColorLabel1.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.Center
-        ' 
+        '
+        ' MB_复制参数总览
+        '
+        MB_复制参数总览.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MB_复制参数总览.BorderRadius = 10
+        MB_复制参数总览.BorderSize = 0
+        MB_复制参数总览.Dock = DockStyle.Fill
+        MB_复制参数总览.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        MB_复制参数总览.Location = New Point(0, 15)
+        MB_复制参数总览.Margin = New Padding(2)
+        MB_复制参数总览.Name = "MB_复制参数总览"
+        MB_复制参数总览.PressedBackColor1 = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
+        MB_复制参数总览.Size = New Size(340, 35)
+        MB_复制参数总览.TabIndex = 2
+        MB_复制参数总览.Text = "复制参数总览"
+        '
+        ' HCL_参数总览标题
+        '
+        HCL_参数总览标题.AutoSize = True
+        HCL_参数总览标题.AutoSizeMode = AutoSizeMode.GrowAndShrink
+        HCL_参数总览标题.Dock = DockStyle.Top
+        HCL_参数总览标题.Font = New Font("Microsoft YaHei UI", 13F)
+        HCL_参数总览标题.Location = New Point(20, 20)
+        HCL_参数总览标题.Margin = New Padding(2)
+        HCL_参数总览标题.Name = "HCL_参数总览标题"
+        HCL_参数总览标题.Padding = New Padding(0, 0, 0, 15)
+        HCL_参数总览标题.Size = New Size(340, 40)
+        HCL_参数总览标题.TabIndex = 0
+        HCL_参数总览标题.Text = "参数总览"
+        HCL_参数总览标题.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.Center
+        '
         ' Panel2
-        ' 
-        Panel2.Controls.Add(ModernTextBox2)
+        '
+        Panel2.Controls.Add(MTB_命令行模板)
         Panel2.Controls.Add(Panel70)
-        Panel2.Controls.Add(HtmlColorLabel2)
+        Panel2.Controls.Add(HCL_命令行模板标题)
         Panel2.Dock = DockStyle.Fill
         Panel2.Location = New Point(370, 0)
         Panel2.Name = "Panel2"
         Panel2.Padding = New Padding(10, 20, 20, 20)
         Panel2.Size = New Size(392, 611)
         Panel2.TabIndex = 1
-        ' 
-        ' ModernTextBox2
-        ' 
-        ModernTextBox2.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernTextBox2.BorderColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernTextBox2.BorderColorFocus = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernTextBox2.BorderRadius = 10
-        ModernTextBox2.BorderSize = 0
-        ModernTextBox2.Dock = DockStyle.Fill
-        ModernTextBox2.Font = New Font("Microsoft YaHei UI", 11F)
-        ModernTextBox2.LineHeight = 20
-        ModernTextBox2.Location = New Point(10, 60)
-        ModernTextBox2.Margin = New Padding(2)
-        ModernTextBox2.MultiLine = True
-        ModernTextBox2.Name = "ModernTextBox2"
-        ModernTextBox2.Padding = New Padding(12, 10, 12, 10)
-        ModernTextBox2.ReadOnly = True
-        ModernTextBox2.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernTextBox2.Size = New Size(362, 481)
-        ModernTextBox2.TabIndex = 3
-        ModernTextBox2.Text = "ModernTextBox2"
-        ' 
+        '
+        ' MTB_命令行模板
+        '
+        MTB_命令行模板.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MTB_命令行模板.BorderColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MTB_命令行模板.BorderColorFocus = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MTB_命令行模板.BorderRadius = 10
+        MTB_命令行模板.BorderSize = 0
+        MTB_命令行模板.Dock = DockStyle.Fill
+        MTB_命令行模板.Font = New Font("Microsoft YaHei UI", 11F)
+        MTB_命令行模板.LineHeight = 20
+        MTB_命令行模板.Location = New Point(10, 60)
+        MTB_命令行模板.Margin = New Padding(2)
+        MTB_命令行模板.MultiLine = True
+        MTB_命令行模板.Name = "MTB_命令行模板"
+        MTB_命令行模板.Padding = New Padding(12, 10, 12, 10)
+        MTB_命令行模板.ReadOnly = True
+        MTB_命令行模板.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MTB_命令行模板.Size = New Size(362, 481)
+        MTB_命令行模板.TabIndex = 3
+        MTB_命令行模板.Text = ""
+        '
         ' Panel70
-        ' 
-        Panel70.Controls.Add(ModernButton2)
+        '
+        Panel70.Controls.Add(MB_复制命令行模板)
         Panel70.Dock = DockStyle.Bottom
         Panel70.Location = New Point(10, 541)
         Panel70.Name = "Panel70"
         Panel70.Padding = New Padding(0, 15, 0, 0)
         Panel70.Size = New Size(362, 50)
         Panel70.TabIndex = 39
-        ' 
-        ' ModernButton2
-        ' 
-        ModernButton2.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernButton2.BorderRadius = 10
-        ModernButton2.BorderSize = 0
-        ModernButton2.Dock = DockStyle.Fill
-        ModernButton2.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
-        ModernButton2.Location = New Point(0, 15)
-        ModernButton2.Margin = New Padding(2)
-        ModernButton2.Name = "ModernButton2"
-        ModernButton2.PressedBackColor1 = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
-        ModernButton2.Size = New Size(362, 35)
-        ModernButton2.TabIndex = 3
-        ModernButton2.Text = "复制命令行模版"
-        ' 
-        ' HtmlColorLabel2
-        ' 
-        HtmlColorLabel2.AutoSize = True
-        HtmlColorLabel2.AutoSizeMode = AutoSizeMode.GrowAndShrink
-        HtmlColorLabel2.Dock = DockStyle.Top
-        HtmlColorLabel2.Font = New Font("Microsoft YaHei UI", 13F)
-        HtmlColorLabel2.Location = New Point(10, 20)
-        HtmlColorLabel2.Margin = New Padding(2)
-        HtmlColorLabel2.Name = "HtmlColorLabel2"
-        HtmlColorLabel2.Padding = New Padding(0, 0, 0, 15)
-        HtmlColorLabel2.Size = New Size(362, 40)
-        HtmlColorLabel2.TabIndex = 2
-        HtmlColorLabel2.Text = "命令行模板"
-        HtmlColorLabel2.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.Center
-        ' 
+        '
+        ' MB_复制命令行模板
+        '
+        MB_复制命令行模板.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MB_复制命令行模板.BorderRadius = 10
+        MB_复制命令行模板.BorderSize = 0
+        MB_复制命令行模板.Dock = DockStyle.Fill
+        MB_复制命令行模板.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        MB_复制命令行模板.Location = New Point(0, 15)
+        MB_复制命令行模板.Margin = New Padding(2)
+        MB_复制命令行模板.Name = "MB_复制命令行模板"
+        MB_复制命令行模板.PressedBackColor1 = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
+        MB_复制命令行模板.Size = New Size(362, 35)
+        MB_复制命令行模板.TabIndex = 3
+        MB_复制命令行模板.Text = "复制命令行模版"
+        '
+        ' HCL_命令行模板标题
+        '
+        HCL_命令行模板标题.AutoSize = True
+        HCL_命令行模板标题.AutoSizeMode = AutoSizeMode.GrowAndShrink
+        HCL_命令行模板标题.Dock = DockStyle.Top
+        HCL_命令行模板标题.Font = New Font("Microsoft YaHei UI", 13F)
+        HCL_命令行模板标题.Location = New Point(10, 20)
+        HCL_命令行模板标题.Margin = New Padding(2)
+        HCL_命令行模板标题.Name = "HCL_命令行模板标题"
+        HCL_命令行模板标题.Padding = New Padding(0, 0, 0, 15)
+        HCL_命令行模板标题.Size = New Size(362, 40)
+        HCL_命令行模板标题.TabIndex = 2
+        HCL_命令行模板标题.Text = "命令行模板"
+        HCL_命令行模板标题.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.Center
+        '
         ' ModernPanel1
-        ' 
+        '
         ModernPanel1.BackColor1 = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         ModernPanel1.BorderSize = 0
         ModernPanel1.Controls.Add(Panel2)
@@ -200,9 +200,9 @@ Partial Class Form_v6_参数面板_参数总览
         ModernPanel1.Name = "ModernPanel1"
         ModernPanel1.Size = New Size(762, 611)
         ModernPanel1.TabIndex = 2
-        ' 
+        '
         ' Form_v6_参数面板_参数总览
-        ' 
+        '
         AutoScaleDimensions = New SizeF(96F, 96F)
         AutoScaleMode = AutoScaleMode.Dpi
         BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
@@ -224,13 +224,13 @@ Partial Class Form_v6_参数面板_参数总览
 
     Friend WithEvents Panel1 As Panel
     Friend WithEvents Panel2 As Panel
-    Friend WithEvents HtmlColorLabel1 As LakeUI.HtmlColorLabel
-    Friend WithEvents ModernTextBox1 As LakeUI.ModernTextBox
-    Friend WithEvents ModernTextBox2 As LakeUI.ModernTextBox
-    Friend WithEvents HtmlColorLabel2 As LakeUI.HtmlColorLabel
+    Friend WithEvents HCL_参数总览标题 As LakeUI.HtmlColorLabel
+    Friend WithEvents MTB_参数总览 As LakeUI.ModernTextBox
+    Friend WithEvents MTB_命令行模板 As LakeUI.ModernTextBox
+    Friend WithEvents HCL_命令行模板标题 As LakeUI.HtmlColorLabel
     Friend WithEvents Panel70 As Panel
     Friend WithEvents Panel3 As Panel
-    Friend WithEvents ModernButton1 As LakeUI.ModernButton
-    Friend WithEvents ModernButton2 As LakeUI.ModernButton
+    Friend WithEvents MB_复制参数总览 As LakeUI.ModernButton
+    Friend WithEvents MB_复制命令行模板 As LakeUI.ModernButton
     Friend WithEvents ModernPanel1 As LakeUI.ModernPanel
 End Class

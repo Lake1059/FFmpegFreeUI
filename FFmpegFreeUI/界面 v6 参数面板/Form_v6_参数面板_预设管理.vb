@@ -24,17 +24,17 @@ Public Class Form_v6_参数面板_预设管理
     End Class
 
     Private Sub Form_v6_参数面板_预设管理_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        ModernTextBox1.Text = ""
-        ModernTextBox2.Text = ""
-        ModernTextBox3.Text = ""
-        ModernTextBox4.Text = ""
-        If ModernComboBox1.SelectedIndex < 0 Then ModernComboBox1.SelectedIndex = 1
+        MTB_预设参数总览.Text = ""
+        MTB_预设命令行预览.Text = ""
+        MTB_预设名称.Text = ""
+        MTB_预设备注.Text = ""
+        If MCB_预设来源.SelectedIndex < 0 Then MCB_预设来源.SelectedIndex = 1
         刷新预设列表()
     End Sub
 
     Private Sub Form_v6_参数面板_预设管理_SizeChanged(sender As Object, e As EventArgs) Handles Me.SizeChanged
-        Me.ModernListBox1.Width = (Me.Panel2.Width - Me.JustEmptyControl1.Width * 2) / 3
-        Me.ModernTextBox1.Width = Me.ModernListBox1.Width
+        Me.MLB_预设列表.Width = (Me.Panel2.Width - Me.JustEmptyControl1.Width * 2) / 3
+        Me.MTB_预设参数总览.Width = Me.MLB_预设列表.Width
     End Sub
 
     Public Sub 刷新预设列表()
@@ -44,8 +44,8 @@ Public Class Form_v6_参数面板_预设管理
         Dim 旧选中标识 = 当前选中列表项()?.标识
         _正在刷新预设列表 = True
         Try
-            ModernListBox1.Items.Clear()
-            ModernListBox1.ItemToolTips.Clear()
+            MLB_预设列表.Items.Clear()
+            MLB_预设列表.ItemToolTips.Clear()
             _预设列表项.Clear()
 
             If 当前是内置来源() Then
@@ -89,7 +89,7 @@ Public Class Form_v6_参数面板_预设管理
 
         Dim index = -1
         If 旧选中标识 <> "" Then index = _预设列表项.FindIndex(Function(x) String.Equals(x.标识, 旧选中标识, StringComparison.OrdinalIgnoreCase))
-        ModernListBox1.SelectedIndex = index
+        MLB_预设列表.SelectedIndex = index
         If index < 0 Then 清空预设预览()
         更新操作可用状态()
     End Sub
@@ -97,9 +97,9 @@ Public Class Form_v6_参数面板_预设管理
     Private Sub 添加预设列表项(item As 预设列表项, Optional remark As String = "")
         If item Is Nothing OrElse item.名称 = "" Then Exit Sub
         _预设列表项.Add(item)
-        ModernListBox1.Items.Add(item.名称)
+        MLB_预设列表.Items.Add(item.名称)
         If item.是内置 AndAlso item.数据 IsNot Nothing Then remark = item.数据.预设备注
-        If remark <> "" Then ModernListBox1.ItemToolTips.Add(New LakeUI.ModernListBox.ToolTipEntry(item.名称, remark))
+        If remark <> "" Then MLB_预设列表.ItemToolTips.Add(New LakeUI.ModernListBox.ToolTipEntry(item.名称, remark))
     End Sub
 
     Private Function 用户预设排序文件路径() As String
@@ -202,11 +202,11 @@ Public Class Form_v6_参数面板_预设管理
     Private Sub 同步拖动后的预设列表顺序()
         If _正在刷新预设列表 Then Exit Sub
         If Not 当前是用户自定义来源() Then Exit Sub
-        If ModernListBox1.Items.Count <> _预设列表项.Count Then Exit Sub
+        If MLB_预设列表.Items.Count <> _预设列表项.Count Then Exit Sub
 
         Dim oldItems = _预设列表项.ToList()
         Dim reordered As New List(Of 预设列表项)
-        For Each rawItem In ModernListBox1.Items
+        For Each rawItem In MLB_预设列表.Items
             Dim name = If(rawItem, "").ToString()
             Dim index = oldItems.FindIndex(Function(x) String.Equals(x.名称, name, StringComparison.Ordinal))
             If index < 0 Then Continue For
@@ -222,8 +222,8 @@ Public Class Form_v6_参数面板_预设管理
     End Sub
 
     Private Function 当前来源名称() As String
-        Dim source = ModernComboBox1.Text
-        If source = "" AndAlso ModernComboBox1.SelectedIndex >= 0 Then source = ModernComboBox1.Items(ModernComboBox1.SelectedIndex)
+        Dim source = MCB_预设来源.Text
+        If source = "" AndAlso MCB_预设来源.SelectedIndex >= 0 Then source = MCB_预设来源.Items(MCB_预设来源.SelectedIndex)
         If source = "" Then source = "用户自定义"
         Return source
     End Function
@@ -312,9 +312,9 @@ Public Class Form_v6_参数面板_预设管理
 
     Private Sub Agent选择来源(source As String)
         Dim sourceName = Agent规范来源(source)
-        Dim index = ModernComboBox1.Items.IndexOf(sourceName)
-        If index >= 0 AndAlso ModernComboBox1.SelectedIndex <> index Then
-            ModernComboBox1.SelectedIndex = index
+        Dim index = MCB_预设来源.Items.IndexOf(sourceName)
+        If index >= 0 AndAlso MCB_预设来源.SelectedIndex <> index Then
+            MCB_预设来源.SelectedIndex = index
         Else
             刷新预设列表()
         End If
@@ -347,8 +347,8 @@ Public Class Form_v6_参数面板_预设管理
     End Function
 
     Private Function 当前选中列表项() As 预设列表项
-        If ModernListBox1.SelectedIndex < 0 OrElse ModernListBox1.SelectedIndex >= _预设列表项.Count Then Return Nothing
-        Return _预设列表项(ModernListBox1.SelectedIndex)
+        If MLB_预设列表.SelectedIndex < 0 OrElse MLB_预设列表.SelectedIndex >= _预设列表项.Count Then Return Nothing
+        Return _预设列表项(MLB_预设列表.SelectedIndex)
     End Function
 
     Private Function 当前选中文件路径() As String
@@ -366,22 +366,22 @@ Public Class Form_v6_参数面板_预设管理
 
     Private Sub 更新操作可用状态()
         Dim isBuiltIn = 当前是内置来源()
-        ModernButton1.Enabled = Not isBuiltIn
-        ModernButton3.Enabled = Not isBuiltIn
-        ModernButton4.Enabled = Not isBuiltIn
-        ModernButton6.Enabled = Not isBuiltIn
-        ModernButton7.Enabled = Not isBuiltIn
-        ModernTextBox3.ReadOnly = isBuiltIn
-        ModernTextBox4.ReadOnly = isBuiltIn
-        ModernCheckBox1.Enabled = Not isBuiltIn
-        ModernListBox1.AllowDragReorder = 当前是用户自定义来源()
+        MB_保存预设.Enabled = Not isBuiltIn
+        MB_导出预设.Enabled = Not isBuiltIn
+        MB_导入预设.Enabled = Not isBuiltIn
+        MB_变更预设名称.Enabled = Not isBuiltIn
+        MB_变更预设备注.Enabled = Not isBuiltIn
+        MTB_预设名称.ReadOnly = isBuiltIn
+        MTB_预设备注.ReadOnly = isBuiltIn
+        MCK_额外保存输出位置.Enabled = Not isBuiltIn
+        MLB_预设列表.AllowDragReorder = 当前是用户自定义来源()
     End Sub
 
     Private Sub 清空预设预览()
-        ModernTextBox1.Text = ""
-        ModernTextBox2.Text = ""
-        ModernTextBox3.Text = ""
-        ModernTextBox4.Text = ""
+        MTB_预设参数总览.Text = ""
+        MTB_预设命令行预览.Text = ""
+        MTB_预设名称.Text = ""
+        MTB_预设备注.Text = ""
     End Sub
 
     Private Sub 预览选中预设()
@@ -396,21 +396,21 @@ Public Class Form_v6_参数面板_预设管理
                 清空预设预览()
                 Exit Sub
             End If
-            ModernTextBox3.Text = item.名称
-            ModernTextBox4.Text = data.预设备注
-            ModernCheckBox1.Checked = data.额外保存输出位置
-            预设管理_v6.显示参数总览(ModernTextBox1, data)
-            ModernTextBox2.Text = 预设管理_v6.生成命令行展示文本(data, 预设管理_v6.输入占位符, 预设管理_v6.输出占位符)
+            MTB_预设名称.Text = item.名称
+            MTB_预设备注.Text = data.预设备注
+            MCK_额外保存输出位置.Checked = data.额外保存输出位置
+            预设管理_v6.显示参数总览(MTB_预设参数总览, data)
+            MTB_预设命令行预览.Text = 预设管理_v6.生成命令行展示文本(data, 预设管理_v6.输入占位符, 预设管理_v6.输出占位符)
         Catch ex As Exception
-            ModernTextBox1.Text = "读取失败：" & ex.Message
-            ModernTextBox2.Text = ""
+            MTB_预设参数总览.Text = "读取失败：" & ex.Message
+            MTB_预设命令行预览.Text = ""
         End Try
     End Sub
 
     Private Function 从面板创建带元数据的预设() As 预设数据_v6
         Dim data = 预设管理_v6.从面板创建预设(所属参数面板对象)
-        data.预设备注 = ModernTextBox4.Text.Trim()
-        data.额外保存输出位置 = ModernCheckBox1.Checked
+        data.预设备注 = MTB_预设备注.Text.Trim()
+        data.额外保存输出位置 = MCK_额外保存输出位置.Checked
         Return data
     End Function
 
@@ -438,14 +438,14 @@ Public Class Form_v6_参数面板_预设管理
     End Function
 
     Private Sub 选中用户预设文件(file As String)
-        If ModernComboBox1.SelectedIndex <> 1 Then
-            ModernComboBox1.SelectedIndex = 1
+        If MCB_预设来源.SelectedIndex <> 1 Then
+            MCB_预设来源.SelectedIndex = 1
         Else
             刷新预设列表()
         End If
 
         Dim idx = _预设列表项.FindIndex(Function(x) Not x.是内置 AndAlso String.Equals(x.文件路径, file, StringComparison.OrdinalIgnoreCase))
-        If idx >= 0 Then ModernListBox1.SelectedIndex = idx
+        If idx >= 0 Then MLB_预设列表.SelectedIndex = idx
     End Sub
 
     Private Sub 保存到用户预设()
@@ -471,7 +471,7 @@ Public Class Form_v6_参数面板_预设管理
                                 $"确认覆盖用户预设：{presetName}？",
                                 $"确认按当前选中项名称保存为用户预设：{presetName}？")
                 Dim buttons = If(已存在, {"覆盖", "取消"}, {"保存", "取消"})
-                Dim result = ExFloatingBox(ModernButton1, prompt, buttons, If(已存在, "确认覆盖", "确认保存"), MsgBoxStyle.Question, 1)
+                Dim result = ExFloatingBox(MB_保存预设, prompt, buttons, If(已存在, "确认覆盖", "确认保存"), MsgBoxStyle.Question, 1)
                 If result <> 0 Then Exit Sub
             End If
 
@@ -479,7 +479,7 @@ Public Class Form_v6_参数面板_预设管理
             预设管理_v6.写入预设文件(file, data)
             If isNewUserPreset Then 添加用户预设到排序末尾(file)
             选中用户预设文件(file)
-            ModernTextBox3.Text = Path.GetFileNameWithoutExtension(file)
+            MTB_预设名称.Text = Path.GetFileNameWithoutExtension(file)
             ExFloatingTip("已保存预设：" & Path.GetFileNameWithoutExtension(file), 1800)
         Catch ex As Exception
             ExFloatingTip("保存失败：" & ex.Message, 2500)
@@ -508,7 +508,7 @@ Public Class Form_v6_参数面板_预设管理
         End If
         Dim file = 当前选中文件路径()
         If file = "" Then Exit Sub
-        Dim suggested = If(ModernTextBox3.Text.Trim() <> "", ModernTextBox3.Text.Trim(), Path.GetFileNameWithoutExtension(file))
+        Dim suggested = If(MTB_预设名称.Text.Trim() <> "", MTB_预设名称.Text.Trim(), Path.GetFileNameWithoutExtension(file))
         Using d As New SaveFileDialog With {.Filter = "JSON 预设|*.json", .FileName = 预设管理_v6.安全文件名(suggested) & ".json"}
             If d.ShowDialog(Me) <> DialogResult.OK OrElse d.FileName = "" Then Exit Sub
             System.IO.File.Copy(file, d.FileName, True)
@@ -533,7 +533,7 @@ Public Class Form_v6_参数面板_预设管理
                 预设管理_v6.写入预设文件(dest, data)
                 If isNewUserPreset Then 添加用户预设到排序末尾(dest)
             Next
-            ModernComboBox1.SelectedIndex = 1
+            MCB_预设来源.SelectedIndex = 1
             刷新预设列表()
             ExFloatingTip(FormMain_v6, "已导入预设", 1800)
         End Using
@@ -545,7 +545,7 @@ Public Class Form_v6_参数面板_预设管理
             Exit Sub
         End If
         Dim file = 当前选中文件路径()
-        Dim newName = ModernTextBox3.Text.Trim()
+        Dim newName = MTB_预设名称.Text.Trim()
         If file = "" OrElse newName = "" Then Exit Sub
         Try
             Dim data = 预设管理_v6.读取预设文件(file)
@@ -565,10 +565,10 @@ Public Class Form_v6_参数面板_预设管理
             ElseIf isNewUserPreset Then
                 添加用户预设到排序末尾(dest)
             End If
-            ModernComboBox1.SelectedIndex = 1
+            MCB_预设来源.SelectedIndex = 1
             刷新预设列表()
             Dim idx = _预设列表项.FindIndex(Function(x) Not x.是内置 AndAlso String.Equals(x.文件路径, dest, StringComparison.OrdinalIgnoreCase))
-            If idx >= 0 Then ModernListBox1.SelectedIndex = idx
+            If idx >= 0 Then MLB_预设列表.SelectedIndex = idx
         Catch ex As Exception
             ExFloatingTip("重命名失败：" & ex.Message, 2500)
         End Try
@@ -584,7 +584,7 @@ Public Class Form_v6_参数面板_预设管理
         Try
             Dim data = 预设管理_v6.读取预设文件(file)
             If data Is Nothing Then Exit Sub
-            data.预设备注 = ModernTextBox4.Text.Trim()
+            data.预设备注 = MTB_预设备注.Text.Trim()
             Dim userDir = 预设管理_v6.获取预设目录("用户自定义")
             Dim dest = file
             If Not String.Equals(Path.GetDirectoryName(file), userDir, StringComparison.OrdinalIgnoreCase) Then
@@ -594,7 +594,7 @@ Public Class Form_v6_参数面板_预设管理
             Dim isNewUserPreset = Not System.IO.File.Exists(dest)
             预设管理_v6.写入预设文件(dest, data)
             If isNewUserPreset Then 添加用户预设到排序末尾(dest)
-            ModernComboBox1.SelectedIndex = 1
+            MCB_预设来源.SelectedIndex = 1
             刷新预设列表()
         Catch ex As Exception
             ExFloatingTip("更新备注失败：" & ex.Message, 2500)
@@ -610,67 +610,67 @@ Public Class Form_v6_参数面板_预设管理
         End If
         If item.文件路径 = "" OrElse Not System.IO.File.Exists(item.文件路径) Then Exit Sub
 
-        Dim oldIndex = ModernListBox1.SelectedIndex
+        Dim oldIndex = MLB_预设列表.SelectedIndex
         Try
             FileIO.FileSystem.DeleteFile(item.文件路径, FileIO.UIOption.OnlyErrorDialogs, FileIO.RecycleOption.SendToRecycleBin)
             刷新预设列表()
-            If _预设列表项.Count > 0 Then ModernListBox1.SelectedIndex = Math.Min(oldIndex, _预设列表项.Count - 1)
+            If _预设列表项.Count > 0 Then MLB_预设列表.SelectedIndex = Math.Min(oldIndex, _预设列表项.Count - 1)
             ExFloatingTip("已删除到回收站：" & item.名称, 1800)
         Catch ex As Exception
             ExFloatingTip("删除失败：" & ex.Message, 2500)
         End Try
     End Sub
 
-    Private Sub ModernComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ModernComboBox1.SelectedIndexChanged
+    Private Sub ModernComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles MCB_预设来源.SelectedIndexChanged
         刷新预设列表()
     End Sub
 
-    Private Sub ModernListBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ModernListBox1.SelectedIndexChanged
+    Private Sub ModernListBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles MLB_预设列表.SelectedIndexChanged
         预览选中预设()
     End Sub
 
-    Private Sub ModernListBox1_ItemDoubleClick(sender As Object, e As LakeUI.ModernListBox.ItemEventArgs) Handles ModernListBox1.ItemDoubleClick
+    Private Sub ModernListBox1_ItemDoubleClick(sender As Object, e As LakeUI.ModernListBox.ItemEventArgs) Handles MLB_预设列表.ItemDoubleClick
         加载选中预设()
     End Sub
 
-    Private Sub ModernListBox1_ItemOrderChanged(sender As Object, e As EventArgs) Handles ModernListBox1.ItemOrderChanged
+    Private Sub ModernListBox1_ItemOrderChanged(sender As Object, e As EventArgs) Handles MLB_预设列表.ItemOrderChanged
         同步拖动后的预设列表顺序()
     End Sub
 
-    Private Sub ModernListBox1_KeyDown(sender As Object, e As KeyEventArgs) Handles ModernListBox1.KeyDown
+    Private Sub ModernListBox1_KeyDown(sender As Object, e As KeyEventArgs) Handles MLB_预设列表.KeyDown
         If e.KeyCode <> Keys.Delete Then Exit Sub
         删除选中预设到回收站()
         e.Handled = True
         e.SuppressKeyPress = True
     End Sub
 
-    Private Sub ModernButton1_Click(sender As Object, e As EventArgs) Handles ModernButton1.Click
+    Private Sub ModernButton1_Click(sender As Object, e As EventArgs) Handles MB_保存预设.Click
         保存到用户预设()
     End Sub
 
-    Private Sub ModernButton2_Click(sender As Object, e As EventArgs) Handles ModernButton2.Click
+    Private Sub ModernButton2_Click(sender As Object, e As EventArgs) Handles MB_读取预设.Click
         加载选中预设()
     End Sub
 
-    Private Sub ModernButton3_Click(sender As Object, e As EventArgs) Handles ModernButton3.Click
+    Private Sub ModernButton3_Click(sender As Object, e As EventArgs) Handles MB_导出预设.Click
         导出选中预设()
     End Sub
 
-    Private Sub ModernButton4_Click(sender As Object, e As EventArgs) Handles ModernButton4.Click
+    Private Sub ModernButton4_Click(sender As Object, e As EventArgs) Handles MB_导入预设.Click
         导入预设()
     End Sub
 
-    Private Sub ModernButton5_Click(sender As Object, e As EventArgs) Handles ModernButton5.Click
+    Private Sub ModernButton5_Click(sender As Object, e As EventArgs) Handles MB_重置所有预设参数.Click
         If 所属参数面板对象 Is Nothing Then Exit Sub
         预设管理_v6.重置面板(所属参数面板对象)
         ExFloatingTip("已重置参数面板", 1800)
     End Sub
 
-    Private Sub ModernButton6_Click(sender As Object, e As EventArgs) Handles ModernButton6.Click
+    Private Sub ModernButton6_Click(sender As Object, e As EventArgs) Handles MB_变更预设名称.Click
         变更名称()
     End Sub
 
-    Private Sub ModernButton7_Click(sender As Object, e As EventArgs) Handles ModernButton7.Click
+    Private Sub ModernButton7_Click(sender As Object, e As EventArgs) Handles MB_变更预设备注.Click
         变更备注()
     End Sub
 

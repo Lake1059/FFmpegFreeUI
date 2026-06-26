@@ -1,4 +1,4 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class Form_v6_参数面板_解码参数
     Inherits System.Windows.Forms.Form
 
@@ -25,21 +25,21 @@ Partial Class Form_v6_参数面板_解码参数
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form_v6_参数面板_解码参数))
         ModernPanel1 = New LakeUI.ModernPanel()
         Panel4 = New Panel()
-        ModernTextBox2 = New LakeUI.ModernTextBox()
+        MTB_硬件解码设备参数值 = New LakeUI.ModernTextBox()
         Panel3 = New Panel()
-        ModernComboBox3 = New LakeUI.ModernComboBox()
-        HtmlColorLabel5 = New LakeUI.HtmlColorLabel()
+        MCB_硬件解码设备参数名 = New LakeUI.ModernComboBox()
+        HCL_硬件解码设备标题 = New LakeUI.HtmlColorLabel()
         Panel2 = New Panel()
-        ModernComboBox2 = New LakeUI.ModernComboBox()
-        HtmlColorLabel4 = New LakeUI.HtmlColorLabel()
-        HtmlColorLabel3 = New LakeUI.HtmlColorLabel()
+        MCB_硬件解码输出格式 = New LakeUI.ModernComboBox()
+        HCL_解码数据格式提示 = New LakeUI.HtmlColorLabel()
+        HCL_解码数据格式标题 = New LakeUI.HtmlColorLabel()
         Panel5 = New Panel()
-        ModernTextBox1 = New LakeUI.ModernTextBox()
-        HtmlColorLabel2 = New LakeUI.HtmlColorLabel()
+        MTB_CPU解码线程数 = New LakeUI.ModernTextBox()
+        HCL_CPU解码线程数说明 = New LakeUI.HtmlColorLabel()
         Panel1 = New Panel()
-        ModernComboBox1 = New LakeUI.ModernComboBox()
-        HtmlColorLabel6 = New LakeUI.HtmlColorLabel()
-        HtmlColorLabel1 = New LakeUI.HtmlColorLabel()
+        MCB_硬件加速解码方式 = New LakeUI.ModernComboBox()
+        HCL_硬件加速解码说明 = New LakeUI.HtmlColorLabel()
+        HCL_解码器标题 = New LakeUI.HtmlColorLabel()
         ModernPanel1.SuspendLayout()
         Panel4.SuspendLayout()
         Panel3.SuspendLayout()
@@ -47,22 +47,22 @@ Partial Class Form_v6_参数面板_解码参数
         Panel5.SuspendLayout()
         Panel1.SuspendLayout()
         SuspendLayout()
-        ' 
+        '
         ' ModernPanel1
-        ' 
+        '
         ModernPanel1.BackColor1 = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         ModernPanel1.BorderSize = 0
         ModernPanel1.Controls.Add(Panel4)
         ModernPanel1.Controls.Add(Panel3)
-        ModernPanel1.Controls.Add(HtmlColorLabel5)
+        ModernPanel1.Controls.Add(HCL_硬件解码设备标题)
         ModernPanel1.Controls.Add(Panel2)
-        ModernPanel1.Controls.Add(HtmlColorLabel4)
-        ModernPanel1.Controls.Add(HtmlColorLabel3)
+        ModernPanel1.Controls.Add(HCL_解码数据格式提示)
+        ModernPanel1.Controls.Add(HCL_解码数据格式标题)
         ModernPanel1.Controls.Add(Panel5)
-        ModernPanel1.Controls.Add(HtmlColorLabel2)
+        ModernPanel1.Controls.Add(HCL_CPU解码线程数说明)
         ModernPanel1.Controls.Add(Panel1)
-        ModernPanel1.Controls.Add(HtmlColorLabel6)
-        ModernPanel1.Controls.Add(HtmlColorLabel1)
+        ModernPanel1.Controls.Add(HCL_硬件加速解码说明)
+        ModernPanel1.Controls.Add(HCL_解码器标题)
         ModernPanel1.Dock = DockStyle.Fill
         ModernPanel1.Location = New Point(0, 0)
         ModernPanel1.Name = "ModernPanel1"
@@ -70,285 +70,285 @@ Partial Class Form_v6_参数面板_解码参数
         ModernPanel1.ScrollBarMode = LakeUI.ModernPanel.ScrollMode.Vertical
         ModernPanel1.Size = New Size(753, 623)
         ModernPanel1.TabIndex = 0
-        ' 
+        '
         ' Panel4
-        ' 
-        Panel4.Controls.Add(ModernTextBox2)
+        '
+        Panel4.Controls.Add(MTB_硬件解码设备参数值)
         Panel4.Dock = DockStyle.Top
         Panel4.Location = New Point(20, 420)
         Panel4.Name = "Panel4"
         Panel4.Padding = New Padding(0, 10, 0, 0)
         Panel4.Size = New Size(713, 42)
         Panel4.TabIndex = 24
-        ' 
-        ' ModernTextBox2
-        ' 
-        ModernTextBox2.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernTextBox2.BorderColor = Color.Transparent
-        ModernTextBox2.BorderColorFocus = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
-        ModernTextBox2.BorderRadius = 10
-        ModernTextBox2.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
-        ModernTextBox2.Dock = DockStyle.Left
-        ModernTextBox2.Location = New Point(0, 10)
-        ModernTextBox2.Margin = New Padding(2)
-        ModernTextBox2.Name = "ModernTextBox2"
-        ModernTextBox2.Padding = New Padding(10, 0, 10, 0)
-        ModernTextBox2.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernTextBox2.Size = New Size(220, 32)
-        ModernTextBox2.TabIndex = 4
-        ModernTextBox2.WaterText = "?"
-        ModernTextBox2.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        ' 
+        '
+        ' MTB_硬件解码设备参数值
+        '
+        MTB_硬件解码设备参数值.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MTB_硬件解码设备参数值.BorderColor = Color.Transparent
+        MTB_硬件解码设备参数值.BorderColorFocus = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
+        MTB_硬件解码设备参数值.BorderRadius = 10
+        MTB_硬件解码设备参数值.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
+        MTB_硬件解码设备参数值.Dock = DockStyle.Left
+        MTB_硬件解码设备参数值.Location = New Point(0, 10)
+        MTB_硬件解码设备参数值.Margin = New Padding(2)
+        MTB_硬件解码设备参数值.Name = "MTB_硬件解码设备参数值"
+        MTB_硬件解码设备参数值.Padding = New Padding(10, 0, 10, 0)
+        MTB_硬件解码设备参数值.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MTB_硬件解码设备参数值.Size = New Size(220, 32)
+        MTB_硬件解码设备参数值.TabIndex = 4
+        MTB_硬件解码设备参数值.WaterText = "?"
+        MTB_硬件解码设备参数值.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
+        '
         ' Panel3
-        ' 
-        Panel3.Controls.Add(ModernComboBox3)
+        '
+        Panel3.Controls.Add(MCB_硬件解码设备参数名)
         Panel3.Dock = DockStyle.Top
         Panel3.Location = New Point(20, 378)
         Panel3.Name = "Panel3"
         Panel3.Padding = New Padding(0, 10, 0, 0)
         Panel3.Size = New Size(713, 42)
         Panel3.TabIndex = 23
-        ' 
-        ' ModernComboBox3
-        ' 
-        ModernComboBox3.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernComboBox3.BorderRadius = 10
-        ModernComboBox3.BorderSize = 0
-        ModernComboBox3.Dock = DockStyle.Left
-        ModernComboBox3.DropDownBackdropBlurPasses = 2
-        ModernComboBox3.DropDownBackdropBlurRadius = 30
-        ModernComboBox3.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
-        ModernComboBox3.DropDownHoverAnimationDuration = 0
-        ModernComboBox3.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
-        ModernComboBox3.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
-        ModernComboBox3.DropDownPadding = New Padding(10)
-        ModernComboBox3.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernComboBox3.DropDownSelectedForeColor = Color.White
-        ModernComboBox3.Editable = True
-        ModernComboBox3.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
-        ModernComboBox3.Items.Add("")
-        ModernComboBox3.Items.Add("-hwaccel_device")
-        ModernComboBox3.Items.Add("-init_hw_device")
-        ModernComboBox3.Items.Add("-qsv_device")
-        ModernComboBox3.Location = New Point(0, 10)
-        ModernComboBox3.Margin = New Padding(2, 2, 2, 2)
-        ModernComboBox3.Name = "ModernComboBox3"
-        ModernComboBox3.Padding = New Padding(10, 0, 10, 0)
-        ModernComboBox3.Size = New Size(220, 32)
-        ModernComboBox3.TabIndex = 0
-        ModernComboBox3.ToolTipGap = -1
-        ModernComboBox3.ToolTipMaxWidth = 350
-        ModernComboBox3.ToolTipPadding = New Padding(15)
-        ModernComboBox3.WaterText = "选择参数"
-        ModernComboBox3.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        ' 
-        ' HtmlColorLabel5
-        ' 
-        HtmlColorLabel5.AutoSize = True
-        HtmlColorLabel5.AutoSizeMode = AutoSizeMode.GrowAndShrink
-        HtmlColorLabel5.Dock = DockStyle.Top
-        HtmlColorLabel5.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        HtmlColorLabel5.Location = New Point(20, 328)
-        HtmlColorLabel5.Margin = New Padding(2)
-        HtmlColorLabel5.Name = "HtmlColorLabel5"
-        HtmlColorLabel5.Padding = New Padding(0, 20, 0, 5)
-        HtmlColorLabel5.Size = New Size(713, 50)
-        HtmlColorLabel5.TabIndex = 22
-        HtmlColorLabel5.Text = "<span style=""font-size:13; color:Silver"">硬件加速解码设备</span>   如果安装了多张同品牌显卡可以指定卡，不一定有效"
-        ' 
+        '
+        ' MCB_硬件解码设备参数名
+        '
+        MCB_硬件解码设备参数名.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MCB_硬件解码设备参数名.BorderRadius = 10
+        MCB_硬件解码设备参数名.BorderSize = 0
+        MCB_硬件解码设备参数名.Dock = DockStyle.Left
+        MCB_硬件解码设备参数名.DropDownBackdropBlurPasses = 2
+        MCB_硬件解码设备参数名.DropDownBackdropBlurRadius = 30
+        MCB_硬件解码设备参数名.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
+        MCB_硬件解码设备参数名.DropDownHoverAnimationDuration = 0
+        MCB_硬件解码设备参数名.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
+        MCB_硬件解码设备参数名.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
+        MCB_硬件解码设备参数名.DropDownPadding = New Padding(10)
+        MCB_硬件解码设备参数名.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MCB_硬件解码设备参数名.DropDownSelectedForeColor = Color.White
+        MCB_硬件解码设备参数名.Editable = True
+        MCB_硬件解码设备参数名.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        MCB_硬件解码设备参数名.Items.Add("")
+        MCB_硬件解码设备参数名.Items.Add("-hwaccel_device")
+        MCB_硬件解码设备参数名.Items.Add("-init_hw_device")
+        MCB_硬件解码设备参数名.Items.Add("-qsv_device")
+        MCB_硬件解码设备参数名.Location = New Point(0, 10)
+        MCB_硬件解码设备参数名.Margin = New Padding(2, 2, 2, 2)
+        MCB_硬件解码设备参数名.Name = "MCB_硬件解码设备参数名"
+        MCB_硬件解码设备参数名.Padding = New Padding(10, 0, 10, 0)
+        MCB_硬件解码设备参数名.Size = New Size(220, 32)
+        MCB_硬件解码设备参数名.TabIndex = 0
+        MCB_硬件解码设备参数名.ToolTipGap = -1
+        MCB_硬件解码设备参数名.ToolTipMaxWidth = 350
+        MCB_硬件解码设备参数名.ToolTipPadding = New Padding(15)
+        MCB_硬件解码设备参数名.WaterText = "选择参数"
+        MCB_硬件解码设备参数名.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
+        '
+        ' HCL_硬件解码设备标题
+        '
+        HCL_硬件解码设备标题.AutoSize = True
+        HCL_硬件解码设备标题.AutoSizeMode = AutoSizeMode.GrowAndShrink
+        HCL_硬件解码设备标题.Dock = DockStyle.Top
+        HCL_硬件解码设备标题.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
+        HCL_硬件解码设备标题.Location = New Point(20, 328)
+        HCL_硬件解码设备标题.Margin = New Padding(2)
+        HCL_硬件解码设备标题.Name = "HCL_硬件解码设备标题"
+        HCL_硬件解码设备标题.Padding = New Padding(0, 20, 0, 5)
+        HCL_硬件解码设备标题.Size = New Size(713, 50)
+        HCL_硬件解码设备标题.TabIndex = 22
+        HCL_硬件解码设备标题.Text = "<span style=""font-size:13; color:Silver"">硬件加速解码设备</span>   如果安装了多张同品牌显卡可以指定卡，不一定有效"
+        '
         ' Panel2
-        ' 
-        Panel2.Controls.Add(ModernComboBox2)
+        '
+        Panel2.Controls.Add(MCB_硬件解码输出格式)
         Panel2.Dock = DockStyle.Top
         Panel2.Location = New Point(20, 286)
         Panel2.Name = "Panel2"
         Panel2.Padding = New Padding(0, 10, 0, 0)
         Panel2.Size = New Size(713, 42)
         Panel2.TabIndex = 21
-        ' 
-        ' ModernComboBox2
-        ' 
-        ModernComboBox2.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernComboBox2.BorderRadius = 10
-        ModernComboBox2.BorderSize = 0
-        ModernComboBox2.Dock = DockStyle.Left
-        ModernComboBox2.DropDownBackdropBlurPasses = 2
-        ModernComboBox2.DropDownBackdropBlurRadius = 30
-        ModernComboBox2.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
-        ModernComboBox2.DropDownHoverAnimationDuration = 0
-        ModernComboBox2.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
-        ModernComboBox2.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
-        ModernComboBox2.DropDownPadding = New Padding(10)
-        ModernComboBox2.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernComboBox2.DropDownSelectedForeColor = Color.White
-        ModernComboBox2.Editable = True
-        ModernComboBox2.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
-        ModernComboBox2.Items.Add("")
-        ModernComboBox2.Items.Add("nv12")
-        ModernComboBox2.Items.Add("yuv420p")
-        ModernComboBox2.Items.Add("p010")
-        ModernComboBox2.Items.Add("d3d11")
-        ModernComboBox2.Location = New Point(0, 10)
-        ModernComboBox2.Margin = New Padding(2, 2, 2, 2)
-        ModernComboBox2.Name = "ModernComboBox2"
-        ModernComboBox2.Padding = New Padding(10, 0, 10, 0)
-        ModernComboBox2.Size = New Size(220, 32)
-        ModernComboBox2.TabIndex = 0
-        ModernComboBox2.ToolTipGap = -1
-        ModernComboBox2.ToolTipMaxWidth = 350
-        ModernComboBox2.ToolTipPadding = New Padding(15)
-        ModernComboBox2.WaterText = "-hwaccel_output_format"
-        ModernComboBox2.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        ' 
-        ' HtmlColorLabel4
-        ' 
-        HtmlColorLabel4.AutoSize = True
-        HtmlColorLabel4.AutoSizeMode = AutoSizeMode.GrowAndShrink
-        HtmlColorLabel4.Dock = DockStyle.Top
-        HtmlColorLabel4.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        HtmlColorLabel4.Location = New Point(20, 260)
-        HtmlColorLabel4.Margin = New Padding(2)
-        HtmlColorLabel4.Name = "HtmlColorLabel4"
-        HtmlColorLabel4.Padding = New Padding(0, 0, 0, 5)
-        HtmlColorLabel4.Size = New Size(713, 26)
-        HtmlColorLabel4.TabIndex = 20
-        HtmlColorLabel4.Text = "比如 <span style=""color:CornflowerBlue"">I卡解码</span> + <span style=""color:YellowGreen"">N卡编码</span> 这样的情况，出问题再考虑！"
-        ' 
-        ' HtmlColorLabel3
-        ' 
-        HtmlColorLabel3.AutoSize = True
-        HtmlColorLabel3.AutoSizeMode = AutoSizeMode.GrowAndShrink
-        HtmlColorLabel3.Dock = DockStyle.Top
-        HtmlColorLabel3.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        HtmlColorLabel3.Location = New Point(20, 210)
-        HtmlColorLabel3.Margin = New Padding(2)
-        HtmlColorLabel3.Name = "HtmlColorLabel3"
-        HtmlColorLabel3.Padding = New Padding(0, 20, 0, 5)
-        HtmlColorLabel3.Size = New Size(713, 50)
-        HtmlColorLabel3.TabIndex = 19
-        HtmlColorLabel3.Text = "<span style=""font-size:13; color:Silver"">解码数据格式</span>   编解码都是 CPU 不需要考虑，通常没必要指定"
-        ' 
+        '
+        ' MCB_硬件解码输出格式
+        '
+        MCB_硬件解码输出格式.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MCB_硬件解码输出格式.BorderRadius = 10
+        MCB_硬件解码输出格式.BorderSize = 0
+        MCB_硬件解码输出格式.Dock = DockStyle.Left
+        MCB_硬件解码输出格式.DropDownBackdropBlurPasses = 2
+        MCB_硬件解码输出格式.DropDownBackdropBlurRadius = 30
+        MCB_硬件解码输出格式.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
+        MCB_硬件解码输出格式.DropDownHoverAnimationDuration = 0
+        MCB_硬件解码输出格式.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
+        MCB_硬件解码输出格式.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
+        MCB_硬件解码输出格式.DropDownPadding = New Padding(10)
+        MCB_硬件解码输出格式.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MCB_硬件解码输出格式.DropDownSelectedForeColor = Color.White
+        MCB_硬件解码输出格式.Editable = True
+        MCB_硬件解码输出格式.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        MCB_硬件解码输出格式.Items.Add("")
+        MCB_硬件解码输出格式.Items.Add("nv12")
+        MCB_硬件解码输出格式.Items.Add("yuv420p")
+        MCB_硬件解码输出格式.Items.Add("p010")
+        MCB_硬件解码输出格式.Items.Add("d3d11")
+        MCB_硬件解码输出格式.Location = New Point(0, 10)
+        MCB_硬件解码输出格式.Margin = New Padding(2, 2, 2, 2)
+        MCB_硬件解码输出格式.Name = "MCB_硬件解码输出格式"
+        MCB_硬件解码输出格式.Padding = New Padding(10, 0, 10, 0)
+        MCB_硬件解码输出格式.Size = New Size(220, 32)
+        MCB_硬件解码输出格式.TabIndex = 0
+        MCB_硬件解码输出格式.ToolTipGap = -1
+        MCB_硬件解码输出格式.ToolTipMaxWidth = 350
+        MCB_硬件解码输出格式.ToolTipPadding = New Padding(15)
+        MCB_硬件解码输出格式.WaterText = "-hwaccel_output_format"
+        MCB_硬件解码输出格式.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
+        '
+        ' HCL_解码数据格式提示
+        '
+        HCL_解码数据格式提示.AutoSize = True
+        HCL_解码数据格式提示.AutoSizeMode = AutoSizeMode.GrowAndShrink
+        HCL_解码数据格式提示.Dock = DockStyle.Top
+        HCL_解码数据格式提示.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
+        HCL_解码数据格式提示.Location = New Point(20, 260)
+        HCL_解码数据格式提示.Margin = New Padding(2)
+        HCL_解码数据格式提示.Name = "HCL_解码数据格式提示"
+        HCL_解码数据格式提示.Padding = New Padding(0, 0, 0, 5)
+        HCL_解码数据格式提示.Size = New Size(713, 26)
+        HCL_解码数据格式提示.TabIndex = 20
+        HCL_解码数据格式提示.Text = "比如 <span style=""color:CornflowerBlue"">I卡解码</span> + <span style=""color:YellowGreen"">N卡编码</span> 这样的情况，出问题再考虑！"
+        '
+        ' HCL_解码数据格式标题
+        '
+        HCL_解码数据格式标题.AutoSize = True
+        HCL_解码数据格式标题.AutoSizeMode = AutoSizeMode.GrowAndShrink
+        HCL_解码数据格式标题.Dock = DockStyle.Top
+        HCL_解码数据格式标题.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
+        HCL_解码数据格式标题.Location = New Point(20, 210)
+        HCL_解码数据格式标题.Margin = New Padding(2)
+        HCL_解码数据格式标题.Name = "HCL_解码数据格式标题"
+        HCL_解码数据格式标题.Padding = New Padding(0, 20, 0, 5)
+        HCL_解码数据格式标题.Size = New Size(713, 50)
+        HCL_解码数据格式标题.TabIndex = 19
+        HCL_解码数据格式标题.Text = "<span style=""font-size:13; color:Silver"">解码数据格式</span>   编解码都是 CPU 不需要考虑，通常没必要指定"
+        '
         ' Panel5
-        ' 
-        Panel5.Controls.Add(ModernTextBox1)
+        '
+        Panel5.Controls.Add(MTB_CPU解码线程数)
         Panel5.Dock = DockStyle.Top
         Panel5.Location = New Point(20, 168)
         Panel5.Name = "Panel5"
         Panel5.Padding = New Padding(0, 10, 0, 0)
         Panel5.Size = New Size(713, 42)
         Panel5.TabIndex = 18
-        ' 
-        ' ModernTextBox1
-        ' 
-        ModernTextBox1.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernTextBox1.BorderColor = Color.Transparent
-        ModernTextBox1.BorderColorFocus = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
-        ModernTextBox1.BorderRadius = 10
-        ModernTextBox1.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
-        ModernTextBox1.Dock = DockStyle.Left
-        ModernTextBox1.Location = New Point(0, 10)
-        ModernTextBox1.Margin = New Padding(2)
-        ModernTextBox1.Name = "ModernTextBox1"
-        ModernTextBox1.Padding = New Padding(10, 0, 10, 0)
-        ModernTextBox1.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernTextBox1.Size = New Size(100, 32)
-        ModernTextBox1.TabIndex = 4
-        ModernTextBox1.WaterText = "-threads"
-        ModernTextBox1.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        ' 
-        ' HtmlColorLabel2
-        ' 
-        HtmlColorLabel2.AutoSize = True
-        HtmlColorLabel2.AutoSizeMode = AutoSizeMode.GrowAndShrink
-        HtmlColorLabel2.Dock = DockStyle.Top
-        HtmlColorLabel2.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        HtmlColorLabel2.Location = New Point(20, 118)
-        HtmlColorLabel2.Margin = New Padding(2)
-        HtmlColorLabel2.Name = "HtmlColorLabel2"
-        HtmlColorLabel2.Padding = New Padding(0, 20, 0, 5)
-        HtmlColorLabel2.Size = New Size(713, 50)
-        HtmlColorLabel2.TabIndex = 17
-        HtmlColorLabel2.Text = "<span style=""font-size:13; color:Silver"">CPU 解码线程数</span>   不一定有效，通常没必要指定"
-        ' 
+        '
+        ' MTB_CPU解码线程数
+        '
+        MTB_CPU解码线程数.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MTB_CPU解码线程数.BorderColor = Color.Transparent
+        MTB_CPU解码线程数.BorderColorFocus = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
+        MTB_CPU解码线程数.BorderRadius = 10
+        MTB_CPU解码线程数.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
+        MTB_CPU解码线程数.Dock = DockStyle.Left
+        MTB_CPU解码线程数.Location = New Point(0, 10)
+        MTB_CPU解码线程数.Margin = New Padding(2)
+        MTB_CPU解码线程数.Name = "MTB_CPU解码线程数"
+        MTB_CPU解码线程数.Padding = New Padding(10, 0, 10, 0)
+        MTB_CPU解码线程数.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MTB_CPU解码线程数.Size = New Size(100, 32)
+        MTB_CPU解码线程数.TabIndex = 4
+        MTB_CPU解码线程数.WaterText = "-threads"
+        MTB_CPU解码线程数.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
+        '
+        ' HCL_CPU解码线程数说明
+        '
+        HCL_CPU解码线程数说明.AutoSize = True
+        HCL_CPU解码线程数说明.AutoSizeMode = AutoSizeMode.GrowAndShrink
+        HCL_CPU解码线程数说明.Dock = DockStyle.Top
+        HCL_CPU解码线程数说明.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
+        HCL_CPU解码线程数说明.Location = New Point(20, 118)
+        HCL_CPU解码线程数说明.Margin = New Padding(2)
+        HCL_CPU解码线程数说明.Name = "HCL_CPU解码线程数说明"
+        HCL_CPU解码线程数说明.Padding = New Padding(0, 20, 0, 5)
+        HCL_CPU解码线程数说明.Size = New Size(713, 50)
+        HCL_CPU解码线程数说明.TabIndex = 17
+        HCL_CPU解码线程数说明.Text = "<span style=""font-size:13; color:Silver"">CPU 解码线程数</span>   不一定有效，通常没必要指定"
+        '
         ' Panel1
-        ' 
-        Panel1.Controls.Add(ModernComboBox1)
+        '
+        Panel1.Controls.Add(MCB_硬件加速解码方式)
         Panel1.Dock = DockStyle.Top
         Panel1.Location = New Point(20, 76)
         Panel1.Name = "Panel1"
         Panel1.Padding = New Padding(0, 10, 0, 0)
         Panel1.Size = New Size(713, 42)
         Panel1.TabIndex = 16
-        ' 
-        ' ModernComboBox1
-        ' 
-        ModernComboBox1.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernComboBox1.BorderRadius = 10
-        ModernComboBox1.BorderSize = 0
-        ModernComboBox1.Dock = DockStyle.Left
-        ModernComboBox1.DropDownBackdropBlurPasses = 2
-        ModernComboBox1.DropDownBackdropBlurRadius = 30
-        ModernComboBox1.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
-        ModernComboBox1.DropDownHoverAnimationDuration = 0
-        ModernComboBox1.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
-        ModernComboBox1.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
-        ModernComboBox1.DropDownPadding = New Padding(10)
-        ModernComboBox1.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernComboBox1.DropDownSelectedForeColor = Color.White
-        ModernComboBox1.Editable = True
-        ModernComboBox1.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
-        ModernComboBox1.Items.Add("")
-        ModernComboBox1.Items.Add("d3d11va")
-        ModernComboBox1.Items.Add("d3d12va")
-        ModernComboBox1.Items.Add("cuda")
-        ModernComboBox1.Items.Add("qsv")
-        ModernComboBox1.Items.Add("amf")
-        ModernComboBox1.Items.Add("vulkan")
-        ModernComboBox1.Items.Add("dxva2")
-        ModernComboBox1.Items.Add("vaapi")
-        ModernComboBox1.Items.Add("opencl")
-        ModernComboBox1.Location = New Point(0, 10)
-        ModernComboBox1.Margin = New Padding(2, 2, 2, 2)
-        ModernComboBox1.Name = "ModernComboBox1"
-        ModernComboBox1.Padding = New Padding(10, 0, 10, 0)
-        ModernComboBox1.Size = New Size(150, 32)
-        ModernComboBox1.TabIndex = 0
-        ModernComboBox1.ToolTipGap = -1
-        ModernComboBox1.ToolTipMaxWidth = 350
-        ModernComboBox1.ToolTipPadding = New Padding(15)
-        ModernComboBox1.WaterText = "-hwaccel"
-        ModernComboBox1.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        ' 
-        ' HtmlColorLabel6
-        ' 
-        HtmlColorLabel6.AutoSize = True
-        HtmlColorLabel6.AutoSizeMode = AutoSizeMode.GrowAndShrink
-        HtmlColorLabel6.Dock = DockStyle.Top
-        HtmlColorLabel6.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        HtmlColorLabel6.Location = New Point(20, 50)
-        HtmlColorLabel6.Margin = New Padding(2)
-        HtmlColorLabel6.Name = "HtmlColorLabel6"
-        HtmlColorLabel6.Padding = New Padding(0, 0, 0, 5)
-        HtmlColorLabel6.Size = New Size(713, 26)
-        HtmlColorLabel6.TabIndex = 15
-        HtmlColorLabel6.Text = resources.GetString("HtmlColorLabel6.Text")
-        ' 
-        ' HtmlColorLabel1
-        ' 
-        HtmlColorLabel1.AutoSize = True
-        HtmlColorLabel1.AutoSizeMode = AutoSizeMode.GrowAndShrink
-        HtmlColorLabel1.Dock = DockStyle.Top
-        HtmlColorLabel1.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        HtmlColorLabel1.Location = New Point(20, 20)
-        HtmlColorLabel1.Margin = New Padding(2)
-        HtmlColorLabel1.Name = "HtmlColorLabel1"
-        HtmlColorLabel1.Padding = New Padding(0, 0, 0, 5)
-        HtmlColorLabel1.Size = New Size(713, 30)
-        HtmlColorLabel1.TabIndex = 14
-        HtmlColorLabel1.Text = "<span style=""font-size:13; color:Silver"">解码器</span>   本页如果不知道选什么就不要选   <span style=""color:Orange"">总有人他非要选然后跑不起来还死磕</span>"
-        ' 
+        '
+        ' MCB_硬件加速解码方式
+        '
+        MCB_硬件加速解码方式.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MCB_硬件加速解码方式.BorderRadius = 10
+        MCB_硬件加速解码方式.BorderSize = 0
+        MCB_硬件加速解码方式.Dock = DockStyle.Left
+        MCB_硬件加速解码方式.DropDownBackdropBlurPasses = 2
+        MCB_硬件加速解码方式.DropDownBackdropBlurRadius = 30
+        MCB_硬件加速解码方式.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
+        MCB_硬件加速解码方式.DropDownHoverAnimationDuration = 0
+        MCB_硬件加速解码方式.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
+        MCB_硬件加速解码方式.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
+        MCB_硬件加速解码方式.DropDownPadding = New Padding(10)
+        MCB_硬件加速解码方式.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MCB_硬件加速解码方式.DropDownSelectedForeColor = Color.White
+        MCB_硬件加速解码方式.Editable = True
+        MCB_硬件加速解码方式.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        MCB_硬件加速解码方式.Items.Add("")
+        MCB_硬件加速解码方式.Items.Add("d3d11va")
+        MCB_硬件加速解码方式.Items.Add("d3d12va")
+        MCB_硬件加速解码方式.Items.Add("cuda")
+        MCB_硬件加速解码方式.Items.Add("qsv")
+        MCB_硬件加速解码方式.Items.Add("amf")
+        MCB_硬件加速解码方式.Items.Add("vulkan")
+        MCB_硬件加速解码方式.Items.Add("dxva2")
+        MCB_硬件加速解码方式.Items.Add("vaapi")
+        MCB_硬件加速解码方式.Items.Add("opencl")
+        MCB_硬件加速解码方式.Location = New Point(0, 10)
+        MCB_硬件加速解码方式.Margin = New Padding(2, 2, 2, 2)
+        MCB_硬件加速解码方式.Name = "MCB_硬件加速解码方式"
+        MCB_硬件加速解码方式.Padding = New Padding(10, 0, 10, 0)
+        MCB_硬件加速解码方式.Size = New Size(150, 32)
+        MCB_硬件加速解码方式.TabIndex = 0
+        MCB_硬件加速解码方式.ToolTipGap = -1
+        MCB_硬件加速解码方式.ToolTipMaxWidth = 350
+        MCB_硬件加速解码方式.ToolTipPadding = New Padding(15)
+        MCB_硬件加速解码方式.WaterText = "-hwaccel"
+        MCB_硬件加速解码方式.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
+        '
+        ' HCL_硬件加速解码说明
+        '
+        HCL_硬件加速解码说明.AutoSize = True
+        HCL_硬件加速解码说明.AutoSizeMode = AutoSizeMode.GrowAndShrink
+        HCL_硬件加速解码说明.Dock = DockStyle.Top
+        HCL_硬件加速解码说明.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
+        HCL_硬件加速解码说明.Location = New Point(20, 50)
+        HCL_硬件加速解码说明.Margin = New Padding(2)
+        HCL_硬件加速解码说明.Name = "HCL_硬件加速解码说明"
+        HCL_硬件加速解码说明.Padding = New Padding(0, 0, 0, 5)
+        HCL_硬件加速解码说明.Size = New Size(713, 26)
+        HCL_硬件加速解码说明.TabIndex = 15
+        HCL_硬件加速解码说明.Text = resources.GetString("HCL_硬件加速解码说明.Text")
+        '
+        ' HCL_解码器标题
+        '
+        HCL_解码器标题.AutoSize = True
+        HCL_解码器标题.AutoSizeMode = AutoSizeMode.GrowAndShrink
+        HCL_解码器标题.Dock = DockStyle.Top
+        HCL_解码器标题.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
+        HCL_解码器标题.Location = New Point(20, 20)
+        HCL_解码器标题.Margin = New Padding(2)
+        HCL_解码器标题.Name = "HCL_解码器标题"
+        HCL_解码器标题.Padding = New Padding(0, 0, 0, 5)
+        HCL_解码器标题.Size = New Size(713, 30)
+        HCL_解码器标题.TabIndex = 14
+        HCL_解码器标题.Text = "<span style=""font-size:13; color:Silver"">解码器</span>   本页如果不知道选什么就不要选   <span style=""color:Orange"">总有人他非要选然后跑不起来还死磕</span>"
+        '
         ' Form_v6_参数面板_解码参数
-        ' 
+        '
         AutoScaleDimensions = New SizeF(96F, 96F)
         AutoScaleMode = AutoScaleMode.Dpi
         BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
@@ -369,20 +369,20 @@ Partial Class Form_v6_参数面板_解码参数
     End Sub
 
     Friend WithEvents ModernPanel1 As LakeUI.ModernPanel
-    Friend WithEvents HtmlColorLabel6 As LakeUI.HtmlColorLabel
-    Friend WithEvents HtmlColorLabel1 As LakeUI.HtmlColorLabel
-    Friend WithEvents HtmlColorLabel2 As LakeUI.HtmlColorLabel
+    Friend WithEvents HCL_硬件加速解码说明 As LakeUI.HtmlColorLabel
+    Friend WithEvents HCL_解码器标题 As LakeUI.HtmlColorLabel
+    Friend WithEvents HCL_CPU解码线程数说明 As LakeUI.HtmlColorLabel
     Friend WithEvents Panel1 As Panel
-    Friend WithEvents ModernComboBox1 As LakeUI.ModernComboBox
+    Friend WithEvents MCB_硬件加速解码方式 As LakeUI.ModernComboBox
     Friend WithEvents Panel5 As Panel
-    Friend WithEvents ModernTextBox1 As LakeUI.ModernTextBox
-    Friend WithEvents HtmlColorLabel3 As LakeUI.HtmlColorLabel
+    Friend WithEvents MTB_CPU解码线程数 As LakeUI.ModernTextBox
+    Friend WithEvents HCL_解码数据格式标题 As LakeUI.HtmlColorLabel
     Friend WithEvents Panel2 As Panel
-    Friend WithEvents ModernComboBox2 As LakeUI.ModernComboBox
-    Friend WithEvents HtmlColorLabel4 As LakeUI.HtmlColorLabel
-    Friend WithEvents HtmlColorLabel5 As LakeUI.HtmlColorLabel
+    Friend WithEvents MCB_硬件解码输出格式 As LakeUI.ModernComboBox
+    Friend WithEvents HCL_解码数据格式提示 As LakeUI.HtmlColorLabel
+    Friend WithEvents HCL_硬件解码设备标题 As LakeUI.HtmlColorLabel
     Friend WithEvents Panel4 As Panel
-    Friend WithEvents ModernTextBox2 As LakeUI.ModernTextBox
+    Friend WithEvents MTB_硬件解码设备参数值 As LakeUI.ModernTextBox
     Friend WithEvents Panel3 As Panel
-    Friend WithEvents ModernComboBox3 As LakeUI.ModernComboBox
+    Friend WithEvents MCB_硬件解码设备参数名 As LakeUI.ModernComboBox
 End Class

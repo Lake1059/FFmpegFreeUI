@@ -1,4 +1,4 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class Form_v6_支持者
     Inherits System.Windows.Forms.Form
 
@@ -41,9 +41,9 @@ Partial Class Form_v6_支持者
         ModernPanel1.SuspendLayout()
         Panel4.SuspendLayout()
         SuspendLayout()
-        ' 
+        '
         ' ModernPanel1
-        ' 
+        '
         ModernPanel1.BorderSize = 0
         ModernPanel1.Controls.Add(MemberWall1)
         ModernPanel1.Controls.Add(Panel4)
@@ -56,9 +56,9 @@ Partial Class Form_v6_支持者
         ModernPanel1.ScrollBarMode = LakeUI.ModernPanel.ScrollMode.None
         ModernPanel1.Size = New Size(748, 621)
         ModernPanel1.TabIndex = 127
-        ' 
+        '
         ' MemberWall1
-        ' 
+        '
         MemberWall1.BackColor = Color.Transparent
         MemberWall1.CardBorderSize = 0
         MemberWall1.CardHoverOverlayColor = Color.FromArgb(CByte(20), CByte(200), CByte(200), CByte(200))
@@ -77,9 +77,9 @@ Partial Class Form_v6_支持者
         MemberWall1.Size = New Size(708, 468)
         MemberWall1.TabIndex = 130
         MemberWall1.Text = "MemberWall1"
-        ' 
+        '
         ' Panel4
-        ' 
+        '
         Panel4.Controls.Add(ModernButton5)
         Panel4.Controls.Add(JustEmptyControl5)
         Panel4.Controls.Add(ModernTextBox1)
@@ -97,9 +97,9 @@ Partial Class Form_v6_支持者
         Panel4.Padding = New Padding(0, 10, 0, 20)
         Panel4.Size = New Size(708, 62)
         Panel4.TabIndex = 129
-        ' 
+        '
         ' ModernButton5
-        ' 
+        '
         ModernButton5.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernButton5.BorderRadius = 10
         ModernButton5.BorderSize = 0
@@ -113,17 +113,17 @@ Partial Class Form_v6_支持者
         ModernButton5.Size = New Size(70, 32)
         ModernButton5.TabIndex = 13
         ModernButton5.Text = "搜索"
-        ' 
+        '
         ' JustEmptyControl5
-        ' 
+        '
         JustEmptyControl5.Dock = DockStyle.Left
         JustEmptyControl5.Location = New Point(600, 10)
         JustEmptyControl5.Name = "JustEmptyControl5"
         JustEmptyControl5.Size = New Size(10, 32)
         JustEmptyControl5.TabIndex = 14
-        ' 
+        '
         ' ModernTextBox1
-        ' 
+        '
         ModernTextBox1.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernTextBox1.BorderColor = Color.Transparent
         ModernTextBox1.BorderColorFocus = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
@@ -139,17 +139,17 @@ Partial Class Form_v6_支持者
         ModernTextBox1.TabIndex = 12
         ModernTextBox1.WaterText = "搜索支持者"
         ModernTextBox1.WaterTextForeColor = Color.DarkGray
-        ' 
+        '
         ' JustEmptyControl4
-        ' 
+        '
         JustEmptyControl4.Dock = DockStyle.Left
         JustEmptyControl4.Location = New Point(390, 10)
         JustEmptyControl4.Name = "JustEmptyControl4"
         JustEmptyControl4.Size = New Size(10, 32)
         JustEmptyControl4.TabIndex = 11
-        ' 
+        '
         ' ModernButton4
-        ' 
+        '
         ModernButton4.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernButton4.BorderRadius = 10
         ModernButton4.BorderSize = 0
@@ -163,17 +163,17 @@ Partial Class Form_v6_支持者
         ModernButton4.Size = New Size(70, 32)
         ModernButton4.TabIndex = 10
         ModernButton4.Text = "清除"
-        ' 
+        '
         ' JustEmptyControl3
-        ' 
+        '
         JustEmptyControl3.Dock = DockStyle.Left
         JustEmptyControl3.Location = New Point(310, 10)
         JustEmptyControl3.Name = "JustEmptyControl3"
         JustEmptyControl3.Size = New Size(10, 32)
         JustEmptyControl3.TabIndex = 9
-        ' 
+        '
         ' ModernButton3
-        ' 
+        '
         ModernButton3.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernButton3.BorderRadius = 10
         ModernButton3.BorderSize = 0
@@ -187,17 +187,17 @@ Partial Class Form_v6_支持者
         ModernButton3.Size = New Size(110, 32)
         ModernButton3.TabIndex = 8
         ModernButton3.Text = "免费赠送的"
-        ' 
+        '
         ' JustEmptyControl2
-        ' 
+        '
         JustEmptyControl2.Dock = DockStyle.Left
         JustEmptyControl2.Location = New Point(190, 10)
         JustEmptyControl2.Name = "JustEmptyControl2"
         JustEmptyControl2.Size = New Size(10, 32)
         JustEmptyControl2.TabIndex = 7
-        ' 
+        '
         ' ModernButton2
-        ' 
+        '
         ModernButton2.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernButton2.BorderRadius = 10
         ModernButton2.BorderSize = 0
@@ -211,17 +211,17 @@ Partial Class Form_v6_支持者
         ModernButton2.Size = New Size(110, 32)
         ModernButton2.TabIndex = 6
         ModernButton2.Text = "购买获得的"
-        ' 
+        '
         ' JustEmptyControl1
-        ' 
+        '
         JustEmptyControl1.Dock = DockStyle.Left
         JustEmptyControl1.Location = New Point(70, 10)
         JustEmptyControl1.Name = "JustEmptyControl1"
         JustEmptyControl1.Size = New Size(10, 32)
         JustEmptyControl1.TabIndex = 4
-        ' 
+        '
         ' ModernButton1
-        ' 
+        '
         ModernButton1.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernButton1.BorderRadius = 10
         ModernButton1.BorderSize = 0
@@ -235,9 +235,9 @@ Partial Class Form_v6_支持者
         ModernButton1.Size = New Size(70, 32)
         ModernButton1.TabIndex = 5
         ModernButton1.Text = "全部"
-        ' 
+        '
         ' HtmlColorLabel2
-        ' 
+        '
         HtmlColorLabel2.AutoSize = True
         HtmlColorLabel2.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel2.Dock = DockStyle.Top
@@ -248,9 +248,9 @@ Partial Class Form_v6_支持者
         HtmlColorLabel2.Size = New Size(708, 21)
         HtmlColorLabel2.TabIndex = 128
         HtmlColorLabel2.Text = "感谢所有向 FFmpegFreeUI 的开发工作提供资金支持和技术支持的用户"
-        ' 
+        '
         ' HtmlColorLabel1
-        ' 
+        '
         HtmlColorLabel1.AutoSize = True
         HtmlColorLabel1.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel1.Dock = DockStyle.Top
@@ -261,9 +261,9 @@ Partial Class Form_v6_支持者
         HtmlColorLabel1.Size = New Size(708, 30)
         HtmlColorLabel1.TabIndex = 127
         HtmlColorLabel1.Text = "<span style=""font-size:13"">支持者名单</span>"
-        ' 
+        '
         ' Form_v6_支持者
-        ' 
+        '
         AutoScaleDimensions = New SizeF(96F, 96F)
         AutoScaleMode = AutoScaleMode.Dpi
         BackColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))

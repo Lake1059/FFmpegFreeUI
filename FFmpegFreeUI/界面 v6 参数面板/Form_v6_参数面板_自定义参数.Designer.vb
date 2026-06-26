@@ -1,4 +1,4 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class Form_v6_参数面板_自定义参数
     Inherits System.Windows.Forms.Form
 
@@ -32,9 +32,9 @@ Partial Class Form_v6_参数面板_自定义参数
         ModernPanel1 = New LakeUI.ModernPanel()
         ModernPanel1.SuspendLayout()
         SuspendLayout()
-        ' 
+        '
         ' ModernTabControl1
-        ' 
+        '
         ModernTabControl1.ContentBackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         ModernTabControl1.Dock = DockStyle.Fill
         ModernTabControl1.IndicatorHeight = 2
@@ -62,9 +62,9 @@ Partial Class Form_v6_参数面板_自定义参数
         ModernTabControl1.TabStripBackColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
         ModernTabControl1.TabStripHeight = 55
         ModernTabControl1.TabStripPadding = New Padding(10)
-        ' 
+        '
         ' ModernPanel1
-        ' 
+        '
         ModernPanel1.BackColor1 = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         ModernPanel1.BorderSize = 0
         ModernPanel1.Controls.Add(ModernTabControl1)
@@ -74,9 +74,9 @@ Partial Class Form_v6_参数面板_自定义参数
         ModernPanel1.ScrollBarMode = LakeUI.ModernPanel.ScrollMode.None
         ModernPanel1.Size = New Size(835, 609)
         ModernPanel1.TabIndex = 2
-        ' 
+        '
         ' Form_v6_参数面板_自定义参数
-        ' 
+        '
         AutoScaleDimensions = New SizeF(96F, 96F)
         AutoScaleMode = AutoScaleMode.Dpi
         BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))

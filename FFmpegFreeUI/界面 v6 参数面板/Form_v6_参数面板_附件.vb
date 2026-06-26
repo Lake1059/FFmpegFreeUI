@@ -9,7 +9,7 @@ Public Class Form_v6_参数面板_附件
 
     Public Function 获取数据() As List(Of 预设数据_v6.附件单片结构)
         Dim result As New List(Of 预设数据_v6.附件单片结构)
-        For Each item In UltraDetailListView1.Items
+        For Each item In UDLV_附件列表.Items
             If item.SubItems.Count < 2 Then Continue For
             Dim 类型 = 解析附件类型(item.SubItems(0).Text)
             Dim file = item.SubItems(1).Text.Trim()
@@ -20,7 +20,7 @@ Public Class Form_v6_参数面板_附件
     End Function
 
     Public Sub 设置数据(items As IEnumerable(Of 预设数据_v6.附件单片结构))
-        UltraDetailListView1.Items.Clear()
+        UDLV_附件列表.Items.Clear()
         If items Is Nothing Then
             校准列表列宽()
             Exit Sub
@@ -36,7 +36,7 @@ Public Class Form_v6_参数面板_附件
         Dim lv As New UltraDetailListView.ListItem()
         lv.SubItems.Add(New UltraDetailListView.ListSubItem With {.Text = 附件类型显示名(类型)})
         lv.SubItems.Add(New UltraDetailListView.ListSubItem With {.Text = 文件路径})
-        UltraDetailListView1.Items.Add(lv)
+        UDLV_附件列表.Items.Add(lv)
         If 校准列宽 Then 校准列表列宽()
     End Sub
 
@@ -97,16 +97,16 @@ Public Class Form_v6_参数面板_附件
     End Function
 
     Private Sub 删除所选()
-        For Each item In UltraDetailListView1.SelectedItems.ToArray()
-            UltraDetailListView1.Items.Remove(item)
+        For Each item In UDLV_附件列表.SelectedItems.ToArray()
+            UDLV_附件列表.Items.Remove(item)
         Next
         校准列表列宽()
         通知参数面板刷新()
     End Sub
 
     Private Sub 清空全部()
-        If UltraDetailListView1.Items.Count = 0 Then Exit Sub
-        UltraDetailListView1.Items.Clear()
+        If UDLV_附件列表.Items.Count = 0 Then Exit Sub
+        UDLV_附件列表.Items.Clear()
         校准列表列宽()
         通知参数面板刷新()
     End Sub
@@ -115,7 +115,7 @@ Public Class Form_v6_参数面板_附件
         Using d As New SaveFileDialog With {.Filter = "JSON 附件列表|*.json", .FileName = "attachments.json"}
             If d.ShowDialog(Me) <> DialogResult.OK OrElse d.FileName = "" Then Exit Sub
             File.WriteAllText(d.FileName, JsonSerializer.Serialize(获取数据(), JsonSO), Encoding.UTF8)
-            ExFloatingTip(ModernButton2, "已导出附件列表", 1200)
+            ExFloatingTip(MB_导出附件, "已导出附件列表", 1200)
         End Using
     End Sub
 
@@ -125,34 +125,34 @@ Public Class Form_v6_参数面板_附件
             Dim data = JsonSerializer.Deserialize(Of List(Of 预设数据_v6.附件单片结构))(File.ReadAllText(d.FileName), JsonSO)
             设置数据(data)
             通知参数面板刷新()
-            ExFloatingTip(ModernButton3, "已导入附件列表", 1200)
+            ExFloatingTip(MB_导入附件, "已导入附件列表", 1200)
         End Using
     End Sub
 
-    Private Sub ModernComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ModernComboBox1.SelectedIndexChanged
-        If ModernComboBox1.SelectedIndex < 0 Then Exit Sub
-        添加附件(ModernComboBox1.Text)
-        ModernComboBox1.SelectedIndex = -1
-        ModernComboBox1.Text = ""
+    Private Sub ModernComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles MCB_添加附件.SelectedIndexChanged
+        If MCB_添加附件.SelectedIndex < 0 Then Exit Sub
+        添加附件(MCB_添加附件.Text)
+        MCB_添加附件.SelectedIndex = -1
+        MCB_添加附件.Text = ""
     End Sub
 
-    Private Sub ModernButton4_Click(sender As Object, e As EventArgs) Handles ModernButton4.Click
+    Private Sub ModernButton4_Click(sender As Object, e As EventArgs) Handles MB_删除所选附件.Click
         删除所选()
     End Sub
 
-    Private Sub ModernButton1_Click(sender As Object, e As EventArgs) Handles ModernButton1.Click
+    Private Sub ModernButton1_Click(sender As Object, e As EventArgs) Handles MB_清空全部附件.Click
         清空全部()
     End Sub
 
-    Private Sub ModernButton2_Click(sender As Object, e As EventArgs) Handles ModernButton2.Click
+    Private Sub ModernButton2_Click(sender As Object, e As EventArgs) Handles MB_导出附件.Click
         导出列表()
     End Sub
 
-    Private Sub ModernButton3_Click(sender As Object, e As EventArgs) Handles ModernButton3.Click
+    Private Sub ModernButton3_Click(sender As Object, e As EventArgs) Handles MB_导入附件.Click
         导入列表()
     End Sub
 
-    Private Sub UltraDetailListView1_AfterLabelEdit(sender As Object, e As UltraDetailListView.LabelEditEventArgs) Handles UltraDetailListView1.AfterLabelEdit
+    Private Sub UltraDetailListView1_AfterLabelEdit(sender As Object, e As UltraDetailListView.LabelEditEventArgs) Handles UDLV_附件列表.AfterLabelEdit
         If e.ColumnIndex <> 1 Then
             e.CancelEdit = True
             Exit Sub
@@ -160,7 +160,7 @@ Public Class Form_v6_参数面板_附件
         通知参数面板刷新()
     End Sub
 
-    Private Sub UltraDetailListView1_ItemOrderChanged(sender As Object, e As EventArgs) Handles UltraDetailListView1.ItemOrderChanged
+    Private Sub UltraDetailListView1_ItemOrderChanged(sender As Object, e As EventArgs) Handles UDLV_附件列表.ItemOrderChanged
         通知参数面板刷新()
     End Sub
 
@@ -168,32 +168,32 @@ Public Class Form_v6_参数面板_附件
         校准列表列宽()
     End Sub
 
-    Private Sub UltraDetailListView1_SizeChanged(sender As Object, e As EventArgs) Handles UltraDetailListView1.SizeChanged
+    Private Sub UltraDetailListView1_SizeChanged(sender As Object, e As EventArgs) Handles UDLV_附件列表.SizeChanged
         校准列表列宽()
     End Sub
 
     Private Sub 校准列表列宽()
-        If UltraDetailListView1 Is Nothing OrElse UltraDetailListView1.Columns.Count < 2 Then Exit Sub
+        If UDLV_附件列表 Is Nothing OrElse UDLV_附件列表.Columns.Count < 2 Then Exit Sub
 
-        Dim 可用宽度 = UltraDetailListView1.ClientSize.Width
-        If 可用宽度 <= 0 Then 可用宽度 = UltraDetailListView1.Width
+        Dim 可用宽度 = UDLV_附件列表.ClientSize.Width
+        If 可用宽度 <= 0 Then 可用宽度 = UDLV_附件列表.Width
         If 可用宽度 <= 0 Then Exit Sub
 
         Dim dpi = DeviceDpi / 96.0
-        可用宽度 = Math.Max(0, 可用宽度 - UltraDetailListView1.Padding.Left - UltraDetailListView1.Padding.Right - CInt(24 * dpi))
+        可用宽度 = Math.Max(0, 可用宽度 - UDLV_附件列表.Padding.Left - UDLV_附件列表.Padding.Right - CInt(24 * dpi))
 
         Dim 类型列宽 = 限制列宽(测量列宽(0, CInt(42 * dpi)), CInt(110 * dpi), Math.Min(CInt(210 * dpi), CInt(可用宽度 * 0.32)))
         Dim 文件路径列宽 = Math.Max(CInt(260 * dpi), 可用宽度 - 类型列宽)
 
-        UltraDetailListView1.Columns(0).Width = 类型列宽
-        UltraDetailListView1.Columns(1).Width = 文件路径列宽
+        UDLV_附件列表.Columns(0).Width = 类型列宽
+        UDLV_附件列表.Columns(1).Width = 文件路径列宽
     End Sub
 
     Private Function 测量列宽(columnIndex As Integer, horizontalPadding As Integer) As Integer
-        Dim maxWidth = TextRenderer.MeasureText(If(UltraDetailListView1.Columns(columnIndex).Text, ""), UltraDetailListView1.Font).Width + horizontalPadding
-        For Each item In UltraDetailListView1.Items
+        Dim maxWidth = TextRenderer.MeasureText(If(UDLV_附件列表.Columns(columnIndex).Text, ""), UDLV_附件列表.Font).Width + horizontalPadding
+        For Each item In UDLV_附件列表.Items
             If item.SubItems.Count <= columnIndex Then Continue For
-            Dim width = TextRenderer.MeasureText(If(item.SubItems(columnIndex).Text, ""), UltraDetailListView1.Font).Width + horizontalPadding
+            Dim width = TextRenderer.MeasureText(If(item.SubItems(columnIndex).Text, ""), UDLV_附件列表.Font).Width + horizontalPadding
             If width > maxWidth Then maxWidth = width
         Next
         Return maxWidth

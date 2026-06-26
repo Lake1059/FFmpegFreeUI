@@ -1,4 +1,4 @@
-﻿Public Class Form_v6_设置_远程调用
+Public Class Form_v6_设置_远程调用
     Private Sub BooleanSwitch1_CheckedChanged(sender As Object, e As EventArgs) Handles BooleanSwitch1.CheckedChanged
         设置_v6.实例对象.是否监听端口 = BooleanSwitch1.Checked
         If BooleanSwitch1.Checked Then

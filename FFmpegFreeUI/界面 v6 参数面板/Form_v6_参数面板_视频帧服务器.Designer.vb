@@ -1,4 +1,4 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class Form_v6_参数面板_视频帧服务器
     Inherits System.Windows.Forms.Form
 
@@ -25,36 +25,36 @@ Partial Class Form_v6_参数面板_视频帧服务器
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form_v6_参数面板_视频帧服务器))
         ModernPanel1 = New LakeUI.ModernPanel()
         Panel1 = New Panel()
-        ModernComboBox2 = New LakeUI.ModernComboBox()
+        MCB_VapourSynth脚本文件 = New LakeUI.ModernComboBox()
         JustEmptyControl2 = New LakeUI.JustEmptyControl()
-        BooleanSwitch2 = New LakeUI.BooleanSwitch()
-        HtmlColorLabel5 = New LakeUI.HtmlColorLabel()
-        HtmlColorLabel6 = New LakeUI.HtmlColorLabel()
+        BS_使用VapourSynth = New LakeUI.BooleanSwitch()
+        HCL_VapourSynth说明 = New LakeUI.HtmlColorLabel()
+        HCL_VapourSynth标题 = New LakeUI.HtmlColorLabel()
         Panel7 = New Panel()
-        ModernComboBox1 = New LakeUI.ModernComboBox()
+        MCB_AviSynth脚本文件 = New LakeUI.ModernComboBox()
         JustEmptyControl1 = New LakeUI.JustEmptyControl()
-        BooleanSwitch1 = New LakeUI.BooleanSwitch()
-        HtmlColorLabel4 = New LakeUI.HtmlColorLabel()
-        HtmlColorLabel3 = New LakeUI.HtmlColorLabel()
-        HtmlColorLabel2 = New LakeUI.HtmlColorLabel()
-        HtmlColorLabel1 = New LakeUI.HtmlColorLabel()
+        BS_使用AviSynth = New LakeUI.BooleanSwitch()
+        HCL_AviSynth说明 = New LakeUI.HtmlColorLabel()
+        HCL_AviSynth标题 = New LakeUI.HtmlColorLabel()
+        HCL_视频帧服务器说明 = New LakeUI.HtmlColorLabel()
+        HCL_视频帧服务器标题 = New LakeUI.HtmlColorLabel()
         ModernPanel1.SuspendLayout()
         Panel1.SuspendLayout()
         Panel7.SuspendLayout()
         SuspendLayout()
-        ' 
+        '
         ' ModernPanel1
-        ' 
+        '
         ModernPanel1.BackColor1 = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         ModernPanel1.BorderSize = 0
         ModernPanel1.Controls.Add(Panel1)
-        ModernPanel1.Controls.Add(HtmlColorLabel5)
-        ModernPanel1.Controls.Add(HtmlColorLabel6)
+        ModernPanel1.Controls.Add(HCL_VapourSynth说明)
+        ModernPanel1.Controls.Add(HCL_VapourSynth标题)
         ModernPanel1.Controls.Add(Panel7)
-        ModernPanel1.Controls.Add(HtmlColorLabel4)
-        ModernPanel1.Controls.Add(HtmlColorLabel3)
-        ModernPanel1.Controls.Add(HtmlColorLabel2)
-        ModernPanel1.Controls.Add(HtmlColorLabel1)
+        ModernPanel1.Controls.Add(HCL_AviSynth说明)
+        ModernPanel1.Controls.Add(HCL_AviSynth标题)
+        ModernPanel1.Controls.Add(HCL_视频帧服务器说明)
+        ModernPanel1.Controls.Add(HCL_视频帧服务器标题)
         ModernPanel1.Dock = DockStyle.Fill
         ModernPanel1.Location = New Point(0, 0)
         ModernPanel1.Name = "ModernPanel1"
@@ -62,219 +62,219 @@ Partial Class Form_v6_参数面板_视频帧服务器
         ModernPanel1.ScrollBarMode = LakeUI.ModernPanel.ScrollMode.Vertical
         ModernPanel1.Size = New Size(764, 630)
         ModernPanel1.TabIndex = 0
-        ' 
+        '
         ' Panel1
-        ' 
-        Panel1.Controls.Add(ModernComboBox2)
+        '
+        Panel1.Controls.Add(MCB_VapourSynth脚本文件)
         Panel1.Controls.Add(JustEmptyControl2)
-        Panel1.Controls.Add(BooleanSwitch2)
+        Panel1.Controls.Add(BS_使用VapourSynth)
         Panel1.Dock = DockStyle.Top
         Panel1.Location = New Point(20, 390)
         Panel1.Name = "Panel1"
         Panel1.Padding = New Padding(0, 10, 0, 0)
         Panel1.Size = New Size(724, 42)
         Panel1.TabIndex = 14
-        ' 
-        ' ModernComboBox2
-        ' 
-        ModernComboBox2.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernComboBox2.BorderRadius = 10
-        ModernComboBox2.BorderSize = 0
-        ModernComboBox2.Dock = DockStyle.Fill
-        ModernComboBox2.DropDownBackdropBlurPasses = 2
-        ModernComboBox2.DropDownBackdropBlurRadius = 30
-        ModernComboBox2.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
-        ModernComboBox2.DropDownHoverAnimationDuration = 0
-        ModernComboBox2.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
-        ModernComboBox2.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
-        ModernComboBox2.DropDownPadding = New Padding(10)
-        ModernComboBox2.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernComboBox2.DropDownSelectedForeColor = Color.White
-        ModernComboBox2.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
-        ModernComboBox2.Items.Add("浏览 ...")
-        ModernComboBox2.Location = New Point(65, 10)
-        ModernComboBox2.Margin = New Padding(2, 2, 2, 2)
-        ModernComboBox2.Name = "ModernComboBox2"
-        ModernComboBox2.Padding = New Padding(10, 0, 10, 0)
-        ModernComboBox2.Size = New Size(659, 32)
-        ModernComboBox2.TabIndex = 1
-        ModernComboBox2.ToolTipGap = -1
-        ModernComboBox2.ToolTipMaxWidth = 350
-        ModernComboBox2.ToolTipPadding = New Padding(15)
-        ModernComboBox2.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        ' 
+        '
+        ' MCB_VapourSynth脚本文件
+        '
+        MCB_VapourSynth脚本文件.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MCB_VapourSynth脚本文件.BorderRadius = 10
+        MCB_VapourSynth脚本文件.BorderSize = 0
+        MCB_VapourSynth脚本文件.Dock = DockStyle.Fill
+        MCB_VapourSynth脚本文件.DropDownBackdropBlurPasses = 2
+        MCB_VapourSynth脚本文件.DropDownBackdropBlurRadius = 30
+        MCB_VapourSynth脚本文件.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
+        MCB_VapourSynth脚本文件.DropDownHoverAnimationDuration = 0
+        MCB_VapourSynth脚本文件.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
+        MCB_VapourSynth脚本文件.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
+        MCB_VapourSynth脚本文件.DropDownPadding = New Padding(10)
+        MCB_VapourSynth脚本文件.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MCB_VapourSynth脚本文件.DropDownSelectedForeColor = Color.White
+        MCB_VapourSynth脚本文件.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        MCB_VapourSynth脚本文件.Items.Add("浏览 ...")
+        MCB_VapourSynth脚本文件.Location = New Point(65, 10)
+        MCB_VapourSynth脚本文件.Margin = New Padding(2, 2, 2, 2)
+        MCB_VapourSynth脚本文件.Name = "MCB_VapourSynth脚本文件"
+        MCB_VapourSynth脚本文件.Padding = New Padding(10, 0, 10, 0)
+        MCB_VapourSynth脚本文件.Size = New Size(659, 32)
+        MCB_VapourSynth脚本文件.TabIndex = 1
+        MCB_VapourSynth脚本文件.ToolTipGap = -1
+        MCB_VapourSynth脚本文件.ToolTipMaxWidth = 350
+        MCB_VapourSynth脚本文件.ToolTipPadding = New Padding(15)
+        MCB_VapourSynth脚本文件.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
+        '
         ' JustEmptyControl2
-        ' 
+        '
         JustEmptyControl2.Dock = DockStyle.Left
         JustEmptyControl2.Location = New Point(55, 10)
         JustEmptyControl2.Name = "JustEmptyControl2"
         JustEmptyControl2.Size = New Size(10, 32)
         JustEmptyControl2.TabIndex = 3
-        ' 
-        ' BooleanSwitch2
-        ' 
-        BooleanSwitch2.BorderColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        BooleanSwitch2.BorderSize = 2
-        BooleanSwitch2.Dock = DockStyle.Left
-        BooleanSwitch2.KnobColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
-        BooleanSwitch2.KnobPadding = 4
-        BooleanSwitch2.Location = New Point(0, 10)
-        BooleanSwitch2.Margin = New Padding(2, 2, 2, 2)
-        BooleanSwitch2.Name = "BooleanSwitch2"
-        BooleanSwitch2.Size = New Size(55, 32)
-        BooleanSwitch2.TabIndex = 0
-        BooleanSwitch2.TrackColorOff = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        BooleanSwitch2.TrackColorOn = Color.MediumSlateBlue
-        ' 
-        ' HtmlColorLabel5
-        ' 
-        HtmlColorLabel5.AutoSize = True
-        HtmlColorLabel5.AutoSizeMode = AutoSizeMode.GrowAndShrink
-        HtmlColorLabel5.Dock = DockStyle.Top
-        HtmlColorLabel5.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        HtmlColorLabel5.Location = New Point(20, 344)
-        HtmlColorLabel5.Margin = New Padding(2)
-        HtmlColorLabel5.Name = "HtmlColorLabel5"
-        HtmlColorLabel5.Padding = New Padding(0, 0, 0, 5)
-        HtmlColorLabel5.Size = New Size(724, 46)
-        HtmlColorLabel5.TabIndex = 13
-        HtmlColorLabel5.Text = "<span style=""font-size:10pt; color:Gray"">在 .vpy/.py 脚本文件中使用 &lt;FilePath&gt; 来表示输入文件路径</span><br><span style=""font-size:10pt; color:Gray"">创建 VapourSynth 文件夹并放置 .vpy/.py 文件就可以在下拉框快速选择</span>"
-        ' 
-        ' HtmlColorLabel6
-        ' 
-        HtmlColorLabel6.AutoSize = True
-        HtmlColorLabel6.AutoSizeMode = AutoSizeMode.GrowAndShrink
-        HtmlColorLabel6.Dock = DockStyle.Top
-        HtmlColorLabel6.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        HtmlColorLabel6.Location = New Point(20, 294)
-        HtmlColorLabel6.Margin = New Padding(2)
-        HtmlColorLabel6.Name = "HtmlColorLabel6"
-        HtmlColorLabel6.Padding = New Padding(0, 20, 0, 5)
-        HtmlColorLabel6.Size = New Size(724, 50)
-        HtmlColorLabel6.TabIndex = 12
-        HtmlColorLabel6.Text = "<span style=""font-size:13; color:Silver"">VapourSynth</span>"
-        ' 
+        '
+        ' BS_使用VapourSynth
+        '
+        BS_使用VapourSynth.BorderColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
+        BS_使用VapourSynth.BorderSize = 2
+        BS_使用VapourSynth.Dock = DockStyle.Left
+        BS_使用VapourSynth.KnobColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
+        BS_使用VapourSynth.KnobPadding = 4
+        BS_使用VapourSynth.Location = New Point(0, 10)
+        BS_使用VapourSynth.Margin = New Padding(2, 2, 2, 2)
+        BS_使用VapourSynth.Name = "BS_使用VapourSynth"
+        BS_使用VapourSynth.Size = New Size(55, 32)
+        BS_使用VapourSynth.TabIndex = 0
+        BS_使用VapourSynth.TrackColorOff = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        BS_使用VapourSynth.TrackColorOn = Color.MediumSlateBlue
+        '
+        ' HCL_VapourSynth说明
+        '
+        HCL_VapourSynth说明.AutoSize = True
+        HCL_VapourSynth说明.AutoSizeMode = AutoSizeMode.GrowAndShrink
+        HCL_VapourSynth说明.Dock = DockStyle.Top
+        HCL_VapourSynth说明.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
+        HCL_VapourSynth说明.Location = New Point(20, 344)
+        HCL_VapourSynth说明.Margin = New Padding(2)
+        HCL_VapourSynth说明.Name = "HCL_VapourSynth说明"
+        HCL_VapourSynth说明.Padding = New Padding(0, 0, 0, 5)
+        HCL_VapourSynth说明.Size = New Size(724, 46)
+        HCL_VapourSynth说明.TabIndex = 13
+        HCL_VapourSynth说明.Text = "<span style=""font-size:10pt; color:Gray"">在 .vpy/.py 脚本文件中使用 &lt;FilePath&gt; 来表示输入文件路径</span><br><span style=""font-size:10pt; color:Gray"">创建 VapourSynth 文件夹并放置 .vpy/.py 文件就可以在下拉框快速选择</span>"
+        '
+        ' HCL_VapourSynth标题
+        '
+        HCL_VapourSynth标题.AutoSize = True
+        HCL_VapourSynth标题.AutoSizeMode = AutoSizeMode.GrowAndShrink
+        HCL_VapourSynth标题.Dock = DockStyle.Top
+        HCL_VapourSynth标题.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
+        HCL_VapourSynth标题.Location = New Point(20, 294)
+        HCL_VapourSynth标题.Margin = New Padding(2)
+        HCL_VapourSynth标题.Name = "HCL_VapourSynth标题"
+        HCL_VapourSynth标题.Padding = New Padding(0, 20, 0, 5)
+        HCL_VapourSynth标题.Size = New Size(724, 50)
+        HCL_VapourSynth标题.TabIndex = 12
+        HCL_VapourSynth标题.Text = "<span style=""font-size:13; color:Silver"">VapourSynth</span>"
+        '
         ' Panel7
-        ' 
-        Panel7.Controls.Add(ModernComboBox1)
+        '
+        Panel7.Controls.Add(MCB_AviSynth脚本文件)
         Panel7.Controls.Add(JustEmptyControl1)
-        Panel7.Controls.Add(BooleanSwitch1)
+        Panel7.Controls.Add(BS_使用AviSynth)
         Panel7.Dock = DockStyle.Top
         Panel7.Location = New Point(20, 252)
         Panel7.Name = "Panel7"
         Panel7.Padding = New Padding(0, 10, 0, 0)
         Panel7.Size = New Size(724, 42)
         Panel7.TabIndex = 11
-        ' 
-        ' ModernComboBox1
-        ' 
-        ModernComboBox1.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernComboBox1.BorderRadius = 10
-        ModernComboBox1.BorderSize = 0
-        ModernComboBox1.Dock = DockStyle.Fill
-        ModernComboBox1.DropDownBackdropBlurPasses = 2
-        ModernComboBox1.DropDownBackdropBlurRadius = 30
-        ModernComboBox1.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
-        ModernComboBox1.DropDownHoverAnimationDuration = 0
-        ModernComboBox1.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
-        ModernComboBox1.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
-        ModernComboBox1.DropDownPadding = New Padding(10)
-        ModernComboBox1.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernComboBox1.DropDownSelectedForeColor = Color.White
-        ModernComboBox1.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
-        ModernComboBox1.Items.Add("浏览 ...")
-        ModernComboBox1.Location = New Point(65, 10)
-        ModernComboBox1.Margin = New Padding(2, 2, 2, 2)
-        ModernComboBox1.Name = "ModernComboBox1"
-        ModernComboBox1.Padding = New Padding(10, 0, 10, 0)
-        ModernComboBox1.Size = New Size(659, 32)
-        ModernComboBox1.TabIndex = 1
-        ModernComboBox1.ToolTipGap = -1
-        ModernComboBox1.ToolTipMaxWidth = 350
-        ModernComboBox1.ToolTipPadding = New Padding(15)
-        ModernComboBox1.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        ' 
+        '
+        ' MCB_AviSynth脚本文件
+        '
+        MCB_AviSynth脚本文件.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MCB_AviSynth脚本文件.BorderRadius = 10
+        MCB_AviSynth脚本文件.BorderSize = 0
+        MCB_AviSynth脚本文件.Dock = DockStyle.Fill
+        MCB_AviSynth脚本文件.DropDownBackdropBlurPasses = 2
+        MCB_AviSynth脚本文件.DropDownBackdropBlurRadius = 30
+        MCB_AviSynth脚本文件.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
+        MCB_AviSynth脚本文件.DropDownHoverAnimationDuration = 0
+        MCB_AviSynth脚本文件.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
+        MCB_AviSynth脚本文件.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
+        MCB_AviSynth脚本文件.DropDownPadding = New Padding(10)
+        MCB_AviSynth脚本文件.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MCB_AviSynth脚本文件.DropDownSelectedForeColor = Color.White
+        MCB_AviSynth脚本文件.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        MCB_AviSynth脚本文件.Items.Add("浏览 ...")
+        MCB_AviSynth脚本文件.Location = New Point(65, 10)
+        MCB_AviSynth脚本文件.Margin = New Padding(2, 2, 2, 2)
+        MCB_AviSynth脚本文件.Name = "MCB_AviSynth脚本文件"
+        MCB_AviSynth脚本文件.Padding = New Padding(10, 0, 10, 0)
+        MCB_AviSynth脚本文件.Size = New Size(659, 32)
+        MCB_AviSynth脚本文件.TabIndex = 1
+        MCB_AviSynth脚本文件.ToolTipGap = -1
+        MCB_AviSynth脚本文件.ToolTipMaxWidth = 350
+        MCB_AviSynth脚本文件.ToolTipPadding = New Padding(15)
+        MCB_AviSynth脚本文件.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
+        '
         ' JustEmptyControl1
-        ' 
+        '
         JustEmptyControl1.Dock = DockStyle.Left
         JustEmptyControl1.Location = New Point(55, 10)
         JustEmptyControl1.Name = "JustEmptyControl1"
         JustEmptyControl1.Size = New Size(10, 32)
         JustEmptyControl1.TabIndex = 3
-        ' 
-        ' BooleanSwitch1
-        ' 
-        BooleanSwitch1.BorderColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        BooleanSwitch1.BorderSize = 2
-        BooleanSwitch1.Dock = DockStyle.Left
-        BooleanSwitch1.KnobColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
-        BooleanSwitch1.KnobPadding = 4
-        BooleanSwitch1.Location = New Point(0, 10)
-        BooleanSwitch1.Margin = New Padding(2, 2, 2, 2)
-        BooleanSwitch1.Name = "BooleanSwitch1"
-        BooleanSwitch1.Size = New Size(55, 32)
-        BooleanSwitch1.TabIndex = 0
-        BooleanSwitch1.TrackColorOff = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        BooleanSwitch1.TrackColorOn = Color.MediumSlateBlue
-        ' 
-        ' HtmlColorLabel4
-        ' 
-        HtmlColorLabel4.AutoSize = True
-        HtmlColorLabel4.AutoSizeMode = AutoSizeMode.GrowAndShrink
-        HtmlColorLabel4.Dock = DockStyle.Top
-        HtmlColorLabel4.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        HtmlColorLabel4.Location = New Point(20, 206)
-        HtmlColorLabel4.Margin = New Padding(2)
-        HtmlColorLabel4.Name = "HtmlColorLabel4"
-        HtmlColorLabel4.Padding = New Padding(0, 0, 0, 5)
-        HtmlColorLabel4.Size = New Size(724, 46)
-        HtmlColorLabel4.TabIndex = 10
-        HtmlColorLabel4.Text = "<span style=""font-size:10pt; color:Gray"">在 .avs 脚本文件中使用 &lt;FilePath&gt; 来表示输入文件路径</span><br><span style=""font-size:10pt; color:Gray"">创建 AviSynth 文件夹并放置 .avs 文件就可以在下拉框快速选择</span>"
-        ' 
-        ' HtmlColorLabel3
-        ' 
-        HtmlColorLabel3.AutoSize = True
-        HtmlColorLabel3.AutoSizeMode = AutoSizeMode.GrowAndShrink
-        HtmlColorLabel3.Dock = DockStyle.Top
-        HtmlColorLabel3.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        HtmlColorLabel3.Location = New Point(20, 156)
-        HtmlColorLabel3.Margin = New Padding(2)
-        HtmlColorLabel3.Name = "HtmlColorLabel3"
-        HtmlColorLabel3.Padding = New Padding(0, 20, 0, 5)
-        HtmlColorLabel3.Size = New Size(724, 50)
-        HtmlColorLabel3.TabIndex = 9
-        HtmlColorLabel3.Text = "<span style=""font-size:13; color:Silver"">AviSynth</span>"
-        ' 
-        ' HtmlColorLabel2
-        ' 
-        HtmlColorLabel2.AutoSize = True
-        HtmlColorLabel2.AutoSizeMode = AutoSizeMode.GrowAndShrink
-        HtmlColorLabel2.Dock = DockStyle.Top
-        HtmlColorLabel2.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        HtmlColorLabel2.Location = New Point(20, 50)
-        HtmlColorLabel2.Margin = New Padding(2)
-        HtmlColorLabel2.Name = "HtmlColorLabel2"
-        HtmlColorLabel2.Padding = New Padding(0, 0, 0, 5)
-        HtmlColorLabel2.Size = New Size(724, 106)
-        HtmlColorLabel2.TabIndex = 8
-        HtmlColorLabel2.Text = resources.GetString("HtmlColorLabel2.Text")
-        ' 
-        ' HtmlColorLabel1
-        ' 
-        HtmlColorLabel1.AutoSize = True
-        HtmlColorLabel1.AutoSizeMode = AutoSizeMode.GrowAndShrink
-        HtmlColorLabel1.Dock = DockStyle.Top
-        HtmlColorLabel1.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        HtmlColorLabel1.Location = New Point(20, 20)
-        HtmlColorLabel1.Margin = New Padding(2)
-        HtmlColorLabel1.Name = "HtmlColorLabel1"
-        HtmlColorLabel1.Padding = New Padding(0, 0, 0, 5)
-        HtmlColorLabel1.Size = New Size(724, 30)
-        HtmlColorLabel1.TabIndex = 7
-        HtmlColorLabel1.Text = "<span style=""font-size:13; color:Silver"">视频帧服务器</span>   这是高阶内容，如果你是新手，不要考虑这些"
-        ' 
+        '
+        ' BS_使用AviSynth
+        '
+        BS_使用AviSynth.BorderColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
+        BS_使用AviSynth.BorderSize = 2
+        BS_使用AviSynth.Dock = DockStyle.Left
+        BS_使用AviSynth.KnobColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
+        BS_使用AviSynth.KnobPadding = 4
+        BS_使用AviSynth.Location = New Point(0, 10)
+        BS_使用AviSynth.Margin = New Padding(2, 2, 2, 2)
+        BS_使用AviSynth.Name = "BS_使用AviSynth"
+        BS_使用AviSynth.Size = New Size(55, 32)
+        BS_使用AviSynth.TabIndex = 0
+        BS_使用AviSynth.TrackColorOff = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        BS_使用AviSynth.TrackColorOn = Color.MediumSlateBlue
+        '
+        ' HCL_AviSynth说明
+        '
+        HCL_AviSynth说明.AutoSize = True
+        HCL_AviSynth说明.AutoSizeMode = AutoSizeMode.GrowAndShrink
+        HCL_AviSynth说明.Dock = DockStyle.Top
+        HCL_AviSynth说明.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
+        HCL_AviSynth说明.Location = New Point(20, 206)
+        HCL_AviSynth说明.Margin = New Padding(2)
+        HCL_AviSynth说明.Name = "HCL_AviSynth说明"
+        HCL_AviSynth说明.Padding = New Padding(0, 0, 0, 5)
+        HCL_AviSynth说明.Size = New Size(724, 46)
+        HCL_AviSynth说明.TabIndex = 10
+        HCL_AviSynth说明.Text = "<span style=""font-size:10pt; color:Gray"">在 .avs 脚本文件中使用 &lt;FilePath&gt; 来表示输入文件路径</span><br><span style=""font-size:10pt; color:Gray"">创建 AviSynth 文件夹并放置 .avs 文件就可以在下拉框快速选择</span>"
+        '
+        ' HCL_AviSynth标题
+        '
+        HCL_AviSynth标题.AutoSize = True
+        HCL_AviSynth标题.AutoSizeMode = AutoSizeMode.GrowAndShrink
+        HCL_AviSynth标题.Dock = DockStyle.Top
+        HCL_AviSynth标题.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
+        HCL_AviSynth标题.Location = New Point(20, 156)
+        HCL_AviSynth标题.Margin = New Padding(2)
+        HCL_AviSynth标题.Name = "HCL_AviSynth标题"
+        HCL_AviSynth标题.Padding = New Padding(0, 20, 0, 5)
+        HCL_AviSynth标题.Size = New Size(724, 50)
+        HCL_AviSynth标题.TabIndex = 9
+        HCL_AviSynth标题.Text = "<span style=""font-size:13; color:Silver"">AviSynth</span>"
+        '
+        ' HCL_视频帧服务器说明
+        '
+        HCL_视频帧服务器说明.AutoSize = True
+        HCL_视频帧服务器说明.AutoSizeMode = AutoSizeMode.GrowAndShrink
+        HCL_视频帧服务器说明.Dock = DockStyle.Top
+        HCL_视频帧服务器说明.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
+        HCL_视频帧服务器说明.Location = New Point(20, 50)
+        HCL_视频帧服务器说明.Margin = New Padding(2)
+        HCL_视频帧服务器说明.Name = "HCL_视频帧服务器说明"
+        HCL_视频帧服务器说明.Padding = New Padding(0, 0, 0, 5)
+        HCL_视频帧服务器说明.Size = New Size(724, 106)
+        HCL_视频帧服务器说明.TabIndex = 8
+        HCL_视频帧服务器说明.Text = resources.GetString("HCL_视频帧服务器说明.Text")
+        '
+        ' HCL_视频帧服务器标题
+        '
+        HCL_视频帧服务器标题.AutoSize = True
+        HCL_视频帧服务器标题.AutoSizeMode = AutoSizeMode.GrowAndShrink
+        HCL_视频帧服务器标题.Dock = DockStyle.Top
+        HCL_视频帧服务器标题.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
+        HCL_视频帧服务器标题.Location = New Point(20, 20)
+        HCL_视频帧服务器标题.Margin = New Padding(2)
+        HCL_视频帧服务器标题.Name = "HCL_视频帧服务器标题"
+        HCL_视频帧服务器标题.Padding = New Padding(0, 0, 0, 5)
+        HCL_视频帧服务器标题.Size = New Size(724, 30)
+        HCL_视频帧服务器标题.TabIndex = 7
+        HCL_视频帧服务器标题.Text = "<span style=""font-size:13; color:Silver"">视频帧服务器</span>   这是高阶内容，如果你是新手，不要考虑这些"
+        '
         ' Form_v6_参数面板_视频帧服务器
-        ' 
+        '
         AutoScaleDimensions = New SizeF(96F, 96F)
         AutoScaleMode = AutoScaleMode.Dpi
         BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
@@ -292,18 +292,18 @@ Partial Class Form_v6_参数面板_视频帧服务器
     End Sub
 
     Friend WithEvents ModernPanel1 As LakeUI.ModernPanel
-    Friend WithEvents HtmlColorLabel1 As LakeUI.HtmlColorLabel
-    Friend WithEvents HtmlColorLabel2 As LakeUI.HtmlColorLabel
-    Friend WithEvents HtmlColorLabel3 As LakeUI.HtmlColorLabel
-    Friend WithEvents HtmlColorLabel4 As LakeUI.HtmlColorLabel
+    Friend WithEvents HCL_视频帧服务器标题 As LakeUI.HtmlColorLabel
+    Friend WithEvents HCL_视频帧服务器说明 As LakeUI.HtmlColorLabel
+    Friend WithEvents HCL_AviSynth标题 As LakeUI.HtmlColorLabel
+    Friend WithEvents HCL_AviSynth说明 As LakeUI.HtmlColorLabel
     Friend WithEvents Panel7 As Panel
-    Friend WithEvents BooleanSwitch1 As LakeUI.BooleanSwitch
-    Friend WithEvents ModernComboBox1 As LakeUI.ModernComboBox
+    Friend WithEvents BS_使用AviSynth As LakeUI.BooleanSwitch
+    Friend WithEvents MCB_AviSynth脚本文件 As LakeUI.ModernComboBox
     Friend WithEvents JustEmptyControl1 As LakeUI.JustEmptyControl
     Friend WithEvents Panel1 As Panel
-    Friend WithEvents ModernComboBox2 As LakeUI.ModernComboBox
+    Friend WithEvents MCB_VapourSynth脚本文件 As LakeUI.ModernComboBox
     Friend WithEvents JustEmptyControl2 As LakeUI.JustEmptyControl
-    Friend WithEvents BooleanSwitch2 As LakeUI.BooleanSwitch
-    Friend WithEvents HtmlColorLabel5 As LakeUI.HtmlColorLabel
-    Friend WithEvents HtmlColorLabel6 As LakeUI.HtmlColorLabel
+    Friend WithEvents BS_使用VapourSynth As LakeUI.BooleanSwitch
+    Friend WithEvents HCL_VapourSynth说明 As LakeUI.HtmlColorLabel
+    Friend WithEvents HCL_VapourSynth标题 As LakeUI.HtmlColorLabel
 End Class

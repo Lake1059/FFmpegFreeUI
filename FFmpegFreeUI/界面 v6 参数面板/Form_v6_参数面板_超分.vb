@@ -24,13 +24,13 @@ Public Class Form_v6_参数面板_超分
     End Sub
 
     Public Sub 刷新策略组列表()
-        If ModernListBox1 Is Nothing Then Exit Sub
-        Dim oldIndex = ModernListBox1.SelectedIndex
-        ModernListBox1.Items.Clear()
+        If MLB_超分滤镜叠加策略列表 Is Nothing Then Exit Sub
+        Dim oldIndex = MLB_超分滤镜叠加策略列表.SelectedIndex
+        MLB_超分滤镜叠加策略列表.Items.Clear()
         For i = 0 To 策略组数据.Count - 1
-            ModernListBox1.Items.Add(格式化策略(i, 策略组数据(i)))
+            MLB_超分滤镜叠加策略列表.Items.Add(格式化策略(i, 策略组数据(i)))
         Next
-        If ModernListBox1.Items.Count > 0 Then ModernListBox1.SelectedIndex = Math.Min(Math.Max(0, oldIndex), ModernListBox1.Items.Count - 1)
+        If MLB_超分滤镜叠加策略列表.Items.Count > 0 Then MLB_超分滤镜叠加策略列表.SelectedIndex = Math.Min(Math.Max(0, oldIndex), MLB_超分滤镜叠加策略列表.Items.Count - 1)
     End Sub
 
     Private Function 从当前面板创建策略() As 超分数据单片结构
@@ -52,7 +52,7 @@ Public Class Form_v6_参数面板_超分
         MCB_下采样算法.Text = 策略.下采样算法
         MTB_抗振铃强度.Text = 策略.抗振铃强度
         MCB_着色器文件路径.Text = 策略.着色器文件路径
-        MCB_超分总开关.Checked = True
+        MCK_超分总开关.Checked = True
     End Sub
 
     Private Function 克隆策略(策略 As 超分数据单片结构) As 超分数据单片结构
@@ -80,13 +80,13 @@ Public Class Form_v6_参数面板_超分
     End Function
 
     Private Sub MB_读取_Click(sender As Object, e As EventArgs) Handles MB_读取.Click
-        Dim i = ModernListBox1.SelectedIndex
+        Dim i = MLB_超分滤镜叠加策略列表.SelectedIndex
         If i >= 0 AndAlso i < 策略组数据.Count Then 读取策略到面板(策略组数据(i))
     End Sub
 
     Private Sub MB_保存_Click(sender As Object, e As EventArgs) Handles MB_保存.Click
         Dim item = 从当前面板创建策略()
-        Dim i = ModernListBox1.SelectedIndex
+        Dim i = MLB_超分滤镜叠加策略列表.SelectedIndex
         If i >= 0 AndAlso i < 策略组数据.Count Then
             策略组数据(i) = item
         Else
@@ -94,31 +94,31 @@ Public Class Form_v6_参数面板_超分
             i = 策略组数据.Count - 1
         End If
         刷新策略组列表()
-        ModernListBox1.SelectedIndex = i
+        MLB_超分滤镜叠加策略列表.SelectedIndex = i
     End Sub
 
     Private Sub MB_移除_Click(sender As Object, e As EventArgs) Handles MB_移除.Click
-        Dim i = ModernListBox1.SelectedIndex
+        Dim i = MLB_超分滤镜叠加策略列表.SelectedIndex
         If i < 0 OrElse i >= 策略组数据.Count Then Exit Sub
         策略组数据.RemoveAt(i)
         刷新策略组列表()
     End Sub
 
     Private Sub MB_克隆_Click(sender As Object, e As EventArgs) Handles MB_克隆.Click
-        Dim i = ModernListBox1.SelectedIndex
+        Dim i = MLB_超分滤镜叠加策略列表.SelectedIndex
         If i < 0 OrElse i >= 策略组数据.Count Then Exit Sub
         策略组数据.Insert(i + 1, 克隆策略(策略组数据(i)))
         刷新策略组列表()
-        ModernListBox1.SelectedIndex = i + 1
+        MLB_超分滤镜叠加策略列表.SelectedIndex = i + 1
     End Sub
 
-    Private Sub ModernListBox1_ItemDoubleClick(sender As Object, e As LakeUI.ModernListBox.ItemEventArgs) Handles ModernListBox1.ItemDoubleClick
+    Private Sub ModernListBox1_ItemDoubleClick(sender As Object, e As LakeUI.ModernListBox.ItemEventArgs) Handles MLB_超分滤镜叠加策略列表.ItemDoubleClick
         If e.Index >= 0 AndAlso e.Index < 策略组数据.Count Then 读取策略到面板(策略组数据(e.Index))
     End Sub
 
-    Private Sub ModernListBox1_ItemOrderChanged(sender As Object, e As EventArgs) Handles ModernListBox1.ItemOrderChanged
+    Private Sub ModernListBox1_ItemOrderChanged(sender As Object, e As EventArgs) Handles MLB_超分滤镜叠加策略列表.ItemOrderChanged
         Dim reordered As New List(Of 超分数据单片结构)
-        For Each item In ModernListBox1.Items
+        For Each item In MLB_超分滤镜叠加策略列表.Items
             Dim dot = item.IndexOf("."c)
             Dim oldIndex As Integer
             If dot > 0 AndAlso Integer.TryParse(item.Substring(0, dot), oldIndex) Then

@@ -34,9 +34,9 @@ Partial Class Form_v6_媒体流选择器
         顶部面板.SuspendLayout()
         底部面板.SuspendLayout()
         SuspendLayout()
-        ' 
+        '
         ' ModernPanel1
-        ' 
+        '
         ModernPanel1.AllowDrop = True
         ModernPanel1.BackColor1 = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         ModernPanel1.BorderSize = 0
@@ -49,9 +49,9 @@ Partial Class Form_v6_媒体流选择器
         ModernPanel1.Padding = New Padding(12)
         ModernPanel1.Size = New Size(665, 462)
         ModernPanel1.TabIndex = 0
-        ' 
+        '
         ' 列表面板
-        ' 
+        '
         列表面板.AllowDrop = True
         列表面板.BackColor1 = Color.Transparent
         列表面板.BorderSize = 0
@@ -62,9 +62,9 @@ Partial Class Form_v6_媒体流选择器
         列表面板.ScrollBarMode = LakeUI.ModernPanel.ScrollMode.Vertical
         列表面板.Size = New Size(641, 358)
         列表面板.TabIndex = 2
-        ' 
+        '
         ' 顶部面板
-        ' 
+        '
         顶部面板.AllowDrop = True
         顶部面板.Controls.Add(MB_全选字幕)
         顶部面板.Controls.Add(JustEmptyControl2)
@@ -77,9 +77,9 @@ Partial Class Form_v6_媒体流选择器
         顶部面板.Padding = New Padding(0, 0, 0, 10)
         顶部面板.Size = New Size(641, 40)
         顶部面板.TabIndex = 0
-        ' 
+        '
         ' MB_全选字幕
-        ' 
+        '
         MB_全选字幕.AllowDrop = True
         MB_全选字幕.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MB_全选字幕.BorderRadius = 8
@@ -93,17 +93,17 @@ Partial Class Form_v6_媒体流选择器
         MB_全选字幕.Size = New Size(100, 30)
         MB_全选字幕.TabIndex = 4
         MB_全选字幕.Text = "全选字幕"
-        ' 
+        '
         ' JustEmptyControl2
-        ' 
+        '
         JustEmptyControl2.Dock = DockStyle.Left
         JustEmptyControl2.Location = New Point(210, 0)
         JustEmptyControl2.Name = "JustEmptyControl2"
         JustEmptyControl2.Size = New Size(10, 30)
         JustEmptyControl2.TabIndex = 3
-        ' 
+        '
         ' MB_全选音频
-        ' 
+        '
         MB_全选音频.AllowDrop = True
         MB_全选音频.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MB_全选音频.BorderRadius = 8
@@ -117,17 +117,17 @@ Partial Class Form_v6_媒体流选择器
         MB_全选音频.Size = New Size(100, 30)
         MB_全选音频.TabIndex = 2
         MB_全选音频.Text = "全选音频"
-        ' 
+        '
         ' JustEmptyControl1
-        ' 
+        '
         JustEmptyControl1.Dock = DockStyle.Left
         JustEmptyControl1.Location = New Point(100, 0)
         JustEmptyControl1.Name = "JustEmptyControl1"
         JustEmptyControl1.Size = New Size(10, 30)
         JustEmptyControl1.TabIndex = 1
-        ' 
+        '
         ' MB_全选视频
-        ' 
+        '
         MB_全选视频.AllowDrop = True
         MB_全选视频.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MB_全选视频.BorderRadius = 8
@@ -141,9 +141,9 @@ Partial Class Form_v6_媒体流选择器
         MB_全选视频.Size = New Size(100, 30)
         MB_全选视频.TabIndex = 0
         MB_全选视频.Text = "全选视频"
-        ' 
+        '
         ' 底部面板
-        ' 
+        '
         底部面板.AllowDrop = True
         底部面板.Controls.Add(MB_确认选择)
         底部面板.Controls.Add(MB_重置选择)
@@ -155,9 +155,9 @@ Partial Class Form_v6_媒体流选择器
         底部面板.Padding = New Padding(0, 10, 0, 0)
         底部面板.Size = New Size(641, 40)
         底部面板.TabIndex = 1
-        ' 
+        '
         ' MB_确认选择
-        ' 
+        '
         MB_确认选择.AllowDrop = True
         MB_确认选择.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MB_确认选择.BorderRadius = 8
@@ -171,9 +171,9 @@ Partial Class Form_v6_媒体流选择器
         MB_确认选择.Size = New Size(120, 30)
         MB_确认选择.TabIndex = 3
         MB_确认选择.Text = "确认选择"
-        ' 
+        '
         ' MB_重置选择
-        ' 
+        '
         MB_重置选择.AllowDrop = True
         MB_重置选择.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MB_重置选择.BorderRadius = 8
@@ -187,17 +187,17 @@ Partial Class Form_v6_媒体流选择器
         MB_重置选择.Size = New Size(100, 30)
         MB_重置选择.TabIndex = 2
         MB_重置选择.Text = "重置选择"
-        ' 
+        '
         ' JustEmptyControl3
-        ' 
+        '
         JustEmptyControl3.Dock = DockStyle.Left
         JustEmptyControl3.Location = New Point(100, 10)
         JustEmptyControl3.Name = "JustEmptyControl3"
         JustEmptyControl3.Size = New Size(10, 30)
         JustEmptyControl3.TabIndex = 1
-        ' 
+        '
         ' MB_打开文件
-        ' 
+        '
         MB_打开文件.AllowDrop = True
         MB_打开文件.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MB_打开文件.BorderRadius = 8
@@ -211,9 +211,9 @@ Partial Class Form_v6_媒体流选择器
         MB_打开文件.Size = New Size(100, 30)
         MB_打开文件.TabIndex = 0
         MB_打开文件.Text = "打开文件"
-        ' 
+        '
         ' Form_v6_媒体流选择器
-        ' 
+        '
         AllowDrop = True
         AutoScaleDimensions = New SizeF(96F, 96F)
         AutoScaleMode = AutoScaleMode.Dpi

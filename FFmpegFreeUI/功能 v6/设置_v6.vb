@@ -1,4 +1,4 @@
-﻿Imports System.IO
+Imports System.IO
 Imports System.Reflection
 Imports System.Text.Json
 Public Class 设置_v6

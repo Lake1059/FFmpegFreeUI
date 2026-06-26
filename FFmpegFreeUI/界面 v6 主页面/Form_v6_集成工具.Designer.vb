@@ -1,4 +1,4 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class Form_v6_集成工具
     Inherits System.Windows.Forms.Form
 
@@ -32,9 +32,9 @@ Partial Class Form_v6_集成工具
         ModernTabListControl1 = New LakeUI.ModernTabListControl()
         ModernPanel1.SuspendLayout()
         SuspendLayout()
-        ' 
+        '
         ' ModernPanel1
-        ' 
+        '
         ModernPanel1.BorderSize = 0
         ModernPanel1.Controls.Add(ModernTabListControl1)
         ModernPanel1.Dock = DockStyle.Fill
@@ -42,9 +42,9 @@ Partial Class Form_v6_集成工具
         ModernPanel1.Name = "ModernPanel1"
         ModernPanel1.Size = New Size(848, 579)
         ModernPanel1.TabIndex = 3
-        ' 
+        '
         ' ModernTabListControl1
-        ' 
+        '
         ModernTabListControl1.AnimationDuration = 0
         ModernTabListControl1.BackColor = Color.Transparent
         ModernTabListControl1.Dock = DockStyle.Fill
@@ -75,9 +75,9 @@ Partial Class Form_v6_集成工具
         ModernTabListControl1.TabItemSpacing = 0
         ModernTabListControl1.TabStripBackColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
         ModernTabListControl1.TabStripWidth = 210
-        ' 
+        '
         ' Form_v6_集成工具
-        ' 
+        '
         AutoScaleDimensions = New SizeF(96F, 96F)
         AutoScaleMode = AutoScaleMode.Dpi
         BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))

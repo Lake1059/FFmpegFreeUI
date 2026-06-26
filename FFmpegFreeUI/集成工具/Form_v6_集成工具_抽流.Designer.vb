@@ -1,4 +1,4 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class Form_v6_集成工具_抽流
     Inherits System.Windows.Forms.Form
 
@@ -34,9 +34,9 @@ Partial Class Form_v6_集成工具_抽流
         ModernPanel1.SuspendLayout()
         Panel1.SuspendLayout()
         SuspendLayout()
-        ' 
+        '
         ' ModernPanel1
-        ' 
+        '
         ModernPanel1.BackColor1 = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         ModernPanel1.BorderSize = 0
         ModernPanel1.Controls.Add(ModernPanel2)
@@ -48,9 +48,9 @@ Partial Class Form_v6_集成工具_抽流
         ModernPanel1.Padding = New Padding(20)
         ModernPanel1.Size = New Size(871, 595)
         ModernPanel1.TabIndex = 0
-        ' 
+        '
         ' Panel1
-        ' 
+        '
         Panel1.Controls.Add(MCB_输出位置)
         Panel1.Controls.Add(JustEmptyControl2)
         Panel1.Controls.Add(MB_提取所选)
@@ -62,17 +62,17 @@ Partial Class Form_v6_集成工具_抽流
         Panel1.Padding = New Padding(0, 10, 0, 10)
         Panel1.Size = New Size(831, 52)
         Panel1.TabIndex = 5
-        ' 
+        '
         ' JustEmptyControl1
-        ' 
+        '
         JustEmptyControl1.Dock = DockStyle.Left
         JustEmptyControl1.Location = New Point(100, 10)
         JustEmptyControl1.Name = "JustEmptyControl1"
         JustEmptyControl1.Size = New Size(10, 32)
         JustEmptyControl1.TabIndex = 3
-        ' 
+        '
         ' MB_打开文件
-        ' 
+        '
         MB_打开文件.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MB_打开文件.BorderRadius = 10
         MB_打开文件.BorderSize = 0
@@ -86,9 +86,9 @@ Partial Class Form_v6_集成工具_抽流
         MB_打开文件.Size = New Size(100, 32)
         MB_打开文件.TabIndex = 0
         MB_打开文件.Text = "打开文件"
-        ' 
+        '
         ' HtmlColorLabel1
-        ' 
+        '
         HtmlColorLabel1.AutoSize = True
         HtmlColorLabel1.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel1.Dock = DockStyle.Top
@@ -99,9 +99,9 @@ Partial Class Form_v6_集成工具_抽流
         HtmlColorLabel1.Size = New Size(831, 25)
         HtmlColorLabel1.TabIndex = 4
         HtmlColorLabel1.Text = "<span style=""font-size:13; color:Silver"">将指定的流单独输出到文件</span>   多选时自动命名；单选时用左键点提取是打开另存为，右键是自动命名"
-        ' 
+        '
         ' MB_提取所选
-        ' 
+        '
         MB_提取所选.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MB_提取所选.BorderRadius = 10
         MB_提取所选.BorderSize = 0
@@ -115,17 +115,17 @@ Partial Class Form_v6_集成工具_抽流
         MB_提取所选.Size = New Size(100, 32)
         MB_提取所选.TabIndex = 4
         MB_提取所选.Text = "提取所选"
-        ' 
+        '
         ' JustEmptyControl2
-        ' 
+        '
         JustEmptyControl2.Dock = DockStyle.Left
         JustEmptyControl2.Location = New Point(210, 10)
         JustEmptyControl2.Name = "JustEmptyControl2"
         JustEmptyControl2.Size = New Size(10, 32)
         JustEmptyControl2.TabIndex = 5
-        ' 
+        '
         ' MCB_输出位置
-        ' 
+        '
         MCB_输出位置.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_输出位置.BorderRadius = 10
         MCB_输出位置.BorderSize = 0
@@ -153,9 +153,9 @@ Partial Class Form_v6_集成工具_抽流
         MCB_输出位置.ToolTipPadding = New Padding(15)
         MCB_输出位置.WaterText = "输出位置，将文件或文件夹拖至此来直接获取位置"
         MCB_输出位置.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        ' 
+        '
         ' ModernPanel2
-        ' 
+        '
         ModernPanel2.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernPanel2.BorderRadius = 10
         ModernPanel2.BorderSize = 0
@@ -165,9 +165,9 @@ Partial Class Form_v6_集成工具_抽流
         ModernPanel2.Padding = New Padding(10)
         ModernPanel2.Size = New Size(831, 478)
         ModernPanel2.TabIndex = 6
-        ' 
+        '
         ' Form_v6_集成工具_抽流
-        ' 
+        '
         AutoScaleDimensions = New SizeF(96F, 96F)
         AutoScaleMode = AutoScaleMode.Dpi
         BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))

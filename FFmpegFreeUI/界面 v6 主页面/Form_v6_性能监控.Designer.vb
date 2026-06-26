@@ -1,4 +1,4 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class Form_v6_性能监控
     Inherits System.Windows.Forms.Form
 
@@ -68,9 +68,9 @@ Partial Class Form_v6_性能监控
         Panel3.SuspendLayout()
         Panel2.SuspendLayout()
         SuspendLayout()
-        ' 
+        '
         ' CpuMonitor1
-        ' 
+        '
         CpuMonitor1.CellBackColor = Color.FromArgb(CByte(120), CByte(0), CByte(0), CByte(0))
         CpuMonitor1.CellBorderThickness = 0F
         CpuMonitor1.CellPadding = 0F
@@ -84,9 +84,9 @@ Partial Class Form_v6_性能监控
         CpuMonitor1.TabIndex = 3
         CpuMonitor1.TextMode = LakeUI.CpuMonitor.TextModeEnum.PercentOnly
         CpuMonitor1.TextPadding = New Padding(0, 5, 0, 5)
-        ' 
+        '
         ' ModernPanel1
-        ' 
+        '
         ModernPanel1.BackColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
         ModernPanel1.BorderSize = 0
         ModernPanel1.Controls.Add(Panel4)
@@ -100,9 +100,9 @@ Partial Class Form_v6_性能监控
         ModernPanel1.ScrollBarMode = LakeUI.ModernPanel.ScrollMode.None
         ModernPanel1.Size = New Size(913, 632)
         ModernPanel1.TabIndex = 16
-        ' 
+        '
         ' Panel4
-        ' 
+        '
         Panel4.Controls.Add(ModernPanel内置显卡监控面板)
         Panel4.Controls.Add(Panel3)
         Panel4.Dock = DockStyle.Fill
@@ -111,9 +111,9 @@ Partial Class Form_v6_性能监控
         Panel4.Padding = New Padding(0, 0, 0, 10)
         Panel4.Size = New Size(578, 462)
         Panel4.TabIndex = 4
-        ' 
+        '
         ' ModernPanel内置显卡监控面板
-        ' 
+        '
         ModernPanel内置显卡监控面板.BackColor = Color.Transparent
         ModernPanel内置显卡监控面板.BackColor1 = Color.Transparent
         ModernPanel内置显卡监控面板.BorderSize = 0
@@ -126,26 +126,26 @@ Partial Class Form_v6_性能监控
         ModernPanel内置显卡监控面板.ScrollBarMode = LakeUI.ModernPanel.ScrollMode.None
         ModernPanel内置显卡监控面板.Size = New Size(578, 410)
         ModernPanel内置显卡监控面板.TabIndex = 7
-        ' 
+        '
         ' EasyStatesPanel1
-        ' 
+        '
         EasyStatesPanel1.BackColor = Color.Transparent
         EasyStatesPanel1.Dock = DockStyle.Fill
         EasyStatesPanel1.Location = New Point(0, 150)
         EasyStatesPanel1.Name = "EasyStatesPanel1"
         EasyStatesPanel1.Size = New Size(578, 260)
         EasyStatesPanel1.TabIndex = 6
-        ' 
+        '
         ' JustEmptyControl5
-        ' 
+        '
         JustEmptyControl5.Dock = DockStyle.Top
         JustEmptyControl5.Location = New Point(0, 140)
         JustEmptyControl5.Name = "JustEmptyControl5"
         JustEmptyControl5.Size = New Size(578, 10)
         JustEmptyControl5.TabIndex = 5
-        ' 
+        '
         ' Panel1
-        ' 
+        '
         Panel1.Controls.Add(ModernPanel7)
         Panel1.Controls.Add(JustEmptyControl6)
         Panel1.Controls.Add(ModernPanel6)
@@ -158,9 +158,9 @@ Partial Class Form_v6_性能监控
         Panel1.Name = "Panel1"
         Panel1.Size = New Size(578, 140)
         Panel1.TabIndex = 0
-        ' 
+        '
         ' ModernPanel7
-        ' 
+        '
         ModernPanel7.BackColor1 = Color.FromArgb(CByte(120), CByte(0), CByte(0), CByte(0))
         ModernPanel7.BorderRadius = 10
         ModernPanel7.BorderSize = 0
@@ -172,9 +172,9 @@ Partial Class Form_v6_性能监控
         ModernPanel7.ScrollBarMode = LakeUI.ModernPanel.ScrollMode.None
         ModernPanel7.Size = New Size(143, 140)
         ModernPanel7.TabIndex = 8
-        ' 
+        '
         ' RoundDashBoard4
-        ' 
+        '
         RoundDashBoard4.Dock = DockStyle.Fill
         RoundDashBoard4.FillColor = Color.CornflowerBlue
         RoundDashBoard4.FillGradientColor = Color.IndianRed
@@ -188,9 +188,9 @@ Partial Class Form_v6_性能监控
         RoundDashBoard4.TabIndex = 3
         RoundDashBoard4.Thickness = 8F
         RoundDashBoard4.TrackColor = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
-        ' 
+        '
         ' HtmlColorLabel4
-        ' 
+        '
         HtmlColorLabel4.AutoSize = True
         HtmlColorLabel4.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel4.Dock = DockStyle.Top
@@ -202,17 +202,17 @@ Partial Class Form_v6_性能监控
         HtmlColorLabel4.TabIndex = 2
         HtmlColorLabel4.Text = "功耗"
         HtmlColorLabel4.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.Center
-        ' 
+        '
         ' JustEmptyControl6
-        ' 
+        '
         JustEmptyControl6.Dock = DockStyle.Left
         JustEmptyControl6.Location = New Point(425, 0)
         JustEmptyControl6.Name = "JustEmptyControl6"
         JustEmptyControl6.Size = New Size(10, 140)
         JustEmptyControl6.TabIndex = 7
-        ' 
+        '
         ' ModernPanel6
-        ' 
+        '
         ModernPanel6.BackColor1 = Color.FromArgb(CByte(120), CByte(0), CByte(0), CByte(0))
         ModernPanel6.BorderRadius = 10
         ModernPanel6.BorderSize = 0
@@ -224,9 +224,9 @@ Partial Class Form_v6_性能监控
         ModernPanel6.ScrollBarMode = LakeUI.ModernPanel.ScrollMode.None
         ModernPanel6.Size = New Size(135, 140)
         ModernPanel6.TabIndex = 6
-        ' 
+        '
         ' RoundDashBoard3
-        ' 
+        '
         RoundDashBoard3.Dock = DockStyle.Fill
         RoundDashBoard3.FillColor = Color.CornflowerBlue
         RoundDashBoard3.FillGradientColor = Color.IndianRed
@@ -240,9 +240,9 @@ Partial Class Form_v6_性能监控
         RoundDashBoard3.TabIndex = 1
         RoundDashBoard3.Thickness = 8F
         RoundDashBoard3.TrackColor = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
-        ' 
+        '
         ' HtmlColorLabel3
-        ' 
+        '
         HtmlColorLabel3.AutoSize = True
         HtmlColorLabel3.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel3.Dock = DockStyle.Top
@@ -254,17 +254,17 @@ Partial Class Form_v6_性能监控
         HtmlColorLabel3.TabIndex = 0
         HtmlColorLabel3.Text = "显存占用"
         HtmlColorLabel3.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.Center
-        ' 
+        '
         ' JustEmptyControl3
-        ' 
+        '
         JustEmptyControl3.Dock = DockStyle.Left
         JustEmptyControl3.Location = New Point(280, 0)
         JustEmptyControl3.Name = "JustEmptyControl3"
         JustEmptyControl3.Size = New Size(10, 140)
         JustEmptyControl3.TabIndex = 5
-        ' 
+        '
         ' ModernPanel5
-        ' 
+        '
         ModernPanel5.BackColor1 = Color.FromArgb(CByte(120), CByte(0), CByte(0), CByte(0))
         ModernPanel5.BorderRadius = 10
         ModernPanel5.BorderSize = 0
@@ -276,9 +276,9 @@ Partial Class Form_v6_性能监控
         ModernPanel5.ScrollBarMode = LakeUI.ModernPanel.ScrollMode.None
         ModernPanel5.Size = New Size(135, 140)
         ModernPanel5.TabIndex = 4
-        ' 
+        '
         ' RoundDashBoard2
-        ' 
+        '
         RoundDashBoard2.Dock = DockStyle.Fill
         RoundDashBoard2.FillColor = Color.CornflowerBlue
         RoundDashBoard2.FillGradientColor = Color.IndianRed
@@ -292,9 +292,9 @@ Partial Class Form_v6_性能监控
         RoundDashBoard2.TabIndex = 1
         RoundDashBoard2.Thickness = 8F
         RoundDashBoard2.TrackColor = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
-        ' 
+        '
         ' HtmlColorLabel2
-        ' 
+        '
         HtmlColorLabel2.AutoSize = True
         HtmlColorLabel2.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel2.Dock = DockStyle.Top
@@ -306,17 +306,17 @@ Partial Class Form_v6_性能监控
         HtmlColorLabel2.TabIndex = 0
         HtmlColorLabel2.Text = "视频编码"
         HtmlColorLabel2.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.Center
-        ' 
+        '
         ' JustEmptyControl2
-        ' 
+        '
         JustEmptyControl2.Dock = DockStyle.Left
         JustEmptyControl2.Location = New Point(135, 0)
         JustEmptyControl2.Name = "JustEmptyControl2"
         JustEmptyControl2.Size = New Size(10, 140)
         JustEmptyControl2.TabIndex = 3
-        ' 
+        '
         ' ModernPanel4
-        ' 
+        '
         ModernPanel4.BackColor1 = Color.FromArgb(CByte(120), CByte(0), CByte(0), CByte(0))
         ModernPanel4.BorderRadius = 10
         ModernPanel4.BorderSize = 0
@@ -328,9 +328,9 @@ Partial Class Form_v6_性能监控
         ModernPanel4.ScrollBarMode = LakeUI.ModernPanel.ScrollMode.None
         ModernPanel4.Size = New Size(135, 140)
         ModernPanel4.TabIndex = 0
-        ' 
+        '
         ' RoundDashBoard1
-        ' 
+        '
         RoundDashBoard1.Dock = DockStyle.Fill
         RoundDashBoard1.FillColor = Color.CornflowerBlue
         RoundDashBoard1.FillGradientColor = Color.IndianRed
@@ -344,9 +344,9 @@ Partial Class Form_v6_性能监控
         RoundDashBoard1.TabIndex = 1
         RoundDashBoard1.Thickness = 8F
         RoundDashBoard1.TrackColor = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
-        ' 
+        '
         ' HtmlColorLabel1
-        ' 
+        '
         HtmlColorLabel1.AutoSize = True
         HtmlColorLabel1.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel1.Dock = DockStyle.Top
@@ -358,9 +358,9 @@ Partial Class Form_v6_性能监控
         HtmlColorLabel1.TabIndex = 0
         HtmlColorLabel1.Text = "视频解码"
         HtmlColorLabel1.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.Center
-        ' 
+        '
         ' Panel3
-        ' 
+        '
         Panel3.Controls.Add(ModernComboBox3)
         Panel3.Controls.Add(JustEmptyControl4)
         Panel3.Controls.Add(ModernComboBox2)
@@ -370,9 +370,9 @@ Partial Class Form_v6_性能监控
         Panel3.Padding = New Padding(0, 0, 0, 10)
         Panel3.Size = New Size(578, 42)
         Panel3.TabIndex = 15
-        ' 
+        '
         ' ModernComboBox3
-        ' 
+        '
         ModernComboBox3.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernComboBox3.BorderRadius = 10
         ModernComboBox3.BorderSize = 0
@@ -398,17 +398,17 @@ Partial Class Form_v6_性能监控
         ModernComboBox3.ToolTipPadding = New Padding(15)
         ModernComboBox3.WaterText = "选择显卡"
         ModernComboBox3.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        ' 
+        '
         ' JustEmptyControl4
-        ' 
+        '
         JustEmptyControl4.Dock = DockStyle.Left
         JustEmptyControl4.Location = New Point(200, 0)
         JustEmptyControl4.Name = "JustEmptyControl4"
         JustEmptyControl4.Size = New Size(10, 32)
         JustEmptyControl4.TabIndex = 2
-        ' 
+        '
         ' ModernComboBox2
-        ' 
+        '
         ModernComboBox2.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernComboBox2.BorderRadius = 10
         ModernComboBox2.BorderSize = 0
@@ -441,9 +441,9 @@ Partial Class Form_v6_性能监控
         ModernComboBox2.ToolTipPadding = New Padding(15)
         ModernComboBox2.WaterText = "选择显卡数据来源"
         ModernComboBox2.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        ' 
+        '
         ' RamMonitor1
-        ' 
+        '
         RamMonitor1.BackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
         RamMonitor1.BottomTextAlign = ContentAlignment.MiddleCenter
         RamMonitor1.Dock = DockStyle.Bottom
@@ -455,17 +455,17 @@ Partial Class Form_v6_性能监控
         RamMonitor1.TabIndex = 3
         RamMonitor1.TextPadding = New Padding(7)
         RamMonitor1.TopTextAlign = ContentAlignment.MiddleCenter
-        ' 
+        '
         ' JustEmptyControl7
-        ' 
+        '
         JustEmptyControl7.Dock = DockStyle.Left
         JustEmptyControl7.Location = New Point(315, 10)
         JustEmptyControl7.Name = "JustEmptyControl7"
         JustEmptyControl7.Size = New Size(10, 612)
         JustEmptyControl7.TabIndex = 3
-        ' 
+        '
         ' Panel2
-        ' 
+        '
         Panel2.Controls.Add(CpuMonitor1)
         Panel2.Controls.Add(JustEmptyControl1)
         Panel2.Controls.Add(ModernComboBox1)
@@ -474,17 +474,17 @@ Partial Class Form_v6_性能监控
         Panel2.Name = "Panel2"
         Panel2.Size = New Size(305, 612)
         Panel2.TabIndex = 0
-        ' 
+        '
         ' JustEmptyControl1
-        ' 
+        '
         JustEmptyControl1.Dock = DockStyle.Top
         JustEmptyControl1.Location = New Point(0, 32)
         JustEmptyControl1.Name = "JustEmptyControl1"
         JustEmptyControl1.Size = New Size(305, 10)
         JustEmptyControl1.TabIndex = 4
-        ' 
+        '
         ' ModernComboBox1
-        ' 
+        '
         ModernComboBox1.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernComboBox1.BorderRadius = 10
         ModernComboBox1.BorderSize = 0
@@ -510,13 +510,13 @@ Partial Class Form_v6_性能监控
         ModernComboBox1.ToolTipPadding = New Padding(15)
         ModernComboBox1.WaterText = "选择 CPU 组"
         ModernComboBox1.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        ' 
+        '
         ' Timer1
-        ' 
+        '
         Timer1.Interval = 1000
-        ' 
+        '
         ' Form_v6_性能监控
-        ' 
+        '
         AutoScaleDimensions = New SizeF(96F, 96F)
         AutoScaleMode = AutoScaleMode.Dpi
         BackColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))

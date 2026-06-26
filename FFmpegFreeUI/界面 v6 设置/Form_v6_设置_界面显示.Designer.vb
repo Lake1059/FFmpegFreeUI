@@ -1,4 +1,4 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class Form_v6_设置_界面显示
     Inherits System.Windows.Forms.Form
 
@@ -29,9 +29,9 @@ Partial Class Form_v6_设置_界面显示
         ModernPanel1.SuspendLayout()
         Panel2.SuspendLayout()
         SuspendLayout()
-        ' 
+        '
         ' ModernPanel1
-        ' 
+        '
         ModernPanel1.BackColor1 = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         ModernPanel1.BorderSize = 0
         ModernPanel1.Controls.Add(Panel2)
@@ -43,9 +43,9 @@ Partial Class Form_v6_设置_界面显示
         ModernPanel1.ScrollBarMode = LakeUI.ModernPanel.ScrollMode.Vertical
         ModernPanel1.Size = New Size(752, 625)
         ModernPanel1.TabIndex = 0
-        ' 
+        '
         ' Panel2
-        ' 
+        '
         Panel2.Controls.Add(MCB_全局字体)
         Panel2.Dock = DockStyle.Top
         Panel2.Location = New Point(20, 45)
@@ -53,9 +53,9 @@ Partial Class Form_v6_设置_界面显示
         Panel2.Padding = New Padding(0, 10, 0, 0)
         Panel2.Size = New Size(712, 42)
         Panel2.TabIndex = 11
-        ' 
+        '
         ' MCB_全局字体
-        ' 
+        '
         MCB_全局字体.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_全局字体.BorderRadius = 10
         MCB_全局字体.BorderSize = 0
@@ -81,9 +81,9 @@ Partial Class Form_v6_设置_界面显示
         MCB_全局字体.ToolTipMaxWidth = 350
         MCB_全局字体.ToolTipPadding = New Padding(15)
         MCB_全局字体.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        ' 
+        '
         ' HtmlColorLabel1
-        ' 
+        '
         HtmlColorLabel1.AutoSize = True
         HtmlColorLabel1.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel1.Dock = DockStyle.Top
@@ -94,9 +94,9 @@ Partial Class Form_v6_设置_界面显示
         HtmlColorLabel1.Size = New Size(712, 25)
         HtmlColorLabel1.TabIndex = 10
         HtmlColorLabel1.Text = "<span style=""font-size:13; color:Silver"">全局字体</span>   在 150% 以及更低 DPI 下使用可以尝试 LakeUI 视觉中的矢量几何绘制"
-        ' 
+        '
         ' Form_v6_设置_界面显示
-        ' 
+        '
         AutoScaleDimensions = New SizeF(96F, 96F)
         AutoScaleMode = AutoScaleMode.Dpi
         BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))

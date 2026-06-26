@@ -1,4 +1,4 @@
-﻿Imports LakeUI
+Imports LakeUI
 
 Public Class Form_v6_集成工具
     Private Sub Form_v6_集成工具_Load(sender As Object, e As EventArgs) Handles MyBase.Load

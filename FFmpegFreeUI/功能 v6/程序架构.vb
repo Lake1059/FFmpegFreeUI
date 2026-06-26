@@ -1,4 +1,4 @@
-﻿Imports System.IO
+Imports System.IO
 Imports System.Runtime.InteropServices
 
 Public Class 程序架构

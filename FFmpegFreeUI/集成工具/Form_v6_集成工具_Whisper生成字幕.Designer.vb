@@ -1,4 +1,4 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class Form_v6_集成工具_Whisper生成字幕
     Inherits System.Windows.Forms.Form
 
@@ -91,9 +91,9 @@ Partial Class Form_v6_集成工具_Whisper生成字幕
         Panel12.SuspendLayout()
         Panel13.SuspendLayout()
         SuspendLayout()
-        ' 
+        '
         ' ModernPanel1
-        ' 
+        '
         ModernPanel1.BackColor1 = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         ModernPanel1.BorderSize = 0
         ModernPanel1.Controls.Add(Panel11)
@@ -116,9 +116,9 @@ Partial Class Form_v6_集成工具_Whisper生成字幕
         ModernPanel1.Padding = New Padding(20)
         ModernPanel1.Size = New Size(794, 646)
         ModernPanel1.TabIndex = 0
-        ' 
+        '
         ' HtmlColorLabel1
-        ' 
+        '
         HtmlColorLabel1.AutoSize = True
         HtmlColorLabel1.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel1.Dock = DockStyle.Top
@@ -129,9 +129,9 @@ Partial Class Form_v6_集成工具_Whisper生成字幕
         HtmlColorLabel1.Size = New Size(754, 25)
         HtmlColorLabel1.TabIndex = 4
         HtmlColorLabel1.Text = "<span style=""font-size:13; color:Silver"">Whisper 音频滤镜生成字幕</span>   如果有批量生成需求可以直接用标准流程的完全自己写模式"
-        ' 
+        '
         ' Panel4
-        ' 
+        '
         Panel4.Controls.Add(HtmlColorLabel5)
         Panel4.Controls.Add(HtmlColorLabel6)
         Panel4.Dock = DockStyle.Top
@@ -139,9 +139,9 @@ Partial Class Form_v6_集成工具_Whisper生成字幕
         Panel4.Name = "Panel4"
         Panel4.Size = New Size(754, 30)
         Panel4.TabIndex = 10
-        ' 
+        '
         ' HtmlColorLabel6
-        ' 
+        '
         HtmlColorLabel6.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel6.Dock = DockStyle.Right
         HtmlColorLabel6.Location = New Point(634, 0)
@@ -151,9 +151,9 @@ Partial Class Form_v6_集成工具_Whisper生成字幕
         HtmlColorLabel6.TabIndex = 1
         HtmlColorLabel6.Text = "音频流索引"
         HtmlColorLabel6.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.BottomLeft
-        ' 
+        '
         ' HtmlColorLabel5
-        ' 
+        '
         HtmlColorLabel5.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel5.Dock = DockStyle.Fill
         HtmlColorLabel5.Location = New Point(0, 0)
@@ -163,9 +163,9 @@ Partial Class Form_v6_集成工具_Whisper生成字幕
         HtmlColorLabel5.TabIndex = 0
         HtmlColorLabel5.Text = "输入文件"
         HtmlColorLabel5.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.BottomLeft
-        ' 
+        '
         ' Panel2
-        ' 
+        '
         Panel2.Controls.Add(MCB_输入文件)
         Panel2.Controls.Add(JustEmptyControl2)
         Panel2.Controls.Add(MTB_音频流索引)
@@ -175,9 +175,9 @@ Partial Class Form_v6_集成工具_Whisper生成字幕
         Panel2.Padding = New Padding(0, 10, 0, 0)
         Panel2.Size = New Size(754, 42)
         Panel2.TabIndex = 11
-        ' 
+        '
         ' MTB_音频流索引
-        ' 
+        '
         MTB_音频流索引.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MTB_音频流索引.BorderColor = Color.Transparent
         MTB_音频流索引.BorderColorFocus = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
@@ -193,17 +193,17 @@ Partial Class Form_v6_集成工具_Whisper生成字幕
         MTB_音频流索引.TabIndex = 12
         MTB_音频流索引.WaterText = "质量值"
         MTB_音频流索引.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        ' 
+        '
         ' JustEmptyControl2
-        ' 
+        '
         JustEmptyControl2.Dock = DockStyle.Right
         JustEmptyControl2.Location = New Point(623, 10)
         JustEmptyControl2.Name = "JustEmptyControl2"
         JustEmptyControl2.Size = New Size(11, 32)
         JustEmptyControl2.TabIndex = 9
-        ' 
+        '
         ' MCB_输入文件
-        ' 
+        '
         MCB_输入文件.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_输入文件.BorderRadius = 10
         MCB_输入文件.BorderSize = 0
@@ -228,9 +228,9 @@ Partial Class Form_v6_集成工具_Whisper生成字幕
         MCB_输入文件.ToolTipMaxWidth = 350
         MCB_输入文件.ToolTipPadding = New Padding(15)
         MCB_输入文件.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        ' 
+        '
         ' Panel1
-        ' 
+        '
         Panel1.Controls.Add(MCB_选择模型文件)
         Panel1.Controls.Add(JustEmptyControl8)
         Panel1.Controls.Add(MCB_GPU加速选项)
@@ -242,9 +242,9 @@ Partial Class Form_v6_集成工具_Whisper生成字幕
         Panel1.Padding = New Padding(0, 10, 0, 0)
         Panel1.Size = New Size(754, 42)
         Panel1.TabIndex = 13
-        ' 
+        '
         ' MCB_选择模型文件
-        ' 
+        '
         MCB_选择模型文件.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_选择模型文件.BorderRadius = 10
         MCB_选择模型文件.BorderSize = 0
@@ -269,9 +269,9 @@ Partial Class Form_v6_集成工具_Whisper生成字幕
         MCB_选择模型文件.ToolTipMaxWidth = 350
         MCB_选择模型文件.ToolTipPadding = New Padding(15)
         MCB_选择模型文件.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        ' 
+        '
         ' MTB_GPU设备索引
-        ' 
+        '
         MTB_GPU设备索引.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MTB_GPU设备索引.BorderColor = Color.Transparent
         MTB_GPU设备索引.BorderColorFocus = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
@@ -287,9 +287,9 @@ Partial Class Form_v6_集成工具_Whisper生成字幕
         MTB_GPU设备索引.TabIndex = 12
         MTB_GPU设备索引.WaterText = "质量值"
         MTB_GPU设备索引.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        ' 
+        '
         ' Panel3
-        ' 
+        '
         Panel3.Controls.Add(HtmlColorLabel2)
         Panel3.Controls.Add(HtmlColorLabel13)
         Panel3.Controls.Add(HtmlColorLabel3)
@@ -298,9 +298,9 @@ Partial Class Form_v6_集成工具_Whisper生成字幕
         Panel3.Name = "Panel3"
         Panel3.Size = New Size(754, 30)
         Panel3.TabIndex = 12
-        ' 
+        '
         ' HtmlColorLabel2
-        ' 
+        '
         HtmlColorLabel2.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel2.Dock = DockStyle.Fill
         HtmlColorLabel2.Location = New Point(0, 0)
@@ -310,9 +310,9 @@ Partial Class Form_v6_集成工具_Whisper生成字幕
         HtmlColorLabel2.TabIndex = 0
         HtmlColorLabel2.Text = "选择模型文件"
         HtmlColorLabel2.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.BottomLeft
-        ' 
+        '
         ' HtmlColorLabel3
-        ' 
+        '
         HtmlColorLabel3.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel3.Dock = DockStyle.Right
         HtmlColorLabel3.Location = New Point(634, 0)
@@ -322,9 +322,9 @@ Partial Class Form_v6_集成工具_Whisper生成字幕
         HtmlColorLabel3.TabIndex = 2
         HtmlColorLabel3.Text = "GPU 设备索引"
         HtmlColorLabel3.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.BottomLeft
-        ' 
+        '
         ' Panel5
-        ' 
+        '
         Panel5.Controls.Add(MCB_字幕片段最大字符数)
         Panel5.Controls.Add(HtmlColorLabel4)
         Panel5.Controls.Add(HtmlColorLabel7)
@@ -333,9 +333,9 @@ Partial Class Form_v6_集成工具_Whisper生成字幕
         Panel5.Name = "Panel5"
         Panel5.Size = New Size(754, 30)
         Panel5.TabIndex = 14
-        ' 
+        '
         ' HtmlColorLabel7
-        ' 
+        '
         HtmlColorLabel7.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel7.Dock = DockStyle.Left
         HtmlColorLabel7.Location = New Point(0, 0)
@@ -345,9 +345,9 @@ Partial Class Form_v6_集成工具_Whisper生成字幕
         HtmlColorLabel7.TabIndex = 0
         HtmlColorLabel7.Text = "要识别的语言"
         HtmlColorLabel7.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.BottomLeft
-        ' 
+        '
         ' Panel6
-        ' 
+        '
         Panel6.Controls.Add(MCB_翻译成英语)
         Panel6.Controls.Add(ETB_字幕片段最大字符数)
         Panel6.Controls.Add(ETB_音频缓存长度)
@@ -359,9 +359,9 @@ Partial Class Form_v6_集成工具_Whisper生成字幕
         Panel6.Padding = New Padding(0, 10, 0, 0)
         Panel6.Size = New Size(754, 42)
         Panel6.TabIndex = 15
-        ' 
+        '
         ' MCB_要识别的语言
-        ' 
+        '
         MCB_要识别的语言.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_要识别的语言.BorderRadius = 10
         MCB_要识别的语言.BorderSize = 0
@@ -386,17 +386,17 @@ Partial Class Form_v6_集成工具_Whisper生成字幕
         MCB_要识别的语言.ToolTipMaxWidth = 350
         MCB_要识别的语言.ToolTipPadding = New Padding(15)
         MCB_要识别的语言.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        ' 
+        '
         ' JustEmptyControl4
-        ' 
+        '
         JustEmptyControl4.Dock = DockStyle.Left
         JustEmptyControl4.Location = New Point(150, 10)
         JustEmptyControl4.Name = "JustEmptyControl4"
         JustEmptyControl4.Size = New Size(13, 32)
         JustEmptyControl4.TabIndex = 10
-        ' 
+        '
         ' HtmlColorLabel4
-        ' 
+        '
         HtmlColorLabel4.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel4.Dock = DockStyle.Left
         HtmlColorLabel4.Location = New Point(161, 0)
@@ -406,9 +406,9 @@ Partial Class Form_v6_集成工具_Whisper生成字幕
         HtmlColorLabel4.TabIndex = 1
         HtmlColorLabel4.Text = "音频缓存长度"
         HtmlColorLabel4.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.BottomLeft
-        ' 
+        '
         ' MCB_字幕片段最大字符数
-        ' 
+        '
         MCB_字幕片段最大字符数.AutoSizeMode = AutoSizeMode.GrowAndShrink
         MCB_字幕片段最大字符数.Dock = DockStyle.Left
         MCB_字幕片段最大字符数.Location = New Point(323, 0)
@@ -418,9 +418,9 @@ Partial Class Form_v6_集成工具_Whisper生成字幕
         MCB_字幕片段最大字符数.TabIndex = 2
         MCB_字幕片段最大字符数.Text = "字幕片段最大字符数"
         MCB_字幕片段最大字符数.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.BottomLeft
-        ' 
+        '
         ' MCB_翻译成英语
-        ' 
+        '
         MCB_翻译成英语.BoxBorderRadius = 5
         MCB_翻译成英语.BoxBorderSize = 0
         MCB_翻译成英语.BoxCheckedBackColor = Color.OliveDrab
@@ -434,9 +434,9 @@ Partial Class Form_v6_集成工具_Whisper生成字幕
         MCB_翻译成英语.Size = New Size(271, 32)
         MCB_翻译成英语.TabIndex = 16
         MCB_翻译成英语.Text = "翻译成英语"
-        ' 
+        '
         ' Panel7
-        ' 
+        '
         Panel7.Controls.Add(ETB_VAD最短静音持续时间)
         Panel7.Controls.Add(ETB_VAD最短语音持续时间)
         Panel7.Controls.Add(ETB_VAD阈值)
@@ -446,9 +446,9 @@ Partial Class Form_v6_集成工具_Whisper生成字幕
         Panel7.Padding = New Padding(0, 10, 0, 0)
         Panel7.Size = New Size(754, 42)
         Panel7.TabIndex = 17
-        ' 
+        '
         ' Panel8
-        ' 
+        '
         Panel8.Controls.Add(HtmlColorLabel9)
         Panel8.Controls.Add(HtmlColorLabel10)
         Panel8.Controls.Add(HtmlColorLabel11)
@@ -457,9 +457,9 @@ Partial Class Form_v6_集成工具_Whisper生成字幕
         Panel8.Name = "Panel8"
         Panel8.Size = New Size(754, 30)
         Panel8.TabIndex = 16
-        ' 
+        '
         ' HtmlColorLabel9
-        ' 
+        '
         HtmlColorLabel9.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel9.Dock = DockStyle.Left
         HtmlColorLabel9.Location = New Point(400, 0)
@@ -469,9 +469,9 @@ Partial Class Form_v6_集成工具_Whisper生成字幕
         HtmlColorLabel9.TabIndex = 2
         HtmlColorLabel9.Text = "VAD 最短静音持续时间"
         HtmlColorLabel9.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.BottomLeft
-        ' 
+        '
         ' HtmlColorLabel10
-        ' 
+        '
         HtmlColorLabel10.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel10.Dock = DockStyle.Left
         HtmlColorLabel10.Location = New Point(200, 0)
@@ -481,9 +481,9 @@ Partial Class Form_v6_集成工具_Whisper生成字幕
         HtmlColorLabel10.TabIndex = 1
         HtmlColorLabel10.Text = "VAD 最短语音持续时间"
         HtmlColorLabel10.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.BottomLeft
-        ' 
+        '
         ' HtmlColorLabel11
-        ' 
+        '
         HtmlColorLabel11.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel11.Dock = DockStyle.Left
         HtmlColorLabel11.Location = New Point(0, 0)
@@ -493,18 +493,18 @@ Partial Class Form_v6_集成工具_Whisper生成字幕
         HtmlColorLabel11.TabIndex = 0
         HtmlColorLabel11.Text = "VAD 阈值"
         HtmlColorLabel11.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.BottomLeft
-        ' 
+        '
         ' Panel10
-        ' 
+        '
         Panel10.Controls.Add(HtmlColorLabel12)
         Panel10.Dock = DockStyle.Top
         Panel10.Location = New Point(20, 313)
         Panel10.Name = "Panel10"
         Panel10.Size = New Size(754, 30)
         Panel10.TabIndex = 18
-        ' 
+        '
         ' HtmlColorLabel12
-        ' 
+        '
         HtmlColorLabel12.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel12.Dock = DockStyle.Fill
         HtmlColorLabel12.Location = New Point(0, 0)
@@ -514,9 +514,9 @@ Partial Class Form_v6_集成工具_Whisper生成字幕
         HtmlColorLabel12.TabIndex = 0
         HtmlColorLabel12.Text = "VAD 语音活动检测模型文件"
         HtmlColorLabel12.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.BottomLeft
-        ' 
+        '
         ' MCB_VAD模型文件
-        ' 
+        '
         MCB_VAD模型文件.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_VAD模型文件.BorderRadius = 10
         MCB_VAD模型文件.BorderSize = 0
@@ -541,9 +541,9 @@ Partial Class Form_v6_集成工具_Whisper生成字幕
         MCB_VAD模型文件.ToolTipMaxWidth = 350
         MCB_VAD模型文件.ToolTipPadding = New Padding(15)
         MCB_VAD模型文件.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        ' 
+        '
         ' Panel9
-        ' 
+        '
         Panel9.Controls.Add(MCB_VAD模型文件)
         Panel9.Dock = DockStyle.Top
         Panel9.Location = New Point(20, 343)
@@ -551,9 +551,9 @@ Partial Class Form_v6_集成工具_Whisper生成字幕
         Panel9.Padding = New Padding(0, 10, 0, 0)
         Panel9.Size = New Size(754, 42)
         Panel9.TabIndex = 19
-        ' 
+        '
         ' Panel11
-        ' 
+        '
         Panel11.Controls.Add(MTB_输出文件)
         Panel11.Controls.Add(JustEmptyControl7)
         Panel11.Controls.Add(MCB_输出类型)
@@ -563,17 +563,17 @@ Partial Class Form_v6_集成工具_Whisper生成字幕
         Panel11.Padding = New Padding(0, 10, 0, 0)
         Panel11.Size = New Size(754, 42)
         Panel11.TabIndex = 21
-        ' 
+        '
         ' JustEmptyControl7
-        ' 
+        '
         JustEmptyControl7.Dock = DockStyle.Left
         JustEmptyControl7.Location = New Point(150, 10)
         JustEmptyControl7.Name = "JustEmptyControl7"
         JustEmptyControl7.Size = New Size(10, 32)
         JustEmptyControl7.TabIndex = 10
-        ' 
+        '
         ' MCB_输出类型
-        ' 
+        '
         MCB_输出类型.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_输出类型.BorderRadius = 10
         MCB_输出类型.BorderSize = 0
@@ -598,9 +598,9 @@ Partial Class Form_v6_集成工具_Whisper生成字幕
         MCB_输出类型.ToolTipMaxWidth = 350
         MCB_输出类型.ToolTipPadding = New Padding(15)
         MCB_输出类型.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        ' 
+        '
         ' Panel12
-        ' 
+        '
         Panel12.Controls.Add(HtmlColorLabel14)
         Panel12.Controls.Add(HtmlColorLabel15)
         Panel12.Dock = DockStyle.Top
@@ -608,9 +608,9 @@ Partial Class Form_v6_集成工具_Whisper生成字幕
         Panel12.Name = "Panel12"
         Panel12.Size = New Size(754, 30)
         Panel12.TabIndex = 20
-        ' 
+        '
         ' HtmlColorLabel14
-        ' 
+        '
         HtmlColorLabel14.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel14.Dock = DockStyle.Fill
         HtmlColorLabel14.Location = New Point(160, 0)
@@ -620,9 +620,9 @@ Partial Class Form_v6_集成工具_Whisper生成字幕
         HtmlColorLabel14.TabIndex = 1
         HtmlColorLabel14.Text = "输出文件"
         HtmlColorLabel14.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.BottomLeft
-        ' 
+        '
         ' HtmlColorLabel15
-        ' 
+        '
         HtmlColorLabel15.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel15.Dock = DockStyle.Left
         HtmlColorLabel15.Location = New Point(0, 0)
@@ -632,9 +632,9 @@ Partial Class Form_v6_集成工具_Whisper生成字幕
         HtmlColorLabel15.TabIndex = 0
         HtmlColorLabel15.Text = "输出类型"
         HtmlColorLabel15.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.BottomLeft
-        ' 
+        '
         ' Panel13
-        ' 
+        '
         Panel13.Controls.Add(MB_输出文件另存为)
         Panel13.Controls.Add(JustEmptyControl1)
         Panel13.Controls.Add(MB_重置页面)
@@ -646,9 +646,9 @@ Partial Class Form_v6_集成工具_Whisper生成字幕
         Panel13.Padding = New Padding(0, 10, 0, 10)
         Panel13.Size = New Size(754, 52)
         Panel13.TabIndex = 22
-        ' 
+        '
         ' MB_添加到编码队列
-        ' 
+        '
         MB_添加到编码队列.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MB_添加到编码队列.BorderRadius = 10
         MB_添加到编码队列.BorderSize = 0
@@ -661,17 +661,17 @@ Partial Class Form_v6_集成工具_Whisper生成字幕
         MB_添加到编码队列.Size = New Size(150, 32)
         MB_添加到编码队列.TabIndex = 0
         MB_添加到编码队列.Text = "添加到编码队列"
-        ' 
+        '
         ' JustEmptyControl6
-        ' 
+        '
         JustEmptyControl6.Dock = DockStyle.Left
         JustEmptyControl6.Location = New Point(150, 10)
         JustEmptyControl6.Name = "JustEmptyControl6"
         JustEmptyControl6.Size = New Size(10, 32)
         JustEmptyControl6.TabIndex = 3
-        ' 
+        '
         ' MB_重置页面
-        ' 
+        '
         MB_重置页面.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MB_重置页面.BorderRadius = 10
         MB_重置页面.BorderSize = 0
@@ -684,17 +684,17 @@ Partial Class Form_v6_集成工具_Whisper生成字幕
         MB_重置页面.Size = New Size(100, 32)
         MB_重置页面.TabIndex = 4
         MB_重置页面.Text = "重置页面"
-        ' 
+        '
         ' JustEmptyControl8
-        ' 
+        '
         JustEmptyControl8.Dock = DockStyle.Right
         JustEmptyControl8.Location = New Point(488, 10)
         JustEmptyControl8.Name = "JustEmptyControl8"
         JustEmptyControl8.Size = New Size(13, 32)
         JustEmptyControl8.TabIndex = 15
-        ' 
+        '
         ' MCB_GPU加速选项
-        ' 
+        '
         MCB_GPU加速选项.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_GPU加速选项.BorderRadius = 10
         MCB_GPU加速选项.BorderSize = 0
@@ -719,17 +719,17 @@ Partial Class Form_v6_集成工具_Whisper生成字幕
         MCB_GPU加速选项.ToolTipMaxWidth = 350
         MCB_GPU加速选项.ToolTipPadding = New Padding(15)
         MCB_GPU加速选项.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        ' 
+        '
         ' JustEmptyControl9
-        ' 
+        '
         JustEmptyControl9.Dock = DockStyle.Right
         JustEmptyControl9.Location = New Point(621, 10)
         JustEmptyControl9.Name = "JustEmptyControl9"
         JustEmptyControl9.Size = New Size(13, 32)
         JustEmptyControl9.TabIndex = 13
-        ' 
+        '
         ' HtmlColorLabel13
-        ' 
+        '
         HtmlColorLabel13.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel13.Dock = DockStyle.Right
         HtmlColorLabel13.Location = New Point(501, 0)
@@ -739,9 +739,9 @@ Partial Class Form_v6_集成工具_Whisper生成字幕
         HtmlColorLabel13.TabIndex = 3
         HtmlColorLabel13.Text = "GPU 加速"
         HtmlColorLabel13.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.BottomLeft
-        ' 
+        '
         ' ETB_VAD阈值
-        ' 
+        '
         ETB_VAD阈值.Dock = DockStyle.Left
         ETB_VAD阈值.LabelColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ETB_VAD阈值.LabelLineColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
@@ -761,9 +761,9 @@ Partial Class Form_v6_集成工具_Whisper生成字幕
         ETB_VAD阈值.ThumbWidth = 38
         ETB_VAD阈值.TrackColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ETB_VAD阈值.TrackFillColor = Color.Transparent
-        ' 
+        '
         ' ETB_VAD最短语音持续时间
-        ' 
+        '
         ETB_VAD最短语音持续时间.Dock = DockStyle.Left
         ETB_VAD最短语音持续时间.LabelColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ETB_VAD最短语音持续时间.LabelLineColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
@@ -783,9 +783,9 @@ Partial Class Form_v6_集成工具_Whisper生成字幕
         ETB_VAD最短语音持续时间.ThumbWidth = 38
         ETB_VAD最短语音持续时间.TrackColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ETB_VAD最短语音持续时间.TrackFillColor = Color.Transparent
-        ' 
+        '
         ' ETB_VAD最短静音持续时间
-        ' 
+        '
         ETB_VAD最短静音持续时间.Dock = DockStyle.Left
         ETB_VAD最短静音持续时间.LabelColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ETB_VAD最短静音持续时间.LabelLineColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
@@ -805,9 +805,9 @@ Partial Class Form_v6_集成工具_Whisper生成字幕
         ETB_VAD最短静音持续时间.ThumbWidth = 38
         ETB_VAD最短静音持续时间.TrackColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ETB_VAD最短静音持续时间.TrackFillColor = Color.Transparent
-        ' 
+        '
         ' ETB_字幕片段最大字符数
-        ' 
+        '
         ETB_字幕片段最大字符数.Dock = DockStyle.Left
         ETB_字幕片段最大字符数.LabelColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ETB_字幕片段最大字符数.LabelLineColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
@@ -827,9 +827,9 @@ Partial Class Form_v6_集成工具_Whisper生成字幕
         ETB_字幕片段最大字符数.ThumbWidth = 38
         ETB_字幕片段最大字符数.TrackColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ETB_字幕片段最大字符数.TrackFillColor = Color.Transparent
-        ' 
+        '
         ' ETB_音频缓存长度
-        ' 
+        '
         ETB_音频缓存长度.Dock = DockStyle.Left
         ETB_音频缓存长度.LabelColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ETB_音频缓存长度.LabelLineColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
@@ -849,9 +849,9 @@ Partial Class Form_v6_集成工具_Whisper生成字幕
         ETB_音频缓存长度.ThumbWidth = 38
         ETB_音频缓存长度.TrackColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ETB_音频缓存长度.TrackFillColor = Color.Transparent
-        ' 
+        '
         ' MTB_输出文件
-        ' 
+        '
         MTB_输出文件.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MTB_输出文件.BorderColor = Color.Transparent
         MTB_输出文件.BorderColorFocus = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
@@ -867,9 +867,9 @@ Partial Class Form_v6_集成工具_Whisper生成字幕
         MTB_输出文件.TabIndex = 13
         MTB_输出文件.WaterText = "输出文件"
         MTB_输出文件.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        ' 
+        '
         ' MB_输出文件另存为
-        ' 
+        '
         MB_输出文件另存为.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MB_输出文件另存为.BorderRadius = 10
         MB_输出文件另存为.BorderSize = 0
@@ -882,17 +882,17 @@ Partial Class Form_v6_集成工具_Whisper生成字幕
         MB_输出文件另存为.Size = New Size(150, 32)
         MB_输出文件另存为.TabIndex = 6
         MB_输出文件另存为.Text = "输出文件另存为"
-        ' 
+        '
         ' JustEmptyControl1
-        ' 
+        '
         JustEmptyControl1.Dock = DockStyle.Left
         JustEmptyControl1.Location = New Point(260, 10)
         JustEmptyControl1.Name = "JustEmptyControl1"
         JustEmptyControl1.Size = New Size(10, 32)
         JustEmptyControl1.TabIndex = 5
-        ' 
+        '
         ' Form_v6_集成工具_Whisper生成字幕
-        ' 
+        '
         AutoScaleDimensions = New SizeF(96F, 96F)
         AutoScaleMode = AutoScaleMode.Dpi
         BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))

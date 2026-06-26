@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!--
     Microsoft ResX Schema
@@ -117,7 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="HtmlColorLabel13.Text" xml:space="preserve">
+  <data name="HCL_流控制底部说明.Text" xml:space="preserve">
     <value>ffmpeg 的 &lt;span style="color:YellowGreen"&gt;-map&lt;/span&gt; 参数具有 &lt;span style="color:IndianRed"&gt;很高的优先级&lt;/span&gt;，当使用其指定流参数时 &lt;span style="color:YellowGreen"&gt;其他类型的流也必须带上 -map&lt;/span&gt;&lt;br&gt;否则 ffmpeg 可能会 &lt;span style="color:IndianRed"&gt;丢弃流&lt;/span&gt;，ffmpeg 默认的逻辑是视频和音频分别只保留一个&lt;br&gt;必须指定了具体的流才可以使用“然后保留其他流”，否则会发生意外情况&lt;br&gt;当同时指定流和保留其他流时，可能有部分参数与该逻辑不兼容&lt;br&gt;处理多轨媒体时需要注意，尽量使用滤镜实现其他需求</value>
   </data>
 </root>

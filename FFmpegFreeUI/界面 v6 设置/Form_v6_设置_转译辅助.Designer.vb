@@ -1,4 +1,4 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class Form_v6_设置_转译辅助
     Inherits System.Windows.Forms.Form
 
@@ -35,9 +35,9 @@ Partial Class Form_v6_设置_转译辅助
         Panel1.SuspendLayout()
         Panel2.SuspendLayout()
         SuspendLayout()
-        ' 
+        '
         ' ModernPanel1
-        ' 
+        '
         ModernPanel1.BackColor1 = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         ModernPanel1.BorderSize = 0
         ModernPanel1.Controls.Add(MCB_转译模式)
@@ -53,9 +53,9 @@ Partial Class Form_v6_设置_转译辅助
         ModernPanel1.ScrollBarMode = LakeUI.ModernPanel.ScrollMode.Vertical
         ModernPanel1.Size = New Size(785, 642)
         ModernPanel1.TabIndex = 2
-        ' 
+        '
         ' MCB_转译模式
-        ' 
+        '
         MCB_转译模式.AutoSize = True
         MCB_转译模式.BoxBorderRadius = 5
         MCB_转译模式.BoxBorderSize = 0
@@ -74,9 +74,9 @@ Partial Class Form_v6_设置_转译辅助
         MCB_转译模式.SubText = "去除盘符、斜杠改为除号"
         MCB_转译模式.TabIndex = 35
         MCB_转译模式.Text = "转译模式"
-        ' 
+        '
         ' Panel1
-        ' 
+        '
         Panel1.Controls.Add(MTB_覆盖参数传递)
         Panel1.Dock = DockStyle.Top
         Panel1.Location = New Point(20, 159)
@@ -84,9 +84,9 @@ Partial Class Form_v6_设置_转译辅助
         Panel1.Padding = New Padding(0, 10, 0, 0)
         Panel1.Size = New Size(745, 42)
         Panel1.TabIndex = 13
-        ' 
+        '
         ' MTB_覆盖参数传递
-        ' 
+        '
         MTB_覆盖参数传递.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MTB_覆盖参数传递.BorderColor = Color.Empty
         MTB_覆盖参数传递.BorderColorFocus = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
@@ -100,9 +100,9 @@ Partial Class Form_v6_设置_转译辅助
         MTB_覆盖参数传递.Size = New Size(745, 32)
         MTB_覆盖参数传递.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MTB_覆盖参数传递.TabIndex = 6
-        ' 
+        '
         ' HtmlColorLabel2
-        ' 
+        '
         HtmlColorLabel2.AutoSize = True
         HtmlColorLabel2.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel2.Dock = DockStyle.Top
@@ -114,9 +114,9 @@ Partial Class Form_v6_设置_转译辅助
         HtmlColorLabel2.TabIndex = 14
         HtmlColorLabel2.Text = "覆盖 Process 的 参数传递，用 <args> 来表示 3FUI 生成的参数部分"
         HtmlColorLabel2.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
-        ' 
+        '
         ' Panel2
-        ' 
+        '
         Panel2.Controls.Add(MCB_替代进程的文件名)
         Panel2.Dock = DockStyle.Top
         Panel2.Location = New Point(20, 81)
@@ -124,9 +124,9 @@ Partial Class Form_v6_设置_转译辅助
         Panel2.Padding = New Padding(0, 10, 0, 0)
         Panel2.Size = New Size(745, 42)
         Panel2.TabIndex = 11
-        ' 
+        '
         ' MCB_替代进程的文件名
-        ' 
+        '
         MCB_替代进程的文件名.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_替代进程的文件名.BorderColor = Color.Empty
         MCB_替代进程的文件名.BorderColorFocus = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
@@ -140,9 +140,9 @@ Partial Class Form_v6_设置_转译辅助
         MCB_替代进程的文件名.Size = New Size(745, 32)
         MCB_替代进程的文件名.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_替代进程的文件名.TabIndex = 6
-        ' 
+        '
         ' HtmlColorLabel6
-        ' 
+        '
         HtmlColorLabel6.AutoSize = True
         HtmlColorLabel6.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel6.Dock = DockStyle.Top
@@ -154,9 +154,9 @@ Partial Class Form_v6_设置_转译辅助
         HtmlColorLabel6.TabIndex = 12
         HtmlColorLabel6.Text = "替代 Process 的 FileName"
         HtmlColorLabel6.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
-        ' 
+        '
         ' HtmlColorLabel1
-        ' 
+        '
         HtmlColorLabel1.AutoSize = True
         HtmlColorLabel1.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel1.Dock = DockStyle.Top
@@ -167,9 +167,9 @@ Partial Class Form_v6_设置_转译辅助
         HtmlColorLabel1.Size = New Size(745, 30)
         HtmlColorLabel1.TabIndex = 10
         HtmlColorLabel1.Text = "<span style=""font-size:13"">转译辅助</span>"
-        ' 
+        '
         ' Form_v6_设置_转译辅助
-        ' 
+        '
         AutoScaleDimensions = New SizeF(96F, 96F)
         AutoScaleMode = AutoScaleMode.Dpi
         BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))

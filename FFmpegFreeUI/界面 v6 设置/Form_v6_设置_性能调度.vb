@@ -1,4 +1,4 @@
-﻿Public Class Form_v6_设置_性能调度
+Public Class Form_v6_设置_性能调度
     Private Sub MTB_处理器线程_TextChanged(sender As Object, e As EventArgs) Handles MTB_处理器线程.TextChanged
         设置_v6.实例对象.指定处理器核心 = MTB_处理器线程.Text
     End Sub

@@ -1,4 +1,4 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class Form_v6_设置
     Inherits System.Windows.Forms.Form
 
@@ -42,9 +42,9 @@ Partial Class Form_v6_设置
         ModernPanel1 = New LakeUI.ModernPanel()
         ModernPanel1.SuspendLayout()
         SuspendLayout()
-        ' 
+        '
         ' ModernTabListControl1
-        ' 
+        '
         ModernTabListControl1.Dock = DockStyle.Fill
         ModernTabPage1.IsDescription = True
         ModernTabPage1.Text = "界面主框架 - 湖界"
@@ -96,9 +96,9 @@ Partial Class Form_v6_设置
         ModernTabListControl1.TabItemSpacing = 0
         ModernTabListControl1.TabStripBackColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
         ModernTabListControl1.TabStripWidth = 200
-        ' 
+        '
         ' ModernPanel1
-        ' 
+        '
         ModernPanel1.BorderSize = 0
         ModernPanel1.Controls.Add(ModernTabListControl1)
         ModernPanel1.Dock = DockStyle.Fill
@@ -107,9 +107,9 @@ Partial Class Form_v6_设置
         ModernPanel1.ScrollBarMode = LakeUI.ModernPanel.ScrollMode.None
         ModernPanel1.Size = New Size(904, 622)
         ModernPanel1.TabIndex = 3
-        ' 
+        '
         ' Form_v6_设置
-        ' 
+        '
         AutoScaleDimensions = New SizeF(96F, 96F)
         AutoScaleMode = AutoScaleMode.Dpi
         BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))

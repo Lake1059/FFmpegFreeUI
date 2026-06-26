@@ -1,4 +1,4 @@
-﻿Public Class Form_v6_设置_LakeUI性能选项
+Public Class Form_v6_设置_LakeUI性能选项
 
     Private Sub Form_v6_设置_LakeUI性能选项_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 

@@ -1,4 +1,4 @@
-﻿<Serializable()>
+<Serializable()>
 Public Class 预设数据_v6
     Public Property 预设备注 As String = ""
     Public Property 预设文件版本 As Integer = 6
