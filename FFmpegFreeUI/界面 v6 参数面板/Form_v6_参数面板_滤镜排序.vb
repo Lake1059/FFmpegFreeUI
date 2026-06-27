@@ -281,15 +281,6 @@ Public Class Form_v6_参数面板_滤镜排序
         End If
     End Sub
 
-    Private Sub ModernComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles MCB_添加新滤镜.SelectedIndexChanged
-        If MCB_添加新滤镜.SelectedIndex = 0 Then
-            添加自定义滤镜(预设数据_v6.滤镜排序单片结构.流类型.视频)
-        ElseIf MCB_添加新滤镜.SelectedIndex = 1 Then
-            添加自定义滤镜(预设数据_v6.滤镜排序单片结构.流类型.音频)
-        End If
-        MCB_添加新滤镜.SelectedIndex = -1
-    End Sub
-
     Private Sub MB_删除滤镜_Click(sender As Object, e As EventArgs) Handles MB_删除滤镜.Click
         删除所选()
     End Sub
@@ -379,5 +370,13 @@ Public Class Form_v6_参数面板_滤镜排序
         UDLV_滤镜排序列表.Columns(0).Width = 标识符列宽
         UDLV_滤镜排序列表.Columns(1).Width = 流类型列宽
         UDLV_滤镜排序列表.Columns(2).Width = 内容列宽
+    End Sub
+
+    Private Sub MB_添加自定义视频滤镜_Click(sender As Object, e As EventArgs) Handles MB_添加自定义视频滤镜.Click
+        添加自定义滤镜(预设数据_v6.滤镜排序单片结构.流类型.视频)
+    End Sub
+
+    Private Sub MB_添加自定义音频滤镜_Click(sender As Object, e As EventArgs) Handles MB_添加自定义音频滤镜.Click
+        添加自定义滤镜(预设数据_v6.滤镜排序单片结构.流类型.音频)
     End Sub
 End Class

@@ -22,22 +22,24 @@ Partial Class Form_v6_参数面板_滤镜排序
     '不要使用代码编辑器修改它。
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim ListColumn1 As LakeUI.UltraDetailListView.ListColumn = New LakeUI.UltraDetailListView.ListColumn()
-        Dim ListColumn2 As LakeUI.UltraDetailListView.ListColumn = New LakeUI.UltraDetailListView.ListColumn()
-        Dim ListColumn3 As LakeUI.UltraDetailListView.ListColumn = New LakeUI.UltraDetailListView.ListColumn()
+        Dim ListColumn4 As LakeUI.UltraDetailListView.ListColumn = New LakeUI.UltraDetailListView.ListColumn()
+        Dim ListColumn5 As LakeUI.UltraDetailListView.ListColumn = New LakeUI.UltraDetailListView.ListColumn()
+        Dim ListColumn6 As LakeUI.UltraDetailListView.ListColumn = New LakeUI.UltraDetailListView.ListColumn()
         ModernPanel1 = New LakeUI.ModernPanel()
         UDLV_滤镜排序列表 = New LakeUI.UltraDetailListView()
         Panel1 = New Panel()
         MB_删除滤镜 = New LakeUI.ModernButton()
+        JustEmptyControl2 = New LakeUI.JustEmptyControl()
+        MB_添加自定义音频滤镜 = New LakeUI.ModernButton()
         JustEmptyControl1 = New LakeUI.JustEmptyControl()
-        MCB_添加新滤镜 = New LakeUI.ModernComboBox()
+        MB_添加自定义视频滤镜 = New LakeUI.ModernButton()
         HCL_滤镜排序说明 = New LakeUI.HtmlColorLabel()
         ModernPanel1.SuspendLayout()
         Panel1.SuspendLayout()
         SuspendLayout()
-        '
+        ' 
         ' ModernPanel1
-        '
+        ' 
         ModernPanel1.BackColor1 = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         ModernPanel1.BorderSize = 0
         ModernPanel1.Controls.Add(UDLV_滤镜排序列表)
@@ -50,21 +52,21 @@ Partial Class Form_v6_参数面板_滤镜排序
         ModernPanel1.ScrollBarMode = LakeUI.ModernPanel.ScrollMode.Vertical
         ModernPanel1.Size = New Size(795, 614)
         ModernPanel1.TabIndex = 0
-        '
+        ' 
         ' UDLV_滤镜排序列表
-        '
+        ' 
         UDLV_滤镜排序列表.AllowDragReorder = True
         UDLV_滤镜排序列表.BackgroundColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         UDLV_滤镜排序列表.BorderRadius = 10
         UDLV_滤镜排序列表.BorderSize = 0
-        ListColumn1.Text = "标识符"
-        ListColumn1.Width = 150
-        ListColumn2.Text = "流类型"
-        ListColumn3.Text = "滤镜内容"
-        ListColumn3.Width = 450
-        UDLV_滤镜排序列表.Columns.Add(ListColumn1)
-        UDLV_滤镜排序列表.Columns.Add(ListColumn2)
-        UDLV_滤镜排序列表.Columns.Add(ListColumn3)
+        ListColumn4.Text = "标识符"
+        ListColumn4.Width = 150
+        ListColumn5.Text = "流类型"
+        ListColumn6.Text = "滤镜内容"
+        ListColumn6.Width = 450
+        UDLV_滤镜排序列表.Columns.Add(ListColumn4)
+        UDLV_滤镜排序列表.Columns.Add(ListColumn5)
+        UDLV_滤镜排序列表.Columns.Add(ListColumn6)
         UDLV_滤镜排序列表.Dock = DockStyle.Fill
         UDLV_滤镜排序列表.DragSelectZoneWidth = 200
         UDLV_滤镜排序列表.GroupBorderColor = Color.Silver
@@ -85,74 +87,84 @@ Partial Class Form_v6_参数面板_滤镜排序
         UDLV_滤镜排序列表.SelectionRectFillColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         UDLV_滤镜排序列表.Size = New Size(755, 492)
         UDLV_滤镜排序列表.TabIndex = 1
-        '
+        ' 
         ' Panel1
-        '
+        ' 
         Panel1.Controls.Add(MB_删除滤镜)
+        Panel1.Controls.Add(JustEmptyControl2)
+        Panel1.Controls.Add(MB_添加自定义音频滤镜)
         Panel1.Controls.Add(JustEmptyControl1)
-        Panel1.Controls.Add(MCB_添加新滤镜)
+        Panel1.Controls.Add(MB_添加自定义视频滤镜)
         Panel1.Dock = DockStyle.Top
         Panel1.Location = New Point(20, 50)
         Panel1.Name = "Panel1"
         Panel1.Padding = New Padding(0, 10, 0, 10)
         Panel1.Size = New Size(755, 52)
         Panel1.TabIndex = 11
-        '
+        ' 
         ' MB_删除滤镜
-        '
+        ' 
         MB_删除滤镜.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MB_删除滤镜.BorderRadius = 10
         MB_删除滤镜.BorderSize = 0
         MB_删除滤镜.Dock = DockStyle.Left
         MB_删除滤镜.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
-        MB_删除滤镜.Location = New Point(160, 10)
+        MB_删除滤镜.Location = New Point(340, 10)
         MB_删除滤镜.Margin = New Padding(2)
         MB_删除滤镜.Name = "MB_删除滤镜"
         MB_删除滤镜.PressedBackColor1 = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
         MB_删除滤镜.Size = New Size(100, 32)
         MB_删除滤镜.TabIndex = 7
         MB_删除滤镜.Text = "删除滤镜"
-        '
+        ' 
+        ' JustEmptyControl2
+        ' 
+        JustEmptyControl2.Dock = DockStyle.Left
+        JustEmptyControl2.Location = New Point(330, 10)
+        JustEmptyControl2.Name = "JustEmptyControl2"
+        JustEmptyControl2.Size = New Size(10, 32)
+        JustEmptyControl2.TabIndex = 15
+        ' 
+        ' MB_添加自定义音频滤镜
+        ' 
+        MB_添加自定义音频滤镜.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MB_添加自定义音频滤镜.BorderRadius = 10
+        MB_添加自定义音频滤镜.BorderSize = 0
+        MB_添加自定义音频滤镜.Dock = DockStyle.Left
+        MB_添加自定义音频滤镜.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        MB_添加自定义音频滤镜.Location = New Point(170, 10)
+        MB_添加自定义音频滤镜.Margin = New Padding(2)
+        MB_添加自定义音频滤镜.Name = "MB_添加自定义音频滤镜"
+        MB_添加自定义音频滤镜.PressedBackColor1 = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
+        MB_添加自定义音频滤镜.Size = New Size(160, 32)
+        MB_添加自定义音频滤镜.TabIndex = 14
+        MB_添加自定义音频滤镜.Text = "添加自定义音频滤镜"
+        ' 
         ' JustEmptyControl1
-        '
+        ' 
         JustEmptyControl1.Dock = DockStyle.Left
-        JustEmptyControl1.Location = New Point(150, 10)
+        JustEmptyControl1.Location = New Point(160, 10)
         JustEmptyControl1.Name = "JustEmptyControl1"
         JustEmptyControl1.Size = New Size(10, 32)
         JustEmptyControl1.TabIndex = 2
-        '
-        ' MCB_添加新滤镜
-        '
-        MCB_添加新滤镜.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        MCB_添加新滤镜.BorderRadius = 10
-        MCB_添加新滤镜.BorderSize = 0
-        MCB_添加新滤镜.Dock = DockStyle.Left
-        MCB_添加新滤镜.DropDownBackdropBlurPasses = 2
-        MCB_添加新滤镜.DropDownBackdropBlurRadius = 30
-        MCB_添加新滤镜.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
-        MCB_添加新滤镜.DropDownHoverAnimationDuration = 0
-        MCB_添加新滤镜.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
-        MCB_添加新滤镜.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
-        MCB_添加新滤镜.DropDownPadding = New Padding(10)
-        MCB_添加新滤镜.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        MCB_添加新滤镜.DropDownSelectedForeColor = Color.White
-        MCB_添加新滤镜.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
-        MCB_添加新滤镜.Items.Add("添加视频滤镜")
-        MCB_添加新滤镜.Items.Add("添加音频滤镜")
-        MCB_添加新滤镜.Location = New Point(0, 10)
-        MCB_添加新滤镜.Margin = New Padding(2, 2, 2, 2)
-        MCB_添加新滤镜.Name = "MCB_添加新滤镜"
-        MCB_添加新滤镜.Padding = New Padding(10, 0, 10, 0)
-        MCB_添加新滤镜.Size = New Size(150, 32)
-        MCB_添加新滤镜.TabIndex = 10
-        MCB_添加新滤镜.ToolTipGap = -1
-        MCB_添加新滤镜.ToolTipMaxWidth = 350
-        MCB_添加新滤镜.ToolTipPadding = New Padding(15)
-        MCB_添加新滤镜.WaterText = "添加新滤镜"
-        MCB_添加新滤镜.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        '
+        ' 
+        ' MB_添加自定义视频滤镜
+        ' 
+        MB_添加自定义视频滤镜.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MB_添加自定义视频滤镜.BorderRadius = 10
+        MB_添加自定义视频滤镜.BorderSize = 0
+        MB_添加自定义视频滤镜.Dock = DockStyle.Left
+        MB_添加自定义视频滤镜.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        MB_添加自定义视频滤镜.Location = New Point(0, 10)
+        MB_添加自定义视频滤镜.Margin = New Padding(2)
+        MB_添加自定义视频滤镜.Name = "MB_添加自定义视频滤镜"
+        MB_添加自定义视频滤镜.PressedBackColor1 = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
+        MB_添加自定义视频滤镜.Size = New Size(160, 32)
+        MB_添加自定义视频滤镜.TabIndex = 12
+        MB_添加自定义视频滤镜.Text = "添加自定义视频滤镜"
+        ' 
         ' HCL_滤镜排序说明
-        '
+        ' 
         HCL_滤镜排序说明.AutoSize = True
         HCL_滤镜排序说明.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HCL_滤镜排序说明.Dock = DockStyle.Top
@@ -164,9 +176,9 @@ Partial Class Form_v6_参数面板_滤镜排序
         HCL_滤镜排序说明.Size = New Size(755, 30)
         HCL_滤镜排序说明.TabIndex = 10
         HCL_滤镜排序说明.Text = "<span style=""font-size:13; color:Silver"">滤镜排序和自定义</span>   如果需要一行里写多个滤镜，使用英文逗号隔开即可"
-        '
+        ' 
         ' Form_v6_参数面板_滤镜排序
-        '
+        ' 
         AutoScaleDimensions = New SizeF(96F, 96F)
         AutoScaleMode = AutoScaleMode.Dpi
         BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
@@ -190,5 +202,6 @@ Partial Class Form_v6_参数面板_滤镜排序
     Friend WithEvents JustEmptyControl1 As LakeUI.JustEmptyControl
     Friend WithEvents UDLV_滤镜排序列表 As LakeUI.UltraDetailListView
     Friend WithEvents JustEmptyControl2 As LakeUI.JustEmptyControl
-    Friend WithEvents MCB_添加新滤镜 As LakeUI.ModernComboBox
+    Friend WithEvents MB_添加自定义音频滤镜 As LakeUI.ModernButton
+    Friend WithEvents MB_添加自定义视频滤镜 As LakeUI.ModernButton
 End Class

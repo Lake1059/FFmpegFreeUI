@@ -111,10 +111,12 @@ Public Class Form_v6_设置_个性化
                 MCB_噪点颗粒.Enabled = True
             Case 2
                 FormMain_v6.ThisIsYourWindow1.BackdropBlurPasses = 1
+                FormMain_v6.ThisIsYourWindow1.BackdropBlurRadius = 10
                 MCB_背景来源.Enabled = True
                 MCB_噪点颗粒.Enabled = True
             Case 3
                 FormMain_v6.ThisIsYourWindow1.BackdropBlurPasses = 3
+                FormMain_v6.ThisIsYourWindow1.BackdropBlurRadius = 24
                 MCB_背景来源.Enabled = True
                 MCB_噪点颗粒.Enabled = True
         End Select
@@ -145,7 +147,7 @@ Public Class Form_v6_设置_个性化
     End Sub
 
     Private Sub MB_选择背景图_Click(sender As Object, e As EventArgs) Handles MB_选择背景图.Click
-        Select Case ExMsgBox($"要使用背景图，必须启用毛玻璃模式。{vbCrLf & vbCrLf}设置之后如果要取消，请直接删除当前目录下的 {Path.GetFileName(设置_v6.自定义背景图路径)} 并重启软件即可。", New List(Of ExMsgBoxButton) From {New ExMsgBoxButton("选择图片", True), New ExMsgBoxButton("取消")}, , MsgBoxStyle.Information, FormMain_v6)
+        Select Case ExMsgBox($"要使用背景图，必须启用玻璃背景。{vbCrLf & vbCrLf}设置之后如果要取消，请直接删除当前目录下的 {Path.GetFileName(设置_v6.自定义背景图路径)} 并重启软件即可。", New List(Of ExMsgBoxButton) From {New ExMsgBoxButton("选择图片", True), New ExMsgBoxButton("取消")}, , MsgBoxStyle.Information, FormMain_v6)
             Case 0
                 Dim a As New OpenFileDialog With {.Multiselect = False, .Filter = "支持的图片|*.png;*.jpg"}
                 If a.ShowDialog(FormMain_v6) = DialogResult.OK Then
