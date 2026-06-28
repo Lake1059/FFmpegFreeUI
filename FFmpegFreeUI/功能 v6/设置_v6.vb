@@ -207,7 +207,7 @@ Public Class 设置_v6
         End If
 
         If Not SP_UnLock Then
-            FormMain_v6.Icon = Icon.FromHandle(My.Resources.Resource1.AppIcon.GetHicon())
+            设置主窗体图标(CreateIconFromImage(My.Resources.Resource1.AppIcon))
             Exit Sub
         End If
 
@@ -272,6 +272,10 @@ Public Class 设置_v6
     Public Shared ReadOnly 自定义图标路径 As String = IO.Path.Combine(Application.StartupPath, "SP_Icon")
     Public Shared ReadOnly 自定义起始页顶栏背景图路径 As String = IO.Path.Combine(Application.StartupPath, "SP_MainTopPanel")
     Public Shared ReadOnly 自定义背景图路径 As String = IO.Path.Combine(Application.StartupPath, "SP_BackImage")
+    Private Shared _当前自有图标 As Image
+    Private Shared _当前自有起始页顶栏背景图 As Image
+    Private Shared _当前自有背景图 As Image
+    Private Shared _默认背景图 As Image
 
     Public Shared Sub 加载SP自定义任务完成音效()
         If Not SP_UnLock Then Exit Sub
@@ -307,25 +311,69 @@ Public Class 设置_v6
     Public Shared Sub 加载SP自定义图标()
         If Not SP_UnLock Then Exit Sub
         If FileIO.FileSystem.FileExists(自定义图标路径) Then
-            Form_v6_起始页面.ModernPanel3.Image = LoadImageFromFile(自定义图标路径)
-            Using bitmap As New Bitmap(Form_v6_起始页面.ModernPanel3.Image)
-                FormMain_v6.Icon = Icon.FromHandle(bitmap.GetHicon())
-            End Using
+            Dim image = LoadImageFromFile(自定义图标路径)
+            设置自有面板图片(Form_v6_起始页面.ModernPanel3, image, _当前自有图标)
+            设置主窗体图标(CreateIconFromImage(image))
         End If
     End Sub
     Public Shared Sub 加载SP自定义起始页顶栏背景图()
         If Not SP_UnLock Then Exit Sub
         If FileIO.FileSystem.FileExists(自定义起始页顶栏背景图路径) Then
-            Form_v6_起始页面.ModernPanel2.Image = LoadImageFromFile(自定义起始页顶栏背景图路径)
+            设置自有面板图片(Form_v6_起始页面.ModernPanel2,
+                         LoadImageFromFile(自定义起始页顶栏背景图路径),
+                         _当前自有起始页顶栏背景图)
         End If
     End Sub
     Public Shared Sub 加载SP自定义背景图()
         If FileIO.FileSystem.FileExists(设置_v6.自定义背景图路径) Then
             If Not SP_UnLock Then Exit Sub
-            FormMain_v6.ThisIsYourWindow1.BackdropImage = LoadImageFromFile(设置_v6.自定义背景图路径)
+            设置自有毛玻璃背景图(LoadImageFromFile(设置_v6.自定义背景图路径))
         Else
-            FormMain_v6.ThisIsYourWindow1.BackdropImage = My.Resources.Resource1.SP_默认背景图
+            设置默认毛玻璃背景图()
         End If
+    End Sub
+
+    Public Shared Sub 清除SP自有背景图()
+        Dim oldOwned = _当前自有背景图
+        _当前自有背景图 = Nothing
+        FormMain_v6.ThisIsYourWindow1.BackdropImage = Nothing
+        释放自有图片(oldOwned)
+    End Sub
+
+    Private Shared Sub 设置自有面板图片(panel As LakeUI.ModernPanel, newImage As Image, ByRef ownedImage As Image)
+        Dim oldOwned = ownedImage
+        ownedImage = newImage
+        panel.Image = newImage
+        If oldOwned IsNot newImage Then 释放自有图片(oldOwned)
+    End Sub
+
+    Private Shared Sub 设置自有毛玻璃背景图(newImage As Image)
+        Dim oldOwned = _当前自有背景图
+        _当前自有背景图 = newImage
+        FormMain_v6.ThisIsYourWindow1.BackdropImage = newImage
+        If oldOwned IsNot newImage Then 释放自有图片(oldOwned)
+    End Sub
+
+    Private Shared Sub 设置默认毛玻璃背景图()
+        Dim oldOwned = _当前自有背景图
+        _当前自有背景图 = Nothing
+        FormMain_v6.ThisIsYourWindow1.BackdropImage = 获取默认背景图()
+        释放自有图片(oldOwned)
+    End Sub
+
+    Private Shared Function 获取默认背景图() As Image
+        If _默认背景图 Is Nothing Then _默认背景图 = My.Resources.Resource1.SP_默认背景图
+        Return _默认背景图
+    End Function
+
+    Private Shared Sub 释放自有图片(image As Image)
+        If image Is Nothing Then Return
+        Try : image.Dispose() : Catch : End Try
+    End Sub
+
+    Private Shared Sub 设置主窗体图标(newIcon As Icon)
+        If newIcon Is Nothing Then Return
+        FormMain_v6.Icon = newIcon
     End Sub
 
     Public Shared Sub 启动时读取SP解锁器()

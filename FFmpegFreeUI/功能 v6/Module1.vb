@@ -20,6 +20,9 @@ Module Module1
     <DllImport("user32.dll")>
     Public Function SendMessage(hWnd As IntPtr, wMsg As Integer, wParam As Integer, lParam As Integer) As Integer
     End Function
+    <DllImport("user32.dll", SetLastError:=True)>
+    Public Function DestroyIcon(hIcon As IntPtr) As Boolean
+    End Function
     Private Const WM_NCLBUTTONDOWN As Integer = &HA1
     Private Const HTCAPTION As Integer = 2
     Sub 绑定拖动控件移动窗体(s As Control)
@@ -258,8 +261,25 @@ Module Module1
     End Sub
 
     Public Function LoadImageFromFile(File As String) As Image
-        Dim ms As New MemoryStream(System.IO.File.ReadAllBytes(File))
-        Return Image.FromStream(ms)
+        Using stream As New FileStream(File, FileMode.Open, FileAccess.Read, FileShare.ReadWrite)
+            Using source = Image.FromStream(stream, False, False)
+                Return New Bitmap(source)
+            End Using
+        End Using
+    End Function
+
+    Public Function CreateIconFromImage(image As Image) As Icon
+        If image Is Nothing Then Return Nothing
+        Using bitmap As New Bitmap(image)
+            Dim hIcon As IntPtr = bitmap.GetHicon()
+            Try
+                Using tempIcon = Icon.FromHandle(hIcon)
+                    Return CType(tempIcon.Clone(), Icon)
+                End Using
+            Finally
+                If hIcon <> IntPtr.Zero Then DestroyIcon(hIcon)
+            End Try
+        End Using
     End Function
 
     Public Sub 显示窗体(哪个窗口 As Form, 以谁为基准显示 As Form)

@@ -99,7 +99,7 @@ Public Class Form_v6_设置_个性化
         Select Case 设置_v6.实例对象.SP_毛玻璃模式
             Case 0
                 FormMain_v6.ThisIsYourWindow1.BackdropMode = ThisIsYourWindow.BackdropModeEnum.None
-                FormMain_v6.ThisIsYourWindow1.BackdropImage = Nothing
+                设置_v6.清除SP自有背景图()
                 FormMain_v6.ThisIsYourWindow1.BackdropNoiseOpacity = 0
                 MCB_背景来源.SelectedIndex = -1
                 MCB_噪点颗粒.SelectedIndex = -1
@@ -131,7 +131,7 @@ Public Class Form_v6_设置_个性化
                 设置_v6.加载SP自定义背景图()
             Case 1
                 FormMain_v6.ThisIsYourWindow1.BackdropMode = ThisIsYourWindow.BackdropModeEnum.Auto
-                FormMain_v6.ThisIsYourWindow1.BackdropImage = Nothing
+                设置_v6.清除SP自有背景图()
         End Select
     End Sub
 
@@ -143,6 +143,8 @@ Public Class Form_v6_设置_个性化
                 FormMain_v6.ThisIsYourWindow1.BackdropNoiseOpacity = 0
             Case 1
                 FormMain_v6.ThisIsYourWindow1.BackdropNoiseOpacity = 18
+            Case 2
+                FormMain_v6.ThisIsYourWindow1.BackdropNoiseOpacity = 36
         End Select
     End Sub
 
