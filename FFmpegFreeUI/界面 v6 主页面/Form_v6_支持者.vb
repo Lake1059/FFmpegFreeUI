@@ -78,7 +78,6 @@ Public Class Form_v6_支持者
 
     Sub 清空支持者列表()
         Me.MemberWall1.Items.Clear()
-        Me.MemberWall1.Update()
     End Sub
 
     Private Sub Form_v6_支持者_Load(sender As Object, e As EventArgs) Handles Me.Load
@@ -89,23 +88,24 @@ Public Class Form_v6_支持者
         清空支持者列表()
         读取付费支持者()
         读取赠送支持者()
-        Me.MemberWall1.Update()
+        Me.MemberWall1.Redraw()
     End Sub
 
     Private Sub ModernButton2_Click(sender As Object, e As EventArgs) Handles ModernButton2.Click
         清空支持者列表()
         读取付费支持者()
-        Me.MemberWall1.Update()
+        Me.MemberWall1.Redraw()
     End Sub
 
     Private Sub ModernButton3_Click(sender As Object, e As EventArgs) Handles ModernButton3.Click
         清空支持者列表()
         读取赠送支持者()
-        Me.MemberWall1.Update()
+        Me.MemberWall1.Redraw()
     End Sub
 
     Private Sub ModernButton4_Click(sender As Object, e As EventArgs) Handles ModernButton4.Click
         清空支持者列表()
+        Me.MemberWall1.Redraw()
     End Sub
 
     Private Sub ModernButton5_Click(sender As Object, e As EventArgs) Handles ModernButton5.Click

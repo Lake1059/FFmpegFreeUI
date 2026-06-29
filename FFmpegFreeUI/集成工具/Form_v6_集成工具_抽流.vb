@@ -78,6 +78,7 @@ Public Class Form_v6_集成工具_抽流
         绑定文件拖入(ModernPanel2)
         绑定文件拖入(MB_打开文件)
         绑定文件拖入(MB_提取所选)
+        绑定文件拖入(MB_清除页面)
         显示提示("打开或拖入媒体文件后选择要提取的流", Color.Silver)
     End Sub
 
@@ -125,6 +126,29 @@ Public Class Form_v6_集成工具_抽流
         Using d As New OpenFileDialog With {.Multiselect = False, .Filter = "所有文件|*.*"}
             If d.ShowDialog(Me) = DialogResult.OK Then Await 打开媒体文件Async(d.FileName)
         End Using
+    End Sub
+
+    Private Sub MB_清除页面_Click(sender As Object, e As EventArgs) Handles MB_清除页面.Click
+        清除页面()
+    End Sub
+
+    Private Sub 清除页面()
+        If 正在运行 Then Exit Sub
+
+        当前文件 = ""
+        当前总时长 = TimeSpan.Zero
+        流列表.Clear()
+
+        If MCB_输出位置.Items.Count > 0 Then
+            MCB_输出位置.SelectedIndex = 0
+            MCB_输出位置.Text = MCB_输出位置.Items(0).ToString()
+        Else
+            MCB_输出位置.Text = ""
+        End If
+
+        MB_提取所选.Text = 提取按钮默认文本
+        MB_提取所选.ForeColor = Color.YellowGreen
+        显示提示("打开或拖入媒体文件后选择要提取的流", Color.Silver)
     End Sub
 
     Private Async Function 打开媒体文件Async(file As String) As Task
@@ -339,8 +363,9 @@ Public Class Form_v6_集成工具_抽流
             .AllowDrop = True,
             .Dock = DockStyle.Top,
             .ForeColor = Color.FromArgb(120, 255, 255, 255),
+            .BackColor = Color.Transparent,
             .Margin = New Padding(2),
-            .Padding = If(作为标题, New Padding(0, 10, 0, 10), New Padding(0, 0, 0, 10)),
+            .Padding = New Padding(0, 0, 0, 10),
             .Text = $"<span style=""font-size:{CInt(size)}; color:{ColorTranslator.ToHtml(color)}"">{转义Html(text)}</span>"
         }
     End Function
@@ -352,6 +377,7 @@ Public Class Form_v6_集成工具_抽流
             .Text = info.主文本,
             .SubText = info.副文本,
             .SubTextForeColor = Color.FromArgb(120, 255, 255, 255),
+            .BackColor = Color.Transparent,
             .MainSubTextSpacing = 3,
             .Tag = info,
             .Checked = False,
@@ -572,6 +598,7 @@ Public Class Form_v6_集成工具_抽流
         MB_提取所选.Text = If(running, "0.0%", 提取按钮默认文本)
         MB_提取所选.ForeColor = If(running, Color.IndianRed, Color.YellowGreen)
         MB_打开文件.Enabled = Not running
+        MB_清除页面.Enabled = Not running
         MCB_输出位置.Enabled = Not running
         For Each info In 流列表
             If info.复选框 IsNot Nothing Then info.复选框.Enabled = Not running
@@ -725,15 +752,19 @@ Public Class Form_v6_集成工具_抽流
     End Function
 
     Private Shared Function 获取默认扩展名(info As 抽流流信息) As String
+        Dim value As String = Nothing
+
+        Dim value1 As String = Nothing
         If info.类型 = 抽流流类型.附件 Then
             Dim ext = 清理扩展名(Path.GetExtension(info.附件文件名))
             If ext <> "" Then Return ext
-            If info.附件MimeType <> "" AndAlso 附件Mime扩展名映射.ContainsKey(info.附件MimeType) Then Return 附件Mime扩展名映射(info.附件MimeType)
-            If info.编码器 <> "" AndAlso 流扩展名映射.ContainsKey(info.编码器) Then Return 流扩展名映射(info.编码器)
+            If info.附件MimeType <> "" AndAlso 附件Mime扩展名映射.TryGetValue(info.附件MimeType, value) Then Return value
+            If info.编码器 <> "" AndAlso 流扩展名映射.TryGetValue(info.编码器, value1) Then Return value1
             Return "bin"
         End If
 
-        If info.编码器 <> "" AndAlso 流扩展名映射.ContainsKey(info.编码器) Then Return 流扩展名映射(info.编码器)
+        Dim value2 As String = Nothing
+        If info.编码器 <> "" AndAlso 流扩展名映射.TryGetValue(info.编码器, value2) Then Return value2
 
         Select Case info.类型
             Case 抽流流类型.视频 : Return "mkv"
@@ -743,6 +774,7 @@ Public Class Form_v6_集成工具_抽流
         End Select
     End Function
 
+    <CodeAnalysis.SuppressMessage("Performance", "CA1861:不要将常量数组作为参数", Justification:="<挂起>")>
     Private Shared Function 规范化编码器(codec As String) As String
         Dim value = If(codec, "").Trim()
         If value = "" Then Return ""
@@ -844,7 +876,7 @@ Public Class Form_v6_集成工具_抽流
 
     Private Shared Function 清理扩展名(ext As String) As String
         ext = If(ext, "").Trim()
-        If ext.StartsWith(".", StringComparison.Ordinal) Then ext = ext.Substring(1)
+        If ext.StartsWith("."c, StringComparison.Ordinal) Then ext = ext.Substring(1)
         Return 清理文件名(ext).Trim("."c).ToLowerInvariant()
     End Function
 

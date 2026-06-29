@@ -311,7 +311,7 @@ Public Class 设置_v6
     Public Shared Sub 加载SP自定义图标()
         If Not SP_UnLock Then Exit Sub
         If FileIO.FileSystem.FileExists(自定义图标路径) Then
-            Dim image = LoadImageFromFile(自定义图标路径)
+            Dim image = LoadImageFromFile(自定义图标路径, preserveAnimation:=True)
             设置自有面板图片(Form_v6_起始页面.ModernPanel3, image, _当前自有图标)
             设置主窗体图标(CreateIconFromImage(image))
         End If
@@ -369,6 +369,7 @@ Public Class 设置_v6
     Private Shared Sub 释放自有图片(image As Image)
         If image Is Nothing Then Return
         Try : image.Dispose() : Catch : End Try
+        Try : ReleaseLoadedImageStream(image) : Catch : End Try
     End Sub
 
     Private Shared Sub 设置主窗体图标(newIcon As Icon)

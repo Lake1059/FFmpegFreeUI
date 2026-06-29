@@ -1,5 +1,6 @@
 Imports System.Globalization
 Imports System.IO
+Imports System.Drawing.Imaging
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
@@ -13,6 +14,7 @@ Module Module1
     Public Sound_Error As Stream = My.Resources.Resource1.错误
     Public SP_UnLock As Boolean = False
     Public UpdateAvailable As Boolean = False
+    Private ReadOnly LoadedImageStreams As New ConditionalWeakTable(Of Image, Stream)()
 
     <DllImport("user32.dll")>
     Public Function ReleaseCapture() As Boolean
@@ -260,13 +262,63 @@ Module Module1
         End Using
     End Sub
 
-    Public Function LoadImageFromFile(File As String) As Image
+    Public Function LoadImageFromFile(File As String, Optional preserveAnimation As Boolean = False) As Image
+        If preserveAnimation Then
+            Dim memoryStream As MemoryStream = Nothing
+            Dim source As Image = Nothing
+            Try
+                memoryStream = New MemoryStream(IO.File.ReadAllBytes(File), writable:=False)
+                source = Image.FromStream(memoryStream, False, False)
+                If IsMultiFrameImage(source) Then
+                    LoadedImageStreams.Add(source, memoryStream)
+                    memoryStream = Nothing
+                    Return source
+                End If
+
+                Dim cloned As New Bitmap(source)
+                source.Dispose()
+                source = Nothing
+                Return cloned
+            Catch
+                If source IsNot Nothing Then
+                    Try : source.Dispose() : Catch : End Try
+                End If
+                Throw
+            Finally
+                If memoryStream IsNot Nothing Then
+                    Try : memoryStream.Dispose() : Catch : End Try
+                End If
+            End Try
+        End If
+
         Using stream As New FileStream(File, FileMode.Open, FileAccess.Read, FileShare.ReadWrite)
             Using source = Image.FromStream(stream, False, False)
                 Return New Bitmap(source)
             End Using
         End Using
     End Function
+
+    Private Function IsMultiFrameImage(image As Image) As Boolean
+        If image Is Nothing Then Return False
+        Try
+            For Each guid In image.FrameDimensionsList
+                If image.GetFrameCount(New FrameDimension(guid)) > 1 Then Return True
+            Next
+        Catch
+        End Try
+        Return False
+    End Function
+
+    Public Sub ReleaseLoadedImageStream(image As Image)
+        If image Is Nothing Then Return
+        Dim backingStream As Stream = Nothing
+        If LoadedImageStreams.TryGetValue(image, backingStream) Then
+            LoadedImageStreams.Remove(image)
+            If backingStream IsNot Nothing Then
+                Try : backingStream.Dispose() : Catch : End Try
+            End If
+        End If
+    End Sub
 
     Public Function CreateIconFromImage(image As Image) As Icon
         If image Is Nothing Then Return Nothing

@@ -11,39 +11,36 @@ Public Class 编码队列_v6
         Public Property 已跳过不可修改任务 As Integer
     End Class
 
+    Public Class 未处理任务缓存文件_v6
+        Public Property 版本 As Integer = 1
+        Public Property 保存时间 As DateTime = DateTime.Now
+        Public Property 任务 As New List(Of 未处理任务缓存项_v6)
+    End Class
+
+    Public Class 未处理任务缓存项_v6
+        Public Property 任务名称 As String = ""
+        Public Property 输入文件 As String = ""
+        Public Property 输出文件 As String = ""
+        Public Property 预设数据 As 预设数据_v6
+        Public Property 命令行 As String = ""
+        Public Property 允许自动启动 As Boolean = False
+    End Class
+
     Public Shared ReadOnly Property 队列 As New List(Of 编码任务_v6)
     Private Shared ReadOnly 队列锁 As New Object
     Private Shared 调度中 As Boolean = False
+    Private Shared 完成提示待播放 As Boolean = False
+    Private Shared 完成提示待调度结束检查 As Boolean = False
     Private Shared 全部任务已完成是否有错误 As Boolean = False
+    Private Const 未处理任务缓存文件名 As String = "QueuePendingTasks_v6.json"
     Private Shared ReadOnly FFmpeg状态进度输出正则 As New Regex("^\s*(?:frame|size)\s*=\s*\S+.*\b(?:time|bitrate|speed)\s*=", RegexOptions.Compiled Or RegexOptions.IgnoreCase)
     Private Shared ReadOnly FFmpegProgress键值输出正则 As New Regex("^\s*(?:frame|fps|stream_\d+_\d+_q|bitrate|total_size|out_time(?:_ms|_us)?|dup_frames|drop_frames|speed|progress)\s*=", RegexOptions.Compiled Or RegexOptions.IgnoreCase)
 
     Public Shared Event 队列已变化()
     Public Shared Event 任务已更新(任务 As 编码任务_v6)
 
-    Public Shared Property 错误输出匹配字符串列表 As New List(Of String) From {"Error", "Invalid", "cannot", "failed", "not supported", "require", "must be", "Could not", "is experimental", "if you want to use it", "Nothing was written"}
-    Public Shared ReadOnly Property 华强买瓜宇宙任务名称列表 As New List(Of String) From {
-        "哥们，这瓜多少钱一斤啊",
-        "两块钱一斤",
-        "这瓜皮子是金子做的还是瓜粒子是金子做的",
-        "你瞧瞧现在这哪有瓜啊",
-        "这都是大棚的瓜",
-        "你嫌贵我还嫌贵呢",
-        "你这瓜保熟嘛",
-        "我开水果摊的能卖你生瓜蛋子",
-        "我问你这瓜保熟嘛",
-        "你是故意找茬是不是",
-        "你要不要吧",
-        "这瓜要熟我肯定要啊",
-        "那它要是不熟怎么办啊",
-        "要是不熟，我自己吃了它，满意了吧",
-        "十五斤三十块",
-        "你这哪够十五斤呐，你这秤有问题啊",
-        "你TM故意找茬是不是，你到底要不要",
-        "吸铁石",
-        "另外你说的，这瓜要生的你自己吞进去啊",
-        "你TM劈我瓜是吧",
-        "萨日朗~"
+    Public Shared Property 错误输出匹配字符串列表 As New List(Of String) From {"Error", "Invalid", "cannot", "failed", "not supported", "require", "must be", "Could not", "is experimental", "if you want to use it", "Nothing was written", "Unable to choose"}
+    Public Shared ReadOnly Property 华强买瓜宇宙任务名称列表 As New List(Of String) From {"有一个人前来买瓜", "哥们，这瓜多少钱一斤啊", "两块钱一斤", "这瓜皮子是金子做的还是瓜粒子是金子做的", "你瞧瞧现在这哪有瓜啊", "这都是大棚的瓜", "你嫌贵我还嫌贵呢", "你这瓜保熟嘛", "我开水果摊的能卖你生瓜蛋子", "我问你这瓜保熟嘛", "你是故意找茬是不是", "你要不要吧", "这瓜要熟我肯定要啊", "那它要是不熟怎么办啊", "要是不熟，我自己吃了它，满意了吧", "十五斤三十块", "你这哪够十五斤呐，你这秤有问题啊", "你TM故意找茬是不是，你到底要不要", "吸铁石", "这瓜要生的你自己吞进去啊", "你TM劈我瓜是吧", "萨日朗~"
     }
 
     Public Shared Function 是否错误输出(line As String) As Boolean
@@ -85,6 +82,118 @@ Public Class 编码队列_v6
         SyncLock 队列锁
             Return 队列.Where(Function(x) 是否进行中任务(x)).Count()
         End SyncLock
+    End Function
+
+    Public Shared Function 获取未处理任务数量() As Integer
+        SyncLock 队列锁
+            Return 队列.Where(Function(x) x.状态 = 编码任务状态_v6.未处理).Count()
+        End SyncLock
+    End Function
+
+    Public Shared ReadOnly Property 未处理任务缓存文件路径 As String
+        Get
+            Return Path.Combine(Application.StartupPath, 未处理任务缓存文件名)
+        End Get
+    End Property
+
+    Public Shared Function 存在未处理任务缓存() As Boolean
+        Return File.Exists(未处理任务缓存文件路径)
+    End Function
+
+    Public Shared Function 读取未处理任务缓存任务数量() As Integer
+        Try
+            Dim cache = 读取未处理任务缓存文件()
+            Return If(cache?.任务?.Count, 0)
+        Catch
+            Return 0
+        End Try
+    End Function
+
+    Public Shared Function 保存未处理任务缓存() As Integer
+        Dim cache As New 未处理任务缓存文件_v6 With {.保存时间 = DateTime.Now}
+        Dim changed As New List(Of 编码任务_v6)
+
+        SyncLock 队列锁
+            For Each task In 队列
+                If task.状态 <> 编码任务状态_v6.未处理 Then Continue For
+                If task.预设数据 Is Nothing AndAlso String.IsNullOrWhiteSpace(task.命令行) Then Continue For
+
+                If task.允许自动启动 Then
+                    task.允许自动启动 = False
+                    changed.Add(task)
+                End If
+
+                cache.任务.Add(New 未处理任务缓存项_v6 With {
+                    .任务名称 = task.任务名称,
+                    .输入文件 = task.输入文件,
+                    .输出文件 = task.输出文件,
+                    .预设数据 = 克隆预设(task.预设数据),
+                    .命令行 = task.命令行,
+                    .允许自动启动 = False
+                })
+            Next
+        End SyncLock
+
+        广播任务更新(changed)
+
+        If cache.任务.Count = 0 Then
+            删除未处理任务缓存()
+            Return 0
+        End If
+
+        Dim json = Text.Json.JsonSerializer.Serialize(cache, JsonSO)
+        File.WriteAllText(未处理任务缓存文件路径, json, New UTF8Encoding(False))
+        Return cache.任务.Count
+    End Function
+
+    Public Shared Function 加载未处理任务缓存() As Integer
+        Dim cache = 读取未处理任务缓存文件()
+        If cache Is Nothing OrElse cache.任务 Is Nothing OrElse cache.任务.Count = 0 Then
+            删除未处理任务缓存()
+            Return 0
+        End If
+
+        Dim restored As New List(Of 编码任务_v6)
+        For Each item In cache.任务
+            If item Is Nothing Then Continue For
+            Dim hasPreset = item.预设数据 IsNot Nothing
+            Dim hasCommand = Not String.IsNullOrWhiteSpace(item.命令行)
+            If Not hasPreset AndAlso Not hasCommand Then Continue For
+
+            Dim task As New 编码任务_v6 With {
+                .任务名称 = If(item.任务名称, ""),
+                .输入文件 = If(item.输入文件, ""),
+                .输出文件 = If(item.输出文件, ""),
+                .预设数据 = If(hasPreset, 克隆预设(item.预设数据), Nothing),
+                .命令行 = If(item.命令行, ""),
+                .状态 = 编码任务状态_v6.未处理,
+                .允许自动启动 = False
+            }
+            restored.Add(task)
+        Next
+
+        If restored.Count > 0 Then
+            SyncLock 队列锁
+                队列.AddRange(restored)
+            End SyncLock
+            RaiseEvent 队列已变化()
+        End If
+
+        删除未处理任务缓存()
+        Return restored.Count
+    End Function
+
+    Public Shared Sub 删除未处理任务缓存()
+        Try
+            If File.Exists(未处理任务缓存文件路径) Then File.Delete(未处理任务缓存文件路径)
+        Catch
+        End Try
+    End Sub
+
+    Private Shared Function 读取未处理任务缓存文件() As 未处理任务缓存文件_v6
+        If Not File.Exists(未处理任务缓存文件路径) Then Return Nothing
+        Dim json = File.ReadAllText(未处理任务缓存文件路径, Encoding.UTF8)
+        Return Text.Json.JsonSerializer.Deserialize(Of 未处理任务缓存文件_v6)(json, JsonSO)
     End Function
 
     Public Shared Sub 停止所有进行中任务()
@@ -193,6 +302,47 @@ Public Class 编码队列_v6
         Return result
     End Function
 
+    Public Shared Function 同步指定未处理预设任务(ids As IEnumerable(Of String), 预设数据 As 预设数据_v6) As 预设同步结果
+        Dim result As New 预设同步结果
+        If 预设数据 Is Nothing Then Return result
+
+        Dim idSet As New HashSet(Of String)(If(ids, Array.Empty(Of String)()))
+        If idSet.Count = 0 Then Return result
+
+        Dim changed As New List(Of 编码任务_v6)
+        SyncLock 队列锁
+            For Each task In 队列
+                If Not idSet.Contains(task.ID) Then Continue For
+
+                If task.预设数据 Is Nothing Then
+                    result.已跳过非预设任务 += 1
+                    Continue For
+                End If
+
+                If task.状态 <> 编码任务状态_v6.未处理 Then
+                    result.已跳过不可修改任务 += 1
+                    Continue For
+                End If
+
+                task.预设数据 = 克隆预设(预设数据)
+                task.步骤.Clear()
+                task.当前步骤索引 = -1
+                task.媒体总时长 = ""
+                task.AviSynthCachePath = ""
+                task.VapourSynthCachePath = ""
+                task.进度 = New 编码进度_v6
+                changed.Add(task)
+                result.已更新 += 1
+            Next
+        End SyncLock
+
+        If changed.Count > 0 Then
+            广播任务更新(changed)
+            RaiseEvent 队列已变化()
+        End If
+        Return result
+    End Function
+
     Public Shared Function 克隆预设(source As 预设数据_v6) As 预设数据_v6
         If source Is Nothing Then Return Nothing
         Dim json = Text.Json.JsonSerializer.Serialize(source, JsonSO)
@@ -212,6 +362,7 @@ Public Class 编码队列_v6
                 If idSet.Contains(task.ID) AndAlso task.状态 = 编码任务状态_v6.未处理 Then
                     task.允许自动启动 = True
                     task.状态 = 编码任务状态_v6.正在处理
+                    标记任务已实际启动()
                     starting.Add(task)
                 End If
             Next
@@ -221,7 +372,7 @@ Public Class 编码队列_v6
         For Each task In starting
             Threading.Tasks.Task.Run(Async Function()
                                          Await task.开始Async()
-                                         请求调度()
+                                         任务执行结束后处理(task)
                                      End Function)
         Next
     End Sub
@@ -242,7 +393,6 @@ Public Class 编码队列_v6
         For Each task In 获取指定任务(ids)
             If task.可停止 Then task.停止()
         Next
-        请求调度()
     End Sub
 
     Public Shared Sub 取消自动开始任务(ids As IEnumerable(Of String))
@@ -362,8 +512,9 @@ Public Class 编码队列_v6
         RaiseEvent 队列已变化()
     End Sub
 
-    Public Shared Sub 请求调度()
+    Public Shared Sub 请求调度(Optional 允许完成提示检查 As Boolean = False)
         SyncLock 队列锁
+            If 允许完成提示检查 Then 完成提示待调度结束检查 = True
             If 调度中 Then Exit Sub
             调度中 = True
         End SyncLock
@@ -372,12 +523,19 @@ Public Class 编码队列_v6
                          调度循环()
                      Finally
                          Dim shouldRunAgain As Boolean
+                         Dim shouldCheckCompletion As Boolean
                          SyncLock 队列锁
                              调度中 = False
                              Dim running = 队列.Where(Function(x) x.状态 = 编码任务状态_v6.正在处理 OrElse x.状态 = 编码任务状态_v6.已暂停).Count()
                              shouldRunAgain = running < 获取并发上限() AndAlso 队列.Any(Function(x) x.状态 = 编码任务状态_v6.未处理 AndAlso x.允许自动启动)
+                             shouldCheckCompletion = 完成提示待调度结束检查
+                             If Not shouldRunAgain Then 完成提示待调度结束检查 = False
                          End SyncLock
-                         If shouldRunAgain Then 请求调度()
+                         If shouldRunAgain Then
+                             请求调度(shouldCheckCompletion)
+                         ElseIf shouldCheckCompletion Then
+                             检查全部完成提示()
+                         End If
                      End Try
                  End Sub)
     End Sub
@@ -391,14 +549,14 @@ Public Class 编码队列_v6
                 nextTask = 队列.FirstOrDefault(Function(x) x.状态 = 编码任务状态_v6.未处理 AndAlso x.允许自动启动)
                 If nextTask Is Nothing Then Exit Do
                 nextTask.状态 = 编码任务状态_v6.正在处理
+                标记任务已实际启动()
             End SyncLock
             RaiseEvent 任务已更新(nextTask)
             Task.Run(Async Function()
                          Await nextTask.开始Async()
-                         请求调度()
+                         任务执行结束后处理(nextTask)
                      End Function)
         Loop
-        检查全部完成提示()
     End Sub
 
     Private Shared Function 获取并发上限() As Integer
@@ -436,14 +594,34 @@ Public Class 编码队列_v6
         全部任务已完成是否有错误 = True
     End Sub
 
+    Private Shared Sub 标记任务已实际启动()
+        If Not 完成提示待播放 Then 全部任务已完成是否有错误 = False
+        完成提示待播放 = True
+    End Sub
+
+    Private Shared Sub 任务执行结束后处理(task As 编码任务_v6)
+        If task IsNot Nothing AndAlso task.手动停止 Then
+            检查全部完成提示()
+            Return
+        End If
+
+        请求调度(True)
+    End Sub
+
     Private Shared Sub 检查全部完成提示()
         Dim shouldPlay As Boolean = False
         Dim hasError As Boolean = False
         SyncLock 队列锁
-            If 队列.Count = 0 Then Exit Sub
-            If 队列.Any(Function(x) x.状态 = 编码任务状态_v6.正在处理 OrElse x.状态 = 编码任务状态_v6.已暂停 OrElse (x.状态 = 编码任务状态_v6.未处理 AndAlso x.允许自动启动)) Then Exit Sub
+            If Not 完成提示待播放 Then Exit Sub
+            If 队列.Count = 0 Then
+                完成提示待播放 = False
+                全部任务已完成是否有错误 = False
+                Exit Sub
+            End If
+            If 队列.Any(Function(x) x.状态 = 编码任务状态_v6.未处理 OrElse x.状态 = 编码任务状态_v6.正在处理 OrElse x.状态 = 编码任务状态_v6.已暂停) Then Exit Sub
             shouldPlay = True
-            hasError = 全部任务已完成是否有错误
+            hasError = 全部任务已完成是否有错误 OrElse 队列.Any(Function(x) x.状态 = 编码任务状态_v6.错误)
+            完成提示待播放 = False
             全部任务已完成是否有错误 = False
         End SyncLock
         If shouldPlay AndAlso 设置_v6.实例对象.提示音选项 = 0 Then

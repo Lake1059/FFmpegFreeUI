@@ -158,6 +158,7 @@ Public Class Form_v6_编码队列
         添加菜单项(任务菜单, "复制选中任务命令行", AddressOf 复制选中任务命令行)
         添加菜单项(任务菜单, "打开任务日志", AddressOf 打开任务日志)
         添加菜单项(任务菜单, "将任务参数覆盖到参数面板", AddressOf 将任务参数覆盖到参数面板)
+        添加菜单项(任务菜单, "将参数面板应用到选中任务", AddressOf 将参数面板应用到选中任务)
         添加菜单分割线(任务菜单)
         添加菜单项(任务菜单, "全选", AddressOf 全选任务)
         添加菜单项(任务菜单, "选中所有错误任务", AddressOf 选中错误任务)
@@ -222,6 +223,21 @@ Public Class Form_v6_编码队列
         预设管理_v6.显示预设(编码队列_v6.克隆预设(task.预设数据), Form_v6_参数面板)
     End Sub
 
+    Private Sub 将参数面板应用到选中任务()
+        Dim ids = 获取选中任务ID()
+        If ids.Count = 0 Then
+            ExFloatingTip(ModernButton8, "请先选择任务", 1200)
+            Exit Sub
+        End If
+
+        Dim preset = 预设管理_v6.从面板创建预设(Form_v6_参数面板)
+        Dim result = 编码队列_v6.同步指定未处理预设任务(ids, preset)
+        Dim parts As New List(Of String) From {$"已更新 {result.已更新} 个任务"}
+        If result.已跳过非预设任务 > 0 Then parts.Add($"跳过 {result.已跳过非预设任务} 个命令行任务")
+        If result.已跳过不可修改任务 > 0 Then parts.Add($"跳过 {result.已跳过不可修改任务} 个已开始或已结束任务")
+        ExFloatingTip(ModernButton8, String.Join("，", parts), 1600)
+    End Sub
+
     Private Sub 全选任务()
         If UltraDetailListView1.Items.Count > 0 Then UltraDetailListView1.SelectedIndex = 0
     End Sub
@@ -246,6 +262,32 @@ Public Class Form_v6_编码队列
 
     Private Sub 打开任务日志()
         Form_v6_编码队列_任务日志.打开或激活(Me, 获取选中任务ID())
+    End Sub
+
+    Private Sub 开始选中任务()
+        编码队列_v6.开始任务(获取选中任务ID())
+    End Sub
+
+    Private Sub 暂停选中任务()
+        编码队列_v6.暂停任务(获取选中任务ID())
+    End Sub
+
+    Private Sub 恢复选中任务()
+        编码队列_v6.恢复任务(获取选中任务ID())
+    End Sub
+
+    Private Sub 暂停或恢复选中任务()
+        Dim ids = 获取选中任务ID()
+        If ids.Count = 0 Then Exit Sub
+
+        Dim 存在暂停任务 = ids.
+            Select(Function(id) 编码队列_v6.根据ID获取任务(id)).
+            Any(Function(task) task IsNot Nothing AndAlso task.状态 = 编码任务状态_v6.已暂停)
+        If 存在暂停任务 Then
+            编码队列_v6.恢复任务(ids)
+        Else
+            编码队列_v6.暂停任务(ids)
+        End If
     End Sub
 
     Private Sub 移除选中任务()
@@ -291,22 +333,31 @@ Public Class Form_v6_编码队列
     End Sub
 
     Private Sub UltraDetailListView1_KeyDown(sender As Object, e As KeyEventArgs) Handles UltraDetailListView1.KeyDown
-        If e.KeyCode <> Keys.Delete Then Exit Sub
-        移除选中任务()
+        Select Case e.KeyCode
+            Case Keys.Enter
+                开始选中任务()
+            Case Keys.Delete
+                移除选中任务()
+            Case Keys.Space
+                暂停或恢复选中任务()
+            Case Else
+                Exit Sub
+        End Select
+
         e.Handled = True
         e.SuppressKeyPress = True
     End Sub
 
     Private Sub ModernButton1_Click(sender As Object, e As EventArgs) Handles ModernButton1.Click
-        编码队列_v6.开始任务(获取选中任务ID())
+        开始选中任务()
     End Sub
 
     Private Sub ModernButton2_Click(sender As Object, e As EventArgs) Handles ModernButton2.Click
-        编码队列_v6.暂停任务(获取选中任务ID())
+        暂停选中任务()
     End Sub
 
     Private Sub ModernButton3_Click(sender As Object, e As EventArgs) Handles ModernButton3.Click
-        编码队列_v6.恢复任务(获取选中任务ID())
+        恢复选中任务()
     End Sub
 
     Private Sub ModernButton4_Click(sender As Object, e As EventArgs) Handles ModernButton4.Click
