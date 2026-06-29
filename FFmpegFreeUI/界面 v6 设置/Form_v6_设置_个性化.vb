@@ -3,7 +3,7 @@ Imports LakeUI
 
 Public Class Form_v6_设置_个性化
     Private Sub MB_前往购买_Click(sender As Object, e As EventArgs) Handles MB_前往购买.Click
-        Process.Start(New ProcessStartInfo With {.FileName = "https://ifdian.net/item/15f0758814a911f1979752540025c377", .UseShellExecute = True})
+        Process.Start(New ProcessStartInfo With {.FileName = "https://ifdian.net/item/a98d04e8b98011f0a49952540025c377", .UseShellExecute = True})
     End Sub
 
     Private Sub MB_窗口标题文字_Click(sender As Object, e As EventArgs) Handles MB_窗口标题文字.Click
