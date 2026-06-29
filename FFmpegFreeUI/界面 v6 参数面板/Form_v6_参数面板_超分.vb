@@ -4,6 +4,7 @@ Imports FFmpegFreeUI.预设数据_v6
 Public Class Form_v6_参数面板_超分
 
     Public 策略组数据 As New List(Of 超分数据单片结构)
+    Public 所属参数面板对象 As Form_v6_参数面板
     Private _正在选择文件 As Boolean = False
 
     Private Sub Form_v6_参数面板_超分_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -70,7 +71,8 @@ Public Class Form_v6_参数面板_超分
     Private Function 格式化策略(index As Integer, 策略 As 超分数据单片结构) As String
         If 策略 Is Nothing Then Return $"{index + 1}. 空策略"
         Dim parts As New List(Of String)
-        If 策略.目标宽度 <> "" OrElse 策略.目标高度 <> "" Then parts.Add($"{If(策略.目标宽度 = "", "iw", 策略.目标宽度)}x{If(策略.目标高度 = "", "ih", 策略.目标高度)}")
+        If 策略.目标宽度 <> "" Then parts.Add("w=" & 策略.目标宽度)
+        If 策略.目标高度 <> "" Then parts.Add("h=" & 策略.目标高度)
         If 策略.上采样算法 <> "" Then parts.Add("up=" & 策略.上采样算法)
         If 策略.下采样算法 <> "" Then parts.Add("down=" & 策略.下采样算法)
         If 策略.抗振铃强度 <> "" Then parts.Add("anti=" & 策略.抗振铃强度)
@@ -95,6 +97,7 @@ Public Class Form_v6_参数面板_超分
         End If
         刷新策略组列表()
         MLB_超分滤镜叠加策略列表.SelectedIndex = i
+        请求刷新参数状态()
     End Sub
 
     Private Sub MB_移除_Click(sender As Object, e As EventArgs) Handles MB_移除.Click
@@ -102,6 +105,7 @@ Public Class Form_v6_参数面板_超分
         If i < 0 OrElse i >= 策略组数据.Count Then Exit Sub
         策略组数据.RemoveAt(i)
         刷新策略组列表()
+        请求刷新参数状态()
     End Sub
 
     Private Sub MB_克隆_Click(sender As Object, e As EventArgs) Handles MB_克隆.Click
@@ -110,6 +114,7 @@ Public Class Form_v6_参数面板_超分
         策略组数据.Insert(i + 1, 克隆策略(策略组数据(i)))
         刷新策略组列表()
         MLB_超分滤镜叠加策略列表.SelectedIndex = i + 1
+        请求刷新参数状态()
     End Sub
 
     Private Sub ModernListBox1_ItemDoubleClick(sender As Object, e As LakeUI.ModernListBox.ItemEventArgs) Handles MLB_超分滤镜叠加策略列表.ItemDoubleClick
@@ -129,6 +134,7 @@ Public Class Form_v6_参数面板_超分
         If reordered.Count = 策略组数据.Count Then
             策略组数据 = reordered
             刷新策略组列表()
+            请求刷新参数状态()
         End If
     End Sub
 
@@ -153,6 +159,10 @@ Public Class Form_v6_参数面板_超分
         Finally
             _正在选择文件 = False
         End Try
+    End Sub
+
+    Private Sub 请求刷新参数状态()
+        所属参数面板对象?.请求刷新参数状态()
     End Sub
 
 End Class

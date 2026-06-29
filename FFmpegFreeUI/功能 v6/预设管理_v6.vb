@@ -1660,8 +1660,13 @@ Partial Public Class 预设管理_v6
 
     Private Shared Function 构造缩放滤镜(a As 预设数据_v6) As String
         If a.视频参数_分辨率 <> "" Then Return $"scale={a.视频参数_分辨率.Replace("x", ":")}"
-        If a.视频参数_分辨率自动计算_宽度 <> "" OrElse a.视频参数_分辨率自动计算_高度 <> "" Then Return $"scale={If(a.视频参数_分辨率自动计算_宽度 = "", "-2", a.视频参数_分辨率自动计算_宽度)}:{If(a.视频参数_分辨率自动计算_高度 = "", "-2", a.视频参数_分辨率自动计算_高度)}"
-        Return ""
+
+        Dim 宽度 = If(a.视频参数_分辨率自动计算_宽度, "")
+        Dim 高度 = If(a.视频参数_分辨率自动计算_高度, "")
+        If 宽度 = "" AndAlso 高度 = "" Then Return ""
+        If 宽度 = "" Then 宽度 = "-2"
+        If 高度 = "" Then 高度 = "-2"
+        Return $"scale={宽度}:{高度}"
     End Function
 
     Private Shared Function 构造裁剪滤镜(a As 预设数据_v6) As String
@@ -1716,19 +1721,17 @@ Partial Public Class 预设管理_v6
         Dim filters As New List(Of String)
         For Each s In list
             If s Is Nothing Then Continue For
+            Dim 目标宽度 = If(s.目标宽度, "")
+            Dim 目标高度 = If(s.目标高度, "")
             Dim libplaceboOpts As New List(Of String)
-            If s.目标宽度 <> "" OrElse s.目标高度 <> "" Then
-                libplaceboOpts.Add("w=" & If(s.目标宽度 = "", "iw", s.目标宽度))
-                libplaceboOpts.Add("h=" & If(s.目标高度 = "", "ih", s.目标高度))
-            End If
+            If 目标宽度 <> "" Then libplaceboOpts.Add("w=" & 目标宽度)
+            If 目标高度 <> "" Then libplaceboOpts.Add("h=" & 目标高度)
             If s.上采样算法 <> "" Then libplaceboOpts.Add("upscaler=" & s.上采样算法)
             If s.下采样算法 <> "" Then libplaceboOpts.Add("downscaler=" & s.下采样算法)
             If s.抗振铃强度 <> "" Then libplaceboOpts.Add("antiringing=" & s.抗振铃强度)
             If s.着色器文件路径 <> "" Then libplaceboOpts.Add($"custom_shader_path='{转义字幕滤镜值(应用转译模式路径(s.着色器文件路径))}'")
-            If libplaceboOpts.Any(Function(x) x.StartsWith("upscaler=", StringComparison.Ordinal) OrElse x.StartsWith("downscaler=", StringComparison.Ordinal) OrElse x.StartsWith("antiringing=", StringComparison.Ordinal) OrElse x.StartsWith("custom_shader_path=", StringComparison.Ordinal)) Then
+            If libplaceboOpts.Count > 0 Then
                 filters.Add("libplacebo=" & String.Join(":", libplaceboOpts))
-            ElseIf s.目标宽度 <> "" OrElse s.目标高度 <> "" Then
-                filters.Add($"scale={If(s.目标宽度 = "", "-2", s.目标宽度)}:{If(s.目标高度 = "", "-2", s.目标高度)}")
             End If
         Next
         Return String.Join(",", filters)

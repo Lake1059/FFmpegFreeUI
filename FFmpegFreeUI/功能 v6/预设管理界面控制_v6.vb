@@ -888,7 +888,8 @@ Public Partial Class 预设管理_v6
     Private Shared Function 格式化超分单片(单片 As 预设数据_v6.超分数据单片结构) As String
         If 单片 Is Nothing Then Return ""
         Dim 片段 As New List(Of String)
-        If 单片.目标宽度 <> "" OrElse 单片.目标高度 <> "" Then 片段.Add($"目标分辨率：{单片.目标宽度} x {单片.目标高度}")
+        If 单片.目标宽度 <> "" Then 片段.Add("目标宽度：" & 单片.目标宽度)
+        If 单片.目标高度 <> "" Then 片段.Add("目标高度：" & 单片.目标高度)
         If 单片.上采样算法 <> "" Then 片段.Add("上采样算法：" & 单片.上采样算法)
         If 单片.下采样算法 <> "" Then 片段.Add("下采样算法：" & 单片.下采样算法)
         If 单片.抗振铃强度 <> "" Then 片段.Add("抗振铃强度：" & 单片.抗振铃强度)
@@ -1265,10 +1266,12 @@ Public Partial Class 预设管理_v6
 
     Public Shared Sub 刷新参数总览(ui As Form_v6_参数面板)
         If ui Is Nothing Then Exit Sub
+        同步全部内置滤镜到排序(ui, False)
         Dim a = 从面板创建预设(ui)
+        ui.私有界面_滤镜排序.刷新局部预览(a)
+        a.滤镜排序系统 = ui.私有界面_滤镜排序.获取排序数据().ToArray()
         显示参数总览(ui.私有界面_参数总览.MTB_参数总览, a)
         ui.私有界面_参数总览.MTB_命令行模板.Text = 生成命令行展示文本(a, 输入占位符, 输出占位符)
-        ui.私有界面_滤镜排序.刷新局部预览(a)
     End Sub
 
     Public Shared Sub 同步全部内置滤镜到排序(ui As Form_v6_参数面板, Optional 刷新 As Boolean = True)

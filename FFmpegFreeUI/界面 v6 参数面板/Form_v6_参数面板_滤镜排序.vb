@@ -287,7 +287,7 @@ Public Class Form_v6_参数面板_滤镜排序
 
     Private Sub 通知参数面板刷新()
         If 所属参数面板对象 Is Nothing OrElse 所属参数面板对象.抑制自动刷新 Then Exit Sub
-        预设管理_v6.刷新参数总览(所属参数面板对象)
+        所属参数面板对象.请求刷新参数状态()
     End Sub
 
     Private Sub Form_v6_参数面板_滤镜排序_SizeChanged(sender As Object, e As EventArgs) Handles Me.SizeChanged

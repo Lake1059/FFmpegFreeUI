@@ -27,8 +27,9 @@ Public Class Form_v6_参数面板
 
     Public Shared ReadOnly 共享界面_画面区域选择窗口 As New Form_v6_参数面板_画面区域选择窗口
     Public 抑制自动刷新 As Boolean = False
-    Private _刷新已挂起 As Boolean = False
-    Private ReadOnly _已注册自动刷新控件 As New HashSet(Of Control)
+    Private Const 参数总览页索引 As Integer = 0
+    Private Const 滤镜排序页索引 As Integer = 15
+    Private _正在刷新聚合页面 As Boolean
 
 
     Private Sub Form_v6_参数面板_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -45,6 +46,7 @@ Public Class Form_v6_参数面板
         Me.ModernTabListControl1.Items(6).BoundControl = 私有界面_视频编码器
         绑定选项卡(私有界面_视频编码器.ModernPanel1)
         Me.ModernTabListControl1.Items(7).BoundControl = 私有界面_画面帧
+        私有界面_画面帧.私有窗口_着色器超分.所属参数面板对象 = Me
         绑定选项卡(私有界面_画面帧.ModernPanel1)
         Me.ModernTabListControl1.Items(8).BoundControl = 私有界面_质量
         绑定选项卡(私有界面_质量.ModernPanel1)
@@ -107,7 +109,6 @@ Public Class Form_v6_参数面板
         Me.私有界面_自定义参数.ModernTabControl1.SelectedIndex = 0
         Me.私有界面_附加内容.ModernTabControl1.SelectedIndex = 0
         '==================================================
-        注册全部自动刷新()
         预设管理_v6.重置面板(Me)
         私有界面_预设管理.刷新预设列表()
     End Sub
@@ -138,79 +139,39 @@ Public Class Form_v6_参数面板
     End Sub
 
     Public Sub 请求刷新参数状态()
-        If 抑制自动刷新 OrElse _刷新已挂起 Then Exit Sub
-        _刷新已挂起 = True
-        BeginInvoke(Sub()
-                        _刷新已挂起 = False
-                        If 抑制自动刷新 Then Exit Sub
-                        预设管理_v6.同步全部内置滤镜到排序(Me)
-                    End Sub)
+        ' 子页面仍可发出变更通知；汇总类页面只在切入时统一读取当前值。
+        If 抑制自动刷新 OrElse IsDisposed Then Exit Sub
     End Sub
 
-    Private Sub 注册全部自动刷新()
-        Dim pages As Form() = {
-            私有界面_输出文件设置,
-            私有界面_解码参数,
-            私有界面_预设管理,
-            私有界面_视频编码器,
-            私有界面_画面帧,
-            私有界面_画面帧.私有窗口_抽帧参数,
-            私有界面_画面帧.私有窗口_插帧参数,
-            私有界面_画面帧.私有窗口_动态模糊,
-            私有界面_画面帧.私有窗口_着色器超分,
-            私有界面_画面帧.私有窗口_降噪,
-            私有界面_画面帧.私有窗口_锐化,
-            私有界面_画面帧.私有窗口_胶片颗粒,
-            私有界面_画面帧.私有窗口_平滑断层,
-            私有界面_画面帧.私有窗口_扫描方式,
-            私有界面_画面帧.私有窗口_画面翻转,
-            私有界面_画面帧.私有窗口_烧录字幕,
-            私有界面_质量,
-            私有界面_色彩管理,
-            私有界面_视频帧服务器,
-            私有界面_音频参数,
-            私有界面_剪辑区间,
-            私有界面_流自定义参数,
-            私有界面_在位置插入参数,
-            私有界面_完全自己写模式,
-            私有界面_流控制,
-            私有界面_元数据,
-            私有界面_章节,
-            私有界面_附件
-        }
-        For Each page In pages
-            注册自动刷新控件(page)
-        Next
-    End Sub
+    Private Sub ModernTabListControl1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ModernTabListControl1.SelectedIndexChanged
+        If 抑制自动刷新 OrElse IsDisposed OrElse _正在刷新聚合页面 Then Exit Sub
 
-    Private Sub 注册自动刷新控件(root As Control)
-        If root Is Nothing OrElse _已注册自动刷新控件.Contains(root) Then Exit Sub
-        _已注册自动刷新控件.Add(root)
-
-        Select Case root.GetType().Name
-            Case "ModernTextBox", "ModernComboBox"
-                AddHandler root.TextChanged, AddressOf 自动刷新控件_值已更改
-            Case "ModernCheckBox"
-                AddHandler DirectCast(root, LakeUI.ModernCheckBox).CheckedChanged, AddressOf 自动刷新控件_值已更改
-            Case "BooleanSwitch"
-                AddHandler DirectCast(root, LakeUI.BooleanSwitch).CheckedChanged, AddressOf 自动刷新控件_值已更改
-            Case "ExcellentTrackBar"
-                AddHandler DirectCast(root, LakeUI.ExcellentTrackBar).ValueChanged, AddressOf 自动刷新控件_值已更改
+        Select Case ModernTabListControl1.SelectedIndex
+            Case 参数总览页索引
+                刷新参数总览页()
+            Case 滤镜排序页索引
+                刷新滤镜排序页()
         End Select
-
-        Dim selectedIndexChanged = root.GetType().GetEvent("SelectedIndexChanged")
-        If selectedIndexChanged IsNot Nothing Then
-            selectedIndexChanged.AddEventHandler(root, New EventHandler(AddressOf 自动刷新控件_值已更改))
-        End If
-
-        For Each child As Control In root.Controls
-            注册自动刷新控件(child)
-        Next
     End Sub
 
-    Private Sub 自动刷新控件_值已更改(sender As Object, e As EventArgs)
-        请求刷新参数状态()
+    Private Sub 刷新参数总览页()
+        If _正在刷新聚合页面 Then Exit Sub
+        _正在刷新聚合页面 = True
+        Try
+            预设管理_v6.刷新参数总览(Me)
+        Finally
+            _正在刷新聚合页面 = False
+        End Try
     End Sub
 
+    Private Sub 刷新滤镜排序页()
+        If _正在刷新聚合页面 Then Exit Sub
+        _正在刷新聚合页面 = True
+        Try
+            预设管理_v6.同步全部内置滤镜到排序(Me, False)
+        Finally
+            _正在刷新聚合页面 = False
+        End Try
+    End Sub
 
 End Class

@@ -14,9 +14,9 @@
     <!--<EnableCompressionInSingleFile>True</EnableCompressionInSingleFile>-->
     <Authors>1059 Studio</Authors>
 	<Company>1059 Studio</Company>
-	<AssemblyVersion>6.0.25</AssemblyVersion>
-	<FileVersion>6.0.25</FileVersion>
-	<Version>6.0.25</Version>
+	<AssemblyVersion>6.0.26</AssemblyVersion>
+	<FileVersion>6.0.26</FileVersion>
+	<Version>6.0.26</Version>
     <SupportedOSPlatformVersion>7.0</SupportedOSPlatformVersion>
     <ApplicationIcon>ico.ico</ApplicationIcon>
     <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
