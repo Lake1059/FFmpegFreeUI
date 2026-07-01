@@ -942,21 +942,9 @@ Public Class 编码队列_v6
             Dim serial = startNumber + offset
             Dim candidateName = $"{baseName}{serial.ToString(New String("0"c, width), CultureInfo.InvariantCulture)}"
             Dim candidate = IO.Path.Combine(dir, $"{candidateName}{ext}")
-            If Not 补零结尾序号文件已存在(dir, candidateName, ext) Then Return candidate
+            If Not File.Exists(candidate) Then Return candidate
         Next
         Return IO.Path.Combine(dir, $"{baseName}{Now:yyyyMMddHHmmss}{ext}")
-    End Function
-
-    Private Shared Function 补零结尾序号文件已存在(dir As String, nameWithoutExtension As String, ext As String) As Boolean
-        If File.Exists(IO.Path.Combine(dir, $"{nameWithoutExtension}{ext}")) Then Return True
-
-        Try
-            Dim searchDir = If(String.IsNullOrWhiteSpace(dir), ".", dir)
-            If Not Directory.Exists(searchDir) Then Return False
-            Return Directory.EnumerateFiles(searchDir, $"{nameWithoutExtension}.*", SearchOption.TopDirectoryOnly).Any()
-        Catch
-            Return False
-        End Try
     End Function
 
 End Class

@@ -874,8 +874,8 @@ Public Class AgentLocalTools
             New Dictionary(Of String, Object) From {{"name", NameOf(预设数据_v6.自动命名选项.附加_随机16位数字)}, {"value", CInt(预设数据_v6.自动命名选项.附加_随机16位数字)}, {"description", "附加 _ 加 16 位随机数字。"}},
             New Dictionary(Of String, Object) From {{"name", NameOf(预设数据_v6.自动命名选项.附加_随机16位字母)}, {"value", CInt(预设数据_v6.自动命名选项.附加_随机16位字母)}, {"description", "附加 _ 加 16 位随机字母。"}},
             New Dictionary(Of String, Object) From {{"name", NameOf(预设数据_v6.自动命名选项.附加_随机16位数字和字母组合)}, {"value", CInt(预设数据_v6.自动命名选项.附加_随机16位数字和字母组合)}, {"description", "附加 _ 加 16 位随机数字字母。"}},
-            New Dictionary(Of String, Object) From {{"name", NameOf(预设数据_v6.自动命名选项.附加_2位结尾序号)}, {"value", CInt(预设数据_v6.自动命名选项.附加_2位结尾序号)}, {"description", "直接在文件名末尾附加 01、02；忽略扩展名递增，不自带空格或下划线。"}},
-            New Dictionary(Of String, Object) From {{"name", NameOf(预设数据_v6.自动命名选项.附加_3位结尾序号)}, {"value", CInt(预设数据_v6.自动命名选项.附加_3位结尾序号)}, {"description", "直接在文件名末尾附加 001、002；忽略扩展名递增，不自带空格或下划线。"}}
+            New Dictionary(Of String, Object) From {{"name", NameOf(预设数据_v6.自动命名选项.附加_2位结尾序号)}, {"value", CInt(预设数据_v6.自动命名选项.附加_2位结尾序号)}, {"description", "直接在文件名末尾附加 01、02；只在同输出后缀目标存在时递增，不自带空格或下划线。"}},
+            New Dictionary(Of String, Object) From {{"name", NameOf(预设数据_v6.自动命名选项.附加_3位结尾序号)}, {"value", CInt(预设数据_v6.自动命名选项.附加_3位结尾序号)}, {"description", "直接在文件名末尾附加 001、002；只在同输出后缀目标存在时递增，不自带空格或下划线。"}}
         }
     End Function
 
@@ -923,7 +923,7 @@ Public Class AgentLocalTools
             Case NameOf(预设数据_v6.输出位置_保留子文件夹结构起始点)
                 Return New List(Of String) From {"必须是已存在文件夹；路径不存在时界面会清空。", "只有 输出位置 是有效自定义输出目录时才生效；默认原目录与此逻辑不兼容。", "它保存到预设时属于额外保存输出位置的一部分；调用 save_parameter_preset 保存时需要传 save_output_location=true。"}
             Case NameOf(预设数据_v6.输出_自动命名选项)
-                Return New List(Of String) From {"可传枚举名或数值。默认 附加_递增时间戳 会替换文件名结尾已有的 _yyyy.MM.dd-HH.mm.ss，否则追加新时间戳。", "附加_2位结尾序号 和 附加_3位结尾序号 始终从 01/001 开始递增，判断已占用序号时忽略扩展名，且直接附加在扩展名前，不包含空格、下划线或其他分隔符。"}
+                Return New List(Of String) From {"可传枚举名或数值。默认 附加_递增时间戳 会替换文件名结尾已有的 _yyyy.MM.dd-HH.mm.ss，否则追加新时间戳。", "附加_2位结尾序号 和 附加_3位结尾序号 始终从 01/001 开始递增，判断已占用序号时只检查相同输出后缀，且直接附加在扩展名前，不包含空格、下划线或其他分隔符。"}
             Case NameOf(预设数据_v6.输出命名_结尾文本)
                 Return New List(Of String) From {"若希望结尾序号前有空格、下划线或其他分隔符，需要把分隔符写在此字段；2 位/3 位结尾序号功能只负责直接拼数字。"}
             Case NameOf(预设数据_v6.视频参数_质量控制_参数名)
