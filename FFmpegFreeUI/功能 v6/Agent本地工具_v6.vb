@@ -360,6 +360,11 @@ Public Class AgentLocalTools
     <CodeAnalysis.SuppressMessage("Performance", "CA1861:不要将常量数组作为参数", Justification:="<挂起>")>
     Public Shared Function BuildToolDefinitions(permissionLevel As Integer, networkMode As Integer) As List(Of Dictionary(Of String, Object))
         Dim tools As New List(Of Dictionary(Of String, Object)) From {
+            FunctionTool("list_agent_skills", "列出 3FUI Agent 内置 skill 资料库及可按需读取的 reference。遇到 3FUI 环境机制、工具行为、参数面板、命令生成、队列、预设、联网权限或编码推荐问题时先用它查看索引。", New Dictionary(Of String, Object)),
+            FunctionTool("read_agent_skill_reference", "读取 3FUI Agent 内置 skill 资料库中的指定 reference。只读取与当前任务相关的章节，避免一次加载全部资料。", New Dictionary(Of String, Object) From {
+            {"skill", New Dictionary(Of String, Object) From {{"type", "string"}, {"description", "skill 名称，默认 ffmpegfreeui"}}},
+            {"reference", New Dictionary(Of String, Object) From {{"type", "string"}, {"description", "reference 名称，例如 SKILL.md 或 references/parameter-panel.md"}}}
+        }, {"reference"}),
             FunctionTool("get_parameter_panel_state", "读取当前 3FUI 参数面板的结构化预设 JSON、人类可读总览和命令行预览。", New Dictionary(Of String, Object)),
             FunctionTool("get_parameter_field_info", "按字段名或关键词查询参数面板字段的类型、当前值、候选值和格式规则。填写不熟悉的参数前优先调用，避免猜字段值。", New Dictionary(Of String, Object) From {
             {"fields", New Dictionary(Of String, Object) From {{"type", "array"}, {"items", New Dictionary(Of String, Object) From {{"type", "string"}}}}},
@@ -374,7 +379,7 @@ Public Class AgentLocalTools
         }
 
         If permissionLevel >= PermissionEnvironment Then
-            tools.Add(FunctionTool("get_queue_summary", "读取 3FUI 编码队列任务信息。默认返回全部任务摘要；可用 id/ids 或 1-based index/indexes 查询指定任务，detail=true 返回完整任务信息，target=all 返回全部。日志请另用 get_queue_task_logs。", New Dictionary(Of String, Object) From {
+            tools.Add(FunctionTool("get_queue_summary", "读取 3FUI 编码队列任务信息。默认返回全部任务摘要；可用 id/ids 或 1-based index/indexes 查询指定任务，detail=true 返回完整任务信息，target=all 返回全部。include_commands=true 会同时返回参数预览命令行和实际执行命令行；日志请另用 get_queue_task_logs。", New Dictionary(Of String, Object) From {
                 {"id", New Dictionary(Of String, Object) From {{"type", "string"}, {"description", "单个任务 ID"}}},
                 {"ids", New Dictionary(Of String, Object) From {{"type", "array"}, {"items", New Dictionary(Of String, Object) From {{"type", "string"}}}, {"description", "任务 ID 列表"}}},
                 {"index", New Dictionary(Of String, Object) From {{"type", "integer"}, {"description", "队列中的 1-based 序号"}}},
@@ -443,11 +448,12 @@ Public Class AgentLocalTools
                 {"source", New Dictionary(Of String, Object) From {{"type", "string"}}},
                 {"name", New Dictionary(Of String, Object) From {{"type", "string"}}}
             }, {"source", "name"}))
-            tools.Add(FunctionTool("save_parameter_preset", "保存参数预设到用户自定义或从社区下载来源。删除权限禁用；开发者内置只允许读取。", New Dictionary(Of String, Object) From {
+            tools.Add(FunctionTool("save_parameter_preset", "保存参数预设到用户自定义或从社区下载来源。删除权限禁用；开发者内置只允许读取。save_output_location=true 时保存输出位置及保留子文件夹结构起始点；false 时清空这些输出位置字段；不传则沿用界面勾选状态。", New Dictionary(Of String, Object) From {
                 {"source", New Dictionary(Of String, Object) From {{"type", "string"}}},
                 {"name", New Dictionary(Of String, Object) From {{"type", "string"}}},
                 {"preset_json", New Dictionary(Of String, Object) From {{"type", "string"}}},
-                {"note", New Dictionary(Of String, Object) From {{"type", "string"}}}
+                {"note", New Dictionary(Of String, Object) From {{"type", "string"}}},
+                {"save_output_location", New Dictionary(Of String, Object) From {{"type", "boolean"}, {"description", "是否写入 输出位置 和 输出位置_保留子文件夹结构起始点；不传则使用预设管理页的额外保存输出位置勾选状态。"}}}
             }, {"source", "name"}))
         End If
 
@@ -496,6 +502,10 @@ Public Class AgentLocalTools
         Dim args = Agent通用工具_v6.ParseJsonArguments(callInfo?.Arguments)
         Try
             Select Case callInfo?.Name
+                Case "list_agent_skills"
+                    Return Agent技能资料库_v6.列出技能()
+                Case "read_agent_skill_reference"
+                    Return Agent技能资料库_v6.读取资料(Agent通用工具_v6.GetJsonString(args, "skill", "ffmpegfreeui"), Agent通用工具_v6.GetJsonString(args, "reference"))
                 Case "get_parameter_panel_state"
                     Return GetParameterPanelState()
                 Case "get_parameter_field_info"
@@ -555,7 +565,9 @@ Public Class AgentLocalTools
                     Return Agent工具封装_v6.应用参数预设(Agent通用工具_v6.GetJsonString(args, "source"), Agent通用工具_v6.GetJsonString(args, "name"))
                 Case "save_parameter_preset"
                     If permissionLevel < PermissionEnvironment Then Return "权限不足：需要环境控制"
-                    Return Agent工具封装_v6.保存参数预设(Agent通用工具_v6.GetJsonString(args, "source"), Agent通用工具_v6.GetJsonString(args, "name"), Agent通用工具_v6.GetJsonString(args, "preset_json"), Agent通用工具_v6.GetJsonString(args, "note"))
+                    Dim saveOutputLocation As Boolean? = Nothing
+                    If HasJsonProperty(args, "save_output_location") Then saveOutputLocation = Agent通用工具_v6.GetJsonBoolean(args, "save_output_location", False)
+                    Return Agent工具封装_v6.保存参数预设(Agent通用工具_v6.GetJsonString(args, "source"), Agent通用工具_v6.GetJsonString(args, "name"), Agent通用工具_v6.GetJsonString(args, "preset_json"), Agent通用工具_v6.GetJsonString(args, "note"), saveOutputLocation)
                 Case "web_search"
                     If Not AgentNetworkMode.IsEnabled(networkMode) Then Return "联网已禁用"
                     Return Await WebSearchAsync(Agent通用工具_v6.GetJsonString(args, "query"), networkMode, endpointClient, modelId, reasoningEffort, cancellationToken)
@@ -778,26 +790,16 @@ Public Class AgentLocalTools
         Return result
     End Function
 
-    <CodeAnalysis.SuppressMessage("Performance", "CA1861:不要将常量数组作为参数", Justification:="<挂起>")>
     Private Shared Function GetKnownParameterCandidates(fieldName As String, preset As 预设数据_v6) As List(Of Object)
         Select Case fieldName
             Case NameOf(预设数据_v6.输出容器)
-                Return {".mp4", ".mkv", ".mov", ".webm", ".flv", ".avi", ".mp3", ".m4a", ".opus", ".flac", ".wav", ".png", ".jpg", ".webp", ".gif"}.Cast(Of Object).ToList()
+                Return BuildStringCandidates(Agent工具封装_v6.获取输出容器候选())
+            Case NameOf(预设数据_v6.输出_自动命名选项)
+                Return BuildAutoNameOptionCandidates()
             Case NameOf(预设数据_v6.视频参数_编码器_分类名称)
-                Return 视频编码器数据库_v6.获取分类列表(preset.视频参数_编码器_类型).
-                    Select(Function(x) CType(New Dictionary(Of String, Object) From {
-                        {"value", x.名称},
-                        {"description", x.描述}
-                    }, Object)).
-                    ToList()
+                Return BuildVideoCategoryCandidates(preset)
             Case NameOf(预设数据_v6.视频参数_编码器_具体编码)
-                Return 视频编码器数据库_v6.获取编码器列表(preset.视频参数_编码器_分类名称).
-                    Select(Function(x) CType(New Dictionary(Of String, Object) From {
-                        {"value", x.名称},
-                        {"command", x.命令行编码器名},
-                        {"type", x.类型.ToString()}
-                    }, Object)).
-                    ToList()
+                Return BuildVideoEncoderCandidates(preset)
             Case NameOf(预设数据_v6.视频参数_编码器_编码预设)
                 Return BuildVideoParameterListCandidates(preset, 视频编码器数据库_v6.编码器参数角色.编码预设)
             Case NameOf(预设数据_v6.视频参数_编码器_配置文件)
@@ -807,21 +809,74 @@ Public Class AgentLocalTools
             Case NameOf(预设数据_v6.视频参数_色彩管理_像素格式)
                 Return BuildVideoParameterListCandidates(preset, 视频编码器数据库_v6.编码器参数角色.像素格式)
             Case NameOf(预设数据_v6.视频参数_色彩管理_像素格式预先转换)
-                Return {"", "yuv420p", "yuv420p10le", "yuv422p", "yuv422p10le", "yuv444p", "yuv444p10le", "p010le"}.Cast(Of Object).ToList()
+                Return BuildStringCandidates(Agent工具封装_v6.获取组合框候选("MCB_像素格式预先转换"))
             Case NameOf(预设数据_v6.视频参数_质量控制_参数名)
-                Return 视频编码器数据库_v6.获取质量参数名列表().Cast(Of Object).ToList()
+                Return BuildStringCandidates(视频编码器数据库_v6.获取质量参数名列表())
             Case NameOf(预设数据_v6.音频参数_编码器_代号)
-                Return 音频编码器数据库_v6.全部编码器.
-                    Select(Function(x) CType(New Dictionary(Of String, Object) From {
-                        {"value", x.私有ID},
-                        {"label", x.显示名称},
-                        {"command", x.命令行编码器名}
-                    }, Object)).
-                    ToList()
+                Return BuildAudioEncoderCandidates()
             Case NameOf(预设数据_v6.音频参数_质量参数名)
-                Return 音频编码器数据库_v6.获取质量参数名列表().Cast(Of Object).ToList()
+                Return BuildStringCandidates(音频编码器数据库_v6.获取质量参数名列表())
         End Select
         Return New List(Of Object)
+    End Function
+
+    Private Shared Function BuildStringCandidates(values As IEnumerable(Of String)) As List(Of Object)
+        Dim result As New List(Of Object)
+        If values Is Nothing Then Return result
+
+        Dim seen As New HashSet(Of String)(StringComparer.OrdinalIgnoreCase)
+        For Each rawValue In values
+            Dim value = If(rawValue, "")
+            If seen.Add(value) Then result.Add(value)
+        Next
+        Return result
+    End Function
+
+    Private Shared Function BuildVideoCategoryCandidates(preset As 预设数据_v6) As List(Of Object)
+        Return 视频编码器数据库_v6.获取分类列表(preset.视频参数_编码器_类型).
+            Select(Function(x) CType(New Dictionary(Of String, Object) From {
+                {"value", x.名称},
+                {"description", x.描述}
+            }, Object)).
+            ToList()
+    End Function
+
+    Private Shared Function BuildVideoEncoderCandidates(preset As 预设数据_v6) As List(Of Object)
+        Return 视频编码器数据库_v6.获取编码器列表(preset.视频参数_编码器_分类名称).
+            Select(Function(x) CType(New Dictionary(Of String, Object) From {
+                {"value", x.名称},
+                {"command", x.命令行编码器名},
+                {"type", x.类型.ToString()}
+            }, Object)).
+            ToList()
+    End Function
+
+    Private Shared Function BuildAudioEncoderCandidates() As List(Of Object)
+        Return 音频编码器数据库_v6.全部编码器.
+            Select(Function(x) CType(New Dictionary(Of String, Object) From {
+                {"value", x.私有ID},
+                {"label", x.显示名称},
+                {"command", x.命令行编码器名}
+            }, Object)).
+            ToList()
+    End Function
+
+    Private Shared Function BuildAutoNameOptionCandidates() As List(Of Object)
+        Return New List(Of Object) From {
+            New Dictionary(Of String, Object) From {{"name", NameOf(预设数据_v6.自动命名选项.不使用自动命名)}, {"value", CInt(预设数据_v6.自动命名选项.不使用自动命名)}, {"description", "不附加自动后缀，容易覆盖目标文件。"}},
+            New Dictionary(Of String, Object) From {{"name", NameOf(预设数据_v6.自动命名选项.附加_递增时间戳)}, {"value", CInt(预设数据_v6.自动命名选项.附加_递增时间戳)}, {"description", "默认选项；追加 _yyyy.MM.dd-HH.mm.ss，若文件名结尾已有同格式时间戳则替换它。"}},
+            New Dictionary(Of String, Object) From {{"name", NameOf(预设数据_v6.自动命名选项.附加_递增数字)}, {"value", CInt(预设数据_v6.自动命名选项.附加_递增数字)}, {"description", "目标存在时使用 ~1、~2 递增。"}},
+            New Dictionary(Of String, Object) From {{"name", NameOf(预设数据_v6.自动命名选项.附加_3FUI)}, {"value", CInt(预设数据_v6.自动命名选项.附加_3FUI)}, {"description", "附加 _3fui。"}},
+            New Dictionary(Of String, Object) From {{"name", NameOf(预设数据_v6.自动命名选项.常规压片_附加编码器和质量参数)}, {"value", CInt(预设数据_v6.自动命名选项.常规压片_附加编码器和质量参数)}, {"description", "根据编码器、预设、质量、码率等参数生成后缀。"}},
+            New Dictionary(Of String, Object) From {{"name", NameOf(预设数据_v6.自动命名选项.附加_随机8位数字)}, {"value", CInt(预设数据_v6.自动命名选项.附加_随机8位数字)}, {"description", "附加 _ 加 8 位随机数字。"}},
+            New Dictionary(Of String, Object) From {{"name", NameOf(预设数据_v6.自动命名选项.附加_随机8位字母)}, {"value", CInt(预设数据_v6.自动命名选项.附加_随机8位字母)}, {"description", "附加 _ 加 8 位随机字母。"}},
+            New Dictionary(Of String, Object) From {{"name", NameOf(预设数据_v6.自动命名选项.附加_随机8位数字和字母组合)}, {"value", CInt(预设数据_v6.自动命名选项.附加_随机8位数字和字母组合)}, {"description", "附加 _ 加 8 位随机数字字母。"}},
+            New Dictionary(Of String, Object) From {{"name", NameOf(预设数据_v6.自动命名选项.附加_随机16位数字)}, {"value", CInt(预设数据_v6.自动命名选项.附加_随机16位数字)}, {"description", "附加 _ 加 16 位随机数字。"}},
+            New Dictionary(Of String, Object) From {{"name", NameOf(预设数据_v6.自动命名选项.附加_随机16位字母)}, {"value", CInt(预设数据_v6.自动命名选项.附加_随机16位字母)}, {"description", "附加 _ 加 16 位随机字母。"}},
+            New Dictionary(Of String, Object) From {{"name", NameOf(预设数据_v6.自动命名选项.附加_随机16位数字和字母组合)}, {"value", CInt(预设数据_v6.自动命名选项.附加_随机16位数字和字母组合)}, {"description", "附加 _ 加 16 位随机数字字母。"}},
+            New Dictionary(Of String, Object) From {{"name", NameOf(预设数据_v6.自动命名选项.附加_2位结尾序号)}, {"value", CInt(预设数据_v6.自动命名选项.附加_2位结尾序号)}, {"description", "直接在文件名末尾附加 01、02；忽略扩展名递增，不自带空格或下划线。"}},
+            New Dictionary(Of String, Object) From {{"name", NameOf(预设数据_v6.自动命名选项.附加_3位结尾序号)}, {"value", CInt(预设数据_v6.自动命名选项.附加_3位结尾序号)}, {"description", "直接在文件名末尾附加 001、002；忽略扩展名递增，不自带空格或下划线。"}}
+        }
     End Function
 
     Private Shared Function BuildVideoParameterListCandidates(preset As 预设数据_v6, role As 视频编码器数据库_v6.编码器参数角色) As List(Of Object)
@@ -862,9 +917,21 @@ Public Class AgentLocalTools
     Private Shared Function GetKnownParameterRules(fieldName As String) As List(Of String)
         Select Case fieldName
             Case NameOf(预设数据_v6.输出容器)
-                Return New List(Of String) From {"后缀必须包含点号，例如 .mp4；空字符串表示不指定或由输出路径决定。"}
+                Return New List(Of String) From {"后缀必须包含点号，例如 .mp4；空字符串表示不指定或由输出路径决定。", "候选值来自当前输出文件设置页的后缀菜单，会随菜单项增删变化；菜单外的自定义后缀也可填写。"}
+            Case NameOf(预设数据_v6.输出位置)
+                Return New List(Of String) From {"必须是已存在文件夹才会作为自定义输出目录生效；空字符串表示默认输出到输入文件原目录。", "设置为默认原目录时必须同时清空 输出位置_保留子文件夹结构起始点。"}
+            Case NameOf(预设数据_v6.输出位置_保留子文件夹结构起始点)
+                Return New List(Of String) From {"必须是已存在文件夹；路径不存在时界面会清空。", "只有 输出位置 是有效自定义输出目录时才生效；默认原目录与此逻辑不兼容。", "它保存到预设时属于额外保存输出位置的一部分；调用 save_parameter_preset 保存时需要传 save_output_location=true。"}
+            Case NameOf(预设数据_v6.输出_自动命名选项)
+                Return New List(Of String) From {"可传枚举名或数值。默认 附加_递增时间戳 会替换文件名结尾已有的 _yyyy.MM.dd-HH.mm.ss，否则追加新时间戳。", "附加_2位结尾序号 和 附加_3位结尾序号 始终从 01/001 开始递增，判断已占用序号时忽略扩展名，且直接附加在扩展名前，不包含空格、下划线或其他分隔符。"}
+            Case NameOf(预设数据_v6.输出命名_结尾文本)
+                Return New List(Of String) From {"若希望结尾序号前有空格、下划线或其他分隔符，需要把分隔符写在此字段；2 位/3 位结尾序号功能只负责直接拼数字。"}
             Case NameOf(预设数据_v6.视频参数_质量控制_参数名)
                 Return New List(Of String) From {"面板显示带横杠的 FFmpeg 参数名；保存预设时会自动去掉开头横杠，changes 中可传 crf 或 -crf。"}
+            Case NameOf(预设数据_v6.视频参数_色彩管理_像素格式)
+                Return New List(Of String) From {"此字段对应可编辑下拉框，候选取决于当前视频编码器，只代表编码器数据库中的常见或建议值。", "可填写 FFmpeg/当前编码器支持的其他像素格式；生成命令时会写为 -pix_fmt <值>，changes 中只传像素格式值，不要带 -pix_fmt。"}
+            Case NameOf(预设数据_v6.视频参数_色彩管理_像素格式预先转换)
+                Return New List(Of String) From {"此字段对应可编辑下拉框，候选值只是常用建议，会随控件 Items 增删变化。", "可填写任意 FFmpeg 支持的像素格式；生成命令时会写为 format=<值>，changes 中只传像素格式值，不要带 format=。"}
             Case NameOf(预设数据_v6.音频参数_编码器_代号)
                 Return New List(Of String) From {"changes 中优先传 value 的私有 ID，不要传显示名称；界面会自动显示对应名称。"}
             Case NameOf(预设数据_v6.音频参数_质量参数名)
@@ -876,6 +943,13 @@ Public Class AgentLocalTools
     Private Shared Function GetKnownParameterNotes(fieldName As String, preset As 预设数据_v6) As List(Of String)
         Dim notes As New List(Of String)
         Select Case fieldName
+            Case NameOf(预设数据_v6.输出位置)
+                notes.Add($"当前 {NameOf(预设数据_v6.输出位置_保留子文件夹结构起始点)} 为：{preset.输出位置_保留子文件夹结构起始点}")
+            Case NameOf(预设数据_v6.输出位置_保留子文件夹结构起始点)
+                notes.Add($"当前 {NameOf(预设数据_v6.输出位置)} 为：{preset.输出位置}")
+                notes.Add("Agent 修改此字段后应重读 get_parameter_panel_state 验证；如果输出位置为默认原目录或路径不存在，界面会清空它。")
+            Case NameOf(预设数据_v6.输出_自动命名选项)
+                notes.Add($"当前开头/替代/结尾文本为：{preset.输出命名_开头文本} / {preset.输出命名_替代文本} / {preset.输出命名_结尾文本}")
             Case NameOf(预设数据_v6.视频参数_编码器_分类名称)
                 notes.Add($"候选取决于 {NameOf(预设数据_v6.视频参数_编码器_类型)}，当前为 {preset.视频参数_编码器_类型}。")
             Case NameOf(预设数据_v6.视频参数_编码器_具体编码)
@@ -1293,7 +1367,11 @@ Public Class AgentLocalTools
         item("non_progress_output_count") = If(task.非进度输出列表 Is Nothing, 0, task.非进度输出列表.Count)
         item("log_version") = task.日志版本号
 
-        If includeCommands Then item("commands") = BuildQueueCommandPayload(task)
+        If includeCommands Then
+            item("commands") = BuildQueueCommandPayload(task)
+            item("command_preview_text") = 编码队列_v6.获取任务实际命令行文本(task)
+            item("actual_command_text") = 编码队列_v6.获取任务执行命令行文本(task)
+        End If
         If includePresetJson Then item("preset_json") = If(task.预设数据 Is Nothing, "", JsonSerializer.Serialize(task.预设数据, JsonSO))
         Return item
     End Function
@@ -1345,6 +1423,11 @@ Public Class AgentLocalTools
             item("process") = 预设管理_v6.获取命令行进程名(stepItem.阶段)
             item("arguments") = stepItem.命令行
             item("command_line") = 预设管理_v6.获取命令行进程名(stepItem.阶段) & " " & stepItem.命令行
+            If Not String.IsNullOrWhiteSpace(stepItem.实际执行文件名) Then
+                item("actual_process") = stepItem.实际执行文件名
+                item("actual_arguments") = stepItem.实际执行参数
+                item("actual_command_line") = 格式化Agent进程文件名(stepItem.实际执行文件名) & If(String.IsNullOrWhiteSpace(stepItem.实际执行参数), "", " " & stepItem.实际执行参数)
+            End If
         End If
         Return item
     End Function
@@ -1387,7 +1470,7 @@ Public Class AgentLocalTools
             If task.步骤 IsNot Nothing AndAlso task.步骤.Count > 0 Then
                 For i = 0 To task.步骤.Count - 1
                     Dim stepItem = task.步骤(i)
-                    result.Add(BuildQueueCommandItem(i + 1, stepItem.阶段, stepItem.显示名称, stepItem.命令行))
+                    result.Add(BuildQueueCommandItem(i + 1, stepItem.阶段, stepItem.显示名称, stepItem.命令行, stepItem.实际执行文件名, stepItem.实际执行参数))
                 Next
             ElseIf task.预设数据 IsNot Nothing Then
                 Dim output = If(task.输出文件 <> "", task.输出文件, 编码队列_v6.计算输出位置_v6(task.输入文件, task.预设数据))
@@ -1408,9 +1491,11 @@ Public Class AgentLocalTools
     Private Shared Function BuildQueueCommandItem(index As Integer,
                                                   stage As 预设数据_v6.命令行阶段,
                                                   displayName As String,
-                                                  arguments As String) As Dictionary(Of String, Object)
+                                                  arguments As String,
+                                                  Optional actualProcess As String = "",
+                                                  Optional actualArguments As String = "") As Dictionary(Of String, Object)
         Dim processName = 预设管理_v6.获取命令行进程名(stage)
-        Return New Dictionary(Of String, Object) From {
+        Dim item As New Dictionary(Of String, Object) From {
             {"index", index},
             {"stage", stage.ToString()},
             {"name", displayName},
@@ -1418,6 +1503,21 @@ Public Class AgentLocalTools
             {"arguments", arguments},
             {"command_line", processName & " " & arguments}
         }
+        If Not String.IsNullOrWhiteSpace(actualProcess) Then
+            item("actual_process") = actualProcess
+            item("actual_arguments") = actualArguments
+            item("actual_command_line") = 格式化Agent进程文件名(actualProcess) & If(String.IsNullOrWhiteSpace(actualArguments), "", " " & actualArguments)
+        End If
+        Return item
+    End Function
+
+    Private Shared Function 格式化Agent进程文件名(value As String) As String
+        Dim processName = If(value, "").Trim()
+        If processName = "" Then processName = "ffmpeg"
+        If processName.Any(Function(c) Char.IsWhiteSpace(c)) AndAlso Not (processName.StartsWith("""c", StringComparison.Ordinal) AndAlso processName.EndsWith("""c", StringComparison.Ordinal)) Then
+            Return """" & processName & """"
+        End If
+        Return processName
     End Function
 
     Private Shared Sub ApplyQueueAction(action As String, ids As List(Of String), requestedAll As Boolean)

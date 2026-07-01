@@ -6,6 +6,13 @@ Public Class AgentUsageInfo
     Public Property ReasoningTokens As Integer
     Public Property InputTokens As Integer
     Public Property OutputTokens As Integer
+    Public Property EffectiveInputTokens As Integer
+    Public Property EffectiveOutputTokens As Integer
+    Public Property LastRequestInputTokens As Integer
+    Public Property LastRequestTotalTokens As Integer
+    Public Property LastRequestCachedTokens As Integer
+    Public Property LastRequestContextWindowTokens As Integer
+    Public Property LastRequestModelId As String = ""
 
     Public Sub Add(other As AgentUsageInfo)
         If other Is Nothing Then Exit Sub
@@ -16,6 +23,18 @@ Public Class AgentUsageInfo
         ReasoningTokens += other.ReasoningTokens
         InputTokens += other.InputTokens
         OutputTokens += other.OutputTokens
+        EffectiveInputTokens += other.EffectiveInputTokens
+        EffectiveOutputTokens += other.EffectiveOutputTokens
+        If other.LastRequestInputTokens > 0 OrElse
+           other.LastRequestTotalTokens > 0 OrElse
+           other.LastRequestContextWindowTokens > 0 OrElse
+           Not String.IsNullOrWhiteSpace(other.LastRequestModelId) Then
+            LastRequestInputTokens = other.LastRequestInputTokens
+            LastRequestTotalTokens = other.LastRequestTotalTokens
+            LastRequestCachedTokens = other.LastRequestCachedTokens
+            LastRequestContextWindowTokens = other.LastRequestContextWindowTokens
+            LastRequestModelId = If(other.LastRequestModelId, "")
+        End If
     End Sub
 End Class
 
@@ -54,6 +73,10 @@ Public Class AgentConversationData
     Public Property PermissionLevel As Integer = 0
     Public Property Messages As New List(Of AgentMessageData)
     Public Property Usage As New AgentUsageInfo
+    Public Property ContextSummary As String = ""
+    Public Property ContextSummaryMessageCount As Integer = 0
+    Public Property ContextSummaryModelId As String = ""
+    Public Property ContextSummaryUpdatedAt As DateTime = DateTime.MinValue
 End Class
 
 Public NotInheritable Class AgentNetworkMode

@@ -1,19 +1,48 @@
+Imports System.Text
+
 Public Class Form_v6_编码队列_任务日志
     Private Shared 当前实例 As Form_v6_编码队列_任务日志
 
     Private 当前任务ID As String = ""
     Private 当前显示模式 As 编码任务日志显示模式_v6 = 编码任务日志显示模式_v6.最新输出不含进度
+    Private 已显示日志版本号 As Long = 0
     Private 已显示最小序号 As Long = 0
     Private 已显示最大序号 As Long = 0
+    Private 已显示行数 As Integer = 0
     Private 已显示日志结构版本号 As Long = 0
     Private 当前阶段名 As String = ""
     Private 正在重载 As Boolean = False
+    Private 窗体已加载 As Boolean = False
     Private 待刷新当前任务 As Boolean = False
     Private 待强制重载 As Boolean = False
+    Private 日志刷新令牌 As Integer = 0
+    Private 日志刷新取消源 As Threading.CancellationTokenSource
     Private ReadOnly 刷新计时器 As New Timer With {.Interval = 500}
     Private ReadOnly 性能计数器刷新计时器 As New Timer With {.Interval = 1000}
     Private 当前性能计数器 As LakeUI.MainAppUsageCounter
     Private 当前性能计数器进程ID As Integer = 0
+
+    Private Class 日志刷新结果
+        Public Property 任务ID As String = ""
+        Public Property 任务显示名称 As String = ""
+        Public Property 显示模式 As 编码任务日志显示模式_v6
+        Public Property 阶段名 As String = ""
+        Public Property 日志版本号 As Long = 0
+        Public Property 日志结构版本号 As Long = 0
+        Public Property 最小序号 As Long = 0
+        Public Property 最大序号 As Long = 0
+        Public Property 行数 As Integer = 0
+        Public Property 强制重载 As Boolean = False
+        Public Property 需要重载 As Boolean = False
+        Public Property 重载文本 As String = ""
+        Public Property 追加行 As New List(Of String)
+
+        Public ReadOnly Property 有内容变化 As Boolean
+            Get
+                Return 需要重载 OrElse 追加行.Count > 0
+            End Get
+        End Property
+    End Class
 
     Public Shared Sub 打开或激活(owner As IWin32Window, selectedIds As IEnumerable(Of String))
         If 当前实例 Is Nothing OrElse 当前实例.IsDisposed Then
@@ -61,6 +90,7 @@ Public Class Form_v6_编码队列_任务日志
         AddHandler 性能计数器刷新计时器.Tick, AddressOf 性能计数器刷新计时器_Tick
         AddHandler 编码队列_v6.任务已更新, AddressOf 任务已更新
         AddHandler 编码队列_v6.队列已变化, AddressOf 队列已变化
+        窗体已加载 = True
         If 当前任务ID = "" Then
             刷新空状态("未选择任务")
         Else
@@ -77,6 +107,8 @@ Public Class Form_v6_编码队列_任务日志
         刷新计时器.Dispose()
         性能计数器刷新计时器.Stop()
         性能计数器刷新计时器.Dispose()
+        日志刷新令牌 += 1
+        取消当前日志刷新()
         释放当前性能计数器()
     End Sub
 
@@ -90,7 +122,7 @@ Public Class Form_v6_编码队列_任务日志
                  If 当前任务ID <> "" AndAlso 编码队列_v6.根据ID获取任务(当前任务ID) Is Nothing Then
                      刷新空状态("任务已移除")
                  Else
-                     刷新当前任务(False)
+                     请求刷新当前任务(False)
                  End If
              End Sub)
     End Sub
@@ -136,30 +168,34 @@ Public Class Form_v6_编码队列_任务日志
 
                  If 当前任务ID <> task.ID Then
                      当前任务ID = task.ID
-                     刷新当前任务(True)
+                     重置已显示日志状态()
+                     If 窗体已加载 Then
+                         ModernTextBox1.Clear()
+                         更新标题与状态(获取任务显示名称(task), 0)
+                         刷新当前任务(True)
+                     End If
                  Else
-                     刷新当前任务(False)
+                     If 窗体已加载 Then 刷新当前任务(False)
                  End If
              End Sub)
     End Sub
 
     Private Sub 刷新空状态(message As String)
         当前任务ID = ""
-        已显示最小序号 = 0
-        已显示最大序号 = 0
-        已显示日志结构版本号 = 0
+        重置已显示日志状态()
         当前阶段名 = ""
         待刷新当前任务 = False
         待强制重载 = False
         刷新计时器.Stop()
+        日志刷新令牌 += 1
+        取消当前日志刷新()
         ModernTextBox1.Clear()
         Text = "编码队列任务日志"
         更新任务性能计数器(Nothing)
     End Sub
 
     Private Sub 刷新当前任务(forceReload As Boolean)
-        If 正在重载 Then Exit Sub
-        If 当前任务ID = "" Then Exit Sub
+        If 当前任务ID = "" OrElse Not 窗体已加载 Then Exit Sub
 
         Dim task = 编码队列_v6.根据ID获取任务(当前任务ID)
         If task Is Nothing Then
@@ -174,51 +210,205 @@ Public Class Form_v6_编码队列_任务日志
         当前显示模式 = mode
         当前阶段名 = stageName
 
-        Dim entries = task.获取日志快照(mode)
-        If forceReload OrElse task.日志结构版本号 <> 已显示日志结构版本号 OrElse (entries.Count = 0 AndAlso 已显示最大序号 > 0) OrElse (entries.Count > 0 AndAlso 已显示最小序号 > 0 AndAlso entries(0).序号 > 已显示最小序号) Then
-            重载日志(task, entries, Not forceReload AndAlso Not ModernCheckBox1.Checked)
+        Dim versionInfo = task.获取日志版本信息()
+        If Not forceReload AndAlso versionInfo.日志版本号 = 已显示日志版本号 AndAlso versionInfo.日志结构版本号 = 已显示日志结构版本号 Then
+            更新标题与状态(获取任务显示名称(task), 已显示行数)
             Exit Sub
         End If
 
-        Dim appended As Boolean = False
-        For Each entry In entries.Where(Function(x) x.序号 > 已显示最大序号)
-            ModernTextBox1.AppendLine(entry.文本)
-            appended = True
-            If 已显示最小序号 = 0 Then 已显示最小序号 = entry.序号
-            已显示最大序号 = Math.Max(已显示最大序号, entry.序号)
-        Next
-        已显示日志结构版本号 = task.日志结构版本号
-        更新标题与状态(task, entries.Count)
-        If appended AndAlso ModernCheckBox1.Checked Then ModernTextBox1.ScrollToBottom()
+        启动后台日志刷新(
+            task,
+            task.ID,
+            获取任务显示名称(task),
+            mode,
+            stageName,
+            forceReload,
+            已显示日志版本号,
+            已显示日志结构版本号,
+            已显示最小序号,
+            已显示最大序号,
+            已显示行数)
     End Sub
 
-    Private Sub 重载日志(task As 编码任务_v6, entries As List(Of 编码任务日志条目_v6), preserveScrollPosition As Boolean)
+    Private Sub 启动后台日志刷新(task As 编码任务_v6,
+                            taskId As String,
+                            taskDisplayName As String,
+                            mode As 编码任务日志显示模式_v6,
+                            stageName As String,
+                            forceReload As Boolean,
+                            displayedLogVersion As Long,
+                            displayedStructureVersion As Long,
+                            displayedMinSequence As Long,
+                            displayedMaxSequence As Long,
+                            displayedLineCount As Integer)
+        日志刷新令牌 += 1
+        Dim requestToken = 日志刷新令牌
+        取消当前日志刷新()
+        日志刷新取消源 = New Threading.CancellationTokenSource()
+        Dim cancellationToken = 日志刷新取消源.Token
+
+        Threading.Tasks.Task.Run(
+            Sub()
+                Try
+                    Dim result = 构建日志刷新结果(
+                        task,
+                        taskId,
+                        taskDisplayName,
+                        mode,
+                        stageName,
+                        forceReload,
+                        displayedLogVersion,
+                        displayedStructureVersion,
+                        displayedMinSequence,
+                        displayedMaxSequence,
+                        displayedLineCount,
+                        cancellationToken)
+
+                    If cancellationToken.IsCancellationRequested Then Exit Sub
+                    UI执行(Sub()
+                             If cancellationToken.IsCancellationRequested OrElse requestToken <> 日志刷新令牌 Then Exit Sub
+                             应用日志刷新结果(result)
+                         End Sub)
+                Catch ex As OperationCanceledException
+                Catch
+                End Try
+            End Sub,
+            cancellationToken)
+    End Sub
+
+    Private Shared Function 构建日志刷新结果(task As 编码任务_v6,
+                                      taskId As String,
+                                      taskDisplayName As String,
+                                      mode As 编码任务日志显示模式_v6,
+                                      stageName As String,
+                                      forceReload As Boolean,
+                                      displayedLogVersion As Long,
+                                      displayedStructureVersion As Long,
+                                      displayedMinSequence As Long,
+                                      displayedMaxSequence As Long,
+                                      displayedLineCount As Integer,
+                                      cancellationToken As Threading.CancellationToken) As 日志刷新结果
+        cancellationToken.ThrowIfCancellationRequested()
+
+        Dim snapshot = task.获取日志快照数据(mode, stageName)
+        Dim entries = If(snapshot?.条目, New List(Of 编码任务日志条目_v6))
+        Dim minSequence As Long = 0
+        Dim maxSequence As Long = 0
+        If entries.Count > 0 Then
+            minSequence = entries(0).序号
+            maxSequence = entries(entries.Count - 1).序号
+        End If
+
+        Dim result As New 日志刷新结果 With {
+            .任务ID = taskId,
+            .任务显示名称 = taskDisplayName,
+            .显示模式 = mode,
+            .阶段名 = stageName,
+            .日志版本号 = snapshot.日志版本号,
+            .日志结构版本号 = snapshot.日志结构版本号,
+            .最小序号 = minSequence,
+            .最大序号 = maxSequence,
+            .行数 = entries.Count,
+            .强制重载 = forceReload
+        }
+
+        Dim canAppend = Not forceReload
+        If canAppend AndAlso displayedLineCount > 0 Then
+            canAppend =
+                entries.Count >= displayedLineCount AndAlso
+                entries.Count > 0 AndAlso
+                minSequence = displayedMinSequence AndAlso
+                entries(displayedLineCount - 1).序号 = displayedMaxSequence
+        End If
+
+        result.需要重载 = Not canAppend
+        If result.需要重载 Then
+            result.重载文本 = 构建日志文本(entries, cancellationToken)
+        Else
+            For i = displayedLineCount To entries.Count - 1
+                cancellationToken.ThrowIfCancellationRequested()
+                result.追加行.Add(获取日志条目显示文本(entries(i)))
+            Next
+        End If
+
+        Return result
+    End Function
+
+    Private Shared Function 构建日志文本(entries As List(Of 编码任务日志条目_v6), cancellationToken As Threading.CancellationToken) As String
+        If entries Is Nothing OrElse entries.Count = 0 Then Return ""
+        Dim sb As New StringBuilder()
+        For i = 0 To entries.Count - 1
+            cancellationToken.ThrowIfCancellationRequested()
+            If i > 0 Then sb.AppendLine()
+            sb.Append(获取日志条目显示文本(entries(i)))
+        Next
+        Return sb.ToString()
+    End Function
+
+    Private Sub 应用日志刷新结果(result As 日志刷新结果)
+        If result Is Nothing OrElse 当前任务ID <> result.任务ID Then Exit Sub
         正在重载 = True
         Dim originalPreserveScrollPosition = ModernTextBox1.PreserveScrollPosition
         Try
-            ModernTextBox1.PreserveScrollPosition = preserveScrollPosition
-            ModernTextBox1.Text = String.Join(vbCrLf, entries.Select(Function(entry) 获取日志条目显示文本(entry)))
-            已显示最小序号 = 0
-            已显示最大序号 = 0
-            For Each entry In entries
-                If 已显示最小序号 = 0 Then 已显示最小序号 = entry.序号
-                已显示最大序号 = Math.Max(已显示最大序号, entry.序号)
-            Next
-            已显示日志结构版本号 = task.日志结构版本号
-            更新标题与状态(task, entries.Count)
-            If ModernCheckBox1.Checked Then ModernTextBox1.ScrollToBottom()
+            Dim shouldScrollToBottom = ModernCheckBox1.Checked AndAlso result.有内容变化
+            If result.需要重载 Then
+                ModernTextBox1.PreserveScrollPosition = Not result.强制重载 AndAlso Not shouldScrollToBottom
+                ModernTextBox1.Text = result.重载文本
+            Else
+                ModernTextBox1.PreserveScrollPosition = Not shouldScrollToBottom
+                For Each line In result.追加行
+                    ModernTextBox1.AppendLine(line)
+                Next
+            End If
+
+            已显示日志版本号 = result.日志版本号
+            已显示日志结构版本号 = result.日志结构版本号
+            已显示最小序号 = result.最小序号
+            已显示最大序号 = result.最大序号
+            已显示行数 = result.行数
+            更新标题与状态(result.任务显示名称, result.行数)
+            If shouldScrollToBottom Then 延迟滚动到底部()
         Finally
             ModernTextBox1.PreserveScrollPosition = originalPreserveScrollPosition
             正在重载 = False
         End Try
     End Sub
 
+    Private Sub 取消当前日志刷新()
+        If 日志刷新取消源 Is Nothing Then Exit Sub
+        Try
+            日志刷新取消源.Cancel()
+        Catch
+        End Try
+        Try
+            日志刷新取消源.Dispose()
+        Catch
+        End Try
+        日志刷新取消源 = Nothing
+    End Sub
+
+    Private Sub 重置已显示日志状态()
+        已显示日志版本号 = 0
+        已显示最小序号 = 0
+        已显示最大序号 = 0
+        已显示行数 = 0
+        已显示日志结构版本号 = 0
+    End Sub
+
     Private Shared Function 获取日志条目显示文本(entry As 编码任务日志条目_v6) As String
         Return If(entry?.文本, "").Replace(vbCr, "").Replace(vbLf, "")
     End Function
 
-    Private Sub 更新标题与状态(task As 编码任务_v6, lineCount As Integer)
-        Text = "任务日志 - " & 获取任务显示名称(task)
+    Private Sub 延迟滚动到底部()
+        If Not ModernCheckBox1.Checked Then Exit Sub
+        BeginInvoke(Sub()
+                        If IsDisposed OrElse Not ModernCheckBox1.Checked Then Exit Sub
+                        ModernTextBox1.ScrollToBottom()
+                    End Sub)
+    End Sub
+
+    Private Sub 更新标题与状态(taskDisplayName As String, lineCount As Integer)
+        Text = "任务日志 - " & taskDisplayName
     End Sub
 
     Private Sub 应用任务性能计数器可见性()

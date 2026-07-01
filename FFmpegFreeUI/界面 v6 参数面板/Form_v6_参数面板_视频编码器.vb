@@ -47,6 +47,7 @@ Public Class Form_v6_参数面板_视频编码器
 
     Private Sub MCB_具体编码器_SelectedIndexChanged(sender As Object, e As EventArgs) Handles MCB_具体编码器.SelectedIndexChanged
         刷新当前编码器参数列表()
+        所属参数面板对象?.私有界面_质量?.同步当前编码器质量参数名()
     End Sub
 
     Public Sub 刷新当前编码器参数列表()

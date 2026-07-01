@@ -35,6 +35,7 @@ Public Class 编码队列_v6
     Private Const 未处理任务缓存文件名 As String = "QueuePendingTasks_v6.json"
     Private Shared ReadOnly FFmpeg状态进度输出正则 As New Regex("^\s*(?:frame|size)\s*=\s*\S+.*\b(?:time|bitrate|speed)\s*=", RegexOptions.Compiled Or RegexOptions.IgnoreCase)
     Private Shared ReadOnly FFmpegProgress键值输出正则 As New Regex("^\s*(?:frame|fps|stream_\d+_\d+_q|bitrate|total_size|out_time(?:_ms|_us)?|dup_frames|drop_frames|speed|progress)\s*=", RegexOptions.Compiled Or RegexOptions.IgnoreCase)
+    Private Shared ReadOnly 自动命名时间戳结尾正则 As New Regex("_[0-9]{4}\.[0-9]{2}\.[0-9]{2}-[0-9]{2}\.[0-9]{2}\.[0-9]{2}$", RegexOptions.Compiled Or RegexOptions.CultureInvariant)
 
     Public Shared Event 队列已变化()
     Public Shared Event 任务已更新(任务 As 编码任务_v6)
@@ -638,34 +639,212 @@ Public Class 编码队列_v6
         End If
     End Sub
 
-    Public Shared Function 计算输出位置_v6(输入文件 As String, 预设数据 As 预设数据_v6) As String
+    Public Shared Function 计算输出位置_v6(输入文件 As String, 预设数据 As 预设数据_v6, Optional 创建输出目录 As Boolean = False) As String
         If 预设数据 Is Nothing Then Return ""
         If 预设数据.输出_输出文件参数使用方法 <> 预设数据_v6.输出文件参数使用方法.正常使用 Then Return ""
-        Dim 容器 = If(预设数据.输出容器, "").Trim()
+
+        Dim 容器 = 规范化输出容器(预设数据.输出容器)
+        If 容器 = "" Then Return ""
+
+        Dim 输入目录 = 获取输入目录(输入文件)
+        Dim 输出目录 = 计算输出目录(输入目录, 预设数据, 创建输出目录)
+        Dim 文件名 = 生成输出文件名(输入文件, 预设数据)
+        Dim 输出路径 = Path.Combine(输出目录, 文件名 & 容器)
+        输出路径 = 应用存在检测命名选项(输出路径, 预设数据.输出_自动命名选项)
+
+        If 设置_v6.实例对象.转译模式 Then Return 转译模式处理路径(输出路径)
+        Return 输出路径
+    End Function
+
+    Public Shared Function 获取任务实际命令行文本(task As 编码任务_v6) As String
+        If task Is Nothing Then Return ""
+        Dim lines As New List(Of String)
+        If task.步骤.Count > 0 Then
+            lines.AddRange(task.步骤.Select(Function(x) $"{预设管理_v6.获取命令行进程名(x.阶段)} {x.命令行}"))
+        ElseIf task.预设数据 IsNot Nothing Then
+            Dim output = If(task.输出文件 <> "", task.输出文件, 计算输出位置_v6(task.输入文件, task.预设数据))
+            lines.AddRange(预设管理_v6.生成阶段化命令行(task.预设数据, task.输入文件, output, 帧服务器脚本后缀:=task.ID).
+                Select(Function(x) $"{预设管理_v6.获取命令行进程名(x.阶段)} {x.命令行}"))
+        ElseIf task.命令行 <> "" Then
+            lines.Add($"{预设管理_v6.获取命令行进程名(预设数据_v6.命令行阶段.普通单次)} {task.命令行}")
+        End If
+        Return String.Join(vbCrLf, lines)
+    End Function
+
+    Public Shared Function 获取任务执行命令行文本(task As 编码任务_v6) As String
+        If task Is Nothing Then Return ""
+        Dim lines As New List(Of String)
+        If task.步骤.Count > 0 Then
+            lines.AddRange(task.步骤.Select(Function(x) 获取步骤执行命令行(x)))
+        ElseIf task.预设数据 IsNot Nothing Then
+            Dim output = If(task.输出文件 <> "", task.输出文件, 计算输出位置_v6(task.输入文件, task.预设数据))
+            lines.AddRange(预设管理_v6.生成阶段化命令行(task.预设数据, task.输入文件, output, 帧服务器脚本后缀:=task.ID).
+                Select(Function(x) 格式化实际执行命令行(x.阶段, x.命令行)))
+        ElseIf task.命令行 <> "" Then
+            lines.Add(格式化实际执行命令行(预设数据_v6.命令行阶段.普通单次, task.命令行))
+        End If
+        Return String.Join(vbCrLf, lines)
+    End Function
+
+    Private Shared Function 格式化实际执行命令行(stage As 预设数据_v6.命令行阶段, arguments As String) As String
+        Dim processName = If(stage = 预设数据_v6.命令行阶段.FFprobe获取时长, "ffprobe", If(设置_v6.实例对象.替代进程文件名 <> "", 设置_v6.实例对象.替代进程文件名, "ffmpeg"))
+        Dim actualArgs = If(stage = 预设数据_v6.命令行阶段.FFprobe获取时长 OrElse 设置_v6.实例对象.覆盖参数传递 = "", arguments, 设置_v6.实例对象.覆盖参数传递.Replace("<args>", arguments))
+        Return 格式化进程文件名(processName) & If(String.IsNullOrWhiteSpace(actualArgs), "", " " & actualArgs)
+    End Function
+
+    Private Shared Function 获取步骤执行命令行(stepItem As 编码步骤_v6) As String
+        If stepItem Is Nothing Then Return ""
+        If Not String.IsNullOrWhiteSpace(stepItem.实际执行文件名) Then
+            Return 格式化进程文件名(stepItem.实际执行文件名) & If(String.IsNullOrWhiteSpace(stepItem.实际执行参数), "", " " & stepItem.实际执行参数)
+        End If
+        Return 格式化实际执行命令行(stepItem.阶段, stepItem.命令行)
+    End Function
+
+    Private Shared Function 格式化进程文件名(value As String) As String
+        Dim processName = If(value, "").Trim()
+        If processName = "" Then processName = "ffmpeg"
+        If processName.Any(Function(c) Char.IsWhiteSpace(c)) AndAlso Not (processName.StartsWith("""c", StringComparison.Ordinal) AndAlso processName.EndsWith("""c", StringComparison.Ordinal)) Then
+            Return """" & processName & """"
+        End If
+        Return processName
+    End Function
+
+    Private Shared Function 规范化输出容器(value As String) As String
+        Dim 容器 = If(value, "").Trim()
         If 容器 = "" Then Return ""
         If Not 容器.StartsWith("."c) Then 容器 = "." & 容器
+        Return 容器
+    End Function
 
+    Private Shared Function 获取输入目录(输入文件 As String) As String
         Dim 输入目录 = Path.GetDirectoryName(输入文件)
-        If String.IsNullOrWhiteSpace(输入目录) Then 输入目录 = Environment.CurrentDirectory
-        Dim 输出目录 = 输入目录
-        If (预设数据.额外保存输出位置 OrElse 预设数据.运行时使用输出位置) AndAlso
-           String.Equals(预设数据.计算机名称, Environment.MachineName, StringComparison.OrdinalIgnoreCase) AndAlso
-           Directory.Exists(预设数据.输出位置) Then
-            输出目录 = 预设数据.输出位置
-        End If
+        Return If(String.IsNullOrWhiteSpace(输入目录), Environment.CurrentDirectory, 输入目录)
+    End Function
 
+    Private Shared Function 计算输出目录(输入目录 As String, 预设数据 As 预设数据_v6, 创建输出目录 As Boolean) As String
+        Dim 输出目录 = 输入目录
+        Dim 使用自定义输出目录 = 选择自定义输出目录(预设数据, 输出目录)
+        If Not 使用自定义输出目录 Then Return 输出目录
+
+        Dim 保留子目录 = 计算保留子文件夹结构相对目录(输入目录, 预设数据.输出位置_保留子文件夹结构起始点)
+        If 保留子目录 <> "" Then 输出目录 = Path.Combine(输出目录, 保留子目录)
+        If 创建输出目录 Then Directory.CreateDirectory(输出目录)
+        Return 输出目录
+    End Function
+
+    Private Shared Function 选择自定义输出目录(预设数据 As 预设数据_v6, ByRef 输出目录 As String) As Boolean
+        If 预设数据 Is Nothing Then Return False
+        If Not (预设管理_v6.可使用预设输出位置(预设数据) OrElse 可使用运行时输出位置(预设数据)) Then Return False
+
+        输出目录 = 预设数据.输出位置
+        Return True
+    End Function
+
+    Private Shared Function 可使用运行时输出位置(预设数据 As 预设数据_v6) As Boolean
+        Return 预设数据 IsNot Nothing AndAlso
+               预设数据.运行时使用输出位置 AndAlso
+               Directory.Exists(If(预设数据.输出位置, "").Trim())
+    End Function
+
+    Private Shared Function 生成输出文件名(输入文件 As String, 预设数据 As 预设数据_v6) As String
         Dim 原名 = Path.GetFileNameWithoutExtension(输入文件)
         If String.IsNullOrWhiteSpace(原名) Then 原名 = "output"
+
         Dim 文件名 = If(预设数据.输出命名_开头文本, "")
         文件名 &= If(String.IsNullOrWhiteSpace(预设数据.输出命名_替代文本), 原名, 预设数据.输出命名_替代文本)
         文件名 &= If(预设数据.输出命名_结尾文本, "")
-        文件名 &= 生成自动命名后缀(预设数据)
+        文件名 = 应用非冲突检测命名选项(文件名, 预设数据.输出_自动命名选项, 预设数据)
         文件名 = 清理文件名(文件名)
-        If 文件名 = "" Then 文件名 = "output"
-        Dim 输出路径 = Path.Combine(输出目录, 文件名 & 容器)
-        If 预设数据.输出_自动命名选项 = 预设数据_v6.自动命名选项.附加_递增数字 Then 输出路径 = 获取递增输出路径(输出路径)
-        If 设置_v6.实例对象.转译模式 Then Return 转译模式处理路径(输出路径)
-        Return 输出路径
+        Return If(文件名 = "", "output", 文件名)
+    End Function
+
+    Private Shared Function 应用非冲突检测命名选项(文件名 As String,
+                                           optionValue As 预设数据_v6.自动命名选项,
+                                           预设数据 As 预设数据_v6) As String
+        If optionValue = 预设数据_v6.自动命名选项.附加_递增时间戳 Then Return 应用自动命名时间戳(文件名)
+        If 使用补零结尾序号(optionValue) Then Return 文件名
+        Return 文件名 & 生成自动命名后缀(预设数据)
+    End Function
+
+    Private Shared Function 应用存在检测命名选项(输出路径 As String, optionValue As 预设数据_v6.自动命名选项) As String
+        Select Case optionValue
+            Case 预设数据_v6.自动命名选项.附加_递增数字
+                Return 获取递增输出路径(输出路径)
+            Case 预设数据_v6.自动命名选项.附加_2位结尾序号
+                Return 获取补零结尾序号输出路径(输出路径, 2)
+            Case 预设数据_v6.自动命名选项.附加_3位结尾序号
+                Return 获取补零结尾序号输出路径(输出路径, 3)
+            Case Else
+                Return 输出路径
+        End Select
+    End Function
+
+    Private Shared Function 计算保留子文件夹结构相对目录(输入目录 As String, 起始点 As String) As String
+        Dim root = 规范化文件夹路径(If(起始点, ""))
+        If root = "" OrElse String.IsNullOrWhiteSpace(输入目录) Then Return ""
+
+        Dim rel = 计算本机相对目录(输入目录, root)
+        If rel <> "" Then Return rel
+
+        If 设置_v6.实例对象.转译模式 Then Return 计算转译相对目录(输入目录, root)
+        Return ""
+    End Function
+
+    Private Shared Function 计算本机相对目录(输入目录 As String, 起始点 As String) As String
+        Try
+            Dim inputFull = 规范化比较目录(输入目录)
+            Dim rootFull = 规范化比较目录(起始点)
+            If inputFull = "" OrElse rootFull = "" Then Return ""
+            If Not 路径位于目录内(inputFull, rootFull) Then Return ""
+            Return 清理相对子目录(Path.GetRelativePath(rootFull, inputFull))
+        Catch
+            Return ""
+        End Try
+    End Function
+
+    Private Shared Function 计算转译相对目录(输入目录 As String, 起始点 As String) As String
+        Try
+            Dim inputVirtual = 规范化转译比较目录(输入目录)
+            Dim rootVirtual = 规范化转译比较目录(转译模式处理路径(起始点))
+            If inputVirtual = "" OrElse rootVirtual = "" Then Return ""
+            If String.Equals(inputVirtual, rootVirtual, StringComparison.OrdinalIgnoreCase) Then Return ""
+            Dim rootPrefix = If(rootVirtual.EndsWith("/", StringComparison.Ordinal), rootVirtual, rootVirtual & "/")
+            If Not inputVirtual.StartsWith(rootPrefix, StringComparison.OrdinalIgnoreCase) Then Return ""
+            Return 清理相对子目录(inputVirtual.Substring(rootPrefix.Length).Replace("/"c, Path.DirectorySeparatorChar))
+        Catch
+            Return ""
+        End Try
+    End Function
+
+    Private Shared Function 规范化比较目录(pathText As String) As String
+        Dim value = If(pathText, "").Trim()
+        If value = "" Then Return ""
+        Return 规范化文件夹路径(Path.GetFullPath(value))
+    End Function
+
+    Private Shared Function 规范化转译比较目录(pathText As String) As String
+        Dim value = If(pathText, "").Trim().Replace("\"c, "/"c)
+        If value = "" Then Return ""
+        If Not value.StartsWith("/", StringComparison.Ordinal) Then value = "/" & value
+        While value.Contains("//")
+            value = value.Replace("//", "/")
+        End While
+        Return value.TrimEnd("/"c)
+    End Function
+
+    Private Shared Function 路径位于目录内(pathText As String, rootText As String) As Boolean
+        If String.Equals(pathText, rootText, StringComparison.OrdinalIgnoreCase) Then Return True
+        Dim rootPrefix = If(rootText.EndsWith("\"c) OrElse rootText.EndsWith("/"c), rootText, rootText & Path.DirectorySeparatorChar)
+        Return pathText.StartsWith(rootPrefix, StringComparison.OrdinalIgnoreCase)
+    End Function
+
+    Private Shared Function 清理相对子目录(relativePath As String) As String
+        Dim rel = If(relativePath, "").Trim()
+        If rel = "" OrElse rel = "." Then Return ""
+        rel = rel.Replace("/"c, Path.DirectorySeparatorChar).Replace("\"c, Path.DirectorySeparatorChar)
+        If Path.IsPathRooted(rel) Then Return ""
+        If rel = ".." OrElse rel.StartsWith(".." & Path.DirectorySeparatorChar, StringComparison.Ordinal) Then Return ""
+        Return rel.Trim(Path.DirectorySeparatorChar)
     End Function
 
     Private Shared Function 生成自动命名后缀(preset As 预设数据_v6) As String
@@ -705,6 +884,18 @@ Public Class 编码队列_v6
         End Select
     End Function
 
+    Private Shared Function 使用补零结尾序号(optionValue As 预设数据_v6.自动命名选项) As Boolean
+        Return optionValue = 预设数据_v6.自动命名选项.附加_2位结尾序号 OrElse
+               optionValue = 预设数据_v6.自动命名选项.附加_3位结尾序号
+    End Function
+
+    Private Shared Function 应用自动命名时间戳(文件名 As String) As String
+        Dim value = If(文件名, "")
+        Dim timeStamp = $"_{Now:yyyy.MM.dd-HH.mm.ss}"
+        If 自动命名时间戳结尾正则.IsMatch(value) Then Return 自动命名时间戳结尾正则.Replace(value, timeStamp)
+        Return value & timeStamp
+    End Function
+
     Private Shared Function 清理文件名(value As String) As String
         Dim result = If(value, "").Trim()
         For Each c In Path.GetInvalidFileNameChars()
@@ -725,6 +916,47 @@ Public Class 编码队列_v6
             If Not File.Exists(candidate) Then Return candidate
         Next
         Return IO.Path.Combine(dir, $"{baseName}~{Now:yyyyMMddHHmmss}{ext}")
+    End Function
+
+    Private Shared Function 获取补零结尾序号输出路径(输出路径 As String, 位数 As Integer) As String
+        If String.IsNullOrWhiteSpace(输出路径) Then Return 输出路径
+        Dim dir = If(IO.Path.GetDirectoryName(输出路径), "")
+        Dim name = IO.Path.GetFileNameWithoutExtension(输出路径)
+        Dim ext = IO.Path.GetExtension(输出路径)
+        Dim width = Math.Max(1, 位数)
+        Dim baseName = name
+        Dim startNumber As Long = 1
+        Dim numberMatch = Regex.Match(name, "\d+$", RegexOptions.CultureInvariant)
+
+        If numberMatch.Success Then
+            baseName = name.Substring(0, name.Length - numberMatch.Value.Length)
+            width = Math.Max(width, numberMatch.Value.Length)
+
+            Dim currentNumber As Long
+            If Long.TryParse(numberMatch.Value, NumberStyles.None, CultureInfo.InvariantCulture, currentNumber) AndAlso currentNumber < Long.MaxValue Then
+                startNumber = currentNumber + 1
+            End If
+        End If
+
+        For offset As Long = 0 To 99999
+            Dim serial = startNumber + offset
+            Dim candidateName = $"{baseName}{serial.ToString(New String("0"c, width), CultureInfo.InvariantCulture)}"
+            Dim candidate = IO.Path.Combine(dir, $"{candidateName}{ext}")
+            If Not 补零结尾序号文件已存在(dir, candidateName, ext) Then Return candidate
+        Next
+        Return IO.Path.Combine(dir, $"{baseName}{Now:yyyyMMddHHmmss}{ext}")
+    End Function
+
+    Private Shared Function 补零结尾序号文件已存在(dir As String, nameWithoutExtension As String, ext As String) As Boolean
+        If File.Exists(IO.Path.Combine(dir, $"{nameWithoutExtension}{ext}")) Then Return True
+
+        Try
+            Dim searchDir = If(String.IsNullOrWhiteSpace(dir), ".", dir)
+            If Not Directory.Exists(searchDir) Then Return False
+            Return Directory.EnumerateFiles(searchDir, $"{nameWithoutExtension}.*", SearchOption.TopDirectoryOnly).Any()
+        Catch
+            Return False
+        End Try
     End Function
 
 End Class
@@ -767,6 +999,17 @@ Public Class 编码任务日志条目_v6
     Public Property 文本 As String = ""
     Public Property 类别 As 编码任务日志类别_v6 = 编码任务日志类别_v6.输出
     Public Property 是否错误 As Boolean = False
+End Class
+
+Public Class 编码任务日志版本信息_v6
+    Public Property 日志版本号 As Long = 0
+    Public Property 日志结构版本号 As Long = 0
+End Class
+
+Public Class 编码任务日志快照_v6
+    Public Property 条目 As New List(Of 编码任务日志条目_v6)
+    Public Property 日志版本号 As Long = 0
+    Public Property 日志结构版本号 As Long = 0
 End Class
 
 Public Class 编码任务_v6
@@ -866,19 +1109,43 @@ Public Class 编码任务_v6
 
     Public Function 获取日志快照(Optional 显示模式 As 编码任务日志显示模式_v6 = 编码任务日志显示模式_v6.全部输出) As List(Of 编码任务日志条目_v6)
         SyncLock 日志锁
-            Select Case 显示模式
-                Case 编码任务日志显示模式_v6.最新输出不含进度
-                    Return 完整日志缓存.Where(Function(x) x.类别 <> 编码任务日志类别_v6.进度).ToList()
-                Case 编码任务日志显示模式_v6.仅错误信息
-                    Return 完整日志缓存.Where(Function(x) x.是否错误 OrElse x.类别 = 编码任务日志类别_v6.错误).ToList()
-                Case 编码任务日志显示模式_v6.当前阶段输出
-                    Dim stageName = If(当前步骤?.显示名称, "")
-                    If String.IsNullOrWhiteSpace(stageName) Then Return New List(Of 编码任务日志条目_v6)
-                    Return 完整日志缓存.Where(Function(x) String.Equals(x.阶段名, stageName, StringComparison.Ordinal)).ToList()
-                Case Else
-                    Return 完整日志缓存.ToList()
-            End Select
+            Return 筛选日志条目(显示模式)
         End SyncLock
+    End Function
+
+    Public Function 获取日志版本信息() As 编码任务日志版本信息_v6
+        SyncLock 日志锁
+            Return New 编码任务日志版本信息_v6 With {
+                .日志版本号 = 日志版本号,
+                .日志结构版本号 = 日志结构版本号
+            }
+        End SyncLock
+    End Function
+
+    Public Function 获取日志快照数据(Optional 显示模式 As 编码任务日志显示模式_v6 = 编码任务日志显示模式_v6.全部输出,
+                              Optional 阶段名 As String = Nothing) As 编码任务日志快照_v6
+        SyncLock 日志锁
+            Return New 编码任务日志快照_v6 With {
+                .条目 = 筛选日志条目(显示模式, 阶段名),
+                .日志版本号 = 日志版本号,
+                .日志结构版本号 = 日志结构版本号
+            }
+        End SyncLock
+    End Function
+
+    Private Function 筛选日志条目(显示模式 As 编码任务日志显示模式_v6, Optional 指定阶段名 As String = Nothing) As List(Of 编码任务日志条目_v6)
+        Select Case 显示模式
+            Case 编码任务日志显示模式_v6.最新输出不含进度
+                Return 完整日志缓存.Where(Function(x) x.类别 <> 编码任务日志类别_v6.进度).ToList()
+            Case 编码任务日志显示模式_v6.仅错误信息
+                Return 完整日志缓存.Where(Function(x) x.是否错误 OrElse x.类别 = 编码任务日志类别_v6.错误).ToList()
+            Case 编码任务日志显示模式_v6.当前阶段输出
+                Dim stageName = If(指定阶段名 Is Nothing, If(当前步骤?.显示名称, ""), 指定阶段名)
+                If String.IsNullOrWhiteSpace(stageName) Then Return New List(Of 编码任务日志条目_v6)
+                Return 完整日志缓存.Where(Function(x) String.Equals(x.阶段名, stageName, StringComparison.Ordinal)).ToList()
+            Case Else
+                Return 完整日志缓存.ToList()
+        End Select
     End Function
 
     Public Function 获取日志文本(Optional 显示模式 As 编码任务日志显示模式_v6 = 编码任务日志显示模式_v6.全部输出) As String
@@ -1069,7 +1336,7 @@ Public Class 编码任务_v6
         If 预设数据 IsNot Nothing Then
             预设管理_v6.初始化空集合(预设数据)
             生成帧服务器脚本()
-            If String.IsNullOrWhiteSpace(输出文件) Then 输出文件 = 编码队列_v6.计算输出位置_v6(输入文件, 预设数据)
+            If String.IsNullOrWhiteSpace(输出文件) Then 输出文件 = 编码队列_v6.计算输出位置_v6(输入文件, 预设数据, True)
             重建编码步骤()
         Else
             步骤.Clear()
@@ -1108,6 +1375,8 @@ Public Class 编码任务_v6
         process.StartInfo.FileName = If(stepItem.阶段 = 预设数据_v6.命令行阶段.FFprobe获取时长, "ffprobe", If(设置_v6.实例对象.替代进程文件名 <> "", 设置_v6.实例对象.替代进程文件名, "ffmpeg"))
         process.StartInfo.WorkingDirectory = If(设置_v6.实例对象.工作目录 <> "", 设置_v6.实例对象.工作目录, "")
         process.StartInfo.Arguments = If(stepItem.阶段 = 预设数据_v6.命令行阶段.FFprobe获取时长 OrElse 设置_v6.实例对象.覆盖参数传递 = "", stepItem.命令行, 设置_v6.实例对象.覆盖参数传递.Replace("<args>", stepItem.命令行))
+        stepItem.实际执行文件名 = process.StartInfo.FileName
+        stepItem.实际执行参数 = process.StartInfo.Arguments
         process.StartInfo.UseShellExecute = False
         process.StartInfo.RedirectStandardOutput = True
         process.StartInfo.RedirectStandardError = True
@@ -1125,7 +1394,7 @@ Public Class 编码任务_v6
                                            code = process.ExitCode
                                        Catch
                                        End Try
-                                           tcs.TrySetResult(code)
+                                       tcs.TrySetResult(code)
                                    End Sub
         追加日志($"[3FUI] 执行：{process.StartInfo.FileName} {process.StartInfo.Arguments}", 编码任务日志类别_v6.系统, stepItem, False, False)
         process.Start()
@@ -1360,6 +1629,8 @@ Public Class 编码步骤_v6
     Public Property 阶段 As 预设数据_v6.命令行阶段 = 预设数据_v6.命令行阶段.普通单次
     Public Property 显示名称 As String = ""
     Public Property 命令行 As String = ""
+    Public Property 实际执行文件名 As String = ""
+    Public Property 实际执行参数 As String = ""
     Public Property 滤镜图 As String = ""
     Public Property 映射参数 As String = ""
     Public Property 输出滤镜参数 As String = ""

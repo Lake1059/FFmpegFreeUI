@@ -99,7 +99,7 @@ Public Class Form_v6_参数面板_质量
                 Case 2
                     MCB_质量参数名称.Text = "-cq"
                 Case 3
-                    MCB_质量参数名称.Text = "-qp"
+                    MCB_质量参数名称.Text = If(当前视频编码器是AMF(), "", "-qp")
                 Case 4, 5
                     MCB_质量参数名称.Text = ""
                     MTB_质量值.Text = ""
@@ -110,6 +110,19 @@ Public Class Form_v6_参数面板_质量
 
         通知参数面板刷新()
     End Sub
+
+    Public Sub 同步当前编码器质量参数名()
+        If MCB_全局质量控制方式.SelectedIndex <> 3 Then Exit Sub
+        If 当前视频编码器是AMF() AndAlso String.Equals(MCB_质量参数名称.Text.Trim().TrimStart("-"c), "qp", StringComparison.OrdinalIgnoreCase) Then
+            MCB_质量参数名称.Text = ""
+            通知参数面板刷新()
+        End If
+    End Sub
+
+    Private Function 当前视频编码器是AMF() As Boolean
+        Dim 编码器 = If(所属参数面板对象?.私有界面_视频编码器?.MCB_具体编码器.Text, "").Trim()
+        Return 编码器.EndsWith("_amf", StringComparison.OrdinalIgnoreCase)
+    End Function
 
     Private Sub MB_插入预制条目_Click(sender As Object, e As EventArgs) Handles MB_插入预制条目.Click
         初始化预制条目菜单()

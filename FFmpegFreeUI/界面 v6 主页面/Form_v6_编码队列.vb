@@ -175,6 +175,7 @@ Public Class Form_v6_编码队列
         添加菜单项(右键菜单, "定位输出", AddressOf 定位输出)
         添加菜单项(右键菜单, "复制命令行", AddressOf 复制选中任务命令行)
         添加菜单项(右键菜单, "打开任务日志", AddressOf 打开任务日志)
+        添加菜单项(右键菜单, "查看任务参数", AddressOf 查看任务参数)
     End Sub
 
     Private Sub 添加菜单项(menu As LakeUI.ModernContextMenu, text As String, action As Action)
@@ -200,17 +201,11 @@ Public Class Form_v6_编码队列
         For Each id In 获取选中任务ID()
             Dim task = 编码队列_v6.根据ID获取任务(id)
             If task Is Nothing Then Continue For
-            If task.步骤.Count > 0 Then
-                lines.AddRange(task.步骤.Select(Function(x) $"{预设管理_v6.获取命令行进程名(x.阶段)} {x.命令行}"))
-            ElseIf task.预设数据 IsNot Nothing Then
-                Dim output = If(task.输出文件 <> "", task.输出文件, 编码队列_v6.计算输出位置_v6(task.输入文件, task.预设数据))
-                lines.AddRange(预设管理_v6.生成阶段化命令行(task.预设数据, task.输入文件, output, 帧服务器脚本后缀:=task.ID).Select(Function(x) $"{预设管理_v6.获取命令行进程名(x.阶段)} {x.命令行}"))
-            ElseIf task.命令行 <> "" Then
-                lines.Add($"{预设管理_v6.获取命令行进程名(预设数据_v6.命令行阶段.普通单次)} {task.命令行}")
-            End If
+            Dim commandText = 编码队列_v6.获取任务实际命令行文本(task)
+            If commandText <> "" Then lines.Add(commandText)
         Next
         If lines.Count > 0 Then
-            Clipboard.SetText(String.Join(vbCrLf, lines))
+            Clipboard.SetText(String.Join(vbCrLf & vbCrLf, lines))
             ExFloatingTip(ModernButton8, "已复制命令行", 1200)
         End If
     End Sub
@@ -262,6 +257,21 @@ Public Class Form_v6_编码队列
 
     Private Sub 打开任务日志()
         Form_v6_编码队列_任务日志.打开或激活(Me, 获取选中任务ID())
+    End Sub
+
+    Private Sub 查看任务参数()
+        Dim ids = 获取选中任务ID()
+        If ids.Count = 0 Then
+            ExFloatingTip(UltraDetailListView1, "请先选择任务", 1200)
+            Exit Sub
+        End If
+
+        For Each id In ids
+            Dim task = 编码队列_v6.根据ID获取任务(id)
+            If task Is Nothing Then Continue For
+            Dim form As New Form_v6_编码队列_查看参数(task)
+            form.Show(Me)
+        Next
     End Sub
 
     Private Sub 开始选中任务()

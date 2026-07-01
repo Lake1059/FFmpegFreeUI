@@ -71,22 +71,42 @@ Public Partial Class 预设管理_v6
         Return 数据
     End Function
 
-    Public Shared Sub 写入预设文件(文件路径 As String, 数据 As 预设数据_v6)
+    Public Shared Function 预设包含输出位置(数据 As 预设数据_v6) As Boolean
+        Return 数据 IsNot Nothing AndAlso Not String.IsNullOrWhiteSpace(数据.输出位置)
+    End Function
+
+    Public Shared Function 可使用预设输出位置(数据 As 预设数据_v6) As Boolean
+        If 数据 Is Nothing Then Return False
+        Dim 输出位置文本 = If(数据.输出位置, "").Trim()
+        If 输出位置文本 = "" Then Return False
+        Dim 保存机器 = If(数据.计算机名称, "").Trim()
+        If 保存机器 <> "" AndAlso Not String.Equals(保存机器, Environment.MachineName, StringComparison.OrdinalIgnoreCase) Then Return False
+        Return Directory.Exists(输出位置文本)
+    End Function
+
+    Public Shared Sub 写入预设文件(文件路径 As String, 数据 As 预设数据_v6, Optional 保存输出位置 As Boolean? = Nothing)
         初始化空集合(数据)
         Directory.CreateDirectory(Path.GetDirectoryName(文件路径))
         Dim 原计算机名称 = 数据.计算机名称
         Dim 原输出位置 = 数据.输出位置
+        Dim 原保留子文件夹结构起始点 = 数据.输出位置_保留子文件夹结构起始点
+        Dim 原额外保存输出位置 = 数据.额外保存输出位置
         Dim 原运行时使用输出位置 = 数据.运行时使用输出位置
+        Dim 应保存输出位置 = If(保存输出位置.HasValue, 保存输出位置.Value, 预设包含输出位置(数据))
         Try
+            数据.额外保存输出位置 = False
             数据.运行时使用输出位置 = False
-            If Not 数据.额外保存输出位置 Then
+            If Not 应保存输出位置 Then
                 数据.计算机名称 = ""
                 数据.输出位置 = ""
+                数据.输出位置_保留子文件夹结构起始点 = ""
             End If
             File.WriteAllText(文件路径, JsonSerializer.Serialize(数据, JsonSO), Encoding.UTF8)
         Finally
             数据.计算机名称 = 原计算机名称
             数据.输出位置 = 原输出位置
+            数据.输出位置_保留子文件夹结构起始点 = 原保留子文件夹结构起始点
+            数据.额外保存输出位置 = 原额外保存输出位置
             数据.运行时使用输出位置 = 原运行时使用输出位置
         End Try
     End Sub
@@ -477,7 +497,6 @@ Public Partial Class 预设管理_v6
             End If
             同步全部内置滤镜到排序(ui, False)
             ui.私有界面_预设管理.MTB_预设备注.Text = a.预设备注
-            ui.私有界面_预设管理.MCK_额外保存输出位置.Checked = a.额外保存输出位置
             刷新参数总览(ui)
         Finally
             ui.抑制自动刷新 = oldSuppress
@@ -564,8 +583,8 @@ Public Partial Class 预设管理_v6
         If a.输出命名_保留创建时间 Then 添加总览文本行(sb, "输出命名：保留创建时间")
         If a.输出命名_保留修改时间 Then 添加总览文本行(sb, "输出命名：保留修改时间")
         If a.输出命名_保留访问时间 Then 添加总览文本行(sb, "输出命名：保留访问时间")
-        If a.额外保存输出位置 Then 添加总览文本行(sb, "额外保存输出位置：启用")
-        添加总览文本行(sb, "输出位置：" & a.输出位置)
+        If 预设包含输出位置(a) Then 添加总览文本行(sb, "输出位置：" & a.输出位置)
+        If Not String.IsNullOrWhiteSpace(a.输出位置_保留子文件夹结构起始点) Then 添加总览文本行(sb, "保留子文件夹结构起始点：" & a.输出位置_保留子文件夹结构起始点)
 
         添加总览文本行(sb, "解码器：" & a.解码参数_解码器)
         添加总览文本行(sb, "CPU 解码线程数：" & a.解码参数_CPU解码线程数)
@@ -1571,9 +1590,12 @@ Public Partial Class 预设管理_v6
                 a.计算机名称 = Environment.MachineName
                 a.输出位置 = 输出位置文本
                 a.运行时使用输出位置 = True
+                Dim 保留子文件夹结构起始点 = 规范化文件夹路径(.MCB_保留子文件夹结构起始点.Text)
+                a.输出位置_保留子文件夹结构起始点 = If(Directory.Exists(保留子文件夹结构起始点), 保留子文件夹结构起始点, "")
             Else
                 a.计算机名称 = ""
                 a.输出位置 = ""
+                a.输出位置_保留子文件夹结构起始点 = ""
                 a.运行时使用输出位置 = False
             End If
         End With
@@ -1590,12 +1612,16 @@ Public Partial Class 预设管理_v6
             .MCK_保留创建时间.Checked = a.输出命名_保留创建时间
             .MCK_保留修改时间.Checked = a.输出命名_保留修改时间
             .MCK_保留访问时间.Checked = a.输出命名_保留访问时间
-            If a.额外保存输出位置 AndAlso
-               String.Equals(a.计算机名称, Environment.MachineName, StringComparison.OrdinalIgnoreCase) AndAlso
-               Directory.Exists(a.输出位置) Then
+            If 可使用预设输出位置(a) Then
                 .设置自定义输出位置(a.输出位置)
+                If Directory.Exists(If(a.输出位置_保留子文件夹结构起始点, "").Trim()) Then
+                    .设置保留子文件夹结构起始点(a.输出位置_保留子文件夹结构起始点)
+                Else
+                    .清空保留子文件夹结构起始点()
+                End If
             Else
                 .MCB_输出位置.SelectedIndex = 0
+                .清空保留子文件夹结构起始点()
             End If
         End With
     End Sub

@@ -277,7 +277,7 @@ Public Class Form_v6_参数面板_预设管理
         Return "已读取预设：" & item.名称
     End Function
 
-    Public Function Agent保存预设(source As String, name As String, presetJson As String, note As String) As String
+    Public Function Agent保存预设(source As String, name As String, presetJson As String, note As String, saveOutputLocation As Boolean?) As String
         Dim sourceName = Agent规范来源(source)
         If String.Equals(sourceName, "开发者内置", StringComparison.Ordinal) Then Return "开发者内置预设只允许读取，不能保存或删除"
         If name Is Nothing OrElse name.Trim() = "" Then Return "缺少预设名称"
@@ -296,7 +296,7 @@ Public Class Form_v6_参数面板_预设管理
         Directory.CreateDirectory(dir)
         Dim file = Path.Combine(dir, 预设管理_v6.安全文件名(name) & ".json")
         Dim isNewUserPreset = String.Equals(sourceName, "用户自定义", StringComparison.Ordinal) AndAlso Not System.IO.File.Exists(file)
-        预设管理_v6.写入预设文件(file, data)
+        预设管理_v6.写入预设文件(file, data, If(saveOutputLocation.HasValue, saveOutputLocation.Value, MCK_额外保存输出位置.Checked))
         If isNewUserPreset Then 添加用户预设到排序末尾(file)
         Agent选择来源(sourceName)
         Return "已保存预设：" & Path.GetFileNameWithoutExtension(file)
@@ -398,7 +398,6 @@ Public Class Form_v6_参数面板_预设管理
             End If
             MTB_预设名称.Text = item.名称
             MTB_预设备注.Text = data.预设备注
-            MCK_额外保存输出位置.Checked = data.额外保存输出位置
             预设管理_v6.显示参数总览(MTB_预设参数总览, data)
             MTB_预设命令行预览.Text = 预设管理_v6.生成命令行展示文本(data, 预设管理_v6.输入占位符, 预设管理_v6.输出占位符)
         Catch ex As Exception
@@ -410,7 +409,6 @@ Public Class Form_v6_参数面板_预设管理
     Private Function 从面板创建带元数据的预设() As 预设数据_v6
         Dim data = 预设管理_v6.从面板创建预设(所属参数面板对象)
         data.预设备注 = MTB_预设备注.Text.Trim()
-        data.额外保存输出位置 = MCK_额外保存输出位置.Checked
         Return data
     End Function
 
@@ -476,7 +474,7 @@ Public Class Form_v6_参数面板_预设管理
             End If
 
             Dim data = 从面板创建带元数据的预设()
-            预设管理_v6.写入预设文件(file, data)
+            预设管理_v6.写入预设文件(file, data, MCK_额外保存输出位置.Checked)
             If isNewUserPreset Then 添加用户预设到排序末尾(file)
             选中用户预设文件(file)
             MTB_预设名称.Text = Path.GetFileNameWithoutExtension(file)

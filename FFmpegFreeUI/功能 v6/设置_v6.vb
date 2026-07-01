@@ -9,12 +9,12 @@ Public Class 设置_v6
     Public Property 图形DX文字渲染模式 As Integer = 0
     Public Property 图形DX_SSAA As Integer = 0
 
-    Public Property 图形DXImage缓存预算 As Integer = 3
-    Public Property 图形DX每对象画刷缓存数量 As Integer = 5
-    Public Property 图形DW字体相关预算 As Integer = 2
-    Public Property 图形DX超容器背景映射源位图缓存 As Integer = 2
-    Public Property 图形DX超容器背景映射脏区策略极限 As Integer = 4
-    Public Property 图形DX超容器背景映射显存总量和单源条目 As Integer = 3
+    Public Property 图形DX_GPU缓存总预算 As Integer = 2
+    Public Property 图形DX_CPU位图缓存总预算 As Integer = 2
+    Public Property 图形DX画刷缓存条目上限 As Integer = 5
+    Public Property 图形DW字体缓存条目上限 As Integer = 2
+    Public Property 图形DX背景穿透脏区策略 As Integer = 4
+    Public Property 图形DX_SSAA缓存分桶粒度 As Integer = 1
 
     Public Property 图形动画帧率 As Integer = 60
 
@@ -127,12 +127,12 @@ Public Class 设置_v6
         Form_v6_设置_LakeUI性能选项.MCB_文字渲染模式.SelectedIndex = 实例对象.图形DX文字渲染模式
         Form_v6_设置_LakeUI性能选项.MCB_SSAA.SelectedIndex = 实例对象.图形DX_SSAA
 
-        Form_v6_设置_LakeUI性能选项.MCB_D2DImage缓存预算.SelectedIndex = 实例对象.图形DXImage缓存预算
-        Form_v6_设置_LakeUI性能选项.MCB_D2D每对象画刷缓存数量.SelectedIndex = 实例对象.图形DX每对象画刷缓存数量
-        Form_v6_设置_LakeUI性能选项.MCB_DW字体相关预算.SelectedIndex = 实例对象.图形DW字体相关预算
-        Form_v6_设置_LakeUI性能选项.MCB_超容器背景映射源位图缓存.SelectedIndex = 实例对象.图形DX超容器背景映射源位图缓存
-        Form_v6_设置_LakeUI性能选项.MCB_超容器背景映射脏区策略极限.SelectedIndex = 实例对象.图形DX超容器背景映射脏区策略极限
-        Form_v6_设置_LakeUI性能选项.MCB_超容器背景映射条目预算.SelectedIndex = 实例对象.图形DX超容器背景映射显存总量和单源条目
+        Form_v6_设置_LakeUI性能选项.MCB_D2DImage缓存预算.SelectedIndex = 实例对象.图形DX_GPU缓存总预算
+        Form_v6_设置_LakeUI性能选项.MCB_D2D每对象画刷缓存数量.SelectedIndex = 实例对象.图形DX画刷缓存条目上限
+        Form_v6_设置_LakeUI性能选项.MCB_DW字体相关预算.SelectedIndex = 实例对象.图形DW字体缓存条目上限
+        Form_v6_设置_LakeUI性能选项.MCB_超容器背景映射源位图缓存.SelectedIndex = 实例对象.图形DX_CPU位图缓存总预算
+        Form_v6_设置_LakeUI性能选项.MCB_超容器背景映射脏区策略极限.SelectedIndex = 实例对象.图形DX背景穿透脏区策略
+        Form_v6_设置_LakeUI性能选项.MCB_超容器背景映射条目预算.SelectedIndex = 实例对象.图形DX_SSAA缓存分桶粒度
         Form_v6_设置_LakeUI性能选项.MCB_动画帧率.Text = 实例对象.图形动画帧率
 
         Form_v6_设置_LakeUI视觉体验.MCB_窗口样式.SelectedIndex = 实例对象.窗口样式

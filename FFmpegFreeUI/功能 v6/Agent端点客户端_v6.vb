@@ -665,11 +665,19 @@ Public Class AgentEndpointClient
         result.TotalTokens = GetInt(usage, "total_tokens")
         result.InputTokens = GetInt(usage, "input_tokens")
         result.OutputTokens = GetInt(usage, "output_tokens")
+        result.EffectiveInputTokens = If(result.InputTokens > 0, result.InputTokens, result.PromptTokens)
+        result.EffectiveOutputTokens = If(result.OutputTokens > 0, result.OutputTokens, result.CompletionTokens)
+        If result.TotalTokens <= 0 Then result.TotalTokens = result.EffectiveInputTokens + result.EffectiveOutputTokens
 
         Dim details As JsonElement
         If usage.TryGetProperty("prompt_tokens_details", details) AndAlso details.ValueKind = JsonValueKind.Object Then
             result.CachedTokens = GetInt(details, "cached_tokens")
         End If
+        If usage.TryGetProperty("input_tokens_details", details) AndAlso details.ValueKind = JsonValueKind.Object Then
+            result.CachedTokens = Math.Max(result.CachedTokens, GetInt(details, "cached_tokens"))
+        End If
+        result.CachedTokens = Math.Max(result.CachedTokens, GetInt(usage, "cached_tokens"))
+        result.CachedTokens = Math.Max(result.CachedTokens, GetInt(usage, "cache_read_input_tokens"))
         If usage.TryGetProperty("completion_tokens_details", details) AndAlso details.ValueKind = JsonValueKind.Object Then
             result.ReasoningTokens = GetInt(details, "reasoning_tokens")
         End If

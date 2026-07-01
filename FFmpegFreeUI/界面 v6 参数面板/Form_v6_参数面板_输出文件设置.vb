@@ -5,6 +5,7 @@ Public Class Form_v6_参数面板_输出文件设置
 
     Private 后缀菜单已初始化 As Boolean = False
     Private 正在选择输出位置 As Boolean = False
+    Private 正在选择保留子文件夹结构起始点 As Boolean = False
 
     Public Sub 设置自定义输出位置(路径 As String)
         Dim value = 规范化文件夹路径(路径)
@@ -18,10 +19,35 @@ Public Class Form_v6_参数面板_输出文件设置
         End Try
     End Sub
 
+    Public Sub 设置保留子文件夹结构起始点(路径 As String)
+        Dim value = 规范化文件夹路径(路径)
+        正在选择保留子文件夹结构起始点 = True
+        Try
+            MCB_保留子文件夹结构起始点.Text = value
+            MCB_保留子文件夹结构起始点.SelectedIndex = -1
+            If MCB_保留子文件夹结构起始点.Text <> value Then MCB_保留子文件夹结构起始点.Text = value
+        Finally
+            正在选择保留子文件夹结构起始点 = False
+        End Try
+    End Sub
+
+    Public Sub 清空保留子文件夹结构起始点()
+        正在选择保留子文件夹结构起始点 = True
+        Try
+            MCB_保留子文件夹结构起始点.Text = ""
+            MCB_保留子文件夹结构起始点.SelectedIndex = -1
+        Finally
+            正在选择保留子文件夹结构起始点 = False
+        End Try
+    End Sub
+
     Private Sub Form_v6_参数面板_输出文件设置_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         绑定路径下拉框拖拽(MCB_输出位置, 路径下拉框拖拽模式.文件夹路径)
+        绑定路径下拉框拖拽(MCB_保留子文件夹结构起始点, 路径下拉框拖拽模式.文件夹路径)
         If MCB_输出文件参数使用方法.SelectedIndex < 0 Then MCB_输出文件参数使用方法.SelectedIndex = 0
         If MCB_输出位置.SelectedIndex < 0 Then MCB_输出位置.SelectedIndex = 0
+        If Not String.IsNullOrWhiteSpace(MCB_保留子文件夹结构起始点.Text) AndAlso Not Directory.Exists(规范化文件夹路径(MCB_保留子文件夹结构起始点.Text)) Then 清空保留子文件夹结构起始点()
+        If MCB_输出位置.SelectedIndex = 0 Then 清空保留子文件夹结构起始点()
         初始化后缀菜单()
     End Sub
 
@@ -72,6 +98,32 @@ Public Class Form_v6_参数面板_输出文件设置
         添加后缀菜单项(后缀菜单, ".mkv")
     End Sub
 
+    Public Function Agent获取输出容器候选() As List(Of String)
+        初始化后缀菜单()
+
+        Dim result As New List(Of String)
+        Dim seen As New HashSet(Of String)(StringComparer.OrdinalIgnoreCase)
+        For Each suffixMenu As LakeUI.ModernContextMenu In New LakeUI.ModernContextMenu() {视频菜单, 音频菜单, 图片菜单, 后缀菜单}
+            Agent收集后缀菜单项(suffixMenu, result, seen)
+        Next
+        Return result
+    End Function
+
+    Private Sub Agent收集后缀菜单项(menu As LakeUI.ModernContextMenu, result As List(Of String), seen As HashSet(Of String))
+        If menu Is Nothing OrElse result Is Nothing OrElse seen Is Nothing Then Exit Sub
+        For Each item As LakeUI.ModernContextMenu.ModernMenuItem In menu.Items
+            If item Is Nothing OrElse item.IsSeparator OrElse item.IsDescription Then Continue For
+            If item.SubMenu IsNot Nothing Then
+                Agent收集后缀菜单项(item.SubMenu, result, seen)
+                Continue For
+            End If
+
+            Dim suffix = If(item.Text, "").Trim()
+            If suffix = "" OrElse Not suffix.StartsWith(".", StringComparison.Ordinal) Then Continue For
+            If seen.Add(suffix) Then result.Add(suffix)
+        Next
+    End Sub
+
     Private Sub 添加说明项(menu As LakeUI.ModernContextMenu, text As String)
         menu.Items.Add(New LakeUI.ModernContextMenu.ModernMenuItem(text) With {.IsDescription = True})
     End Sub
@@ -98,16 +150,36 @@ Public Class Form_v6_参数面板_输出文件设置
             正在选择输出位置 = True
             Try
                 Dim dialog As New CommonOpenFileDialog With {.IsFolderPicker = True}
-                If dialog.ShowDialog() = CommonFileDialogResult.Ok Then
+                If dialog.ShowDialog = CommonFileDialogResult.Ok Then
                     设置自定义输出位置(dialog.FileName)
                 Else
                     MCB_输出位置.SelectedIndex = 0
+                    清空保留子文件夹结构起始点()
                 End If
             Finally
                 正在选择输出位置 = False
             End Try
-        ElseIf MCB_输出位置.SelectedIndex < 0 AndAlso MCB_输出位置.Text.Trim() = "" Then
+        ElseIf MCB_输出位置.SelectedIndex < 0 AndAlso MCB_输出位置.Text.Trim = "" Then
             MCB_输出位置.SelectedIndex = 0
+        ElseIf MCB_输出位置.SelectedIndex = 0 Then
+            清空保留子文件夹结构起始点()
+        End If
+    End Sub
+
+    Private Sub MCB_保留子文件夹结构起始点_SelectedIndexChanged(sender As Object, e As EventArgs) Handles MCB_保留子文件夹结构起始点.SelectedIndexChanged
+        If 正在选择保留子文件夹结构起始点 Then Exit Sub
+        If MCB_保留子文件夹结构起始点.SelectedIndex = 0 Then
+            正在选择保留子文件夹结构起始点 = True
+            Try
+                Dim dialog As New CommonOpenFileDialog With {.IsFolderPicker = True}
+                If dialog.ShowDialog = CommonFileDialogResult.Ok Then
+                    设置保留子文件夹结构起始点(dialog.FileName)
+                Else
+                    清空保留子文件夹结构起始点()
+                End If
+            Finally
+                正在选择保留子文件夹结构起始点 = False
+            End Try
         End If
     End Sub
 
@@ -128,5 +200,9 @@ Public Class Form_v6_参数面板_输出文件设置
 
         图片菜单.MenuFont = New Font(设置_v6.实例对象.字体, 图片菜单.MenuFont.Size, 图片菜单.MenuFont.Style)
         图片菜单.DescriptionFont = New Font(设置_v6.实例对象.字体, 图片菜单.MenuFont.Size, 图片菜单.MenuFont.Style)
+    End Sub
+
+    Private Sub MCB_保留子文件夹结构起始点_MouseClick(sender As Object, e As MouseEventArgs) Handles MCB_保留子文件夹结构起始点.MouseClick
+        If e.Button = MouseButtons.Right Then MCB_保留子文件夹结构起始点.Text = ""
     End Sub
 End Class

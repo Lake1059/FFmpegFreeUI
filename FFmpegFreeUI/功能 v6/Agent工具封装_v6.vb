@@ -112,13 +112,25 @@ Public NotInheritable Class Agent工具封装_v6
         Return UI(Function() Form_v6_参数面板.私有界面_预设管理.Agent应用预设(source, name))
     End Function
 
-    Public Shared Function 保存参数预设(source As String, name As String, presetJson As String, note As String) As String
-        Return UI(Function() Form_v6_参数面板.私有界面_预设管理.Agent保存预设(source, name, presetJson, note))
+    Public Shared Function 保存参数预设(source As String, name As String, presetJson As String, note As String, saveOutputLocation As Boolean?) As String
+        Return UI(Function() Form_v6_参数面板.私有界面_预设管理.Agent保存预设(source, name, presetJson, note, saveOutputLocation))
     End Function
 
     Public Shared Function 获取参数面板控件信息(query As String) As String
         Dim payload = UI(Function() 扫描控件(Form_v6_参数面板, query))
         Return JsonSerializer.Serialize(payload, JsonSO)
+    End Function
+
+    Public Shared Function 获取输出容器候选() As List(Of String)
+        Return UI(Function() Form_v6_参数面板.私有界面_输出文件设置.Agent获取输出容器候选())
+    End Function
+
+    Public Shared Function 获取组合框候选(controlName As String) As List(Of String)
+        Return UI(Function()
+                      Dim combo = 查找参数面板组合框(controlName)
+                      If combo Is Nothing Then Return New List(Of String)
+                      Return 读取组合框项(combo)
+                  End Function)
     End Function
 
     Private Shared Function 获取选项卡控件(scope As String) As Object
@@ -257,6 +269,37 @@ Public NotInheritable Class Agent工具封装_v6
         }.Where(Function(x) x IsNot Nothing).Distinct().ToList()
     End Function
 
+    Private Shared Function 查找参数面板组合框(controlName As String) As ModernComboBox
+        Dim name = If(controlName, "").Trim()
+        If name = "" Then Return Nothing
+        For Each root In 获取参数面板扫描根()
+            Dim found = 查找组合框递归(root, name)
+            If found IsNot Nothing Then Return found
+        Next
+        Return Nothing
+    End Function
+
+    Private Shared Function 查找组合框递归(control As Control, controlName As String) As ModernComboBox
+        If control Is Nothing Then Return Nothing
+        Dim combo = TryCast(control, ModernComboBox)
+        If combo IsNot Nothing AndAlso String.Equals(combo.Name, controlName, StringComparison.OrdinalIgnoreCase) Then Return combo
+        For Each child As Control In control.Controls
+            Dim found = 查找组合框递归(child, controlName)
+            If found IsNot Nothing Then Return found
+        Next
+        Return Nothing
+    End Function
+
+    Private Shared Function 读取组合框项(combo As ModernComboBox) As List(Of String)
+        Dim result As New List(Of String)
+        If combo Is Nothing Then Return result
+        For Each rawItem In combo.Items
+            Dim value = If(rawItem, "").ToString()
+            If Not result.Contains(value, StringComparer.OrdinalIgnoreCase) Then result.Add(value)
+        Next
+        Return result
+    End Function
+
     Private Shared Sub 扫描控件递归(control As Control, query As String, result As List(Of Dictionary(Of String, Object)))
         If control Is Nothing OrElse result.Count >= 200 Then Return
         Dim typeName = control.GetType().Name
@@ -273,9 +316,10 @@ Public NotInheritable Class Agent工具封装_v6
             }
             Dim combo = TryCast(control, ModernComboBox)
             If combo IsNot Nothing Then
-                item("items") = combo.Items.Cast(Of Object).Select(Function(x) If(x, "").ToString()).ToList()
+                item("items") = 读取组合框项(combo)
                 item("selected_index") = combo.SelectedIndex
                 item("selected_text") = If(combo.SelectedItem, combo.Text)
+                item("editable") = combo.Editable
             End If
 
             Dim textBox = TryCast(control, ModernTextBox)

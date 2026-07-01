@@ -596,7 +596,7 @@ Partial Public Class 预设管理_v6
                 inDoubleQuote = Not inDoubleQuote
                 Continue For
             End If
-            If Not inSingleQuote AndAlso Not inDoubleQuote AndAlso chars.IndexOf(c) >= 0 Then Return True
+            If Not inSingleQuote AndAlso Not inDoubleQuote AndAlso chars.Contains(c) Then Return True
         Next
         Return False
     End Function
@@ -817,8 +817,12 @@ Partial Public Class 预设管理_v6
             Case 预设数据_v6.视频全局质量控制方式.CRF
                 添加编码器参数(parts, 获取视频质量参数名(a.视频参数_质量控制_参数名, "crf"), a.视频参数_质量控制_值, 输出流选择器)
             Case 预设数据_v6.视频全局质量控制方式.CQP
-                添加NVENC码率控制参数(parts, a, 控制方式, 输出流选择器)
-                添加编码器参数(parts, 获取视频质量参数名(a.视频参数_质量控制_参数名, "qp"), a.视频参数_质量控制_值, 输出流选择器)
+                If 是AMF编码器(a.视频参数_编码器_具体编码) Then
+                    添加AMFCQP码率控制参数(parts, a, 输出流选择器)
+                Else
+                    添加NVENC码率控制参数(parts, a, 控制方式, 输出流选择器)
+                    添加编码器参数(parts, 获取视频质量参数名(a.视频参数_质量控制_参数名, "qp"), a.视频参数_质量控制_值, 输出流选择器)
+                End If
             Case 预设数据_v6.视频全局质量控制方式.VBR, 预设数据_v6.视频全局质量控制方式.CBR
                 添加NVENC码率控制参数(parts, a, 控制方式, 输出流选择器)
                 添加视频质量参数(parts, a, 输出流选择器)
@@ -854,9 +858,20 @@ Partial Public Class 预设管理_v6
         End Select
     End Sub
 
+    Private Shared Sub 添加AMFCQP码率控制参数(parts As List(Of String), a As 预设数据_v6, 输出流选择器 As String)
+        If Not 已显式设置码率控制(a.视频参数_质量控制_进阶参数集) Then
+            添加编码器参数(parts, "-rc", "cqp", 输出流选择器)
+        End If
+    End Sub
+
     Private Shared Function 是NVENC编码器(编码器 As String) As Boolean
         Dim value = If(编码器, "").Trim()
         Return value.EndsWith("_nvenc", StringComparison.OrdinalIgnoreCase)
+    End Function
+
+    Private Shared Function 是AMF编码器(编码器 As String) As Boolean
+        Dim value = If(编码器, "").Trim()
+        Return value.EndsWith("_amf", StringComparison.OrdinalIgnoreCase)
     End Function
 
     Private Shared Function 已显式设置码率控制(value As String) As Boolean
@@ -877,7 +892,7 @@ Partial Public Class 预设管理_v6
     Private Shared Function 标准化视频全局质量控制方式(value As 预设数据_v6.视频全局质量控制方式) As 预设数据_v6.视频全局质量控制方式
         Dim raw = Convert.ToInt32(value, CultureInfo.InvariantCulture)
         If raw = 3 Then Return 预设数据_v6.视频全局质量控制方式.VBR
-        If [Enum].IsDefined(GetType(预设数据_v6.视频全局质量控制方式), value) Then Return value
+        If [Enum].IsDefined(value) Then Return value
         Return 预设数据_v6.视频全局质量控制方式.未选择
     End Function
 

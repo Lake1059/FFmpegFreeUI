@@ -2,6 +2,7 @@
 Public Class 预设数据_v6
     Public Property 预设备注 As String = ""
     Public Property 预设文件版本 As Integer = 6
+    <System.Text.Json.Serialization.JsonIgnore()>
     Public Property 额外保存输出位置 As Boolean = False
     '==================================================
     Public Property 输出容器 As String = ""
@@ -25,6 +26,8 @@ Public Class 预设数据_v6
         附加_随机16位数字 = 8
         附加_随机16位字母 = 9
         附加_随机16位数字和字母组合 = 10
+        附加_2位结尾序号 = 11
+        附加_3位结尾序号 = 12
     End Enum
     Public Property 输出_自动命名选项 As 自动命名选项 = 自动命名选项.附加_递增时间戳
     Public Property 输出命名_开头文本 As String = ""
@@ -432,6 +435,7 @@ Public Class 预设数据_v6
     '==================================================
     Public Property 计算机名称 As String = ""
     Public Property 输出位置 As String = ""
+    Public Property 输出位置_保留子文件夹结构起始点 As String = ""
     <System.Text.Json.Serialization.JsonIgnore()>
     Public Property 运行时使用输出位置 As Boolean = False
 

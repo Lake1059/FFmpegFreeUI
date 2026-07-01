@@ -30,9 +30,9 @@ Public Class Form_v6_Agent
     Private ReadOnly _pendingFiles As New List(Of String)
     Private _refreshingSubmittedFiles As Boolean = False
 
-    Private Const MaxRequestMessages As Integer = 60
-    Private Const MaxRequestCharacters As Integer = 48000
-    Private Const KeepRecentMessages As Integer = 40
+    Private Const ContextCompressionTriggerRatio As Double = 0.85
+    Private Const ContextCompressionTargetRatio As Double = 0.6
+    Private Const ContextSummaryLimitTokens As Integer = 12000
     Private Const StreamFlushIntervalMs As Integer = 35
     Private Const StreamFlushCharacters As Integer = 96
     Private Const SubmittedTextFileLimitBytes As Long = 128 * 1024
@@ -57,6 +57,19 @@ Public Class Form_v6_Agent
         Public Property RunningCount As Integer
         Public Property ElapsedMilliseconds As Double
         Public Property AddedCharacters As Integer
+    End Class
+
+    Private Class ContextCompressionPlan
+        Public Property ContextWindowTokens As Integer
+        Public Property CurrentRequestTokens As Integer
+        Public Property TriggerTokens As Integer
+        Public Property TargetTokens As Integer
+        Public Property SystemTokens As Integer
+        Public Property ReservedSummaryTokens As Integer
+        Public Property RecentMessageBudgetTokens As Integer
+        Public Property RecentMessageTokens As Integer
+        Public Property SummaryBoundaryIndex As Integer
+        Public Property CompressionSourceBudgetTokens As Integer
     End Class
 
     Private Class StreamingTextBuffer
@@ -793,7 +806,7 @@ Public Class Form_v6_Agent
 
     Private Sub UpdateUsageButton()
         Dim currentUsage = If(_current?.Usage, New AgentUsageInfo)
-        MB_页面用量.Text = $"{currentUsage.TotalTokens} / {_pageUsage.TotalTokens}"
+        MB_页面用量.Text = $"{FormatContextPercent(currentUsage)} | {currentUsage.TotalTokens} / {_pageUsage.TotalTokens}"
     End Sub
 
     Private Sub UpdateSendButtonState()
@@ -1194,7 +1207,7 @@ Public Class Form_v6_Agent
         Dim networkMode = AgentNetworkMode.Normalize(conversation.NetworkMode)
         Dim permissionLevel = Math.Max(0, conversation.PermissionLevel)
         Dim tools = AgentLocalTools.BuildToolDefinitions(permissionLevel, networkMode)
-        Dim messages = BuildRequestMessages(conversation)
+        Dim messages = Await BuildRequestMessagesAsync(client, conversation, modelId, cancellationToken)
         Dim round As Integer = 0
 
         Using powerShellSession As New AgentLocalTools.PowerShellRunSession()
@@ -1233,7 +1246,7 @@ Public Class Form_v6_Agent
                         Exit Function
                     End If
                 End If
-                AddUsage(conversation, result.Usage)
+                AddUsage(conversation, result.Usage, modelId)
 
                 If result.ToolCalls Is Nothing OrElse result.ToolCalls.Count = 0 Then
                     Dim content = If(result.Content, "").Trim()
@@ -1287,19 +1300,227 @@ Public Class Form_v6_Agent
         End Using
     End Function
 
-    Private Function BuildRequestMessages(conversation As AgentConversationData) As List(Of AgentMessageData)
-        Dim conversationMessages = conversation.Messages.Where(Function(x) x.Role <> "card").ToList()
-        Dim estimatedCharacters = conversationMessages.Sum(Function(x) EstimateMessageCharacters(x))
-        If conversationMessages.Count > MaxRequestMessages OrElse estimatedCharacters > MaxRequestCharacters Then
-            Dim omitted = Math.Max(0, conversationMessages.Count - KeepRecentMessages)
-            ShowRunStatus(conversation, $"正在压缩上下文：{conversationMessages.Count} 条消息，保留最近 {Math.Min(KeepRecentMessages, conversationMessages.Count)} 条")
-            conversationMessages = conversationMessages.Skip(Math.Max(0, conversationMessages.Count - KeepRecentMessages)).ToList()
-            conversationMessages.Insert(0, New AgentMessageData With {
+    Private Async Function BuildRequestMessagesAsync(client As AgentEndpointClient,
+                                                     conversation As AgentConversationData,
+                                                     modelId As String,
+                                                     cancellationToken As Threading.CancellationToken) As Task(Of List(Of AgentMessageData))
+        Dim conversationMessages = GetRequestConversationMessages(conversation)
+        Dim plan = BuildContextCompressionPlan(conversation, conversationMessages)
+        If plan.SummaryBoundaryIndex > 0 Then
+            Await EnsureContextSummaryAsync(client, conversation, conversationMessages, modelId, plan, cancellationToken)
+            conversationMessages = BuildCompressedConversationMessages(conversation, conversationMessages, plan)
+        End If
+
+        Return BuildRequestMessagesWithSystem(conversation, conversationMessages)
+    End Function
+
+    Private Function GetRequestConversationMessages(conversation As AgentConversationData) As List(Of AgentMessageData)
+        If conversation?.Messages Is Nothing Then Return New List(Of AgentMessageData)
+        Return conversation.Messages.
+            Where(Function(x) x IsNot Nothing AndAlso Not String.Equals(If(x.Role, ""), "card", StringComparison.OrdinalIgnoreCase)).
+            ToList()
+    End Function
+
+    Private Function BuildContextCompressionPlan(conversation As AgentConversationData,
+                                                 messages As List(Of AgentMessageData)) As ContextCompressionPlan
+        Dim contextWindowTokens = ResolveContextWindowTokens(If(conversation?.ModelId, ""))
+        Dim plan As New ContextCompressionPlan With {
+            .ContextWindowTokens = contextWindowTokens,
+            .TriggerTokens = CInt(Math.Floor(contextWindowTokens * ContextCompressionTriggerRatio)),
+            .TargetTokens = CInt(Math.Floor(contextWindowTokens * ContextCompressionTargetRatio))
+        }
+        If messages Is Nothing OrElse messages.Count = 0 Then Return plan
+
+        Dim systemTokens = EstimateRequestTokenCount(Agent提示词_v6.构建系统提示词(
+            AgentNetworkMode.Normalize(conversation.NetworkMode),
+            GetPermissionLevelDisplayName(conversation.PermissionLevel)))
+        plan.SystemTokens = systemTokens
+        plan.CurrentRequestTokens = systemTokens + messages.Sum(Function(x) EstimateMessageTokens(x))
+        If plan.CurrentRequestTokens <= plan.TriggerTokens Then Return plan
+
+        plan.ReservedSummaryTokens = Math.Min(ContextSummaryLimitTokens, Math.Max(1000, plan.TargetTokens \ 5))
+        plan.RecentMessageBudgetTokens = Math.Max(1000, plan.TargetTokens - systemTokens - plan.ReservedSummaryTokens)
+        plan.CompressionSourceBudgetTokens = Math.Max(1000, plan.TriggerTokens - ContextSummaryLimitTokens)
+        Dim recentTokens = 0
+        Dim firstRetainedIndex = messages.Count
+
+        For i = messages.Count - 1 To 0 Step -1
+            Dim messageTokens = EstimateMessageTokens(messages(i))
+            If firstRetainedIndex < messages.Count AndAlso recentTokens + messageTokens > plan.RecentMessageBudgetTokens Then Exit For
+            recentTokens += messageTokens
+            firstRetainedIndex = i
+        Next
+
+        If firstRetainedIndex <= 0 AndAlso messages.Count > 1 Then
+            firstRetainedIndex = 1
+            recentTokens = messages.Skip(firstRetainedIndex).Sum(Function(x) EstimateMessageTokens(x))
+        End If
+
+        plan.SummaryBoundaryIndex = Math.Max(0, Math.Min(firstRetainedIndex, messages.Count))
+        plan.RecentMessageTokens = Math.Max(0, recentTokens)
+        Return plan
+    End Function
+
+    Private Async Function EnsureContextSummaryAsync(client As AgentEndpointClient,
+                                                     conversation As AgentConversationData,
+                                                     conversationMessages As List(Of AgentMessageData),
+                                                     modelId As String,
+                                                     plan As ContextCompressionPlan,
+                                                     cancellationToken As Threading.CancellationToken) As Task
+        If client Is Nothing OrElse conversation Is Nothing OrElse conversationMessages Is Nothing Then Return
+        Dim summaryBoundaryIndex = Math.Max(0, Math.Min(If(plan?.SummaryBoundaryIndex, 0), conversationMessages.Count))
+        If summaryBoundaryIndex <= 0 Then Return
+
+        Dim retainedCount = conversationMessages.Count - summaryBoundaryIndex
+        If Not String.IsNullOrWhiteSpace(conversation.ContextSummary) AndAlso conversation.ContextSummaryMessageCount = summaryBoundaryIndex Then
+            ShowRunStatus(conversation, $"正在压缩上下文：复用已生成摘要，当前约 {plan.CurrentRequestTokens} / {plan.ContextWindowTokens} tokens，后段历史约 {plan.RecentMessageTokens} tokens")
+            Return
+        End If
+
+        Dim previousSummary = ""
+        Dim sourceStart = 0
+        If Not String.IsNullOrWhiteSpace(conversation.ContextSummary) AndAlso
+           conversation.ContextSummaryMessageCount > 0 AndAlso
+           conversation.ContextSummaryMessageCount < summaryBoundaryIndex Then
+            previousSummary = conversation.ContextSummary.Trim()
+            sourceStart = conversation.ContextSummaryMessageCount
+        End If
+
+        Dim sourceMessages = conversationMessages.Skip(sourceStart).Take(summaryBoundaryIndex - sourceStart).ToList()
+        If sourceMessages.Count = 0 Then Return
+
+        Dim compactModelId = Agent上下文能力表_v6.选择上下文压缩模型(_models, modelId)
+        If String.IsNullOrWhiteSpace(compactModelId) Then Return
+
+        ShowRunStatus(conversation, $"正在压缩上下文：使用 {compactModelId}，当前约 {plan.CurrentRequestTokens} / {plan.ContextWindowTokens} tokens，后段预算 {plan.RecentMessageBudgetTokens} tokens，折算后保留 {retainedCount} 条")
+        Dim compactMessages = BuildContextCompressionMessages(previousSummary, sourceMessages, summaryBoundaryIndex, plan)
+        Dim result = Await client.TryCreateChatCompletionAsync(compactModelId, compactMessages, Nothing, "", cancellationToken)
+        cancellationToken.ThrowIfCancellationRequested()
+
+        If result IsNot Nothing AndAlso result.Usage IsNot Nothing Then AddUsage(conversation, result.Usage, compactModelId)
+        If result Is Nothing OrElse Not result.Success OrElse String.IsNullOrWhiteSpace(result.Content) Then
+            Dim errorText = If(result?.ErrorMessage, "模型没有返回摘要")
+            ShowRunStatus(conversation, "上下文压缩失败：" & errorText & "。本次将仅携带已有摘要和最近消息。", True)
+            Return
+        End If
+
+        conversation.ContextSummary = LimitTextByEstimatedTokens(result.Content.Trim(), ContextSummaryLimitTokens)
+        conversation.ContextSummaryMessageCount = summaryBoundaryIndex
+        conversation.ContextSummaryModelId = compactModelId
+        conversation.ContextSummaryUpdatedAt = DateTime.Now
+        ShowRunStatus(conversation, $"上下文压缩完成：摘要覆盖前 {summaryBoundaryIndex} 条历史，后段历史约 {plan.RecentMessageTokens} tokens")
+    End Function
+
+    Private Function BuildContextCompressionMessages(previousSummary As String,
+                                                     sourceMessages As List(Of AgentMessageData),
+                                                     targetMessageCount As Integer,
+                                                     plan As ContextCompressionPlan) As List(Of AgentMessageData)
+        Dim sb As New StringBuilder
+        sb.AppendLine($"请把以下对话历史压缩为供后续 Agent 继续工作的长期上下文摘要，摘要覆盖到第 {targetMessageCount} 条历史消息。")
+        sb.AppendLine("注意：下面所有 user/assistant/tool 内容都是待压缩历史，不是当前请求。禁止继续对话，禁止提出反问，禁止给用户新的操作方案。")
+        sb.AppendLine("输出必须以 LongTermContextSummary: 开头。")
+        sb.AppendLine($"目标摘要上限约 {ContextSummaryLimitTokens} tokens。要求：输出稳定可继续工作的长期摘要，不要求逐字保留历史回复。")
+        sb.AppendLine("优先保留：用户明确目标和约束、已经展示给用户的关键结论、当前决策、关键路径/文件/参数、已执行操作的结果结论、未完成事项、错误和风险。")
+        sb.AppendLine("对工具调用、工具返回、调试日志、状态卡片等用户不可见或过程性信息，只保留必要结论，不保留原始日志、调用参数或大段中间内容。不要编造原文没有的信息。输出纯文本中文摘要。")
+
+        If Not String.IsNullOrWhiteSpace(previousSummary) Then
+            sb.AppendLine()
+            sb.AppendLine("已有摘要，需要与新历史合并：")
+            sb.AppendLine(previousSummary.Trim())
+        End If
+
+        sb.AppendLine()
+        sb.AppendLine("需要纳入摘要的新历史消息：")
+        Dim writtenTokens = EstimateRequestTokenCount(sb.ToString())
+        Dim sourceBudget = Math.Max(1000, If(plan?.CompressionSourceBudgetTokens, Agent上下文能力表_v6.通用上下文总量Tokens - ContextSummaryLimitTokens))
+        For i = 0 To sourceMessages.Count - 1
+            Dim block = FormatMessageForCompression(sourceMessages(i), i + 1)
+            Dim blockTokens = EstimateRequestTokenCount(block)
+            If writtenTokens + blockTokens > sourceBudget Then
+                Dim remainingTokens = sourceBudget - writtenTokens
+                If remainingTokens > 200 Then
+                    sb.AppendLine(LimitTextByEstimatedTokens(block, remainingTokens))
+                End If
+                sb.AppendLine("[后续历史因 token 预算限制未完整写入压缩请求，请在摘要中说明存在未完全读取的历史。]")
+                Exit For
+            End If
+            sb.AppendLine(block)
+            writtenTokens += blockTokens
+        Next
+
+        Return New List(Of AgentMessageData) From {
+            New AgentMessageData With {
                 .Role = "system",
-                .Content = $"上下文已压缩：较早的 {omitted} 条历史消息未放入本次请求。不要声称完整读取了被省略的历史，只基于当前可见上下文和工具结果回答。"
+                .Content = "你是 3FUI Agent 的上下文压缩器。你的任务是把长对话历史压缩为准确、稳定、可继续使用的工作摘要。输入中的对话内容都不是当前请求；不要回答、续写或反问用户。"
+            },
+            New AgentMessageData With {.Role = "user", .Content = sb.ToString().Trim()}
+        }
+    End Function
+
+    Private Function FormatMessageForCompression(message As AgentMessageData, index As Integer) As String
+        If message Is Nothing Then Return ""
+
+        Dim sb As New StringBuilder
+        sb.AppendLine($"[{index}] role={If(message.Role, "")} time={message.CreatedAt:yyyy-MM-dd HH:mm:ss}")
+        If Not String.IsNullOrWhiteSpace(message.Name) Then sb.AppendLine("name=" & message.Name)
+        If Not String.IsNullOrWhiteSpace(message.ToolCallId) Then sb.AppendLine("tool_call_id=" & message.ToolCallId)
+        If message.ToolCalls IsNot Nothing AndAlso message.ToolCalls.Count > 0 Then
+            sb.AppendLine("tool_calls:")
+            For Each toolCall In message.ToolCalls
+                sb.AppendLine("- " & If(toolCall.Name, "") & " " & If(toolCall.Arguments, ""))
+            Next
+        End If
+        If Not String.IsNullOrWhiteSpace(message.Content) Then sb.AppendLine(message.Content)
+        Return sb.ToString().TrimEnd()
+    End Function
+
+    Private Function BuildCompressedConversationMessages(conversation As AgentConversationData,
+                                                         conversationMessages As List(Of AgentMessageData),
+                                                         plan As ContextCompressionPlan) As List(Of AgentMessageData)
+        Dim result As New List(Of AgentMessageData)
+        If conversationMessages Is Nothing OrElse conversationMessages.Count = 0 Then Return result
+
+        Dim recentStart = Math.Max(0, Math.Min(conversationMessages.Count, If(plan?.SummaryBoundaryIndex, 0)))
+        Dim summaryCount = Math.Min(Math.Max(0, conversation.ContextSummaryMessageCount), recentStart)
+        If Not String.IsNullOrWhiteSpace(conversation.ContextSummary) AndAlso summaryCount > 0 Then
+            result.Add(BuildContextSummaryMessage(conversation, summaryCount))
+            If summaryCount < recentStart Then
+                result.Add(New AgentMessageData With {
+                    .Role = "system",
+                    .Content = $"上下文压缩未覆盖摘要之后的 {recentStart - summaryCount} 条较早历史；这些历史未放入本次请求。不要声称完整读取了被省略的历史。"
+                })
+            End If
+        ElseIf recentStart > 0 Then
+            result.Add(New AgentMessageData With {
+                .Role = "system",
+                .Content = $"上下文过长且没有可用摘要；较早的 {recentStart} 条历史未放入本次请求。不要声称完整读取了被省略的历史。"
             })
         End If
 
+        result.AddRange(NormalizeLeadingRequestMessages(conversationMessages.Skip(recentStart).ToList()))
+        Return result
+    End Function
+
+    Private Function BuildContextSummaryMessage(conversation As AgentConversationData, summaryCount As Integer) As AgentMessageData
+        Dim modelText = If(String.IsNullOrWhiteSpace(conversation.ContextSummaryModelId), "", $"，模型 {conversation.ContextSummaryModelId}")
+        Dim timeText = If(conversation.ContextSummaryUpdatedAt = DateTime.MinValue, "", $"，时间 {conversation.ContextSummaryUpdatedAt:yyyy-MM-dd HH:mm:ss}")
+        Return New AgentMessageData With {
+            .Role = "system",
+            .Content = $"长期上下文摘要（覆盖前 {summaryCount} 条历史{modelText}{timeText}）：{vbCrLf}{conversation.ContextSummary.Trim()}"
+        }
+    End Function
+
+    Private Function NormalizeLeadingRequestMessages(messages As List(Of AgentMessageData)) As List(Of AgentMessageData)
+        If messages Is Nothing Then Return New List(Of AgentMessageData)
+        Dim result = messages.Where(Function(x) x IsNot Nothing).ToList()
+        While result.Count > 0 AndAlso String.Equals(If(result(0).Role, ""), "tool", StringComparison.OrdinalIgnoreCase)
+            result.RemoveAt(0)
+        End While
+        Return result
+    End Function
+
+    Private Function BuildRequestMessagesWithSystem(conversation As AgentConversationData,
+                                                    conversationMessages As List(Of AgentMessageData)) As List(Of AgentMessageData)
         Dim systemText = Agent提示词_v6.构建系统提示词(
             AgentNetworkMode.Normalize(conversation.NetworkMode),
             GetPermissionLevelDisplayName(conversation.PermissionLevel))
@@ -1307,7 +1528,7 @@ Public Class Form_v6_Agent
         Dim result As New List(Of AgentMessageData) From {
             New AgentMessageData With {.Role = "system", .Content = systemText}
         }
-        result.AddRange(conversationMessages)
+        result.AddRange(If(conversationMessages, New List(Of AgentMessageData)))
         Return result
     End Function
 
@@ -1322,21 +1543,97 @@ Public Class Form_v6_Agent
         End Select
     End Function
 
-    Private Function EstimateMessageCharacters(message As AgentMessageData) As Integer
+    Private Function ResolveContextWindowTokens(modelId As String) As Integer
+        Return Agent上下文能力表_v6.获取上下文总量(modelId)
+    End Function
+
+    Private Function EstimateMessageTokens(message As AgentMessageData) As Integer
         If message Is Nothing Then Return 0
-        Dim total = If(message.Content, "").Length + If(message.Name, "").Length + If(message.ToolCallId, "").Length
+        Dim total = 4 + EstimateRequestTokenCount(If(message.Role, ""))
+        total += EstimateRequestTokenCount(If(message.Content, ""))
+        total += EstimateRequestTokenCount(If(message.Name, ""))
+        total += EstimateRequestTokenCount(If(message.ToolCallId, ""))
         If message.ToolCalls IsNot Nothing Then
-            total += message.ToolCalls.Sum(Function(x) If(x.Name, "").Length + If(x.Arguments, "").Length)
+            For Each toolCall In message.ToolCalls
+                total += 8 + EstimateRequestTokenCount(If(toolCall.Name, "")) + EstimateRequestTokenCount(If(toolCall.Arguments, ""))
+            Next
         End If
         Return total
     End Function
 
-    Private Sub AddUsage(conversation As AgentConversationData, usage As AgentUsageInfo)
+    Private Function EstimateRequestTokenCount(text As String) As Integer
+        text = If(text, "")
+        If text = "" Then Return 0
+
+        Dim asciiRun As Integer = 0
+        Dim tokens As Integer = 0
+        For Each ch In text
+            If AscW(ch) >= 0 AndAlso AscW(ch) < 128 Then
+                asciiRun += 1
+            Else
+                If asciiRun > 0 Then
+                    tokens += CInt(Math.Ceiling(asciiRun / 4.0))
+                    asciiRun = 0
+                End If
+                tokens += 1
+            End If
+        Next
+        If asciiRun > 0 Then tokens += CInt(Math.Ceiling(asciiRun / 4.0))
+
+        Return Math.Max(1, tokens)
+    End Function
+
+    Private Function LimitTextByEstimatedTokens(text As String, maxTokens As Integer) As String
+        text = If(text, "")
+        If maxTokens <= 0 OrElse EstimateRequestTokenCount(text) <= maxTokens Then Return text
+
+        Const suffix As String = "...[已截断]"
+        Dim contentBudget = maxTokens - EstimateRequestTokenCount(suffix)
+        If contentBudget <= 0 Then Return suffix
+
+        Dim tokens As Integer = 0
+        Dim asciiRun As Integer = 0
+        Dim safeLength As Integer = 0
+        For Each ch In text
+            Dim nextTokens As Integer
+            If AscW(ch) >= 0 AndAlso AscW(ch) < 128 Then
+                Dim previousAsciiTokens = CInt(Math.Ceiling(asciiRun / 4.0))
+                asciiRun += 1
+                Dim nextAsciiTokens = CInt(Math.Ceiling(asciiRun / 4.0))
+                nextTokens = tokens + (nextAsciiTokens - previousAsciiTokens)
+            Else
+                asciiRun = 0
+                nextTokens = tokens + 1
+            End If
+
+            If nextTokens > contentBudget Then Exit For
+            tokens = nextTokens
+            safeLength += 1
+        Next
+
+        If safeLength <= 0 Then Return suffix
+        Return text.Substring(0, safeLength).TrimEnd() & suffix
+    End Function
+
+    Private Sub AddUsage(conversation As AgentConversationData, usage As AgentUsageInfo, modelId As String)
         If usage Is Nothing Then Return
+        EnrichUsageForRequest(usage, modelId)
         _pageUsage.Add(usage)
         If conversation.Usage Is Nothing Then conversation.Usage = New AgentUsageInfo
         conversation.Usage.Add(usage)
         UpdateUsageButton()
+    End Sub
+
+    Private Sub EnrichUsageForRequest(usage As AgentUsageInfo, modelId As String)
+        If usage Is Nothing Then Return
+        If usage.EffectiveInputTokens <= 0 Then usage.EffectiveInputTokens = GetUsageInputTokens(usage)
+        If usage.EffectiveOutputTokens <= 0 Then usage.EffectiveOutputTokens = GetUsageOutputTokens(usage)
+        If usage.TotalTokens <= 0 Then usage.TotalTokens = usage.EffectiveInputTokens + usage.EffectiveOutputTokens
+        usage.LastRequestInputTokens = usage.EffectiveInputTokens
+        usage.LastRequestTotalTokens = usage.TotalTokens
+        usage.LastRequestCachedTokens = usage.CachedTokens
+        usage.LastRequestContextWindowTokens = ResolveContextWindowTokens(modelId)
+        usage.LastRequestModelId = If(modelId, "")
     End Sub
 
     Private Sub AddSubmittedFiles(paths As IEnumerable(Of String))
@@ -1628,11 +1925,59 @@ Public Class Form_v6_Agent
 
     Private Sub MB_页面用量_Click(sender As Object, e As EventArgs) Handles MB_页面用量.Click
         Dim currentUsage = If(_current?.Usage, New AgentUsageInfo)
-        ExMsgBox(FormMain_v6, $"当前会话：{FormatUsage(currentUsage)}{vbCrLf}本页累计：{FormatUsage(_pageUsage)}", MsgBoxStyle.Information, "页面用量")
+        Dim contextWindowTokens = GetUsageContextWindowTokens(currentUsage)
+        Dim detail =
+            $"上下文窗口：{contextWindowTokens} tokens{vbCrLf}" &
+            $"当前会话：{FormatUsage(currentUsage)}{vbCrLf}" &
+            $"本页累计：{FormatUsage(_pageUsage)}{vbCrLf}" &
+            $"最近请求：模型 {If(String.IsNullOrWhiteSpace(currentUsage.LastRequestModelId), "未知", currentUsage.LastRequestModelId)}，输入 {currentUsage.LastRequestInputTokens}，总量上下文 {FormatContextPercent(currentUsage)}，缓存命中率 {FormatLastRequestCacheHitRate(currentUsage)}"
+        ExMsgBox(FormMain_v6, detail, MsgBoxStyle.Information, "页面用量")
     End Sub
 
     Private Function FormatUsage(usage As AgentUsageInfo) As String
-        Return $"总 {usage.TotalTokens}，输入 {usage.PromptTokens + usage.InputTokens}，输出 {usage.CompletionTokens + usage.OutputTokens}，缓存 {usage.CachedTokens}，推理 {usage.ReasoningTokens}"
+        Return $"总 {usage.TotalTokens}，输入 {GetUsageInputTokens(usage)}，输出 {GetUsageOutputTokens(usage)}，缓存 {usage.CachedTokens}，缓存命中率 {FormatCacheHitRate(usage)}，推理 {usage.ReasoningTokens}"
+    End Function
+
+    Private Function GetUsageInputTokens(usage As AgentUsageInfo) As Integer
+        If usage Is Nothing Then Return 0
+        If usage.EffectiveInputTokens > 0 Then Return usage.EffectiveInputTokens
+        If usage.InputTokens > 0 Then Return usage.InputTokens
+        Return usage.PromptTokens
+    End Function
+
+    Private Function GetUsageOutputTokens(usage As AgentUsageInfo) As Integer
+        If usage Is Nothing Then Return 0
+        If usage.EffectiveOutputTokens > 0 Then Return usage.EffectiveOutputTokens
+        If usage.OutputTokens > 0 Then Return usage.OutputTokens
+        Return usage.CompletionTokens
+    End Function
+
+    Private Function FormatContextPercent(usage As AgentUsageInfo) As String
+        If usage Is Nothing OrElse usage.LastRequestInputTokens <= 0 Then Return "0%"
+        Dim windowTokens = GetUsageContextWindowTokens(usage)
+        Return FormatPercent(usage.LastRequestInputTokens / CDbl(windowTokens))
+    End Function
+
+    Private Function GetUsageContextWindowTokens(usage As AgentUsageInfo) As Integer
+        If usage IsNot Nothing AndAlso usage.LastRequestContextWindowTokens > 0 Then Return usage.LastRequestContextWindowTokens
+        Dim modelId = If(usage?.LastRequestModelId, If(_current?.ModelId, ""))
+        Return ResolveContextWindowTokens(modelId)
+    End Function
+
+    Private Function FormatCacheHitRate(usage As AgentUsageInfo) As String
+        Dim inputTokens = GetUsageInputTokens(usage)
+        If inputTokens <= 0 Then Return "0%"
+        Return FormatPercent(Math.Min(1.0, Math.Max(0.0, usage.CachedTokens / CDbl(inputTokens))))
+    End Function
+
+    Private Function FormatLastRequestCacheHitRate(usage As AgentUsageInfo) As String
+        If usage Is Nothing OrElse usage.LastRequestInputTokens <= 0 Then Return "0%"
+        Return FormatPercent(Math.Min(1.0, Math.Max(0.0, usage.LastRequestCachedTokens / CDbl(usage.LastRequestInputTokens))))
+    End Function
+
+    Private Function FormatPercent(value As Double) As String
+        If Double.IsNaN(value) OrElse Double.IsInfinity(value) Then Return "0%"
+        Return value.ToString("P1", Globalization.CultureInfo.InvariantCulture)
     End Function
 
     Private Sub AgentRoom1_LinkClicked(sender As Object, e As AgentRoom.LinkClickedEventArgs) Handles AgentRoom1.LinkClicked
