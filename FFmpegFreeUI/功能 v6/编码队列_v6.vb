@@ -751,7 +751,7 @@ Public Class 编码队列_v6
         If String.IsNullOrWhiteSpace(原名) Then 原名 = "output"
 
         Dim 文件名 = If(预设数据.输出命名_开头文本, "")
-        文件名 &= If(String.IsNullOrWhiteSpace(预设数据.输出命名_替代文本), 原名, 预设数据.输出命名_替代文本)
+        文件名 &= If(预设数据.输出命名_替代文本 Is Nothing OrElse 预设数据.输出命名_替代文本 = "", 原名, 预设数据.输出命名_替代文本)
         文件名 &= If(预设数据.输出命名_结尾文本, "")
         文件名 = 应用非冲突检测命名选项(文件名, 预设数据.输出_自动命名选项, 预设数据)
         文件名 = 清理文件名(文件名)
@@ -808,7 +808,7 @@ Public Class 编码队列_v6
             Dim rootVirtual = 规范化转译比较目录(转译模式处理路径(起始点))
             If inputVirtual = "" OrElse rootVirtual = "" Then Return ""
             If String.Equals(inputVirtual, rootVirtual, StringComparison.OrdinalIgnoreCase) Then Return ""
-            Dim rootPrefix = If(rootVirtual.EndsWith("/", StringComparison.Ordinal), rootVirtual, rootVirtual & "/")
+            Dim rootPrefix = If(rootVirtual.EndsWith("/"c), rootVirtual, rootVirtual & "/")
             If Not inputVirtual.StartsWith(rootPrefix, StringComparison.OrdinalIgnoreCase) Then Return ""
             Return 清理相对子目录(inputVirtual.Substring(rootPrefix.Length).Replace("/"c, Path.DirectorySeparatorChar))
         Catch
@@ -825,7 +825,7 @@ Public Class 编码队列_v6
     Private Shared Function 规范化转译比较目录(pathText As String) As String
         Dim value = If(pathText, "").Trim().Replace("\"c, "/"c)
         If value = "" Then Return ""
-        If Not value.StartsWith("/", StringComparison.Ordinal) Then value = "/" & value
+        If Not value.StartsWith("/"c) Then value = "/" & value
         While value.Contains("//")
             value = value.Replace("//", "/")
         End While
@@ -897,7 +897,7 @@ Public Class 编码队列_v6
     End Function
 
     Private Shared Function 清理文件名(value As String) As String
-        Dim result = If(value, "").Trim()
+        Dim result = If(value, "")
         For Each c In Path.GetInvalidFileNameChars()
             result = result.Replace(c, "_"c)
         Next
@@ -1140,7 +1140,7 @@ Public Class 编码任务_v6
             Case 编码任务日志显示模式_v6.仅错误信息
                 Return 完整日志缓存.Where(Function(x) x.是否错误 OrElse x.类别 = 编码任务日志类别_v6.错误).ToList()
             Case 编码任务日志显示模式_v6.当前阶段输出
-                Dim stageName = If(指定阶段名 Is Nothing, If(当前步骤?.显示名称, ""), 指定阶段名)
+                Dim stageName = If(指定阶段名, If(当前步骤?.显示名称, ""))
                 If String.IsNullOrWhiteSpace(stageName) Then Return New List(Of 编码任务日志条目_v6)
                 Return 完整日志缓存.Where(Function(x) String.Equals(x.阶段名, stageName, StringComparison.Ordinal)).ToList()
             Case Else
