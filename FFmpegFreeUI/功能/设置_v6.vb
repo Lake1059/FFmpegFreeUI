@@ -18,6 +18,11 @@ Public Class 设置_v6
 
     Public Property 图形动画帧率 As Integer = 60
 
+    Public Property 图形DX_HDR启用 As Integer = 0
+    Public Property 图形DX_HDR显示档位 As Integer = 2
+    Public Property 图形DX_HDR矢量颜色映射 As Integer = 0
+    Public Property 图形DX_HDR图片映射 As Integer = 0
+
     Public Property 窗口样式 As Integer = 2
     Public Property 启用性能计数器 As Integer = 0
 
@@ -123,17 +128,22 @@ Public Class 设置_v6
             实例对象 = JsonSerializer.Deserialize(Of 设置_v6)(设置文本)
             迁移旧设置字段(设置文本)
         End If
-        Form_v6_设置_LakeUI性能选项.MCB_GPU抗锯齿.SelectedIndex = 实例对象.图形DX抗锯齿
-        Form_v6_设置_LakeUI性能选项.MCB_文字渲染模式.SelectedIndex = 实例对象.图形DX文字渲染模式
-        Form_v6_设置_LakeUI性能选项.MCB_SSAA.SelectedIndex = 实例对象.图形DX_SSAA
+        设置组合框选中索引(Form_v6_设置_LakeUI性能选项.MCB_GPU抗锯齿, 实例对象.图形DX抗锯齿, 0)
+        设置组合框选中索引(Form_v6_设置_LakeUI性能选项.MCB_文字渲染模式, 实例对象.图形DX文字渲染模式, 0)
+        设置组合框选中索引(Form_v6_设置_LakeUI性能选项.MCB_SSAA, 实例对象.图形DX_SSAA, 0)
 
-        Form_v6_设置_LakeUI性能选项.MCB_D2DImage缓存预算.SelectedIndex = 实例对象.图形DX_GPU缓存总预算
-        Form_v6_设置_LakeUI性能选项.MCB_D2D每对象画刷缓存数量.SelectedIndex = 实例对象.图形DX画刷缓存条目上限
-        Form_v6_设置_LakeUI性能选项.MCB_DW字体相关预算.SelectedIndex = 实例对象.图形DW字体缓存条目上限
-        Form_v6_设置_LakeUI性能选项.MCB_超容器背景映射源位图缓存.SelectedIndex = 实例对象.图形DX_CPU位图缓存总预算
-        Form_v6_设置_LakeUI性能选项.MCB_超容器背景映射脏区策略极限.SelectedIndex = 实例对象.图形DX背景穿透脏区策略
-        Form_v6_设置_LakeUI性能选项.MCB_超容器背景映射条目预算.SelectedIndex = 实例对象.图形DX_SSAA缓存分桶粒度
+        设置组合框选中索引(Form_v6_设置_LakeUI性能选项.MCB_D2DImage缓存预算, 实例对象.图形DX_GPU缓存总预算, 2)
+        设置组合框选中索引(Form_v6_设置_LakeUI性能选项.MCB_D2D每对象画刷缓存数量, 实例对象.图形DX画刷缓存条目上限, 5)
+        设置组合框选中索引(Form_v6_设置_LakeUI性能选项.MCB_DW字体相关预算, 实例对象.图形DW字体缓存条目上限, 2)
+        设置组合框选中索引(Form_v6_设置_LakeUI性能选项.MCB_超容器背景映射源位图缓存, 实例对象.图形DX_CPU位图缓存总预算, 2)
+        设置组合框选中索引(Form_v6_设置_LakeUI性能选项.MCB_超容器背景映射脏区策略极限, 实例对象.图形DX背景穿透脏区策略, 4)
+        设置组合框选中索引(Form_v6_设置_LakeUI性能选项.MCB_超容器背景映射条目预算, 实例对象.图形DX_SSAA缓存分桶粒度, 1)
         Form_v6_设置_LakeUI性能选项.MCB_动画帧率.Text = 实例对象.图形动画帧率
+
+        设置组合框选中索引(Form_v6_设置_LakeUIHDR.MCB_HDR启用, 实例对象.图形DX_HDR启用, 0)
+        设置组合框选中索引(Form_v6_设置_LakeUIHDR.MCB_HDR显示档位, 实例对象.图形DX_HDR显示档位, 2)
+        设置组合框选中索引(Form_v6_设置_LakeUIHDR.MCB_HDR矢量颜色, 实例对象.图形DX_HDR矢量颜色映射, 0)
+        设置组合框选中索引(Form_v6_设置_LakeUIHDR.MCB_HDR图片, 实例对象.图形DX_HDR图片映射, 0)
 
         Form_v6_设置_LakeUI视觉体验.MCB_窗口样式.SelectedIndex = 实例对象.窗口样式
         Form_v6_设置_LakeUI视觉体验.MCB_性能计数器.SelectedIndex = 实例对象.启用性能计数器
@@ -228,6 +238,16 @@ Public Class 设置_v6
         Form_v6_设置_个性化.MCB_背景来源.SelectedIndex = 实例对象.SP_毛玻璃背景来源
         Form_v6_设置_个性化.MCB_噪点颗粒.SelectedIndex = 实例对象.SP_毛玻璃噪点颗粒
 
+    End Sub
+
+    Private Shared Sub 设置组合框选中索引(combo As LakeUI.ModernComboBox, index As Integer, Optional fallback As Integer = 0)
+        If combo Is Nothing OrElse combo.Items.Count = 0 Then Return
+        Dim safeFallback = Math.Min(Math.Max(fallback, 0), combo.Items.Count - 1)
+        If index < 0 OrElse index >= combo.Items.Count Then
+            combo.SelectedIndex = safeFallback
+        Else
+            combo.SelectedIndex = index
+        End If
     End Sub
 
     Private Shared Sub 迁移旧设置字段(设置文本 As String)

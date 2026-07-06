@@ -58,7 +58,7 @@ Partial Class Form_v6_编码队列
         任务菜单.BackdropTintColor = Color.FromArgb(CByte(40), CByte(0), CByte(0), CByte(0))
         任务菜单.BorderColor = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
         任务菜单.DescriptionFont = New Font("Microsoft YaHei UI", 9F)
-        任务菜单.HoverAnimationFPS = 120
+        任务菜单.AnimationFPS = 120
         任务菜单.HoverBackColor = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
         任务菜单.HoverRadius = 5
         任务菜单.IconSize = 0
@@ -66,7 +66,6 @@ Partial Class Form_v6_编码队列
         任务菜单.ItemPadding = New Padding(10, 0, 10, 0)
         任务菜单.MenuFont = New Font("Microsoft YaHei UI", 10F)
         任务菜单.MenuPadding = New Padding(10)
-        任务菜单.PopupAnimationFPS = 0
         任务菜单.PressedBackColor = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
         任务菜单.SeparatorColor = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
         任务菜单.SeparatorHeight = 20
@@ -80,7 +79,7 @@ Partial Class Form_v6_编码队列
         右键菜单.BackdropTintColor = Color.FromArgb(CByte(40), CByte(0), CByte(0), CByte(0))
         右键菜单.BorderColor = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
         右键菜单.DescriptionFont = New Font("Microsoft YaHei UI", 9F)
-        右键菜单.HoverAnimationFPS = 120
+        右键菜单.AnimationFPS = 120
         右键菜单.HoverBackColor = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
         右键菜单.HoverRadius = 5
         右键菜单.IconSize = 0
@@ -88,7 +87,6 @@ Partial Class Form_v6_编码队列
         右键菜单.ItemPadding = New Padding(10, 0, 10, 0)
         右键菜单.MenuFont = New Font("Microsoft YaHei UI", 10F)
         右键菜单.MenuPadding = New Padding(10)
-        右键菜单.PopupAnimationFPS = 0
         右键菜单.PressedBackColor = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
         右键菜单.SeparatorColor = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
         右键菜单.SeparatorHeight = 20

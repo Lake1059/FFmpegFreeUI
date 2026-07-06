@@ -423,7 +423,7 @@ Public Class Form_v6_编码队列
     End Sub
 
     Private Function 获取列宽Dpi比例() As Single
-        Return D2DGlobals.GetCurrentDpiScale(UltraDetailListView1)
+        Return D3D_D2DInterop.GetCurrentDpiScale(UltraDetailListView1)
     End Function
 
     Private Sub 校准编码队列列宽()
@@ -482,7 +482,7 @@ Public Class Form_v6_编码队列
     End Function
 
     Private Function 测量列文本宽度(text As String) As Integer
-        Return D2DTextRenderer.MeasureWidth(If(text, ""), UltraDetailListView1.Font, DPI) + 缩放宽度(列宽文本预留宽度基准, DPI)
+        Return D3D_TextInterop.MeasureWidth(If(text, ""), UltraDetailListView1.Font, DPI) + 缩放宽度(列宽文本预留宽度基准, DPI)
     End Function
 
     Private Shared Function 压缩列宽(理想宽度 As Integer(), 最小宽度 As Integer(), 目标总宽度 As Integer) As Integer()

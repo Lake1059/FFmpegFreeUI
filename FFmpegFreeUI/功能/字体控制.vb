@@ -51,6 +51,7 @@ Public Class 字体控制
         SetControlFont(设置_v6.实例对象.字体, Form_v6_设置, , True)
         SetControlFont(设置_v6.实例对象.字体, Form_v6_设置_LakeUI性能选项, , True)
         SetControlFont(设置_v6.实例对象.字体, Form_v6_设置_LakeUI视觉体验, , True)
+        SetControlFont(设置_v6.实例对象.字体, Form_v6_设置_LakeUIHDR, , True)
         SetControlFont(设置_v6.实例对象.字体, Form_v6_设置_LakeUI许可证, , True)
         SetControlFont(设置_v6.实例对象.字体, Form_v6_设置_界面显示, {Form_v6_设置_界面显示.MCB_全局字体}, True)
         SetControlFont(设置_v6.实例对象.字体, Form_v6_设置_功能设定, , True)

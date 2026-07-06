@@ -72,8 +72,7 @@ Public Class 音频编码器数据库_v6
 
     Public Shared Function 获取质量参数名列表() As List(Of String)
         Dim result As New List(Of String) From {""}
-        Dim exists As New HashSet(Of String)(StringComparer.OrdinalIgnoreCase)
-        exists.Add("")
+        Dim exists As New HashSet(Of String)(StringComparer.OrdinalIgnoreCase) From {""}
 
         For Each 编码器 In 编码器列表
             For Each 参数项 As 音频编码器参数数据 In 编码器.质量参数列表.Concat(编码器.特殊参数列表.Where(AddressOf 是质量参数下拉框参数))

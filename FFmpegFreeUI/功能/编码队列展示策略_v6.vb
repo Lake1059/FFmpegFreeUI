@@ -61,7 +61,7 @@ Public Class 旧版兼容编码队列展示策略_v6
     End Sub
 
     Private Shared Function 占位文本(value As String) As String
-        If String.IsNullOrWhiteSpace(value) Then Return "N/A"
+        If String.IsNullOrWhiteSpace(value) Then Return ""
         Return value
     End Function
 
@@ -89,7 +89,7 @@ Public Class 旧版兼容编码队列展示策略_v6
     End Function
 
     Private Shared Function 默认时间文本(task As 编码任务_v6) As String
-        If task.状态 = 编码任务状态_v6.未处理 Then Return "N/A"
+        If task.状态 = 编码任务状态_v6.未处理 Then Return ""
         Dim elapsedText = 编码进度_v6.格式化秒(task.任务耗时计时器.Elapsed.TotalSeconds)
         If task.状态 = 编码任务状态_v6.正在处理 AndAlso task.进度.时间文本 <> "" Then Return $"{task.进度.时间文本} - {elapsedText}"
         If task.状态 = 编码任务状态_v6.已暂停 Then Return elapsedText
@@ -122,7 +122,7 @@ Public Class 旧版兼容编码队列展示策略_v6
         If task.进度.输出大小KB > 0 Then
             item.SubItems(4).Text = 编码进度_v6.格式化大小KB(task.进度.输出大小KB)
         Else
-            item.SubItems(4).Text = "N/A"
+            item.SubItems(4).Text = ""
         End If
     End Sub
 

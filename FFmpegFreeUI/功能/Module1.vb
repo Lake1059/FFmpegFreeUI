@@ -346,13 +346,6 @@ Module Module1
         End If
     End Sub
 
-    'Public Sub 根据标签宽度计算并设置显示高度(标签控件 As Label)
-    '    Dim g As Graphics = 标签控件.CreateGraphics()
-    '    Dim size As SizeF = g.MeasureString(标签控件.Text, 标签控件.Font, 标签控件.Width - 标签控件.Padding.Left - 标签控件.Padding.Right)
-    '    g.Dispose()
-    '    标签控件.Height = size.Height + 标签控件.Padding.Top + 标签控件.Padding.Bottom
-    'End Sub
-
     ''' <summary>
     ''' 根据核心编号列表生成 ProcessorAffinity 掩码
     ''' </summary>
@@ -402,23 +395,6 @@ Module Module1
         a = a.Replace("\", "/").Replace("//", "/")
         If Not a.StartsWith("/"c) Then a = "/" & a
         Return a
-    End Function
-
-    Public Function 截取画面_对话框背景专用() As Bitmap
-        Try
-            Dim bounds As Rectangle = FormMain_v6.ClientRectangle
-            Dim bitmap As New Bitmap(bounds.Width, bounds.Height)
-            Using g As Graphics = Graphics.FromImage(bitmap)
-                g.CopyFromScreen(FormMain_v6.PointToScreen(bounds.Location), Point.Empty, bounds.Size)
-                g.CompositingMode = Drawing2D.CompositingMode.SourceOver
-                Using brush As New SolidBrush(Color.FromArgb(180, 0, 0, 0))
-                    g.FillRectangle(brush, 0, 0, bitmap.Width, bitmap.Height)
-                End Using
-            End Using
-            Return bitmap
-        Catch ex As Exception
-            Return New Bitmap(FormMain_v6.Width, FormMain_v6.Height)
-        End Try
     End Function
 
     Public Function 随机字符串生成(长度 As Integer, Optional 包含数字 As Boolean = True, Optional 包含大写字母 As Boolean = True, Optional 包含小写字母 As Boolean = True) As String

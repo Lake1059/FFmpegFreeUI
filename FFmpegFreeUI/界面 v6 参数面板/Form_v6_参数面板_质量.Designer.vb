@@ -69,7 +69,7 @@ Partial Class Form_v6_参数面板_质量
         预制条目菜单.BackdropNoiseOpacity = CByte(0)
         预制条目菜单.BackdropTintColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         预制条目菜单.BorderColor = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
-        预制条目菜单.HoverAnimationFPS = 0
+        预制条目菜单.AnimationFPS = 0
         预制条目菜单.HoverBackColor = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
         预制条目菜单.HoverRadius = 5
         预制条目菜单.IconSize = 0
@@ -77,7 +77,6 @@ Partial Class Form_v6_参数面板_质量
         预制条目菜单.ItemPadding = New Padding(10, 0, 10, 0)
         预制条目菜单.MenuFont = New Font("Microsoft YaHei UI", 10F)
         预制条目菜单.MenuPadding = New Padding(10)
-        预制条目菜单.PopupAnimationFPS = 0
         预制条目菜单.PressedBackColor = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
         预制条目菜单.SeparatorColor = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
         预制条目菜单.SeparatorHeight = 20

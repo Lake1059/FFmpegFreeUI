@@ -1,9 +1,9 @@
 Public Class Form_v6_设置_LakeUI性能选项
 
-    Private Shared ReadOnly GPU缓存预算选项MiB As Long() = {64L, 128L, 256L, 512L, 1024L, 2048L, 4096L}
-    Private Shared ReadOnly CPU缓存预算选项MiB As Long() = {32L, 64L, 128L, 256L, 512L}
-    Private Shared ReadOnly 缓存条目选项 As Integer() = {8, 16, 32, 64, 128, 256, 512}
-    Private Shared ReadOnly 字体缓存条目选项 As Integer() = {32, 64, 128, 256, 512}
+    Private Shared ReadOnly GPU缓存预算选项MiB As Long() = {64L, 128L, 256L, 512L, 1024L, 2048L, 4096L, 8192L, 0L}
+    Private Shared ReadOnly CPU缓存预算选项MiB As Long() = {32L, 64L, 128L, 256L, 512L, 1024L, 2048L, 0L}
+    Private Shared ReadOnly 缓存条目选项 As Integer() = {8, 16, 32, 64, 128, 256, 512, 1024, 0}
+    Private Shared ReadOnly 字体缓存条目选项 As Integer() = {32, 64, 128, 256, 512, 1024, 0}
     Private Shared ReadOnly 背景穿透脏区数量选项 As Integer() = {4, 4, 4, 8, 8, 8, 16, 16, 16}
     Private Shared ReadOnly 背景穿透完整重采阈值选项 As Single() = {0.4F, 0.6F, 0.8F, 0.4F, 0.6F, 0.8F, 0.4F, 0.6F, 0.8F}
     Private Shared ReadOnly SSAA缓存分桶粒度选项 As Integer() = {32, 64, 96, 128, 192, 256, 384, 512, 1024}

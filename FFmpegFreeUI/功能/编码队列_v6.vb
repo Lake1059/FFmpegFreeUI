@@ -416,7 +416,6 @@ Public Class 编码队列_v6
             End If
         Next
         广播任务更新(changed)
-        请求调度()
     End Sub
 
     Public Shared Sub 移除任务(ids As IEnumerable(Of String))
@@ -1470,11 +1469,13 @@ Public Class 编码任务_v6
         状态 = 编码任务状态_v6.未处理
         当前步骤索引 = -1
         手动停止 = False
-        允许自动启动 = 设置_v6.实例对象.自动开始任务选项 = 0
+        允许自动启动 = False
         实时输出 = ""
         清空日志(False)
         步骤.Clear()
         进度 = New 编码进度_v6
+        输入文件大小 = 0
+        媒体总时长 = ""
         任务耗时计时器.Reset()
     End Sub
 
@@ -1640,12 +1641,12 @@ Public Class 编码进度_v6
     Public Property 总时长 As TimeSpan = TimeSpan.Zero
     Public Property 当前时间 As TimeSpan = TimeSpan.Zero
     Public Property 百分比 As Double = 0
-    Public Property 进度文本 As String = "N/A"
-    Public Property 效率文本 As String = "N/A"
-    Public Property 输出大小文本 As String = "N/A"
+    Public Property 进度文本 As String = ""
+    Public Property 效率文本 As String = ""
+    Public Property 输出大小文本 As String = ""
     Public Property 输出大小KB As Long = 0
-    Public Property 质量文本 As String = "N/A"
-    Public Property 比特率文本 As String = "N/A"
+    Public Property 质量文本 As String = ""
+    Public Property 比特率文本 As String = ""
     Public Property 时间文本 As String = ""
 
     Public Sub 解析FFmpeg输出(line As String, preferredTotal As TimeSpan)
@@ -1660,7 +1661,7 @@ Public Class 编码进度_v6
             百分比 = Math.Min(Math.Max(当前时间.TotalSeconds / 总时长.TotalSeconds, 0), 1)
             进度文本 = $"{百分比 * 100:F1}%"
         Else
-            进度文本 = "N/A"
+            进度文本 = ""
         End If
 
         Dim sm = SizePattern.Match(line)
@@ -1688,7 +1689,7 @@ Public Class 编码进度_v6
     Private Shared Function 格式化质量文本(value As String) As String
         Dim q As Double
         If Not Double.TryParse(value, NumberStyles.Any, CultureInfo.InvariantCulture, q) Then Return If(value, "")
-        If q = 0 OrElse q = -1 Then Return "N/A"
+        If q = 0 OrElse q = -1 Then Return ""
         Return q.ToString("F0", CultureInfo.InvariantCulture)
     End Function
 
@@ -1706,7 +1707,7 @@ Public Class 编码进度_v6
 
     Private Sub 更新输出大小文本()
         If 输出大小KB <= 0 Then
-            输出大小文本 = "N/A"
+            输出大小文本 = ""
             Exit Sub
         End If
 
