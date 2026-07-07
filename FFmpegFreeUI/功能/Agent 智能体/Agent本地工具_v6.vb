@@ -11,11 +11,18 @@ Public Class AgentLocalTools
     Public Const PermissionEnvironment As Integer = 1
     Public Const PermissionSystem As Integer = 2
 
-    Public NotInheritable Class PowerShellRunSession
+    Public MustInherit Class ConsoleRunSession
         Implements IDisposable
 
-        Private Const StdoutEndPrefixBase As String = "__3FUI_AGENT_PS_STDOUT_END__"
-        Private Const StderrEndPrefixBase As String = "__3FUI_AGENT_PS_STDERR_END__"
+        Private Const DefaultTimeoutSeconds As Integer = 60
+        Private Const MaxCapturedOutputCharacters As Integer = 12000
+        Private Shared ReadOnly ConsoleProtocolJsonOptions As New JsonSerializerOptions With {
+            .WriteIndented = False,
+            .PropertyNamingPolicy = Nothing,
+            .DictionaryKeyPolicy = Nothing,
+            .Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping
+        }
+        Private Shared ReadOnly Utf8NoBomEncoding As New UTF8Encoding(False)
 
         Private ReadOnly _gate As New Threading.SemaphoreSlim(1, 1)
         Private ReadOnly _outputLock As New Object()
@@ -30,29 +37,41 @@ Public Class AgentLocalTools
         Private _reportedExitCode As Integer = -1
         Private _reportedWorkingDirectory As String = ""
         Private _lastWorkingDirectory As String = ""
+        Private _processFileName As String = ""
         Private _disposed As Boolean = False
+
+        Protected MustOverride ReadOnly Property DisplayName As String
+        Protected MustOverride ReadOnly Property InputPropertyNames As String()
+        Protected MustOverride ReadOnly Property StdoutMarkerPrefixBase As String
+        Protected MustOverride ReadOnly Property StderrMarkerPrefixBase As String
+
+        Protected ReadOnly Property CurrentProcessFileName As String
+            Get
+                Return _processFileName
+            End Get
+        End Property
 
         Public Async Function ExecuteAsync(args As JsonElement,
                                            cancellationToken As Threading.CancellationToken) As Task(Of String)
-            Dim command = Agent通用工具_v6.GetJsonString(args, "command").Trim()
-            If command = "" Then Return "缺少 command。"
+            Dim inputText = ReadInputText(args).Trim()
+            If inputText = "" Then Return MissingInputMessage()
 
-            Dim requestedWorkingDirectory = Agent通用工具_v6.GetJsonString(args, "working_directory").Trim()
-            If requestedWorkingDirectory <> "" AndAlso Not Directory.Exists(requestedWorkingDirectory) Then Return "目录不存在：" & requestedWorkingDirectory
+            Dim requestedWorkingDirectory = GetJsonStringValue(args, "working_directory").Trim()
+            If requestedWorkingDirectory <> "" AndAlso Not Directory.Exists(requestedWorkingDirectory) Then Return "Directory does not exist: " & requestedWorkingDirectory
 
-            Dim timeoutSeconds = Agent通用工具_v6.GetJsonInteger(args, "timeout_seconds", 60)
+            Dim timeoutSeconds = GetJsonIntegerValue(args, "timeout_seconds", DefaultTimeoutSeconds)
             timeoutSeconds = Math.Min(Math.Max(timeoutSeconds, 1), 300)
 
             Await _gate.WaitAsync(cancellationToken)
             Try
-                If _disposed Then Return "PowerShell 会话已关闭。"
+                If _disposed Then Return DisplayName & " session closed."
 
                 Dim initialDirectory = If(requestedWorkingDirectory <> "", requestedWorkingDirectory, Application.StartupPath)
                 EnsureProcessStarted(initialDirectory)
 
                 Dim token = Guid.NewGuid().ToString("N")
-                Dim stdoutEndPrefix = StdoutEndPrefixBase & token & ":"
-                Dim stderrEndMarker = StderrEndPrefixBase & token
+                Dim stdoutEndPrefix = StdoutMarkerPrefixBase & token & ":"
+                Dim stderrEndMarker = StderrMarkerPrefixBase & token
                 Dim stdoutCapture As New StringBuilder()
                 Dim stderrCapture As New StringBuilder()
                 Dim stdoutEndTcs As New TaskCompletionSource(Of Boolean)(TaskCreationOptions.RunContinuationsAsynchronously)
@@ -75,11 +94,12 @@ Public Class AgentLocalTools
                 Dim processEnded As Boolean = False
                 Dim waitAfterKill As Boolean = False
                 Dim throwCancellation As Boolean = False
+                Dim operationFailure As Exception = Nothing
 
                 Using linkedCts = Threading.CancellationTokenSource.CreateLinkedTokenSource(cancellationToken)
                     linkedCts.CancelAfter(TimeSpan.FromSeconds(timeoutSeconds))
                     Try
-                        _process.StandardInput.WriteLine(BuildPersistentPowerShellScript(command, requestedWorkingDirectory, stdoutEndPrefix, stderrEndMarker))
+                        _process.StandardInput.WriteLine(BuildInputPayload(inputText, requestedWorkingDirectory, stdoutEndPrefix, stderrEndMarker))
                         _process.StandardInput.Flush()
 
                         Dim markerTask = Task.WhenAll(stdoutEndTcs.Task, stderrEndTcs.Task)
@@ -95,6 +115,9 @@ Public Class AgentLocalTools
                         waitAfterKill = True
                         throwCancellation = cancellationToken.IsCancellationRequested
                         timedOut = Not throwCancellation
+                        processEnded = True
+                    Catch ex As Exception
+                        operationFailure = ex
                         processEnded = True
                     End Try
                 End Using
@@ -122,23 +145,58 @@ Public Class AgentLocalTools
                 If workingDirectory <> "" Then _lastWorkingDirectory = workingDirectory
                 If processEnded Then CleanupProcess()
 
-                stdout = Agent通用工具_v6.LimitText(stdout, 12000)
-                stderr = Agent通用工具_v6.LimitText(stderr, 12000)
+                If operationFailure IsNot Nothing Then Throw New InvalidOperationException(DisplayName & " execution failed: " & operationFailure.Message, operationFailure)
 
-                Dim payload As New Dictionary(Of String, Object) From {
-                    {"command", command},
-                    {"working_directory", workingDirectory},
-                    {"timeout_seconds", timeoutSeconds},
-                    {"timed_out", timedOut},
-                    {"exit_code", exitCode},
-                    {"elapsed_ms", CLng(sw.Elapsed.TotalMilliseconds)},
-                    {"stdout", stdout},
-                    {"stderr", stderr}
-                }
-                Return JsonSerializer.Serialize(payload, JsonSO)
+                stdout = LimitSessionText(stdout, MaxCapturedOutputCharacters)
+                stderr = LimitSessionText(stderr, MaxCapturedOutputCharacters)
+
+                Dim result = BuildResultPayload(inputText, workingDirectory, timeoutSeconds, timedOut, exitCode, CLng(sw.Elapsed.TotalMilliseconds), stdout, stderr)
+                Return JsonSerializer.Serialize(result, JsonSO)
             Finally
                 _gate.Release()
             End Try
+        End Function
+
+        Protected MustOverride Function CreateProcessCandidates(workingDirectory As String) As IEnumerable(Of Process)
+
+        Protected MustOverride Function BuildInputPayload(inputText As String,
+                                                          workingDirectory As String,
+                                                          stdoutEndPrefix As String,
+                                                          stderrEndMarker As String) As String
+
+        Protected Overridable Sub OnProcessStarted(process As Process)
+        End Sub
+
+        Protected Overridable Function BuildResultPayload(inputText As String,
+                                                          workingDirectory As String,
+                                                          timeoutSeconds As Integer,
+                                                          timedOut As Boolean,
+                                                          exitCode As Integer,
+                                                          elapsedMilliseconds As Long,
+                                                          stdout As String,
+                                                          stderr As String) As Dictionary(Of String, Object)
+            Return New Dictionary(Of String, Object) From {
+                {InputPropertyNames(0), inputText},
+                {"working_directory", workingDirectory},
+                {"timeout_seconds", timeoutSeconds},
+                {"timed_out", timedOut},
+                {"exit_code", exitCode},
+                {"elapsed_ms", elapsedMilliseconds},
+                {"stdout", stdout},
+                {"stderr", stderr}
+            }
+        End Function
+
+        Protected Overridable Function MissingInputMessage() As String
+            Return "Missing " & InputPropertyNames(0) & "."
+        End Function
+
+        Private Function ReadInputText(args As JsonElement) As String
+            For Each name In InputPropertyNames
+                Dim value = GetJsonStringValue(args, name).Trim()
+                If value <> "" Then Return value
+            Next
+            Return ""
         End Function
 
         Private Sub EnsureProcessStarted(initialWorkingDirectory As String)
@@ -149,92 +207,108 @@ Public Class AgentLocalTools
             Dim workingDirectory = If(initialWorkingDirectory, "").Trim()
             If workingDirectory = "" OrElse Not Directory.Exists(workingDirectory) Then workingDirectory = Application.StartupPath
 
-            Dim process As New Process With {
+            Dim lastError As Exception = Nothing
+            For Each process In CreateProcessCandidates(workingDirectory)
+                Try
+                    AddHandler process.OutputDataReceived, AddressOf OnOutputDataReceived
+                    AddHandler process.ErrorDataReceived, AddressOf OnErrorDataReceived
+                    AddHandler process.Exited, AddressOf OnProcessExited
+                    _processExitedTcs = New TaskCompletionSource(Of Boolean)(TaskCreationOptions.RunContinuationsAsynchronously)
+
+                    If Not process.Start() Then Throw New InvalidOperationException("Start returned false.")
+
+                    _process = process
+                    _processFileName = process.StartInfo.FileName
+                    _lastWorkingDirectory = workingDirectory
+                    process.BeginOutputReadLine()
+                    process.BeginErrorReadLine()
+                    OnProcessStarted(process)
+                    Return
+                Catch ex As Exception
+                    lastError = ex
+                    Try
+                        RemoveHandler process.OutputDataReceived, AddressOf OnOutputDataReceived
+                        RemoveHandler process.ErrorDataReceived, AddressOf OnErrorDataReceived
+                        RemoveHandler process.Exited, AddressOf OnProcessExited
+                    Catch
+                    End Try
+                    Try
+                        If Not process.HasExited Then process.Kill(True)
+                    Catch
+                    End Try
+                    Try
+                        process.Dispose()
+                    Catch
+                    End Try
+                End Try
+            Next
+
+            _processExitedTcs = Nothing
+            Throw New InvalidOperationException(DisplayName & " start failed: " & If(lastError?.Message, "No candidate executable could be started."))
+        End Sub
+
+        Protected Shared Function CreateRedirectedProcess(fileName As String, workingDirectory As String) As Process
+            Return New Process With {
                 .StartInfo = New ProcessStartInfo With {
-                    .FileName = "powershell.exe",
+                    .FileName = fileName,
                     .WorkingDirectory = workingDirectory,
                     .UseShellExecute = False,
                     .RedirectStandardInput = True,
                     .RedirectStandardOutput = True,
                     .RedirectStandardError = True,
                     .CreateNoWindow = True,
-                    .StandardOutputEncoding = Encoding.UTF8,
-                    .StandardErrorEncoding = Encoding.UTF8
-                }
+                    .StandardInputEncoding = Utf8NoBomEncoding,
+                    .StandardOutputEncoding = Utf8NoBomEncoding,
+                    .StandardErrorEncoding = Utf8NoBomEncoding
+                },
+                .EnableRaisingEvents = True
             }
-            process.StartInfo.ArgumentList.Add("-NoLogo")
-            process.StartInfo.ArgumentList.Add("-NoProfile")
-            process.StartInfo.ArgumentList.Add("-NonInteractive")
-            process.StartInfo.ArgumentList.Add("-ExecutionPolicy")
-            process.StartInfo.ArgumentList.Add("Bypass")
-            process.StartInfo.ArgumentList.Add("-Command")
-            process.StartInfo.ArgumentList.Add("-")
-            process.StartInfo.EnvironmentVariables("POWERSHELL_TELEMETRY_OPTOUT") = "1"
-            process.EnableRaisingEvents = True
-            _processExitedTcs = New TaskCompletionSource(Of Boolean)(TaskCreationOptions.RunContinuationsAsynchronously)
-            AddHandler process.OutputDataReceived, AddressOf OnOutputDataReceived
-            AddHandler process.ErrorDataReceived, AddressOf OnErrorDataReceived
-            AddHandler process.Exited, AddressOf OnProcessExited
-
-            If Not process.Start() Then
-                process.Dispose()
-                Throw New InvalidOperationException("PowerShell 启动失败。")
-            End If
-
-            _process = process
-            _lastWorkingDirectory = workingDirectory
-            process.BeginOutputReadLine()
-            process.BeginErrorReadLine()
-            process.StandardInput.WriteLine("[Console]::OutputEncoding=[System.Text.Encoding]::UTF8; $OutputEncoding=[System.Text.Encoding]::UTF8; $ProgressPreference='SilentlyContinue'")
-            process.StandardInput.Flush()
-        End Sub
-
-        Private Shared Function BuildPersistentPowerShellScript(command As String,
-                                                                workingDirectory As String,
-                                                                stdoutEndPrefix As String,
-                                                                stderrEndMarker As String) As String
-            Dim commandBase64 = ToBase64Utf8(command)
-            Dim workingDirectoryBase64 = If(String.IsNullOrWhiteSpace(workingDirectory), "", ToBase64Utf8(workingDirectory))
-            Dim sb As New StringBuilder()
-            sb.AppendLine("$__3FUI_PreviousLastExitCode = $global:LASTEXITCODE")
-            sb.AppendLine("$global:LASTEXITCODE = $null")
-            sb.AppendLine("$__3FUI_CommandSucceeded = $true")
-            sb.AppendLine("try {")
-            If workingDirectoryBase64 <> "" Then
-                sb.AppendLine("    Set-Location -LiteralPath ([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('" & workingDirectoryBase64 & "')))")
-            End If
-            sb.AppendLine("    $__3FUI_CommandText = [System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('" & commandBase64 & "'))")
-            sb.AppendLine("    $__3FUI_ScriptBlock = [System.Management.Automation.ScriptBlock]::Create($__3FUI_CommandText)")
-            sb.AppendLine("    . $__3FUI_ScriptBlock")
-            sb.AppendLine("    $__3FUI_CommandSucceeded = $?")
-            sb.AppendLine("} catch {")
-            sb.AppendLine("    $__3FUI_CommandSucceeded = $false")
-            sb.AppendLine("    Write-Error $_")
-            sb.AppendLine("} finally {")
-            sb.AppendLine("    $__3FUI_HasNativeExitCode = $null -ne $global:LASTEXITCODE")
-            sb.AppendLine("    if ($__3FUI_HasNativeExitCode) { $__3FUI_ExitCode = [int]$global:LASTEXITCODE } elseif (-not $__3FUI_CommandSucceeded) { $__3FUI_ExitCode = 1 } else { $__3FUI_ExitCode = 0 }")
-            sb.AppendLine("    if (-not $__3FUI_HasNativeExitCode) { $global:LASTEXITCODE = $__3FUI_PreviousLastExitCode }")
-            sb.AppendLine("    $__3FUI_CwdText = ''")
-            sb.AppendLine("    try { $__3FUI_CwdText = (Get-Location).ProviderPath } catch { }")
-            sb.AppendLine("    $__3FUI_CwdBase64 = [System.Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes($__3FUI_CwdText))")
-            sb.AppendLine("    [Console]::Out.WriteLine('" & stdoutEndPrefix & "' + $__3FUI_ExitCode + ':' + $__3FUI_CwdBase64)")
-            sb.AppendLine("    [Console]::Error.WriteLine('" & stderrEndMarker & "')")
-            sb.AppendLine("    Remove-Variable -Name __3FUI_PreviousLastExitCode,__3FUI_CommandSucceeded,__3FUI_CommandText,__3FUI_ScriptBlock,__3FUI_HasNativeExitCode,__3FUI_ExitCode,__3FUI_CwdText,__3FUI_CwdBase64 -ErrorAction SilentlyContinue")
-            sb.AppendLine("}")
-            Return sb.ToString()
         End Function
 
-        Private Shared Function ToBase64Utf8(text As String) As String
+        Protected Shared Function SerializeConsoleProtocolPayload(payload As Object) As String
+            Return JsonSerializer.Serialize(payload, ConsoleProtocolJsonOptions)
+        End Function
+
+        Protected Shared Function ToBase64Utf8(text As String) As String
             Return Convert.ToBase64String(Encoding.UTF8.GetBytes(If(text, "")))
         End Function
 
-        Private Shared Function FromBase64Utf8(text As String) As String
+        Protected Shared Function FromBase64Utf8(text As String) As String
             If String.IsNullOrWhiteSpace(text) Then Return ""
             Try
                 Return Encoding.UTF8.GetString(Convert.FromBase64String(text))
             Catch
                 Return ""
             End Try
+        End Function
+
+        Private Shared Function GetJsonStringValue(root As JsonElement, name As String, Optional defaultValue As String = "") As String
+            If root.ValueKind <> JsonValueKind.Object Then Return defaultValue
+            Dim value As JsonElement
+            If Not root.TryGetProperty(name, value) Then Return defaultValue
+            If value.ValueKind = JsonValueKind.String Then Return If(value.GetString(), "")
+            If value.ValueKind = JsonValueKind.Number OrElse value.ValueKind = JsonValueKind.True OrElse value.ValueKind = JsonValueKind.False Then Return value.ToString()
+            Return defaultValue
+        End Function
+
+        Private Shared Function GetJsonIntegerValue(root As JsonElement, name As String, defaultValue As Integer) As Integer
+            If root.ValueKind <> JsonValueKind.Object Then Return defaultValue
+            Dim value As JsonElement
+            If Not root.TryGetProperty(name, value) Then Return defaultValue
+            If value.ValueKind = JsonValueKind.Number Then
+                Dim result As Integer
+                If value.TryGetInt32(result) Then Return result
+            End If
+            Dim text = GetJsonStringValue(root, name)
+            Dim parsed As Integer
+            If Integer.TryParse(text, parsed) Then Return parsed
+            Return defaultValue
+        End Function
+
+        Private Shared Function LimitSessionText(text As String, maxLength As Integer) As String
+            text = If(text, "")
+            If maxLength <= 0 OrElse text.Length <= maxLength Then Return text
+            Return text.Substring(0, maxLength) & "...[truncated]"
         End Function
 
         Private Sub OnOutputDataReceived(sender As Object, e As DataReceivedEventArgs)
@@ -337,6 +411,7 @@ Public Class AgentLocalTools
             End Try
             _process = Nothing
             _processExitedTcs = Nothing
+            _processFileName = ""
         End Sub
 
         Public Sub Dispose() Implements IDisposable.Dispose
@@ -355,6 +430,94 @@ Public Class AgentLocalTools
                 _gate.Dispose()
             End Try
         End Sub
+    End Class
+
+    Public NotInheritable Class PowerShellRunSession
+        Inherits ConsoleRunSession
+
+        Protected Overrides ReadOnly Property DisplayName As String
+            Get
+                Return "PowerShell"
+            End Get
+        End Property
+
+        Protected Overrides ReadOnly Property InputPropertyNames As String()
+            Get
+                Return New String() {"command"}
+            End Get
+        End Property
+
+        Protected Overrides ReadOnly Property StdoutMarkerPrefixBase As String
+            Get
+                Return "__3FUI_AGENT_PS_STDOUT_END__"
+            End Get
+        End Property
+
+        Protected Overrides ReadOnly Property StderrMarkerPrefixBase As String
+            Get
+                Return "__3FUI_AGENT_PS_STDERR_END__"
+            End Get
+        End Property
+
+        Protected Overrides Iterator Function CreateProcessCandidates(workingDirectory As String) As IEnumerable(Of Process)
+            Dim process = CreateRedirectedProcess("powershell.exe", workingDirectory)
+            process.StartInfo.ArgumentList.Add("-NoLogo")
+            process.StartInfo.ArgumentList.Add("-NoProfile")
+            process.StartInfo.ArgumentList.Add("-NonInteractive")
+            process.StartInfo.ArgumentList.Add("-ExecutionPolicy")
+            process.StartInfo.ArgumentList.Add("Bypass")
+            process.StartInfo.ArgumentList.Add("-Command")
+            process.StartInfo.ArgumentList.Add("-")
+            process.StartInfo.EnvironmentVariables("POWERSHELL_TELEMETRY_OPTOUT") = "1"
+            Yield process
+        End Function
+
+        Protected Overrides Sub OnProcessStarted(process As Process)
+            process.StandardInput.WriteLine("[Console]::OutputEncoding=[System.Text.Encoding]::UTF8; $OutputEncoding=[System.Text.Encoding]::UTF8; $ProgressPreference='SilentlyContinue'")
+            process.StandardInput.Flush()
+        End Sub
+
+        Protected Overrides Function BuildInputPayload(inputText As String,
+                                                       workingDirectory As String,
+                                                       stdoutEndPrefix As String,
+                                                       stderrEndMarker As String) As String
+            Return BuildPersistentPowerShellScript(inputText, workingDirectory, stdoutEndPrefix, stderrEndMarker)
+        End Function
+
+        Private Shared Function BuildPersistentPowerShellScript(command As String,
+                                                                workingDirectory As String,
+                                                                stdoutEndPrefix As String,
+                                                                stderrEndMarker As String) As String
+            Dim commandBase64 = ToBase64Utf8(command)
+            Dim workingDirectoryBase64 = If(String.IsNullOrWhiteSpace(workingDirectory), "", ToBase64Utf8(workingDirectory))
+            Dim sb As New StringBuilder()
+            sb.AppendLine("$__3FUI_PreviousLastExitCode = $global:LASTEXITCODE")
+            sb.AppendLine("$global:LASTEXITCODE = $null")
+            sb.AppendLine("$__3FUI_CommandSucceeded = $true")
+            sb.AppendLine("try {")
+            If workingDirectoryBase64 <> "" Then
+                sb.AppendLine("    Set-Location -LiteralPath ([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('" & workingDirectoryBase64 & "')))")
+            End If
+            sb.AppendLine("    $__3FUI_CommandText = [System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('" & commandBase64 & "'))")
+            sb.AppendLine("    $__3FUI_ScriptBlock = [System.Management.Automation.ScriptBlock]::Create($__3FUI_CommandText)")
+            sb.AppendLine("    . $__3FUI_ScriptBlock")
+            sb.AppendLine("    $__3FUI_CommandSucceeded = $?")
+            sb.AppendLine("} catch {")
+            sb.AppendLine("    $__3FUI_CommandSucceeded = $false")
+            sb.AppendLine("    Write-Error $_")
+            sb.AppendLine("} finally {")
+            sb.AppendLine("    $__3FUI_HasNativeExitCode = $null -ne $global:LASTEXITCODE")
+            sb.AppendLine("    if ($__3FUI_HasNativeExitCode) { $__3FUI_ExitCode = [int]$global:LASTEXITCODE } elseif (-not $__3FUI_CommandSucceeded) { $__3FUI_ExitCode = 1 } else { $__3FUI_ExitCode = 0 }")
+            sb.AppendLine("    if (-not $__3FUI_HasNativeExitCode) { $global:LASTEXITCODE = $__3FUI_PreviousLastExitCode }")
+            sb.AppendLine("    $__3FUI_CwdText = ''")
+            sb.AppendLine("    try { $__3FUI_CwdText = (Get-Location).ProviderPath } catch { }")
+            sb.AppendLine("    $__3FUI_CwdBase64 = [System.Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes($__3FUI_CwdText))")
+            sb.AppendLine("    [Console]::Out.WriteLine('" & stdoutEndPrefix & "' + $__3FUI_ExitCode + ':' + $__3FUI_CwdBase64)")
+            sb.AppendLine("    [Console]::Error.WriteLine('" & stderrEndMarker & "')")
+            sb.AppendLine("    Remove-Variable -Name __3FUI_PreviousLastExitCode,__3FUI_CommandSucceeded,__3FUI_CommandText,__3FUI_ScriptBlock,__3FUI_HasNativeExitCode,__3FUI_ExitCode,__3FUI_CwdText,__3FUI_CwdBase64 -ErrorAction SilentlyContinue")
+            sb.AppendLine("}")
+            Return sb.ToString()
+        End Function
     End Class
 
     <CodeAnalysis.SuppressMessage("Performance", "CA1861:不要将常量数组作为参数", Justification:="<挂起>")>
@@ -481,15 +644,19 @@ Public Class AgentLocalTools
             tools.Add(FunctionTool("get_image_info", "读取本地图片的宽高、格式和小图 base64。仅系统访问权限可用。", New Dictionary(Of String, Object) From {
                 {"path", New Dictionary(Of String, Object) From {{"type", "string"}}}
             }, {"path"}))
-            tools.Add(FunctionTool("run_powershell", "运行 PowerShell 命令。仅系统访问权限可用。同一次用户消息触发的 Agent 运行会复用同一个 PowerShell 进程，变量、当前位置和模块导入可在本轮多次调用之间保留；本轮响应结束、超时或任务终止时会关闭进程。", New Dictionary(Of String, Object) From {
-                {"command", New Dictionary(Of String, Object) From {{"type", "string"}, {"description", "要执行的 PowerShell 命令"}}},
-                {"working_directory", New Dictionary(Of String, Object) From {{"type", "string"}, {"description", "可选工作目录。首次调用默认使用程序目录；后续调用默认沿用当前 PowerShell 位置。"}}},
-                {"timeout_seconds", New Dictionary(Of String, Object) From {{"type", "integer"}, {"description", "可选超时时间，1-300 秒，默认 60 秒"}}}
-            }, {"command"}))
+            AddConsoleToolDefinitions(tools)
         End If
 
         Return tools
     End Function
+
+    Private Shared Sub AddConsoleToolDefinitions(tools As List(Of Dictionary(Of String, Object)))
+        tools.Add(FunctionTool("run_powershell", "运行 PowerShell 命令。仅系统访问权限可用。同一次用户消息触发的 Agent 运行会复用同一个 PowerShell 进程，变量、当前位置和模块导入可在本轮多次调用之间保留；本轮响应结束、超时或任务终止时会关闭进程。", New Dictionary(Of String, Object) From {
+            {"command", New Dictionary(Of String, Object) From {{"type", "string"}, {"description", "要执行的 PowerShell 命令"}}},
+            {"working_directory", New Dictionary(Of String, Object) From {{"type", "string"}, {"description", "可选工作目录。首次调用默认使用程序目录；后续调用默认沿用当前 PowerShell 位置。"}}},
+            {"timeout_seconds", New Dictionary(Of String, Object) From {{"type", "integer"}, {"description", "可选超时时间，1-300 秒，默认 60 秒"}}}
+        }, {"command"}))
+    End Sub
 
     Public Shared Async Function ExecuteAsync(callInfo As AgentToolCallInfo,
                                               permissionLevel As Integer,
@@ -499,8 +666,11 @@ Public Class AgentLocalTools
                                               reasoningEffort As String,
                                               Optional powerShellSession As PowerShellRunSession = Nothing,
                                               Optional cancellationToken As Threading.CancellationToken = Nothing) As Task(Of String)
-        Dim args = Agent通用工具_v6.ParseJsonArguments(callInfo?.Arguments)
         Try
+            Dim argumentParseError As String = ""
+            Dim args = ParseToolArguments(callInfo, argumentParseError)
+            If argumentParseError <> "" Then Return argumentParseError
+
             Select Case callInfo?.Name
                 Case "list_agent_skills"
                     Return Agent技能资料库_v6.列出技能()
@@ -585,9 +755,7 @@ Public Class AgentLocalTools
                     If permissionLevel < PermissionSystem Then Return "权限不足：需要系统访问"
                     Return GetImageInfo(Agent通用工具_v6.GetJsonString(args, "path"))
                 Case "run_powershell"
-                    If permissionLevel < PermissionSystem Then Return "权限不足：需要系统访问"
-                    If powerShellSession Is Nothing Then Return "PowerShell 会话不可用。"
-                    Return Await powerShellSession.ExecuteAsync(args, cancellationToken)
+                    Return Await RunConsoleToolAsync(permissionLevel, powerShellSession, args, cancellationToken, "PowerShell")
                 Case Else
                     Return $"未知工具：{callInfo?.Name}"
             End Select
@@ -596,6 +764,71 @@ Public Class AgentLocalTools
         Catch ex As Exception
             Return $"工具执行失败：{ex.Message}"
         End Try
+    End Function
+
+    Private Shared Function ParseToolArguments(callInfo As AgentToolCallInfo, ByRef errorMessage As String) As JsonElement
+        errorMessage = ""
+        Dim raw = If(callInfo?.Arguments, "")
+        Dim rawArgumentProperty = GetRawConsoleArgumentPropertyName(callInfo?.Name)
+        Try
+            Dim parsed = Agent通用工具_v6.ParseJsonArguments(raw)
+            If parsed.ValueKind = JsonValueKind.Object Then Return parsed
+
+            If rawArgumentProperty <> "" AndAlso parsed.ValueKind = JsonValueKind.String Then
+                Return NormalizeToolArguments(callInfo, rawArgumentProperty, If(parsed.GetString(), ""))
+            End If
+
+            callInfo.Arguments = "{}"
+            errorMessage = "工具参数必须是 JSON 对象。原始参数：" & Agent通用工具_v6.LimitText(raw, 4000)
+            Return BuildEmptyJsonElement()
+        Catch ex As Exception
+            If rawArgumentProperty <> "" Then Return NormalizeToolArguments(callInfo, rawArgumentProperty, raw)
+
+            callInfo.Arguments = "{}"
+            errorMessage = "工具参数 JSON 解析失败：" & ex.Message & vbCrLf &
+                           "原始参数：" & Agent通用工具_v6.LimitText(raw, 4000)
+            Return BuildEmptyJsonElement()
+        End Try
+    End Function
+
+    Private Shared Function GetRawConsoleArgumentPropertyName(toolName As String) As String
+        Select Case If(toolName, "")
+            Case "run_powershell"
+                Return "command"
+            Case Else
+                Return ""
+        End Select
+    End Function
+
+    Private Shared Function NormalizeToolArguments(callInfo As AgentToolCallInfo, propertyName As String, value As String) As JsonElement
+        Dim normalizedJson = BuildSingleStringJson(propertyName, value)
+        callInfo.Arguments = normalizedJson
+        Using doc = JsonDocument.Parse(normalizedJson)
+            Return doc.RootElement.Clone()
+        End Using
+    End Function
+
+    Private Shared Function BuildSingleStringJson(propertyName As String, value As String) As String
+        Dim payload As New Dictionary(Of String, String) From {
+            {propertyName, If(value, "")}
+        }
+        Return JsonSerializer.Serialize(payload)
+    End Function
+
+    Private Shared Function BuildEmptyJsonElement() As JsonElement
+        Using doc = JsonDocument.Parse("{}")
+            Return doc.RootElement.Clone()
+        End Using
+    End Function
+
+    Private Shared Async Function RunConsoleToolAsync(permissionLevel As Integer,
+                                                      session As ConsoleRunSession,
+                                                      args As JsonElement,
+                                                      cancellationToken As Threading.CancellationToken,
+                                                      displayName As String) As Task(Of String)
+        If permissionLevel < PermissionSystem Then Return "权限不足：需要系统访问"
+        If session Is Nothing Then Return displayName & " 会话不可用。"
+        Return Await session.ExecuteAsync(args, cancellationToken)
     End Function
 
     Private Shared Function FunctionTool(name As String,

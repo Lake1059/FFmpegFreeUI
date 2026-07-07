@@ -102,13 +102,18 @@ Public Class AgentEndpointClient
         End If
         MergeExtraBodyIntoPayload(payload)
 
+        Dim raw As String = ""
         Try
             Using response = Await SendJsonAsync(HttpMethod.Post, "chat/completions", payload, cancellationToken)
-                Dim raw = Await response.Content.ReadAsStringAsync(cancellationToken)
+                raw = Await response.Content.ReadAsStringAsync(cancellationToken)
                 If Not response.IsSuccessStatusCode Then
                     Return AgentChatResult.Fail(ExtractErrorMessage(raw, response.StatusCode), CInt(response.StatusCode), raw)
                 End If
-                Dim result = ParseChatResult(raw)
+                Dim result = ParseChatCompletionRaw(raw)
+                If ShouldRetryEmptySseAsStreaming(raw, result) Then
+                    Dim streamedResult = Await TryCreateChatCompletionStreamingAsync(modelId, messages, tools, reasoningEffort, Nothing, cancellationToken)
+                    If HasChatResultPayload(streamedResult) Then Return streamedResult
+                End If
                 result.Success = True
                 result.StatusCode = CInt(response.StatusCode)
                 Return result
@@ -116,7 +121,7 @@ Public Class AgentEndpointClient
         Catch ex As OperationCanceledException
             Throw
         Catch ex As Exception
-            Return AgentChatResult.Fail(ex.Message)
+            Return AgentChatResult.Fail(ex.Message, rawJson:=raw)
         End Try
     End Function
 
@@ -167,45 +172,7 @@ Public Class AgentEndpointClient
                                 raw.AppendLine(data)
 
                                 Using doc = JsonDocument.Parse(data)
-                                    Dim root = doc.RootElement
-                                    Dim usage As JsonElement
-                                    If root.TryGetProperty("usage", usage) AndAlso usage.ValueKind = JsonValueKind.Object Then
-                                        result.Usage = ParseUsage(root)
-                                    End If
-
-                                    Dim choices As JsonElement
-                                    If Not root.TryGetProperty("choices", choices) OrElse choices.ValueKind <> JsonValueKind.Array OrElse choices.GetArrayLength() = 0 Then Continue While
-                                    Dim delta As JsonElement
-                                    If Not choices(0).TryGetProperty("delta", delta) OrElse delta.ValueKind <> JsonValueKind.Object Then Continue While
-
-                                    Dim textPart As JsonElement
-                                    If delta.TryGetProperty("content", textPart) AndAlso textPart.ValueKind = JsonValueKind.String Then
-                                        Dim part = textPart.GetString()
-                                        If part <> "" Then
-                                            content.Append(part)
-                                            onContentDelta?.Invoke(part)
-                                        End If
-                                    End If
-
-                                    Dim toolCalls As JsonElement
-                                    If delta.TryGetProperty("tool_calls", toolCalls) AndAlso toolCalls.ValueKind = JsonValueKind.Array Then
-                                        For Each callDelta In toolCalls.EnumerateArray()
-                                            Dim indexValue = GetInt(callDelta, "index")
-                                            Dim callInfo As AgentToolCallInfo = Nothing
-                                            If Not toolCallMap.TryGetValue(indexValue, callInfo) Then
-                                                callInfo = New AgentToolCallInfo
-                                                toolCallMap(indexValue) = callInfo
-                                            End If
-
-                                            Dim value As JsonElement
-                                            If callDelta.TryGetProperty("id", value) AndAlso value.ValueKind = JsonValueKind.String AndAlso value.GetString() <> "" Then callInfo.Id = value.GetString()
-                                            Dim fn As JsonElement
-                                            If callDelta.TryGetProperty("function", fn) AndAlso fn.ValueKind = JsonValueKind.Object Then
-                                                If fn.TryGetProperty("name", value) AndAlso value.ValueKind = JsonValueKind.String Then callInfo.Name &= value.GetString()
-                                                If fn.TryGetProperty("arguments", value) AndAlso value.ValueKind = JsonValueKind.String Then callInfo.Arguments &= value.GetString()
-                                            End If
-                                        Next
-                                    End If
+                                    AccumulateStreamingChatChunk(doc.RootElement, result, content, toolCallMap, onContentDelta)
                                 End Using
                             End While
                         End Using
@@ -213,10 +180,7 @@ Public Class AgentEndpointClient
 
                     result.Content = content.ToString()
                     result.RawJson = raw.ToString()
-                    For Each item In toolCallMap.OrderBy(Function(x) x.Key).Select(Function(x) x.Value)
-                        If item.Id = "" Then item.Id = Guid.NewGuid().ToString("N")
-                        If item.Name <> "" Then result.ToolCalls.Add(item)
-                    Next
+                    AddAccumulatedToolCalls(result, toolCallMap)
                     result.Success = True
                     result.StatusCode = CInt(response.StatusCode)
                     Return result
@@ -328,8 +292,9 @@ Public Class AgentEndpointClient
                     item("tool_call_id") = msg.ToolCallId
                     item("content") = If(msg.Content, "")
                 Case "assistant"
-                    item("content") = If(msg.Content, "")
-                    If msg.ToolCalls IsNot Nothing AndAlso msg.ToolCalls.Count > 0 Then
+                    Dim hasToolCalls = msg.ToolCalls IsNot Nothing AndAlso msg.ToolCalls.Count > 0
+                    item("content") = If(hasToolCalls AndAlso String.IsNullOrWhiteSpace(msg.Content), Nothing, If(msg.Content, ""))
+                    If hasToolCalls Then
                         item("tool_calls") = msg.ToolCalls.Select(Function(t) New Dictionary(Of String, Object) From {
                             {"id", t.Id},
                             {"type", "function"},
@@ -594,6 +559,120 @@ Public Class AgentEndpointClient
     Private Shared Function NormalizeJsonName(value As String) As String
         Return If(value, "").Trim().Replace("_", "").Replace("-", "").ToLowerInvariant()
     End Function
+
+    Private Shared Function ParseChatCompletionRaw(raw As String) As AgentChatResult
+        If IsSseRaw(raw) Then Return ParseStreamingChatResult(raw)
+        Return ParseChatResult(raw)
+    End Function
+
+    Private Shared Function IsSseRaw(raw As String) As Boolean
+        If String.IsNullOrWhiteSpace(raw) Then Return False
+        For Each line In raw.Replace(vbCrLf, vbLf).Replace(vbCr, vbLf).Split(ControlChars.Lf)
+            line = line.Trim()
+            If line = "" Then Continue For
+            Return line.StartsWith("data:", StringComparison.OrdinalIgnoreCase)
+        Next
+        Return False
+    End Function
+
+    Private Shared Function ShouldRetryEmptySseAsStreaming(raw As String, result As AgentChatResult) As Boolean
+        Return IsSseRaw(raw) AndAlso Not HasChatResultPayload(result)
+    End Function
+
+    Private Shared Function HasChatResultPayload(result As AgentChatResult) As Boolean
+        If result Is Nothing OrElse Not result.Success Then Return False
+        If Not String.IsNullOrWhiteSpace(result.Content) Then Return True
+        Return result.ToolCalls IsNot Nothing AndAlso result.ToolCalls.Count > 0
+    End Function
+
+    Private Shared Function ParseStreamingChatResult(raw As String) As AgentChatResult
+        Dim result As New AgentChatResult With {.RawJson = raw}
+        Dim content As New StringBuilder
+        Dim toolCallMap As New Dictionary(Of Integer, AgentToolCallInfo)
+
+        For Each line In If(raw, "").Replace(vbCrLf, vbLf).Replace(vbCr, vbLf).Split(ControlChars.Lf)
+            line = line.Trim()
+            If line = "" OrElse Not line.StartsWith("data:", StringComparison.OrdinalIgnoreCase) Then Continue For
+
+            Dim data = line.Substring(5).Trim()
+            If data = "" OrElse data = "[DONE]" Then Continue For
+
+            Using doc = JsonDocument.Parse(data)
+                AccumulateStreamingChatChunk(doc.RootElement, result, content, toolCallMap, Nothing)
+            End Using
+        Next
+
+        result.Content = content.ToString()
+        AddAccumulatedToolCalls(result, toolCallMap)
+        Return result
+    End Function
+
+    Private Shared Sub AccumulateStreamingChatChunk(root As JsonElement,
+                                                    result As AgentChatResult,
+                                                    content As StringBuilder,
+                                                    toolCallMap As Dictionary(Of Integer, AgentToolCallInfo),
+                                                    onContentDelta As Action(Of String))
+        Dim usage As JsonElement
+        If root.TryGetProperty("usage", usage) AndAlso usage.ValueKind = JsonValueKind.Object Then
+            result.Usage = ParseUsage(root)
+        End If
+
+        Dim choices As JsonElement
+        If Not root.TryGetProperty("choices", choices) OrElse choices.ValueKind <> JsonValueKind.Array OrElse choices.GetArrayLength() = 0 Then Return
+
+        Dim delta As JsonElement
+        If choices(0).TryGetProperty("delta", delta) AndAlso delta.ValueKind = JsonValueKind.Object Then
+            AccumulateChatMessageDelta(delta, content, toolCallMap, onContentDelta)
+            Return
+        End If
+
+        Dim message As JsonElement
+        If choices(0).TryGetProperty("message", message) AndAlso message.ValueKind = JsonValueKind.Object Then
+            AccumulateChatMessageDelta(message, content, toolCallMap, onContentDelta)
+        End If
+    End Sub
+
+    Private Shared Sub AccumulateChatMessageDelta(delta As JsonElement,
+                                                  content As StringBuilder,
+                                                  toolCallMap As Dictionary(Of Integer, AgentToolCallInfo),
+                                                  onContentDelta As Action(Of String))
+        Dim textPart As JsonElement
+        If delta.TryGetProperty("content", textPart) AndAlso textPart.ValueKind = JsonValueKind.String Then
+            Dim part = textPart.GetString()
+            If part <> "" Then
+                content.Append(part)
+                onContentDelta?.Invoke(part)
+            End If
+        End If
+
+        Dim toolCalls As JsonElement
+        If delta.TryGetProperty("tool_calls", toolCalls) AndAlso toolCalls.ValueKind = JsonValueKind.Array Then
+            For Each callDelta In toolCalls.EnumerateArray()
+                Dim indexValue = GetInt(callDelta, "index")
+                Dim callInfo As AgentToolCallInfo = Nothing
+                If Not toolCallMap.TryGetValue(indexValue, callInfo) Then
+                    callInfo = New AgentToolCallInfo
+                    toolCallMap(indexValue) = callInfo
+                End If
+
+                Dim value As JsonElement
+                If callDelta.TryGetProperty("id", value) AndAlso value.ValueKind = JsonValueKind.String AndAlso value.GetString() <> "" Then callInfo.Id = value.GetString()
+                Dim fn As JsonElement
+                If callDelta.TryGetProperty("function", fn) AndAlso fn.ValueKind = JsonValueKind.Object Then
+                    If fn.TryGetProperty("name", value) AndAlso value.ValueKind = JsonValueKind.String Then callInfo.Name &= value.GetString()
+                    If fn.TryGetProperty("arguments", value) AndAlso value.ValueKind = JsonValueKind.String Then callInfo.Arguments &= value.GetString()
+                End If
+            Next
+        End If
+    End Sub
+
+    Private Shared Sub AddAccumulatedToolCalls(result As AgentChatResult,
+                                               toolCallMap As Dictionary(Of Integer, AgentToolCallInfo))
+        For Each item In toolCallMap.OrderBy(Function(x) x.Key).Select(Function(x) x.Value)
+            If item.Id = "" Then item.Id = Guid.NewGuid().ToString("N")
+            If item.Name <> "" Then result.ToolCalls.Add(item)
+        Next
+    End Sub
 
     Private Shared Function ParseChatResult(raw As String) As AgentChatResult
         Dim result As New AgentChatResult With {.RawJson = raw}

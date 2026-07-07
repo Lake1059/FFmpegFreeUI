@@ -1279,7 +1279,15 @@ Public Class Form_v6_Agent
 
                     Dim started = DateTime.Now
                     ShowRunStatus(conversation, "正在调用工具：" & callInfo.Name)
-                    Dim toolResult = Await AgentLocalTools.ExecuteAsync(callInfo, permissionLevel, networkMode, client, modelId, reasoning, powerShellSession, cancellationToken)
+                    Dim toolResult = Await AgentLocalTools.ExecuteAsync(
+                        callInfo,
+                        permissionLevel,
+                        networkMode,
+                        client,
+                        modelId,
+                        reasoning,
+                        powerShellSession,
+                        cancellationToken)
                     cancellationToken.ThrowIfCancellationRequested()
                     Dim elapsed = DateTime.Now - started
                     toolResult = Agent通用工具_v6.LimitText(toolResult, 16000)
