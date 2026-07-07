@@ -251,8 +251,7 @@ Partial Class Form_v6_参数面板_超分
         MCB_着色器文件路径.DropDownBackdropBlurPasses = 2
         MCB_着色器文件路径.DropDownBackdropBlurRadius = 30
         MCB_着色器文件路径.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
-        MCB_着色器文件路径.DropDownHoverAnimationDuration = 0
-        MCB_着色器文件路径.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
+        MCB_着色器文件路径.DropDownHoverColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
         MCB_着色器文件路径.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
         MCB_着色器文件路径.DropDownPadding = New Padding(10)
         MCB_着色器文件路径.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
@@ -334,8 +333,7 @@ Partial Class Form_v6_参数面板_超分
         MCB_下采样算法.DropDownBackdropBlurPasses = 2
         MCB_下采样算法.DropDownBackdropBlurRadius = 30
         MCB_下采样算法.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
-        MCB_下采样算法.DropDownHoverAnimationDuration = 0
-        MCB_下采样算法.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
+        MCB_下采样算法.DropDownHoverColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
         MCB_下采样算法.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
         MCB_下采样算法.DropDownPadding = New Padding(10)
         MCB_下采样算法.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
@@ -398,8 +396,7 @@ Partial Class Form_v6_参数面板_超分
         MCB_上采样算法.DropDownBackdropBlurPasses = 2
         MCB_上采样算法.DropDownBackdropBlurRadius = 30
         MCB_上采样算法.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
-        MCB_上采样算法.DropDownHoverAnimationDuration = 0
-        MCB_上采样算法.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
+        MCB_上采样算法.DropDownHoverColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
         MCB_上采样算法.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
         MCB_上采样算法.DropDownPadding = New Padding(10)
         MCB_上采样算法.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))

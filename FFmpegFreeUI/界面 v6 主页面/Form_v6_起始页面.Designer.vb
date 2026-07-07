@@ -95,8 +95,7 @@ Partial Class Form_v6_起始页面
         MCB_清理内存.DropDownBackdropBlurPasses = 2
         MCB_清理内存.DropDownBackdropBlurRadius = 30
         MCB_清理内存.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
-        MCB_清理内存.DropDownHoverAnimationDuration = 0
-        MCB_清理内存.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
+        MCB_清理内存.DropDownHoverColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
         MCB_清理内存.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
         MCB_清理内存.DropDownPadding = New Padding(10)
         MCB_清理内存.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))

@@ -389,8 +389,7 @@ Partial Class Form_v6_参数面板_预设管理
         MCB_预设来源.DropDownBackdropBlurPasses = 2
         MCB_预设来源.DropDownBackdropBlurRadius = 30
         MCB_预设来源.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
-        MCB_预设来源.DropDownHoverAnimationDuration = 0
-        MCB_预设来源.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
+        MCB_预设来源.DropDownHoverColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
         MCB_预设来源.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
         MCB_预设来源.DropDownPadding = New Padding(10)
         MCB_预设来源.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))

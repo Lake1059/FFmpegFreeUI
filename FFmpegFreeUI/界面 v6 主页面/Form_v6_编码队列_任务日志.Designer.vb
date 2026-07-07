@@ -118,8 +118,7 @@ Partial Class Form_v6_编码队列_任务日志
         MCB_显示模式.DropDownBackdropBlurPasses = 2
         MCB_显示模式.DropDownBackdropBlurRadius = 30
         MCB_显示模式.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
-        MCB_显示模式.DropDownHoverAnimationDuration = 0
-        MCB_显示模式.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
+        MCB_显示模式.DropDownHoverColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
         MCB_显示模式.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
         MCB_显示模式.DropDownPadding = New Padding(10)
         MCB_显示模式.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))

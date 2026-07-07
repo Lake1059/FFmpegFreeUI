@@ -65,8 +65,7 @@ Partial Class Form_v6_参数面板_画面翻转
         MCB_镜像翻转.DropDownBackdropBlurPasses = 2
         MCB_镜像翻转.DropDownBackdropBlurRadius = 30
         MCB_镜像翻转.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
-        MCB_镜像翻转.DropDownHoverAnimationDuration = 0
-        MCB_镜像翻转.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
+        MCB_镜像翻转.DropDownHoverColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
         MCB_镜像翻转.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
         MCB_镜像翻转.DropDownPadding = New Padding(10)
         MCB_镜像翻转.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
@@ -119,8 +118,7 @@ Partial Class Form_v6_参数面板_画面翻转
         MCB_角度翻转.DropDownBackdropBlurPasses = 2
         MCB_角度翻转.DropDownBackdropBlurRadius = 30
         MCB_角度翻转.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
-        MCB_角度翻转.DropDownHoverAnimationDuration = 0
-        MCB_角度翻转.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
+        MCB_角度翻转.DropDownHoverColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
         MCB_角度翻转.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
         MCB_角度翻转.DropDownPadding = New Padding(10)
         MCB_角度翻转.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))

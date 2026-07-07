@@ -211,8 +211,7 @@ Partial Class Form_v6_集成工具_Whisper生成字幕
         MCB_输入文件.DropDownBackdropBlurPasses = 2
         MCB_输入文件.DropDownBackdropBlurRadius = 30
         MCB_输入文件.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
-        MCB_输入文件.DropDownHoverAnimationDuration = 0
-        MCB_输入文件.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
+        MCB_输入文件.DropDownHoverColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
         MCB_输入文件.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
         MCB_输入文件.DropDownPadding = New Padding(10)
         MCB_输入文件.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
@@ -252,8 +251,7 @@ Partial Class Form_v6_集成工具_Whisper生成字幕
         MCB_选择模型文件.DropDownBackdropBlurPasses = 2
         MCB_选择模型文件.DropDownBackdropBlurRadius = 30
         MCB_选择模型文件.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
-        MCB_选择模型文件.DropDownHoverAnimationDuration = 0
-        MCB_选择模型文件.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
+        MCB_选择模型文件.DropDownHoverColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
         MCB_选择模型文件.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
         MCB_选择模型文件.DropDownPadding = New Padding(10)
         MCB_选择模型文件.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
@@ -369,8 +367,7 @@ Partial Class Form_v6_集成工具_Whisper生成字幕
         MCB_要识别的语言.DropDownBackdropBlurPasses = 2
         MCB_要识别的语言.DropDownBackdropBlurRadius = 30
         MCB_要识别的语言.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
-        MCB_要识别的语言.DropDownHoverAnimationDuration = 0
-        MCB_要识别的语言.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
+        MCB_要识别的语言.DropDownHoverColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
         MCB_要识别的语言.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
         MCB_要识别的语言.DropDownPadding = New Padding(10)
         MCB_要识别的语言.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
@@ -524,8 +521,7 @@ Partial Class Form_v6_集成工具_Whisper生成字幕
         MCB_VAD模型文件.DropDownBackdropBlurPasses = 2
         MCB_VAD模型文件.DropDownBackdropBlurRadius = 30
         MCB_VAD模型文件.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
-        MCB_VAD模型文件.DropDownHoverAnimationDuration = 0
-        MCB_VAD模型文件.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
+        MCB_VAD模型文件.DropDownHoverColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
         MCB_VAD模型文件.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
         MCB_VAD模型文件.DropDownPadding = New Padding(10)
         MCB_VAD模型文件.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
@@ -581,8 +577,7 @@ Partial Class Form_v6_集成工具_Whisper生成字幕
         MCB_输出类型.DropDownBackdropBlurPasses = 2
         MCB_输出类型.DropDownBackdropBlurRadius = 30
         MCB_输出类型.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
-        MCB_输出类型.DropDownHoverAnimationDuration = 0
-        MCB_输出类型.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
+        MCB_输出类型.DropDownHoverColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
         MCB_输出类型.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
         MCB_输出类型.DropDownPadding = New Padding(10)
         MCB_输出类型.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
@@ -702,8 +697,7 @@ Partial Class Form_v6_集成工具_Whisper生成字幕
         MCB_GPU加速选项.DropDownBackdropBlurPasses = 2
         MCB_GPU加速选项.DropDownBackdropBlurRadius = 30
         MCB_GPU加速选项.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
-        MCB_GPU加速选项.DropDownHoverAnimationDuration = 0
-        MCB_GPU加速选项.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
+        MCB_GPU加速选项.DropDownHoverColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
         MCB_GPU加速选项.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
         MCB_GPU加速选项.DropDownPadding = New Padding(10)
         MCB_GPU加速选项.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))

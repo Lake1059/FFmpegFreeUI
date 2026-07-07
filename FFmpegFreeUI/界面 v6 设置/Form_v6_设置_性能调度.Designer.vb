@@ -78,8 +78,7 @@ Partial Class Form_v6_设置_性能调度
         MCB_编码队列刷新速度.DropDownBackdropBlurPasses = 2
         MCB_编码队列刷新速度.DropDownBackdropBlurRadius = 30
         MCB_编码队列刷新速度.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
-        MCB_编码队列刷新速度.DropDownHoverAnimationDuration = 0
-        MCB_编码队列刷新速度.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
+        MCB_编码队列刷新速度.DropDownHoverColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
         MCB_编码队列刷新速度.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
         MCB_编码队列刷新速度.DropDownPadding = New Padding(10)
         MCB_编码队列刷新速度.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
@@ -135,8 +134,7 @@ Partial Class Form_v6_设置_性能调度
         MCB_自动开始数量.DropDownBackdropBlurPasses = 2
         MCB_自动开始数量.DropDownBackdropBlurRadius = 30
         MCB_自动开始数量.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
-        MCB_自动开始数量.DropDownHoverAnimationDuration = 0
-        MCB_自动开始数量.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
+        MCB_自动开始数量.DropDownHoverColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
         MCB_自动开始数量.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
         MCB_自动开始数量.DropDownPadding = New Padding(10)
         MCB_自动开始数量.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))

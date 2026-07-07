@@ -155,8 +155,7 @@ Partial Class Form_v6_参数面板_流控制
         MCB_附件选项.DropDownBackdropBlurPasses = 2
         MCB_附件选项.DropDownBackdropBlurRadius = 30
         MCB_附件选项.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
-        MCB_附件选项.DropDownHoverAnimationDuration = 0
-        MCB_附件选项.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
+        MCB_附件选项.DropDownHoverColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
         MCB_附件选项.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
         MCB_附件选项.DropDownPadding = New Padding(10)
         MCB_附件选项.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
@@ -193,8 +192,7 @@ Partial Class Form_v6_参数面板_流控制
         MCB_章节选项.DropDownBackdropBlurPasses = 2
         MCB_章节选项.DropDownBackdropBlurRadius = 30
         MCB_章节选项.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
-        MCB_章节选项.DropDownHoverAnimationDuration = 0
-        MCB_章节选项.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
+        MCB_章节选项.DropDownHoverColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
         MCB_章节选项.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
         MCB_章节选项.DropDownPadding = New Padding(10)
         MCB_章节选项.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
@@ -232,8 +230,7 @@ Partial Class Form_v6_参数面板_流控制
         MCB_元数据选项.DropDownBackdropBlurPasses = 2
         MCB_元数据选项.DropDownBackdropBlurRadius = 30
         MCB_元数据选项.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
-        MCB_元数据选项.DropDownHoverAnimationDuration = 0
-        MCB_元数据选项.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
+        MCB_元数据选项.DropDownHoverColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
         MCB_元数据选项.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
         MCB_元数据选项.DropDownPadding = New Padding(10)
         MCB_元数据选项.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
@@ -518,8 +515,7 @@ Partial Class Form_v6_参数面板_流控制
         MCB_字幕流操作.DropDownBackdropBlurPasses = 2
         MCB_字幕流操作.DropDownBackdropBlurRadius = 30
         MCB_字幕流操作.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
-        MCB_字幕流操作.DropDownHoverAnimationDuration = 0
-        MCB_字幕流操作.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
+        MCB_字幕流操作.DropDownHoverColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
         MCB_字幕流操作.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
         MCB_字幕流操作.DropDownPadding = New Padding(10)
         MCB_字幕流操作.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))

@@ -272,8 +272,7 @@ Partial Class Form_v6_参数面板_插帧参数
         MCB_运动补偿模式.DropDownBackdropBlurPasses = 2
         MCB_运动补偿模式.DropDownBackdropBlurRadius = 30
         MCB_运动补偿模式.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
-        MCB_运动补偿模式.DropDownHoverAnimationDuration = 0
-        MCB_运动补偿模式.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
+        MCB_运动补偿模式.DropDownHoverColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
         MCB_运动补偿模式.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
         MCB_运动补偿模式.DropDownPadding = New Padding(10)
         MCB_运动补偿模式.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
@@ -339,8 +338,7 @@ Partial Class Form_v6_参数面板_插帧参数
         MCB_运动估计算法.DropDownBackdropBlurPasses = 2
         MCB_运动估计算法.DropDownBackdropBlurRadius = 30
         MCB_运动估计算法.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
-        MCB_运动估计算法.DropDownHoverAnimationDuration = 0
-        MCB_运动估计算法.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
+        MCB_运动估计算法.DropDownHoverColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
         MCB_运动估计算法.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
         MCB_运动估计算法.DropDownPadding = New Padding(10)
         MCB_运动估计算法.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
@@ -385,8 +383,7 @@ Partial Class Form_v6_参数面板_插帧参数
         MCB_运动估计模式.DropDownBackdropBlurPasses = 2
         MCB_运动估计模式.DropDownBackdropBlurRadius = 30
         MCB_运动估计模式.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
-        MCB_运动估计模式.DropDownHoverAnimationDuration = 0
-        MCB_运动估计模式.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
+        MCB_运动估计模式.DropDownHoverColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
         MCB_运动估计模式.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
         MCB_运动估计模式.DropDownPadding = New Padding(10)
         MCB_运动估计模式.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
@@ -424,8 +421,7 @@ Partial Class Form_v6_参数面板_插帧参数
         MCB_插帧模式.DropDownBackdropBlurPasses = 2
         MCB_插帧模式.DropDownBackdropBlurRadius = 30
         MCB_插帧模式.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
-        MCB_插帧模式.DropDownHoverAnimationDuration = 0
-        MCB_插帧模式.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
+        MCB_插帧模式.DropDownHoverColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
         MCB_插帧模式.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
         MCB_插帧模式.DropDownPadding = New Padding(10)
         MCB_插帧模式.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))

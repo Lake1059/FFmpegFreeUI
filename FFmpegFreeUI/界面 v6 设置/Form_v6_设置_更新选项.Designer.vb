@@ -128,8 +128,7 @@ Partial Class Form_v6_设置_更新选项
         MCB_更新服务器.DropDownBackdropBlurPasses = 2
         MCB_更新服务器.DropDownBackdropBlurRadius = 30
         MCB_更新服务器.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
-        MCB_更新服务器.DropDownHoverAnimationDuration = 0
-        MCB_更新服务器.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
+        MCB_更新服务器.DropDownHoverColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
         MCB_更新服务器.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
         MCB_更新服务器.DropDownPadding = New Padding(10)
         MCB_更新服务器.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))

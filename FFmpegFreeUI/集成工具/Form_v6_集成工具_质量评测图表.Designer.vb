@@ -105,8 +105,7 @@ Partial Class Form_v6_集成工具_质量评测图表
         MCB_指标选择.DropDownBackdropBlurPasses = 2
         MCB_指标选择.DropDownBackdropBlurRadius = 30
         MCB_指标选择.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
-        MCB_指标选择.DropDownHoverAnimationDuration = 0
-        MCB_指标选择.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
+        MCB_指标选择.DropDownHoverColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
         MCB_指标选择.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
         MCB_指标选择.DropDownPadding = New Padding(10)
         MCB_指标选择.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))

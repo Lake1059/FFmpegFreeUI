@@ -402,8 +402,7 @@ Partial Class Form_v6_参数面板_音频参数
         MCB_声道布局.DropDownBackdropBlurPasses = 2
         MCB_声道布局.DropDownBackdropBlurRadius = 30
         MCB_声道布局.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
-        MCB_声道布局.DropDownHoverAnimationDuration = 0
-        MCB_声道布局.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
+        MCB_声道布局.DropDownHoverColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
         MCB_声道布局.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
         MCB_声道布局.DropDownPadding = New Padding(10)
         MCB_声道布局.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
@@ -465,8 +464,7 @@ Partial Class Form_v6_参数面板_音频参数
         MCB_位深度.DropDownBackdropBlurPasses = 2
         MCB_位深度.DropDownBackdropBlurRadius = 30
         MCB_位深度.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
-        MCB_位深度.DropDownHoverAnimationDuration = 0
-        MCB_位深度.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
+        MCB_位深度.DropDownHoverColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
         MCB_位深度.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
         MCB_位深度.DropDownPadding = New Padding(10)
         MCB_位深度.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
@@ -523,8 +521,7 @@ Partial Class Form_v6_参数面板_音频参数
         MCB_采样率.DropDownBackdropBlurPasses = 2
         MCB_采样率.DropDownBackdropBlurRadius = 30
         MCB_采样率.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
-        MCB_采样率.DropDownHoverAnimationDuration = 0
-        MCB_采样率.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
+        MCB_采样率.DropDownHoverColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
         MCB_采样率.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
         MCB_采样率.DropDownPadding = New Padding(10)
         MCB_采样率.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
@@ -613,8 +610,7 @@ Partial Class Form_v6_参数面板_音频参数
         MCB_质量参数名.DropDownBackdropBlurPasses = 2
         MCB_质量参数名.DropDownBackdropBlurRadius = 30
         MCB_质量参数名.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
-        MCB_质量参数名.DropDownHoverAnimationDuration = 0
-        MCB_质量参数名.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
+        MCB_质量参数名.DropDownHoverColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
         MCB_质量参数名.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
         MCB_质量参数名.DropDownPadding = New Padding(10)
         MCB_质量参数名.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
@@ -655,8 +651,7 @@ Partial Class Form_v6_参数面板_音频参数
         MCB_比特率.DropDownBackdropBlurPasses = 2
         MCB_比特率.DropDownBackdropBlurRadius = 30
         MCB_比特率.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
-        MCB_比特率.DropDownHoverAnimationDuration = 0
-        MCB_比特率.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
+        MCB_比特率.DropDownHoverColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
         MCB_比特率.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
         MCB_比特率.DropDownPadding = New Padding(10)
         MCB_比特率.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
@@ -718,8 +713,7 @@ Partial Class Form_v6_参数面板_音频参数
         MCB_音频编码器.DropDownBackdropBlurPasses = 2
         MCB_音频编码器.DropDownBackdropBlurRadius = 30
         MCB_音频编码器.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
-        MCB_音频编码器.DropDownHoverAnimationDuration = 0
-        MCB_音频编码器.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
+        MCB_音频编码器.DropDownHoverColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
         MCB_音频编码器.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
         MCB_音频编码器.DropDownPadding = New Padding(10)
         MCB_音频编码器.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))

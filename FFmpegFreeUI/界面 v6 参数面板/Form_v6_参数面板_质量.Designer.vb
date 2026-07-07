@@ -441,8 +441,7 @@ Partial Class Form_v6_参数面板_质量
         MCB_质量参数名称.DropDownBackdropBlurPasses = 2
         MCB_质量参数名称.DropDownBackdropBlurRadius = 30
         MCB_质量参数名称.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
-        MCB_质量参数名称.DropDownHoverAnimationDuration = 0
-        MCB_质量参数名称.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
+        MCB_质量参数名称.DropDownHoverColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
         MCB_质量参数名称.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
         MCB_质量参数名称.DropDownPadding = New Padding(10)
         MCB_质量参数名称.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
@@ -482,8 +481,7 @@ Partial Class Form_v6_参数面板_质量
         MCB_全局质量控制方式.DropDownBackdropBlurPasses = 2
         MCB_全局质量控制方式.DropDownBackdropBlurRadius = 30
         MCB_全局质量控制方式.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
-        MCB_全局质量控制方式.DropDownHoverAnimationDuration = 0
-        MCB_全局质量控制方式.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
+        MCB_全局质量控制方式.DropDownHoverColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
         MCB_全局质量控制方式.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
         MCB_全局质量控制方式.DropDownPadding = New Padding(10)
         MCB_全局质量控制方式.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))

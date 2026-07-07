@@ -86,8 +86,7 @@ Partial Class Form_v6_参数面板_剪辑区间
         MCB_向前解码秒数.DropDownBackdropBlurPasses = 2
         MCB_向前解码秒数.DropDownBackdropBlurRadius = 30
         MCB_向前解码秒数.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
-        MCB_向前解码秒数.DropDownHoverAnimationDuration = 0
-        MCB_向前解码秒数.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
+        MCB_向前解码秒数.DropDownHoverColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
         MCB_向前解码秒数.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
         MCB_向前解码秒数.DropDownPadding = New Padding(10)
         MCB_向前解码秒数.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
@@ -265,8 +264,7 @@ Partial Class Form_v6_参数面板_剪辑区间
         MCB_剪辑模式.DropDownBackdropBlurPasses = 2
         MCB_剪辑模式.DropDownBackdropBlurRadius = 30
         MCB_剪辑模式.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
-        MCB_剪辑模式.DropDownHoverAnimationDuration = 0
-        MCB_剪辑模式.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
+        MCB_剪辑模式.DropDownHoverColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
         MCB_剪辑模式.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
         MCB_剪辑模式.DropDownPadding = New Padding(10)
         MCB_剪辑模式.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))

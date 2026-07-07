@@ -205,8 +205,7 @@ Partial Class Form_v6_参数面板_视频编码器
         MCB_场景优化.DropDownBackdropBlurPasses = 2
         MCB_场景优化.DropDownBackdropBlurRadius = 30
         MCB_场景优化.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
-        MCB_场景优化.DropDownHoverAnimationDuration = 0
-        MCB_场景优化.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
+        MCB_场景优化.DropDownHoverColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
         MCB_场景优化.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
         MCB_场景优化.DropDownPadding = New Padding(10)
         MCB_场景优化.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
@@ -256,8 +255,7 @@ Partial Class Form_v6_参数面板_视频编码器
         MCB_配置文件.DropDownBackdropBlurPasses = 2
         MCB_配置文件.DropDownBackdropBlurRadius = 30
         MCB_配置文件.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
-        MCB_配置文件.DropDownHoverAnimationDuration = 0
-        MCB_配置文件.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
+        MCB_配置文件.DropDownHoverColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
         MCB_配置文件.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
         MCB_配置文件.DropDownPadding = New Padding(10)
         MCB_配置文件.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
@@ -307,8 +305,7 @@ Partial Class Form_v6_参数面板_视频编码器
         MCB_编码预设.DropDownBackdropBlurPasses = 2
         MCB_编码预设.DropDownBackdropBlurRadius = 30
         MCB_编码预设.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
-        MCB_编码预设.DropDownHoverAnimationDuration = 0
-        MCB_编码预设.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
+        MCB_编码预设.DropDownHoverColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
         MCB_编码预设.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
         MCB_编码预设.DropDownPadding = New Padding(10)
         MCB_编码预设.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
@@ -405,8 +402,7 @@ Partial Class Form_v6_参数面板_视频编码器
         MCB_具体编码器.DropDownBackdropBlurPasses = 2
         MCB_具体编码器.DropDownBackdropBlurRadius = 30
         MCB_具体编码器.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
-        MCB_具体编码器.DropDownHoverAnimationDuration = 0
-        MCB_具体编码器.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
+        MCB_具体编码器.DropDownHoverColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
         MCB_具体编码器.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
         MCB_具体编码器.DropDownPadding = New Padding(10)
         MCB_具体编码器.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
@@ -443,8 +439,7 @@ Partial Class Form_v6_参数面板_视频编码器
         MCB_视频编码器分类.DropDownBackdropBlurPasses = 2
         MCB_视频编码器分类.DropDownBackdropBlurRadius = 30
         MCB_视频编码器分类.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
-        MCB_视频编码器分类.DropDownHoverAnimationDuration = 0
-        MCB_视频编码器分类.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
+        MCB_视频编码器分类.DropDownHoverColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
         MCB_视频编码器分类.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
         MCB_视频编码器分类.DropDownPadding = New Padding(10)
         MCB_视频编码器分类.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
@@ -480,8 +475,7 @@ Partial Class Form_v6_参数面板_视频编码器
         MCB_视频编码器类型.DropDownBackdropBlurPasses = 2
         MCB_视频编码器类型.DropDownBackdropBlurRadius = 30
         MCB_视频编码器类型.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
-        MCB_视频编码器类型.DropDownHoverAnimationDuration = 0
-        MCB_视频编码器类型.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
+        MCB_视频编码器类型.DropDownHoverColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
         MCB_视频编码器类型.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
         MCB_视频编码器类型.DropDownPadding = New Padding(10)
         MCB_视频编码器类型.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))

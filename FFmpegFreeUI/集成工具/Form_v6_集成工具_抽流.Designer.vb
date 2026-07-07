@@ -88,8 +88,7 @@ Partial Class Form_v6_集成工具_抽流
         MCB_输出位置.DropDownBackdropBlurPasses = 2
         MCB_输出位置.DropDownBackdropBlurRadius = 30
         MCB_输出位置.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
-        MCB_输出位置.DropDownHoverAnimationDuration = 0
-        MCB_输出位置.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
+        MCB_输出位置.DropDownHoverColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
         MCB_输出位置.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
         MCB_输出位置.DropDownPadding = New Padding(10)
         MCB_输出位置.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))

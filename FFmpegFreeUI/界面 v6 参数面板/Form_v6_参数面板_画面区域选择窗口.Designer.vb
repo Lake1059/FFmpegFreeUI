@@ -117,8 +117,7 @@ Partial Class Form_v6_参数面板_画面区域选择窗口
         MCB_裁剪比例.DropDownBackdropBlurPasses = 2
         MCB_裁剪比例.DropDownBackdropBlurRadius = 30
         MCB_裁剪比例.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
-        MCB_裁剪比例.DropDownHoverAnimationDuration = 0
-        MCB_裁剪比例.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
+        MCB_裁剪比例.DropDownHoverColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
         MCB_裁剪比例.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
         MCB_裁剪比例.DropDownPadding = New Padding(10)
         MCB_裁剪比例.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))

@@ -419,8 +419,7 @@ Partial Class Form_v6_参数面板_输出文件设置
         MCB_自动命名方式.DropDownBackdropBlurPasses = 2
         MCB_自动命名方式.DropDownBackdropBlurRadius = 30
         MCB_自动命名方式.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
-        MCB_自动命名方式.DropDownHoverAnimationDuration = 0
-        MCB_自动命名方式.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
+        MCB_自动命名方式.DropDownHoverColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
         MCB_自动命名方式.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
         MCB_自动命名方式.DropDownPadding = New Padding(10)
         MCB_自动命名方式.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
@@ -482,8 +481,7 @@ Partial Class Form_v6_参数面板_输出文件设置
         MCB_保留子文件夹结构起始点.DropDownBackdropBlurPasses = 2
         MCB_保留子文件夹结构起始点.DropDownBackdropBlurRadius = 30
         MCB_保留子文件夹结构起始点.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
-        MCB_保留子文件夹结构起始点.DropDownHoverAnimationDuration = 0
-        MCB_保留子文件夹结构起始点.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
+        MCB_保留子文件夹结构起始点.DropDownHoverColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
         MCB_保留子文件夹结构起始点.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
         MCB_保留子文件夹结构起始点.DropDownPadding = New Padding(10)
         MCB_保留子文件夹结构起始点.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
@@ -534,8 +532,7 @@ Partial Class Form_v6_参数面板_输出文件设置
         MCB_输出位置.DropDownBackdropBlurPasses = 2
         MCB_输出位置.DropDownBackdropBlurRadius = 30
         MCB_输出位置.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
-        MCB_输出位置.DropDownHoverAnimationDuration = 0
-        MCB_输出位置.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
+        MCB_输出位置.DropDownHoverColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
         MCB_输出位置.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
         MCB_输出位置.DropDownPadding = New Padding(10)
         MCB_输出位置.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
@@ -578,8 +575,7 @@ Partial Class Form_v6_参数面板_输出文件设置
         MCB_输出文件参数使用方法.DropDownBackdropBlurPasses = 2
         MCB_输出文件参数使用方法.DropDownBackdropBlurRadius = 30
         MCB_输出文件参数使用方法.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
-        MCB_输出文件参数使用方法.DropDownHoverAnimationDuration = 0
-        MCB_输出文件参数使用方法.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
+        MCB_输出文件参数使用方法.DropDownHoverColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
         MCB_输出文件参数使用方法.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
         MCB_输出文件参数使用方法.DropDownPadding = New Padding(10)
         MCB_输出文件参数使用方法.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))

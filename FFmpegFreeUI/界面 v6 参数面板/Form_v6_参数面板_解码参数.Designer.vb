@@ -118,8 +118,7 @@ Partial Class Form_v6_参数面板_解码参数
         MCB_硬件解码设备参数名.DropDownBackdropBlurPasses = 2
         MCB_硬件解码设备参数名.DropDownBackdropBlurRadius = 30
         MCB_硬件解码设备参数名.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
-        MCB_硬件解码设备参数名.DropDownHoverAnimationDuration = 0
-        MCB_硬件解码设备参数名.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
+        MCB_硬件解码设备参数名.DropDownHoverColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
         MCB_硬件解码设备参数名.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
         MCB_硬件解码设备参数名.DropDownPadding = New Padding(10)
         MCB_硬件解码设备参数名.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
@@ -175,8 +174,7 @@ Partial Class Form_v6_参数面板_解码参数
         MCB_硬件解码输出格式.DropDownBackdropBlurPasses = 2
         MCB_硬件解码输出格式.DropDownBackdropBlurRadius = 30
         MCB_硬件解码输出格式.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
-        MCB_硬件解码输出格式.DropDownHoverAnimationDuration = 0
-        MCB_硬件解码输出格式.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
+        MCB_硬件解码输出格式.DropDownHoverColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
         MCB_硬件解码输出格式.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
         MCB_硬件解码输出格式.DropDownPadding = New Padding(10)
         MCB_硬件解码输出格式.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
@@ -289,8 +287,7 @@ Partial Class Form_v6_参数面板_解码参数
         MCB_硬件加速解码方式.DropDownBackdropBlurPasses = 2
         MCB_硬件加速解码方式.DropDownBackdropBlurRadius = 30
         MCB_硬件加速解码方式.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
-        MCB_硬件加速解码方式.DropDownHoverAnimationDuration = 0
-        MCB_硬件加速解码方式.DropDownHoverColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
+        MCB_硬件加速解码方式.DropDownHoverColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
         MCB_硬件加速解码方式.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
         MCB_硬件加速解码方式.DropDownPadding = New Padding(10)
         MCB_硬件加速解码方式.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
