@@ -58,9 +58,9 @@ Partial Class Form_v6_参数面板_预设管理
         Panel1.SuspendLayout()
         Panel4.SuspendLayout()
         SuspendLayout()
-        '
+        ' 
         ' ModernPanel1
-        '
+        ' 
         ModernPanel1.BackColor1 = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         ModernPanel1.BorderSize = 0
         ModernPanel1.Controls.Add(Panel2)
@@ -74,9 +74,9 @@ Partial Class Form_v6_参数面板_预设管理
         ModernPanel1.Padding = New Padding(20)
         ModernPanel1.Size = New Size(816, 633)
         ModernPanel1.TabIndex = 0
-        '
+        ' 
         ' Panel2
-        '
+        ' 
         Panel2.Controls.Add(MTB_预设命令行预览)
         Panel2.Controls.Add(JustEmptyControl2)
         Panel2.Controls.Add(MTB_预设参数总览)
@@ -88,9 +88,9 @@ Partial Class Form_v6_参数面板_预设管理
         Panel2.Padding = New Padding(0, 10, 0, 0)
         Panel2.Size = New Size(776, 442)
         Panel2.TabIndex = 11
-        '
+        ' 
         ' MTB_预设命令行预览
-        '
+        ' 
         MTB_预设命令行预览.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MTB_预设命令行预览.BorderColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MTB_预设命令行预览.BorderColorFocus = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
@@ -102,23 +102,22 @@ Partial Class Form_v6_参数面板_预设管理
         MTB_预设命令行预览.Margin = New Padding(2)
         MTB_预设命令行预览.MultiLine = True
         MTB_预设命令行预览.Name = "MTB_预设命令行预览"
-        MTB_预设命令行预览.Padding = New Padding(12, 10, 12, 10)
+        MTB_预设命令行预览.Padding = New Padding(10, 8, 10, 8)
         MTB_预设命令行预览.ReadOnly = True
         MTB_预设命令行预览.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MTB_预设命令行预览.Size = New Size(234, 432)
         MTB_预设命令行预览.TabIndex = 4
-        MTB_预设命令行预览.Text = ""
-        '
+        ' 
         ' JustEmptyControl2
-        '
+        ' 
         JustEmptyControl2.Dock = DockStyle.Left
         JustEmptyControl2.Location = New Point(532, 10)
         JustEmptyControl2.Name = "JustEmptyControl2"
         JustEmptyControl2.Size = New Size(10, 432)
         JustEmptyControl2.TabIndex = 3
-        '
+        ' 
         ' MTB_预设参数总览
-        '
+        ' 
         MTB_预设参数总览.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MTB_预设参数总览.BorderColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MTB_预设参数总览.BorderColorFocus = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
@@ -130,23 +129,22 @@ Partial Class Form_v6_参数面板_预设管理
         MTB_预设参数总览.Margin = New Padding(2)
         MTB_预设参数总览.MultiLine = True
         MTB_预设参数总览.Name = "MTB_预设参数总览"
-        MTB_预设参数总览.Padding = New Padding(12, 10, 12, 10)
+        MTB_预设参数总览.Padding = New Padding(10, 8, 10, 8)
         MTB_预设参数总览.ReadOnly = True
         MTB_预设参数总览.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MTB_预设参数总览.Size = New Size(267, 432)
         MTB_预设参数总览.TabIndex = 2
-        MTB_预设参数总览.Text = ""
-        '
+        ' 
         ' JustEmptyControl1
-        '
+        ' 
         JustEmptyControl1.Dock = DockStyle.Left
         JustEmptyControl1.Location = New Point(255, 10)
         JustEmptyControl1.Name = "JustEmptyControl1"
         JustEmptyControl1.Size = New Size(10, 432)
         JustEmptyControl1.TabIndex = 1
-        '
+        ' 
         ' MLB_预设列表
-        '
+        ' 
         MLB_预设列表.AllowDragReorder = True
         MLB_预设列表.AnimationDuration = 300
         MLB_预设列表.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
@@ -163,9 +161,9 @@ Partial Class Form_v6_参数面板_预设管理
         MLB_预设列表.TabIndex = 5
         MLB_预设列表.ToolTipBorderColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MLB_预设列表.ToolTipMaxWidth = 350
-        '
+        ' 
         ' Panel3
-        '
+        ' 
         Panel3.Controls.Add(MTB_预设名称)
         Panel3.Controls.Add(JustEmptyControl9)
         Panel3.Controls.Add(MB_变更预设名称)
@@ -175,9 +173,9 @@ Partial Class Form_v6_参数面板_预设管理
         Panel3.Padding = New Padding(0, 10, 0, 0)
         Panel3.Size = New Size(776, 42)
         Panel3.TabIndex = 12
-        '
+        ' 
         ' MTB_预设名称
-        '
+        ' 
         MTB_预设名称.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MTB_预设名称.BorderColor = Color.Transparent
         MTB_预设名称.BorderColorFocus = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
@@ -193,17 +191,17 @@ Partial Class Form_v6_参数面板_预设管理
         MTB_预设名称.TabIndex = 5
         MTB_预设名称.WaterText = "这里显示选中的预设项名称，主用于显示完整名称，也可在此直接重命名"
         MTB_预设名称.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        '
+        ' 
         ' JustEmptyControl9
-        '
+        ' 
         JustEmptyControl9.Dock = DockStyle.Right
         JustEmptyControl9.Location = New Point(666, 10)
         JustEmptyControl9.Name = "JustEmptyControl9"
         JustEmptyControl9.Size = New Size(10, 32)
         JustEmptyControl9.TabIndex = 13
-        '
+        ' 
         ' MB_变更预设名称
-        '
+        ' 
         MB_变更预设名称.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MB_变更预设名称.BorderRadius = 10
         MB_变更预设名称.BorderSize = 0
@@ -216,9 +214,9 @@ Partial Class Form_v6_参数面板_预设管理
         MB_变更预设名称.Size = New Size(100, 32)
         MB_变更预设名称.TabIndex = 12
         MB_变更预设名称.Text = "变更名称"
-        '
+        ' 
         ' Panel1
-        '
+        ' 
         Panel1.Controls.Add(MCK_额外保存输出位置)
         Panel1.Controls.Add(JustEmptyControl8)
         Panel1.Controls.Add(MB_重置所有预设参数)
@@ -238,9 +236,9 @@ Partial Class Form_v6_参数面板_预设管理
         Panel1.Padding = New Padding(0, 10, 0, 0)
         Panel1.Size = New Size(776, 42)
         Panel1.TabIndex = 10
-        '
+        ' 
         ' MCK_额外保存输出位置
-        '
+        ' 
         MCK_额外保存输出位置.AutoSize = True
         MCK_额外保存输出位置.BoxBorderRadius = 5
         MCK_额外保存输出位置.BoxBorderSize = 0
@@ -256,17 +254,17 @@ Partial Class Form_v6_参数面板_预设管理
         MCK_额外保存输出位置.Size = New Size(144, 32)
         MCK_额外保存输出位置.TabIndex = 14
         MCK_额外保存输出位置.Text = "额外保存输出位置"
-        '
+        ' 
         ' JustEmptyControl8
-        '
+        ' 
         JustEmptyControl8.Dock = DockStyle.Left
         JustEmptyControl8.Location = New Point(560, 10)
         JustEmptyControl8.Name = "JustEmptyControl8"
         JustEmptyControl8.Size = New Size(10, 32)
         JustEmptyControl8.TabIndex = 12
-        '
+        ' 
         ' MB_重置所有预设参数
-        '
+        ' 
         MB_重置所有预设参数.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MB_重置所有预设参数.BorderRadius = 10
         MB_重置所有预设参数.BorderSize = 0
@@ -279,17 +277,17 @@ Partial Class Form_v6_参数面板_预设管理
         MB_重置所有预设参数.Size = New Size(100, 32)
         MB_重置所有预设参数.TabIndex = 11
         MB_重置所有预设参数.Text = "重置所有"
-        '
+        ' 
         ' JustEmptyControl7
-        '
+        ' 
         JustEmptyControl7.Dock = DockStyle.Left
         JustEmptyControl7.Location = New Point(450, 10)
         JustEmptyControl7.Name = "JustEmptyControl7"
         JustEmptyControl7.Size = New Size(10, 32)
         JustEmptyControl7.TabIndex = 10
-        '
+        ' 
         ' MB_导入预设
-        '
+        ' 
         MB_导入预设.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MB_导入预设.BorderRadius = 10
         MB_导入预设.BorderSize = 0
@@ -302,17 +300,17 @@ Partial Class Form_v6_参数面板_预设管理
         MB_导入预设.Size = New Size(65, 32)
         MB_导入预设.TabIndex = 9
         MB_导入预设.Text = "导入"
-        '
+        ' 
         ' JustEmptyControl6
-        '
+        ' 
         JustEmptyControl6.Dock = DockStyle.Left
         JustEmptyControl6.Location = New Point(375, 10)
         JustEmptyControl6.Name = "JustEmptyControl6"
         JustEmptyControl6.Size = New Size(10, 32)
         JustEmptyControl6.TabIndex = 8
-        '
+        ' 
         ' MB_导出预设
-        '
+        ' 
         MB_导出预设.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MB_导出预设.BorderRadius = 10
         MB_导出预设.BorderSize = 0
@@ -325,17 +323,17 @@ Partial Class Form_v6_参数面板_预设管理
         MB_导出预设.Size = New Size(65, 32)
         MB_导出预设.TabIndex = 7
         MB_导出预设.Text = "导出"
-        '
+        ' 
         ' JustEmptyControl5
-        '
+        ' 
         JustEmptyControl5.Dock = DockStyle.Left
         JustEmptyControl5.Location = New Point(300, 10)
         JustEmptyControl5.Name = "JustEmptyControl5"
         JustEmptyControl5.Size = New Size(10, 32)
         JustEmptyControl5.TabIndex = 6
-        '
+        ' 
         ' MB_读取预设
-        '
+        ' 
         MB_读取预设.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MB_读取预设.BorderRadius = 10
         MB_读取预设.BorderSize = 0
@@ -348,17 +346,17 @@ Partial Class Form_v6_参数面板_预设管理
         MB_读取预设.Size = New Size(65, 32)
         MB_读取预设.TabIndex = 5
         MB_读取预设.Text = "读取"
-        '
+        ' 
         ' JustEmptyControl4
-        '
+        ' 
         JustEmptyControl4.Dock = DockStyle.Left
         JustEmptyControl4.Location = New Point(225, 10)
         JustEmptyControl4.Name = "JustEmptyControl4"
         JustEmptyControl4.Size = New Size(10, 32)
         JustEmptyControl4.TabIndex = 4
-        '
+        ' 
         ' MB_保存预设
-        '
+        ' 
         MB_保存预设.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MB_保存预设.BorderRadius = 10
         MB_保存预设.BorderSize = 0
@@ -371,17 +369,17 @@ Partial Class Form_v6_参数面板_预设管理
         MB_保存预设.Size = New Size(65, 32)
         MB_保存预设.TabIndex = 3
         MB_保存预设.Text = "保存"
-        '
+        ' 
         ' JustEmptyControl3
-        '
+        ' 
         JustEmptyControl3.Dock = DockStyle.Left
         JustEmptyControl3.Location = New Point(150, 10)
         JustEmptyControl3.Name = "JustEmptyControl3"
         JustEmptyControl3.Size = New Size(10, 32)
         JustEmptyControl3.TabIndex = 2
-        '
+        ' 
         ' MCB_预设来源
-        '
+        ' 
         MCB_预设来源.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_预设来源.BorderRadius = 10
         MCB_预设来源.BorderSize = 0
@@ -409,9 +407,9 @@ Partial Class Form_v6_参数面板_预设管理
         MCB_预设来源.ToolTipPadding = New Padding(15)
         MCB_预设来源.WaterText = "选择预设来源"
         MCB_预设来源.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        '
+        ' 
         ' HCL_预设管理说明
-        '
+        ' 
         HCL_预设管理说明.AutoSize = True
         HCL_预设管理说明.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HCL_预设管理说明.Dock = DockStyle.Top
@@ -422,9 +420,9 @@ Partial Class Form_v6_参数面板_预设管理
         HCL_预设管理说明.Size = New Size(776, 25)
         HCL_预设管理说明.TabIndex = 7
         HCL_预设管理说明.Text = "<span style=""font-size:13; color:Silver"">预设管理</span>   先选择预设来源，双击或读取来加载，用户和社区预设选中后按 Delete 删除到回收站"
-        '
+        ' 
         ' Panel4
-        '
+        ' 
         Panel4.Controls.Add(MTB_预设备注)
         Panel4.Controls.Add(JustEmptyControl10)
         Panel4.Controls.Add(MB_变更预设备注)
@@ -434,9 +432,9 @@ Partial Class Form_v6_参数面板_预设管理
         Panel4.Padding = New Padding(0, 10, 0, 0)
         Panel4.Size = New Size(776, 42)
         Panel4.TabIndex = 13
-        '
+        ' 
         ' MTB_预设备注
-        '
+        ' 
         MTB_预设备注.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MTB_预设备注.BorderColor = Color.Transparent
         MTB_预设备注.BorderColorFocus = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
@@ -452,17 +450,17 @@ Partial Class Form_v6_参数面板_预设管理
         MTB_预设备注.TabIndex = 5
         MTB_预设备注.WaterText = "这里显示选中的预设项备注，备注会在鼠标移上时显示在侧边，如果有相同的名称则会显示一样的"
         MTB_预设备注.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        '
+        ' 
         ' JustEmptyControl10
-        '
+        ' 
         JustEmptyControl10.Dock = DockStyle.Right
         JustEmptyControl10.Location = New Point(666, 10)
         JustEmptyControl10.Name = "JustEmptyControl10"
         JustEmptyControl10.Size = New Size(10, 32)
         JustEmptyControl10.TabIndex = 13
-        '
+        ' 
         ' MB_变更预设备注
-        '
+        ' 
         MB_变更预设备注.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MB_变更预设备注.BorderRadius = 10
         MB_变更预设备注.BorderSize = 0
@@ -475,9 +473,9 @@ Partial Class Form_v6_参数面板_预设管理
         MB_变更预设备注.Size = New Size(100, 32)
         MB_变更预设备注.TabIndex = 12
         MB_变更预设备注.Text = "变更备注"
-        '
+        ' 
         ' Form_v6_参数面板_预设管理
-        '
+        ' 
         AutoScaleDimensions = New SizeF(96F, 96F)
         AutoScaleMode = AutoScaleMode.Dpi
         BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
