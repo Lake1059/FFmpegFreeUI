@@ -22,6 +22,7 @@ Public Class Form_v6_编码队列
         UltraDetailListView1.Items.Clear()
         UltraDetailListView1.AllowDrop = True
         UltraDetailListView1.AllowDragReorder = True
+        调整列表交互区域()
         调整顶部按钮组居中()
         初始化菜单()
         AddHandler 编码队列_v6.队列已变化, AddressOf 队列已变化
@@ -392,7 +393,13 @@ Public Class Form_v6_编码队列
     End Sub
 
     Private Sub UltraDetailListView1_SizeChanged(sender As Object, e As EventArgs) Handles UltraDetailListView1.SizeChanged
+        调整列表交互区域()
         请求校准编码队列列宽()
+    End Sub
+
+    Private Sub 调整列表交互区域()
+        If UltraDetailListView1 Is Nothing Then Exit Sub
+        UltraDetailListView1.DragSelectZoneWidth = Math.Max(0, UltraDetailListView1.Size.Width \ 2)
     End Sub
 
     Private Sub UltraDetailListView1_DpiChangedAfterParent(sender As Object, e As EventArgs) Handles UltraDetailListView1.DpiChangedAfterParent
@@ -482,7 +489,9 @@ Public Class Form_v6_编码队列
     End Function
 
     Private Function 测量列文本宽度(text As String) As Integer
-        Return D3D_TextInterop.MeasureWidth(If(text, ""), UltraDetailListView1.Font, DPI) + 缩放宽度(列宽文本预留宽度基准, DPI)
+        Dim flags = TextFormatFlags.Left Or TextFormatFlags.Top Or TextFormatFlags.NoPadding Or TextFormatFlags.SingleLine
+        Dim size = D3D_TextInterop.MeasureText(If(text, ""), UltraDetailListView1.Font, New Size(Integer.MaxValue, Integer.MaxValue), flags, DPI)
+        Return size.Width + 缩放宽度(列宽文本预留宽度基准, DPI)
     End Function
 
     Private Shared Function 压缩列宽(理想宽度 As Integer(), 最小宽度 As Integer(), 目标总宽度 As Integer) As Integer()
