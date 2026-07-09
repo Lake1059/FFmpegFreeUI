@@ -143,14 +143,36 @@ Namespace My
                 Dim 规范子路径 = 规范化目录路径(子路径)
                 Dim 规范父目录 = 规范化目录路径(父目录)
                 If String.Equals(规范子路径, 规范父目录, StringComparison.OrdinalIgnoreCase) Then Return True
-                Return 规范子路径.StartsWith(规范父目录 & Path.DirectorySeparatorChar, StringComparison.OrdinalIgnoreCase)
+                If 是文件系统根目录(规范父目录) Then Return False
+                Return 规范子路径.StartsWith(确保目录路径以分隔符结尾(规范父目录), StringComparison.OrdinalIgnoreCase)
             Catch
                 Return False
             End Try
         End Function
 
         Private Shared Function 规范化目录路径(目录路径 As String) As String
-            Return Path.GetFullPath(目录路径).TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar)
+            Dim 完整路径 = Path.GetFullPath(目录路径)
+            Dim 根目录 = Path.GetPathRoot(完整路径)
+            Dim 去尾路径 = 完整路径.TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar)
+
+            If Not String.IsNullOrEmpty(根目录) Then
+                Dim 去尾根目录 = 根目录.TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar)
+                If String.Equals(去尾路径, 去尾根目录, StringComparison.OrdinalIgnoreCase) Then Return 根目录
+            End If
+
+            Return 去尾路径
+        End Function
+
+        Private Shared Function 是文件系统根目录(目录路径 As String) As Boolean
+            Dim 根目录 = Path.GetPathRoot(Path.GetFullPath(目录路径))
+            If String.IsNullOrEmpty(根目录) Then Return False
+            Return String.Equals(规范化目录路径(目录路径), 规范化目录路径(根目录), StringComparison.OrdinalIgnoreCase)
+        End Function
+
+        Private Shared Function 确保目录路径以分隔符结尾(目录路径 As String) As String
+            If String.IsNullOrEmpty(目录路径) Then Return 目录路径
+            If 目录路径.EndsWith(Path.DirectorySeparatorChar) OrElse 目录路径.EndsWith(Path.AltDirectorySeparatorChar) Then Return 目录路径
+            Return 目录路径 & Path.DirectorySeparatorChar
         End Function
 
     End Class
