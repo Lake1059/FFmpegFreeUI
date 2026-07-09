@@ -1,7 +1,19 @@
 Public Class Form_v6_参数面板_音频参数
     Private Sub Form_v6_参数面板_音频参数_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        初始化音频编码器下拉框()
         绑定音频编码器工具提示()
         初始化质量参数名下拉框()
+    End Sub
+
+    Private Sub 初始化音频编码器下拉框()
+        Dim 当前文本 = MCB_音频编码器.Text
+        MCB_音频编码器.Items.Clear()
+
+        For Each 编码器 In 音频编码器数据库_v6.全部编码器
+            MCB_音频编码器.Items.Add(编码器.显示名称)
+        Next
+
+        设置组合框文本并尝试选中(MCB_音频编码器, 当前文本)
     End Sub
 
     Private Sub 绑定音频编码器工具提示()
