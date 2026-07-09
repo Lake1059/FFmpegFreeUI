@@ -30,9 +30,9 @@ Partial Class Form_v6_参数面板_流自定义参数
         ModernPanel1 = New LakeUI.ModernPanel()
         ModernPanel1.SuspendLayout()
         SuspendLayout()
-        '
+        ' 
         ' HCL_视频流自定义参数说明
-        '
+        ' 
         HCL_视频流自定义参数说明.AutoSize = True
         HCL_视频流自定义参数说明.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HCL_视频流自定义参数说明.Dock = DockStyle.Top
@@ -44,9 +44,9 @@ Partial Class Form_v6_参数面板_流自定义参数
         HCL_视频流自定义参数说明.Size = New Size(722, 35)
         HCL_视频流自定义参数说明.TabIndex = 9
         HCL_视频流自定义参数说明.Text = "<span style=""font-size:13; color:Silver"">视频流参数</span>   如果要写滤镜请用滤镜排序功能，否则逻辑会冲突"
-        '
+        ' 
         ' MTB_视频流自定义参数
-        '
+        ' 
         MTB_视频流自定义参数.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MTB_视频流自定义参数.BorderColor = Color.Transparent
         MTB_视频流自定义参数.BorderColorFocus = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
@@ -58,16 +58,16 @@ Partial Class Form_v6_参数面板_流自定义参数
         MTB_视频流自定义参数.Margin = New Padding(2)
         MTB_视频流自定义参数.MultiLine = True
         MTB_视频流自定义参数.Name = "MTB_视频流自定义参数"
-        MTB_视频流自定义参数.Padding = New Padding(15, 10, 15, 10)
+        MTB_视频流自定义参数.Padding = New Padding(10, 8, 10, 8)
         MTB_视频流自定义参数.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MTB_视频流自定义参数.ShowLineNumbers = True
         MTB_视频流自定义参数.Size = New Size(722, 256)
         MTB_视频流自定义参数.TabIndex = 10
         MTB_视频流自定义参数.WaterText = "拼接在已生成部分的末尾，图片参数也是用这个"
         MTB_视频流自定义参数.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        '
+        ' 
         ' HCL_音频流自定义参数说明
-        '
+        ' 
         HCL_音频流自定义参数说明.AutoSize = True
         HCL_音频流自定义参数说明.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HCL_音频流自定义参数说明.Dock = DockStyle.Top
@@ -79,9 +79,9 @@ Partial Class Form_v6_参数面板_流自定义参数
         HCL_音频流自定义参数说明.Size = New Size(722, 55)
         HCL_音频流自定义参数说明.TabIndex = 11
         HCL_音频流自定义参数说明.Text = "<span style=""font-size:13; color:Silver"">音频流参数</span>   如果要写滤镜请用滤镜排序功能，否则逻辑会冲突"
-        '
+        ' 
         ' HCL_字幕自定义参数说明
-        '
+        ' 
         HCL_字幕自定义参数说明.AutoSize = True
         HCL_字幕自定义参数说明.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HCL_字幕自定义参数说明.Dock = DockStyle.Bottom
@@ -93,9 +93,9 @@ Partial Class Form_v6_参数面板_流自定义参数
         HCL_字幕自定义参数说明.Size = New Size(722, 45)
         HCL_字幕自定义参数说明.TabIndex = 12
         HCL_字幕自定义参数说明.Text = "<span style=""font-size:13; color:Silver"">字幕？</span>   请使用自带相关功能，或者使用在位置插入功能"
-        '
+        ' 
         ' MTB_音频流自定义参数
-        '
+        ' 
         MTB_音频流自定义参数.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MTB_音频流自定义参数.BorderColor = Color.Transparent
         MTB_音频流自定义参数.BorderColorFocus = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
@@ -107,16 +107,16 @@ Partial Class Form_v6_参数面板_流自定义参数
         MTB_音频流自定义参数.Margin = New Padding(2)
         MTB_音频流自定义参数.MultiLine = True
         MTB_音频流自定义参数.Name = "MTB_音频流自定义参数"
-        MTB_音频流自定义参数.Padding = New Padding(15, 10, 15, 10)
+        MTB_音频流自定义参数.Padding = New Padding(10, 8, 10, 8)
         MTB_音频流自定义参数.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MTB_音频流自定义参数.ShowLineNumbers = True
         MTB_音频流自定义参数.Size = New Size(722, 192)
         MTB_音频流自定义参数.TabIndex = 13
         MTB_音频流自定义参数.WaterText = "拼接在已生成部分的末尾"
         MTB_音频流自定义参数.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        '
+        ' 
         ' ModernPanel1
-        '
+        ' 
         ModernPanel1.BackColor1 = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         ModernPanel1.BorderSize = 0
         ModernPanel1.Controls.Add(MTB_音频流自定义参数)
@@ -130,9 +130,9 @@ Partial Class Form_v6_参数面板_流自定义参数
         ModernPanel1.Padding = New Padding(20)
         ModernPanel1.Size = New Size(762, 623)
         ModernPanel1.TabIndex = 14
-        '
+        ' 
         ' Form_v6_参数面板_流自定义参数
-        '
+        ' 
         AutoScaleMode = AutoScaleMode.None
         BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         ClientSize = New Size(762, 623)

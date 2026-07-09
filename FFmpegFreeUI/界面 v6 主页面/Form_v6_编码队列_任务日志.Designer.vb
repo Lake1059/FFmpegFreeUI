@@ -19,19 +19,19 @@ Partial Class Form_v6_编码队列_任务日志
     Private Sub InitializeComponent()
         ModernPanel1 = New LakeUI.ModernPanel()
         ModernTextBox1 = New LakeUI.ModernTextBox()
+        Panel2 = New Panel()
+        MB_任务性能计数器 = New LakeUI.ModernButton()
         Panel1 = New Panel()
         ModernCheckBox1 = New LakeUI.ModernCheckBox()
         MB_复制当前视图 = New LakeUI.ModernButton()
         MCB_显示模式 = New LakeUI.ModernComboBox()
-        Panel2 = New Panel()
-        MB_任务性能计数器 = New LakeUI.ModernButton()
         ModernPanel1.SuspendLayout()
-        Panel1.SuspendLayout()
         Panel2.SuspendLayout()
+        Panel1.SuspendLayout()
         SuspendLayout()
-        '
+        ' 
         ' ModernPanel1
-        '
+        ' 
         ModernPanel1.BackColor1 = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         ModernPanel1.BorderSize = 0
         ModernPanel1.Controls.Add(ModernTextBox1)
@@ -43,9 +43,9 @@ Partial Class Form_v6_编码队列_任务日志
         ModernPanel1.Padding = New Padding(10)
         ModernPanel1.Size = New Size(634, 461)
         ModernPanel1.TabIndex = 0
-        '
+        ' 
         ' ModernTextBox1
-        '
+        ' 
         ModernTextBox1.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernTextBox1.BorderColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernTextBox1.BorderColorFocus = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
@@ -58,14 +58,37 @@ Partial Class Form_v6_编码队列_任务日志
         ModernTextBox1.Margin = New Padding(2)
         ModernTextBox1.MultiLine = True
         ModernTextBox1.Name = "ModernTextBox1"
-        ModernTextBox1.Padding = New Padding(10)
+        ModernTextBox1.Padding = New Padding(10, 8, 10, 8)
         ModernTextBox1.ReadOnly = True
         ModernTextBox1.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernTextBox1.Size = New Size(614, 357)
         ModernTextBox1.TabIndex = 3
-        '
+        ' 
+        ' Panel2
+        ' 
+        Panel2.Controls.Add(MB_任务性能计数器)
+        Panel2.Dock = DockStyle.Bottom
+        Panel2.Location = New Point(10, 409)
+        Panel2.Name = "Panel2"
+        Panel2.Padding = New Padding(0, 10, 0, 0)
+        Panel2.Size = New Size(614, 42)
+        Panel2.TabIndex = 4
+        ' 
+        ' MB_任务性能计数器
+        ' 
+        MB_任务性能计数器.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MB_任务性能计数器.BorderRadius = 10
+        MB_任务性能计数器.BorderSize = 0
+        MB_任务性能计数器.Dock = DockStyle.Fill
+        MB_任务性能计数器.Location = New Point(0, 10)
+        MB_任务性能计数器.Margin = New Padding(2)
+        MB_任务性能计数器.Name = "MB_任务性能计数器"
+        MB_任务性能计数器.Size = New Size(614, 32)
+        MB_任务性能计数器.TabIndex = 4
+        MB_任务性能计数器.Text = ""
+        ' 
         ' Panel1
-        '
+        ' 
         Panel1.Controls.Add(ModernCheckBox1)
         Panel1.Controls.Add(MB_复制当前视图)
         Panel1.Controls.Add(MCB_显示模式)
@@ -75,9 +98,9 @@ Partial Class Form_v6_编码队列_任务日志
         Panel1.Padding = New Padding(0, 0, 0, 10)
         Panel1.Size = New Size(614, 42)
         Panel1.TabIndex = 0
-        '
+        ' 
         ' ModernCheckBox1
-        '
+        ' 
         ModernCheckBox1.AutoSize = True
         ModernCheckBox1.BoxBorderRadius = 5
         ModernCheckBox1.BoxBorderSize = 0
@@ -93,9 +116,9 @@ Partial Class Form_v6_编码队列_任务日志
         ModernCheckBox1.Size = New Size(294, 32)
         ModernCheckBox1.TabIndex = 13
         ModernCheckBox1.Text = "自动滚动到底部"
-        '
+        ' 
         ' MB_复制当前视图
-        '
+        ' 
         MB_复制当前视图.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MB_复制当前视图.BorderRadius = 10
         MB_复制当前视图.BorderSize = 0
@@ -108,9 +131,9 @@ Partial Class Form_v6_编码队列_任务日志
         MB_复制当前视图.Size = New Size(130, 32)
         MB_复制当前视图.TabIndex = 3
         MB_复制当前视图.Text = "复制当前视图"
-        '
+        ' 
         ' MCB_显示模式
-        '
+        ' 
         MCB_显示模式.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_显示模式.BorderRadius = 10
         MCB_显示模式.BorderSize = 0
@@ -138,32 +161,9 @@ Partial Class Form_v6_编码队列_任务日志
         MCB_显示模式.ToolTipMaxWidth = 350
         MCB_显示模式.ToolTipPadding = New Padding(15)
         MCB_显示模式.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        '
-        ' Panel2
-        '
-        Panel2.Controls.Add(MB_任务性能计数器)
-        Panel2.Dock = DockStyle.Bottom
-        Panel2.Location = New Point(10, 409)
-        Panel2.Name = "Panel2"
-        Panel2.Padding = New Padding(0, 10, 0, 0)
-        Panel2.Size = New Size(614, 42)
-        Panel2.TabIndex = 4
-        '
-        ' MB_任务性能计数器
-        '
-        MB_任务性能计数器.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        MB_任务性能计数器.BorderRadius = 10
-        MB_任务性能计数器.BorderSize = 0
-        MB_任务性能计数器.Dock = DockStyle.Fill
-        MB_任务性能计数器.Location = New Point(0, 10)
-        MB_任务性能计数器.Margin = New Padding(2)
-        MB_任务性能计数器.Name = "MB_任务性能计数器"
-        MB_任务性能计数器.Size = New Size(614, 32)
-        MB_任务性能计数器.TabIndex = 4
-        MB_任务性能计数器.Text = ""
-        '
+        ' 
         ' Form_v6_编码队列_任务日志
-        '
+        ' 
         AutoScaleDimensions = New SizeF(96F, 96F)
         AutoScaleMode = AutoScaleMode.Dpi
         BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
@@ -177,9 +177,9 @@ Partial Class Form_v6_编码队列_任务日志
         StartPosition = FormStartPosition.CenterParent
         Text = "编码队列任务日志"
         ModernPanel1.ResumeLayout(False)
+        Panel2.ResumeLayout(False)
         Panel1.ResumeLayout(False)
         Panel1.PerformLayout()
-        Panel2.ResumeLayout(False)
         ResumeLayout(False)
     End Sub
 

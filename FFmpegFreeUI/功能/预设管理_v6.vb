@@ -803,6 +803,7 @@ Partial Public Class 预设管理_v6
             If 选择复制流编码器 Then Continue For
             添加编码器参数(parts, "-b:a", a.音频参数_比特率, target)
             添加编码器参数(parts, a.音频参数_质量参数名, a.音频参数_质量值, target)
+            添加编码器参数(parts, a.音频参数_质量参数名2, a.音频参数_质量值2, target)
             添加编码器参数(parts, "-sample_fmt", a.音频参数_位深度, target)
             添加编码器参数(parts, "-ar", a.音频参数_采样率, target)
         Next
@@ -985,6 +986,8 @@ Partial Public Class 预设管理_v6
         Return Not String.IsNullOrWhiteSpace(a.音频参数_比特率) OrElse
                Not String.IsNullOrWhiteSpace(a.音频参数_质量参数名) OrElse
                Not String.IsNullOrWhiteSpace(a.音频参数_质量值) OrElse
+               Not String.IsNullOrWhiteSpace(a.音频参数_质量参数名2) OrElse
+               Not String.IsNullOrWhiteSpace(a.音频参数_质量值2) OrElse
                Not String.IsNullOrWhiteSpace(a.音频参数_位深度) OrElse
                Not String.IsNullOrWhiteSpace(a.音频参数_采样率)
     End Function

@@ -759,8 +759,8 @@ Public Partial Class 预设管理_v6
 
         添加总览文本行(sb, "音频编码器：" & 获取音频编码器总览显示名(a.音频参数_编码器_代号))
         添加总览文本行(sb, "音频比特率：" & a.音频参数_比特率)
-        If Not String.IsNullOrWhiteSpace(a.音频参数_质量参数名) Then 添加总览文本行(sb, "音频质量控制：" & a.音频参数_质量参数名 & If(a.音频参数_质量值 = "", "（未填写值）", "=" & a.音频参数_质量值))
-        If String.IsNullOrWhiteSpace(a.音频参数_质量参数名) AndAlso Not String.IsNullOrWhiteSpace(a.音频参数_质量值) Then 添加总览文本行(sb, "音频质量值：" & a.音频参数_质量值)
+        添加音频质量控制总览(sb, "音频质量控制", a.音频参数_质量参数名, a.音频参数_质量值)
+        添加音频质量控制总览(sb, "音频质量控制 2", a.音频参数_质量参数名2, a.音频参数_质量值2)
         添加总览文本行(sb, "声道布局：" & a.音频参数_声道数)
         添加总览文本行(sb, "音频位深度：" & a.音频参数_位深度)
         添加总览文本行(sb, "采样率：" & a.音频参数_采样率)
@@ -826,6 +826,14 @@ Public Partial Class 预设管理_v6
         End If
 
         设置参数总览文本(MTB, If(sb.Length > 0, sb.ToString(), "未设置参数"))
+    End Sub
+
+    Private Shared Sub 添加音频质量控制总览(sb As StringBuilder, 标题 As String, 参数名 As String, 参数值 As String)
+        If Not String.IsNullOrWhiteSpace(参数名) Then
+            添加总览文本行(sb, 标题 & "：" & 参数名 & If(参数值 = "", "（未填写值）", "=" & 参数值))
+        ElseIf Not String.IsNullOrWhiteSpace(参数值) Then
+            添加总览文本行(sb, 标题.Replace("控制", "值") & "：" & 参数值)
+        End If
     End Sub
 
     Private Shared Sub 添加总览文本行(sb As StringBuilder, 文本 As String)
@@ -1192,6 +1200,8 @@ Public Partial Class 预设管理_v6
         Return Not String.IsNullOrWhiteSpace(a.音频参数_比特率) OrElse
                Not String.IsNullOrWhiteSpace(a.音频参数_质量参数名) OrElse
                Not String.IsNullOrWhiteSpace(a.音频参数_质量值) OrElse
+               Not String.IsNullOrWhiteSpace(a.音频参数_质量参数名2) OrElse
+               Not String.IsNullOrWhiteSpace(a.音频参数_质量值2) OrElse
                Not String.IsNullOrWhiteSpace(a.音频参数_位深度) OrElse
                Not String.IsNullOrWhiteSpace(a.音频参数_采样率)
     End Function
@@ -2039,6 +2049,8 @@ Public Partial Class 预设管理_v6
             a.音频参数_比特率 = .MCB_比特率.Text
             a.音频参数_质量参数名 = .MCB_质量参数名.Text
             a.音频参数_质量值 = .MTB_质量值.Text
+            a.音频参数_质量参数名2 = .MCB_质量参数名2.Text
+            a.音频参数_质量值2 = .MTB_质量值2.Text
             a.音频参数_声道数 = .MCB_声道布局.Text
             a.音频参数_位深度 = .MCB_位深度.Text
             a.音频参数_采样率 = .MCB_采样率.Text
@@ -2059,6 +2071,8 @@ Public Partial Class 预设管理_v6
             .MCB_比特率.Text = a.音频参数_比特率
             设置组合框文本并尝试选中(.MCB_质量参数名, a.音频参数_质量参数名)
             .MTB_质量值.Text = a.音频参数_质量值
+            设置组合框文本并尝试选中(.MCB_质量参数名2, a.音频参数_质量参数名2)
+            .MTB_质量值2.Text = a.音频参数_质量值2
             .MCB_声道布局.Text = a.音频参数_声道数
             .MCB_位深度.Text = a.音频参数_位深度
             .MCB_采样率.Text = a.音频参数_采样率

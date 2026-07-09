@@ -249,7 +249,7 @@ Partial Class Form_v6_起始页面
         HtmlColorLabel5.Padding = New Padding(0, 20, 0, 10)
         HtmlColorLabel5.Size = New Size(264, 52)
         HtmlColorLabel5.TabIndex = 3
-        HtmlColorLabel5.Text = "分离的组件"
+        HtmlColorLabel5.Text = "未完成的内容"
         HtmlColorLabel5.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.Center
         ' 
         ' MB_更新器更新

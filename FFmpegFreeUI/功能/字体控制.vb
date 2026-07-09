@@ -37,6 +37,11 @@ Public Class 字体控制
 
         SetControlFont(设置_v6.实例对象.字体, Form_v6_Agent, , True)
 
+        SetControlFont(设置_v6.实例对象.字体, Form_v6_社区, , True)
+        SetControlFont(设置_v6.实例对象.字体, Form_v6_社区_起始页面, , True)
+        SetControlFont(设置_v6.实例对象.字体, Form_v6_社区_用户登录, , True)
+        SetControlFont(设置_v6.实例对象.字体, Form_v6_社区_我的收藏, , True)
+
         SetControlFont(设置_v6.实例对象.字体, Form_v6_媒体信息, , True)
         SetControlFont(设置_v6.实例对象.字体, Form_v6_调试播放器, , True)
         SetControlFont(设置_v6.实例对象.字体, Form_v6_性能监控, , True)

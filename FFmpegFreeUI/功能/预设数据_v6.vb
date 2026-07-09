@@ -300,6 +300,8 @@ Public Class 预设数据_v6
     Public Property 音频参数_比特率 As String = ""
     Public Property 音频参数_质量参数名 As String = ""
     Public Property 音频参数_质量值 As String = ""
+    Public Property 音频参数_质量参数名2 As String = ""
+    Public Property 音频参数_质量值2 As String = ""
     Public Property 音频参数_声道数 As String = ""
     Public Property 音频参数_位深度 As String = ""
     Public Property 音频参数_采样率 As String = ""

@@ -35,7 +35,7 @@ Partial Class Form_v6_设置_LakeUIHDR
         PanelHDR启用 = New Panel()
         HtmlColorLabel启用 = New LakeUI.HtmlColorLabel()
         MCB_HDR启用 = New LakeUI.ModernComboBox()
-        HtmlColorLabel说明1 = New LakeUI.HtmlColorLabel()
+        HtmlColorLabel1 = New LakeUI.HtmlColorLabel()
         ModernPanel1.SuspendLayout()
         PanelHDR图片.SuspendLayout()
         PanelHDR矢量颜色.SuspendLayout()
@@ -51,7 +51,7 @@ Partial Class Form_v6_设置_LakeUIHDR
         ModernPanel1.Controls.Add(PanelHDR矢量颜色)
         ModernPanel1.Controls.Add(PanelHDR显示档位)
         ModernPanel1.Controls.Add(PanelHDR启用)
-        ModernPanel1.Controls.Add(HtmlColorLabel说明1)
+        ModernPanel1.Controls.Add(HtmlColorLabel1)
         ModernPanel1.Dock = DockStyle.Fill
         ModernPanel1.Location = New Point(0, 0)
         ModernPanel1.Name = "ModernPanel1"
@@ -279,18 +279,18 @@ Partial Class Form_v6_设置_LakeUIHDR
         MCB_HDR启用.ToolTipPadding = New Padding(15)
         MCB_HDR启用.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ' 
-        ' HtmlColorLabel说明1
+        ' HtmlColorLabel1
         ' 
-        HtmlColorLabel说明1.AutoSize = True
-        HtmlColorLabel说明1.AutoSizeMode = AutoSizeMode.GrowAndShrink
-        HtmlColorLabel说明1.Dock = DockStyle.Top
-        HtmlColorLabel说明1.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        HtmlColorLabel说明1.Location = New Point(20, 20)
-        HtmlColorLabel说明1.Margin = New Padding(2)
-        HtmlColorLabel说明1.Name = "HtmlColorLabel说明1"
-        HtmlColorLabel说明1.Size = New Size(702, 25)
-        HtmlColorLabel说明1.TabIndex = 0
-        HtmlColorLabel说明1.Text = "<span style=""font-size:13; color:Silver"">LakeUI HDR</span>   此 HDR 方案不同于视频和游戏，因此实际效果有所出入"
+        HtmlColorLabel1.AutoSize = True
+        HtmlColorLabel1.AutoSizeMode = AutoSizeMode.GrowAndShrink
+        HtmlColorLabel1.Dock = DockStyle.Top
+        HtmlColorLabel1.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
+        HtmlColorLabel1.Location = New Point(20, 20)
+        HtmlColorLabel1.Margin = New Padding(2)
+        HtmlColorLabel1.Name = "HtmlColorLabel1"
+        HtmlColorLabel1.Size = New Size(702, 25)
+        HtmlColorLabel1.TabIndex = 0
+        HtmlColorLabel1.Text = "<span style=""font-size:13; color:Silver"">LakeUI HDR</span>   此 HDR 方案不同于视频和游戏，因此实际效果有所出入"
         ' 
         ' Form_v6_设置_LakeUIHDR
         ' 
@@ -313,7 +313,7 @@ Partial Class Form_v6_设置_LakeUIHDR
     End Sub
 
     Friend WithEvents ModernPanel1 As LakeUI.ModernPanel
-    Friend WithEvents HtmlColorLabel说明1 As LakeUI.HtmlColorLabel
+    Friend WithEvents HtmlColorLabel1 As LakeUI.HtmlColorLabel
     Friend WithEvents PanelHDR启用 As Panel
     Friend WithEvents HtmlColorLabel启用 As LakeUI.HtmlColorLabel
     Friend WithEvents MCB_HDR启用 As LakeUI.ModernComboBox

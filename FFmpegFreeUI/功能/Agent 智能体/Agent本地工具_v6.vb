@@ -1047,7 +1047,8 @@ Public Class AgentLocalTools
                 Return BuildStringCandidates(视频编码器数据库_v6.获取质量参数名列表())
             Case NameOf(预设数据_v6.音频参数_编码器_代号)
                 Return BuildAudioEncoderCandidates()
-            Case NameOf(预设数据_v6.音频参数_质量参数名)
+            Case NameOf(预设数据_v6.音频参数_质量参数名),
+                 NameOf(预设数据_v6.音频参数_质量参数名2)
                 Return BuildStringCandidates(音频编码器数据库_v6.获取质量参数名列表())
         End Select
         Return New List(Of Object)
@@ -1167,8 +1168,9 @@ Public Class AgentLocalTools
                 Return New List(Of String) From {"此字段对应可编辑下拉框，候选值只是常用建议，会随控件 Items 增删变化。", "可填写任意 FFmpeg 支持的像素格式；生成命令时会写为 format=<值>，changes 中只传像素格式值，不要带 format=。"}
             Case NameOf(预设数据_v6.音频参数_编码器_代号)
                 Return New List(Of String) From {"changes 中优先传 value 的私有 ID，不要传显示名称；界面会自动显示对应名称。"}
-            Case NameOf(预设数据_v6.音频参数_质量参数名)
-                Return New List(Of String) From {"音频质量参数名保存时保留横杠，例如 -q:a、-b:a。"}
+            Case NameOf(预设数据_v6.音频参数_质量参数名),
+                 NameOf(预设数据_v6.音频参数_质量参数名2)
+                Return New List(Of String) From {"音频质量参数名保存时保留横杠，例如 -q:a、-b:a。", "第二组音频质量参数会在命令中紧跟第一组之后写入，可用于同时设置两个编码器参数，例如 -vbr 与 -aac_nmr_speed。"}
         End Select
         Return New List(Of String)
     End Function

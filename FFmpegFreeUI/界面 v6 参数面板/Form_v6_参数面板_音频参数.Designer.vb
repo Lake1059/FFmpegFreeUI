@@ -60,6 +60,10 @@ Partial Class Form_v6_参数面板_音频参数
         MCB_采样率 = New LakeUI.ModernComboBox()
         HCL_规格 = New LakeUI.HtmlColorLabel()
         Panel3 = New Panel()
+        MTB_质量值2 = New LakeUI.ModernTextBox()
+        JustEmptyControl5 = New LakeUI.JustEmptyControl()
+        MCB_质量参数名2 = New LakeUI.ModernComboBox()
+        JustEmptyControl4 = New LakeUI.JustEmptyControl()
         MTB_质量值 = New LakeUI.ModernTextBox()
         JustEmptyControl1 = New LakeUI.JustEmptyControl()
         MCB_质量参数名 = New LakeUI.ModernComboBox()
@@ -81,9 +85,9 @@ Partial Class Form_v6_参数面板_音频参数
         Panel1.SuspendLayout()
         Panel2.SuspendLayout()
         SuspendLayout()
-        '
+        ' 
         ' ModernPanel1
-        '
+        ' 
         ModernPanel1.BackColor1 = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         ModernPanel1.BorderSize = 0
         ModernPanel1.Controls.Add(Panel7)
@@ -104,9 +108,9 @@ Partial Class Form_v6_参数面板_音频参数
         ModernPanel1.ScrollBarMode = LakeUI.ModernPanel.ScrollMode.Vertical
         ModernPanel1.Size = New Size(774, 669)
         ModernPanel1.TabIndex = 0
-        '
+        ' 
         ' Panel7
-        '
+        ' 
         Panel7.Controls.Add(Panel14)
         Panel7.Controls.Add(JustEmptyControl3)
         Panel7.Controls.Add(Panel11)
@@ -117,9 +121,9 @@ Partial Class Form_v6_参数面板_音频参数
         Panel7.Name = "Panel7"
         Panel7.Size = New Size(734, 207)
         Panel7.TabIndex = 17
-        '
+        ' 
         ' Panel14
-        '
+        ' 
         Panel14.Controls.Add(ETB_峰值电平)
         Panel14.Controls.Add(MCK_启用峰值电平)
         Panel14.Dock = DockStyle.Left
@@ -127,9 +131,9 @@ Partial Class Form_v6_参数面板_音频参数
         Panel14.Name = "Panel14"
         Panel14.Size = New Size(200, 207)
         Panel14.TabIndex = 7
-        '
+        ' 
         ' ETB_峰值电平
-        '
+        ' 
         ETB_峰值电平.BackColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
         ETB_峰值电平.Dock = DockStyle.Fill
         ETB_峰值电平.LabelColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
@@ -165,9 +169,9 @@ Partial Class Form_v6_参数面板_音频参数
         ETB_峰值电平.TrackColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ETB_峰值电平.TrackFillColor = Color.Transparent
         ETB_峰值电平.Value = -1R
-        '
+        ' 
         ' MCK_启用峰值电平
-        '
+        ' 
         MCK_启用峰值电平.AutoSize = True
         MCK_启用峰值电平.BackColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCK_启用峰值电平.BoxBorderRadius = 5
@@ -185,17 +189,17 @@ Partial Class Form_v6_参数面板_音频参数
         MCK_启用峰值电平.Size = New Size(200, 42)
         MCK_启用峰值电平.TabIndex = 16
         MCK_启用峰值电平.Text = "峰值电平 dBTP"
-        '
+        ' 
         ' JustEmptyControl3
-        '
+        ' 
         JustEmptyControl3.Dock = DockStyle.Left
         JustEmptyControl3.Location = New Point(455, 0)
         JustEmptyControl3.Name = "JustEmptyControl3"
         JustEmptyControl3.Size = New Size(5, 207)
         JustEmptyControl3.TabIndex = 6
-        '
+        ' 
         ' Panel11
-        '
+        ' 
         Panel11.Controls.Add(ETB_动态范围)
         Panel11.Controls.Add(MCK_启用动态范围)
         Panel11.Dock = DockStyle.Left
@@ -203,9 +207,9 @@ Partial Class Form_v6_参数面板_音频参数
         Panel11.Name = "Panel11"
         Panel11.Size = New Size(200, 207)
         Panel11.TabIndex = 5
-        '
+        ' 
         ' ETB_动态范围
-        '
+        ' 
         ETB_动态范围.BackColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
         ETB_动态范围.Dock = DockStyle.Fill
         ETB_动态范围.LabelColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
@@ -246,9 +250,9 @@ Partial Class Form_v6_参数面板_音频参数
         ETB_动态范围.TrackColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ETB_动态范围.TrackFillColor = Color.Transparent
         ETB_动态范围.Value = 1R
-        '
+        ' 
         ' MCK_启用动态范围
-        '
+        ' 
         MCK_启用动态范围.AutoSize = True
         MCK_启用动态范围.BackColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCK_启用动态范围.BoxBorderRadius = 5
@@ -266,17 +270,17 @@ Partial Class Form_v6_参数面板_音频参数
         MCK_启用动态范围.Size = New Size(200, 42)
         MCK_启用动态范围.TabIndex = 15
         MCK_启用动态范围.Text = "动态范围 LU"
-        '
+        ' 
         ' JustEmptyControl2
-        '
+        ' 
         JustEmptyControl2.Dock = DockStyle.Left
         JustEmptyControl2.Location = New Point(250, 0)
         JustEmptyControl2.Name = "JustEmptyControl2"
         JustEmptyControl2.Size = New Size(5, 207)
         JustEmptyControl2.TabIndex = 4
-        '
+        ' 
         ' Panel10
-        '
+        ' 
         Panel10.Controls.Add(ETB_目标响度)
         Panel10.Controls.Add(MCK_启用目标响度)
         Panel10.Dock = DockStyle.Left
@@ -284,9 +288,9 @@ Partial Class Form_v6_参数面板_音频参数
         Panel10.Name = "Panel10"
         Panel10.Size = New Size(250, 207)
         Panel10.TabIndex = 2
-        '
+        ' 
         ' ETB_目标响度
-        '
+        ' 
         ETB_目标响度.BackColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
         ETB_目标响度.Dock = DockStyle.Fill
         ETB_目标响度.LabelColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
@@ -333,9 +337,9 @@ Partial Class Form_v6_参数面板_音频参数
         ETB_目标响度.TrackColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ETB_目标响度.TrackFillColor = Color.Transparent
         ETB_目标响度.Value = -24R
-        '
+        ' 
         ' MCK_启用目标响度
-        '
+        ' 
         MCK_启用目标响度.AutoSize = True
         MCK_启用目标响度.BackColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCK_启用目标响度.BoxBorderRadius = 5
@@ -353,9 +357,9 @@ Partial Class Form_v6_参数面板_音频参数
         MCK_启用目标响度.Size = New Size(250, 42)
         MCK_启用目标响度.TabIndex = 14
         MCK_启用目标响度.Text = "目标响度 LUFS"
-        '
+        ' 
         ' HCL_响度标准化
-        '
+        ' 
         HCL_响度标准化.AutoSize = True
         HCL_响度标准化.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HCL_响度标准化.Dock = DockStyle.Top
@@ -367,9 +371,9 @@ Partial Class Form_v6_参数面板_音频参数
         HCL_响度标准化.Size = New Size(734, 55)
         HCL_响度标准化.TabIndex = 16
         HCL_响度标准化.Text = "<span style=""font-size:13; color:Silver"">响度标准化</span>   歌曲细节少可适当拉响，电影细节多需要放静并提升动态；勾选上才有效"
-        '
+        ' 
         ' Panel6
-        '
+        ' 
         Panel6.Controls.Add(HCL_声道布局)
         Panel6.Controls.Add(MCB_声道布局)
         Panel6.Dock = DockStyle.Top
@@ -378,9 +382,9 @@ Partial Class Form_v6_参数面板_音频参数
         Panel6.Padding = New Padding(0, 10, 0, 0)
         Panel6.Size = New Size(734, 42)
         Panel6.TabIndex = 15
-        '
+        ' 
         ' HCL_声道布局
-        '
+        ' 
         HCL_声道布局.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HCL_声道布局.Dock = DockStyle.Fill
         HCL_声道布局.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
@@ -392,9 +396,9 @@ Partial Class Form_v6_参数面板_音频参数
         HCL_声道布局.TabIndex = 1
         HCL_声道布局.Text = "<span style=""color:Silver"">声道布局</span>   如果使用 CBR 则需要注意增加比特率"
         HCL_声道布局.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
-        '
+        ' 
         ' MCB_声道布局
-        '
+        ' 
         MCB_声道布局.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_声道布局.BorderRadius = 10
         MCB_声道布局.BorderSize = 0
@@ -429,9 +433,9 @@ Partial Class Form_v6_参数面板_音频参数
         MCB_声道布局.ToolTipPadding = New Padding(15)
         MCB_声道布局.WaterText = "-channel_layout"
         MCB_声道布局.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        '
+        ' 
         ' Panel5
-        '
+        ' 
         Panel5.Controls.Add(HCL_位深度)
         Panel5.Controls.Add(MCB_位深度)
         Panel5.Dock = DockStyle.Top
@@ -440,9 +444,9 @@ Partial Class Form_v6_参数面板_音频参数
         Panel5.Padding = New Padding(0, 10, 0, 0)
         Panel5.Size = New Size(734, 42)
         Panel5.TabIndex = 14
-        '
+        ' 
         ' HCL_位深度
-        '
+        ' 
         HCL_位深度.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HCL_位深度.Dock = DockStyle.Fill
         HCL_位深度.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
@@ -454,9 +458,9 @@ Partial Class Form_v6_参数面板_音频参数
         HCL_位深度.TabIndex = 1
         HCL_位深度.Text = "<span style=""color:Silver"">位深度</span>   注意查询编码器所支持的位深；WAV 是通过编码器名称选择的"
         HCL_位深度.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
-        '
+        ' 
         ' MCB_位深度
-        '
+        ' 
         MCB_位深度.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_位深度.BorderRadius = 10
         MCB_位深度.BorderSize = 0
@@ -486,9 +490,9 @@ Partial Class Form_v6_参数面板_音频参数
         MCB_位深度.ToolTipPadding = New Padding(15)
         MCB_位深度.WaterText = "-sample_fmt"
         MCB_位深度.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        '
+        ' 
         ' Panel4
-        '
+        ' 
         Panel4.Controls.Add(HCL_采样率)
         Panel4.Controls.Add(MCB_采样率)
         Panel4.Dock = DockStyle.Top
@@ -497,9 +501,9 @@ Partial Class Form_v6_参数面板_音频参数
         Panel4.Padding = New Padding(0, 10, 0, 0)
         Panel4.Size = New Size(734, 42)
         Panel4.TabIndex = 13
-        '
+        ' 
         ' HCL_采样率
-        '
+        ' 
         HCL_采样率.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HCL_采样率.Dock = DockStyle.Fill
         HCL_采样率.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
@@ -511,9 +515,9 @@ Partial Class Form_v6_参数面板_音频参数
         HCL_采样率.TabIndex = 1
         HCL_采样率.Text = "<span style=""color:Silver"">采样率</span>   采样并非越高越好，需要适配目标设备"
         HCL_采样率.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
-        '
+        ' 
         ' MCB_采样率
-        '
+        ' 
         MCB_采样率.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_采样率.BorderRadius = 10
         MCB_采样率.BorderSize = 0
@@ -526,6 +530,7 @@ Partial Class Form_v6_参数面板_音频参数
         MCB_采样率.DropDownPadding = New Padding(10)
         MCB_采样率.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_采样率.DropDownSelectedForeColor = Color.White
+        MCB_采样率.Editable = True
         MCB_采样率.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
         MCB_采样率.Items.Add("")
         MCB_采样率.Items.Add("192000")
@@ -548,9 +553,9 @@ Partial Class Form_v6_参数面板_音频参数
         MCB_采样率.ToolTipPadding = New Padding(15)
         MCB_采样率.WaterText = "-ar"
         MCB_采样率.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        '
+        ' 
         ' HCL_规格
-        '
+        ' 
         HCL_规格.AutoSize = True
         HCL_规格.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HCL_规格.Dock = DockStyle.Top
@@ -562,9 +567,13 @@ Partial Class Form_v6_参数面板_音频参数
         HCL_规格.Size = New Size(734, 45)
         HCL_规格.TabIndex = 12
         HCL_规格.Text = "<span style=""font-size:13; color:Silver"">规格</span>"
-        '
+        ' 
         ' Panel3
-        '
+        ' 
+        Panel3.Controls.Add(MTB_质量值2)
+        Panel3.Controls.Add(JustEmptyControl5)
+        Panel3.Controls.Add(MCB_质量参数名2)
+        Panel3.Controls.Add(JustEmptyControl4)
         Panel3.Controls.Add(MTB_质量值)
         Panel3.Controls.Add(JustEmptyControl1)
         Panel3.Controls.Add(MCB_质量参数名)
@@ -574,9 +583,70 @@ Partial Class Form_v6_参数面板_音频参数
         Panel3.Padding = New Padding(0, 10, 0, 0)
         Panel3.Size = New Size(734, 42)
         Panel3.TabIndex = 11
-        '
+        ' 
+        ' MTB_质量值2
+        ' 
+        MTB_质量值2.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MTB_质量值2.BorderColor = Color.Transparent
+        MTB_质量值2.BorderColorFocus = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
+        MTB_质量值2.BorderRadius = 10
+        MTB_质量值2.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
+        MTB_质量值2.Dock = DockStyle.Left
+        MTB_质量值2.Location = New Point(580, 10)
+        MTB_质量值2.Margin = New Padding(2)
+        MTB_质量值2.Name = "MTB_质量值2"
+        MTB_质量值2.Padding = New Padding(10, 0, 10, 0)
+        MTB_质量值2.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MTB_质量值2.Size = New Size(80, 32)
+        MTB_质量值2.TabIndex = 9
+        MTB_质量值2.WaterText = "质量值"
+        MTB_质量值2.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
+        ' 
+        ' JustEmptyControl5
+        ' 
+        JustEmptyControl5.Dock = DockStyle.Left
+        JustEmptyControl5.Location = New Point(570, 10)
+        JustEmptyControl5.Name = "JustEmptyControl5"
+        JustEmptyControl5.Size = New Size(10, 32)
+        JustEmptyControl5.TabIndex = 8
+        ' 
+        ' MCB_质量参数名2
+        ' 
+        MCB_质量参数名2.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MCB_质量参数名2.BorderRadius = 10
+        MCB_质量参数名2.BorderSize = 0
+        MCB_质量参数名2.Dock = DockStyle.Left
+        MCB_质量参数名2.DropDownBackdropBlurPasses = 2
+        MCB_质量参数名2.DropDownBackdropBlurRadius = 30
+        MCB_质量参数名2.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
+        MCB_质量参数名2.DropDownHoverColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
+        MCB_质量参数名2.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
+        MCB_质量参数名2.DropDownPadding = New Padding(10)
+        MCB_质量参数名2.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MCB_质量参数名2.DropDownSelectedForeColor = Color.White
+        MCB_质量参数名2.Editable = True
+        MCB_质量参数名2.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        MCB_质量参数名2.Location = New Point(370, 10)
+        MCB_质量参数名2.Margin = New Padding(2, 2, 2, 2)
+        MCB_质量参数名2.Name = "MCB_质量参数名2"
+        MCB_质量参数名2.Padding = New Padding(10, 0, 10, 0)
+        MCB_质量参数名2.Size = New Size(200, 32)
+        MCB_质量参数名2.TabIndex = 7
+        MCB_质量参数名2.ToolTipMaxWidth = 350
+        MCB_质量参数名2.ToolTipPadding = New Padding(15)
+        MCB_质量参数名2.WaterText = "选择第二质量参数名"
+        MCB_质量参数名2.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
+        ' 
+        ' JustEmptyControl4
+        ' 
+        JustEmptyControl4.Dock = DockStyle.Left
+        JustEmptyControl4.Location = New Point(290, 10)
+        JustEmptyControl4.Name = "JustEmptyControl4"
+        JustEmptyControl4.Size = New Size(80, 32)
+        JustEmptyControl4.TabIndex = 6
+        ' 
         ' MTB_质量值
-        '
+        ' 
         MTB_质量值.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MTB_质量值.BorderColor = Color.Transparent
         MTB_质量值.BorderColorFocus = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
@@ -588,21 +658,21 @@ Partial Class Form_v6_参数面板_音频参数
         MTB_质量值.Name = "MTB_质量值"
         MTB_质量值.Padding = New Padding(10, 0, 10, 0)
         MTB_质量值.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        MTB_质量值.Size = New Size(100, 32)
+        MTB_质量值.Size = New Size(80, 32)
         MTB_质量值.TabIndex = 5
         MTB_质量值.WaterText = "质量值"
         MTB_质量值.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        '
+        ' 
         ' JustEmptyControl1
-        '
+        ' 
         JustEmptyControl1.Dock = DockStyle.Left
         JustEmptyControl1.Location = New Point(200, 10)
         JustEmptyControl1.Name = "JustEmptyControl1"
         JustEmptyControl1.Size = New Size(10, 32)
         JustEmptyControl1.TabIndex = 3
-        '
+        ' 
         ' MCB_质量参数名
-        '
+        ' 
         MCB_质量参数名.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_质量参数名.BorderRadius = 10
         MCB_质量参数名.BorderSize = 0
@@ -617,10 +687,6 @@ Partial Class Form_v6_参数面板_音频参数
         MCB_质量参数名.DropDownSelectedForeColor = Color.White
         MCB_质量参数名.Editable = True
         MCB_质量参数名.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
-        MCB_质量参数名.Items.Add("")
-        MCB_质量参数名.Items.Add("-q:a")
-        MCB_质量参数名.Items.Add("-vbr")
-        MCB_质量参数名.Items.Add("-compression_level")
         MCB_质量参数名.Location = New Point(0, 10)
         MCB_质量参数名.Margin = New Padding(2, 2, 2, 2)
         MCB_质量参数名.Name = "MCB_质量参数名"
@@ -631,9 +697,9 @@ Partial Class Form_v6_参数面板_音频参数
         MCB_质量参数名.ToolTipPadding = New Padding(15)
         MCB_质量参数名.WaterText = "选择质量参数名"
         MCB_质量参数名.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        '
+        ' 
         ' Panel1
-        '
+        ' 
         Panel1.Controls.Add(MCB_比特率)
         Panel1.Dock = DockStyle.Top
         Panel1.Location = New Point(20, 132)
@@ -641,9 +707,9 @@ Partial Class Form_v6_参数面板_音频参数
         Panel1.Padding = New Padding(0, 10, 0, 0)
         Panel1.Size = New Size(734, 42)
         Panel1.TabIndex = 10
-        '
+        ' 
         ' MCB_比特率
-        '
+        ' 
         MCB_比特率.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_比特率.BorderRadius = 10
         MCB_比特率.BorderSize = 0
@@ -679,9 +745,9 @@ Partial Class Form_v6_参数面板_音频参数
         MCB_比特率.ToolTipPadding = New Padding(15)
         MCB_比特率.WaterText = "选择或填写比特率"
         MCB_比特率.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        '
+        ' 
         ' HCL_质量
-        '
+        ' 
         HCL_质量.AutoSize = True
         HCL_质量.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HCL_质量.Dock = DockStyle.Top
@@ -693,9 +759,9 @@ Partial Class Form_v6_参数面板_音频参数
         HCL_质量.Size = New Size(734, 45)
         HCL_质量.TabIndex = 9
         HCL_质量.Text = "<span style=""font-size:13; color:Silver"">质量</span>   CBR 直接写比特率，VBR 通过对应参数名和值来实现"
-        '
+        ' 
         ' Panel2
-        '
+        ' 
         Panel2.Controls.Add(MCB_音频编码器)
         Panel2.Dock = DockStyle.Top
         Panel2.Location = New Point(20, 45)
@@ -703,9 +769,9 @@ Partial Class Form_v6_参数面板_音频参数
         Panel2.Padding = New Padding(0, 10, 0, 0)
         Panel2.Size = New Size(734, 42)
         Panel2.TabIndex = 8
-        '
+        ' 
         ' MCB_音频编码器
-        '
+        ' 
         MCB_音频编码器.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_音频编码器.BorderRadius = 10
         MCB_音频编码器.BorderSize = 0
@@ -723,6 +789,7 @@ Partial Class Form_v6_参数面板_音频参数
         MCB_音频编码器.Items.Add("复制流")
         MCB_音频编码器.Items.Add("禁用")
         MCB_音频编码器.Items.Add("AAC")
+        MCB_音频编码器.Items.Add("NMR AAC")
         MCB_音频编码器.Items.Add("FDK AAC")
         MCB_音频编码器.Items.Add("FDK AAC HE")
         MCB_音频编码器.Items.Add("FDK AAC HE v2")
@@ -750,16 +817,16 @@ Partial Class Form_v6_参数面板_音频参数
         MCB_音频编码器.MaxDropDownItems = 15
         MCB_音频编码器.Name = "MCB_音频编码器"
         MCB_音频编码器.Padding = New Padding(10, 0, 10, 0)
-        MCB_音频编码器.Size = New Size(310, 32)
+        MCB_音频编码器.Size = New Size(250, 32)
         MCB_音频编码器.TabIndex = 0
         MCB_音频编码器.ToolTipGap = -1
         MCB_音频编码器.ToolTipMaxWidth = 500
         MCB_音频编码器.ToolTipPadding = New Padding(15)
         MCB_音频编码器.WaterText = "选择音频编码器"
         MCB_音频编码器.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        '
+        ' 
         ' HCL_音频编码器
-        '
+        ' 
         HCL_音频编码器.AutoSize = True
         HCL_音频编码器.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HCL_音频编码器.Dock = DockStyle.Top
@@ -770,9 +837,9 @@ Partial Class Form_v6_参数面板_音频参数
         HCL_音频编码器.Size = New Size(734, 25)
         HCL_音频编码器.TabIndex = 7
         HCL_音频编码器.Text = "<span style=""font-size:13; color:Silver"">音频编码器</span>"
-        '
+        ' 
         ' Form_v6_参数面板_音频参数
-        '
+        ' 
         AutoScaleDimensions = New SizeF(96F, 96F)
         AutoScaleMode = AutoScaleMode.Dpi
         BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
@@ -834,4 +901,8 @@ Partial Class Form_v6_参数面板_音频参数
     Friend WithEvents MCK_启用峰值电平 As LakeUI.ModernCheckBox
     Friend WithEvents MCK_启用动态范围 As LakeUI.ModernCheckBox
     Friend WithEvents MCK_启用目标响度 As LakeUI.ModernCheckBox
+    Friend WithEvents MTB_质量值2 As LakeUI.ModernTextBox
+    Friend WithEvents JustEmptyControl5 As LakeUI.JustEmptyControl
+    Friend WithEvents MCB_质量参数名2 As LakeUI.ModernComboBox
+    Friend WithEvents JustEmptyControl4 As LakeUI.JustEmptyControl
 End Class

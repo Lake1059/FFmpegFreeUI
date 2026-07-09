@@ -89,7 +89,7 @@ Public Class 音频编码器数据库_v6
     Private Shared Function 是质量参数下拉框参数(参数 As 音频编码器参数数据) As Boolean
         If 参数 Is Nothing Then Return False
         Select Case If(参数.参数名, "").Trim()
-            Case "-aac_at_mode", "-aac_at_quality", "-abr"
+            Case "-aac_at_mode", "-aac_at_quality", "-aac_nmr_speed", "-abr"
                 Return True
         End Select
         Return False
@@ -105,11 +105,19 @@ Public Class 音频编码器数据库_v6
             VBR说明:="禁用音频输出，不适用。",
             是否禁用:=True))
 
-        加入编码器(基础("aac.native", "AAC", "aac", "FFmpeg 原生 AAC 编码器，兼容性好，适合作为通用默认选择。",
+        加入编码器(基础("aac.native", "AAC", "aac", "FFmpeg 原生 AAC 编码器，兼容性好；新版本默认使用 NMR，可通过 NMR AAC 项显式固定。",
             质量参数:=参数列表(参数("-q:a", "VBR 质量，常用 0.1 ~ 2.0；数值越高越清晰，体积也越大"), 参数("-b:a", "CBR/ABR 目标比特率；例如 128k、192k、320k")),
-            特殊参数:=参数列表(参数("-aac_coder", "twoloop/fast", "twoloop=质量优先，fast=速度优先"), 参数("-aac_ms", "auto/0/1", "M/S 立体声；auto=自动，0=禁用，1=强制启用"), 参数("-aac_pns", "0/1", "感知噪声替代；低码率可能有帮助")),
+            特殊参数:=参数列表(参数("-aac_coder", "nmr/twoloop/fast", "nmr=Noise-to-mask ratio trellis，twoloop=旧质量优先，fast=旧速度优先"), 参数("-aac_ms", "auto/0/1", "M/S 立体声；auto=自动，0=禁用，1=强制启用"), 参数("-aac_is", "auto/0/1", "强度立体声；默认启用"), 参数("-aac_pns", "0/1", "感知噪声替代；低码率可能有帮助"), 参数("-aac_tns", "0/1", "时域噪声整形"), 参数("-aac_pce", "0/1", "强制写入 PCE 声道配置")),
             VBR说明:="支持。使用 -q:a 设置 VBR 质量；填写 -b:a 时按目标比特率编码。",
             支持说明:="采样格式：fltp；采样率：7350/8000/11025/12000/16000/22050/24000/32000/44100/48000/64000/88200/96000。"))
+
+        加入编码器(基础("aac.nmr", "NMR AAC", "aac", "FFmpeg 原生 AAC 的 NMR 标量因子 trellis 编码模式；新版 FFmpeg 已将其作为默认 AAC 编码算法。这是原生 aac 编码器的编码算法，不是独立的 -c:a nmraac 编码器名。",
+            默认附加参数:=参数列表(参数("-aac_coder", "nmr", "固定使用 NMR 编码算法", 默认值:="nmr")),
+            质量参数:=参数列表(参数("-q:a", "VBR 质量，常用 0.1 ~ 2.0；数值越高越清晰，体积也越大"), 参数("-b:a", "CBR/ABR 目标比特率；例如 96k、128k、192k、320k")),
+            特殊参数:=参数列表(参数("-aac_nmr_speed", "0 ~ 4；0=最慢/最高质量，数值越高越快", "仅 NMR 模式有效"), 参数("-aac_ms", "auto/0/1", "M/S 立体声；auto=自动，0=禁用，1=强制启用"), 参数("-aac_is", "auto/0/1", "强度立体声；默认启用"), 参数("-aac_pns", "0/1", "感知噪声替代；NMR 会在码率吃紧时重新分配节省的比特"), 参数("-aac_tns", "0/1", "时域噪声整形；NMR 会在量化前处理"), 参数("-aac_pce", "0/1", "强制写入 PCE 声道配置")),
+            VBR说明:="支持。使用 -q:a 设置 VBR 质量；填写 -b:a 时按目标比特率编码。NMR 模式会围绕噪声/遮蔽目标做 trellis 搜索。",
+            支持说明:="采样格式：fltp；采样率：7350/8000/11025/12000/16000/22050/24000/32000/44100/48000/64000/88200/96000。",
+            旧版命令文本:="nmraac|aac -aac_coder nmr|aac -aac_coder:a nmr"))
 
         加入编码器(基础("aac.fdk", "FDK AAC", "libfdk_aac", "Fraunhofer FDK AAC，低码率表现好；需要 FFmpeg 构建包含 libfdk_aac。",
             质量参数:=参数列表(参数("-vbr", "0 ~ 5；0=关闭 VBR，1 最低质量/最小体积，5 最高质量/最大体积"), 参数("-b:a", "CBR/ABR 比特率；例如 64k、96k、128k、192k")),
@@ -264,7 +272,10 @@ Public Class 音频编码器数据库_v6
         ID索引(数据.私有ID) = 数据
         显示名称索引(数据.显示名称) = 数据
 
-        If 数据.旧版命令文本 <> "" Then 旧版命令索引(数据.旧版命令文本) = 数据
+        For Each 旧版命令 In If(数据.旧版命令文本, "").Split({"|"c}, StringSplitOptions.RemoveEmptyEntries)
+            Dim 命令文本 = 旧版命令.Trim()
+            If 命令文本 <> "" Then 旧版命令索引(命令文本) = 数据
+        Next
         If 数据.命令行编码器名 <> "" AndAlso Not 旧版命令索引.ContainsKey(数据.命令行编码器名) Then 旧版命令索引(数据.命令行编码器名) = 数据
     End Sub
 

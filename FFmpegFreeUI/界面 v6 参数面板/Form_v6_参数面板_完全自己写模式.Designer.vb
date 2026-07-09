@@ -33,9 +33,9 @@ Partial Class Form_v6_参数面板_完全自己写模式
         Panel5.SuspendLayout()
         ModernPanel1.SuspendLayout()
         SuspendLayout()
-        '
+        ' 
         ' HCL_完全自己写模式警告
-        '
+        ' 
         HCL_完全自己写模式警告.AutoSize = True
         HCL_完全自己写模式警告.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HCL_完全自己写模式警告.Dock = DockStyle.Top
@@ -47,9 +47,9 @@ Partial Class Form_v6_参数面板_完全自己写模式
         HCL_完全自己写模式警告.Size = New Size(770, 30)
         HCL_完全自己写模式警告.TabIndex = 10
         HCL_完全自己写模式警告.Text = "<span style=""font-size:13; color:Silver"">完全自己写</span>   <span style=""font-size:10pt; color:IndianRed"">使用此模式时，其他所有参数全都不生效！</span>"
-        '
+        ' 
         ' MTB_完整命令行参数
-        '
+        ' 
         MTB_完整命令行参数.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MTB_完整命令行参数.BorderColor = Color.Transparent
         MTB_完整命令行参数.BorderColorFocus = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
@@ -61,7 +61,7 @@ Partial Class Form_v6_参数面板_完全自己写模式
         MTB_完整命令行参数.Margin = New Padding(2)
         MTB_完整命令行参数.MultiLine = True
         MTB_完整命令行参数.Name = "MTB_完整命令行参数"
-        MTB_完整命令行参数.Padding = New Padding(15, 10, 15, 10)
+        MTB_完整命令行参数.Padding = New Padding(10, 8, 10, 8)
         MTB_完整命令行参数.ScrollBarColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MTB_完整命令行参数.ScrollBarHoverColor = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
         MTB_完整命令行参数.ScrollBarTrackColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
@@ -70,9 +70,9 @@ Partial Class Form_v6_参数面板_完全自己写模式
         MTB_完整命令行参数.Size = New Size(770, 471)
         MTB_完整命令行参数.TabIndex = 11
         MTB_完整命令行参数.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        '
+        ' 
         ' HCL_完整命令行参数说明
-        '
+        ' 
         HCL_完整命令行参数说明.AutoSize = True
         HCL_完整命令行参数说明.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HCL_完整命令行参数说明.Dock = DockStyle.Top
@@ -84,9 +84,9 @@ Partial Class Form_v6_参数面板_完全自己写模式
         HCL_完整命令行参数说明.Size = New Size(770, 71)
         HCL_完整命令行参数说明.TabIndex = 14
         HCL_完整命令行参数说明.Text = "不要包含开头的 ffmpeg，这里是直接给其的参数<br>用 <span style=""color:YellowGreen""><InputFile></span> 表示输入文件，用 <span style=""color:YellowGreen""><OutputFile></span> 表示输出文件<br>不会自动写引号，注意区分大小写，可以直接用插入功能"
-        '
+        ' 
         ' Panel5
-        '
+        ' 
         Panel5.Controls.Add(MB_插入输出文件占位符)
         Panel5.Controls.Add(JustEmptyControl1)
         Panel5.Controls.Add(MB_插入输入文件占位符)
@@ -96,9 +96,9 @@ Partial Class Form_v6_参数面板_完全自己写模式
         Panel5.Padding = New Padding(0, 0, 0, 20)
         Panel5.Size = New Size(770, 52)
         Panel5.TabIndex = 15
-        '
+        ' 
         ' MB_插入输出文件占位符
-        '
+        ' 
         MB_插入输出文件占位符.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MB_插入输出文件占位符.BorderRadius = 10
         MB_插入输出文件占位符.BorderSize = 0
@@ -111,17 +111,17 @@ Partial Class Form_v6_参数面板_完全自己写模式
         MB_插入输出文件占位符.Size = New Size(200, 32)
         MB_插入输出文件占位符.TabIndex = 7
         MB_插入输出文件占位符.Text = "插入输出文件"
-        '
+        ' 
         ' JustEmptyControl1
-        '
+        ' 
         JustEmptyControl1.Dock = DockStyle.Left
         JustEmptyControl1.Location = New Point(200, 0)
         JustEmptyControl1.Name = "JustEmptyControl1"
         JustEmptyControl1.Size = New Size(11, 32)
         JustEmptyControl1.TabIndex = 5
-        '
+        ' 
         ' MB_插入输入文件占位符
-        '
+        ' 
         MB_插入输入文件占位符.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MB_插入输入文件占位符.BorderRadius = 10
         MB_插入输入文件占位符.BorderSize = 0
@@ -134,9 +134,9 @@ Partial Class Form_v6_参数面板_完全自己写模式
         MB_插入输入文件占位符.Size = New Size(200, 32)
         MB_插入输入文件占位符.TabIndex = 6
         MB_插入输入文件占位符.Text = "插入输入文件"
-        '
+        ' 
         ' ModernPanel1
-        '
+        ' 
         ModernPanel1.BackColor1 = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         ModernPanel1.BorderSize = 0
         ModernPanel1.Controls.Add(MTB_完整命令行参数)
@@ -149,9 +149,9 @@ Partial Class Form_v6_参数面板_完全自己写模式
         ModernPanel1.Padding = New Padding(20)
         ModernPanel1.Size = New Size(810, 664)
         ModernPanel1.TabIndex = 16
-        '
+        ' 
         ' Form_v6_参数面板_完全自己写模式
-        '
+        ' 
         AutoScaleDimensions = New SizeF(96F, 96F)
         AutoScaleMode = AutoScaleMode.Dpi
         BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
