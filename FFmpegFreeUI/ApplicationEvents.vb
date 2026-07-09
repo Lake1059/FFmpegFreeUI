@@ -59,7 +59,12 @@ Namespace My
 
         Private Shared Function 获取禁止启动位置说明(程序目录 As String) As String
             For Each 规则 In 获取禁止启动目录列表()
-                If 路径位于或等于(程序目录, 规则.Value) Then
+                Dim 允许子目录 = String.Equals(规则.Key, "桌面目录", StringComparison.OrdinalIgnoreCase) OrElse
+                    String.Equals(规则.Key, "公共桌面目录", StringComparison.OrdinalIgnoreCase)
+                Dim 命中规则 = If(允许子目录,
+                    路径等于(程序目录, 规则.Value),
+                    路径位于或等于(程序目录, 规则.Value))
+                If 命中规则 Then
                     Return $"{规则.Key}：{规则.Value}"
                 End If
             Next
@@ -118,6 +123,16 @@ Namespace My
                 If 路径指针 <> IntPtr.Zero Then
                     Marshal.FreeCoTaskMem(路径指针)
                 End If
+            End Try
+        End Function
+
+        Private Shared Function 路径等于(路径1 As String, 路径2 As String) As Boolean
+            If String.IsNullOrWhiteSpace(路径1) OrElse String.IsNullOrWhiteSpace(路径2) Then Return False
+
+            Try
+                Return String.Equals(规范化目录路径(路径1), 规范化目录路径(路径2), StringComparison.OrdinalIgnoreCase)
+            Catch
+                Return False
             End Try
         End Function
 
