@@ -174,14 +174,14 @@ https://en.wikipedia.org/wiki/Intel_Quick_Sync_Video
 
 | 参数                | 作用                        | 在情况下使用 |
 | ------------------- | --------------------------- | ------------ |
-| -i [string]         | 输入媒体文件                | 已启动软件   |
-| -3fui_file [string] | 输入预设文件                | 已启动软件   |
-| -ffmpeg [string]... | 把后面的参数全部喂给 ffmpeg | 已启动软件   |
-| -test               | 测试用，会弹出“哔哔”        | 已启动软件   |
+| -i [string]         | 输入媒体文件                | 首次或已启动软件 |
+| -3fui_file [string] | 输入预设文件                | 首次或已启动软件 |
+| -ffmpeg [string]... | 把后面的参数全部喂给 ffmpeg | 首次或已启动软件 |
+| -test               | 测试用，会弹出“哔哔”        | 首次或已启动软件 |
 | fullscreen          | 全屏无边框模式              | 未启动软件   |
 
 - -i 和 -3fui_file 必须一起用，表示使用指定预设文件对指定媒体文件进行任务，预设文件可以直接指定在 Preset 文件夹也就是方案管理中的预设名称。
-- -ffmpeg 是纯命令模式，后面的所有内容全都会给 ffmpeg。
+- -ffmpeg 是纯命令模式，后面的所有内容全都会给 ffmpeg。可传入参数列表，也可传入以 ffmpeg、ffmpeg.exe 或其完整路径开头的完整 FFmpeg 命令行；程序会自动忽略其中的可执行文件部分。
 - 另外还有用于传递剪辑区间参数的 -3fuiVideoHelperInPointTime 和 -3fuiVideoHelperOutPointTime
 
 ## 远程调用

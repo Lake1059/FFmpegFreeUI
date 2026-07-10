@@ -3,6 +3,8 @@ Imports System.Text
 
 Public Class 启动参数响应_v6
 
+    Private Shared 首次启动参数 As List(Of String)
+
     Private Class 接收参数状态
         Public Property 输入文件 As String = ""
         Public Property 预设文件 As String = ""
@@ -11,6 +13,16 @@ Public Class 启动参数响应_v6
         Public Property 独立命令行 As String = ""
         Public Property 独立命令行任务名 As String = ""
     End Class
+
+    Public Shared Sub 保存首次启动参数(CL As IEnumerable(Of String))
+        首次启动参数 = If(CL, Array.Empty(Of String)()).Where(Function(x) x IsNot Nothing).ToList()
+    End Sub
+
+    Public Shared Sub 处理首次启动参数()
+        Dim args = 首次启动参数
+        首次启动参数 = Nothing
+        处理接收的参数(args)
+    End Sub
 
     Public Shared Sub 处理接收的参数(原始文本 As String)
         处理接收的参数(拆分命令行(原始文本))
@@ -131,64 +143,110 @@ Public Class 启动参数响应_v6
     End Sub
 
     Private Shared Sub 处理FFmpeg参数(args As List(Of String), startIndex As Integer, state As 接收参数状态)
+        Dim ffmpegArgs = args.Skip(startIndex + 1).ToList()
+
+        ' 既支持 -ffmpeg -i ...，也支持把完整命令行作为一个参数传入。
+        If ffmpegArgs.Count = 1 Then
+            Dim parsed = 拆分命令行(ffmpegArgs(0))
+            If parsed.Count > 1 OrElse (parsed.Count = 1 AndAlso 是FFmpeg可执行文件(parsed(0))) Then ffmpegArgs = parsed
+        End If
+
+        ' 队列会自行启动 ffmpeg，因此完整命令行中的可执行文件只用于兼容输入格式。
+        If ffmpegArgs.Count > 0 AndAlso 是FFmpeg可执行文件(ffmpegArgs(0)) Then ffmpegArgs.RemoveAt(0)
+
         Dim parts As New List(Of String)
-        For i = startIndex + 1 To args.Count - 1
-            Dim arg = args(i)
+        For i = 0 To ffmpegArgs.Count - 1
+            Dim arg = ffmpegArgs(i)
             parts.Add(转命令行参数文本(arg))
-            If state.独立命令行任务名 = "" AndAlso arg = "-i" AndAlso i < args.Count - 1 Then
-                state.独立命令行任务名 = Path.GetFileName(args(i + 1))
+            If state.独立命令行任务名 = "" AndAlso arg = "-i" AndAlso i < ffmpegArgs.Count - 1 Then
+                state.独立命令行任务名 = Path.GetFileName(ffmpegArgs(i + 1))
             End If
         Next
         state.独立命令行 = String.Join(" ", parts)
     End Sub
 
+    Private Shared Function 是FFmpeg可执行文件(value As String) As Boolean
+        Dim fileName As String
+        Try
+            fileName = Path.GetFileName(If(value, "").Trim())
+        Catch
+            Return False
+        End Try
+        Return String.Equals(fileName, "ffmpeg", StringComparison.OrdinalIgnoreCase) OrElse
+            String.Equals(fileName, "ffmpeg.exe", StringComparison.OrdinalIgnoreCase)
+    End Function
+
     Private Shared Function 转命令行参数文本(arg As String) As String
-        If arg Is Nothing Then Return """"""
-        If arg = "" Then Return """"""
-        If arg.Any(Function(c) Char.IsWhiteSpace(c) OrElse c = """"c) Then
-            Return """" & arg.Replace("""", """""") & """"
-        End If
-        Return arg
+        arg = If(arg, "")
+        If arg.Length > 0 AndAlso Not arg.Any(Function(c) Char.IsWhiteSpace(c) OrElse c = """"c) Then Return arg
+
+        ' ProcessStartInfo.Arguments 遵循 Windows 的反斜杠/引号规则。
+        Dim result As New StringBuilder("""")
+        Dim backslashCount = 0
+        For Each ch In arg
+            If ch = "\"c Then
+                backslashCount += 1
+            ElseIf ch = """"c Then
+                result.Append("\"c, backslashCount * 2 + 1)
+                result.Append(ch)
+                backslashCount = 0
+            Else
+                result.Append("\"c, backslashCount)
+                result.Append(ch)
+                backslashCount = 0
+            End If
+        Next
+        result.Append("\"c, backslashCount * 2)
+        result.Append(""""c)
+        Return result.ToString()
     End Function
 
     Public Shared Function 拆分命令行(commandLine As String) As List(Of String)
         Dim result As New List(Of String)
         If String.IsNullOrWhiteSpace(commandLine) Then Return result
 
-        Dim current As New StringBuilder
-        Dim inQuote = False
-        Dim escapeNext = False
+        Dim index = 0
+        While index < commandLine.Length
+            While index < commandLine.Length AndAlso Char.IsWhiteSpace(commandLine(index))
+                index += 1
+            End While
+            If index >= commandLine.Length Then Exit While
 
-        For Each ch In commandLine
-            If escapeNext Then
-                current.Append(ch)
-                escapeNext = False
-                Continue For
-            End If
+            Dim current As New StringBuilder
+            Dim inQuote = False
+            While index < commandLine.Length
+                Dim ch = commandLine(index)
+                If Char.IsWhiteSpace(ch) AndAlso Not inQuote Then Exit While
 
-            If ch = "\"c AndAlso inQuote Then
-                escapeNext = True
-                Continue For
-            End If
-
-            If ch = """"c Then
-                inQuote = Not inQuote
-                Continue For
-            End If
-
-            If Char.IsWhiteSpace(ch) AndAlso Not inQuote Then
-                If current.Length > 0 Then
-                    result.Add(current.ToString())
-                    current.Clear()
+                If ch <> "\"c Then
+                    If ch = """"c Then
+                        inQuote = Not inQuote
+                    Else
+                        current.Append(ch)
+                    End If
+                    index += 1
+                    Continue While
                 End If
-                Continue For
-            End If
 
-            current.Append(ch)
-        Next
-
-        If escapeNext Then current.Append("\"c)
-        If current.Length > 0 Then result.Add(current.ToString())
+                Dim backslashCount = 0
+                While index < commandLine.Length AndAlso commandLine(index) = "\"c
+                    backslashCount += 1
+                    index += 1
+                End While
+                If index < commandLine.Length AndAlso commandLine(index) = """"c Then
+                    current.Append("\"c, backslashCount \ 2)
+                    If backslashCount Mod 2 = 0 Then
+                        inQuote = Not inQuote
+                    Else
+                        current.Append(""""c)
+                    End If
+                    index += 1
+                Else
+                    current.Append("\"c, backslashCount)
+                End If
+            End While
+            result.Add(current.ToString())
+        End While
         Return result
     End Function
 

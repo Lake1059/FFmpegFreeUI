@@ -61,7 +61,7 @@ Partial Class FormMain_v6
         ModernTabPage5.Text = "准备文件"
         ModernTabPage6.Text = "参数面板"
         ModernTabPage7.Text = "Agent 智能体"
-        ModernTabPage8.Text = "浏览社区"
+        ModernTabPage8.Text = "3FUI Studios"
         ModernTabPage9.IsSeparator = True
         ModernTabPage10.Text = "ffprobe 媒体信息"
         ModernTabPage11.Text = "ffplay 调试播放器"

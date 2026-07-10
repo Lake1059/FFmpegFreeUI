@@ -26,8 +26,8 @@ Public Class FormMain_v6
         绑定选项卡(Form_v6_参数面板.ModernPanel1)
         Me.ModernTabListControl1.Items(6).BoundControl = Form_v6_Agent
         绑定选项卡(Form_v6_Agent.ModernPanel1)
-        'Me.ModernTabListControl1.Items(7).BoundControl = Form_v6_社区
-        '绑定选项卡(Form_v6_社区.ModernPanel1)
+        'Me.ModernTabListControl1.Items(7).BoundControl = Form_v6_社区_个人中心
+        '绑定选项卡(Form_v6_社区_个人中心.ModernPanel1)
         Me.ModernTabListControl1.Items(9).BoundControl = Form_v6_媒体信息
         绑定选项卡(Form_v6_媒体信息.ModernPanel1)
         Me.ModernTabListControl1.Items(10).BoundControl = Form_v6_调试播放器
@@ -53,8 +53,6 @@ Public Class FormMain_v6
                         ModernTabListControl1.ContentBackColor = Color.Transparent
                         Form_v6_参数面板.ModernTabListControl1.TabStripBackColor = Color.Transparent
                         Form_v6_参数面板.ModernTabListControl1.ContentBackColor = Color.Transparent
-                        Form_v6_社区.ModernTabListControl1.TabStripBackColor = Color.Transparent
-                        Form_v6_社区.ModernTabListControl1.ContentBackColor = Color.Transparent
                         Form_v6_集成工具.ModernTabListControl1.TabStripBackColor = Color.Transparent
                         Form_v6_集成工具.ModernTabListControl1.ContentBackColor = Color.Transparent
                         Form_v6_设置.ModernTabListControl1.TabStripBackColor = Color.Transparent
@@ -62,6 +60,9 @@ Public Class FormMain_v6
 
                         Form_v6_起始页面.ModernPanel1.Padding = New Padding(10 * DeviceDpi / 96, 10 * DeviceDpi / 96, Form_v6_起始页面.ModernPanel1.Padding.Right, Form_v6_起始页面.ModernPanel1.Padding.Bottom)
                         Form_v6_准备文件.ModernPanel1.Padding = New Padding(10 * DeviceDpi / 96, 10 * DeviceDpi / 96, Form_v6_准备文件.ModernPanel1.Padding.Right, Form_v6_准备文件.ModernPanel1.Padding.Bottom)
+
+                        Form_v6_社区_个人中心.ModernPanel1.Padding = New Padding(10 * DeviceDpi / 96, 10 * DeviceDpi / 96, Form_v6_社区_个人中心.ModernPanel1.Padding.Right, Form_v6_社区_个人中心.ModernPanel1.Padding.Bottom)
+
                         Form_v6_媒体信息.ModernPanel1.Padding = New Padding(10 * DeviceDpi / 96, 10 * DeviceDpi / 96, Form_v6_媒体信息.ModernPanel1.Padding.Right, Form_v6_媒体信息.ModernPanel1.Padding.Bottom)
                         Form_v6_调试播放器.ModernPanel1.Padding = New Padding(10 * DeviceDpi / 96, 10 * DeviceDpi / 96, Form_v6_调试播放器.ModernPanel1.Padding.Right, Form_v6_调试播放器.ModernPanel1.Padding.Bottom)
                 End Select
@@ -80,6 +81,7 @@ Public Class FormMain_v6
     Private Sub FormMain_v6_Shown(sender As Object, e As EventArgs) Handles Me.Shown
         Me.ModernTabListControl1.Focus()
         Application.DoEvents()
+        启动参数响应_v6.处理首次启动参数()
 
         If Not 设置_v6.实例对象.是否询问标记_下载服务器选择 Then
             If Globalization.RegionInfo.CurrentRegion.EnglishName.ToLower.Trim.Contains("china") Then

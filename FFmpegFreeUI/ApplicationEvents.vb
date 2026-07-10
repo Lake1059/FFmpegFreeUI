@@ -51,6 +51,7 @@ Namespace My
                 FormMain_v6.FormBorderStyle = FormBorderStyle.None
                 FormMain_v6.WindowState = FormWindowState.Maximized
             End If
+            启动参数响应_v6.保存首次启动参数(e.CommandLine)
         End Sub
 
         Private Sub MyApplication_StartupNextInstance(sender As Object, e As StartupNextInstanceEventArgs) Handles Me.StartupNextInstance
