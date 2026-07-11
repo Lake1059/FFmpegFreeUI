@@ -1,20 +1,19 @@
 Imports System.Globalization
 Imports System.IO
-Imports System.Text
-Imports System.Text.RegularExpressions
-
 
 Partial Public Class 预设管理_v6
 
     Private Shared Function 构造缩放滤镜(a As 预设数据_v6) As String
-        If a.视频参数_分辨率 <> "" Then Return $"scale={a.视频参数_分辨率.Replace("x", ":")}"
+        Dim 缩放算法 = If(a.视频参数_分辨率自动计算_缩放算法, "").Trim()
+        Dim 缩放参数 = If(缩放算法 = "", "", ":flags=" & 缩放算法)
+        If a.视频参数_分辨率 <> "" Then Return $"scale={a.视频参数_分辨率.Replace("x", ":")}{缩放参数}"
 
         Dim 宽度 = If(a.视频参数_分辨率自动计算_宽度, "")
         Dim 高度 = If(a.视频参数_分辨率自动计算_高度, "")
         If 宽度 = "" AndAlso 高度 = "" Then Return ""
         If 宽度 = "" Then 宽度 = "-2"
         If 高度 = "" Then 高度 = "-2"
-        Return $"scale={宽度}:{高度}"
+        Return $"scale={宽度}:{高度}{缩放参数}"
     End Function
 
     Private Shared Function 构造裁剪滤镜(a As 预设数据_v6) As String

@@ -61,6 +61,7 @@ Public Class 预设数据_v6
     Public Property 视频参数_分辨率 As String = ""
     Public Property 视频参数_分辨率自动计算_宽度 As String = ""
     Public Property 视频参数_分辨率自动计算_高度 As String = ""
+    Public Property 视频参数_分辨率自动计算_缩放算法 As String = ""
     Public Property 视频参数_分辨率_裁剪滤镜参数 As String = ""
     '==================================================
     Public Property 视频参数_帧速率 As String = ""

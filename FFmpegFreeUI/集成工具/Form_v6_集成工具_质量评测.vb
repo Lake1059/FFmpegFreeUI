@@ -37,6 +37,9 @@ Public Class Form_v6_集成工具_质量评测
     End Enum
 
     Private Shared ReadOnly 全部指标 As 指标类型() = {指标类型.PSNR, 指标类型.SSIM, 指标类型.VMAF, 指标类型.XPSNR}
+    ' 当两路像素格式不一致时，统一到常见且受全部四个滤镜支持的 10-bit 4:2:0 格式。
+    ' 选择 4:2:0 而非 4:4:4 是为了让原始色度采样率不成为评分差异；同时保留 10-bit 精度。
+    Private Const 统一评测像素格式 As String = "yuv420p10le"
 
     Private Class 评测文件数据
         Public Property 文件路径 As String = ""
@@ -109,11 +112,10 @@ Public Class Form_v6_集成工具_质量评测
         填充下拉框(MCB_模型选择,
               "vmaf_v0.6.1",
               "vmaf_v0.6.1neg",
-              "vmaf_4k_v0.6.1",
-              "vmaf_b_v0.6.3")
+              "vmaf_4k_v0.6.1")
         填充下拉框(MCB_Pooling, "mean", "harmonic_mean", "min")
         填充下拉框(MCB_SubSample, "1", "2", "3", "5", "10", "15")
-        设置下拉框选中值(MCB_SubSample, "15")
+        设置下拉框选中值(MCB_SubSample, "0")
     End Sub
 
     Private Shared Sub 填充下拉框(combo As ModernComboBox, ParamArray values() As String)
@@ -617,9 +619,9 @@ Public Class Form_v6_集成工具_质量评测
     Private Function 解析运行中Stats(metric As 指标类型, path As String) As 指标结果数据
         Select Case metric
             Case 指标类型.PSNR
-                Return 解析键值Stats(path, "", "psnr_avg", "average:")
+                Return 解析键值Stats(指标类型.PSNR, path, "", "psnr_avg", "average:")
             Case 指标类型.SSIM
-                Return 解析键值Stats(path, "", "All", "All:")
+                Return 解析键值Stats(指标类型.SSIM, path, "", "All", "All:")
             Case 指标类型.XPSNR
                 Return 解析XpsnrStats(path, "")
             Case Else
@@ -668,22 +670,25 @@ Public Class Form_v6_集成工具_质量评测
     End Function
 
     Private Function 构建指标命令(reference As String, distorted As String, metric As 指标类型, startTime As String, duration As String, tempPath As String, referenceInfo As 视频流信息, distortedInfo As 视频流信息) As String
-        Dim inputFrameRate = 获取FFMetrics帧率参数(distortedInfo, referenceInfo)
-        Dim arg As New StringBuilder("-hide_banner -nostdin ")
-        追加时间输入参数(arg, startTime, distorted, inputFrameRate)
-        追加时间输入参数(arg, startTime, reference, inputFrameRate)
+        Dim distortedFrameRate = 获取FFMetrics帧率参数(distortedInfo)
+        Dim referenceFrameRate = 获取FFMetrics帧率参数(referenceInfo)
+        Dim durationFrameRate = If(String.IsNullOrWhiteSpace(distortedFrameRate), referenceFrameRate, distortedFrameRate)
+        Dim arg As New StringBuilder("-hide_banner -nostdin -probesize 50M ")
+        追加FFMetrics输入参数(arg, distorted, distortedFrameRate)
+        追加FFMetrics输入参数(arg, reference, referenceFrameRate)
 
-        Dim frameLimit = 获取FFMetrics帧数限制(duration, inputFrameRate)
+        Dim frameLimit = 获取FFMetrics帧数限制(duration, durationFrameRate)
         If frameLimit > 0 Then arg.Append("-frames:v ").Append(frameLimit.ToString(CultureInfo.InvariantCulture)).Append(" "c)
 
         Dim filter As String
-        Dim finalPixelFormat = 获取指标像素格式(referenceInfo)
+        Dim finalPixelFormat = 获取指标像素格式(referenceInfo, distortedInfo)
         Dim model = If(metric = 指标类型.VMAF, 获取下拉框文本(MCB_模型选择, "vmaf_v0.6.1"), "")
         Dim targetSize = 获取评测目标尺寸(metric, referenceInfo, model)
         Dim scaleDistorted = 构建视频预处理滤镜(distortedInfo, referenceInfo, targetSize.Width, targetSize.Height, finalPixelFormat)
         Dim scaleReference = 构建参考预处理滤镜(metric, referenceInfo, targetSize, finalPixelFormat)
-        Dim dist = $"[0:v]settb=AVTB,setpts=PTS-STARTPTS{scaleDistorted}[dist];"
-        Dim ref = $"[1:v]settb=AVTB,setpts=PTS-STARTPTS{scaleReference}[ref];"
+        Dim trim = 构建FFMetrics剪辑滤镜(startTime)
+        Dim dist = $"[0:v]{trim}settb=AVTB,setpts=PTS-STARTPTS{scaleDistorted}[dist];"
+        Dim ref = $"[1:v]{trim}settb=AVTB,setpts=PTS-STARTPTS{scaleReference}[ref];"
         Select Case metric
             Case 指标类型.PSNR
                 filter = $"{dist}{ref}[dist][ref]psnr=eof_action=endall:stats_file={引用过滤器参数(tempPath)}"
@@ -693,9 +698,10 @@ Public Class Form_v6_集成工具_质量评测
                 filter = $"{dist}{ref}[ref][dist]xpsnr=eof_action=endall:stats_file={引用过滤器参数(tempPath)}"
             Case 指标类型.VMAF
                 Dim pool = 获取下拉框文本(MCB_Pooling, "mean")
-                Dim subsample = 获取下拉框文本(MCB_SubSample, "1")
+                Dim subsample = 获取下拉框文本(MCB_SubSample, "0")
                 Dim threads = Math.Max(1, Environment.ProcessorCount - 1)
-                filter = $"{dist}{ref}[dist][ref]libvmaf=eof_action=endall:log_fmt=json:log_path={引用过滤器参数(tempPath)}:n_threads={threads.ToString(CultureInfo.InvariantCulture)}:n_subsample={转义过滤器值(subsample)}:pool={转义过滤器值(pool)}:model={转义过滤器值("version=" & model)}"
+                Dim subsampleOption = 构建Vmaf子采样参数(subsample)
+                filter = $"{dist}{ref}[dist][ref]libvmaf=eof_action=endall:log_fmt=json:log_path={引用过滤器参数(tempPath)}:n_threads={threads.ToString(CultureInfo.InvariantCulture)}{subsampleOption}:pool={转义过滤器值(pool)}:model={转义过滤器值("version=" & model)}"
             Case Else
                 Throw New InvalidOperationException("未知评测项目")
         End Select
@@ -704,12 +710,22 @@ Public Class Form_v6_集成工具_质量评测
         Return arg.ToString()
     End Function
 
-    Private Shared Sub 追加时间输入参数(arg As StringBuilder, startTime As String, file As String, inputFrameRate As String)
-        Dim seekTime = 格式化FFmpeg时间参数(startTime)
-        If Not String.IsNullOrWhiteSpace(seekTime) Then arg.Append("-ss ").Append(引用参数(seekTime)).Append(" "c)
+    Private Shared Sub 追加FFMetrics输入参数(arg As StringBuilder, file As String, inputFrameRate As String)
         If Not String.IsNullOrWhiteSpace(inputFrameRate) Then arg.Append("-r ").Append(引用参数(inputFrameRate.Trim())).Append(" "c)
         arg.Append("-i ").Append(引用参数(file)).Append(" "c)
     End Sub
+
+    Private Shared Function 构建FFMetrics剪辑滤镜(startTime As String) As String
+        Dim seekTime = 格式化FFmpeg时间参数(startTime)
+        If String.IsNullOrWhiteSpace(seekTime) OrElse seekTime = "0" Then Return ""
+        Return $"trim=start={seekTime},"
+    End Function
+
+    Private Shared Function 构建Vmaf子采样参数(subsample As String) As String
+        Dim value As Integer
+        If Not Integer.TryParse(If(subsample, "").Trim(), NumberStyles.Integer, CultureInfo.InvariantCulture, value) OrElse value <= 0 Then Return ""
+        Return $":n_subsample={value.ToString(CultureInfo.InvariantCulture)}"
+    End Function
 
     Private Async Function 获取视频流信息Async(file As String, token As CancellationToken) As Task(Of 视频流信息)
         Dim result As New 视频流信息()
@@ -826,14 +842,17 @@ Public Class Form_v6_集成工具_质量评测
         Return ""
     End Function
 
-    Private Shared Function 获取指标像素格式(referenceInfo As 视频流信息) As String
-        Dim sourceFormat = 清理像素格式(If(referenceInfo?.像素格式, ""))
-        Return 映射普通指标像素格式(sourceFormat)
+    Private Shared Function 获取指标像素格式(referenceInfo As 视频流信息, distortedInfo As 视频流信息) As String
+        Dim referenceFormat = 清理像素格式(If(referenceInfo?.像素格式, ""))
+        Dim distortedFormat = 清理像素格式(If(distortedInfo?.像素格式, ""))
+
+        ' 无需转换时不插入 format 滤镜，保留 FFMetrics 在同格式素材上的原始计分结果。
+        If referenceFormat <> "" AndAlso String.Equals(referenceFormat, distortedFormat, StringComparison.OrdinalIgnoreCase) Then Return ""
+        Return 统一评测像素格式
     End Function
 
-    Private Shared Function 获取FFMetrics帧率参数(distortedInfo As 视频流信息, referenceInfo As 视频流信息) As String
-        Dim rate = 解析帧率值(If(distortedInfo?.帧率, ""))
-        If rate <= 0 Then rate = 解析帧率值(If(referenceInfo?.帧率, ""))
+    Private Shared Function 获取FFMetrics帧率参数(info As 视频流信息) As String
+        Dim rate = 解析帧率值(If(info?.帧率, ""))
         If rate <= 0 Then Return ""
         Return rate.ToString("0.##", CultureInfo.InvariantCulture)
     End Function
@@ -926,48 +945,6 @@ Public Class Form_v6_集成工具_质量评测
         Dim widthDiff = Math.Abs(referenceInfo.宽度 - modelSize.Width) / CDbl(modelSize.Width)
         Dim heightDiff = Math.Abs(referenceInfo.高度 - modelSize.Height) / CDbl(modelSize.Height)
         Return widthDiff > 0.1 OrElse heightDiff > 0.1
-    End Function
-
-    Private Shared Function 映射普通指标像素格式(pixelFormat As String) As String
-        Dim value = 清理像素格式(pixelFormat).ToLowerInvariant()
-        If value = "" Then Return "yuv420p"
-
-        Dim sampling As String
-        If value.Contains("422") OrElse value = "nv16" OrElse value = "nv20" OrElse value = "nv61" OrElse
-           value.StartsWith("p21", StringComparison.OrdinalIgnoreCase) Then
-            sampling = "422"
-        ElseIf value.Contains("444") OrElse value.Contains("440") OrElse value.StartsWith("gbr", StringComparison.OrdinalIgnoreCase) OrElse
-               value.StartsWith("rgb", StringComparison.OrdinalIgnoreCase) OrElse value.StartsWith("bgr", StringComparison.OrdinalIgnoreCase) OrElse
-               value.Contains("rgba") OrElse value.Contains("bgra") OrElse value = "0rgb" OrElse value = "0bgr" OrElse
-               value = "argb" OrElse value = "abgr" OrElse value = "ayuv" OrElse value = "nv24" OrElse value = "nv42" OrElse
-               value.StartsWith("p41", StringComparison.OrdinalIgnoreCase) Then
-            sampling = "444"
-        Else
-            sampling = "420"
-        End If
-
-        Return 构建Yuv像素格式(sampling, 获取像素格式位深(value))
-    End Function
-
-    Private Shared Function 获取像素格式位深(value As String) As Integer
-        Dim text = If(value, "").ToLowerInvariant()
-        If text = "" OrElse text = "yuv410p" Then Return 8
-        If text.Contains("16") OrElse text.Contains("rgb48") OrElse text.Contains("rgba64") OrElse text.Contains("gbrap16") Then Return 16
-        If text.Contains("14") Then Return 14
-        If text.Contains("12") OrElse text.Contains("p012") OrElse text.Contains("p212") OrElse text.Contains("p412") Then Return 12
-        If text.Contains("10") OrElse text.Contains("p010") OrElse text.Contains("p210") OrElse text.Contains("p410") Then Return 10
-        If text.Contains("9"c) Then Return 9
-        Return 8
-    End Function
-
-    Private Shared Function 构建Yuv像素格式(sampling As String, bitDepth As Integer) As String
-        Dim baseName = $"yuv{If(String.IsNullOrWhiteSpace(sampling), "420", sampling)}p"
-        Select Case bitDepth
-            Case 9, 10, 12, 14, 16
-                Return $"{baseName}{bitDepth}le"
-            Case Else
-                Return baseName
-        End Select
     End Function
 
     Private Shared Function 清理像素格式(value As String) As String
@@ -1103,9 +1080,9 @@ Public Class Form_v6_集成工具_质量评测
     Private Function 解析指标结果(metric As 指标类型, tempPath As String, output As String, vmafPool As String) As 指标结果数据
         Select Case metric
             Case 指标类型.PSNR
-                Return 解析键值Stats(tempPath, output, "psnr_avg", "average:")
+                Return 解析键值Stats(指标类型.PSNR, tempPath, output, "psnr_avg", "average:")
             Case 指标类型.SSIM
-                Return 解析键值Stats(tempPath, output, "All", "All:")
+                Return 解析键值Stats(指标类型.SSIM, tempPath, output, "All", "All:")
             Case 指标类型.XPSNR
                 Return 解析XpsnrStats(tempPath, output)
             Case 指标类型.VMAF
@@ -1115,12 +1092,12 @@ Public Class Form_v6_集成工具_质量评测
         End Select
     End Function
 
-    Private Function 解析键值Stats(path As String, output As String, frameKey As String, summaryKey As String) As 指标结果数据
+    Private Function 解析键值Stats(metric As 指标类型, path As String, output As String, frameKey As String, summaryKey As String) As 指标结果数据
         Dim result As New 指标结果数据()
         If File.Exists(path) Then
             For Each line In File.ReadLines(path)
                 Dim value = 提取键值(line, frameKey)
-                If Not Double.IsNaN(value) Then result.每帧数据.Add(value)
+                添加规范化帧值(result.每帧数据, metric, value)
             Next
         End If
 
@@ -1134,11 +1111,11 @@ Public Class Form_v6_集成工具_质量评测
         If File.Exists(path) Then
             For Each line In File.ReadLines(path)
                 Dim value = 提取Xpsnr帧值(line)
-                If Not Double.IsNaN(value) Then result.每帧数据.Add(value)
+                添加规范化帧值(result.每帧数据, 指标类型.XPSNR, value)
             Next
         End If
 
-        result.汇总值 = 获取汇总值或帧平均值(提取Xpsnr摘要值(output), result.每帧数据, False, True)
+        result.汇总值 = 获取汇总值或帧平均值(提取Xpsnr摘要值(output), result.每帧数据, True, True)
         result.成功 = Not Double.IsNaN(result.汇总值)
         Return result
     End Function
@@ -1158,7 +1135,7 @@ Public Class Form_v6_集成工具_质量评测
                     Dim metrics As JsonElement
                     If frame.TryGetProperty("metrics", metrics) Then
                         Dim value = 获取Json数字(metrics, "vmaf")
-                        If Not Double.IsNaN(value) Then result.每帧数据.Add(value)
+                        添加规范化帧值(result.每帧数据, 指标类型.VMAF, value)
                     End If
                 Next
             End If
@@ -1245,6 +1222,16 @@ Public Class Form_v6_集成工具_质量评测
             Dim value = 解析浮点(match.Groups("value").Value)
             If Not Double.IsNaN(value) Then result(channel) = value
         Next
+
+        ' FFmpeg 的最终汇总行只有首个通道带有 "XPSNR" 前缀，例如：
+        ' "XPSNR y: 43.5788  u: 47.0558  v: 46.2689"。必须在该行中继续解析无前缀通道。
+        If result.Count < 3 AndAlso Regex.IsMatch(line, "\bXPSNR\b", RegexOptions.IgnoreCase Or RegexOptions.CultureInvariant) Then
+            For Each match As Match In Regex.Matches(line, "(?<channel>[yuvrgb])\s*:\s*(?<value>[+\-]?(?:Infinity|inf|nan|\d+(?:\.\d+)?))", RegexOptions.IgnoreCase Or RegexOptions.CultureInvariant)
+                Dim channel = match.Groups("channel").Value
+                Dim value = 解析浮点(match.Groups("value").Value)
+                If Not Double.IsNaN(value) Then result(channel) = value
+            Next
+        End If
         Return result
     End Function
 
@@ -1271,6 +1258,19 @@ Public Class Form_v6_集成工具_质量评测
         Dim result As Double
         If Double.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture, result) Then Return result
         Return Double.NaN
+    End Function
+
+    Private Shared Sub 添加规范化帧值(values As List(Of Double), metric As 指标类型, value As Double)
+        If values Is Nothing OrElse Double.IsNaN(value) Then Exit Sub
+        values.Add(规范化FFMetrics帧值(metric, value))
+    End Sub
+
+    Private Shared Function 规范化FFMetrics帧值(metric As 指标类型, value As Double) As Double
+        Dim minimum = 0.0
+        Dim maximum = If(metric = 指标类型.SSIM, 1.0, 100.0)
+        If Double.IsPositiveInfinity(value) Then Return maximum
+        If Double.IsNegativeInfinity(value) Then Return minimum
+        Return Math.Max(minimum, Math.Min(maximum, value))
     End Function
 
     Private Shared Function 提取错误信息(output As String) As String
