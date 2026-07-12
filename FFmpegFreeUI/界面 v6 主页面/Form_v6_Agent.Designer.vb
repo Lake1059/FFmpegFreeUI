@@ -397,6 +397,8 @@ Partial Class Form_v6_Agent
         ModernListBox1.Location = New Point(10, 36)
         ModernListBox1.MultiSelect = False
         ModernListBox1.Name = "ModernListBox1"
+        ModernListBox1.SelectionRectFillColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        ModernListBox1.SelectionRectBorderColor = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
         ModernListBox1.Padding = New Padding(0, 10, 0, 10)
         ModernListBox1.Size = New Size(230, 316)
         ModernListBox1.TabIndex = 8
@@ -448,6 +450,8 @@ Partial Class Form_v6_Agent
         ModernListBox2.Location = New Point(0, 400)
         ModernListBox2.MultiSelect = False
         ModernListBox2.Name = "ModernListBox2"
+        ModernListBox2.SelectionRectFillColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        ModernListBox2.SelectionRectBorderColor = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
         ModernListBox2.Padding = New Padding(0, 10, 0, 10)
         ModernListBox2.Size = New Size(250, 120)
         ModernListBox2.TabIndex = 16

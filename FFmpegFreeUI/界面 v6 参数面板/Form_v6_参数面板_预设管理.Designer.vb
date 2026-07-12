@@ -157,6 +157,8 @@ Partial Class Form_v6_参数面板_预设管理
         MLB_预设列表.Location = New Point(0, 10)
         MLB_预设列表.MultiSelect = False
         MLB_预设列表.Name = "MLB_预设列表"
+        MLB_预设列表.SelectionRectFillColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MLB_预设列表.SelectionRectBorderColor = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
         MLB_预设列表.Size = New Size(255, 432)
         MLB_预设列表.TabIndex = 5
         MLB_预设列表.ToolTipBorderColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))

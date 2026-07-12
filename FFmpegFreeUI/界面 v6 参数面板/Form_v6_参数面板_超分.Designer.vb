@@ -99,6 +99,8 @@ Partial Class Form_v6_参数面板_超分
         MLB_超分滤镜叠加策略列表.ItemSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MLB_超分滤镜叠加策略列表.Location = New Point(20, 432)
         MLB_超分滤镜叠加策略列表.Name = "MLB_超分滤镜叠加策略列表"
+        MLB_超分滤镜叠加策略列表.SelectionRectFillColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MLB_超分滤镜叠加策略列表.SelectionRectBorderColor = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
         MLB_超分滤镜叠加策略列表.Size = New Size(644, 109)
         MLB_超分滤镜叠加策略列表.TabIndex = 35
         '

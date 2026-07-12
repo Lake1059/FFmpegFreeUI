@@ -10,9 +10,9 @@ Public Class 设置_v6
     Public Property 图形DX_SSAA As Integer = 0
 
     Public Property 图形DX_GPU缓存总预算 As Integer = 2
-    Public Property 图形DX_CPU位图缓存总预算 As Integer = 2
-    Public Property 图形DX画刷缓存条目上限 As Integer = 5
-    Public Property 图形DW字体缓存条目上限 As Integer = 2
+    Public Property 图形DX_CPU位图缓存总预算 As Integer = 3
+    Public Property 图形DX画刷缓存条目上限 As Integer = 6
+    Public Property 图形DW字体缓存条目上限 As Integer = 3
     Public Property 图形DX背景穿透脏区策略 As Integer = 4
     Public Property 图形DX_SSAA缓存分桶粒度 As Integer = 1
 
@@ -133,9 +133,9 @@ Public Class 设置_v6
         设置组合框选中索引(Form_v6_设置_LakeUI性能选项.MCB_SSAA, 实例对象.图形DX_SSAA, 0)
 
         设置组合框选中索引(Form_v6_设置_LakeUI性能选项.MCB_D2DImage缓存预算, 实例对象.图形DX_GPU缓存总预算, 2)
-        设置组合框选中索引(Form_v6_设置_LakeUI性能选项.MCB_D2D每对象画刷缓存数量, 实例对象.图形DX画刷缓存条目上限, 5)
-        设置组合框选中索引(Form_v6_设置_LakeUI性能选项.MCB_DW字体相关预算, 实例对象.图形DW字体缓存条目上限, 2)
-        设置组合框选中索引(Form_v6_设置_LakeUI性能选项.MCB_超容器背景映射源位图缓存, 实例对象.图形DX_CPU位图缓存总预算, 2)
+        设置组合框选中索引(Form_v6_设置_LakeUI性能选项.MCB_D2D每对象画刷缓存数量, 实例对象.图形DX画刷缓存条目上限, 6)
+        设置组合框选中索引(Form_v6_设置_LakeUI性能选项.MCB_DW字体相关预算, 实例对象.图形DW字体缓存条目上限, 3)
+        设置组合框选中索引(Form_v6_设置_LakeUI性能选项.MCB_超容器背景映射源位图缓存, 实例对象.图形DX_CPU位图缓存总预算, 3)
         设置组合框选中索引(Form_v6_设置_LakeUI性能选项.MCB_超容器背景映射脏区策略极限, 实例对象.图形DX背景穿透脏区策略, 4)
         设置组合框选中索引(Form_v6_设置_LakeUI性能选项.MCB_超容器背景映射条目预算, 实例对象.图形DX_SSAA缓存分桶粒度, 1)
         Form_v6_设置_LakeUI性能选项.MCB_动画帧率.Text = 实例对象.图形动画帧率
@@ -270,6 +270,7 @@ Public Class 设置_v6
                         实例对象.Agent权限级别 = 1
                     End If
                 End If
+
             End Using
         Catch
         End Try

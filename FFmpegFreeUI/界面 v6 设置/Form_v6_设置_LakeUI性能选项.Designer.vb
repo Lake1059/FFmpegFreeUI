@@ -329,14 +329,15 @@ Partial Class Form_v6_设置_LakeUI性能选项
         MCB_超容器背景映射源位图缓存.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_超容器背景映射源位图缓存.DropDownSelectedForeColor = Color.White
         MCB_超容器背景映射源位图缓存.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        MCB_超容器背景映射源位图缓存.Items.Add("禁用 CPU 位图缓存")
         MCB_超容器背景映射源位图缓存.Items.Add("32 MiB")
         MCB_超容器背景映射源位图缓存.Items.Add("64 MiB")
-        MCB_超容器背景映射源位图缓存.Items.Add("128 MiB 默认")
+        MCB_超容器背景映射源位图缓存.Items.Add("96 MiB 默认")
+        MCB_超容器背景映射源位图缓存.Items.Add("128 MiB")
         MCB_超容器背景映射源位图缓存.Items.Add("256 MiB")
         MCB_超容器背景映射源位图缓存.Items.Add("512 MiB")
         MCB_超容器背景映射源位图缓存.Items.Add("1 GiB")
         MCB_超容器背景映射源位图缓存.Items.Add("2 GiB")
-        MCB_超容器背景映射源位图缓存.Items.Add("禁用 CPU 位图缓存")
         MCB_超容器背景映射源位图缓存.Location = New Point(0, 10)
         MCB_超容器背景映射源位图缓存.Margin = New Padding(2, 2, 2, 2)
         MCB_超容器背景映射源位图缓存.Name = "MCB_超容器背景映射源位图缓存"
@@ -388,13 +389,13 @@ Partial Class Form_v6_设置_LakeUI性能选项
         MCB_DW字体相关预算.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_DW字体相关预算.DropDownSelectedForeColor = Color.White
         MCB_DW字体相关预算.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        MCB_DW字体相关预算.Items.Add("禁用字体缓存")
         MCB_DW字体相关预算.Items.Add("32 TF + 32 解析")
         MCB_DW字体相关预算.Items.Add("64 TF + 64 解析")
         MCB_DW字体相关预算.Items.Add("128 TF + 128 解析 默认")
         MCB_DW字体相关预算.Items.Add("256 TF + 256 解析")
         MCB_DW字体相关预算.Items.Add("512 TF + 512 解析")
         MCB_DW字体相关预算.Items.Add("1024 TF + 1024 解析")
-        MCB_DW字体相关预算.Items.Add("禁用字体缓存")
         MCB_DW字体相关预算.Location = New Point(0, 10)
         MCB_DW字体相关预算.Margin = New Padding(2, 2, 2, 2)
         MCB_DW字体相关预算.Name = "MCB_DW字体相关预算"
@@ -446,6 +447,7 @@ Partial Class Form_v6_设置_LakeUI性能选项
         MCB_D2D每对象画刷缓存数量.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_D2D每对象画刷缓存数量.DropDownSelectedForeColor = Color.White
         MCB_D2D每对象画刷缓存数量.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        MCB_D2D每对象画刷缓存数量.Items.Add("禁用画刷缓存")
         MCB_D2D每对象画刷缓存数量.Items.Add("8")
         MCB_D2D每对象画刷缓存数量.Items.Add("16")
         MCB_D2D每对象画刷缓存数量.Items.Add("32")
@@ -454,7 +456,6 @@ Partial Class Form_v6_设置_LakeUI性能选项
         MCB_D2D每对象画刷缓存数量.Items.Add("256 默认")
         MCB_D2D每对象画刷缓存数量.Items.Add("512")
         MCB_D2D每对象画刷缓存数量.Items.Add("1024")
-        MCB_D2D每对象画刷缓存数量.Items.Add("禁用画刷缓存")
         MCB_D2D每对象画刷缓存数量.Location = New Point(0, 10)
         MCB_D2D每对象画刷缓存数量.Margin = New Padding(2, 2, 2, 2)
         MCB_D2D每对象画刷缓存数量.Name = "MCB_D2D每对象画刷缓存数量"
@@ -506,15 +507,15 @@ Partial Class Form_v6_设置_LakeUI性能选项
         MCB_D2DImage缓存预算.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_D2DImage缓存预算.DropDownSelectedForeColor = Color.White
         MCB_D2DImage缓存预算.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        MCB_D2DImage缓存预算.Items.Add("禁用 GPU 缓存")
         MCB_D2DImage缓存预算.Items.Add("64 MiB")
-        MCB_D2DImage缓存预算.Items.Add("128 MiB")
-        MCB_D2DImage缓存预算.Items.Add("256 MiB 默认")
+        MCB_D2DImage缓存预算.Items.Add("128 MiB 默认")
+        MCB_D2DImage缓存预算.Items.Add("256 MiB")
         MCB_D2DImage缓存预算.Items.Add("512 MiB")
         MCB_D2DImage缓存预算.Items.Add("1 GiB")
         MCB_D2DImage缓存预算.Items.Add("2 GiB")
         MCB_D2DImage缓存预算.Items.Add("4 GiB")
         MCB_D2DImage缓存预算.Items.Add("8 GiB")
-        MCB_D2DImage缓存预算.Items.Add("禁用 GPU 缓存")
         MCB_D2DImage缓存预算.Location = New Point(0, 10)
         MCB_D2DImage缓存预算.Margin = New Padding(2, 2, 2, 2)
         MCB_D2DImage缓存预算.Name = "MCB_D2DImage缓存预算"

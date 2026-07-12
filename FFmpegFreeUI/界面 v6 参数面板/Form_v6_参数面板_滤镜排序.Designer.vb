@@ -83,7 +83,7 @@ Partial Class Form_v6_参数面板_滤镜排序
         UDLV_滤镜排序列表.ScrollBarThumbColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         UDLV_滤镜排序列表.ScrollBarThumbHoverColor = Color.FromArgb(CByte(120), CByte(220), CByte(220), CByte(220))
         UDLV_滤镜排序列表.ScrollBarTrackColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
-        UDLV_滤镜排序列表.SelectionRectBorderColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        UDLV_滤镜排序列表.SelectionRectBorderColor = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
         UDLV_滤镜排序列表.SelectionRectFillColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         UDLV_滤镜排序列表.Size = New Size(755, 492)
         UDLV_滤镜排序列表.TabIndex = 1
