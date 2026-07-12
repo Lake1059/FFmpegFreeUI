@@ -19,6 +19,8 @@ Public Class Form_v6_Agent
     Private _activeToolSummaryItem As LakeUI.AgentRoom.ChatItem = Nothing
     Private _activeRunStatusItem As LakeUI.AgentRoom.ChatItem = Nothing
     Private _activeResponseText As String = ""
+    Private ReadOnly _activeResponseTextBuilder As New StringBuilder
+    Private _activeResponseTextDirty As Boolean = False
     Private _activeRunStatusText As String = ""
     Private _activeRunStartedAtUtc As DateTime = DateTime.MinValue
     Private _activeRunElapsedTimer As System.Windows.Forms.Timer = Nothing
@@ -33,8 +35,8 @@ Public Class Form_v6_Agent
     Private Const ContextCompressionTriggerRatio As Double = 0.85
     Private Const ContextCompressionTargetRatio As Double = 0.6
     Private Const ContextSummaryLimitTokens As Integer = 12000
-    Private Const StreamFlushIntervalMs As Integer = 35
-    Private Const StreamFlushCharacters As Integer = 96
+    Private Const StreamFlushIntervalMs As Integer = 80
+    Private Const StreamFlushCharacters As Integer = 384
     Private Const SubmittedTextFileLimitBytes As Long = 128 * 1024
     Private Const SubmittedTextLimitCharacters As Integer = 12000
 
@@ -75,53 +77,32 @@ Public Class Form_v6_Agent
     Private Class StreamingTextBuffer
         Private ReadOnly _room As LakeUI.AgentRoom
         Private ReadOnly _item As LakeUI.AgentRoom.ChatItem
-        Private ReadOnly _onTextChanged As Action(Of String)
-        Private ReadOnly _fullText As New StringBuilder
+        Private ReadOnly _onTextAppended As Action(Of String)
         Private ReadOnly _pendingText As New StringBuilder
         Private _lastFlushUtc As DateTime = DateTime.MinValue
-        Private _started As Boolean = False
 
-        Public Sub New(room As LakeUI.AgentRoom, item As LakeUI.AgentRoom.ChatItem, Optional onTextChanged As Action(Of String) = Nothing)
+        Public Sub New(room As LakeUI.AgentRoom, item As LakeUI.AgentRoom.ChatItem, Optional onTextAppended As Action(Of String) = Nothing)
             _room = room
             _item = item
-            _onTextChanged = onTextChanged
+            _onTextAppended = onTextAppended
         End Sub
-
-        Public ReadOnly Property HasContent As Boolean
-            Get
-                Return _fullText.Length > 0
-            End Get
-        End Property
-
-        Public ReadOnly Property Text As String
-            Get
-                Return _fullText.ToString()
-            End Get
-        End Property
 
         Public Sub Append(delta As String)
             If String.IsNullOrEmpty(delta) Then Return
-            _fullText.Append(delta)
             _pendingText.Append(delta)
-            _onTextChanged?.Invoke(_fullText.ToString())
 
             Dim shouldFlush = _pendingText.Length >= StreamFlushCharacters OrElse
-                delta.Contains(vbLf) OrElse
                 (DateTime.UtcNow - _lastFlushUtc).TotalMilliseconds >= StreamFlushIntervalMs
             If shouldFlush Then Flush(False)
         End Sub
 
         Public Sub Flush(forceScroll As Boolean)
             If _pendingText.Length = 0 Then Return
-            If _item Is Nothing Then
-                _pendingText.Clear()
-                _lastFlushUtc = DateTime.UtcNow
-                Return
-            End If
-            If Not _started Then _started = True
-            _item.Text &= _pendingText.ToString()
+            Dim appendedText = _pendingText.ToString()
             _pendingText.Clear()
             _lastFlushUtc = DateTime.UtcNow
+            If _item IsNot Nothing Then _room.AppendToItem(_item, appendedText)
+            _onTextAppended?.Invoke(appendedText)
             If forceScroll Then _room.ScrollToBottom()
         End Sub
     End Class
@@ -584,7 +565,7 @@ Public Class Form_v6_Agent
     End Function
 
     Private Function GetVisibleRunResponsePrefix() As String
-        Dim text = If(_activeResponseText, "").Trim()
+        Dim text = GetActiveResponseTextSnapshot().Trim()
         Return If(IsRunResponsePlaceholder(text), "", text)
     End Function
 
@@ -710,20 +691,25 @@ Public Class Form_v6_Agent
         If _activeRunStatusItem IsNot Nothing AndAlso AgentRoom1.Items.Contains(_activeRunStatusItem) Then orderedItems.Add(_activeRunStatusItem)
         If orderedItems.Count = 0 Then Return
 
+        Dim firstIndex = AgentRoom1.Items.IndexOf(orderedItems(0))
+        Dim alreadyOrdered = firstIndex >= 0
+        For i = 1 To orderedItems.Count - 1
+            If AgentRoom1.Items.IndexOf(orderedItems(i)) <> firstIndex + i Then
+                alreadyOrdered = False
+                Exit For
+            End If
+        Next
+        If alreadyOrdered Then Return
+
         Dim insertIndex = AgentRoom1.Items.Count
         For Each item In orderedItems
             Dim itemIndex = AgentRoom1.Items.IndexOf(item)
             If itemIndex >= 0 Then insertIndex = Math.Min(insertIndex, itemIndex)
         Next
 
-        For Each item In orderedItems
-            AgentRoom1.Items.Remove(item)
-        Next
-
-        If insertIndex > AgentRoom1.Items.Count Then insertIndex = AgentRoom1.Items.Count
-        For Each item In orderedItems
-            AgentRoom1.Items.Insert(insertIndex, item)
-            insertIndex += 1
+        insertIndex = Math.Max(0, Math.Min(insertIndex, AgentRoom1.Items.Count - 1))
+        For i = 0 To orderedItems.Count - 1
+            AgentRoom1.MoveItem(orderedItems(i), insertIndex + i)
         Next
     End Sub
 
@@ -859,7 +845,7 @@ Public Class Form_v6_Agent
     End Function
 
     Private Sub SetRunResponseText(conversation As AgentConversationData, text As String)
-        If ReferenceEquals(conversation, _activeRunConversation) Then _activeResponseText = If(text, "")
+        If ReferenceEquals(conversation, _activeRunConversation) Then ReplaceActiveResponseText(If(text, ""))
         If Not IsConversationSelected(conversation) Then Return
 
         If IsRunResponsePlaceholder(_activeResponseText) Then
@@ -874,13 +860,79 @@ Public Class Form_v6_Agent
 
         If _activeResponseItem Is Nothing OrElse Not AgentRoom1.Items.Contains(_activeResponseItem) Then
             _activeResponseItem = New LakeUI.AgentRoom.ChatItem(LakeUI.AgentRoom.ChatItemKind.AssistantMessage, _activeResponseText)
-            AgentRoom1.Items.Add(_activeResponseItem)
+            InsertActiveResponseItem(_activeResponseItem)
         Else
             _activeResponseItem.Text = _activeResponseText
         End If
         EnsureActiveRunItemOrder()
         AgentRoom1.ScrollToBottom()
     End Sub
+
+    Private Sub AppendRunResponseText(conversation As AgentConversationData,
+                                      delta As String,
+                                      prependParagraphBreak As Boolean)
+        If String.IsNullOrEmpty(delta) OrElse Not ReferenceEquals(conversation, _activeRunConversation) Then Return
+
+        If Not _activeResponseTextDirty AndAlso IsRunResponsePlaceholder(_activeResponseText) Then
+            _activeResponseTextBuilder.Clear()
+            _activeResponseText = ""
+            _activeResponseTextDirty = False
+        End If
+        Dim appendedText = delta
+        If prependParagraphBreak AndAlso _activeResponseTextBuilder.Length > 0 Then
+            appendedText = vbCrLf & vbCrLf & appendedText
+        End If
+        _activeResponseTextBuilder.Append(appendedText)
+        _activeResponseTextDirty = True
+        If Not IsConversationSelected(conversation) Then Return
+
+        If _activeResponseItem Is Nothing OrElse Not AgentRoom1.Items.Contains(_activeResponseItem) Then
+            _activeResponseItem = New LakeUI.AgentRoom.ChatItem(LakeUI.AgentRoom.ChatItemKind.AssistantMessage, GetActiveResponseTextSnapshot())
+            InsertActiveResponseItem(_activeResponseItem)
+            EnsureActiveRunItemOrder()
+        Else
+            AgentRoom1.AppendToItem(_activeResponseItem, appendedText)
+        End If
+    End Sub
+
+    Private Sub CompleteRunResponseText(conversation As AgentConversationData, text As String)
+        Dim finalText = If(text, "").Trim()
+        Dim currentText = GetActiveResponseTextSnapshot().Trim()
+        If ReferenceEquals(conversation, _activeRunConversation) AndAlso
+           _activeResponseItem IsNot Nothing AndAlso
+           AgentRoom1.Items.Contains(_activeResponseItem) AndAlso
+           String.Equals(currentText, finalText, StringComparison.Ordinal) Then
+            ReplaceActiveResponseText(finalText)
+            AgentRoom1.CompleteStreamingMessage(_activeResponseItem)
+            Return
+        End If
+        SetRunResponseText(conversation, finalText)
+    End Sub
+
+    Private Sub InsertActiveResponseItem(item As LakeUI.AgentRoom.ChatItem)
+        If item Is Nothing Then Return
+        Dim statusIndex = If(_activeRunStatusItem Is Nothing, -1, AgentRoom1.Items.IndexOf(_activeRunStatusItem))
+        If statusIndex >= 0 Then
+            AgentRoom1.Items.Insert(statusIndex, item)
+        Else
+            AgentRoom1.Items.Add(item)
+        End If
+    End Sub
+
+    Private Sub ReplaceActiveResponseText(text As String)
+        _activeResponseText = If(text, "")
+        _activeResponseTextBuilder.Clear()
+        _activeResponseTextBuilder.Append(_activeResponseText)
+        _activeResponseTextDirty = False
+    End Sub
+
+    Private Function GetActiveResponseTextSnapshot() As String
+        If _activeResponseTextDirty Then
+            _activeResponseText = _activeResponseTextBuilder.ToString()
+            _activeResponseTextDirty = False
+        End If
+        Return If(_activeResponseText, "")
+    End Function
 
     Private Sub RefreshActiveToolSummaryCard(conversation As AgentConversationData)
         UpdateActiveRunOverviewCard(conversation)
@@ -893,8 +945,9 @@ Public Class Form_v6_Agent
         If _activeRunConversation Is Nothing OrElse Not IsConversationSelected(_activeRunConversation) Then Return
 
         _activeToolSummaryItem = AgentRoom1.AddCard(FormatRunOverviewCard(_activeToolRoundLogs))
-        If Not IsRunResponsePlaceholder(_activeResponseText) Then
-            _activeResponseItem = AgentRoom1.AddAssistantMessage(_activeResponseText)
+        Dim responseText = GetActiveResponseTextSnapshot()
+        If Not IsRunResponsePlaceholder(responseText) Then
+            _activeResponseItem = AgentRoom1.AddAssistantMessage(responseText)
         End If
 
         If Not String.IsNullOrWhiteSpace(_activeRunStatusText) Then
@@ -911,7 +964,7 @@ Public Class Form_v6_Agent
         _activeToolRoundLogs = Nothing
         _activeToolSummaryItem = Nothing
         _activeRunStatusItem = Nothing
-        _activeResponseText = ""
+        ReplaceActiveResponseText("")
         _activeRunStatusText = ""
         _activeRunStartedAtUtc = DateTime.MinValue
     End Sub
@@ -1120,7 +1173,7 @@ Public Class Form_v6_Agent
         _requestCts = localCts
         _activeRunConversation = runConversation
         _activeRunStartedAtUtc = DateTime.UtcNow
-        _activeResponseText = "正在思考..."
+        ReplaceActiveResponseText("正在思考...")
         _activeRunStatusText = ""
         _activeRunStatusItem = Nothing
         _activeResponseItem = Nothing
@@ -1140,7 +1193,7 @@ Public Class Form_v6_Agent
 
             Await RunAgentLoopAsync(runConversation, toolRoundLogs, localCts.Token)
         Catch ex As OperationCanceledException
-            Dim canceledText = BuildCanceledResponseText(_activeResponseText, _restartAfterCancel)
+            Dim canceledText = BuildCanceledResponseText(GetActiveResponseTextSnapshot(), _restartAfterCancel)
             SetRunResponseText(runConversation, canceledText)
             If Not _restartAfterCancel Then runConversation.Messages.Add(New AgentMessageData With {.Role = "assistant", .Content = canceledText})
             ShowRunStatus(runConversation, If(_restartAfterCancel, "已停止当前响应，准备按新的引导继续", "已停止当前任务"))
@@ -1217,7 +1270,14 @@ Public Class Form_v6_Agent
                 Dim streamedAny As Boolean = False
                 Dim result As AgentChatResult = Nothing
                 Dim responsePrefix = GetVisibleRunResponsePrefix()
-                Dim streamBuffer As New StreamingTextBuffer(AgentRoom1, Nothing, Sub(value) SetRunResponseText(conversation, CombineRunResponseText(responsePrefix, value)))
+                Dim firstStreamFlush As Boolean = True
+                Dim streamBuffer As New StreamingTextBuffer(
+                    AgentRoom1,
+                    Nothing,
+                    Sub(value)
+                        AppendRunResponseText(conversation, value, firstStreamFlush AndAlso responsePrefix.Length > 0)
+                        firstStreamFlush = False
+                    End Sub)
 
                 ShowRunStatus(conversation, $"正在思考：第 {round} 轮")
                 result = Await client.TryCreateChatCompletionStreamingAsync(
@@ -1251,13 +1311,13 @@ Public Class Form_v6_Agent
                 If result.ToolCalls Is Nothing OrElse result.ToolCalls.Count = 0 Then
                     Dim content = If(result.Content, "").Trim()
                     If content = "" Then content = "模型没有返回内容。"
-                    SetRunResponseText(conversation, content)
+                    CompleteRunResponseText(conversation, content)
                     conversation.Messages.Add(New AgentMessageData With {.Role = "assistant", .Content = content})
                     ShowRunStatus(conversation, "响应完成")
                     Exit Function
                 End If
 
-                SetRunResponseText(conversation, CombineRunResponseText(responsePrefix, result.Content))
+                CompleteRunResponseText(conversation, CombineRunResponseText(responsePrefix, result.Content))
                 ShowRunStatus(conversation, "正在调用工具：" & String.Join("、", result.ToolCalls.Select(Function(x) x.Name)))
                 Dim assistantToolMessage As New AgentMessageData With {
                 .Role = "assistant",

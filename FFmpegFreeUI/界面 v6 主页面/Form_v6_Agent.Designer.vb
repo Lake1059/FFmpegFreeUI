@@ -114,7 +114,6 @@ Partial Class Form_v6_Agent
         AgentRoom1.ScrollBarTrackColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         AgentRoom1.ScrollBarWidth = 10
         AgentRoom1.SelectionBackColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        AgentRoom1.ShowCopyContextMenu = False
         AgentRoom1.Size = New Size(716, 520)
         AgentRoom1.TabIndex = 7
         AgentRoom1.Text = "AgentRoom1"
