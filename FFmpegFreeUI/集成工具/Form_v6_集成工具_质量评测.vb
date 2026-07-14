@@ -8,6 +8,7 @@ Imports LakeUI
 
 Public Class Form_v6_集成工具_质量评测
 
+    Private Const 浏览本地模型项 As String = "浏览本地模型文件 ..."
     Private Const 文件列 As Integer = 0
     Private Const PSNR列 As Integer = 1
     Private Const SSIM列 As Integer = 2
@@ -22,6 +23,7 @@ Public Class Form_v6_集成工具_质量评测
     Private ReadOnly 评测记录锁 As New Object()
     Private 当前评测记录 As StringBuilder = Nothing
     Private 最后评测记录 As String = ""
+    Private 正在选择本地模型 As Boolean = False
 
     Private Enum 指标类型
         PSNR
@@ -110,12 +112,15 @@ Public Class Form_v6_集成工具_质量评测
         Next
 
         填充下拉框(MCB_模型选择,
+              "",
+              浏览本地模型项,
               "vmaf_v0.6.1",
               "vmaf_v0.6.1neg",
               "vmaf_4k_v0.6.1")
-        填充下拉框(MCB_Pooling, "mean", "harmonic_mean", "min")
-        填充下拉框(MCB_SubSample, "1", "2", "3", "5", "10", "15")
-        设置下拉框选中值(MCB_SubSample, "0")
+        填充下拉框(MCB_Pooling, "", "mean", "harmonic_mean", "min")
+        填充下拉框(MCB_SubSample, "", "1", "2", "3", "5", "10", "15")
+        绑定路径下拉框拖拽(MCB_模型选择, 路径下拉框拖拽模式.文件路径,
+                         Sub(combo, path) 添加本地Vmaf模型(path))
     End Sub
 
     Private Shared Sub 填充下拉框(combo As ModernComboBox, ParamArray values() As String)
@@ -125,6 +130,65 @@ Public Class Form_v6_集成工具_质量评测
             combo.Items.Add(value)
         Next
         If combo.Items.Count > 0 Then combo.SelectedIndex = 0
+    End Sub
+
+    Private Sub MCB_模型选择_SelectedIndexChanged(sender As Object, e As EventArgs) Handles MCB_模型选择.SelectedIndexChanged
+        If 正在选择本地模型 Then Exit Sub
+
+        Select Case MCB_模型选择.Text.Trim()
+            Case ""
+                清空Vmaf附加选项()
+            Case 浏览本地模型项
+                选择本地Vmaf模型()
+        End Select
+    End Sub
+
+    Private Sub 选择本地Vmaf模型()
+        正在选择本地模型 = True
+        Try
+            Using dialog As New OpenFileDialog With {.Multiselect = False, .Filter = "VMAF 模型 JSON 文件|*.json|所有文件|*.*"}
+                If dialog.ShowDialog(Me) = DialogResult.OK Then
+                    添加本地Vmaf模型(dialog.FileName)
+                Else
+                    MCB_模型选择.SelectedIndex = 0
+                    MCB_模型选择.Text = ""
+                    清空Vmaf附加选项()
+                End If
+            End Using
+        Finally
+            正在选择本地模型 = False
+        End Try
+    End Sub
+
+    Private Sub 添加本地Vmaf模型(path As String)
+        Dim modelPath = If(path, "").Trim()
+        If Not 是否有效本地Vmaf模型(modelPath) Then
+            MCB_模型选择.SelectedIndex = 0
+            MCB_模型选择.Text = ""
+            ExFloatingTip(MCB_模型选择, "请选择 VMAF 模型 JSON 文件", 1800)
+            Exit Sub
+        End If
+
+        For i = 0 To MCB_模型选择.Items.Count - 1
+            If String.Equals(CStr(MCB_模型选择.Items(i)), modelPath, StringComparison.OrdinalIgnoreCase) Then
+                MCB_模型选择.SelectedIndex = i
+                Exit Sub
+            End If
+        Next
+
+        MCB_模型选择.Items.Add(modelPath)
+        MCB_模型选择.SelectedIndex = MCB_模型选择.Items.Count - 1
+    End Sub
+
+    Private Shared Function 是否有效本地Vmaf模型(path As String) As Boolean
+        Return Not String.IsNullOrWhiteSpace(path) AndAlso
+               String.Equals(System.IO.Path.GetExtension(path), ".json", StringComparison.OrdinalIgnoreCase) AndAlso
+               File.Exists(path)
+    End Function
+
+    Private Sub 清空Vmaf附加选项()
+        MCB_Pooling.SelectedIndex = If(MCB_Pooling.Items.Count > 0, 0, -1)
+        MCB_SubSample.SelectedIndex = If(MCB_SubSample.Items.Count > 0, 0, -1)
     End Sub
 
     Private Shared Sub 设置下拉框选中值(combo As ModernComboBox, value As String)
@@ -229,7 +293,7 @@ Public Class Form_v6_集成工具_质量评测
         Return data
     End Function
 
-    Private Sub ModernButton5_Click(sender As Object, e As EventArgs) Handles ModernButton5.Click
+    Private Sub MB_选择原视频_Click(sender As Object, e As EventArgs) Handles MB_选择原视频.Click
         Using d As New OpenFileDialog With {.Multiselect = False, .Filter = "所有文件|*.*"}
             If d.ShowDialog(Me) = DialogResult.OK Then MTB_原视频文件路径.Text = d.FileName
         End Using
@@ -292,6 +356,13 @@ Public Class Form_v6_集成工具_质量评测
             ExFloatingTip(Panel3, "请至少选择一个评测项目", 1800)
             Return False
         End If
+        If 获取选中指标().Contains(指标类型.VMAF) Then
+            Dim selectedModel = 获取下拉框文本(MCB_模型选择, "")
+            If selectedModel.EndsWith(".json", StringComparison.OrdinalIgnoreCase) AndAlso Not 是否有效本地Vmaf模型(selectedModel) Then
+                ExFloatingTip(MCB_模型选择, "本地 VMAF 模型文件不存在或不是 JSON 文件", 2200)
+                Return False
+            End If
+        End If
         For Each item In UltraDetailListView1.Items
             Dim pathValue = 获取项数据(item).文件路径
             If Not File.Exists(pathValue) Then
@@ -349,6 +420,7 @@ Public Class Form_v6_集成工具_质量评测
         Return data.指标结果.TryGetValue(metric, result) AndAlso result IsNot Nothing AndAlso result.成功
     End Function
 
+    <CodeAnalysis.SuppressMessage("Performance", "CA1861:不要将常量数组作为参数", Justification:="<挂起>")>
     Private Function 获取覆盖已有成绩决策(items As List(Of UltraDetailListView.ListItem), metrics As List(Of 指标类型)) As 覆盖已有成绩决策
         Dim overwriteCount As Integer = 0
         获取即将覆盖成绩签名(items, metrics, overwriteCount)
@@ -701,7 +773,8 @@ Public Class Form_v6_集成工具_质量评测
                 Dim subsample = 获取下拉框文本(MCB_SubSample, "0")
                 Dim threads = Math.Max(1, Environment.ProcessorCount - 1)
                 Dim subsampleOption = 构建Vmaf子采样参数(subsample)
-                filter = $"{dist}{ref}[dist][ref]libvmaf=eof_action=endall:log_fmt=json:log_path={引用过滤器参数(tempPath)}:n_threads={threads.ToString(CultureInfo.InvariantCulture)}{subsampleOption}:pool={转义过滤器值(pool)}:model={转义过滤器值("version=" & model)}"
+                Dim modelOption = 构建Vmaf模型参数(model)
+                filter = $"{dist}{ref}[dist][ref]libvmaf=eof_action=endall:log_fmt=json:log_path={引用过滤器参数(tempPath)}:n_threads={threads.ToString(CultureInfo.InvariantCulture)}{subsampleOption}:pool={转义过滤器值(pool)}:model={转义过滤器值(modelOption)}"
             Case Else
                 Throw New InvalidOperationException("未知评测项目")
         End Select
@@ -725,6 +798,12 @@ Public Class Form_v6_集成工具_质量评测
         Dim value As Integer
         If Not Integer.TryParse(If(subsample, "").Trim(), NumberStyles.Integer, CultureInfo.InvariantCulture, value) OrElse value <= 0 Then Return ""
         Return $":n_subsample={value.ToString(CultureInfo.InvariantCulture)}"
+    End Function
+
+    Private Shared Function 构建Vmaf模型参数(model As String) As String
+        Dim value = If(model, "").Trim()
+        If value.EndsWith(".json", StringComparison.OrdinalIgnoreCase) Then Return "path=" & value
+        Return "version=" & value
     End Function
 
     Private Async Function 获取视频流信息Async(file As String, token As CancellationToken) As Task(Of 视频流信息)
@@ -1297,7 +1376,7 @@ Public Class Form_v6_集成工具_质量评测
     Private Sub 设置运行状态(running As Boolean)
         MB_开始评测.Text = If(running, "取消评测", "开始评测")
         MB_开始评测.ForeColor = If(running, Color.IndianRed, Color.YellowGreen)
-        ModernButton5.Enabled = Not running
+        MB_选择原视频.Enabled = Not running
         MB_移除选中文件.Enabled = Not running
         MB_移除全部文件.Enabled = Not running
         MB_清除选中记录.Enabled = Not running

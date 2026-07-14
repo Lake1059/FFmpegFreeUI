@@ -17,6 +17,7 @@ Partial Public Class 预设管理_v6
             End If
         End If
         If 请求视频输出 Then 添加按流视频附加参数(parts, a, 阶段, If(视频选择器, New List(Of String)), 视频来自滤镜)
+        AddRaw(parts, 应用自定义参数通配字符串(a.自定义参数_视频参数, 输入文件, 输出文件))
 
         Dim 音频 = 音频编码器数据库_v6.获取编码器数据(a.音频参数_编码器_代号)
         If 音频 IsNot Nothing AndAlso 阶段 <> 预设数据_v6.命令行阶段.二次编码第一遍 Then
@@ -25,6 +26,7 @@ Partial Public Class 预设管理_v6
         If 请求音频输出 AndAlso 阶段 <> 预设数据_v6.命令行阶段.二次编码第一遍 Then
             添加按流音频附加参数(parts, a, 音频, If(音频选择器, New List(Of String)), 音频来自滤镜)
         End If
+        AddRaw(parts, 应用自定义参数通配字符串(a.自定义参数_音频参数, 输入文件, 输出文件))
 
         If 阶段 = 预设数据_v6.命令行阶段.二次编码第一遍 OrElse 阶段 = 预设数据_v6.命令行阶段.二次编码第二遍 Then
             parts.Add(If(阶段 = 预设数据_v6.命令行阶段.二次编码第一遍, "-pass 1", "-pass 2"))

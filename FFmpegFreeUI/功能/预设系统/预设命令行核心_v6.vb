@@ -1,11 +1,4 @@
-Imports System.Globalization
-Imports System.IO
-Imports System.Text
-Imports System.Text.RegularExpressions
-
-
 Partial Public Class 预设管理_v6
-
 
     Private Shared ReadOnly separator As String() = {","}
     Public Const 输入占位符 As String = "<输入文件>"
@@ -194,8 +187,6 @@ Partial Public Class 预设管理_v6
             额外输入.AddRange(附加片段.额外输入)
             输出前.AddRange(附加片段.输出前)
         End If
-        AddRaw(输出前, 应用自定义参数通配字符串(a.自定义参数_视频参数, 输入文件, 输出文件))
-        AddRaw(输出前, 应用自定义参数通配字符串(a.自定义参数_音频参数, 输入文件, 输出文件))
         AddRaw(输出前, 应用自定义参数通配字符串(a.自定义参数_之后参数, 输入文件, 输出文件))
 
         Dim 丢弃输出 = 阶段 = 预设数据_v6.命令行阶段.二次编码第一遍 OrElse a.输出_输出文件参数使用方法 = 预设数据_v6.输出文件参数使用方法.声明丢弃输出

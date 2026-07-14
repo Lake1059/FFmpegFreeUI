@@ -63,6 +63,8 @@ Public Class Form_v6_调试播放器
     Private Const GWL_STYLE As Integer = -16
     Private Const WS_CAPTION As Integer = &HC00000
     Private Const WS_THICKFRAME As Integer = &H40000
+    Private Const WS_CHILD As Integer = &H40000000
+    Private Const WS_POPUP As Integer = -2147483648
     Private Const WM_MOUSEMOVE As Integer = &H200
     Private Const WM_RBUTTONDOWN As Integer = &H204
     Private Const WM_RBUTTONUP As Integer = &H205
@@ -85,6 +87,7 @@ Public Class Form_v6_调试播放器
         AddHandler MB_关闭.Click, AddressOf 停止
         AddHandler ExcellentProgressBar1.MouseDown, AddressOf 进度条_MouseDown
         AddHandler Me.ResizeEnd, AddressOf 视频容器尺寸变化事件
+        AddHandler ModernPanel2.SizeChanged, AddressOf 视频容器尺寸变化事件
         重置进度显示()
     End Sub
 
@@ -99,7 +102,7 @@ Public Class Form_v6_调试播放器
         ffplayProcess = New Process
         ffplayProcess.StartInfo.FileName = "ffplay"
         ffplayProcess.StartInfo.WorkingDirectory = If(设置_v6.实例对象.工作目录 <> "", 设置_v6.实例对象.工作目录, "")
-        ffplayProcess.StartInfo.Arguments = $"-x {ModernPanel2.Width} -y {ModernPanel2.Height} -noborder ""{文件路径}"""
+        ffplayProcess.StartInfo.Arguments = $"-x {ModernPanel2.Width} -y {ModernPanel2.Height} ""{文件路径}"""
         ffplayProcess.StartInfo.UseShellExecute = False
         ffplayProcess.StartInfo.CreateNoWindow = True
         ffplayProcess.StartInfo.RedirectStandardOutput = True
@@ -130,17 +133,30 @@ Public Class Form_v6_调试播放器
         End While
 
         If 是否已经取消播放 OrElse ffplayProcess IsNot 当前进程 Then Exit Sub
+        设置为播放容器子窗口()
         SetParent(ffplayHandle, ModernPanel2.Handle)
-        SetWindowPos(ffplayHandle, IntPtr.Zero, 0, 0, ModernPanel2.Width, ModernPanel2.Height, SWP_NOZORDER Or SWP_NOACTIVATE)
+        设置播放窗口尺寸()
         FormMain_v6.Focus()
     End Sub
 
     Sub 视频容器尺寸变化事件()
-        If FormMain_v6.WindowState = FormWindowState.Minimized Then Exit Sub
-        If FormMain_v6.ModernTabListControl1.SelectedIndex <> 10 Then Exit Sub
-        If ffplayProcess IsNot Nothing Then
-            SetWindowPos(ffplayHandle, IntPtr.Zero, 0, 0, ModernPanel2.Width, ModernPanel2.Height, SWP_NOZORDER Or SWP_NOACTIVATE)
-        End If
+        设置播放窗口尺寸()
+    End Sub
+
+    Private Sub 设置为播放容器子窗口()
+        Dim style = GetWindowLong(ffplayHandle, GWL_STYLE)
+        style = (style And Not (WS_CAPTION Or WS_THICKFRAME Or WS_POPUP)) Or WS_CHILD
+        SetWindowLong(ffplayHandle, GWL_STYLE, style)
+    End Sub
+
+    Private Sub 设置播放窗口尺寸()
+        If ffplayProcess Is Nothing OrElse ffplayHandle = IntPtr.Zero Then Exit Sub
+
+        Dim size = ModernPanel2.ClientSize
+        If size.Width <= 0 OrElse size.Height <= 0 Then Exit Sub
+
+        SetWindowPos(ffplayHandle, IntPtr.Zero, 0, 0, size.Width, size.Height,
+                     SWP_NOZORDER Or SWP_NOACTIVATE Or SWP_FRAMECHANGED)
     End Sub
 
     Sub 打开()

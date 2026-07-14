@@ -70,6 +70,19 @@ Public Class 开发者内置预设_v6
         RTX50_HEVC_UHQ.视频参数_色彩管理_像素格式 = "p010le"
         result.Add(New 预设项("RTX50 HEVC UHQ", RTX50_HEVC_UHQ))
 
+        Dim SVTAV1_CRF36 As New 预设数据_v6
+        SVTAV1_CRF36.预设备注 = "采用 HDR 分支的 libsvtav1，可能与常规的分支有些许差别。此预设仅包含视频参数！"
+        SVTAV1_CRF36.视频参数_编码器_类型 = 预设数据_v6.视频编码器类型.视频
+        SVTAV1_CRF36.视频参数_编码器_分类名称 = "AV1"
+        SVTAV1_CRF36.视频参数_编码器_具体编码 = "libsvtav1"
+        SVTAV1_CRF36.视频参数_编码器_编码预设 = "6"
+        SVTAV1_CRF36.视频参数_比特率_控制方式 = 预设数据_v6.视频全局质量控制方式.CRF
+        SVTAV1_CRF36.视频参数_质量控制_参数名 = "crf"
+        SVTAV1_CRF36.视频参数_质量控制_值 = "36"
+        SVTAV1_CRF36.视频参数_质量控制_进阶参数集 = "-svtav1-params tune=0:keyint=10s:enable-variance-boost=1:variance-boost-strength=1:film-grain=4:film-grain-denoise=1:sharpness=1:ac-bias=1"
+        SVTAV1_CRF36.视频参数_色彩管理_像素格式 = "yuv420p10le"
+        result.Add(New 预设项("SVT-AV1-HDR 适用平衡点", SVTAV1_CRF36))
+
         Dim X265_Slow As New 预设数据_v6
         X265_Slow.预设备注 = "x265 默认推荐质量，选用 slow 预设可直接作为普通人的最终压制方案，参考 VMAF ≈ 95。此预设仅包含视频参数！"
         X265_Slow.视频参数_编码器_类型 = 预设数据_v6.视频编码器类型.视频

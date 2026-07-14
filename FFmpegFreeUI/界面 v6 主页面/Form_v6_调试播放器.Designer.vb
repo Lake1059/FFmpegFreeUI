@@ -24,6 +24,7 @@ Partial Class Form_v6_调试播放器
     Private Sub InitializeComponent()
         ModernPanel1 = New LakeUI.ModernPanel()
         ModernPanel2 = New LakeUI.ModernPanel()
+        HtmlColorLabel1 = New LakeUI.HtmlColorLabel()
         Panel2 = New Panel()
         ExcellentProgressBar1 = New LakeUI.ExcellentProgressBar()
         JustEmptyControl2 = New LakeUI.JustEmptyControl()
@@ -31,6 +32,7 @@ Partial Class Form_v6_调试播放器
         JustEmptyControl1 = New LakeUI.JustEmptyControl()
         MB_打开 = New LakeUI.ModernButton()
         ModernPanel1.SuspendLayout()
+        ModernPanel2.SuspendLayout()
         Panel2.SuspendLayout()
         SuspendLayout()
         ' 
@@ -48,13 +50,32 @@ Partial Class Form_v6_调试播放器
         ' 
         ' ModernPanel2
         ' 
+        ModernPanel2.AllowDrop = True
         ModernPanel2.BackColor1 = Color.Transparent
         ModernPanel2.BorderSize = 0
+        ModernPanel2.Controls.Add(HtmlColorLabel1)
         ModernPanel2.Dock = DockStyle.Fill
         ModernPanel2.Location = New Point(20, 62)
         ModernPanel2.Name = "ModernPanel2"
+        ModernPanel2.Padding = New Padding(200)
         ModernPanel2.Size = New Size(809, 556)
         ModernPanel2.TabIndex = 15
+        ' 
+        ' HtmlColorLabel1
+        ' 
+        HtmlColorLabel1.AutoSizeMode = AutoSizeMode.GrowAndShrink
+        HtmlColorLabel1.BorderColor = Color.FromArgb(CByte(60), CByte(255), CByte(255), CByte(255))
+        HtmlColorLabel1.BorderRadius = 15
+        HtmlColorLabel1.BorderSize = 1
+        HtmlColorLabel1.Dock = DockStyle.Fill
+        HtmlColorLabel1.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
+        HtmlColorLabel1.Location = New Point(200, 200)
+        HtmlColorLabel1.Margin = New Padding(2)
+        HtmlColorLabel1.Name = "HtmlColorLabel1"
+        HtmlColorLabel1.Size = New Size(409, 156)
+        HtmlColorLabel1.TabIndex = 0
+        HtmlColorLabel1.Text = "建议在 Windows 11+ 系统上使用此功能<br>早期系统可能无法绑定播放窗口，此问题无解"
+        HtmlColorLabel1.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.Center
         ' 
         ' Panel2
         ' 
@@ -80,12 +101,11 @@ Partial Class Form_v6_调试播放器
         ExcellentProgressBar1.Location = New Point(180, 0)
         ExcellentProgressBar1.Margin = New Padding(2, 2, 2, 2)
         ExcellentProgressBar1.Name = "ExcellentProgressBar1"
-        ExcellentProgressBar1.Padding = New Padding(5)
+        ExcellentProgressBar1.Padding = New Padding(3)
         ExcellentProgressBar1.Size = New Size(629, 32)
         ExcellentProgressBar1.TabIndex = 0
         ExcellentProgressBar1.TextPadding = New Padding(0)
         ExcellentProgressBar1.TrackColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ExcellentProgressBar1.Value = 50
         ' 
         ' JustEmptyControl2
         ' 
@@ -145,6 +165,7 @@ Partial Class Form_v6_调试播放器
         Name = "Form_v6_调试播放器"
         Text = "Form_v6_调试播放器"
         ModernPanel1.ResumeLayout(False)
+        ModernPanel2.ResumeLayout(False)
         Panel2.ResumeLayout(False)
         ResumeLayout(False)
     End Sub
@@ -157,4 +178,5 @@ Partial Class Form_v6_调试播放器
     Friend WithEvents ModernPanel2 As LakeUI.ModernPanel
     Friend WithEvents JustEmptyControl2 As LakeUI.JustEmptyControl
     Friend WithEvents ExcellentProgressBar1 As LakeUI.ExcellentProgressBar
+    Friend WithEvents HtmlColorLabel1 As LakeUI.HtmlColorLabel
 End Class

@@ -11,7 +11,8 @@ Public Class Form_v6_支持者
         "落叶清风|#6495ED|https://github.com/luoye-cpu/ffmpegPictureUI",
         "Xing|#135da7",
         "xrh0905||https://www.xrh0905.top",
-        "L. Snow|#6028e0", "爱发电用户_b274c", "不安的乌鸦 (暗夜精灵德鲁伊)|#FF8C00", "小豆豆变毛豆"
+        "L. Snow|#6028e0", "爱发电用户_b274c", "不安的乌鸦 (暗夜精灵德鲁伊)|#FF8C00", "小豆豆变毛豆",
+        "Liu Zheng|#FFFFFF|https://www3.ntu.edu.sg/home/z.liu"
     }
     Public Shared ReadOnly 赠送支持者列表 As New List(Of String) From {
         "格里芬指挥官|#39C5BB",

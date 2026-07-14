@@ -259,6 +259,7 @@ Public Class FormMain_v6
         If 启动更新器 Then
             Process.Start(updaterPath)
         End If
+        If Form_v6_调试播放器.ffplayHandle <> IntPtr.Zero Then Form_v6_调试播放器.停止()
     End Sub
 
     <CodeAnalysis.SuppressMessage("Performance", "CA1861:不要将常量数组作为参数", Justification:="<挂起>")>
