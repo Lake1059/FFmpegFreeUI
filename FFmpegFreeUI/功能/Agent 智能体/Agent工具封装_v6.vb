@@ -69,8 +69,16 @@ Public NotInheritable Class Agent工具封装_v6
                 Return UI(Function() Form_v6_集成工具_混流.Agent配置(specs, output, mode))
             Case "extract"
                 Dim file = Agent通用工具_v6.GetJsonString(payload, "file")
-                Dim outputLocation = Agent通用工具_v6.GetJsonString(payload, "output_location")
-                Dim selectedStreams = Agent通用工具_v6.GetJsonStringArray(payload, "selected_streams", False)
+                Dim outputLocation As String = Nothing
+                Dim outputLocationElement As JsonElement
+                If payload.ValueKind = JsonValueKind.Object AndAlso payload.TryGetProperty("output_location", outputLocationElement) Then
+                    outputLocation = Agent通用工具_v6.GetJsonString(payload, "output_location")
+                End If
+                Dim selectedStreams As IEnumerable(Of String) = Nothing
+                Dim selectedStreamsElement As JsonElement
+                If payload.ValueKind = JsonValueKind.Object AndAlso payload.TryGetProperty("selected_streams", selectedStreamsElement) Then
+                    selectedStreams = Agent通用工具_v6.GetJsonStringArray(payload, "selected_streams", False)
+                End If
                 Return Await UIAsync(Function() Form_v6_集成工具_抽流.Agent配置Async(file, outputLocation, selectedStreams))
             Case Else
                 Return "未知集成工具：" & tool

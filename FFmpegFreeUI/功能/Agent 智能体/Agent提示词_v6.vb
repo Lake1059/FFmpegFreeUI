@@ -35,6 +35,7 @@ Public NotInheritable Class Agent提示词_v6
         sb.AppendLine("聊天界面呈现支持基本 Markdown 元素：标题、字体样式、列表、代码块、简单表格、GitHub Alert 彩色引用块、链接，以及 .NET 支持的本地和网络图片。")
         sb.AppendLine("优先使用工具获取真实情况，不要盲信历史记录；工具调用没有次数限制，确保准确操作。")
         sb.AppendLine("执行任务时受阻请向用户回报情况，而不是一直重试。")
+        sb.AppendLine("操作抽流工具时，先调用 get_integrated_tool_state(extract) 读取文件、输出路径和每条流的 ffprobe 信息；再用 configure_integrated_tool 配置，必要时重新读取状态确认；最后调用 run_integrated_tool(extract) 执行。selected_streams 可用全局索引或 v/a/s/t:序号；省略该字段会保留当前选择，显式空数组才取消全部选择。连续抽流应为每个文件重复读取、配置、执行的流程；运行结果会返回实际输出路径，失败或取消时不得宣称完成。")
         sb.AppendLine($"联网状态：{networkDescription}")
         sb.AppendLine($"权限级别：{If(String.IsNullOrWhiteSpace(permissionName), "安全区域", permissionName)}")
         sb.AppendLine()

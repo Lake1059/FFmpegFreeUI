@@ -114,6 +114,7 @@ Public Class 开发者内置预设_v6
         Dim M4A_HDAudio As New 预设数据_v6
         M4A_HDAudio.预设备注 = "在找全能音乐压制方案？别看了就这个！三个愿望一次满足：接近无损的质量 + 小体积 + 元数据支持（歌曲信息以及专辑图等）。代价是你需要去找个自编译带 FDK AAC 的 ffmpeg，而且好像只支持 16 位深，反正听歌是足够了。"
         M4A_HDAudio.输出容器 = ".m4a"
+        M4A_HDAudio.视频参数_编码器_类型 = 预设数据_v6.视频编码器类型.视频
         M4A_HDAudio.视频参数_编码器_分类名称 = "复制流"
         M4A_HDAudio.视频参数_编码器_具体编码 = "copy"
         M4A_HDAudio.音频参数_编码器_代号 = "aac.fdk"
@@ -124,6 +125,7 @@ Public Class 开发者内置预设_v6
         Dim AVIF_AOMAV1 As New 预设数据_v6
         AVIF_AOMAV1.预设备注 = "AVIF 是将 AV1 用于图片的超高压缩图，非常适合用它来压制你那巨量不再需要后期的图片，crf18 基本上能稳定卡 VMAF ≈ 96，如果实在追求质量可以自己改 crf12。其他几个 AV1 编码器也可以输出到 AVIF 图片，如有需要可以自行研究，这里只收录 AOM 预设，都压图片了也不差那点时间了。"
         AVIF_AOMAV1.输出容器 = ".avif"
+        AVIF_AOMAV1.视频参数_编码器_类型 = 预设数据_v6.视频编码器类型.视频
         AVIF_AOMAV1.视频参数_编码器_分类名称 = "AV1"
         AVIF_AOMAV1.视频参数_编码器_具体编码 = "libaom-av1"
         AVIF_AOMAV1.视频参数_编码器_编码预设 = "1"

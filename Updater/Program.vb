@@ -10,6 +10,7 @@ Module Program
     Private Const 仓库名称 As String = "FFmpegFreeUI"
     Private Const 控制台行宽 As Integer = 92
     Private Const 进度条宽度 As Integer = 28
+    Private 已跳过DotNet运行库检查 As Boolean
     Private ReadOnly 架构主程序文件名列表 As String() = {
         "FFmpegFreeUI.x64.exe",
         "FFmpegFreeUI.arm64.exe"
@@ -451,9 +452,20 @@ Module Program
     End Function
 
     Private Async Function 确保DotNet10WindowsDesktop运行库(目标目录 As String, 架构 As String) As Task(Of Boolean)
+        If 已跳过DotNet运行库检查 Then
+            输出警告("已跳过 .NET 10 Desktop Runtime 检查，将继续更新流程。")
+            Return True
+        End If
+
         If 检查DotNet10WindowsDesktop运行库(架构) Then Return True
 
-        输出警告("未检测到 .NET 10 Desktop Runtime，开始自动下载并静默安装。")
+        输出警告("未检测到 .NET 10 Desktop Runtime。")
+        If Not 询问是否安装DotNet10WindowsDesktop运行库() Then
+            已跳过DotNet运行库检查 = True
+            输出警告("已跳过 .NET 10 Desktop Runtime 的安装与后续检查，将继续更新流程。")
+            Return True
+        End If
+
         Dim 安装器路径 = Path.Combine(目标目录, $"windowsdesktop-runtime-10.0-win-{架构}.exe")
         Dim 下载地址 = 获取DotNet10WindowsDesktop运行库下载地址(架构)
         If String.IsNullOrEmpty(下载地址) Then
@@ -468,6 +480,39 @@ Module Program
         If 检查DotNet10WindowsDesktop运行库(架构) Then Return True
 
         输出错误("安装结束后仍未检测到 .NET 10 Desktop Runtime。")
+        Return False
+    End Function
+
+    ' 询问是否安装：Y=安装，N/回车/超时(10s)=跳过
+    Private Function 询问是否安装DotNet10WindowsDesktop运行库() As Boolean
+        Const 等待秒数 As Integer = 10
+        输出信息("是否下载并安装 .NET 10 Desktop Runtime？  [Y]=安装   [N]=跳过 (默认)")
+        输出警告($"超时 {等待秒数} 秒未操作将跳过运行库安装并继续更新。")
+        For 剩余 = 等待秒数 To 1 Step -1
+            Dim 百分比 = 剩余 * 100.0R / 等待秒数
+            Dim 提示 = $"  {生成进度条(百分比)} 请选择（剩余 {剩余,2} 秒，直接回车=跳过）"
+            写入覆盖行(提示, ConsoleColor.Yellow)
+            Dim 截止 = Environment.TickCount + 1000
+            Do While Environment.TickCount < 截止
+                Try
+                    If Console.KeyAvailable Then
+                        Dim k = Console.ReadKey(True).Key
+                        Console.WriteLine()
+                        Select Case k
+                            Case ConsoleKey.Y
+                                Return True
+                            Case ConsoleKey.N, ConsoleKey.Enter
+                                Return False
+                        End Select
+                    End If
+                Catch
+                    '输入被重定向或不可用，跳过键盘检测
+                End Try
+                Thread.Sleep(50)
+            Loop
+        Next
+        Console.WriteLine()
+        输出警告("超时未操作，已跳过 .NET 10 Desktop Runtime 安装。")
         Return False
     End Function
 

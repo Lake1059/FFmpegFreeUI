@@ -22,12 +22,12 @@ Partial Class Form_v6_Agent
     '不要使用代码编辑器修改它。
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim ToolTipEntry1 As LakeUI.ModernComboBox.ToolTipEntry = New LakeUI.ModernComboBox.ToolTipEntry()
-        Dim ToolTipEntry2 As LakeUI.ModernComboBox.ToolTipEntry = New LakeUI.ModernComboBox.ToolTipEntry()
-        Dim ToolTipEntry3 As LakeUI.ModernComboBox.ToolTipEntry = New LakeUI.ModernComboBox.ToolTipEntry()
-        Dim ToolTipEntry4 As LakeUI.ModernComboBox.ToolTipEntry = New LakeUI.ModernComboBox.ToolTipEntry()
-        Dim ToolTipEntry5 As LakeUI.ModernComboBox.ToolTipEntry = New LakeUI.ModernComboBox.ToolTipEntry()
-        Dim ToolTipEntry6 As LakeUI.ModernComboBox.ToolTipEntry = New LakeUI.ModernComboBox.ToolTipEntry()
+        Dim ToolTipEntry7 As LakeUI.ModernComboBox.ToolTipEntry = New LakeUI.ModernComboBox.ToolTipEntry()
+        Dim ToolTipEntry8 As LakeUI.ModernComboBox.ToolTipEntry = New LakeUI.ModernComboBox.ToolTipEntry()
+        Dim ToolTipEntry9 As LakeUI.ModernComboBox.ToolTipEntry = New LakeUI.ModernComboBox.ToolTipEntry()
+        Dim ToolTipEntry10 As LakeUI.ModernComboBox.ToolTipEntry = New LakeUI.ModernComboBox.ToolTipEntry()
+        Dim ToolTipEntry11 As LakeUI.ModernComboBox.ToolTipEntry = New LakeUI.ModernComboBox.ToolTipEntry()
+        Dim ToolTipEntry12 As LakeUI.ModernComboBox.ToolTipEntry = New LakeUI.ModernComboBox.ToolTipEntry()
         ModernPanel1 = New LakeUI.ModernPanel()
         AgentRoom1 = New LakeUI.AgentRoom()
         JustEmptyControl7 = New LakeUI.JustEmptyControl()
@@ -54,7 +54,7 @@ Partial Class Form_v6_Agent
         JustEmptyControl5 = New LakeUI.JustEmptyControl()
         MB_新对话 = New LakeUI.ModernButton()
         Panel1 = New Panel()
-        MB_刷新推理级别 = New LakeUI.ModernButton()
+        MB_操作提示 = New LakeUI.ModernButton()
         JustEmptyControl6 = New LakeUI.JustEmptyControl()
         MB_重载连接 = New LakeUI.ModernButton()
         Panel5 = New Panel()
@@ -145,7 +145,6 @@ Partial Class Form_v6_Agent
         ModernTextBox1.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernTextBox1.Size = New Size(716, 74)
         ModernTextBox1.TabIndex = 17
-        ModernTextBox1.WaterText = "按 Enter 键发送，按 Shift + Enter 进行换行"
         ModernTextBox1.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ' 
         ' Panel2
@@ -282,13 +281,13 @@ Partial Class Form_v6_Agent
         MCB_权限控制.Items.Add("安全区域")
         MCB_权限控制.Items.Add("环境控制")
         MCB_权限控制.Items.Add("系统访问")
-        ToolTipEntry1.ItemText = "安全区域"
-        ToolTipEntry1.ToolTipText = "仅向 AI 开放参数面板的操作，这通常是最安全的"
-        ToolTipEntry2.ItemText = "环境控制"
-        ToolTipEntry2.ToolTipText = "AI 将可以控制整个 3FUI 环境，包括但不限于：编码队列、页面切换、修改设置。但仍旧在 3FUI 程序之内，不会对系统造成任何影响。"
-        ToolTipEntry3.ItemText = "系统访问"
-        ToolTipEntry3.ToolTipText = "AI 将获得当前权限下的操作系统访问能力，如果模型能力较差，可能会导致用户数据损失！"
-        MCB_权限控制.ItemToolTips.AddRange(New LakeUI.ModernComboBox.ToolTipEntry() {ToolTipEntry1, ToolTipEntry2, ToolTipEntry3})
+        ToolTipEntry7.ItemText = "安全区域"
+        ToolTipEntry7.ToolTipText = "仅向 AI 开放参数面板的操作，这通常是最安全的"
+        ToolTipEntry8.ItemText = "环境控制"
+        ToolTipEntry8.ToolTipText = "AI 将可以控制整个 3FUI 环境，包括但不限于：编码队列、页面切换、修改设置。但仍旧在 3FUI 程序之内，不会对系统造成任何影响。"
+        ToolTipEntry9.ItemText = "系统访问"
+        ToolTipEntry9.ToolTipText = "AI 将获得当前权限下的操作系统访问能力，如果模型能力较差，可能会导致用户数据损失！"
+        MCB_权限控制.ItemToolTips.AddRange(New LakeUI.ModernComboBox.ToolTipEntry() {ToolTipEntry7, ToolTipEntry8, ToolTipEntry9})
         MCB_权限控制.Location = New Point(130, 10)
         MCB_权限控制.Margin = New Padding(2, 2, 2, 2)
         MCB_权限控制.Name = "MCB_权限控制"
@@ -328,13 +327,13 @@ Partial Class Form_v6_Agent
         MCB_联网设置.Items.Add("本地联网")
         MCB_联网设置.Items.Add("端点联网")
         MCB_联网设置.Items.Add("禁用联网")
-        ToolTipEntry4.ItemText = "本地联网"
-        ToolTipEntry4.ToolTipText = "AI 通过 3FUI 在本机发起 HTTP 请求访问网络"
-        ToolTipEntry5.ItemText = "端点联网"
-        ToolTipEntry5.ToolTipText = "AI 通过模型端点的原生联网能力访问网络"
-        ToolTipEntry6.ItemText = "禁用联网"
-        ToolTipEntry6.ToolTipText = "不向 AI 暴露任何联网工具"
-        MCB_联网设置.ItemToolTips.AddRange(New LakeUI.ModernComboBox.ToolTipEntry() {ToolTipEntry4, ToolTipEntry5, ToolTipEntry6})
+        ToolTipEntry10.ItemText = "本地联网"
+        ToolTipEntry10.ToolTipText = "AI 通过 3FUI 在本机发起 HTTP 请求访问网络"
+        ToolTipEntry11.ItemText = "端点联网"
+        ToolTipEntry11.ToolTipText = "AI 通过模型端点的原生联网能力访问网络"
+        ToolTipEntry12.ItemText = "禁用联网"
+        ToolTipEntry12.ToolTipText = "不向 AI 暴露任何联网工具"
+        MCB_联网设置.ItemToolTips.AddRange(New LakeUI.ModernComboBox.ToolTipEntry() {ToolTipEntry10, ToolTipEntry11, ToolTipEntry12})
         MCB_联网设置.Location = New Point(0, 10)
         MCB_联网设置.Margin = New Padding(2, 2, 2, 2)
         MCB_联网设置.Name = "MCB_联网设置"
@@ -396,9 +395,9 @@ Partial Class Form_v6_Agent
         ModernListBox1.Location = New Point(10, 36)
         ModernListBox1.MultiSelect = False
         ModernListBox1.Name = "ModernListBox1"
-        ModernListBox1.SelectionRectFillColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernListBox1.SelectionRectBorderColor = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
         ModernListBox1.Padding = New Padding(0, 10, 0, 10)
+        ModernListBox1.SelectionRectBorderColor = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
+        ModernListBox1.SelectionRectFillColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernListBox1.Size = New Size(230, 316)
         ModernListBox1.TabIndex = 8
         ' 
@@ -449,9 +448,9 @@ Partial Class Form_v6_Agent
         ModernListBox2.Location = New Point(0, 400)
         ModernListBox2.MultiSelect = False
         ModernListBox2.Name = "ModernListBox2"
-        ModernListBox2.SelectionRectFillColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernListBox2.SelectionRectBorderColor = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
         ModernListBox2.Padding = New Padding(0, 10, 0, 10)
+        ModernListBox2.SelectionRectBorderColor = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
+        ModernListBox2.SelectionRectFillColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernListBox2.Size = New Size(250, 120)
         ModernListBox2.TabIndex = 16
         ' 
@@ -512,7 +511,7 @@ Partial Class Form_v6_Agent
         ' 
         ' Panel1
         ' 
-        Panel1.Controls.Add(MB_刷新推理级别)
+        Panel1.Controls.Add(MB_操作提示)
         Panel1.Controls.Add(JustEmptyControl6)
         Panel1.Controls.Add(MB_重载连接)
         Panel1.Dock = DockStyle.Bottom
@@ -522,22 +521,21 @@ Partial Class Form_v6_Agent
         Panel1.Size = New Size(250, 42)
         Panel1.TabIndex = 11
         ' 
-        ' MB_刷新推理级别
+        ' MB_操作提示
         ' 
-        MB_刷新推理级别.BackColor = Color.Transparent
-        MB_刷新推理级别.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        MB_刷新推理级别.BorderRadius = 10
-        MB_刷新推理级别.BorderSize = 0
-        MB_刷新推理级别.Dock = DockStyle.Fill
-        MB_刷新推理级别.ForeColor = Color.CornflowerBlue
-        MB_刷新推理级别.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
-        MB_刷新推理级别.Location = New Point(130, 10)
-        MB_刷新推理级别.Margin = New Padding(2)
-        MB_刷新推理级别.Name = "MB_刷新推理级别"
-        MB_刷新推理级别.PressedBackColor1 = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
-        MB_刷新推理级别.Size = New Size(120, 32)
-        MB_刷新推理级别.TabIndex = 15
-        MB_刷新推理级别.Text = "刷新级别"
+        MB_操作提示.BackColor = Color.Transparent
+        MB_操作提示.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MB_操作提示.BorderRadius = 10
+        MB_操作提示.BorderSize = 0
+        MB_操作提示.Dock = DockStyle.Fill
+        MB_操作提示.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        MB_操作提示.Location = New Point(130, 10)
+        MB_操作提示.Margin = New Padding(2)
+        MB_操作提示.Name = "MB_操作提示"
+        MB_操作提示.PressedBackColor1 = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
+        MB_操作提示.Size = New Size(120, 32)
+        MB_操作提示.TabIndex = 15
+        MB_操作提示.Text = "操作提示"
         ' 
         ' JustEmptyControl6
         ' 
@@ -555,9 +553,9 @@ Partial Class Form_v6_Agent
         MB_重载连接.BorderRadius = 10
         MB_重载连接.BorderSize = 0
         MB_重载连接.Dock = DockStyle.Left
-        MB_重载连接.ForeColor = Color.CornflowerBlue
         MB_重载连接.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
         MB_重载连接.Location = New Point(0, 10)
+        MB_重载连接.MainSubTextSpacing = 0
         MB_重载连接.Margin = New Padding(2)
         MB_重载连接.Name = "MB_重载连接"
         MB_重载连接.PressedBackColor1 = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
@@ -638,7 +636,7 @@ Partial Class Form_v6_Agent
     Friend WithEvents Panel4 As Panel
     Friend WithEvents Panel5 As Panel
     Friend WithEvents Panel1 As Panel
-    Friend WithEvents MB_刷新推理级别 As LakeUI.ModernButton
+    Friend WithEvents MB_操作提示 As LakeUI.ModernButton
     Friend WithEvents JustEmptyControl6 As LakeUI.JustEmptyControl
     Friend WithEvents MB_重载连接 As LakeUI.ModernButton
     Friend WithEvents HtmlColorLabel1 As LakeUI.HtmlColorLabel

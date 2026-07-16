@@ -2,14 +2,17 @@ Public NotInheritable Class Agent上下文能力表_v6
     Private Sub New()
     End Sub
 
-    Public Const 通用上下文总量Tokens As Integer = 270000
+    Public Const 通用上下文总量Tokens As Integer = 200000
 
     ' 在这里维护已知模型的上下文总量。未命中规则时统一使用通用上下文总量。
     ' 示例：
     '   精确("some-model-id", 128000)
     '   前缀("some-model-family", 200000)
-    <CodeAnalysis.SuppressMessage("Performance", "CA1825:避免长度为零的数组分配", Justification:="<挂起>")>
     Private Shared ReadOnly 上下文总量规则 As 上下文总量规则项() = {
+        前缀("gpt-5.6", 300000),
+        前缀("gpt-5.5", 270000),
+        前缀("deepseek-v4", 1000000),
+        前缀("glm-5.2", 1000000)
     }
 
     ' 在这里维护已知上下文压缩专用模型，按优先级从高到低匹配端点模型列表。

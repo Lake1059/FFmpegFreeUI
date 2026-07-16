@@ -542,13 +542,14 @@ Public Class AgentLocalTools
         }
 
         If permissionLevel >= PermissionEnvironment Then
-            tools.Add(FunctionTool("get_queue_summary", "读取 3FUI 编码队列任务信息。默认返回全部任务摘要；可用 id/ids 或 1-based index/indexes 查询指定任务，detail=true 返回完整任务信息，target=all 返回全部。include_commands=true 会同时返回参数预览命令行和实际执行命令行；日志请另用 get_queue_task_logs。", New Dictionary(Of String, Object) From {
+            tools.Add(FunctionTool("get_queue_summary", "读取 3FUI 编码队列任务信息及活动任务的性能占用。性能采样独立于任务日志窗口；可用 id/ids 或 1-based index/indexes 查询指定任务，detail=true 返回完整任务信息，target=all 返回全部。include_commands=true 会同时返回参数预览命令行和实际执行命令行；日志请另用 get_queue_task_logs。", New Dictionary(Of String, Object) From {
                 {"id", New Dictionary(Of String, Object) From {{"type", "string"}, {"description", "单个任务 ID"}}},
                 {"ids", New Dictionary(Of String, Object) From {{"type", "array"}, {"items", New Dictionary(Of String, Object) From {{"type", "string"}}}, {"description", "任务 ID 列表"}}},
                 {"index", New Dictionary(Of String, Object) From {{"type", "integer"}, {"description", "队列中的 1-based 序号"}}},
                 {"indexes", New Dictionary(Of String, Object) From {{"type", "array"}, {"items", New Dictionary(Of String, Object) From {{"type", "integer"}}}, {"description", "队列中的 1-based 序号列表"}}},
                 {"target", New Dictionary(Of String, Object) From {{"type", "string"}, {"description", "all/全部 表示读取全部任务；不传目标时默认读取全部摘要"}}},
                 {"detail", New Dictionary(Of String, Object) From {{"type", "boolean"}, {"description", "是否返回完整任务信息；查询指定任务时默认 true"}}},
+                {"include_performance", New Dictionary(Of String, Object) From {{"type", "boolean"}, {"description", "是否返回活动进程的 CPU、内存和 GPU 占用，默认 true；无需打开任务日志窗口"}}},
                 {"include_commands", New Dictionary(Of String, Object) From {{"type", "boolean"}, {"description", "是否附带可执行命令行，默认 false"}}},
                 {"include_preset_json", New Dictionary(Of String, Object) From {{"type", "boolean"}, {"description", "是否附带任务预设 JSON，可能很大，默认 false"}}}
             }))
@@ -626,9 +627,10 @@ Public Class AgentLocalTools
                     {"query", New Dictionary(Of String, Object) From {{"type", "string"}, {"description", "要搜索的问题"}}}
                 }, {"query"}))
             Case AgentNetworkMode.Local
-                tools.Add(FunctionTool("web_search", "联网搜索。使用 3FUI 在本机发起常规网页搜索请求。", New Dictionary(Of String, Object) From {
-                    {"query", New Dictionary(Of String, Object) From {{"type", "string"}, {"description", "要搜索的问题"}}}
-                }, {"query"}))
+                tools.Add(FunctionTool("web_search", "联网搜索。由你选择搜索引擎，并使用 engine_url 指定完整的搜索 URL，或使用 {query} 作为查询词占位符，例如 https://www.google.com/search?q={query}。", New Dictionary(Of String, Object) From {
+                    {"query", New Dictionary(Of String, Object) From {{"type", "string"}, {"description", "要搜索的问题"}}},
+                    {"engine_url", New Dictionary(Of String, Object) From {{"type", "string"}, {"description", "自行选择的 HTTP/HTTPS 搜索引擎 URL。必须是已包含查询词的完整 URL，或使用 {query} 占位符。"}}}
+                }, {"query", "engine_url"}))
                 tools.Add(FunctionTool("fetch_url", "读取指定 URL 的网页文本。使用 3FUI 在本机发起 HTTP 请求。", New Dictionary(Of String, Object) From {
                     {"url", New Dictionary(Of String, Object) From {{"type", "string"}}}
                 }, {"url"}))
@@ -740,7 +742,7 @@ Public Class AgentLocalTools
                     Return Agent工具封装_v6.保存参数预设(Agent通用工具_v6.GetJsonString(args, "source"), Agent通用工具_v6.GetJsonString(args, "name"), Agent通用工具_v6.GetJsonString(args, "preset_json"), Agent通用工具_v6.GetJsonString(args, "note"), saveOutputLocation)
                 Case "web_search"
                     If Not AgentNetworkMode.IsEnabled(networkMode) Then Return "联网已禁用"
-                    Return Await WebSearchAsync(Agent通用工具_v6.GetJsonString(args, "query"), networkMode, endpointClient, modelId, reasoningEffort, cancellationToken)
+                    Return Await WebSearchAsync(Agent通用工具_v6.GetJsonString(args, "query"), Agent通用工具_v6.GetJsonString(args, "engine_url"), networkMode, endpointClient, modelId, reasoningEffort, cancellationToken)
                 Case "fetch_url"
                     If Not AgentNetworkMode.IsEnabled(networkMode) Then Return "联网已禁用"
                     If AgentNetworkMode.Normalize(networkMode) <> AgentNetworkMode.Local Then Return "当前联网模式不允许本地网页请求"
@@ -1384,10 +1386,11 @@ Public Class AgentLocalTools
         Dim resolution = ResolveQueueTarget(args, snapshot, True)
         Dim includeCommands = Agent通用工具_v6.GetJsonBoolean(args, "include_commands", False)
         Dim includePresetJson = Agent通用工具_v6.GetJsonBoolean(args, "include_preset_json", False)
+        Dim includePerformance = Agent通用工具_v6.GetJsonBoolean(args, "include_performance", True)
         Dim detail = Agent通用工具_v6.GetJsonBoolean(args, "detail", resolution.HasSpecificSelectors OrElse includeCommands OrElse includePresetJson)
 
         Dim items = resolution.Tasks.
-            Select(Function(t) BuildQueueTaskPayload(t, QueueIndexOf(snapshot, t.ID), detail, includeCommands, includePresetJson)).
+            Select(Function(t) BuildQueueTaskPayload(t, QueueIndexOf(snapshot, t.ID), detail, includeCommands, includePresetJson, includePerformance)).
             ToList()
 
         If Not HasQueueQueryArguments(args) AndAlso resolution.Errors.Count = 0 Then
@@ -1448,7 +1451,7 @@ Public Class AgentLocalTools
         End If
         Dim ids = resolution.Tasks.Select(Function(t) t.ID).ToList()
         Dim beforeItems = resolution.Tasks.
-            Select(Function(t) BuildQueueTaskPayload(t, QueueIndexOf(snapshotBefore, t.ID), detail, False, False)).
+            Select(Function(t) BuildQueueTaskPayload(t, QueueIndexOf(snapshotBefore, t.ID), detail, False, False, False)).
             ToList()
         Dim eligibleCount = resolution.Tasks.Where(Function(t) IsQueueActionAvailable(t, action)).Count()
 
@@ -1466,7 +1469,7 @@ Public Class AgentLocalTools
                     {"removed", True}
                 })
             Else
-                afterItems.Add(BuildQueueTaskPayload(task, QueueIndexOf(snapshotAfter, id), detail, False, False))
+                afterItems.Add(BuildQueueTaskPayload(task, QueueIndexOf(snapshotAfter, id), detail, False, False, False))
             End If
         Next
 
@@ -1564,9 +1567,11 @@ Public Class AgentLocalTools
                                                   index As Integer,
                                                   detail As Boolean,
                                                   includeCommands As Boolean,
-                                                  includePresetJson As Boolean) As Dictionary(Of String, Object)
+                                                  includePresetJson As Boolean,
+                                                  includePerformance As Boolean) As Dictionary(Of String, Object)
         Dim item = BuildQueueTaskSummary(task, index)
         If task Is Nothing Then Return item
+        If includePerformance Then item("performance") = 任务性能统计_v6.获取快照(task)
         If Not detail AndAlso Not includeCommands AndAlso Not includePresetJson Then Return item
 
         item("status_code") = CInt(task.状态)
@@ -1938,6 +1943,7 @@ Public Class AgentLocalTools
     End Function
 
     Private Shared Async Function WebSearchAsync(query As String,
+                                                 engineUrl As String,
                                                  networkMode As Integer,
                                                  endpointClient As AgentEndpointClient,
                                                  modelId As String,
@@ -1957,7 +1963,7 @@ Public Class AgentLocalTools
                 Return "端点联网失败：" & response.ErrorMessage
 
             Case AgentNetworkMode.Local
-                Return Await LocalWebSearchAsync(query, cancellationToken)
+                Return Await LocalWebSearchAsync(query, engineUrl, cancellationToken)
 
             Case Else
                 Return "联网已禁用。"
@@ -1965,29 +1971,28 @@ Public Class AgentLocalTools
     End Function
 
     Private Shared Async Function LocalWebSearchAsync(query As String,
+                                                      engineUrl As String,
                                                       cancellationToken As Threading.CancellationToken) As Task(Of String)
-        Dim encodedQuery = Uri.EscapeDataString(query)
-        Dim urls = {
-            "https://cn.bing.com/search?q=" & encodedQuery & "&setlang=zh-CN&mkt=zh-CN",
-            "https://www.bing.com/search?q=" & encodedQuery & "&setlang=zh-CN&mkt=zh-CN"
-        }
-        Dim errors As New List(Of String)
+        Dim url = BuildSearchUrl(query, engineUrl)
+        If url = "" Then Return "缺少 engine_url。请提供包含查询词的完整搜索 URL，或使用 {query} 占位符。"
 
-        For Each url In urls
-            cancellationToken.ThrowIfCancellationRequested()
-            Dim host = New Uri(url).Host
-            Try
-                Dim result = Await FetchUrlAsync(url, cancellationToken)
-                If Not IsFetchFailure(result) Then Return $"搜索来源：{host}{vbCrLf}{result}"
-                errors.Add(host & "：" & Agent通用工具_v6.LimitText(result, 300))
-            Catch ex As OperationCanceledException When cancellationToken.IsCancellationRequested
-                Throw
-            Catch ex As Exception
-                errors.Add(host & "：" & ex.Message)
-            End Try
-        Next
+        Dim uri As Uri = Nothing
+        If Not Uri.TryCreate(url, UriKind.Absolute, uri) OrElse
+           (Not String.Equals(uri.Scheme, Uri.UriSchemeHttp, StringComparison.OrdinalIgnoreCase) AndAlso
+            Not String.Equals(uri.Scheme, Uri.UriSchemeHttps, StringComparison.OrdinalIgnoreCase)) Then
+            Return "搜索引擎地址无效：必须是 HTTP 或 HTTPS 的完整 URL"
+        End If
 
-        Return "本地联网搜索失败：" & String.Join("；", errors)
+        cancellationToken.ThrowIfCancellationRequested()
+        Dim result = Await FetchUrlAsync(uri.AbsoluteUri, cancellationToken)
+        If Not IsFetchFailure(result) Then Return $"搜索来源：{uri.Host}{vbCrLf}{result}"
+        Return $"本地联网搜索失败：{uri.Host}：{Agent通用工具_v6.LimitText(result, 300)}"
+    End Function
+
+    Private Shared Function BuildSearchUrl(query As String, engineUrl As String) As String
+        Dim url = If(engineUrl, "").Trim()
+        If url = "" Then Return ""
+        Return url.Replace("{query}", Uri.EscapeDataString(query), StringComparison.Ordinal)
     End Function
 
     Private Shared Function IsFetchFailure(text As String) As Boolean

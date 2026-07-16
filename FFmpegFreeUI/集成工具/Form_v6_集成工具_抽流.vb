@@ -37,6 +37,7 @@ Public Class Form_v6_集成工具_抽流
         Public Property 主文本 As String = ""
         Public Property 副文本 As String = ""
         Public Property 默认扩展名 As String = "bin"
+        Public Property FFprobe信息 As JsonElement
         Public Property 复选框 As ModernCheckBox
     End Class
 
@@ -185,16 +186,27 @@ Public Class Form_v6_集成工具_抽流
             {"type", x.类型.ToString()},
             {"type_index", x.类型序号},
             {"codec", x.编码器},
+            {"codec_long_name", x.编码器完整名称},
             {"language", x.流语言},
             {"title", x.元数据标题},
+            {"attachment_filename", x.附件文件名},
+            {"attachment_mime_type", x.附件MimeType},
             {"extension", x.默认扩展名},
             {"selected", x.复选框 IsNot Nothing AndAlso x.复选框.Checked},
-            {"text", x.主文本}
+            {"text", x.主文本},
+            {"sub_text", x.副文本},
+            {"ffprobe", x.FFprobe信息}
         }).Cast(Of Object).ToList()
         Return New Dictionary(Of String, Object) From {
             {"file", 当前文件},
+            {"file_name", If(当前文件 = "", "", Path.GetFileName(当前文件))},
+            {"duration_seconds", Math.Round(当前总时长.TotalSeconds, 3)},
             {"output_location", MCB_输出位置.Text},
+            {"output_location_options", MCB_输出位置.Items.Cast(Of Object).Select(Function(x) If(x, "").ToString()).ToList()},
             {"running", 正在运行},
+            {"run_button_text", MB_提取所选.Text},
+            {"input_button_text", MB_打开文件.Text},
+            {"page_hint", HtmlColorLabel1.Text},
             {"streams", streams}
         }
     End Function
@@ -207,7 +219,7 @@ Public Class Form_v6_集成工具_抽流
             Select(Function(x) If(x, "").Trim()).
             Where(Function(x) x <> "").
             ToList()
-        If requested.Count > 0 Then
+        If selectedStreams IsNot Nothing Then
             For Each info In 流列表
                 If info.复选框 Is Nothing Then Continue For
                 info.复选框.Checked = requested.Any(Function(x) Agent匹配流选择(x, info))
@@ -218,8 +230,7 @@ Public Class Form_v6_集成工具_抽流
     End Function
 
     Public Async Function Agent运行Async(Optional forceAutoName As Boolean = True) As Task(Of String)
-        Await 提取所选Async(forceAutoName)
-        Return "已请求执行抽流工具"
+        Return Await 提取所选Async(forceAutoName)
     End Function
 
     Private Function Agent匹配流选择(value As String, info As 抽流流信息) As Boolean
@@ -282,7 +293,8 @@ Public Class Form_v6_集成工具_抽流
                     .流语言 = 获取Json标签(stream, "language"),
                     .元数据标题 = 获取Json标签(stream, "title"),
                     .附件文件名 = 获取Json标签(stream, "filename"),
-                    .附件MimeType = 获取Json标签(stream, "mimetype")
+                    .附件MimeType = 获取Json标签(stream, "mimetype"),
+                    .FFprobe信息 = stream.Clone()
                 }
                 info.默认扩展名 = 获取默认扩展名(info)
                 info.主文本 = 构建主文本(info, stream)
@@ -424,30 +436,30 @@ Public Class Form_v6_集成工具_抽流
         Await 提取所选Async(e.Button = MouseButtons.Right)
     End Sub
 
-    Private Async Function 提取所选Async(强制自动命名 As Boolean) As Task
+    Private Async Function 提取所选Async(强制自动命名 As Boolean) As Task(Of String)
         If 当前文件 = "" OrElse Not File.Exists(当前文件) Then
             ExFloatingTip(MB_打开文件, "请先打开媒体文件", 1800)
-            Exit Function
+            Return "抽流失败：请先打开存在的媒体文件"
         End If
 
         Dim selected = 流列表.Where(Function(x) x.复选框 IsNot Nothing AndAlso x.复选框.Checked).ToList()
         If selected.Count = 0 Then
             ExFloatingTip(ModernPanel2, "请选择要提取的流", 1800)
-            Exit Function
+            Return "抽流失败：未选择任何流"
         End If
 
         Dim outputDir = 获取输出目录()
-        If outputDir = "" Then Exit Function
+        If outputDir = "" Then Return "抽流失败：未设置有效输出目录"
         If Not Directory.Exists(outputDir) Then
             ExFloatingTip(MCB_输出位置, "输出目录不存在", 1800)
-            Exit Function
+            Return "抽流失败：输出目录不存在"
         End If
 
         Dim 输出表 = 获取输出路径表(selected, outputDir, 强制自动命名)
-        If 输出表 Is Nothing OrElse 输出表.Count = 0 Then Exit Function
+        If 输出表 Is Nothing OrElse 输出表.Count = 0 Then Return "抽流已取消或未生成输出路径"
         If 输出表.Values.Any(Function(x) String.Equals(Path.GetFullPath(x), Path.GetFullPath(当前文件), StringComparison.OrdinalIgnoreCase)) Then
             ExFloatingTip(MB_提取所选, "输出文件不能覆盖源文件", 2200)
-            Exit Function
+            Return "抽流失败：输出文件不能覆盖源文件"
         End If
 
         取消令牌源 = New CancellationTokenSource()
@@ -457,10 +469,19 @@ Public Class Form_v6_集成工具_抽流
             Await 运行提取Async(selected, 输出表, 取消令牌源.Token)
             设置提取进度(100)
             ExFloatingTip(MB_提取所选, $"已提取 {selected.Count} 个流", 1600)
+            Return JsonSerializer.Serialize(New Dictionary(Of String, Object) From {
+                {"success", True},
+                {"file", 当前文件},
+                {"output_directory", outputDir},
+                {"extracted_streams", selected.Select(Function(x) x.全局索引).ToList()},
+                {"outputs", 输出表.Values.ToList()}
+            })
         Catch ex As OperationCanceledException
             ExFloatingTip(MB_提取所选, "已取消", 1600)
+            Return "抽流已取消"
         Catch ex As Exception
             ExFloatingTip(MB_提取所选, "提取失败：" & ex.Message, 2600)
+            Return "抽流失败：" & ex.Message
         Finally
             取消令牌源?.Dispose()
             取消令牌源 = Nothing

@@ -32,8 +32,6 @@ Public Class Form_v6_Agent
     Private ReadOnly _pendingFiles As New List(Of String)
     Private _refreshingSubmittedFiles As Boolean = False
 
-    Private Const ContextCompressionTriggerRatio As Double = 0.85
-    Private Const ContextCompressionTargetRatio As Double = 0.6
     Private Const ContextSummaryLimitTokens As Integer = 12000
     Private Const StreamFlushIntervalMs As Integer = 80
     Private Const StreamFlushCharacters As Integer = 384
@@ -64,10 +62,6 @@ Public Class Form_v6_Agent
     Private Class ContextCompressionPlan
         Public Property ContextWindowTokens As Integer
         Public Property CurrentRequestTokens As Integer
-        Public Property TriggerTokens As Integer
-        Public Property TargetTokens As Integer
-        Public Property SystemTokens As Integer
-        Public Property ReservedSummaryTokens As Integer
         Public Property RecentMessageBudgetTokens As Integer
         Public Property RecentMessageTokens As Integer
         Public Property SummaryBoundaryIndex As Integer
@@ -152,85 +146,6 @@ Public Class Form_v6_Agent
         Await RefreshModelsIfEndpointChangedAsync(False)
     End Sub
 
-    Private Async Function RefreshAllReasoningEffortsForCurrentEndpointAsync() As Task
-        If _refreshingModels Then
-            _pendingModelRefresh = True
-            Return
-        End If
-
-        _refreshingModels = True
-        Dim oldLoading = _loading
-        Dim selectedModel = If(MCB_模型选择.SelectedItem, 设置_v6.实例对象.AgentModelId)
-        Dim client As AgentEndpointClient = Nothing
-        Dim useDefaultAfterCatch As Boolean = False
-        _loading = True
-        Try
-            client = CreateClient()
-            If String.IsNullOrWhiteSpace(client.Endpoint) Then
-                ShowStatus("请先在 Agent 设置中选择或填写端点。", True)
-                ExFloatingTip(MCB_模型选择, "请先选择或填写 Agent 端点", 1800)
-                Return
-            End If
-
-            ShowStatus("正在刷新当前端点全部模型的推理级别")
-            Dim modelResult As AgentClientResult(Of List(Of AgentModelInfo))
-            Do
-                modelResult = Await client.TryGetModelsAsync()
-                If modelResult.Success Then Exit Do
-
-                ShowStatus("刷新推理级别失败：" & modelResult.ErrorMessage, True)
-                ExFloatingTip(MCB_推理级别, modelResult.ErrorMessage, 2600)
-                If ShouldRetryReasoningRefresh(modelResult.ErrorMessage, selectedModel) Then
-                    ShowStatus("正在重新刷新当前端点全部模型的推理级别")
-                    Continue Do
-                End If
-
-                Await UseDefaultReasoningEffortsAfterRefreshFailureAsync(client, selectedModel)
-                Return
-            Loop
-
-            _models = If(modelResult.Value, New List(Of AgentModelInfo))
-            AgentCapabilityCache.ImportReasoningEfforts(client, _models)
-            MCB_模型选择.Items.Clear()
-            MCB_模型选择.Items.AddRange(_models.Select(Function(x) x.Id))
-
-            If _models.Count = 0 Then
-                ShowStatus("端点没有返回可用模型。", True)
-                Return
-            End If
-
-            Dim index = _models.FindIndex(Function(x) String.Equals(x.Id, selectedModel, StringComparison.OrdinalIgnoreCase))
-            If index < 0 Then index = 0
-            MCB_模型选择.SelectedIndex = index
-            设置_v6.实例对象.AgentModelId = If(MCB_模型选择.SelectedItem, "")
-            Await RefreshReasoningEffortsAsync()
-            _modelEndpointSignature = AgentCapabilityCache.BuildEndpointSignature(client)
-            ShowStatus($"推理级别已刷新：{_models.Count} 个模型")
-        Catch ex As Exception
-            ShowStatus("系统故障：刷新推理级别失败：" & ex.Message, True)
-            ExFloatingTip(MCB_推理级别, ex.Message, 2600)
-            If ShouldRetryReasoningRefresh(ex.Message, selectedModel) Then
-                _pendingModelRefresh = True
-            Else
-                useDefaultAfterCatch = True
-            End If
-        Finally
-            _loading = oldLoading
-            _refreshingModels = False
-            MCB_模型选择.WaterText = "模型选择"
-            MCB_推理级别.WaterText = "推理级别"
-        End Try
-
-        If useDefaultAfterCatch Then
-            Await UseDefaultReasoningEffortsAfterRefreshFailureAsync(client, selectedModel)
-        End If
-
-        If _pendingModelRefresh Then
-            _pendingModelRefresh = False
-            Await RefreshModelsIfEndpointChangedAsync(True)
-        End If
-    End Function
-
     Private Function ShouldRetryReasoningRefresh(errorMessage As String, Optional modelId As String = "") As Boolean
         Dim detail = If(String.IsNullOrWhiteSpace(errorMessage), "未知错误", errorMessage)
         Dim defaultEfforts = String.Join("、", AgentCapabilityCache.GetDefaultReasoningEfforts(modelId))
@@ -292,10 +207,6 @@ Public Class Form_v6_Agent
         End Try
     End Function
 
-    Private Function BuildModelEndpointSignature() As String
-        Return AgentCapabilityCache.BuildEndpointSignature(CreateClient())
-    End Function
-
     Private Async Function RefreshModelsIfEndpointChangedAsync(force As Boolean) As Task
         Dim client As AgentEndpointClient
         Dim signature As String
@@ -324,7 +235,7 @@ Public Class Form_v6_Agent
         End If
 
         Try
-            If expectedSignature Is Nothing Then expectedSignature = BuildModelEndpointSignature()
+            If expectedSignature Is Nothing Then expectedSignature = AgentCapabilityCache.BuildEndpointSignature(CreateClient())
         Catch ex As Exception
             ShowStatus("Agent 端点配置无效：" & ex.Message, True)
             Return
@@ -367,7 +278,7 @@ Public Class Form_v6_Agent
                 Await UseDefaultReasoningEffortsAfterRefreshFailureAsync(client, selectedModel)
                 Return
             Loop
-            If Not String.Equals(expectedSignature, BuildModelEndpointSignature(), StringComparison.Ordinal) Then
+            If Not String.Equals(expectedSignature, AgentCapabilityCache.BuildEndpointSignature(CreateClient()), StringComparison.Ordinal) Then
                 _pendingModelRefresh = True
                 Return
             End If
@@ -538,17 +449,8 @@ Public Class Form_v6_Agent
     End Sub
 
     Private Function FormatRunOverviewCard(roundLogs As IEnumerable(Of ToolRoundLog)) As String
-        Dim sb As New StringBuilder
-        sb.AppendLine("已用时间：" & FormatRunElapsed())
-
         Dim toolSummary = FormatToolSummaryCard(roundLogs)
-        If String.IsNullOrWhiteSpace(toolSummary) Then
-            sb.AppendLine("工具调用：暂无")
-        Else
-            sb.Append(toolSummary)
-        End If
-
-        Return sb.ToString().Trim()
+        Return $"已用时间：{FormatRunElapsed()}{vbCrLf}{If(String.IsNullOrWhiteSpace(toolSummary), "工具调用：暂无", toolSummary)}"
     End Function
 
     Private Function FormatRunElapsed() As String
@@ -578,14 +480,11 @@ Public Class Form_v6_Agent
     End Function
 
     Private Function FormatToolSummaryCard(roundLogs As IEnumerable(Of ToolRoundLog)) As String
-        Dim calls As New List(Of ToolRunLog)
-        If roundLogs IsNot Nothing Then
-            calls = roundLogs.
-                Where(Function(x) x IsNot Nothing AndAlso x.Calls IsNot Nothing AndAlso x.Calls.Count > 0).
-                SelectMany(Function(x) x.Calls).
-                Where(Function(x) x IsNot Nothing).
-                ToList()
-        End If
+        Dim calls = If(roundLogs, Enumerable.Empty(Of ToolRoundLog)).
+            Where(Function(x) x IsNot Nothing AndAlso x.Calls IsNot Nothing AndAlso x.Calls.Count > 0).
+            SelectMany(Function(x) x.Calls).
+            Where(Function(x) x IsNot Nothing).
+            ToList()
         If calls.Count = 0 Then Return ""
 
         Dim groups = BuildToolSummaryGroups(calls)
@@ -605,19 +504,15 @@ Public Class Form_v6_Agent
     End Function
 
     Private Function BuildToolSummaryGroups(calls As IEnumerable(Of ToolRunLog)) As List(Of ToolSummaryGroup)
-        Dim result As New List(Of ToolSummaryGroup)
-        For Each group In calls.GroupBy(Function(x) If(x.ToolName, "").Trim(), StringComparer.OrdinalIgnoreCase)
-            Dim summary As New ToolSummaryGroup With {
+        Return calls.GroupBy(Function(x) If(x.ToolName, "").Trim(), StringComparer.OrdinalIgnoreCase).
+            Select(Function(group) New ToolSummaryGroup With {
                 .ToolName = group.First().ToolName,
                 .Count = group.Count(),
                 .CompletedCount = group.Where(Function(x) x.ElapsedMilliseconds >= 0).Count(),
                 .RunningCount = group.Where(Function(x) x.ElapsedMilliseconds < 0).Count(),
                 .ElapsedMilliseconds = group.Where(Function(x) x.ElapsedMilliseconds >= 0).Sum(Function(x) x.ElapsedMilliseconds),
                 .AddedCharacters = group.Sum(Function(x) If(x.ResultText, "").Length)
-            }
-            result.Add(summary)
-        Next
-        Return result
+            }).ToList()
     End Function
 
     Private Function FormatToolTotalSummary(totalCalls As Integer,
@@ -657,29 +552,21 @@ Public Class Form_v6_Agent
     Private Sub UpdateActiveRunOverviewCard(conversation As AgentConversationData)
         If Not ReferenceEquals(conversation, _activeRunConversation) Then Return
         If Not IsConversationSelected(conversation) Then Return
-
-        Dim content = FormatRunOverviewCard(_activeToolRoundLogs)
-        If _activeToolSummaryItem Is Nothing OrElse Not AgentRoom1.Items.Contains(_activeToolSummaryItem) Then
-            _activeToolSummaryItem = New LakeUI.AgentRoom.ChatItem(LakeUI.AgentRoom.ChatItemKind.Card, content)
-            AgentRoom1.Items.Add(_activeToolSummaryItem)
-        Else
-            _activeToolSummaryItem.Text = content
-        End If
-
-        EnsureActiveRunItemOrder()
-        AgentRoom1.ScrollToBottom()
+        UpdateActiveRunCard(_activeToolSummaryItem, FormatRunOverviewCard(_activeToolRoundLogs))
     End Sub
 
     Private Sub UpdateActiveRunStatusCard(conversation As AgentConversationData, content As String, keepRecord As Boolean)
         If Not IsConversationSelected(conversation) Then Return
+        UpdateActiveRunCard(_activeRunStatusItem, content, keepRecord)
+    End Sub
 
-        If keepRecord OrElse _activeRunStatusItem Is Nothing OrElse Not AgentRoom1.Items.Contains(_activeRunStatusItem) Then
-            _activeRunStatusItem = New LakeUI.AgentRoom.ChatItem(LakeUI.AgentRoom.ChatItemKind.Card, content)
-            AgentRoom1.Items.Add(_activeRunStatusItem)
+    Private Sub UpdateActiveRunCard(ByRef item As LakeUI.AgentRoom.ChatItem, content As String, Optional keepRecord As Boolean = False)
+        If keepRecord OrElse item Is Nothing OrElse Not AgentRoom1.Items.Contains(item) Then
+            item = New LakeUI.AgentRoom.ChatItem(LakeUI.AgentRoom.ChatItemKind.Card, content)
+            AgentRoom1.Items.Add(item)
         Else
-            _activeRunStatusItem.Text = content
+            item.Text = content
         End If
-
         EnsureActiveRunItemOrder()
         AgentRoom1.ScrollToBottom()
     End Sub
@@ -1069,7 +956,19 @@ Public Class Form_v6_Agent
     End Sub
 
     Private Async Sub ModernTextBox1_KeyDown(sender As Object, e As KeyEventArgs) Handles ModernTextBox1.KeyDown
-        If e.KeyCode = Keys.Enter AndAlso Not e.Shift Then
+        If e.KeyCode = Keys.Delete AndAlso e.Control Then
+            e.SuppressKeyPress = True
+            e.Handled = True
+            RemoveLatestUserTurnAndCopyToClipboard()
+        ElseIf e.KeyCode = Keys.Enter AndAlso e.Alt Then
+            e.SuppressKeyPress = True
+            e.Handled = True
+            If _busy Then
+                ExFloatingTip(ModernTextBox1, "当前任务正在响应，请先停止后再撤回", 2200)
+            Else
+                Await ReplaceLatestUserTurnAsync()
+            End If
+        ElseIf e.KeyCode = Keys.Enter AndAlso Not e.Shift Then
             e.SuppressKeyPress = True
             e.Handled = True
             If _busy Then
@@ -1087,18 +986,109 @@ Public Class Form_v6_Agent
     Private Async Function StartUserMessageAsync() As Task
         If _busy Then Return
         Dim text = ModernTextBox1.Text.Trim()
-        If text = "" Then Return
+        If text = "" Then
+            Await RetryLatestUserTurnAsync()
+            Return
+        End If
         If Not EnsureModelSelected() Then Return
 
-        If _current Is Nothing Then _current = CreateConversationFromCurrentSettings()
-        ApplyConversationSnapshot()
-        AppendUserMessage(text, BuildSubmittedFilesContext())
-        ModernTextBox1.Text = ""
-        ClearSubmittedFiles()
-        SaveCurrent()
-
+        CommitUserMessage(text)
         Await StartAgentRunAsync(_current)
     End Function
+
+    Private Async Function RetryLatestUserTurnAsync() As Task
+        If _busy OrElse _current Is Nothing Then Return
+        Dim userIndex = GetLatestUserMessageIndex()
+        If userIndex < 0 Then
+            ExFloatingTip(ModernTextBox1, "没有可重试的用户消息", 1800)
+            Return
+        End If
+
+        Dim confirm = ExMsgBox(FormMain_v6,
+            "是否移除最新一轮 AI 推理内容，并重新发送此前最后一次用户消息？",
+            MsgBoxStyle.YesNo Or MsgBoxStyle.Question,
+            "重试上一轮")
+        If confirm <> MsgBoxResult.Yes Then Return
+
+        RewindConversationFrom(userIndex + 1)
+        Await StartAgentRunAsync(_current)
+    End Function
+
+    Private Async Function ReplaceLatestUserTurnAsync() As Task
+        If _busy Then Return
+        Dim text = ModernTextBox1.Text.Trim()
+        If text = "" Then
+            ExFloatingTip(ModernTextBox1, "请输入要重新发送的内容", 1800)
+            Return
+        End If
+        If Not EnsureModelSelected() Then Return
+
+        If _current IsNot Nothing Then
+            Dim userIndex = GetLatestUserMessageIndex()
+            If userIndex >= 0 Then
+                Dim confirm = ExMsgBox(FormMain_v6,
+                    "是否移除最新一轮 AI 推理和用户内容，并以当前文本重新开始？",
+                    MsgBoxStyle.YesNo Or MsgBoxStyle.Question,
+                    "撤回上一轮")
+                If confirm <> MsgBoxResult.Yes Then Return
+                RemoveConversationMessagesFrom(userIndex)
+            End If
+        End If
+
+        CommitUserMessage(text, True)
+        Await StartAgentRunAsync(_current)
+    End Function
+
+    Private Function GetLatestUserMessageIndex() As Integer
+        If _current?.Messages Is Nothing Then Return -1
+        For i = _current.Messages.Count - 1 To 0 Step -1
+            If String.Equals(_current.Messages(i)?.Role, "user", StringComparison.OrdinalIgnoreCase) Then Return i
+        Next
+        Return -1
+    End Function
+
+    Private Sub RemoveLatestUserTurnAndCopyToClipboard()
+        If _busy Then
+            ExFloatingTip(ModernTextBox1, "当前任务正在响应，请先停止后再删除", 2200)
+            Return
+        End If
+
+        Dim userIndex = GetLatestUserMessageIndex()
+        If userIndex < 0 Then
+            ExFloatingTip(ModernTextBox1, "没有可删除的用户消息", 1800)
+            Return
+        End If
+
+        Dim userContent = If(_current.Messages(userIndex)?.Content, "")
+        Dim copied = True
+        Try
+            Clipboard.SetText(userContent)
+        Catch ex As Exception
+            copied = False
+            ExFloatingTip(ModernTextBox1, "用户内容删除成功，但复制到剪贴板失败：" & ex.Message, 2600)
+        End Try
+
+        RewindConversationFrom(userIndex)
+        If copied Then ExFloatingTip(ModernTextBox1, "已删除上一轮推理和用户内容，用户内容已复制到剪贴板", 2200)
+    End Sub
+
+    Private Sub RewindConversationFrom(index As Integer)
+        RemoveConversationMessagesFrom(index)
+        SaveCurrent()
+        RenderCurrentConversation()
+    End Sub
+
+    Private Sub RemoveConversationMessagesFrom(index As Integer)
+        If _current?.Messages Is Nothing Then Return
+        Dim startIndex = Math.Max(0, Math.Min(index, _current.Messages.Count))
+        If startIndex < _current.Messages.Count Then _current.Messages.RemoveRange(startIndex, _current.Messages.Count - startIndex)
+
+        ' A stored summary is indexed by the old message sequence and is invalid after a retry or rewind.
+        _current.ContextSummary = ""
+        _current.ContextSummaryMessageCount = 0
+        _current.ContextSummaryModelId = ""
+        _current.ContextSummaryUpdatedAt = DateTime.MinValue
+    End Sub
 
     Private Async Function OfferGuidanceMessageAsync() As Task
         Dim text = ModernTextBox1.Text.Trim()
@@ -1114,15 +1104,10 @@ Public Class Form_v6_Agent
             "引导对话")
         If confirm <> MsgBoxResult.Yes Then Return
 
-        If _current Is Nothing Then _current = CreateConversationFromCurrentSettings()
-        ApplyConversationSnapshot()
-        AppendUserMessage(text, BuildSubmittedFilesContext())
-        ModernTextBox1.Text = ""
-        ClearSubmittedFiles()
+        CommitUserMessage(text)
         _restartAfterCancel = True
         _restartRunConversation = _current
         ShowRunStatus(_restartRunConversation, "已添加引导消息，正在停止当前响应")
-        SaveCurrent()
         RequestStopAgentTask(True)
         Await Task.CompletedTask
     End Function
@@ -1143,6 +1128,16 @@ Public Class Form_v6_Agent
         _current.Messages.Add(userMessage)
         If _current.Title = "新对话" OrElse String.IsNullOrWhiteSpace(_current.Title) Then _current.Title = BuildTitle(text)
         AgentRoom1.AddUserMessage(content)
+    End Sub
+
+    Private Sub CommitUserMessage(text As String, Optional rerenderConversation As Boolean = False)
+        If _current Is Nothing Then _current = CreateConversationFromCurrentSettings()
+        ApplyConversationSnapshot()
+        AppendUserMessage(text, BuildSubmittedFilesContext())
+        ModernTextBox1.Text = ""
+        ClearSubmittedFiles()
+        SaveCurrent()
+        If rerenderConversation Then RenderCurrentConversation()
     End Sub
 
     Private Sub RequestStopAgentTask(restartAfterCancel As Boolean)
@@ -1393,22 +1388,18 @@ Public Class Form_v6_Agent
                                                  messages As List(Of AgentMessageData)) As ContextCompressionPlan
         Dim contextWindowTokens = ResolveContextWindowTokens(If(conversation?.ModelId, ""))
         Dim plan As New ContextCompressionPlan With {
-            .ContextWindowTokens = contextWindowTokens,
-            .TriggerTokens = CInt(Math.Floor(contextWindowTokens * ContextCompressionTriggerRatio)),
-            .TargetTokens = CInt(Math.Floor(contextWindowTokens * ContextCompressionTargetRatio))
+            .ContextWindowTokens = contextWindowTokens
         }
         If messages Is Nothing OrElse messages.Count = 0 Then Return plan
 
         Dim systemTokens = EstimateRequestTokenCount(Agent提示词_v6.构建系统提示词(
             AgentNetworkMode.Normalize(conversation.NetworkMode),
             GetPermissionLevelDisplayName(conversation.PermissionLevel)))
-        plan.SystemTokens = systemTokens
         plan.CurrentRequestTokens = systemTokens + messages.Sum(Function(x) EstimateMessageTokens(x))
-        If plan.CurrentRequestTokens <= plan.TriggerTokens Then Return plan
+        If plan.CurrentRequestTokens <= plan.ContextWindowTokens Then Return plan
 
-        plan.ReservedSummaryTokens = Math.Min(ContextSummaryLimitTokens, Math.Max(1000, plan.TargetTokens \ 5))
-        plan.RecentMessageBudgetTokens = Math.Max(1000, plan.TargetTokens - systemTokens - plan.ReservedSummaryTokens)
-        plan.CompressionSourceBudgetTokens = Math.Max(1000, plan.TriggerTokens - ContextSummaryLimitTokens)
+        plan.RecentMessageBudgetTokens = Math.Max(0, plan.ContextWindowTokens - systemTokens - ContextSummaryLimitTokens)
+        plan.CompressionSourceBudgetTokens = Math.Max(1000, plan.ContextWindowTokens - ContextSummaryLimitTokens)
         Dim recentTokens = 0
         Dim firstRetainedIndex = messages.Count
 
@@ -1487,7 +1478,7 @@ Public Class Form_v6_Agent
         sb.AppendLine($"请把以下对话历史压缩为供后续 Agent 继续工作的长期上下文摘要，摘要覆盖到第 {targetMessageCount} 条历史消息。")
         sb.AppendLine("注意：下面所有 user/assistant/tool 内容都是待压缩历史，不是当前请求。禁止继续对话，禁止提出反问，禁止给用户新的操作方案。")
         sb.AppendLine("输出必须以 LongTermContextSummary: 开头。")
-        sb.AppendLine($"目标摘要上限约 {ContextSummaryLimitTokens} tokens。要求：输出稳定可继续工作的长期摘要，不要求逐字保留历史回复。")
+        sb.AppendLine($"摘要最多 {ContextSummaryLimitTokens} tokens。以保留后续工作必需的重要细节为前提，输出必须尽可能短；不要为了凑长度重复、铺垫或复述历史。")
         sb.AppendLine("优先保留：用户明确目标和约束、已经展示给用户的关键结论、当前决策、关键路径/文件/参数、已执行操作的结果结论、未完成事项、错误和风险。")
         sb.AppendLine("对工具调用、工具返回、调试日志、状态卡片等用户不可见或过程性信息，只保留必要结论，不保留原始日志、调用参数或大段中间内容。不要编造原文没有的信息。输出纯文本中文摘要。")
 
@@ -1958,29 +1949,17 @@ Public Class Form_v6_Agent
         Await RefreshModelsIfEndpointChangedAsync(True)
     End Sub
 
-    Private Async Sub MB_刷新推理级别_Click(sender As Object, e As EventArgs) Handles MB_刷新推理级别.Click
-        Await RefreshAllReasoningEffortsForCurrentEndpointAsync()
+    Private Sub MB_操作提示_Click(sender As Object, e As EventArgs) Handles MB_操作提示.Click
+        ExOverlayMsgBox(FormMain_v6, $"{vbCrLf}【文本框快捷键】{vbCrLf}【常规】按 Enter 发送，按 Shift + Enter 换行{vbCrLf}【重新推理】发送空信息可触发重试推理，相当于重试功能{vbCrLf}【撤回重发】按 Alt + Enter 用当前内容替换最新一次你的内容并重新开始推理{vbCrLf}【单纯撤回】按 Ctrl + Delete 删除最新一轮对话并将用户消息复制到剪贴板{vbCrLf}{vbCrLf}【关于上下文限制和推理级别】{vbCrLf}【*】几乎没有端点会返回模型的上下文限制和推理级别列表{vbCrLf}【*】因此 3FUI 使用兜底策略在本地建立静态数据{vbCrLf}【*】如果你希望对某个模型增加上下文或是增加推理级别可以提 issue{vbCrLf}【*】但我不会把上下文给的太高，这会浪费token，除非该模型特别便宜",, "Agent 操作提示")
     End Sub
 
-    Private Sub Panel4_SizeChanged(sender As Object, e As EventArgs) Handles Panel4.SizeChanged
-        EqualizeTwoButtons(Panel4, MB_新对话, MB_删除对话, JustEmptyControl5)
-    End Sub
-
-    Private Sub Panel1_SizeChanged(sender As Object, e As EventArgs) Handles Panel1.SizeChanged
-        EqualizeTwoButtons(Panel1, MB_重载连接, MB_刷新推理级别, JustEmptyControl6)
-    End Sub
-
-    Private Sub JustEmptyControl5_SizeChanged(sender As Object, e As EventArgs) Handles JustEmptyControl5.SizeChanged
-        EqualizeTwoButtons(Panel4, MB_新对话, MB_删除对话, JustEmptyControl5)
-    End Sub
-
-    Private Sub JustEmptyControl6_SizeChanged(sender As Object, e As EventArgs) Handles JustEmptyControl6.SizeChanged
-        EqualizeTwoButtons(Panel1, MB_重载连接, MB_刷新推理级别, JustEmptyControl6)
+    Private Sub AgentButtonLayoutChanged(sender As Object, e As EventArgs) Handles Panel4.SizeChanged, Panel1.SizeChanged, JustEmptyControl5.SizeChanged, JustEmptyControl6.SizeChanged
+        ApplyAgentButtonPanelLayout()
     End Sub
 
     Private Sub ApplyAgentButtonPanelLayout()
         EqualizeTwoButtons(Panel4, MB_新对话, MB_删除对话, JustEmptyControl5)
-        EqualizeTwoButtons(Panel1, MB_重载连接, MB_刷新推理级别, JustEmptyControl6)
+        EqualizeTwoButtons(Panel1, MB_重载连接, MB_操作提示, JustEmptyControl6)
     End Sub
 
     Private Sub EqualizeTwoButtons(panel As Panel, leftButton As Control, rightButton As Control, gap As Control)

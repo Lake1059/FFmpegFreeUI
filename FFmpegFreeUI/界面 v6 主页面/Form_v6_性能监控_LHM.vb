@@ -7,7 +7,8 @@ Public Class Form_v6_性能监控_LHM
     Private ReadOnly computer As Computer
     Private initialized As Boolean
     Private cpuTemperatureValue As Double
-    Private gpuInfoTable As New Dictionary(Of String, GpuInfo)
+    Private ReadOnly gpuInfoTable As New Dictionary(Of String, GpuInfo)(StringComparer.Ordinal)
+    Private ReadOnly gpuKeyByDisplayName As New Dictionary(Of String, String)(StringComparer.Ordinal)
     Private hostGpuComboBox As ModernComboBox
     Private hostCpuComboBox As ModernComboBox
 
@@ -154,7 +155,10 @@ Public Class Form_v6_性能监控_LHM
     End Function
 
     Private Sub ReadGpuSensors(hardware As IHardware)
-        Dim gpuInfo As New GpuInfo With {.Name = hardware.Name}
+        Dim gpuInfo As New GpuInfo With {
+            .Key = hardware.Identifier.ToString(),
+            .Name = hardware.Name
+        }
 
         For Each sensor In hardware.Sensors
             Dim value = sensor.Value.GetValueOrDefault()
@@ -191,26 +195,30 @@ Public Class Form_v6_性能监控_LHM
             End Select
         Next
 
-        gpuInfoTable(hardware.Name) = gpuInfo
+        gpuInfoTable(gpuInfo.Key) = gpuInfo
     End Sub
 
     Private Sub RefreshGpuComboBox()
         If hostGpuComboBox Is Nothing Then Exit Sub
 
-        Dim gpuNames = gpuInfoTable.Keys.ToList()
-        If hostGpuComboBox.Items.Count <> gpuNames.Count OrElse gpuNames.Any(Function(gpuName) Not hostGpuComboBox.Items.Contains(gpuName)) Then
-            Dim selectedText = If(hostGpuComboBox.SelectedItem?.ToString(), "")
-            hostGpuComboBox.Items.Clear()
-            For Each gpuName In gpuNames
-                hostGpuComboBox.Items.Add(gpuName)
-            Next
-            If hostGpuComboBox.Items.Count > 0 Then
-                Dim oldIndex = hostGpuComboBox.Items.IndexOf(selectedText)
-                hostGpuComboBox.SelectedIndex = If(oldIndex >= 0, oldIndex, 0)
-            End If
-        ElseIf hostGpuComboBox.SelectedIndex < 0 AndAlso hostGpuComboBox.Items.Count > 0 Then
-            hostGpuComboBox.SelectedIndex = 0
-        End If
+        Dim selectedKey = GetSelectedGpuKey()
+        Dim items = BuildGpuDisplayItems()
+        Dim needsRebuild = hostGpuComboBox.Items.Count <> items.Count OrElse
+            items.Any(Function(x) Not hostGpuComboBox.Items.Contains(x.DisplayName))
+
+        gpuKeyByDisplayName.Clear()
+        For Each item In items
+            gpuKeyByDisplayName(item.DisplayName) = item.Key
+        Next
+        If Not needsRebuild Then Return
+
+        hostGpuComboBox.Items.Clear()
+        For Each item In items
+            hostGpuComboBox.Items.Add(item.DisplayName)
+        Next
+
+        Dim selectedIndex = items.FindIndex(Function(x) x.Key = selectedKey)
+        hostGpuComboBox.SelectedIndex = If(selectedIndex >= 0, selectedIndex, 0)
     End Sub
 
     Private Sub RefreshCpuTemperature()
@@ -235,12 +243,12 @@ Public Class Form_v6_性能监控_LHM
             Exit Sub
         End If
 
-        Dim gpuName = GetSelectedGpuName()
-        If String.IsNullOrEmpty(gpuName) OrElse Not gpuInfoTable.ContainsKey(gpuName) Then
-            gpuName = gpuInfoTable.Keys.First()
+        Dim gpuKey = GetSelectedGpuKey()
+        If String.IsNullOrEmpty(gpuKey) OrElse Not gpuInfoTable.ContainsKey(gpuKey) Then
+            gpuKey = gpuInfoTable.Keys.First()
         End If
 
-        Dim gpuInfo = gpuInfoTable(gpuName)
+        Dim gpuInfo = gpuInfoTable(gpuKey)
         SetDashboardValue(RoundDashBoard1, gpuInfo.VideoDecode)
         SetDashboardValue(RoundDashBoard2, gpuInfo.VideoEncode)
         SetDashboardValue(RoundDashBoard3, gpuInfo.PcieBus)
@@ -267,9 +275,25 @@ Public Class Form_v6_性能监控_LHM
         EasyStatesPanel1.Items.Clear()
     End Sub
 
-    Private Function GetSelectedGpuName() As String
+    Private Function GetSelectedGpuKey() As String
         If hostGpuComboBox Is Nothing OrElse hostGpuComboBox.SelectedIndex < 0 Then Return ""
-        Return hostGpuComboBox.SelectedItem?.ToString()
+        Dim displayName = If(hostGpuComboBox.SelectedItem, "").ToString()
+        Dim key As String = ""
+        Return If(gpuKeyByDisplayName.TryGetValue(displayName, key), key, "")
+    End Function
+
+    Private Function BuildGpuDisplayItems() As List(Of (DisplayName As String, Key As String))
+        Dim result As New List(Of (DisplayName As String, Key As String))
+        For Each group In gpuInfoTable.Values.GroupBy(Function(x) If(x.Name, ""), StringComparer.OrdinalIgnoreCase)
+            Dim ordinal = 0
+            For Each info In group.OrderBy(Function(x) x.Key, StringComparer.Ordinal)
+                ordinal += 1
+                Dim displayName = If(String.IsNullOrWhiteSpace(info.Name), "GPU", info.Name)
+                If group.Count() > 1 Then displayName &= $" #{ordinal}"
+                result.Add((displayName, info.Key))
+            Next
+        Next
+        Return result
     End Function
 
     Private Shared Function StripCpuTemperature(text As String) As String
@@ -311,6 +335,7 @@ Public Class Form_v6_性能监控_LHM
     End Sub
 
     Private Class GpuInfo
+        Public Property Key As String = ""
         Public Property Name As String = ""
         Public Property VideoDecode As Integer
         Public Property VideoEncode As Integer
