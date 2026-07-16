@@ -21,6 +21,7 @@ Public Class 编码队列_v6
         Public Property 任务名称 As String = ""
         Public Property 输入文件 As String = ""
         Public Property 输出文件 As String = ""
+        Public Property 输出文件由自动命名生成 As Boolean = False
         Public Property 预设数据 As 预设数据_v6
         Public Property 命令行 As String = ""
         Public Property 允许自动启动 As Boolean = False
@@ -128,6 +129,7 @@ Public Class 编码队列_v6
                     .任务名称 = task.任务名称,
                     .输入文件 = task.输入文件,
                     .输出文件 = task.输出文件,
+                    .输出文件由自动命名生成 = task.输出文件由自动命名生成,
                     .预设数据 = 克隆预设(task.预设数据),
                     .命令行 = task.命令行,
                     .允许自动启动 = False
@@ -165,6 +167,7 @@ Public Class 编码队列_v6
                 .任务名称 = If(item.任务名称, ""),
                 .输入文件 = If(item.输入文件, ""),
                 .输出文件 = If(item.输出文件, ""),
+                .输出文件由自动命名生成 = item.输出文件由自动命名生成,
                 .预设数据 = If(hasPreset, 克隆预设(item.预设数据), Nothing),
                 .命令行 = If(item.命令行, ""),
                 .状态 = 编码任务状态_v6.未处理,
@@ -285,6 +288,10 @@ Public Class 编码队列_v6
                 End If
 
                 task.预设数据 = 克隆预设(预设数据)
+                If task.输出文件由自动命名生成 Then
+                    task.输出文件 = ""
+                    task.输出文件由自动命名生成 = False
+                End If
                 task.步骤.Clear()
                 task.当前步骤索引 = -1
                 task.媒体总时长 = ""
@@ -326,6 +333,10 @@ Public Class 编码队列_v6
                 End If
 
                 task.预设数据 = 克隆预设(预设数据)
+                If task.输出文件由自动命名生成 Then
+                    task.输出文件 = ""
+                    task.输出文件由自动命名生成 = False
+                End If
                 task.步骤.Clear()
                 task.当前步骤索引 = -1
                 task.媒体总时长 = ""
@@ -357,24 +368,23 @@ Public Class 编码队列_v6
         Dim idSet As New HashSet(Of String)(If(ids, Array.Empty(Of String)()))
         If idSet.Count = 0 Then Exit Sub
 
-        Dim starting As New List(Of 编码任务_v6)
+        Dim starting As New List(Of KeyValuePair(Of 编码任务_v6, Long))
         SyncLock 队列锁
             For Each task In 队列
                 If idSet.Contains(task.ID) AndAlso task.状态 = 编码任务状态_v6.未处理 Then
-                    task.允许自动启动 = True
+                    Dim 执行标识 = task.开始执行()
+                    If 执行标识 = 0 Then Continue For
                     task.状态 = 编码任务状态_v6.正在处理
+                    为任务保留输出文件(task)
                     标记任务已实际启动()
-                    starting.Add(task)
+                    starting.Add(New KeyValuePair(Of 编码任务_v6, Long)(task, 执行标识))
                 End If
             Next
         End SyncLock
 
-        广播任务更新(starting)
-        For Each task In starting
-            Threading.Tasks.Task.Run(Async Function()
-                                         Await task.开始Async()
-                                         任务执行结束后处理(task)
-                                     End Function)
+        广播任务更新(starting.Select(Function(x) x.Key))
+        For Each item In starting
+            异步执行任务(item.Key, item.Value)
         Next
     End Sub
 
@@ -526,8 +536,8 @@ Public Class 编码队列_v6
                          Dim shouldCheckCompletion As Boolean
                          SyncLock 队列锁
                              调度中 = False
-                             Dim running = 队列.Where(Function(x) x.状态 = 编码任务状态_v6.正在处理 OrElse x.状态 = 编码任务状态_v6.已暂停).Count()
-                             shouldRunAgain = running < 获取并发上限() AndAlso 队列.Any(Function(x) x.状态 = 编码任务状态_v6.未处理 AndAlso x.允许自动启动)
+                             Dim running = 队列.Where(Function(x) 是否进行中任务(x) OrElse x.正在执行).Count()
+                             shouldRunAgain = running < 获取并发上限() AndAlso 队列.Any(Function(x) x.状态 = 编码任务状态_v6.未处理 AndAlso x.允许自动启动 AndAlso Not x.正在执行)
                              shouldCheckCompletion = 完成提示待调度结束检查
                              If Not shouldRunAgain Then 完成提示待调度结束检查 = False
                          End SyncLock
@@ -543,20 +553,32 @@ Public Class 编码队列_v6
     Private Shared Sub 调度循环()
         Do
             Dim nextTask As 编码任务_v6 = Nothing
+            Dim 执行标识 As Long = 0
             SyncLock 队列锁
-                Dim running = 队列.Where(Function(x) x.状态 = 编码任务状态_v6.正在处理 OrElse x.状态 = 编码任务状态_v6.已暂停).Count()
+                Dim running = 队列.Where(Function(x) 是否进行中任务(x) OrElse x.正在执行).Count()
                 If running >= 获取并发上限() Then Exit Do
-                nextTask = 队列.FirstOrDefault(Function(x) x.状态 = 编码任务状态_v6.未处理 AndAlso x.允许自动启动)
+                nextTask = 队列.FirstOrDefault(Function(x) x.状态 = 编码任务状态_v6.未处理 AndAlso x.允许自动启动 AndAlso Not x.正在执行)
                 If nextTask Is Nothing Then Exit Do
+                执行标识 = nextTask.开始执行()
+                If 执行标识 = 0 Then Continue Do
                 nextTask.状态 = 编码任务状态_v6.正在处理
+                为任务保留输出文件(nextTask)
                 标记任务已实际启动()
             End SyncLock
             RaiseEvent 任务已更新(nextTask)
-            Task.Run(Async Function()
-                         Await nextTask.开始Async()
-                         任务执行结束后处理(nextTask)
-                     End Function)
+            异步执行任务(nextTask, 执行标识)
         Loop
+    End Sub
+
+    Private Shared Sub 异步执行任务(task As 编码任务_v6, 执行标识 As Long)
+        Threading.Tasks.Task.Run(Async Function()
+                     Try
+                         Await task.开始Async(执行标识)
+                     Finally
+                         task.结束执行()
+                         任务执行结束后处理(task)
+                     End Try
+                 End Function)
     End Sub
 
     Private Shared Function 获取并发上限() As Integer
@@ -575,8 +597,7 @@ Public Class 编码队列_v6
     Private Shared Function 是否进行中任务(task As 编码任务_v6) As Boolean
         If task Is Nothing Then Return False
         Return task.状态 = 编码任务状态_v6.正在处理 OrElse
-               task.状态 = 编码任务状态_v6.已暂停 OrElse
-               (task.状态 = 编码任务状态_v6.未处理 AndAlso task.允许自动启动)
+               task.状态 = 编码任务状态_v6.已暂停
     End Function
 
     Private Shared Sub 广播任务更新(tasks As IEnumerable(Of 编码任务_v6))
@@ -600,11 +621,6 @@ Public Class 编码队列_v6
     End Sub
 
     Private Shared Sub 任务执行结束后处理(task As 编码任务_v6)
-        If task IsNot Nothing AndAlso task.手动停止 Then
-            检查全部完成提示()
-            Return
-        End If
-
         请求调度(True)
     End Sub
 
@@ -638,7 +654,10 @@ Public Class 编码队列_v6
         End If
     End Sub
 
-    Public Shared Function 计算输出位置_v6(输入文件 As String, 预设数据 As 预设数据_v6, Optional 创建输出目录 As Boolean = False) As String
+    Public Shared Function 计算输出位置_v6(输入文件 As String,
+                                        预设数据 As 预设数据_v6,
+                                        Optional 创建输出目录 As Boolean = False,
+                                        Optional 已保留输出路径 As ISet(Of String) = Nothing) As String
         If 预设数据 Is Nothing Then Return ""
         If 预设数据.输出_输出文件参数使用方法 <> 预设数据_v6.输出文件参数使用方法.正常使用 Then Return ""
 
@@ -649,7 +668,7 @@ Public Class 编码队列_v6
         Dim 输出目录 = 计算输出目录(输入目录, 预设数据, 创建输出目录)
         Dim 文件名 = 生成输出文件名(输入文件, 预设数据)
         Dim 输出路径 = Path.Combine(输出目录, 文件名 & 容器)
-        输出路径 = 应用存在检测命名选项(输出路径, 预设数据.输出_自动命名选项)
+        输出路径 = 应用存在检测命名选项(输出路径, 预设数据.输出_自动命名选项, 已保留输出路径)
 
         If 设置_v6.实例对象.转译模式 Then Return 转译模式处理路径(输出路径)
         Return 输出路径
@@ -765,14 +784,16 @@ Public Class 编码队列_v6
         Return 文件名 & 生成自动命名后缀(预设数据)
     End Function
 
-    Private Shared Function 应用存在检测命名选项(输出路径 As String, optionValue As 预设数据_v6.自动命名选项) As String
+    Private Shared Function 应用存在检测命名选项(输出路径 As String,
+                                            optionValue As 预设数据_v6.自动命名选项,
+                                            Optional 已保留输出路径 As ISet(Of String) = Nothing) As String
         Select Case optionValue
             Case 预设数据_v6.自动命名选项.附加_递增数字
-                Return 获取递增输出路径(输出路径)
+                Return 获取递增输出路径(输出路径, 已保留输出路径)
             Case 预设数据_v6.自动命名选项.附加_2位结尾序号
-                Return 获取补零结尾序号输出路径(输出路径, 2)
+                Return 获取补零结尾序号输出路径(输出路径, 2, 已保留输出路径)
             Case 预设数据_v6.自动命名选项.附加_3位结尾序号
-                Return 获取补零结尾序号输出路径(输出路径, 3)
+                Return 获取补零结尾序号输出路径(输出路径, 3, 已保留输出路径)
             Case Else
                 Return 输出路径
         End Select
@@ -903,21 +924,23 @@ Public Class 编码队列_v6
         Return result
     End Function
 
-    Private Shared Function 获取递增输出路径(输出路径 As String) As String
+    Private Shared Function 获取递增输出路径(输出路径 As String, 已保留输出路径 As ISet(Of String)) As String
         If String.IsNullOrWhiteSpace(输出路径) Then Return 输出路径
-        If Not File.Exists(输出路径) Then Return 输出路径
+        If 输出路径可用(输出路径, 已保留输出路径) Then Return 输出路径
         Dim dir = IO.Path.GetDirectoryName(输出路径)
         Dim name = IO.Path.GetFileNameWithoutExtension(输出路径)
         Dim ext = IO.Path.GetExtension(输出路径)
         Dim baseName = Regex.Replace(name, "~\d+$", "")
         For i = 1 To 99999
             Dim candidate = IO.Path.Combine(dir, $"{baseName}~{i}{ext}")
-            If Not File.Exists(candidate) Then Return candidate
+            If 输出路径可用(candidate, 已保留输出路径) Then Return candidate
         Next
         Return IO.Path.Combine(dir, $"{baseName}~{Now:yyyyMMddHHmmss}{ext}")
     End Function
 
-    Private Shared Function 获取补零结尾序号输出路径(输出路径 As String, 位数 As Integer) As String
+    Private Shared Function 获取补零结尾序号输出路径(输出路径 As String,
+                                                位数 As Integer,
+                                                已保留输出路径 As ISet(Of String)) As String
         If String.IsNullOrWhiteSpace(输出路径) Then Return 输出路径
         Dim dir = If(IO.Path.GetDirectoryName(输出路径), "")
         Dim name = IO.Path.GetFileNameWithoutExtension(输出路径)
@@ -941,10 +964,29 @@ Public Class 编码队列_v6
             Dim serial = startNumber + offset
             Dim candidateName = $"{baseName}{serial.ToString(New String("0"c, width), CultureInfo.InvariantCulture)}"
             Dim candidate = IO.Path.Combine(dir, $"{candidateName}{ext}")
-            If Not File.Exists(candidate) Then Return candidate
+            If 输出路径可用(candidate, 已保留输出路径) Then Return candidate
         Next
         Return IO.Path.Combine(dir, $"{baseName}{Now:yyyyMMddHHmmss}{ext}")
     End Function
+
+    Private Shared Function 输出路径可用(输出路径 As String, 已保留输出路径 As ISet(Of String)) As Boolean
+        Return Not File.Exists(输出路径) AndAlso (已保留输出路径 Is Nothing OrElse Not 已保留输出路径.Contains(输出路径))
+    End Function
+
+    ' Must be called while 队列锁 is held so simultaneously-started tasks reserve different names.
+    Private Shared Sub 为任务保留输出文件(task As 编码任务_v6)
+        If task Is Nothing OrElse task.预设数据 Is Nothing Then Exit Sub
+        If Not String.IsNullOrWhiteSpace(task.输出文件) AndAlso Not task.输出文件由自动命名生成 Then Exit Sub
+
+        Dim 已保留输出路径 As New HashSet(Of String)(StringComparer.OrdinalIgnoreCase)
+        For Each other In 队列
+            If other Is task OrElse Not 是否进行中任务(other) OrElse String.IsNullOrWhiteSpace(other.输出文件) Then Continue For
+            已保留输出路径.Add(other.输出文件)
+        Next
+
+        task.输出文件 = 计算输出位置_v6(task.输入文件, task.预设数据, True, 已保留输出路径)
+        task.输出文件由自动命名生成 = Not String.IsNullOrWhiteSpace(task.输出文件)
+    End Sub
 
 End Class
 
@@ -1004,6 +1046,7 @@ Public Class 编码任务_v6
     Public Property 任务名称 As String = ""
     Public Property 输入文件 As String = ""
     Public Property 输出文件 As String = ""
+    Public Property 输出文件由自动命名生成 As Boolean = False
     Public Property 预设数据 As 预设数据_v6
     Public Property 命令行 As String = ""
     Public Property 状态 As 编码任务状态_v6 = 编码任务状态_v6.未处理
@@ -1027,6 +1070,8 @@ Public Class 编码任务_v6
 
     Private 当前进程 As Process
     Private ReadOnly 状态锁 As New Object
+    Private 正在执行标记 As Boolean = False
+    Private 执行版本 As Long = 0
     Private ReadOnly 日志锁 As New Object
     Private ReadOnly 完整日志缓存 As New List(Of 编码任务日志条目_v6)
     Private 日志序号 As Long = 0
@@ -1079,6 +1124,41 @@ Public Class 编码任务_v6
             End Try
         End Get
     End Property
+
+    Public ReadOnly Property 正在执行 As Boolean
+        Get
+            SyncLock 状态锁
+                Return 正在执行标记
+            End SyncLock
+        End Get
+    End Property
+
+    Friend Function 开始执行() As Long
+        SyncLock 状态锁
+            If 正在执行标记 Then Return 0
+            正在执行标记 = True
+            执行版本 += 1
+            Return 执行版本
+        End SyncLock
+    End Function
+
+    Friend Sub 结束执行()
+        SyncLock 状态锁
+            正在执行标记 = False
+        End SyncLock
+    End Sub
+
+    Private Sub 使当前执行失效()
+        SyncLock 状态锁
+            If 正在执行标记 Then 执行版本 += 1
+        End SyncLock
+    End Sub
+
+    Private Function 是当前执行(执行标识 As Long) As Boolean
+        SyncLock 状态锁
+            Return 正在执行标记 AndAlso 执行版本 = 执行标识
+        End SyncLock
+    End Function
 
     Public ReadOnly Property 当前进程名称 As String
         Get
@@ -1236,8 +1316,9 @@ Public Class 编码任务_v6
         End Select
     End Function
 
-    Public Async Function 开始Async() As Task
+    Public Async Function 开始Async(执行标识 As Long) As Task
         SyncLock 状态锁
+            If Not 正在执行标记 OrElse 执行版本 <> 执行标识 Then Exit Function
             状态 = 编码任务状态_v6.正在处理
             手动停止 = False
         End SyncLock
@@ -1247,6 +1328,7 @@ Public Class 编码任务_v6
             任务耗时计时器.Restart()
             追加日志($"[3FUI] 任务开始：{If(任务名称 <> "", 任务名称, Path.GetFileName(输入文件))}", 编码任务日志类别_v6.系统, Nothing, False, False)
             准备输入输出与步骤()
+            If Not 是当前执行(执行标识) Then Exit Try
             设定系统状态_v6()
             编码队列_v6.通知任务更新(Me)
 
@@ -1258,6 +1340,7 @@ Public Class 编码任务_v6
                 追加日志($"[3FUI] 开始阶段：{stepItem.显示名称}", 编码任务日志类别_v6.系统, stepItem, False, False)
                 编码队列_v6.通知任务更新(Me)
                 Dim exitCode = Await 运行步骤Async(stepItem)
+                If Not 是当前执行(执行标识) Then Exit While
                 If 手动停止 Then
                     stepItem.状态 = 编码步骤状态_v6.已停止
                     状态 = 编码任务状态_v6.已停止
@@ -1291,7 +1374,7 @@ Public Class 编码任务_v6
                 当前步骤索引 += 1
             End While
 
-            If 状态 = 编码任务状态_v6.正在处理 Then
+            If 是当前执行(执行标识) AndAlso 状态 = 编码任务状态_v6.正在处理 Then
                 状态 = 编码任务状态_v6.已完成
                 进度.百分比 = 1
                 进度.进度文本 = "100%"
@@ -1299,6 +1382,7 @@ Public Class 编码任务_v6
                 追加日志("[3FUI] 任务完成", 编码任务日志类别_v6.系统, Nothing, False, False)
             End If
         Catch ex As Exception
+            If Not 是当前执行(执行标识) Then Exit Try
             状态 = If(手动停止, 编码任务状态_v6.已停止, 编码任务状态_v6.错误)
             Dim logCategory = If(状态 = 编码任务状态_v6.已停止, 编码任务日志类别_v6.系统, 编码任务日志类别_v6.错误)
             追加日志("[3FUI] " & ex.Message, logCategory, 当前步骤, 状态 = 编码任务状态_v6.错误, False)
@@ -1465,11 +1549,13 @@ Public Class 编码任务_v6
     End Sub
 
     Public Sub 重置()
+        使当前执行失效()
         释放资源()
+        If 输出文件由自动命名生成 Then 输出文件 = ""
+        输出文件由自动命名生成 = False
         状态 = 编码任务状态_v6.未处理
         当前步骤索引 = -1
         手动停止 = False
-        允许自动启动 = False
         实时输出 = ""
         清空日志(False)
         步骤.Clear()

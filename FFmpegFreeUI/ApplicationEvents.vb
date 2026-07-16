@@ -42,7 +42,7 @@ Namespace My
             Dim 禁止启动位置说明 = 获取禁止启动位置说明(System.Windows.Forms.Application.StartupPath)
             If Not String.IsNullOrEmpty(禁止启动位置说明) Then
                 ExOverlayMsgBox(
-                    $"{vbCrLf}当前启动位置不受支持：{禁止启动位置说明}{vbCrLf}{vbCrLf}这是以便携形式发行的单文件应用程序，需要建一个文件夹单独装起来，其会将当前目录作为自己的数据目录。{vbCrLf}{vbCrLf}为避免程序数据或更新文件被放到桌面、下载目录或系统缓存目录，已阻止继续运行。",
+                    $"{vbCrLf}已阻止继续运行，当前启动位置不受支持，命中规则：{vbCrLf}{禁止启动位置说明}{vbCrLf}{vbCrLf}这是以便携形式发行的单文件应用程序，需要建一个文件夹单独装起来，其会将当前目录作为自己的数据目录。规则判定基于系统枚举，无法通过重命名来规避！{vbCrLf}{vbCrLf}可以在桌面上建立文件夹，其他下载和缓存目录不支持子目录。",
                     MsgBoxStyle.Critical,
                     "不要直接在桌面、下载目录或缓存目录运行")
                 End

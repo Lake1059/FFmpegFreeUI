@@ -20,6 +20,7 @@ Public Class 开发者内置预设_v6
 
         Dim RTX50_AV1 As New 预设数据_v6
         RTX50_AV1.预设备注 = "老黄 AV1 常规模式标准答案，参考 VMAF = 95~96，最推荐 RTX50 全系使用。此预设仅包含视频参数！"
+        RTX50_AV1.解码参数_解码器 = "cuda"
         RTX50_AV1.视频参数_编码器_类型 = 预设数据_v6.视频编码器类型.视频
         RTX50_AV1.视频参数_编码器_分类名称 = "AV1"
         RTX50_AV1.视频参数_编码器_具体编码 = "av1_nvenc"
@@ -32,6 +33,7 @@ Public Class 开发者内置预设_v6
 
         Dim RTX50_AV1_UHQ As New 预设数据_v6
         RTX50_AV1_UHQ.预设备注 = "老黄 AV1 UHQ 模式推荐答案，极细微质量损失换来体积大幅降低，参考 VMAF = 94~95，最推荐 RTX50 全系使用。此预设仅包含视频参数！"
+        RTX50_AV1_UHQ.解码参数_解码器 = "cuda"
         RTX50_AV1_UHQ.视频参数_编码器_类型 = 预设数据_v6.视频编码器类型.视频
         RTX50_AV1_UHQ.视频参数_编码器_分类名称 = "AV1"
         RTX50_AV1_UHQ.视频参数_编码器_具体编码 = "av1_nvenc"
@@ -45,6 +47,7 @@ Public Class 开发者内置预设_v6
 
         Dim RTX50_AV1_UHQ_EX As New 预设数据_v6
         RTX50_AV1_UHQ_EX.预设备注 = "老黄 AV1 UHQ + 复杂度全开，提升极细微可能对稳定度有帮助但同时也可能不利于评测，参考 VMAF = 94~95，最推荐 RTX50 全系使用。此预设仅包含视频参数！"
+        RTX50_AV1_UHQ_EX.解码参数_解码器 = "cuda"
         RTX50_AV1_UHQ_EX.视频参数_编码器_类型 = 预设数据_v6.视频编码器类型.视频
         RTX50_AV1_UHQ_EX.视频参数_编码器_分类名称 = "AV1"
         RTX50_AV1_UHQ_EX.视频参数_编码器_具体编码 = "av1_nvenc"
@@ -59,6 +62,7 @@ Public Class 开发者内置预设_v6
 
         Dim RTX50_HEVC_UHQ As New 预设数据_v6
         RTX50_HEVC_UHQ.预设备注 = "老黄 HEVC UHQ 满分答案，参考 VMAF = 95~96，最推荐 RTX50 全系使用，压缩度大概能摸到 x265 medium 水平。此预设仅包含视频参数！"
+        RTX50_HEVC_UHQ.解码参数_解码器 = "cuda"
         RTX50_HEVC_UHQ.视频参数_编码器_类型 = 预设数据_v6.视频编码器类型.视频
         RTX50_HEVC_UHQ.视频参数_编码器_分类名称 = "H.265/HEVC"
         RTX50_HEVC_UHQ.视频参数_编码器_具体编码 = "hevc_nvenc"
@@ -70,18 +74,18 @@ Public Class 开发者内置预设_v6
         RTX50_HEVC_UHQ.视频参数_色彩管理_像素格式 = "p010le"
         result.Add(New 预设项("RTX50 HEVC UHQ", RTX50_HEVC_UHQ))
 
-        Dim SVTAV1_CRF36 As New 预设数据_v6
-        SVTAV1_CRF36.预设备注 = "采用 HDR 分支的 libsvtav1，可能与常规的分支有些许差别。此预设仅包含视频参数！"
-        SVTAV1_CRF36.视频参数_编码器_类型 = 预设数据_v6.视频编码器类型.视频
-        SVTAV1_CRF36.视频参数_编码器_分类名称 = "AV1"
-        SVTAV1_CRF36.视频参数_编码器_具体编码 = "libsvtav1"
-        SVTAV1_CRF36.视频参数_编码器_编码预设 = "6"
-        SVTAV1_CRF36.视频参数_比特率_控制方式 = 预设数据_v6.视频全局质量控制方式.CRF
-        SVTAV1_CRF36.视频参数_质量控制_参数名 = "crf"
-        SVTAV1_CRF36.视频参数_质量控制_值 = "36"
-        SVTAV1_CRF36.视频参数_质量控制_进阶参数集 = "-svtav1-params tune=0:keyint=10s:enable-variance-boost=1:variance-boost-strength=1:film-grain=4:film-grain-denoise=1:sharpness=1:ac-bias=1"
-        SVTAV1_CRF36.视频参数_色彩管理_像素格式 = "yuv420p10le"
-        result.Add(New 预设项("SVT-AV1-HDR 适用平衡点", SVTAV1_CRF36))
+        Dim SVTAV1HDR_CRF36 As New 预设数据_v6
+        SVTAV1HDR_CRF36.预设备注 = "采用 HDR 分支的 libsvtav1，可能与常规的分支有些许差别。注意在编码高分辨率视频时会占用大量内存，4K 通常建议 32GB 及以上内存条。此预设仅包含视频参数！"
+        SVTAV1HDR_CRF36.视频参数_编码器_类型 = 预设数据_v6.视频编码器类型.视频
+        SVTAV1HDR_CRF36.视频参数_编码器_分类名称 = "AV1"
+        SVTAV1HDR_CRF36.视频参数_编码器_具体编码 = "libsvtav1"
+        SVTAV1HDR_CRF36.视频参数_编码器_编码预设 = "6"
+        SVTAV1HDR_CRF36.视频参数_比特率_控制方式 = 预设数据_v6.视频全局质量控制方式.CRF
+        SVTAV1HDR_CRF36.视频参数_质量控制_参数名 = "crf"
+        SVTAV1HDR_CRF36.视频参数_质量控制_值 = "36"
+        SVTAV1HDR_CRF36.视频参数_质量控制_进阶参数集 = "-svtav1-params tune=0:keyint=10s:enable-variance-boost=1:variance-boost-strength=1:film-grain=4:film-grain-denoise=1:sharpness=1:ac-bias=1:lp=4"
+        SVTAV1HDR_CRF36.视频参数_色彩管理_像素格式 = "yuv420p10le"
+        result.Add(New 预设项("SVT-AV1-HDR 适用平衡点", SVTAV1HDR_CRF36))
 
         Dim X265_Slow As New 预设数据_v6
         X265_Slow.预设备注 = "x265 默认推荐质量，选用 slow 预设可直接作为普通人的最终压制方案，参考 VMAF ≈ 95。此预设仅包含视频参数！"
@@ -105,7 +109,7 @@ Public Class 开发者内置预设_v6
         X264_Slower.视频参数_质量控制_参数名 = "crf"
         X264_Slower.视频参数_质量控制_值 = "23"
         X264_Slower.视频参数_色彩管理_像素格式 = "yuv420p10le"
-        result.Add(New 预设项("x264 slower", X264_Slower))
+        result.Add(New 预设项("x264 最终压制", X264_Slower))
 
         Dim M4A_HDAudio As New 预设数据_v6
         M4A_HDAudio.预设备注 = "在找全能音乐压制方案？别看了就这个！三个愿望一次满足：接近无损的质量 + 小体积 + 元数据支持（歌曲信息以及专辑图等）。代价是你需要去找个自编译带 FDK AAC 的 ffmpeg，而且好像只支持 16 位深，反正听歌是足够了。"
@@ -118,7 +122,7 @@ Public Class 开发者内置预设_v6
         result.Add(New 预设项("FDK AAC 压制音频到 M4A", M4A_HDAudio))
 
         Dim AVIF_AOMAV1 As New 预设数据_v6
-        AVIF_AOMAV1.预设备注 = "AVIF 是将 AV1 用于图片的超高压缩图，非常适合用它来压制你那巨量不再需要后期的图片。"
+        AVIF_AOMAV1.预设备注 = "AVIF 是将 AV1 用于图片的超高压缩图，非常适合用它来压制你那巨量不再需要后期的图片，crf18 基本上能稳定卡 VMAF ≈ 96，如果实在追求质量可以自己改 crf12。其他几个 AV1 编码器也可以输出到 AVIF 图片，如有需要可以自行研究，这里只收录 AOM 预设，都压图片了也不差那点时间了。"
         AVIF_AOMAV1.输出容器 = ".avif"
         AVIF_AOMAV1.视频参数_编码器_分类名称 = "AV1"
         AVIF_AOMAV1.视频参数_编码器_具体编码 = "libaom-av1"
@@ -126,7 +130,7 @@ Public Class 开发者内置预设_v6
         AVIF_AOMAV1.视频参数_比特率_控制方式 = 预设数据_v6.视频全局质量控制方式.CRF
         AVIF_AOMAV1.视频参数_质量控制_参数名 = "crf"
         AVIF_AOMAV1.视频参数_质量控制_值 = "18"
-        AVIF_AOMAV1.视频参数_质量控制_进阶参数集 = "-aom-params tune=iq -b:v 0 -still-picture 1 -row-mt 1"
+        AVIF_AOMAV1.视频参数_质量控制_进阶参数集 = "-still-picture 1 -row-mt 1"
         result.Add(New 预设项("AVIF 高压缩图片 AOM AV1", AVIF_AOMAV1))
 
         Dim WindowsICO As New 预设数据_v6
