@@ -48,9 +48,9 @@ Partial Class Form_v6_集成工具_合并
         Panel2.SuspendLayout()
         Panel1.SuspendLayout()
         SuspendLayout()
-        '
+        ' 
         ' ModernPanel1
-        '
+        ' 
         ModernPanel1.BackColor1 = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         ModernPanel1.BorderSize = 0
         ModernPanel1.Controls.Add(UltraDetailListView1)
@@ -63,9 +63,9 @@ Partial Class Form_v6_集成工具_合并
         ModernPanel1.Padding = New Padding(20)
         ModernPanel1.Size = New Size(829, 625)
         ModernPanel1.TabIndex = 0
-        '
+        ' 
         ' UltraDetailListView1
-        '
+        ' 
         UltraDetailListView1.AllowDragReorder = True
         UltraDetailListView1.BackgroundColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         UltraDetailListView1.BorderRadius = 10
@@ -86,7 +86,7 @@ Partial Class Form_v6_集成工具_合并
         UltraDetailListView1.ItemCornerRadius = 10
         UltraDetailListView1.ItemPadding = New Padding(10, 5, 10, 5)
         UltraDetailListView1.ItemSelectedBackColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        UltraDetailListView1.Location = New Point(20, 102)
+        UltraDetailListView1.Location = New Point(20, 97)
         UltraDetailListView1.Margin = New Padding(2, 2, 2, 2)
         UltraDetailListView1.Name = "UltraDetailListView1"
         UltraDetailListView1.Padding = New Padding(5, 0, 5, 5)
@@ -95,11 +95,11 @@ Partial Class Form_v6_集成工具_合并
         UltraDetailListView1.ScrollBarTrackColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
         UltraDetailListView1.SelectionRectBorderColor = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
         UltraDetailListView1.SelectionRectFillColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        UltraDetailListView1.Size = New Size(789, 461)
+        UltraDetailListView1.Size = New Size(789, 466)
         UltraDetailListView1.TabIndex = 4
-        '
+        ' 
         ' Panel2
-        '
+        ' 
         Panel2.Controls.Add(MTB_输出目标文件)
         Panel2.Controls.Add(JustEmptyControl5)
         Panel2.Controls.Add(JustEmptyControl6)
@@ -111,9 +111,9 @@ Partial Class Form_v6_集成工具_合并
         Panel2.Padding = New Padding(0, 10, 0, 0)
         Panel2.Size = New Size(789, 42)
         Panel2.TabIndex = 3
-        '
+        ' 
         ' MTB_输出目标文件
-        '
+        ' 
         MTB_输出目标文件.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MTB_输出目标文件.BorderColor = Color.Transparent
         MTB_输出目标文件.BorderColorFocus = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
@@ -129,25 +129,25 @@ Partial Class Form_v6_集成工具_合并
         MTB_输出目标文件.TabIndex = 3
         MTB_输出目标文件.WaterText = "输出目标文件路径"
         MTB_输出目标文件.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        '
+        ' 
         ' JustEmptyControl5
-        '
+        ' 
         JustEmptyControl5.Dock = DockStyle.Right
         JustEmptyControl5.Location = New Point(679, 10)
         JustEmptyControl5.Name = "JustEmptyControl5"
         JustEmptyControl5.Size = New Size(10, 32)
         JustEmptyControl5.TabIndex = 4
-        '
+        ' 
         ' JustEmptyControl6
-        '
+        ' 
         JustEmptyControl6.Dock = DockStyle.Left
         JustEmptyControl6.Location = New Point(100, 10)
         JustEmptyControl6.Name = "JustEmptyControl6"
         JustEmptyControl6.Size = New Size(10, 32)
         JustEmptyControl6.TabIndex = 2
-        '
+        ' 
         ' MB_选择位置
-        '
+        ' 
         MB_选择位置.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MB_选择位置.BorderRadius = 10
         MB_选择位置.BorderSize = 0
@@ -161,9 +161,9 @@ Partial Class Form_v6_集成工具_合并
         MB_选择位置.Size = New Size(100, 32)
         MB_选择位置.TabIndex = 0
         MB_选择位置.Text = "选择位置"
-        '
+        ' 
         ' MB_启动合并
-        '
+        ' 
         MB_启动合并.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MB_启动合并.BorderRadius = 10
         MB_启动合并.BorderSize = 0
@@ -177,9 +177,9 @@ Partial Class Form_v6_集成工具_合并
         MB_启动合并.Size = New Size(100, 32)
         MB_启动合并.TabIndex = 5
         MB_启动合并.Text = "启动合并"
-        '
+        ' 
         ' Panel1
-        '
+        ' 
         Panel1.Controls.Add(HtmlColorLabel2)
         Panel1.Controls.Add(MB_移除全部)
         Panel1.Controls.Add(JustEmptyControl4)
@@ -191,14 +191,14 @@ Partial Class Form_v6_集成工具_合并
         Panel1.Controls.Add(JustEmptyControl1)
         Panel1.Controls.Add(MB_添加文件)
         Panel1.Dock = DockStyle.Top
-        Panel1.Location = New Point(20, 50)
+        Panel1.Location = New Point(20, 45)
         Panel1.Name = "Panel1"
         Panel1.Padding = New Padding(0, 10, 0, 10)
         Panel1.Size = New Size(789, 52)
         Panel1.TabIndex = 2
-        '
+        ' 
         ' HtmlColorLabel2
-        '
+        ' 
         HtmlColorLabel2.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel2.Dock = DockStyle.Fill
         HtmlColorLabel2.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
@@ -210,9 +210,9 @@ Partial Class Form_v6_集成工具_合并
         HtmlColorLabel2.TabIndex = 10
         HtmlColorLabel2.Text = "偏左侧拖动排序，偏右侧框选"
         HtmlColorLabel2.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
-        '
+        ' 
         ' MB_移除全部
-        '
+        ' 
         MB_移除全部.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MB_移除全部.BorderRadius = 10
         MB_移除全部.BorderSize = 0
@@ -226,17 +226,17 @@ Partial Class Form_v6_集成工具_合并
         MB_移除全部.Size = New Size(100, 32)
         MB_移除全部.TabIndex = 9
         MB_移除全部.Text = "移除全部"
-        '
+        ' 
         ' JustEmptyControl4
-        '
+        ' 
         JustEmptyControl4.Dock = DockStyle.Left
         JustEmptyControl4.Location = New Point(350, 10)
         JustEmptyControl4.Name = "JustEmptyControl4"
         JustEmptyControl4.Size = New Size(10, 32)
         JustEmptyControl4.TabIndex = 8
-        '
+        ' 
         ' MB_移除选中
-        '
+        ' 
         MB_移除选中.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MB_移除选中.BorderRadius = 10
         MB_移除选中.BorderSize = 0
@@ -250,17 +250,17 @@ Partial Class Form_v6_集成工具_合并
         MB_移除选中.Size = New Size(100, 32)
         MB_移除选中.TabIndex = 7
         MB_移除选中.Text = "移除选中"
-        '
+        ' 
         ' JustEmptyControl3
-        '
+        ' 
         JustEmptyControl3.Dock = DockStyle.Left
         JustEmptyControl3.Location = New Point(240, 10)
         JustEmptyControl3.Name = "JustEmptyControl3"
         JustEmptyControl3.Size = New Size(10, 32)
         JustEmptyControl3.TabIndex = 6
-        '
+        ' 
         ' MB_下移
-        '
+        ' 
         MB_下移.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MB_下移.BorderRadius = 10
         MB_下移.BorderSize = 0
@@ -274,17 +274,17 @@ Partial Class Form_v6_集成工具_合并
         MB_下移.Size = New Size(60, 32)
         MB_下移.TabIndex = 5
         MB_下移.Text = "下移"
-        '
+        ' 
         ' JustEmptyControl2
-        '
+        ' 
         JustEmptyControl2.Dock = DockStyle.Left
         JustEmptyControl2.Location = New Point(170, 10)
         JustEmptyControl2.Name = "JustEmptyControl2"
         JustEmptyControl2.Size = New Size(10, 32)
         JustEmptyControl2.TabIndex = 4
-        '
+        ' 
         ' MB_上移
-        '
+        ' 
         MB_上移.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MB_上移.BorderRadius = 10
         MB_上移.BorderSize = 0
@@ -298,17 +298,17 @@ Partial Class Form_v6_集成工具_合并
         MB_上移.Size = New Size(60, 32)
         MB_上移.TabIndex = 3
         MB_上移.Text = "上移"
-        '
+        ' 
         ' JustEmptyControl1
-        '
+        ' 
         JustEmptyControl1.Dock = DockStyle.Left
         JustEmptyControl1.Location = New Point(100, 10)
         JustEmptyControl1.Name = "JustEmptyControl1"
         JustEmptyControl1.Size = New Size(10, 32)
         JustEmptyControl1.TabIndex = 2
-        '
+        ' 
         ' MB_添加文件
-        '
+        ' 
         MB_添加文件.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MB_添加文件.BorderRadius = 10
         MB_添加文件.BorderSize = 0
@@ -322,9 +322,9 @@ Partial Class Form_v6_集成工具_合并
         MB_添加文件.Size = New Size(100, 32)
         MB_添加文件.TabIndex = 0
         MB_添加文件.Text = "添加文件"
-        '
+        ' 
         ' HtmlColorLabel1
-        '
+        ' 
         HtmlColorLabel1.AutoSize = True
         HtmlColorLabel1.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel1.Dock = DockStyle.Top
@@ -332,13 +332,12 @@ Partial Class Form_v6_集成工具_合并
         HtmlColorLabel1.Location = New Point(20, 20)
         HtmlColorLabel1.Margin = New Padding(2)
         HtmlColorLabel1.Name = "HtmlColorLabel1"
-        HtmlColorLabel1.Padding = New Padding(0, 0, 0, 5)
-        HtmlColorLabel1.Size = New Size(789, 30)
+        HtmlColorLabel1.Size = New Size(789, 25)
         HtmlColorLabel1.TabIndex = 1
         HtmlColorLabel1.Text = "<span style=""font-size:13; color:Silver"">多个文件按顺序头尾相接</span>   如果你的需求不是这个那么你可能指的是混流"
-        '
+        ' 
         ' Form_v6_集成工具_合并
-        '
+        ' 
         AutoScaleDimensions = New SizeF(96F, 96F)
         AutoScaleMode = AutoScaleMode.Dpi
         BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))

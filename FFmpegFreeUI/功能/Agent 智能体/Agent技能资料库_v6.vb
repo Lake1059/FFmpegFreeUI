@@ -39,6 +39,8 @@ Public NotInheritable Class Agent技能资料库_v6
                 Return 滤镜与流控制()
             Case "queue-integrated-tools"
                 Return 队列与集成工具()
+            Case "stream-extraction"
+                Return 抽流工具()
             Case "presets-files"
                 Return 预设与文件上下文()
             Case "recommendations"
@@ -57,6 +59,7 @@ Public NotInheritable Class Agent技能资料库_v6
             引用("references/command-generation.md", "命令生成", "预设数据到 ffmpeg/ffprobe 命令的生成链路、阶段化命令、剪辑、附件、字幕和自定义参数。"),
             引用("references/filters-streams.md", "滤镜与流控制", "滤镜排序系统、内置滤镜同步、filter_complex 判断、流映射和保留流规则。"),
             引用("references/queue-integrated-tools.md", "队列与集成工具", "编码队列摘要、日志、控制、同步，以及合并、混流、抽流等集成工具行为。"),
+            引用("references/stream-extraction.md", "抽流工具", "抽流页的单文件多流批量提取、流选择、输出命名和防止重复执行规则。"),
             引用("references/presets-files.md", "预设与文件上下文", "预设来源、读取应用保存规则、准备文件页、对话附件和本地文件上下文。"),
             引用("references/recommendations.md", "推荐策略", "3FUI 开发者推荐的 10bit、NVENC、x264/x265、AV1/HEVC 和其他 GUI 软件答复口径。")
         }
@@ -110,6 +113,7 @@ Reference 选择：
 - `command-generation`：命令拼装、阶段化命令、剪辑、附件、字幕、自定义参数。
 - `filters-streams`：滤镜排序、内置滤镜同步、filter_complex、流映射。
 - `queue-integrated-tools`：队列读取控制、日志、同步、合并、混流、抽流。
+- `stream-extraction`：抽流页的单文件多流批量提取和工具调用规则。
 - `presets-files`：预设来源、读取应用保存、准备文件和对话附件。
 - `recommendations`：开发者推荐的编码策略和口径。"
     End Function
@@ -269,13 +273,36 @@ CRF、CQP、VBR、CBR、TPE 分支不同。NVENC 的 CQP/VBR/CBR 和 AMF 的 CQP
 
 合并工具通常按文件列表和输出路径工作。混流工具的 files 可以是对象数组，适合描述不同输入文件的流选择、语言、标题、默认轨等。
 
-抽流前必须先调用 `get_integrated_tool_state(tool=extract)`。状态会返回当前输入文件、输出位置及候选项、运行状态、媒体时长，以及每条流的全量 `ffprobe` 信息、全局索引、类型序号、编码、语言、标题、附件信息、扩展名和选择状态。随后使用 `configure_integrated_tool` 传入 `tool=extract` 和 payload 的 `file`、`output_location`、`selected_streams`；流可按全局索引或 `v/a/s/t:序号` 指定。省略 `output_location` 或 `selected_streams` 会保留页面中的对应设置；显式空 `selected_streams` 数组才会取消全部选择。配置后应重新读取状态确认，再调用 `run_integrated_tool(tool=extract)`；`force_auto_name` 默认 true，成功结果中的 `outputs` 才是实际写出的路径。连续抽流时，对每个新文件重复这套读取、配置、确认、执行流程。失败或取消结果不能当作完成。
+抽流页的单文件多流批量提取、流选择和防重复执行规则见 `stream-extraction`。
 
 ## 页面与硬件
 
 `get_ui_tabs` 和 `switch_ui_tab` 可读取和切换主页面、参数面板、集成工具、设置页以及部分嵌套页。页面切换不仅影响用户看到的界面，也会触发部分控件初始化。
 
 `get_system_hardware` 返回处理器名称、内存和显卡名称。硬件概要可辅助推荐编码器，但不能替代实际 ffmpeg 支持情况；如需要确认可用编码器，系统访问下可用 PowerShell 执行只读检查。"
+    End Function
+
+    Private Shared Function 抽流工具() As String
+        Return "# 抽流工具
+
+## 页面能力
+
+抽流页一次只处理一个输入媒体文件，但可在该文件中同时勾选多个视频、音频、字幕和附件流。一次 `run_integrated_tool(tool=extract)` 就会按当前勾选项批量提取全部流；页面会逐项完成提取并在成功结果的 `outputs` 中返回每个实际输出路径。不要为同一个文件的每条流分别调用运行工具，否则已保留的选择会再次被提取，造成重复输出。
+
+## 标准流程
+
+1. 调用 `get_integrated_tool_state(tool=extract)`，读取当前文件、输出位置、运行状态和可选流。每条流含全局索引、类型序号、编码、语言、标题、附件信息、推荐扩展名及完整 `ffprobe` 信息。
+2. 调用一次 `configure_integrated_tool(tool=extract)`，在 payload 中传入目标 `file`、可选的 `output_location`，以及包含全部目标流的 `selected_streams`。
+3. 必要时再次读取状态，确认当前文件和所有目标流均已选中。
+4. 只调用一次 `run_integrated_tool(tool=extract)`，等待该次批量运行完成后再报告结果。
+
+处理另一个输入文件时，才为该文件重复上述流程。运行中不要重新配置或再次运行；结果为失败、取消或 `success` 不为 true 时，不得宣称已完成。
+
+## 选择与输出
+
+`selected_streams` 的每项可用全局索引，或 `v/a/s/t:序号`（分别为视频、音频、字幕、附件）。传入该字段会以完整列表替换当前选择；省略该字段会保留页面已有选择；显式空数组才取消全部选择。
+
+默认 `force_auto_name=true`，所有选中流均自动命名，适用于多流批量提取。只选一个流且需要手动指定文件名时，才将其设为 false。输出默认在源文件目录，也可通过 `output_location` 指定已有目录。成功后以返回的 `outputs` 作为实际写出的文件路径；不要根据推测的文件名报告结果。"
     End Function
 
     Private Shared Function 预设与文件上下文() As String
