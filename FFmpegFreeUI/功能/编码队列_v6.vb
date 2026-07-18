@@ -30,6 +30,7 @@ Public Class 编码队列_v6
     Public Shared ReadOnly Property 队列 As New List(Of 编码任务_v6)
     Private Shared ReadOnly 队列锁 As New Object
     Private Shared 调度中 As Boolean = False
+    Private Shared 自动调度已暂停 As Boolean = False
     Private Shared 完成提示待播放 As Boolean = False
     Private Shared 完成提示待调度结束检查 As Boolean = False
     Private Shared 全部任务已完成是否有错误 As Boolean = False
@@ -380,12 +381,14 @@ Public Class 编码队列_v6
                     starting.Add(New KeyValuePair(Of 编码任务_v6, Long)(task, 执行标识))
                 End If
             Next
+            If starting.Count > 0 Then 自动调度已暂停 = False
         End SyncLock
 
         广播任务更新(starting.Select(Function(x) x.Key))
         For Each item In starting
             异步执行任务(item.Key, item.Value)
         Next
+        If starting.Count > 0 Then 请求调度()
     End Sub
 
     Public Shared Sub 暂停任务(ids As IEnumerable(Of String))
@@ -401,8 +404,14 @@ Public Class 编码队列_v6
     End Sub
 
     Public Shared Sub 停止任务(ids As IEnumerable(Of String))
-        For Each task In 获取指定任务(ids)
-            If task.可停止 Then task.停止()
+        Dim stopping = 获取指定任务(ids).Where(Function(task) task.可停止).ToList()
+        If stopping.Count = 0 Then Exit Sub
+
+        SyncLock 队列锁
+            自动调度已暂停 = True
+        End SyncLock
+        For Each task In stopping
+            task.停止()
         Next
     End Sub
 
@@ -467,7 +476,12 @@ Public Class 编码队列_v6
         End SyncLock
 
         广播任务更新(changed)
-        If 自动开始 Then 请求调度()
+        If 自动开始 Then
+            SyncLock 队列锁
+                自动调度已暂停 = False
+            End SyncLock
+            请求调度()
+        End If
     End Sub
 
     Public Shared Function 重新排序(idsInOrder As IEnumerable(Of String)) As Boolean
@@ -525,6 +539,7 @@ Public Class 编码队列_v6
     Public Shared Sub 请求调度(Optional 允许完成提示检查 As Boolean = False)
         SyncLock 队列锁
             If 允许完成提示检查 Then 完成提示待调度结束检查 = True
+            If 自动调度已暂停 Then Exit Sub
             If 调度中 Then Exit Sub
             调度中 = True
         End SyncLock
@@ -537,7 +552,7 @@ Public Class 编码队列_v6
                          SyncLock 队列锁
                              调度中 = False
                              Dim running = 队列.Where(Function(x) 是否进行中任务(x) OrElse x.正在执行).Count()
-                             shouldRunAgain = running < 获取并发上限() AndAlso 队列.Any(Function(x) x.状态 = 编码任务状态_v6.未处理 AndAlso x.允许自动启动 AndAlso Not x.正在执行)
+                             shouldRunAgain = Not 自动调度已暂停 AndAlso running < 获取并发上限() AndAlso 队列.Any(Function(x) x.状态 = 编码任务状态_v6.未处理 AndAlso x.允许自动启动 AndAlso Not x.正在执行)
                              shouldCheckCompletion = 完成提示待调度结束检查
                              If Not shouldRunAgain Then 完成提示待调度结束检查 = False
                          End SyncLock
@@ -555,6 +570,7 @@ Public Class 编码队列_v6
             Dim nextTask As 编码任务_v6 = Nothing
             Dim 执行标识 As Long = 0
             SyncLock 队列锁
+                If 自动调度已暂停 Then Exit Do
                 Dim running = 队列.Where(Function(x) 是否进行中任务(x) OrElse x.正在执行).Count()
                 If running >= 获取并发上限() Then Exit Do
                 nextTask = 队列.FirstOrDefault(Function(x) x.状态 = 编码任务状态_v6.未处理 AndAlso x.允许自动启动 AndAlso Not x.正在执行)
@@ -973,14 +989,14 @@ Public Class 编码队列_v6
         Return Not File.Exists(输出路径) AndAlso (已保留输出路径 Is Nothing OrElse Not 已保留输出路径.Contains(输出路径))
     End Function
 
-    ' Must be called while 队列锁 is held so simultaneously-started tasks reserve different names.
+        ' Must be called while 队列锁 is held so active and stopping tasks reserve different names.
     Private Shared Sub 为任务保留输出文件(task As 编码任务_v6)
         If task Is Nothing OrElse task.预设数据 Is Nothing Then Exit Sub
         If Not String.IsNullOrWhiteSpace(task.输出文件) AndAlso Not task.输出文件由自动命名生成 Then Exit Sub
 
         Dim 已保留输出路径 As New HashSet(Of String)(StringComparer.OrdinalIgnoreCase)
         For Each other In 队列
-            If other Is task OrElse Not 是否进行中任务(other) OrElse String.IsNullOrWhiteSpace(other.输出文件) Then Continue For
+            If other Is task OrElse (Not 是否进行中任务(other) AndAlso Not other.正在执行) OrElse String.IsNullOrWhiteSpace(other.输出文件) Then Continue For
             已保留输出路径.Add(other.输出文件)
         Next
 
@@ -1319,8 +1335,8 @@ Public Class 编码任务_v6
     Public Async Function 开始Async(执行标识 As Long) As Task
         SyncLock 状态锁
             If Not 正在执行标记 OrElse 执行版本 <> 执行标识 Then Exit Function
+            If 手动停止 OrElse 状态 = 编码任务状态_v6.已停止 Then Exit Function
             状态 = 编码任务状态_v6.正在处理
-            手动停止 = False
         End SyncLock
         Try
             清空日志(False)
@@ -1536,10 +1552,14 @@ Public Class 编码任务_v6
 
     Public Sub 停止()
         Try
-            If Not 可停止 Then Exit Sub
-            手动停止 = True
-            If 当前进程 IsNot Nothing AndAlso Not 当前进程.HasExited Then 当前进程.Kill()
-            状态 = 编码任务状态_v6.已停止
+            Dim process As Process = Nothing
+            SyncLock 状态锁
+                If Not 可停止 Then Exit Sub
+                手动停止 = True
+                状态 = 编码任务状态_v6.已停止
+                process = 当前进程
+            End SyncLock
+            If process IsNot Nothing AndAlso Not process.HasExited Then process.Kill()
             任务耗时计时器.Stop()
             追加日志("[3FUI] 正在停止任务", 编码任务日志类别_v6.系统, 当前步骤, False, False)
             编码队列_v6.通知任务更新(Me)

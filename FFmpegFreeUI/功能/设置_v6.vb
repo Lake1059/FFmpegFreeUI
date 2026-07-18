@@ -27,10 +27,6 @@ Public Class 设置_v6
     Public Property 启用性能计数器 As Integer = 0
 
     Public Property 字体 As String = SystemFonts.DefaultFont.FontFamily.Name
-    Public Property 语言 As String = "zh"
-    Public Property 界面修正_选项卡文字增加左侧空格 As Integer = 0
-    Public Property 界面修正_增加使用文字渲染尺寸来调节的标签的尺寸 As Integer = 0
-    Public Property 界面修正_校准列表视图的项高度 As Integer = 0
 
     Public Property 指定处理器核心 As String = ""
     Public Property 自动同时运行任务数量选项 As Integer = 0
@@ -103,7 +99,6 @@ Public Class 设置_v6
     Public Property SP_毛玻璃背景来源 As Integer = -1
     Public Property SP_毛玻璃噪点颗粒 As Integer = -1
 
-    Public Property 上次回报活跃信息的日期 As Date
     Public Property 是否询问标记_下载服务器选择 As Boolean = False
     Public Property 自定义视频编码器列表 As New List(Of String)
 
