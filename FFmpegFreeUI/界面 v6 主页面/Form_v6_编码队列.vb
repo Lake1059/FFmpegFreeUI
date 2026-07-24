@@ -3,9 +3,7 @@ Imports LakeUI
 
 Public Class Form_v6_编码队列
     Private DPI As Single = 1.0F
-    Private Shared ReadOnly 非任务列理想宽度基准 As Integer() = {82, 70, 66, 136, 54, 98, 145}
-    Private Shared ReadOnly 非任务列最小宽度基准 As Integer() = {72, 60, 56, 112, 46, 82, 118}
-    Private Shared ReadOnly 非任务列常用文本 As String() = {"正在处理", "100.0%", "1000%", "999 MB - 999 MB", "99", "100.00 Mbps", "9h99m99s - 9h99m99s"}
+    Private Shared ReadOnly 非任务列常用文本 As String() = {"正在处理", "100.0%", "1000%", "99.00 GB - 99.0 GB", "100", "100.00 Mbps", "99h99m99s - 99h99m99s"}
     Private Const 任务名称列最小宽度基准 As Integer = 96
     Private Const 列宽滚动条预留宽度基准 As Integer = 18
     Private Const 列宽文本预留宽度基准 As Integer = 20
@@ -15,7 +13,6 @@ Public Class Form_v6_编码队列
     Private WithEvents 列宽调整计时器 As New System.Windows.Forms.Timer With {.Interval = 80}
     Private 上次列宽有效总宽度 As Integer = -1
     Private 上次列宽Dpi As Single = -1
-    Private 菜单已初始化 As Boolean = False
     Private 正在刷新列表 As Boolean = False
 
     Private Sub Form_v6_编码队列_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -24,7 +21,7 @@ Public Class Form_v6_编码队列
         UltraDetailListView1.AllowDragReorder = True
         调整列表交互区域()
         调整顶部按钮组居中()
-        初始化菜单()
+        绑定菜单事件()
         AddHandler 编码队列_v6.队列已变化, AddressOf 队列已变化
         AddHandler 编码队列_v6.任务已更新, AddressOf 任务已更新
         刷新整表()
@@ -151,42 +148,21 @@ Public Class Form_v6_编码队列
         If JustEmptyControl1.Width <> 新宽度 Then JustEmptyControl1.Width = 新宽度
     End Sub
 
-    Private Sub 初始化菜单()
-        If 菜单已初始化 Then Exit Sub
-        菜单已初始化 = True
+    Private Sub 绑定菜单事件()
+        AddHandler 任务菜单.Items(0).Click, AddressOf 添加文件到队列
+        AddHandler 任务菜单.Items(1).Click, AddressOf 复制选中任务命令行
+        AddHandler 任务菜单.Items(2).Click, AddressOf 打开任务日志
+        AddHandler 任务菜单.Items(3).Click, AddressOf 将任务参数覆盖到参数面板
+        AddHandler 任务菜单.Items(4).Click, AddressOf 将参数面板应用到选中任务
+        AddHandler 任务菜单.Items(6).Click, AddressOf 全选任务
+        AddHandler 任务菜单.Items(7).Click, AddressOf 选中错误任务
+        AddHandler 任务菜单.Items(8).Click, Sub() 编码队列_v6.上移任务(获取选中任务ID())
+        AddHandler 任务菜单.Items(9).Click, Sub() 编码队列_v6.下移任务(获取选中任务ID())
 
-        添加菜单项(任务菜单, "添加文件到队列", AddressOf 添加文件到队列)
-        添加菜单项(任务菜单, "复制选中任务命令行", AddressOf 复制选中任务命令行)
-        添加菜单项(任务菜单, "打开任务日志", AddressOf 打开任务日志)
-        添加菜单项(任务菜单, "将任务参数覆盖到参数面板", AddressOf 将任务参数覆盖到参数面板)
-        添加菜单项(任务菜单, "将参数面板应用到选中任务", AddressOf 将参数面板应用到选中任务)
-        添加菜单分割线(任务菜单)
-        添加菜单项(任务菜单, "全选", AddressOf 全选任务)
-        添加菜单项(任务菜单, "选中所有错误任务", AddressOf 选中错误任务)
-        添加菜单项(任务菜单, "上移选中任务", Sub() 编码队列_v6.上移任务(获取选中任务ID()))
-        添加菜单项(任务菜单, "下移选中任务", Sub() 编码队列_v6.下移任务(获取选中任务ID()))
-
-        添加菜单项(右键菜单, "开始", Sub() 编码队列_v6.开始任务(获取选中任务ID()))
-        添加菜单项(右键菜单, "暂停", Sub() 编码队列_v6.暂停任务(获取选中任务ID()))
-        添加菜单项(右键菜单, "恢复", Sub() 编码队列_v6.恢复任务(获取选中任务ID()))
-        添加菜单项(右键菜单, "停止", Sub() 编码队列_v6.停止任务(获取选中任务ID()))
-        添加菜单项(右键菜单, "重置", Sub() 编码队列_v6.重置任务(获取选中任务ID()))
-        添加菜单项(右键菜单, "移除", Sub() 编码队列_v6.移除任务(获取选中任务ID()))
-        添加菜单分割线(右键菜单)
-        添加菜单项(右键菜单, "定位输出", AddressOf 定位输出)
-        添加菜单项(右键菜单, "复制命令行", AddressOf 复制选中任务命令行)
-        添加菜单项(右键菜单, "打开任务日志", AddressOf 打开任务日志)
-        添加菜单项(右键菜单, "查看任务参数", AddressOf 查看任务参数)
-    End Sub
-
-    Private Sub 添加菜单项(menu As LakeUI.ModernContextMenu, text As String, action As Action)
-        Dim item As New LakeUI.ModernContextMenu.ModernMenuItem(text)
-        AddHandler item.Click, Sub() action()
-        menu.Items.Add(item)
-    End Sub
-
-    Private Sub 添加菜单分割线(menu As LakeUI.ModernContextMenu)
-        menu.Items.Add(New LakeUI.ModernContextMenu.ModernMenuItem() With {.IsSeparator = True})
+        AddHandler 右键菜单.Items(0).Click, AddressOf 打开任务日志
+        AddHandler 右键菜单.Items(1).Click, AddressOf 定位输出
+        AddHandler 右键菜单.Items(2).Click, AddressOf 复制选中任务命令行
+        AddHandler 右键菜单.Items(3).Click, AddressOf 查看任务参数
     End Sub
 
     Private Sub 添加文件到队列()
@@ -253,7 +229,22 @@ Public Class Form_v6_编码队列
         Dim task = 编码队列_v6.根据ID获取任务(ids(0))
         If task Is Nothing Then Exit Sub
         Dim target = If(task.状态 = 编码任务状态_v6.未处理, task.输入文件, task.输出文件)
-        If File.Exists(target) Then Process.Start("explorer", "/select,""" & target & """")
+        If Not File.Exists(target) Then Exit Sub
+
+        Dim startInfo As New ProcessStartInfo With {
+            .FileName = "explorer.exe",
+            .UseShellExecute = True
+        }
+        startInfo.ArgumentList.Add("/select," & Path.GetFullPath(target))
+        Process.Start(startInfo)
+    End Sub
+
+    Private Sub 打开输出文件(task As 编码任务_v6)
+        If task Is Nothing OrElse Not File.Exists(task.输出文件) Then Exit Sub
+        Process.Start(New ProcessStartInfo With {
+            .FileName = Path.GetFullPath(task.输出文件),
+            .UseShellExecute = True
+        })
     End Sub
 
     Private Sub 打开任务日志()
@@ -338,9 +329,21 @@ Public Class Form_v6_编码队列
         Dim id = TryCast(e.Item?.Tag, String)
         If String.IsNullOrWhiteSpace(id) Then
             打开任务日志()
-        Else
-            Form_v6_编码队列_任务日志.打开或激活(Me, New String() {id})
+            Exit Sub
         End If
+
+        Dim task = 编码队列_v6.根据ID获取任务(id)
+        If task Is Nothing Then Exit Sub
+
+        Select Case task.状态
+            Case 编码任务状态_v6.已完成
+                打开输出文件(task)
+            Case 编码任务状态_v6.未处理
+                Dim form As New Form_v6_编码队列_查看参数(task)
+                form.Show(Me)
+            Case Else
+                Form_v6_编码队列_任务日志.打开或激活(Me, New String() {id})
+        End Select
     End Sub
 
     Private Sub UltraDetailListView1_KeyDown(sender As Object, e As KeyEventArgs) Handles UltraDetailListView1.KeyDown
@@ -388,7 +391,6 @@ Public Class Form_v6_编码队列
     End Sub
 
     Private Sub ModernButton8_Click(sender As Object, e As EventArgs) Handles ModernButton8.Click
-        初始化菜单()
         任务菜单.Show(ModernButton8, 0, ModernButton8.Height)
     End Sub
 
@@ -447,14 +449,13 @@ Public Class Form_v6_编码队列
         上次列宽有效总宽度 = 有效总宽度
         上次列宽Dpi = DPI
 
-        Dim 非任务列宽 = 获取非任务列理想宽度()
-        Dim 非任务列最小宽度 = 获取非任务列最小宽度()
+        Dim 非任务列宽 = 获取非任务列最大宽度()
         Dim 任务名称列最小宽度 = 缩放宽度(任务名称列最小宽度基准, DPI)
         Dim 非任务列总宽度 = 非任务列宽.Sum()
 
         If 有效总宽度 - 非任务列总宽度 < 任务名称列最小宽度 Then
             Dim 非任务列目标宽度 = Math.Max(0, 有效总宽度 - 任务名称列最小宽度)
-            非任务列宽 = 压缩列宽(非任务列宽, 非任务列最小宽度, 非任务列目标宽度)
+            非任务列宽 = 按最大值压缩列宽(非任务列宽, 非任务列目标宽度)
             非任务列总宽度 = 非任务列宽.Sum()
         End If
 
@@ -469,21 +470,10 @@ Public Class Form_v6_编码队列
         End Try
     End Sub
 
-    Private Function 获取非任务列理想宽度() As Integer()
-        Dim result(非任务列理想宽度基准.Length - 1) As Integer
-        For i = 0 To 非任务列理想宽度基准.Length - 1
-            Dim 文本宽度 = Math.Max(
-                测量列文本宽度(If(UltraDetailListView1.Columns(i + 1).Text, "")),
-                测量列文本宽度(非任务列常用文本(i)))
-            result(i) = Math.Max(缩放宽度(非任务列理想宽度基准(i), DPI), 文本宽度)
-        Next
-        Return result
-    End Function
-
-    Private Function 获取非任务列最小宽度() As Integer()
-        Dim result(非任务列最小宽度基准.Length - 1) As Integer
-        For i = 0 To 非任务列最小宽度基准.Length - 1
-            result(i) = Math.Max(缩放宽度(非任务列最小宽度基准(i), DPI), 测量列文本宽度(If(UltraDetailListView1.Columns(i + 1).Text, "")))
+    Private Function 获取非任务列最大宽度() As Integer()
+        Dim result(非任务列常用文本.Length - 1) As Integer
+        For i = 0 To 非任务列常用文本.Length - 1
+            result(i) = 测量列文本宽度(非任务列常用文本(i))
         Next
         Return result
     End Function
@@ -494,31 +484,17 @@ Public Class Form_v6_编码队列
         Return size.Width + 缩放宽度(列宽文本预留宽度基准, DPI)
     End Function
 
-    Private Shared Function 压缩列宽(理想宽度 As Integer(), 最小宽度 As Integer(), 目标总宽度 As Integer) As Integer()
-        Dim result = DirectCast(理想宽度.Clone(), Integer())
-        Dim 理想总宽度 = result.Sum()
-        Dim 最小总宽度 = 最小宽度.Sum()
+    Private Shared Function 按最大值压缩列宽(最大宽度 As Integer(), 目标总宽度 As Integer) As Integer()
+        Dim 最大总宽度 = 最大宽度.Sum()
+        If 目标总宽度 >= 最大总宽度 Then Return DirectCast(最大宽度.Clone(), Integer())
 
-        If 目标总宽度 >= 理想总宽度 Then Return result
-        If 目标总宽度 <= 最小总宽度 Then Return DirectCast(最小宽度.Clone(), Integer())
+        Dim result(最大宽度.Length - 1) As Integer
+        If 目标总宽度 <= 0 OrElse 最大总宽度 <= 0 Then Return result
 
-        Dim 需要压缩宽度 = 理想总宽度 - 目标总宽度
-        Dim 可压缩宽度 = 理想总宽度 - 最小总宽度
-        For i = 0 To result.Length - 1
-            Dim 当前可压缩宽度 = result(i) - 最小宽度(i)
-            result(i) -= CInt(Math.Floor(当前可压缩宽度 * 需要压缩宽度 / 可压缩宽度))
+        Dim 缩放比例 = 目标总宽度 / CDbl(最大总宽度)
+        For i = 0 To 最大宽度.Length - 1
+            result(i) = CInt(Math.Floor(最大宽度(i) * 缩放比例))
         Next
-
-        Dim 当前总宽度 = result.Sum()
-        Dim index = result.Length - 1
-        While 当前总宽度 > 目标总宽度
-            If result(index) > 最小宽度(index) Then
-                result(index) -= 1
-                当前总宽度 -= 1
-            End If
-            index = If(index = 0, result.Length - 1, index - 1)
-        End While
-
         Return result
     End Function
 

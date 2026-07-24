@@ -402,6 +402,7 @@ Partial Class Form_v6_参数面板_预设管理
         MCB_预设来源.Margin = New Padding(2, 2, 2, 2)
         MCB_预设来源.Name = "MCB_预设来源"
         MCB_预设来源.Padding = New Padding(10, 0, 10, 0)
+        MCB_预设来源.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_预设来源.Size = New Size(150, 32)
         MCB_预设来源.TabIndex = 0
         MCB_预设来源.ToolTipGap = -1

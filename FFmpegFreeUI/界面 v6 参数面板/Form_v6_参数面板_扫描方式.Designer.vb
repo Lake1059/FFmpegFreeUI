@@ -83,6 +83,7 @@ Partial Class Form_v6_参数面板_扫描方式
         MCB_扫描方式.MaxDropDownItems = 15
         MCB_扫描方式.Name = "MCB_扫描方式"
         MCB_扫描方式.Padding = New Padding(10, 0, 10, 0)
+        MCB_扫描方式.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_扫描方式.Size = New Size(544, 32)
         MCB_扫描方式.TabIndex = 15
         MCB_扫描方式.ToolTipGap = -1

@@ -90,6 +90,7 @@ Partial Class Form_v6_设置_LakeUIHDR
         MCB_HDR启用.Margin = New Padding(2, 2, 2, 2)
         MCB_HDR启用.Name = "MCB_HDR启用"
         MCB_HDR启用.Padding = New Padding(10, 0, 10, 0)
+        MCB_HDR启用.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_HDR启用.Size = New Size(220, 32)
         MCB_HDR启用.TabIndex = 0
         MCB_HDR启用.ToolTipGap = -1
@@ -160,6 +161,7 @@ Partial Class Form_v6_设置_LakeUIHDR
         MCB_HDR图片.Margin = New Padding(2, 2, 2, 2)
         MCB_HDR图片.Name = "MCB_HDR图片"
         MCB_HDR图片.Padding = New Padding(10, 0, 10, 0)
+        MCB_HDR图片.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_HDR图片.Size = New Size(220, 32)
         MCB_HDR图片.TabIndex = 0
         MCB_HDR图片.ToolTipGap = -1
@@ -213,6 +215,7 @@ Partial Class Form_v6_设置_LakeUIHDR
         MCB_HDR矢量颜色.Margin = New Padding(2, 2, 2, 2)
         MCB_HDR矢量颜色.Name = "MCB_HDR矢量颜色"
         MCB_HDR矢量颜色.Padding = New Padding(10, 0, 10, 0)
+        MCB_HDR矢量颜色.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_HDR矢量颜色.Size = New Size(220, 32)
         MCB_HDR矢量颜色.TabIndex = 0
         MCB_HDR矢量颜色.ToolTipGap = -1
@@ -273,6 +276,7 @@ Partial Class Form_v6_设置_LakeUIHDR
         MCB_HDR显示档位.Margin = New Padding(2, 2, 2, 2)
         MCB_HDR显示档位.Name = "MCB_HDR显示档位"
         MCB_HDR显示档位.Padding = New Padding(10, 0, 10, 0)
+        MCB_HDR显示档位.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_HDR显示档位.Size = New Size(220, 32)
         MCB_HDR显示档位.TabIndex = 0
         MCB_HDR显示档位.ToolTipGap = -1

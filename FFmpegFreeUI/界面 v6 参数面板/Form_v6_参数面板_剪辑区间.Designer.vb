@@ -104,6 +104,7 @@ Partial Class Form_v6_参数面板_剪辑区间
         MCB_向前解码秒数.Margin = New Padding(2, 2, 2, 2)
         MCB_向前解码秒数.Name = "MCB_向前解码秒数"
         MCB_向前解码秒数.Padding = New Padding(10, 0, 10, 0)
+        MCB_向前解码秒数.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_向前解码秒数.Size = New Size(100, 32)
         MCB_向前解码秒数.TabIndex = 0
         MCB_向前解码秒数.ToolTipGap = -1
@@ -280,6 +281,7 @@ Partial Class Form_v6_参数面板_剪辑区间
         MCB_剪辑模式.Margin = New Padding(2, 2, 2, 2)
         MCB_剪辑模式.Name = "MCB_剪辑模式"
         MCB_剪辑模式.Padding = New Padding(10, 0, 10, 0)
+        MCB_剪辑模式.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_剪辑模式.Size = New Size(500, 32)
         MCB_剪辑模式.TabIndex = 0
         MCB_剪辑模式.ToolTipGap = -1

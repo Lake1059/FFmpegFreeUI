@@ -215,6 +215,7 @@ Partial Class Form_v6_参数面板_视频编码器
         MCB_场景优化.Margin = New Padding(2, 2, 2, 2)
         MCB_场景优化.Name = "MCB_场景优化"
         MCB_场景优化.Padding = New Padding(10, 0, 10, 0)
+        MCB_场景优化.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_场景优化.Size = New Size(150, 32)
         MCB_场景优化.TabIndex = 0
         MCB_场景优化.ToolTipMaxWidth = 350
@@ -265,6 +266,7 @@ Partial Class Form_v6_参数面板_视频编码器
         MCB_配置文件.Margin = New Padding(2, 2, 2, 2)
         MCB_配置文件.Name = "MCB_配置文件"
         MCB_配置文件.Padding = New Padding(10, 0, 10, 0)
+        MCB_配置文件.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_配置文件.Size = New Size(150, 32)
         MCB_配置文件.TabIndex = 0
         MCB_配置文件.ToolTipMaxWidth = 350
@@ -315,6 +317,7 @@ Partial Class Form_v6_参数面板_视频编码器
         MCB_编码预设.Margin = New Padding(2, 2, 2, 2)
         MCB_编码预设.Name = "MCB_编码预设"
         MCB_编码预设.Padding = New Padding(10, 0, 10, 0)
+        MCB_编码预设.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_编码预设.Size = New Size(150, 32)
         MCB_编码预设.TabIndex = 0
         MCB_编码预设.ToolTipMaxWidth = 350
@@ -413,6 +416,7 @@ Partial Class Form_v6_参数面板_视频编码器
         MCB_具体编码器.MaxDropDownItems = 20
         MCB_具体编码器.Name = "MCB_具体编码器"
         MCB_具体编码器.Padding = New Padding(10, 0, 10, 0)
+        MCB_具体编码器.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_具体编码器.Size = New Size(160, 32)
         MCB_具体编码器.TabIndex = 6
         MCB_具体编码器.ToolTipGap = -1
@@ -450,6 +454,7 @@ Partial Class Form_v6_参数面板_视频编码器
         MCB_视频编码器分类.MaxDropDownItems = 15
         MCB_视频编码器分类.Name = "MCB_视频编码器分类"
         MCB_视频编码器分类.Padding = New Padding(10, 0, 10, 0)
+        MCB_视频编码器分类.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_视频编码器分类.Size = New Size(200, 32)
         MCB_视频编码器分类.TabIndex = 4
         MCB_视频编码器分类.ToolTipGap = -1
@@ -488,6 +493,7 @@ Partial Class Form_v6_参数面板_视频编码器
         MCB_视频编码器类型.Margin = New Padding(2, 2, 2, 2)
         MCB_视频编码器类型.Name = "MCB_视频编码器类型"
         MCB_视频编码器类型.Padding = New Padding(10, 0, 10, 0)
+        MCB_视频编码器类型.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_视频编码器类型.Size = New Size(100, 32)
         MCB_视频编码器类型.TabIndex = 0
         MCB_视频编码器类型.ToolTipMaxWidth = 350

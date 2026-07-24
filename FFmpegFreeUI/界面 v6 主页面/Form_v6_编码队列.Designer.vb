@@ -22,6 +22,20 @@ Partial Class Form_v6_编码队列
     '不要使用代码编辑器修改它。
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Dim ModernMenuItem1 As LakeUI.ModernContextMenu.ModernMenuItem = New LakeUI.ModernContextMenu.ModernMenuItem()
+        Dim ModernMenuItem2 As LakeUI.ModernContextMenu.ModernMenuItem = New LakeUI.ModernContextMenu.ModernMenuItem()
+        Dim ModernMenuItem3 As LakeUI.ModernContextMenu.ModernMenuItem = New LakeUI.ModernContextMenu.ModernMenuItem()
+        Dim ModernMenuItem4 As LakeUI.ModernContextMenu.ModernMenuItem = New LakeUI.ModernContextMenu.ModernMenuItem()
+        Dim ModernMenuItem5 As LakeUI.ModernContextMenu.ModernMenuItem = New LakeUI.ModernContextMenu.ModernMenuItem()
+        Dim ModernMenuItem6 As LakeUI.ModernContextMenu.ModernMenuItem = New LakeUI.ModernContextMenu.ModernMenuItem()
+        Dim ModernMenuItem7 As LakeUI.ModernContextMenu.ModernMenuItem = New LakeUI.ModernContextMenu.ModernMenuItem()
+        Dim ModernMenuItem8 As LakeUI.ModernContextMenu.ModernMenuItem = New LakeUI.ModernContextMenu.ModernMenuItem()
+        Dim ModernMenuItem9 As LakeUI.ModernContextMenu.ModernMenuItem = New LakeUI.ModernContextMenu.ModernMenuItem()
+        Dim ModernMenuItem10 As LakeUI.ModernContextMenu.ModernMenuItem = New LakeUI.ModernContextMenu.ModernMenuItem()
+        Dim ModernMenuItem11 As LakeUI.ModernContextMenu.ModernMenuItem = New LakeUI.ModernContextMenu.ModernMenuItem()
+        Dim ModernMenuItem12 As LakeUI.ModernContextMenu.ModernMenuItem = New LakeUI.ModernContextMenu.ModernMenuItem()
+        Dim ModernMenuItem13 As LakeUI.ModernContextMenu.ModernMenuItem = New LakeUI.ModernContextMenu.ModernMenuItem()
+        Dim ModernMenuItem14 As LakeUI.ModernContextMenu.ModernMenuItem = New LakeUI.ModernContextMenu.ModernMenuItem()
         Dim ListColumn1 As LakeUI.UltraDetailListView.ListColumn = New LakeUI.UltraDetailListView.ListColumn()
         Dim ListColumn2 As LakeUI.UltraDetailListView.ListColumn = New LakeUI.UltraDetailListView.ListColumn()
         Dim ListColumn3 As LakeUI.UltraDetailListView.ListColumn = New LakeUI.UltraDetailListView.ListColumn()
@@ -48,9 +62,10 @@ Partial Class Form_v6_编码队列
         Panel1.SuspendLayout()
         ModernPanel1.SuspendLayout()
         SuspendLayout()
-        '
+        ' 
         ' 任务菜单
-        '
+        ' 
+        任务菜单.AnimationFPS = 120
         任务菜单.BackdropBlurPasses = 2
         任务菜单.BackdropBlurRadius = 30
         任务菜单.BackdropMode = LakeUI.ModernContextMenu.BackdropModeEnum.Auto
@@ -58,20 +73,50 @@ Partial Class Form_v6_编码队列
         任务菜单.BackdropTintColor = Color.FromArgb(CByte(40), CByte(0), CByte(0), CByte(0))
         任务菜单.BorderColor = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
         任务菜单.DescriptionFont = New Font("Microsoft YaHei UI", 9F)
-        任务菜单.AnimationFPS = 120
         任务菜单.HoverBackColor = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
         任务菜单.HoverRadius = 5
         任务菜单.IconSize = 0
         任务菜单.ItemHeight = 28
         任务菜单.ItemPadding = New Padding(10, 0, 10, 0)
+        ModernMenuItem1.Font = Nothing
+        ModernMenuItem1.Text = "添加文件到队列"
+        ModernMenuItem2.Font = Nothing
+        ModernMenuItem2.Text = "复制选中任务命令行"
+        ModernMenuItem3.Font = Nothing
+        ModernMenuItem3.Text = "打开任务日志"
+        ModernMenuItem4.Font = Nothing
+        ModernMenuItem4.Text = "将任务参数覆盖到参数面板"
+        ModernMenuItem5.Font = Nothing
+        ModernMenuItem5.Text = "将参数面板应用到选中任务"
+        ModernMenuItem6.Font = Nothing
+        ModernMenuItem6.IsSeparator = True
+        ModernMenuItem7.Font = Nothing
+        ModernMenuItem7.Text = "全选"
+        ModernMenuItem8.Font = Nothing
+        ModernMenuItem8.Text = "选中所有错误任务"
+        ModernMenuItem9.Font = Nothing
+        ModernMenuItem9.Text = "上移选中任务"
+        ModernMenuItem10.Font = Nothing
+        ModernMenuItem10.Text = "下移选中任务"
+        任务菜单.Items.Add(ModernMenuItem1)
+        任务菜单.Items.Add(ModernMenuItem2)
+        任务菜单.Items.Add(ModernMenuItem3)
+        任务菜单.Items.Add(ModernMenuItem4)
+        任务菜单.Items.Add(ModernMenuItem5)
+        任务菜单.Items.Add(ModernMenuItem6)
+        任务菜单.Items.Add(ModernMenuItem7)
+        任务菜单.Items.Add(ModernMenuItem8)
+        任务菜单.Items.Add(ModernMenuItem9)
+        任务菜单.Items.Add(ModernMenuItem10)
         任务菜单.MenuFont = New Font("Microsoft YaHei UI", 10F)
         任务菜单.MenuPadding = New Padding(10)
         任务菜单.PressedBackColor = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
         任务菜单.SeparatorColor = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
         任务菜单.SeparatorHeight = 20
-        '
+        ' 
         ' 右键菜单
-        '
+        ' 
+        右键菜单.AnimationFPS = 120
         右键菜单.BackdropBlurPasses = 2
         右键菜单.BackdropBlurRadius = 30
         右键菜单.BackdropMode = LakeUI.ModernContextMenu.BackdropModeEnum.Auto
@@ -79,20 +124,31 @@ Partial Class Form_v6_编码队列
         右键菜单.BackdropTintColor = Color.FromArgb(CByte(40), CByte(0), CByte(0), CByte(0))
         右键菜单.BorderColor = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
         右键菜单.DescriptionFont = New Font("Microsoft YaHei UI", 9F)
-        右键菜单.AnimationFPS = 120
         右键菜单.HoverBackColor = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
         右键菜单.HoverRadius = 5
         右键菜单.IconSize = 0
         右键菜单.ItemHeight = 28
         右键菜单.ItemPadding = New Padding(10, 0, 10, 0)
+        ModernMenuItem11.Font = Nothing
+        ModernMenuItem11.Text = "打开任务日志"
+        ModernMenuItem12.Font = Nothing
+        ModernMenuItem12.Text = "定位输出"
+        ModernMenuItem13.Font = Nothing
+        ModernMenuItem13.Text = "复制命令行"
+        ModernMenuItem14.Font = Nothing
+        ModernMenuItem14.Text = "查看任务参数"
+        右键菜单.Items.Add(ModernMenuItem11)
+        右键菜单.Items.Add(ModernMenuItem12)
+        右键菜单.Items.Add(ModernMenuItem13)
+        右键菜单.Items.Add(ModernMenuItem14)
         右键菜单.MenuFont = New Font("Microsoft YaHei UI", 10F)
         右键菜单.MenuPadding = New Padding(10)
         右键菜单.PressedBackColor = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
         右键菜单.SeparatorColor = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
         右键菜单.SeparatorHeight = 20
-        '
+        ' 
         ' Panel1
-        '
+        ' 
         Panel1.Controls.Add(HtmlColorLabel1)
         Panel1.Controls.Add(ModernButton7)
         Panel1.Controls.Add(ModernButton6)
@@ -109,9 +165,9 @@ Partial Class Form_v6_编码队列
         Panel1.Padding = New Padding(10)
         Panel1.Size = New Size(984, 55)
         Panel1.TabIndex = 0
-        '
+        ' 
         ' HtmlColorLabel1
-        '
+        ' 
         HtmlColorLabel1.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel1.Dock = DockStyle.Fill
         HtmlColorLabel1.Location = New Point(727, 10)
@@ -121,9 +177,9 @@ Partial Class Form_v6_编码队列
         HtmlColorLabel1.Size = New Size(247, 35)
         HtmlColorLabel1.TabIndex = 9
         HtmlColorLabel1.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleRight
-        '
+        ' 
         ' ModernButton7
-        '
+        ' 
         ModernButton7.BackColor1 = Color.Transparent
         ModernButton7.BorderColor = Color.Transparent
         ModernButton7.BorderRadius = 10
@@ -141,9 +197,9 @@ Partial Class Form_v6_编码队列
         ModernButton7.Size = New Size(60, 35)
         ModernButton7.TabIndex = 6
         ModernButton7.Text = "定位"
-        '
+        ' 
         ' ModernButton6
-        '
+        ' 
         ModernButton6.BackColor1 = Color.Transparent
         ModernButton6.BorderColor = Color.Transparent
         ModernButton6.BorderRadius = 10
@@ -161,9 +217,9 @@ Partial Class Form_v6_编码队列
         ModernButton6.Size = New Size(60, 35)
         ModernButton6.TabIndex = 5
         ModernButton6.Text = "重置"
-        '
+        ' 
         ' ModernButton5
-        '
+        ' 
         ModernButton5.BackColor1 = Color.Transparent
         ModernButton5.BorderColor = Color.Transparent
         ModernButton5.BorderRadius = 10
@@ -181,9 +237,9 @@ Partial Class Form_v6_编码队列
         ModernButton5.Size = New Size(60, 35)
         ModernButton5.TabIndex = 4
         ModernButton5.Text = "移除"
-        '
+        ' 
         ' ModernButton4
-        '
+        ' 
         ModernButton4.BackColor1 = Color.Transparent
         ModernButton4.BorderColor = Color.Transparent
         ModernButton4.BorderRadius = 10
@@ -201,9 +257,9 @@ Partial Class Form_v6_编码队列
         ModernButton4.Size = New Size(60, 35)
         ModernButton4.TabIndex = 3
         ModernButton4.Text = "停止"
-        '
+        ' 
         ' ModernButton3
-        '
+        ' 
         ModernButton3.BackColor1 = Color.Transparent
         ModernButton3.BorderColor = Color.Transparent
         ModernButton3.BorderRadius = 10
@@ -221,9 +277,9 @@ Partial Class Form_v6_编码队列
         ModernButton3.Size = New Size(60, 35)
         ModernButton3.TabIndex = 2
         ModernButton3.Text = "恢复"
-        '
+        ' 
         ' ModernButton2
-        '
+        ' 
         ModernButton2.BackColor1 = Color.Transparent
         ModernButton2.BorderColor = Color.Transparent
         ModernButton2.BorderRadius = 10
@@ -241,9 +297,9 @@ Partial Class Form_v6_编码队列
         ModernButton2.Size = New Size(60, 35)
         ModernButton2.TabIndex = 1
         ModernButton2.Text = "暂停"
-        '
+        ' 
         ' ModernButton1
-        '
+        ' 
         ModernButton1.BackColor1 = Color.Transparent
         ModernButton1.BorderColor = Color.Transparent
         ModernButton1.BorderRadius = 10
@@ -261,17 +317,17 @@ Partial Class Form_v6_编码队列
         ModernButton1.Size = New Size(60, 35)
         ModernButton1.TabIndex = 0
         ModernButton1.Text = "开始"
-        '
+        ' 
         ' JustEmptyControl1
-        '
+        ' 
         JustEmptyControl1.Dock = DockStyle.Left
         JustEmptyControl1.Location = New Point(130, 10)
         JustEmptyControl1.Name = "JustEmptyControl1"
         JustEmptyControl1.Size = New Size(177, 35)
         JustEmptyControl1.TabIndex = 10
-        '
+        ' 
         ' ModernButton8
-        '
+        ' 
         ModernButton8.BackColor1 = Color.Transparent
         ModernButton8.BorderColor = Color.Transparent
         ModernButton8.BorderRadius = 10
@@ -289,9 +345,9 @@ Partial Class Form_v6_编码队列
         ModernButton8.Size = New Size(120, 35)
         ModernButton8.TabIndex = 7
         ModernButton8.Text = "任务管理菜单"
-        '
+        ' 
         ' UltraDetailListView1
-        '
+        ' 
         UltraDetailListView1.BackgroundColor = Color.Transparent
         UltraDetailListView1.BorderSize = 0
         ListColumn1.AllowLabelEdit = True
@@ -299,16 +355,23 @@ Partial Class Form_v6_编码队列
         ListColumn1.Width = 200
         ListColumn1.WordWrapHeightFixed = True
         ListColumn2.Text = "状态"
+        ListColumn2.WordWrapHeightFixed = True
         ListColumn3.Text = "进度"
         ListColumn3.Width = 80
+        ListColumn3.WordWrapHeightFixed = True
         ListColumn4.Text = "效率"
         ListColumn4.Width = 80
+        ListColumn4.WordWrapHeightFixed = True
         ListColumn5.Text = "大小/预估"
         ListColumn5.Width = 150
+        ListColumn5.WordWrapHeightFixed = True
         ListColumn6.Text = "质量"
         ListColumn6.Width = 80
+        ListColumn6.WordWrapHeightFixed = True
         ListColumn7.Text = "比特率"
+        ListColumn7.WordWrapHeightFixed = True
         ListColumn8.Text = "剩余/已用"
+        ListColumn8.WordWrapHeightFixed = True
         UltraDetailListView1.Columns.Add(ListColumn1)
         UltraDetailListView1.Columns.Add(ListColumn2)
         UltraDetailListView1.Columns.Add(ListColumn3)
@@ -337,9 +400,9 @@ Partial Class Form_v6_编码队列
         UltraDetailListView1.SelectionRectFillColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         UltraDetailListView1.Size = New Size(984, 626)
         UltraDetailListView1.TabIndex = 1
-        '
+        ' 
         ' ModernPanel1
-        '
+        ' 
         ModernPanel1.BackColor = Color.Transparent
         ModernPanel1.BackColor1 = Color.Transparent
         ModernPanel1.BorderSize = 0
@@ -350,9 +413,9 @@ Partial Class Form_v6_编码队列
         ModernPanel1.Name = "ModernPanel1"
         ModernPanel1.Size = New Size(984, 681)
         ModernPanel1.TabIndex = 2
-        '
+        ' 
         ' Form_v6_编码队列
-        '
+        ' 
         AutoScaleDimensions = New SizeF(96F, 96F)
         AutoScaleMode = AutoScaleMode.Dpi
         BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))

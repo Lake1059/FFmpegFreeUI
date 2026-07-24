@@ -368,6 +368,7 @@ Partial Class Form_v6_集成工具_质量评测
         MCB_模型选择.Margin = New Padding(2, 2, 2, 2)
         MCB_模型选择.Name = "MCB_模型选择"
         MCB_模型选择.Padding = New Padding(10, 0, 10, 0)
+        MCB_模型选择.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_模型选择.Size = New Size(457, 32)
         MCB_模型选择.TabIndex = 6
         MCB_模型选择.ToolTipGap = -1
@@ -402,6 +403,7 @@ Partial Class Form_v6_集成工具_质量评测
         MCB_SubSample.Margin = New Padding(2, 2, 2, 2)
         MCB_SubSample.Name = "MCB_SubSample"
         MCB_SubSample.Padding = New Padding(10, 0, 10, 0)
+        MCB_SubSample.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_SubSample.Size = New Size(150, 32)
         MCB_SubSample.TabIndex = 20
         MCB_SubSample.ToolTipGap = -1
@@ -436,6 +438,7 @@ Partial Class Form_v6_集成工具_质量评测
         MCB_Pooling.Margin = New Padding(2, 2, 2, 2)
         MCB_Pooling.Name = "MCB_Pooling"
         MCB_Pooling.Padding = New Padding(10, 0, 10, 0)
+        MCB_Pooling.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_Pooling.Size = New Size(150, 32)
         MCB_Pooling.TabIndex = 17
         MCB_Pooling.ToolTipGap = -1

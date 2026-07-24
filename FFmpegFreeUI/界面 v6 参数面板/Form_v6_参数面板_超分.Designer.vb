@@ -264,6 +264,7 @@ Partial Class Form_v6_参数面板_超分
         MCB_着色器文件路径.Margin = New Padding(2, 2, 2, 2)
         MCB_着色器文件路径.Name = "MCB_着色器文件路径"
         MCB_着色器文件路径.Padding = New Padding(10, 0, 10, 0)
+        MCB_着色器文件路径.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_着色器文件路径.Size = New Size(470, 32)
         MCB_着色器文件路径.TabIndex = 15
         MCB_着色器文件路径.ToolTipGap = -1
@@ -373,6 +374,7 @@ Partial Class Form_v6_参数面板_超分
         MCB_下采样算法.Margin = New Padding(2, 2, 2, 2)
         MCB_下采样算法.Name = "MCB_下采样算法"
         MCB_下采样算法.Padding = New Padding(10, 0, 10, 0)
+        MCB_下采样算法.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_下采样算法.Size = New Size(150, 32)
         MCB_下采样算法.TabIndex = 16
         MCB_下采样算法.ToolTipGap = -1
@@ -436,6 +438,7 @@ Partial Class Form_v6_参数面板_超分
         MCB_上采样算法.Margin = New Padding(2, 2, 2, 2)
         MCB_上采样算法.Name = "MCB_上采样算法"
         MCB_上采样算法.Padding = New Padding(10, 0, 10, 0)
+        MCB_上采样算法.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_上采样算法.Size = New Size(150, 32)
         MCB_上采样算法.TabIndex = 15
         MCB_上采样算法.ToolTipGap = -1

@@ -171,6 +171,7 @@ Partial Class Form_v6_设置_个性化
         MCB_噪点颗粒.Margin = New Padding(2, 2, 2, 2)
         MCB_噪点颗粒.Name = "MCB_噪点颗粒"
         MCB_噪点颗粒.Padding = New Padding(10, 0, 10, 0)
+        MCB_噪点颗粒.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_噪点颗粒.Size = New Size(150, 32)
         MCB_噪点颗粒.TabIndex = 11
         MCB_噪点颗粒.ToolTipGap = -1
@@ -211,6 +212,7 @@ Partial Class Form_v6_设置_个性化
         MCB_背景来源.Margin = New Padding(2, 2, 2, 2)
         MCB_背景来源.Name = "MCB_背景来源"
         MCB_背景来源.Padding = New Padding(10, 0, 10, 0)
+        MCB_背景来源.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_背景来源.Size = New Size(150, 32)
         MCB_背景来源.TabIndex = 9
         MCB_背景来源.ToolTipGap = -1
@@ -250,6 +252,7 @@ Partial Class Form_v6_设置_个性化
         MCB_毛玻璃模式.Margin = New Padding(2, 2, 2, 2)
         MCB_毛玻璃模式.Name = "MCB_毛玻璃模式"
         MCB_毛玻璃模式.Padding = New Padding(10, 0, 10, 0)
+        MCB_毛玻璃模式.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_毛玻璃模式.Size = New Size(150, 32)
         MCB_毛玻璃模式.TabIndex = 1
         MCB_毛玻璃模式.ToolTipGap = -1
@@ -307,6 +310,7 @@ Partial Class Form_v6_设置_个性化
         MCB_边框宽度.Margin = New Padding(2, 2, 2, 2)
         MCB_边框宽度.Name = "MCB_边框宽度"
         MCB_边框宽度.Padding = New Padding(10, 0, 10, 0)
+        MCB_边框宽度.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_边框宽度.Size = New Size(150, 32)
         MCB_边框宽度.TabIndex = 12
         MCB_边框宽度.ToolTipGap = -1

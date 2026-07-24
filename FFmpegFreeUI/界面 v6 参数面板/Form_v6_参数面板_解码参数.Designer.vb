@@ -133,6 +133,7 @@ Partial Class Form_v6_参数面板_解码参数
         MCB_硬件解码设备参数名.Margin = New Padding(2, 2, 2, 2)
         MCB_硬件解码设备参数名.Name = "MCB_硬件解码设备参数名"
         MCB_硬件解码设备参数名.Padding = New Padding(10, 0, 10, 0)
+        MCB_硬件解码设备参数名.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_硬件解码设备参数名.Size = New Size(220, 32)
         MCB_硬件解码设备参数名.TabIndex = 0
         MCB_硬件解码设备参数名.ToolTipGap = -1
@@ -190,6 +191,7 @@ Partial Class Form_v6_参数面板_解码参数
         MCB_硬件解码输出格式.Margin = New Padding(2, 2, 2, 2)
         MCB_硬件解码输出格式.Name = "MCB_硬件解码输出格式"
         MCB_硬件解码输出格式.Padding = New Padding(10, 0, 10, 0)
+        MCB_硬件解码输出格式.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_硬件解码输出格式.Size = New Size(220, 32)
         MCB_硬件解码输出格式.TabIndex = 0
         MCB_硬件解码输出格式.ToolTipGap = -1
@@ -308,6 +310,7 @@ Partial Class Form_v6_参数面板_解码参数
         MCB_硬件加速解码方式.Margin = New Padding(2, 2, 2, 2)
         MCB_硬件加速解码方式.Name = "MCB_硬件加速解码方式"
         MCB_硬件加速解码方式.Padding = New Padding(10, 0, 10, 0)
+        MCB_硬件加速解码方式.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_硬件加速解码方式.Size = New Size(150, 32)
         MCB_硬件加速解码方式.TabIndex = 0
         MCB_硬件加速解码方式.ToolTipGap = -1

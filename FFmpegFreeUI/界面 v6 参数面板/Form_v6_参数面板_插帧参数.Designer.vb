@@ -285,6 +285,7 @@ Partial Class Form_v6_参数面板_插帧参数
         MCB_运动补偿模式.Margin = New Padding(2, 2, 2, 2)
         MCB_运动补偿模式.Name = "MCB_运动补偿模式"
         MCB_运动补偿模式.Padding = New Padding(10, 0, 10, 0)
+        MCB_运动补偿模式.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_运动补偿模式.Size = New Size(150, 32)
         MCB_运动补偿模式.TabIndex = 15
         MCB_运动补偿模式.ToolTipGap = -1
@@ -358,6 +359,7 @@ Partial Class Form_v6_参数面板_插帧参数
         MCB_运动估计算法.Margin = New Padding(2, 2, 2, 2)
         MCB_运动估计算法.Name = "MCB_运动估计算法"
         MCB_运动估计算法.Padding = New Padding(10, 0, 10, 0)
+        MCB_运动估计算法.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_运动估计算法.Size = New Size(150, 32)
         MCB_运动估计算法.TabIndex = 18
         MCB_运动估计算法.ToolTipGap = -1
@@ -396,6 +398,7 @@ Partial Class Form_v6_参数面板_插帧参数
         MCB_运动估计模式.Margin = New Padding(2, 2, 2, 2)
         MCB_运动估计模式.Name = "MCB_运动估计模式"
         MCB_运动估计模式.Padding = New Padding(10, 0, 10, 0)
+        MCB_运动估计模式.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_运动估计模式.Size = New Size(150, 32)
         MCB_运动估计模式.TabIndex = 16
         MCB_运动估计模式.ToolTipGap = -1
@@ -434,6 +437,7 @@ Partial Class Form_v6_参数面板_插帧参数
         MCB_插帧模式.Margin = New Padding(2, 2, 2, 2)
         MCB_插帧模式.Name = "MCB_插帧模式"
         MCB_插帧模式.Padding = New Padding(10, 0, 10, 0)
+        MCB_插帧模式.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_插帧模式.Size = New Size(150, 32)
         MCB_插帧模式.TabIndex = 15
         MCB_插帧模式.ToolTipGap = -1

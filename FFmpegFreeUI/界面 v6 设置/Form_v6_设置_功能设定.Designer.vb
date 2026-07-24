@@ -145,6 +145,7 @@ Partial Class Form_v6_设置_功能设定
         MCB_任务失败删除文件.Margin = New Padding(2, 2, 2, 2)
         MCB_任务失败删除文件.Name = "MCB_任务失败删除文件"
         MCB_任务失败删除文件.Padding = New Padding(10, 0, 10, 0)
+        MCB_任务失败删除文件.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_任务失败删除文件.Size = New Size(200, 32)
         MCB_任务失败删除文件.TabIndex = 0
         MCB_任务失败删除文件.ToolTipGap = -1
@@ -200,6 +201,7 @@ Partial Class Form_v6_设置_功能设定
         MCB_任务日志保留行数.Margin = New Padding(2, 2, 2, 2)
         MCB_任务日志保留行数.Name = "MCB_任务日志保留行数"
         MCB_任务日志保留行数.Padding = New Padding(10, 0, 10, 0)
+        MCB_任务日志保留行数.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_任务日志保留行数.Size = New Size(200, 32)
         MCB_任务日志保留行数.TabIndex = 0
         MCB_任务日志保留行数.ToolTipGap = -1
@@ -253,6 +255,7 @@ Partial Class Form_v6_设置_功能设定
         MCB_任务日志性能计数器.Margin = New Padding(2, 2, 2, 2)
         MCB_任务日志性能计数器.Name = "MCB_任务日志性能计数器"
         MCB_任务日志性能计数器.Padding = New Padding(10, 0, 10, 0)
+        MCB_任务日志性能计数器.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_任务日志性能计数器.Size = New Size(200, 32)
         MCB_任务日志性能计数器.TabIndex = 0
         MCB_任务日志性能计数器.ToolTipGap = -1
@@ -306,6 +309,7 @@ Partial Class Form_v6_设置_功能设定
         MCB_编码队列显示最新日志行.Margin = New Padding(2, 2, 2, 2)
         MCB_编码队列显示最新日志行.Name = "MCB_编码队列显示最新日志行"
         MCB_编码队列显示最新日志行.Padding = New Padding(10, 0, 10, 0)
+        MCB_编码队列显示最新日志行.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_编码队列显示最新日志行.Size = New Size(200, 32)
         MCB_编码队列显示最新日志行.TabIndex = 0
         MCB_编码队列显示最新日志行.ToolTipGap = -1
@@ -359,6 +363,7 @@ Partial Class Form_v6_设置_功能设定
         MCB_独立参数面板自动切预设管理.Margin = New Padding(2, 2, 2, 2)
         MCB_独立参数面板自动切预设管理.Name = "MCB_独立参数面板自动切预设管理"
         MCB_独立参数面板自动切预设管理.Padding = New Padding(10, 0, 10, 0)
+        MCB_独立参数面板自动切预设管理.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_独立参数面板自动切预设管理.Size = New Size(200, 32)
         MCB_独立参数面板自动切预设管理.TabIndex = 0
         MCB_独立参数面板自动切预设管理.ToolTipGap = -1
@@ -413,6 +418,7 @@ Partial Class Form_v6_设置_功能设定
         MCB_任务名称混淆.Margin = New Padding(2, 2, 2, 2)
         MCB_任务名称混淆.Name = "MCB_任务名称混淆"
         MCB_任务名称混淆.Padding = New Padding(10, 0, 10, 0)
+        MCB_任务名称混淆.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_任务名称混淆.Size = New Size(200, 32)
         MCB_任务名称混淆.TabIndex = 0
         MCB_任务名称混淆.ToolTipGap = -1
@@ -466,6 +472,7 @@ Partial Class Form_v6_设置_功能设定
         MCB_是否自动重置参数面板到第一个页面.Margin = New Padding(2, 2, 2, 2)
         MCB_是否自动重置参数面板到第一个页面.Name = "MCB_是否自动重置参数面板到第一个页面"
         MCB_是否自动重置参数面板到第一个页面.Padding = New Padding(10, 0, 10, 0)
+        MCB_是否自动重置参数面板到第一个页面.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_是否自动重置参数面板到第一个页面.Size = New Size(200, 32)
         MCB_是否自动重置参数面板到第一个页面.TabIndex = 0
         MCB_是否自动重置参数面板到第一个页面.ToolTipGap = -1
@@ -519,6 +526,7 @@ Partial Class Form_v6_设置_功能设定
         MCB_是否自动开始任务.Margin = New Padding(2, 2, 2, 2)
         MCB_是否自动开始任务.Name = "MCB_是否自动开始任务"
         MCB_是否自动开始任务.Padding = New Padding(10, 0, 10, 0)
+        MCB_是否自动开始任务.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_是否自动开始任务.Size = New Size(200, 32)
         MCB_是否自动开始任务.TabIndex = 0
         MCB_是否自动开始任务.ToolTipGap = -1
@@ -572,6 +580,7 @@ Partial Class Form_v6_设置_功能设定
         MCB_是否启用提示音.Margin = New Padding(2, 2, 2, 2)
         MCB_是否启用提示音.Name = "MCB_是否启用提示音"
         MCB_是否启用提示音.Padding = New Padding(10, 0, 10, 0)
+        MCB_是否启用提示音.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_是否启用提示音.Size = New Size(200, 32)
         MCB_是否启用提示音.TabIndex = 0
         MCB_是否启用提示音.ToolTipGap = -1
@@ -626,6 +635,7 @@ Partial Class Form_v6_设置_功能设定
         MCB_有任务时系统状态.Margin = New Padding(2, 2, 2, 2)
         MCB_有任务时系统状态.Name = "MCB_有任务时系统状态"
         MCB_有任务时系统状态.Padding = New Padding(10, 0, 10, 0)
+        MCB_有任务时系统状态.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_有任务时系统状态.Size = New Size(200, 32)
         MCB_有任务时系统状态.TabIndex = 0
         MCB_有任务时系统状态.ToolTipGap = -1

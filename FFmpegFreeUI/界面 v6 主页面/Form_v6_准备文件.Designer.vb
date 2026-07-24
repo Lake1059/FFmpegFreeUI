@@ -150,6 +150,7 @@ Partial Class Form_v6_准备文件
         MCB_排序.Margin = New Padding(2, 2, 2, 2)
         MCB_排序.Name = "MCB_排序"
         MCB_排序.Padding = New Padding(10, 0, 10, 0)
+        MCB_排序.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_排序.Size = New Size(207, 30)
         MCB_排序.TabIndex = 10
         MCB_排序.ToolTipGap = -1

@@ -221,6 +221,7 @@ Partial Class Form_v6_集成工具_Whisper生成字幕
         MCB_输入文件.Margin = New Padding(2, 2, 2, 2)
         MCB_输入文件.Name = "MCB_输入文件"
         MCB_输入文件.Padding = New Padding(10, 0, 10, 0)
+        MCB_输入文件.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_输入文件.Size = New Size(623, 32)
         MCB_输入文件.TabIndex = 0
         MCB_输入文件.ToolTipGap = -1
@@ -261,6 +262,7 @@ Partial Class Form_v6_集成工具_Whisper生成字幕
         MCB_选择模型文件.Margin = New Padding(2, 2, 2, 2)
         MCB_选择模型文件.Name = "MCB_选择模型文件"
         MCB_选择模型文件.Padding = New Padding(10, 0, 10, 0)
+        MCB_选择模型文件.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_选择模型文件.Size = New Size(488, 32)
         MCB_选择模型文件.TabIndex = 0
         MCB_选择模型文件.ToolTipGap = -1
@@ -377,6 +379,7 @@ Partial Class Form_v6_集成工具_Whisper生成字幕
         MCB_要识别的语言.Margin = New Padding(2, 2, 2, 2)
         MCB_要识别的语言.Name = "MCB_要识别的语言"
         MCB_要识别的语言.Padding = New Padding(10, 0, 10, 0)
+        MCB_要识别的语言.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_要识别的语言.Size = New Size(150, 32)
         MCB_要识别的语言.TabIndex = 0
         MCB_要识别的语言.ToolTipGap = -1
@@ -531,6 +534,7 @@ Partial Class Form_v6_集成工具_Whisper生成字幕
         MCB_VAD模型文件.Margin = New Padding(2, 2, 2, 2)
         MCB_VAD模型文件.Name = "MCB_VAD模型文件"
         MCB_VAD模型文件.Padding = New Padding(10, 0, 10, 0)
+        MCB_VAD模型文件.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_VAD模型文件.Size = New Size(754, 32)
         MCB_VAD模型文件.TabIndex = 0
         MCB_VAD模型文件.ToolTipGap = -1
@@ -587,6 +591,7 @@ Partial Class Form_v6_集成工具_Whisper生成字幕
         MCB_输出类型.Margin = New Padding(2, 2, 2, 2)
         MCB_输出类型.Name = "MCB_输出类型"
         MCB_输出类型.Padding = New Padding(10, 0, 10, 0)
+        MCB_输出类型.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_输出类型.Size = New Size(150, 32)
         MCB_输出类型.TabIndex = 0
         MCB_输出类型.ToolTipGap = -1
@@ -707,6 +712,7 @@ Partial Class Form_v6_集成工具_Whisper生成字幕
         MCB_GPU加速选项.Margin = New Padding(2, 2, 2, 2)
         MCB_GPU加速选项.Name = "MCB_GPU加速选项"
         MCB_GPU加速选项.Padding = New Padding(10, 0, 10, 0)
+        MCB_GPU加速选项.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_GPU加速选项.Size = New Size(120, 32)
         MCB_GPU加速选项.TabIndex = 14
         MCB_GPU加速选项.ToolTipGap = -1

@@ -155,6 +155,7 @@ Partial Class Form_v6_编码队列_任务日志
         MCB_显示模式.Margin = New Padding(2, 2, 2, 2)
         MCB_显示模式.Name = "MCB_显示模式"
         MCB_显示模式.Padding = New Padding(10, 0, 10, 0)
+        MCB_显示模式.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_显示模式.Size = New Size(190, 32)
         MCB_显示模式.TabIndex = 1
         MCB_显示模式.ToolTipGap = -1

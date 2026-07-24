@@ -181,6 +181,7 @@ Partial Class Form_v6_参数面板_抽帧参数
         MCB_低阈值.Margin = New Padding(2, 2, 2, 2)
         MCB_低阈值.Name = "MCB_低阈值"
         MCB_低阈值.Padding = New Padding(10, 0, 10, 0)
+        MCB_低阈值.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_低阈值.Size = New Size(150, 32)
         MCB_低阈值.TabIndex = 1
         MCB_低阈值.ToolTipGap = -1
@@ -249,6 +250,7 @@ Partial Class Form_v6_参数面板_抽帧参数
         MCB_高阈值.Margin = New Padding(2, 2, 2, 2)
         MCB_高阈值.Name = "MCB_高阈值"
         MCB_高阈值.Padding = New Padding(10, 0, 10, 0)
+        MCB_高阈值.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_高阈值.Size = New Size(150, 32)
         MCB_高阈值.TabIndex = 1
         MCB_高阈值.ToolTipGap = -1

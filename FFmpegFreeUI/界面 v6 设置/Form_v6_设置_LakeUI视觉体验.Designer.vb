@@ -104,6 +104,7 @@ Partial Class Form_v6_设置_LakeUI视觉体验
         MCB_性能计数器.Margin = New Padding(2, 2, 2, 2)
         MCB_性能计数器.Name = "MCB_性能计数器"
         MCB_性能计数器.Padding = New Padding(10, 0, 10, 0)
+        MCB_性能计数器.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_性能计数器.Size = New Size(200, 32)
         MCB_性能计数器.TabIndex = 0
         MCB_性能计数器.ToolTipGap = -1
@@ -199,6 +200,7 @@ Partial Class Form_v6_设置_LakeUI视觉体验
         MCB_窗口样式.Margin = New Padding(2, 2, 2, 2)
         MCB_窗口样式.Name = "MCB_窗口样式"
         MCB_窗口样式.Padding = New Padding(10, 0, 10, 0)
+        MCB_窗口样式.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_窗口样式.Size = New Size(200, 32)
         MCB_窗口样式.TabIndex = 0
         MCB_窗口样式.ToolTipGap = -1

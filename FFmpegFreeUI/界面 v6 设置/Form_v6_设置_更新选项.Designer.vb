@@ -142,6 +142,7 @@ Partial Class Form_v6_设置_更新选项
         MCB_更新服务器.Margin = New Padding(2, 2, 2, 2)
         MCB_更新服务器.Name = "MCB_更新服务器"
         MCB_更新服务器.Padding = New Padding(10, 0, 10, 0)
+        MCB_更新服务器.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_更新服务器.Size = New Size(200, 32)
         MCB_更新服务器.TabIndex = 0
         MCB_更新服务器.ToolTipGap = -1

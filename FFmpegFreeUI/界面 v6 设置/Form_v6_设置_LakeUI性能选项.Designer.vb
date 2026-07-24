@@ -148,6 +148,7 @@ Partial Class Form_v6_设置_LakeUI性能选项
         MCB_动画帧率.Margin = New Padding(2, 2, 2, 2)
         MCB_动画帧率.Name = "MCB_动画帧率"
         MCB_动画帧率.Padding = New Padding(10, 0, 10, 0)
+        MCB_动画帧率.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_动画帧率.Size = New Size(200, 32)
         MCB_动画帧率.TabIndex = 0
         MCB_动画帧率.ToolTipGap = -1
@@ -222,6 +223,7 @@ Partial Class Form_v6_设置_LakeUI性能选项
         MCB_超容器背景映射条目预算.Margin = New Padding(2, 2, 2, 2)
         MCB_超容器背景映射条目预算.Name = "MCB_超容器背景映射条目预算"
         MCB_超容器背景映射条目预算.Padding = New Padding(10, 0, 10, 0)
+        MCB_超容器背景映射条目预算.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_超容器背景映射条目预算.Size = New Size(200, 32)
         MCB_超容器背景映射条目预算.TabIndex = 0
         MCB_超容器背景映射条目预算.ToolTipGap = -1
@@ -282,6 +284,7 @@ Partial Class Form_v6_设置_LakeUI性能选项
         MCB_超容器背景映射脏区策略极限.Margin = New Padding(2, 2, 2, 2)
         MCB_超容器背景映射脏区策略极限.Name = "MCB_超容器背景映射脏区策略极限"
         MCB_超容器背景映射脏区策略极限.Padding = New Padding(10, 0, 10, 0)
+        MCB_超容器背景映射脏区策略极限.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_超容器背景映射脏区策略极限.Size = New Size(200, 32)
         MCB_超容器背景映射脏区策略极限.TabIndex = 0
         MCB_超容器背景映射脏区策略极限.ToolTipGap = -1
@@ -342,6 +345,7 @@ Partial Class Form_v6_设置_LakeUI性能选项
         MCB_超容器背景映射源位图缓存.Margin = New Padding(2, 2, 2, 2)
         MCB_超容器背景映射源位图缓存.Name = "MCB_超容器背景映射源位图缓存"
         MCB_超容器背景映射源位图缓存.Padding = New Padding(10, 0, 10, 0)
+        MCB_超容器背景映射源位图缓存.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_超容器背景映射源位图缓存.Size = New Size(200, 32)
         MCB_超容器背景映射源位图缓存.TabIndex = 0
         MCB_超容器背景映射源位图缓存.ToolTipGap = -1
@@ -400,6 +404,7 @@ Partial Class Form_v6_设置_LakeUI性能选项
         MCB_DW字体相关预算.Margin = New Padding(2, 2, 2, 2)
         MCB_DW字体相关预算.Name = "MCB_DW字体相关预算"
         MCB_DW字体相关预算.Padding = New Padding(10, 0, 10, 0)
+        MCB_DW字体相关预算.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_DW字体相关预算.Size = New Size(200, 32)
         MCB_DW字体相关预算.TabIndex = 0
         MCB_DW字体相关预算.ToolTipGap = -1
@@ -460,6 +465,7 @@ Partial Class Form_v6_设置_LakeUI性能选项
         MCB_D2D每对象画刷缓存数量.Margin = New Padding(2, 2, 2, 2)
         MCB_D2D每对象画刷缓存数量.Name = "MCB_D2D每对象画刷缓存数量"
         MCB_D2D每对象画刷缓存数量.Padding = New Padding(10, 0, 10, 0)
+        MCB_D2D每对象画刷缓存数量.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_D2D每对象画刷缓存数量.Size = New Size(200, 32)
         MCB_D2D每对象画刷缓存数量.TabIndex = 0
         MCB_D2D每对象画刷缓存数量.ToolTipGap = -1
@@ -520,6 +526,7 @@ Partial Class Form_v6_设置_LakeUI性能选项
         MCB_D2DImage缓存预算.Margin = New Padding(2, 2, 2, 2)
         MCB_D2DImage缓存预算.Name = "MCB_D2DImage缓存预算"
         MCB_D2DImage缓存预算.Padding = New Padding(10, 0, 10, 0)
+        MCB_D2DImage缓存预算.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_D2DImage缓存预算.Size = New Size(200, 32)
         MCB_D2DImage缓存预算.TabIndex = 0
         MCB_D2DImage缓存预算.ToolTipGap = -1
@@ -592,6 +599,7 @@ Partial Class Form_v6_设置_LakeUI性能选项
         MCB_SSAA.Margin = New Padding(2, 2, 2, 2)
         MCB_SSAA.Name = "MCB_SSAA"
         MCB_SSAA.Padding = New Padding(10, 0, 10, 0)
+        MCB_SSAA.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_SSAA.Size = New Size(200, 32)
         MCB_SSAA.TabIndex = 0
         MCB_SSAA.ToolTipGap = -1
@@ -650,6 +658,7 @@ Partial Class Form_v6_设置_LakeUI性能选项
         MCB_文字渲染模式.Margin = New Padding(2, 2, 2, 2)
         MCB_文字渲染模式.Name = "MCB_文字渲染模式"
         MCB_文字渲染模式.Padding = New Padding(10, 0, 10, 0)
+        MCB_文字渲染模式.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_文字渲染模式.Size = New Size(200, 32)
         MCB_文字渲染模式.TabIndex = 0
         MCB_文字渲染模式.ToolTipGap = -1
@@ -703,6 +712,7 @@ Partial Class Form_v6_设置_LakeUI性能选项
         MCB_GPU抗锯齿.Margin = New Padding(2, 2, 2, 2)
         MCB_GPU抗锯齿.Name = "MCB_GPU抗锯齿"
         MCB_GPU抗锯齿.Padding = New Padding(10, 0, 10, 0)
+        MCB_GPU抗锯齿.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_GPU抗锯齿.Size = New Size(200, 32)
         MCB_GPU抗锯齿.TabIndex = 0
         MCB_GPU抗锯齿.ToolTipGap = -1

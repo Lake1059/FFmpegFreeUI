@@ -118,6 +118,7 @@ Partial Class Form_v6_集成工具_质量评测图表
         MCB_指标选择.Margin = New Padding(2, 2, 2, 2)
         MCB_指标选择.Name = "MCB_指标选择"
         MCB_指标选择.Padding = New Padding(10, 0, 10, 0)
+        MCB_指标选择.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_指标选择.Size = New Size(150, 32)
         MCB_指标选择.TabIndex = 0
         MCB_指标选择.Text = "PSNR"

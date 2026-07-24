@@ -111,6 +111,7 @@ Partial Class Form_v6_起始页面
         MCB_清理内存.MaxDropDownItems = 15
         MCB_清理内存.Name = "MCB_清理内存"
         MCB_清理内存.Padding = New Padding(10, 0, 10, 0)
+        MCB_清理内存.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_清理内存.Size = New Size(200, 32)
         MCB_清理内存.TabIndex = 16
         MCB_清理内存.ToolTipGap = -1

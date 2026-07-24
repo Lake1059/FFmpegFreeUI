@@ -213,6 +213,7 @@ Partial Class Form_v6_参数面板_附件
         MCB_添加附件.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
         MCB_添加附件.Margin = New Padding(2, 2, 2, 2)
         MCB_添加附件.Padding = New Padding(10, 0, 10, 0)
+        MCB_添加附件.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_添加附件.ToolTipGap = -1
         MCB_添加附件.ToolTipMaxWidth = 350
         MCB_添加附件.ToolTipPadding = New Padding(15)

@@ -83,6 +83,7 @@ Partial Class Form_v6_参数面板_章节
         MCB_章节文件.MaxDropDownItems = 15
         MCB_章节文件.Name = "MCB_章节文件"
         MCB_章节文件.Padding = New Padding(10, 0, 10, 0)
+        MCB_章节文件.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_章节文件.Size = New Size(503, 32)
         MCB_章节文件.TabIndex = 11
         MCB_章节文件.ToolTipGap = -1
@@ -122,6 +123,7 @@ Partial Class Form_v6_参数面板_章节
         MCB_章节来源.MaxDropDownItems = 15
         MCB_章节来源.Name = "MCB_章节来源"
         MCB_章节来源.Padding = New Padding(10, 0, 10, 0)
+        MCB_章节来源.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_章节来源.Size = New Size(150, 32)
         MCB_章节来源.TabIndex = 10
         MCB_章节来源.ToolTipGap = -1

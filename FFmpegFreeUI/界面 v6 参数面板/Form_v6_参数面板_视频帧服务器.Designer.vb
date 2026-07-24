@@ -95,6 +95,7 @@ Partial Class Form_v6_参数面板_视频帧服务器
         MCB_VapourSynth脚本文件.Margin = New Padding(2, 2, 2, 2)
         MCB_VapourSynth脚本文件.Name = "MCB_VapourSynth脚本文件"
         MCB_VapourSynth脚本文件.Padding = New Padding(10, 0, 10, 0)
+        MCB_VapourSynth脚本文件.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_VapourSynth脚本文件.Size = New Size(659, 32)
         MCB_VapourSynth脚本文件.TabIndex = 1
         MCB_VapourSynth脚本文件.ToolTipGap = -1
@@ -185,6 +186,7 @@ Partial Class Form_v6_参数面板_视频帧服务器
         MCB_AviSynth脚本文件.Margin = New Padding(2, 2, 2, 2)
         MCB_AviSynth脚本文件.Name = "MCB_AviSynth脚本文件"
         MCB_AviSynth脚本文件.Padding = New Padding(10, 0, 10, 0)
+        MCB_AviSynth脚本文件.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_AviSynth脚本文件.Size = New Size(659, 32)
         MCB_AviSynth脚本文件.TabIndex = 1
         MCB_AviSynth脚本文件.ToolTipGap = -1

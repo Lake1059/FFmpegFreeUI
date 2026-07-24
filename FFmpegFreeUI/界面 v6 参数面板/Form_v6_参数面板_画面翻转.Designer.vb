@@ -78,6 +78,7 @@ Partial Class Form_v6_参数面板_画面翻转
         MCB_镜像翻转.Margin = New Padding(2, 2, 2, 2)
         MCB_镜像翻转.Name = "MCB_镜像翻转"
         MCB_镜像翻转.Padding = New Padding(10, 0, 10, 0)
+        MCB_镜像翻转.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_镜像翻转.Size = New Size(180, 32)
         MCB_镜像翻转.TabIndex = 16
         MCB_镜像翻转.ToolTipGap = -1
@@ -135,6 +136,7 @@ Partial Class Form_v6_参数面板_画面翻转
         MCB_角度翻转.Margin = New Padding(2, 2, 2, 2)
         MCB_角度翻转.Name = "MCB_角度翻转"
         MCB_角度翻转.Padding = New Padding(10, 0, 10, 0)
+        MCB_角度翻转.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_角度翻转.Size = New Size(220, 32)
         MCB_角度翻转.TabIndex = 15
         MCB_角度翻转.ToolTipGap = -1

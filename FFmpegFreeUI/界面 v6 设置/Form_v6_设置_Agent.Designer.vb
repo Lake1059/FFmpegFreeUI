@@ -116,6 +116,7 @@ Partial Class Form_v6_设置_Agent
         ModernComboBox1.Margin = New Padding(2, 2, 2, 2)
         ModernComboBox1.Name = "ModernComboBox1"
         ModernComboBox1.Padding = New Padding(10, 0, 10, 0)
+        ModernComboBox1.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernComboBox1.Size = New Size(400, 32)
         ModernComboBox1.TabIndex = 0
         ModernComboBox1.ToolTipGap = -1

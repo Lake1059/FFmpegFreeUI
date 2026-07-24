@@ -442,6 +442,7 @@ Partial Class Form_v6_参数面板_输出文件设置
         MCB_自动命名方式.Margin = New Padding(2, 2, 2, 2)
         MCB_自动命名方式.Name = "MCB_自动命名方式"
         MCB_自动命名方式.Padding = New Padding(10, 0, 10, 0)
+        MCB_自动命名方式.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_自动命名方式.Size = New Size(350, 32)
         MCB_自动命名方式.TabIndex = 6
         MCB_自动命名方式.ToolTipGap = -1
@@ -492,6 +493,7 @@ Partial Class Form_v6_参数面板_输出文件设置
         MCB_保留子文件夹结构起始点.Margin = New Padding(2, 2, 2, 2)
         MCB_保留子文件夹结构起始点.Name = "MCB_保留子文件夹结构起始点"
         MCB_保留子文件夹结构起始点.Padding = New Padding(10, 0, 10, 0)
+        MCB_保留子文件夹结构起始点.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_保留子文件夹结构起始点.Size = New Size(660, 32)
         MCB_保留子文件夹结构起始点.TabIndex = 7
         MCB_保留子文件夹结构起始点.ToolTipGap = -1
@@ -544,6 +546,7 @@ Partial Class Form_v6_参数面板_输出文件设置
         MCB_输出位置.Margin = New Padding(2, 2, 2, 2)
         MCB_输出位置.Name = "MCB_输出位置"
         MCB_输出位置.Padding = New Padding(10, 0, 10, 0)
+        MCB_输出位置.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_输出位置.Size = New Size(660, 32)
         MCB_输出位置.TabIndex = 6
         MCB_输出位置.ToolTipGap = -1
@@ -588,6 +591,7 @@ Partial Class Form_v6_参数面板_输出文件设置
         MCB_输出文件参数使用方法.Margin = New Padding(2, 2, 2, 2)
         MCB_输出文件参数使用方法.Name = "MCB_输出文件参数使用方法"
         MCB_输出文件参数使用方法.Padding = New Padding(10, 0, 10, 0)
+        MCB_输出文件参数使用方法.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_输出文件参数使用方法.Size = New Size(440, 32)
         MCB_输出文件参数使用方法.TabIndex = 5
         MCB_输出文件参数使用方法.ToolTipGap = -1

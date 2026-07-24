@@ -167,6 +167,7 @@ Partial Class Form_v6_参数面板_流控制
         MCB_附件选项.Margin = New Padding(2, 2, 2, 2)
         MCB_附件选项.Name = "MCB_附件选项"
         MCB_附件选项.Padding = New Padding(10, 0, 10, 0)
+        MCB_附件选项.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_附件选项.Size = New Size(150, 32)
         MCB_附件选项.TabIndex = 9
         MCB_附件选项.ToolTipGap = -1
@@ -205,6 +206,7 @@ Partial Class Form_v6_参数面板_流控制
         MCB_章节选项.Margin = New Padding(2, 2, 2, 2)
         MCB_章节选项.Name = "MCB_章节选项"
         MCB_章节选项.Padding = New Padding(10, 0, 10, 0)
+        MCB_章节选项.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_章节选项.Size = New Size(150, 32)
         MCB_章节选项.TabIndex = 7
         MCB_章节选项.ToolTipGap = -1
@@ -244,6 +246,7 @@ Partial Class Form_v6_参数面板_流控制
         MCB_元数据选项.Margin = New Padding(2, 2, 2, 2)
         MCB_元数据选项.Name = "MCB_元数据选项"
         MCB_元数据选项.Padding = New Padding(10, 0, 10, 0)
+        MCB_元数据选项.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_元数据选项.Size = New Size(150, 32)
         MCB_元数据选项.TabIndex = 1
         MCB_元数据选项.ToolTipGap = -1
@@ -531,6 +534,7 @@ Partial Class Form_v6_参数面板_流控制
         MCB_字幕流操作.Margin = New Padding(2, 2, 2, 2)
         MCB_字幕流操作.Name = "MCB_字幕流操作"
         MCB_字幕流操作.Padding = New Padding(10, 0, 10, 0)
+        MCB_字幕流操作.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_字幕流操作.Size = New Size(178, 32)
         MCB_字幕流操作.TabIndex = 15
         MCB_字幕流操作.ToolTipGap = -1

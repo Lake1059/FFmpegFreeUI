@@ -427,6 +427,7 @@ Partial Class Form_v6_参数面板_音频参数
         MCB_声道布局.Margin = New Padding(2, 2, 2, 2)
         MCB_声道布局.Name = "MCB_声道布局"
         MCB_声道布局.Padding = New Padding(10, 0, 10, 0)
+        MCB_声道布局.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_声道布局.Size = New Size(160, 32)
         MCB_声道布局.TabIndex = 0
         MCB_声道布局.ToolTipMaxWidth = 350
@@ -484,6 +485,7 @@ Partial Class Form_v6_参数面板_音频参数
         MCB_位深度.Margin = New Padding(2, 2, 2, 2)
         MCB_位深度.Name = "MCB_位深度"
         MCB_位深度.Padding = New Padding(10, 0, 10, 0)
+        MCB_位深度.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_位深度.Size = New Size(160, 32)
         MCB_位深度.TabIndex = 0
         MCB_位深度.ToolTipMaxWidth = 350
@@ -547,6 +549,7 @@ Partial Class Form_v6_参数面板_音频参数
         MCB_采样率.Margin = New Padding(2, 2, 2, 2)
         MCB_采样率.Name = "MCB_采样率"
         MCB_采样率.Padding = New Padding(10, 0, 10, 0)
+        MCB_采样率.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_采样率.Size = New Size(160, 32)
         MCB_采样率.TabIndex = 0
         MCB_采样率.ToolTipMaxWidth = 350
@@ -630,6 +633,7 @@ Partial Class Form_v6_参数面板_音频参数
         MCB_质量参数名2.Margin = New Padding(2, 2, 2, 2)
         MCB_质量参数名2.Name = "MCB_质量参数名2"
         MCB_质量参数名2.Padding = New Padding(10, 0, 10, 0)
+        MCB_质量参数名2.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_质量参数名2.Size = New Size(200, 32)
         MCB_质量参数名2.TabIndex = 7
         MCB_质量参数名2.ToolTipMaxWidth = 350
@@ -691,6 +695,7 @@ Partial Class Form_v6_参数面板_音频参数
         MCB_质量参数名.Margin = New Padding(2, 2, 2, 2)
         MCB_质量参数名.Name = "MCB_质量参数名"
         MCB_质量参数名.Padding = New Padding(10, 0, 10, 0)
+        MCB_质量参数名.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_质量参数名.Size = New Size(200, 32)
         MCB_质量参数名.TabIndex = 0
         MCB_质量参数名.ToolTipMaxWidth = 350
@@ -739,6 +744,7 @@ Partial Class Form_v6_参数面板_音频参数
         MCB_比特率.Margin = New Padding(2, 2, 2, 2)
         MCB_比特率.Name = "MCB_比特率"
         MCB_比特率.Padding = New Padding(10, 0, 10, 0)
+        MCB_比特率.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_比特率.Size = New Size(200, 32)
         MCB_比特率.TabIndex = 0
         MCB_比特率.ToolTipMaxWidth = 350
@@ -790,6 +796,7 @@ Partial Class Form_v6_参数面板_音频参数
         MCB_音频编码器.MaxDropDownItems = 15
         MCB_音频编码器.Name = "MCB_音频编码器"
         MCB_音频编码器.Padding = New Padding(10, 0, 10, 0)
+        MCB_音频编码器.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_音频编码器.Size = New Size(250, 32)
         MCB_音频编码器.TabIndex = 0
         MCB_音频编码器.ToolTipGap = -1

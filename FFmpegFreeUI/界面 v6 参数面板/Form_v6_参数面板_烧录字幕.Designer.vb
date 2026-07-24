@@ -513,6 +513,7 @@ Partial Class Form_v6_参数面板_烧录字幕
         MCB_对齐方位.Margin = New Padding(2, 2, 2, 2)
         MCB_对齐方位.Name = "MCB_对齐方位"
         MCB_对齐方位.Padding = New Padding(10, 0, 10, 0)
+        MCB_对齐方位.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_对齐方位.Size = New Size(130, 32)
         MCB_对齐方位.TabIndex = 15
         MCB_对齐方位.ToolTipGap = -1
@@ -584,6 +585,7 @@ Partial Class Form_v6_参数面板_烧录字幕
         MCB_字体文件夹路径.Margin = New Padding(2, 2, 2, 2)
         MCB_字体文件夹路径.Name = "MCB_字体文件夹路径"
         MCB_字体文件夹路径.Padding = New Padding(10, 0, 10, 0)
+        MCB_字体文件夹路径.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_字体文件夹路径.Size = New Size(330, 32)
         MCB_字体文件夹路径.TabIndex = 16
         MCB_字体文件夹路径.ToolTipGap = -1
@@ -856,6 +858,7 @@ Partial Class Form_v6_参数面板_烧录字幕
         MCB_边框类型.Margin = New Padding(2, 2, 2, 2)
         MCB_边框类型.Name = "MCB_边框类型"
         MCB_边框类型.Padding = New Padding(10, 0, 10, 0)
+        MCB_边框类型.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_边框类型.Size = New Size(182, 32)
         MCB_边框类型.TabIndex = 15
         MCB_边框类型.ToolTipGap = -1
@@ -1141,6 +1144,7 @@ Partial Class Form_v6_参数面板_烧录字幕
         MCB_字幕文件路径.Margin = New Padding(2, 2, 2, 2)
         MCB_字幕文件路径.Name = "MCB_字幕文件路径"
         MCB_字幕文件路径.Padding = New Padding(10, 0, 10, 0)
+        MCB_字幕文件路径.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_字幕文件路径.Size = New Size(320, 32)
         MCB_字幕文件路径.TabIndex = 16
         MCB_字幕文件路径.ToolTipGap = -1
@@ -1242,6 +1246,7 @@ Partial Class Form_v6_参数面板_烧录字幕
         MCB_后缀优先级3.Margin = New Padding(2, 2, 2, 2)
         MCB_后缀优先级3.Name = "MCB_后缀优先级3"
         MCB_后缀优先级3.Padding = New Padding(10, 0, 10, 0)
+        MCB_后缀优先级3.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_后缀优先级3.Size = New Size(100, 32)
         MCB_后缀优先级3.TabIndex = 19
         MCB_后缀优先级3.ToolTipGap = -1
@@ -1280,6 +1285,7 @@ Partial Class Form_v6_参数面板_烧录字幕
         MCB_后缀优先级2.Margin = New Padding(2, 2, 2, 2)
         MCB_后缀优先级2.Name = "MCB_后缀优先级2"
         MCB_后缀优先级2.Padding = New Padding(10, 0, 10, 0)
+        MCB_后缀优先级2.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_后缀优先级2.Size = New Size(100, 32)
         MCB_后缀优先级2.TabIndex = 17
         MCB_后缀优先级2.ToolTipGap = -1
@@ -1318,6 +1324,7 @@ Partial Class Form_v6_参数面板_烧录字幕
         MCB_后缀优先级1.Margin = New Padding(2, 2, 2, 2)
         MCB_后缀优先级1.Name = "MCB_后缀优先级1"
         MCB_后缀优先级1.Padding = New Padding(10, 0, 10, 0)
+        MCB_后缀优先级1.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_后缀优先级1.Size = New Size(100, 32)
         MCB_后缀优先级1.TabIndex = 15
         MCB_后缀优先级1.ToolTipGap = -1
@@ -1387,6 +1394,7 @@ Partial Class Form_v6_参数面板_烧录字幕
         MCB_字幕来源.Margin = New Padding(2, 2, 2, 2)
         MCB_字幕来源.Name = "MCB_字幕来源"
         MCB_字幕来源.Padding = New Padding(10, 0, 10, 0)
+        MCB_字幕来源.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_字幕来源.Size = New Size(154, 32)
         MCB_字幕来源.TabIndex = 17
         MCB_字幕来源.ToolTipGap = -1
@@ -1424,6 +1432,7 @@ Partial Class Form_v6_参数面板_烧录字幕
         MCB_滤镜选择.Margin = New Padding(2, 2, 2, 2)
         MCB_滤镜选择.Name = "MCB_滤镜选择"
         MCB_滤镜选择.Padding = New Padding(10, 0, 10, 0)
+        MCB_滤镜选择.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_滤镜选择.Size = New Size(156, 32)
         MCB_滤镜选择.TabIndex = 15
         MCB_滤镜选择.ToolTipGap = -1

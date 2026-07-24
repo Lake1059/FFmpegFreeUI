@@ -228,6 +228,7 @@ Partial Class Form_v6_参数面板_元数据
         MCB_添加元数据预制项.MaxDropDownItems = 15
         MCB_添加元数据预制项.Name = "MCB_添加元数据预制项"
         MCB_添加元数据预制项.Padding = New Padding(10, 0, 10, 0)
+        MCB_添加元数据预制项.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_添加元数据预制项.Size = New Size(200, 32)
         MCB_添加元数据预制项.TabIndex = 10
         MCB_添加元数据预制项.ToolTipGap = -1

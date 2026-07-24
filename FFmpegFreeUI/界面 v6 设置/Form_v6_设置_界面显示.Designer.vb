@@ -74,6 +74,7 @@ Partial Class Form_v6_设置_界面显示
         MCB_全局字体.MaxDropDownItems = 20
         MCB_全局字体.Name = "MCB_全局字体"
         MCB_全局字体.Padding = New Padding(10, 0, 10, 0)
+        MCB_全局字体.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_全局字体.Size = New Size(300, 32)
         MCB_全局字体.TabIndex = 0
         MCB_全局字体.ToolTipGap = -1

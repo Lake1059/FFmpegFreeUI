@@ -411,6 +411,7 @@ Partial Class Form_v6_参数面板_色彩管理
         MCB_色彩管理_色彩空间操作方式.Margin = New Padding(2, 2, 2, 2)
         MCB_色彩管理_色彩空间操作方式.Name = "MCB_色彩管理_色彩空间操作方式"
         MCB_色彩管理_色彩空间操作方式.Padding = New Padding(10, 0, 10, 0)
+        MCB_色彩管理_色彩空间操作方式.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_色彩管理_色彩空间操作方式.Size = New Size(175, 32)
         MCB_色彩管理_色彩空间操作方式.TabIndex = 0
         MCB_色彩管理_色彩空间操作方式.ToolTipGap = -1
@@ -476,6 +477,7 @@ Partial Class Form_v6_参数面板_色彩管理
         MCB_色彩管理_色调映射算法.Margin = New Padding(2, 2, 2, 2)
         MCB_色彩管理_色调映射算法.Name = "MCB_色彩管理_色调映射算法"
         MCB_色彩管理_色调映射算法.Padding = New Padding(10, 0, 10, 0)
+        MCB_色彩管理_色调映射算法.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_色彩管理_色调映射算法.Size = New Size(175, 32)
         MCB_色彩管理_色调映射算法.TabIndex = 0
         MCB_色彩管理_色调映射算法.ToolTipGap = -1
@@ -531,6 +533,7 @@ Partial Class Form_v6_参数面板_色彩管理
         MCB_色彩管理_色彩范围.Margin = New Padding(2, 2, 2, 2)
         MCB_色彩管理_色彩范围.Name = "MCB_色彩管理_色彩范围"
         MCB_色彩管理_色彩范围.Padding = New Padding(10, 0, 10, 0)
+        MCB_色彩管理_色彩范围.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_色彩管理_色彩范围.Size = New Size(175, 32)
         MCB_色彩管理_色彩范围.TabIndex = 0
         MCB_色彩管理_色彩范围.ToolTipGap = -1
@@ -602,6 +605,7 @@ Partial Class Form_v6_参数面板_色彩管理
         MCB_色彩管理_传输特性.Margin = New Padding(2, 2, 2, 2)
         MCB_色彩管理_传输特性.Name = "MCB_色彩管理_传输特性"
         MCB_色彩管理_传输特性.Padding = New Padding(10, 0, 10, 0)
+        MCB_色彩管理_传输特性.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_色彩管理_传输特性.Size = New Size(175, 32)
         MCB_色彩管理_传输特性.TabIndex = 0
         MCB_色彩管理_传输特性.ToolTipGap = -1
@@ -668,6 +672,7 @@ Partial Class Form_v6_参数面板_色彩管理
         MCB_色彩管理_色域.Margin = New Padding(2, 2, 2, 2)
         MCB_色彩管理_色域.Name = "MCB_色彩管理_色域"
         MCB_色彩管理_色域.Padding = New Padding(10, 0, 10, 0)
+        MCB_色彩管理_色域.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_色彩管理_色域.Size = New Size(175, 32)
         MCB_色彩管理_色域.TabIndex = 0
         MCB_色彩管理_色域.ToolTipGap = -1
@@ -734,6 +739,7 @@ Partial Class Form_v6_参数面板_色彩管理
         MCB_色彩管理_矩阵系数.Margin = New Padding(2, 2, 2, 2)
         MCB_色彩管理_矩阵系数.Name = "MCB_色彩管理_矩阵系数"
         MCB_色彩管理_矩阵系数.Padding = New Padding(10, 0, 10, 0)
+        MCB_色彩管理_矩阵系数.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_色彩管理_矩阵系数.Size = New Size(175, 32)
         MCB_色彩管理_矩阵系数.TabIndex = 0
         MCB_色彩管理_矩阵系数.ToolTipGap = -1
@@ -789,6 +795,7 @@ Partial Class Form_v6_参数面板_色彩管理
         MCB_色彩管理_选择滤镜.Margin = New Padding(2, 2, 2, 2)
         MCB_色彩管理_选择滤镜.Name = "MCB_色彩管理_选择滤镜"
         MCB_色彩管理_选择滤镜.Padding = New Padding(10, 0, 10, 0)
+        MCB_色彩管理_选择滤镜.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_色彩管理_选择滤镜.Size = New Size(175, 32)
         MCB_色彩管理_选择滤镜.TabIndex = 0
         MCB_色彩管理_选择滤镜.ToolTipGap = -1
@@ -865,6 +872,7 @@ Partial Class Form_v6_参数面板_色彩管理
         MCB_像素格式预先转换.Margin = New Padding(2, 2, 2, 2)
         MCB_像素格式预先转换.Name = "MCB_像素格式预先转换"
         MCB_像素格式预先转换.Padding = New Padding(10, 0, 10, 0)
+        MCB_像素格式预先转换.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_像素格式预先转换.Size = New Size(175, 32)
         MCB_像素格式预先转换.TabIndex = 2
         MCB_像素格式预先转换.ToolTipGap = -1
@@ -906,6 +914,7 @@ Partial Class Form_v6_参数面板_色彩管理
         MCB_像素格式.Margin = New Padding(2, 2, 2, 2)
         MCB_像素格式.Name = "MCB_像素格式"
         MCB_像素格式.Padding = New Padding(10, 0, 10, 0)
+        MCB_像素格式.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_像素格式.Size = New Size(175, 32)
         MCB_像素格式.TabIndex = 0
         MCB_像素格式.ToolTipGap = -1

@@ -100,6 +100,7 @@ Partial Class Form_v6_集成工具_抽流
         MCB_输出位置.Margin = New Padding(2, 2, 2, 2)
         MCB_输出位置.Name = "MCB_输出位置"
         MCB_输出位置.Padding = New Padding(10, 0, 10, 0)
+        MCB_输出位置.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_输出位置.Size = New Size(501, 32)
         MCB_输出位置.TabIndex = 7
         MCB_输出位置.ToolTipGap = -1

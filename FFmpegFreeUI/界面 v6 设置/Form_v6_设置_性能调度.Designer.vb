@@ -94,6 +94,7 @@ Partial Class Form_v6_设置_性能调度
         MCB_编码队列刷新速度.MaxDropDownItems = 15
         MCB_编码队列刷新速度.Name = "MCB_编码队列刷新速度"
         MCB_编码队列刷新速度.Padding = New Padding(10, 0, 10, 0)
+        MCB_编码队列刷新速度.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_编码队列刷新速度.Size = New Size(200, 32)
         MCB_编码队列刷新速度.TabIndex = 0
         MCB_编码队列刷新速度.ToolTipGap = -1
@@ -155,6 +156,7 @@ Partial Class Form_v6_设置_性能调度
         MCB_自动开始数量.MaxDropDownItems = 15
         MCB_自动开始数量.Name = "MCB_自动开始数量"
         MCB_自动开始数量.Padding = New Padding(10, 0, 10, 0)
+        MCB_自动开始数量.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_自动开始数量.Size = New Size(200, 32)
         MCB_自动开始数量.TabIndex = 0
         MCB_自动开始数量.ToolTipGap = -1

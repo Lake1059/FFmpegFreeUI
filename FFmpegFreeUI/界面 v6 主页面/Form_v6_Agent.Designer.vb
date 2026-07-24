@@ -185,6 +185,7 @@ Partial Class Form_v6_Agent
         MCB_模型选择.Margin = New Padding(2, 2, 2, 2)
         MCB_模型选择.Name = "MCB_模型选择"
         MCB_模型选择.Padding = New Padding(10, 0, 10, 0)
+        MCB_模型选择.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_模型选择.Size = New Size(236, 32)
         MCB_模型选择.TabIndex = 19
         MCB_模型选择.ToolTipGap = -1
@@ -221,6 +222,7 @@ Partial Class Form_v6_Agent
         MCB_推理级别.Margin = New Padding(2, 2, 2, 2)
         MCB_推理级别.Name = "MCB_推理级别"
         MCB_推理级别.Padding = New Padding(10, 0, 10, 0)
+        MCB_推理级别.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_推理级别.Size = New Size(120, 32)
         MCB_推理级别.TabIndex = 21
         MCB_推理级别.ToolTipGap = -1
@@ -292,6 +294,7 @@ Partial Class Form_v6_Agent
         MCB_权限控制.Margin = New Padding(2, 2, 2, 2)
         MCB_权限控制.Name = "MCB_权限控制"
         MCB_权限控制.Padding = New Padding(10, 0, 10, 0)
+        MCB_权限控制.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_权限控制.Size = New Size(120, 32)
         MCB_权限控制.TabIndex = 16
         MCB_权限控制.ToolTipGap = -1
@@ -338,6 +341,7 @@ Partial Class Form_v6_Agent
         MCB_联网设置.Margin = New Padding(2, 2, 2, 2)
         MCB_联网设置.Name = "MCB_联网设置"
         MCB_联网设置.Padding = New Padding(10, 0, 10, 0)
+        MCB_联网设置.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_联网设置.Size = New Size(120, 32)
         MCB_联网设置.TabIndex = 7
         MCB_联网设置.ToolTipGap = -1

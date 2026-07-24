@@ -234,6 +234,7 @@ Partial Class Form_v6_参数面板_锐化
         MCB_滤镜选择.Margin = New Padding(2, 2, 2, 2)
         MCB_滤镜选择.Name = "MCB_滤镜选择"
         MCB_滤镜选择.Padding = New Padding(10, 0, 10, 0)
+        MCB_滤镜选择.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_滤镜选择.Size = New Size(544, 32)
         MCB_滤镜选择.TabIndex = 15
         MCB_滤镜选择.ToolTipGap = -1

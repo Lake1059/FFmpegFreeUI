@@ -407,12 +407,24 @@ Public Class 编码队列_v6
         Dim stopping = 获取指定任务(ids).Where(Function(task) task.可停止).ToList()
         If stopping.Count = 0 Then Exit Sub
 
-        SyncLock 队列锁
-            自动调度已暂停 = True
-        End SyncLock
+        Dim 可能停止执行中任务 = stopping.Any(Function(task) task.正在执行)
+        If 可能停止执行中任务 Then
+            SyncLock 队列锁
+                自动调度已暂停 = True
+            End SyncLock
+        End If
+
+        Dim 已停止执行中任务 As Boolean = False
         For Each task In stopping
-            task.停止()
+            If task.停止并报告是否停止执行() Then 已停止执行中任务 = True
         Next
+
+        If 可能停止执行中任务 AndAlso Not 已停止执行中任务 Then
+            SyncLock 队列锁
+                自动调度已暂停 = False
+            End SyncLock
+            请求调度()
+        End If
     End Sub
 
     Public Shared Sub 取消自动开始任务(ids As IEnumerable(Of String))
@@ -591,8 +603,8 @@ Public Class 编码队列_v6
                      Try
                          Await task.开始Async(执行标识)
                      Finally
-                         task.结束执行()
-                         任务执行结束后处理(task)
+                         Dim 因手动停止结束 = task.结束执行()
+                         任务执行结束后处理(因手动停止结束)
                      End Try
                  End Function)
     End Sub
@@ -636,7 +648,12 @@ Public Class 编码队列_v6
         完成提示待播放 = True
     End Sub
 
-    Private Shared Sub 任务执行结束后处理(task As 编码任务_v6)
+    Private Shared Sub 任务执行结束后处理(因手动停止结束 As Boolean)
+        If Not 因手动停止结束 Then
+            SyncLock 队列锁
+                自动调度已暂停 = False
+            End SyncLock
+        End If
         请求调度(True)
     End Sub
 
@@ -1087,6 +1104,7 @@ Public Class 编码任务_v6
     Private 当前进程 As Process
     Private ReadOnly 状态锁 As New Object
     Private 正在执行标记 As Boolean = False
+    Private 当前执行已请求停止 As Boolean = False
     Private 执行版本 As Long = 0
     Private ReadOnly 日志锁 As New Object
     Private ReadOnly 完整日志缓存 As New List(Of 编码任务日志条目_v6)
@@ -1153,16 +1171,20 @@ Public Class 编码任务_v6
         SyncLock 状态锁
             If 正在执行标记 Then Return 0
             正在执行标记 = True
+            当前执行已请求停止 = False
             执行版本 += 1
             Return 执行版本
         End SyncLock
     End Function
 
-    Friend Sub 结束执行()
+    Friend Function 结束执行() As Boolean
         SyncLock 状态锁
+            Dim result = 当前执行已请求停止
             正在执行标记 = False
+            当前执行已请求停止 = False
+            Return result
         End SyncLock
-    End Sub
+    End Function
 
     Private Sub 使当前执行失效()
         SyncLock 状态锁
@@ -1551,10 +1573,17 @@ Public Class 编码任务_v6
     End Sub
 
     Public Sub 停止()
+        停止并报告是否停止执行()
+    End Sub
+
+    Friend Function 停止并报告是否停止执行() As Boolean
+        Dim stoppedExecution As Boolean = False
         Try
             Dim process As Process = Nothing
             SyncLock 状态锁
-                If Not 可停止 Then Exit Sub
+                If Not 可停止 Then Return False
+                stoppedExecution = 正在执行标记
+                If stoppedExecution Then 当前执行已请求停止 = True
                 手动停止 = True
                 状态 = 编码任务状态_v6.已停止
                 process = 当前进程
@@ -1563,10 +1592,12 @@ Public Class 编码任务_v6
             任务耗时计时器.Stop()
             追加日志("[3FUI] 正在停止任务", 编码任务日志类别_v6.系统, 当前步骤, False, False)
             编码队列_v6.通知任务更新(Me)
+            Return stoppedExecution
         Catch ex As Exception
             追加日志("[3FUI] 停止失败：" & ex.Message, 编码任务日志类别_v6.错误, 当前步骤, True)
+            Return stoppedExecution
         End Try
-    End Sub
+    End Function
 
     Public Sub 重置()
         使当前执行失效()

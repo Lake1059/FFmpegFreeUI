@@ -445,6 +445,7 @@ Partial Class Form_v6_参数面板_画面帧
         MCB_直接指定帧率.Margin = New Padding(2, 2, 2, 2)
         MCB_直接指定帧率.Name = "MCB_直接指定帧率"
         MCB_直接指定帧率.Padding = New Padding(10, 0, 10, 0)
+        MCB_直接指定帧率.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_直接指定帧率.Size = New Size(150, 32)
         MCB_直接指定帧率.TabIndex = 0
         MCB_直接指定帧率.ToolTipGap = -1
@@ -591,6 +592,7 @@ Partial Class Form_v6_参数面板_画面帧
         MCB_指定缩放算法.Margin = New Padding(2, 2, 2, 2)
         MCB_指定缩放算法.Name = "MCB_指定缩放算法"
         MCB_指定缩放算法.Padding = New Padding(10, 0, 10, 0)
+        MCB_指定缩放算法.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_指定缩放算法.Size = New Size(150, 32)
         MCB_指定缩放算法.TabIndex = 11
         MCB_指定缩放算法.ToolTipGap = -1
@@ -631,6 +633,7 @@ Partial Class Form_v6_参数面板_画面帧
         MCB_高度缩放.Margin = New Padding(2, 2, 2, 2)
         MCB_高度缩放.Name = "MCB_高度缩放"
         MCB_高度缩放.Padding = New Padding(10, 0, 10, 0)
+        MCB_高度缩放.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_高度缩放.Size = New Size(150, 32)
         MCB_高度缩放.TabIndex = 9
         MCB_高度缩放.ToolTipGap = -1
@@ -671,6 +674,7 @@ Partial Class Form_v6_参数面板_画面帧
         MCB_宽度缩放.Margin = New Padding(2, 2, 2, 2)
         MCB_宽度缩放.Name = "MCB_宽度缩放"
         MCB_宽度缩放.Padding = New Padding(10, 0, 10, 0)
+        MCB_宽度缩放.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_宽度缩放.Size = New Size(150, 32)
         MCB_宽度缩放.TabIndex = 0
         MCB_宽度缩放.ToolTipGap = -1
@@ -728,6 +732,7 @@ Partial Class Form_v6_参数面板_画面帧
         MCB_直接指定分辨率.Margin = New Padding(2, 2, 2, 2)
         MCB_直接指定分辨率.Name = "MCB_直接指定分辨率"
         MCB_直接指定分辨率.Padding = New Padding(10, 0, 10, 0)
+        MCB_直接指定分辨率.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_直接指定分辨率.Size = New Size(150, 32)
         MCB_直接指定分辨率.TabIndex = 0
         MCB_直接指定分辨率.ToolTipGap = -1

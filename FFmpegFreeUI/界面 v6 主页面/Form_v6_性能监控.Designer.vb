@@ -385,6 +385,7 @@ Partial Class Form_v6_性能监控
         ModernComboBox3.Margin = New Padding(2, 2, 2, 2)
         ModernComboBox3.Name = "ModernComboBox3"
         ModernComboBox3.Padding = New Padding(10, 0, 10, 0)
+        ModernComboBox3.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernComboBox3.Size = New Size(368, 32)
         ModernComboBox3.TabIndex = 3
         ModernComboBox3.ToolTipGap = -1
@@ -427,6 +428,7 @@ Partial Class Form_v6_性能监控
         ModernComboBox2.Margin = New Padding(2, 2, 2, 2)
         ModernComboBox2.Name = "ModernComboBox2"
         ModernComboBox2.Padding = New Padding(10, 0, 10, 0)
+        ModernComboBox2.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernComboBox2.Size = New Size(200, 32)
         ModernComboBox2.TabIndex = 1
         ModernComboBox2.ToolTipGap = -1
@@ -495,6 +497,7 @@ Partial Class Form_v6_性能监控
         ModernComboBox1.Margin = New Padding(2, 2, 2, 2)
         ModernComboBox1.Name = "ModernComboBox1"
         ModernComboBox1.Padding = New Padding(10, 0, 10, 0)
+        ModernComboBox1.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernComboBox1.Size = New Size(305, 32)
         ModernComboBox1.TabIndex = 2
         ModernComboBox1.ToolTipGap = -1
