@@ -151,7 +151,8 @@ Partial Public Class 预设管理_v6
             If item Is Nothing Then Continue For
             Dim 字段 = item.字段.Trim()
             If 字段 = "" Then Continue For
-            result.输出前.Add($"-metadata {QMetadata(字段 & "=" & If(item.值, ""))}")
+            Dim 元数据表达式 = 应用自定义参数通配字符串(字段 & "=" & If(item.值, ""), 输入文件, 输出文件)
+            result.输出前.Add($"-metadata {QMetadata(元数据表达式)}")
         Next
 
         Select Case a.流控制_章节选项
