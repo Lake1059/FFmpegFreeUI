@@ -3,7 +3,7 @@ Imports LakeUI
 
 Public Class Form_v6_编码队列
     Private DPI As Single = 1.0F
-    Private Shared ReadOnly 非任务列常用文本 As String() = {"正在处理", "100.0%", "1000%", "99.00 GB - 99.0 GB", "100", "100.00 Mbps", "99h99m99s - 99h99m99s"}
+    Private Shared ReadOnly 非任务列常用文本 As String() = {"正在处理", "100.0%", "1000%", "99.00 GB - 99.0 GB", "质量0", "100.00 Mbps", "99h99m99s - 99h99m99s"}
     Private Const 任务名称列最小宽度基准 As Integer = 96
     Private Const 列宽滚动条预留宽度基准 As Integer = 18
     Private Const 列宽文本预留宽度基准 As Integer = 20
@@ -228,14 +228,31 @@ Public Class Form_v6_编码队列
         If ids.Count <> 1 Then Exit Sub
         Dim task = 编码队列_v6.根据ID获取任务(ids(0))
         If task Is Nothing Then Exit Sub
-        Dim target = If(task.状态 = 编码任务状态_v6.未处理, task.输入文件, task.输出文件)
-        If Not File.Exists(target) Then Exit Sub
 
+        If task.状态 <> 编码任务状态_v6.未处理 AndAlso File.Exists(task.输出文件) Then
+            在资源管理器中定位(task.输出文件)
+            Exit Sub
+        End If
+
+        If Not File.Exists(task.输入文件) Then
+            ExMsgBox(Me, "没有可定位的输出文件，输入文件也不存在。", MsgBoxStyle.Information, "定位输出")
+            Exit Sub
+        End If
+
+        Dim prompt = If(task.状态 = 编码任务状态_v6.未处理,
+                        "任务尚未开始，没有可定位的输出文件。是否改为定位输入文件？",
+                        "没有找到输出文件。是否改为定位输入文件？")
+        If ExMsgBox(Me, prompt, MsgBoxStyle.YesNo Or MsgBoxStyle.Question, "定位输出") = MsgBoxResult.Yes Then
+            在资源管理器中定位(task.输入文件)
+        End If
+    End Sub
+
+    Private Shared Sub 在资源管理器中定位(filePath As String)
         Dim startInfo As New ProcessStartInfo With {
             .FileName = "explorer.exe",
+            .Arguments = "/select,""" & Path.GetFullPath(filePath) & """",
             .UseShellExecute = True
         }
-        startInfo.ArgumentList.Add("/select," & Path.GetFullPath(target))
         Process.Start(startInfo)
     End Sub
 

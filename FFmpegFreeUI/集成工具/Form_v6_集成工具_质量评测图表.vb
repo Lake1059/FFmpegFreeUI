@@ -127,7 +127,7 @@ Public Class Form_v6_集成工具_质量评测图表
 
     Private Sub 设置坐标范围(metric As String)
         If String.Equals(metric, "SSIM", StringComparison.OrdinalIgnoreCase) Then
-            Ultra2DChart1.YAxisRangeMode = Ultra2DChart.AxisRangeModeEnum.Fixed
+            Ultra2DChart1.YAxisRangeMode = Ultra2DChart.AxisRangeModeEnum.AutoClamped
             Ultra2DChart1.YAxisMinimum = 0
             Ultra2DChart1.YAxisMaximum = 1
         ElseIf String.Equals(metric, "VMAF", StringComparison.OrdinalIgnoreCase) Then
