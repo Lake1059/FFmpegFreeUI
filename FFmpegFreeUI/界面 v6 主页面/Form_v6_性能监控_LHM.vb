@@ -6,17 +6,14 @@ Public Class Form_v6_性能监控_LHM
 
     Private ReadOnly computer As Computer
     Private initialized As Boolean
-    Private cpuTemperatureValue As Double
     Private ReadOnly gpuInfoTable As New Dictionary(Of String, GpuInfo)(StringComparer.Ordinal)
     Private ReadOnly gpuKeyByDisplayName As New Dictionary(Of String, String)(StringComparer.Ordinal)
     Private hostGpuComboBox As ModernComboBox
-    Private hostCpuComboBox As ModernComboBox
 
     Public Sub New()
         InitializeComponent()
 
         computer = New Computer With {
-            .IsCpuEnabled = True,
             .IsGpuEnabled = True,
             .IsMemoryEnabled = False,
             .IsNetworkEnabled = False,
@@ -31,9 +28,8 @@ Public Class Form_v6_性能监控_LHM
         End Get
     End Property
 
-    Public Sub InitializeLhm(gpuComboBox As ModernComboBox, cpuComboBox As ModernComboBox)
+    Public Sub InitializeLhm(gpuComboBox As ModernComboBox)
         hostGpuComboBox = gpuComboBox
-        hostCpuComboBox = cpuComboBox
         If initialized Then Exit Sub
         initialized = True
 
@@ -53,7 +49,6 @@ Public Class Form_v6_性能监控_LHM
 
     Public Sub StopMonitoring()
         Timer1.Enabled = False
-        RestoreCpuItemText()
     End Sub
 
     Private Sub Form_v6_性能监控_LHM_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -99,7 +94,6 @@ Public Class Form_v6_性能监控_LHM
         End Try
 
         RefreshGpuComboBox()
-        RefreshCpuTemperature()
         RefreshGpuInfo()
     End Sub
 
@@ -120,39 +114,10 @@ Public Class Form_v6_性能监控_LHM
         End Try
 
         Select Case hardware.HardwareType
-            Case HardwareType.Cpu
-                ReadCpuSensors(hardware)
             Case HardwareType.GpuNvidia, HardwareType.GpuAmd, HardwareType.GpuIntel
                 ReadGpuSensors(hardware)
         End Select
     End Sub
-
-    Private Sub ReadCpuSensors(hardware As IHardware)
-        Dim cpuTemperatureSensor = hardware.Sensors.
-            Where(Function(sensor) sensor.SensorType = SensorType.Temperature AndAlso IsCpuOverallTemperatureSensor(sensor.Name)).
-            OrderBy(Function(sensor) GetCpuOverallTemperaturePriority(sensor.Name)).
-            FirstOrDefault()
-
-        If cpuTemperatureSensor IsNot Nothing Then cpuTemperatureValue = cpuTemperatureSensor.Value.GetValueOrDefault()
-    End Sub
-
-    Private Shared Function IsCpuOverallTemperatureSensor(sensorName As String) As Boolean
-        If String.IsNullOrWhiteSpace(sensorName) Then Return False
-
-        Return sensorName.Equals("CPU Package", StringComparison.OrdinalIgnoreCase) OrElse
-            sensorName.Contains("Package", StringComparison.OrdinalIgnoreCase) OrElse
-            sensorName.Contains("Tctl", StringComparison.OrdinalIgnoreCase) OrElse
-            sensorName.Contains("Tdie", StringComparison.OrdinalIgnoreCase)
-    End Function
-
-    Private Shared Function GetCpuOverallTemperaturePriority(sensorName As String) As Integer
-        If sensorName.Equals("CPU Package", StringComparison.OrdinalIgnoreCase) Then Return 0
-        If sensorName.Contains("Package", StringComparison.OrdinalIgnoreCase) Then Return 1
-        If sensorName.Contains("Tctl/Tdie", StringComparison.OrdinalIgnoreCase) Then Return 2
-        If sensorName.Contains("Tctl", StringComparison.OrdinalIgnoreCase) Then Return 3
-        If sensorName.Contains("Tdie", StringComparison.OrdinalIgnoreCase) Then Return 4
-        Return 5
-    End Function
 
     Private Sub ReadGpuSensors(hardware As IHardware)
         Dim gpuInfo As New GpuInfo With {
@@ -221,22 +186,6 @@ Public Class Form_v6_性能监控_LHM
         hostGpuComboBox.SelectedIndex = If(selectedIndex >= 0, selectedIndex, 0)
     End Sub
 
-    Private Sub RefreshCpuTemperature()
-        If hostCpuComboBox Is Nothing OrElse hostCpuComboBox.Items.Count <= 1 Then Exit Sub
-
-        Dim baseCpuItemText = StripCpuTemperature(hostCpuComboBox.Items(1))
-        If cpuTemperatureValue > 0 Then
-            hostCpuComboBox.Items(1) = $"{baseCpuItemText}  {cpuTemperatureValue:F0}°C"
-        ElseIf Not String.IsNullOrEmpty(baseCpuItemText) Then
-            hostCpuComboBox.Items(1) = baseCpuItemText
-        End If
-    End Sub
-
-    Private Sub RestoreCpuItemText()
-        If hostCpuComboBox Is Nothing OrElse hostCpuComboBox.Items.Count <= 1 Then Exit Sub
-        hostCpuComboBox.Items(1) = StripCpuTemperature(hostCpuComboBox.Items(1))
-    End Sub
-
     Private Sub RefreshGpuInfo()
         If gpuInfoTable.Count = 0 Then
             ClearGpuDashboards()
@@ -294,13 +243,6 @@ Public Class Form_v6_性能监控_LHM
             Next
         Next
         Return result
-    End Function
-
-    Private Shared Function StripCpuTemperature(text As String) As String
-        If String.IsNullOrEmpty(text) Then Return ""
-        Dim temperatureStart = text.LastIndexOf("  ", StringComparison.Ordinal)
-        If temperatureStart > 0 AndAlso text.EndsWith("°C") Then Return text.Substring(0, temperatureStart)
-        Return text
     End Function
 
     Private Sub RefreshGpuEngineInfo(gpuInfo As GpuInfo)

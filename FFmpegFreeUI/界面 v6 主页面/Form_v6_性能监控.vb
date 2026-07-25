@@ -72,7 +72,7 @@ Public Class Form_v6_性能监控
         If LHM监控窗体 IsNot Nothing Then Exit Sub
 
         LHM监控窗体 = New Form_v6_性能监控_LHM()
-        LHM监控窗体.InitializeLhm(ModernComboBox3, ModernComboBox1)
+        LHM监控窗体.InitializeLhm(ModernComboBox3)
 
         Dim lhmPanel = LHM监控窗体.RootPanel
         lhmPanel.Dock = DockStyle.Fill

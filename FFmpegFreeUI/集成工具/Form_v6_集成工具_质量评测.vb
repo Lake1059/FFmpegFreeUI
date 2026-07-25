@@ -24,6 +24,7 @@ Public Class Form_v6_集成工具_质量评测
     Private 当前评测记录 As StringBuilder = Nothing
     Private 最后评测记录 As String = ""
     Private 正在选择本地模型 As Boolean = False
+    Private 正在刷新Vmaf模型列表 As Boolean = False
 
     Private Enum 指标类型
         PSNR
@@ -111,17 +112,85 @@ Public Class Form_v6_集成工具_质量评测
             checkBox.ClickAnywhere = True
         Next
 
-        填充下拉框(MCB_模型选择,
-              "",
-              浏览本地模型项,
-              "vmaf_v0.6.1",
-              "vmaf_v0.6.1neg",
-              "vmaf_4k_v0.6.1")
-        填充下拉框(MCB_Pooling, "", "mean", "harmonic_mean", "min")
-        填充下拉框(MCB_SubSample, "", "1", "2", "3", "5", "10", "15")
+        MCB_模型选择.Items.Clear()
+        MCB_模型选择.SelectedIndex = -1
+        填充下拉框(MCB_Pooling, "mean", "harmonic_mean", "min")
+        填充下拉框(MCB_SubSample, "1", "2", "3", "5", "10", "15")
         绑定路径下拉框拖拽(MCB_模型选择, 路径下拉框拖拽模式.文件路径,
                          Sub(combo, path) 添加本地Vmaf模型(path))
     End Sub
+
+    Public Async Function 刷新Vmaf模型列表Async() As Task
+        If 正在刷新Vmaf模型列表 OrElse IsDisposed Then Return
+        正在刷新Vmaf模型列表 = True
+        MCB_模型选择.Enabled = False
+        Try
+            Dim models = Await 获取FFmpegVmaf模型列表Async()
+            If IsDisposed Then Return
+
+            MCB_模型选择.Items.Clear()
+            MCB_模型选择.Items.Add(浏览本地模型项)
+            For Each model In models
+                MCB_模型选择.Items.Add(model)
+            Next
+            MCB_模型选择.SelectedIndex = If(models.Count > 0, 1, -1)
+            If models.Count = 0 Then MCB_模型选择.Text = ""
+        Finally
+            正在刷新Vmaf模型列表 = False
+            If Not IsDisposed Then MCB_模型选择.Enabled = True
+        End Try
+    End Function
+
+    Private Shared Async Function 获取FFmpegVmaf模型列表Async() As Task(Of List(Of String))
+        Try
+            Using process As New Process(), timeout As New CancellationTokenSource(TimeSpan.FromSeconds(10))
+                process.StartInfo.FileName = 获取FFmpeg文件名()
+                process.StartInfo.WorkingDirectory = If(设置_v6.实例对象.工作目录 <> "", 设置_v6.实例对象.工作目录, "")
+                process.StartInfo.Arguments = "-hide_banner -h filter=libvmaf"
+                process.StartInfo.UseShellExecute = False
+                process.StartInfo.RedirectStandardOutput = True
+                process.StartInfo.RedirectStandardError = True
+                process.StartInfo.StandardOutputEncoding = Encoding.UTF8
+                process.StartInfo.StandardErrorEncoding = Encoding.UTF8
+                process.StartInfo.CreateNoWindow = True
+
+                Using registration = timeout.Token.Register(Sub()
+                                                                Try
+                                                                    If Not process.HasExited Then process.Kill()
+                                                                Catch
+                                                                End Try
+                                                            End Sub)
+                    process.Start()
+                    Dim stdoutTask = process.StandardOutput.ReadToEndAsync(timeout.Token)
+                    Dim stderrTask = process.StandardError.ReadToEndAsync(timeout.Token)
+                    Await process.WaitForExitAsync(timeout.Token)
+                    Dim output = Await stdoutTask & vbCrLf & Await stderrTask
+                    If process.ExitCode <> 0 Then Return New List(Of String)()
+                    Return 解析FFmpegVmaf模型列表(output)
+                End Using
+            End Using
+        Catch
+            Return New List(Of String)()
+        End Try
+    End Function
+
+    Private Shared Function 解析FFmpegVmaf模型列表(output As String) As List(Of String)
+        Dim result As New List(Of String)()
+        Dim optionMatch = Regex.Match(
+            If(output, ""),
+            "^\s*model\s+<string>.*?\(default\s+""(?<value>[^""]+)""\)",
+            RegexOptions.IgnoreCase Or RegexOptions.Multiline Or RegexOptions.CultureInvariant)
+        If Not optionMatch.Success Then Return result
+
+        For Each versionMatch As Match In Regex.Matches(
+            optionMatch.Groups("value").Value,
+            "(?:^|\|)version=(?<value>[^:|]+)",
+            RegexOptions.IgnoreCase Or RegexOptions.CultureInvariant)
+            Dim model = versionMatch.Groups("value").Value.Trim()
+            If model <> "" AndAlso Not result.Contains(model, StringComparer.OrdinalIgnoreCase) Then result.Add(model)
+        Next
+        Return result
+    End Function
 
     Private Shared Sub 填充下拉框(combo As ModernComboBox, ParamArray values() As String)
         If combo Is Nothing OrElse values Is Nothing Then Exit Sub
@@ -133,7 +202,7 @@ Public Class Form_v6_集成工具_质量评测
     End Sub
 
     Private Sub MCB_模型选择_SelectedIndexChanged(sender As Object, e As EventArgs) Handles MCB_模型选择.SelectedIndexChanged
-        If 正在选择本地模型 Then Exit Sub
+        If 正在选择本地模型 OrElse 正在刷新Vmaf模型列表 Then Exit Sub
 
         Select Case MCB_模型选择.Text.Trim()
             Case ""
@@ -150,9 +219,7 @@ Public Class Form_v6_集成工具_质量评测
                 If dialog.ShowDialog(Me) = DialogResult.OK Then
                     添加本地Vmaf模型(dialog.FileName)
                 Else
-                    MCB_模型选择.SelectedIndex = 0
-                    MCB_模型选择.Text = ""
-                    清空Vmaf附加选项()
+                    选中首个Vmaf模型()
                 End If
             End Using
         Finally
@@ -163,8 +230,7 @@ Public Class Form_v6_集成工具_质量评测
     Private Sub 添加本地Vmaf模型(path As String)
         Dim modelPath = If(path, "").Trim()
         If Not 是否有效本地Vmaf模型(modelPath) Then
-            MCB_模型选择.SelectedIndex = 0
-            MCB_模型选择.Text = ""
+            选中首个Vmaf模型()
             ExFloatingTip(MCB_模型选择, "请选择 VMAF 模型 JSON 文件", 1800)
             Exit Sub
         End If
@@ -180,6 +246,18 @@ Public Class Form_v6_集成工具_质量评测
         MCB_模型选择.SelectedIndex = MCB_模型选择.Items.Count - 1
     End Sub
 
+    Private Sub 选中首个Vmaf模型()
+        For i = 0 To MCB_模型选择.Items.Count - 1
+            If String.Equals(CStr(MCB_模型选择.Items(i)), 浏览本地模型项, StringComparison.Ordinal) Then Continue For
+            MCB_模型选择.SelectedIndex = i
+            Exit Sub
+        Next
+
+        MCB_模型选择.SelectedIndex = -1
+        MCB_模型选择.Text = ""
+        清空Vmaf附加选项()
+    End Sub
+
     Private Shared Function 是否有效本地Vmaf模型(path As String) As Boolean
         Return Not String.IsNullOrWhiteSpace(path) AndAlso
                String.Equals(System.IO.Path.GetExtension(path), ".json", StringComparison.OrdinalIgnoreCase) AndAlso
@@ -189,16 +267,6 @@ Public Class Form_v6_集成工具_质量评测
     Private Sub 清空Vmaf附加选项()
         MCB_Pooling.SelectedIndex = If(MCB_Pooling.Items.Count > 0, 0, -1)
         MCB_SubSample.SelectedIndex = If(MCB_SubSample.Items.Count > 0, 0, -1)
-    End Sub
-
-    Private Shared Sub 设置下拉框选中值(combo As ModernComboBox, value As String)
-        If combo Is Nothing Then Exit Sub
-        For i = 0 To combo.Items.Count - 1
-            If String.Equals(combo.Items(i), value, StringComparison.OrdinalIgnoreCase) Then
-                combo.SelectedIndex = i
-                Exit Sub
-            End If
-        Next
     End Sub
 
     Private Sub 绑定文件拖入(target As Control, 写入原视频 As Boolean)
@@ -754,7 +822,7 @@ Public Class Form_v6_集成工具_质量评测
 
         Dim filter As String
         Dim finalPixelFormat = 获取指标像素格式(referenceInfo, distortedInfo)
-        Dim model = If(metric = 指标类型.VMAF, 获取下拉框文本(MCB_模型选择, "vmaf_v0.6.1"), "")
+        Dim model = If(metric = 指标类型.VMAF, 获取下拉框文本(MCB_模型选择, ""), "")
         Dim targetSize = 获取评测目标尺寸(metric, referenceInfo, model)
         Dim scaleDistorted = 构建视频预处理滤镜(distortedInfo, referenceInfo, targetSize.Width, targetSize.Height, finalPixelFormat)
         Dim scaleReference = 构建参考预处理滤镜(metric, referenceInfo, targetSize, finalPixelFormat)
@@ -774,7 +842,8 @@ Public Class Form_v6_集成工具_质量评测
                 Dim threads = Math.Max(1, Environment.ProcessorCount - 1)
                 Dim subsampleOption = 构建Vmaf子采样参数(subsample)
                 Dim modelOption = 构建Vmaf模型参数(model)
-                filter = $"{dist}{ref}[dist][ref]libvmaf=eof_action=endall:log_fmt=json:log_path={引用过滤器参数(tempPath)}:n_threads={threads.ToString(CultureInfo.InvariantCulture)}{subsampleOption}:pool={转义过滤器值(pool)}:model={转义过滤器值(modelOption)}"
+                Dim modelArgument = If(modelOption = "", "", $":model={转义过滤器值(modelOption)}")
+                filter = $"{dist}{ref}[dist][ref]libvmaf=eof_action=endall:log_fmt=json:log_path={引用过滤器参数(tempPath)}:n_threads={threads.ToString(CultureInfo.InvariantCulture)}{subsampleOption}:pool={转义过滤器值(pool)}{modelArgument}"
             Case Else
                 Throw New InvalidOperationException("未知评测项目")
         End Select
@@ -802,6 +871,7 @@ Public Class Form_v6_集成工具_质量评测
 
     Private Shared Function 构建Vmaf模型参数(model As String) As String
         Dim value = If(model, "").Trim()
+        If value = "" Then Return ""
         If value.EndsWith(".json", StringComparison.OrdinalIgnoreCase) Then Return "path=" & value
         Return "version=" & value
     End Function

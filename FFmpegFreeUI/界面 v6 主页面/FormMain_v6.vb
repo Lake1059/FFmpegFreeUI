@@ -5,6 +5,11 @@ Imports LakeUI
 
 Public Class FormMain_v6
     Private ReadOnly 插件选项卡页 As New Dictionary(Of String, ModernTabListControl.ModernTabPage)(StringComparer.CurrentCultureIgnoreCase)
+    Private 退出确认已完成 As Boolean = False
+    Private 退出时清除所有任务 As Boolean = True
+    Private 退出时启动更新器 As Boolean = False
+    Private 退出里程碑检查进行中 As Boolean = False
+    Private 退出里程碑检查已完成 As Boolean = False
 
     Private Sub FormMain_v6_Load(sender As Object, e As EventArgs) Handles Me.Load
         UI同步上下文 = Threading.SynchronizationContext.Current
@@ -103,6 +108,7 @@ Public Class FormMain_v6
         End If
 
         检查并询问加载未处理任务缓存()
+        用户使用统计_v6.启动时后台检查(Me)
     End Sub
 
     Sub 绑定选项卡(选项卡的根面板容器 As ModernPanel)
@@ -206,57 +212,75 @@ Public Class FormMain_v6
     End Sub
 
     <CodeAnalysis.SuppressMessage("Performance", "CA1861:不要将常量数组作为参数", Justification:="<挂起>")>
-    Private Sub FormMain_v6_Closing(sender As Object, e As CancelEventArgs) Handles Me.FormClosing
+    Private Async Sub FormMain_v6_Closing(sender As Object, e As CancelEventArgs) Handles Me.FormClosing
         e.Cancel = False
         Dim updaterPath = Path.Combine(Application.StartupPath, "Updater.exe")
-        Dim 启动更新器 = UpdateAvailable AndAlso FileIO.FileSystem.FileExists(updaterPath)
-        If UpdateAvailable AndAlso Not 启动更新器 Then
-            If ExOverlayMsgBox(Me, "程序目录下没有更新器，这是意外情况，仍旧退出？", MsgBoxStyle.YesNo) <> MsgBoxResult.Yes Then
-                e.Cancel = True
-                Exit Sub
-            End If
-        End If
-
-        Dim 进行中任务数量 = 编码队列_v6.获取进行中任务数量()
-        Dim 未处理任务数量 = 编码队列_v6.获取未处理任务数量()
-        Dim 清除所有任务 As Boolean = True
-        If 进行中任务数量 > 0 OrElse 未处理任务数量 > 0 Then
-            Dim promptParts As New List(Of String)
-            If 进行中任务数量 > 0 Then promptParts.Add($"当前仍有 {进行中任务数量} 个任务正在处理、暂停或等待自动开始。")
-            If 未处理任务数量 > 0 Then promptParts.Add($"当前可保留的未执行任务有 {未处理任务数量} 个。")
-            promptParts.Add("请选择退出方式。")
-
-            Dim result = ExOverlayMsgBox(
-                Me,
-                String.Join(vbCrLf, promptParts),
-                {"保留未执行的任务并退出", "清除所有任务然后退出", "取消退出操作"},
-                "确认退出",
-                MsgBoxStyle.Question,
-                2)
-
-            Select Case result
-                Case 0
-                    Try
-                        编码队列_v6.保存未处理任务缓存()
-                        清除所有任务 = False
-                    Catch ex As Exception
-                        ExOverlayMsgBox(Me, "保存未执行任务失败：" & ex.Message, MsgBoxStyle.Critical, "无法退出")
-                        e.Cancel = True
-                        Exit Sub
-                    End Try
-                Case 1
-                    编码队列_v6.删除未处理任务缓存()
-                    清除所有任务 = True
-                Case Else
+        If Not 退出确认已完成 Then
+            退出时启动更新器 = UpdateAvailable AndAlso FileIO.FileSystem.FileExists(updaterPath)
+            If UpdateAvailable AndAlso Not 退出时启动更新器 Then
+                If ExOverlayMsgBox(Me, "程序目录下没有更新器，这是意外情况，仍旧退出？", MsgBoxStyle.YesNo) <> MsgBoxResult.Yes Then
                     e.Cancel = True
                     Exit Sub
-            End Select
+                End If
+            End If
+
+            Dim 进行中任务数量 = 编码队列_v6.获取进行中任务数量()
+            Dim 未处理任务数量 = 编码队列_v6.获取未处理任务数量()
+            退出时清除所有任务 = True
+            If 进行中任务数量 > 0 OrElse 未处理任务数量 > 0 Then
+                Dim promptParts As New List(Of String)
+                If 进行中任务数量 > 0 Then promptParts.Add($"当前仍有 {进行中任务数量} 个任务正在处理、暂停或等待自动开始。")
+                If 未处理任务数量 > 0 Then promptParts.Add($"当前可保留的未执行任务有 {未处理任务数量} 个。")
+                promptParts.Add("请选择退出方式。")
+
+                Dim result = ExOverlayMsgBox(
+                    Me,
+                    String.Join(vbCrLf, promptParts),
+                    {"保留未执行的任务并退出", "清除所有任务然后退出", "取消退出操作"},
+                    "确认退出",
+                    MsgBoxStyle.Question,
+                    2)
+
+                Select Case result
+                    Case 0
+                        Try
+                            编码队列_v6.保存未处理任务缓存()
+                            退出时清除所有任务 = False
+                        Catch ex As Exception
+                            ExOverlayMsgBox(Me, "保存未执行任务失败：" & ex.Message, MsgBoxStyle.Critical, "无法退出")
+                            e.Cancel = True
+                            Exit Sub
+                        End Try
+                    Case 1
+                        编码队列_v6.删除未处理任务缓存()
+                        退出时清除所有任务 = True
+                    Case Else
+                        e.Cancel = True
+                        Exit Sub
+                End Select
+            End If
+            退出确认已完成 = True
         End If
 
-        If 清除所有任务 AndAlso 进行中任务数量 > 0 Then 编码队列_v6.停止所有进行中任务()
+        If Not 退出里程碑检查已完成 Then
+            e.Cancel = True
+            If 退出里程碑检查进行中 Then Exit Sub
+            退出里程碑检查进行中 = True
+            Try
+                Await 用户使用统计_v6.退出时后台检查Async(Me)
+            Catch
+            Finally
+                退出里程碑检查进行中 = False
+                退出里程碑检查已完成 = True
+            End Try
+            BeginInvoke(Sub() Close())
+            Exit Sub
+        End If
+
+        If 退出时清除所有任务 AndAlso 编码队列_v6.获取进行中任务数量() > 0 Then 编码队列_v6.停止所有进行中任务()
         端口监听_v6.停止客户端()
         设置_v6.退出时保存设置()
-        If 启动更新器 Then
+        If 退出时启动更新器 Then
             Process.Start(updaterPath)
         End If
         If Form_v6_调试播放器.ffplayHandle <> IntPtr.Zero Then Form_v6_调试播放器.停止()

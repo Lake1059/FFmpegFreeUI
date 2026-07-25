@@ -32,4 +32,10 @@ Public Class Form_v6_集成工具
         End If
     End Sub
 
+    Private Async Sub ModernTabListControl1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ModernTabListControl1.SelectedIndexChanged
+        If ModernTabListControl1.SelectedIndex = 4 Then
+            Await Form_v6_集成工具_质量评测.刷新Vmaf模型列表Async()
+        End If
+    End Sub
+
 End Class

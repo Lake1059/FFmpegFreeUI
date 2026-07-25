@@ -1,5 +1,6 @@
 Imports System.IO
 Imports System.Reflection
+Imports System.Text
 Imports System.Text.Json
 Public Class 设置_v6
 
@@ -55,7 +56,11 @@ Public Class 设置_v6
     Public Property 更新服务器选择 As Integer = 0
     Public Property MirrorChyanCDK As String = ""
 
-    Public Property 是否参与用户统计 As Boolean = True
+    Public Property 用户统计_成功编码任务数 As Long = 0
+    Public Property 用户统计_任务执行总时长Ticks As Long = 0
+    Public Property 用户统计_首次成功提示已显示 As Boolean = False
+    Public Property 用户统计_已提示编码任务百次档位 As Long = 0
+    Public Property 用户统计_已提示任务时长240小时档位 As Long = 0
 
     Public Property 是否监听端口 As Boolean = False
     Public Property 监听的端口 As String = "10591"
@@ -103,13 +108,30 @@ Public Class 设置_v6
     Public Property 自定义视频编码器列表 As New List(Of String)
 
     Private Shared ReadOnly 设置文件路径 As String = Path.Combine(Application.StartupPath, "Settings.json")
+    Private Shared ReadOnly 设置文件写入锁 As New Object()
 
     Public Shared Sub 退出时保存设置()
         Try
-            FileIO.FileSystem.WriteAllText(设置文件路径, JsonSerializer.Serialize(实例对象, JsonSO), False)
+            保存设置到文件()
         Catch ex As Exception
             MsgBox($"保存设置失败：{ex.Message}", MsgBoxStyle.Critical)
         End Try
+    End Sub
+
+    Friend Shared Sub 后台保存设置()
+        保存设置到文件()
+    End Sub
+
+    Private Shared Sub 保存设置到文件()
+        SyncLock 设置文件写入锁
+            Dim 临时文件路径 = 设置文件路径 & ".tmp"
+            Try
+                File.WriteAllText(临时文件路径, JsonSerializer.Serialize(实例对象, JsonSO), New UTF8Encoding(False))
+                File.Move(临时文件路径, 设置文件路径, True)
+            Finally
+                If File.Exists(临时文件路径) Then File.Delete(临时文件路径)
+            End Try
+        End SyncLock
     End Sub
 
     Public Shared Sub 启动时加载设置()
