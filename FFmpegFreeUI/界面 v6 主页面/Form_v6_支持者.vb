@@ -12,7 +12,8 @@ Public Class Form_v6_支持者
         "Xing|#135da7",
         "xrh0905||https://www.xrh0905.top",
         "L. Snow|#6028e0", "爱发电用户_b274c", "不安的乌鸦 (暗夜精灵德鲁伊)|#FF8C00", "小豆豆变毛豆",
-        "Liu Zheng|#FFFFFF|https://www3.ntu.edu.sg/home/z.liu"
+        "Liu Zheng|#FFFFFF|https://www3.ntu.edu.sg/home/z.liu",
+        "Vertin", "简风|#613E33"
     }
     Public Shared ReadOnly 赠送支持者列表 As New List(Of String) From {
         "格里芬指挥官|#39C5BB",
@@ -20,7 +21,7 @@ Public Class Form_v6_支持者
         "Celery (酒吧点蛋炒饭的)|#21AEFF",
         "哈哈6662333 (坏点子大师/""网""管)|#FF9633",
         "哈基曼波|#FF96DE",
-        "ZOGMOS (终末诗) (首席教程制作大师) (开发者特别授予)|#72565F|https://zhuanlan.zhihu.com/p/1943079795341623993",
+        "ZOGMOS (终末诗) (首席教程制作大师) (开发者特别授予)|#72565F|https://zhuanlan.zhihu.com/p/2053530841180009271",
         "Uyanide (I use arch btw) (首席二次元)|#89B4FA",
         "Simlalsy (压片的)|#E3E0F9",
         "Dominic (AWJ神力)|#FF9D9F|https://github.com/Dominic485649/AWJimage"
