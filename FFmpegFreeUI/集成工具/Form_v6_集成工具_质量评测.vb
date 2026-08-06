@@ -63,6 +63,7 @@ Public Class Form_v6_集成工具_质量评测
     Private Class 进程运行结果
         Public Property ExitCode As Integer = -1
         Public Property Output As String = ""
+        Public Property ExecutablePath As String = ""
     End Class
 
     Private Class 视频流信息
@@ -143,35 +144,88 @@ Public Class Form_v6_集成工具_质量评测
 
     Private Shared Async Function 获取FFmpegVmaf模型列表Async() As Task(Of List(Of String))
         Try
-            Using process As New Process(), timeout As New CancellationTokenSource(TimeSpan.FromSeconds(10))
-                process.StartInfo.FileName = 获取FFmpeg文件名()
-                process.StartInfo.WorkingDirectory = If(设置_v6.实例对象.工作目录 <> "", 设置_v6.实例对象.工作目录, "")
-                process.StartInfo.Arguments = "-hide_banner -h filter=libvmaf"
-                process.StartInfo.UseShellExecute = False
-                process.StartInfo.RedirectStandardOutput = True
-                process.StartInfo.RedirectStandardError = True
-                process.StartInfo.StandardOutputEncoding = Encoding.UTF8
-                process.StartInfo.StandardErrorEncoding = Encoding.UTF8
-                process.StartInfo.CreateNoWindow = True
+            Dim ffmpeg = 获取FFmpeg文件名()
+            Dim helpResult = Await 运行FFmpeg模型查询Async(ffmpeg, "-hide_banner -h filter=libvmaf", TimeSpan.FromSeconds(10))
+            If helpResult.ExitCode <> 0 Then Return New List(Of String)()
 
-                Using registration = timeout.Token.Register(Sub()
-                                                                Try
-                                                                    If Not process.HasExited Then process.Kill()
-                                                                Catch
-                                                                End Try
-                                                            End Sub)
-                    process.Start()
-                    Dim stdoutTask = process.StandardOutput.ReadToEndAsync(timeout.Token)
-                    Dim stderrTask = process.StandardError.ReadToEndAsync(timeout.Token)
-                    Await process.WaitForExitAsync(timeout.Token)
-                    Dim output = Await stdoutTask & vbCrLf & Await stderrTask
-                    If process.ExitCode <> 0 Then Return New List(Of String)()
-                    Return 解析FFmpegVmaf模型列表(output)
-                End Using
-            End Using
+            Dim candidates = 解析FFmpegVmaf模型列表(helpResult.Output)
+            For Each model In 从FFmpeg运行库提取Vmaf模型列表(helpResult.ExecutablePath)
+                If Not candidates.Contains(model, StringComparer.OrdinalIgnoreCase) Then candidates.Add(model)
+            Next
+            Return candidates
         Catch
             Return New List(Of String)()
         End Try
+    End Function
+
+    Private Shared Function 从FFmpeg运行库提取Vmaf模型列表(ffmpegPath As String) As List(Of String)
+        Dim result As New List(Of String)()
+        If String.IsNullOrWhiteSpace(ffmpegPath) OrElse Not File.Exists(ffmpegPath) Then Return result
+
+        Dim files As New HashSet(Of String)(StringComparer.OrdinalIgnoreCase) From {ffmpegPath}
+        Try
+            Dim directory = Path.GetDirectoryName(ffmpegPath)
+            If String.IsNullOrWhiteSpace(directory) Then Return result
+            For Each pattern In {"avfilter*.dll", "libavfilter*.dll", "libvmaf*.dll"}
+                For Each file In System.IO.Directory.EnumerateFiles(directory, pattern, SearchOption.TopDirectoryOnly)
+                    files.Add(file)
+                Next
+            Next
+        Catch
+        End Try
+
+        For Each file In files
+            Try
+                Dim info As New FileInfo(file)
+                If info.Length <= 0 OrElse info.Length > 256L * 1024L * 1024L Then Continue For
+                Dim content = Encoding.ASCII.GetString(System.IO.File.ReadAllBytes(file))
+                For Each modelMatch As Match In Regex.Matches(
+                    content,
+                    "(?<![A-Za-z0-9_])(?<value>vmaf_[A-Za-z0-9_]*v\d+\.\d+\.\d+[A-Za-z0-9]*(?:_[A-Za-z0-9]+)*)",
+                    RegexOptions.IgnoreCase Or RegexOptions.CultureInvariant)
+                    Dim model = modelMatch.Groups("value").Value
+                    If Not result.Contains(model, StringComparer.OrdinalIgnoreCase) Then result.Add(model)
+                Next
+            Catch
+            End Try
+        Next
+
+        result.Sort(StringComparer.OrdinalIgnoreCase)
+        Return result
+    End Function
+
+    Private Shared Async Function 运行FFmpeg模型查询Async(ffmpeg As String, arguments As String, timeoutValue As TimeSpan) As Task(Of 进程运行结果)
+        Using process As New Process(), timeout As New CancellationTokenSource(timeoutValue)
+            process.StartInfo.FileName = ffmpeg
+            process.StartInfo.WorkingDirectory = If(设置_v6.实例对象.工作目录 <> "", 设置_v6.实例对象.工作目录, "")
+            process.StartInfo.Arguments = arguments
+            process.StartInfo.UseShellExecute = False
+            process.StartInfo.RedirectStandardOutput = True
+            process.StartInfo.RedirectStandardError = True
+            process.StartInfo.StandardOutputEncoding = Encoding.UTF8
+            process.StartInfo.StandardErrorEncoding = Encoding.UTF8
+            process.StartInfo.CreateNoWindow = True
+
+            Using registration = timeout.Token.Register(Sub()
+                                                            Try
+                                                                If Not process.HasExited Then process.Kill()
+                                                            Catch
+                                                            End Try
+                                                        End Sub)
+                process.Start()
+                Dim executablePath = ""
+                Try
+                    If process.MainModule IsNot Nothing Then executablePath = process.MainModule.FileName
+                Catch
+                End Try
+                Dim stdoutTask = process.StandardOutput.ReadToEndAsync(timeout.Token)
+                Dim stderrTask = process.StandardError.ReadToEndAsync(timeout.Token)
+                Await process.WaitForExitAsync(timeout.Token)
+                Dim stdout = Await stdoutTask
+                Dim stderr = Await stderrTask
+                Return New 进程运行结果 With {.ExitCode = process.ExitCode, .Output = stdout & vbCrLf & stderr, .ExecutablePath = executablePath}
+            End Using
+        End Using
     End Function
 
     Private Shared Function 解析FFmpegVmaf模型列表(output As String) As List(Of String)

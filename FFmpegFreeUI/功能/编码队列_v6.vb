@@ -1521,7 +1521,13 @@ Public Class 编码任务_v6
         If line Is Nothing Then Exit Sub
         stepItem.输出缓存.Add(line)
         If stepItem.输出缓存.Count > 2000 Then stepItem.输出缓存.RemoveRange(0, stepItem.输出缓存.Count - 1000)
-        If line.Contains("Duration:", StringComparison.OrdinalIgnoreCase) Then 进度.解析FFmpeg输出(line, 计算当前总时长())
+        If line.Contains("Duration:", StringComparison.OrdinalIgnoreCase) Then
+            Dim detectedDuration = 编码进度_v6.提取媒体总时长(line)
+            If String.IsNullOrWhiteSpace(媒体总时长) AndAlso detectedDuration > TimeSpan.Zero Then
+                媒体总时长 = detectedDuration.TotalSeconds.ToString("0.###", CultureInfo.InvariantCulture)
+            End If
+            进度.解析FFmpeg输出(line, 计算当前总时长())
+        End If
         Dim isProgressLine = 编码队列_v6.是否进度输出(line)
         If isProgressLine Then
             进度.解析FFmpeg输出(line, 计算当前总时长())
@@ -1532,14 +1538,29 @@ Public Class 编码任务_v6
     End Sub
 
     Private Function 计算当前总时长() As TimeSpan
-        If 预设数据 IsNot Nothing Then
-            If 预设数据.剪辑区间_入点 <> "" AndAlso 预设数据.剪辑区间_出点 <> "" Then
-                Return 编码进度_v6.转换时间(预设数据.剪辑区间_出点) - 编码进度_v6.转换时间(预设数据.剪辑区间_入点)
-            End If
-            If 预设数据.剪辑区间_入点 = "" AndAlso 预设数据.剪辑区间_出点 <> "" Then Return 编码进度_v6.转换时间(预设数据.剪辑区间_出点)
+        Dim originalDuration = If(Not String.IsNullOrWhiteSpace(媒体总时长),
+                                  编码进度_v6.转换时间(媒体总时长),
+                                  进度.总时长)
+        If 预设数据 Is Nothing OrElse 预设数据.剪辑区间_方法 = 预设数据_v6.剪辑方法.未知 Then Return originalDuration
+
+        Dim inPointText = If(预设数据.剪辑区间_入点, "").Trim()
+        Dim outPointText = If(预设数据.剪辑区间_出点, "").Trim()
+        If inPointText = "" AndAlso outPointText = "" Then Return originalDuration
+
+        Dim inPoint = 编码进度_v6.转换时间(inPointText)
+        Dim outPoint = 编码进度_v6.转换时间(outPointText)
+        If 预设数据.剪辑区间_方法 = 预设数据_v6.剪辑方法.掐头去尾 Then
+            If originalDuration <= TimeSpan.Zero Then Return originalDuration
+            Return TimeSpan.FromSeconds(Math.Max(0, originalDuration.TotalSeconds - inPoint.TotalSeconds - outPoint.TotalSeconds))
         End If
-        If Not String.IsNullOrWhiteSpace(媒体总时长) Then Return TimeSpan.FromSeconds(Val(媒体总时长))
-        Return 进度.总时长
+
+        If outPointText <> "" Then
+            Return TimeSpan.FromSeconds(Math.Max(0, outPoint.TotalSeconds - inPoint.TotalSeconds))
+        End If
+        If inPointText <> "" AndAlso originalDuration > TimeSpan.Zero Then
+            Return TimeSpan.FromSeconds(Math.Max(0, originalDuration.TotalSeconds - inPoint.TotalSeconds))
+        End If
+        Return originalDuration
     End Function
 
     Public Sub 暂停()
@@ -1790,8 +1811,8 @@ Public Class 编码进度_v6
     Public Sub 解析FFmpeg输出(line As String, preferredTotal As TimeSpan)
         If String.IsNullOrWhiteSpace(line) Then Exit Sub
         If 总时长 = TimeSpan.Zero AndAlso preferredTotal > TimeSpan.Zero Then 总时长 = preferredTotal
-        Dim dm = DurationPattern.Match(line)
-        If 总时长 = TimeSpan.Zero AndAlso dm.Success Then 总时长 = 转换时间(dm.Groups(1).Value)
+        Dim detectedDuration = 提取媒体总时长(line)
+        If 总时长 = TimeSpan.Zero AndAlso detectedDuration > TimeSpan.Zero Then 总时长 = detectedDuration
         Dim tm = TimePattern.Match(line)
         If tm.Success Then 当前时间 = 转换时间(tm.Groups("value").Value)
 
@@ -1823,6 +1844,13 @@ Public Class 编码进度_v6
             End If
         End If
     End Sub
+
+    Friend Shared Function 提取媒体总时长(line As String) As TimeSpan
+        If String.IsNullOrWhiteSpace(line) Then Return TimeSpan.Zero
+        Dim match = DurationPattern.Match(line)
+        If Not match.Success Then Return TimeSpan.Zero
+        Return 转换时间(match.Groups(1).Value)
+    End Function
 
     Private Shared Function 格式化质量文本(value As String) As String
         Dim q As Double
