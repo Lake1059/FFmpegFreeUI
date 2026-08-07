@@ -34,6 +34,10 @@ Partial Class Form_v6_设置_个性化
         JustEmptyControl4 = New LakeUI.JustEmptyControl()
         MCB_毛玻璃模式 = New LakeUI.ModernComboBox()
         HtmlColorLabel6 = New LakeUI.HtmlColorLabel()
+        Panel8 = New Panel()
+        MB_标题栏分割线颜色 = New LakeUI.ModernButton()
+        JustEmptyControl9 = New LakeUI.JustEmptyControl()
+        MCB_标题栏分割线 = New LakeUI.ModernComboBox()
         Panel3 = New Panel()
         MCB_边框宽度 = New LakeUI.ModernComboBox()
         JustEmptyControl8 = New LakeUI.JustEmptyControl()
@@ -65,6 +69,7 @@ Partial Class Form_v6_设置_个性化
         ModernPanel1.SuspendLayout()
         Panel6.SuspendLayout()
         Panel5.SuspendLayout()
+        Panel8.SuspendLayout()
         Panel3.SuspendLayout()
         Panel7.SuspendLayout()
         Panel1.SuspendLayout()
@@ -81,6 +86,7 @@ Partial Class Form_v6_设置_个性化
         ModernPanel1.Controls.Add(Panel6)
         ModernPanel1.Controls.Add(Panel5)
         ModernPanel1.Controls.Add(HtmlColorLabel6)
+        ModernPanel1.Controls.Add(Panel8)
         ModernPanel1.Controls.Add(Panel3)
         ModernPanel1.Controls.Add(HtmlColorLabel5)
         ModernPanel1.Controls.Add(Panel7)
@@ -101,11 +107,11 @@ Partial Class Form_v6_设置_个性化
         HtmlColorLabel7.AutoSize = True
         HtmlColorLabel7.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel7.Dock = DockStyle.Top
-        HtmlColorLabel7.Location = New Point(20, 586)
+        HtmlColorLabel7.Location = New Point(20, 605)
         HtmlColorLabel7.Margin = New Padding(2)
         HtmlColorLabel7.Name = "HtmlColorLabel7"
         HtmlColorLabel7.Padding = New Padding(0, 10, 0, 0)
-        HtmlColorLabel7.Size = New Size(738, 31)
+        HtmlColorLabel7.Size = New Size(738, 27)
         HtmlColorLabel7.TabIndex = 24
         HtmlColorLabel7.Text = "本页设置请重启软件以获得完整改动"
         HtmlColorLabel7.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.BottomLeft
@@ -114,7 +120,7 @@ Partial Class Form_v6_设置_个性化
         ' 
         Panel6.Controls.Add(MB_选择背景图)
         Panel6.Dock = DockStyle.Top
-        Panel6.Location = New Point(20, 544)
+        Panel6.Location = New Point(20, 563)
         Panel6.Name = "Panel6"
         Panel6.Padding = New Padding(0, 10, 0, 0)
         Panel6.Size = New Size(738, 42)
@@ -143,7 +149,7 @@ Partial Class Form_v6_设置_个性化
         Panel5.Controls.Add(JustEmptyControl4)
         Panel5.Controls.Add(MCB_毛玻璃模式)
         Panel5.Dock = DockStyle.Top
-        Panel5.Location = New Point(20, 502)
+        Panel5.Location = New Point(20, 521)
         Panel5.Name = "Panel5"
         Panel5.Padding = New Padding(0, 10, 0, 0)
         Panel5.Size = New Size(738, 42)
@@ -266,13 +272,78 @@ Partial Class Form_v6_设置_个性化
         HtmlColorLabel6.AutoSize = True
         HtmlColorLabel6.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel6.Dock = DockStyle.Top
-        HtmlColorLabel6.Location = New Point(20, 451)
+        HtmlColorLabel6.Location = New Point(20, 477)
         HtmlColorLabel6.Margin = New Padding(2)
         HtmlColorLabel6.Name = "HtmlColorLabel6"
         HtmlColorLabel6.Padding = New Padding(0, 10, 0, 0)
-        HtmlColorLabel6.Size = New Size(738, 51)
+        HtmlColorLabel6.Size = New Size(738, 44)
         HtmlColorLabel6.TabIndex = 22
         HtmlColorLabel6.Text = "玻璃背景模式下将禁用部分控件的遮罩色以实现全透背景<br>玻璃背景将大幅增加内存和显存占用，并对 UI 性能产生影响，不建议低端 CPU 使用"
+        ' 
+        ' Panel8
+        ' 
+        Panel8.Controls.Add(MB_标题栏分割线颜色)
+        Panel8.Controls.Add(JustEmptyControl9)
+        Panel8.Controls.Add(MCB_标题栏分割线)
+        Panel8.Dock = DockStyle.Top
+        Panel8.Location = New Point(20, 435)
+        Panel8.Name = "Panel8"
+        Panel8.Padding = New Padding(0, 10, 0, 0)
+        Panel8.Size = New Size(738, 42)
+        Panel8.TabIndex = 26
+        ' 
+        ' MB_标题栏分割线颜色
+        ' 
+        MB_标题栏分割线颜色.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MB_标题栏分割线颜色.BorderRadius = 10
+        MB_标题栏分割线颜色.BorderSize = 0
+        MB_标题栏分割线颜色.Dock = DockStyle.Left
+        MB_标题栏分割线颜色.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        MB_标题栏分割线颜色.Location = New Point(200, 10)
+        MB_标题栏分割线颜色.Margin = New Padding(2)
+        MB_标题栏分割线颜色.Name = "MB_标题栏分割线颜色"
+        MB_标题栏分割线颜色.PressedBackColor1 = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
+        MB_标题栏分割线颜色.Size = New Size(110, 32)
+        MB_标题栏分割线颜色.TabIndex = 13
+        MB_标题栏分割线颜色.Text = "分割线颜色"
+        ' 
+        ' JustEmptyControl9
+        ' 
+        JustEmptyControl9.Dock = DockStyle.Left
+        JustEmptyControl9.Location = New Point(190, 10)
+        JustEmptyControl9.Name = "JustEmptyControl9"
+        JustEmptyControl9.Size = New Size(10, 32)
+        JustEmptyControl9.TabIndex = 14
+        ' 
+        ' MCB_标题栏分割线
+        ' 
+        MCB_标题栏分割线.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MCB_标题栏分割线.BorderRadius = 10
+        MCB_标题栏分割线.BorderSize = 0
+        MCB_标题栏分割线.Dock = DockStyle.Left
+        MCB_标题栏分割线.DropDownBackdropBlurPasses = 2
+        MCB_标题栏分割线.DropDownBackdropBlurRadius = 30
+        MCB_标题栏分割线.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
+        MCB_标题栏分割线.DropDownHoverColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
+        MCB_标题栏分割线.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
+        MCB_标题栏分割线.DropDownPadding = New Padding(10)
+        MCB_标题栏分割线.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MCB_标题栏分割线.DropDownSelectedForeColor = Color.White
+        MCB_标题栏分割线.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        MCB_标题栏分割线.Items.Add("禁用标题栏分割线")
+        MCB_标题栏分割线.Items.Add("启用标题栏分割线")
+        MCB_标题栏分割线.Location = New Point(0, 10)
+        MCB_标题栏分割线.Margin = New Padding(2, 2, 2, 2)
+        MCB_标题栏分割线.Name = "MCB_标题栏分割线"
+        MCB_标题栏分割线.Padding = New Padding(10, 0, 10, 0)
+        MCB_标题栏分割线.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MCB_标题栏分割线.Size = New Size(190, 32)
+        MCB_标题栏分割线.TabIndex = 12
+        MCB_标题栏分割线.ToolTipGap = -1
+        MCB_标题栏分割线.ToolTipMaxWidth = 350
+        MCB_标题栏分割线.ToolTipPadding = New Padding(15)
+        MCB_标题栏分割线.WaterText = "标题栏分割线"
+        MCB_标题栏分割线.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ' 
         ' Panel3
         ' 
@@ -282,7 +353,7 @@ Partial Class Form_v6_设置_个性化
         Panel3.Controls.Add(JustEmptyControl6)
         Panel3.Controls.Add(MB_窗口边框颜色)
         Panel3.Dock = DockStyle.Top
-        Panel3.Location = New Point(20, 409)
+        Panel3.Location = New Point(20, 393)
         Panel3.Name = "Panel3"
         Panel3.Padding = New Padding(0, 10, 0, 0)
         Panel3.Size = New Size(738, 42)
@@ -371,11 +442,11 @@ Partial Class Form_v6_设置_个性化
         HtmlColorLabel5.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel5.Dock = DockStyle.Top
         HtmlColorLabel5.Font = New Font("Microsoft YaHei UI", 13F)
-        HtmlColorLabel5.Location = New Point(20, 364)
+        HtmlColorLabel5.Location = New Point(20, 350)
         HtmlColorLabel5.Margin = New Padding(2)
         HtmlColorLabel5.Name = "HtmlColorLabel5"
         HtmlColorLabel5.Padding = New Padding(0, 20, 0, 0)
-        HtmlColorLabel5.Size = New Size(738, 45)
+        HtmlColorLabel5.Size = New Size(738, 43)
         HtmlColorLabel5.TabIndex = 19
         HtmlColorLabel5.Text = "ThisIsYourWindow 特别呈现"
         ' 
@@ -385,7 +456,7 @@ Partial Class Form_v6_设置_个性化
         Panel7.Controls.Add(JustEmptyControl7)
         Panel7.Controls.Add(MB_任务完成音效)
         Panel7.Dock = DockStyle.Top
-        Panel7.Location = New Point(20, 322)
+        Panel7.Location = New Point(20, 308)
         Panel7.Name = "Panel7"
         Panel7.Padding = New Padding(0, 10, 0, 0)
         Panel7.Size = New Size(738, 42)
@@ -435,7 +506,7 @@ Partial Class Form_v6_设置_个性化
         Panel1.Controls.Add(JustEmptyControl3)
         Panel1.Controls.Add(MB_图标)
         Panel1.Dock = DockStyle.Top
-        Panel1.Location = New Point(20, 280)
+        Panel1.Location = New Point(20, 266)
         Panel1.Name = "Panel1"
         Panel1.Padding = New Padding(0, 10, 0, 0)
         Panel1.Size = New Size(738, 42)
@@ -487,7 +558,7 @@ Partial Class Form_v6_设置_个性化
         Panel2.Controls.Add(JustEmptyControl1)
         Panel2.Controls.Add(MB_窗口标题文字)
         Panel2.Dock = DockStyle.Top
-        Panel2.Location = New Point(20, 238)
+        Panel2.Location = New Point(20, 224)
         Panel2.Name = "Panel2"
         Panel2.Padding = New Padding(0, 10, 0, 0)
         Panel2.Size = New Size(738, 42)
@@ -560,11 +631,11 @@ Partial Class Form_v6_设置_个性化
         HtmlColorLabel3.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel3.Dock = DockStyle.Top
         HtmlColorLabel3.Font = New Font("Microsoft YaHei UI", 13F)
-        HtmlColorLabel3.Location = New Point(20, 193)
+        HtmlColorLabel3.Location = New Point(20, 181)
         HtmlColorLabel3.Margin = New Padding(2)
         HtmlColorLabel3.Name = "HtmlColorLabel3"
         HtmlColorLabel3.Padding = New Padding(0, 20, 0, 0)
-        HtmlColorLabel3.Size = New Size(738, 45)
+        HtmlColorLabel3.Size = New Size(738, 43)
         HtmlColorLabel3.TabIndex = 15
         HtmlColorLabel3.Text = "可定制内容"
         ' 
@@ -582,7 +653,7 @@ Partial Class Form_v6_设置_个性化
         ModernPanel2.Location = New Point(20, 20)
         ModernPanel2.Name = "ModernPanel2"
         ModernPanel2.Padding = New Padding(10)
-        ModernPanel2.Size = New Size(738, 173)
+        ModernPanel2.Size = New Size(738, 161)
         ModernPanel2.TabIndex = 0
         ' 
         ' Panel4
@@ -590,7 +661,7 @@ Partial Class Form_v6_设置_个性化
         Panel4.Controls.Add(HtmlColorLabel8)
         Panel4.Controls.Add(MB_前往购买)
         Panel4.Dock = DockStyle.Top
-        Panel4.Location = New Point(20, 111)
+        Panel4.Location = New Point(20, 99)
         Panel4.Name = "Panel4"
         Panel4.Padding = New Padding(0, 10, 0, 0)
         Panel4.Size = New Size(698, 42)
@@ -633,10 +704,10 @@ Partial Class Form_v6_设置_个性化
         HtmlColorLabel2.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel2.Dock = DockStyle.Top
         HtmlColorLabel2.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        HtmlColorLabel2.Location = New Point(20, 50)
+        HtmlColorLabel2.Location = New Point(20, 48)
         HtmlColorLabel2.Margin = New Padding(2)
         HtmlColorLabel2.Name = "HtmlColorLabel2"
-        HtmlColorLabel2.Size = New Size(698, 61)
+        HtmlColorLabel2.Size = New Size(698, 51)
         HtmlColorLabel2.TabIndex = 12
         HtmlColorLabel2.Text = "3FUI 支持者内容包仅提供个性化功能，所有生产力功能和附属功能是全部免费的<br>作为 3FUI 的付费支持者，您可以提供一个支持者信息，我会在下一次更新时硬编码到 3FUI<br>同时您还可以在 Agent 智能体中免费使用我们自费提供的高级模型"
         ' 
@@ -650,7 +721,7 @@ Partial Class Form_v6_设置_个性化
         HtmlColorLabel1.Margin = New Padding(2)
         HtmlColorLabel1.Name = "HtmlColorLabel1"
         HtmlColorLabel1.Padding = New Padding(0, 0, 0, 5)
-        HtmlColorLabel1.Size = New Size(698, 30)
+        HtmlColorLabel1.Size = New Size(698, 28)
         HtmlColorLabel1.TabIndex = 11
         HtmlColorLabel1.Text = "购买 FFmpegFreeUI Supporter Pack 以解锁个性化设置"
         ' 
@@ -669,6 +740,7 @@ Partial Class Form_v6_设置_个性化
         ModernPanel1.PerformLayout()
         Panel6.ResumeLayout(False)
         Panel5.ResumeLayout(False)
+        Panel8.ResumeLayout(False)
         Panel3.ResumeLayout(False)
         Panel7.ResumeLayout(False)
         Panel1.ResumeLayout(False)
@@ -719,4 +791,8 @@ Partial Class Form_v6_设置_个性化
     Friend WithEvents MB_任务失败音效 As LakeUI.ModernButton
     Friend WithEvents JustEmptyControl7 As LakeUI.JustEmptyControl
     Friend WithEvents MB_任务完成音效 As LakeUI.ModernButton
+    Friend WithEvents Panel8 As Panel
+    Friend WithEvents MB_标题栏分割线颜色 As LakeUI.ModernButton
+    Friend WithEvents JustEmptyControl9 As LakeUI.JustEmptyControl
+    Friend WithEvents MCB_标题栏分割线 As LakeUI.ModernComboBox
 End Class

@@ -48,22 +48,30 @@ Partial Class Form_v6_参数面板_画面帧
         Panel3 = New Panel()
         MB_抽帧设置 = New LakeUI.ModernButton()
         JustEmptyControl3 = New LakeUI.JustEmptyControl()
+        MCB_强调帧率模式 = New LakeUI.ModernComboBox()
+        JustEmptyControl13 = New LakeUI.JustEmptyControl()
         MCB_直接指定帧率 = New LakeUI.ModernComboBox()
         HCL_帧率设置标题 = New LakeUI.HtmlColorLabel()
         Panel4 = New Panel()
-        LB_裁剪滤镜排序说明 = New Label()
+        HtmlColorLabel1 = New LakeUI.HtmlColorLabel()
         MTB_画面裁剪参数 = New LakeUI.ModernTextBox()
         JustEmptyControl1 = New LakeUI.JustEmptyControl()
         MB_画面裁剪交互 = New LakeUI.ModernButton()
+        Panel11 = New Panel()
+        JustEmptyControl12 = New LakeUI.JustEmptyControl()
         Panel1 = New Panel()
-        LB_单独缩放说明 = New Label()
         MCB_指定缩放算法 = New LakeUI.ModernComboBox()
         JustEmptyControl6 = New LakeUI.JustEmptyControl()
         MCB_高度缩放 = New LakeUI.ModernComboBox()
         JustEmptyControl2 = New LakeUI.JustEmptyControl()
         MCB_宽度缩放 = New LakeUI.ModernComboBox()
+        Panel9 = New Panel()
+        HCL_缩放滤镜说明 = New LakeUI.HtmlColorLabel()
+        MCB_指定缩放滤镜 = New LakeUI.ModernComboBox()
+        Panel10 = New Panel()
+        JustEmptyControl7 = New LakeUI.JustEmptyControl()
         Panel2 = New Panel()
-        LB_直接指定分辨率说明 = New Label()
+        HCL_直接指定分辨率说明 = New LakeUI.HtmlColorLabel()
         MCB_直接指定分辨率 = New LakeUI.ModernComboBox()
         HCL_分辨率设置标题 = New LakeUI.HtmlColorLabel()
         ModernPanel1.SuspendLayout()
@@ -73,7 +81,10 @@ Partial Class Form_v6_参数面板_画面帧
         Panel5.SuspendLayout()
         Panel3.SuspendLayout()
         Panel4.SuspendLayout()
+        Panel11.SuspendLayout()
         Panel1.SuspendLayout()
+        Panel9.SuspendLayout()
+        Panel10.SuspendLayout()
         Panel2.SuspendLayout()
         SuspendLayout()
         ' 
@@ -90,7 +101,10 @@ Partial Class Form_v6_参数面板_画面帧
         ModernPanel1.Controls.Add(Panel3)
         ModernPanel1.Controls.Add(HCL_帧率设置标题)
         ModernPanel1.Controls.Add(Panel4)
+        ModernPanel1.Controls.Add(Panel11)
         ModernPanel1.Controls.Add(Panel1)
+        ModernPanel1.Controls.Add(Panel9)
+        ModernPanel1.Controls.Add(Panel10)
         ModernPanel1.Controls.Add(Panel2)
         ModernPanel1.Controls.Add(HCL_分辨率设置标题)
         ModernPanel1.Dock = DockStyle.Fill
@@ -105,7 +119,7 @@ Partial Class Form_v6_参数面板_画面帧
         ' 
         Panel6.Controls.Add(MB_烧录字幕)
         Panel6.Dock = DockStyle.Top
-        Panel6.Location = New Point(20, 494)
+        Panel6.Location = New Point(20, 550)
         Panel6.Name = "Panel6"
         Panel6.Padding = New Padding(0, 10, 0, 0)
         Panel6.Size = New Size(729, 42)
@@ -132,11 +146,11 @@ Partial Class Form_v6_参数面板_画面帧
         HCL_画面内容标题.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HCL_画面内容标题.Dock = DockStyle.Top
         HCL_画面内容标题.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        HCL_画面内容标题.Location = New Point(20, 444)
+        HCL_画面内容标题.Location = New Point(20, 502)
         HCL_画面内容标题.Margin = New Padding(2)
         HCL_画面内容标题.Name = "HCL_画面内容标题"
         HCL_画面内容标题.Padding = New Padding(0, 20, 0, 5)
-        HCL_画面内容标题.Size = New Size(729, 50)
+        HCL_画面内容标题.Size = New Size(729, 48)
         HCL_画面内容标题.TabIndex = 13
         HCL_画面内容标题.Text = "<span style=""font-size:13; color:Silver"">内容</span>   专业需求请用剪辑和特效软件"
         ' 
@@ -148,7 +162,7 @@ Partial Class Form_v6_参数面板_画面帧
         Panel8.Controls.Add(JustEmptyControl11)
         Panel8.Controls.Add(MB_扫描方式)
         Panel8.Dock = DockStyle.Top
-        Panel8.Location = New Point(20, 402)
+        Panel8.Location = New Point(20, 460)
         Panel8.Name = "Panel8"
         Panel8.Padding = New Padding(0, 10, 0, 0)
         Panel8.Size = New Size(729, 42)
@@ -223,7 +237,7 @@ Partial Class Form_v6_参数面板_画面帧
         Panel7.Controls.Add(JustEmptyControl9)
         Panel7.Controls.Add(MB_传统降噪)
         Panel7.Dock = DockStyle.Top
-        Panel7.Location = New Point(20, 360)
+        Panel7.Location = New Point(20, 418)
         Panel7.Name = "Panel7"
         Panel7.Padding = New Padding(0, 10, 0, 0)
         Panel7.Size = New Size(729, 42)
@@ -298,7 +312,7 @@ Partial Class Form_v6_参数面板_画面帧
         Panel5.Controls.Add(JustEmptyControl4)
         Panel5.Controls.Add(MB_简易插帧)
         Panel5.Dock = DockStyle.Top
-        Panel5.Location = New Point(20, 318)
+        Panel5.Location = New Point(20, 376)
         Panel5.Name = "Panel5"
         Panel5.Padding = New Padding(0, 10, 0, 0)
         Panel5.Size = New Size(729, 42)
@@ -371,11 +385,11 @@ Partial Class Form_v6_参数面板_画面帧
         HCL_画面增强标题.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HCL_画面增强标题.Dock = DockStyle.Top
         HCL_画面增强标题.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        HCL_画面增强标题.Location = New Point(20, 268)
+        HCL_画面增强标题.Location = New Point(20, 328)
         HCL_画面增强标题.Margin = New Padding(2)
         HCL_画面增强标题.Name = "HCL_画面增强标题"
         HCL_画面增强标题.Padding = New Padding(0, 20, 0, 5)
-        HCL_画面增强标题.Size = New Size(729, 50)
+        HCL_画面增强标题.Size = New Size(729, 48)
         HCL_画面增强标题.TabIndex = 11
         HCL_画面增强标题.Text = "<span style=""font-size:13; color:Silver"">增强</span>   专业需求请考虑行业软件或 AI 软件"
         ' 
@@ -383,9 +397,11 @@ Partial Class Form_v6_参数面板_画面帧
         ' 
         Panel3.Controls.Add(MB_抽帧设置)
         Panel3.Controls.Add(JustEmptyControl3)
+        Panel3.Controls.Add(MCB_强调帧率模式)
+        Panel3.Controls.Add(JustEmptyControl13)
         Panel3.Controls.Add(MCB_直接指定帧率)
         Panel3.Dock = DockStyle.Top
-        Panel3.Location = New Point(20, 226)
+        Panel3.Location = New Point(20, 286)
         Panel3.Name = "Panel3"
         Panel3.Padding = New Padding(0, 10, 0, 0)
         Panel3.Size = New Size(729, 42)
@@ -398,7 +414,7 @@ Partial Class Form_v6_参数面板_画面帧
         MB_抽帧设置.BorderSize = 0
         MB_抽帧设置.Dock = DockStyle.Left
         MB_抽帧设置.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
-        MB_抽帧设置.Location = New Point(160, 10)
+        MB_抽帧设置.Location = New Point(320, 10)
         MB_抽帧设置.Margin = New Padding(2)
         MB_抽帧设置.Name = "MB_抽帧设置"
         MB_抽帧设置.PressedBackColor1 = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
@@ -409,10 +425,49 @@ Partial Class Form_v6_参数面板_画面帧
         ' JustEmptyControl3
         ' 
         JustEmptyControl3.Dock = DockStyle.Left
-        JustEmptyControl3.Location = New Point(150, 10)
+        JustEmptyControl3.Location = New Point(310, 10)
         JustEmptyControl3.Name = "JustEmptyControl3"
         JustEmptyControl3.Size = New Size(10, 32)
         JustEmptyControl3.TabIndex = 9
+        ' 
+        ' MCB_强调帧率模式
+        ' 
+        MCB_强调帧率模式.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MCB_强调帧率模式.BorderRadius = 10
+        MCB_强调帧率模式.BorderSize = 0
+        MCB_强调帧率模式.Dock = DockStyle.Left
+        MCB_强调帧率模式.DropDownBackdropBlurPasses = 2
+        MCB_强调帧率模式.DropDownBackdropBlurRadius = 30
+        MCB_强调帧率模式.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
+        MCB_强调帧率模式.DropDownHoverColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
+        MCB_强调帧率模式.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
+        MCB_强调帧率模式.DropDownPadding = New Padding(10)
+        MCB_强调帧率模式.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MCB_强调帧率模式.DropDownSelectedForeColor = Color.White
+        MCB_强调帧率模式.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        MCB_强调帧率模式.Items.Add("")
+        MCB_强调帧率模式.Items.Add("固定帧率 CFR")
+        MCB_强调帧率模式.Items.Add("动态帧率 VFR")
+        MCB_强调帧率模式.Location = New Point(160, 10)
+        MCB_强调帧率模式.Margin = New Padding(2, 2, 2, 2)
+        MCB_强调帧率模式.Name = "MCB_强调帧率模式"
+        MCB_强调帧率模式.Padding = New Padding(10, 0, 10, 0)
+        MCB_强调帧率模式.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MCB_强调帧率模式.Size = New Size(150, 32)
+        MCB_强调帧率模式.TabIndex = 11
+        MCB_强调帧率模式.ToolTipGap = -1
+        MCB_强调帧率模式.ToolTipMaxWidth = 350
+        MCB_强调帧率模式.ToolTipPadding = New Padding(15)
+        MCB_强调帧率模式.WaterText = "强调帧率模式"
+        MCB_强调帧率模式.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
+        ' 
+        ' JustEmptyControl13
+        ' 
+        JustEmptyControl13.Dock = DockStyle.Left
+        JustEmptyControl13.Location = New Point(150, 10)
+        JustEmptyControl13.Name = "JustEmptyControl13"
+        JustEmptyControl13.Size = New Size(10, 32)
+        JustEmptyControl13.TabIndex = 12
         ' 
         ' MCB_直接指定帧率
         ' 
@@ -460,38 +515,41 @@ Partial Class Form_v6_参数面板_画面帧
         HCL_帧率设置标题.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HCL_帧率设置标题.Dock = DockStyle.Top
         HCL_帧率设置标题.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        HCL_帧率设置标题.Location = New Point(20, 176)
+        HCL_帧率设置标题.Location = New Point(20, 238)
         HCL_帧率设置标题.Margin = New Padding(2)
         HCL_帧率设置标题.Name = "HCL_帧率设置标题"
         HCL_帧率设置标题.Padding = New Padding(0, 20, 0, 5)
-        HCL_帧率设置标题.Size = New Size(729, 50)
+        HCL_帧率设置标题.Size = New Size(729, 48)
         HCL_帧率设置标题.TabIndex = 9
-        HCL_帧率设置标题.Text = "<span style=""font-size:13; color:Silver"">帧率</span>   直接指定是静态帧率，抽帧可变为动态帧率"
+        HCL_帧率设置标题.Text = "<span style=""font-size:13; color:Silver"">帧率</span>   收藏内容切勿抽帧！"
         ' 
         ' Panel4
         ' 
-        Panel4.Controls.Add(LB_裁剪滤镜排序说明)
+        Panel4.Controls.Add(HtmlColorLabel1)
         Panel4.Controls.Add(MTB_画面裁剪参数)
         Panel4.Controls.Add(JustEmptyControl1)
         Panel4.Controls.Add(MB_画面裁剪交互)
         Panel4.Dock = DockStyle.Top
-        Panel4.Location = New Point(20, 134)
+        Panel4.Location = New Point(20, 196)
         Panel4.Name = "Panel4"
         Panel4.Padding = New Padding(0, 10, 0, 0)
         Panel4.Size = New Size(729, 42)
         Panel4.TabIndex = 8
         ' 
-        ' LB_裁剪滤镜排序说明
+        ' HtmlColorLabel1
         ' 
-        LB_裁剪滤镜排序说明.Dock = DockStyle.Fill
-        LB_裁剪滤镜排序说明.ForeColor = Color.MediumPurple
-        LB_裁剪滤镜排序说明.Location = New Point(310, 10)
-        LB_裁剪滤镜排序说明.Name = "LB_裁剪滤镜排序说明"
-        LB_裁剪滤镜排序说明.Padding = New Padding(10, 0, 0, 0)
-        LB_裁剪滤镜排序说明.Size = New Size(419, 32)
-        LB_裁剪滤镜排序说明.TabIndex = 7
-        LB_裁剪滤镜排序说明.Text = "默认将裁剪的滤镜排在缩放滤镜之前"
-        LB_裁剪滤镜排序说明.TextAlign = ContentAlignment.MiddleLeft
+        HtmlColorLabel1.AutoSizeMode = AutoSizeMode.GrowAndShrink
+        HtmlColorLabel1.Dock = DockStyle.Fill
+        HtmlColorLabel1.ForeColor = Color.MediumPurple
+        HtmlColorLabel1.InfoIconSizeRatio = 1F
+        HtmlColorLabel1.Location = New Point(310, 10)
+        HtmlColorLabel1.Margin = New Padding(2)
+        HtmlColorLabel1.Name = "HtmlColorLabel1"
+        HtmlColorLabel1.Padding = New Padding(10, 0, 0, 0)
+        HtmlColorLabel1.Size = New Size(419, 32)
+        HtmlColorLabel1.TabIndex = 14
+        HtmlColorLabel1.Text = "默认将裁剪的滤镜放在缩放之前"
+        HtmlColorLabel1.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
         ' 
         ' MTB_画面裁剪参数
         ' 
@@ -534,32 +592,39 @@ Partial Class Form_v6_参数面板_画面帧
         MB_画面裁剪交互.TabIndex = 1
         MB_画面裁剪交互.Text = "画面裁剪交互"
         ' 
+        ' Panel11
+        ' 
+        Panel11.AutoSize = True
+        Panel11.Controls.Add(JustEmptyControl12)
+        Panel11.Dock = DockStyle.Top
+        Panel11.Location = New Point(20, 185)
+        Panel11.Name = "Panel11"
+        Panel11.Padding = New Padding(0, 10, 0, 0)
+        Panel11.Size = New Size(729, 11)
+        Panel11.TabIndex = 19
+        ' 
+        ' JustEmptyControl12
+        ' 
+        JustEmptyControl12.BackColor = Color.FromArgb(CByte(80), CByte(200), CByte(200), CByte(200))
+        JustEmptyControl12.Dock = DockStyle.Bottom
+        JustEmptyControl12.Location = New Point(0, 10)
+        JustEmptyControl12.Name = "JustEmptyControl12"
+        JustEmptyControl12.Size = New Size(729, 1)
+        JustEmptyControl12.TabIndex = 0
+        ' 
         ' Panel1
         ' 
-        Panel1.Controls.Add(LB_单独缩放说明)
         Panel1.Controls.Add(MCB_指定缩放算法)
         Panel1.Controls.Add(JustEmptyControl6)
         Panel1.Controls.Add(MCB_高度缩放)
         Panel1.Controls.Add(JustEmptyControl2)
         Panel1.Controls.Add(MCB_宽度缩放)
         Panel1.Dock = DockStyle.Top
-        Panel1.Location = New Point(20, 92)
+        Panel1.Location = New Point(20, 143)
         Panel1.Name = "Panel1"
         Panel1.Padding = New Padding(0, 10, 0, 0)
         Panel1.Size = New Size(729, 42)
         Panel1.TabIndex = 6
-        ' 
-        ' LB_单独缩放说明
-        ' 
-        LB_单独缩放说明.Dock = DockStyle.Fill
-        LB_单独缩放说明.ForeColor = Color.OliveDrab
-        LB_单独缩放说明.Location = New Point(470, 10)
-        LB_单独缩放说明.Name = "LB_单独缩放说明"
-        LB_单独缩放说明.Padding = New Padding(10, 0, 0, 0)
-        LB_单独缩放说明.Size = New Size(259, 32)
-        LB_单独缩放说明.TabIndex = 7
-        LB_单独缩放说明.Text = "留空其一可以自动维持比例"
-        LB_单独缩放说明.TextAlign = ContentAlignment.MiddleLeft
         ' 
         ' MCB_指定缩放算法
         ' 
@@ -575,7 +640,6 @@ Partial Class Form_v6_参数面板_画面帧
         MCB_指定缩放算法.DropDownPadding = New Padding(10)
         MCB_指定缩放算法.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_指定缩放算法.DropDownSelectedForeColor = Color.White
-        MCB_指定缩放算法.Editable = True
         MCB_指定缩放算法.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
         MCB_指定缩放算法.Items.Add("")
         MCB_指定缩放算法.Items.Add("lanczos")
@@ -594,7 +658,7 @@ Partial Class Form_v6_参数面板_画面帧
         MCB_指定缩放算法.Padding = New Padding(10, 0, 10, 0)
         MCB_指定缩放算法.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_指定缩放算法.Size = New Size(150, 32)
-        MCB_指定缩放算法.TabIndex = 11
+        MCB_指定缩放算法.TabIndex = 16
         MCB_指定缩放算法.ToolTipGap = -1
         MCB_指定缩放算法.ToolTipMaxWidth = 350
         MCB_指定缩放算法.ToolTipPadding = New Padding(15)
@@ -607,7 +671,7 @@ Partial Class Form_v6_参数面板_画面帧
         JustEmptyControl6.Location = New Point(310, 10)
         JustEmptyControl6.Name = "JustEmptyControl6"
         JustEmptyControl6.Size = New Size(10, 32)
-        JustEmptyControl6.TabIndex = 10
+        JustEmptyControl6.TabIndex = 15
         ' 
         ' MCB_高度缩放
         ' 
@@ -683,28 +747,110 @@ Partial Class Form_v6_参数面板_画面帧
         MCB_宽度缩放.WaterText = "宽度缩放"
         MCB_宽度缩放.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ' 
+        ' Panel9
+        ' 
+        Panel9.Controls.Add(HCL_缩放滤镜说明)
+        Panel9.Controls.Add(MCB_指定缩放滤镜)
+        Panel9.Dock = DockStyle.Top
+        Panel9.Location = New Point(20, 101)
+        Panel9.Name = "Panel9"
+        Panel9.Padding = New Padding(0, 10, 0, 0)
+        Panel9.Size = New Size(729, 42)
+        Panel9.TabIndex = 17
+        ' 
+        ' HCL_缩放滤镜说明
+        ' 
+        HCL_缩放滤镜说明.AutoSizeMode = AutoSizeMode.GrowAndShrink
+        HCL_缩放滤镜说明.Dock = DockStyle.Fill
+        HCL_缩放滤镜说明.ForeColor = Color.OliveDrab
+        HCL_缩放滤镜说明.InfoIconSizeRatio = 1F
+        HCL_缩放滤镜说明.Location = New Point(200, 10)
+        HCL_缩放滤镜说明.Margin = New Padding(2)
+        HCL_缩放滤镜说明.Name = "HCL_缩放滤镜说明"
+        HCL_缩放滤镜说明.Padding = New Padding(10, 0, 0, 0)
+        HCL_缩放滤镜说明.Size = New Size(529, 32)
+        HCL_缩放滤镜说明.TabIndex = 13
+        HCL_缩放滤镜说明.Text = "更推荐使用这里的用滤镜缩放"
+        HCL_缩放滤镜说明.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
+        HCL_缩放滤镜说明.ToolTipText = "宽度和高度可以只写一个来表示另一个按照原视频比例自动进行缩放"
+        ' 
+        ' MCB_指定缩放滤镜
+        ' 
+        MCB_指定缩放滤镜.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MCB_指定缩放滤镜.BorderRadius = 10
+        MCB_指定缩放滤镜.BorderSize = 0
+        MCB_指定缩放滤镜.Dock = DockStyle.Left
+        MCB_指定缩放滤镜.DropDownBackdropBlurPasses = 2
+        MCB_指定缩放滤镜.DropDownBackdropBlurRadius = 30
+        MCB_指定缩放滤镜.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
+        MCB_指定缩放滤镜.DropDownHoverColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
+        MCB_指定缩放滤镜.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
+        MCB_指定缩放滤镜.DropDownPadding = New Padding(10)
+        MCB_指定缩放滤镜.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MCB_指定缩放滤镜.DropDownSelectedForeColor = Color.White
+        MCB_指定缩放滤镜.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        MCB_指定缩放滤镜.Items.Add("")
+        MCB_指定缩放滤镜.Items.Add("默认 CPU scale")
+        MCB_指定缩放滤镜.Items.Add("NVIDIA 专用 scale_cuda")
+        MCB_指定缩放滤镜.Location = New Point(0, 10)
+        MCB_指定缩放滤镜.Margin = New Padding(2, 2, 2, 2)
+        MCB_指定缩放滤镜.Name = "MCB_指定缩放滤镜"
+        MCB_指定缩放滤镜.Padding = New Padding(10, 0, 10, 0)
+        MCB_指定缩放滤镜.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MCB_指定缩放滤镜.Size = New Size(200, 32)
+        MCB_指定缩放滤镜.TabIndex = 12
+        MCB_指定缩放滤镜.ToolTipGap = -1
+        MCB_指定缩放滤镜.ToolTipMaxWidth = 350
+        MCB_指定缩放滤镜.ToolTipPadding = New Padding(15)
+        MCB_指定缩放滤镜.WaterText = "指定缩放滤镜"
+        MCB_指定缩放滤镜.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
+        ' 
+        ' Panel10
+        ' 
+        Panel10.AutoSize = True
+        Panel10.Controls.Add(JustEmptyControl7)
+        Panel10.Dock = DockStyle.Top
+        Panel10.Location = New Point(20, 90)
+        Panel10.Name = "Panel10"
+        Panel10.Padding = New Padding(0, 10, 0, 0)
+        Panel10.Size = New Size(729, 11)
+        Panel10.TabIndex = 18
+        ' 
+        ' JustEmptyControl7
+        ' 
+        JustEmptyControl7.BackColor = Color.FromArgb(CByte(80), CByte(200), CByte(200), CByte(200))
+        JustEmptyControl7.Dock = DockStyle.Bottom
+        JustEmptyControl7.Location = New Point(0, 10)
+        JustEmptyControl7.Name = "JustEmptyControl7"
+        JustEmptyControl7.Size = New Size(729, 1)
+        JustEmptyControl7.TabIndex = 0
+        ' 
         ' Panel2
         ' 
-        Panel2.Controls.Add(LB_直接指定分辨率说明)
+        Panel2.Controls.Add(HCL_直接指定分辨率说明)
         Panel2.Controls.Add(MCB_直接指定分辨率)
         Panel2.Dock = DockStyle.Top
-        Panel2.Location = New Point(20, 50)
+        Panel2.Location = New Point(20, 48)
         Panel2.Name = "Panel2"
         Panel2.Padding = New Padding(0, 10, 0, 0)
         Panel2.Size = New Size(729, 42)
         Panel2.TabIndex = 5
         ' 
-        ' LB_直接指定分辨率说明
+        ' HCL_直接指定分辨率说明
         ' 
-        LB_直接指定分辨率说明.Dock = DockStyle.Fill
-        LB_直接指定分辨率说明.ForeColor = Color.DarkGoldenrod
-        LB_直接指定分辨率说明.Location = New Point(150, 10)
-        LB_直接指定分辨率说明.Name = "LB_直接指定分辨率说明"
-        LB_直接指定分辨率说明.Padding = New Padding(10, 0, 0, 0)
-        LB_直接指定分辨率说明.Size = New Size(579, 32)
-        LB_直接指定分辨率说明.TabIndex = 6
-        LB_直接指定分辨率说明.Text = "传统的直接指定分辨率，批量任务通常不这样做"
-        LB_直接指定分辨率说明.TextAlign = ContentAlignment.MiddleLeft
+        HCL_直接指定分辨率说明.AutoSizeMode = AutoSizeMode.GrowAndShrink
+        HCL_直接指定分辨率说明.Dock = DockStyle.Fill
+        HCL_直接指定分辨率说明.ForeColor = Color.Goldenrod
+        HCL_直接指定分辨率说明.InfoIconSizeRatio = 1F
+        HCL_直接指定分辨率说明.Location = New Point(150, 10)
+        HCL_直接指定分辨率说明.Margin = New Padding(2)
+        HCL_直接指定分辨率说明.Name = "HCL_直接指定分辨率说明"
+        HCL_直接指定分辨率说明.Padding = New Padding(10, 0, 0, 0)
+        HCL_直接指定分辨率说明.Size = New Size(579, 32)
+        HCL_直接指定分辨率说明.TabIndex = 14
+        HCL_直接指定分辨率说明.Text = "批量任务通常不使用直接指定的方式"
+        HCL_直接指定分辨率说明.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
+        HCL_直接指定分辨率说明.ToolTipText = "更建议用滤镜去缩放"
         ' 
         ' MCB_直接指定分辨率
         ' 
@@ -751,7 +897,7 @@ Partial Class Form_v6_参数面板_画面帧
         HCL_分辨率设置标题.Margin = New Padding(2)
         HCL_分辨率设置标题.Name = "HCL_分辨率设置标题"
         HCL_分辨率设置标题.Padding = New Padding(0, 0, 0, 5)
-        HCL_分辨率设置标题.Size = New Size(729, 30)
+        HCL_分辨率设置标题.Size = New Size(729, 28)
         HCL_分辨率设置标题.TabIndex = 4
         HCL_分辨率设置标题.Text = "<span style=""font-size:13; color:Silver"">分辨率</span>   推荐使用在滤镜中处理的单独缩放"
         ' 
@@ -774,7 +920,10 @@ Partial Class Form_v6_参数面板_画面帧
         Panel5.ResumeLayout(False)
         Panel3.ResumeLayout(False)
         Panel4.ResumeLayout(False)
+        Panel11.ResumeLayout(False)
         Panel1.ResumeLayout(False)
+        Panel9.ResumeLayout(False)
+        Panel10.ResumeLayout(False)
         Panel2.ResumeLayout(False)
         ResumeLayout(False)
     End Sub
@@ -785,11 +934,8 @@ Partial Class Form_v6_参数面板_画面帧
     Friend WithEvents HCL_分辨率设置标题 As LakeUI.HtmlColorLabel
     Friend WithEvents Panel1 As Panel
     Friend WithEvents MCB_宽度缩放 As LakeUI.ModernComboBox
-    Friend WithEvents LB_单独缩放说明 As Label
-    Friend WithEvents LB_直接指定分辨率说明 As Label
     Friend WithEvents Panel4 As Panel
     Friend WithEvents MB_画面裁剪交互 As LakeUI.ModernButton
-    Friend WithEvents LB_裁剪滤镜排序说明 As Label
     Friend WithEvents MTB_画面裁剪参数 As LakeUI.ModernTextBox
     Friend WithEvents JustEmptyControl1 As LakeUI.JustEmptyControl
     Friend WithEvents MCB_高度缩放 As LakeUI.ModernComboBox
@@ -821,6 +967,17 @@ Partial Class Form_v6_参数面板_画面帧
     Friend WithEvents MB_画面翻转 As LakeUI.ModernButton
     Friend WithEvents JustEmptyControl11 As LakeUI.JustEmptyControl
     Friend WithEvents MB_扫描方式 As LakeUI.ModernButton
+    Friend WithEvents Panel9 As Panel
+    Friend WithEvents MCB_指定缩放滤镜 As LakeUI.ModernComboBox
+    Friend WithEvents Panel11 As Panel
+    Friend WithEvents JustEmptyControl12 As LakeUI.JustEmptyControl
+    Friend WithEvents Panel10 As Panel
+    Friend WithEvents JustEmptyControl7 As LakeUI.JustEmptyControl
+    Friend WithEvents MCB_强调帧率模式 As LakeUI.ModernComboBox
+    Friend WithEvents JustEmptyControl13 As LakeUI.JustEmptyControl
     Friend WithEvents MCB_指定缩放算法 As LakeUI.ModernComboBox
     Friend WithEvents JustEmptyControl6 As LakeUI.JustEmptyControl
+    Friend WithEvents HCL_缩放滤镜说明 As LakeUI.HtmlColorLabel
+    Friend WithEvents HtmlColorLabel1 As LakeUI.HtmlColorLabel
+    Friend WithEvents HCL_直接指定分辨率说明 As LakeUI.HtmlColorLabel
 End Class

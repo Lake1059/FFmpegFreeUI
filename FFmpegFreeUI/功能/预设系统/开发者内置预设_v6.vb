@@ -98,7 +98,7 @@ Public Class 开发者内置预设_v6
         SVTAV1HDR_CRF36.视频参数_比特率_控制方式 = 预设数据_v6.视频全局质量控制方式.CRF
         SVTAV1HDR_CRF36.视频参数_质量控制_参数名 = "crf"
         SVTAV1HDR_CRF36.视频参数_质量控制_值 = "36"
-        SVTAV1HDR_CRF36.视频参数_质量控制_进阶参数集 = "-svtav1-params tune=0:keyint=10s:enable-variance-boost=1:variance-boost-strength=1:film-grain=4:film-grain-denoise=1:sharpness=1:ac-bias=1:lp=4"
+        SVTAV1HDR_CRF36.视频参数_质量控制_进阶参数集 = "-svtav1-params tune=0:keyint=10s:enable-variance-boost=1:variance-boost-strength=1:film-grain=4:sharpness=1:ac-bias=1:lp=4"
         SVTAV1HDR_CRF36.视频参数_色彩管理_像素格式 = "yuv420p10le"
         result.Add(New 预设项("SVT-AV1-HDR 适用平衡点", SVTAV1HDR_CRF36))
 

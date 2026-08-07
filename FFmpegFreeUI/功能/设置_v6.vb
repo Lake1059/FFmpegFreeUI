@@ -100,6 +100,11 @@ Public Class 设置_v6
     Public Property SP_分层阴影颜色_G As Integer = Color.Black.G
     Public Property SP_分层阴影颜色_B As Integer = Color.Black.B
     Public Property SP_边框宽度 As Integer = 1
+    Public Property SP_标题栏分割线 As Integer = 0
+    Public Property SP_标题栏分割线颜色_A As Integer = 40
+    Public Property SP_标题栏分割线颜色_R As Integer = 220
+    Public Property SP_标题栏分割线颜色_G As Integer = 220
+    Public Property SP_标题栏分割线颜色_B As Integer = 220
     Public Property SP_毛玻璃模式 As Integer = 0
     Public Property SP_毛玻璃背景来源 As Integer = -1
     Public Property SP_毛玻璃噪点颗粒 As Integer = -1
@@ -249,8 +254,11 @@ Public Class 设置_v6
         FormMain_v6.ThisIsYourWindow1.BorderColor = Color.FromArgb(实例对象.SP_窗口边框颜色_A, 实例对象.SP_窗口边框颜色_R, 实例对象.SP_窗口边框颜色_G, 实例对象.SP_窗口边框颜色_B)
         FormMain_v6.ThisIsYourWindow1.BorderInactiveColor = Color.FromArgb(实例对象.SP_窗口边框颜色_A, 实例对象.SP_窗口边框颜色_R, 实例对象.SP_窗口边框颜色_G, 实例对象.SP_窗口边框颜色_B)
         FormMain_v6.ThisIsYourWindow1.LayerShadowColor = Color.FromArgb(实例对象.SP_分层阴影颜色_A, 实例对象.SP_分层阴影颜色_R, 实例对象.SP_分层阴影颜色_G, 实例对象.SP_分层阴影颜色_B)
+        应用SP标题栏分割线()
+        FormMain_v6.ThisIsYourWindow1.CaptionBottomLineColor = Color.FromArgb(实例对象.SP_标题栏分割线颜色_A, 实例对象.SP_标题栏分割线颜色_R, 实例对象.SP_标题栏分割线颜色_G, 实例对象.SP_标题栏分割线颜色_B)
 
         Form_v6_设置_个性化.MCB_边框宽度.SelectedIndex = 实例对象.SP_边框宽度
+        设置组合框选中索引(Form_v6_设置_个性化.MCB_标题栏分割线, If(实例对象.SP_标题栏分割线 > 0, 1, 0))
         Form_v6_设置_个性化.MCB_毛玻璃模式.SelectedIndex = 实例对象.SP_毛玻璃模式
         Form_v6_设置_个性化.MCB_背景来源.SelectedIndex = 实例对象.SP_毛玻璃背景来源
         Form_v6_设置_个性化.MCB_噪点颗粒.SelectedIndex = 实例对象.SP_毛玻璃噪点颗粒
@@ -265,6 +273,15 @@ Public Class 设置_v6
         Else
             combo.SelectedIndex = index
         End If
+    End Sub
+
+    Public Shared Sub 应用SP标题栏分割线()
+        Dim window = FormMain_v6.ThisIsYourWindow1
+        Dim 当前分割线高度 = Math.Max(0, window.CaptionBottomLineHeight)
+        Dim 原标题栏高度 = Math.Max(0, window.CaptionHeight - 当前分割线高度)
+        Dim 分割线高度 = If(实例对象.SP_标题栏分割线 > 0, 1, 0)
+        window.CaptionBottomLineHeight = 分割线高度
+        window.CaptionHeight = 原标题栏高度 + 分割线高度
     End Sub
 
     Private Shared Sub 迁移旧设置字段(设置文本 As String)

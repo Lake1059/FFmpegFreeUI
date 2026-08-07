@@ -1,9 +1,68 @@
 Public Class Form_v6_参数面板_画面帧
 
     Public 所属参数面板对象 As Form_v6_参数面板
+    Private 正在更新缩放算法选项 As Boolean = False
+
+    Private Shared ReadOnly CPU缩放算法列表 As String() = {
+        "", "lanczos", "bilinear", "fast_bilinear", "bicubic", "neighbor",
+        "area", "bicublin", "gauss", "sinc", "spline"
+    }
+    Private Shared ReadOnly CUDA缩放算法列表 As String() = {
+        "", "lanczos", "bilinear", "nearest", "bicubic"
+    }
 
     Private Sub Form_v6_参数面板_画面帧_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        更新缩放滤镜交互()
+    End Sub
 
+    Private Sub MCB_指定缩放滤镜_SelectedIndexChanged(sender As Object, e As EventArgs) Handles MCB_指定缩放滤镜.SelectedIndexChanged
+        If 正在更新缩放算法选项 Then Exit Sub
+        更新缩放滤镜交互()
+        通知参数面板刷新()
+    End Sub
+
+    Private Sub MCB_强调帧率模式_SelectedIndexChanged(sender As Object, e As EventArgs) Handles MCB_强调帧率模式.SelectedIndexChanged
+        通知参数面板刷新()
+    End Sub
+
+    Public Sub 更新缩放滤镜交互()
+        If 正在更新缩放算法选项 OrElse MCB_指定缩放滤镜 Is Nothing OrElse MCB_指定缩放算法 Is Nothing Then Exit Sub
+
+        正在更新缩放算法选项 = True
+        Try
+            Dim 当前算法 = If(MCB_指定缩放算法.Text, "").Trim()
+            Dim 使用CUDA = String.Equals(获取缩放滤镜标识符(), "scale_cuda", StringComparison.OrdinalIgnoreCase)
+            Dim 算法列表 = If(使用CUDA, CUDA缩放算法列表, CPU缩放算法列表)
+
+            MCB_指定缩放算法.Items.Clear()
+            MCB_指定缩放算法.Items.AddRange(算法列表)
+            MCB_指定缩放算法.Enabled = 算法列表.Length > 1
+
+            If 算法列表.Any(Function(x) String.Equals(x, 当前算法, StringComparison.OrdinalIgnoreCase)) Then
+                MCB_指定缩放算法.Text = 当前算法
+            Else
+                MCB_指定缩放算法.SelectedIndex = 0
+                MCB_指定缩放算法.Text = ""
+            End If
+        Finally
+            正在更新缩放算法选项 = False
+        End Try
+    End Sub
+
+    Public Function 获取缩放滤镜标识符() As String
+        Select Case MCB_指定缩放滤镜.SelectedIndex
+            Case 2
+                Return "scale_cuda"
+            Case 1
+                Return "scale"
+            Case Else
+                Return ""
+        End Select
+    End Function
+
+    Private Sub 通知参数面板刷新()
+        If 所属参数面板对象 Is Nothing OrElse 所属参数面板对象.抑制自动刷新 Then Exit Sub
+        所属参数面板对象.请求刷新参数状态()
     End Sub
 
     Private Sub Form_v6_参数面板_画面帧_Shown(sender As Object, e As EventArgs) Handles Me.Shown

@@ -93,6 +93,24 @@ Public Class Form_v6_设置_个性化
         FormMain_v6.ThisIsYourWindow1.BorderSize = MCB_边框宽度.SelectedIndex
     End Sub
 
+    Private Sub MCB_标题栏分割线_SelectedIndexChanged(sender As Object, e As EventArgs) Handles MCB_标题栏分割线.SelectedIndexChanged
+        If Not SP_UnLock Then Exit Sub
+        设置_v6.实例对象.SP_标题栏分割线 = If(MCB_标题栏分割线.SelectedIndex > 0, 1, 0)
+        设置_v6.应用SP标题栏分割线()
+    End Sub
+
+    Private Sub MB_标题栏分割线颜色_Click(sender As Object, e As EventArgs) Handles MB_标题栏分割线颜色.Click
+        Dim a As New ModernColorDialog With {.SelectedColor = FormMain_v6.ThisIsYourWindow1.CaptionBottomLineColor, .Icon = FormMain_v6.Icon}
+        FormMain_v6.ThisIsYourWindow1.Attach(a)
+        If a.ShowDialog(FormMain_v6) = DialogResult.OK Then
+            设置_v6.实例对象.SP_标题栏分割线颜色_A = a.SelectedColor.A
+            设置_v6.实例对象.SP_标题栏分割线颜色_R = a.SelectedColor.R
+            设置_v6.实例对象.SP_标题栏分割线颜色_G = a.SelectedColor.G
+            设置_v6.实例对象.SP_标题栏分割线颜色_B = a.SelectedColor.B
+            FormMain_v6.ThisIsYourWindow1.CaptionBottomLineColor = a.SelectedColor
+        End If
+    End Sub
+
     Private Sub MCB_毛玻璃模式_SelectedIndexChanged(sender As Object, e As EventArgs) Handles MCB_毛玻璃模式.SelectedIndexChanged
         If Not SP_UnLock Then Exit Sub
         设置_v6.实例对象.SP_毛玻璃模式 = MCB_毛玻璃模式.SelectedIndex

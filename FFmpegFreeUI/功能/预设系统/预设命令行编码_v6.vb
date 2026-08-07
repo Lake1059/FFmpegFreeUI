@@ -60,7 +60,10 @@ Partial Public Class 预设管理_v6
                 添加编码器参数(parts, 编码器.场景优化.参数名, a.视频参数_编码器_场景优化, target)
                 添加编码器参数(parts, 编码器.图片质量.参数名, a.视频参数_编码器_图片编码器质量值, target)
             End If
-            If Not 选择复制流编码器 Then 添加编码器参数(parts, "-r", a.视频参数_帧速率, target)
+            If Not 选择复制流编码器 Then
+                添加编码器参数(parts, "-r", a.视频参数_帧速率, target)
+                添加编码器参数(parts, "-fps_mode", 标准化帧率模式(a.视频参数_帧速率模式), target)
+            End If
             If Not 选择复制流编码器 Then 添加编码器参数(parts, "-pix_fmt", a.视频参数_色彩管理_像素格式, target)
             parts.AddRange(生成色彩元数据参数(a, target))
             If Not 选择复制流编码器 Then
@@ -70,6 +73,17 @@ Partial Public Class 预设管理_v6
             End If
         Next
     End Sub
+
+    Private Shared Function 标准化帧率模式(value As String) As String
+        Select Case If(value, "").Trim().ToLowerInvariant()
+            Case "cfr", "固定帧率 cfr"
+                Return "cfr"
+            Case "vfr", "动态帧率 vfr"
+                Return "vfr"
+            Case Else
+                Return ""
+        End Select
+    End Function
 
     Private Shared Sub 添加按流音频编码参数(parts As List(Of String), 音频 As 音频编码器数据库_v6.音频编码器数据, 选择器 As List(Of String), 来自滤镜 As Boolean)
         If 音频.是否禁用 Then
@@ -262,6 +276,7 @@ Partial Public Class 预设管理_v6
                Not String.IsNullOrWhiteSpace(a.视频参数_编码器_场景优化) OrElse
                Not String.IsNullOrWhiteSpace(a.视频参数_编码器_图片编码器质量值) OrElse
                Not String.IsNullOrWhiteSpace(a.视频参数_帧速率) OrElse
+               Not String.IsNullOrWhiteSpace(标准化帧率模式(a.视频参数_帧速率模式)) OrElse
                Not String.IsNullOrWhiteSpace(a.视频参数_色彩管理_像素格式) OrElse
                色彩元数据已设置(a) OrElse
                Not String.IsNullOrWhiteSpace(a.视频参数_编码器_gpu) OrElse

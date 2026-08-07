@@ -867,19 +867,22 @@ Public Class Form_v6_集成工具_质量评测
         Dim distortedFrameRate = 获取FFMetrics帧率参数(distortedInfo)
         Dim referenceFrameRate = 获取FFMetrics帧率参数(referenceInfo)
         Dim durationFrameRate = If(String.IsNullOrWhiteSpace(distortedFrameRate), referenceFrameRate, distortedFrameRate)
+        Dim 使用VmafCuda = metric = 指标类型.VMAF AndAlso MCB_VMAF_CUDA IsNot Nothing AndAlso MCB_VMAF_CUDA.Checked
         Dim arg As New StringBuilder("-hide_banner -nostdin -probesize 50M ")
-        追加FFMetrics输入参数(arg, distorted, distortedFrameRate)
-        追加FFMetrics输入参数(arg, reference, referenceFrameRate)
+        追加FFMetrics输入参数(arg, distorted, distortedFrameRate, 使用VmafCuda)
+        追加FFMetrics输入参数(arg, reference, referenceFrameRate, 使用VmafCuda)
 
         Dim frameLimit = 获取FFMetrics帧数限制(duration, durationFrameRate)
         If frameLimit > 0 Then arg.Append("-frames:v ").Append(frameLimit.ToString(CultureInfo.InvariantCulture)).Append(" "c)
 
         Dim filter As String
-        Dim finalPixelFormat = 获取指标像素格式(referenceInfo, distortedInfo)
+        Dim finalPixelFormat = If(使用VmafCuda,
+                                  获取VmafCuda像素格式(referenceInfo, distortedInfo),
+                                  获取指标像素格式(referenceInfo, distortedInfo))
         Dim model = If(metric = 指标类型.VMAF, 获取下拉框文本(MCB_模型选择, ""), "")
         Dim targetSize = 获取评测目标尺寸(metric, referenceInfo, model)
-        Dim scaleDistorted = 构建视频预处理滤镜(distortedInfo, referenceInfo, targetSize.Width, targetSize.Height, finalPixelFormat)
-        Dim scaleReference = 构建参考预处理滤镜(metric, referenceInfo, targetSize, finalPixelFormat)
+        Dim scaleDistorted = 构建视频预处理滤镜(distortedInfo, referenceInfo, targetSize.Width, targetSize.Height, finalPixelFormat, 使用VmafCuda)
+        Dim scaleReference = 构建参考预处理滤镜(metric, referenceInfo, targetSize, finalPixelFormat, 使用VmafCuda)
         Dim trim = 构建FFMetrics剪辑滤镜(startTime)
         Dim dist = $"[0:v]{trim}settb=AVTB,setpts=PTS-STARTPTS{scaleDistorted}[dist];"
         Dim ref = $"[1:v]{trim}settb=AVTB,setpts=PTS-STARTPTS{scaleReference}[ref];"
@@ -893,11 +896,13 @@ Public Class Form_v6_集成工具_质量评测
             Case 指标类型.VMAF
                 Dim pool = 获取下拉框文本(MCB_Pooling, "mean")
                 Dim subsample = 获取下拉框文本(MCB_SubSample, "0")
-                Dim threads = Math.Max(1, Environment.ProcessorCount - 1)
+                ' libvmaf_cuda currently crashes when n_threads is greater than zero.
+                Dim threads = If(使用VmafCuda, 0, Math.Max(1, Environment.ProcessorCount - 1))
                 Dim subsampleOption = 构建Vmaf子采样参数(subsample)
                 Dim modelOption = 构建Vmaf模型参数(model)
                 Dim modelArgument = If(modelOption = "", "", $":model={转义过滤器值(modelOption)}")
-                filter = $"{dist}{ref}[dist][ref]libvmaf=eof_action=endall:log_fmt=json:log_path={引用过滤器参数(tempPath)}:n_threads={threads.ToString(CultureInfo.InvariantCulture)}{subsampleOption}:pool={转义过滤器值(pool)}{modelArgument}"
+                Dim vmafFilter = If(使用VmafCuda, "libvmaf_cuda", "libvmaf")
+                filter = $"{dist}{ref}[dist][ref]{vmafFilter}=eof_action=endall:log_fmt=json:log_path={引用过滤器参数(tempPath)}:n_threads={threads.ToString(CultureInfo.InvariantCulture)}{subsampleOption}:pool={转义过滤器值(pool)}{modelArgument}"
             Case Else
                 Throw New InvalidOperationException("未知评测项目")
         End Select
@@ -906,7 +911,8 @@ Public Class Form_v6_集成工具_质量评测
         Return arg.ToString()
     End Function
 
-    Private Shared Sub 追加FFMetrics输入参数(arg As StringBuilder, file As String, inputFrameRate As String)
+    Private Shared Sub 追加FFMetrics输入参数(arg As StringBuilder, file As String, inputFrameRate As String, Optional 使用Cuda As Boolean = False)
+        If 使用Cuda Then arg.Append("-hwaccel cuda -hwaccel_output_format cuda ")
         If Not String.IsNullOrWhiteSpace(inputFrameRate) Then arg.Append("-r ").Append(引用参数(inputFrameRate.Trim())).Append(" "c)
         arg.Append("-i ").Append(引用参数(file)).Append(" "c)
     End Sub
@@ -1054,6 +1060,22 @@ Public Class Form_v6_集成工具_质量评测
         Return 统一评测像素格式
     End Function
 
+    Private Shared Function 获取VmafCuda像素格式(referenceInfo As 视频流信息, distortedInfo As 视频流信息) As String
+        Dim formats = {清理像素格式(If(referenceInfo?.像素格式, "")), 清理像素格式(If(distortedInfo?.像素格式, ""))}
+        For Each pixelFormatValue In formats
+            If pixelFormatValue.Contains("10", StringComparison.OrdinalIgnoreCase) OrElse
+               pixelFormatValue.Contains("12", StringComparison.OrdinalIgnoreCase) OrElse
+               pixelFormatValue.Contains("16", StringComparison.OrdinalIgnoreCase) OrElse
+               pixelFormatValue.Contains("p010", StringComparison.OrdinalIgnoreCase) OrElse
+               pixelFormatValue.Contains("p016", StringComparison.OrdinalIgnoreCase) Then
+                Return "yuv444p16"
+            End If
+        Next
+
+        ' libvmaf_cuda accepts yuv420p and yuv444p16 CUDA frames only.
+        Return "yuv420p"
+    End Function
+
     Private Shared Function 获取FFMetrics帧率参数(info As 视频流信息) As String
         Dim rate = 解析帧率值(If(info?.帧率, ""))
         If rate <= 0 Then Return ""
@@ -1138,7 +1160,7 @@ Public Class Form_v6_集成工具_质量评测
 
     Private Shared Function 获取Vmaf模型尺寸(model As String) As Size
         Dim text = model.ToLowerInvariant()
-        If text.Contains("4k") Then Return New Size(3840, 2160)
+        If text.Contains("4k") OrElse text.Contains("2160") Then Return New Size(3840, 2160)
         Return New Size(1920, 1080)
     End Function
 
@@ -1172,19 +1194,30 @@ Public Class Form_v6_集成工具_质量评测
         Return text
     End Function
 
-    Private Shared Function 构建参考预处理滤镜(metric As 指标类型, referenceInfo As 视频流信息, targetSize As Size, pixelFormat As String) As String
-        If metric = 指标类型.VMAF Then Return 构建视频预处理滤镜(referenceInfo, referenceInfo, targetSize.Width, targetSize.Height, pixelFormat)
+    Private Shared Function 构建参考预处理滤镜(metric As 指标类型, referenceInfo As 视频流信息, targetSize As Size, pixelFormat As String, Optional 使用Cuda As Boolean = False) As String
+        If metric = 指标类型.VMAF Then Return 构建视频预处理滤镜(referenceInfo, referenceInfo, targetSize.Width, targetSize.Height, pixelFormat, 使用Cuda)
         Return 构建像素格式滤镜(pixelFormat)
     End Function
 
-    Private Shared Function 构建视频预处理滤镜(sourceInfo As 视频流信息, referenceInfo As 视频流信息, targetWidth As Integer, targetHeight As Integer, pixelFormat As String) As String
+    Private Shared Function 构建视频预处理滤镜(sourceInfo As 视频流信息, referenceInfo As 视频流信息, targetWidth As Integer, targetHeight As Integer, pixelFormat As String, Optional 使用Cuda As Boolean = False) As String
         Dim hasScale = targetWidth > 0 AndAlso targetHeight > 0 AndAlso
                        (sourceInfo Is Nothing OrElse sourceInfo.宽度 <= 0 OrElse sourceInfo.高度 <= 0 OrElse
                         sourceInfo.宽度 <> targetWidth OrElse sourceInfo.高度 <> targetHeight)
+        Dim cleanPixelFormat = 清理像素格式(pixelFormat)
 
         Dim filter As New StringBuilder()
-        If hasScale Then filter.Append($",scale={targetWidth}:{targetHeight}:flags=bicubic")
-        filter.Append(构建像素格式滤镜(pixelFormat))
+        If 使用Cuda Then
+            If hasScale Then
+                filter.Append($",scale_cuda=w={targetWidth}:h={targetHeight}:interp_algo=bicubic")
+            ElseIf cleanPixelFormat <> "" Then
+                ' scale_cuda also performs the required CUDA-frame pixel-format conversion.
+                filter.Append($",scale_cuda=w=iw:h=ih:format={cleanPixelFormat}:passthrough=0")
+            End If
+            If hasScale AndAlso cleanPixelFormat <> "" Then filter.Append($":format={cleanPixelFormat}")
+        Else
+            If hasScale Then filter.Append($",scale={targetWidth}:{targetHeight}:flags=bicubic")
+            filter.Append(构建像素格式滤镜(pixelFormat))
+        End If
         Return filter.ToString()
     End Function
 

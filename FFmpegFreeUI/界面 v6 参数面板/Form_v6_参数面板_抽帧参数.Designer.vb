@@ -58,9 +58,9 @@ Partial Class Form_v6_参数面板_抽帧参数
         Panel1.SuspendLayout()
         Panel2.SuspendLayout()
         SuspendLayout()
-        '
+        ' 
         ' ModernPanel1
-        '
+        ' 
         ModernPanel1.BackColor1 = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         ModernPanel1.BorderSize = 0
         ModernPanel1.Controls.Add(Panel7)
@@ -73,9 +73,9 @@ Partial Class Form_v6_参数面板_抽帧参数
         ModernPanel1.ScrollBarMode = LakeUI.ModernPanel.ScrollMode.Vertical
         ModernPanel1.Size = New Size(984, 561)
         ModernPanel1.TabIndex = 1
-        '
+        ' 
         ' Panel7
-        '
+        ' 
         Panel7.Controls.Add(Panel5)
         Panel7.Controls.Add(HCL_最大变化占比说明)
         Panel7.Controls.Add(HCL_最大变化占比标签)
@@ -91,19 +91,19 @@ Partial Class Form_v6_参数面板_抽帧参数
         Panel7.Name = "Panel7"
         Panel7.Size = New Size(472, 497)
         Panel7.TabIndex = 23
-        '
+        ' 
         ' Panel5
-        '
+        ' 
         Panel5.Controls.Add(MTB_最大变化占比)
         Panel5.Dock = DockStyle.Top
-        Panel5.Location = New Point(0, 360)
+        Panel5.Location = New Point(0, 331)
         Panel5.Name = "Panel5"
         Panel5.Padding = New Padding(0, 10, 0, 0)
         Panel5.Size = New Size(472, 42)
         Panel5.TabIndex = 22
-        '
+        ' 
         ' MTB_最大变化占比
-        '
+        ' 
         MTB_最大变化占比.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MTB_最大变化占比.BorderColor = Color.Transparent
         MTB_最大变化占比.BorderColorFocus = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
@@ -119,46 +119,46 @@ Partial Class Form_v6_参数面板_抽帧参数
         MTB_最大变化占比.TabIndex = 6
         MTB_最大变化占比.WaterText = "frac"
         MTB_最大变化占比.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        '
+        ' 
         ' HCL_最大变化占比说明
-        '
+        ' 
         HCL_最大变化占比说明.AutoSize = True
         HCL_最大变化占比说明.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HCL_最大变化占比说明.Dock = DockStyle.Top
         HCL_最大变化占比说明.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        HCL_最大变化占比说明.Location = New Point(0, 339)
+        HCL_最大变化占比说明.Location = New Point(0, 314)
         HCL_最大变化占比说明.Margin = New Padding(2)
         HCL_最大变化占比说明.Name = "HCL_最大变化占比说明"
-        HCL_最大变化占比说明.Size = New Size(472, 21)
+        HCL_最大变化占比说明.Size = New Size(472, 17)
         HCL_最大变化占比说明.TabIndex = 21
         HCL_最大变化占比说明.Text = "例如 0.1 表示只有 10% 以下的变化才会丢帧"
-        '
+        ' 
         ' HCL_最大变化占比标签
-        '
+        ' 
         HCL_最大变化占比标签.AutoSize = True
         HCL_最大变化占比标签.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HCL_最大变化占比标签.Dock = DockStyle.Top
         HCL_最大变化占比标签.Font = New Font("Microsoft YaHei UI", 11F)
-        HCL_最大变化占比标签.Location = New Point(0, 303)
+        HCL_最大变化占比标签.Location = New Point(0, 280)
         HCL_最大变化占比标签.Margin = New Padding(2)
         HCL_最大变化占比标签.Name = "HCL_最大变化占比标签"
         HCL_最大变化占比标签.Padding = New Padding(0, 15, 0, 0)
-        HCL_最大变化占比标签.Size = New Size(472, 36)
+        HCL_最大变化占比标签.Size = New Size(472, 34)
         HCL_最大变化占比标签.TabIndex = 20
         HCL_最大变化占比标签.Text = "允许超过低阈值的最大占比（1=整张图）"
-        '
+        ' 
         ' Panel4
-        '
+        ' 
         Panel4.Controls.Add(MCB_低阈值)
         Panel4.Dock = DockStyle.Top
-        Panel4.Location = New Point(0, 261)
+        Panel4.Location = New Point(0, 238)
         Panel4.Name = "Panel4"
         Panel4.Padding = New Padding(0, 10, 0, 0)
         Panel4.Size = New Size(472, 42)
         Panel4.TabIndex = 19
-        '
+        ' 
         ' MCB_低阈值
-        '
+        ' 
         MCB_低阈值.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_低阈值.BorderRadius = 10
         MCB_低阈值.BorderSize = 0
@@ -189,46 +189,46 @@ Partial Class Form_v6_参数面板_抽帧参数
         MCB_低阈值.ToolTipPadding = New Padding(15)
         MCB_低阈值.WaterText = "lo"
         MCB_低阈值.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        '
+        ' 
         ' HCL_低阈值说明
-        '
+        ' 
         HCL_低阈值说明.AutoSize = True
         HCL_低阈值说明.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HCL_低阈值说明.Dock = DockStyle.Top
         HCL_低阈值说明.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        HCL_低阈值说明.Location = New Point(0, 220)
+        HCL_低阈值说明.Location = New Point(0, 204)
         HCL_低阈值说明.Margin = New Padding(2)
         HCL_低阈值说明.Name = "HCL_低阈值说明"
-        HCL_低阈值说明.Size = New Size(472, 41)
+        HCL_低阈值说明.Size = New Size(472, 34)
         HCL_低阈值说明.TabIndex = 18
         HCL_低阈值说明.Text = "（格式同上）在满足高阈值的前提下<br>变化必须超过低阈值且不能超过最大占比才会丢帧"
-        '
+        ' 
         ' HCL_低阈值标签
-        '
+        ' 
         HCL_低阈值标签.AutoSize = True
         HCL_低阈值标签.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HCL_低阈值标签.Dock = DockStyle.Top
         HCL_低阈值标签.Font = New Font("Microsoft YaHei UI", 11F)
-        HCL_低阈值标签.Location = New Point(0, 184)
+        HCL_低阈值标签.Location = New Point(0, 170)
         HCL_低阈值标签.Margin = New Padding(2)
         HCL_低阈值标签.Name = "HCL_低阈值标签"
         HCL_低阈值标签.Padding = New Padding(0, 15, 0, 0)
-        HCL_低阈值标签.Size = New Size(472, 36)
+        HCL_低阈值标签.Size = New Size(472, 34)
         HCL_低阈值标签.TabIndex = 17
         HCL_低阈值标签.Text = "低阈值，所有 <span style=""color:YellowGreen"">8*8=64</span> 的像素块差异最小值"
-        '
+        ' 
         ' Panel3
-        '
+        ' 
         Panel3.Controls.Add(MCB_高阈值)
         Panel3.Dock = DockStyle.Top
-        Panel3.Location = New Point(0, 142)
+        Panel3.Location = New Point(0, 128)
         Panel3.Name = "Panel3"
         Panel3.Padding = New Padding(0, 10, 0, 0)
         Panel3.Size = New Size(472, 42)
         Panel3.TabIndex = 16
-        '
+        ' 
         ' MCB_高阈值
-        '
+        ' 
         MCB_高阈值.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_高阈值.BorderRadius = 10
         MCB_高阈值.BorderSize = 0
@@ -258,36 +258,36 @@ Partial Class Form_v6_参数面板_抽帧参数
         MCB_高阈值.ToolTipPadding = New Padding(15)
         MCB_高阈值.WaterText = "hi"
         MCB_高阈值.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        '
+        ' 
         ' HCL_高阈值说明
-        '
+        ' 
         HCL_高阈值说明.AutoSize = True
         HCL_高阈值说明.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HCL_高阈值说明.Dock = DockStyle.Top
         HCL_高阈值说明.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        HCL_高阈值说明.Location = New Point(0, 81)
+        HCL_高阈值说明.Location = New Point(0, 77)
         HCL_高阈值说明.Margin = New Padding(2)
         HCL_高阈值说明.Name = "HCL_高阈值说明"
-        HCL_高阈值说明.Size = New Size(472, 61)
+        HCL_高阈值说明.Size = New Size(472, 51)
         HCL_高阈值说明.TabIndex = 15
         HCL_高阈值说明.Text = "格式：64 个像素 × 每像素平均差值 ?<br>例如：<span style=""color:YellowGreen"">64*10</span> 或 <span style=""color:YellowGreen"">640</span>，写乘法和结果都可以<br>表示：如果有任一 8*8 块中的每个像素平均变化了 10 灰度级则不丢帧"
-        '
+        ' 
         ' HCL_高阈值标签
-        '
+        ' 
         HCL_高阈值标签.AutoSize = True
         HCL_高阈值标签.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HCL_高阈值标签.Dock = DockStyle.Top
         HCL_高阈值标签.Font = New Font("Microsoft YaHei UI", 11F)
-        HCL_高阈值标签.Location = New Point(0, 45)
+        HCL_高阈值标签.Location = New Point(0, 43)
         HCL_高阈值标签.Margin = New Padding(2)
         HCL_高阈值标签.Name = "HCL_高阈值标签"
         HCL_高阈值标签.Padding = New Padding(0, 15, 0, 0)
-        HCL_高阈值标签.Size = New Size(472, 36)
+        HCL_高阈值标签.Size = New Size(472, 34)
         HCL_高阈值标签.TabIndex = 14
         HCL_高阈值标签.Text = "高阈值，所有 <span style=""color:YellowGreen"">8*8=64</span> 的像素块差异最大值"
-        '
+        ' 
         ' HCL_帧丢弃判定标题
-        '
+        ' 
         HCL_帧丢弃判定标题.AutoSize = True
         HCL_帧丢弃判定标题.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HCL_帧丢弃判定标题.Dock = DockStyle.Top
@@ -295,12 +295,12 @@ Partial Class Form_v6_参数面板_抽帧参数
         HCL_帧丢弃判定标题.Margin = New Padding(2)
         HCL_帧丢弃判定标题.Name = "HCL_帧丢弃判定标题"
         HCL_帧丢弃判定标题.Padding = New Padding(0, 20, 0, 0)
-        HCL_帧丢弃判定标题.Size = New Size(472, 45)
+        HCL_帧丢弃判定标题.Size = New Size(472, 43)
         HCL_帧丢弃判定标题.TabIndex = 13
         HCL_帧丢弃判定标题.Text = "<span style=""font-size:13"">帧丢弃判定</span>"
-        '
+        ' 
         ' Panel6
-        '
+        ' 
         Panel6.Controls.Add(HCL_抽帧风险说明)
         Panel6.Controls.Add(HCL_抽帧风险标题)
         Panel6.Controls.Add(Panel1)
@@ -314,46 +314,45 @@ Partial Class Form_v6_参数面板_抽帧参数
         Panel6.Name = "Panel6"
         Panel6.Size = New Size(472, 497)
         Panel6.TabIndex = 21
-        '
+        ' 
         ' HCL_抽帧风险说明
-        '
-        HCL_抽帧风险说明.AutoSize = True
+        ' 
         HCL_抽帧风险说明.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HCL_抽帧风险说明.Dock = DockStyle.Fill
         HCL_抽帧风险说明.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        HCL_抽帧风险说明.Location = New Point(0, 316)
+        HCL_抽帧风险说明.Location = New Point(0, 296)
         HCL_抽帧风险说明.Margin = New Padding(2)
         HCL_抽帧风险说明.Name = "HCL_抽帧风险说明"
         HCL_抽帧风险说明.Padding = New Padding(0, 0, 20, 0)
-        HCL_抽帧风险说明.Size = New Size(472, 181)
+        HCL_抽帧风险说明.Size = New Size(472, 201)
         HCL_抽帧风险说明.TabIndex = 14
         HCL_抽帧风险说明.Text = "当你决定要对视频抽帧时，即代表你认为视频的细节不重要，且没有收藏意义。如果不能同时满足这两点，则不应考虑使用。抽帧是在能够正确传达信息的前提下以细节大量损失为代价换取体积大幅降低来极大增加信息传播效率的手段，属于压片战争的邪修流。如果你的存储空间紧张到需要对收藏内容进行抽帧了，此时你应该去扩充空间，而不是损失自己的收藏。"
-        '
+        ' 
         ' HCL_抽帧风险标题
-        '
+        ' 
         HCL_抽帧风险标题.AutoSize = True
         HCL_抽帧风险标题.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HCL_抽帧风险标题.Dock = DockStyle.Top
-        HCL_抽帧风险标题.Location = New Point(0, 266)
+        HCL_抽帧风险标题.Location = New Point(0, 248)
         HCL_抽帧风险标题.Margin = New Padding(2)
         HCL_抽帧风险标题.Name = "HCL_抽帧风险标题"
         HCL_抽帧风险标题.Padding = New Padding(0, 20, 0, 5)
-        HCL_抽帧风险标题.Size = New Size(472, 50)
+        HCL_抽帧风险标题.Size = New Size(472, 48)
         HCL_抽帧风险标题.TabIndex = 13
         HCL_抽帧风险标题.Text = "<span style=""font-size:13"">如何决定是否需要抽帧</span>   <span style=""color:IndianRed"">三思而后行</span>"
-        '
+        ' 
         ' Panel1
-        '
+        ' 
         Panel1.Controls.Add(MTB_连续相似要求)
         Panel1.Dock = DockStyle.Top
-        Panel1.Location = New Point(0, 224)
+        Panel1.Location = New Point(0, 206)
         Panel1.Name = "Panel1"
         Panel1.Padding = New Padding(0, 10, 0, 0)
         Panel1.Size = New Size(472, 42)
         Panel1.TabIndex = 12
-        '
+        ' 
         ' MTB_连续相似要求
-        '
+        ' 
         MTB_连续相似要求.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MTB_连续相似要求.BorderColor = Color.Transparent
         MTB_连续相似要求.BorderColorFocus = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
@@ -369,45 +368,45 @@ Partial Class Form_v6_参数面板_抽帧参数
         MTB_连续相似要求.TabIndex = 6
         MTB_连续相似要求.WaterText = "keep"
         MTB_连续相似要求.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        '
+        ' 
         ' HCL_连续相似要求说明
-        '
+        ' 
         HCL_连续相似要求说明.AutoSize = True
         HCL_连续相似要求说明.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HCL_连续相似要求说明.Dock = DockStyle.Top
         HCL_连续相似要求说明.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        HCL_连续相似要求说明.Location = New Point(0, 203)
+        HCL_连续相似要求说明.Location = New Point(0, 189)
         HCL_连续相似要求说明.Margin = New Padding(2)
         HCL_连续相似要求说明.Name = "HCL_连续相似要求说明"
-        HCL_连续相似要求说明.Size = New Size(472, 21)
+        HCL_连续相似要求说明.Size = New Size(472, 17)
         HCL_连续相似要求说明.TabIndex = 11
         HCL_连续相似要求说明.Text = "连续相似帧达到多少才开始丢"
-        '
+        ' 
         ' HCL_连续相似要求标题
-        '
+        ' 
         HCL_连续相似要求标题.AutoSize = True
         HCL_连续相似要求标题.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HCL_连续相似要求标题.Dock = DockStyle.Top
-        HCL_连续相似要求标题.Location = New Point(0, 153)
+        HCL_连续相似要求标题.Location = New Point(0, 141)
         HCL_连续相似要求标题.Margin = New Padding(2)
         HCL_连续相似要求标题.Name = "HCL_连续相似要求标题"
         HCL_连续相似要求标题.Padding = New Padding(0, 20, 0, 5)
-        HCL_连续相似要求标题.Size = New Size(472, 50)
+        HCL_连续相似要求标题.Size = New Size(472, 48)
         HCL_连续相似要求标题.TabIndex = 10
         HCL_连续相似要求标题.Text = "<span style=""font-size:13"">连续相似要求</span>   <span style=""font-size:10pt; color:YellowGreen"">默认：0</span>"
-        '
+        ' 
         ' Panel2
-        '
+        ' 
         Panel2.Controls.Add(MTB_连续丢帧数量)
         Panel2.Dock = DockStyle.Top
-        Panel2.Location = New Point(0, 111)
+        Panel2.Location = New Point(0, 99)
         Panel2.Name = "Panel2"
         Panel2.Padding = New Padding(0, 10, 0, 0)
         Panel2.Size = New Size(472, 42)
         Panel2.TabIndex = 9
-        '
+        ' 
         ' MTB_连续丢帧数量
-        '
+        ' 
         MTB_连续丢帧数量.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MTB_连续丢帧数量.BorderColor = Color.Transparent
         MTB_连续丢帧数量.BorderColorFocus = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
@@ -423,22 +422,22 @@ Partial Class Form_v6_参数面板_抽帧参数
         MTB_连续丢帧数量.TabIndex = 6
         MTB_连续丢帧数量.WaterText = "max"
         MTB_连续丢帧数量.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        '
+        ' 
         ' HCL_连续丢帧数量说明
-        '
+        ' 
         HCL_连续丢帧数量说明.AutoSize = True
         HCL_连续丢帧数量说明.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HCL_连续丢帧数量说明.Dock = DockStyle.Top
         HCL_连续丢帧数量说明.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        HCL_连续丢帧数量说明.Location = New Point(0, 50)
+        HCL_连续丢帧数量说明.Location = New Point(0, 48)
         HCL_连续丢帧数量说明.Margin = New Padding(2)
         HCL_连续丢帧数量说明.Name = "HCL_连续丢帧数量说明"
-        HCL_连续丢帧数量说明.Size = New Size(472, 61)
+        HCL_连续丢帧数量说明.Size = New Size(472, 51)
         HCL_连续丢帧数量说明.TabIndex = 8
         HCL_连续丢帧数量说明.Text = "正数：最多允许连续丢弃的帧数<br>负数：两次丢帧之间的最小间隔帧数<br>0：不限制，无论之前连续丢了多少帧都可以继续丢"
-        '
+        ' 
         ' HCL_连续丢帧数量标题
-        '
+        ' 
         HCL_连续丢帧数量标题.AutoSize = True
         HCL_连续丢帧数量标题.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HCL_连续丢帧数量标题.Dock = DockStyle.Top
@@ -446,12 +445,12 @@ Partial Class Form_v6_参数面板_抽帧参数
         HCL_连续丢帧数量标题.Margin = New Padding(2)
         HCL_连续丢帧数量标题.Name = "HCL_连续丢帧数量标题"
         HCL_连续丢帧数量标题.Padding = New Padding(0, 20, 0, 5)
-        HCL_连续丢帧数量标题.Size = New Size(472, 50)
+        HCL_连续丢帧数量标题.Size = New Size(472, 48)
         HCL_连续丢帧数量标题.TabIndex = 7
         HCL_连续丢帧数量标题.Text = "<span style=""font-size:13"">连续丢帧数量</span>   <span style=""font-size:10pt; color:YellowGreen"">默认：0</span>"
-        '
+        ' 
         ' MCK_抽帧总开关
-        '
+        ' 
         MCK_抽帧总开关.AutoSize = True
         MCK_抽帧总开关.BoxBorderRadius = 5
         MCK_抽帧总开关.BoxBorderSize = 0
@@ -467,9 +466,9 @@ Partial Class Form_v6_参数面板_抽帧参数
         MCK_抽帧总开关.Size = New Size(944, 24)
         MCK_抽帧总开关.TabIndex = 22
         MCK_抽帧总开关.Text = "抽帧总开关 / 勾选才会使用"
-        '
+        ' 
         ' Form_v6_参数面板_抽帧参数
-        '
+        ' 
         AutoScaleDimensions = New SizeF(96F, 96F)
         AutoScaleMode = AutoScaleMode.Dpi
         BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))

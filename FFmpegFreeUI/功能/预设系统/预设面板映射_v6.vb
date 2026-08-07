@@ -248,8 +248,10 @@ Partial Public Class 预设管理_v6
             a.视频参数_分辨率 = .MCB_直接指定分辨率.Text
             a.视频参数_分辨率自动计算_宽度 = .MCB_宽度缩放.Text
             a.视频参数_分辨率自动计算_高度 = .MCB_高度缩放.Text
+            a.视频参数_分辨率自动计算_缩放滤镜 = .获取缩放滤镜标识符()
             a.视频参数_分辨率自动计算_缩放算法 = .MCB_指定缩放算法.Text
             a.视频参数_帧速率 = .MCB_直接指定帧率.Text
+            a.视频参数_帧速率模式 = If(.MCB_强调帧率模式.SelectedIndex = 1, "cfr", If(.MCB_强调帧率模式.SelectedIndex = 2, "vfr", ""))
             a.视频参数_分辨率_裁剪滤镜参数 = .MTB_画面裁剪参数.Text
             储存滤镜子窗口(a, .私有窗口_抽帧参数, .私有窗口_插帧参数, .私有窗口_动态模糊, .私有窗口_着色器超分, .私有窗口_降噪, .私有窗口_锐化, .私有窗口_胶片颗粒, .私有窗口_平滑断层, .私有窗口_扫描方式, .私有窗口_画面翻转, .私有窗口_烧录字幕)
         End With
@@ -260,8 +262,26 @@ Partial Public Class 预设管理_v6
             .MCB_直接指定分辨率.Text = a.视频参数_分辨率
             .MCB_宽度缩放.Text = a.视频参数_分辨率自动计算_宽度
             .MCB_高度缩放.Text = a.视频参数_分辨率自动计算_高度
+            Select Case If(a.视频参数_分辨率自动计算_缩放滤镜, "").Trim().ToLowerInvariant()
+                Case "scale_cuda"
+                    .MCB_指定缩放滤镜.SelectedIndex = 2
+                Case "scale"
+                    .MCB_指定缩放滤镜.SelectedIndex = 1
+                Case Else
+                    .MCB_指定缩放滤镜.SelectedIndex = -1
+            End Select
+            .更新缩放滤镜交互()
             .MCB_指定缩放算法.Text = a.视频参数_分辨率自动计算_缩放算法
+            .更新缩放滤镜交互()
             .MCB_直接指定帧率.Text = a.视频参数_帧速率
+            Select Case If(a.视频参数_帧速率模式, "").Trim().ToLowerInvariant()
+                Case "cfr", "固定帧率 cfr"
+                    .MCB_强调帧率模式.SelectedIndex = 1
+                Case "vfr", "动态帧率 vfr"
+                    .MCB_强调帧率模式.SelectedIndex = 2
+                Case Else
+                    .MCB_强调帧率模式.SelectedIndex = 0
+            End Select
             .MTB_画面裁剪参数.Text = a.视频参数_分辨率_裁剪滤镜参数
             显示滤镜子窗口(a, .私有窗口_抽帧参数, .私有窗口_插帧参数, .私有窗口_动态模糊, .私有窗口_着色器超分, .私有窗口_降噪, .私有窗口_锐化, .私有窗口_胶片颗粒, .私有窗口_平滑断层, .私有窗口_扫描方式, .私有窗口_画面翻转, .私有窗口_烧录字幕)
         End With

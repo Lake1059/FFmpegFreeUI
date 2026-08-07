@@ -1950,7 +1950,7 @@ Public Class Form_v6_Agent
     End Sub
 
     Private Sub MB_操作提示_Click(sender As Object, e As EventArgs) Handles MB_操作提示.Click
-        ExOverlayMsgBox(FormMain_v6, $"{vbCrLf}【文本框快捷键】{vbCrLf}【常规】按 Enter 发送，按 Shift + Enter 换行{vbCrLf}【重新推理】发送空信息可触发重试推理，相当于重试功能{vbCrLf}【撤回重发】按 Alt + Enter 用当前内容替换最新一次你的内容并重新开始推理{vbCrLf}【单纯撤回】按 Ctrl + Delete 删除最新一轮对话并将用户消息复制到剪贴板{vbCrLf}{vbCrLf}【关于上下文限制和推理级别】{vbCrLf}【*】几乎没有端点会返回模型的上下文限制和推理级别列表{vbCrLf}【*】因此 3FUI 使用兜底策略在本地建立静态数据{vbCrLf}【*】如果你希望对某个模型增加上下文或是增加推理级别可以提 issue{vbCrLf}【*】但我不会把上下文给的太高，这会浪费token，除非该模型特别便宜",, "Agent 操作提示")
+        ExOverlayMsgBox(FormMain_v6, $"{vbCrLf}【文本框快捷键】{vbCrLf}【常规】按 Enter 发送，按 Shift + Enter 换行{vbCrLf}【重新推理】发送空信息可触发重试推理{vbCrLf}【撤回重发】按 Alt + Enter 用当前内容替换最新一次你的内容并重新开始推理{vbCrLf}【单纯撤回】按 Ctrl + Delete 删除最新一轮对话并将用户消息复制到剪贴板{vbCrLf}{vbCrLf}【关于上下文限制和推理级别】{vbCrLf}【*】几乎没有端点会返回模型的上下文限制和推理级别列表{vbCrLf}【*】因此 3FUI 使用兜底策略在本地建立静态数据{vbCrLf}【*】如果你希望对某个模型增加上下文或是增加推理级别可以提 issue{vbCrLf}【*】但我不会把上下文给的太高，这会浪费token，除非该模型特别便宜",, "Agent 操作提示")
     End Sub
 
     Private Sub AgentButtonLayoutChanged(sender As Object, e As EventArgs) Handles Panel4.SizeChanged, Panel1.SizeChanged, JustEmptyControl5.SizeChanged, JustEmptyControl6.SizeChanged

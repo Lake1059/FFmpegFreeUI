@@ -4,15 +4,26 @@ Imports System.IO
 Partial Public Class 预设管理_v6
 
     Private Shared Function 构造缩放滤镜(a As 预设数据_v6) As String
+        Dim 缩放滤镜 = If(a.视频参数_分辨率自动计算_缩放滤镜, "").Trim().ToLowerInvariant()
+        Dim 使用CUDA = String.Equals(缩放滤镜, "scale_cuda", StringComparison.Ordinal)
         Dim 缩放算法 = If(a.视频参数_分辨率自动计算_缩放算法, "").Trim()
-        Dim 缩放参数 = If(缩放算法 = "", "", ":flags=" & 缩放算法)
-        If a.视频参数_分辨率 <> "" Then Return $"scale={a.视频参数_分辨率.Replace("x", ":")}{缩放参数}"
+        If 使用CUDA AndAlso Not {"nearest", "bilinear", "bicubic", "lanczos"}.Contains(缩放算法, StringComparer.OrdinalIgnoreCase) Then 缩放算法 = ""
+        Dim 缩放参数 = If(缩放算法 = "", "", If(使用CUDA, ":interp_algo=" & 缩放算法, ":flags=" & 缩放算法))
+        If a.视频参数_分辨率 <> "" Then
+            Dim 分辨率 = a.视频参数_分辨率.Trim().Replace("X", "x", StringComparison.Ordinal)
+            If 使用CUDA AndAlso 分辨率.Contains("x", StringComparison.Ordinal) Then
+                Dim 尺寸 = 分辨率.Split("x"c)
+                If 尺寸.Length >= 2 Then Return $"scale_cuda=w={尺寸(0)}:h={尺寸(1)}{缩放参数}"
+            End If
+            Return $"scale={分辨率.Replace("x", ":")}{缩放参数}"
+        End If
 
         Dim 宽度 = If(a.视频参数_分辨率自动计算_宽度, "")
         Dim 高度 = If(a.视频参数_分辨率自动计算_高度, "")
         If 宽度 = "" AndAlso 高度 = "" Then Return ""
         If 宽度 = "" Then 宽度 = "-2"
         If 高度 = "" Then 高度 = "-2"
+        If 使用CUDA Then Return $"scale_cuda=w={宽度}:h={高度}{缩放参数}"
         Return $"scale={宽度}:{高度}{缩放参数}"
     End Function
 

@@ -13,7 +13,7 @@ Public Class Form_v6_支持者
         "xrh0905||https://www.xrh0905.top",
         "L. Snow|#6028e0", "爱发电用户_b274c", "不安的乌鸦 (暗夜精灵德鲁伊)|#FF8C00", "小豆豆变毛豆",
         "Liu Zheng|#FFFFFF|https://www3.ntu.edu.sg/home/z.liu",
-        "Vertin", "简风|#613E33"
+        "Vertin", "简风|#613E33", "Amanecida"
     }
     Public Shared ReadOnly 赠送支持者列表 As New List(Of String) From {
         "格里芬指挥官|#39C5BB",
@@ -24,7 +24,8 @@ Public Class Form_v6_支持者
         "ZOGMOS (终末诗) (首席教程制作大师) (开发者特别授予)|#72565F|https://zhuanlan.zhihu.com/p/2053530841180009271",
         "Uyanide (I use arch btw) (首席二次元)|#89B4FA",
         "Simlalsy (压片的)|#E3E0F9",
-        "Dominic (AWJ神力)|#FF9D9F|https://github.com/Dominic485649/AWJimage"
+        "Dominic (AWJ神力)|#FF9D9F|https://github.com/Dominic485649/AWJimage",
+        "小in分享 (UP主)|#FFFB04|https://space.bilibili.com/524894626"
     }
 
     Sub 读取付费支持者()
@@ -64,10 +65,14 @@ Public Class Form_v6_支持者
         Dim 背景色亮度 As Double = 背景颜色.R * 0.299 + 背景颜色.G * 0.587 + 背景颜色.B * 0.114
         Dim 文字颜色 As Color = If(背景色亮度 >= 128, Color.Black, Color.Silver)
         Dim a As New MemberWall.MemberItem With {.Text = 文本, .BackColor = 背景颜色, .ForeColor = 文字颜色}
-        If 文本.Contains("ZOGMOS") Then
-            a.BorderColor = Color.FromArgb(200, 255, 255, 255)
-            a.BorderSize = 2
-        End If
+        Select Case True
+            Case 文本.Contains("ZOGMOS")
+                a.BorderColor = Color.FromArgb(200, 255, 255, 255)
+                a.BorderSize = 2
+            Case 文本.Contains("小in分享")
+                a.BorderColor = Color.FromArgb(200, 255, 215, 0)
+                a.BorderSize = 2
+        End Select
         If 站点 <> "" Then
             If 站点.StartsWith("http") Then
                 a.ClickAction = Sub() Process.Start(New ProcessStartInfo With {.FileName = 站点, .UseShellExecute = True})

@@ -22,11 +22,11 @@ Partial Class Form_v6_集成工具_质量评测
     '不要使用代码编辑器修改它。
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim ListColumn1 As LakeUI.UltraDetailListView.ListColumn = New LakeUI.UltraDetailListView.ListColumn()
-        Dim ListColumn2 As LakeUI.UltraDetailListView.ListColumn = New LakeUI.UltraDetailListView.ListColumn()
-        Dim ListColumn3 As LakeUI.UltraDetailListView.ListColumn = New LakeUI.UltraDetailListView.ListColumn()
-        Dim ListColumn4 As LakeUI.UltraDetailListView.ListColumn = New LakeUI.UltraDetailListView.ListColumn()
-        Dim ListColumn5 As LakeUI.UltraDetailListView.ListColumn = New LakeUI.UltraDetailListView.ListColumn()
+        Dim ListColumn6 As LakeUI.UltraDetailListView.ListColumn = New LakeUI.UltraDetailListView.ListColumn()
+        Dim ListColumn7 As LakeUI.UltraDetailListView.ListColumn = New LakeUI.UltraDetailListView.ListColumn()
+        Dim ListColumn8 As LakeUI.UltraDetailListView.ListColumn = New LakeUI.UltraDetailListView.ListColumn()
+        Dim ListColumn9 As LakeUI.UltraDetailListView.ListColumn = New LakeUI.UltraDetailListView.ListColumn()
+        Dim ListColumn10 As LakeUI.UltraDetailListView.ListColumn = New LakeUI.UltraDetailListView.ListColumn()
         ModernPanel1 = New LakeUI.ModernPanel()
         UltraDetailListView1 = New LakeUI.UltraDetailListView()
         Panel6 = New Panel()
@@ -46,7 +46,7 @@ Partial Class Form_v6_集成工具_质量评测
         HtmlColorLabel8 = New LakeUI.HtmlColorLabel()
         Panel4 = New Panel()
         MCB_模型选择 = New LakeUI.ModernComboBox()
-        JustEmptyControl2 = New LakeUI.JustEmptyControl()
+        MCB_VMAF_CUDA = New LakeUI.ModernCheckBox()
         MCB_SubSample = New LakeUI.ModernComboBox()
         JustEmptyControl1 = New LakeUI.JustEmptyControl()
         MCB_Pooling = New LakeUI.ModernComboBox()
@@ -105,21 +105,21 @@ Partial Class Form_v6_集成工具_质量评测
         UltraDetailListView1.BackgroundColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         UltraDetailListView1.BorderRadius = 10
         UltraDetailListView1.BorderSize = 0
-        ListColumn1.Text = "文件"
-        ListColumn1.Width = 350
-        ListColumn2.Text = "PSNR"
-        ListColumn2.Width = 80
-        ListColumn3.Text = "SSIM"
-        ListColumn3.Width = 80
-        ListColumn4.Text = "VMAF"
-        ListColumn4.Width = 80
-        ListColumn5.Text = "XPSNR"
-        ListColumn5.Width = 80
-        UltraDetailListView1.Columns.Add(ListColumn1)
-        UltraDetailListView1.Columns.Add(ListColumn2)
-        UltraDetailListView1.Columns.Add(ListColumn3)
-        UltraDetailListView1.Columns.Add(ListColumn4)
-        UltraDetailListView1.Columns.Add(ListColumn5)
+        ListColumn6.Text = "文件"
+        ListColumn6.Width = 350
+        ListColumn7.Text = "PSNR"
+        ListColumn7.Width = 80
+        ListColumn8.Text = "SSIM"
+        ListColumn8.Width = 80
+        ListColumn9.Text = "VMAF"
+        ListColumn9.Width = 80
+        ListColumn10.Text = "XPSNR"
+        ListColumn10.Width = 80
+        UltraDetailListView1.Columns.Add(ListColumn6)
+        UltraDetailListView1.Columns.Add(ListColumn7)
+        UltraDetailListView1.Columns.Add(ListColumn8)
+        UltraDetailListView1.Columns.Add(ListColumn9)
+        UltraDetailListView1.Columns.Add(ListColumn10)
         UltraDetailListView1.Dock = DockStyle.Fill
         UltraDetailListView1.DragSelectZoneWidth = 200
         UltraDetailListView1.GroupBorderColor = Color.Silver
@@ -129,7 +129,7 @@ Partial Class Form_v6_集成工具_质量评测
         UltraDetailListView1.ItemCornerRadius = 10
         UltraDetailListView1.ItemPadding = New Padding(10, 5, 10, 5)
         UltraDetailListView1.ItemSelectedBackColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        UltraDetailListView1.Location = New Point(20, 293)
+        UltraDetailListView1.Location = New Point(20, 289)
         UltraDetailListView1.Margin = New Padding(2, 2, 2, 2)
         UltraDetailListView1.Name = "UltraDetailListView1"
         UltraDetailListView1.Padding = New Padding(5, 0, 5, 5)
@@ -138,7 +138,7 @@ Partial Class Form_v6_集成工具_质量评测
         UltraDetailListView1.ScrollBarTrackColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
         UltraDetailListView1.SelectionRectBorderColor = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
         UltraDetailListView1.SelectionRectFillColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        UltraDetailListView1.Size = New Size(777, 248)
+        UltraDetailListView1.Size = New Size(777, 252)
         UltraDetailListView1.TabIndex = 13
         ' 
         ' Panel6
@@ -325,23 +325,23 @@ Partial Class Form_v6_集成工具_质量评测
         HtmlColorLabel8.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel8.Dock = DockStyle.Top
         HtmlColorLabel8.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        HtmlColorLabel8.Location = New Point(20, 238)
+        HtmlColorLabel8.Location = New Point(20, 236)
         HtmlColorLabel8.Margin = New Padding(2)
         HtmlColorLabel8.Name = "HtmlColorLabel8"
         HtmlColorLabel8.Padding = New Padding(0, 20, 0, 10)
-        HtmlColorLabel8.Size = New Size(777, 55)
+        HtmlColorLabel8.Size = New Size(777, 53)
         HtmlColorLabel8.TabIndex = 11
         HtmlColorLabel8.Text = "<span style=""font-size:13; color:Silver"">对比文件列表</span>   这里放编码之后的文件，原文件放最顶上那个文本框"
         ' 
         ' Panel4
         ' 
         Panel4.Controls.Add(MCB_模型选择)
-        Panel4.Controls.Add(JustEmptyControl2)
+        Panel4.Controls.Add(MCB_VMAF_CUDA)
         Panel4.Controls.Add(MCB_SubSample)
         Panel4.Controls.Add(JustEmptyControl1)
         Panel4.Controls.Add(MCB_Pooling)
         Panel4.Dock = DockStyle.Top
-        Panel4.Location = New Point(20, 196)
+        Panel4.Location = New Point(20, 194)
         Panel4.Name = "Panel4"
         Panel4.Padding = New Padding(0, 10, 0, 0)
         Panel4.Size = New Size(777, 42)
@@ -369,20 +369,30 @@ Partial Class Form_v6_集成工具_质量评测
         MCB_模型选择.Name = "MCB_模型选择"
         MCB_模型选择.Padding = New Padding(10, 0, 10, 0)
         MCB_模型选择.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        MCB_模型选择.Size = New Size(457, 32)
+        MCB_模型选择.Size = New Size(370, 32)
         MCB_模型选择.TabIndex = 6
         MCB_模型选择.ToolTipGap = -1
         MCB_模型选择.ToolTipMaxWidth = 350
         MCB_模型选择.ToolTipPadding = New Padding(15)
         MCB_模型选择.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ' 
-        ' JustEmptyControl2
+        ' MCB_VMAF_CUDA
         ' 
-        JustEmptyControl2.Dock = DockStyle.Right
-        JustEmptyControl2.Location = New Point(457, 10)
-        JustEmptyControl2.Name = "JustEmptyControl2"
-        JustEmptyControl2.Size = New Size(10, 32)
-        JustEmptyControl2.TabIndex = 19
+        MCB_VMAF_CUDA.AutoSize = True
+        MCB_VMAF_CUDA.BoxBorderRadius = 5
+        MCB_VMAF_CUDA.BoxBorderSize = 0
+        MCB_VMAF_CUDA.BoxCheckedBackColor = Color.OliveDrab
+        MCB_VMAF_CUDA.BoxInnerPadding = 6
+        MCB_VMAF_CUDA.BoxSize = 22
+        MCB_VMAF_CUDA.BoxTextSpacing = 10
+        MCB_VMAF_CUDA.BoxUncheckedBackColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MCB_VMAF_CUDA.Dock = DockStyle.Right
+        MCB_VMAF_CUDA.Location = New Point(370, 10)
+        MCB_VMAF_CUDA.Name = "MCB_VMAF_CUDA"
+        MCB_VMAF_CUDA.Padding = New Padding(10, 0, 15, 0)
+        MCB_VMAF_CUDA.Size = New Size(97, 32)
+        MCB_VMAF_CUDA.TabIndex = 21
+        MCB_VMAF_CUDA.Text = "CUDA"
         ' 
         ' MCB_SubSample
         ' 
@@ -452,7 +462,7 @@ Partial Class Form_v6_集成工具_质量评测
         Panel5.Controls.Add(HtmlColorLabel7)
         Panel5.Controls.Add(HtmlColorLabel6)
         Panel5.Dock = DockStyle.Top
-        Panel5.Location = New Point(20, 171)
+        Panel5.Location = New Point(20, 169)
         Panel5.Name = "Panel5"
         Panel5.Size = New Size(777, 25)
         Panel5.TabIndex = 10
@@ -461,13 +471,16 @@ Partial Class Form_v6_集成工具_质量评测
         ' 
         HtmlColorLabel9.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel9.Dock = DockStyle.Fill
+        HtmlColorLabel9.InfoIconSizeRatio = 0.9F
+        HtmlColorLabel9.InfoIconTextGap = 8
         HtmlColorLabel9.Location = New Point(0, 0)
         HtmlColorLabel9.Margin = New Padding(2)
         HtmlColorLabel9.Name = "HtmlColorLabel9"
         HtmlColorLabel9.Size = New Size(467, 25)
         HtmlColorLabel9.TabIndex = 0
-        HtmlColorLabel9.Text = "VMAF 模型"
+        HtmlColorLabel9.Text = "<span style=""font-size:11; color:Silver"">选择 VMAF 模型</span>"
         HtmlColorLabel9.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.BottomLeft
+        HtmlColorLabel9.ToolTipText = "NVIDIA 用户可用 CUDA 模式，建议将 FFmpeg 升级到 9.0 及以上版本，CUDA 评测模式仅支持 420-8bit 和 444-16bit，程序将根据测试文件组合优先选择高精度格式，已知问题：可能只能使用 0.6.1 的模型！"
         ' 
         ' HtmlColorLabel7
         ' 
@@ -501,7 +514,7 @@ Partial Class Form_v6_集成工具_质量评测
         Panel3.Controls.Add(MCB_PSNR)
         Panel3.Controls.Add(HtmlColorLabel4)
         Panel3.Dock = DockStyle.Top
-        Panel3.Location = New Point(20, 129)
+        Panel3.Location = New Point(20, 127)
         Panel3.Name = "Panel3"
         Panel3.Padding = New Padding(0, 10, 0, 0)
         Panel3.Size = New Size(777, 42)
@@ -599,7 +612,7 @@ Partial Class Form_v6_集成工具_质量评测
         Panel2.Controls.Add(MTB_评测时长)
         Panel2.Controls.Add(HtmlColorLabel3)
         Panel2.Dock = DockStyle.Top
-        Panel2.Location = New Point(20, 87)
+        Panel2.Location = New Point(20, 85)
         Panel2.Name = "Panel2"
         Panel2.Padding = New Padding(0, 10, 0, 0)
         Panel2.Size = New Size(777, 42)
@@ -672,7 +685,7 @@ Partial Class Form_v6_集成工具_质量评测
         Panel1.Controls.Add(JustEmptyControl5)
         Panel1.Controls.Add(MB_选择原视频)
         Panel1.Dock = DockStyle.Top
-        Panel1.Location = New Point(20, 45)
+        Panel1.Location = New Point(20, 43)
         Panel1.Name = "Panel1"
         Panel1.Padding = New Padding(0, 10, 0, 0)
         Panel1.Size = New Size(777, 42)
@@ -728,7 +741,7 @@ Partial Class Form_v6_集成工具_质量评测
         HtmlColorLabel1.Location = New Point(20, 20)
         HtmlColorLabel1.Margin = New Padding(2)
         HtmlColorLabel1.Name = "HtmlColorLabel1"
-        HtmlColorLabel1.Size = New Size(777, 25)
+        HtmlColorLabel1.Size = New Size(777, 23)
         HtmlColorLabel1.TabIndex = 4
         HtmlColorLabel1.Text = "<span style=""font-size:13; color:Silver"">简易质量评测</span>   任何一种评测标准都不是万能的，请以人眼视觉感受为准"
         ' 
@@ -747,6 +760,7 @@ Partial Class Form_v6_集成工具_质量评测
         ModernPanel1.PerformLayout()
         Panel6.ResumeLayout(False)
         Panel4.ResumeLayout(False)
+        Panel4.PerformLayout()
         Panel5.ResumeLayout(False)
         Panel3.ResumeLayout(False)
         Panel3.PerformLayout()
@@ -773,7 +787,6 @@ Partial Class Form_v6_集成工具_质量评测
     Friend WithEvents MCB_模型选择 As LakeUI.ModernComboBox
     Friend WithEvents MCB_Pooling As LakeUI.ModernComboBox
     Friend WithEvents MCB_SubSample As LakeUI.ModernComboBox
-    Friend WithEvents JustEmptyControl2 As LakeUI.JustEmptyControl
     Friend WithEvents JustEmptyControl1 As LakeUI.JustEmptyControl
     Friend WithEvents Panel5 As Panel
     Friend WithEvents HtmlColorLabel7 As LakeUI.HtmlColorLabel
@@ -798,4 +811,5 @@ Partial Class Form_v6_集成工具_质量评测
     Friend WithEvents MB_导出记录 As LakeUI.ModernButton
     Friend WithEvents JustEmptyControl9 As LakeUI.JustEmptyControl
     Friend WithEvents JustEmptyControl8 As LakeUI.JustEmptyControl
+    Friend WithEvents MCB_VMAF_CUDA As LakeUI.ModernCheckBox
 End Class
