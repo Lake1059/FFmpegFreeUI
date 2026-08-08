@@ -125,6 +125,7 @@ Public Class Form_v6_集成工具_质量评测
         If 正在刷新Vmaf模型列表 OrElse IsDisposed Then Return
         正在刷新Vmaf模型列表 = True
         MCB_模型选择.Enabled = False
+        MB_刷新VMAF模型.Enabled = False
         Try
             Dim models = Await 获取FFmpegVmaf模型列表Async()
             If IsDisposed Then Return
@@ -138,9 +139,16 @@ Public Class Form_v6_集成工具_质量评测
             If models.Count = 0 Then MCB_模型选择.Text = ""
         Finally
             正在刷新Vmaf模型列表 = False
-            If Not IsDisposed Then MCB_模型选择.Enabled = True
+            If Not IsDisposed Then
+                MCB_模型选择.Enabled = True
+                MB_刷新VMAF模型.Enabled = True
+            End If
         End Try
     End Function
+
+    Private Async Sub MB_刷新VMAF模型_Click(sender As Object, e As EventArgs) Handles MB_刷新VMAF模型.Click
+        Await 刷新Vmaf模型列表Async()
+    End Sub
 
     Private Shared Async Function 获取FFmpegVmaf模型列表Async() As Task(Of List(Of String))
         Try

@@ -1,6 +1,8 @@
 Imports LakeUI
 
 Public Class Form_v6_集成工具
+    Private 已自动刷新质量评测Vmaf模型列表 As Boolean = False
+
     Private Sub Form_v6_集成工具_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.ModernTabListControl1.Items(0).BoundControl = Form_v6_集成工具_合并
         绑定选项卡(Form_v6_集成工具_合并.ModernPanel1)
@@ -33,7 +35,8 @@ Public Class Form_v6_集成工具
     End Sub
 
     Private Async Sub ModernTabListControl1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ModernTabListControl1.SelectedIndexChanged
-        If ModernTabListControl1.SelectedIndex = 4 Then
+        If ModernTabListControl1.SelectedIndex = 4 AndAlso Not 已自动刷新质量评测Vmaf模型列表 Then
+            已自动刷新质量评测Vmaf模型列表 = True
             Await Form_v6_集成工具_质量评测.刷新Vmaf模型列表Async()
         End If
     End Sub

@@ -46,6 +46,8 @@ Partial Class Form_v6_集成工具_质量评测
         HtmlColorLabel8 = New LakeUI.HtmlColorLabel()
         Panel4 = New Panel()
         MCB_模型选择 = New LakeUI.ModernComboBox()
+        JustEmptyControl2 = New LakeUI.JustEmptyControl()
+        MB_刷新VMAF模型 = New LakeUI.ModernButton()
         MCB_VMAF_CUDA = New LakeUI.ModernCheckBox()
         MCB_SubSample = New LakeUI.ModernComboBox()
         JustEmptyControl1 = New LakeUI.JustEmptyControl()
@@ -129,7 +131,7 @@ Partial Class Form_v6_集成工具_质量评测
         UltraDetailListView1.ItemCornerRadius = 10
         UltraDetailListView1.ItemPadding = New Padding(10, 5, 10, 5)
         UltraDetailListView1.ItemSelectedBackColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        UltraDetailListView1.Location = New Point(20, 289)
+        UltraDetailListView1.Location = New Point(20, 279)
         UltraDetailListView1.Margin = New Padding(2, 2, 2, 2)
         UltraDetailListView1.Name = "UltraDetailListView1"
         UltraDetailListView1.Padding = New Padding(5, 0, 5, 5)
@@ -138,7 +140,7 @@ Partial Class Form_v6_集成工具_质量评测
         UltraDetailListView1.ScrollBarTrackColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
         UltraDetailListView1.SelectionRectBorderColor = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
         UltraDetailListView1.SelectionRectFillColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        UltraDetailListView1.Size = New Size(777, 252)
+        UltraDetailListView1.Size = New Size(777, 262)
         UltraDetailListView1.TabIndex = 13
         ' 
         ' Panel6
@@ -328,14 +330,16 @@ Partial Class Form_v6_集成工具_质量评测
         HtmlColorLabel8.Location = New Point(20, 236)
         HtmlColorLabel8.Margin = New Padding(2)
         HtmlColorLabel8.Name = "HtmlColorLabel8"
-        HtmlColorLabel8.Padding = New Padding(0, 20, 0, 10)
-        HtmlColorLabel8.Size = New Size(777, 53)
+        HtmlColorLabel8.Padding = New Padding(0, 10, 0, 10)
+        HtmlColorLabel8.Size = New Size(777, 43)
         HtmlColorLabel8.TabIndex = 11
         HtmlColorLabel8.Text = "<span style=""font-size:13; color:Silver"">对比文件列表</span>   这里放编码之后的文件，原文件放最顶上那个文本框"
         ' 
         ' Panel4
         ' 
         Panel4.Controls.Add(MCB_模型选择)
+        Panel4.Controls.Add(JustEmptyControl2)
+        Panel4.Controls.Add(MB_刷新VMAF模型)
         Panel4.Controls.Add(MCB_VMAF_CUDA)
         Panel4.Controls.Add(MCB_SubSample)
         Panel4.Controls.Add(JustEmptyControl1)
@@ -364,17 +368,41 @@ Partial Class Form_v6_集成工具_质量评测
         MCB_模型选择.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
         MCB_模型选择.Items.Add("")
         MCB_模型选择.Items.Add("浏览本地模型文件 ...")
-        MCB_模型选择.Location = New Point(0, 10)
+        MCB_模型选择.Location = New Point(70, 10)
         MCB_模型选择.Margin = New Padding(2, 2, 2, 2)
+        MCB_模型选择.MaxDropDownItems = 12
         MCB_模型选择.Name = "MCB_模型选择"
         MCB_模型选择.Padding = New Padding(10, 0, 10, 0)
         MCB_模型选择.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        MCB_模型选择.Size = New Size(370, 32)
+        MCB_模型选择.Size = New Size(300, 32)
         MCB_模型选择.TabIndex = 6
         MCB_模型选择.ToolTipGap = -1
         MCB_模型选择.ToolTipMaxWidth = 350
         MCB_模型选择.ToolTipPadding = New Padding(15)
         MCB_模型选择.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
+        ' 
+        ' JustEmptyControl2
+        ' 
+        JustEmptyControl2.Dock = DockStyle.Left
+        JustEmptyControl2.Location = New Point(60, 10)
+        JustEmptyControl2.Name = "JustEmptyControl2"
+        JustEmptyControl2.Size = New Size(10, 32)
+        JustEmptyControl2.TabIndex = 23
+        ' 
+        ' MB_刷新VMAF模型
+        ' 
+        MB_刷新VMAF模型.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MB_刷新VMAF模型.BorderRadius = 10
+        MB_刷新VMAF模型.BorderSize = 0
+        MB_刷新VMAF模型.Dock = DockStyle.Left
+        MB_刷新VMAF模型.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        MB_刷新VMAF模型.Location = New Point(0, 10)
+        MB_刷新VMAF模型.Margin = New Padding(2)
+        MB_刷新VMAF模型.Name = "MB_刷新VMAF模型"
+        MB_刷新VMAF模型.PressedBackColor1 = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
+        MB_刷新VMAF模型.Size = New Size(60, 32)
+        MB_刷新VMAF模型.TabIndex = 22
+        MB_刷新VMAF模型.Text = "刷新"
         ' 
         ' MCB_VMAF_CUDA
         ' 
@@ -471,7 +499,7 @@ Partial Class Form_v6_集成工具_质量评测
         ' 
         HtmlColorLabel9.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel9.Dock = DockStyle.Fill
-        HtmlColorLabel9.InfoIconSizeRatio = 0.9F
+        HtmlColorLabel9.InfoIconSizeRatio = 0.8F
         HtmlColorLabel9.InfoIconTextGap = 8
         HtmlColorLabel9.Location = New Point(0, 0)
         HtmlColorLabel9.Margin = New Padding(2)
@@ -812,4 +840,6 @@ Partial Class Form_v6_集成工具_质量评测
     Friend WithEvents JustEmptyControl9 As LakeUI.JustEmptyControl
     Friend WithEvents JustEmptyControl8 As LakeUI.JustEmptyControl
     Friend WithEvents MCB_VMAF_CUDA As LakeUI.ModernCheckBox
+    Friend WithEvents JustEmptyControl2 As LakeUI.JustEmptyControl
+    Friend WithEvents MB_刷新VMAF模型 As LakeUI.ModernButton
 End Class
