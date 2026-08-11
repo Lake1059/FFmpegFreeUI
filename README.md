@@ -10,6 +10,7 @@ FFmpegFreeUI（简称 3FUI）是在 Windows 上的 [FFmpeg](https://ffmpeg.org) 
 
 知乎终末诗的教程：https://zhuanlan.zhihu.com/p/1943079795341623993<br>
 v6 开发者官方宣传视频：https://www.bilibili.com/video/BV1rT7E6wEK4
+来自 小in 的宣传视频：https://www.bilibili.com/video/BV1vZud6VEsn
 
 - 发布形式：所有数据存于当前目录的单文件
 - 系统要求：Windows 10 1609+ 仅限 x64 / arm64
