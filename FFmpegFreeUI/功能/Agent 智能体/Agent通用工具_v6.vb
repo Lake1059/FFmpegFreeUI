@@ -79,7 +79,7 @@ Public NotInheritable Class Agent通用工具_v6
 
     Public Shared Function IsImageExtension(extension As String) As Boolean
         Select Case If(extension, "").ToLowerInvariant()
-            Case ".png", ".jpg", ".jpeg", ".webp", ".gif", ".bmp"
+            Case ".png", ".jpg", ".jpeg", ".jxl", ".webp", ".gif", ".bmp"
                 Return True
             Case Else
                 Return False

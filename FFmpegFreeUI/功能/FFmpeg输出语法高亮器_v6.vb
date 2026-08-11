@@ -30,7 +30,7 @@ Public Class FFmpeg输出语法高亮器_v6
     Private Shared ReadOnly 命令选项正则 As New Regex("(?<!\S)-{1,2}[A-Za-z0-9][A-Za-z0-9_.:-]*", RegexOptions.Compiled)
     Private Shared ReadOnly 分辨率正则 As New Regex("\b\d{2,5}x\d{2,5}\b(?:\s*\[[^\]]+\])?", RegexOptions.Compiled Or RegexOptions.IgnoreCase)
     Private Shared ReadOnly 数值单位正则 As New Regex("\b\d+(?:\.\d+)?\s*(?:k|m|g|t)?(?:b/s|bit/s|bits/s|hz|fps|tbr|tbn|tb|x|s|ms)\b|\b\d+(?:\.\d+)?\s*(?:k|m|g|t)?i?b\b", RegexOptions.Compiled Or RegexOptions.IgnoreCase)
-    Private Shared ReadOnly 格式正则 As New Regex("\b(?:h264|hevc|av1|vp9|vp8|mpeg[124]?|aac|ac3|eac3|opus|vorbis|flac|mp3|pcm_[a-z0-9_]+|png|mjpeg|jpeg|webp|gif|ass|ssa|subrip|mov_text|yuvj?\d{3,4}p\d*|nv12|p010le|p016le|rgb24|bgr24|rgba|bgra|pal8|fltp|s16p?|s32p?|s64p?|u8p?|dblp?|mono|stereo|5\.1|7\.1|bt\d{3,4}|smpte\d{3}m?)\b(?:\([^)]*\))?", RegexOptions.Compiled Or RegexOptions.IgnoreCase)
+    Private Shared ReadOnly 格式正则 As New Regex("\b(?:h264|hevc|av1|vp9|vp8|mpeg[124]?|aac|ac3|eac3|opus|vorbis|flac|mp3|pcm_[a-z0-9_]+|png|mjpeg|jpeg|jpegxl|jxl|webp|gif|ass|ssa|subrip|mov_text|yuvj?\d{3,4}p\d*|nv12|p010le|p016le|rgb24|bgr24|rgba|bgra|pal8|fltp|s16p?|s32p?|s64p?|u8p?|dblp?|mono|stereo|5\.1|7\.1|bt\d{3,4}|smpte\d{3}m?)\b(?:\([^)]*\))?", RegexOptions.Compiled Or RegexOptions.IgnoreCase)
 
     Public Function HighlightLine(lineIndex As Integer, lineText As String, previousLineState As Integer) As ModernTextBox.SyntaxHighlightResult Implements ModernTextBox.ISyntaxHighlighter.HighlightLine
         Dim tokens As New List(Of ModernTextBox.SyntaxToken)

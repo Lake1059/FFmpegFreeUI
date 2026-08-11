@@ -51,7 +51,7 @@ Public Class Form_v6_集成工具_抽流
         {"hevc", "h265"}, {"h265", "h265"},
         {"mpeg1video", "m1v"}, {"mpeg2video", "m2v"}, {"mpeg4", "m4v"},
         {"vc1", "vc1"}, {"vp8", "ivf"}, {"vp9", "ivf"}, {"av1", "ivf"},
-        {"theora", "ogv"}, {"prores", "mov"}, {"mjpeg", "mjpg"}, {"rawvideo", "raw"},
+        {"theora", "ogv"}, {"prores", "mov"}, {"mjpeg", "mjpg"}, {"jpegxl", "jxl"}, {"rawvideo", "raw"},
         {"aac", "aac"}, {"ac3", "ac3"}, {"eac3", "eac3"}, {"truehd", "thd"}, {"mlp", "mlp"},
         {"dts", "dts"}, {"dca", "dts"}, {"mp1", "mp1"}, {"mp2", "mp2"}, {"mp3", "mp3"},
         {"flac", "flac"}, {"opus", "opus"}, {"vorbis", "ogg"}, {"alac", "m4a"},
@@ -65,7 +65,7 @@ Public Class Form_v6_集成工具_抽流
     Private Shared ReadOnly 附件Mime扩展名映射 As New Dictionary(Of String, String)(StringComparer.OrdinalIgnoreCase) From {
         {"font/ttf", "ttf"}, {"font/otf", "otf"}, {"font/woff", "woff"}, {"font/woff2", "woff2"},
         {"application/x-truetype-font", "ttf"}, {"application/x-font-ttf", "ttf"}, {"application/vnd.ms-opentype", "otf"},
-        {"image/jpeg", "jpg"}, {"image/jpg", "jpg"}, {"image/png", "png"}, {"image/webp", "webp"}, {"image/gif", "gif"},
+        {"image/jpeg", "jpg"}, {"image/jpg", "jpg"}, {"image/jxl", "jxl"}, {"image/png", "png"}, {"image/webp", "webp"}, {"image/gif", "gif"},
         {"text/plain", "txt"}, {"text/xml", "xml"}, {"application/json", "json"}
     }
 

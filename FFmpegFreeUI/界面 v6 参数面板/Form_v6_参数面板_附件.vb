@@ -54,7 +54,7 @@ Public Class Form_v6_参数面板_附件
             Case 预设数据_v6.附件单片结构.附件类型.图片,
                  预设数据_v6.附件单片结构.附件类型.MP4封面图,
                  预设数据_v6.附件单片结构.附件类型.MKV封面图
-                filter = "图片|*.png;*.jpg;*.jpeg;*.webp;*.bmp|所有文件|*.*"
+                filter = "图片|*.png;*.jpg;*.jpeg;*.jxl;*.webp;*.bmp|所有文件|*.*"
             Case 预设数据_v6.附件单片结构.附件类型.字体文件
                 filter = "字体|*.ttf;*.otf;*.ttc;*.woff;*.woff2|所有文件|*.*"
             Case 预设数据_v6.附件单片结构.附件类型.文本文档

@@ -189,6 +189,8 @@ Partial Public Class 预设管理_v6
         Select Case ext
             Case "jpg", "jpeg"
                 Return "image/jpeg"
+            Case "jxl"
+                Return "image/jxl"
             Case "png"
                 Return "image/png"
             Case "webp"

@@ -268,7 +268,7 @@ Partial Public Class 预设管理_v6
 
     Private Shared Function 附加片段默认映射主视频(a As 预设数据_v6, 输出文件 As String) As Boolean
         Select Case 获取输出容器扩展名(a, 输出文件)
-            Case "mp3", "m4a", "aac", "flac", "wav", "ogg", "opus", "wma", "mka", "srt", "ass", "ssa", "vtt", "sup", "jpg", "jpeg", "png", "webp", "bmp", "gif", "raw", "yuv", "h264", "h265", "hevc", "av1", "ivf"
+            Case "mp3", "m4a", "aac", "flac", "wav", "ogg", "opus", "wma", "mka", "srt", "ass", "ssa", "vtt", "sup", "jpg", "jpeg", "jxl", "png", "webp", "bmp", "gif", "raw", "yuv", "h264", "h265", "hevc", "av1", "ivf"
                 Return False
             Case Else
                 Return True
@@ -277,7 +277,7 @@ Partial Public Class 预设管理_v6
 
     Private Shared Function 附加片段默认映射主音频(a As 预设数据_v6, 输出文件 As String) As Boolean
         Select Case 获取输出容器扩展名(a, 输出文件)
-            Case "jpg", "jpeg", "png", "webp", "bmp", "gif", "srt", "ass", "ssa", "vtt", "sup", "raw", "yuv", "h264", "h265", "hevc", "av1", "ivf"
+            Case "jpg", "jpeg", "jxl", "png", "webp", "bmp", "gif", "srt", "ass", "ssa", "vtt", "sup", "raw", "yuv", "h264", "h265", "hevc", "av1", "ivf"
                 Return False
             Case Else
                 Return True

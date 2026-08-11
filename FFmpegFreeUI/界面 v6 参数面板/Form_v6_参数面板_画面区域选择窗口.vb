@@ -38,7 +38,7 @@ Public Class Form_v6_参数面板_画面区域选择窗口
     Private Function ShowFileOpenDialog() As String
         Using openFileDialog As New OpenFileDialog With {
             .Multiselect = False,
-            .Filter = "媒体文件|*.mp4;*.mkv;*.mov;*.m4v;*.avi;*.wmv;*.webm;*.flv;*.ts;*.m2ts;*.mts;*.mpg;*.mpeg;*.3gp;*.bmp;*.dib;*.gif;*.ico;*.jfif;*.jpe;*.jpeg;*.jpg;*.png;*.tif;*.tiff;*.webp|图片文件|*.bmp;*.dib;*.gif;*.ico;*.jfif;*.jpe;*.jpeg;*.jpg;*.png;*.tif;*.tiff;*.webp|视频文件|*.mp4;*.mkv;*.mov;*.m4v;*.avi;*.wmv;*.webm;*.flv;*.ts;*.m2ts;*.mts;*.mpg;*.mpeg;*.3gp|所有文件|*.*"
+            .Filter = "媒体文件|*.mp4;*.mkv;*.mov;*.m4v;*.avi;*.wmv;*.webm;*.flv;*.ts;*.m2ts;*.mts;*.mpg;*.mpeg;*.3gp;*.bmp;*.dib;*.gif;*.ico;*.jfif;*.jpe;*.jpeg;*.jpg;*.jxl;*.png;*.tif;*.tiff;*.webp|图片文件|*.bmp;*.dib;*.gif;*.ico;*.jfif;*.jpe;*.jpeg;*.jpg;*.jxl;*.png;*.tif;*.tiff;*.webp|视频文件|*.mp4;*.mkv;*.mov;*.m4v;*.avi;*.wmv;*.webm;*.flv;*.ts;*.m2ts;*.mts;*.mpg;*.mpeg;*.3gp|所有文件|*.*"
         }
             If openFileDialog.ShowDialog() = DialogResult.OK Then
                 Return openFileDialog.FileName
