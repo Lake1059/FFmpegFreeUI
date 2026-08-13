@@ -1,11 +1,25 @@
 Imports System.IO
 Imports System.Reflection
+Imports System.Text.Json
+Imports System.Text.Json.Serialization
 
 Public Class 插件管理
 
     Public Shared ReadOnly Property 由插件加载的自定义界面 As New Dictionary(Of String, Control)(StringComparer.CurrentCultureIgnoreCase)
+    Private Shared ReadOnly 编码队列事件订阅列表 As New List(Of Action(Of String, String))
+    Private Shared ReadOnly 编码队列事件锁 As New Object
+    Private Shared ReadOnly 编码队列事件序列化选项 As New JsonSerializerOptions With {
+        .PropertyNamingPolicy = Nothing,
+        .DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+        .WriteIndented = False
+    }
+    Private Shared 编码队列事件已连接 As Boolean = False
 
     Public Shared Sub 启动时加载插件()
+        If Not 编码队列事件已连接 Then
+            AddHandler 编码队列_v6.插件事件已触发, AddressOf 编码队列事件处理
+            编码队列事件已连接 = True
+        End If
         Dim 插件文件夹路径 As String = Path.Combine(Application.StartupPath, "Plugin")
         If Not Directory.Exists(插件文件夹路径) Then Exit Sub
 
@@ -35,6 +49,7 @@ Public Class 插件管理
         注入宿主回调(Entry类, Entry类的实例, "SetHost_AddMissionToQueueWithArgs", New Action(Of String, String, String, String)(AddressOf 使用命令行添加任务到编码队列))
         注入宿主回调(Entry类, Entry类的实例, "SetHost_AddMissionToQueueWith3fuiFile", New Action(Of String, String, String, String)(AddressOf 使用预设文件添加任务到编码队列))
         注入宿主回调(Entry类, Entry类的实例, "SetHost_MediaStreamVisualSelector", New Action(Of String, Object, Object, Object, String, String, String, String)(AddressOf 打开媒体流可视化选择器))
+        注入宿主回调(Entry类, Entry类的实例, "SetHost_SubscribeQueueEvents", New Action(Of String, Object)(AddressOf 注册编码队列事件))
 
         Dim Entry方法 As MethodInfo = Entry类.GetMethod("Entry", BindingFlags.Public Or BindingFlags.NonPublic Or BindingFlags.Static)
         If Entry方法 Is Nothing Then
@@ -42,6 +57,69 @@ Public Class 插件管理
             Exit Sub
         End If
         Entry方法.Invoke(Nothing, Nothing)
+    End Sub
+
+    Private Shared Sub 注册编码队列事件(事件名称 As String, callback As Object)
+        Dim action = TryCast(callback, Action(Of String, String))
+        If action Is Nothing Then Exit Sub
+        Dim filter = If(事件名称, "").Trim()
+        SyncLock 编码队列事件锁
+            编码队列事件订阅列表.Add(Sub(name As String, data As String)
+                               If filter = "" OrElse filter = "*" OrElse String.Equals(filter, name, StringComparison.OrdinalIgnoreCase) Then
+                                   Try
+                                       action(name, data)
+                                   Catch
+                                       '插件回调异常不得影响编码队列
+                                   End Try
+                               End If
+                           End Sub)
+        End SyncLock
+    End Sub
+
+    <CodeAnalysis.SuppressMessage("Style", "IDE0037:使用推断的成员名称", Justification:="<挂起>")>
+    Private Shared Sub 编码队列事件处理(事件名称 As String, task As 编码任务_v6, log As 编码任务日志条目_v6)
+        Dim data As String
+        Try
+            data = JsonSerializer.Serialize(New With {
+            .eventName = 事件名称,
+            .timestamp = DateTime.Now,
+            .task = New With {
+                .id = task.ID,
+                .name = task.任务名称,
+                .inputPath = task.输入文件,
+                .outputPath = task.输出文件,
+                .status = task.状态.ToString(),
+                .statusCode = CInt(task.状态),
+                .progress = task.进度?.百分比,
+                .progressText = task.进度?.进度文本,
+                .currentStage = task.当前步骤?.显示名称,
+                .realtimeOutput = task.实时输出,
+                .nonProgressOutput = task.非进度输出列表?.ToArray()
+            },
+            .log = If(log Is Nothing, Nothing, New With {
+                .sequence = log.序号,
+                .time = log.时间,
+                .text = log.文本,
+                .category = log.类别.ToString(),
+                .categoryCode = CInt(log.类别),
+                .isError = log.是否错误,
+                .stage = log.阶段名
+            })
+            }, 编码队列事件序列化选项)
+        Catch
+            Exit Sub
+        End Try
+
+        Dim callbacks As List(Of Action(Of String, String))
+        SyncLock 编码队列事件锁
+            callbacks = 编码队列事件订阅列表.ToList()
+        End SyncLock
+        For Each callback In callbacks
+            Try
+                callback(事件名称, data)
+            Catch
+            End Try
+        Next
     End Sub
 
     Private Shared Sub 注入宿主回调(entryType As Type, entryInstance As Object, methodName As String, callback As Object)

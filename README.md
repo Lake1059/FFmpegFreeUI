@@ -114,9 +114,7 @@ v6 开发者官方宣传视频：https://www.bilibili.com/video/BV1rT7E6wEK4<br>
 
 > 请勿让 **我** 或 **群友** 或 **专业人士** 或 **外行人士** 进行包括但不限于这些行为：算卦、猜谜、托梦、占卜、人脑推理、强行传教、交流物理学、灵能飞升、虚空扰动、尝试进入量子隧道等等，如有以上行为或类似行为的，造成的全部后果由用户全责承担。
 
-重要的事情再说三遍：不要算卦！尽快提供完整信息！  
-重要的事情再说三遍：不要算卦！尽快提供完整信息！  
-重要的事情再说三遍：不要算卦！尽快提供完整信息！
+重要的事情再说三遍：不要算卦！尽快提供完整信息！<br>重要的事情再说三遍：不要算卦！尽快提供完整信息！<br>重要的事情再说三遍：不要算卦！尽快提供完整信息！
 
 你说这种人是不是生活不能自理啊，他不是来求助的，是来求心理安慰的！
 
@@ -195,211 +193,169 @@ https://en.wikipedia.org/wiki/Intel_Quick_Sync_Video
 
 ## 插件开发
 
-通过插件，你可以给 3FUI 添加各种功能来满足自己的需求，只需要像我那样把可视化摆上来然后生成对应的参数即可，还可以选择接入我的编码队列，而不用自己做进度显示。
+插件通过反射加载，不需要引用 3FUI，只通过下面列出的委托与宿主通信。你只需要创建一个 .NET 10 Windows 窗体（或 WPF）项目，并在程序集的 `Entry` 类中提供共享/静态的 `Entry` 方法。
 
-考虑到 ReadyToRun 生成的 exe 无法被添加引用，插件使用 反射 + 特性 + 动态调用 来实现，你在开发插件的时候不需要引用 3FUI，只需要按照我制定的接口标准写代码即可。目前总共只有 4 个接口功能，非常简单，通常情况下你只需要用其中 2 个，所以不要担心要硬啃代码。
+```vb
+Public Class Entry
+    Public Shared Sub Entry()
+        '初始化、注册界面和队列事件
+    End Sub
+End Class
+```
 
-首先你需要有与我开发 3FUI 相同的集成开发环境：
+```csharp
+public class Entry
+{
+    public static void Entry()
+    {
+        // 初始化、注册界面和队列事件
+    }
+}
+```
 
-1. 下载并安装 [Visual Studio Community 2026](https://visualstudio.microsoft.com/zh-hans/vs/)
-2. 工作负载勾选：.NET 桌面开发
-   - 可选组件看自己需求，可以能不要就都不要的
-   - 但是我仍旧推荐这些组件：IntelliCode、.NET 可移植库目标包、.NET 分析工具
-   - 按理说会强制安装 .NET 10 SDK，记得检查
-3. 完成 VS2026 的安装
-
-然后就可以开始开发了，从新建工程开始：
-
-1. 使用 VB 或 C# 创建一个 **Windows 窗体应用** 项目
-
-   - 如果你更擅长 WPF，也可以选择那个
-   - 但我不会 WPF，后面的代码如果不是这么写的那你得自己想办法
-   - 目标框架必须和 3FUI 一样，选 .NET 10
-   - 我知道你会疑惑为什么开发插件要选窗体应用而不是类库，其实这是 VS 的限制，要做界面你必须选这个，否则就没有可视化什么事了
-
-2. 创建项目后把默认窗体 Form1 关掉，我们不需要它
-
-   - 但是也不要删掉，否则你就没法生成了
-   - 或者你可以用它来做测试，不然你没法调试自己的设计
-   - 事实上我们并不需要“启动”这个项目
-
-3. 新建一个 Entry 类
-
-4. 在这个 Entry 类中写一个 Entry 方法，需要是共享\静态的
-
-   - VB 语言如下：
-
-     ```vb
-     Public Shared Sub Entry()
-     	'初始化的代码都写这里，在 3FUI 启动后执行
-     End Sub
-     ```
-
-   - C# 语言如下：
-
-     ```c#
-     public static void Entry()
-     {
-     	// 初始化的代码都写这里，在 3FUI 启动后执行
-     }
-     ```
-
-现在，你就完成了插件初始化的方法，确认一下：是名为 Entry 的 Class 里有名为 Entry 的方法。接下来就是接口来实现关键的功能，直接把下面的代码复制过去自己改就行了。
-
-### 添加自定义 WinForm 界面
-
-要向 3FUI 的插件扩展选项卡添加自己的界面，必须创建你自己的用户控件，将你的功能全部集成到这个控件里，然后将下列代码复制到你的 Entry 类中：
-
-VB 语言：
+### 添加界面
 
 ```vb
 Public Shared Property HostCall_AddCustomWinformPanel As Action(Of String, Control)
 Public Shared Sub SetHost_AddCustomWinformPanel(action As Object)
-	HostCall_AddCustomWinformPanel = CType(action, Action(Of String, Control))
+    HostCall_AddCustomWinformPanel = CType(action, Action(Of String, Control))
 End Sub
 
-'调用
-HostCall_AddCustomWinformPanel.Invoke("在下拉框中显示的名称", New 自定义控件)
-```
-
-C# 语言：
-
-```c#
-public static Action<string, Control> HostCall_AddCustomWinformPanel { get; set; }
-public static void SetHost_AddCustomWinformPanel(object action)
-{
-	HostCall_AddCustomWinformPanel = (Action<string, Control>)action;
-}
-
-//调用
-HostCall_AddCustomWinformPanel?.Invoke("在下拉框中显示的名称", new 自定义控件());
-```
-
-- 不可以更改 HostCall 定义和 SetHost 方法，否则 3FUI 无法正确调用
-- 添加自定义界面的方法必须在 Entry 方法中调用，因为我不会在其他地方刷新那个下拉框
-- 以上内容后文不再赘述
-
-通常情况下直接在这个过程中把界面 New 出来即可，如果你有更高级的需求，当然也可以在其他地方 New，只是千万记得添加到 3FUI 中必须在 Entry 方法里执行。
-
-### 添加自定义 WPF 界面
-
-如果你更擅长 WPF，则使用另一个接口。
-
-VB 语言：
-
-```vb
 Public Shared Property HostCall_AddCustomWpfPanel As Action(Of String, UIElement)
 Public Shared Sub SetHost_AddCustomWpfPanel(action As Object)
-	HostCall_AddCustomWpfPanel = CType(action, Action(Of String, UIElement))
+    HostCall_AddCustomWpfPanel = CType(action, Action(Of String, UIElement))
 End Sub
-    
-'调用
-HostCall_AddCustomWpfPanel.Invoke("在下拉框中显示的名称", New 自定义控件)
+
+'调用示例
+HostCall_AddCustomWinformPanel?.Invoke("我的插件", New MyUserControl())
+'WPF 使用：HostCall_AddCustomWpfPanel?.Invoke("我的插件", New MyWpfControl())
 ```
 
-C# 语言：
+```csharp
+public static Action<string, Control> HostCall_AddCustomWinformPanel { get; set; }
+public static void SetHost_AddCustomWinformPanel(object action)
+    => HostCall_AddCustomWinformPanel = (Action<string, Control>)action;
 
-```c#
 public static Action<string, UIElement> HostCall_AddCustomWpfPanel { get; set; }
 public static void SetHost_AddCustomWpfPanel(object action)
-{
-	HostCall_AddCustomWpfPanel = (Action<string, UIElement>)action;
-}
+    => HostCall_AddCustomWpfPanel = (Action<string, UIElement>)action;
 
-//调用
-HostCall_AddCustomWpfPanel?.Invoke("在下拉框中显示的名称", new 自定义控件());
+//调用示例
+HostCall_AddCustomWinformPanel?.Invoke("我的插件", new MyUserControl());
 ```
 
-### 将编码任务添加到队列中
-
-同样简单的方式即可将你的编码任务添加到 3FUI 的编码队列中。从 2.0 版本开始有两种添加的方式，一个是用命令行添加，这样添加的任务不包含预设数据，无法使用重配置相关功能；另一个是用 3FUI 的预设文件来添加，这样添加的任务可以使用完整功能，但是注意每添加一个任务都会读取一遍预设文件，这个方法不是专门设计给批量添加需求的。
-
-VB 语言：
+### 添加编码任务
 
 ```vb
-'使用 FFmpeg 命令行添加
 Public Shared Property HostCall_AddMissionToQueueWithArgs As Action(Of String, String, String, String)
 Public Shared Sub SetHost_AddMissionToQueueWithArgs(action As Object)
-	HostCall_AddMissionToQueueWithArgs = CType(action, Action(Of String, String, String, String))
+    HostCall_AddMissionToQueueWithArgs = CType(action, Action(Of String, String, String, String))
 End Sub
 
-'调用
-HostCall_AddMissionToQueueWithArgs.Invoke("给 ffmpeg 的参数，不要以 ffmpeg 开始", "在编码队列里显示的文件名，也可以用来显示其他信息", "输出文件的路径在哪，用于编码队列中的定位输出功能", "输入文件在哪，可以不写")
-```
-
-```vb
-'使用 3FUI 预设文件添加
 Public Shared Property HostCall_AddMissionToQueueWith3fuiFile As Action(Of String, String, String, String)
 Public Shared Sub SetHost_AddMissionToQueueWith3fuiFile(action As Object)
-	HostCall_AddMissionToQueueWith3fuiFile = CType(action, Action(Of String, String, String, String))
+    HostCall_AddMissionToQueueWith3fuiFile = CType(action, Action(Of String, String, String, String))
 End Sub
 
-'调用
-HostCall_AddMissionToQueueWith3fuiFile.Invoke("3FUI 预设文件的路径", "在编码队列里显示的文件名，也可以用来显示其他信息", "输出文件的路径在哪，用于编码队列中的定位输出功能", "输入文件在哪，可以不写")
+'参数依次为：ffmpeg 参数（不要以 ffmpeg 开头）、显示名称、输出路径、输入路径（可空）
+HostCall_AddMissionToQueueWithArgs?.Invoke(args, name, output, input)
+HostCall_AddMissionToQueueWith3fuiFile?.Invoke(presetPath, name, output, input)
 ```
 
-C# 语言：
-
-```c#
-//使用 FFmpeg 命令行添加
+```csharp
 public static Action<string, string, string, string> HostCall_AddMissionToQueueWithArgs { get; set; }
 public static void SetHost_AddMissionToQueueWithArgs(object action)
-{
-	HostCall_AddMissionToQueueWithArgs = (Action<string, string, string, string>)action;
-}
+    => HostCall_AddMissionToQueueWithArgs = (Action<string, string, string, string>)action;
 
-//调用
-HostCall_AddMissionToQueueWithArgs?.Invoke("给 ffmpeg 的参数，不要以 ffmpeg 开始", "在编码队列里显示的文件名，也可以用来显示其他信息", "输出文件的路径在哪，用于编码队列中的定位输出功能", "输入文件在哪，可以不写");
-```
-
-```c#
-//使用 3FUI 预设文件添加
 public static Action<string, string, string, string> HostCall_AddMissionToQueueWith3fuiFile { get; set; }
 public static void SetHost_AddMissionToQueueWith3fuiFile(object action)
-{
-	HostCall_AddMissionToQueueWith3fuiFile = (Action<string, string, string, string>)action;
-}
+    => HostCall_AddMissionToQueueWith3fuiFile = (Action<string, string, string, string>)action;
 
-//调用
-HostCall_AddMissionToQueueWith3fuiFile?.Invoke("3FUI 预设文件的路径", "在编码队列里显示的文件名，也可以用来显示其他信息", "输出文件的路径在哪，用于编码队列中的定位输出功能", "输入文件在哪，可以不写");
+HostCall_AddMissionToQueueWithArgs?.Invoke(args, name, output, input);
+HostCall_AddMissionToQueueWith3fuiFile?.Invoke(presetPath, name, output, input);
 ```
 
-### 媒体流可视化选择器
+### 编码队列事件
 
-从 5.1 版本开始，新增了一个可视化的媒体流选择器，得益于优秀的设计逻辑，这个功能不仅完美接入 3FUI 的现有功能，还可以通过插件调用来为你自己的功能服务。*不过从长远角度来讲，不太建议插件去使用这个功能，因为它的参数太多了，而这种调用方式也无法自定义参数的顺序，会显得很乱。*
+6.1.28 起可以订阅编码队列事件。插件实现 `SetHost_SubscribeQueueEvents`，注册器类型是 `Action(Of String, Object)`（C# 为 `Action<string, object>`）。调用注册器时，第一个参数是事件筛选器，第二个参数必须是 `Action(Of String, String)`（C# 为 `Action<string, string>`）回调；回调收到的第一个参数是事件名，第二个参数是 JSON 字符串。回调可能来自后台线程，插件应自行切回 UI 线程；回调中的异常会被宿主隔离，不会中断编码队列。
 
-VB 语言：
+```vb
+Public Shared Property HostCall_SubscribeQueueEvents As Action(Of String, Object)
+Public Shared Sub SetHost_SubscribeQueueEvents(action As Object)
+    HostCall_SubscribeQueueEvents = CType(action, Action(Of String, Object))
+End Sub
+
+Public Shared Sub Entry()
+    HostCall_SubscribeQueueEvents?.Invoke("*", AddressOf OnQueueEvent)
+    '也可以只订阅一个事件：HostCall_SubscribeQueueEvents?.Invoke("task.completed", AddressOf OnQueueEvent)
+End Sub
+
+Private Shared Sub OnQueueEvent(eventName As String, json As String)
+    '按需反序列化 json；不要在这里阻塞编码线程
+    Dim data = System.Text.Json.JsonDocument.Parse(json)
+    Dim taskId = data.RootElement.GetProperty("task").GetProperty("id").GetString()
+End Sub
+```
+
+```csharp
+public static Action<string, object> HostCall_SubscribeQueueEvents { get; set; }
+public static void SetHost_SubscribeQueueEvents(object action)
+    => HostCall_SubscribeQueueEvents = (Action<string, object>)action;
+
+public static void Entry()
+{
+    HostCall_SubscribeQueueEvents?.Invoke("*", OnQueueEvent);
+    //只订阅完成事件：HostCall_SubscribeQueueEvents?.Invoke("task.completed", OnQueueEvent);
+}
+
+private static void OnQueueEvent(string eventName, string json)
+{
+    using var data = System.Text.Json.JsonDocument.Parse(json);
+    var taskId = data.RootElement.GetProperty("task").GetProperty("id").GetString();
+}
+```
+
+支持的事件名如下：
+
+| 事件名 | 触发时机 |
+| --- | --- |
+| `task.added` | 任务加入队列（包括恢复未处理任务） |
+| `task.started` | 任务实际开始执行 |
+| `task.paused` | 任务暂停成功 |
+| `task.resumed` | 任务恢复成功 |
+| `task.stopped` | 任务被停止 |
+| `task.completed` | 所有编码阶段成功完成 |
+| `task.failed` | 编码阶段退出码非零或发生异常 |
+| `task.log` | 新增一条非进度日志 |
+| `task.progress` | 新增一条进度日志（宿主按约 1 秒节流） |
+| `task.removed` | 任务从队列移除 |
+
+事件 JSON 的主要字段为 `eventName`、`timestamp`、`task` 和 `log`。`task` 包含 `id`、`name`、`inputPath`、`outputPath`、`status`、`statusCode`、`progress`、`progressText`、`currentStage`、`realtimeOutput` 和 `nonProgressOutput`；`task.log`/`task.progress` 额外提供 `log.sequence`、`log.time`、`log.text`、`log.category`、`log.categoryCode`、`log.isError` 与 `log.stage`。进度日志经过宿主节流，普通日志不会触发 `task.progress`，因此可以按需选择低频的 `task.log` 或完整的 `task.progress`。
+
+### 媒体流选择器
+
+参数依次为：文件路径、视频/音频/字幕结果目标对象、输入文件索引，以及三个已选流索引字符串。目标对象需要提供 `Text` 属性；所有参数均可传 `Nothing`/`null`。
 
 ```vb
 Public Shared Property HostCall_MediaStreamVisualSelector As Action(Of String, Object, Object, Object, String, String, String, String)
 Public Shared Sub SetHost_MediaStreamVisualSelector(action As Object)
-	HostCall_AddMissionToQueueWithArgs = CType(action, Action(Of String, Object, Object, Object, String, String, String, String))
+    HostCall_MediaStreamVisualSelector = CType(action, Action(Of String, Object, Object, Object, String, String, String, String))
 End Sub
 
-'调用，注意所有参数都是可选，如果不需要指定，直接给nothing即可
-HostCall_MediaStreamVisualSelector.Invoke(
-        "FilePath", '字符串，指定要让 ffprobe 读取的文件，如果文件存在那么窗口打开后将自动启动
-        VideoStreamTargetObject, 'Object对象，但必须有Text属性，指定要将视频流的选择结果输出到什么对象上
-        AudioStreamTargetObject, '同上，指定要将音频流的选择结果输出到什么对象上
-        SubtitleStreamTargetObject, '同上，指定要将字幕流的选择结果输出到什么对象上
-        "InputFileIndex", '字符串，选择器只能对一个文件的流进行选择，如果你希望输出附带文件索引，可以直接填写这是哪个索引的文件，会像这样输出：0:v:0,0:v:1 如果不设置则仅输出逗号分隔的数字：0,1,2
-        "VideoStreamSelected", '字符串，如果用户已经选择了指定的视频流，可以设置此属性来让对应流直接勾选，格式必须是逗号分隔的直接索引：0,1,2 不能带其他字符
-        "AudioStreamSelected", '同上，是指定的音频流
-        "SubtitleStreamSelected", '同上，是指定的字幕流
-        )
+HostCall_MediaStreamVisualSelector?.Invoke(filePath, videoTarget, audioTarget, subtitleTarget, "0", "0", "0", "")
 ```
 
-C# 的版本懒得写了，太长了，让AI直接翻译吧。
+```csharp
+public static Action<string, object, object, object, string, string, string, string> HostCall_MediaStreamVisualSelector { get; set; }
+public static void SetHost_MediaStreamVisualSelector(object action)
+    => HostCall_MediaStreamVisualSelector = (Action<string, object, object, object, string, string, string, string>)action;
 
-### 安装并发布你的插件
+HostCall_MediaStreamVisualSelector?.Invoke(filePath, videoTarget, audioTarget, subtitleTarget, "0", "0", "0", "");
+```
 
-当你完成开发和测试后，点击生成即可在输出目录得到你的插件。前面我们选择了窗体应用，所以是生成的 exe 文件，但从 .NET 5 开始这个 exe 是纯二进制文件，同名的 dll 文件才是代码。此时将这个同名的 dll 单独复制出来，将其后缀从 .dll 改为 .3fui.dll，这样这个文件就是你要发布的插件了，而那个 exe 是完全不需要的。
+### 安装与发布
 
-安装方法：在 3FUI 程序目录下新建 Plugin 文件夹，将插件文件放置其中然后重启软件。
-
-如果你引用了其他三方组件，需要将那些文件一并发布，当然那些文件就不要改后缀了，3FUI 就是用这个后缀来识别哪些是要加载的插件的。
-
-由于你并没有引用 3FUI，相关许可证条款对你不生效，因此你可以选择闭源甚至出售（虽然这并不能保护你的代码，.NET 程序非常容易反编译）。
+生成项目后，将输出目录中与项目同名的 `.dll` 的后缀改为 `.3fui.dll`，放入 3FUI 程序目录的 `Plugin` 文件夹并重启，该文件夹可能需要手动创建。插件依赖的其他程序集也要一起复制，但不要改它们的扩展名。
 
 ## 你已获得成就
 
