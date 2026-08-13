@@ -8,6 +8,9 @@ Partial Public Class 预设管理_v6
 
     Public Shared Sub 显示预设(a As 预设数据_v6, ui As Form_v6_参数面板)
         If a Is Nothing OrElse ui Is Nothing Then Exit Sub
+        Dim beforeContext = 插件扩展桥接_v2.创建预设管线上下文(插件处理阶段_v2.应用预设之前, a, ui)
+        插件扩展桥接_v2.执行同步阶段(插件处理阶段_v2.应用预设之前, beforeContext)
+        a = 插件扩展桥接_v2.反序列化预设(beforeContext.PresetJson, a)
         Dim oldSuppress = ui.抑制自动刷新
         ui.抑制自动刷新 = True
         Try
@@ -30,7 +33,11 @@ Partial Public Class 预设管理_v6
             End If
             同步全部内置滤镜到排序(ui, False)
             ui.私有界面_预设管理.MTB_预设备注.Text = a.预设备注
+            插件扩展桥接_v2.还原参数面板插件状态(ui, a.插件扩展数据)
             刷新参数总览(ui)
+
+            Dim afterContext = 插件扩展桥接_v2.创建预设管线上下文(插件处理阶段_v2.应用预设之后, a, ui)
+            插件扩展桥接_v2.执行同步阶段(插件处理阶段_v2.应用预设之后, afterContext)
         Finally
             ui.抑制自动刷新 = oldSuppress
         End Try
@@ -40,6 +47,10 @@ Partial Public Class 预设管理_v6
         If a Is Nothing Then a = New 预设数据_v6
         If ui Is Nothing Then Exit Sub
         初始化空集合(a)
+        a.插件扩展数据 = 插件扩展桥接_v2.捕获参数面板插件状态(ui)
+        Dim beforeContext = 插件扩展桥接_v2.创建预设管线上下文(插件处理阶段_v2.捕获预设之前, a, ui)
+        插件扩展桥接_v2.执行同步阶段(插件处理阶段_v2.捕获预设之前, beforeContext)
+        a = 插件扩展桥接_v2.反序列化预设(beforeContext.PresetJson, a)
         a.预设备注 = ui.私有界面_预设管理.MTB_预设备注.Text.Trim()
         a.额外保存输出位置 = ui.私有界面_预设管理.MCK_额外保存输出位置.Checked
 
@@ -58,6 +69,11 @@ Partial Public Class 预设管理_v6
         ui.私有界面_滤镜排序.刷新局部预览(a)
         a.滤镜排序系统 = ui.私有界面_滤镜排序.获取排序数据().ToArray()
         同步内置滤镜排序数据(a)
+        a.插件扩展数据 = 插件扩展桥接_v2.捕获参数面板插件状态(ui)
+
+        Dim afterContext = 插件扩展桥接_v2.创建预设管线上下文(插件处理阶段_v2.捕获预设之后, a, ui)
+        插件扩展桥接_v2.执行同步阶段(插件处理阶段_v2.捕获预设之后, afterContext)
+        a = 插件扩展桥接_v2.反序列化预设(afterContext.PresetJson, a)
     End Sub
 
     Public Shared Function 从面板创建预设(ui As Form_v6_参数面板) As 预设数据_v6

@@ -91,6 +91,11 @@ Partial Public Class 预设管理_v6
 
     Public Shared Sub 初始化空集合(a As 预设数据_v6)
         If a Is Nothing Then Exit Sub
+        If a.插件扩展数据 Is Nothing Then
+            a.插件扩展数据 = New Dictionary(Of String, String)(StringComparer.OrdinalIgnoreCase)
+        ElseIf Not Object.ReferenceEquals(a.插件扩展数据.Comparer, StringComparer.OrdinalIgnoreCase) Then
+            a.插件扩展数据 = New Dictionary(Of String, String)(a.插件扩展数据, StringComparer.OrdinalIgnoreCase)
+        End If
         If a.视频参数_超分_直接面板 Is Nothing Then a.视频参数_超分_直接面板 = New 预设数据_v6.超分数据单片结构
         If a.视频参数_超分_滤镜叠加策略组 Is Nothing Then a.视频参数_超分_滤镜叠加策略组 = Array.Empty(Of 预设数据_v6.超分数据单片结构)()
         If a.滤镜排序系统 Is Nothing Then a.滤镜排序系统 = Array.Empty(Of 预设数据_v6.滤镜排序单片结构)()

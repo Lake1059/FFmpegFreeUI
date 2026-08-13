@@ -2,6 +2,8 @@
 Public Class 预设数据_v6
     Public Property 预设备注 As String = ""
     Public Property 预设文件版本 As Integer = 6
+    ''' <summary>插件以插件 ID 为键保存的独立 JSON 状态；3FUI 不解释其中结构。</summary>
+    Public Property 插件扩展数据 As New Dictionary(Of String, String)(StringComparer.OrdinalIgnoreCase)
     <System.Text.Json.Serialization.JsonIgnore()>
     Public Property 额外保存输出位置 As Boolean = False
     '==================================================

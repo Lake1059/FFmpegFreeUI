@@ -36,6 +36,7 @@ Public Class Form_v6_编码队列_任务日志
         Public Property 需要重载 As Boolean = False
         Public Property 重载文本 As String = ""
         Public Property 追加行 As New List(Of String)
+        Public Property 插件结果文本 As String = ""
 
         Public ReadOnly Property 有内容变化 As Boolean
             Get
@@ -190,6 +191,7 @@ Public Class Form_v6_编码队列_任务日志
         日志刷新令牌 += 1
         取消当前日志刷新()
         ModernTextBox1.Clear()
+        更新插件结果显示("")
         Text = "编码队列任务日志"
         更新任务性能计数器(Nothing)
     End Sub
@@ -311,6 +313,7 @@ Public Class Form_v6_编码队列_任务日志
             .行数 = entries.Count,
             .强制重载 = forceReload
         }
+        result.插件结果文本 = 构建插件结果文本(task.获取插件结果快照())
 
         Dim canAppend = Not forceReload
         If canAppend AndAlso displayedLineCount > 0 Then
@@ -366,12 +369,38 @@ Public Class Form_v6_编码队列_任务日志
             已显示最小序号 = result.最小序号
             已显示最大序号 = result.最大序号
             已显示行数 = result.行数
+            更新插件结果显示(result.插件结果文本)
             更新标题与状态(result.任务显示名称, result.行数)
             If shouldScrollToBottom Then 延迟滚动到底部()
         Finally
             ModernTextBox1.PreserveScrollPosition = originalPreserveScrollPosition
             正在重载 = False
         End Try
+    End Sub
+
+    Private Shared Function 构建插件结果文本(results As IEnumerable(Of 编码任务插件结果_v6)) As String
+        If results Is Nothing Then Return ""
+        Dim parts As New List(Of String)
+        For Each result In results
+            If result Is Nothing Then Continue For
+            Dim title = 规范化结果摘要片段(If(String.IsNullOrWhiteSpace(result.显示名称), result.键, result.显示名称))
+            If String.IsNullOrWhiteSpace(title) Then Continue For
+            Dim value = 规范化结果摘要片段(result.值)
+            Dim unit = 规范化结果摘要片段(result.单位)
+            Dim suffix = If(unit = "", "", " " & unit)
+            parts.Add($"{title}：{value}{suffix}")
+        Next
+        Return String.Join("   |   ", parts)
+    End Function
+
+    Private Shared Function 规范化结果摘要片段(value As String) As String
+        Return If(value, "").Replace(vbCr, " ").Replace(vbLf, " ").Trim()
+    End Function
+
+    Private Sub 更新插件结果显示(text As String)
+        Dim normalized = If(text, "").Trim()
+        MB_插件结果.Text = normalized
+        Panel3.Visible = normalized <> ""
     End Sub
 
     Private Sub 取消当前日志刷新()

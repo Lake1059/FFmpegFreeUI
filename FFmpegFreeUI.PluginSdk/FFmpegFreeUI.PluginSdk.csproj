@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0-windows10.0.17763.0</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);1591</NoWarn>
+    <AssemblyName>FFmpegFreeUI.PluginSdk</AssemblyName>
+    <RootNamespace>FFmpegFreeUI.PluginSdk</RootNamespace>
+    <Version>2.1.0</Version>
+    <!-- 2.x 仅追加契约成员，保持程序集版本可兼容已编译的 2.0 插件。 -->
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
+    <FileVersion>2.1.0.0</FileVersion>
+  </PropertyGroup>
+
+</Project>

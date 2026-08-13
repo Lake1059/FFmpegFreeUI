@@ -19,6 +19,8 @@ Partial Class Form_v6_编码队列_任务日志
     Private Sub InitializeComponent()
         ModernPanel1 = New LakeUI.ModernPanel()
         ModernTextBox1 = New LakeUI.ModernTextBox()
+        Panel3 = New Panel()
+        MB_插件结果 = New LakeUI.ModernButton()
         Panel2 = New Panel()
         MB_任务性能计数器 = New LakeUI.ModernButton()
         Panel1 = New Panel()
@@ -26,6 +28,7 @@ Partial Class Form_v6_编码队列_任务日志
         MB_复制当前视图 = New LakeUI.ModernButton()
         MCB_显示模式 = New LakeUI.ModernComboBox()
         ModernPanel1.SuspendLayout()
+        Panel3.SuspendLayout()
         Panel2.SuspendLayout()
         Panel1.SuspendLayout()
         SuspendLayout()
@@ -35,6 +38,7 @@ Partial Class Form_v6_编码队列_任务日志
         ModernPanel1.BackColor1 = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         ModernPanel1.BorderSize = 0
         ModernPanel1.Controls.Add(ModernTextBox1)
+        ModernPanel1.Controls.Add(Panel3)
         ModernPanel1.Controls.Add(Panel2)
         ModernPanel1.Controls.Add(Panel1)
         ModernPanel1.Dock = DockStyle.Fill
@@ -61,8 +65,32 @@ Partial Class Form_v6_编码队列_任务日志
         ModernTextBox1.Padding = New Padding(10, 8, 10, 8)
         ModernTextBox1.ReadOnly = True
         ModernTextBox1.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernTextBox1.Size = New Size(614, 357)
+        ModernTextBox1.Size = New Size(614, 315)
         ModernTextBox1.TabIndex = 3
+        '
+        ' Panel3
+        '
+        Panel3.Controls.Add(MB_插件结果)
+        Panel3.Dock = DockStyle.Bottom
+        Panel3.Location = New Point(10, 367)
+        Panel3.Name = "Panel3"
+        Panel3.Padding = New Padding(0, 10, 0, 0)
+        Panel3.Size = New Size(614, 42)
+        Panel3.TabIndex = 5
+        Panel3.Visible = False
+        '
+        ' MB_插件结果
+        '
+        MB_插件结果.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MB_插件结果.BorderRadius = 10
+        MB_插件结果.BorderSize = 0
+        MB_插件结果.Dock = DockStyle.Fill
+        MB_插件结果.Location = New Point(0, 10)
+        MB_插件结果.Margin = New Padding(2)
+        MB_插件结果.Name = "MB_插件结果"
+        MB_插件结果.Size = New Size(614, 32)
+        MB_插件结果.TabIndex = 5
+        MB_插件结果.Text = ""
         ' 
         ' Panel2
         ' 
@@ -178,6 +206,7 @@ Partial Class Form_v6_编码队列_任务日志
         StartPosition = FormStartPosition.CenterParent
         Text = "编码队列任务日志"
         ModernPanel1.ResumeLayout(False)
+        Panel3.ResumeLayout(False)
         Panel2.ResumeLayout(False)
         Panel1.ResumeLayout(False)
         Panel1.PerformLayout()
@@ -192,4 +221,6 @@ Partial Class Form_v6_编码队列_任务日志
     Friend WithEvents ModernCheckBox1 As LakeUI.ModernCheckBox
     Friend WithEvents Panel2 As Panel
     Friend WithEvents MB_任务性能计数器 As LakeUI.ModernButton
+    Friend WithEvents Panel3 As Panel
+    Friend WithEvents MB_插件结果 As LakeUI.ModernButton
 End Class

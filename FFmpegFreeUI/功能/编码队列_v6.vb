@@ -229,6 +229,12 @@ Public Class 编码队列_v6
             .任务名称 = 应用任务名称混淆(If(String.IsNullOrWhiteSpace(任务名称), Path.GetFileName(输入文件), 任务名称)),
             .预设数据 = 预设数据
         }
+        Dim context = 插件扩展桥接_v2.创建任务管线上下文(插件处理阶段_v2.加入队列之前, task)
+        context.Properties("taskName") = task.任务名称
+        插件扩展桥接_v2.执行同步阶段(插件处理阶段_v2.加入队列之前, context)
+        插件扩展桥接_v2.应用任务管线上下文(task, context)
+        Dim processedTaskName As String = Nothing
+        If context.Properties.TryGetValue("taskName", processedTaskName) Then task.任务名称 = If(processedTaskName, "")
         SyncLock 队列锁
             队列.Add(task)
         End SyncLock
@@ -244,6 +250,12 @@ Public Class 编码队列_v6
             .任务名称 = 应用任务名称混淆(If(String.IsNullOrWhiteSpace(任务名称), If(String.IsNullOrWhiteSpace(输入文件), "命令行任务", Path.GetFileName(输入文件)), 任务名称)),
             .命令行 = 命令行
         }
+        Dim context = 插件扩展桥接_v2.创建任务管线上下文(插件处理阶段_v2.加入队列之前, task)
+        context.Properties("taskName") = task.任务名称
+        插件扩展桥接_v2.执行同步阶段(插件处理阶段_v2.加入队列之前, context)
+        插件扩展桥接_v2.应用任务管线上下文(task, context)
+        Dim processedTaskName As String = Nothing
+        If context.Properties.TryGetValue("taskName", processedTaskName) Then task.任务名称 = If(processedTaskName, "")
         SyncLock 队列锁
             队列.Add(task)
         End SyncLock
@@ -1006,7 +1018,7 @@ Public Class 编码队列_v6
         Return Not File.Exists(输出路径) AndAlso (已保留输出路径 Is Nothing OrElse Not 已保留输出路径.Contains(输出路径))
     End Function
 
-        ' Must be called while 队列锁 is held so active and stopping tasks reserve different names.
+        ' 必须在持有“队列锁”时调用，确保运行中和停止中的任务预留不同名称。
     Private Shared Sub 为任务保留输出文件(task As 编码任务_v6)
         If task Is Nothing OrElse task.预设数据 Is Nothing Then Exit Sub
         If Not String.IsNullOrWhiteSpace(task.输出文件) AndAlso Not task.输出文件由自动命名生成 Then Exit Sub
@@ -1019,6 +1031,25 @@ Public Class 编码队列_v6
 
         task.输出文件 = 计算输出位置_v6(task.输入文件, task.预设数据, True, 已保留输出路径)
         task.输出文件由自动命名生成 = Not String.IsNullOrWhiteSpace(task.输出文件)
+    End Sub
+
+    Friend Shared Sub 刷新插件处理后的输出文件(task As 编码任务_v6,
+                                      处理前输出文件 As String,
+                                      处理前由自动命名生成 As Boolean)
+        If task Is Nothing Then Exit Sub
+        SyncLock 队列锁
+            If 处理前由自动命名生成 AndAlso
+               String.Equals(If(task.输出文件, ""), If(处理前输出文件, ""), StringComparison.OrdinalIgnoreCase) Then
+                task.输出文件 = ""
+                task.输出文件由自动命名生成 = False
+                为任务保留输出文件(task)
+            ElseIf 处理前由自动命名生成 AndAlso String.IsNullOrWhiteSpace(task.输出文件) Then
+                task.输出文件由自动命名生成 = False
+                为任务保留输出文件(task)
+            ElseIf Not String.Equals(If(task.输出文件, ""), If(处理前输出文件, ""), StringComparison.OrdinalIgnoreCase) Then
+                task.输出文件由自动命名生成 = False
+            End If
+        End SyncLock
     End Sub
 
 End Class
@@ -1074,6 +1105,17 @@ Public Class 编码任务日志快照_v6
     Public Property 日志结构版本号 As Long = 0
 End Class
 
+''' <summary>一个插件为编码任务发布的结构化结果。</summary>
+Public Class 编码任务插件结果_v6
+    Public Property 插件ID As String = ""
+    Public Property 键 As String = ""
+    Public Property 值 As String = ""
+    Public Property 显示名称 As String = ""
+    Public Property 单位 As String = ""
+    Public Property 序号 As Long
+    Public Property 更新时间 As DateTime
+End Class
+
 Public Class 编码任务_v6
     Public Property ID As String = Guid.NewGuid().ToString("N")
     Public Property 任务名称 As String = ""
@@ -1100,9 +1142,11 @@ Public Class 编码任务_v6
     Public Property 最新底部日志是否错误 As Boolean = False
     Public Property 日志版本号 As Long = 0
     Public Property 日志结构版本号 As Long = 0
+    Public Property 插件结果版本号 As Long = 0
 
     Private 当前进程 As Process
     Private ReadOnly 状态锁 As New Object
+    Private 当前执行取消源 As Threading.CancellationTokenSource
     Private 正在执行标记 As Boolean = False
     Private 当前执行已请求停止 As Boolean = False
     Private 执行版本 As Long = 0
@@ -1115,6 +1159,9 @@ Public Class 编码任务_v6
     Private 最新非进度日志文本 As String = ""
     Private 最新非进度日志是否错误 As Boolean = False
     Private 上次进度日志提交时间 As DateTime = DateTime.MinValue
+    Private ReadOnly 插件结果锁 As New Object
+    Private ReadOnly 插件结果表 As New Dictionary(Of String, 编码任务插件结果_v6)(StringComparer.OrdinalIgnoreCase)
+    Private 插件结果序号 As Long = 0
 
     Public ReadOnly Property 可移除 As Boolean
         Get
@@ -1170,6 +1217,8 @@ Public Class 编码任务_v6
     Friend Function 开始执行() As Long
         SyncLock 状态锁
             If 正在执行标记 Then Return 0
+            当前执行取消源?.Dispose()
+            当前执行取消源 = New Threading.CancellationTokenSource
             正在执行标记 = True
             当前执行已请求停止 = False
             执行版本 += 1
@@ -1182,7 +1231,18 @@ Public Class 编码任务_v6
             Dim result = 当前执行已请求停止
             正在执行标记 = False
             当前执行已请求停止 = False
+            当前执行取消源?.Dispose()
+            当前执行取消源 = Nothing
             Return result
+        End SyncLock
+    End Function
+
+    Private Function 获取当前执行取消令牌(执行标识 As Long) As Threading.CancellationToken
+        SyncLock 状态锁
+            If Not 正在执行标记 OrElse 执行版本 <> 执行标识 OrElse 当前执行取消源 Is Nothing Then
+                Return New Threading.CancellationToken(True)
+            End If
+            Return 当前执行取消源.Token
         End SyncLock
     End Function
 
@@ -1256,6 +1316,60 @@ Public Class 编码任务_v6
     Public Function 获取日志文本(Optional 显示模式 As 编码任务日志显示模式_v6 = 编码任务日志显示模式_v6.全部输出) As String
         Return String.Join(vbCrLf, 获取日志快照(显示模式).Select(Function(x) x.文本))
     End Function
+
+    Public Function 获取插件结果快照() As List(Of 编码任务插件结果_v6)
+        SyncLock 插件结果锁
+            Return 插件结果表.Values.
+                OrderBy(Function(item) item.序号).
+                Select(Function(item) New 编码任务插件结果_v6 With {
+                    .插件ID = item.插件ID,
+                    .键 = item.键,
+                    .值 = item.值,
+                    .显示名称 = item.显示名称,
+                    .单位 = item.单位,
+                    .序号 = item.序号,
+                    .更新时间 = item.更新时间
+                }).
+                ToList()
+        End SyncLock
+    End Function
+
+    Friend Sub 记录插件结果(pluginId As String, key As String, value As String, displayName As String, unit As String)
+        Dim normalizedPluginId = If(pluginId, "").Trim()
+        Dim normalizedKey = If(key, "").Trim()
+        If normalizedPluginId = "" OrElse normalizedKey = "" Then Exit Sub
+
+        Dim result As 编码任务插件结果_v6 = Nothing
+        SyncLock 插件结果锁
+            Dim storageKey = normalizedPluginId & ChrW(31) & normalizedKey
+            If Not 插件结果表.TryGetValue(storageKey, result) Then
+                插件结果序号 += 1
+                result = New 编码任务插件结果_v6 With {
+                    .插件ID = normalizedPluginId,
+                    .键 = normalizedKey,
+                    .序号 = 插件结果序号
+                }
+                插件结果表(storageKey) = result
+            End If
+            result.值 = If(value, "")
+            result.显示名称 = If(displayName, "").Trim()
+            result.单位 = If(unit, "").Trim()
+            result.更新时间 = DateTime.Now
+            插件结果版本号 += 1
+        End SyncLock
+
+        Dim title = If(result.显示名称 = "", result.键, result.显示名称)
+        Dim suffix = If(result.单位 = "", "", " " & result.单位)
+        追加日志($"[插件结果/{result.插件ID}] {title}：{result.值}{suffix}", 编码任务日志类别_v6.系统)
+    End Sub
+
+    Private Sub 清空插件结果()
+        SyncLock 插件结果锁
+            插件结果表.Clear()
+            插件结果序号 = 0
+            插件结果版本号 += 1
+        End SyncLock
+    End Sub
 
     Public Sub 追加日志(文本 As String, Optional 类别 As 编码任务日志类别_v6 = 编码任务日志类别_v6.输出, Optional 步骤项 As 编码步骤_v6 = Nothing, Optional 强制错误 As Boolean = False, Optional 通知更新 As Boolean = True)
         If 文本 Is Nothing Then Exit Sub
@@ -1355,17 +1469,47 @@ Public Class 编码任务_v6
     End Function
 
     Public Async Function 开始Async(执行标识 As Long) As Task
+        Dim cancellationToken = 获取当前执行取消令牌(执行标识)
+        Dim 原生步骤全部成功 As Boolean = False
         SyncLock 状态锁
             If Not 正在执行标记 OrElse 执行版本 <> 执行标识 Then Exit Function
             If 手动停止 OrElse 状态 = 编码任务状态_v6.已停止 Then Exit Function
             状态 = 编码任务状态_v6.正在处理
         End SyncLock
         Try
-            清空日志(False)
-            进度 = New 编码进度_v6
-            任务耗时计时器.Restart()
-            追加日志($"[3FUI] 任务开始：{If(任务名称 <> "", 任务名称, Path.GetFileName(输入文件))}", 编码任务日志类别_v6.系统, Nothing, False, False)
+            Try
+                清空日志(False)
+                清空插件结果()
+                进度 = New 编码进度_v6
+                任务耗时计时器.Restart()
+                追加日志($"[3FUI] 任务开始：{If(任务名称 <> "", 任务名称, Path.GetFileName(输入文件))}", 编码任务日志类别_v6.系统, Nothing, False, False)
+            Dim 处理前输出文件 = 输出文件
+            Dim 处理前由自动命名生成 = 输出文件由自动命名生成
+            Dim beforePrepare = 插件扩展桥接_v2.创建任务管线上下文(插件处理阶段_v2.准备任务之前, Me)
+            Await 插件扩展桥接_v2.执行异步阶段Async(插件处理阶段_v2.准备任务之前, beforePrepare, cancellationToken).ConfigureAwait(False)
+            插件扩展桥接_v2.应用任务管线上下文(Me, beforePrepare)
+            编码队列_v6.刷新插件处理后的输出文件(Me, 处理前输出文件, 处理前由自动命名生成)
+            cancellationToken.ThrowIfCancellationRequested()
             准备输入输出与步骤()
+
+            Dim afterPrepare = 插件扩展桥接_v2.创建任务管线上下文(插件处理阶段_v2.准备任务之后, Me)
+            afterPrepare.Properties("stepCount") = 步骤.Count.ToString(Globalization.CultureInfo.InvariantCulture)
+            Await 插件扩展桥接_v2.执行异步阶段Async(插件处理阶段_v2.准备任务之后, afterPrepare, cancellationToken).ConfigureAwait(False)
+            Dim afterPresetJson = 插件扩展桥接_v2.序列化预设(预设数据)
+            Dim needsRebuild = Not String.Equals(afterPrepare.PresetJson, afterPresetJson, StringComparison.Ordinal) OrElse
+                               Not String.Equals(afterPrepare.InputPath, 输入文件, StringComparison.Ordinal) OrElse
+                               Not String.Equals(afterPrepare.OutputPath, 输出文件, StringComparison.Ordinal) OrElse
+                               Not String.Equals(afterPrepare.CommandLine, 命令行, StringComparison.Ordinal)
+            If needsRebuild Then
+                处理前输出文件 = 输出文件
+                处理前由自动命名生成 = 输出文件由自动命名生成
+                插件扩展桥接_v2.应用任务管线上下文(Me, afterPrepare)
+                编码队列_v6.刷新插件处理后的输出文件(Me, 处理前输出文件, 处理前由自动命名生成)
+                准备输入输出与步骤()
+            End If
+            进度.当前阶段 = ""
+            进度.百分比 = 0
+            进度.进度文本 = ""
             If Not 是当前执行(执行标识) Then Exit Try
             设定系统状态_v6()
             编码队列_v6.通知任务更新(Me)
@@ -1377,7 +1521,7 @@ Public Class 编码任务_v6
                 进度.当前阶段 = stepItem.显示名称
                 追加日志($"[3FUI] 开始阶段：{stepItem.显示名称}", 编码任务日志类别_v6.系统, stepItem, False, False)
                 编码队列_v6.通知任务更新(Me)
-                Dim exitCode = Await 运行步骤Async(stepItem)
+                Dim exitCode = Await 运行步骤Async(stepItem, cancellationToken)
                 If Not 是当前执行(执行标识) Then Exit While
                 If 手动停止 Then
                     stepItem.状态 = 编码步骤状态_v6.已停止
@@ -1413,18 +1557,41 @@ Public Class 编码任务_v6
             End While
 
             If 是当前执行(执行标识) AndAlso 状态 = 编码任务状态_v6.正在处理 Then
+                原生步骤全部成功 = True
+                Dim afterComplete = 插件扩展桥接_v2.创建任务管线上下文(插件处理阶段_v2.任务成功之后, Me)
+                afterComplete.TaskStatus = "succeeded"
+                afterComplete.Properties("elapsedMilliseconds") = CLng(任务耗时计时器.Elapsed.TotalMilliseconds).ToString(CultureInfo.InvariantCulture)
+                Await 插件扩展桥接_v2.执行异步阶段Async(插件处理阶段_v2.任务成功之后, afterComplete, cancellationToken).ConfigureAwait(False)
+                cancellationToken.ThrowIfCancellationRequested()
+                If Not 是当前执行(执行标识) Then Exit Try
                 状态 = 编码任务状态_v6.已完成
                 进度.百分比 = 1
                 进度.进度文本 = "100%"
                 完成后处理输出时间()
                 追加日志("[3FUI] 任务完成", 编码任务日志类别_v6.系统, Nothing, False, False)
             End If
-        Catch ex As Exception
-            If Not 是当前执行(执行标识) Then Exit Try
-            状态 = If(手动停止, 编码任务状态_v6.已停止, 编码任务状态_v6.错误)
-            Dim logCategory = If(状态 = 编码任务状态_v6.已停止, 编码任务日志类别_v6.系统, 编码任务日志类别_v6.错误)
-            追加日志("[3FUI] " & ex.Message, logCategory, 当前步骤, 状态 = 编码任务状态_v6.错误, False)
-            If 状态 = 编码任务状态_v6.错误 Then 编码队列_v6.标记任务出错()
+            Catch ex As OperationCanceledException When cancellationToken.IsCancellationRequested
+                If 是当前执行(执行标识) Then
+                    手动停止 = True
+                    状态 = 编码任务状态_v6.已停止
+                    追加日志("[3FUI] 任务已取消", 编码任务日志类别_v6.系统, 当前步骤, False, False)
+                    If Not 原生步骤全部成功 Then 手动停止后清理输出()
+                End If
+            Catch ex As Exception
+                If Not 是当前执行(执行标识) Then Exit Try
+                状态 = If(手动停止, 编码任务状态_v6.已停止, 编码任务状态_v6.错误)
+                Dim logCategory = If(状态 = 编码任务状态_v6.已停止, 编码任务日志类别_v6.系统, 编码任务日志类别_v6.错误)
+                追加日志("[3FUI] " & ex.Message, logCategory, 当前步骤, 状态 = 编码任务状态_v6.错误, False)
+                If 状态 = 编码任务状态_v6.错误 Then 编码队列_v6.标记任务出错()
+            End Try
+
+            ' VB.NET 不允许在 Finally 中 Await，因此终态处理位于受外层 Finally 保护的正常 Try 区域。
+            If 是当前执行(执行标识) Then
+                If 状态 = 编码任务状态_v6.错误 Then
+                    Await 安全执行终态插件阶段Async(插件处理阶段_v2.任务失败之后).ConfigureAwait(False)
+                End If
+                Await 安全执行终态插件阶段Async(插件处理阶段_v2.任务结束之后).ConfigureAwait(False)
+            End If
         Finally
             任务耗时计时器.Stop()
             用户使用统计_v6.记录编码任务执行结果(状态 = 编码任务状态_v6.已完成, 任务耗时计时器.Elapsed)
@@ -1432,6 +1599,16 @@ Public Class 编码任务_v6
             清理帧服务器缓存()
             恢复系统状态_v6()
             编码队列_v6.通知任务更新(Me)
+        End Try
+    End Function
+
+    Private Async Function 安全执行终态插件阶段Async(stageId As String) As Task
+        Try
+            Dim context = 插件扩展桥接_v2.创建任务管线上下文(stageId, Me)
+            context.Properties("elapsedMilliseconds") = CLng(任务耗时计时器.Elapsed.TotalMilliseconds).ToString(CultureInfo.InvariantCulture)
+            Await 插件扩展桥接_v2.执行异步阶段Async(stageId, context, Threading.CancellationToken.None).ConfigureAwait(False)
+        Catch ex As Exception
+            追加日志($"[3FUI] 终态插件处理失败：{ex.Message}", 编码任务日志类别_v6.错误, 当前步骤, True, False)
         End Try
     End Function
 
@@ -1478,8 +1655,9 @@ Public Class 编码任务_v6
         Next
     End Sub
 
-    Private Function 运行步骤Async(stepItem As 编码步骤_v6) As Task(Of Integer)
-        Dim tcs As New TaskCompletionSource(Of Integer)
+    Private Async Function 运行步骤Async(stepItem As 编码步骤_v6,
+                                     cancellationToken As Threading.CancellationToken) As Task(Of Integer)
+        Dim tcs As New TaskCompletionSource(Of Integer)(TaskCreationOptions.RunContinuationsAsynchronously)
         Dim process As New Process()
         当前进程 = process
         process.StartInfo.FileName = If(stepItem.阶段 = 预设数据_v6.命令行阶段.FFprobe获取时长, "ffprobe", If(设置_v6.实例对象.替代进程文件名 <> "", 设置_v6.实例对象.替代进程文件名, "ffmpeg"))
@@ -1496,6 +1674,19 @@ Public Class 编码任务_v6
         process.StartInfo.StandardInputEncoding = Encoding.UTF8
         process.StartInfo.CreateNoWindow = True
         process.EnableRaisingEvents = True
+
+        Dim beforeStart = 插件扩展桥接_v2.创建任务管线上下文(插件处理阶段_v2.启动进程之前, Me)
+        beforeStart.ProcessFileName = process.StartInfo.FileName
+        beforeStart.CommandLine = process.StartInfo.Arguments
+        beforeStart.PhaseName = stepItem.显示名称
+        beforeStart.Properties("commandStage") = stepItem.阶段.ToString()
+        Await 插件扩展桥接_v2.执行异步阶段Async(插件处理阶段_v2.启动进程之前, beforeStart, cancellationToken).ConfigureAwait(False)
+        cancellationToken.ThrowIfCancellationRequested()
+        process.StartInfo.FileName = beforeStart.ProcessFileName
+        process.StartInfo.Arguments = beforeStart.CommandLine
+        stepItem.实际执行文件名 = process.StartInfo.FileName
+        stepItem.实际执行参数 = process.StartInfo.Arguments
+
         AddHandler process.OutputDataReceived, Sub(sender, e) 处理输出(stepItem, e.Data)
         AddHandler process.ErrorDataReceived, Sub(sender, e) 处理输出(stepItem, e.Data)
         AddHandler process.Exited, Sub()
@@ -1514,7 +1705,15 @@ Public Class 编码任务_v6
         If 设置_v6.实例对象.指定处理器核心 <> "" Then
             process.ProcessorAffinity = GetAffinityMask(设置_v6.实例对象.指定处理器核心.Split(","c).Select(Function(s) s.Trim()).Where(Function(s) Integer.TryParse(s, Nothing)).Select(Function(s) Integer.Parse(s)).ToArray())
         End If
-        Return tcs.Task
+        Dim exitCode = Await tcs.Task.ConfigureAwait(False)
+        Dim afterExit = 插件扩展桥接_v2.创建任务管线上下文(插件处理阶段_v2.进程退出之后, Me)
+        afterExit.ProcessFileName = process.StartInfo.FileName
+        afterExit.CommandLine = process.StartInfo.Arguments
+        afterExit.PhaseName = stepItem.显示名称
+        afterExit.ExitCode = exitCode
+        afterExit.Properties("commandStage") = stepItem.阶段.ToString()
+        Await 插件扩展桥接_v2.执行异步阶段Async(插件处理阶段_v2.进程退出之后, afterExit, cancellationToken).ConfigureAwait(False)
+        Return afterExit.ExitCode.GetValueOrDefault(exitCode)
     End Function
 
     Private Sub 处理输出(stepItem As 编码步骤_v6, line As String)
@@ -1600,6 +1799,7 @@ Public Class 编码任务_v6
 
     Friend Function 停止并报告是否停止执行() As Boolean
         Dim stoppedExecution As Boolean = False
+        Dim cancellationSource As Threading.CancellationTokenSource = Nothing
         Try
             Dim process As Process = Nothing
             SyncLock 状态锁
@@ -1609,7 +1809,9 @@ Public Class 编码任务_v6
                 手动停止 = True
                 状态 = 编码任务状态_v6.已停止
                 process = 当前进程
+                cancellationSource = 当前执行取消源
             End SyncLock
+            cancellationSource?.Cancel()
             If process IsNot Nothing AndAlso Not process.HasExited Then process.Kill()
             任务耗时计时器.Stop()
             追加日志("[3FUI] 正在停止任务", 编码任务日志类别_v6.系统, 当前步骤, False, False)
@@ -1631,6 +1833,7 @@ Public Class 编码任务_v6
         手动停止 = False
         实时输出 = ""
         清空日志(False)
+        清空插件结果()
         步骤.Clear()
         进度 = New 编码进度_v6
         输入文件大小 = 0

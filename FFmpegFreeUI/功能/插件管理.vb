@@ -1,5 +1,7 @@
 Imports System.IO
 Imports System.Reflection
+Imports System.Reflection.Metadata
+Imports System.Reflection.PortableExecutable
 
 Public Class 插件管理
 
@@ -19,7 +21,14 @@ Public Class 插件管理
     End Sub
 
     Private Shared Sub 加载单个插件(插件文件 As String)
+        ' 在加载程序集之前读取引用表，确保缺少可选 SDK 时不会执行插件的任何代码。
+        If Not 插件扩展桥接_v2.可用 AndAlso 插件文件依赖SDK(插件文件) Then Exit Sub
+
         Dim 程序集 = Assembly.LoadFrom(插件文件)
+        If 插件扩展桥接_v2.可用 AndAlso 插件扩展桥接_v2.尝试加载v2插件(程序集) Then
+            Exit Sub
+        End If
+
         Dim Entry类 As Type = 程序集.GetType(程序集.GetName.Name & ".Entry")
 
         If Entry类 Is Nothing Then
@@ -43,6 +52,27 @@ Public Class 插件管理
         End If
         Entry方法.Invoke(Nothing, Nothing)
     End Sub
+
+    Private Shared Function 插件文件依赖SDK(插件文件 As String) As Boolean
+        Try
+            Using stream = File.OpenRead(插件文件)
+                Using reader As New PEReader(stream)
+                    If Not reader.HasMetadata Then Return False
+                    Dim metadata = reader.GetMetadataReader()
+                    For Each handle In metadata.AssemblyReferences
+                        Dim reference = metadata.GetAssemblyReference(handle)
+                        Dim name = metadata.GetString(reference.Name)
+                        If String.Equals(name, "FFmpegFreeUI.PluginSdk", StringComparison.OrdinalIgnoreCase) Then
+                            Return True
+                        End If
+                    Next
+                End Using
+            End Using
+        Catch ex As BadImageFormatException
+            ' 交给后续 Assembly.LoadFrom 生成原有的加载错误信息。
+        End Try
+        Return False
+    End Function
 
     Private Shared Sub 注入宿主回调(entryType As Type, entryInstance As Object, methodName As String, callback As Object)
         Dim method = entryType.GetMethod(methodName, BindingFlags.Public Or BindingFlags.NonPublic Or BindingFlags.Static Or BindingFlags.Instance)

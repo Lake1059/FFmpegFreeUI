@@ -37,6 +37,7 @@
 
   <ItemGroup>
     <Compile Remove="Language\**" />
+    <Compile Remove="功能\插件扩展宿主_v2.vb" />
     <EmbeddedResource Remove="Language\**" />
     <None Remove="Language\**" />
     <Page Remove="Language\**" />
@@ -55,16 +56,11 @@
   <ItemGroup>
     <PackageReference Include="Microsoft-WindowsAPICodePack-Shell" Version="1.1.5" />
     <PackageReference Include="LibreHardwareMonitorLib" Version="0.9.6" />
-	<PackageReference Include="Microsoft.Agents.AI.OpenAI" Version="1.13.0" />
+    <PackageReference Include="Microsoft.Agents.AI.OpenAI" Version="1.13.0" />
+	<PackageReference Include="LakeUI" Version="3.16.0" />
 	<PackageReference Include="System.Management" Version="10.0.9" />
     <PackageReference Include="Vortice.Direct2D1" Version="3.8.3" />
     <PackageReference Include="Vortice.Direct3D11" Version="3.8.3" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="LakeUI">
-      <HintPath>..\..\LakeUI\LakeUI\bin\Debug\net10.0-windows10.0.17763.0\LakeUI.dll</HintPath>
-    </Reference>
   </ItemGroup>
 
   <ItemGroup>

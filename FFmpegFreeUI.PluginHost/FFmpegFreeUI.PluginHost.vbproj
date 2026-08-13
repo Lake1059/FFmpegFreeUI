@@ -1,0 +1,33 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0-windows10.0.26100.0</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <OptionExplicit>On</OptionExplicit>
+    <OptionInfer>On</OptionInfer>
+    <OptionStrict>On</OptionStrict>
+    <RootNamespace>FFmpegFreeUI</RootNamespace>
+    <AssemblyName>FFmpegFreeUI.PluginHost</AssemblyName>
+    <Version>2.1.0</Version>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\FFmpegFreeUI\功能\插件扩展宿主_v2.vb" Link="插件扩展宿主_v2.vb" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FFmpegFreeUI\FFmpegFreeUI.vbproj" />
+    <ProjectReference Include="..\FFmpegFreeUI.PluginSdk\FFmpegFreeUI.PluginSdk.csproj" />
+  </ItemGroup>
+
+  <!-- PluginHost 随宿主发行但保持休眠；SDK 由用户按需安装，不在这里复制。 -->
+  <Target Name="CopyPluginHostToThreeFuiOutput" AfterTargets="Build">
+    <PropertyGroup>
+      <ThreeFuiOutputDirectory>$(MSBuildThisFileDirectory)..\FFmpegFreeUI\bin\$(Configuration)\$(TargetFramework)\</ThreeFuiOutputDirectory>
+    </PropertyGroup>
+    <MakeDir Directories="$(ThreeFuiOutputDirectory)" />
+    <Copy SourceFiles="$(TargetPath)"
+          DestinationFiles="$(ThreeFuiOutputDirectory)FFmpegFreeUI.PluginHost.dll" />
+  </Target>
+
+</Project>

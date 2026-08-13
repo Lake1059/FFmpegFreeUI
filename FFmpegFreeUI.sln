@@ -12,6 +12,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Updater", "Updater\Updater.vbproj", "{DCAC07F7-C2D4-4CEE-8734-4A845907FFAA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FFmpegFreeUI.PluginSdk", "FFmpegFreeUI.PluginSdk\FFmpegFreeUI.PluginSdk.csproj", "{9A2F2807-7D50-4B58-A38B-E3453E9816EE}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "FFmpegFreeUI.PluginHost", "FFmpegFreeUI.PluginHost\FFmpegFreeUI.PluginHost.vbproj", "{93E797B2-1196-4775-B10D-93F9B4C55270}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThreeFui.PluginApi.Sample", "Samples\ThreeFui.PluginApi.Sample\ThreeFui.PluginApi.Sample.csproj", "{D916B56F-C201-462B-868D-89270DCBAE4A}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "ThreeFui.PluginApi.VbVmafSample", "Samples\ThreeFui.PluginApi.VbVmafSample\ThreeFui.PluginApi.VbVmafSample.vbproj", "{2F6C00DF-601F-48E2-813B-8D819678C8DB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -26,6 +34,22 @@ Global
 		{DCAC07F7-C2D4-4CEE-8734-4A845907FFAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DCAC07F7-C2D4-4CEE-8734-4A845907FFAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DCAC07F7-C2D4-4CEE-8734-4A845907FFAA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9A2F2807-7D50-4B58-A38B-E3453E9816EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A2F2807-7D50-4B58-A38B-E3453E9816EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A2F2807-7D50-4B58-A38B-E3453E9816EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A2F2807-7D50-4B58-A38B-E3453E9816EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{93E797B2-1196-4775-B10D-93F9B4C55270}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93E797B2-1196-4775-B10D-93F9B4C55270}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93E797B2-1196-4775-B10D-93F9B4C55270}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93E797B2-1196-4775-B10D-93F9B4C55270}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D916B56F-C201-462B-868D-89270DCBAE4A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D916B56F-C201-462B-868D-89270DCBAE4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D916B56F-C201-462B-868D-89270DCBAE4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D916B56F-C201-462B-868D-89270DCBAE4A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F6C00DF-601F-48E2-813B-8D819678C8DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F6C00DF-601F-48E2-813B-8D819678C8DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F6C00DF-601F-48E2-813B-8D819678C8DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F6C00DF-601F-48E2-813B-8D819678C8DB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
