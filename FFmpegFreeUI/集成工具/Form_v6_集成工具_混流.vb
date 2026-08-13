@@ -17,13 +17,8 @@ Public Class Form_v6_集成工具_混流
 
     Private Sub Form_v6_集成工具_混流_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         初始化列表()
-        绑定文件拖入(Me)
-        绑定文件拖入(ModernPanel1)
-        绑定文件拖入(Panel1)
         绑定文件拖入(UltraDetailListView1)
-        绑定文件拖入(Panel2)
-        绑定文件拖入(Panel3)
-        绑定文件拖入(Panel4)
+        绑定输出文件拖入(MTB_输出目标文件)
         调整列表交互区域()
         调整列宽()
     End Sub
@@ -54,6 +49,38 @@ Public Class Form_v6_集成工具_混流
     Private Sub 文件放下事件(sender As Object, e As DragEventArgs)
         添加文件(获取拖入文件(e))
     End Sub
+
+    Private Sub 绑定输出文件拖入(target As Control)
+        If target Is Nothing Then Exit Sub
+        target.AllowDrop = True
+        RemoveHandler target.DragEnter, AddressOf 输出文件拖入事件
+        RemoveHandler target.DragDrop, AddressOf 输出文件放下事件
+        AddHandler target.DragEnter, AddressOf 输出文件拖入事件
+        AddHandler target.DragDrop, AddressOf 输出文件放下事件
+    End Sub
+
+    Private Sub 输出文件拖入事件(sender As Object, e As DragEventArgs)
+        e.Effect = If(获取原始拖入路径(e).Count > 0, DragDropEffects.Copy, DragDropEffects.None)
+    End Sub
+
+    Private Sub 输出文件放下事件(sender As Object, e As DragEventArgs)
+        Dim paths = 获取原始拖入路径(e)
+        If paths.Count = 0 Then Exit Sub
+
+        Dim path = paths(0)
+        If File.Exists(path) Then
+            MTB_输出目标文件.Text = path
+        ElseIf Directory.Exists(path) Then
+            MTB_输出目标文件.Text = System.IO.Path.Combine(path, $"Output_{DateTime.Now:HHmmss}.后缀")
+        End If
+    End Sub
+
+    Private Function 获取原始拖入路径(e As DragEventArgs) As List(Of String)
+        If e Is Nothing OrElse e.Data Is Nothing OrElse Not e.Data.GetDataPresent(DataFormats.FileDrop) Then Return New List(Of String)
+        Dim paths = TryCast(e.Data.GetData(DataFormats.FileDrop), String())
+        If paths Is Nothing Then Return New List(Of String)
+        Return paths.Where(Function(x) Not String.IsNullOrWhiteSpace(x) AndAlso (File.Exists(x) OrElse Directory.Exists(x))).ToList()
+    End Function
 
     Private Function 获取拖入文件(e As DragEventArgs) As List(Of String)
         If e Is Nothing OrElse e.Data Is Nothing OrElse Not e.Data.GetDataPresent(DataFormats.FileDrop) Then Return New List(Of String)

@@ -1795,6 +1795,7 @@ Public Class 编码进度_v6
     Private Shared ReadOnly QPattern As New Regex("q=\s*(?<value>[\d\.\-]+)", RegexOptions.Compiled)
     Private Shared ReadOnly BitratePattern As New Regex("bitrate=\s*(?<value>[\d\.]+)\s*kbits/s", RegexOptions.Compiled)
     Private Shared ReadOnly SpeedPattern As New Regex("speed=\s*(?<value>[\d\.eE\+\-]+)\s*x", RegexOptions.Compiled)
+    Private Const 最低有效速度 As Double = 0.01
 
     Public Property 当前阶段 As String = ""
     Public Property 总时长 As TimeSpan = TimeSpan.Zero
@@ -1837,11 +1838,25 @@ Public Class 编码进度_v6
             Dim speed As Double
             If Double.TryParse(sp.Groups("value").Value, NumberStyles.Any, CultureInfo.InvariantCulture, speed) Then
                 效率文本 = 格式化效率文本(speed)
-                If 总时长.TotalSeconds > 0 AndAlso 当前时间.TotalSeconds > 0 AndAlso speed > 0 Then
+                If 总时长.TotalSeconds > 0 AndAlso 当前时间.TotalSeconds > 0 AndAlso
+                   Not Double.IsNaN(speed) AndAlso Not Double.IsInfinity(speed) AndAlso speed >= 最低有效速度 Then
                     Dim remain = Math.Max(0, (总时长.TotalSeconds - 当前时间.TotalSeconds) / speed)
-                    时间文本 = 格式化秒(remain)
+                    ' FFmpeg startup samples can report an extremely small speed (for example 0.00x).
+                    ' Do not expose the resulting multi-year ETA; wait for a usable sample instead.
+                    Dim maximumRemain = Math.Max(TimeSpan.FromDays(30).TotalSeconds, 总时长.TotalSeconds * 100.0R)
+                    If Not Double.IsNaN(remain) AndAlso Not Double.IsInfinity(remain) AndAlso remain <= maximumRemain Then
+                        时间文本 = 格式化秒(remain)
+                    Else
+                        时间文本 = ""
+                    End If
+                Else
+                    时间文本 = ""
                 End If
+            Else
+                时间文本 = ""
             End If
+        Else
+            时间文本 = ""
         End If
     End Sub
 
@@ -1885,10 +1900,19 @@ Public Class 编码进度_v6
     End Sub
 
     Public Shared Function 转换时间(value As String) As TimeSpan
-        Dim t As TimeSpan
-        If TimeSpan.TryParse(value, CultureInfo.InvariantCulture, t) Then Return t
+        If String.IsNullOrWhiteSpace(value) Then Return TimeSpan.Zero
+
+        ' FFprobe stores durations as plain seconds (for example "3600").
+        ' TimeSpan.TryParse treats a plain integer as days, which can inflate
+        ' the ETA by 24 hours per unit. Parse numeric values as seconds first.
         Dim seconds As Double
-        If Double.TryParse(value, NumberStyles.Any, CultureInfo.InvariantCulture, seconds) Then Return TimeSpan.FromSeconds(seconds)
+        If Double.TryParse(value.Trim(), NumberStyles.Float, CultureInfo.InvariantCulture, seconds) Then
+            If Double.IsNaN(seconds) OrElse Double.IsInfinity(seconds) OrElse seconds < 0 OrElse seconds > TimeSpan.MaxValue.TotalSeconds Then Return TimeSpan.Zero
+            Return TimeSpan.FromSeconds(seconds)
+        End If
+
+        Dim t As TimeSpan
+        If TimeSpan.TryParse(value.Trim(), CultureInfo.InvariantCulture, t) AndAlso t >= TimeSpan.Zero Then Return t
         Return TimeSpan.Zero
     End Function
 
@@ -1914,9 +1938,11 @@ Public Class 编码进度_v6
     End Function
 
     Public Shared Function 格式化秒(value As Double) As String
-        Dim h = CInt(Math.Floor(value / 3600.0))
-        Dim m = CInt(Math.Floor((value - h * 3600.0) / 60.0))
-        Dim s = CInt(Math.Floor(value - h * 3600.0 - m * 60.0))
+        If Double.IsNaN(value) OrElse Double.IsInfinity(value) OrElse value < 0 Then Return ""
+        Dim safeValue = Math.Min(value, TimeSpan.MaxValue.TotalSeconds)
+        Dim h = CLng(Math.Floor(safeValue / 3600.0R))
+        Dim m = CLng(Math.Floor((safeValue - h * 3600.0R) / 60.0R))
+        Dim s = CLng(Math.Floor(safeValue - h * 3600.0R - m * 60.0R))
         Dim parts As New List(Of String)
         If h > 0 Then parts.Add($"{h}h")
         If m > 0 OrElse h > 0 Then parts.Add($"{m}m")
