@@ -42,6 +42,7 @@ Public Class AgentModelInfo
     Public Property Id As String = ""
     Public Property SupportedEndpointTypes As New List(Of String)
     Public Property ReasoningEfforts As New List(Of String)
+    Public Property ContextWindowTokens As Integer
     Public Property RawJson As String = ""
 End Class
 

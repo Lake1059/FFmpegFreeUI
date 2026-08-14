@@ -22,11 +22,11 @@ Partial Class Form_v6_集成工具_质量评测
     '不要使用代码编辑器修改它。
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim ListColumn6 As LakeUI.UltraDetailListView.ListColumn = New LakeUI.UltraDetailListView.ListColumn()
-        Dim ListColumn7 As LakeUI.UltraDetailListView.ListColumn = New LakeUI.UltraDetailListView.ListColumn()
-        Dim ListColumn8 As LakeUI.UltraDetailListView.ListColumn = New LakeUI.UltraDetailListView.ListColumn()
-        Dim ListColumn9 As LakeUI.UltraDetailListView.ListColumn = New LakeUI.UltraDetailListView.ListColumn()
-        Dim ListColumn10 As LakeUI.UltraDetailListView.ListColumn = New LakeUI.UltraDetailListView.ListColumn()
+        Dim ListColumn1 As LakeUI.UltraDetailListView.ListColumn = New LakeUI.UltraDetailListView.ListColumn()
+        Dim ListColumn2 As LakeUI.UltraDetailListView.ListColumn = New LakeUI.UltraDetailListView.ListColumn()
+        Dim ListColumn3 As LakeUI.UltraDetailListView.ListColumn = New LakeUI.UltraDetailListView.ListColumn()
+        Dim ListColumn4 As LakeUI.UltraDetailListView.ListColumn = New LakeUI.UltraDetailListView.ListColumn()
+        Dim ListColumn5 As LakeUI.UltraDetailListView.ListColumn = New LakeUI.UltraDetailListView.ListColumn()
         ModernPanel1 = New LakeUI.ModernPanel()
         UltraDetailListView1 = New LakeUI.UltraDetailListView()
         Panel6 = New Panel()
@@ -107,21 +107,21 @@ Partial Class Form_v6_集成工具_质量评测
         UltraDetailListView1.BackgroundColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         UltraDetailListView1.BorderRadius = 10
         UltraDetailListView1.BorderSize = 0
-        ListColumn6.Text = "文件"
-        ListColumn6.Width = 350
-        ListColumn7.Text = "PSNR"
-        ListColumn7.Width = 80
-        ListColumn8.Text = "SSIM"
-        ListColumn8.Width = 80
-        ListColumn9.Text = "VMAF"
-        ListColumn9.Width = 80
-        ListColumn10.Text = "XPSNR"
-        ListColumn10.Width = 80
-        UltraDetailListView1.Columns.Add(ListColumn6)
-        UltraDetailListView1.Columns.Add(ListColumn7)
-        UltraDetailListView1.Columns.Add(ListColumn8)
-        UltraDetailListView1.Columns.Add(ListColumn9)
-        UltraDetailListView1.Columns.Add(ListColumn10)
+        ListColumn1.Text = "文件"
+        ListColumn1.Width = 350
+        ListColumn2.Text = "PSNR"
+        ListColumn2.Width = 80
+        ListColumn3.Text = "SSIM"
+        ListColumn3.Width = 80
+        ListColumn4.Text = "VMAF"
+        ListColumn4.Width = 80
+        ListColumn5.Text = "XPSNR"
+        ListColumn5.Width = 80
+        UltraDetailListView1.Columns.Add(ListColumn1)
+        UltraDetailListView1.Columns.Add(ListColumn2)
+        UltraDetailListView1.Columns.Add(ListColumn3)
+        UltraDetailListView1.Columns.Add(ListColumn4)
+        UltraDetailListView1.Columns.Add(ListColumn5)
         UltraDetailListView1.Dock = DockStyle.Fill
         UltraDetailListView1.DragSelectZoneWidth = 200
         UltraDetailListView1.GroupBorderColor = Color.Silver
@@ -624,14 +624,16 @@ Partial Class Form_v6_集成工具_质量评测
         ' 
         HtmlColorLabel4.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel4.Dock = DockStyle.Left
-        HtmlColorLabel4.Font = New Font("Microsoft YaHei UI", 11F)
+        HtmlColorLabel4.InfoIconSizeRatio = 0.8F
+        HtmlColorLabel4.InfoIconTextGap = 8
         HtmlColorLabel4.Location = New Point(0, 10)
         HtmlColorLabel4.Margin = New Padding(2)
         HtmlColorLabel4.Name = "HtmlColorLabel4"
         HtmlColorLabel4.Size = New Size(130, 32)
         HtmlColorLabel4.TabIndex = 14
-        HtmlColorLabel4.Text = "要评测的项目："
+        HtmlColorLabel4.Text = "<span style=""font-size:11; color:Silver"">要评测的项目</span>"
         HtmlColorLabel4.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
+        HtmlColorLabel4.ToolTipMaxWidth = 500
         ' 
         ' Panel2
         ' 

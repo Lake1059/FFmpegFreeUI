@@ -258,14 +258,25 @@ Public Class Form_v6_Agent
                 Return
             End If
 
+            Dim customModelResult = Agent自定义模型配置_v6.加载(client)
+            If customModelResult.ErrorMessage <> "" Then
+                ExFloatingTip(MCB_模型选择, $"{Agent自定义模型配置_v6.配置文件名} 无效：{customModelResult.ErrorMessage}", 3600)
+            End If
+
             ShowStatus("正在连接端点并获取模型列表")
             MCB_模型选择.Items.Clear()
             MCB_模型选择.Text = ""
             MCB_模型选择.WaterText = "正在获取模型"
             Dim modelResult As AgentClientResult(Of List(Of AgentModelInfo))
+            Dim endpointModelError As String = ""
             Do
                 modelResult = Await client.TryGetModelsAsync()
                 If modelResult.Success Then Exit Do
+
+                If customModelResult.Models.Count > 0 Then
+                    endpointModelError = modelResult.ErrorMessage
+                    Exit Do
+                End If
 
                 ShowStatus("获取模型列表失败：" & modelResult.ErrorMessage, True)
                 ExFloatingTip(MCB_模型选择, modelResult.ErrorMessage, 2600)
@@ -283,7 +294,8 @@ Public Class Form_v6_Agent
                 Return
             End If
 
-            _models = If(modelResult.Value, New List(Of AgentModelInfo))
+            Dim endpointModels = If(modelResult.Success, modelResult.Value, New List(Of AgentModelInfo))
+            _models = Agent自定义模型配置_v6.合并模型(endpointModels, customModelResult.Models)
             AgentCapabilityCache.ImportReasoningEfforts(client, _models)
             MCB_模型选择.Items.AddRange(_models.Select(Function(x) x.Id))
 
@@ -300,7 +312,16 @@ Public Class Form_v6_Agent
             设置_v6.实例对象.AgentModelId = If(MCB_模型选择.SelectedItem, "")
             Await RefreshReasoningEffortsAsync()
             _modelEndpointSignature = expectedSignature
-            ShowStatus($"模型列表已刷新：{_models.Count} 个模型")
+            If endpointModelError <> "" Then
+                ShowStatus($"端点模型列表不可用，已加载 {_models.Count} 个自定义模型", True)
+                ExFloatingTip(MCB_模型选择, endpointModelError, 2600)
+            ElseIf customModelResult.ErrorMessage <> "" Then
+                ShowStatus($"模型列表已刷新：{_models.Count} 个模型；{Agent自定义模型配置_v6.配置文件名} 无效", True)
+            ElseIf customModelResult.Models.Count > 0 Then
+                ShowStatus($"模型列表已刷新：{_models.Count} 个模型，已应用自定义模型配置")
+            Else
+                ShowStatus($"模型列表已刷新：{_models.Count} 个模型")
+            End If
         Catch ex As Exception
             ShowStatus("系统故障：获取模型列表失败：" & ex.Message, True)
             ExFloatingTip(MCB_模型选择, ex.Message, 2600)
@@ -402,7 +423,7 @@ Public Class Form_v6_Agent
     Private Function FormatConversationTitle(conversation As AgentConversationData) As String
         Dim title = If(conversation.Title, "").Trim()
         If title = "" Then title = "新对话"
-        If title.Length > 28 Then title = title.Substring(0, 28) & "..."
+        If title.Length > 28 Then title = String.Concat(title.AsSpan(0, 28), "...")
         Return $"{title}  {conversation.UpdatedAt:MM-dd HH:mm}"
     End Function
 
@@ -1242,7 +1263,7 @@ Public Class Form_v6_Agent
 
     Private Function BuildTitle(text As String) As String
         text = text.Replace(vbCr, " ").Replace(vbLf, " ").Trim()
-        If text.Length > 18 Then text = text.Substring(0, 18) & "..."
+        If text.Length > 18 Then text = String.Concat(text.AsSpan(0, 18), "...")
         Return If(text = "", "新对话", text)
     End Function
 
@@ -1603,6 +1624,11 @@ Public Class Form_v6_Agent
     End Function
 
     Private Function ResolveContextWindowTokens(modelId As String) As Integer
+        Dim configuredModel = If(_models, New List(Of AgentModelInfo)).
+            FirstOrDefault(Function(x) x IsNot Nothing AndAlso String.Equals(x.Id, modelId, StringComparison.OrdinalIgnoreCase))
+        If configuredModel IsNot Nothing AndAlso configuredModel.ContextWindowTokens > 0 Then
+            Return configuredModel.ContextWindowTokens
+        End If
         Return Agent上下文能力表_v6.获取上下文总量(modelId)
     End Function
 

@@ -98,6 +98,7 @@ Public Class Form_v6_集成工具_质量评测
         调整底部按钮布局()
     End Sub
 
+    <CodeAnalysis.SuppressMessage("Performance", "CA1861:不要将常量数组作为参数", Justification:="<挂起>")>
     Private Sub 初始化控件()
         UltraDetailListView1.MultiSelect = True
         UltraDetailListView1.AllowDragReorder = True
@@ -105,6 +106,12 @@ Public Class Form_v6_集成工具_质量评测
             column.WordWrapHeightFixed = True
         Next
         If UltraDetailListView1.Columns.Count > VMAF列 Then UltraDetailListView1.Columns(VMAF列).Text = "VMAF"
+        HtmlColorLabel4.ToolTipText = String.Join(vbCrLf & vbCrLf, {
+            "PSNR（峰值信噪比）：逐像素计算误差并以 dB 表示，数值越高越接近原视频，完全一致时为无穷大。经验参考：低于 30 dB 通常失真明显；30～35 dB 尚可；35～40 dB 良好；40～50 dB 优秀；高于 50 dB 接近无损。它对位移、亮度变化很敏感，也不能充分反映人眼感知，只有在分辨率、位深和色彩处理一致时才适合横向比较。",
+            "SSIM（结构相似性）：从亮度、对比度和结构三方面比较画面，通常取值为 0～1，越接近 1 越好，1 表示完全一致。经验参考：低于 0.90 差异明显；0.90～0.95 尚可；0.95～0.98 良好；0.98～0.99 优秀；高于 0.99 接近无损。它比 PSNR 更贴近视觉感受，但仍可能忽略局部伪影，且不同分辨率或不同预处理结果不宜直接比较。",
+            "VMAF（视频多方法评估融合）：通过模型融合多种画质特征来预测主观观感，通常为 0～100 分，越高越好。经验参考：低于 70 较差；70～80 一般；80～90 良好；90～95 高质量；95 分及以上通常接近视觉无损。分数会受模型、Pooling、抽样比例、内容类型和观看条件影响；比较多个文件时应使用相同模型与设置，100 分也不代表所有场景下绝对无差异。",
+            "XPSNR（扩展感知峰值信噪比）：在 PSNR 基础上按局部纹理和人眼可见度对误差加权，以 dB 表示，数值越高越好，完全一致时为无穷大。经验参考：低于 30 dB 通常较差；30～35 dB 尚可；35～40 dB 良好；40～50 dB 优秀；高于 50 dB 接近无损。它通常比普通 PSNR 更符合感知质量，但没有跨内容通用的绝对门槛，应主要用于同一原片、相同处理条件下的方案对比。"
+        })
 
         For Each metric In 全部指标
             Dim checkBox = 获取指标复选框(metric)
@@ -910,7 +917,7 @@ Public Class Form_v6_集成工具_质量评测
                 Dim modelOption = 构建Vmaf模型参数(model)
                 Dim modelArgument = If(modelOption = "", "", $":model={转义过滤器值(modelOption)}")
                 Dim vmafFilter = If(使用VmafCuda, "libvmaf_cuda", "libvmaf")
-                filter = $"{dist}{ref}[dist][ref]{vmafFilter}=eof_action=endall:log_fmt=json:log_path={引用过滤器参数(tempPath)}:n_threads={threads.ToString(CultureInfo.InvariantCulture)}{subsampleOption}:pool={转义过滤器值(pool)}{modelArgument}"
+                filter = $"{dist}{ref}[dist][ref]{vmafFilter}=eof_action=endall:ts_sync_mode=nearest:log_fmt=json:log_path={引用过滤器参数(tempPath)}:n_threads={threads.ToString(CultureInfo.InvariantCulture)}{subsampleOption}:pool={转义过滤器值(pool)}{modelArgument}"
             Case Else
                 Throw New InvalidOperationException("未知评测项目")
         End Select

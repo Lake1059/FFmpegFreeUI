@@ -7,6 +7,8 @@ Imports System.Text.RegularExpressions
 
 Public Class AgentEndpointClient
     Private Shared ReadOnly Http As New HttpClient With {.Timeout = TimeSpan.FromSeconds(90)}
+    Private Const MaxErrorMessageLength As Integer = 600
+    Private Const MaxRawErrorLength As Integer = 32768
 
     Public Property Endpoint As String
     Public Property ApiKey As String
@@ -74,14 +76,17 @@ Public Class AgentEndpointClient
             Using response = Await SendJsonAsync(HttpMethod.Get, "models", Nothing, cancellationToken)
                 Dim raw = Await response.Content.ReadAsStringAsync(cancellationToken)
                 If Not response.IsSuccessStatusCode Then
-                    Return AgentClientResult(Of List(Of AgentModelInfo)).Fail(ExtractErrorMessage(raw, response.StatusCode), CInt(response.StatusCode))
+                    Return AgentClientResult(Of List(Of AgentModelInfo)).Fail(ExtractErrorMessage(raw, response), CInt(response.StatusCode))
+                End If
+                If IsHtmlResponse(raw, response) Then
+                    Return AgentClientResult(Of List(Of AgentModelInfo)).Fail(ExtractErrorMessage(raw, response), CInt(response.StatusCode))
                 End If
                 Return AgentClientResult(Of List(Of AgentModelInfo)).Ok(ParseModels(raw))
             End Using
         Catch ex As OperationCanceledException
             Throw
         Catch ex As Exception
-            Return AgentClientResult(Of List(Of AgentModelInfo)).Fail(ex.Message)
+            Return AgentClientResult(Of List(Of AgentModelInfo)).Fail(FormatExceptionMessage(ex))
         End Try
     End Function
 
@@ -107,7 +112,10 @@ Public Class AgentEndpointClient
             Using response = Await SendJsonAsync(HttpMethod.Post, "chat/completions", payload, cancellationToken)
                 raw = Await response.Content.ReadAsStringAsync(cancellationToken)
                 If Not response.IsSuccessStatusCode Then
-                    Return AgentChatResult.Fail(ExtractErrorMessage(raw, response.StatusCode), CInt(response.StatusCode), raw)
+                    Return AgentChatResult.Fail(ExtractErrorMessage(raw, response), CInt(response.StatusCode), LimitRawError(raw))
+                End If
+                If IsHtmlResponse(raw, response) Then
+                    Return AgentChatResult.Fail(ExtractErrorMessage(raw, response), CInt(response.StatusCode), LimitRawError(raw))
                 End If
                 Dim result = ParseChatCompletionRaw(raw)
                 If ShouldRetryEmptySseAsStreaming(raw, result) Then
@@ -121,7 +129,7 @@ Public Class AgentEndpointClient
         Catch ex As OperationCanceledException
             Throw
         Catch ex As Exception
-            Return AgentChatResult.Fail(ex.Message, rawJson:=raw)
+            Return AgentChatResult.Fail(FormatExceptionMessage(ex), rawJson:=LimitRawError(raw))
         End Try
     End Function
 
@@ -155,7 +163,11 @@ Public Class AgentEndpointClient
                 Using response = Await Http.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, cancellationToken)
                     If Not response.IsSuccessStatusCode Then
                         Dim errorRaw = Await response.Content.ReadAsStringAsync(cancellationToken)
-                        Return AgentChatResult.Fail(ExtractErrorMessage(errorRaw, response.StatusCode), CInt(response.StatusCode), errorRaw)
+                        Return AgentChatResult.Fail(ExtractErrorMessage(errorRaw, response), CInt(response.StatusCode), LimitRawError(errorRaw))
+                    End If
+                    If IsHtmlResponse("", response) Then
+                        Dim errorRaw = Await response.Content.ReadAsStringAsync(cancellationToken)
+                        Return AgentChatResult.Fail(ExtractErrorMessage(errorRaw, response), CInt(response.StatusCode), LimitRawError(errorRaw))
                     End If
 
                     Using stream = Await response.Content.ReadAsStreamAsync(cancellationToken)
@@ -189,9 +201,9 @@ Public Class AgentEndpointClient
         Catch ex As OperationCanceledException
             Throw
         Catch ex As Exception
-            Dim failed = AgentChatResult.Fail(ex.Message)
+            Dim failed = AgentChatResult.Fail(FormatExceptionMessage(ex))
             failed.Content = content.ToString()
-            failed.RawJson = raw.ToString()
+            failed.RawJson = LimitRawError(raw.ToString())
             Return failed
         End Try
     End Function
@@ -214,7 +226,10 @@ Public Class AgentEndpointClient
             Using response = Await SendJsonAsync(HttpMethod.Post, "responses", payload, cancellationToken)
                 Dim raw = Await response.Content.ReadAsStringAsync(cancellationToken)
                 If Not response.IsSuccessStatusCode Then
-                    Return AgentChatResult.Fail(ExtractErrorMessage(raw, response.StatusCode), CInt(response.StatusCode), raw)
+                    Return AgentChatResult.Fail(ExtractErrorMessage(raw, response), CInt(response.StatusCode), LimitRawError(raw))
+                End If
+                If IsHtmlResponse(raw, response) Then
+                    Return AgentChatResult.Fail(ExtractErrorMessage(raw, response), CInt(response.StatusCode), LimitRawError(raw))
                 End If
                 Dim result = ParseResponsesResult(raw)
                 result.Success = True
@@ -224,7 +239,7 @@ Public Class AgentEndpointClient
         Catch ex As OperationCanceledException
             Throw
         Catch ex As Exception
-            Return AgentChatResult.Fail(ex.Message)
+            Return AgentChatResult.Fail(FormatExceptionMessage(ex))
         End Try
     End Function
 
@@ -775,22 +790,171 @@ Public Class AgentEndpointClient
         Return 0
     End Function
 
-    Private Shared Function ExtractErrorMessage(raw As String, statusCode As HttpStatusCode) As String
-        If String.IsNullOrWhiteSpace(raw) Then Return $"请求失败：HTTP {CInt(statusCode)}"
+    Private Shared Function ExtractErrorMessage(raw As String, response As HttpResponseMessage) As String
+        Dim statusCode = response.StatusCode
+        Dim statusText = BuildHttpStatusText(statusCode)
+        If IsCloudflareChallengeResponse(raw, response) Then
+            Return BuildCloudflareChallengeMessage(statusText, GetCloudflareRay(response, raw))
+        End If
+        If IsHtmlResponse(raw, response) Then Return BuildHtmlResponseMessage(statusText)
+        If String.IsNullOrWhiteSpace(raw) Then Return statusText
+
         Try
             Using doc = JsonDocument.Parse(raw)
                 Dim root = doc.RootElement
                 Dim err As JsonElement
                 If root.TryGetProperty("error", err) Then
-                    If err.ValueKind = JsonValueKind.String Then Return err.GetString()
+                    If err.ValueKind = JsonValueKind.String Then Return FormatErrorDetail(err.GetString(), statusText)
                     Dim msg As JsonElement
-                    If err.ValueKind = JsonValueKind.Object AndAlso err.TryGetProperty("message", msg) AndAlso msg.ValueKind = JsonValueKind.String Then Return msg.GetString()
+                    If err.ValueKind = JsonValueKind.Object AndAlso err.TryGetProperty("message", msg) AndAlso msg.ValueKind = JsonValueKind.String Then
+                        Return FormatErrorDetail(msg.GetString(), statusText)
+                    End If
                 End If
                 Dim message As JsonElement
-                If root.TryGetProperty("message", message) AndAlso message.ValueKind = JsonValueKind.String Then Return message.GetString()
+                If root.TryGetProperty("message", message) AndAlso message.ValueKind = JsonValueKind.String Then
+                    Return FormatErrorDetail(message.GetString(), statusText)
+                End If
             End Using
         Catch
         End Try
-        Return $"请求失败：HTTP {CInt(statusCode)} {raw}"
+
+        Dim detail = LimitErrorMessage(raw)
+        If detail = "" Then Return statusText
+        Return LimitErrorMessage(statusText & "：" & detail)
+    End Function
+
+    Private Shared Function FormatExceptionMessage(ex As Exception) As String
+        Dim message = If(ex?.Message, "").Trim()
+        If message = "" Then Return "Agent 请求失败。"
+
+        Dim statusText = TryExtractHttpStatusText(message)
+        If IsCloudflareChallengeText(message) Then
+            Return BuildCloudflareChallengeMessage(statusText, GetCloudflareRay(Nothing, message))
+        End If
+        If ContainsHtmlMarkup(message) Then Return BuildHtmlResponseMessage(statusText)
+        Return LimitErrorMessage(message)
+    End Function
+
+    Private Shared Function FormatErrorDetail(detail As String, statusText As String) As String
+        If IsCloudflareChallengeText(detail) Then
+            Return BuildCloudflareChallengeMessage(statusText, GetCloudflareRay(Nothing, detail))
+        End If
+        If ContainsHtmlMarkup(detail) Then Return BuildHtmlResponseMessage(statusText)
+
+        Dim result = LimitErrorMessage(detail)
+        Return If(result = "", statusText, result)
+    End Function
+
+    Private Shared Function IsCloudflareChallengeResponse(raw As String, response As HttpResponseMessage) As Boolean
+        If IsCloudflareChallengeText(raw) Then Return True
+        If Not HasCloudflareHeader(response) OrElse Not IsHtmlResponse(raw, response) Then Return False
+
+        Select Case response.StatusCode
+            Case HttpStatusCode.Forbidden, HttpStatusCode.TooManyRequests, HttpStatusCode.ServiceUnavailable
+                Return True
+            Case Else
+                Return False
+        End Select
+    End Function
+
+    Private Shared Function IsCloudflareChallengeText(value As String) As Boolean
+        If String.IsNullOrWhiteSpace(value) Then Return False
+        Return ContainsIgnoreCase(value, "challenges.cloudflare.com") OrElse
+               ContainsIgnoreCase(value, "cf-chl-") OrElse
+               ContainsIgnoreCase(value, "cf-mitigated") OrElse
+               (ContainsIgnoreCase(value, "cloudflare") AndAlso
+                (ContainsIgnoreCase(value, "just a moment") OrElse
+                 ContainsIgnoreCase(value, "attention required") OrElse
+                 ContainsIgnoreCase(value, "verify you are human") OrElse
+                 ContainsIgnoreCase(value, "security verification")))
+    End Function
+
+    Private Shared Function IsHtmlResponse(raw As String, response As HttpResponseMessage) As Boolean
+        Dim mediaType = response?.Content?.Headers?.ContentType?.MediaType
+        Return ContainsIgnoreCase(mediaType, "html") OrElse ContainsHtmlMarkup(raw)
+    End Function
+
+    Private Shared Function ContainsHtmlMarkup(value As String) As Boolean
+        If String.IsNullOrWhiteSpace(value) Then Return False
+        Return Regex.IsMatch(value, "<!doctype\s+html|<html(?:\s|>)|<head(?:\s|>)|<body(?:\s|>)", RegexOptions.IgnoreCase)
+    End Function
+
+    Private Shared Function HasCloudflareHeader(response As HttpResponseMessage) As Boolean
+        Return HeaderContains(response, "server", "cloudflare") OrElse
+               HeaderContains(response, "cf-ray", "") OrElse
+               HeaderContains(response, "cf-mitigated", "")
+    End Function
+
+    Private Shared Function HeaderContains(response As HttpResponseMessage, name As String, expectedValue As String) As Boolean
+        If response Is Nothing Then Return False
+        Dim values As IEnumerable(Of String) = Nothing
+        If Not response.Headers.TryGetValues(name, values) Then Return False
+        If expectedValue = "" Then Return values.Any()
+        Return values.Any(Function(value) ContainsIgnoreCase(value, expectedValue))
+    End Function
+
+    Private Shared Function GetCloudflareRay(response As HttpResponseMessage, source As String) As String
+        If response IsNot Nothing Then
+            Dim values As IEnumerable(Of String) = Nothing
+            If response.Headers.TryGetValues("cf-ray", values) Then
+                Dim headerValue = values.FirstOrDefault()
+                If Not String.IsNullOrWhiteSpace(headerValue) Then Return LimitErrorMessage(headerValue.Trim(), 80)
+            End If
+        End If
+
+        Dim match = Regex.Match(If(source, ""), "cf-ray[^0-9a-f]*(?<ray>[0-9a-f]{12,32}(?:-[a-z0-9]+)?)", RegexOptions.IgnoreCase)
+        Return If(match.Success, match.Groups("ray").Value, "")
+    End Function
+
+    Private Shared Function BuildCloudflareChallengeMessage(statusText As String, rayId As String) As String
+        Dim result = statusText & "。目标站点返回了 Cloudflare 安全检查页面，Agent 无法完成浏览器验证。请改用可直接调用的 API 地址，或在 Cloudflare/上游服务中放行该 API 路径和当前 IP。"
+        If Not String.IsNullOrWhiteSpace(rayId) Then result &= " CF-Ray：" & rayId
+        Return LimitErrorMessage(result)
+    End Function
+
+    Private Shared Function BuildHtmlResponseMessage(statusText As String) As String
+        Return LimitErrorMessage(statusText & "。目标站点返回了 HTML 页面而不是 API JSON。请检查端点地址、反向代理和上游服务状态。")
+    End Function
+
+    Private Shared Function BuildHttpStatusText(statusCode As HttpStatusCode) As String
+        Dim prefix = If(CInt(statusCode) >= 200 AndAlso CInt(statusCode) < 300, "端点响应异常", "请求失败")
+        Dim reason = statusCode.ToString()
+        If reason = CInt(statusCode).ToString() Then Return $"{prefix}：HTTP {CInt(statusCode)}"
+        Return $"{prefix}：HTTP {CInt(statusCode)} {reason}"
+    End Function
+
+    Private Shared Function TryExtractHttpStatusText(message As String) As String
+        Dim match = Regex.Match(If(message, ""), "(?:unexpected\s+status|http)\s+(?<code>\d{3})", RegexOptions.IgnoreCase)
+        If Not match.Success Then Return "Agent 请求失败"
+
+        Dim code As Integer
+        If Not Integer.TryParse(match.Groups("code").Value, code) Then Return "Agent 请求失败"
+        Return BuildHttpStatusText(CType(code, HttpStatusCode))
+    End Function
+
+    Private Shared Function LimitErrorMessage(value As String, Optional maxLength As Integer = MaxErrorMessageLength) As String
+        If maxLength <= 0 Then Return ""
+
+        Dim source = If(value, "")
+        Dim scanLength = Math.Max(maxLength + 1, maxLength * 4)
+        Dim sourceWasTruncated = source.Length > scanLength
+        If sourceWasTruncated Then source = source.Substring(0, scanLength)
+
+        Dim result = Regex.Replace(source, "\s+", " ").Trim()
+        If Not sourceWasTruncated AndAlso result.Length <= maxLength Then Return result
+
+        Const suffix As String = "...[错误信息已截断]"
+        If maxLength <= suffix.Length Then Return suffix.Substring(0, maxLength)
+        Return result.Substring(0, Math.Min(result.Length, maxLength - suffix.Length)) & suffix
+    End Function
+
+    Private Shared Function LimitRawError(value As String) As String
+        value = If(value, "")
+        If value.Length <= MaxRawErrorLength Then Return value
+        Return value.Substring(0, MaxRawErrorLength) & "...[错误响应已截断]"
+    End Function
+
+    Private Shared Function ContainsIgnoreCase(value As String, expected As String) As Boolean
+        Return Not String.IsNullOrEmpty(value) AndAlso value.IndexOf(expected, StringComparison.OrdinalIgnoreCase) >= 0
     End Function
 End Class

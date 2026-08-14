@@ -357,6 +357,45 @@ HostCall_MediaStreamVisualSelector?.Invoke(filePath, videoTarget, audioTarget, s
 
 生成项目后，将输出目录中与项目同名的 `.dll` 的后缀改为 `.3fui.dll`，放入 3FUI 程序目录的 `Plugin` 文件夹并重启，该文件夹可能需要手动创建。插件依赖的其他程序集也要一起复制，但不要改它们的扩展名。
 
+## Agent 自定义模型、推理级别、上下文总量
+
+手动创建并编辑 `Agent/CustomModels.json`，3FUI 不会主动创建或覆盖这个文件；修改后在 Agent 页面点击重载连接即可重新读取。
+
+```json
+{
+  "version": 1,
+  "global": {
+    "models": [
+      {
+        "id": "global-custom-model",
+        "reasoning_efforts": ["low", "medium", "high"],
+        "context_window_tokens": 200000
+      }
+    ]
+  },
+  "endpoints": [
+    {
+      "endpoint": "https://api.example.com/v1",
+      "models": [
+        {
+          "id": "endpoint-custom-model",
+          "reasoning_efforts": ["none", "low", "medium", "high", "xhigh"],
+          "context_window_tokens": 1000000
+        },
+        {
+          "id": "model-with-default-efforts",
+          "reasoning_efforts": []
+        }
+      ]
+    }
+  ]
+}
+```
+
+`global.models` 会应用到所有端点；`endpoints` 中的配置只应用于 `endpoint` 与当前 Agent 端点地址一致的项目，比较时会忽略地址末尾的 `/` 和大小写。`id` 是实际发送给接口的模型名称。新增模型的 `reasoning_efforts` 可以省略或留空，此时使用 3FUI 的默认推理级别。`context_window_tokens` 是该模型的上下文总量，单位为 token；省略或设为 `0` 时继续使用 3FUI 内置值，不能使用负数。
+
+自定义模型会与端点返回的模型合并并按 `id` 去重；同一模型在全局、指定端点或端点响应中重复出现时，推理级别会合并并去重，指定端点中大于 `0` 的上下文总量会覆盖同一模型的全局值。如果端点的 `/models` 接口不可用，但当前配置提供了可用模型，Agent 会直接使用自定义模型列表。配置文件格式无效时不会影响端点原有模型，Agent 页面会显示对应提示。
+
 ## 你已获得成就
 
 - 看完了这个 md 文件，击败了全球 99% 的用户
