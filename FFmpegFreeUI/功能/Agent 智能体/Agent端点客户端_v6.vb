@@ -14,6 +14,8 @@ Public Class AgentEndpointClient
     Public Property ApiKey As String
     Public Property ExtraHeaders As IReadOnlyDictionary(Of String, String)
     Public Property ExtraBody As IReadOnlyDictionary(Of String, Object)
+    Private _apiPrefix As String = Nothing
+    Private _apiPrefixResolved As Boolean = False
 
     Public Sub New(endpoint As String, apiKey As String, extraHeadersText As String, Optional extraBodyText As String = "")
         Me.Endpoint = NormalizeEndpoint(endpoint)
@@ -72,17 +74,29 @@ Public Class AgentEndpointClient
     End Function
 
     Public Async Function TryGetModelsAsync(Optional cancellationToken As Threading.CancellationToken = Nothing) As Task(Of AgentClientResult(Of List(Of AgentModelInfo)))
+        Dim lastFailure As AgentClientResult(Of List(Of AgentModelInfo)) = Nothing
         Try
-            Using response = Await SendJsonAsync(HttpMethod.Get, "models", Nothing, cancellationToken)
-                Dim raw = Await response.Content.ReadAsStringAsync(cancellationToken)
-                If Not response.IsSuccessStatusCode Then
-                    Return AgentClientResult(Of List(Of AgentModelInfo)).Fail(ExtractErrorMessage(raw, response), CInt(response.StatusCode))
-                End If
-                If IsHtmlResponse(raw, response) Then
-                    Return AgentClientResult(Of List(Of AgentModelInfo)).Fail(ExtractErrorMessage(raw, response), CInt(response.StatusCode))
-                End If
-                Return AgentClientResult(Of List(Of AgentModelInfo)).Ok(ParseModels(raw))
-            End Using
+            For Each prefix In GetApiPrefixes()
+                Using response = Await SendJsonAsync(HttpMethod.Get, BuildApiPath(prefix, "models"), Nothing, cancellationToken)
+                    Dim raw = Await response.Content.ReadAsStringAsync(cancellationToken)
+                    If Not response.IsSuccessStatusCode OrElse IsHtmlResponse(raw, response) Then
+                        lastFailure = AgentClientResult(Of List(Of AgentModelInfo)).Fail(ExtractErrorMessage(raw, response), CInt(response.StatusCode))
+                        Continue For
+                    End If
+
+                    Try
+                        Dim models = ParseModels(raw)
+                        _apiPrefix = prefix
+                        _apiPrefixResolved = True
+                        Return AgentClientResult(Of List(Of AgentModelInfo)).Ok(models)
+                    Catch ex As Exception
+                        lastFailure = AgentClientResult(Of List(Of AgentModelInfo)).Fail(FormatExceptionMessage(ex), CInt(response.StatusCode))
+                    End Try
+                End Using
+            Next
+
+            If lastFailure IsNot Nothing Then Return lastFailure
+            Return AgentClientResult(Of List(Of AgentModelInfo)).Fail("端点没有返回模型列表。")
         Catch ex As OperationCanceledException
             Throw
         Catch ex As Exception
@@ -95,6 +109,7 @@ Public Class AgentEndpointClient
                                                        tools As List(Of Dictionary(Of String, Object)),
                                                        reasoningEffort As String,
                                                        Optional cancellationToken As Threading.CancellationToken = Nothing) As Task(Of AgentChatResult)
+        Await EnsureApiPrefixAsync(cancellationToken)
         Dim payload As New Dictionary(Of String, Object) From {
             {"model", modelId},
             {"messages", BuildChatMessages(messages)}
@@ -109,7 +124,7 @@ Public Class AgentEndpointClient
 
         Dim raw As String = ""
         Try
-            Using response = Await SendJsonAsync(HttpMethod.Post, "chat/completions", payload, cancellationToken)
+            Using response = Await SendJsonAsync(HttpMethod.Post, GetChatCompletionsPath(), payload, cancellationToken)
                 raw = Await response.Content.ReadAsStringAsync(cancellationToken)
                 If Not response.IsSuccessStatusCode Then
                     Return AgentChatResult.Fail(ExtractErrorMessage(raw, response), CInt(response.StatusCode), LimitRawError(raw))
@@ -139,6 +154,7 @@ Public Class AgentEndpointClient
                                                                 reasoningEffort As String,
                                                                 onContentDelta As Action(Of String),
                                                                 Optional cancellationToken As Threading.CancellationToken = Nothing) As Task(Of AgentChatResult)
+        Await EnsureApiPrefixAsync(cancellationToken)
         Dim payload As New Dictionary(Of String, Object) From {
             {"model", modelId},
             {"messages", BuildChatMessages(messages)},
@@ -159,27 +175,29 @@ Public Class AgentEndpointClient
         Dim toolCallMap As New Dictionary(Of Integer, AgentToolCallInfo)
 
         Try
-            Using request = CreateJsonRequest(HttpMethod.Post, "chat/completions", payload)
+            Using request = CreateJsonRequest(HttpMethod.Post, GetChatCompletionsPath(), payload)
                 Using response = Await Http.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, cancellationToken)
                     If Not response.IsSuccessStatusCode Then
                         Dim errorRaw = Await response.Content.ReadAsStringAsync(cancellationToken)
                         Return AgentChatResult.Fail(ExtractErrorMessage(errorRaw, response), CInt(response.StatusCode), LimitRawError(errorRaw))
                     End If
-                    If IsHtmlResponse("", response) Then
-                        Dim errorRaw = Await response.Content.ReadAsStringAsync(cancellationToken)
-                        Return AgentChatResult.Fail(ExtractErrorMessage(errorRaw, response), CInt(response.StatusCode), LimitRawError(errorRaw))
-                    End If
-
                     Using stream = Await response.Content.ReadAsStreamAsync(cancellationToken)
                         Using reader As New StreamReader(stream, Encoding.UTF8)
+                            Dim firstNonDataLines As New StringBuilder
+                            Dim sawDataEvent As Boolean = False
                             While True
                                 cancellationToken.ThrowIfCancellationRequested()
                                 Dim line = Await reader.ReadLineAsync(cancellationToken)
                                 If line Is Nothing Then Exit While
                                 line = line.Trim()
-                                If line = "" OrElse Not line.StartsWith("data:", StringComparison.OrdinalIgnoreCase) Then Continue While
+                                If line = "" Then Continue While
+                                If Not line.StartsWith("data:", StringComparison.OrdinalIgnoreCase) Then
+                                    If Not sawDataEvent AndAlso firstNonDataLines.Length < 4096 Then firstNonDataLines.AppendLine(line)
+                                    Continue While
+                                End If
 
                                 Dim data = line.Substring(5).Trim()
+                                sawDataEvent = True
                                 If data = "[DONE]" Then Exit While
                                 raw.AppendLine(data)
 
@@ -187,6 +205,17 @@ Public Class AgentEndpointClient
                                     AccumulateStreamingChatChunk(doc.RootElement, result, content, toolCallMap, onContentDelta)
                                 End Using
                             End While
+
+                            If Not sawDataEvent Then
+                                Dim responseText = firstNonDataLines.ToString()
+                                If IsCloudflareChallengeText(responseText) Then
+                                    Return AgentChatResult.Fail(BuildCloudflareChallengeMessage(BuildHttpStatusText(response.StatusCode), GetCloudflareRay(response, responseText)), CInt(response.StatusCode), LimitRawError(responseText))
+                                End If
+                                If ContainsHtmlMarkup(responseText) OrElse String.IsNullOrWhiteSpace(responseText) Then
+                                    Return AgentChatResult.Fail(BuildHtmlResponseMessage(BuildHttpStatusText(response.StatusCode)), CInt(response.StatusCode), LimitRawError(responseText))
+                                End If
+                                Return AgentChatResult.Fail("端点没有返回有效的流式 JSON。", CInt(response.StatusCode), LimitRawError(responseText))
+                            End If
                         End Using
                     End Using
 
@@ -212,6 +241,7 @@ Public Class AgentEndpointClient
                                                            query As String,
                                                            reasoningEffort As String,
                                                            Optional cancellationToken As Threading.CancellationToken = Nothing) As Task(Of AgentChatResult)
+        Await EnsureApiPrefixAsync(cancellationToken)
         Dim payload As New Dictionary(Of String, Object) From {
             {"model", modelId},
             {"input", If(query, "")},
@@ -223,7 +253,7 @@ Public Class AgentEndpointClient
             payload("reasoning") = New Dictionary(Of String, Object) From {{"effort", reasoningEffort.Trim()}}
         End If
         Try
-            Using response = Await SendJsonAsync(HttpMethod.Post, "responses", payload, cancellationToken)
+            Using response = Await SendJsonAsync(HttpMethod.Post, BuildApiPath(_apiPrefix, "responses"), payload, cancellationToken)
                 Dim raw = Await response.Content.ReadAsStringAsync(cancellationToken)
                 If Not response.IsSuccessStatusCode Then
                     Return AgentChatResult.Fail(ExtractErrorMessage(raw, response), CInt(response.StatusCode), LimitRawError(raw))
@@ -248,6 +278,56 @@ Public Class AgentEndpointClient
                                          payload As Object,
                                          cancellationToken As Threading.CancellationToken) As Task(Of HttpResponseMessage)
         Return Await Http.SendAsync(CreateJsonRequest(method, relativePath, payload), cancellationToken)
+    End Function
+
+    Private Async Function EnsureApiPrefixAsync(cancellationToken As Threading.CancellationToken) As Task
+        If _apiPrefixResolved Then Return
+
+        Dim endpointVersion = GetEndpointVersion(Endpoint)
+        If endpointVersion <> "" Then
+            _apiPrefix = ""
+            _apiPrefixResolved = True
+            Return
+        End If
+
+        Dim unused = Await TryGetModelsAsync(cancellationToken)
+        If Not _apiPrefixResolved Then
+            _apiPrefix = "v1"
+            _apiPrefixResolved = True
+        End If
+    End Function
+
+    Private Function GetChatCompletionsPath() As String
+        Return BuildApiPath(_apiPrefix, "chat/completions")
+    End Function
+
+    Private Function GetApiPrefixes() As IEnumerable(Of String)
+        If _apiPrefixResolved Then Return {If(_apiPrefix, "")}
+
+        Dim endpointVersion = GetEndpointVersion(Endpoint)
+        If endpointVersion <> "" Then Return {""}
+        Return {"v1", "v2", "v3", "v4", "v5", "v6", "v7", "v8", "v9", ""}
+    End Function
+
+    Private Shared Function BuildApiPath(prefix As String, relativePath As String) As String
+        Dim cleanRelative = If(relativePath, "").TrimStart("/"c)
+        Dim cleanPrefix = If(prefix, "").Trim("/"c)
+        If cleanPrefix = "" Then Return cleanRelative
+        Return cleanPrefix & "/" & cleanRelative
+    End Function
+
+    Private Shared Function GetEndpointVersion(endpoint As String) As String
+        Dim value = NormalizeEndpoint(endpoint)
+        If value = "" Then Return ""
+        Try
+            Dim uri = New Uri(value)
+            Dim path = uri.AbsolutePath.TrimEnd("/"c)
+            Dim match = Regex.Match(path, "(?:^|/)(v\d+)$", RegexOptions.IgnoreCase)
+            Return If(match.Success, match.Groups(1).Value.ToLowerInvariant(), "")
+        Catch
+            Dim match = Regex.Match(value, "(?:^|/)(v\d+)$", RegexOptions.IgnoreCase)
+            Return If(match.Success, match.Groups(1).Value.ToLowerInvariant(), "")
+        End Try
     End Function
 
     Private Sub MergeExtraBodyIntoPayload(payload As Dictionary(Of String, Object))
@@ -275,20 +355,27 @@ Public Class AgentEndpointClient
         Dim uri = New Uri($"{Endpoint}/{relativePath.TrimStart("/"c)}")
         Dim request As New HttpRequestMessage(method, uri)
 
-        If Not String.IsNullOrWhiteSpace(ApiKey) Then
-            request.Headers.Authorization = New Headers.AuthenticationHeaderValue("Bearer", ApiKey)
-        End If
-        For Each item In ExtraHeaders
-            request.Headers.Remove(item.Key)
-            If Not request.Headers.TryAddWithoutValidation(item.Key, item.Value) Then
-                request.Content?.Headers.TryAddWithoutValidation(item.Key, item.Value)
-            End If
-        Next
-
         If payload IsNot Nothing Then
             Dim json = JsonSerializer.Serialize(payload, JsonSO)
             request.Content = New StringContent(json, Encoding.UTF8, "application/json")
         End If
+
+        If Not String.IsNullOrWhiteSpace(ApiKey) Then
+            request.Headers.Authorization = New Headers.AuthenticationHeaderValue("Bearer", ApiKey)
+        End If
+        For Each item In ExtraHeaders
+            Dim addedToRequest As Boolean = False
+            Try
+                request.Headers.Remove(item.Key)
+                addedToRequest = request.Headers.TryAddWithoutValidation(item.Key, item.Value)
+            Catch ex As InvalidOperationException
+                addedToRequest = False
+            End Try
+            If Not addedToRequest AndAlso request.Content IsNot Nothing Then
+                request.Content.Headers.Remove(item.Key)
+                request.Content.Headers.TryAddWithoutValidation(item.Key, item.Value)
+            End If
+        Next
 
         Return request
     End Function
@@ -846,7 +933,7 @@ Public Class AgentEndpointClient
     End Function
 
     Private Shared Function IsCloudflareChallengeResponse(raw As String, response As HttpResponseMessage) As Boolean
-        If IsCloudflareChallengeText(raw) Then Return True
+        If Not IsJsonDocument(raw) AndAlso IsCloudflareChallengeText(raw) Then Return True
         If Not HasCloudflareHeader(response) OrElse Not IsHtmlResponse(raw, response) Then Return False
 
         Select Case response.StatusCode
@@ -870,8 +957,21 @@ Public Class AgentEndpointClient
     End Function
 
     Private Shared Function IsHtmlResponse(raw As String, response As HttpResponseMessage) As Boolean
+        If IsJsonDocument(raw) Then Return False
         Dim mediaType = response?.Content?.Headers?.ContentType?.MediaType
         Return ContainsIgnoreCase(mediaType, "html") OrElse ContainsHtmlMarkup(raw)
+    End Function
+
+    Private Shared Function IsJsonDocument(value As String) As Boolean
+        If String.IsNullOrWhiteSpace(value) Then Return False
+        Try
+            Using doc = JsonDocument.Parse(value)
+                Return doc.RootElement.ValueKind = JsonValueKind.Object OrElse
+                       doc.RootElement.ValueKind = JsonValueKind.Array
+            End Using
+        Catch
+            Return False
+        End Try
     End Function
 
     Private Shared Function ContainsHtmlMarkup(value As String) As Boolean

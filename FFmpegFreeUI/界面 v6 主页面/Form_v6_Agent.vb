@@ -1724,14 +1724,14 @@ Public Class Form_v6_Agent
     Private Sub AddSubmittedFiles(paths As IEnumerable(Of String))
         If paths Is Nothing Then Return
 
-        For Each pathValue In ExpandSubmittedFilePaths(paths)
+        For Each pathValue In NormalizeSubmittedPaths(paths)
             If _pendingFiles.Any(Function(x) String.Equals(x, pathValue, StringComparison.OrdinalIgnoreCase)) Then Continue For
             _pendingFiles.Add(pathValue)
         Next
         RefreshSubmittedFileList()
     End Sub
 
-    Private Function ExpandSubmittedFilePaths(paths As IEnumerable(Of String)) As List(Of String)
+    Private Function NormalizeSubmittedPaths(paths As IEnumerable(Of String)) As List(Of String)
         Dim result As New List(Of String)
         If paths Is Nothing Then Return result
 
@@ -1739,9 +1739,7 @@ Public Class Form_v6_Agent
             If String.IsNullOrWhiteSpace(raw) Then Continue For
             Try
                 If Directory.Exists(raw) Then
-                    result.AddRange(Directory.EnumerateFiles(raw, "*", SearchOption.TopDirectoryOnly).
-                                    OrderBy(Function(x) x, StringComparer.CurrentCultureIgnoreCase).
-                                    Select(Function(x) Path.GetFullPath(x)))
+                    result.Add(Path.TrimEndingDirectorySeparator(Path.GetFullPath(raw)))
                 ElseIf File.Exists(raw) Then
                     result.Add(Path.GetFullPath(raw))
                 End If
@@ -1760,10 +1758,10 @@ Public Class Form_v6_Agent
         Try
             ModernListBox2.Items.Clear()
             ModernListBox2.ItemToolTips.Clear()
-            For Each file In _pendingFiles
-                Dim display = BuildSubmittedFileDisplayName(file)
+            For Each pathValue In _pendingFiles
+                Dim display = BuildSubmittedFileDisplayName(pathValue)
                 ModernListBox2.Items.Add(display)
-                ModernListBox2.ItemToolTips.Add(New LakeUI.ModernListBox.ToolTipEntry(display, file))
+                ModernListBox2.ItemToolTips.Add(New LakeUI.ModernListBox.ToolTipEntry(display, pathValue))
             Next
             If selectedPath <> "" Then
                 Dim index = _pendingFiles.FindIndex(Function(x) String.Equals(x, selectedPath, StringComparison.OrdinalIgnoreCase))
@@ -1774,14 +1772,19 @@ Public Class Form_v6_Agent
         End Try
     End Sub
 
-    Private Function BuildSubmittedFileDisplayName(file As String) As String
-        Dim name = Path.GetFileName(file)
-        If name = "" Then Return file
-        Dim sameNameCount = _pendingFiles.Where(Function(x) String.Equals(Path.GetFileName(x), name, StringComparison.CurrentCultureIgnoreCase)).Count()
-        If sameNameCount <= 1 Then Return name
-        Dim parent = Path.GetFileName(Path.GetDirectoryName(file))
-        If parent = "" Then parent = Path.GetDirectoryName(file)
-        Return $"{name}  ({parent})"
+    Private Function BuildSubmittedFileDisplayName(pathValue As String) As String
+        Dim name = GetSubmittedPathName(pathValue)
+        Dim prefix = If(Directory.Exists(pathValue), "[文件夹] ", "")
+        Dim sameNameCount = _pendingFiles.Where(Function(x) String.Equals(GetSubmittedPathName(x), name, StringComparison.CurrentCultureIgnoreCase)).Count()
+        If sameNameCount <= 1 Then Return prefix & name
+        Dim parent = Path.GetFileName(Path.GetDirectoryName(pathValue))
+        If parent = "" Then parent = Path.GetDirectoryName(pathValue)
+        Return $"{prefix}{name}  ({parent})"
+    End Function
+
+    Private Function GetSubmittedPathName(pathValue As String) As String
+        Dim name = Path.GetFileName(Path.TrimEndingDirectorySeparator(pathValue))
+        Return If(name = "", pathValue, name)
     End Function
 
     Private Sub RemoveSelectedSubmittedFile()
@@ -1800,41 +1803,46 @@ Public Class Form_v6_Agent
         If _pendingFiles.Count = 0 Then Return ""
 
         Dim sb As New StringBuilder
-        sb.AppendLine("用户提交的文件上下文：")
+        sb.AppendLine("用户提交的文件或文件夹上下文：")
         For i = 0 To _pendingFiles.Count - 1
             sb.AppendLine(BuildSubmittedFileContextItem(i + 1, _pendingFiles(i)))
         Next
         Return sb.ToString().Trim()
     End Function
 
-    Private Function BuildSubmittedFileContextItem(index As Integer, file As String) As String
+    Private Function BuildSubmittedFileContextItem(index As Integer, pathValue As String) As String
         Try
-            If Not System.IO.File.Exists(file) Then Return $"{index}. 文件不存在：{file}"
-            Dim info As New FileInfo(file)
+            If Directory.Exists(pathValue) Then
+                Dim directoryInfo As New DirectoryInfo(pathValue)
+                Return $"{index}. {GetSubmittedPathName(directoryInfo.FullName)}{vbCrLf}类型：文件夹{vbCrLf}路径：{directoryInfo.FullName}{vbCrLf}内容：未自动扫描，可按需通过文件系统工具读取。"
+            End If
+            If Not System.IO.File.Exists(pathValue) Then Return $"{index}. 路径不存在：{pathValue}"
+            Dim fileInfo As New FileInfo(pathValue)
             Dim sb As New StringBuilder
-            sb.AppendLine($"{index}. {info.Name}")
-            sb.AppendLine($"路径：{info.FullName}")
-            sb.AppendLine($"大小：{Agent通用工具_v6.FormatFileSize(info.Length)}")
-            sb.AppendLine($"扩展名：{If(info.Extension = "", "(无)", info.Extension)}")
+            sb.AppendLine($"{index}. {fileInfo.Name}")
+            sb.AppendLine("类型：文件")
+            sb.AppendLine($"路径：{fileInfo.FullName}")
+            sb.AppendLine($"大小：{Agent通用工具_v6.FormatFileSize(fileInfo.Length)}")
+            sb.AppendLine($"扩展名：{If(fileInfo.Extension = "", "(无)", fileInfo.Extension)}")
 
-            If Agent通用工具_v6.IsImageExtension(info.Extension) Then
+            If Agent通用工具_v6.IsImageExtension(fileInfo.Extension) Then
                 Try
-                    Using img = Image.FromFile(file)
+                    Using img = Image.FromFile(pathValue)
                         sb.AppendLine($"图片：{img.Width}x{img.Height}")
                     End Using
                 Catch ex As Exception
                     sb.AppendLine("图片信息读取失败：" & ex.Message)
                 End Try
-            ElseIf IsLikelyTextFile(info) Then
+            ElseIf IsLikelyTextFile(fileInfo) Then
                 sb.AppendLine("文本内容：")
-                sb.AppendLine(Agent通用工具_v6.LimitText(Agent通用工具_v6.DecodeTextBytes(System.IO.File.ReadAllBytes(file)), SubmittedTextLimitCharacters))
+                sb.AppendLine(Agent通用工具_v6.LimitText(Agent通用工具_v6.DecodeTextBytes(System.IO.File.ReadAllBytes(pathValue)), SubmittedTextLimitCharacters))
             Else
                 sb.AppendLine("内容：二进制或大文件，未内嵌。")
             End If
 
             Return sb.ToString().TrimEnd()
         Catch ex As Exception
-            Return $"{index}. 读取失败：{file}，{ex.Message}"
+            Return $"{index}. 读取失败：{pathValue}，{ex.Message}"
         End Try
     End Function
 

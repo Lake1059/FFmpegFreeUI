@@ -83,13 +83,21 @@ Friend NotInheritable Class 网络功能_v6_更新源
 
         校验国内镜像源挑战数据(挑战响应)
 
-        Dim Nonce As String = Await Task.Run(Function() 求解国内镜像源PowNonce(挑战响应.Data, cancellationToken), cancellationToken)
+        Dim Solution As String = Await Task.Run(
+            Function()
+                Return LakeUI.RsaRepeatedSquaring.Solve(
+                    挑战响应.Data.Modulus,
+                    挑战响应.Data.BaseValue,
+                    挑战响应.Data.Iterations,
+                    cancellationToken:=cancellationToken)
+            End Function,
+            cancellationToken)
         Dim 授权响应 As 网络功能.国内镜像源授权数据结构 = Await LakeUI.SRV_JsonSever.PostJsonAsync(Of 网络功能.国内镜像源创建授权请求, 网络功能.国内镜像源授权数据结构)(
             获取国内镜像源创建授权地址(),
             New 网络功能.国内镜像源创建授权请求 With {
                 .ChallengeId = 挑战响应.Data.ChallengeId,
                 .AssetId = 资产ID,
-                .Nonce = Nonce
+                .Solution = Solution
             },
             JsonSO,
             cancellationToken)
@@ -105,11 +113,13 @@ Friend NotInheritable Class 网络功能_v6_更新源
         End If
 
         If 挑战响应.Data Is Nothing OrElse
-           Not String.Equals(挑战响应.Data.Algorithm, "sha256", StringComparison.OrdinalIgnoreCase) OrElse
+           Not String.Equals(挑战响应.Data.Algorithm, "rsa-repeated-squaring-v1", StringComparison.Ordinal) OrElse
            String.IsNullOrWhiteSpace(挑战响应.Data.ChallengeId) OrElse
-           String.IsNullOrWhiteSpace(挑战响应.Data.AssetId) OrElse
-           String.IsNullOrWhiteSpace(挑战响应.Data.NonceSeed) OrElse
-           挑战响应.Data.LeadingZeroBits <= 0 Then
+           String.IsNullOrWhiteSpace(挑战响应.Data.ModulusId) OrElse
+           String.IsNullOrWhiteSpace(挑战响应.Data.Modulus) OrElse
+           String.IsNullOrWhiteSpace(挑战响应.Data.BaseValue) OrElse
+           挑战响应.Data.Iterations <= 0 OrElse
+           Not String.Equals(挑战响应.Data.Encoding, "base64url-uint-be-384", StringComparison.Ordinal) Then
             Throw New InvalidOperationException("下载挑战数据不完整。")
         End If
     End Sub
@@ -126,17 +136,6 @@ Friend NotInheritable Class 网络功能_v6_更新源
             Throw New InvalidOperationException("下载授权数据不完整。")
         End If
     End Sub
-
-    Private Shared Function 求解国内镜像源PowNonce(挑战数据 As 网络功能.国内镜像源挑战DataInfo, cancellationToken As CancellationToken) As String
-        Return LakeUI.Sha256ProofOfWork.Solve(
-            Function(Nonce) 生成国内镜像源Pow规范文本(挑战数据, Nonce),
-            挑战数据.LeadingZeroBits,
-            cancellationToken:=cancellationToken)
-    End Function
-
-    Private Shared Function 生成国内镜像源Pow规范文本(挑战数据 As 网络功能.国内镜像源挑战DataInfo, Nonce As ULong) As String
-        Return $"download.v1:{挑战数据.ChallengeId}:{挑战数据.AssetId}:{挑战数据.NonceSeed}:{Nonce}"
-    End Function
 
     Friend Shared Function 应用GitHub代理(下载地址 As String) As String
         If 设置_v6.实例对象.更新服务器选择 <> 1 Then Return 下载地址
@@ -211,11 +210,11 @@ Friend NotInheritable Class 网络功能_v6_更新源
     End Function
 
     Private Shared Function 获取国内镜像源创建挑战地址() As String
-        Return "https://fengyuan.frostlynx.work/api/public/v1/api/challenges"
+        Return "https://fengyuan.frostlynx.work/api/public/v2/api/challenges"
     End Function
 
     Private Shared Function 获取国内镜像源创建授权地址() As String
-        Return "https://fengyuan.frostlynx.work/api/public/v1/api/authorizations"
+        Return "https://fengyuan.frostlynx.work/api/public/v2/api/authorizations"
     End Function
 
     Friend Shared Function 获取MirrorChyan本体更新地址() As String

@@ -115,24 +115,24 @@ Public Partial Class 网络功能
         <JsonPropertyName("algorithm")>
         Public Property Algorithm As String
 
-        <JsonPropertyName("asset_id")>
-        Public Property AssetId As String
-
-        <JsonPropertyName("canonical_format")>
-        Public Property CanonicalFormat As String
-
         <JsonPropertyName("challenge_id")>
         Public Property ChallengeId As String
 
-        <JsonPropertyName("expires_at")>
-        Public Property ExpiresAt As String
+        <JsonPropertyName("modulus_id")>
+        Public Property ModulusId As String
 
-        <JsonPropertyName("leading_zero_bits")>
+        <JsonPropertyName("modulus")>
+        Public Property Modulus As String
+
+        <JsonPropertyName("base")>
+        Public Property BaseValue As String
+
+        <JsonPropertyName("iterations")>
         <JsonNumberHandling(JsonNumberHandling.AllowReadingFromString)>
-        Public Property LeadingZeroBits As Integer
+        Public Property Iterations As Integer
 
-        <JsonPropertyName("nonce_seed")>
-        Public Property NonceSeed As String
+        <JsonPropertyName("encoding")>
+        Public Property Encoding As String
     End Class
 
     Public Class 国内镜像源创建授权请求
@@ -142,8 +142,8 @@ Public Partial Class 网络功能
         <JsonPropertyName("asset_id")>
         Public Property AssetId As String
 
-        <JsonPropertyName("nonce")>
-        Public Property Nonce As String
+        <JsonPropertyName("solution")>
+        Public Property Solution As String
     End Class
 
     Public Class 国内镜像源授权数据结构

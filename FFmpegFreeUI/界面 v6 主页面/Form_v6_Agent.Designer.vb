@@ -383,7 +383,7 @@ Partial Class Form_v6_Agent
         ModernPanel2.Location = New Point(0, 0)
         ModernPanel2.Name = "ModernPanel2"
         ModernPanel2.Padding = New Padding(5)
-        ModernPanel2.Size = New Size(250, 362)
+        ModernPanel2.Size = New Size(250, 366)
         ModernPanel2.TabIndex = 1
         ' 
         ' ModernListBox1
@@ -396,13 +396,13 @@ Partial Class Form_v6_Agent
         ModernListBox1.ItemHoverColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
         ModernListBox1.ItemPaddingLeft = 10
         ModernListBox1.ItemSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernListBox1.Location = New Point(10, 36)
+        ModernListBox1.Location = New Point(10, 32)
         ModernListBox1.MultiSelect = False
         ModernListBox1.Name = "ModernListBox1"
-        ModernListBox1.Padding = New Padding(0, 10, 0, 10)
+        ModernListBox1.Padding = New Padding(0, 5, 0, 0)
         ModernListBox1.SelectionRectBorderColor = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
         ModernListBox1.SelectionRectFillColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernListBox1.Size = New Size(230, 316)
+        ModernListBox1.Size = New Size(230, 324)
         ModernListBox1.TabIndex = 8
         ' 
         ' HtmlColorLabel2
@@ -416,7 +416,7 @@ Partial Class Form_v6_Agent
         HtmlColorLabel2.Margin = New Padding(2)
         HtmlColorLabel2.Name = "HtmlColorLabel2"
         HtmlColorLabel2.Padding = New Padding(0, 0, 0, 5)
-        HtmlColorLabel2.Size = New Size(230, 26)
+        HtmlColorLabel2.Size = New Size(230, 22)
         HtmlColorLabel2.TabIndex = 19
         HtmlColorLabel2.Text = "Agent 对话列表"
         HtmlColorLabel2.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.Center
@@ -428,13 +428,13 @@ Partial Class Form_v6_Agent
         HtmlColorLabel1.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel1.Dock = DockStyle.Bottom
         HtmlColorLabel1.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        HtmlColorLabel1.Location = New Point(0, 362)
+        HtmlColorLabel1.Location = New Point(0, 366)
         HtmlColorLabel1.Margin = New Padding(2)
         HtmlColorLabel1.Name = "HtmlColorLabel1"
         HtmlColorLabel1.Padding = New Padding(0, 10, 0, 7)
-        HtmlColorLabel1.Size = New Size(250, 38)
+        HtmlColorLabel1.Size = New Size(250, 34)
         HtmlColorLabel1.TabIndex = 17
-        HtmlColorLabel1.Text = "向 AI 发送文件"
+        HtmlColorLabel1.Text = "向 AI 发送文件(夹)"
         HtmlColorLabel1.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.Center
         HtmlColorLabel1.ToolTipText = "将文件拖至下方列表来添加，右键任何项或空白区域打开对话框，双击或按 Delete 来移除，可直接拖拽排序"
         ' 
@@ -447,12 +447,9 @@ Partial Class Form_v6_Agent
         ModernListBox2.Dock = DockStyle.Bottom
         ModernListBox2.ItemHeight = 26
         ModernListBox2.ItemHoverColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
-        ModernListBox2.ItemPaddingLeft = 10
         ModernListBox2.ItemSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernListBox2.Location = New Point(0, 400)
-        ModernListBox2.MultiSelect = False
         ModernListBox2.Name = "ModernListBox2"
-        ModernListBox2.Padding = New Padding(0, 10, 0, 10)
         ModernListBox2.SelectionRectBorderColor = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
         ModernListBox2.SelectionRectFillColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernListBox2.Size = New Size(250, 120)
