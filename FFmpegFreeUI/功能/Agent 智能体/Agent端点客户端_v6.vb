@@ -9,6 +9,7 @@ Public Class AgentEndpointClient
     Private Shared ReadOnly Http As New HttpClient With {.Timeout = TimeSpan.FromSeconds(90)}
     Private Const MaxErrorMessageLength As Integer = 600
     Private Const MaxRawErrorLength As Integer = 32768
+    Private Const MaxStreamingRawCaptureLength As Integer = 65536
 
     Public Property Endpoint As String
     Public Property ApiKey As String
@@ -109,7 +110,7 @@ Public Class AgentEndpointClient
                                                        tools As List(Of Dictionary(Of String, Object)),
                                                        reasoningEffort As String,
                                                        Optional cancellationToken As Threading.CancellationToken = Nothing) As Task(Of AgentChatResult)
-        Await EnsureApiPrefixAsync(cancellationToken)
+        Await EnsureApiPrefixAsync(cancellationToken).ConfigureAwait(False)
         Dim payload As New Dictionary(Of String, Object) From {
             {"model", modelId},
             {"messages", BuildChatMessages(messages)}
@@ -176,18 +177,18 @@ Public Class AgentEndpointClient
 
         Try
             Using request = CreateJsonRequest(HttpMethod.Post, GetChatCompletionsPath(), payload)
-                Using response = Await Http.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, cancellationToken)
+                Using response = Await Http.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(False)
                     If Not response.IsSuccessStatusCode Then
-                        Dim errorRaw = Await response.Content.ReadAsStringAsync(cancellationToken)
+                        Dim errorRaw = Await response.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(False)
                         Return AgentChatResult.Fail(ExtractErrorMessage(errorRaw, response), CInt(response.StatusCode), LimitRawError(errorRaw))
                     End If
-                    Using stream = Await response.Content.ReadAsStreamAsync(cancellationToken)
+                    Using stream = Await response.Content.ReadAsStreamAsync(cancellationToken).ConfigureAwait(False)
                         Using reader As New StreamReader(stream, Encoding.UTF8)
                             Dim firstNonDataLines As New StringBuilder
                             Dim sawDataEvent As Boolean = False
                             While True
                                 cancellationToken.ThrowIfCancellationRequested()
-                                Dim line = Await reader.ReadLineAsync(cancellationToken)
+                                Dim line = Await reader.ReadLineAsync(cancellationToken).ConfigureAwait(False)
                                 If line Is Nothing Then Exit While
                                 line = line.Trim()
                                 If line = "" Then Continue While
@@ -199,7 +200,14 @@ Public Class AgentEndpointClient
                                 Dim data = line.Substring(5).Trim()
                                 sawDataEvent = True
                                 If data = "[DONE]" Then Exit While
-                                raw.AppendLine(data)
+                                If raw.Length < MaxStreamingRawCaptureLength Then
+                                    Dim remaining = MaxStreamingRawCaptureLength - raw.Length
+                                    If data.Length + Environment.NewLine.Length <= remaining Then
+                                        raw.AppendLine(data)
+                                    ElseIf remaining > 0 Then
+                                        raw.Append(data.AsSpan(0, Math.Min(data.Length, remaining)))
+                                    End If
+                                End If
 
                                 Using doc = JsonDocument.Parse(data)
                                     AccumulateStreamingChatChunk(doc.RootElement, result, content, toolCallMap, onContentDelta)
@@ -408,7 +416,11 @@ Public Class AgentEndpointClient
                     End If
                 Case Else
                     item("content") = If(msg.Content, "")
-                    If Not String.IsNullOrWhiteSpace(msg.Name) Then item("name") = msg.Name
+                    If Not String.IsNullOrWhiteSpace(msg.Name) AndAlso
+                       Not String.Equals(msg.Name, AgentConversationSchema.SteeringMessageName, StringComparison.OrdinalIgnoreCase) AndAlso
+                       Not String.Equals(msg.Name, AgentConversationSchema.ActivityMessageName, StringComparison.OrdinalIgnoreCase) Then
+                        item("name") = msg.Name
+                    End If
             End Select
             result.Add(item)
         Next

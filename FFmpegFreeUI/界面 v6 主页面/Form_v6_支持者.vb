@@ -13,7 +13,7 @@ Public Class Form_v6_支持者
         "xrh0905||https://www.xrh0905.top",
         "L. Snow|#6028e0", "爱发电用户_b274c", "不安的乌鸦 (暗夜精灵德鲁伊)|#FF8C00", "小豆豆变毛豆",
         "Liu Zheng|#FFFFFF|https://www3.ntu.edu.sg/home/z.liu",
-        "Vertin", "简风|#613E33", "Amanecida", "nika|#F4B8C4"
+        "Vertin", "简风|#613E33", "Amanecida", "nika|#F4B8C4", "SteveYu000|#39c5bb|https://github.com/SteveYu000"
     }
     Public Shared ReadOnly 赠送支持者列表 As New List(Of String) From {
         "格里芬指挥官|#39C5BB",

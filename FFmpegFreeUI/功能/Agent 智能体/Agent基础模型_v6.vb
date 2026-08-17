@@ -62,7 +62,31 @@ Public Class AgentMessageData
     Public Property CreatedAt As DateTime = DateTime.Now
 End Class
 
+Public Class AgentTurnActivityData
+    Public Property Id As String = Guid.NewGuid().ToString("N")
+    Public Property Kind As String = ""
+    Public Property Title As String = ""
+    Public Property Content As String = ""
+    Public Property ToolName As String = ""
+    Public Property Arguments As String = ""
+    Public Property ResultText As String = ""
+    Public Property State As String = "pending"
+    Public Property ElapsedMilliseconds As Double = -1
+    Public Property CreatedAt As DateTime = DateTime.Now
+End Class
+
+Public Class AgentTurnData
+    Public Property Id As String = Guid.NewGuid().ToString("N")
+    Public Property UserMessageId As String = ""
+    Public Property StartedAt As DateTime = DateTime.Now
+    Public Property CompletedAt As DateTime = DateTime.MinValue
+    Public Property State As String = "pending"
+    Public Property StatusText As String = ""
+    Public Property Activities As New List(Of AgentTurnActivityData)
+End Class
+
 Public Class AgentConversationData
+    Public Property Version As Integer = AgentConversationSchema.LatestVersion
     Public Property Id As String = Guid.NewGuid().ToString("N")
     Public Property Title As String = "新对话"
     Public Property CreatedAt As DateTime = DateTime.Now
@@ -73,11 +97,32 @@ Public Class AgentConversationData
     Public Property NetworkMode As Integer = 0
     Public Property PermissionLevel As Integer = 0
     Public Property Messages As New List(Of AgentMessageData)
+    Public Property Turns As New List(Of AgentTurnData)
     Public Property Usage As New AgentUsageInfo
-    Public Property ContextSummary As String = ""
-    Public Property ContextSummaryMessageCount As Integer = 0
-    Public Property ContextSummaryModelId As String = ""
-    Public Property ContextSummaryUpdatedAt As DateTime = DateTime.MinValue
+    <System.Text.Json.Serialization.JsonIgnore>
+    Public Property ContextCheckpoint As AgentContextCheckpointData
+End Class
+
+Public NotInheritable Class AgentConversationSchema
+    Private Sub New()
+    End Sub
+
+    Public Const LatestVersion As Integer = 3
+    Public Const SteeringMessageName As String = "steer"
+    Public Const ActivityMessageName As String = "agent_activity"
+End Class
+
+Public Class AgentContextCheckpointData
+    Public Property Version As Integer = 1
+    Public Property ConversationId As String = ""
+    Public Property Summary As String = ""
+    Public Property CoveredThroughMessageId As String = ""
+    Public Property CoveredMessageCountSnapshot As Integer
+    Public Property ModelId As String = ""
+    Public Property SourceTokenEstimate As Integer
+    Public Property SummaryTokenEstimate As Integer
+    Public Property CreatedAt As DateTime = DateTime.Now
+    Public Property UpdatedAt As DateTime = DateTime.Now
 End Class
 
 Public NotInheritable Class AgentNetworkMode

@@ -12,19 +12,17 @@ Public Class Form_v6_Agent
     Private _busy As Boolean = False
     Private _statusItem As LakeUI.AgentRoom.ChatItem = Nothing
     Private _requestCts As Threading.CancellationTokenSource = Nothing
-    Private _restartAfterCancel As Boolean = False
+    Private ReadOnly _pendingSteeringMessages As New List(Of AgentMessageData)
     Private _activeResponseItem As LakeUI.AgentRoom.ChatItem = Nothing
     Private _activeRunConversation As AgentConversationData = Nothing
+    Private _activeTurn As AgentTurnData = Nothing
+    Private _activeTurnItem As LakeUI.AgentRoom.ChatItem = Nothing
     Private _activeToolRoundLogs As List(Of ToolRoundLog) = Nothing
-    Private _activeToolSummaryItem As LakeUI.AgentRoom.ChatItem = Nothing
-    Private _activeRunStatusItem As LakeUI.AgentRoom.ChatItem = Nothing
     Private _activeResponseText As String = ""
     Private ReadOnly _activeResponseTextBuilder As New StringBuilder
     Private _activeResponseTextDirty As Boolean = False
     Private _activeRunStatusText As String = ""
-    Private _activeRunStartedAtUtc As DateTime = DateTime.MinValue
     Private _activeRunElapsedTimer As System.Windows.Forms.Timer = Nothing
-    Private _restartRunConversation As AgentConversationData = Nothing
     Private _modelEndpointSignature As String = ""
     Private _refreshingModels As Boolean = False
     Private _pendingModelRefresh As Boolean = False
@@ -33,6 +31,10 @@ Public Class Form_v6_Agent
     Private _refreshingSubmittedFiles As Boolean = False
 
     Private Const ContextSummaryLimitTokens As Integer = 12000
+    Private Const ContextAutoCompactRatio As Double = 0.9
+    Private Const MaxContextCompactionPasses As Integer = 32
+    Private Const ContextRequestEnvelopeReserveTokens As Integer = 512
+    Private Const ContextMinimumCompletionReserveTokens As Integer = 2048
     Private Const StreamFlushIntervalMs As Integer = 80
     Private Const StreamFlushCharacters As Integer = 384
     Private Const SubmittedTextFileLimitBytes As Long = 128 * 1024
@@ -41,8 +43,11 @@ Public Class Form_v6_Agent
     Private Class ToolRunLog
         Public Property Round As Integer
         Public Property ToolName As String = ""
+        Public Property CallId As String = ""
         Public Property ElapsedMilliseconds As Double = -1
         Public Property ResultText As String = ""
+        Public Property Activity As AgentTurnActivityData
+        Public Property Item As LakeUI.AgentRoom.ChatItem
     End Class
 
     Private Class ToolRoundLog
@@ -50,22 +55,26 @@ Public Class Form_v6_Agent
         Public Property Calls As New List(Of ToolRunLog)
     End Class
 
-    Private Class ToolSummaryGroup
-        Public Property ToolName As String = ""
-        Public Property Count As Integer
-        Public Property CompletedCount As Integer
-        Public Property RunningCount As Integer
-        Public Property ElapsedMilliseconds As Double
-        Public Property AddedCharacters As Integer
-    End Class
-
     Private Class ContextCompressionPlan
         Public Property ContextWindowTokens As Integer
+        Public Property AutoCompactTokenLimit As Integer
+        Public Property CompactModelId As String = ""
         Public Property CurrentRequestTokens As Integer
         Public Property RecentMessageBudgetTokens As Integer
         Public Property RecentMessageTokens As Integer
-        Public Property SummaryBoundaryIndex As Integer
+        Public Property ExistingBoundaryIndex As Integer = -1
+        Public Property TargetBoundaryIndex As Integer = -1
         Public Property CompressionSourceBudgetTokens As Integer
+        Public Property CompressionSourceTokens As Integer
+        Public Property ToolDefinitionTokens As Integer
+        Public Property CompletionReserveTokens As Integer
+        Public Property SummaryBudgetTokens As Integer
+
+        Public ReadOnly Property RequiresCompaction As Boolean
+            Get
+                Return TargetBoundaryIndex > ExistingBoundaryIndex
+            End Get
+        End Property
     End Class
 
     Private Class StreamingTextBuffer
@@ -73,31 +82,48 @@ Public Class Form_v6_Agent
         Private ReadOnly _item As LakeUI.AgentRoom.ChatItem
         Private ReadOnly _onTextAppended As Action(Of String)
         Private ReadOnly _pendingText As New StringBuilder
+        Private ReadOnly _syncRoot As New Object
+        Private ReadOnly _uiContext As Threading.SynchronizationContext
         Private _lastFlushUtc As DateTime = DateTime.MinValue
 
         Public Sub New(room As LakeUI.AgentRoom, item As LakeUI.AgentRoom.ChatItem, Optional onTextAppended As Action(Of String) = Nothing)
             _room = room
             _item = item
             _onTextAppended = onTextAppended
+            _uiContext = Threading.SynchronizationContext.Current
         End Sub
 
         Public Sub Append(delta As String)
             If String.IsNullOrEmpty(delta) Then Return
-            _pendingText.Append(delta)
-
-            Dim shouldFlush = _pendingText.Length >= StreamFlushCharacters OrElse
-                (DateTime.UtcNow - _lastFlushUtc).TotalMilliseconds >= StreamFlushIntervalMs
+            Dim shouldFlush As Boolean
+            SyncLock _syncRoot
+                _pendingText.Append(delta)
+                shouldFlush = _pendingText.Length >= StreamFlushCharacters OrElse
+                    (DateTime.UtcNow - _lastFlushUtc).TotalMilliseconds >= StreamFlushIntervalMs
+            End SyncLock
             If shouldFlush Then Flush(False)
         End Sub
 
         Public Sub Flush(forceScroll As Boolean)
-            If _pendingText.Length = 0 Then Return
-            Dim appendedText = _pendingText.ToString()
-            _pendingText.Clear()
-            _lastFlushUtc = DateTime.UtcNow
-            If _item IsNot Nothing Then _room.AppendToItem(_item, appendedText)
-            _onTextAppended?.Invoke(appendedText)
-            If forceScroll Then _room.ScrollToBottom()
+            Dim appendedText As String
+            SyncLock _syncRoot
+                If _pendingText.Length = 0 Then Return
+                appendedText = _pendingText.ToString()
+                _pendingText.Clear()
+                _lastFlushUtc = DateTime.UtcNow
+            End SyncLock
+
+            Dim apply =
+                Sub()
+                    If _item IsNot Nothing Then _room.AppendToItem(_item, appendedText)
+                    _onTextAppended?.Invoke(appendedText)
+                    If forceScroll Then _room.FollowLatestIfPinned()
+                End Sub
+            If _uiContext IsNot Nothing AndAlso Not Object.ReferenceEquals(Threading.SynchronizationContext.Current, _uiContext) Then
+                _uiContext.Send(Sub(state) apply(), Nothing)
+            Else
+                apply()
+            End If
         End Sub
     End Class
 
@@ -427,36 +453,143 @@ Public Class Form_v6_Agent
         Return $"{title}  {conversation.UpdatedAt:MM-dd HH:mm}"
     End Function
 
-    Private Sub RenderCurrentConversation()
+    Private Sub RenderCurrentConversation(Optional scrollToBottom As Boolean = True)
         AgentRoom1.Clear()
         _statusItem = Nothing
+        _activeTurnItem = Nothing
+        _activeResponseItem = Nothing
         If _current Is Nothing Then
             UpdateSendButtonState()
             Return
         End If
-        Dim i = 0
-        While i < _current.Messages.Count
-            Dim message = _current.Messages(i)
+        Dim turnsByUserMessage = If(_current.Turns, New List(Of AgentTurnData)).
+            Where(Function(x) x IsNot Nothing AndAlso Not String.IsNullOrWhiteSpace(x.UserMessageId)).
+            GroupBy(Function(x) x.UserMessageId, StringComparer.OrdinalIgnoreCase).
+            ToDictionary(Function(x) x.Key, Function(x) x.Last(), StringComparer.OrdinalIgnoreCase)
+
+        For Each message In _current.Messages
             Select Case message.Role
                 Case "user"
+                    If String.Equals(message.Name, AgentConversationSchema.SteeringMessageName, StringComparison.OrdinalIgnoreCase) Then Continue For
                     AgentRoom1.AddUserMessage(message.Content)
+                    Dim turn As AgentTurnData = Nothing
+                    If turnsByUserMessage.TryGetValue(message.Id, turn) Then RenderTurnRecord(turn)
                 Case "assistant"
-                    If i + 1 < _current.Messages.Count AndAlso IsToolSummaryMessage(_current.Messages(i + 1)) Then
-                        AddStoredCard(_current.Messages(i + 1))
-                        i += 1
-                    End If
+                    If String.Equals(message.Name, AgentConversationSchema.ActivityMessageName, StringComparison.OrdinalIgnoreCase) Then Continue For
                     If Not String.IsNullOrWhiteSpace(message.Content) Then AgentRoom1.AddAssistantMessage(message.Content)
                 Case "tool"
-                    ' 工具详情只用于上下文，不再作为聊天正文渲染。
+                    ' 工具过程由 Turns 中的展示记录承载。
                 Case "card"
-                    AddStoredCard(message)
+                    If Not IsToolSummaryMessage(message) Then AddStoredCard(message)
             End Select
-            i += 1
-        End While
+        Next
         RenderActiveRunOverlay()
         UpdateSendButtonState()
-        AgentRoom1.ScrollToBottom()
+        If scrollToBottom Then AgentRoom1.ScrollToBottom()
     End Sub
+
+    Private Sub RenderTurnRecord(turn As AgentTurnData)
+        If turn Is Nothing Then Return
+        Dim isActive = ReferenceEquals(turn, _activeTurn)
+        Dim expanded = isActive OrElse Not String.Equals(turn.State, "completed", StringComparison.OrdinalIgnoreCase)
+        Dim header = AgentRoom1.AddTurnHeader(turn.Id, FormatTurnHeader(turn), expanded)
+        If isActive Then _activeTurnItem = header
+
+        For Each activity In If(turn.Activities, New List(Of AgentTurnActivityData))
+            If activity Is Nothing Then Continue For
+            Select Case If(activity.Kind, "").ToLowerInvariant()
+                Case "assistant"
+                    If Not String.IsNullOrWhiteSpace(activity.Content) Then
+                        AgentRoom1.AddAssistantActivity(turn.Id, activity.Content, activity.Id)
+                    End If
+                Case "guidance"
+                    If Not String.IsNullOrWhiteSpace(activity.Content) Then
+                        AgentRoom1.AddAssistantActivity(turn.Id, "调整方向：" & activity.Content, activity.Id)
+                    End If
+                Case "tool"
+                    Dim item = AgentRoom1.AddToolCall(
+                        turn.Id,
+                        FormatToolActivityTitle(activity),
+                        FormatToolActivityDetails(activity),
+                        activity.Id,
+                        expanded:=False,
+                        running:=String.Equals(activity.State, "running", StringComparison.OrdinalIgnoreCase),
+                        isError:=String.Equals(activity.State, "error", StringComparison.OrdinalIgnoreCase))
+                    Dim log = FindToolRunLog(activity.Id)
+                    If log IsNot Nothing Then log.Item = item
+            End Select
+        Next
+    End Sub
+
+    Private Function FormatTurnHeader(turn As AgentTurnData) As String
+        If turn Is Nothing Then Return "工作记录"
+        Dim elapsed = If(turn.CompletedAt > turn.StartedAt,
+                         turn.CompletedAt - turn.StartedAt,
+                         If(ReferenceEquals(turn, _activeTurn), DateTime.Now - turn.StartedAt, TimeSpan.Zero))
+        Dim toolCount = If(turn.Activities, New List(Of AgentTurnActivityData)).
+            Where(Function(x) x IsNot Nothing AndAlso String.Equals(x.Kind, "tool", StringComparison.OrdinalIgnoreCase)).
+            Count()
+        Dim suffix = If(toolCount > 0, $" · {toolCount} 次工具调用", "")
+        Select Case If(turn.State, "").ToLowerInvariant()
+            Case "running"
+                Dim status = CompactSingleLine(If(String.IsNullOrWhiteSpace(turn.StatusText), "正在工作", turn.StatusText), 34)
+                Return $"{status} · {FormatElapsedMilliseconds(elapsed.TotalMilliseconds)}{suffix}"
+            Case "canceled"
+                Return $"已停止 · {FormatElapsedMilliseconds(elapsed.TotalMilliseconds)}{suffix}"
+            Case "error"
+                Return $"运行失败 · {FormatElapsedMilliseconds(elapsed.TotalMilliseconds)}{suffix}"
+            Case Else
+                Return $"已工作 {FormatElapsedMilliseconds(elapsed.TotalMilliseconds)}{suffix}"
+        End Select
+    End Function
+
+    Private Function FormatToolActivityTitle(activity As AgentTurnActivityData) As String
+        Dim name = CompactSingleLine(GetToolDisplayName(activity?.ToolName), 42)
+        Select Case If(activity?.State, "").ToLowerInvariant()
+            Case "running"
+                Return name & " · 正在执行"
+            Case "error"
+                Return name & " · 失败"
+            Case "canceled"
+                Return name & " · 已取消"
+            Case Else
+                Return name & " · " & FormatElapsedMilliseconds(If(activity?.ElapsedMilliseconds, 0))
+        End Select
+    End Function
+
+    Private Function CompactSingleLine(value As String, maxLength As Integer) As String
+        Dim text = If(value, "").Replace(vbCr, " ").Replace(vbLf, " ").Trim()
+        While text.Contains("  ", StringComparison.Ordinal)
+            text = text.Replace("  ", " ")
+        End While
+        maxLength = Math.Max(4, maxLength)
+        If text.Length > maxLength Then text = String.Concat(text.AsSpan(0, maxLength - 3), "...")
+        Return text
+    End Function
+
+    Private Function FormatToolActivityDetails(activity As AgentTurnActivityData) As String
+        If activity Is Nothing Then Return ""
+        Dim sb As New StringBuilder
+        If Not String.IsNullOrWhiteSpace(activity.Arguments) Then
+            sb.AppendLine("调用参数")
+            sb.AppendLine(activity.Arguments.Trim())
+        End If
+        If Not String.IsNullOrWhiteSpace(activity.ResultText) Then
+            If sb.Length > 0 Then sb.AppendLine()
+            sb.AppendLine("返回结果")
+            sb.Append(activity.ResultText.Trim())
+        ElseIf String.Equals(activity.State, "running", StringComparison.OrdinalIgnoreCase) Then
+            If sb.Length > 0 Then sb.AppendLine()
+            sb.Append("正在等待工具返回结果...")
+        End If
+        Return sb.ToString()
+    End Function
+
+    Private Function FindToolRunLog(activityId As String) As ToolRunLog
+        If String.IsNullOrWhiteSpace(activityId) OrElse _activeToolRoundLogs Is Nothing Then Return Nothing
+        Return _activeToolRoundLogs.SelectMany(Function(x) If(x?.Calls, New List(Of ToolRunLog))).
+            FirstOrDefault(Function(x) x?.Activity IsNot Nothing AndAlso String.Equals(x.Activity.Id, activityId, StringComparison.Ordinal))
+    End Function
 
     Private Function IsToolSummaryMessage(message As AgentMessageData) As Boolean
         Return message IsNot Nothing AndAlso
@@ -469,94 +602,12 @@ Public Class Form_v6_Agent
         AgentRoom1.AddCard(message.Content)
     End Sub
 
-    Private Function FormatRunOverviewCard(roundLogs As IEnumerable(Of ToolRoundLog)) As String
-        Dim toolSummary = FormatToolSummaryCard(roundLogs)
-        Return $"已用时间：{FormatRunElapsed()}{vbCrLf}{If(String.IsNullOrWhiteSpace(toolSummary), "工具调用：暂无", toolSummary)}"
-    End Function
-
-    Private Function FormatRunElapsed() As String
-        If _activeRunStartedAtUtc = DateTime.MinValue Then Return "0 毫秒"
-        Return FormatElapsedMilliseconds((DateTime.UtcNow - _activeRunStartedAtUtc).TotalMilliseconds)
-    End Function
-
     Private Function IsRunResponsePlaceholder(text As String) As Boolean
         text = If(text, "").Trim()
         Return text = "" OrElse
             text = "正在思考..." OrElse
             text = "正在重新连接..." OrElse
             text.StartsWith("正在调用工具：", StringComparison.Ordinal)
-    End Function
-
-    Private Function GetVisibleRunResponsePrefix() As String
-        Dim text = GetActiveResponseTextSnapshot().Trim()
-        Return If(IsRunResponsePlaceholder(text), "", text)
-    End Function
-
-    Private Function CombineRunResponseText(prefix As String, currentText As String) As String
-        prefix = If(prefix, "").Trim()
-        currentText = If(currentText, "").Trim()
-        If prefix = "" Then Return currentText
-        If currentText = "" Then Return prefix
-        Return prefix & vbCrLf & vbCrLf & currentText
-    End Function
-
-    Private Function FormatToolSummaryCard(roundLogs As IEnumerable(Of ToolRoundLog)) As String
-        Dim calls = If(roundLogs, Enumerable.Empty(Of ToolRoundLog)).
-            Where(Function(x) x IsNot Nothing AndAlso x.Calls IsNot Nothing AndAlso x.Calls.Count > 0).
-            SelectMany(Function(x) x.Calls).
-            Where(Function(x) x IsNot Nothing).
-            ToList()
-        If calls.Count = 0 Then Return ""
-
-        Dim groups = BuildToolSummaryGroups(calls)
-        Dim totalCalls = calls.Count
-        Dim completedCount = calls.Where(Function(x) x.ElapsedMilliseconds >= 0).Count()
-        Dim runningCount = totalCalls - completedCount
-        Dim totalElapsed = groups.Sum(Function(x) x.ElapsedMilliseconds)
-        Dim totalCharacters = groups.Sum(Function(x) x.AddedCharacters)
-        Dim sb As New StringBuilder
-        sb.AppendLine(FormatToolTotalSummary(totalCalls, completedCount, runningCount, totalElapsed, totalCharacters))
-
-        For Each group In groups
-            sb.AppendLine(FormatToolGroupSummary(group))
-        Next
-
-        Return sb.ToString().Trim()
-    End Function
-
-    Private Function BuildToolSummaryGroups(calls As IEnumerable(Of ToolRunLog)) As List(Of ToolSummaryGroup)
-        Return calls.GroupBy(Function(x) If(x.ToolName, "").Trim(), StringComparer.OrdinalIgnoreCase).
-            Select(Function(group) New ToolSummaryGroup With {
-                .ToolName = group.First().ToolName,
-                .Count = group.Count(),
-                .CompletedCount = group.Where(Function(x) x.ElapsedMilliseconds >= 0).Count(),
-                .RunningCount = group.Where(Function(x) x.ElapsedMilliseconds < 0).Count(),
-                .ElapsedMilliseconds = group.Where(Function(x) x.ElapsedMilliseconds >= 0).Sum(Function(x) x.ElapsedMilliseconds),
-                .AddedCharacters = group.Sum(Function(x) If(x.ResultText, "").Length)
-            }).ToList()
-    End Function
-
-    Private Function FormatToolTotalSummary(totalCalls As Integer,
-                                            completedCount As Integer,
-                                            runningCount As Integer,
-                                            elapsedMilliseconds As Double,
-                                            addedCharacters As Integer) As String
-        If completedCount = 0 Then Return $"工具调用：{totalCalls} 次 正在执行"
-
-        Dim text = $"工具调用：{totalCalls} 次 {FormatElapsedMilliseconds(elapsedMilliseconds)} +{addedCharacters} 字符"
-        If runningCount > 0 Then text &= $"，{runningCount} 次进行中"
-        Return text
-    End Function
-
-    Private Function FormatToolGroupSummary(group As ToolSummaryGroup) As String
-        If group Is Nothing Then Return ""
-
-        Dim countText = If(group.Count > 1, $"{group.Count} 次 ", "")
-        If group.CompletedCount = 0 Then Return $"{GetToolDisplayName(group.ToolName)} {countText}正在执行".Trim()
-
-        Dim text = $"{GetToolDisplayName(group.ToolName)} {countText}{FormatElapsedMilliseconds(group.ElapsedMilliseconds)} +{group.AddedCharacters} 字符".Trim()
-        If group.RunningCount > 0 Then text &= $"，{group.RunningCount} 次进行中"
-        Return text
     End Function
 
     Private Function FormatElapsedMilliseconds(elapsedMilliseconds As Double) As String
@@ -573,68 +624,15 @@ Public Class Form_v6_Agent
     Private Sub UpdateActiveRunOverviewCard(conversation As AgentConversationData)
         If Not ReferenceEquals(conversation, _activeRunConversation) Then Return
         If Not IsConversationSelected(conversation) Then Return
-        UpdateActiveRunCard(_activeToolSummaryItem, FormatRunOverviewCard(_activeToolRoundLogs))
-    End Sub
-
-    Private Sub UpdateActiveRunStatusCard(conversation As AgentConversationData, content As String, keepRecord As Boolean)
-        If Not IsConversationSelected(conversation) Then Return
-        UpdateActiveRunCard(_activeRunStatusItem, content, keepRecord)
-    End Sub
-
-    Private Sub UpdateActiveRunCard(ByRef item As LakeUI.AgentRoom.ChatItem, content As String, Optional keepRecord As Boolean = False)
-        If keepRecord OrElse item Is Nothing OrElse Not AgentRoom1.Items.Contains(item) Then
-            item = New LakeUI.AgentRoom.ChatItem(LakeUI.AgentRoom.ChatItemKind.Card, content)
-            AgentRoom1.Items.Add(item)
-        Else
-            item.Text = content
+        If _activeTurn Is Nothing Then Return
+        If _activeTurnItem Is Nothing OrElse Not AgentRoom1.Items.Contains(_activeTurnItem) Then
+            _activeTurnItem = AgentRoom1.FindItem(_activeTurn.Id)
         End If
-        EnsureActiveRunItemOrder()
-        AgentRoom1.ScrollToBottom()
-    End Sub
-
-    Private Sub EnsureActiveRunItemOrder()
-        Dim orderedItems As New List(Of LakeUI.AgentRoom.ChatItem)
-        If _activeToolSummaryItem IsNot Nothing AndAlso AgentRoom1.Items.Contains(_activeToolSummaryItem) Then orderedItems.Add(_activeToolSummaryItem)
-        If _activeResponseItem IsNot Nothing AndAlso AgentRoom1.Items.Contains(_activeResponseItem) Then orderedItems.Add(_activeResponseItem)
-        If _activeRunStatusItem IsNot Nothing AndAlso AgentRoom1.Items.Contains(_activeRunStatusItem) Then orderedItems.Add(_activeRunStatusItem)
-        If orderedItems.Count = 0 Then Return
-
-        Dim firstIndex = AgentRoom1.Items.IndexOf(orderedItems(0))
-        Dim alreadyOrdered = firstIndex >= 0
-        For i = 1 To orderedItems.Count - 1
-            If AgentRoom1.Items.IndexOf(orderedItems(i)) <> firstIndex + i Then
-                alreadyOrdered = False
-                Exit For
-            End If
-        Next
-        If alreadyOrdered Then Return
-
-        Dim insertIndex = AgentRoom1.Items.Count
-        For Each item In orderedItems
-            Dim itemIndex = AgentRoom1.Items.IndexOf(item)
-            If itemIndex >= 0 Then insertIndex = Math.Min(insertIndex, itemIndex)
-        Next
-
-        insertIndex = Math.Max(0, Math.Min(insertIndex, AgentRoom1.Items.Count - 1))
-        For i = 0 To orderedItems.Count - 1
-            AgentRoom1.MoveItem(orderedItems(i), insertIndex + i)
-        Next
-    End Sub
-
-    Private Sub AddToolSummaryMessage(conversation As AgentConversationData, roundLogs As List(Of ToolRoundLog))
-        Dim content = FormatToolSummaryCard(roundLogs)
-        If String.IsNullOrWhiteSpace(content) OrElse conversation Is Nothing Then Return
-        Dim message As New AgentMessageData With {
-            .Role = "card",
-            .Name = "tool_summary",
-            .Content = content
-        }
-
-        Dim insertIndex = conversation.Messages.Count
-        If insertIndex > 0 AndAlso String.Equals(conversation.Messages(insertIndex - 1).Role, "assistant", StringComparison.OrdinalIgnoreCase) Then
-            insertIndex -= 1
-        End If
-        conversation.Messages.Insert(insertIndex, message)
+        If _activeTurnItem Is Nothing Then Return
+        _activeTurnItem.Title = FormatTurnHeader(_activeTurn)
+        _activeTurnItem.IsRunning = String.Equals(_activeTurn.State, "running", StringComparison.OrdinalIgnoreCase)
+        _activeTurnItem.IsError = String.Equals(_activeTurn.State, "error", StringComparison.OrdinalIgnoreCase)
+        AgentRoom1.FollowLatestIfPinned()
     End Sub
 
     Private Function GetToolDisplayName(toolName As String) As String
@@ -705,11 +703,21 @@ Public Class Form_v6_Agent
 
     Private Sub UpdateSendButtonState()
         If _busy AndAlso IsConversationSelected(_activeRunConversation) Then
-            MB_发送.Text = If(_requestCts IsNot Nothing AndAlso _requestCts.IsCancellationRequested, "停止中", "停止")
+            If _requestCts IsNot Nothing AndAlso _requestCts.IsCancellationRequested Then
+                MB_发送.Text = "停止中"
+            ElseIf Not String.IsNullOrWhiteSpace(ModernTextBox1.Text) Then
+                MB_发送.Text = "调整方向"
+            Else
+                MB_发送.Text = "停止"
+            End If
         Else
             MB_发送.Text = "发送"
         End If
         MB_发送.Enabled = True
+    End Sub
+
+    Private Sub ModernTextBox1_TextChanged(sender As Object, e As EventArgs) Handles ModernTextBox1.TextChanged
+        If _busy Then UpdateSendButtonState()
     End Sub
 
     Private Sub ShowStatus(text As String, Optional keepRecord As Boolean = False)
@@ -719,26 +727,26 @@ Public Class Form_v6_Agent
         Else
             _statusItem.Text = content
         End If
-        AgentRoom1.ScrollToBottom()
+        AgentRoom1.FollowLatestIfPinned()
     End Sub
 
     Private Sub ShowRunStatus(conversation As AgentConversationData, text As String, Optional keepRecord As Boolean = False)
         Dim content = If(text, "").Trim()
-        If ReferenceEquals(conversation, _activeRunConversation) Then _activeRunStatusText = content
         If ReferenceEquals(conversation, _activeRunConversation) Then
+            _activeRunStatusText = content
+            If _activeTurn IsNot Nothing Then _activeTurn.StatusText = content
             UpdateActiveRunOverviewCard(conversation)
-            UpdateActiveRunStatusCard(conversation, content, keepRecord)
             Return
         End If
 
         If Not IsConversationSelected(conversation) Then Return
         AgentRoom1.AddCard(content)
-        AgentRoom1.ScrollToBottom()
+        AgentRoom1.FollowLatestIfPinned()
     End Sub
 
     Private Function AddCardBeforeActiveResponse(content As String) As LakeUI.AgentRoom.ChatItem
         Dim item As New LakeUI.AgentRoom.ChatItem(LakeUI.AgentRoom.ChatItemKind.Card, content)
-        Dim anchor = If(_activeToolSummaryItem, _activeResponseItem)
+        Dim anchor = _activeResponseItem
         Dim insertIndex = If(anchor Is Nothing, -1, AgentRoom1.Items.IndexOf(anchor))
         If insertIndex >= 0 Then
             AgentRoom1.Items.Insert(insertIndex, item)
@@ -761,19 +769,16 @@ Public Class Form_v6_Agent
                 AgentRoom1.Items.Remove(_activeResponseItem)
             End If
             _activeResponseItem = Nothing
-            EnsureActiveRunItemOrder()
-            AgentRoom1.ScrollToBottom()
+            AgentRoom1.FollowLatestIfPinned()
             Return
         End If
 
         If _activeResponseItem Is Nothing OrElse Not AgentRoom1.Items.Contains(_activeResponseItem) Then
-            _activeResponseItem = New LakeUI.AgentRoom.ChatItem(LakeUI.AgentRoom.ChatItemKind.AssistantMessage, _activeResponseText)
-            InsertActiveResponseItem(_activeResponseItem)
+            _activeResponseItem = AgentRoom1.AddAssistantMessage(_activeResponseText)
         Else
             _activeResponseItem.Text = _activeResponseText
         End If
-        EnsureActiveRunItemOrder()
-        AgentRoom1.ScrollToBottom()
+        AgentRoom1.FollowLatestIfPinned()
     End Sub
 
     Private Sub AppendRunResponseText(conversation As AgentConversationData,
@@ -795,12 +800,11 @@ Public Class Form_v6_Agent
         If Not IsConversationSelected(conversation) Then Return
 
         If _activeResponseItem Is Nothing OrElse Not AgentRoom1.Items.Contains(_activeResponseItem) Then
-            _activeResponseItem = New LakeUI.AgentRoom.ChatItem(LakeUI.AgentRoom.ChatItemKind.AssistantMessage, GetActiveResponseTextSnapshot())
-            InsertActiveResponseItem(_activeResponseItem)
-            EnsureActiveRunItemOrder()
+            _activeResponseItem = AgentRoom1.AddAssistantMessage(GetActiveResponseTextSnapshot())
         Else
             AgentRoom1.AppendToItem(_activeResponseItem, appendedText)
         End If
+        AgentRoom1.FollowLatestIfPinned()
     End Sub
 
     Private Sub CompleteRunResponseText(conversation As AgentConversationData, text As String)
@@ -817,14 +821,94 @@ Public Class Form_v6_Agent
         SetRunResponseText(conversation, finalText)
     End Sub
 
-    Private Sub InsertActiveResponseItem(item As LakeUI.AgentRoom.ChatItem)
-        If item Is Nothing Then Return
-        Dim statusIndex = If(_activeRunStatusItem Is Nothing, -1, AgentRoom1.Items.IndexOf(_activeRunStatusItem))
-        If statusIndex >= 0 Then
-            AgentRoom1.Items.Insert(statusIndex, item)
-        Else
-            AgentRoom1.Items.Add(item)
+    Private Sub PromoteActiveResponseToActivity(conversation As AgentConversationData, content As String)
+        If _activeTurn Is Nothing OrElse Not ReferenceEquals(conversation, _activeRunConversation) Then Return
+        Dim activityText = If(content, "").Trim()
+        If activityText = "" Then activityText = GetActiveResponseTextSnapshot().Trim()
+
+        If activityText <> "" AndAlso Not IsRunResponsePlaceholder(activityText) Then
+            Dim activity As New AgentTurnActivityData With {
+                .Kind = "assistant",
+                .Content = activityText,
+                .State = "completed"
+            }
+            _activeTurn.Activities.Add(activity)
+
+            If IsConversationSelected(conversation) Then
+                If _activeResponseItem IsNot Nothing AndAlso AgentRoom1.Items.Contains(_activeResponseItem) Then
+                    AgentRoom1.CompleteStreamingMessage(_activeResponseItem)
+                    _activeResponseItem.Kind = LakeUI.AgentRoom.ChatItemKind.AssistantActivity
+                    _activeResponseItem.Key = activity.Id
+                    _activeResponseItem.ParentTurnId = _activeTurn.Id
+                Else
+                    AgentRoom1.AddAssistantActivity(_activeTurn.Id, activityText, activity.Id)
+                End If
+            End If
+        ElseIf _activeResponseItem IsNot Nothing AndAlso AgentRoom1.Items.Contains(_activeResponseItem) Then
+            AgentRoom1.Items.Remove(_activeResponseItem)
         End If
+
+        _activeResponseItem = Nothing
+        ReplaceActiveResponseText("正在思考...")
+        AgentRoom1.FollowLatestIfPinned()
+    End Sub
+
+    Private Function BeginToolActivity(conversation As AgentConversationData,
+                                       callInfo As AgentToolCallInfo,
+                                       round As Integer) As ToolRunLog
+        Dim activity As New AgentTurnActivityData With {
+            .Kind = "tool",
+            .ToolName = If(callInfo?.Name, ""),
+            .Arguments = If(callInfo?.Arguments, ""),
+            .State = "running"
+        }
+        _activeTurn?.Activities.Add(activity)
+
+        Dim log As New ToolRunLog With {
+            .Round = round,
+            .ToolName = activity.ToolName,
+            .CallId = If(callInfo?.Id, ""),
+            .Activity = activity
+        }
+        If IsConversationSelected(conversation) AndAlso _activeTurn IsNot Nothing Then
+            log.Item = AgentRoom1.AddToolCall(
+                _activeTurn.Id,
+                FormatToolActivityTitle(activity),
+                FormatToolActivityDetails(activity),
+                activity.Id,
+                expanded:=False,
+                running:=True)
+        End If
+        UpdateActiveRunOverviewCard(conversation)
+        AgentRoom1.FollowLatestIfPinned()
+        Return log
+    End Function
+
+    Private Sub CompleteToolActivity(conversation As AgentConversationData,
+                                     log As ToolRunLog,
+                                     resultText As String,
+                                     elapsedMilliseconds As Double,
+                                     isError As Boolean)
+        If log Is Nothing OrElse log.Activity Is Nothing Then Return
+        log.ElapsedMilliseconds = elapsedMilliseconds
+        log.ResultText = If(resultText, "")
+        log.Activity.ElapsedMilliseconds = elapsedMilliseconds
+        log.Activity.ResultText = log.ResultText
+        log.Activity.State = If(isError, "error", "completed")
+
+        If IsConversationSelected(conversation) Then
+            If log.Item Is Nothing OrElse Not AgentRoom1.Items.Contains(log.Item) Then
+                log.Item = AgentRoom1.FindItem(log.Activity.Id)
+            End If
+            If log.Item IsNot Nothing Then
+                log.Item.Title = FormatToolActivityTitle(log.Activity)
+                log.Item.Text = FormatToolActivityDetails(log.Activity)
+                log.Item.IsRunning = False
+                log.Item.IsError = isError
+            End If
+        End If
+        UpdateActiveRunOverviewCard(conversation)
+        AgentRoom1.FollowLatestIfPinned()
     End Sub
 
     Private Sub ReplaceActiveResponseText(text As String)
@@ -842,39 +926,29 @@ Public Class Form_v6_Agent
         Return If(_activeResponseText, "")
     End Function
 
-    Private Sub RefreshActiveToolSummaryCard(conversation As AgentConversationData)
-        UpdateActiveRunOverviewCard(conversation)
-    End Sub
-
     Private Sub RenderActiveRunOverlay()
-        _activeRunStatusItem = Nothing
-        _activeToolSummaryItem = Nothing
         _activeResponseItem = Nothing
         If _activeRunConversation Is Nothing OrElse Not IsConversationSelected(_activeRunConversation) Then Return
 
-        _activeToolSummaryItem = AgentRoom1.AddCard(FormatRunOverviewCard(_activeToolRoundLogs))
+        If _activeTurn IsNot Nothing Then
+            _activeTurnItem = AgentRoom1.FindItem(_activeTurn.Id)
+            If _activeTurnItem IsNot Nothing Then _activeTurnItem.IsExpanded = True
+        End If
         Dim responseText = GetActiveResponseTextSnapshot()
         If Not IsRunResponsePlaceholder(responseText) Then
             _activeResponseItem = AgentRoom1.AddAssistantMessage(responseText)
         End If
-
-        If Not String.IsNullOrWhiteSpace(_activeRunStatusText) Then
-            _activeRunStatusItem = AgentRoom1.AddCard(_activeRunStatusText)
-        End If
-
-        EnsureActiveRunItemOrder()
     End Sub
 
     Private Sub ClearActiveRunState()
         StopActiveRunElapsedTimer()
         _activeResponseItem = Nothing
         _activeRunConversation = Nothing
+        _activeTurn = Nothing
+        _activeTurnItem = Nothing
         _activeToolRoundLogs = Nothing
-        _activeToolSummaryItem = Nothing
-        _activeRunStatusItem = Nothing
         ReplaceActiveResponseText("")
         _activeRunStatusText = ""
-        _activeRunStartedAtUtc = DateTime.MinValue
     End Sub
 
     Private Sub StartActiveRunElapsedTimer()
@@ -967,7 +1041,11 @@ Public Class Form_v6_Agent
     Private Async Sub MB_发送_Click(sender As Object, e As EventArgs) Handles MB_发送.Click
         If _busy Then
             If IsConversationSelected(_activeRunConversation) Then
-                RequestStopAgentTask(False)
+                If String.IsNullOrWhiteSpace(ModernTextBox1.Text) Then
+                    RequestStopAgentTask()
+                Else
+                    Await OfferGuidanceMessageAsync()
+                End If
             Else
                 ExFloatingTip(MB_发送, "当前已有其他对话正在响应，请先切回该对话或停止任务", 2200)
             End If
@@ -1063,7 +1141,8 @@ Public Class Form_v6_Agent
     Private Function GetLatestUserMessageIndex() As Integer
         If _current?.Messages Is Nothing Then Return -1
         For i = _current.Messages.Count - 1 To 0 Step -1
-            If String.Equals(_current.Messages(i)?.Role, "user", StringComparison.OrdinalIgnoreCase) Then Return i
+            If String.Equals(_current.Messages(i)?.Role, "user", StringComparison.OrdinalIgnoreCase) AndAlso
+               Not String.Equals(_current.Messages(i)?.Name, AgentConversationSchema.SteeringMessageName, StringComparison.OrdinalIgnoreCase) Then Return i
         Next
         Return -1
     End Function
@@ -1102,13 +1181,24 @@ Public Class Form_v6_Agent
     Private Sub RemoveConversationMessagesFrom(index As Integer)
         If _current?.Messages Is Nothing Then Return
         Dim startIndex = Math.Max(0, Math.Min(index, _current.Messages.Count))
+        Dim affectedUserIds As New HashSet(Of String)(StringComparer.OrdinalIgnoreCase)
+        For Each message In _current.Messages.Skip(startIndex)
+            If String.Equals(message?.Role, "user", StringComparison.OrdinalIgnoreCase) Then affectedUserIds.Add(message.Id)
+        Next
+        For i = Math.Min(startIndex - 1, _current.Messages.Count - 1) To 0 Step -1
+            Dim message = _current.Messages(i)
+            If Not String.Equals(message?.Role, "user", StringComparison.OrdinalIgnoreCase) Then Continue For
+            affectedUserIds.Add(message.Id)
+            Exit For
+        Next
         If startIndex < _current.Messages.Count Then _current.Messages.RemoveRange(startIndex, _current.Messages.Count - startIndex)
+        If _current.Turns IsNot Nothing AndAlso affectedUserIds.Count > 0 Then
+            _current.Turns.RemoveAll(Function(x) x IsNot Nothing AndAlso affectedUserIds.Contains(x.UserMessageId))
+        End If
 
-        ' A stored summary is indexed by the old message sequence and is invalid after a retry or rewind.
-        _current.ContextSummary = ""
-        _current.ContextSummaryMessageCount = 0
-        _current.ContextSummaryModelId = ""
-        _current.ContextSummaryUpdatedAt = DateTime.MinValue
+        If ResolveContextCheckpointBoundaryIndex(_current, GetRequestConversationMessages(_current)) < 0 Then
+            _current.ContextCheckpoint = Nothing
+        End If
     End Sub
 
     Private Async Function OfferGuidanceMessageAsync() As Task
@@ -1119,19 +1209,45 @@ Public Class Form_v6_Agent
             Return
         End If
 
-        Dim confirm = ExMsgBox(FormMain_v6,
-            "当前任务仍在进行。是否将这条消息作为新的引导，并停止当前响应后重新生成？",
-            MsgBoxStyle.YesNo Or MsgBoxStyle.Question,
-            "引导对话")
-        If confirm <> MsgBoxResult.Yes Then Return
+        Dim content = text
+        Dim fileContext = BuildSubmittedFilesContext()
+        If Not String.IsNullOrWhiteSpace(fileContext) Then content &= vbCrLf & vbCrLf & fileContext.Trim()
+        Dim steeringMessage As New AgentMessageData With {
+            .Role = "user",
+            .Name = AgentConversationSchema.SteeringMessageName,
+            .Content = "调整方向：" & vbCrLf & content
+        }
+        _activeRunConversation.Messages.Add(steeringMessage)
+        _pendingSteeringMessages.Add(steeringMessage)
 
-        CommitUserMessage(text)
-        _restartAfterCancel = True
-        _restartRunConversation = _current
-        ShowRunStatus(_restartRunConversation, "已添加引导消息，正在停止当前响应")
-        RequestStopAgentTask(True)
+        If _activeTurn IsNot Nothing Then
+            Dim activity As New AgentTurnActivityData With {
+                .Kind = "guidance",
+                .Title = "调整方向",
+                .Content = content,
+                .State = "completed"
+            }
+            _activeTurn.Activities.Add(activity)
+            If IsConversationSelected(_activeRunConversation) Then AddSteeringActivityToRoom(activity)
+        End If
+
+        ModernTextBox1.Text = ""
+        ClearSubmittedFiles()
+        SaveConversation(_activeRunConversation)
+        ShowRunStatus(_activeRunConversation, "已收到调整方向，将在当前步骤结束后继续")
         Await Task.CompletedTask
     End Function
+
+    Private Sub AddSteeringActivityToRoom(activity As AgentTurnActivityData)
+        If activity Is Nothing OrElse _activeTurn Is Nothing Then Return
+        Dim item = AgentRoom1.AddAssistantActivity(_activeTurn.Id, "调整方向：" & activity.Content, activity.Id)
+        Dim responseIndex = If(_activeResponseItem Is Nothing, -1, AgentRoom1.Items.IndexOf(_activeResponseItem))
+        If responseIndex >= 0 AndAlso AgentRoom1.Items.IndexOf(item) > responseIndex Then
+            AgentRoom1.Items.Remove(item)
+            AgentRoom1.Items.Insert(responseIndex, item)
+        End If
+        AgentRoom1.FollowLatestIfPinned()
+    End Sub
 
     Private Function EnsureModelSelected() As Boolean
         If MCB_模型选择.SelectedIndex >= 0 Then Return True
@@ -1147,6 +1263,12 @@ Public Class Form_v6_Agent
         End If
         Dim userMessage As New AgentMessageData With {.Role = "user", .Content = content}
         _current.Messages.Add(userMessage)
+        If _current.Turns Is Nothing Then _current.Turns = New List(Of AgentTurnData)
+        _current.Turns.Add(New AgentTurnData With {
+            .UserMessageId = userMessage.Id,
+            .State = "pending",
+            .StatusText = "等待开始"
+        })
         If _current.Title = "新对话" OrElse String.IsNullOrWhiteSpace(_current.Title) Then _current.Title = BuildTitle(text)
         AgentRoom1.AddUserMessage(content)
     End Sub
@@ -1161,13 +1283,12 @@ Public Class Form_v6_Agent
         If rerenderConversation Then RenderCurrentConversation()
     End Sub
 
-    Private Sub RequestStopAgentTask(restartAfterCancel As Boolean)
+    Private Sub RequestStopAgentTask()
         If Not _busy Then Return
-        If restartAfterCancel Then _restartAfterCancel = True
         If _requestCts IsNot Nothing AndAlso Not _requestCts.IsCancellationRequested Then
             _requestCts.Cancel()
             MB_发送.Text = "停止中"
-            ShowRunStatus(_activeRunConversation, If(restartAfterCancel, "正在按新的引导停止当前响应", "正在停止当前任务"))
+            ShowRunStatus(_activeRunConversation, "正在停止当前任务")
         End If
     End Sub
 
@@ -1188,70 +1309,74 @@ Public Class Form_v6_Agent
         Dim localCts As New Threading.CancellationTokenSource()
         _requestCts = localCts
         _activeRunConversation = runConversation
-        _activeRunStartedAtUtc = DateTime.UtcNow
+        _pendingSteeringMessages.Clear()
+        _activeTurn = EnsureLatestTurn(runConversation)
+        If _activeTurn IsNot Nothing Then
+            _activeTurn.StartedAt = DateTime.Now
+            _activeTurn.CompletedAt = DateTime.MinValue
+            _activeTurn.State = "running"
+            _activeTurn.StatusText = "正在准备上下文"
+        End If
         ReplaceActiveResponseText("正在思考...")
         _activeRunStatusText = ""
-        _activeRunStatusItem = Nothing
         _activeResponseItem = Nothing
+        _activeTurnItem = Nothing
         UpdateSendButtonState()
         Dim toolRoundLogs As New List(Of ToolRoundLog)
         _activeToolRoundLogs = toolRoundLogs
-        _activeToolSummaryItem = Nothing
         If IsConversationSelected(runConversation) Then
+            If _activeTurn IsNot Nothing Then
+                _activeTurnItem = AgentRoom1.FindItem(_activeTurn.Id)
+                If _activeTurnItem Is Nothing Then
+                    _activeTurnItem = AgentRoom1.AddTurnHeader(_activeTurn.Id, FormatTurnHeader(_activeTurn), expanded:=True)
+                Else
+                    _activeTurnItem.IsExpanded = True
+                End If
+            End If
             UpdateActiveRunOverviewCard(runConversation)
-            SetRunResponseText(runConversation, "正在思考...")
         End If
         StartActiveRunElapsedTimer()
-        Dim shouldRestart As Boolean = False
         Try
             ShowRunStatus(runConversation, "正在准备上下文")
             SaveConversation(runConversation)
 
             Await RunAgentLoopAsync(runConversation, toolRoundLogs, localCts.Token)
         Catch ex As OperationCanceledException
-            Dim canceledText = BuildCanceledResponseText(GetActiveResponseTextSnapshot(), _restartAfterCancel)
+            CompleteInterruptedToolBatch(runConversation, toolRoundLogs, "工具调用已取消，未返回结果。", "canceled")
+            Dim canceledText = BuildCanceledResponseText(GetActiveResponseTextSnapshot())
             SetRunResponseText(runConversation, canceledText)
-            If Not _restartAfterCancel Then runConversation.Messages.Add(New AgentMessageData With {.Role = "assistant", .Content = canceledText})
-            ShowRunStatus(runConversation, If(_restartAfterCancel, "已停止当前响应，准备按新的引导继续", "已停止当前任务"))
+            AppendRunConversationMessage(runConversation, New AgentMessageData With {.Role = "assistant", .Content = canceledText})
+            ShowRunStatus(runConversation, "已停止当前任务")
+            FinishActiveTurn("canceled", "已停止")
         Catch ex As Exception
+            CompleteInterruptedToolBatch(runConversation, toolRoundLogs, "工具调用因运行异常中止：" & ex.Message, "error")
             ShowRunStatus(runConversation, "系统故障：请求失败：" & ex.Message, True)
             SetRunResponseText(runConversation, "请求失败：" & ex.Message)
-            runConversation.Messages.Add(New AgentMessageData With {.Role = "assistant", .Content = _activeResponseText})
+            AppendRunConversationMessage(runConversation, New AgentMessageData With {.Role = "assistant", .Content = GetActiveResponseTextSnapshot()})
+            FinishActiveTurn("error", ex.Message)
             ExFloatingTip(MB_发送, ex.Message, 2600)
         Finally
-            shouldRestart = _restartAfterCancel AndAlso localCts.IsCancellationRequested
             _requestCts = Nothing
             localCts.Dispose()
             _busy = False
             MB_发送.Enabled = True
-            If Not shouldRestart Then AddToolSummaryMessage(runConversation, toolRoundLogs)
             SaveConversation(runConversation)
-            Dim shouldRenderConversation = IsConversationSelected(runConversation)
             ClearActiveRunState()
-            _restartAfterCancel = False
-            If shouldRenderConversation Then RenderCurrentConversation()
-            If Not shouldRestart Then UpdateSendButtonState()
+            _pendingSteeringMessages.Clear()
+            UpdateSendButtonState()
         End Try
-
-        If shouldRestart Then
-            Dim restartConversation = If(_restartRunConversation, runConversation)
-            _restartRunConversation = Nothing
-            Await StartAgentRunAsync(restartConversation)
-        Else
-            _restartRunConversation = Nothing
-        End If
     End Function
 
-    Private Function BuildCanceledResponseText(currentText As String, restarting As Boolean) As String
+    Private Function BuildCanceledResponseText(currentText As String) As String
         Dim text = If(currentText, "").Trim()
         If text = "" OrElse
             text = "正在思考..." OrElse
             text = "正在重新连接..." OrElse
             text.StartsWith("正在调用工具：", StringComparison.Ordinal) Then
-            Return If(restarting, "已按新的引导停止当前响应。", "已停止。")
+            Return "已停止。"
         End If
 
-        Return text & vbCrLf & vbCrLf & If(restarting, "（已被新的引导中断）", "（已停止）")
+        Return text & vbCrLf & vbCrLf & "（已停止）"
     End Function
 
     Private Sub ApplyConversationSnapshot()
@@ -1267,6 +1392,43 @@ Public Class Form_v6_Agent
         Return If(text = "", "新对话", text)
     End Function
 
+    Private Function EnsureLatestTurn(conversation As AgentConversationData) As AgentTurnData
+        If conversation Is Nothing Then Return Nothing
+        If conversation.Turns Is Nothing Then conversation.Turns = New List(Of AgentTurnData)
+        Dim userMessage = conversation.Messages.LastOrDefault(
+            Function(x) x IsNot Nothing AndAlso
+                String.Equals(x.Role, "user", StringComparison.OrdinalIgnoreCase) AndAlso
+                Not String.Equals(x.Name, AgentConversationSchema.SteeringMessageName, StringComparison.OrdinalIgnoreCase))
+        If userMessage Is Nothing Then Return Nothing
+        Dim turn = conversation.Turns.LastOrDefault(
+            Function(x) x IsNot Nothing AndAlso String.Equals(x.UserMessageId, userMessage.Id, StringComparison.OrdinalIgnoreCase))
+        If turn Is Nothing Then
+            turn = New AgentTurnData With {.UserMessageId = userMessage.Id}
+            conversation.Turns.Add(turn)
+        End If
+        If turn.Activities Is Nothing Then turn.Activities = New List(Of AgentTurnActivityData)
+        Return turn
+    End Function
+
+    Private Sub FinishActiveTurn(state As String, Optional statusText As String = "")
+        If _activeTurn Is Nothing Then Return
+        For Each activity In If(_activeTurn.Activities, New List(Of AgentTurnActivityData))
+            If activity Is Nothing OrElse Not String.Equals(activity.State, "running", StringComparison.OrdinalIgnoreCase) Then Continue For
+            activity.State = If(String.Equals(state, "canceled", StringComparison.OrdinalIgnoreCase), "canceled", "error")
+            If String.IsNullOrWhiteSpace(activity.ResultText) Then activity.ResultText = If(statusText, "运行已结束")
+        Next
+        _activeTurn.State = If(state, "completed")
+        _activeTurn.CompletedAt = DateTime.Now
+        If Not String.IsNullOrWhiteSpace(statusText) Then _activeTurn.StatusText = statusText.Trim()
+        If _activeTurnItem IsNot Nothing AndAlso AgentRoom1.Items.Contains(_activeTurnItem) Then
+            _activeTurnItem.Title = FormatTurnHeader(_activeTurn)
+            _activeTurnItem.IsRunning = False
+            _activeTurnItem.IsError = String.Equals(_activeTurn.State, "error", StringComparison.OrdinalIgnoreCase)
+            _activeTurnItem.IsExpanded = False
+        End If
+        AgentRoom1.FollowLatestIfPinned()
+    End Sub
+
     Private Async Function RunAgentLoopAsync(conversation As AgentConversationData,
                                              toolRoundLogs As List(Of ToolRoundLog),
                                              cancellationToken As Threading.CancellationToken) As Task
@@ -1276,24 +1438,19 @@ Public Class Form_v6_Agent
         Dim networkMode = AgentNetworkMode.Normalize(conversation.NetworkMode)
         Dim permissionLevel = Math.Max(0, conversation.PermissionLevel)
         Dim tools = AgentLocalTools.BuildToolDefinitions(permissionLevel, networkMode)
-        Dim messages = Await BuildRequestMessagesAsync(client, conversation, modelId, cancellationToken)
+        Dim messages = Await BuildRequestMessagesAsync(client, conversation, modelId, tools, cancellationToken)
         Dim round As Integer = 0
 
         Using powerShellSession As New AgentLocalTools.PowerShellRunSession()
             Do
                 cancellationToken.ThrowIfCancellationRequested()
                 round += 1
-                Dim streamedAny As Boolean = False
                 Dim result As AgentChatResult = Nothing
-                Dim responsePrefix = GetVisibleRunResponsePrefix()
-                Dim firstStreamFlush As Boolean = True
+                If _activeResponseItem Is Nothing Then ReplaceActiveResponseText("正在思考...")
                 Dim streamBuffer As New StreamingTextBuffer(
                     AgentRoom1,
                     Nothing,
-                    Sub(value)
-                        AppendRunResponseText(conversation, value, firstStreamFlush AndAlso responsePrefix.Length > 0)
-                        firstStreamFlush = False
-                    End Sub)
+                    Sub(value) AppendRunResponseText(conversation, value, False))
 
                 ShowRunStatus(conversation, $"正在思考：第 {round} 轮")
                 result = Await client.TryCreateChatCompletionStreamingAsync(
@@ -1302,7 +1459,6 @@ Public Class Form_v6_Agent
                 tools,
                 reasoning,
                 Sub(delta)
-                    streamedAny = True
                     streamBuffer.Append(delta)
                 End Sub,
                 cancellationToken)
@@ -1311,13 +1467,14 @@ Public Class Form_v6_Agent
 
                 If Not result.Success Then
                     ShowRunStatus(conversation, "重新连接：流式响应不可用，切换非流式。" & result.ErrorMessage)
-                    If Not streamedAny Then SetRunResponseText(conversation, "正在重新连接...")
+                    SetRunResponseText(conversation, "正在重新连接...")
                     result = Await client.TryCreateChatCompletionAsync(modelId, messages, tools, reasoning, cancellationToken)
                     If Not result.Success Then
                         Dim errorText = "系统故障：请求失败：" & result.ErrorMessage
                         SetRunResponseText(conversation, errorText)
-                        conversation.Messages.Add(New AgentMessageData With {.Role = "assistant", .Content = errorText})
+                        AppendRunConversationMessage(conversation, New AgentMessageData With {.Role = "assistant", .Content = errorText})
                         ShowRunStatus(conversation, errorText, True)
+                        FinishActiveTurn("error", result.ErrorMessage)
                         ExFloatingTip(MB_发送, result.ErrorMessage, 2600)
                         Exit Function
                     End If
@@ -1326,32 +1483,47 @@ Public Class Form_v6_Agent
 
                 If result.ToolCalls Is Nothing OrElse result.ToolCalls.Count = 0 Then
                     Dim content = If(result.Content, "").Trim()
+                    If content = "" Then
+                        Dim streamedContent = GetActiveResponseTextSnapshot().Trim()
+                        If Not IsRunResponsePlaceholder(streamedContent) Then content = streamedContent
+                    End If
                     If content = "" Then content = "模型没有返回内容。"
+                    If _pendingSteeringMessages.Count > 0 Then
+                        PromoteActiveResponseToActivity(conversation, content)
+                        Dim intermediateMessage As New AgentMessageData With {
+                            .Role = "assistant",
+                            .Name = AgentConversationSchema.ActivityMessageName,
+                            .Content = content
+                        }
+                        messages.Add(intermediateMessage)
+                        AppendRunConversationMessage(conversation, intermediateMessage)
+                        ConsumePendingSteeringMessages(messages, conversation)
+                        Continue Do
+                    End If
                     CompleteRunResponseText(conversation, content)
-                    conversation.Messages.Add(New AgentMessageData With {.Role = "assistant", .Content = content})
+                    AppendRunConversationMessage(conversation, New AgentMessageData With {.Role = "assistant", .Content = content})
                     ShowRunStatus(conversation, "响应完成")
+                    FinishActiveTurn("completed", "响应完成")
                     Exit Function
                 End If
 
-                CompleteRunResponseText(conversation, CombineRunResponseText(responsePrefix, result.Content))
+                PromoteActiveResponseToActivity(conversation, result.Content)
                 ShowRunStatus(conversation, "正在调用工具：" & String.Join("、", result.ToolCalls.Select(Function(x) x.Name)))
                 Dim assistantToolMessage As New AgentMessageData With {
                 .Role = "assistant",
+                .Name = AgentConversationSchema.ActivityMessageName,
                 .Content = If(result.Content, ""),
                 .ToolCalls = result.ToolCalls
             }
                 messages.Add(assistantToolMessage)
+                AppendRunConversationMessage(conversation, assistantToolMessage)
 
                 Dim currentRoundLog As New ToolRoundLog With {.Round = round}
                 toolRoundLogs.Add(currentRoundLog)
                 For Each callInfo In result.ToolCalls
                     cancellationToken.ThrowIfCancellationRequested()
-                    Dim callLog As New ToolRunLog With {
-                    .Round = round,
-                    .ToolName = callInfo.Name
-                }
+                    Dim callLog = BeginToolActivity(conversation, callInfo, round)
                     currentRoundLog.Calls.Add(callLog)
-                    RefreshActiveToolSummaryCard(conversation)
 
                     Dim started = DateTime.Now
                     ShowRunStatus(conversation, "正在调用工具：" & callInfo.Name)
@@ -1367,33 +1539,137 @@ Public Class Form_v6_Agent
                     cancellationToken.ThrowIfCancellationRequested()
                     Dim elapsed = DateTime.Now - started
                     toolResult = Agent通用工具_v6.LimitText(toolResult, 16000)
-                    callLog.ElapsedMilliseconds = elapsed.TotalMilliseconds
-                    callLog.ResultText = toolResult
-                    RefreshActiveToolSummaryCard(conversation)
+                    CompleteToolActivity(conversation, callLog, toolResult, elapsed.TotalMilliseconds, False)
 
                     Dim toolMessage As New AgentMessageData With {
                     .Role = "tool",
                     .Name = callInfo.Name,
                     .ToolCallId = callInfo.Id,
                     .Content = toolResult
-                }
+                    }
                     messages.Add(toolMessage)
+                    AppendRunConversationMessage(conversation, toolMessage)
                     ShowRunStatus(conversation, $"工具完成：{callInfo.Name}，耗时 {FormatElapsedMilliseconds(elapsed.TotalMilliseconds)}")
                 Next
+                ConsumePendingSteeringMessages(messages, conversation)
             Loop
         End Using
     End Function
 
+    Private Function ConsumePendingSteeringMessages(messages As List(Of AgentMessageData),
+                                                     conversation As AgentConversationData) As Boolean
+        If messages Is Nothing OrElse _pendingSteeringMessages.Count = 0 Then Return False
+        For Each steeringMessage In _pendingSteeringMessages
+            If steeringMessage IsNot Nothing Then messages.Add(steeringMessage)
+        Next
+        Dim count = _pendingSteeringMessages.Count
+        _pendingSteeringMessages.Clear()
+        ReplaceActiveResponseText("正在根据调整继续...")
+        ShowRunStatus(conversation, $"正在应用 {count} 条调整方向")
+        Return True
+    End Function
+
+    Private Sub AppendRunConversationMessage(conversation As AgentConversationData, message As AgentMessageData)
+        If conversation?.Messages Is Nothing OrElse message Is Nothing Then Return
+        Dim insertIndex = conversation.Messages.Count
+        For Each pending In _pendingSteeringMessages
+            If pending Is Nothing Then Continue For
+            Dim candidate = conversation.Messages.IndexOf(pending)
+            If candidate >= 0 Then insertIndex = Math.Min(insertIndex, candidate)
+        Next
+        conversation.Messages.Insert(insertIndex, message)
+    End Sub
+
+    Private Sub CompleteInterruptedToolBatch(conversation As AgentConversationData,
+                                             toolRoundLogs As List(Of ToolRoundLog),
+                                             resultText As String,
+                                             state As String)
+        If conversation?.Messages Is Nothing Then Return
+        Dim assistantIndex = conversation.Messages.FindLastIndex(
+            Function(x) x IsNot Nothing AndAlso
+                String.Equals(x.Role, "assistant", StringComparison.OrdinalIgnoreCase) AndAlso
+                x.ToolCalls IsNot Nothing AndAlso x.ToolCalls.Count > 0)
+        If assistantIndex < 0 Then Return
+
+        Dim assistantMessage = conversation.Messages(assistantIndex)
+        Dim completedIds = conversation.Messages.Skip(assistantIndex + 1).
+            Where(Function(x) x IsNot Nothing AndAlso String.Equals(x.Role, "tool", StringComparison.OrdinalIgnoreCase)).
+            Select(Function(x) If(x.ToolCallId, "")).
+            Where(Function(x) x <> "").
+            ToHashSet(StringComparer.OrdinalIgnoreCase)
+        Dim logs = If(toolRoundLogs, New List(Of ToolRoundLog)).
+            SelectMany(Function(x) If(x?.Calls, New List(Of ToolRunLog))).
+            Where(Function(x) x IsNot Nothing).
+            ToList()
+
+        For Each callInfo In assistantMessage.ToolCalls.Where(Function(x) x IsNot Nothing)
+            If Not String.IsNullOrWhiteSpace(callInfo.Id) AndAlso completedIds.Contains(callInfo.Id) Then Continue For
+
+            Dim log = logs.LastOrDefault(Function(x) String.Equals(x.CallId, callInfo.Id, StringComparison.OrdinalIgnoreCase))
+            Dim activity = log?.Activity
+            If activity Is Nothing AndAlso _activeTurn IsNot Nothing Then
+                activity = New AgentTurnActivityData With {
+                    .Kind = "tool",
+                    .ToolName = If(callInfo.Name, ""),
+                    .Arguments = If(callInfo.Arguments, ""),
+                    .CreatedAt = DateTime.Now
+                }
+                _activeTurn.Activities.Add(activity)
+            End If
+            If activity IsNot Nothing Then
+                activity.ResultText = If(resultText, "")
+                activity.State = If(state, "error")
+                If activity.ElapsedMilliseconds < 0 Then activity.ElapsedMilliseconds = 0
+                If IsConversationSelected(conversation) Then
+                    Dim item = If(log?.Item, AgentRoom1.FindItem(activity.Id))
+                    If item Is Nothing Then
+                        item = AgentRoom1.AddToolCall(_activeTurn.Id,
+                                                     FormatToolActivityTitle(activity),
+                                                     FormatToolActivityDetails(activity),
+                                                     activity.Id,
+                                                     expanded:=False,
+                                                     running:=False,
+                                                     isError:=String.Equals(state, "error", StringComparison.OrdinalIgnoreCase))
+                    Else
+                        item.Title = FormatToolActivityTitle(activity)
+                        item.Text = FormatToolActivityDetails(activity)
+                        item.IsRunning = False
+                        item.IsError = String.Equals(state, "error", StringComparison.OrdinalIgnoreCase)
+                    End If
+                End If
+            End If
+
+            AppendRunConversationMessage(conversation, New AgentMessageData With {
+                .Role = "tool",
+                .Name = If(callInfo.Name, ""),
+                .ToolCallId = If(callInfo.Id, ""),
+                .Content = If(resultText, "")
+            })
+        Next
+    End Sub
+
     Private Async Function BuildRequestMessagesAsync(client As AgentEndpointClient,
                                                      conversation As AgentConversationData,
                                                      modelId As String,
+                                                     tools As List(Of Dictionary(Of String, Object)),
                                                      cancellationToken As Threading.CancellationToken) As Task(Of List(Of AgentMessageData))
         Dim conversationMessages = GetRequestConversationMessages(conversation)
-        Dim plan = BuildContextCompressionPlan(conversation, conversationMessages)
-        If plan.SummaryBoundaryIndex > 0 Then
-            Await EnsureContextSummaryAsync(client, conversation, conversationMessages, modelId, plan, cancellationToken)
-            conversationMessages = BuildCompressedConversationMessages(conversation, conversationMessages, plan)
+        Dim plan = BuildContextCompressionPlan(conversation, conversationMessages, tools)
+        Dim pass = 0
+        While plan.RequiresCompaction AndAlso pass < MaxContextCompactionPasses
+            cancellationToken.ThrowIfCancellationRequested()
+            pass += 1
+            If Not Await EnsureContextSummaryAsync(client, conversation, conversationMessages, modelId, plan, cancellationToken) Then Exit While
+            plan = BuildContextCompressionPlan(conversation, conversationMessages, tools)
+        End While
+
+        plan = BuildContextCompressionPlan(conversation, conversationMessages, tools)
+        If plan.CurrentRequestTokens > plan.AutoCompactTokenLimit Then
+            Throw New InvalidOperationException(
+                $"上下文约 {plan.CurrentRequestTokens} tokens，超过当前安全请求上限 {plan.AutoCompactTokenLimit} tokens，且自动压缩未能继续。请减少历史记录或更换上下文更大的模型。")
         End If
+
+        conversationMessages = BuildCompressedConversationMessages(conversation, conversationMessages)
 
         Return BuildRequestMessagesWithSystem(conversation, conversationMessages)
     End Function
@@ -1406,38 +1682,73 @@ Public Class Form_v6_Agent
     End Function
 
     Private Function BuildContextCompressionPlan(conversation As AgentConversationData,
-                                                 messages As List(Of AgentMessageData)) As ContextCompressionPlan
+                                                 messages As List(Of AgentMessageData),
+                                                 tools As List(Of Dictionary(Of String, Object))) As ContextCompressionPlan
         Dim contextWindowTokens = ResolveContextWindowTokens(If(conversation?.ModelId, ""))
+        Dim completionReserveTokens = Math.Min(8192,
+            Math.Max(ContextMinimumCompletionReserveTokens, CInt(Math.Ceiling(contextWindowTokens * 0.06))))
+        Dim summaryBudgetTokens = Math.Min(ContextSummaryLimitTokens,
+            Math.Max(1024, CInt(Math.Floor(contextWindowTokens * 0.15))))
+        Dim toolDefinitionTokens = EstimateToolDefinitionTokens(tools)
         Dim plan As New ContextCompressionPlan With {
-            .ContextWindowTokens = contextWindowTokens
+            .ContextWindowTokens = contextWindowTokens,
+            .AutoCompactTokenLimit = Math.Max(1, CInt(Math.Floor(contextWindowTokens * ContextAutoCompactRatio))),
+            .ToolDefinitionTokens = toolDefinitionTokens,
+            .CompletionReserveTokens = completionReserveTokens,
+            .SummaryBudgetTokens = summaryBudgetTokens
         }
-        If messages Is Nothing OrElse messages.Count = 0 Then Return plan
 
         Dim systemTokens = EstimateRequestTokenCount(Agent提示词_v6.构建系统提示词(
             AgentNetworkMode.Normalize(conversation.NetworkMode),
             GetPermissionLevelDisplayName(conversation.PermissionLevel)))
-        plan.CurrentRequestTokens = systemTokens + messages.Sum(Function(x) EstimateMessageTokens(x))
-        If plan.CurrentRequestTokens <= plan.ContextWindowTokens Then Return plan
+        Dim fixedRequestTokens = systemTokens + toolDefinitionTokens + completionReserveTokens + ContextRequestEnvelopeReserveTokens
+        If messages Is Nothing OrElse messages.Count = 0 Then
+            plan.CurrentRequestTokens = fixedRequestTokens
+            Return plan
+        End If
 
-        plan.RecentMessageBudgetTokens = Math.Max(0, plan.ContextWindowTokens - systemTokens - ContextSummaryLimitTokens)
-        plan.CompressionSourceBudgetTokens = Math.Max(1000, plan.ContextWindowTokens - ContextSummaryLimitTokens)
+        plan.ExistingBoundaryIndex = ResolveContextCheckpointBoundaryIndex(conversation, messages)
+        Dim activeMessages = BuildCompressedConversationMessages(conversation, messages)
+        plan.CurrentRequestTokens = fixedRequestTokens + activeMessages.Sum(Function(x) EstimateMessageTokens(x))
+        If plan.CurrentRequestTokens <= plan.AutoCompactTokenLimit Then Return plan
+
+        plan.CompactModelId = Agent上下文能力表_v6.选择上下文压缩模型(_models, conversation.ModelId)
+        Dim compactContextWindow = ResolveContextWindowTokens(plan.CompactModelId)
+        Dim compactSummaryBudget = Math.Min(ContextSummaryLimitTokens,
+            Math.Max(1024, CInt(Math.Floor(compactContextWindow * 0.15))))
+        plan.SummaryBudgetTokens = Math.Min(summaryBudgetTokens, compactSummaryBudget)
+        plan.RecentMessageBudgetTokens = Math.Max(0, plan.AutoCompactTokenLimit - fixedRequestTokens - plan.SummaryBudgetTokens)
+        plan.CompressionSourceBudgetTokens = Math.Max(1000,
+            CInt(Math.Floor(compactContextWindow * ContextAutoCompactRatio)) - compactSummaryBudget - ContextRequestEnvelopeReserveTokens)
         Dim recentTokens = 0
         Dim firstRetainedIndex = messages.Count
 
-        For i = messages.Count - 1 To 0 Step -1
+        For i = messages.Count - 1 To plan.ExistingBoundaryIndex + 1 Step -1
             Dim messageTokens = EstimateMessageTokens(messages(i))
             If firstRetainedIndex < messages.Count AndAlso recentTokens + messageTokens > plan.RecentMessageBudgetTokens Then Exit For
             recentTokens += messageTokens
             firstRetainedIndex = i
         Next
 
-        If firstRetainedIndex <= 0 AndAlso messages.Count > 1 Then
-            firstRetainedIndex = 1
-            recentTokens = messages.Skip(firstRetainedIndex).Sum(Function(x) EstimateMessageTokens(x))
-        End If
+        Dim desiredBoundary = AdjustBoundaryBeforeToolMessage(messages, firstRetainedIndex - 1, plan.ExistingBoundaryIndex)
+        If desiredBoundary <= plan.ExistingBoundaryIndex Then Return plan
 
-        plan.SummaryBoundaryIndex = Math.Max(0, Math.Min(firstRetainedIndex, messages.Count))
-        plan.RecentMessageTokens = Math.Max(0, recentTokens)
+        Dim checkpointSummaryTokens = EstimateRequestTokenCount(If(conversation?.ContextCheckpoint?.Summary, ""))
+        Dim sourceTokens = checkpointSummaryTokens + 900
+        Dim limitedBoundary = plan.ExistingBoundaryIndex
+        For i = plan.ExistingBoundaryIndex + 1 To desiredBoundary
+            Dim messageTokens = EstimateRequestTokenCount(FormatMessageForCompression(messages(i), i + 1))
+            If sourceTokens + messageTokens > plan.CompressionSourceBudgetTokens Then Exit For
+            sourceTokens += messageTokens
+            limitedBoundary = i
+        Next
+
+        limitedBoundary = AdjustBoundaryBeforeToolMessage(messages, limitedBoundary, plan.ExistingBoundaryIndex)
+        If limitedBoundary <= plan.ExistingBoundaryIndex Then Return plan
+
+        plan.TargetBoundaryIndex = limitedBoundary
+        plan.CompressionSourceTokens = Math.Max(0, sourceTokens)
+        plan.RecentMessageTokens = messages.Skip(limitedBoundary + 1).Sum(Function(x) EstimateMessageTokens(x))
         Return plan
     End Function
 
@@ -1446,60 +1757,65 @@ Public Class Form_v6_Agent
                                                      conversationMessages As List(Of AgentMessageData),
                                                      modelId As String,
                                                      plan As ContextCompressionPlan,
-                                                     cancellationToken As Threading.CancellationToken) As Task
-        If client Is Nothing OrElse conversation Is Nothing OrElse conversationMessages Is Nothing Then Return
-        Dim summaryBoundaryIndex = Math.Max(0, Math.Min(If(plan?.SummaryBoundaryIndex, 0), conversationMessages.Count))
-        If summaryBoundaryIndex <= 0 Then Return
+                                                     cancellationToken As Threading.CancellationToken) As Task(Of Boolean)
+        If client Is Nothing OrElse conversation Is Nothing OrElse conversationMessages Is Nothing OrElse plan Is Nothing Then Return False
+        Dim existingBoundary = ResolveContextCheckpointBoundaryIndex(conversation, conversationMessages)
+        Dim targetBoundary = Math.Min(plan.TargetBoundaryIndex, conversationMessages.Count - 1)
+        If targetBoundary <= existingBoundary Then Return False
 
-        Dim retainedCount = conversationMessages.Count - summaryBoundaryIndex
-        If Not String.IsNullOrWhiteSpace(conversation.ContextSummary) AndAlso conversation.ContextSummaryMessageCount = summaryBoundaryIndex Then
-            ShowRunStatus(conversation, $"正在压缩上下文：复用已生成摘要，当前约 {plan.CurrentRequestTokens} / {plan.ContextWindowTokens} tokens，后段历史约 {plan.RecentMessageTokens} tokens")
-            Return
-        End If
+        Dim previousSummary = If(conversation.ContextCheckpoint?.Summary, "").Trim()
+        Dim sourceStart = existingBoundary + 1
+        Dim sourceMessages = conversationMessages.Skip(sourceStart).Take(targetBoundary - existingBoundary).ToList()
+        If sourceMessages.Count = 0 Then Return False
 
-        Dim previousSummary = ""
-        Dim sourceStart = 0
-        If Not String.IsNullOrWhiteSpace(conversation.ContextSummary) AndAlso
-           conversation.ContextSummaryMessageCount > 0 AndAlso
-           conversation.ContextSummaryMessageCount < summaryBoundaryIndex Then
-            previousSummary = conversation.ContextSummary.Trim()
-            sourceStart = conversation.ContextSummaryMessageCount
-        End If
+        Dim compactModelId = If(String.IsNullOrWhiteSpace(plan.CompactModelId),
+                                Agent上下文能力表_v6.选择上下文压缩模型(_models, modelId),
+                                plan.CompactModelId)
+        If String.IsNullOrWhiteSpace(compactModelId) Then Return False
 
-        Dim sourceMessages = conversationMessages.Skip(sourceStart).Take(summaryBoundaryIndex - sourceStart).ToList()
-        If sourceMessages.Count = 0 Then Return
-
-        Dim compactModelId = Agent上下文能力表_v6.选择上下文压缩模型(_models, modelId)
-        If String.IsNullOrWhiteSpace(compactModelId) Then Return
-
-        ShowRunStatus(conversation, $"正在压缩上下文：使用 {compactModelId}，当前约 {plan.CurrentRequestTokens} / {plan.ContextWindowTokens} tokens，后段预算 {plan.RecentMessageBudgetTokens} tokens，折算后保留 {retainedCount} 条")
-        Dim compactMessages = BuildContextCompressionMessages(previousSummary, sourceMessages, summaryBoundaryIndex, plan)
+        ShowRunStatus(conversation, $"正在压缩上下文：使用 {compactModelId}，活动上下文约 {plan.CurrentRequestTokens} / {plan.AutoCompactTokenLimit} tokens，本批推进到第 {targetBoundary + 1} 条")
+        Dim compactMessages = BuildContextCompressionMessages(previousSummary,
+                                                               sourceMessages,
+                                                               targetBoundary + 1,
+                                                               plan.SummaryBudgetTokens)
         Dim result = Await client.TryCreateChatCompletionAsync(compactModelId, compactMessages, Nothing, "", cancellationToken)
         cancellationToken.ThrowIfCancellationRequested()
 
         If result IsNot Nothing AndAlso result.Usage IsNot Nothing Then AddUsage(conversation, result.Usage, compactModelId)
         If result Is Nothing OrElse Not result.Success OrElse String.IsNullOrWhiteSpace(result.Content) Then
             Dim errorText = If(result?.ErrorMessage, "模型没有返回摘要")
-            ShowRunStatus(conversation, "上下文压缩失败：" & errorText & "。本次将仅携带已有摘要和最近消息。", True)
-            Return
+            ShowRunStatus(conversation, "上下文压缩失败：" & errorText & "。本次保留当前检查点及其后的全部原始历史。", True)
+            Return False
         End If
 
-        conversation.ContextSummary = LimitTextByEstimatedTokens(result.Content.Trim(), ContextSummaryLimitTokens)
-        conversation.ContextSummaryMessageCount = summaryBoundaryIndex
-        conversation.ContextSummaryModelId = compactModelId
-        conversation.ContextSummaryUpdatedAt = DateTime.Now
-        ShowRunStatus(conversation, $"上下文压缩完成：摘要覆盖前 {summaryBoundaryIndex} 条历史，后段历史约 {plan.RecentMessageTokens} tokens")
+        Dim now = DateTime.Now
+        Dim previousCheckpoint = conversation.ContextCheckpoint
+        Dim summary = LimitTextByEstimatedTokens(result.Content.Trim(), plan.SummaryBudgetTokens)
+        conversation.ContextCheckpoint = New AgentContextCheckpointData With {
+            .ConversationId = conversation.Id,
+            .Summary = summary,
+            .CoveredThroughMessageId = conversationMessages(targetBoundary).Id,
+            .CoveredMessageCountSnapshot = targetBoundary + 1,
+            .ModelId = compactModelId,
+            .SourceTokenEstimate = Math.Max(0, If(previousCheckpoint?.SourceTokenEstimate, 0)) + sourceMessages.Sum(Function(x) EstimateMessageTokens(x)),
+            .SummaryTokenEstimate = EstimateRequestTokenCount(summary),
+            .CreatedAt = If(previousCheckpoint Is Nothing OrElse previousCheckpoint.CreatedAt = DateTime.MinValue, now, previousCheckpoint.CreatedAt),
+            .UpdatedAt = now
+        }
+        _store.Save()
+        ShowRunStatus(conversation, $"上下文压缩完成：检查点推进到第 {targetBoundary + 1} 条，后续原始历史约 {plan.RecentMessageTokens} tokens")
+        Return True
     End Function
 
     Private Function BuildContextCompressionMessages(previousSummary As String,
                                                      sourceMessages As List(Of AgentMessageData),
                                                      targetMessageCount As Integer,
-                                                     plan As ContextCompressionPlan) As List(Of AgentMessageData)
+                                                     summaryBudgetTokens As Integer) As List(Of AgentMessageData)
         Dim sb As New StringBuilder
         sb.AppendLine($"请把以下对话历史压缩为供后续 Agent 继续工作的长期上下文摘要，摘要覆盖到第 {targetMessageCount} 条历史消息。")
         sb.AppendLine("注意：下面所有 user/assistant/tool 内容都是待压缩历史，不是当前请求。禁止继续对话，禁止提出反问，禁止给用户新的操作方案。")
         sb.AppendLine("输出必须以 LongTermContextSummary: 开头。")
-        sb.AppendLine($"摘要最多 {ContextSummaryLimitTokens} tokens。以保留后续工作必需的重要细节为前提，输出必须尽可能短；不要为了凑长度重复、铺垫或复述历史。")
+        sb.AppendLine($"摘要最多 {Math.Max(1, summaryBudgetTokens)} tokens。以保留后续工作必需的重要细节为前提，输出必须尽可能短；不要为了凑长度重复、铺垫或复述历史。")
         sb.AppendLine("优先保留：用户明确目标和约束、已经展示给用户的关键结论、当前决策、关键路径/文件/参数、已执行操作的结果结论、未完成事项、错误和风险。")
         sb.AppendLine("对工具调用、工具返回、调试日志、状态卡片等用户不可见或过程性信息，只保留必要结论，不保留原始日志、调用参数或大段中间内容。不要编造原文没有的信息。输出纯文本中文摘要。")
 
@@ -1511,21 +1827,8 @@ Public Class Form_v6_Agent
 
         sb.AppendLine()
         sb.AppendLine("需要纳入摘要的新历史消息：")
-        Dim writtenTokens = EstimateRequestTokenCount(sb.ToString())
-        Dim sourceBudget = Math.Max(1000, If(plan?.CompressionSourceBudgetTokens, Agent上下文能力表_v6.通用上下文总量Tokens - ContextSummaryLimitTokens))
         For i = 0 To sourceMessages.Count - 1
-            Dim block = FormatMessageForCompression(sourceMessages(i), i + 1)
-            Dim blockTokens = EstimateRequestTokenCount(block)
-            If writtenTokens + blockTokens > sourceBudget Then
-                Dim remainingTokens = sourceBudget - writtenTokens
-                If remainingTokens > 200 Then
-                    sb.AppendLine(LimitTextByEstimatedTokens(block, remainingTokens))
-                End If
-                sb.AppendLine("[后续历史因 token 预算限制未完整写入压缩请求，请在摘要中说明存在未完全读取的历史。]")
-                Exit For
-            End If
-            sb.AppendLine(block)
-            writtenTokens += blockTokens
+            sb.AppendLine(FormatMessageForCompression(sourceMessages(i), i + 1))
         Next
 
         Return New List(Of AgentMessageData) From {
@@ -1555,46 +1858,23 @@ Public Class Form_v6_Agent
     End Function
 
     Private Function BuildCompressedConversationMessages(conversation As AgentConversationData,
-                                                         conversationMessages As List(Of AgentMessageData),
-                                                         plan As ContextCompressionPlan) As List(Of AgentMessageData)
-        Dim result As New List(Of AgentMessageData)
-        If conversationMessages Is Nothing OrElse conversationMessages.Count = 0 Then Return result
-
-        Dim recentStart = Math.Max(0, Math.Min(conversationMessages.Count, If(plan?.SummaryBoundaryIndex, 0)))
-        Dim summaryCount = Math.Min(Math.Max(0, conversation.ContextSummaryMessageCount), recentStart)
-        If Not String.IsNullOrWhiteSpace(conversation.ContextSummary) AndAlso summaryCount > 0 Then
-            result.Add(BuildContextSummaryMessage(conversation, summaryCount))
-            If summaryCount < recentStart Then
-                result.Add(New AgentMessageData With {
-                    .Role = "system",
-                    .Content = $"上下文压缩未覆盖摘要之后的 {recentStart - summaryCount} 条较早历史；这些历史未放入本次请求。不要声称完整读取了被省略的历史。"
-                })
-            End If
-        ElseIf recentStart > 0 Then
-            result.Add(New AgentMessageData With {
-                .Role = "system",
-                .Content = $"上下文过长且没有可用摘要；较早的 {recentStart} 条历史未放入本次请求。不要声称完整读取了被省略的历史。"
-            })
-        End If
-
-        result.AddRange(NormalizeLeadingRequestMessages(conversationMessages.Skip(recentStart).ToList()))
-        Return result
+                                                         conversationMessages As List(Of AgentMessageData)) As List(Of AgentMessageData)
+        Return AgentContextProjection.BuildModelContext(conversationMessages, conversation?.ContextCheckpoint)
     End Function
 
-    Private Function BuildContextSummaryMessage(conversation As AgentConversationData, summaryCount As Integer) As AgentMessageData
-        Dim modelText = If(String.IsNullOrWhiteSpace(conversation.ContextSummaryModelId), "", $"，模型 {conversation.ContextSummaryModelId}")
-        Dim timeText = If(conversation.ContextSummaryUpdatedAt = DateTime.MinValue, "", $"，时间 {conversation.ContextSummaryUpdatedAt:yyyy-MM-dd HH:mm:ss}")
-        Return New AgentMessageData With {
-            .Role = "system",
-            .Content = $"长期上下文摘要（覆盖前 {summaryCount} 条历史{modelText}{timeText}）：{vbCrLf}{conversation.ContextSummary.Trim()}"
-        }
+    Private Function ResolveContextCheckpointBoundaryIndex(conversation As AgentConversationData,
+                                                           messages As List(Of AgentMessageData)) As Integer
+        Return AgentContextProjection.ResolveBoundaryIndex(messages, conversation?.ContextCheckpoint)
     End Function
 
-    Private Function NormalizeLeadingRequestMessages(messages As List(Of AgentMessageData)) As List(Of AgentMessageData)
-        If messages Is Nothing Then Return New List(Of AgentMessageData)
-        Dim result = messages.Where(Function(x) x IsNot Nothing).ToList()
-        While result.Count > 0 AndAlso String.Equals(If(result(0).Role, ""), "tool", StringComparison.OrdinalIgnoreCase)
-            result.RemoveAt(0)
+    Private Function AdjustBoundaryBeforeToolMessage(messages As List(Of AgentMessageData),
+                                                     boundaryIndex As Integer,
+                                                     minimumBoundaryIndex As Integer) As Integer
+        Dim result = Math.Min(boundaryIndex, If(messages?.Count, 0) - 1)
+        While result > minimumBoundaryIndex AndAlso
+              result + 1 < messages.Count AndAlso
+              String.Equals(If(messages(result + 1).Role, ""), "tool", StringComparison.OrdinalIgnoreCase)
+            result -= 1
         End While
         Return result
     End Function
@@ -1644,6 +1924,15 @@ Public Class Form_v6_Agent
             Next
         End If
         Return total
+    End Function
+
+    Private Function EstimateToolDefinitionTokens(tools As List(Of Dictionary(Of String, Object))) As Integer
+        If tools Is Nothing OrElse tools.Count = 0 Then Return 0
+        Try
+            Return EstimateRequestTokenCount(System.Text.Json.JsonSerializer.Serialize(tools))
+        Catch
+            Return tools.Count * 256
+        End Try
     End Function
 
     Private Function EstimateRequestTokenCount(text As String) As Integer
