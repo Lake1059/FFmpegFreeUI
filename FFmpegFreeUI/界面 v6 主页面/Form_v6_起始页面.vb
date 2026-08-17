@@ -100,12 +100,10 @@ MKV 直出，无混流合成步骤，被中断仍可正常播放", {"立即下�
                 Process.Start(New ProcessStartInfo With {.FileName = "https://github.com/Lake1059/FFF_Project/releases", .UseShellExecute = True})
             Case 1
                 Process.Start(New ProcessStartInfo With {.FileName = "https://github.com/Lake1059/FFF_Project", .UseShellExecute = True})
-
         End Select
     End Sub
 
-    <CodeAnalysis.SuppressMessage("Performance", "CA1861:不要将常量数组作为参数", Justification:="<挂起>")>
-    Private Sub 即将推出1_Click(sender As Object, e As EventArgs) Handles 即将推出1.Click
+    Private Sub MB_3FP极简本地播放器_Click(sender As Object, e As EventArgs) Handles MB_3FP极简本地播放器.Click
         Select Case ExOverlayMsgBox(FormMain_v6, "
 3FP 是一款独特路线的本地视频播放器，也支持单独的音频和图片。自主 D3D11 渲染引擎，由 avcodec 等 dll 解码后直接送到自己的渲染逻辑中，没有任何第三方插手，全 GPU 渲染链路 + 真实高亮 HDR 支持，占用极低，功能极简，可完全取代普通人的日常本地播放需求。
 
@@ -116,10 +114,10 @@ MKV 直出，无混流合成步骤，被中断仍可正常播放", {"立即下�
 理论上支持 ffmpeg 的全部编码，工程上需要逐步适配
 采用 WASAPI 音频输出，支持独占模式以提供最佳音质
 支持 SRT / ASS / SSA / SUP 字幕
-支持哔哩哔哩规范的弹幕，支持查找和屏蔽
-三挡 HDR 模式，适配不同的屏幕和场景", {"加群获取", "前往仓库查看", "现在不"}, "可提前预览 FFF.Player / 3FP")
+支持哔哩哔哩规范的弹幕
+三挡 HDR 模式，适配不同的屏幕和场景", {"立即下载", "前往仓库查看", "现在不"}, "获取 FFF.Player / 3FP")
             Case 0
-                Process.Start(New ProcessStartInfo With {.FileName = "https://qm.qq.com/q/fiauAsddG8", .UseShellExecute = True})
+                Process.Start(New ProcessStartInfo With {.FileName = "https://github.com/Lake1059/FFF_Project/releases", .UseShellExecute = True})
             Case 1
                 Process.Start(New ProcessStartInfo With {.FileName = "https://github.com/Lake1059/FFF_Project", .UseShellExecute = True})
         End Select
