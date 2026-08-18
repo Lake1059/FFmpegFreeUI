@@ -37,8 +37,6 @@ Public Class Form_v6_Agent
     Private Const ContextMinimumCompletionReserveTokens As Integer = 2048
     Private Const StreamFlushIntervalMs As Integer = 80
     Private Const StreamFlushCharacters As Integer = 384
-    Private Const SubmittedTextFileLimitBytes As Long = 128 * 1024
-    Private Const SubmittedTextLimitCharacters As Integer = 12000
 
     Private Class ToolRunLog
         Public Property Round As Integer
@@ -683,14 +681,30 @@ Public Class Form_v6_Agent
                 Return "联网搜索"
             Case "fetch_url"
                 Return "读取网页"
+            Case "http_request"
+                Return "HTTP 请求"
             Case "read_local_text_file"
                 Return "读取本地文件"
+            Case "write_local_text_file"
+                Return "写入本地文件"
+            Case "apply_local_text_patch"
+                Return "编辑本地文件"
             Case "list_directory"
                 Return "列举目录"
+            Case "create_directory"
+                Return "创建目录"
+            Case "copy_local_file"
+                Return "复制本地文件"
+            Case "move_local_path"
+                Return "移动本地路径"
+            Case "delete_local_path"
+                Return "删除本地路径"
             Case "get_image_info"
                 Return "读取图片信息"
             Case "run_powershell"
                 Return "PowerShell 终端"
+            Case "run_windows_executable"
+                Return "运行 Windows 程序"
             Case Else
                 Return If(String.IsNullOrWhiteSpace(toolName), "工具", toolName)
         End Select
@@ -2090,64 +2104,17 @@ Public Class Form_v6_Agent
 
     Private Function BuildSubmittedFilesContext() As String
         If _pendingFiles.Count = 0 Then Return ""
-
-        Dim sb As New StringBuilder
-        sb.AppendLine("用户提交的文件或文件夹上下文：")
-        For i = 0 To _pendingFiles.Count - 1
-            sb.AppendLine(BuildSubmittedFileContextItem(i + 1, _pendingFiles(i)))
-        Next
-        Return sb.ToString().Trim()
+        Return String.Join(vbCrLf, _pendingFiles.Select(Function(pathValue) BuildSubmittedFileContextItem(pathValue)))
     End Function
 
-    Private Function BuildSubmittedFileContextItem(index As Integer, pathValue As String) As String
+    Private Function BuildSubmittedFileContextItem(pathValue As String) As String
         Try
             If Directory.Exists(pathValue) Then
-                Dim directoryInfo As New DirectoryInfo(pathValue)
-                Return $"{index}. {GetSubmittedPathName(directoryInfo.FullName)}{vbCrLf}类型：文件夹{vbCrLf}路径：{directoryInfo.FullName}{vbCrLf}内容：未自动扫描，可按需通过文件系统工具读取。"
+                Return Path.GetFullPath(pathValue)
             End If
-            If Not System.IO.File.Exists(pathValue) Then Return $"{index}. 路径不存在：{pathValue}"
-            Dim fileInfo As New FileInfo(pathValue)
-            Dim sb As New StringBuilder
-            sb.AppendLine($"{index}. {fileInfo.Name}")
-            sb.AppendLine("类型：文件")
-            sb.AppendLine($"路径：{fileInfo.FullName}")
-            sb.AppendLine($"大小：{Agent通用工具_v6.FormatFileSize(fileInfo.Length)}")
-            sb.AppendLine($"扩展名：{If(fileInfo.Extension = "", "(无)", fileInfo.Extension)}")
-
-            If Agent通用工具_v6.IsImageExtension(fileInfo.Extension) Then
-                Try
-                    Using img = Image.FromFile(pathValue)
-                        sb.AppendLine($"图片：{img.Width}x{img.Height}")
-                    End Using
-                Catch ex As Exception
-                    sb.AppendLine("图片信息读取失败：" & ex.Message)
-                End Try
-            ElseIf IsLikelyTextFile(fileInfo) Then
-                sb.AppendLine("文本内容：")
-                sb.AppendLine(Agent通用工具_v6.LimitText(Agent通用工具_v6.DecodeTextBytes(System.IO.File.ReadAllBytes(pathValue)), SubmittedTextLimitCharacters))
-            Else
-                sb.AppendLine("内容：二进制或大文件，未内嵌。")
-            End If
-
-            Return sb.ToString().TrimEnd()
+            Return Path.GetFullPath(pathValue)
         Catch ex As Exception
-            Return $"{index}. 读取失败：{pathValue}，{ex.Message}"
-        End Try
-    End Function
-
-    Private Function IsLikelyTextFile(info As FileInfo) As Boolean
-        If info Is Nothing OrElse info.Length > SubmittedTextFileLimitBytes Then Return False
-        Dim ext = info.Extension.ToLowerInvariant()
-        Dim textExts = {".txt", ".log", ".md", ".json", ".xml", ".csv", ".tsv", ".ini", ".cfg", ".conf", ".avs", ".vpy", ".bat", ".cmd", ".ps1", ".sh", ".py", ".js", ".ts", ".vb", ".cs", ".cpp", ".c", ".h", ".hpp", ".yml", ".yaml", ".srt", ".ass", ".ssa", ".vtt"}
-        If textExts.Contains(ext) Then Return True
-
-        Try
-            Dim sample = System.IO.File.ReadAllBytes(info.FullName).Take(4096).ToArray()
-            If sample.Length = 0 Then Return True
-            Dim zeroCount = sample.Count(Function(x) x = 0)
-            Return zeroCount = 0
-        Catch
-            Return False
+            Return pathValue
         End Try
     End Function
 

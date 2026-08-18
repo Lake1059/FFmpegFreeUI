@@ -27,6 +27,12 @@ Public Class 编码队列_v6
         Public Property 允许自动启动 As Boolean = False
     End Class
 
+    Private Class 批量预设任务输入_v6
+        Public Property 输入文件 As String = ""
+        Public Property 任务名称 As String = ""
+        Public Property 输出文件 As String = ""
+    End Class
+
     Public Shared ReadOnly Property 队列 As New List(Of 编码任务_v6)
     Private Shared ReadOnly 队列锁 As New Object
     Private Shared 调度中 As Boolean = False
@@ -227,19 +233,42 @@ Public Class 编码队列_v6
     End Sub
 
     Public Shared Function 添加预设任务(输入文件 As String, 预设数据 As 预设数据_v6, Optional 任务名称 As String = "", Optional 输出文件 As String = "") As 编码任务_v6
-        Dim task As New 编码任务_v6 With {
-            .输入文件 = 输入文件,
-            .输出文件 = 输出文件,
-            .任务名称 = 应用任务名称混淆(If(String.IsNullOrWhiteSpace(任务名称), Path.GetFileName(输入文件), 任务名称)),
-            .预设数据 = 预设数据
-        }
+        Return 添加预设任务批量(New List(Of 批量预设任务输入_v6) From {
+            New 批量预设任务输入_v6 With {.输入文件 = 输入文件, .任务名称 = 任务名称, .输出文件 = 输出文件}
+        }, 预设数据).FirstOrDefault()
+    End Function
+
+    Public Shared Function 批量添加预设任务(输入文件列表 As IEnumerable(Of String), 预设数据 As 预设数据_v6) As List(Of 编码任务_v6)
+        Dim specs As New List(Of 批量预设任务输入_v6)
+        For Each inputPath In If(输入文件列表, Array.Empty(Of String)())
+            If String.IsNullOrWhiteSpace(inputPath) Then Continue For
+            specs.Add(New 批量预设任务输入_v6 With {.输入文件 = inputPath, .任务名称 = Path.GetFileName(inputPath)})
+        Next
+        Return 添加预设任务批量(specs, 预设数据)
+    End Function
+
+    Private Shared Function 添加预设任务批量(specs As IEnumerable(Of 批量预设任务输入_v6), 预设数据 As 预设数据_v6) As List(Of 编码任务_v6)
+        Dim added As New List(Of 编码任务_v6)
+        If 预设数据 Is Nothing Then Return added
+        For Each spec In If(specs, Array.Empty(Of 批量预设任务输入_v6)())
+            If spec Is Nothing OrElse String.IsNullOrWhiteSpace(spec.输入文件) Then Continue For
+            added.Add(New 编码任务_v6 With {
+                .输入文件 = spec.输入文件,
+                .输出文件 = If(spec.输出文件, ""),
+                .任务名称 = 应用任务名称混淆(If(String.IsNullOrWhiteSpace(spec.任务名称), Path.GetFileName(spec.输入文件), spec.任务名称)),
+                .预设数据 = 克隆预设(预设数据)
+            })
+        Next
+        If added.Count = 0 Then Return added
         SyncLock 队列锁
-            队列.Add(task)
+            队列.AddRange(added)
         End SyncLock
-        触发插件事件("task.added", task)
+        For Each task In added
+            触发插件事件("task.added", task)
+        Next
         RaiseEvent 队列已变化()
         请求调度()
-        Return task
+        Return added
     End Function
 
     Public Shared Function 添加命令行任务(命令行 As String, 任务名称 As String, 输出文件 As String, Optional 输入文件 As String = "") As 编码任务_v6
@@ -261,20 +290,18 @@ Public Class 编码队列_v6
     Public Shared Function 添加来自参数面板的文件(files As IEnumerable(Of String), 参数面板 As Form_v6_参数面板) As Integer
         If files Is Nothing OrElse 参数面板 Is Nothing Then Return 0
         Dim preset = 预设管理_v6.从面板创建预设(参数面板)
-        Dim count As Integer = 0
+        Dim expanded As New List(Of String)
         For Each file In files
             If String.IsNullOrWhiteSpace(file) Then Continue For
             If Directory.Exists(file) Then
                 For Each child In Directory.GetFiles(file, "*", SearchOption.AllDirectories)
-                    添加预设任务(If(设置_v6.实例对象.转译模式, 转译模式处理路径(child), child), 克隆预设(preset), Path.GetFileName(child))
-                    count += 1
+                    expanded.Add(If(设置_v6.实例对象.转译模式, 转译模式处理路径(child), child))
                 Next
             Else
-                添加预设任务(If(设置_v6.实例对象.转译模式, 转译模式处理路径(file), file), 克隆预设(preset), Path.GetFileName(file))
-                count += 1
+                expanded.Add(If(设置_v6.实例对象.转译模式, 转译模式处理路径(file), file))
             End If
         Next
-        Return count
+        Return 批量添加预设任务(expanded, preset).Count
     End Function
 
     Public Shared Function 同步未处理预设任务(预设数据 As 预设数据_v6) As 预设同步结果

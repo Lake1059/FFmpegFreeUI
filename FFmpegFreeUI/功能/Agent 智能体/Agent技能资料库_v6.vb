@@ -31,6 +31,8 @@ Public NotInheritable Class Agent技能资料库_v6
                 Return 环境与工作流()
             Case "permissions-network"
                 Return 权限与联网()
+            Case "agent-tools", "tools"
+                Return Agent工具说明()
             Case "parameter-panel"
                 Return 参数面板()
             Case "command-generation"
@@ -55,6 +57,7 @@ Public NotInheritable Class Agent技能资料库_v6
             引用("SKILL.md", "入口说明", "触发规则、资料导航和最小工作原则。"),
             引用("references/environment-workflow.md", "环境与工作流", "3FUI Agent 身份、运行环境、Markdown 呈现、页面生命周期、参数到队列的整体工作流。"),
             引用("references/permissions-network.md", "权限与联网", "安全区域、环境访问、系统访问、联网模式、本地文件、图片信息和 PowerShell 边界。"),
+            引用("references/agent-tools.md", "Agent 工具说明", "所有 Agent 工具的用途、参数、返回值、调用顺序和权限边界。"),
             引用("references/parameter-panel.md", "参数面板", "预设数据结构、字段查询、补丁修改、控件扫描、输出命名和路径规则。"),
             引用("references/command-generation.md", "命令生成", "预设数据到 ffmpeg/ffprobe 命令的生成链路、阶段化命令、剪辑、附件、字幕和自定义参数。"),
             引用("references/filters-streams.md", "滤镜与流控制", "滤镜排序系统、内置滤镜同步、filter_complex 判断、流映射和保留流规则。"),
@@ -109,6 +112,7 @@ description: 3FUI Agent 的内置资料库。用于了解 FFmpegFreeUI 环境机
 Reference 选择：
 - `environment-workflow`：身份、运行环境、页面生命周期、总体工作流。
 - `permissions-network`：权限等级、联网模式、文件访问和 PowerShell 风险边界。
+- `agent-tools`：所有 Agent 工具的参数、返回值、调用顺序和权限边界。
 - `parameter-panel`：参数字段、控件、输出位置、自动命名、补丁修改。
 - `command-generation`：命令拼装、阶段化命令、剪辑、附件、字幕、自定义参数。
 - `filters-streams`：滤镜排序、内置滤镜同步、filter_complex、流映射。
@@ -153,25 +157,78 @@ Agent 面向用户时既是聊天助手，也是 3FUI 控制器。不要把自�
 
 ## 权限等级
 
-3FUI Agent 的工具按权限开放。`安全区域` 可使用参数面板读取、字段查询和补丁修改，以及内置 skill 资料库读取。`环境访问` 增加页面切换、队列摘要、队列日志、队列控制、同步参数到队列、准备文件页、集成工具、硬件概要、参数预设和控件文本。`系统访问` 再增加本地文本读取、目录列举、图片信息和 PowerShell。
+3FUI Agent 的工具按权限开放。`安全区域` 可使用参数面板读取、字段查询和补丁修改，以及内置 skill 资料库读取。`环境访问` 增加页面切换、队列摘要、队列日志、队列控制、同步参数到队列、准备文件页、集成工具、硬件概要、参数预设和控件文本。`系统访问` 再增加本地文件读取、原子写入、精确文本补丁、目录和路径操作、图片信息、PowerShell 以及直接运行 Windows 可执行文件。
 
 不要绕过权限。工具返回权限不足时，应告诉用户当前权限不够，并说明需要切换到哪一级权限。
 
 ## 联网模式
 
-联网有三种状态。禁用联网时没有联网工具。端点联网使用模型端点的原生联网能力，通常走 `web_search` 并由端点实现。 本地联网由 3FUI 在本机发起 HTTP 请求；调用 `web_search` 时必须由你自行选择搜索引擎，并传入 `engine_url`，它应为带有查询词的完整 HTTP/HTTPS URL，或使用 `{query}` 作为查询词占位符。`fetch_url` 可读取指定 URL 的网页文本。联网结果不等于权威事实，高风险或时效性信息仍应标注来源和不确定性。
+联网有三种状态。禁用联网时没有联网工具。端点联网使用模型端点的原生联网能力，通常走 `web_search` 并由端点实现。 本地联网由 3FUI 在本机发起 HTTP 请求；调用 `web_search` 时必须由你自行选择搜索引擎，并传入 `engine_url`，它应为带有查询词的完整 HTTP/HTTPS URL，或使用 `{query}` 作为查询词占位符。`fetch_url` 和 `http_request` 支持 HTML、JSON、XML、纯文本及 API 请求，并可按需填写 User-Agent、Referer、Cookie、Authorization 等请求头、请求方法和请求体。联网结果不等于权威事实，高风险或时效性信息仍应标注来源和不确定性。
 
 ## 本地文件和图片
 
-系统访问权限下，`read_local_text_file` 只能读本地文本文件，文件大小限制 512 KiB，并会按文本编码解码和截断。`list_directory` 列出目录最多 200 项。`get_image_info` 读取图片宽高、格式、大小；小于等于 1 MiB 的图片会返回 base64。对话框待提交文件不是这些工具的直接输入，它们会在用户下一条消息中转为文本上下文；图片和二进制只附摘要，不走多模态 base64。
+系统访问权限下，`read_local_text_file` 支持按行读取和字符上限，`write_local_text_file` 使用原子替换写入，`apply_local_text_patch` 可对代码执行精确文本补丁；`list_directory` 支持递归和条数上限，另有创建、复制、移动和需明确确认的回收站删除工具。`get_image_info` 只返回元数据，不返回 base64。对话框待提交文件只显示路径，Agent 应按需调用本地文件工具读取。
 
 准备文件页和集成工具里的路径操作属于 3FUI 环境控制，不等于任意文件系统操作。即使系统访问开放，也要尊重用户意图，不要主动读取无关私人文件。
 
 ## PowerShell
 
-`run_powershell` 仅系统访问可用。同一次用户消息触发的 Agent 运行会复用同一个 PowerShell 进程，变量、当前位置和模块导入可跨多次调用保留；本轮响应结束、超时或终止时关闭。默认工作目录是程序目录，后续调用默认沿用当前 PowerShell 位置。
+`run_powershell` 和 `run_windows_executable` 仅系统访问可用。同一次用户消息触发的 Agent 运行会复用同一个 PowerShell 进程，变量、当前位置和模块导入可跨多次调用保留；本轮响应结束、超时或终止时关闭。`run_windows_executable` 使用 `arguments` 数组逐项传参，不经过 shell 拼接，并返回 exit_code、stdout、stderr 和超时状态。默认工作目录是程序目录，后续 PowerShell 调用默认沿用当前 PowerShell 位置。
 
 PowerShell 优先用于只读检查、诊断、结构化计算和用户明确要求的命令。删除、覆盖、批量修改、安装软件、修改系统设置、联网下载执行、停止进程等高风险操作需要用户明确确认。执行命令后必须检查返回的 exit_code、stdout、stderr 和实际效果，不要只凭命令看起来正确就回答完成。"
+    End Function
+
+    Private Shared Function Agent工具说明() As String
+        Return "# Agent 工具说明
+
+## 调用总则
+
+工具名称和参数以当前 `BuildToolDefinitions` 返回的定义为准。工具调用前先确认权限和联网模式；工具返回的实时状态优先于历史消息。涉及修改时先读取状态，执行后检查返回值；不要把工具调用结果之外的推测当成已完成。
+
+权限按风险分层：安全区域包含资料库和参数面板读写；环境访问包含队列、页面、准备文件、集成工具、硬件和预设；系统访问才包含任意本地路径、PowerShell 和 Windows 程序。权限不足时不要改用更高风险工具绕过。
+
+## 安全区域工具
+
+- `list_agent_skills`：列出 skill 和 reference 索引。遇到 3FUI 具体机制、字段、队列、联网或推荐问题时先调用。
+- `read_agent_skill_reference`：读取指定 reference。参数为 `skill`（默认 `ffmpegfreeui`）和 `reference`；只读取当前问题相关章节。
+- `get_parameter_panel_state`：读取当前参数面板的 `preset_json`、总览和 `command_preview`。判断当前配置时优先使用它。
+- `get_parameter_field_info`：查询字段类型、当前值、候选值、枚举和格式规则。可传 `fields`、`query`、`include_current_values`；不熟悉字段时先查再改。
+- `apply_parameter_panel_patch`：修改当前参数面板。优先传 `changes`，必要时才传完整 `preset_json`，返回 `actual_changed_fields`、总览和命令预览；它不会自动修改已入队任务。
+
+## 环境访问工具
+
+- `get_queue_summary`：读取队列摘要或详情。可用 `id/ids`、1-based `index/indexes`、`target=all`；大队列用 `offset/limit` 分页。`detail`、`include_commands`、`include_preset_json` 和 `include_performance` 会增加返回体，按需打开。
+- `get_queue_task_logs`：读取日志。先用队列摘要获得 ID，再用 `mode`/`modes` 选择 `all`、`latest_non_progress`、`errors`、`current_stage`，并用 `log_limit` 限制条数。
+- `control_queue_tasks`：控制 `start`、`pause`、`resume`、`stop`、`remove`、`reset`。停止或移除全部必须有用户明确指令；执行后检查返回的 `eligible_count`、`before` 和 `after`。
+- `sync_parameter_panel_to_queue`：把当前面板同步到尚未开始的预设任务。只有用户明确要求同步时调用；不会修改已开始、暂停、完成、出错或命令行任务。
+- `get_ui_tabs` / `switch_ui_tab`：读取或切换主页面、参数面板、集成工具、设置和嵌套页。控件未初始化或用户要求切换页面时使用。
+- `get_prepare_files` / `set_prepare_files` / `submit_prepare_files_to_queue`：操作准备文件页。`set_prepare_files` 的 `mode` 为 `append`、`replace` 或 `clear`；它与对话附件列表不是同一功能。
+- `get_integrated_tool_state`：读取 `merge`、`mux` 或 `extract` 的当前配置和状态，配置或运行前先调用。
+- `configure_integrated_tool`：配置集成工具。`merge` 使用必填 `files` 字符串数组，可选 `output` 和 `mode`（`replace`、`append`、`clear`）；`mux` 的 `files` 是对象数组，每项至少有 `path`，可包含 `video`、`audio`、`subtitle`、`chapters`、`metadata`，另有 `output`、`mode`；`extract` 使用必填 `file`，可选 `output_location` 和 `selected_streams`。
+- `run_integrated_tool`：运行当前集成工具配置。合并和混流会加入编码队列，抽流直接执行；抽流一次配置后只运行一次。抽流可在 payload 中传 `force_auto_name`（默认 `true`）。
+- `get_system_hardware`：读取处理器、内存和显卡概要，只用于辅助建议，不能代替实际编码器可用性检查。
+- `get_parameter_panel_controls`：扫描用户可见控件和说明控件；需要定位控件名、候选项或页面文案时使用，不用它替代结构化参数状态。
+- `list_parameter_presets` / `read_parameter_preset` / `apply_parameter_preset` / `save_parameter_preset`：列出、读取、应用和保存预设。开发者内置预设只读可应用；保存时注意 `save_output_location`。
+
+## 联网工具
+
+- `web_search`：端点联网由模型端点搜索；本地联网必须提供 `engine_url`，可使用 `{query}` 占位符。
+- `fetch_url`：读取网页、JSON、XML 或纯文本。可传 `method`、`headers`、`user_agent`、`referer`、`cookies`、`body`、`response_format`、`max_chars`。
+- `http_request`：通用本地 HTTP 请求，返回 `status_code`、响应头、`content_type` 和响应体摘要。API 请求优先用它，并通过 `headers` 填写 `Authorization` 等身份标识。模型可以根据用户提供的站点要求选择 User-Agent、Referer、Cookie 和请求头，但不得凭空编造登录凭据或绕过访问控制。
+
+## 系统访问工具
+
+- `read_local_text_file`：必填 `path`，支持 `start_line`、`line_count`、`max_chars`；大文件按片段读取。
+- `write_local_text_file`：必填 `path`、`content`，用原子替换写入文本，可选 `encoding`（`utf-8`、`utf-8-bom`、`utf-16`）和 `create_directories`。
+- `apply_local_text_patch`：必填 `path`、`old_text`、`new_text`，对代码执行精确修改；默认要求唯一匹配，可用 `replace_all` 或 `expected_replacements` 明确匹配次数。
+- `list_directory`：必填 `path`，列出目录，支持 `recursive` 和 `max_items`。
+- `create_directory`：必填 `path`，创建目录（已存在时返回现状）。`copy_local_file` 和 `move_local_path` 必填 `source`、`destination`，可选 `overwrite`，默认不覆盖目标。
+- `delete_local_path`：必须传 `confirm=true`，文件和目录优先进入回收站；执行前再次确认路径和用户意图。
+- `get_image_info`：读取图片尺寸、格式和大小，不返回 Base64。
+- `run_powershell`：复用本轮 PowerShell 会话，适合诊断和用户明确要求的命令；参数为 `command`、可选 `working_directory` 和 `timeout_seconds`。
+- `run_windows_executable`：直接运行 Windows 可执行文件。参数为 `executable`、`arguments` 数组，可选 `working_directory`、`stdin`、`timeout_seconds`、`max_output_chars`；返回 `exit_code`、`stdout`、`stderr`、`timed_out`。参数逐项传递，不要把整条命令拼成一个字符串。
+
+所有系统访问工具都要求 `系统访问` 权限。删除、覆盖、批量修改、运行未知程序或带副作用的网络请求必须先确认用户意图。"
     End Function
 
     Private Shared Function 参数面板() As String
@@ -197,7 +254,36 @@ PowerShell 优先用于只读检查、诊断、结构化计算和用户明确要
 
 `输出_自动命名选项` 中，默认 `附加_递增时间戳` 会替换文件名结尾已有的 `_yyyy.MM.dd-HH.mm.ss`。`附加_2位结尾序号` 和 `附加_3位结尾序号` 始终从 `01` 或 `001` 开始递增，判断已占用序号时只检查相同输出后缀，不自带空格或下划线；需要分隔符就写入 `输出命名_结尾文本`。
 
-视频帧服务器脚本字段可保存绝对路径或相对路径。相对路径按 `Application.StartupPath` 解析；界面快捷列表来自程序目录下的 AviSynth 和 VapourSynth 目录，并优先保存为相对路径。"
+视频帧服务器脚本字段可保存绝对路径或相对路径。相对路径按 `Application.StartupPath` 解析；界面快捷列表来自程序目录下的 AviSynth 和 VapourSynth 目录，并优先保存为相对路径。
+
+## 多轨任务决策
+
+先区分 `一个文件内有多个流` 和 `多个文件要合成一个输出`：
+
+| 用户目标 | 首选方式 | 判断依据 |
+| --- | --- | --- |
+| 同一个输入文件选择某个视频/音频/字幕流并重新编码，或保留同文件的其他流 | 参数面板的流控制 | 只有一个主输入，目标是选流、编码、滤镜、保留或排除其他流 |
+| 多个输入文件的音视频/字幕流放进同一个容器，尽量不重新编码 | 集成工具的混流 `mux` | 每个文件分别选择要带入的视频、音频和字幕流，并可选择章节、元数据；输出通常使用 `-c copy` |
+| 多个文件首尾连接成连续内容 | 集成工具的合并 `merge` | 目标是时间上的串接，不是把多条轨并存于同一容器 |
+| 一个文件的多条流拆成多个独立文件 | 集成工具的抽流 `extract` | 目标是导出，不是编码到一个输出 |
+
+### 流控制字段
+
+流控制字段属于当前参数面板，不是混流配置：
+
+- `流控制_将视频参数应用于指定流`、`流控制_将音频参数应用于指定流`、`流控制_将字幕参数应用于指定流`：多个值用英文逗号分隔；可写 `0:v:0`、`0:a:1`、`0:s:0`，省略完整前缀的数字会按对应类型补成第一个输入的流序号。
+- `流控制_启用保留其他视频流`、`流控制_启用保留其他音频流`、`流控制_启用保留其他字幕流`：保留同一输入中未作为主处理流的其他流，生成显式 `-map`，通常配合复制流。
+- 视频或音频没有指定流，但设置了对应编码器、滤镜或附加参数时，系统默认处理 `0:v:0` 或 `0:a:0`；不要为了默认主流重复写选择器。
+- 字幕操作可选择复制、`mov_text`、`srt`、`ass` 或 `ssa`；容器不兼容时应以命令预览为准。自动混流 SRT/ASS/SSA 只适用于预设的字幕输入逻辑，不等同于多个媒体文件的 mux。
+
+### 多轨操作顺序
+
+1. 用户只提到 `保留第二条音轨`、`给指定视频流加滤镜` 等单文件目标时，先读 `get_parameter_panel_state` 和 `get_parameter_field_info`，修改流控制字段，再检查命令预览中的 `-map`。
+2. 用户给出多个文件，并要求每个文件的不同轨道共同进入一个输出时，使用 `get_integrated_tool_state(tool=mux)`，再用 `configure_integrated_tool` 传入 `files` 对象数组；不要把多个文件路径塞进参数面板流控制字段。
+3. 混流前确认各输入的编码、时间基、分辨率、采样率和容器兼容性；混流本身通常不转码，若需要统一编码或滤镜，应先分别处理或改用参数面板任务。
+4. 目标只是抽出一条或多条流时，不要配置 mux；使用抽流状态中的全局索引调用一次 `extract`。
+
+判断不清时先反问 `是同一文件多轨选择，还是多个文件多轨合成`，不要直接替用户选择混流或合并。"
     End Function
 
     Private Shared Function 命令生成() As String
@@ -259,7 +345,7 @@ CRF、CQP、VBR、CBR、TPE 分支不同。NVENC 的 CQP/VBR/CBR 和 AMF 的 CQP
 
 ## 编码队列
 
-`get_queue_summary` 默认返回全部任务摘要；可用 `id/ids` 或 1-based `index/indexes` 查询指定任务，`target=all` 明确读取全部。`detail=true` 返回完整任务信息。`include_commands=true` 会返回 `commands`、`command_preview_text` 和 `actual_command_text`。其中 `actual_command_text` 对应队列查看任务参数窗口右侧的实际执行命令行。
+`get_queue_summary` 默认返回全部任务摘要；可用 `id/ids` 或 1-based `index/indexes` 查询指定任务，`target=all` 明确读取全部。大队列可用 `offset`、`limit` 分页，避免一次返回过多任务。`detail=true` 返回完整任务信息。`include_commands=true` 会返回 `commands`、`command_preview_text` 和 `actual_command_text`。其中 `actual_command_text` 对应队列查看任务参数窗口右侧的实际执行命令行。
 
 `get_queue_task_logs` 读取指定任务日志。默认一次返回四档：`all`、`latest_non_progress`、`errors`、`current_stage`。先用 `get_queue_summary` 获取任务 ID 或序号，再读日志。日志可能很长，优先读指定任务和指定档位。
 
@@ -271,7 +357,7 @@ CRF、CQP、VBR、CBR、TPE 分支不同。NVENC 的 CQP/VBR/CBR 和 AMF 的 CQP
 
 集成工具包括合并、混流、抽流。质量评测和字幕生成当前不可由 Agent 操作。合并和混流配置后加入编码队列执行；抽流在页面直接执行。涉及流索引、章节、元数据、输出位置或选择流时，先用 `get_integrated_tool_state` 读状态，再配置和运行。
 
-合并工具通常按文件列表和输出路径工作。混流工具的 files 可以是对象数组，适合描述不同输入文件的流选择、语言、标题、默认轨等。
+合并工具通常按文件列表和输出路径工作。混流工具的 `files` 可以是对象数组；每项至少有 `path`，可选 `video`、`audio`、`subtitle` 文本，以及 `chapters`、`metadata` 布尔开关。不要向混流 payload 添加页面未支持的语言、标题或默认轨字段。
 
 抽流页的单文件多流批量提取、流选择和防重复执行规则见 `stream-extraction`。
 
@@ -324,7 +410,7 @@ CRF、CQP、VBR、CBR、TPE 分支不同。NVENC 的 CQP/VBR/CBR 和 AMF 的 CQP
 
 ## 对话附件与本地文件
 
-Agent 对话框待提交文件会在用户下一条消息中转为文本上下文。图片和二进制只附摘要，不走多模态 base64。系统访问权限下的 `read_local_text_file`、`list_directory`、`get_image_info` 是另一路本地文件工具，不能默认读取用户没有明确要求的文件。
+Agent 对话框待提交文件会在用户下一条消息中只转为文件或文件夹路径，不内嵌文本和 base64。系统访问权限下的 `read_local_text_file`、`write_local_text_file`、`apply_local_text_patch`、`list_directory`、`get_image_info` 等工具是读取或修改这些路径的入口；不能默认读取用户没有明确要求的文件。
 
 处理路径时区分三类：参数面板输出位置、准备文件页路径、系统访问文件路径。参数面板输出位置为空或无效代表默认原目录；准备文件页路径会影响入队；系统访问路径用于读取和诊断。不要混用这些概念。"
     End Function

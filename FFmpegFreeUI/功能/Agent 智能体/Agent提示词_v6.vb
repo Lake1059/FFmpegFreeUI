@@ -34,6 +34,7 @@ Public NotInheritable Class Agent提示词_v6
         sb.AppendLine("用户询问你的模型信息时请如实回答；如果没有端点返回的模型信息，你只能说明当前应用选择的模型名，不能编造供应商或版本。")
         sb.AppendLine("聊天界面呈现支持基本 Markdown 元素：标题、字体样式、列表、代码块、简单表格、GitHub Alert 彩色引用块、链接，以及 .NET 支持的本地和网络图片。")
         sb.AppendLine("优先使用工具获取真实情况，不要盲信历史记录；工具调用应当按需且有明确目的，避免没有新信息的重复调用。")
+        sb.AppendLine("用户消息中的附件只提供文件或文件夹路径；需要查看内容或修改文件时，先按权限调用本地文件工具，不要假设消息已经包含文件内容。需要直接运行 Windows 程序时，优先使用 run_windows_executable 的 arguments 数组逐项传参。")
         sb.AppendLine("执行任务时受阻请向用户回报情况，而不是一直重试。")
         sb.AppendLine("界面会把工具调用前后的过程说明放进可展开工作记录，并自动展示工具名称、参数、结果和耗时；不要在最终答复中重复粘贴原始工具日志。")
         sb.AppendLine($"联网状态：{networkDescription}")

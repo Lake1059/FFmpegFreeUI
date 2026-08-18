@@ -551,7 +551,9 @@ Public Class AgentLocalTools
                 {"detail", New Dictionary(Of String, Object) From {{"type", "boolean"}, {"description", "是否返回完整任务信息；查询指定任务时默认 true"}}},
                 {"include_performance", New Dictionary(Of String, Object) From {{"type", "boolean"}, {"description", "是否返回活动进程的 CPU、内存和 GPU 占用，默认 true；无需打开任务日志窗口"}}},
                 {"include_commands", New Dictionary(Of String, Object) From {{"type", "boolean"}, {"description", "是否附带可执行命令行，默认 false"}}},
-                {"include_preset_json", New Dictionary(Of String, Object) From {{"type", "boolean"}, {"description", "是否附带任务预设 JSON，可能很大，默认 false"}}}
+                {"include_preset_json", New Dictionary(Of String, Object) From {{"type", "boolean"}, {"description", "是否附带任务预设 JSON，可能很大，默认 false"}}},
+                {"offset", New Dictionary(Of String, Object) From {{"type", "integer"}, {"description", "target=all 时跳过的任务数，默认 0"}}},
+                {"limit", New Dictionary(Of String, Object) From {{"type", "integer"}, {"description", "target=all 时最多返回的任务数；0 表示不限制"}}}
             }))
             tools.Add(FunctionTool("get_queue_task_logs", "读取指定编码队列任务日志。先用 get_queue_summary 获取任务 ID 或序号；默认一次返回四档：all、latest_non_progress、errors、current_stage。", New Dictionary(Of String, Object) From {
                 {"id", New Dictionary(Of String, Object) From {{"type", "string"}, {"description", "单个任务 ID"}}},
@@ -631,19 +633,73 @@ Public Class AgentLocalTools
                     {"query", New Dictionary(Of String, Object) From {{"type", "string"}, {"description", "要搜索的问题"}}},
                     {"engine_url", New Dictionary(Of String, Object) From {{"type", "string"}, {"description", "自行选择的 HTTP/HTTPS 搜索引擎 URL。必须是已包含查询词的完整 URL，或使用 {query} 占位符。"}}}
                 }, {"query", "engine_url"}))
-                tools.Add(FunctionTool("fetch_url", "读取指定 URL 的网页文本。使用 3FUI 在本机发起 HTTP 请求。", New Dictionary(Of String, Object) From {
-                    {"url", New Dictionary(Of String, Object) From {{"type", "string"}}}
+                tools.Add(FunctionTool("fetch_url", "读取指定 URL 的文本或 JSON。请求由 3FUI 在本机发起；可按需填写 User-Agent、Referer、Cookie、自定义请求头、请求方法和请求体。", New Dictionary(Of String, Object) From {
+                    {"url", New Dictionary(Of String, Object) From {{"type", "string"}}},
+                    {"method", New Dictionary(Of String, Object) From {{"type", "string"}, {"description", "GET、POST、PUT、PATCH、DELETE 等 HTTP 方法，默认 GET"}}},
+                    {"headers", New Dictionary(Of String, Object) From {{"type", "object"}, {"additionalProperties", New Dictionary(Of String, Object) From {{"type", "string"}}}}},
+                    {"user_agent", New Dictionary(Of String, Object) From {{"type", "string"}}},
+                    {"referer", New Dictionary(Of String, Object) From {{"type", "string"}}},
+                    {"cookies", New Dictionary(Of String, Object) From {{"type", "string"}}},
+                    {"body", New Dictionary(Of String, Object) From {{"type", "string"}}},
+                    {"response_format", New Dictionary(Of String, Object) From {{"type", "string"}, {"description", "auto、text、json、raw；默认 auto"}}},
+                    {"max_chars", New Dictionary(Of String, Object) From {{"type", "integer"}, {"description", "响应文本最大字符数，1-200000，默认 12000"}}}
+                }, {"url"}))
+                tools.Add(FunctionTool("http_request", "发起通用 HTTP 请求并返回状态码、响应头、内容类型和响应体摘要。用于 API、JSON、XML 或需要自定义身份标识的站点。", New Dictionary(Of String, Object) From {
+                    {"url", New Dictionary(Of String, Object) From {{"type", "string"}}},
+                    {"method", New Dictionary(Of String, Object) From {{"type", "string"}}},
+                    {"headers", New Dictionary(Of String, Object) From {{"type", "object"}, {"additionalProperties", New Dictionary(Of String, Object) From {{"type", "string"}}}}},
+                    {"user_agent", New Dictionary(Of String, Object) From {{"type", "string"}}},
+                    {"referer", New Dictionary(Of String, Object) From {{"type", "string"}}},
+                    {"cookies", New Dictionary(Of String, Object) From {{"type", "string"}}},
+                    {"body", New Dictionary(Of String, Object) From {{"type", "string"}}},
+                    {"response_format", New Dictionary(Of String, Object) From {{"type", "string"}}},
+                    {"max_chars", New Dictionary(Of String, Object) From {{"type", "integer"}}}
                 }, {"url"}))
         End Select
 
         If permissionLevel >= PermissionSystem Then
-            tools.Add(FunctionTool("read_local_text_file", "读取本地文本文件。仅系统访问权限可用，文件大小限制 512 KiB。", New Dictionary(Of String, Object) From {
+            tools.Add(FunctionTool("read_local_text_file", "读取本地文本文件。仅系统访问权限可用，支持按行读取，避免把大文件一次性放入上下文。", New Dictionary(Of String, Object) From {
+                {"path", New Dictionary(Of String, Object) From {{"type", "string"}}},
+                {"start_line", New Dictionary(Of String, Object) From {{"type", "integer"}, {"description", "1-based 起始行，默认 1"}}},
+                {"line_count", New Dictionary(Of String, Object) From {{"type", "integer"}, {"description", "最多读取行数，默认读取到文件末尾，最多 10000 行"}}},
+                {"max_chars", New Dictionary(Of String, Object) From {{"type", "integer"}, {"description", "最大返回字符数，1-200000，默认 20000"}}}
+            }, {"path"}))
+            tools.Add(FunctionTool("write_local_text_file", "写入本地文本文件，使用临时文件替换保证写入过程不会留下半截文件；必要时可创建父目录。仅系统访问权限可用。", New Dictionary(Of String, Object) From {
+                {"path", New Dictionary(Of String, Object) From {{"type", "string"}}},
+                {"content", New Dictionary(Of String, Object) From {{"type", "string"}}},
+                {"encoding", New Dictionary(Of String, Object) From {{"type", "string"}, {"description", "utf-8、utf-8-bom、utf-16，默认 utf-8"}}},
+                {"create_directories", New Dictionary(Of String, Object) From {{"type", "boolean"}}}
+            }, {"path", "content"}))
+            tools.Add(FunctionTool("apply_local_text_patch", "对本地文本文件执行精确 old_text 到 new_text 替换，默认要求恰好匹配一次；用于安全编辑代码而不需要传输 Base64。", New Dictionary(Of String, Object) From {
+                {"path", New Dictionary(Of String, Object) From {{"type", "string"}}},
+                {"old_text", New Dictionary(Of String, Object) From {{"type", "string"}}},
+                {"new_text", New Dictionary(Of String, Object) From {{"type", "string"}}},
+                {"replace_all", New Dictionary(Of String, Object) From {{"type", "boolean"}}},
+                {"expected_replacements", New Dictionary(Of String, Object) From {{"type", "integer"}}}
+            }, {"path", "old_text", "new_text"}))
+            tools.Add(FunctionTool("list_directory", "列举本地目录，支持递归和条数上限。仅系统访问权限可用。", New Dictionary(Of String, Object) From {
+                {"path", New Dictionary(Of String, Object) From {{"type", "string"}}},
+                {"recursive", New Dictionary(Of String, Object) From {{"type", "boolean"}}},
+                {"max_items", New Dictionary(Of String, Object) From {{"type", "integer"}}}
+            }, {"path"}))
+            tools.Add(FunctionTool("create_directory", "创建本地目录（包含不存在的父目录）。仅系统访问权限可用。", New Dictionary(Of String, Object) From {
                 {"path", New Dictionary(Of String, Object) From {{"type", "string"}}}
             }, {"path"}))
-            tools.Add(FunctionTool("list_directory", "列举本地目录。仅系统访问权限可用。", New Dictionary(Of String, Object) From {
-                {"path", New Dictionary(Of String, Object) From {{"type", "string"}}}
-            }, {"path"}))
-            tools.Add(FunctionTool("get_image_info", "读取本地图片的宽高、格式和小图 base64。仅系统访问权限可用。", New Dictionary(Of String, Object) From {
+            tools.Add(FunctionTool("copy_local_file", "复制本地文件。仅系统访问权限可用；目标已存在时默认拒绝覆盖。", New Dictionary(Of String, Object) From {
+                {"source", New Dictionary(Of String, Object) From {{"type", "string"}}},
+                {"destination", New Dictionary(Of String, Object) From {{"type", "string"}}},
+                {"overwrite", New Dictionary(Of String, Object) From {{"type", "boolean"}}}
+            }, {"source", "destination"}))
+            tools.Add(FunctionTool("move_local_path", "移动本地文件或目录。仅系统访问权限可用；目标已存在时默认拒绝覆盖。", New Dictionary(Of String, Object) From {
+                {"source", New Dictionary(Of String, Object) From {{"type", "string"}}},
+                {"destination", New Dictionary(Of String, Object) From {{"type", "string"}}},
+                {"overwrite", New Dictionary(Of String, Object) From {{"type", "boolean"}}}
+            }, {"source", "destination"}))
+            tools.Add(FunctionTool("delete_local_path", "删除本地文件或目录。为了避免误删，必须明确传 confirm=true；文件会优先移入回收站。仅系统访问权限可用。", New Dictionary(Of String, Object) From {
+                {"path", New Dictionary(Of String, Object) From {{"type", "string"}}},
+                {"confirm", New Dictionary(Of String, Object) From {{"type", "boolean"}}}
+            }, {"path", "confirm"}))
+            tools.Add(FunctionTool("get_image_info", "读取本地图片的宽高、格式和大小，不返回图片 Base64。仅系统访问权限可用。", New Dictionary(Of String, Object) From {
                 {"path", New Dictionary(Of String, Object) From {{"type", "string"}}}
             }, {"path"}))
             AddConsoleToolDefinitions(tools)
@@ -658,6 +714,14 @@ Public Class AgentLocalTools
             {"working_directory", New Dictionary(Of String, Object) From {{"type", "string"}, {"description", "可选工作目录。首次调用默认使用程序目录；后续调用默认沿用当前 PowerShell 位置。"}}},
             {"timeout_seconds", New Dictionary(Of String, Object) From {{"type", "integer"}, {"description", "可选超时时间，1-300 秒，默认 60 秒"}}}
         }, {"command"}))
+        tools.Add(FunctionTool("run_windows_executable", "直接运行 Windows 可执行文件并传递参数。仅系统访问权限可用；参数使用数组逐项传递，不经过 shell 拼接。返回 exit_code、stdout、stderr 和超时状态。", New Dictionary(Of String, Object) From {
+            {"executable", New Dictionary(Of String, Object) From {{"type", "string"}, {"description", "可执行文件路径或 PATH 中的程序名，例如 ffmpeg.exe"}}},
+            {"arguments", New Dictionary(Of String, Object) From {{"type", "array"}, {"items", New Dictionary(Of String, Object) From {{"type", "string"}}}, {"description", "按顺序传递给程序的参数，每一项单独填写，不要自行加引号"}}},
+            {"working_directory", New Dictionary(Of String, Object) From {{"type", "string"}}},
+            {"stdin", New Dictionary(Of String, Object) From {{"type", "string"}, {"description", "可选标准输入文本；传入后程序收到文本并关闭输入流"}}},
+            {"timeout_seconds", New Dictionary(Of String, Object) From {{"type", "integer"}, {"description", "1-300 秒，默认 60 秒"}}},
+            {"max_output_chars", New Dictionary(Of String, Object) From {{"type", "integer"}, {"description", "stdout/stderr 各自最大字符数，默认 12000"}}}
+        }, {"executable"}))
     End Sub
 
     Public Shared Async Function ExecuteAsync(callInfo As AgentToolCallInfo,
@@ -746,18 +810,72 @@ Public Class AgentLocalTools
                 Case "fetch_url"
                     If Not AgentNetworkMode.IsEnabled(networkMode) Then Return "联网已禁用"
                     If AgentNetworkMode.Normalize(networkMode) <> AgentNetworkMode.Local Then Return "当前联网模式不允许本地网页请求"
-                    Return Await FetchUrlAsync(Agent通用工具_v6.GetJsonString(args, "url"), cancellationToken)
+                    Return Await FetchUrlAsync(Agent通用工具_v6.GetJsonString(args, "url"), cancellationToken,
+                                               Agent通用工具_v6.GetJsonString(args, "method", "GET"),
+                                               ReadHeaderMap(args),
+                                               Agent通用工具_v6.GetJsonString(args, "user_agent"),
+                                               Agent通用工具_v6.GetJsonString(args, "referer"),
+                                               Agent通用工具_v6.GetJsonString(args, "cookies"),
+                                               Agent通用工具_v6.GetJsonString(args, "body"),
+                                               Agent通用工具_v6.GetJsonInteger(args, "max_chars", 12000),
+                                               Agent通用工具_v6.GetJsonString(args, "response_format", "auto"), False)
+                Case "http_request"
+                    If Not AgentNetworkMode.IsEnabled(networkMode) Then Return "联网已禁用"
+                    If AgentNetworkMode.Normalize(networkMode) <> AgentNetworkMode.Local Then Return "当前联网模式不允许本地 HTTP 请求"
+                    Return Await FetchUrlAsync(Agent通用工具_v6.GetJsonString(args, "url"), cancellationToken,
+                                               Agent通用工具_v6.GetJsonString(args, "method", "GET"),
+                                               ReadHeaderMap(args),
+                                               Agent通用工具_v6.GetJsonString(args, "user_agent"),
+                                               Agent通用工具_v6.GetJsonString(args, "referer"),
+                                               Agent通用工具_v6.GetJsonString(args, "cookies"),
+                                               Agent通用工具_v6.GetJsonString(args, "body"),
+                                               Agent通用工具_v6.GetJsonInteger(args, "max_chars", 20000),
+                                               Agent通用工具_v6.GetJsonString(args, "response_format", "auto"), True)
                 Case "read_local_text_file"
                     If permissionLevel < PermissionSystem Then Return "权限不足：需要系统访问"
-                    Return ReadLocalTextFile(Agent通用工具_v6.GetJsonString(args, "path"))
+                    Return ReadLocalTextFile(Agent通用工具_v6.GetJsonString(args, "path"),
+                                             Agent通用工具_v6.GetJsonInteger(args, "start_line", 1),
+                                             Agent通用工具_v6.GetJsonInteger(args, "line_count", 0),
+                                             Agent通用工具_v6.GetJsonInteger(args, "max_chars", 20000))
+                Case "write_local_text_file"
+                    If permissionLevel < PermissionSystem Then Return "权限不足：需要系统访问"
+                    Return WriteLocalTextFile(Agent通用工具_v6.GetJsonString(args, "path"),
+                                              Agent通用工具_v6.GetJsonString(args, "content"),
+                                              Agent通用工具_v6.GetJsonString(args, "encoding", "utf-8"),
+                                              Agent通用工具_v6.GetJsonBoolean(args, "create_directories", False))
+                Case "apply_local_text_patch"
+                    If permissionLevel < PermissionSystem Then Return "权限不足：需要系统访问"
+                    Return ApplyLocalTextPatch(Agent通用工具_v6.GetJsonString(args, "path"),
+                                               Agent通用工具_v6.GetJsonString(args, "old_text"),
+                                               Agent通用工具_v6.GetJsonString(args, "new_text"),
+                                               Agent通用工具_v6.GetJsonBoolean(args, "replace_all", False),
+                                               Agent通用工具_v6.GetJsonInteger(args, "expected_replacements", 0))
                 Case "list_directory"
                     If permissionLevel < PermissionSystem Then Return "权限不足：需要系统访问"
-                    Return ListDirectory(Agent通用工具_v6.GetJsonString(args, "path"))
+                    Return ListDirectory(Agent通用工具_v6.GetJsonString(args, "path"),
+                                         Agent通用工具_v6.GetJsonBoolean(args, "recursive", False),
+                                         Agent通用工具_v6.GetJsonInteger(args, "max_items", 200))
+                Case "create_directory"
+                    If permissionLevel < PermissionSystem Then Return "权限不足：需要系统访问"
+                    Return CreateDirectory(Agent通用工具_v6.GetJsonString(args, "path"))
+                Case "copy_local_file"
+                    If permissionLevel < PermissionSystem Then Return "权限不足：需要系统访问"
+                    Return CopyLocalFile(Agent通用工具_v6.GetJsonString(args, "source"), Agent通用工具_v6.GetJsonString(args, "destination"), Agent通用工具_v6.GetJsonBoolean(args, "overwrite", False))
+                Case "move_local_path"
+                    If permissionLevel < PermissionSystem Then Return "权限不足：需要系统访问"
+                    Return MoveLocalPath(Agent通用工具_v6.GetJsonString(args, "source"), Agent通用工具_v6.GetJsonString(args, "destination"), Agent通用工具_v6.GetJsonBoolean(args, "overwrite", False))
+                Case "delete_local_path"
+                    If permissionLevel < PermissionSystem Then Return "权限不足：需要系统访问"
+                    If Not Agent通用工具_v6.GetJsonBoolean(args, "confirm", False) Then Return "拒绝删除：必须传 confirm=true"
+                    Return DeleteLocalPath(Agent通用工具_v6.GetJsonString(args, "path"))
                 Case "get_image_info"
                     If permissionLevel < PermissionSystem Then Return "权限不足：需要系统访问"
                     Return GetImageInfo(Agent通用工具_v6.GetJsonString(args, "path"))
                 Case "run_powershell"
                     Return Await RunConsoleToolAsync(permissionLevel, powerShellSession, args, cancellationToken, "PowerShell")
+                Case "run_windows_executable"
+                    If permissionLevel < PermissionSystem Then Return "权限不足：需要系统访问"
+                    Return Await RunWindowsExecutableAsync(args, cancellationToken)
                 Case Else
                     Return $"未知工具：{callInfo?.Name}"
             End Select
@@ -831,6 +949,115 @@ Public Class AgentLocalTools
         If permissionLevel < PermissionSystem Then Return "权限不足：需要系统访问"
         If session Is Nothing Then Return displayName & " 会话不可用。"
         Return Await session.ExecuteAsync(args, cancellationToken)
+    End Function
+
+    Private Shared Async Function RunWindowsExecutableAsync(args As JsonElement,
+                                                            cancellationToken As Threading.CancellationToken) As Task(Of String)
+        Dim executable = Agent通用工具_v6.GetJsonString(args, "executable").Trim()
+        If executable = "" Then Return "缺少 executable"
+
+        Dim workingDirectory = Agent通用工具_v6.GetJsonString(args, "working_directory").Trim()
+        If workingDirectory = "" Then workingDirectory = Application.StartupPath
+        If Not Directory.Exists(workingDirectory) Then Return "工作目录不存在：" & workingDirectory
+
+        Dim timeoutSeconds = Math.Min(Math.Max(Agent通用工具_v6.GetJsonInteger(args, "timeout_seconds", 60), 1), 300)
+        Dim maxOutputCharacters = Math.Min(Math.Max(Agent通用工具_v6.GetJsonInteger(args, "max_output_chars", 12000), 1), 200000)
+        Dim arguments = Agent通用工具_v6.GetJsonStringArray(args, "arguments", False)
+        Dim process As New Process With {
+            .StartInfo = New ProcessStartInfo With {
+                .FileName = executable,
+                .WorkingDirectory = workingDirectory,
+                .UseShellExecute = False,
+                .CreateNoWindow = True,
+                .RedirectStandardInput = True,
+                .RedirectStandardOutput = True,
+                .RedirectStandardError = True,
+                .StandardInputEncoding = New UTF8Encoding(False),
+                .StandardOutputEncoding = New UTF8Encoding(False),
+                .StandardErrorEncoding = New UTF8Encoding(False)
+            }
+        }
+        For Each argument In arguments
+            process.StartInfo.ArgumentList.Add(argument)
+        Next
+
+        Dim stopwatch = Diagnostics.Stopwatch.StartNew()
+        Dim timedOut = False
+        Dim cancelled = False
+        Dim exitCode = -1
+        Dim stdout = ""
+        Dim stderr = ""
+        Try
+            If Not process.Start() Then Return "无法启动可执行文件：" & executable
+            Dim stdoutTask = process.StandardOutput.ReadToEndAsync()
+            Dim stderrTask = process.StandardError.ReadToEndAsync()
+            Dim stdinText = Agent通用工具_v6.GetJsonString(args, "stdin")
+            If HasJsonProperty(args, "stdin") AndAlso stdinText <> "" Then
+                Await process.StandardInput.WriteAsync(stdinText)
+            End If
+            process.StandardInput.Close()
+
+            Using linkedCts = Threading.CancellationTokenSource.CreateLinkedTokenSource(cancellationToken)
+                linkedCts.CancelAfter(TimeSpan.FromSeconds(timeoutSeconds))
+                Dim waitForExitAfterKill = False
+                Try
+                    Await Task.WhenAll(New Task() {stdoutTask, stderrTask, process.WaitForExitAsync(linkedCts.Token)})
+                Catch ex As OperationCanceledException
+                    cancelled = cancellationToken.IsCancellationRequested
+                    timedOut = Not cancelled
+                    waitForExitAfterKill = True
+                    Try
+                        If Not process.HasExited Then
+                            Try
+                                process.Kill(True)
+                            Catch
+                                process.Kill()
+                            End Try
+                        End If
+                    Catch
+                    End Try
+                End Try
+                If waitForExitAfterKill Then
+                    Try
+                        Await process.WaitForExitAsync(Threading.CancellationToken.None)
+                    Catch
+                    End Try
+                End If
+            End Using
+
+            Try
+                Await Task.WhenAll(New Task() {stdoutTask, stderrTask})
+            Catch
+            End Try
+            If process.HasExited Then exitCode = process.ExitCode
+            stdout = Agent通用工具_v6.LimitText(stdoutTask.Result, maxOutputCharacters, "...[truncated]")
+            stderr = Agent通用工具_v6.LimitText(stderrTask.Result, maxOutputCharacters, "...[truncated]")
+        Catch ex As OperationCanceledException When cancellationToken.IsCancellationRequested
+            cancelled = True
+            Throw
+        Catch ex As Exception
+            stderr = ex.Message
+        Finally
+            stopwatch.Stop()
+            Try
+                If Not process.HasExited Then process.Kill(True)
+            Catch
+            End Try
+            process.Dispose()
+        End Try
+
+        If cancelled Then Throw New OperationCanceledException(cancellationToken)
+        Return JsonSerializer.Serialize(New Dictionary(Of String, Object) From {
+            {"success", Not timedOut AndAlso exitCode = 0},
+            {"executable", executable},
+            {"working_directory", workingDirectory},
+            {"arguments", arguments},
+            {"exit_code", exitCode},
+            {"timed_out", timedOut},
+            {"elapsed_ms", CLng(stopwatch.Elapsed.TotalMilliseconds)},
+            {"stdout", stdout},
+            {"stderr", stderr}
+        }, JsonSO)
     End Function
 
     Private Shared Function FunctionTool(name As String,
@@ -1379,6 +1606,7 @@ Public Class AgentLocalTools
         Public Property MissingIds As New List(Of String)
         Public Property MissingIndexes As New List(Of Integer)
         Public Property Errors As New List(Of String)
+        Public Property IndexById As New Dictionary(Of String, Integer)(StringComparer.OrdinalIgnoreCase)
     End Class
 
     Private Shared Function GetQueueSummary(args As JsonElement) As String
@@ -1388,9 +1616,14 @@ Public Class AgentLocalTools
         Dim includePresetJson = Agent通用工具_v6.GetJsonBoolean(args, "include_preset_json", False)
         Dim includePerformance = Agent通用工具_v6.GetJsonBoolean(args, "include_performance", True)
         Dim detail = Agent通用工具_v6.GetJsonBoolean(args, "detail", resolution.HasSpecificSelectors OrElse includeCommands OrElse includePresetJson)
+        Dim offset = Math.Max(Agent通用工具_v6.GetJsonInteger(args, "offset", 0), 0)
+        Dim limit = Math.Max(Agent通用工具_v6.GetJsonInteger(args, "limit", 0), 0)
+        Dim selectedCountBeforePaging = resolution.Tasks.Count
+        If offset > 0 Then resolution.Tasks = resolution.Tasks.Skip(offset).ToList()
+        If limit > 0 Then resolution.Tasks = resolution.Tasks.Take(Math.Min(limit, 5000)).ToList()
 
         Dim items = resolution.Tasks.
-            Select(Function(t) BuildQueueTaskPayload(t, QueueIndexOf(snapshot, t.ID), detail, includeCommands, includePresetJson, includePerformance)).
+            Select(Function(t) BuildQueueTaskPayload(t, QueueIndexOf(snapshot, t.ID, resolution.IndexById), detail, includeCommands, includePresetJson, includePerformance)).
             ToList()
 
         If Not HasQueueQueryArguments(args) AndAlso resolution.Errors.Count = 0 Then
@@ -1400,6 +1633,9 @@ Public Class AgentLocalTools
         Dim payload As New Dictionary(Of String, Object) From {
             {"queue_count", snapshot.Count},
             {"returned_count", items.Count},
+            {"offset", offset},
+            {"limit", limit},
+            {"has_more", offset + items.Count < selectedCountBeforePaging},
             {"target_all", resolution.RequestedAll},
             {"used_default_all", resolution.UsedDefaultAll},
             {"tasks", items},
@@ -1417,7 +1653,7 @@ Public Class AgentLocalTools
         Dim modes = ResolveQueueLogModes(args)
 
         Dim items = resolution.Tasks.
-            Select(Function(t) BuildQueueTaskLogsPayload(t, QueueIndexOf(snapshot, t.ID), modes, logLimit)).
+            Select(Function(t) BuildQueueTaskLogsPayload(t, QueueIndexOf(snapshot, t.ID, resolution.IndexById), modes, logLimit)).
             ToList()
 
         Dim payload As New Dictionary(Of String, Object) From {
@@ -1451,7 +1687,7 @@ Public Class AgentLocalTools
         End If
         Dim ids = resolution.Tasks.Select(Function(t) t.ID).ToList()
         Dim beforeItems = resolution.Tasks.
-            Select(Function(t) BuildQueueTaskPayload(t, QueueIndexOf(snapshotBefore, t.ID), detail, False, False, False)).
+            Select(Function(t) BuildQueueTaskPayload(t, QueueIndexOf(snapshotBefore, t.ID, resolution.IndexById), detail, False, False, False)).
             ToList()
         Dim eligibleCount = resolution.Tasks.Where(Function(t) IsQueueActionAvailable(t, action)).Count()
 
@@ -1460,16 +1696,21 @@ Public Class AgentLocalTools
         End If
 
         Dim snapshotAfter = 编码队列_v6.获取队列快照()
+        Dim afterIndex As New Dictionary(Of String, Integer)(StringComparer.OrdinalIgnoreCase)
+        For i = 0 To snapshotAfter.Count - 1
+            afterIndex(snapshotAfter(i).ID) = i + 1
+        Next
         Dim afterItems As New List(Of Dictionary(Of String, Object))
+        Dim afterById = snapshotAfter.ToDictionary(Function(t) t.ID, StringComparer.OrdinalIgnoreCase)
         For Each id In ids
-            Dim task = snapshotAfter.FirstOrDefault(Function(t) t.ID = id)
-            If task Is Nothing Then
+            Dim task As 编码任务_v6 = Nothing
+            If Not afterById.TryGetValue(id, task) Then
                 afterItems.Add(New Dictionary(Of String, Object) From {
                     {"id", id},
                     {"removed", True}
                 })
             Else
-                afterItems.Add(BuildQueueTaskPayload(task, QueueIndexOf(snapshotAfter, id), detail, False, False, False))
+                afterItems.Add(BuildQueueTaskPayload(task, QueueIndexOf(snapshotAfter, id, afterIndex), detail, False, False, False))
             End If
         Next
 
@@ -1495,6 +1736,12 @@ Public Class AgentLocalTools
 
     Private Shared Function ResolveQueueTarget(args As JsonElement, snapshot As List(Of 编码任务_v6), defaultAll As Boolean) As QueueTargetResolution
         Dim result As New QueueTargetResolution
+        If snapshot IsNot Nothing Then
+            For i = 0 To snapshot.Count - 1
+                If snapshot(i) IsNot Nothing Then result.IndexById(snapshot(i).ID) = i + 1
+            Next
+        End If
+        Dim byId = snapshot.ToDictionary(Function(t) t.ID, StringComparer.OrdinalIgnoreCase)
         Dim target = Agent通用工具_v6.GetJsonString(args, "target").Trim().ToLowerInvariant()
         Dim requestedIds As New List(Of String)
         Dim requestedIndexes As New List(Of Integer)
@@ -1532,8 +1779,8 @@ Public Class AgentLocalTools
         End If
 
         For Each id In requestedIds
-            Dim task = snapshot.FirstOrDefault(Function(t) String.Equals(t.ID, id, StringComparison.OrdinalIgnoreCase))
-            If task Is Nothing Then
+            Dim task As 编码任务_v6 = Nothing
+            If Not byId.TryGetValue(id, task) Then
                 If Not result.MissingIds.Contains(id, StringComparer.OrdinalIgnoreCase) Then result.MissingIds.Add(id)
             Else
                 addTask(task)
@@ -1905,8 +2152,13 @@ Public Class AgentLocalTools
         Return Math.Min(value, 200)
     End Function
 
-    Private Shared Function QueueIndexOf(snapshot As List(Of 编码任务_v6), id As String) As Integer
+    Private Shared Function QueueIndexOf(snapshot As List(Of 编码任务_v6), id As String, Optional indexById As Dictionary(Of String, Integer) = Nothing) As Integer
         If snapshot Is Nothing OrElse String.IsNullOrWhiteSpace(id) Then Return 0
+        If indexById IsNot Nothing Then
+            Dim index As Integer
+            If indexById.TryGetValue(id, index) Then Return index
+            Return 0
+        End If
         For i = 0 To snapshot.Count - 1
             If String.Equals(snapshot(i).ID, id, StringComparison.OrdinalIgnoreCase) Then Return i + 1
         Next
@@ -1914,7 +2166,7 @@ Public Class AgentLocalTools
     End Function
 
     Private Shared Function HasQueueQueryArguments(args As JsonElement) As Boolean
-        Return HasJsonProperty(args, "id", "ids", "index", "indexes", "target", "detail", "include_commands", "include_preset_json")
+        Return HasJsonProperty(args, "id", "ids", "index", "indexes", "target", "detail", "include_commands", "include_preset_json", "offset", "limit")
     End Function
 
     Private Shared Function HasJsonProperty(root As JsonElement, ParamArray names As String()) As Boolean
@@ -2004,47 +2256,183 @@ Public Class AgentLocalTools
             text.StartsWith("缺少 url", StringComparison.Ordinal)
     End Function
 
-    Private Shared Async Function FetchUrlAsync(url As String, cancellationToken As Threading.CancellationToken) As Task(Of String)
+    Private Shared Function ReadHeaderMap(args As JsonElement) As Dictionary(Of String, String)
+        Dim result As New Dictionary(Of String, String)(StringComparer.OrdinalIgnoreCase)
+        Dim headers = Agent通用工具_v6.GetJsonObject(args, "headers")
+        If headers.ValueKind <> JsonValueKind.Object Then Return result
+        For Each prop In headers.EnumerateObject()
+            If prop.Value.ValueKind = JsonValueKind.String Then
+                Dim value = If(prop.Value.GetString(), "").Trim()
+                If prop.Name.Trim() <> "" AndAlso value <> "" Then result(prop.Name.Trim()) = value
+            End If
+        Next
+        Return result
+    End Function
+
+    Private Shared Async Function FetchUrlAsync(url As String,
+                                                cancellationToken As Threading.CancellationToken,
+                                                Optional methodName As String = "GET",
+                                                Optional headers As Dictionary(Of String, String) = Nothing,
+                                                Optional userAgent As String = "",
+                                                Optional referer As String = "",
+                                                Optional cookies As String = "",
+                                                Optional body As String = "",
+                                                Optional maxChars As Integer = 12000,
+                                                Optional responseFormat As String = "auto",
+                                                Optional includeMetadata As Boolean = False) As Task(Of String)
         If String.IsNullOrWhiteSpace(url) Then Return "缺少 url"
         Dim uri As Uri = Nothing
-        If Not Uri.TryCreate(url, UriKind.Absolute, uri) Then Return "URL 无效"
+        If Not Uri.TryCreate(url, UriKind.Absolute, uri) OrElse
+           (Not String.Equals(uri.Scheme, Uri.UriSchemeHttp, StringComparison.OrdinalIgnoreCase) AndAlso
+            Not String.Equals(uri.Scheme, Uri.UriSchemeHttps, StringComparison.OrdinalIgnoreCase)) Then Return "URL 无效"
+        Dim normalizedMethod = If(methodName, "GET").Trim().ToUpperInvariant()
+        If normalizedMethod = "" Then normalizedMethod = "GET"
+        Dim safeMaxChars = Math.Min(Math.Max(If(maxChars <= 0, 12000, maxChars), 1), 200000)
         Using http As New HttpClient With {.Timeout = TimeSpan.FromSeconds(45)}
-            Using request As New HttpRequestMessage(HttpMethod.Get, uri)
-                request.Headers.UserAgent.ParseAdd("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36 Edg/148.0.0.0")
-                request.Headers.Accept.ParseAdd("text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8")
+            Dim requestMethod As New HttpMethod(normalizedMethod)
+            Using request As New HttpRequestMessage(requestMethod, uri)
+                Dim defaultAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36 Edg/148.0.0.0"
+                request.Headers.UserAgent.ParseAdd(If(String.IsNullOrWhiteSpace(userAgent), defaultAgent, userAgent.Trim()))
+                request.Headers.Accept.ParseAdd("text/html,application/xhtml+xml,application/json,application/xml,text/plain;q=0.9,*/*;q=0.8")
                 request.Headers.AcceptLanguage.ParseAdd("zh-CN,zh;q=0.9,en;q=0.8")
+                If Not String.IsNullOrWhiteSpace(referer) Then
+                    Dim refererUri As Uri = Nothing
+                    If Uri.TryCreate(referer.Trim(), UriKind.Absolute, refererUri) Then request.Headers.Referrer = refererUri
+                End If
+                If Not String.IsNullOrWhiteSpace(cookies) Then request.Headers.TryAddWithoutValidation("Cookie", cookies.Trim())
+                If headers IsNot Nothing Then
+                    For Each pair In headers
+                        If String.Equals(pair.Key, "Content-Type", StringComparison.OrdinalIgnoreCase) Then Continue For
+                        request.Headers.TryAddWithoutValidation(pair.Key, pair.Value)
+                    Next
+                End If
+                If Not String.Equals(normalizedMethod, "GET", StringComparison.OrdinalIgnoreCase) AndAlso
+                   Not String.Equals(normalizedMethod, "HEAD", StringComparison.OrdinalIgnoreCase) AndAlso
+                   body IsNot Nothing AndAlso body <> "" Then
+                    Dim contentType = "application/json"
+                    If headers IsNot Nothing AndAlso headers.ContainsKey("Content-Type") Then contentType = headers("Content-Type")
+                    request.Content = New StringContent(body, Encoding.UTF8, contentType)
+                End If
 
                 Using response = Await http.SendAsync(request, cancellationToken)
-                    If Not response.IsSuccessStatusCode Then Return $"请求失败：HTTP {CInt(response.StatusCode)} {response.ReasonPhrase}"
-                    Dim html = Await response.Content.ReadAsStringAsync(cancellationToken)
-                    html = Regex.Replace(html, "<script[\s\S]*?</script>", "", RegexOptions.IgnoreCase)
-                    html = Regex.Replace(html, "<style[\s\S]*?</style>", "", RegexOptions.IgnoreCase)
-                    html = Regex.Replace(html, "<[^>]+>", " ")
-                    html = WebUtility.HtmlDecode(html)
-                    html = Regex.Replace(html, "\s+", " ").Trim()
-                    If html.Length > 12000 Then html = html.Substring(0, 12000)
-                    Return html
+                    Dim responseText = Await response.Content.ReadAsStringAsync(cancellationToken)
+                    Dim contentType = If(response.Content.Headers.ContentType?.MediaType, "")
+                    Dim format = If(responseFormat, "auto").Trim().ToLowerInvariant()
+                    If format = "auto" Then
+                        Dim looksLikeHtml = contentType.Contains("html", StringComparison.OrdinalIgnoreCase) OrElse
+                                            responseText.Contains("<html", StringComparison.OrdinalIgnoreCase) OrElse
+                                            responseText.Contains("<body", StringComparison.OrdinalIgnoreCase)
+                        format = If(looksLikeHtml, "text", "raw")
+                    End If
+                    If format = "text" AndAlso contentType.Contains("html", StringComparison.OrdinalIgnoreCase) Then
+                        responseText = Regex.Replace(responseText, "<script[\s\S]*?</script>", "", RegexOptions.IgnoreCase)
+                        responseText = Regex.Replace(responseText, "<style[\s\S]*?</style>", "", RegexOptions.IgnoreCase)
+                        responseText = Regex.Replace(responseText, "<[^>]+>", " ")
+                        responseText = WebUtility.HtmlDecode(responseText)
+                        responseText = Regex.Replace(responseText, "\s+", " ").Trim()
+                    ElseIf format = "json" Then
+                        Try
+                            Using doc = JsonDocument.Parse(responseText)
+                                responseText = JsonSerializer.Serialize(doc.RootElement, JsonSO)
+                            End Using
+                        Catch
+                        End Try
+                    End If
+                    If responseText.Length > safeMaxChars Then responseText = responseText.Substring(0, safeMaxChars) & "...[truncated]"
+                    If includeMetadata Then
+                        Dim responseHeaders As New Dictionary(Of String, String)(StringComparer.OrdinalIgnoreCase)
+                        For Each pair In response.Headers.Concat(response.Content.Headers)
+                            responseHeaders(pair.Key) = String.Join(", ", pair.Value)
+                        Next
+                        Return JsonSerializer.Serialize(New Dictionary(Of String, Object) From {
+                            {"success", response.IsSuccessStatusCode},
+                            {"status_code", CInt(response.StatusCode)},
+                            {"reason", If(response.ReasonPhrase, "")},
+                            {"url", uri.AbsoluteUri},
+                            {"content_type", contentType},
+                            {"headers", responseHeaders},
+                            {"body", responseText}
+                        }, JsonSO)
+                    End If
+                    If Not response.IsSuccessStatusCode Then Return $"请求失败：HTTP {CInt(response.StatusCode)} {response.ReasonPhrase}{vbCrLf}{responseText}"
+                    Return responseText
                 End Using
             End Using
         End Using
     End Function
 
-    Private Shared Function ReadLocalTextFile(path As String) As String
+    Private Shared Function ReadLocalTextFile(path As String,
+                                              startLine As Integer,
+                                              lineCount As Integer,
+                                              maxChars As Integer) As String
         If String.IsNullOrWhiteSpace(path) Then Return "缺少 path"
         If Not File.Exists(path) Then Return "文件不存在"
         Dim info As New FileInfo(path)
-        If info.Length > 512 * 1024 Then Return "文件超过 512 KiB 限制"
-        Return Agent通用工具_v6.LimitText(Agent通用工具_v6.DecodeTextBytes(File.ReadAllBytes(path)), 20000, "")
+        If info.Length > 8 * 1024 * 1024 Then Return "文件超过 8 MiB 限制"
+        Dim text = Agent通用工具_v6.DecodeTextBytes(File.ReadAllBytes(path))
+        Dim first = Math.Max(startLine, 1)
+        If first > 1 OrElse lineCount > 0 Then
+            Dim lines = text.Replace(vbCrLf, vbLf).Replace(vbCr, vbLf).Split(ControlChars.Lf)
+            Dim skip = Math.Min(first - 1, lines.Length)
+            Dim take = If(lineCount <= 0, Math.Min(10000, lines.Length - skip), Math.Min(Math.Max(lineCount, 0), 10000))
+            text = String.Join(vbCrLf, lines.Skip(skip).Take(take))
+        End If
+        Return Agent通用工具_v6.LimitText(text, Math.Min(Math.Max(maxChars, 1), 200000), "...[truncated]")
     End Function
 
-    Private Shared Function ListDirectory(path As String) As String
+    Private Shared Function WriteLocalTextFile(path As String, content As String, encodingName As String, createDirectories As Boolean) As String
+        If String.IsNullOrWhiteSpace(path) Then Return "缺少 path"
+        Dim fullPath = System.IO.Path.GetFullPath(path)
+        Dim parent = System.IO.Path.GetDirectoryName(fullPath)
+        If createDirectories AndAlso Not String.IsNullOrWhiteSpace(parent) Then Directory.CreateDirectory(parent)
+        If String.IsNullOrWhiteSpace(parent) OrElse Not Directory.Exists(parent) Then Return "父目录不存在"
+        Dim encoding As Encoding
+        Select Case If(encodingName, "utf-8").Trim().ToLowerInvariant()
+            Case "utf-16", "unicode" : encoding = Encoding.Unicode
+            Case "utf-8-bom", "utf8-bom" : encoding = New UTF8Encoding(True)
+            Case Else : encoding = New UTF8Encoding(False)
+        End Select
+        Dim tempPath = fullPath & ".3fui-tmp-" & Guid.NewGuid().ToString("N")
+        Try
+            File.WriteAllText(tempPath, If(content, ""), encoding)
+            File.Move(tempPath, fullPath, True)
+            Return JsonSerializer.Serialize(New Dictionary(Of String, Object) From {{"success", True}, {"path", fullPath}, {"bytes", New FileInfo(fullPath).Length}}, JsonSO)
+        Finally
+            If File.Exists(tempPath) Then File.Delete(tempPath)
+        End Try
+    End Function
+
+    Private Shared Function ApplyLocalTextPatch(path As String, oldText As String, newText As String, replaceAll As Boolean, expectedReplacements As Integer) As String
+        If String.IsNullOrWhiteSpace(path) Then Return "缺少 path"
+        If Not File.Exists(path) Then Return "文件不存在"
+        If String.IsNullOrEmpty(oldText) Then Return "old_text 不能为空"
+        Dim original = Agent通用工具_v6.DecodeTextBytes(File.ReadAllBytes(path))
+        Dim count = 0
+        Dim searchStart = 0
+        While searchStart <= original.Length - oldText.Length
+            Dim found = original.IndexOf(oldText, searchStart, StringComparison.Ordinal)
+            If found < 0 Then Exit While
+            count += 1
+            searchStart = found + oldText.Length
+        End While
+        If expectedReplacements > 0 AndAlso count <> expectedReplacements Then Return $"补丁未应用：匹配 {count} 次，期望 {expectedReplacements} 次"
+        If count = 0 Then Return "补丁未应用：找不到完全匹配的 old_text"
+        If Not replaceAll AndAlso count > 1 Then Return "补丁未应用：old_text 匹配多次，请提供更大上下文或传 replace_all=true"
+        Dim updated = original.Replace(oldText, If(newText, ""), StringComparison.Ordinal)
+        Dim result = WriteLocalTextFile(path, updated, "utf-8", False)
+        Return JsonSerializer.Serialize(New Dictionary(Of String, Object) From {{"success", True}, {"path", System.IO.Path.GetFullPath(path)}, {"replacements", If(replaceAll, count, 1)}, {"result", result}}, JsonSO)
+    End Function
+
+    Private Shared Function ListDirectory(path As String, recursive As Boolean, maxItems As Integer) As String
         If String.IsNullOrWhiteSpace(path) Then Return "缺少 path"
         If Not Directory.Exists(path) Then Return "目录不存在"
         Dim dir As New DirectoryInfo(path)
-        Dim items = dir.EnumerateFileSystemInfos().
+        Dim safeLimit = Math.Min(Math.Max(maxItems, 1), 5000)
+        Dim options = If(recursive, SearchOption.AllDirectories, SearchOption.TopDirectoryOnly)
+        Dim items = dir.EnumerateFileSystemInfos("*", options).
             OrderByDescending(Function(x) TypeOf x Is DirectoryInfo).
             ThenBy(Function(x) x.Name, StringComparer.CurrentCultureIgnoreCase).
-            Take(200).
+            Take(safeLimit).
             Select(Function(x) New Dictionary(Of String, Object) From {
                 {"name", x.Name},
                 {"path", x.FullName},
@@ -2052,6 +2440,52 @@ Public Class AgentLocalTools
                 {"size", If(TypeOf x Is FileInfo, DirectCast(x, FileInfo).Length, 0)}
             }).ToList()
         Return JsonSerializer.Serialize(items, JsonSO)
+    End Function
+
+    Private Shared Function CreateDirectory(path As String) As String
+        If String.IsNullOrWhiteSpace(path) Then Return "缺少 path"
+        Dim fullPath = System.IO.Path.GetFullPath(path)
+        Directory.CreateDirectory(fullPath)
+        Return JsonSerializer.Serialize(New Dictionary(Of String, Object) From {{"success", True}, {"path", fullPath}}, JsonSO)
+    End Function
+
+    Private Shared Function CopyLocalFile(source As String, destination As String, overwrite As Boolean) As String
+        If String.IsNullOrWhiteSpace(source) OrElse String.IsNullOrWhiteSpace(destination) Then Return "缺少 source 或 destination"
+        If Not File.Exists(source) Then Return "源文件不存在"
+        Dim fullDestination = System.IO.Path.GetFullPath(destination)
+        Dim parent = System.IO.Path.GetDirectoryName(fullDestination)
+        If Not String.IsNullOrWhiteSpace(parent) Then Directory.CreateDirectory(parent)
+        If File.Exists(fullDestination) AndAlso Not overwrite Then Return "目标文件已存在，请传 overwrite=true"
+        File.Copy(source, fullDestination, overwrite)
+        Return JsonSerializer.Serialize(New Dictionary(Of String, Object) From {{"success", True}, {"source", System.IO.Path.GetFullPath(source)}, {"destination", fullDestination}}, JsonSO)
+    End Function
+
+    Private Shared Function MoveLocalPath(source As String, destination As String, overwrite As Boolean) As String
+        If String.IsNullOrWhiteSpace(source) OrElse String.IsNullOrWhiteSpace(destination) Then Return "缺少 source 或 destination"
+        If Not File.Exists(source) AndAlso Not Directory.Exists(source) Then Return "源路径不存在"
+        Dim fullDestination = System.IO.Path.GetFullPath(destination)
+        If (File.Exists(fullDestination) OrElse Directory.Exists(fullDestination)) AndAlso Not overwrite Then Return "目标路径已存在，请传 overwrite=true"
+        If Directory.Exists(source) Then
+            If overwrite AndAlso Directory.Exists(fullDestination) Then Directory.Delete(fullDestination, True)
+            Directory.Move(source, fullDestination)
+        Else
+            Dim parent = System.IO.Path.GetDirectoryName(fullDestination)
+            If Not String.IsNullOrWhiteSpace(parent) Then Directory.CreateDirectory(parent)
+            File.Move(source, fullDestination, overwrite)
+        End If
+        Return JsonSerializer.Serialize(New Dictionary(Of String, Object) From {{"success", True}, {"source", System.IO.Path.GetFullPath(source)}, {"destination", fullDestination}}, JsonSO)
+    End Function
+
+    Private Shared Function DeleteLocalPath(path As String) As String
+        If String.IsNullOrWhiteSpace(path) Then Return "缺少 path"
+        If File.Exists(path) Then
+            FileIO.FileSystem.DeleteFile(System.IO.Path.GetFullPath(path), FileIO.UIOption.OnlyErrorDialogs, FileIO.RecycleOption.SendToRecycleBin)
+        ElseIf Directory.Exists(path) Then
+            FileIO.FileSystem.DeleteDirectory(System.IO.Path.GetFullPath(path), FileIO.UIOption.OnlyErrorDialogs, FileIO.RecycleOption.SendToRecycleBin)
+        Else
+            Return "路径不存在"
+        End If
+        Return JsonSerializer.Serialize(New Dictionary(Of String, Object) From {{"success", True}, {"path", System.IO.Path.GetFullPath(path)}, {"recycled", True}}, JsonSO)
     End Function
 
     Private Shared Function GetImageInfo(path As String) As String
@@ -2066,9 +2500,6 @@ Public Class AgentLocalTools
                 {"format", ImageFormatName(img.RawFormat)},
                 {"size", info.Length}
             }
-            If info.Length <= 1024 * 1024 Then
-                payload("base64") = Convert.ToBase64String(File.ReadAllBytes(path))
-            End If
             Return JsonSerializer.Serialize(payload, JsonSO)
         End Using
     End Function
