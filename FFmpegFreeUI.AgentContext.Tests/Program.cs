@@ -122,6 +122,34 @@ try
             "升级后的文件版本号不正确");
     }
 
+    var steeringUpgrade = AgentConversationJsonUpgrader.Upgrade("""
+        {
+          "Version": 3,
+          "Id": "steering-upgrade",
+          "Messages": [
+            { "Id": "main-user", "Role": "user", "Content": "先检查文件" },
+            { "Id": "steering-user", "Role": "user", "Name": "steer", "Content": "调整方向：\r\n只检查视频" }
+          ],
+          "Turns": [
+            {
+              "Id": "turn-1",
+              "UserMessageId": "main-user",
+              "Activities": [
+                { "Id": "old-guidance", "Kind": "guidance", "Title": "调整方向", "Content": "只检查视频" }
+              ]
+            }
+          ]
+        }
+        """);
+    Assert(steeringUpgrade?.Conversation.Version == AgentConversationSchema.LatestVersion,
+        "方向消息会话没有升级到最新版本");
+    Assert(steeringUpgrade?.Conversation.Messages[1].Content == "只检查视频",
+        "方向消息仍带有旧显示前缀");
+    Assert(steeringUpgrade?.Conversation.Turns[0].Activities[0].Id == "steering-user",
+        "方向活动没有关联到对应的用户消息");
+    Assert(string.IsNullOrEmpty(steeringUpgrade?.Conversation.Turns[0].Activities[0].Title),
+        "方向活动仍保留旧标题");
+
     var recoveryRoot = Path.Combine(root, "storage-recovery-case");
     var recoveryConversationDirectory = Path.Combine(recoveryRoot, "Conversations");
     Directory.CreateDirectory(recoveryConversationDirectory);
@@ -148,7 +176,7 @@ try
     recoveredAgain.Save();
     Assert(File.Exists(damagedConversationPath), "跨重启保存删除了仍无法读取的历史文件");
 
-    Console.WriteLine("Agent context tests passed: 32 assertions.");
+    Console.WriteLine("Agent context tests passed: 36 assertions.");
 }
 finally
 {

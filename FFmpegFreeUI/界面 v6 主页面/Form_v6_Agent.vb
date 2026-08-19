@@ -14,6 +14,7 @@ Public Class Form_v6_Agent
     Private _requestCts As Threading.CancellationTokenSource = Nothing
     Private ReadOnly _pendingSteeringMessages As New List(Of AgentMessageData)
     Private _activeResponseItem As LakeUI.AgentRoom.ChatItem = Nothing
+    Private _activeThinkingItem As LakeUI.AgentRoom.ChatItem = Nothing
     Private _activeRunConversation As AgentConversationData = Nothing
     Private _activeTurn As AgentTurnData = Nothing
     Private _activeTurnItem As LakeUI.AgentRoom.ChatItem = Nothing
@@ -456,6 +457,7 @@ Public Class Form_v6_Agent
         _statusItem = Nothing
         _activeTurnItem = Nothing
         _activeResponseItem = Nothing
+        _activeThinkingItem = Nothing
         If _current Is Nothing Then
             UpdateSendButtonState()
             Return
@@ -493,8 +495,12 @@ Public Class Form_v6_Agent
         Dim header = AgentRoom1.AddTurnHeader(turn.Id, FormatTurnHeader(turn), expanded)
         If isActive Then _activeTurnItem = header
 
-        For Each activity In If(turn.Activities, New List(Of AgentTurnActivityData))
-            If activity Is Nothing Then Continue For
+        Dim activities = If(turn.Activities, New List(Of AgentTurnActivityData))
+        Dim activityIndex As Integer = 0
+        While activityIndex < activities.Count
+            Dim activity = activities(activityIndex)
+            activityIndex += 1
+            If activity Is Nothing Then Continue While
             Select Case If(activity.Kind, "").ToLowerInvariant()
                 Case "assistant"
                     If Not String.IsNullOrWhiteSpace(activity.Content) Then
@@ -502,21 +508,30 @@ Public Class Form_v6_Agent
                     End If
                 Case "guidance"
                     If Not String.IsNullOrWhiteSpace(activity.Content) Then
-                        AgentRoom1.AddAssistantActivity(turn.Id, "调整方向：" & activity.Content, activity.Id)
+                        AgentRoom1.AddUserMessage(activity.Content)
                     End If
                 Case "tool"
+                    Dim toolActivities As New List(Of AgentTurnActivityData) From {activity}
+                    While activityIndex < activities.Count AndAlso
+                          activities(activityIndex) IsNot Nothing AndAlso
+                          String.Equals(activities(activityIndex).Kind, "tool", StringComparison.OrdinalIgnoreCase)
+                        toolActivities.Add(activities(activityIndex))
+                        activityIndex += 1
+                    End While
                     Dim item = AgentRoom1.AddToolCall(
                         turn.Id,
-                        FormatToolActivityTitle(activity),
-                        FormatToolActivityDetails(activity),
+                        FormatToolGroupTitle(toolActivities),
+                        FormatToolGroupDetails(toolActivities),
                         activity.Id,
                         expanded:=False,
-                        running:=String.Equals(activity.State, "running", StringComparison.OrdinalIgnoreCase),
-                        isError:=String.Equals(activity.State, "error", StringComparison.OrdinalIgnoreCase))
-                    Dim log = FindToolRunLog(activity.Id)
-                    If log IsNot Nothing Then log.Item = item
+                        running:=toolActivities.Any(Function(x) String.Equals(x.State, "running", StringComparison.OrdinalIgnoreCase)),
+                        isError:=toolActivities.Any(Function(x) String.Equals(x.State, "error", StringComparison.OrdinalIgnoreCase)))
+                    For Each toolActivity In toolActivities
+                        Dim log = FindToolRunLog(toolActivity.Id)
+                        If log IsNot Nothing Then log.Item = item
+                    Next
             End Select
-        Next
+        End While
     End Sub
 
     Private Function FormatTurnHeader(turn As AgentTurnData) As String
@@ -582,6 +597,67 @@ Public Class Form_v6_Agent
         End If
         Return sb.ToString()
     End Function
+
+    Private Function FormatToolGroupTitle(activities As IReadOnlyList(Of AgentTurnActivityData)) As String
+        If activities Is Nothing OrElse activities.Count = 0 Then Return "工具调用"
+        If activities.Count = 1 Then Return FormatToolActivityTitle(activities(0))
+
+        Dim runningActivity = activities.LastOrDefault(Function(x) String.Equals(x?.State, "running", StringComparison.OrdinalIgnoreCase))
+        If runningActivity IsNot Nothing Then
+            Dim currentName = CompactSingleLine(GetToolDisplayName(runningActivity.ToolName), 34)
+            Return $"{currentName} · 正在执行 · 共 {activities.Count} 次"
+        End If
+        Dim errorCount = activities.Where(Function(x) String.Equals(x?.State, "error", StringComparison.OrdinalIgnoreCase)).Count()
+        If errorCount > 0 Then Return $"{activities.Count} 次工具调用 · {errorCount} 项失败"
+        Dim canceledCount = activities.Where(Function(x) String.Equals(x?.State, "canceled", StringComparison.OrdinalIgnoreCase)).Count()
+        If canceledCount > 0 Then Return $"{activities.Count} 次工具调用 · {canceledCount} 项已取消"
+
+        Dim elapsed = activities.Sum(Function(x) Math.Max(0, If(x?.ElapsedMilliseconds, 0)))
+        Return $"{activities.Count} 次工具调用 · {FormatElapsedMilliseconds(elapsed)}"
+    End Function
+
+    Private Function FormatToolGroupDetails(activities As IReadOnlyList(Of AgentTurnActivityData)) As String
+        If activities Is Nothing OrElse activities.Count = 0 Then Return ""
+        If activities.Count = 1 Then Return FormatToolActivityDetails(activities(0))
+
+        Dim sb As New StringBuilder
+        For i = 0 To activities.Count - 1
+            Dim activity = activities(i)
+            If i > 0 Then sb.AppendLine().AppendLine()
+            sb.Append(i + 1).Append(". ").AppendLine(FormatToolActivityTitle(activity))
+            Dim details = FormatToolActivityDetails(activity)
+            If Not String.IsNullOrWhiteSpace(details) Then sb.Append(details.Trim())
+        Next
+        Return sb.ToString()
+    End Function
+
+    Private Function GetConsecutiveToolActivities(activity As AgentTurnActivityData) As List(Of AgentTurnActivityData)
+        Dim result As New List(Of AgentTurnActivityData)
+        If activity Is Nothing OrElse _activeTurn?.Activities Is Nothing Then Return result
+        Dim index = _activeTurn.Activities.IndexOf(activity)
+        If index < 0 Then Return result
+
+        Dim first = index
+        While first > 0 AndAlso _activeTurn.Activities(first - 1) IsNot Nothing AndAlso
+              String.Equals(_activeTurn.Activities(first - 1).Kind, "tool", StringComparison.OrdinalIgnoreCase)
+            first -= 1
+        End While
+        For i = first To _activeTurn.Activities.Count - 1
+            Dim candidate = _activeTurn.Activities(i)
+            If candidate Is Nothing OrElse Not String.Equals(candidate.Kind, "tool", StringComparison.OrdinalIgnoreCase) Then Exit For
+            result.Add(candidate)
+        Next
+        Return result
+    End Function
+
+    Private Sub UpdateToolGroupItem(item As LakeUI.AgentRoom.ChatItem,
+                                    activities As IReadOnlyList(Of AgentTurnActivityData))
+        If item Is Nothing OrElse activities Is Nothing OrElse activities.Count = 0 Then Return
+        item.Title = FormatToolGroupTitle(activities)
+        item.Text = FormatToolGroupDetails(activities)
+        item.IsRunning = activities.Any(Function(x) String.Equals(x?.State, "running", StringComparison.OrdinalIgnoreCase))
+        item.IsError = activities.Any(Function(x) String.Equals(x?.State, "error", StringComparison.OrdinalIgnoreCase))
+    End Sub
 
     Private Function FindToolRunLog(activityId As String) As ToolRunLog
         If String.IsNullOrWhiteSpace(activityId) OrElse _activeToolRoundLogs Is Nothing Then Return Nothing
@@ -758,6 +834,25 @@ Public Class Form_v6_Agent
         AgentRoom1.FollowLatestIfPinned()
     End Sub
 
+    Private Sub ShowActiveThinking(conversation As AgentConversationData)
+        If Not ReferenceEquals(conversation, _activeRunConversation) OrElse
+           Not IsConversationSelected(conversation) OrElse
+           _activeTurn Is Nothing Then Return
+        If _activeThinkingItem Is Nothing OrElse Not AgentRoom1.Items.Contains(_activeThinkingItem) Then
+            _activeThinkingItem = AgentRoom1.AddAssistantActivity(_activeTurn.Id, "正在思考...")
+        Else
+            _activeThinkingItem.Text = "正在思考..."
+        End If
+        AgentRoom1.FollowLatestIfPinned()
+    End Sub
+
+    Private Sub HideActiveThinking()
+        If _activeThinkingItem IsNot Nothing AndAlso AgentRoom1.Items.Contains(_activeThinkingItem) Then
+            AgentRoom1.Items.Remove(_activeThinkingItem)
+        End If
+        _activeThinkingItem = Nothing
+    End Sub
+
     Private Function AddCardBeforeActiveResponse(content As String) As LakeUI.AgentRoom.ChatItem
         Dim item As New LakeUI.AgentRoom.ChatItem(LakeUI.AgentRoom.ChatItemKind.Card, content)
         Dim anchor = _activeResponseItem
@@ -799,6 +894,7 @@ Public Class Form_v6_Agent
                                       delta As String,
                                       prependParagraphBreak As Boolean)
         If String.IsNullOrEmpty(delta) OrElse Not ReferenceEquals(conversation, _activeRunConversation) Then Return
+        HideActiveThinking()
 
         If Not _activeResponseTextDirty AndAlso IsRunResponsePlaceholder(_activeResponseText) Then
             _activeResponseTextBuilder.Clear()
@@ -822,6 +918,7 @@ Public Class Form_v6_Agent
     End Sub
 
     Private Sub CompleteRunResponseText(conversation As AgentConversationData, text As String)
+        HideActiveThinking()
         Dim finalText = If(text, "").Trim()
         Dim currentText = GetActiveResponseTextSnapshot().Trim()
         If ReferenceEquals(conversation, _activeRunConversation) AndAlso
@@ -837,6 +934,7 @@ Public Class Form_v6_Agent
 
     Private Sub PromoteActiveResponseToActivity(conversation As AgentConversationData, content As String)
         If _activeTurn Is Nothing OrElse Not ReferenceEquals(conversation, _activeRunConversation) Then Return
+        HideActiveThinking()
         Dim activityText = If(content, "").Trim()
         If activityText = "" Then activityText = GetActiveResponseTextSnapshot().Trim()
 
@@ -870,6 +968,7 @@ Public Class Form_v6_Agent
     Private Function BeginToolActivity(conversation As AgentConversationData,
                                        callInfo As AgentToolCallInfo,
                                        round As Integer) As ToolRunLog
+        HideActiveThinking()
         Dim activity As New AgentTurnActivityData With {
             .Kind = "tool",
             .ToolName = If(callInfo?.Name, ""),
@@ -885,13 +984,23 @@ Public Class Form_v6_Agent
             .Activity = activity
         }
         If IsConversationSelected(conversation) AndAlso _activeTurn IsNot Nothing Then
-            log.Item = AgentRoom1.AddToolCall(
-                _activeTurn.Id,
-                FormatToolActivityTitle(activity),
-                FormatToolActivityDetails(activity),
-                activity.Id,
-                expanded:=False,
-                running:=True)
+            Dim toolActivities = GetConsecutiveToolActivities(activity)
+            If toolActivities.Count > 1 Then
+                Dim previousLog = FindToolRunLog(toolActivities(toolActivities.Count - 2).Id)
+                log.Item = previousLog?.Item
+                If log.Item Is Nothing Then log.Item = AgentRoom1.FindItem(toolActivities(0).Id)
+            End If
+            If log.Item Is Nothing Then
+                log.Item = AgentRoom1.AddToolCall(
+                    _activeTurn.Id,
+                    FormatToolGroupTitle(toolActivities),
+                    FormatToolGroupDetails(toolActivities),
+                    toolActivities(0).Id,
+                    expanded:=False,
+                    running:=True)
+            Else
+                UpdateToolGroupItem(log.Item, toolActivities)
+            End If
         End If
         UpdateActiveRunOverviewCard(conversation)
         AgentRoom1.FollowLatestIfPinned()
@@ -915,10 +1024,7 @@ Public Class Form_v6_Agent
                 log.Item = AgentRoom1.FindItem(log.Activity.Id)
             End If
             If log.Item IsNot Nothing Then
-                log.Item.Title = FormatToolActivityTitle(log.Activity)
-                log.Item.Text = FormatToolActivityDetails(log.Activity)
-                log.Item.IsRunning = False
-                log.Item.IsError = isError
+                UpdateToolGroupItem(log.Item, GetConsecutiveToolActivities(log.Activity))
             End If
         End If
         UpdateActiveRunOverviewCard(conversation)
@@ -942,6 +1048,7 @@ Public Class Form_v6_Agent
 
     Private Sub RenderActiveRunOverlay()
         _activeResponseItem = Nothing
+        _activeThinkingItem = Nothing
         If _activeRunConversation Is Nothing OrElse Not IsConversationSelected(_activeRunConversation) Then Return
 
         If _activeTurn IsNot Nothing Then
@@ -951,11 +1058,14 @@ Public Class Form_v6_Agent
         Dim responseText = GetActiveResponseTextSnapshot()
         If Not IsRunResponsePlaceholder(responseText) Then
             _activeResponseItem = AgentRoom1.AddAssistantMessage(responseText)
+        ElseIf _activeRunStatusText.StartsWith("正在思考", StringComparison.Ordinal) Then
+            ShowActiveThinking(_activeRunConversation)
         End If
     End Sub
 
     Private Sub ClearActiveRunState()
         StopActiveRunElapsedTimer()
+        HideActiveThinking()
         _activeResponseItem = Nothing
         _activeRunConversation = Nothing
         _activeTurn = Nothing
@@ -1139,6 +1249,37 @@ Public Class Form_v6_Agent
         If _current IsNot Nothing Then
             Dim userIndex = GetLatestUserMessageIndex()
             If userIndex >= 0 Then
+                Dim latestUserMessage = _current.Messages(userIndex)
+                If IsSteeringMessage(latestUserMessage) Then
+                    Dim confirmSteering = ExMsgBox(FormMain_v6,
+                        "是否移除这条用户消息之后的 AI 推理，并以当前文本从该位置重新开始？",
+                        MsgBoxStyle.YesNo Or MsgBoxStyle.Question,
+                        "撤回上一条消息")
+                    If confirmSteering <> MsgBoxResult.Yes Then Return
+
+                    Dim replacementContent = text
+                    Dim fileContext = BuildSubmittedFilesContext()
+                    If Not String.IsNullOrWhiteSpace(fileContext) Then replacementContent &= vbCrLf & vbCrLf & fileContext.Trim()
+                    RemoveConversationMessagesFrom(userIndex + 1)
+                    latestUserMessage.Content = replacementContent
+                    For Each turn In If(_current.Turns, New List(Of AgentTurnData))
+                        Dim guidance = turn?.Activities?.FirstOrDefault(
+                            Function(x) x IsNot Nothing AndAlso
+                                String.Equals(x.Kind, "guidance", StringComparison.OrdinalIgnoreCase) AndAlso
+                                String.Equals(x.Id, latestUserMessage.Id, StringComparison.OrdinalIgnoreCase))
+                        If guidance Is Nothing Then Continue For
+                        guidance.Content = replacementContent
+                        Exit For
+                    Next
+                    ApplyConversationSnapshot()
+                    ModernTextBox1.Text = ""
+                    ClearSubmittedFiles()
+                    SaveCurrent()
+                    RenderCurrentConversation()
+                    Await StartAgentRunAsync(_current)
+                    Return
+                End If
+
                 Dim confirm = ExMsgBox(FormMain_v6,
                     "是否移除最新一轮 AI 推理和用户内容，并以当前文本重新开始？",
                     MsgBoxStyle.YesNo Or MsgBoxStyle.Question,
@@ -1155,8 +1296,7 @@ Public Class Form_v6_Agent
     Private Function GetLatestUserMessageIndex() As Integer
         If _current?.Messages Is Nothing Then Return -1
         For i = _current.Messages.Count - 1 To 0 Step -1
-            If String.Equals(_current.Messages(i)?.Role, "user", StringComparison.OrdinalIgnoreCase) AndAlso
-               Not String.Equals(_current.Messages(i)?.Name, AgentConversationSchema.SteeringMessageName, StringComparison.OrdinalIgnoreCase) Then Return i
+            If String.Equals(_current.Messages(i)?.Role, "user", StringComparison.OrdinalIgnoreCase) Then Return i
         Next
         Return -1
     End Function
@@ -1197,14 +1337,27 @@ Public Class Form_v6_Agent
         Dim startIndex = Math.Max(0, Math.Min(index, _current.Messages.Count))
         Dim affectedUserIds As New HashSet(Of String)(StringComparer.OrdinalIgnoreCase)
         For Each message In _current.Messages.Skip(startIndex)
-            If String.Equals(message?.Role, "user", StringComparison.OrdinalIgnoreCase) Then affectedUserIds.Add(message.Id)
-        Next
-        For i = Math.Min(startIndex - 1, _current.Messages.Count - 1) To 0 Step -1
-            Dim message = _current.Messages(i)
             If Not String.Equals(message?.Role, "user", StringComparison.OrdinalIgnoreCase) Then Continue For
-            affectedUserIds.Add(message.Id)
-            Exit For
+            If IsSteeringMessage(message) Then
+                TrimTurnActivitiesFromSteering(message, includeSteering:=True)
+            Else
+                affectedUserIds.Add(message.Id)
+            End If
         Next
+        Dim startsAtUser = startIndex < _current.Messages.Count AndAlso
+            String.Equals(_current.Messages(startIndex)?.Role, "user", StringComparison.OrdinalIgnoreCase)
+        If Not startsAtUser Then
+            For i = Math.Min(startIndex - 1, _current.Messages.Count - 1) To 0 Step -1
+                Dim message = _current.Messages(i)
+                If Not String.Equals(message?.Role, "user", StringComparison.OrdinalIgnoreCase) Then Continue For
+                If IsSteeringMessage(message) Then
+                    TrimTurnActivitiesFromSteering(message, includeSteering:=False)
+                Else
+                    affectedUserIds.Add(message.Id)
+                End If
+                Exit For
+            Next
+        End If
         If startIndex < _current.Messages.Count Then _current.Messages.RemoveRange(startIndex, _current.Messages.Count - startIndex)
         If _current.Turns IsNot Nothing AndAlso affectedUserIds.Count > 0 Then
             _current.Turns.RemoveAll(Function(x) x IsNot Nothing AndAlso affectedUserIds.Contains(x.UserMessageId))
@@ -1229,15 +1382,15 @@ Public Class Form_v6_Agent
         Dim steeringMessage As New AgentMessageData With {
             .Role = "user",
             .Name = AgentConversationSchema.SteeringMessageName,
-            .Content = "调整方向：" & vbCrLf & content
+            .Content = content
         }
         _activeRunConversation.Messages.Add(steeringMessage)
         _pendingSteeringMessages.Add(steeringMessage)
 
         If _activeTurn IsNot Nothing Then
             Dim activity As New AgentTurnActivityData With {
+                .Id = steeringMessage.Id,
                 .Kind = "guidance",
-                .Title = "调整方向",
                 .Content = content,
                 .State = "completed"
             }
@@ -1254,11 +1407,11 @@ Public Class Form_v6_Agent
 
     Private Sub AddSteeringActivityToRoom(activity As AgentTurnActivityData)
         If activity Is Nothing OrElse _activeTurn Is Nothing Then Return
-        Dim item = AgentRoom1.AddAssistantActivity(_activeTurn.Id, "调整方向：" & activity.Content, activity.Id)
-        Dim responseIndex = If(_activeResponseItem Is Nothing, -1, AgentRoom1.Items.IndexOf(_activeResponseItem))
-        If responseIndex >= 0 AndAlso AgentRoom1.Items.IndexOf(item) > responseIndex Then
-            AgentRoom1.Items.Remove(item)
-            AgentRoom1.Items.Insert(responseIndex, item)
+        Dim item = AgentRoom1.AddUserMessage(activity.Content)
+        Dim anchor = If(_activeResponseItem, _activeThinkingItem)
+        Dim anchorIndex = If(anchor Is Nothing, -1, AgentRoom1.Items.IndexOf(anchor))
+        If anchorIndex >= 0 AndAlso AgentRoom1.Items.IndexOf(item) > anchorIndex Then
+            AgentRoom1.MoveItem(item, anchorIndex)
         End If
         AgentRoom1.FollowLatestIfPinned()
     End Sub
@@ -1305,6 +1458,47 @@ Public Class Form_v6_Agent
             ShowRunStatus(_activeRunConversation, "正在停止当前任务")
         End If
     End Sub
+
+    Private Function IsSteeringMessage(message As AgentMessageData) As Boolean
+        Return message IsNot Nothing AndAlso
+            String.Equals(message.Role, "user", StringComparison.OrdinalIgnoreCase) AndAlso
+            String.Equals(message.Name, AgentConversationSchema.SteeringMessageName, StringComparison.OrdinalIgnoreCase)
+    End Function
+
+    Private Sub TrimTurnActivitiesFromSteering(message As AgentMessageData, includeSteering As Boolean)
+        If message Is Nothing OrElse _current?.Turns Is Nothing Then Return
+        For Each turn In _current.Turns.AsEnumerable().Reverse()
+            If turn?.Activities Is Nothing Then Continue For
+            Dim activityIndex = turn.Activities.FindIndex(
+                Function(x) x IsNot Nothing AndAlso
+                    String.Equals(x.Kind, "guidance", StringComparison.OrdinalIgnoreCase) AndAlso
+                    String.Equals(x.Id, message.Id, StringComparison.OrdinalIgnoreCase))
+            If activityIndex < 0 Then
+                activityIndex = turn.Activities.FindIndex(
+                    Function(x) x IsNot Nothing AndAlso
+                        String.Equals(x.Kind, "guidance", StringComparison.OrdinalIgnoreCase) AndAlso
+                        String.Equals(NormalizeSteeringContent(x.Content), NormalizeSteeringContent(message.Content), StringComparison.Ordinal))
+            End If
+            If activityIndex < 0 Then Continue For
+
+            Dim removeIndex = activityIndex + If(includeSteering, 0, 1)
+            If removeIndex < turn.Activities.Count Then
+                turn.Activities.RemoveRange(removeIndex, turn.Activities.Count - removeIndex)
+            End If
+            turn.State = "completed"
+            turn.StatusText = "后续记录已撤回"
+            turn.CompletedAt = DateTime.Now
+            Return
+        Next
+    End Sub
+
+    Private Shared Function NormalizeSteeringContent(content As String) As String
+        Dim text = If(content, "").Trim()
+        If text.StartsWith("调整方向：", StringComparison.Ordinal) Then
+            text = text.Substring("调整方向：".Length).TrimStart(ChrW(13), ChrW(10), " "c)
+        End If
+        Return text
+    End Function
 
     Private Async Function StartAgentRunAsync(Optional conversation As AgentConversationData = Nothing) As Task
         If _busy Then Return
@@ -1426,6 +1620,7 @@ Public Class Form_v6_Agent
 
     Private Sub FinishActiveTurn(state As String, Optional statusText As String = "")
         If _activeTurn Is Nothing Then Return
+        HideActiveThinking()
         For Each activity In If(_activeTurn.Activities, New List(Of AgentTurnActivityData))
             If activity Is Nothing OrElse Not String.Equals(activity.State, "running", StringComparison.OrdinalIgnoreCase) Then Continue For
             activity.State = If(String.Equals(state, "canceled", StringComparison.OrdinalIgnoreCase), "canceled", "error")
@@ -1467,6 +1662,7 @@ Public Class Form_v6_Agent
                     Sub(value) AppendRunResponseText(conversation, value, False))
 
                 ShowRunStatus(conversation, $"正在思考：第 {round} 轮")
+                ShowActiveThinking(conversation)
                 result = Await client.TryCreateChatCompletionStreamingAsync(
                 modelId,
                 messages,
@@ -1480,6 +1676,7 @@ Public Class Form_v6_Agent
                 cancellationToken.ThrowIfCancellationRequested()
 
                 If Not result.Success Then
+                    HideActiveThinking()
                     ShowRunStatus(conversation, "重新连接：流式响应不可用，切换非流式。" & result.ErrorMessage)
                     SetRunResponseText(conversation, "正在重新连接...")
                     result = Await client.TryCreateChatCompletionAsync(modelId, messages, tools, reasoning, cancellationToken)
@@ -1635,20 +1832,18 @@ Public Class Form_v6_Agent
                 activity.State = If(state, "error")
                 If activity.ElapsedMilliseconds < 0 Then activity.ElapsedMilliseconds = 0
                 If IsConversationSelected(conversation) Then
-                    Dim item = If(log?.Item, AgentRoom1.FindItem(activity.Id))
+                    Dim toolActivities = GetConsecutiveToolActivities(activity)
+                    Dim item = If(log?.Item, AgentRoom1.FindItem(toolActivities(0).Id))
                     If item Is Nothing Then
                         item = AgentRoom1.AddToolCall(_activeTurn.Id,
-                                                     FormatToolActivityTitle(activity),
-                                                     FormatToolActivityDetails(activity),
-                                                     activity.Id,
+                                                     FormatToolGroupTitle(toolActivities),
+                                                     FormatToolGroupDetails(toolActivities),
+                                                     toolActivities(0).Id,
                                                      expanded:=False,
                                                      running:=False,
                                                      isError:=String.Equals(state, "error", StringComparison.OrdinalIgnoreCase))
                     Else
-                        item.Title = FormatToolActivityTitle(activity)
-                        item.Text = FormatToolActivityDetails(activity)
-                        item.IsRunning = False
-                        item.IsError = String.Equals(state, "error", StringComparison.OrdinalIgnoreCase)
+                        UpdateToolGroupItem(item, toolActivities)
                     End If
                 End If
             End If

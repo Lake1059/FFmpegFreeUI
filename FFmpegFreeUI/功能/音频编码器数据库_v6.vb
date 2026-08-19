@@ -96,18 +96,17 @@ Public Class 音频编码器数据库_v6
     End Function
 
     Private Shared Sub 初始化编码器()
-        加入编码器(基础("", "", "", "沿用 FFmpeg 默认音频编码器。"))
         加入编码器(基础("audio.copy", "复制流", "copy", "直接复制源音频，不重新编码。",
             是否复制流:=True))
         加入编码器(基础("audio.disable", "禁用", "-an", "不输出音频流。",
             是否禁用:=True))
 
-        加入编码器(基础("aac.native", "AAC", "aac", "FFmpeg 原生 AAC，兼容性好，默认使用 NMR 算法。",
+        加入编码器(基础("aac.native", "AAC", "aac", "FFmpeg 原生 AAC；如果正在使用自编译版本或未来新版本，可能默认就是 NMR 算法。",
             质量参数:=参数列表(参数("-q:a", "可变质量：0.1~2.0 常用；越高越清晰、体积越大"), 参数("-b:a", "目标码率：如 128k/192k/320k")),
             特殊参数:=参数列表(参数("-aac_coder", "nmr/twoloop/fast", "编码算法：nmr=默认，twoloop=旧版质量优先，fast=旧版速度优先"), 参数("-aac_ms", "auto/0/1", "M/S 立体声：auto=自动，0=关闭，1=强制"), 参数("-aac_is", "auto/0/1", "强度立体声：auto=自动"), 参数("-aac_pns", "0/1", "感知噪声替代，低码率时可能有益"), 参数("-aac_tns", "0/1", "时域噪声整形"), 参数("-aac_pce", "0/1", "写入 PCE 声道配置")),
             支持说明:="输入：fltp；采样率：7.35~96 kHz 的标准 AAC 档位。"))
 
-        加入编码器(基础("aac.nmr", "NMR AAC", "aac", "原生 AAC 的 NMR 模式；不是独立的 nmraac 编码器。",
+        加入编码器(基础("aac.nmr", "NMR AAC", "aac", "原生 AAC 的 NMR 模式，不是独立编码器，要使用此算法需要更新到 FFmpeg 9.0。",
             默认附加参数:=参数列表(参数("-aac_coder", "nmr", "固定使用 NMR", 默认值:="nmr")),
             质量参数:=参数列表(参数("-q:a", "可变质量：0.1~2.0 常用；越高越清晰、体积越大"), 参数("-b:a", "目标码率：如 96k/128k/192k/320k")),
             特殊参数:=参数列表(参数("-aac_nmr_speed", "0~4", "NMR 搜索速度：0=最慢且质量最高，4=最快"), 参数("-aac_ms", "auto/0/1", "M/S 立体声：auto=自动，0=关闭，1=强制"), 参数("-aac_is", "auto/0/1", "强度立体声：auto=自动"), 参数("-aac_pns", "0/1", "感知噪声替代，低码率时可能有益"), 参数("-aac_tns", "0/1", "时域噪声整形"), 参数("-aac_pce", "0/1", "写入 PCE 声道配置")),
@@ -138,12 +137,12 @@ Public Class 音频编码器数据库_v6
             特殊参数:=AudioToolbox参数(),
             支持说明:="输入：s16/u8；声道：mono 至 7.1 等布局。"))
 
-        加入编码器(基础("mp3.lame", "LAME MP3", "libmp3lame", "LAME MP3，旧设备兼容性好。",
+        加入编码器(基础("mp3.lame", "LAME MP3", "libmp3lame", "MP3 已无法满足音质佬的有损高音质，建议考虑 AAC。",
             质量参数:=参数列表(参数("-q:a", "可变质量：0=最高，9=最低；常用 0~4"), 参数("-b:a", "目标码率：如 128k/192k/320k")),
             特殊参数:=参数列表(参数("-abr", "0/1", "平均码率：设为 1 后配合 -b:a"), 参数("-joint_stereo", "0/1", "联合立体声，适合中低码率"), 参数("-reservoir", "0/1", "启用比特储备，允许帧间分配码率")),
             支持说明:="输入：s16p/fltp/s32p；采样率：8~48 kHz；mono/stereo。"))
 
-        加入编码器(基础("opus.libopus", "Opus", "libopus", "现代网络音频，适合语音、直播和低码率。",
+        加入编码器(基础("opus.libopus", "Opus", "libopus", "现代网络音频编码，在有损小体积音频中质量最高，需要注意目标设备和应用是否支持，如果要编码超过立体声的声道需要显式声明。",
             质量参数:=参数列表(参数("-b:a", "目标码率：语音 24k~64k；音乐 96k~256k；最高约 512k")),
             特殊参数:=参数列表(参数("-vbr", "off/on/constrained", "码率模式：off=固定，on=可变（默认），constrained=受限可变"), 参数("-application", "voip/audio/lowdelay", "用途：voip=语音，audio=音乐，lowdelay=低延迟"), 参数("-frame_duration", "2.5~120 ms", "帧长，默认 20 ms；越短延迟越低、效率越差"), 参数("-packet_loss", "0~100 (%)", "预期丢包率，用于鲁棒性优化"), 参数("-fec", "0/1", "带内前向纠错；丢包率大于 0 时才有意义"), 参数("-dtx", "0/1", "静音时减少发送")),
             支持说明:="输入：s16/flt；采样率：8/12/16/24/48 kHz。"))
@@ -204,7 +203,7 @@ Public Class 音频编码器数据库_v6
         加入编码器(基础("tta.native", "True Audio", "tta", "TTA 无损音频编码器。",
             支持说明:="输入：u8/s16/s32。"))
 
-        加入编码器(基础("vorbis.libvorbis", "Vorbis (ogg)", "libvorbis", "OGG/Vorbis 兼容场景。",
+        加入编码器(基础("vorbis.libvorbis", "Vorbis (ogg)", "libvorbis", "OGG 音频，在一些轻框架游戏上和特殊场景用到，但是个人没事别用。",
             质量参数:=参数列表(参数("-q:a", "可变质量：-1~10；越高越清晰、体积越大"), 参数("-b:a", "目标码率：未设置 -q:a 时用于码率控制")),
             特殊参数:=参数列表(参数("-iblock", "-15~0", "瞬态块偏置；越低越强调瞬态保护")),
             支持说明:="输入：fltp。"))
@@ -215,7 +214,7 @@ Public Class 音频编码器数据库_v6
             特殊参数:=参数列表(参数("-joint_stereo", "0/1/auto", "联合立体声：auto=自动"), 参数("-optimize_mono", "0/1", "仅对单声道有效")),
             支持说明:="输入：u8p/s16p/s32p/fltp。"))
 
-        加入编码器(基础("mp2.twolame", "LAME MP2", "libtwolame", "MP2，适合旧广播和兼容场景。",
+        加入编码器(基础("mp2.twolame", "LAME MP2", "libtwolame", "MP2，旧广播等。",
             质量参数:=参数列表(参数("-b:a", "固定码率：常用 128k~384k")),
             特殊参数:=参数列表(参数("-mode", "auto/stereo/joint_stereo/dual_channel/mono", "声道模式：auto=自动，joint_stereo=联合立体声，dual_channel=双单声道"), 参数("-psymodel", "-1/0~4", "心理声学模型；-1=自动，数值越高越复杂"), 参数("-error_protection", "0/1", "CRC 错误保护，略增体积"), 参数("-energy_levels", "0/1", "写入能量级别信息")),
             支持说明:="输入：flt/fltp/s16/s16p；采样率：16~48 kHz；mono/stereo。"))

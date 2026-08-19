@@ -107,7 +107,7 @@ Public NotInheritable Class AgentConversationSchema
     Private Sub New()
     End Sub
 
-    Public Const LatestVersion As Integer = 3
+    Public Const LatestVersion As Integer = 4
     Public Const SteeringMessageName As String = "steer"
     Public Const ActivityMessageName As String = "agent_activity"
 End Class

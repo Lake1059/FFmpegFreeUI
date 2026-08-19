@@ -38,6 +38,7 @@ Public NotInheritable Class AgentConversationJsonUpgrader
         conversation.Version = AgentConversationSchema.LatestVersion
         NormalizeMessageKinds(conversation, changed)
         If requiresTurnUpgrade Then UpgradeTurns(conversation, changed)
+        NormalizeSteeringRecords(conversation, changed)
 
         Return New AgentConversationUpgradeResult With {
             .Conversation = conversation,
@@ -196,6 +197,53 @@ Public NotInheritable Class AgentConversationJsonUpgrader
             .CreatedAt = message.CreatedAt
         })
     End Sub
+
+    Private Shared Sub NormalizeSteeringRecords(conversation As AgentConversationData, ByRef changed As Boolean)
+        Dim steeringMessages = If(conversation.Messages, New List(Of AgentMessageData)).
+            Where(Function(x) x IsNot Nothing AndAlso
+                String.Equals(x.Role, "user", StringComparison.OrdinalIgnoreCase) AndAlso
+                String.Equals(x.Name, AgentConversationSchema.SteeringMessageName, StringComparison.OrdinalIgnoreCase)).
+            ToList()
+        Dim guidanceActivities = If(conversation.Turns, New List(Of AgentTurnData)).
+            Where(Function(x) x IsNot Nothing).
+            SelectMany(Function(x) If(x.Activities, New List(Of AgentTurnActivityData))).
+            Where(Function(x) x IsNot Nothing AndAlso String.Equals(x.Kind, "guidance", StringComparison.OrdinalIgnoreCase)).
+            ToList()
+
+        For Each message In steeringMessages
+            Dim normalized = NormalizeSteeringContent(message.Content)
+            If Not String.Equals(message.Content, normalized, StringComparison.Ordinal) Then
+                message.Content = normalized
+                changed = True
+            End If
+        Next
+
+        For i = 0 To Math.Min(steeringMessages.Count, guidanceActivities.Count) - 1
+            Dim message = steeringMessages(i)
+            Dim activity = guidanceActivities(i)
+            If Not String.Equals(activity.Id, message.Id, StringComparison.OrdinalIgnoreCase) Then
+                activity.Id = message.Id
+                changed = True
+            End If
+            Dim normalized = NormalizeSteeringContent(activity.Content)
+            If Not String.Equals(activity.Content, normalized, StringComparison.Ordinal) Then
+                activity.Content = normalized
+                changed = True
+            End If
+            If Not String.IsNullOrWhiteSpace(activity.Title) Then
+                activity.Title = ""
+                changed = True
+            End If
+        Next
+    End Sub
+
+    Private Shared Function NormalizeSteeringContent(content As String) As String
+        Dim text = If(content, "").Trim()
+        If text.StartsWith("调整方向：", StringComparison.Ordinal) Then
+            text = text.Substring("调整方向：".Length).TrimStart(ChrW(13), ChrW(10), " "c)
+        End If
+        Return text
+    End Function
 
     Private Shared Function BuildLegacyCheckpoint(root As JsonObject,
                                                   conversation As AgentConversationData) As AgentContextCheckpointData

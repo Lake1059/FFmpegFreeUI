@@ -132,7 +132,7 @@ Public NotInheritable Class 用户使用统计_v6
     Private Shared Sub 执行赞助提示(所属窗体 As Form, 提示项目 As IReadOnlyCollection(Of String), 完成源 As TaskCompletionSource(Of Boolean))
         Try
             If 所属窗体 Is Nothing OrElse 所属窗体.IsDisposed OrElse Not 所属窗体.IsHandleCreated Then Return
-            Dim 提示内容 = $"您已经完成了{String.Join("、", 提示项目)}，想要为 3FUI 提供支持吗？"
+            Dim 提示内容 = $"您已经完成了 {String.Join("、", 提示项目)}，想要为 3FUI 提供支持吗？"
             Dim 结果 = ExOverlayMsgBox(所属窗体, vbCrLf & 提示内容, ButtonTexts, "已完成里程碑", 1)
             If 结果 = 0 Then Process.Start(New ProcessStartInfo With {.FileName = 赞助地址, .UseShellExecute = True})
         Catch
