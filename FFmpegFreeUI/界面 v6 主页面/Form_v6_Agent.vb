@@ -38,6 +38,8 @@ Public Class Form_v6_Agent
     Private Const ContextMinimumCompletionReserveTokens As Integer = 2048
     Private Const StreamFlushIntervalMs As Integer = 80
     Private Const StreamFlushCharacters As Integer = 384
+    Private Const MaxConsecutiveUpstreamFailures As Integer = 5
+    Private Const RetryDelayMilliseconds As Integer = 750
 
     Private Class ToolRunLog
         Public Property Round As Integer
@@ -77,17 +79,13 @@ Public Class Form_v6_Agent
     End Class
 
     Private Class StreamingTextBuffer
-        Private ReadOnly _room As LakeUI.AgentRoom
-        Private ReadOnly _item As LakeUI.AgentRoom.ChatItem
         Private ReadOnly _onTextAppended As Action(Of String)
         Private ReadOnly _pendingText As New StringBuilder
         Private ReadOnly _syncRoot As New Object
         Private ReadOnly _uiContext As Threading.SynchronizationContext
         Private _lastFlushUtc As DateTime = DateTime.MinValue
 
-        Public Sub New(room As LakeUI.AgentRoom, item As LakeUI.AgentRoom.ChatItem, Optional onTextAppended As Action(Of String) = Nothing)
-            _room = room
-            _item = item
+        Public Sub New(Optional onTextAppended As Action(Of String) = Nothing)
             _onTextAppended = onTextAppended
             _uiContext = Threading.SynchronizationContext.Current
         End Sub
@@ -100,10 +98,10 @@ Public Class Form_v6_Agent
                 shouldFlush = _pendingText.Length >= StreamFlushCharacters OrElse
                     (DateTime.UtcNow - _lastFlushUtc).TotalMilliseconds >= StreamFlushIntervalMs
             End SyncLock
-            If shouldFlush Then Flush(False)
+            If shouldFlush Then Flush()
         End Sub
 
-        Public Sub Flush(forceScroll As Boolean)
+        Public Sub Flush()
             Dim appendedText As String
             SyncLock _syncRoot
                 If _pendingText.Length = 0 Then Return
@@ -114,9 +112,7 @@ Public Class Form_v6_Agent
 
             Dim apply =
                 Sub()
-                    If _item IsNot Nothing Then _room.AppendToItem(_item, appendedText)
                     _onTextAppended?.Invoke(appendedText)
-                    If forceScroll Then _room.FollowLatestIfPinned()
                 End Sub
             If _uiContext IsNot Nothing AndAlso Not Object.ReferenceEquals(Threading.SynchronizationContext.Current, _uiContext) Then
                 _uiContext.Send(Sub(state) apply(), Nothing)
@@ -826,6 +822,10 @@ Public Class Form_v6_Agent
             _activeRunStatusText = content
             If _activeTurn IsNot Nothing Then _activeTurn.StatusText = content
             UpdateActiveRunOverviewCard(conversation)
+            If keepRecord AndAlso IsConversationSelected(conversation) Then
+                AgentRoom1.AddCard(content)
+                AgentRoom1.FollowLatestIfPinned()
+            End If
             Return
         End If
 
@@ -1654,41 +1654,16 @@ Public Class Form_v6_Agent
             Do
                 cancellationToken.ThrowIfCancellationRequested()
                 round += 1
-                Dim result As AgentChatResult = Nothing
-                If _activeResponseItem Is Nothing Then ReplaceActiveResponseText("正在思考...")
-                Dim streamBuffer As New StreamingTextBuffer(
-                    AgentRoom1,
-                    Nothing,
-                    Sub(value) AppendRunResponseText(conversation, value, False))
-
-                ShowRunStatus(conversation, $"正在思考：第 {round} 轮")
-                ShowActiveThinking(conversation)
-                result = Await client.TryCreateChatCompletionStreamingAsync(
-                modelId,
-                messages,
-                tools,
-                reasoning,
-                Sub(delta)
-                    streamBuffer.Append(delta)
-                End Sub,
-                cancellationToken)
-                streamBuffer.Flush(True)
-                cancellationToken.ThrowIfCancellationRequested()
-
+                Dim result = Await RequestChatCompletionWithRetryAsync(
+                    client, conversation, modelId, messages, tools, reasoning, round, cancellationToken)
                 If Not result.Success Then
-                    HideActiveThinking()
-                    ShowRunStatus(conversation, "重新连接：流式响应不可用，切换非流式。" & result.ErrorMessage)
-                    SetRunResponseText(conversation, "正在重新连接...")
-                    result = Await client.TryCreateChatCompletionAsync(modelId, messages, tools, reasoning, cancellationToken)
-                    If Not result.Success Then
-                        Dim errorText = "系统故障：请求失败：" & result.ErrorMessage
-                        SetRunResponseText(conversation, errorText)
-                        AppendRunConversationMessage(conversation, New AgentMessageData With {.Role = "assistant", .Content = errorText})
-                        ShowRunStatus(conversation, errorText, True)
-                        FinishActiveTurn("error", result.ErrorMessage)
-                        ExFloatingTip(MB_发送, result.ErrorMessage, 2600)
-                        Exit Function
-                    End If
+                    Dim errorText = "系统故障：请求失败：" & result.ErrorMessage
+                    SetRunResponseText(conversation, errorText)
+                    AppendRunConversationMessage(conversation, New AgentMessageData With {.Role = "assistant", .Content = errorText})
+                    ShowRunStatus(conversation, errorText, True)
+                    FinishActiveTurn("error", result.ErrorMessage)
+                    ExFloatingTip(MB_发送, result.ErrorMessage, 2600)
+                    Exit Function
                 End If
                 AddUsage(conversation, result.Usage, modelId)
 
@@ -1765,6 +1740,51 @@ Public Class Form_v6_Agent
                 ConsumePendingSteeringMessages(messages, conversation)
             Loop
         End Using
+    End Function
+
+    Private Async Function RequestChatCompletionWithRetryAsync(client As AgentEndpointClient,
+                                                                conversation As AgentConversationData,
+                                                                modelId As String,
+                                                                messages As List(Of AgentMessageData),
+                                                                tools As List(Of Dictionary(Of String, Object)),
+                                                                reasoning As String,
+                                                                round As Integer,
+                                                                cancellationToken As Threading.CancellationToken) As Task(Of AgentChatResult)
+        Dim lastResult As AgentChatResult = Nothing
+
+        For attempt = 1 To MaxConsecutiveUpstreamFailures
+            cancellationToken.ThrowIfCancellationRequested()
+            If attempt > 1 Then
+                Dim retryDelay = Math.Min(4000, RetryDelayMilliseconds * CInt(Math.Pow(2, Math.Min(attempt - 2, 3))))
+                SetRunResponseText(conversation, "正在重新连接...")
+                ShowRunStatus(conversation, $"上游请求连续失败 {attempt - 1}/{MaxConsecutiveUpstreamFailures}，正在重试：{If(lastResult?.ErrorMessage, "未知错误")}")
+                Await Task.Delay(retryDelay, cancellationToken)
+            End If
+
+            If _activeResponseItem Is Nothing Then ReplaceActiveResponseText("正在思考...")
+            ShowRunStatus(conversation, $"正在思考：第 {round} 轮")
+            ShowActiveThinking(conversation)
+
+            Dim streamBuffer As New StreamingTextBuffer(
+                Sub(value) AppendRunResponseText(conversation, value, False))
+            Dim result = Await client.TryCreateChatCompletionStreamingAsync(
+                modelId, messages, tools, reasoning,
+                Sub(delta) streamBuffer.Append(delta),
+                cancellationToken)
+            streamBuffer.Flush()
+            cancellationToken.ThrowIfCancellationRequested()
+            If result.Success Then Return result
+
+            HideActiveThinking()
+            SetRunResponseText(conversation, "正在重新连接...")
+            ShowRunStatus(conversation, $"流式响应不可用，切换非流式（连续失败 {attempt}/{MaxConsecutiveUpstreamFailures}）")
+            result = Await client.TryCreateChatCompletionAsync(modelId, messages, tools, reasoning, cancellationToken)
+            cancellationToken.ThrowIfCancellationRequested()
+            If result.Success Then Return result
+            lastResult = result
+        Next
+
+        Return If(lastResult, AgentChatResult.Fail("上游请求连续失败。"))
     End Function
 
     Private Function ConsumePendingSteeringMessages(messages As List(Of AgentMessageData),
@@ -2304,9 +2324,6 @@ Public Class Form_v6_Agent
 
     Private Function BuildSubmittedFileContextItem(pathValue As String) As String
         Try
-            If Directory.Exists(pathValue) Then
-                Return Path.GetFullPath(pathValue)
-            End If
             Return Path.GetFullPath(pathValue)
         Catch ex As Exception
             Return pathValue
@@ -2443,12 +2460,12 @@ Public Class Form_v6_Agent
     End Sub
 
     Private Sub ApplyAgentButtonPanelLayout()
-        EqualizeTwoButtons(Panel4, MB_新对话, MB_删除对话, JustEmptyControl5)
-        EqualizeTwoButtons(Panel1, MB_重载连接, MB_操作提示, JustEmptyControl6)
+        EqualizeTwoButtons(Panel4, MB_新对话, JustEmptyControl5)
+        EqualizeTwoButtons(Panel1, MB_重载连接, JustEmptyControl6)
     End Sub
 
-    Private Sub EqualizeTwoButtons(panel As Panel, leftButton As Control, rightButton As Control, gap As Control)
-        If panel Is Nothing OrElse leftButton Is Nothing OrElse rightButton Is Nothing Then Return
+    Private Sub EqualizeTwoButtons(panel As Panel, leftButton As Control, gap As Control)
+        If panel Is Nothing OrElse leftButton Is Nothing Then Return
         Dim gapWidth = If(gap Is Nothing OrElse Not gap.Visible, 0, gap.Width)
         Dim available = Math.Max(0, panel.DisplayRectangle.Width - gapWidth)
         Dim leftWidth = available \ 2

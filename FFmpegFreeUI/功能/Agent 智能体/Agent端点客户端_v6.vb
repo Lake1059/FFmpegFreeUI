@@ -298,7 +298,7 @@ Public Class AgentEndpointClient
             Return
         End If
 
-        Dim unused = Await TryGetModelsAsync(cancellationToken)
+        Await TryGetModelsAsync(cancellationToken)
         If Not _apiPrefixResolved Then
             _apiPrefix = "v1"
             _apiPrefixResolved = True
