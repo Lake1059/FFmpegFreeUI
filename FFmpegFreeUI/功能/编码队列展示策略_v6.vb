@@ -8,11 +8,13 @@ End Interface
 Public Class 旧版兼容编码队列展示策略_v6
     Implements I编码队列展示策略_v6
 
+    Private Shared ReadOnly 预估大小警告色 As Color = Color.FromArgb(224, 198, 180, 72)
+
     Public Sub 应用(task As 编码任务_v6, item As UltraDetailListView.ListItem) Implements I编码队列展示策略_v6.应用
         If task Is Nothing OrElse item Is Nothing Then Exit Sub
         确保子项数量(item, 8)
 
-        item.SubItems(0).Text = 占位文本(If(task.任务名称 <> "", task.任务名称, Path.GetFileName(task.输入文件)))
+        item.SubItems(0).Text = If(String.IsNullOrWhiteSpace(task.任务名称), Path.GetFileName(task.输入文件), task.任务名称)
         item.SubItems(1).Text = 状态文本(task.状态)
         item.SubItems(2).Text = task.进度.进度文本
         item.SubItems(3).Text = task.进度.效率文本
@@ -25,24 +27,17 @@ Public Class 旧版兼容编码队列展示策略_v6
         设置整行颜色(item, rowColor)
 
         Select Case task.状态
-            Case 编码任务状态_v6.未处理
-                item.SubItems(4).ForeColor = rowColor
-
-            Case 编码任务状态_v6.正在处理
-                If 输出大小过大(task) Then item.SubItems(4).ForeColor = 界面配色_v6.错误文本色
+            Case 编码任务状态_v6.正在处理, 编码任务状态_v6.已暂停
+                设置进行中大小颜色(task, item)
 
             Case 编码任务状态_v6.已完成
                 item.SubItems(2).Text = "100%"
-                设置完成输出大小(task, item, rowColor)
+                设置完成输出大小(task, item)
                 item.SubItems(5).Text = ""
                 item.SubItems(7).Text = "耗时 " & 格式化旧版耗时(task.任务耗时计时器.Elapsed)
 
-            Case 编码任务状态_v6.已暂停
-                If 输出大小过大(task) OrElse item.SubItems(4).ForeColor = 界面配色_v6.错误文本色 Then item.SubItems(4).ForeColor = 界面配色_v6.错误文本色
-
             Case 编码任务状态_v6.已停止, 编码任务状态_v6.错误
                 item.SubItems(5).Text = ""
-                item.SubItems(4).ForeColor = rowColor
         End Select
 
         应用底部日志行(task, item)
@@ -59,11 +54,6 @@ Public Class 旧版兼容编码队列展示策略_v6
             subItem.ForeColor = color
         Next
     End Sub
-
-    Private Shared Function 占位文本(value As String) As String
-        If String.IsNullOrWhiteSpace(value) Then Return ""
-        Return value
-    End Function
 
     Private Shared Function 状态文本(status As 编码任务状态_v6) As String
         Select Case status
@@ -92,43 +82,53 @@ Public Class 旧版兼容编码队列展示策略_v6
         If task.状态 = 编码任务状态_v6.未处理 Then Return ""
         Dim elapsedText = 编码进度_v6.格式化秒(task.任务耗时计时器.Elapsed.TotalSeconds)
         If task.状态 = 编码任务状态_v6.正在处理 AndAlso task.进度.时间文本 <> "" Then Return $"{task.进度.时间文本} - {elapsedText}"
-        If task.状态 = 编码任务状态_v6.已暂停 Then Return elapsedText
         Return elapsedText
     End Function
 
-    Private Shared Sub 设置完成输出大小(task As 编码任务_v6, item As UltraDetailListView.ListItem, rowColor As Color)
-        item.SubItems(4).ForeColor = rowColor
-
-        If File.Exists(task.输入文件) AndAlso File.Exists(task.输出文件) Then
-            Dim inputSize = New FileInfo(task.输入文件).Length
+    Private Shared Sub 设置完成输出大小(task As 编码任务_v6, item As UltraDetailListView.ListItem)
+        If File.Exists(task.输出文件) Then
             Dim outputSize = New FileInfo(task.输出文件).Length
+            Dim inputSize As Long = 0
+            If File.Exists(task.输入文件) Then inputSize = New FileInfo(task.输入文件).Length
             Dim sizeText = 编码进度_v6.格式化大小KB(CLng(outputSize / 1024))
             If inputSize > 0 Then
                 Dim ratio = outputSize / inputSize
                 item.SubItems(4).Text = $"{sizeText} ({ratio * 100:F0}%)"
-                item.SubItems(4).ForeColor = If(ratio >= 1, 界面配色_v6.错误文本色, rowColor)
             Else
                 item.SubItems(4).Text = sizeText
             End If
-            Exit Sub
-        End If
-
-        If Not File.Exists(task.输入文件) AndAlso File.Exists(task.输出文件) Then
-            Dim outputSize = New FileInfo(task.输出文件).Length
-            item.SubItems(4).Text = 编码进度_v6.格式化大小KB(CLng(outputSize / 1024))
+            Dim comparisonInputSize = If(inputSize > 0, inputSize, task.输入文件大小)
+            If 输出大小超过输入(comparisonInputSize, outputSize) Then item.SubItems(4).ForeColor = 界面配色_v6.错误文本色
             Exit Sub
         End If
 
         If task.进度.输出大小KB > 0 Then
             item.SubItems(4).Text = 编码进度_v6.格式化大小KB(task.进度.输出大小KB)
+            If 输出大小超过输入(task.输入文件大小, CDbl(task.进度.输出大小KB) * 1024.0R) Then item.SubItems(4).ForeColor = 界面配色_v6.错误文本色
         Else
             item.SubItems(4).Text = ""
         End If
     End Sub
 
-    Private Shared Function 输出大小过大(task As 编码任务_v6) As Boolean
+    Private Shared Sub 设置进行中大小颜色(task As 编码任务_v6, item As UltraDetailListView.ListItem)
+        If 输出大小超过输入(task.输入文件大小, CDbl(task.进度.输出大小KB) * 1024.0R) Then
+            item.SubItems(4).ForeColor = 界面配色_v6.错误文本色
+        ElseIf 预估输出大小过大(task) Then
+            item.SubItems(4).ForeColor = 预估大小警告色
+        End If
+    End Sub
+
+    Private Shared Function 输出大小超过输入(inputSize As Long, outputSizeBytes As Double) As Boolean
+        Return inputSize > 0 AndAlso outputSizeBytes > CDbl(inputSize)
+    End Function
+
+    Private Shared Function 预估输出大小过大(task As 编码任务_v6) As Boolean
         If task.输入文件大小 <= 0 OrElse task.进度.输出大小KB <= 0 Then Return False
-        Return task.进度.输出大小KB * 1024L >= task.输入文件大小
+        Dim percent = task.进度.百分比
+        If percent <= 0 OrElse percent >= 1 OrElse Double.IsNaN(percent) OrElse Double.IsInfinity(percent) Then Return False
+
+        ' Compare in bytes without rounding the displayed estimate first.
+        Return 输出大小超过输入(task.输入文件大小, CDbl(task.进度.输出大小KB) * 1024.0R / percent)
     End Function
 
     Private Shared Sub 应用底部日志行(task As 编码任务_v6, item As UltraDetailListView.ListItem)
@@ -139,12 +139,7 @@ Public Class 旧版兼容编码队列展示策略_v6
 
         Dim text = task.最新底部日志文本.Replace(vbCr, " ").Replace(vbLf, " ").Trim()
         If text = "" Then Exit Sub
-        Dim color As Color
-        If task.最新底部日志是否错误 Then
-            color = 界面配色_v6.错误文本色
-        Else
-            color = Color.FromArgb(150, 220, 220, 220)
-        End If
+        Dim color As Color = If(task.最新底部日志是否错误, 界面配色_v6.错误文本色, Color.FromArgb(150, 220, 220, 220))
         item.BottomLines.Add(New UltraDetailListView.TextLine(text, Nothing, color))
     End Sub
 
