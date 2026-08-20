@@ -344,7 +344,7 @@ Public Class Form_v6_Agent
                 ShowStatus($"模型列表已刷新：{_models.Count} 个模型")
             End If
         Catch ex As Exception
-            ShowStatus("系统故障：获取模型列表失败：" & ex.Message, True)
+            ShowStatus("获取模型列表失败：" & ex.Message, True)
             ExFloatingTip(MCB_模型选择, ex.Message, 2600)
             If allowReasoningFallback Then
                 If ShouldRetryReasoningRefresh(ex.Message, selectedModel) Then
@@ -384,7 +384,7 @@ Public Class Form_v6_Agent
 
             Dim selected = If(设置_v6.实例对象.Agent推理级别, "")
             Dim index = efforts.FindIndex(Function(x) String.Equals(x, selected, StringComparison.OrdinalIgnoreCase))
-            If index < 0 AndAlso efforts.Count > 0 Then index = Math.Min(1, efforts.Count - 1)
+            If index < 0 AndAlso efforts.Count > 0 Then index = 0
             If index >= 0 Then MCB_推理级别.SelectedIndex = index
             设置_v6.实例对象.Agent推理级别 = If(MCB_推理级别.SelectedItem, "")
             If model.ReasoningEfforts IsNot Nothing AndAlso model.ReasoningEfforts.Count > 0 Then
@@ -393,7 +393,7 @@ Public Class Form_v6_Agent
                 ShowStatus("推理级别使用默认值：" & String.Join("、", efforts))
             End If
         Catch ex As Exception
-            ShowStatus("系统故障：读取推理级别失败：" & ex.Message, True)
+            ShowStatus("读取推理级别失败：" & ex.Message, True)
             ExFloatingTip(MCB_推理级别, ex.Message, 2600)
         Finally
             _loading = oldLoading
@@ -1657,7 +1657,7 @@ Public Class Form_v6_Agent
                 Dim result = Await RequestChatCompletionWithRetryAsync(
                     client, conversation, modelId, messages, tools, reasoning, round, cancellationToken)
                 If Not result.Success Then
-                    Dim errorText = "系统故障：请求失败：" & result.ErrorMessage
+                    Dim errorText = "请求失败：" & result.ErrorMessage
                     SetRunResponseText(conversation, errorText)
                     AppendRunConversationMessage(conversation, New AgentMessageData With {.Role = "assistant", .Content = errorText})
                     ShowRunStatus(conversation, errorText, True)
