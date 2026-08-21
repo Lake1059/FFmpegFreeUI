@@ -526,7 +526,10 @@ Public Class Form_v6_集成工具_抽流
             设置提取进度(baseProgress * 100)
 
             If info.类型 = 抽流流类型.附件 Then
-                Dim args = $"-hide_banner -nostdin -y -dump_attachment:t:{info.类型序号} {引用参数(output)} -i {引用参数(当前文件)} -f null -"
+                ' dump_attachment writes the attachment while probing the input. Limit the
+                ' null output to zero duration so long media files do not get fully decoded
+                ' after the attachment has already been written.
+                Dim args = $"-hide_banner -nostdin -y -dump_attachment:t:{info.类型序号} {引用参数(output)} -i {引用参数(当前文件)} -t 0 -f null -"
                 Dim result = Await 运行FFmpegAsync(args, token, Nothing)
                 If result.ExitCode <> 0 Then Throw New InvalidOperationException(提取错误摘要(result.Output))
             Else
