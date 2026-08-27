@@ -15,6 +15,10 @@ Public Class Form_v6_Agent
     Private ReadOnly _pendingSteeringMessages As New List(Of AgentMessageData)
     Private _activeResponseItem As LakeUI.AgentRoom.ChatItem = Nothing
     Private _activeThinkingItem As LakeUI.AgentRoom.ChatItem = Nothing
+    Private _activeThinkingActivity As AgentTurnActivityData = Nothing
+    Private ReadOnly _activeThinkingTextBuilder As New StringBuilder
+    Private _activeThinkingParser As LakeUI.AgentThinkingTextParser = Nothing
+    Private _activeStreamReceivedDelta As Boolean
     Private _activeRunConversation As AgentConversationData = Nothing
     Private _activeTurn As AgentTurnData = Nothing
     Private _activeTurnItem As LakeUI.AgentRoom.ChatItem = Nothing
@@ -784,7 +788,9 @@ Public Class Form_v6_Agent
 
     Private Sub UpdateUsageButton()
         Dim currentUsage = If(_current?.Usage, New AgentUsageInfo)
-        MB_页面用量.Text = $"{FormatContextPercent(currentUsage)} | {currentUsage.TotalTokens} / {_pageUsage.TotalTokens}"
+        Dim currentContextTokens = Math.Max(0, currentUsage.LastRequestInputTokens)
+        Dim contextWindowTokens = GetUsageContextWindowTokens(currentUsage)
+        MB_页面用量.Text = $"{FormatContextPercent(currentUsage)} | {currentContextTokens} / {contextWindowTokens}"
     End Sub
 
     Private Sub UpdateSendButtonState()
@@ -846,11 +852,87 @@ Public Class Form_v6_Agent
         AgentRoom1.FollowLatestIfPinned()
     End Sub
 
+    Private Sub BeginThinkingTextStream()
+        If _activeThinkingParser Is Nothing Then _activeThinkingParser = New LakeUI.AgentThinkingTextParser()
+        _activeThinkingParser.Reset()
+        _activeThinkingTextBuilder.Clear()
+        _activeThinkingActivity = Nothing
+        _activeStreamReceivedDelta = False
+    End Sub
+
+    Private Sub AppendThinkingText(conversation As AgentConversationData, text As String)
+        If String.IsNullOrEmpty(text) OrElse _activeTurn Is Nothing Then Return
+        If _activeThinkingActivity Is Nothing Then
+            _activeThinkingActivity = New AgentTurnActivityData With {
+                .Kind = "assistant",
+                .State = "running"
+            }
+            _activeTurn.Activities.Add(_activeThinkingActivity)
+        End If
+        _activeThinkingTextBuilder.Append(text)
+        _activeThinkingActivity.Content = _activeThinkingTextBuilder.ToString()
+
+        If Not IsConversationSelected(conversation) Then Return
+        If _activeThinkingItem Is Nothing OrElse Not AgentRoom1.Items.Contains(_activeThinkingItem) Then
+            _activeThinkingItem = AgentRoom1.AddAssistantActivity(_activeTurn.Id, _activeThinkingActivity.Content, _activeThinkingActivity.Id)
+        Else
+            _activeThinkingItem.Text = _activeThinkingActivity.Content
+        End If
+        AgentRoom1.FollowLatestIfPinned()
+    End Sub
+
+    Private Sub CompleteThinkingText(conversation As AgentConversationData)
+        If _activeThinkingActivity Is Nothing Then Return
+        _activeThinkingActivity.State = "completed"
+        If String.IsNullOrWhiteSpace(_activeThinkingActivity.Content) Then
+            HideActiveThinking()
+        Else
+            _activeThinkingItem = Nothing
+        End If
+    End Sub
+
+    Private Sub ApplyThinkingChunk(conversation As AgentConversationData,
+                                   chunk As LakeUI.AgentThinkingTextChunk,
+                                   Optional appendVisibleToResponse As Boolean = True)
+        If chunk Is Nothing Then Return
+        AppendThinkingText(conversation, chunk.ThinkingText)
+        If Not String.IsNullOrEmpty(chunk.VisibleText) Then
+            CompleteThinkingText(conversation)
+            If appendVisibleToResponse Then AppendRunResponseText(conversation, chunk.VisibleText, False)
+        End If
+    End Sub
+
+    Private Function ParseCompleteAgentText(conversation As AgentConversationData, text As String) As String
+        BeginThinkingTextStream()
+        Dim chunk = _activeThinkingParser.Append(If(text, ""))
+        ApplyThinkingChunk(conversation, chunk, appendVisibleToResponse:=False)
+        Dim tail = _activeThinkingParser.Complete()
+        ApplyThinkingChunk(conversation, tail, appendVisibleToResponse:=False)
+        Dim visible As New StringBuilder()
+        visible.Append(chunk.VisibleText)
+        visible.Append(tail.VisibleText)
+        Return visible.ToString()
+    End Function
+
+    Private Shared Function StripAgentThinkingText(text As String) As String
+        Dim parser As New LakeUI.AgentThinkingTextParser()
+        Dim first = parser.Append(If(text, ""))
+        Dim tail = parser.Complete()
+        Return first.VisibleText & tail.VisibleText
+    End Function
+
     Private Sub HideActiveThinking()
+        If _activeThinkingActivity IsNot Nothing AndAlso Not String.IsNullOrWhiteSpace(_activeThinkingActivity.Content) Then
+            _activeThinkingActivity.State = "completed"
+            _activeThinkingItem = Nothing
+            Return
+        End If
         If _activeThinkingItem IsNot Nothing AndAlso AgentRoom1.Items.Contains(_activeThinkingItem) Then
             AgentRoom1.Items.Remove(_activeThinkingItem)
         End If
         _activeThinkingItem = Nothing
+        _activeThinkingActivity = Nothing
+        _activeThinkingTextBuilder.Clear()
     End Sub
 
     Private Function AddCardBeforeActiveResponse(content As String) As LakeUI.AgentRoom.ChatItem
@@ -915,6 +997,13 @@ Public Class Form_v6_Agent
             AgentRoom1.AppendToItem(_activeResponseItem, appendedText)
         End If
         AgentRoom1.FollowLatestIfPinned()
+    End Sub
+
+    Private Sub AppendRunResponseDelta(conversation As AgentConversationData, delta As String)
+        If String.IsNullOrEmpty(delta) OrElse Not ReferenceEquals(conversation, _activeRunConversation) Then Return
+        _activeStreamReceivedDelta = True
+        If _activeThinkingParser Is Nothing Then BeginThinkingTextStream()
+        ApplyThinkingChunk(conversation, _activeThinkingParser.Append(delta))
     End Sub
 
     Private Sub CompleteRunResponseText(conversation As AgentConversationData, text As String)
@@ -1066,6 +1155,11 @@ Public Class Form_v6_Agent
     Private Sub ClearActiveRunState()
         StopActiveRunElapsedTimer()
         HideActiveThinking()
+        _activeThinkingParser?.Reset()
+        _activeThinkingParser = Nothing
+        _activeThinkingActivity = Nothing
+        _activeThinkingTextBuilder.Clear()
+        _activeStreamReceivedDelta = False
         _activeResponseItem = Nothing
         _activeRunConversation = Nothing
         _activeTurn = Nothing
@@ -1668,7 +1762,7 @@ Public Class Form_v6_Agent
                 AddUsage(conversation, result.Usage, modelId)
 
                 If result.ToolCalls Is Nothing OrElse result.ToolCalls.Count = 0 Then
-                    Dim content = If(result.Content, "").Trim()
+                    Dim content = StripAgentThinkingText(result.Content).Trim()
                     If content = "" Then
                         Dim streamedContent = GetActiveResponseTextSnapshot().Trim()
                         If Not IsRunResponsePlaceholder(streamedContent) Then content = streamedContent
@@ -1693,12 +1787,12 @@ Public Class Form_v6_Agent
                     Exit Function
                 End If
 
-                PromoteActiveResponseToActivity(conversation, result.Content)
+                PromoteActiveResponseToActivity(conversation, StripAgentThinkingText(result.Content))
                 ShowRunStatus(conversation, "正在调用工具：" & String.Join("、", result.ToolCalls.Select(Function(x) x.Name)))
                 Dim assistantToolMessage As New AgentMessageData With {
                 .Role = "assistant",
                 .Name = AgentConversationSchema.ActivityMessageName,
-                .Content = If(result.Content, ""),
+                .Content = StripAgentThinkingText(result.Content),
                 .ToolCalls = result.ToolCalls
             }
                 messages.Add(assistantToolMessage)
@@ -1765,22 +1859,38 @@ Public Class Form_v6_Agent
             ShowRunStatus(conversation, $"正在思考：第 {round} 轮")
             ShowActiveThinking(conversation)
 
+            BeginThinkingTextStream()
             Dim streamBuffer As New StreamingTextBuffer(
-                Sub(value) AppendRunResponseText(conversation, value, False))
+                Sub(value) AppendRunResponseDelta(conversation, value))
             Dim result = Await client.TryCreateChatCompletionStreamingAsync(
                 modelId, messages, tools, reasoning,
                 Sub(delta) streamBuffer.Append(delta),
                 cancellationToken)
             streamBuffer.Flush()
             cancellationToken.ThrowIfCancellationRequested()
-            If result.Success Then Return result
+            If result.Success Then
+                If _activeStreamReceivedDelta Then
+                    ApplyThinkingChunk(conversation, _activeThinkingParser.Complete())
+                Else
+                    ParseCompleteAgentText(conversation, result.Content)
+                End If
+                CompleteThinkingText(conversation)
+                Return result
+            End If
 
             HideActiveThinking()
+            _activeThinkingParser?.Reset()
+            _activeThinkingActivity = Nothing
+            _activeThinkingTextBuilder.Clear()
             SetRunResponseText(conversation, "正在重新连接...")
             ShowRunStatus(conversation, $"流式响应不可用，切换非流式（连续失败 {attempt}/{MaxConsecutiveUpstreamFailures}）")
             result = Await client.TryCreateChatCompletionAsync(modelId, messages, tools, reasoning, cancellationToken)
             cancellationToken.ThrowIfCancellationRequested()
-            If result.Success Then Return result
+            If result.Success Then
+                ParseCompleteAgentText(conversation, result.Content)
+                CompleteThinkingText(conversation)
+                Return result
+            End If
             lastResult = result
         Next
 
@@ -2474,18 +2584,26 @@ Public Class Form_v6_Agent
 
     Private Sub MB_页面用量_Click(sender As Object, e As EventArgs) Handles MB_页面用量.Click
         Dim currentUsage = If(_current?.Usage, New AgentUsageInfo)
+        Dim currentContextTokens = Math.Max(0, currentUsage.LastRequestInputTokens)
         Dim contextWindowTokens = GetUsageContextWindowTokens(currentUsage)
+        Dim lastRequestModelId = If(String.IsNullOrWhiteSpace(currentUsage.LastRequestModelId), "未知", currentUsage.LastRequestModelId)
         Dim detail =
-            $"上下文窗口：{contextWindowTokens} tokens{vbCrLf}" &
-            $"当前会话：{FormatUsage(currentUsage)}{vbCrLf}" &
-            $"本页累计：{FormatUsage(_pageUsage)}{vbCrLf}" &
-            $"最近请求：模型 {If(String.IsNullOrWhiteSpace(currentUsage.LastRequestModelId), "未知", currentUsage.LastRequestModelId)}，输入 {currentUsage.LastRequestInputTokens}，总量上下文 {FormatContextPercent(currentUsage)}，缓存命中率 {FormatLastRequestCacheHitRate(currentUsage)}"
-        ExMsgBox(FormMain_v6, detail, MsgBoxStyle.Information, "页面用量")
+            $"当前上下文用量：{currentContextTokens} / {contextWindowTokens} tokens{vbCrLf}" &
+            $"当前上下文使用率：{FormatContextPercent(currentUsage)}{vbCrLf}" &
+            $"最近请求模型：{lastRequestModelId}{vbCrLf}" &
+            $"最近请求输入：{currentUsage.LastRequestInputTokens} tokens{vbCrLf}" &
+            $"最近请求输出：{Math.Max(0, currentUsage.LastRequestTotalTokens - currentUsage.LastRequestInputTokens)} tokens{vbCrLf}" &
+            $"最近请求总量：{Math.Max(0, currentUsage.LastRequestTotalTokens)} tokens{vbCrLf}" &
+            $"最近请求缓存：{Math.Max(0, currentUsage.LastRequestCachedTokens)} tokens{vbCrLf}" &
+            $"最近请求缓存命中率：{FormatLastRequestCacheHitRate(currentUsage)}{vbCrLf}" &
+            $"当前对话累计总量：{Math.Max(0, currentUsage.TotalTokens)} tokens{vbCrLf}" &
+            $"当前对话累计输入：{Math.Max(0, GetUsageInputTokens(currentUsage))} tokens{vbCrLf}" &
+            $"当前对话累计输出：{Math.Max(0, GetUsageOutputTokens(currentUsage))} tokens{vbCrLf}" &
+            $"当前对话累计缓存：{Math.Max(0, currentUsage.CachedTokens)} tokens{vbCrLf}" &
+            $"当前对话累计缓存命中率：{FormatCacheHitRate(currentUsage)}{vbCrLf}" &
+            $"当前对话累计推理：{Math.Max(0, currentUsage.ReasoningTokens)} tokens"
+        ExMsgBox(FormMain_v6, detail, MsgBoxStyle.Information, "当前对话用量")
     End Sub
-
-    Private Function FormatUsage(usage As AgentUsageInfo) As String
-        Return $"总 {usage.TotalTokens}，输入 {GetUsageInputTokens(usage)}，输出 {GetUsageOutputTokens(usage)}，缓存 {usage.CachedTokens}，缓存命中率 {FormatCacheHitRate(usage)}，推理 {usage.ReasoningTokens}"
-    End Function
 
     Private Function GetUsageInputTokens(usage As AgentUsageInfo) As Integer
         If usage Is Nothing Then Return 0

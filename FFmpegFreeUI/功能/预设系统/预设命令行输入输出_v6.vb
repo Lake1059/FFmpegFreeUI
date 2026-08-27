@@ -139,11 +139,11 @@ Partial Public Class 预设管理_v6
     Private Shared Function 生成元数据章节附件片段(a As 预设数据_v6, 当前视频输出数量 As Integer, 输入文件 As String, 输出文件 As String, 当前字幕输出数量 As Integer) As 附加输出片段
         Dim result As New 附加输出片段
         Select Case a.流控制_元数据选项
-            Case 1
+            Case 预设数据_v6.流控制元数据选项.保留元数据
                 result.输出前.Add("-map_metadata 0")
-            Case 2
+            Case 预设数据_v6.流控制元数据选项.清除元数据
                 result.输出前.Add("-map_metadata -1")
-            Case 3
+            Case 预设数据_v6.流控制元数据选项.保留更多元数据
                 result.输出前.Add("-map_metadata 0 -movflags +use_metadata_tags")
         End Select
 
@@ -156,9 +156,9 @@ Partial Public Class 预设管理_v6
         Next
 
         Select Case a.流控制_章节选项
-            Case 1
+            Case 预设数据_v6.流控制章节选项.保留章节
                 result.输出前.Add("-map_chapters 0")
-            Case 2
+            Case 预设数据_v6.流控制章节选项.清除章节
                 result.输出前.Add("-map_chapters -1")
         End Select
 
@@ -181,7 +181,7 @@ Partial Public Class 预设管理_v6
         Dim 允许常规附件 = 输出容器支持附件(a, 输出文件)
         Dim 允许附加封面图 = 输出容器支持附加封面图(a, 输出文件)
         Select Case a.流控制_附件选项
-            Case 1
+            Case 预设数据_v6.流控制附件选项.保留附件
                 If 允许常规附件 Then
                     result.输出前.Add("-map 0:t? -c:t copy")
                     result.包含显式流映射 = True

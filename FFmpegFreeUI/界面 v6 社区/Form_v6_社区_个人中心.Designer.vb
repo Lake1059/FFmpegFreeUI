@@ -23,6 +23,8 @@ Partial Class Form_v6_社区_个人中心
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         ModernPanel1 = New LakeUI.ModernPanel()
+        MDV_活动信息 = New LakeUI.MarkDownViewer()
+        JustEmptyControl13 = New LakeUI.JustEmptyControl()
         Panel5 = New Panel()
         MB_服务器性能界面 = New LakeUI.ModernButton()
         JustEmptyControl8 = New LakeUI.JustEmptyControl()
@@ -42,31 +44,29 @@ Partial Class Form_v6_社区_个人中心
         JustEmptyControl14 = New LakeUI.JustEmptyControl()
         MB_浏览社区内容 = New LakeUI.ModernButton()
         ModernPanel4 = New LakeUI.ModernPanel()
-        HtmlColorLabel7 = New LakeUI.HtmlColorLabel()
+        HCL_经验值 = New LakeUI.HtmlColorLabel()
         JustEmptyControl7 = New LakeUI.JustEmptyControl()
-        HtmlColorLabel6 = New LakeUI.HtmlColorLabel()
+        HCL_获得评论 = New LakeUI.HtmlColorLabel()
         JustEmptyControl6 = New LakeUI.JustEmptyControl()
-        HtmlColorLabel5 = New LakeUI.HtmlColorLabel()
+        HCL_获赞数 = New LakeUI.HtmlColorLabel()
         JustEmptyControl4 = New LakeUI.JustEmptyControl()
-        HtmlColorLabel4 = New LakeUI.HtmlColorLabel()
+        HCL_我的收藏 = New LakeUI.HtmlColorLabel()
         JustEmptyControl3 = New LakeUI.JustEmptyControl()
-        HtmlColorLabel3 = New LakeUI.HtmlColorLabel()
+        HCL_发布数量 = New LakeUI.HtmlColorLabel()
         JustEmptyControl5 = New LakeUI.JustEmptyControl()
         JustEmptyControl2 = New LakeUI.JustEmptyControl()
         ModernPanel2 = New LakeUI.ModernPanel()
-        HtmlColorLabel1 = New LakeUI.HtmlColorLabel()
+        HCL_账号信息显示 = New LakeUI.HtmlColorLabel()
         JustEmptyControl1 = New LakeUI.JustEmptyControl()
-        ModernPanel3 = New LakeUI.ModernPanel()
+        MP_账户头像 = New LakeUI.ModernPanel()
         Panel4 = New Panel()
         JustEmptyControl12 = New LakeUI.JustEmptyControl()
-        MB_登出 = New LakeUI.ModernButton()
-        MB_登录 = New LakeUI.ModernButton()
+        MB_账户管理页面 = New LakeUI.ModernButton()
+        MB_登录和登出 = New LakeUI.ModernButton()
         Panel2 = New Panel()
         ModernButton2 = New LakeUI.ModernButton()
         Panel6 = New Panel()
-        MarkDownViewer1 = New LakeUI.MarkDownViewer()
-        JustEmptyControl13 = New LakeUI.JustEmptyControl()
-        MarkDownViewer2 = New LakeUI.MarkDownViewer()
+        MDV_社区准则 = New LakeUI.MarkDownViewer()
         ModernPanel1.SuspendLayout()
         Panel5.SuspendLayout()
         Panel3.SuspendLayout()
@@ -82,7 +82,7 @@ Partial Class Form_v6_社区_个人中心
         ' 
         ModernPanel1.BackColor1 = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         ModernPanel1.BorderSize = 0
-        ModernPanel1.Controls.Add(MarkDownViewer2)
+        ModernPanel1.Controls.Add(MDV_活动信息)
         ModernPanel1.Controls.Add(JustEmptyControl13)
         ModernPanel1.Controls.Add(Panel5)
         ModernPanel1.Controls.Add(Panel3)
@@ -98,6 +98,32 @@ Partial Class Form_v6_社区_个人中心
         ModernPanel1.Padding = New Padding(20)
         ModernPanel1.Size = New Size(929, 580)
         ModernPanel1.TabIndex = 0
+        ' 
+        ' MDV_活动信息
+        ' 
+        MDV_活动信息.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MDV_活动信息.BasePath = Nothing
+        MDV_活动信息.BorderRadius = 10
+        MDV_活动信息.Dock = DockStyle.Fill
+        MDV_活动信息.Font = New Font("Microsoft YaHei UI", 10F)
+        MDV_活动信息.ForeColor = Color.FromArgb(CByte(160), CByte(255), CByte(255), CByte(255))
+        MDV_活动信息.HeadingColor = Color.FromArgb(CByte(160), CByte(255), CByte(255), CByte(255))
+        MDV_活动信息.HorizontalRuleColor = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
+        MDV_活动信息.HorizontalRuleThickness = 2
+        MDV_活动信息.Location = New Point(20, 478)
+        MDV_活动信息.Name = "MDV_活动信息"
+        MDV_活动信息.Padding = New Padding(10)
+        MDV_活动信息.Size = New Size(618, 82)
+        MDV_活动信息.TabIndex = 40
+        ' 
+        ' JustEmptyControl13
+        ' 
+        JustEmptyControl13.BackColor = Color.Transparent
+        JustEmptyControl13.Dock = DockStyle.Top
+        JustEmptyControl13.Location = New Point(20, 468)
+        JustEmptyControl13.Name = "JustEmptyControl13"
+        JustEmptyControl13.Size = New Size(618, 10)
+        JustEmptyControl13.TabIndex = 39
         ' 
         ' Panel5
         ' 
@@ -380,15 +406,15 @@ Partial Class Form_v6_社区_个人中心
         ModernPanel4.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernPanel4.BorderRadius = 10
         ModernPanel4.BorderSize = 0
-        ModernPanel4.Controls.Add(HtmlColorLabel7)
+        ModernPanel4.Controls.Add(HCL_经验值)
         ModernPanel4.Controls.Add(JustEmptyControl7)
-        ModernPanel4.Controls.Add(HtmlColorLabel6)
+        ModernPanel4.Controls.Add(HCL_获得评论)
         ModernPanel4.Controls.Add(JustEmptyControl6)
-        ModernPanel4.Controls.Add(HtmlColorLabel5)
+        ModernPanel4.Controls.Add(HCL_获赞数)
         ModernPanel4.Controls.Add(JustEmptyControl4)
-        ModernPanel4.Controls.Add(HtmlColorLabel4)
+        ModernPanel4.Controls.Add(HCL_我的收藏)
         ModernPanel4.Controls.Add(JustEmptyControl3)
-        ModernPanel4.Controls.Add(HtmlColorLabel3)
+        ModernPanel4.Controls.Add(HCL_发布数量)
         ModernPanel4.Controls.Add(JustEmptyControl5)
         ModernPanel4.Dock = DockStyle.Top
         ModernPanel4.Location = New Point(20, 182)
@@ -397,20 +423,20 @@ Partial Class Form_v6_社区_个人中心
         ModernPanel4.Size = New Size(618, 70)
         ModernPanel4.TabIndex = 33
         ' 
-        ' HtmlColorLabel7
+        ' HCL_经验值
         ' 
-        HtmlColorLabel7.AutoSizeMode = AutoSizeMode.GrowAndShrink
-        HtmlColorLabel7.BackColor = Color.Transparent
-        HtmlColorLabel7.Dock = DockStyle.Fill
-        HtmlColorLabel7.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        HtmlColorLabel7.Location = New Point(510, 15)
-        HtmlColorLabel7.Margin = New Padding(2)
-        HtmlColorLabel7.Name = "HtmlColorLabel7"
-        HtmlColorLabel7.Padding = New Padding(10, 0, 10, 0)
-        HtmlColorLabel7.Size = New Size(93, 40)
-        HtmlColorLabel7.TabIndex = 12
-        HtmlColorLabel7.Text = "<span style=""font-size:13; color:Silver"">0</span><br>经验值"
-        HtmlColorLabel7.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
+        HCL_经验值.AutoSizeMode = AutoSizeMode.GrowAndShrink
+        HCL_经验值.BackColor = Color.Transparent
+        HCL_经验值.Dock = DockStyle.Fill
+        HCL_经验值.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
+        HCL_经验值.Location = New Point(510, 15)
+        HCL_经验值.Margin = New Padding(2)
+        HCL_经验值.Name = "HCL_经验值"
+        HCL_经验值.Padding = New Padding(10, 0, 10, 0)
+        HCL_经验值.Size = New Size(93, 40)
+        HCL_经验值.TabIndex = 12
+        HCL_经验值.Text = "<span style=""font-size:13; color:Silver"">0</span><br>经验值"
+        HCL_经验值.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
         ' 
         ' JustEmptyControl7
         ' 
@@ -421,20 +447,20 @@ Partial Class Form_v6_社区_个人中心
         JustEmptyControl7.Size = New Size(3, 40)
         JustEmptyControl7.TabIndex = 11
         ' 
-        ' HtmlColorLabel6
+        ' HCL_获得评论
         ' 
-        HtmlColorLabel6.AutoSizeMode = AutoSizeMode.GrowAndShrink
-        HtmlColorLabel6.BackColor = Color.Transparent
-        HtmlColorLabel6.Dock = DockStyle.Left
-        HtmlColorLabel6.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        HtmlColorLabel6.Location = New Point(387, 15)
-        HtmlColorLabel6.Margin = New Padding(2)
-        HtmlColorLabel6.Name = "HtmlColorLabel6"
-        HtmlColorLabel6.Padding = New Padding(10, 0, 10, 0)
-        HtmlColorLabel6.Size = New Size(120, 40)
-        HtmlColorLabel6.TabIndex = 10
-        HtmlColorLabel6.Text = "<span style=""font-size:13; color:Silver"">0</span><br>获得评论"
-        HtmlColorLabel6.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
+        HCL_获得评论.AutoSizeMode = AutoSizeMode.GrowAndShrink
+        HCL_获得评论.BackColor = Color.Transparent
+        HCL_获得评论.Dock = DockStyle.Left
+        HCL_获得评论.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
+        HCL_获得评论.Location = New Point(387, 15)
+        HCL_获得评论.Margin = New Padding(2)
+        HCL_获得评论.Name = "HCL_获得评论"
+        HCL_获得评论.Padding = New Padding(10, 0, 10, 0)
+        HCL_获得评论.Size = New Size(120, 40)
+        HCL_获得评论.TabIndex = 10
+        HCL_获得评论.Text = "<span style=""font-size:13; color:Silver"">0</span><br>获得评论"
+        HCL_获得评论.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
         ' 
         ' JustEmptyControl6
         ' 
@@ -445,20 +471,20 @@ Partial Class Form_v6_社区_个人中心
         JustEmptyControl6.Size = New Size(3, 40)
         JustEmptyControl6.TabIndex = 9
         ' 
-        ' HtmlColorLabel5
+        ' HCL_获赞数
         ' 
-        HtmlColorLabel5.AutoSizeMode = AutoSizeMode.GrowAndShrink
-        HtmlColorLabel5.BackColor = Color.Transparent
-        HtmlColorLabel5.Dock = DockStyle.Left
-        HtmlColorLabel5.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        HtmlColorLabel5.Location = New Point(264, 15)
-        HtmlColorLabel5.Margin = New Padding(2)
-        HtmlColorLabel5.Name = "HtmlColorLabel5"
-        HtmlColorLabel5.Padding = New Padding(10, 0, 10, 0)
-        HtmlColorLabel5.Size = New Size(120, 40)
-        HtmlColorLabel5.TabIndex = 7
-        HtmlColorLabel5.Text = "<span style=""font-size:13; color:Silver"">0</span><br>获赞数"
-        HtmlColorLabel5.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
+        HCL_获赞数.AutoSizeMode = AutoSizeMode.GrowAndShrink
+        HCL_获赞数.BackColor = Color.Transparent
+        HCL_获赞数.Dock = DockStyle.Left
+        HCL_获赞数.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
+        HCL_获赞数.Location = New Point(264, 15)
+        HCL_获赞数.Margin = New Padding(2)
+        HCL_获赞数.Name = "HCL_获赞数"
+        HCL_获赞数.Padding = New Padding(10, 0, 10, 0)
+        HCL_获赞数.Size = New Size(120, 40)
+        HCL_获赞数.TabIndex = 7
+        HCL_获赞数.Text = "<span style=""font-size:13; color:Silver"">0</span><br>获赞数"
+        HCL_获赞数.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
         ' 
         ' JustEmptyControl4
         ' 
@@ -469,20 +495,20 @@ Partial Class Form_v6_社区_个人中心
         JustEmptyControl4.Size = New Size(3, 40)
         JustEmptyControl4.TabIndex = 6
         ' 
-        ' HtmlColorLabel4
+        ' HCL_我的收藏
         ' 
-        HtmlColorLabel4.AutoSizeMode = AutoSizeMode.GrowAndShrink
-        HtmlColorLabel4.BackColor = Color.Transparent
-        HtmlColorLabel4.Dock = DockStyle.Left
-        HtmlColorLabel4.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        HtmlColorLabel4.Location = New Point(141, 15)
-        HtmlColorLabel4.Margin = New Padding(2)
-        HtmlColorLabel4.Name = "HtmlColorLabel4"
-        HtmlColorLabel4.Padding = New Padding(10, 0, 10, 0)
-        HtmlColorLabel4.Size = New Size(120, 40)
-        HtmlColorLabel4.TabIndex = 5
-        HtmlColorLabel4.Text = "<span style=""font-size:13; color:Silver"">0</span><br>我的收藏"
-        HtmlColorLabel4.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
+        HCL_我的收藏.AutoSizeMode = AutoSizeMode.GrowAndShrink
+        HCL_我的收藏.BackColor = Color.Transparent
+        HCL_我的收藏.Dock = DockStyle.Left
+        HCL_我的收藏.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
+        HCL_我的收藏.Location = New Point(141, 15)
+        HCL_我的收藏.Margin = New Padding(2)
+        HCL_我的收藏.Name = "HCL_我的收藏"
+        HCL_我的收藏.Padding = New Padding(10, 0, 10, 0)
+        HCL_我的收藏.Size = New Size(120, 40)
+        HCL_我的收藏.TabIndex = 5
+        HCL_我的收藏.Text = "<span style=""font-size:13; color:Silver"">0</span><br>我的收藏"
+        HCL_我的收藏.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
         ' 
         ' JustEmptyControl3
         ' 
@@ -493,20 +519,20 @@ Partial Class Form_v6_社区_个人中心
         JustEmptyControl3.Size = New Size(3, 40)
         JustEmptyControl3.TabIndex = 4
         ' 
-        ' HtmlColorLabel3
+        ' HCL_发布数量
         ' 
-        HtmlColorLabel3.AutoSizeMode = AutoSizeMode.GrowAndShrink
-        HtmlColorLabel3.BackColor = Color.Transparent
-        HtmlColorLabel3.Dock = DockStyle.Left
-        HtmlColorLabel3.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        HtmlColorLabel3.Location = New Point(18, 15)
-        HtmlColorLabel3.Margin = New Padding(2)
-        HtmlColorLabel3.Name = "HtmlColorLabel3"
-        HtmlColorLabel3.Padding = New Padding(10, 0, 10, 0)
-        HtmlColorLabel3.Size = New Size(120, 40)
-        HtmlColorLabel3.TabIndex = 3
-        HtmlColorLabel3.Text = "<span style=""font-size:13; color:Silver"">0</span><br>发布数量"
-        HtmlColorLabel3.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
+        HCL_发布数量.AutoSizeMode = AutoSizeMode.GrowAndShrink
+        HCL_发布数量.BackColor = Color.Transparent
+        HCL_发布数量.Dock = DockStyle.Left
+        HCL_发布数量.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
+        HCL_发布数量.Location = New Point(18, 15)
+        HCL_发布数量.Margin = New Padding(2)
+        HCL_发布数量.Name = "HCL_发布数量"
+        HCL_发布数量.Padding = New Padding(10, 0, 10, 0)
+        HCL_发布数量.Size = New Size(120, 40)
+        HCL_发布数量.TabIndex = 3
+        HCL_发布数量.Text = "<span style=""font-size:13; color:Silver"">0</span><br>发布数量"
+        HCL_发布数量.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
         ' 
         ' JustEmptyControl5
         ' 
@@ -531,9 +557,9 @@ Partial Class Form_v6_社区_个人中心
         ModernPanel2.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernPanel2.BorderRadius = 10
         ModernPanel2.BorderSize = 0
-        ModernPanel2.Controls.Add(HtmlColorLabel1)
+        ModernPanel2.Controls.Add(HCL_账号信息显示)
         ModernPanel2.Controls.Add(JustEmptyControl1)
-        ModernPanel2.Controls.Add(ModernPanel3)
+        ModernPanel2.Controls.Add(MP_账户头像)
         ModernPanel2.Controls.Add(Panel4)
         ModernPanel2.Dock = DockStyle.Top
         ModernPanel2.Location = New Point(20, 62)
@@ -542,20 +568,20 @@ Partial Class Form_v6_社区_个人中心
         ModernPanel2.Size = New Size(618, 110)
         ModernPanel2.TabIndex = 0
         ' 
-        ' HtmlColorLabel1
+        ' HCL_账号信息显示
         ' 
-        HtmlColorLabel1.AutoSizeMode = AutoSizeMode.GrowAndShrink
-        HtmlColorLabel1.BackColor = Color.Transparent
-        HtmlColorLabel1.Dock = DockStyle.Fill
-        HtmlColorLabel1.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        HtmlColorLabel1.LineSpacing = 3
-        HtmlColorLabel1.Location = New Point(110, 15)
-        HtmlColorLabel1.Margin = New Padding(2)
-        HtmlColorLabel1.Name = "HtmlColorLabel1"
-        HtmlColorLabel1.Size = New Size(413, 80)
-        HtmlColorLabel1.TabIndex = 2
-        HtmlColorLabel1.Text = "<span style=""font-size:13; color:Silver"">未登录</span><br>平台和用户基本信息<br>权限信息"
-        HtmlColorLabel1.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
+        HCL_账号信息显示.AutoSizeMode = AutoSizeMode.GrowAndShrink
+        HCL_账号信息显示.BackColor = Color.Transparent
+        HCL_账号信息显示.Dock = DockStyle.Fill
+        HCL_账号信息显示.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
+        HCL_账号信息显示.LineSpacing = 3
+        HCL_账号信息显示.Location = New Point(110, 15)
+        HCL_账号信息显示.Margin = New Padding(2)
+        HCL_账号信息显示.Name = "HCL_账号信息显示"
+        HCL_账号信息显示.Size = New Size(393, 80)
+        HCL_账号信息显示.TabIndex = 2
+        HCL_账号信息显示.Text = "<span style=""font-size:13; color:Silver"">未登录</span><br>用户基本信息<br>权限信息"
+        HCL_账号信息显示.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
         ' 
         ' JustEmptyControl1
         ' 
@@ -566,28 +592,28 @@ Partial Class Form_v6_社区_个人中心
         JustEmptyControl1.Size = New Size(15, 80)
         JustEmptyControl1.TabIndex = 1
         ' 
-        ' ModernPanel3
+        ' MP_账户头像
         ' 
-        ModernPanel3.BackColor = Color.Transparent
-        ModernPanel3.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernPanel3.BorderRadius = 40
-        ModernPanel3.BorderSize = 0
-        ModernPanel3.Dock = DockStyle.Left
-        ModernPanel3.Location = New Point(15, 15)
-        ModernPanel3.Name = "ModernPanel3"
-        ModernPanel3.Size = New Size(80, 80)
-        ModernPanel3.TabIndex = 0
+        MP_账户头像.BackColor = Color.Transparent
+        MP_账户头像.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MP_账户头像.BorderRadius = 40
+        MP_账户头像.BorderSize = 0
+        MP_账户头像.Dock = DockStyle.Left
+        MP_账户头像.Location = New Point(15, 15)
+        MP_账户头像.Name = "MP_账户头像"
+        MP_账户头像.Size = New Size(80, 80)
+        MP_账户头像.TabIndex = 0
         ' 
         ' Panel4
         ' 
         Panel4.BackColor = Color.Transparent
         Panel4.Controls.Add(JustEmptyControl12)
-        Panel4.Controls.Add(MB_登出)
-        Panel4.Controls.Add(MB_登录)
+        Panel4.Controls.Add(MB_账户管理页面)
+        Panel4.Controls.Add(MB_登录和登出)
         Panel4.Dock = DockStyle.Right
-        Panel4.Location = New Point(523, 15)
+        Panel4.Location = New Point(503, 15)
         Panel4.Name = "Panel4"
-        Panel4.Size = New Size(80, 80)
+        Panel4.Size = New Size(100, 80)
         Panel4.TabIndex = 3
         ' 
         ' JustEmptyControl12
@@ -596,38 +622,38 @@ Partial Class Form_v6_社区_个人中心
         JustEmptyControl12.Dock = DockStyle.Fill
         JustEmptyControl12.Location = New Point(0, 34)
         JustEmptyControl12.Name = "JustEmptyControl12"
-        JustEmptyControl12.Size = New Size(80, 12)
+        JustEmptyControl12.Size = New Size(100, 12)
         JustEmptyControl12.TabIndex = 33
         ' 
-        ' MB_登出
+        ' MB_账户管理页面
         ' 
-        MB_登出.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        MB_登出.BorderRadius = 10
-        MB_登出.BorderSize = 0
-        MB_登出.Dock = DockStyle.Bottom
-        MB_登出.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
-        MB_登出.Location = New Point(0, 46)
-        MB_登出.Margin = New Padding(2)
-        MB_登出.Name = "MB_登出"
-        MB_登出.PressedBackColor1 = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
-        MB_登出.Size = New Size(80, 34)
-        MB_登出.TabIndex = 34
-        MB_登出.Text = "登出"
+        MB_账户管理页面.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MB_账户管理页面.BorderRadius = 10
+        MB_账户管理页面.BorderSize = 0
+        MB_账户管理页面.Dock = DockStyle.Bottom
+        MB_账户管理页面.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        MB_账户管理页面.Location = New Point(0, 46)
+        MB_账户管理页面.Margin = New Padding(2)
+        MB_账户管理页面.Name = "MB_账户管理页面"
+        MB_账户管理页面.PressedBackColor1 = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
+        MB_账户管理页面.Size = New Size(100, 34)
+        MB_账户管理页面.TabIndex = 34
+        MB_账户管理页面.Text = "账户管理"
         ' 
-        ' MB_登录
+        ' MB_登录和登出
         ' 
-        MB_登录.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        MB_登录.BorderRadius = 10
-        MB_登录.BorderSize = 0
-        MB_登录.Dock = DockStyle.Top
-        MB_登录.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
-        MB_登录.Location = New Point(0, 0)
-        MB_登录.Margin = New Padding(2)
-        MB_登录.Name = "MB_登录"
-        MB_登录.PressedBackColor1 = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
-        MB_登录.Size = New Size(80, 34)
-        MB_登录.TabIndex = 5
-        MB_登录.Text = "登录"
+        MB_登录和登出.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MB_登录和登出.BorderRadius = 10
+        MB_登录和登出.BorderSize = 0
+        MB_登录和登出.Dock = DockStyle.Top
+        MB_登录和登出.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        MB_登录和登出.Location = New Point(0, 0)
+        MB_登录和登出.Margin = New Padding(2)
+        MB_登录和登出.Name = "MB_登录和登出"
+        MB_登录和登出.PressedBackColor1 = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
+        MB_登录和登出.Size = New Size(100, 34)
+        MB_登录和登出.TabIndex = 5
+        MB_登录和登出.Text = "登录"
         ' 
         ' Panel2
         ' 
@@ -658,56 +684,30 @@ Partial Class Form_v6_社区_个人中心
         ' 
         ' Panel6
         ' 
-        Panel6.Controls.Add(MarkDownViewer1)
+        Panel6.Controls.Add(MDV_社区准则)
         Panel6.Dock = DockStyle.Right
         Panel6.Location = New Point(638, 20)
         Panel6.Name = "Panel6"
-        Panel6.Padding = New Padding(20, 0, 0, 0)
+        Panel6.Padding = New Padding(10, 0, 0, 0)
         Panel6.Size = New Size(271, 540)
         Panel6.TabIndex = 38
         ' 
-        ' MarkDownViewer1
+        ' MDV_社区准则
         ' 
-        MarkDownViewer1.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        MarkDownViewer1.BasePath = Nothing
-        MarkDownViewer1.BorderRadius = 10
-        MarkDownViewer1.Dock = DockStyle.Fill
-        MarkDownViewer1.Font = New Font("Microsoft YaHei UI", 10F)
-        MarkDownViewer1.ForeColor = Color.FromArgb(CByte(160), CByte(255), CByte(255), CByte(255))
-        MarkDownViewer1.HeadingColor = Color.FromArgb(CByte(160), CByte(255), CByte(255), CByte(255))
-        MarkDownViewer1.HorizontalRuleColor = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
-        MarkDownViewer1.HorizontalRuleThickness = 2
-        MarkDownViewer1.Location = New Point(20, 0)
-        MarkDownViewer1.Name = "MarkDownViewer1"
-        MarkDownViewer1.Padding = New Padding(10)
-        MarkDownViewer1.Size = New Size(251, 540)
-        MarkDownViewer1.TabIndex = 15
-        ' 
-        ' JustEmptyControl13
-        ' 
-        JustEmptyControl13.BackColor = Color.Transparent
-        JustEmptyControl13.Dock = DockStyle.Top
-        JustEmptyControl13.Location = New Point(20, 468)
-        JustEmptyControl13.Name = "JustEmptyControl13"
-        JustEmptyControl13.Size = New Size(618, 10)
-        JustEmptyControl13.TabIndex = 39
-        ' 
-        ' MarkDownViewer2
-        ' 
-        MarkDownViewer2.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        MarkDownViewer2.BasePath = Nothing
-        MarkDownViewer2.BorderRadius = 10
-        MarkDownViewer2.Dock = DockStyle.Fill
-        MarkDownViewer2.Font = New Font("Microsoft YaHei UI", 10F)
-        MarkDownViewer2.ForeColor = Color.FromArgb(CByte(160), CByte(255), CByte(255), CByte(255))
-        MarkDownViewer2.HeadingColor = Color.FromArgb(CByte(160), CByte(255), CByte(255), CByte(255))
-        MarkDownViewer2.HorizontalRuleColor = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
-        MarkDownViewer2.HorizontalRuleThickness = 2
-        MarkDownViewer2.Location = New Point(20, 478)
-        MarkDownViewer2.Name = "MarkDownViewer2"
-        MarkDownViewer2.Padding = New Padding(10)
-        MarkDownViewer2.Size = New Size(618, 82)
-        MarkDownViewer2.TabIndex = 40
+        MDV_社区准则.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MDV_社区准则.BasePath = Nothing
+        MDV_社区准则.BorderRadius = 10
+        MDV_社区准则.Dock = DockStyle.Fill
+        MDV_社区准则.Font = New Font("Microsoft YaHei UI", 10F)
+        MDV_社区准则.ForeColor = Color.FromArgb(CByte(160), CByte(255), CByte(255), CByte(255))
+        MDV_社区准则.HeadingColor = Color.FromArgb(CByte(160), CByte(255), CByte(255), CByte(255))
+        MDV_社区准则.HorizontalRuleColor = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
+        MDV_社区准则.HorizontalRuleThickness = 2
+        MDV_社区准则.Location = New Point(10, 0)
+        MDV_社区准则.Name = "MDV_社区准则"
+        MDV_社区准则.Padding = New Padding(10)
+        MDV_社区准则.Size = New Size(261, 540)
+        MDV_社区准则.TabIndex = 15
         ' 
         ' Form_v6_社区_个人中心
         ' 
@@ -738,19 +738,19 @@ Partial Class Form_v6_社区_个人中心
     Friend WithEvents MCB_记住密码 As LakeUI.ModernCheckBox
     Friend WithEvents MCB_自动登录 As LakeUI.ModernCheckBox
     Friend WithEvents ModernPanel2 As LakeUI.ModernPanel
-    Friend WithEvents ModernPanel3 As LakeUI.ModernPanel
+    Friend WithEvents MP_账户头像 As LakeUI.ModernPanel
     Friend WithEvents JustEmptyControl1 As LakeUI.JustEmptyControl
-    Friend WithEvents HtmlColorLabel1 As LakeUI.HtmlColorLabel
+    Friend WithEvents HCL_账号信息显示 As LakeUI.HtmlColorLabel
     Friend WithEvents ModernPanel4 As LakeUI.ModernPanel
     Friend WithEvents JustEmptyControl2 As LakeUI.JustEmptyControl
-    Friend WithEvents HtmlColorLabel3 As LakeUI.HtmlColorLabel
-    Friend WithEvents HtmlColorLabel7 As LakeUI.HtmlColorLabel
+    Friend WithEvents HCL_发布数量 As LakeUI.HtmlColorLabel
+    Friend WithEvents HCL_经验值 As LakeUI.HtmlColorLabel
     Friend WithEvents JustEmptyControl7 As LakeUI.JustEmptyControl
-    Friend WithEvents HtmlColorLabel6 As LakeUI.HtmlColorLabel
+    Friend WithEvents HCL_获得评论 As LakeUI.HtmlColorLabel
     Friend WithEvents JustEmptyControl6 As LakeUI.JustEmptyControl
-    Friend WithEvents HtmlColorLabel5 As LakeUI.HtmlColorLabel
+    Friend WithEvents HCL_获赞数 As LakeUI.HtmlColorLabel
     Friend WithEvents JustEmptyControl4 As LakeUI.JustEmptyControl
-    Friend WithEvents HtmlColorLabel4 As LakeUI.HtmlColorLabel
+    Friend WithEvents HCL_我的收藏 As LakeUI.HtmlColorLabel
     Friend WithEvents JustEmptyControl3 As LakeUI.JustEmptyControl
     Friend WithEvents JustEmptyControl5 As LakeUI.JustEmptyControl
     Friend WithEvents Panel3 As Panel
@@ -761,8 +761,8 @@ Partial Class Form_v6_社区_个人中心
     Friend WithEvents JustEmptyControl10 As LakeUI.JustEmptyControl
     Friend WithEvents Panel4 As Panel
     Friend WithEvents JustEmptyControl12 As LakeUI.JustEmptyControl
-    Friend WithEvents MB_登出 As LakeUI.ModernButton
-    Friend WithEvents MB_登录 As LakeUI.ModernButton
+    Friend WithEvents MB_账户管理页面 As LakeUI.ModernButton
+    Friend WithEvents MB_登录和登出 As LakeUI.ModernButton
     Friend WithEvents Panel1 As Panel
     Friend WithEvents MB_管理我的内容 As LakeUI.ModernButton
     Friend WithEvents JustEmptyControl14 As LakeUI.JustEmptyControl
@@ -776,9 +776,9 @@ Partial Class Form_v6_社区_个人中心
     Friend WithEvents JustEmptyControl15 As LakeUI.JustEmptyControl
     Friend WithEvents MB_审核列表 As LakeUI.ModernButton
     Friend WithEvents Panel6 As Panel
-    Friend WithEvents MarkDownViewer1 As LakeUI.MarkDownViewer
+    Friend WithEvents MDV_社区准则 As LakeUI.MarkDownViewer
     Friend WithEvents MB_我的消息 As LakeUI.ModernButton
     Friend WithEvents JustEmptyControl11 As LakeUI.JustEmptyControl
-    Friend WithEvents MarkDownViewer2 As LakeUI.MarkDownViewer
+    Friend WithEvents MDV_活动信息 As LakeUI.MarkDownViewer
     Friend WithEvents JustEmptyControl13 As LakeUI.JustEmptyControl
 End Class

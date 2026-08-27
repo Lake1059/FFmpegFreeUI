@@ -55,17 +55,17 @@ Partial Public Class 预设管理_v6
         Return head & ":" & 输出流选择器 & tail
     End Function
 
-    Private Shared Function 获取字幕编码参数(index As Integer) As String
-        Select Case index
-            Case 1
+    Private Shared Function 获取字幕编码参数(value As 预设数据_v6.流控制字幕操作) As String
+        Select Case value
+            Case 预设数据_v6.流控制字幕操作.复制流
                 Return "copy"
-            Case 2
+            Case 预设数据_v6.流控制字幕操作.转为_mov_text
                 Return "mov_text"
-            Case 3
+            Case 预设数据_v6.流控制字幕操作.转为_srt
                 Return "srt"
-            Case 4
+            Case 预设数据_v6.流控制字幕操作.转为_ass
                 Return "ass"
-            Case 5
+            Case 预设数据_v6.流控制字幕操作.转为_ssa
                 Return "ssa"
             Case Else
                 Return ""

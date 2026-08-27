@@ -400,15 +400,39 @@ Public Class 预设数据_v6
     Public Property 流控制_启用保留其他音频流 As Boolean = False
     Public Property 流控制_将音频参数应用于指定流 As String() = Array.Empty(Of String)()
     Public Property 流控制_将字幕参数应用于指定流 As String() = Array.Empty(Of String)()
-    Public Property 流控制_如何操作指定的字幕 As Integer = 0
+    Enum 流控制字幕操作
+        未选择 = 0
+        复制流 = 1
+        转为_mov_text = 2
+        转为_srt = 3
+        转为_ass = 4
+        转为_ssa = 5
+    End Enum
+    Public Property 流控制_如何操作指定的字幕 As 流控制字幕操作 = 流控制字幕操作.未选择
     Public Property 流控制_启用保留其他字幕流 As Boolean = False
     Public Property 流控制_自动混流SRT As Boolean = False
     Public Property 流控制_自动混流ASS As Boolean = False
     Public Property 流控制_自动混流SSA As Boolean = False
     Public Property 流控制_自动混流的字幕转为MOVTEXT As Boolean = False
-    Public Property 流控制_元数据选项 As Integer = 0
-    Public Property 流控制_章节选项 As Integer = 0
-    Public Property 流控制_附件选项 As Integer = 0
+    Enum 流控制元数据选项
+        未选择 = 0
+        保留元数据 = 1
+        清除元数据 = 2
+        保留更多元数据 = 3
+    End Enum
+    Public Property 流控制_元数据选项 As 流控制元数据选项 = 流控制元数据选项.未选择
+    Enum 流控制章节选项
+        未选择 = 0
+        保留章节 = 1
+        清除章节 = 2
+    End Enum
+    Public Property 流控制_章节选项 As 流控制章节选项 = 流控制章节选项.未选择
+    Enum 流控制附件选项
+        未选择 = 0
+        保留附件 = 1
+        清除附件 = 2
+    End Enum
+    Public Property 流控制_附件选项 As 流控制附件选项 = 流控制附件选项.未选择
     '==================================================
     Class 元数据单片结构
         Public Property 字段 As String = ""

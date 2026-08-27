@@ -301,6 +301,8 @@ Public Class 编码队列_v6
                 expanded.Add(If(设置_v6.实例对象.转译模式, 转译模式处理路径(file), file))
             End If
         Next
+        If expanded.Count = 0 Then Return 0
+        If Not 预设管理_v6.验证可添加任务(preset) Then Return 0
         Return 批量添加预设任务(expanded, preset).Count
     End Function
 
@@ -636,13 +638,13 @@ Public Class 编码队列_v6
 
     Private Shared Sub 异步执行任务(task As 编码任务_v6, 执行标识 As Long)
         Threading.Tasks.Task.Run(Async Function()
-                     Try
-                         Await task.开始Async(执行标识)
-                     Finally
-                         Dim 因手动停止结束 = task.结束执行()
-                         任务执行结束后处理(因手动停止结束)
-                     End Try
-                 End Function)
+                                     Try
+                                         Await task.开始Async(执行标识)
+                                     Finally
+                                         Dim 因手动停止结束 = task.结束执行()
+                                         任务执行结束后处理(因手动停止结束)
+                                     End Try
+                                 End Function)
     End Sub
 
     Private Shared Function 获取并发上限() As Integer
@@ -1047,7 +1049,7 @@ Public Class 编码队列_v6
         Return Not File.Exists(输出路径) AndAlso (已保留输出路径 Is Nothing OrElse Not 已保留输出路径.Contains(输出路径))
     End Function
 
-        ' Must be called while 队列锁 is held so active and stopping tasks reserve different names.
+    ' Must be called while 队列锁 is held so active and stopping tasks reserve different names.
     Private Shared Sub 为任务保留输出文件(task As 编码任务_v6)
         If task Is Nothing OrElse task.预设数据 Is Nothing Then Exit Sub
         If Not String.IsNullOrWhiteSpace(task.输出文件) AndAlso Not task.输出文件由自动命名生成 Then Exit Sub

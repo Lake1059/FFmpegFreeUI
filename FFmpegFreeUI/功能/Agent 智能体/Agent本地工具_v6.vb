@@ -473,7 +473,13 @@ Public Class AgentLocalTools
         End Function
 
         Protected Overrides Sub OnProcessStarted(process As Process)
-            process.StandardInput.WriteLine("[Console]::OutputEncoding=[System.Text.Encoding]::UTF8; $OutputEncoding=[System.Text.Encoding]::UTF8; $ProgressPreference='SilentlyContinue'")
+            process.StandardInput.WriteLine(
+                "$__3FUI_Utf8 = [System.Text.UTF8Encoding]::new($false); " &
+                "[Console]::InputEncoding = $__3FUI_Utf8; " &
+                "[Console]::OutputEncoding = $__3FUI_Utf8; " &
+                "$global:OutputEncoding = $__3FUI_Utf8; " &
+                "$global:PSDefaultParameterValues['*:Encoding'] = 'utf8'; " &
+                "$ProgressPreference = 'SilentlyContinue'")
             process.StandardInput.Flush()
         End Sub
 
@@ -709,7 +715,7 @@ Public Class AgentLocalTools
     End Function
 
     Private Shared Sub AddConsoleToolDefinitions(tools As List(Of Dictionary(Of String, Object)))
-        tools.Add(FunctionTool("run_powershell", "运行 PowerShell 命令。仅系统访问权限可用。同一次用户消息触发的 Agent 运行会复用同一个 PowerShell 进程，变量、当前位置和模块导入可在本轮多次调用之间保留；本轮响应结束、超时或任务终止时会关闭进程。", New Dictionary(Of String, Object) From {
+        tools.Add(FunctionTool("run_powershell", "运行 PowerShell 命令。仅系统访问权限可用。同一次用户消息触发的 Agent 运行会复用同一个 PowerShell 进程，变量、当前位置和模块导入可在本轮多次调用之间保留；会话启动时强制标准输入、标准输出、标准错误、$OutputEncoding 和带 Encoding 参数的文本 cmdlet 使用 UTF-8；本轮响应结束、超时或任务终止时会关闭进程。若本轮首次使用，先验证 $PSVersionTable.PSVersion 和 $PSVersionTable.PSEdition，再选择兼容语法；脚本读写文本仍需显式使用 -Encoding UTF8 或 .NET UTF8Encoding。", New Dictionary(Of String, Object) From {
             {"command", New Dictionary(Of String, Object) From {{"type", "string"}, {"description", "要执行的 PowerShell 命令"}}},
             {"working_directory", New Dictionary(Of String, Object) From {{"type", "string"}, {"description", "可选工作目录。首次调用默认使用程序目录；后续调用默认沿用当前 PowerShell 位置。"}}},
             {"timeout_seconds", New Dictionary(Of String, Object) From {{"type", "integer"}, {"description", "可选超时时间，1-300 秒，默认 60 秒"}}}

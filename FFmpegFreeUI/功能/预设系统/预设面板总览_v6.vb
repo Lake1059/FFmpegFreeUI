@@ -66,6 +66,20 @@ Partial Public Class 预设管理_v6
         Return a
     End Function
 
+    Public Shared Function 验证可添加任务(a As 预设数据_v6) As Boolean
+        If a Is Nothing Then Return False
+        If a.输出_输出文件参数使用方法 = 预设数据_v6.输出文件参数使用方法.正常使用 AndAlso
+           String.IsNullOrWhiteSpace(a.输出容器) Then
+            ExOverlayMsgBox(FormMain_v6,
+                            "常规输出模式需要填写输出后缀，ffmpeg 需要后缀来决定封装。" & vbCrLf & vbCrLf &
+                            "请先在 参数面板 -> 输出文件设置 中填写后缀，再加入编码队列。",
+                            MsgBoxStyle.Critical,
+                            "未填写输出后缀")
+            Return False
+        End If
+        Return True
+    End Function
+
     Public Shared Sub 重置面板(ui As Form_v6_参数面板)
         If ui Is Nothing Then Exit Sub
         显示预设(New 预设数据_v6, ui)
@@ -272,7 +286,7 @@ Partial Public Class 预设管理_v6
             If Not String.IsNullOrWhiteSpace(a.视频参数_质量控制_值) Then
                 添加总览文本行(sb, "质量控制参数：" & 参数名 & " = " & a.视频参数_质量控制_值)
             Else
-                添加总览文本行(sb, "质量控制参数：" & 参数名 & "（未填写值）")
+                添加总览文本行(sb, "质量控制参数：" & 参数名 & " 值没写！要出事！")
             End If
         ElseIf Not String.IsNullOrWhiteSpace(a.视频参数_质量控制_值) Then
             添加总览文本行(sb, "质量控制值：" & a.视频参数_质量控制_值)
@@ -332,7 +346,7 @@ Partial Public Class 预设管理_v6
         If a.流控制_启用保留其他音频流 Then 添加总览文本行(sb, "已选择保留其他音频流")
         If a.流控制_将字幕参数应用于指定流.Length > 0 Then
             添加总览文本行(sb, "使用这些文件的这些字幕：" & 格式化字符串数组(a.流控制_将字幕参数应用于指定流))
-            If a.流控制_如何操作指定的字幕 > 0 Then 添加总览文本行(sb, "字幕操作：" & 格式化字幕流操作(a.流控制_如何操作指定的字幕))
+            If a.流控制_如何操作指定的字幕 <> 预设数据_v6.流控制字幕操作.未选择 Then 添加总览文本行(sb, "字幕操作：" & 格式化字幕流操作(a.流控制_如何操作指定的字幕))
         End If
         If a.流控制_启用保留其他字幕流 Then 添加总览文本行(sb, "已选择保留其他字幕流")
         If a.流控制_自动混流SRT Then 添加总览文本行(sb, "自动混流同名 SRT 字幕文件")
@@ -340,9 +354,9 @@ Partial Public Class 预设管理_v6
         If a.流控制_自动混流SSA Then 添加总览文本行(sb, "自动混流同名 SSA 字幕文件")
         If a.流控制_自动混流的字幕转为MOVTEXT Then 添加总览文本行(sb, "自动混流的字幕转为 mov_text 编码")
         添加字幕容器兼容性总览(sb, a)
-        If a.流控制_元数据选项 > 0 Then 添加总览文本行(sb, "元数据选项：" & 格式化元数据选项(a.流控制_元数据选项))
-        If a.流控制_章节选项 > 0 Then 添加总览文本行(sb, "章节选项：" & 格式化章节选项(a.流控制_章节选项))
-        If a.流控制_附件选项 > 0 Then 添加总览文本行(sb, "附件选项：" & 格式化附件选项(a.流控制_附件选项))
+        If a.流控制_元数据选项 <> 预设数据_v6.流控制元数据选项.未选择 Then 添加总览文本行(sb, "元数据选项：" & 格式化元数据选项(a.流控制_元数据选项))
+        If a.流控制_章节选项 <> 预设数据_v6.流控制章节选项.未选择 Then 添加总览文本行(sb, "章节选项：" & 格式化章节选项(a.流控制_章节选项))
+        If a.流控制_附件选项 <> 预设数据_v6.流控制附件选项.未选择 Then 添加总览文本行(sb, "附件选项：" & 格式化附件选项(a.流控制_附件选项))
 
         Dim 元数据文本 = 格式化元数据总览(a.元数据_要写入的信息)
         If 元数据文本 <> "" Then 添加总览文本行(sb, "写入元数据：" & 元数据文本)
@@ -509,40 +523,40 @@ Partial Public Class 预设管理_v6
         Return String.Join(",", 值.Select(Function(x) If(x, "").Trim()).Where(Function(x) x <> ""))
     End Function
 
-    Private Shared Function 格式化字幕流操作(value As Integer) As String
+    Private Shared Function 格式化字幕流操作(value As 预设数据_v6.流控制字幕操作) As String
         Select Case value
-            Case 1 : Return "复制流"
-            Case 2 : Return "转为 mov_text 编码"
-            Case 3 : Return "转为 srt 编码"
-            Case 4 : Return "转为 ass 编码"
-            Case 5 : Return "转为 ssa 编码"
+            Case 预设数据_v6.流控制字幕操作.复制流 : Return "复制流"
+            Case 预设数据_v6.流控制字幕操作.转为_mov_text : Return "转为 mov_text 编码"
+            Case 预设数据_v6.流控制字幕操作.转为_srt : Return "转为 srt 编码"
+            Case 预设数据_v6.流控制字幕操作.转为_ass : Return "转为 ass 编码"
+            Case 预设数据_v6.流控制字幕操作.转为_ssa : Return "转为 ssa 编码"
         End Select
-        Return value.ToString(CultureInfo.InvariantCulture)
+        Return 格式化枚举名称(value)
     End Function
 
-    Private Shared Function 格式化元数据选项(value As Integer) As String
+    Private Shared Function 格式化元数据选项(value As 预设数据_v6.流控制元数据选项) As String
         Select Case value
-            Case 1 : Return "保留元数据"
-            Case 2 : Return "清除元数据"
-            Case 3 : Return "清除更多元数据"
+            Case 预设数据_v6.流控制元数据选项.保留元数据 : Return "保留元数据"
+            Case 预设数据_v6.流控制元数据选项.清除元数据 : Return "清除元数据"
+            Case 预设数据_v6.流控制元数据选项.保留更多元数据 : Return "保留更多元数据"
         End Select
-        Return value.ToString(CultureInfo.InvariantCulture)
+        Return 格式化枚举名称(value)
     End Function
 
-    Private Shared Function 格式化章节选项(value As Integer) As String
+    Private Shared Function 格式化章节选项(value As 预设数据_v6.流控制章节选项) As String
         Select Case value
-            Case 1 : Return "保留章节"
-            Case 2 : Return "清除章节"
+            Case 预设数据_v6.流控制章节选项.保留章节 : Return "保留章节"
+            Case 预设数据_v6.流控制章节选项.清除章节 : Return "清除章节"
         End Select
-        Return value.ToString(CultureInfo.InvariantCulture)
+        Return 格式化枚举名称(value)
     End Function
 
-    Private Shared Function 格式化附件选项(value As Integer) As String
+    Private Shared Function 格式化附件选项(value As 预设数据_v6.流控制附件选项) As String
         Select Case value
-            Case 1 : Return "保留附件"
-            Case 2 : Return "清除附件"
+            Case 预设数据_v6.流控制附件选项.保留附件 : Return "保留附件"
+            Case 预设数据_v6.流控制附件选项.清除附件 : Return "清除附件"
         End Select
-        Return value.ToString(CultureInfo.InvariantCulture)
+        Return 格式化枚举名称(value)
     End Function
 
     Private Shared Function 格式化元数据总览(列表 As 预设数据_v6.元数据单片结构()) As String
@@ -585,7 +599,7 @@ Partial Public Class 预设管理_v6
 
         Dim 支持常规附件 = 输出容器支持附件(a, 输出占位符)
         Dim 支持附加封面图 = 输出容器支持附加封面图(a, 输出占位符)
-        If a.流控制_附件选项 = 1 AndAlso Not 支持常规附件 Then
+        If a.流控制_附件选项 = 预设数据_v6.流控制附件选项.保留附件 AndAlso Not 支持常规附件 Then
             添加总览文本行(sb, "警告：当前输出容器不支持常规附件，保留附件不会写入命令")
         End If
 

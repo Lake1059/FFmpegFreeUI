@@ -165,6 +165,10 @@ Module Module1
         .Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping
     }
 
+    Sub New()
+        JsonSO.Converters.Add(New System.Text.Json.Serialization.JsonStringEnumConverter())
+    End Sub
+
     Public Sub 设置富文本框行高(RichTextBoxObject As Control, LineHeight As Integer)
         Dim fmt As New PARAFORMAT2()
         fmt.cbSize = Marshal.SizeOf(fmt)

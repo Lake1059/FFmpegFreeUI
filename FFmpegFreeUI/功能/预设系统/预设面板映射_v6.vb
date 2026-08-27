@@ -243,6 +243,94 @@ Partial Public Class 预设管理_v6
         Return False
     End Function
 
+    Private Shared Function 字幕流操作文本到枚举(value As String) As 预设数据_v6.流控制字幕操作
+        Select Case If(value, "").Trim().ToLowerInvariant()
+            Case "复制流", "copy"
+                Return 预设数据_v6.流控制字幕操作.复制流
+            Case "转为 mov_text", "转为 mov_text 编码", "mov_text"
+                Return 预设数据_v6.流控制字幕操作.转为_mov_text
+            Case "转为 srt", "转为 srt 编码", "srt"
+                Return 预设数据_v6.流控制字幕操作.转为_srt
+            Case "转为 ass", "转为 ass 编码", "ass"
+                Return 预设数据_v6.流控制字幕操作.转为_ass
+            Case "转为 ssa", "转为 ssa 编码", "ssa"
+                Return 预设数据_v6.流控制字幕操作.转为_ssa
+            Case Else
+                Return 预设数据_v6.流控制字幕操作.未选择
+        End Select
+    End Function
+
+    Private Shared Function 元数据选项文本到枚举(value As String) As 预设数据_v6.流控制元数据选项
+        Select Case If(value, "").Trim()
+            Case "保留元数据"
+                Return 预设数据_v6.流控制元数据选项.保留元数据
+            Case "清除元数据"
+                Return 预设数据_v6.流控制元数据选项.清除元数据
+            Case "保留更多元数据", "清除更多元数据"
+                Return 预设数据_v6.流控制元数据选项.保留更多元数据
+            Case Else
+                Return 预设数据_v6.流控制元数据选项.未选择
+        End Select
+    End Function
+
+    Private Shared Function 章节选项文本到枚举(value As String) As 预设数据_v6.流控制章节选项
+        Select Case If(value, "").Trim()
+            Case "保留章节"
+                Return 预设数据_v6.流控制章节选项.保留章节
+            Case "清除章节"
+                Return 预设数据_v6.流控制章节选项.清除章节
+            Case Else
+                Return 预设数据_v6.流控制章节选项.未选择
+        End Select
+    End Function
+
+    Private Shared Function 附件选项文本到枚举(value As String) As 预设数据_v6.流控制附件选项
+        Select Case If(value, "").Trim()
+            Case "保留附件"
+                Return 预设数据_v6.流控制附件选项.保留附件
+            Case "清除附件"
+                Return 预设数据_v6.流控制附件选项.清除附件
+            Case Else
+                Return 预设数据_v6.流控制附件选项.未选择
+        End Select
+    End Function
+
+    Private Shared Function 字幕流操作ToSelectedIndex(value As 预设数据_v6.流控制字幕操作) As Integer
+        Select Case value
+            Case 预设数据_v6.流控制字幕操作.复制流 : Return 1
+            Case 预设数据_v6.流控制字幕操作.转为_mov_text : Return 2
+            Case 预设数据_v6.流控制字幕操作.转为_srt : Return 3
+            Case 预设数据_v6.流控制字幕操作.转为_ass : Return 4
+            Case 预设数据_v6.流控制字幕操作.转为_ssa : Return 5
+            Case Else : Return 0
+        End Select
+    End Function
+
+    Private Shared Function 元数据选项ToSelectedIndex(value As 预设数据_v6.流控制元数据选项) As Integer
+        Select Case value
+            Case 预设数据_v6.流控制元数据选项.保留元数据 : Return 1
+            Case 预设数据_v6.流控制元数据选项.清除元数据 : Return 2
+            Case 预设数据_v6.流控制元数据选项.保留更多元数据 : Return 3
+            Case Else : Return 0
+        End Select
+    End Function
+
+    Private Shared Function 章节选项ToSelectedIndex(value As 预设数据_v6.流控制章节选项) As Integer
+        Select Case value
+            Case 预设数据_v6.流控制章节选项.保留章节 : Return 1
+            Case 预设数据_v6.流控制章节选项.清除章节 : Return 2
+            Case Else : Return 0
+        End Select
+    End Function
+
+    Private Shared Function 附件选项ToSelectedIndex(value As 预设数据_v6.流控制附件选项) As Integer
+        Select Case value
+            Case 预设数据_v6.流控制附件选项.保留附件 : Return 1
+            Case 预设数据_v6.流控制附件选项.清除附件 : Return 2
+            Case Else : Return 0
+        End Select
+    End Function
+
     Private Shared Sub 储存画面帧(a As 预设数据_v6, ui As Form_v6_参数面板)
         With ui.私有界面_画面帧
             a.视频参数_分辨率 = .MCB_直接指定分辨率.Text
@@ -729,15 +817,15 @@ Partial Public Class 预设管理_v6
             a.流控制_将音频参数应用于指定流 = SplitTextList(.MTB_音频流选择.Text)
             a.流控制_启用保留其他音频流 = .MCK_保留其他音频流.Checked
             a.流控制_将字幕参数应用于指定流 = SplitTextList(.MTB_字幕流选择.Text)
-            a.流控制_如何操作指定的字幕 = Math.Max(0, .MCB_字幕流操作.SelectedIndex)
+            a.流控制_如何操作指定的字幕 = 字幕流操作文本到枚举(.MCB_字幕流操作.Text)
             a.流控制_启用保留其他字幕流 = .MCK_保留其他字幕流.Checked
             a.流控制_自动混流SRT = .MCK_混流同名SRT字幕.Checked
             a.流控制_自动混流ASS = .MCK_混流同名ASS字幕.Checked
             a.流控制_自动混流SSA = .MCK_混流同名SSA字幕.Checked
             a.流控制_自动混流的字幕转为MOVTEXT = .MCK_字幕转为mov_text.Checked
-            a.流控制_元数据选项 = Math.Max(0, .MCB_元数据选项.SelectedIndex)
-            a.流控制_章节选项 = Math.Max(0, .MCB_章节选项.SelectedIndex)
-            a.流控制_附件选项 = Math.Max(0, .MCB_附件选项.SelectedIndex)
+            a.流控制_元数据选项 = 元数据选项文本到枚举(.MCB_元数据选项.Text)
+            a.流控制_章节选项 = 章节选项文本到枚举(.MCB_章节选项.Text)
+            a.流控制_附件选项 = 附件选项文本到枚举(.MCB_附件选项.Text)
         End With
     End Sub
 
@@ -748,15 +836,15 @@ Partial Public Class 预设管理_v6
             .MTB_音频流选择.Text = String.Join(",", a.流控制_将音频参数应用于指定流)
             .MCK_保留其他音频流.Checked = a.流控制_启用保留其他音频流
             .MTB_字幕流选择.Text = String.Join(",", a.流控制_将字幕参数应用于指定流)
-            .MCB_字幕流操作.SelectedIndex = a.流控制_如何操作指定的字幕
+            .MCB_字幕流操作.SelectedIndex = 字幕流操作ToSelectedIndex(a.流控制_如何操作指定的字幕)
             .MCK_保留其他字幕流.Checked = a.流控制_启用保留其他字幕流
             .MCK_混流同名SRT字幕.Checked = a.流控制_自动混流SRT
             .MCK_混流同名ASS字幕.Checked = a.流控制_自动混流ASS
             .MCK_混流同名SSA字幕.Checked = a.流控制_自动混流SSA
             .MCK_字幕转为mov_text.Checked = a.流控制_自动混流的字幕转为MOVTEXT
-            .MCB_元数据选项.SelectedIndex = a.流控制_元数据选项
-            .MCB_章节选项.SelectedIndex = a.流控制_章节选项
-            .MCB_附件选项.SelectedIndex = a.流控制_附件选项
+            .MCB_元数据选项.SelectedIndex = 元数据选项ToSelectedIndex(a.流控制_元数据选项)
+            .MCB_章节选项.SelectedIndex = 章节选项ToSelectedIndex(a.流控制_章节选项)
+            .MCB_附件选项.SelectedIndex = 附件选项ToSelectedIndex(a.流控制_附件选项)
         End With
     End Sub
 

@@ -1,3 +1,12 @@
+﻿#requires -Version 5.1
+
+# 统一 PowerShell 管道、原生程序和文本 cmdlet 的编码。
+$utf8NoBom = [System.Text.UTF8Encoding]::new($false)
+[Console]::InputEncoding = $utf8NoBom
+[Console]::OutputEncoding = $utf8NoBom
+$OutputEncoding = $utf8NoBom
+$PSDefaultParameterValues['*:Encoding'] = 'utf8'
+
 Write-Host "========================================" -ForegroundColor Cyan
 Write-Host "  适用于 FFmpegFreeUI 的输出文件时间戳清理工具" -ForegroundColor Cyan
 Write-Host "========================================" -ForegroundColor Cyan

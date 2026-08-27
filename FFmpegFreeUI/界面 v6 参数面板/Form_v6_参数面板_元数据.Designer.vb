@@ -249,7 +249,7 @@ Partial Class Form_v6_参数面板_元数据
         HCL_元数据说明.Padding = New Padding(0, 0, 0, 5)
         HCL_元数据说明.Size = New Size(824, 30)
         HCL_元数据说明.TabIndex = 10
-        HCL_元数据说明.Text = "<span style=""font-size:13; color:Silver"">元数据</span>   向输出文件中写入自定义元数据，流的元数据请写自定义参数"
+        HCL_元数据说明.Text = "<span style=""font-size:13; color:Silver"">元数据</span>   向输出文件中写入自定义元数据，流的元数据请写自定义参数<br><span style=""font-size:10pt; color:Gray"">值支持通配字符串，例如 &lt;InputFileNameWithOutExtension&gt;、&lt;OutputFile&gt;</span>"
         '
         ' Form_v6_参数面板_元数据
         '

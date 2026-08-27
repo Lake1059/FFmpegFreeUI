@@ -39,7 +39,6 @@ Partial Class FormMain_v6
         Dim ModernTabPage14 As LakeUI.ModernTabListControl.ModernTabPage = New LakeUI.ModernTabListControl.ModernTabPage()
         Dim ModernTabPage15 As LakeUI.ModernTabListControl.ModernTabPage = New LakeUI.ModernTabListControl.ModernTabPage()
         Dim ModernTabPage16 As LakeUI.ModernTabListControl.ModernTabPage = New LakeUI.ModernTabListControl.ModernTabPage()
-        Dim ModernTabPage17 As LakeUI.ModernTabListControl.ModernTabPage = New LakeUI.ModernTabListControl.ModernTabPage()
         ModernTabListControl1 = New LakeUI.ModernTabListControl()
         ModernTextBox1 = New LakeUI.ModernTextBox()
         ThisIsYourWindow1 = New LakeUI.ThisIsYourWindow(components)
@@ -53,24 +52,22 @@ Partial Class FormMain_v6
         ModernTabListControl1.BackColor = Color.Transparent
         ModernTabListControl1.Controls.Add(ModernTextBox1)
         ModernTabListControl1.Dock = DockStyle.Fill
-        ModernTabPage1.IsDescription = True
-        ModernTabPage1.Text = "FFmpegFreeUI"
-        ModernTabPage2.Text = "起始页面"
-        ModernTabPage3.Text = "编码队列"
-        ModernTabPage4.IsSeparator = True
-        ModernTabPage5.Text = "准备文件"
-        ModernTabPage6.Text = "参数面板"
-        ModernTabPage7.Text = "Agent 智能体"
-        ModernTabPage8.Text = "3FUI Studios"
-        ModernTabPage9.IsSeparator = True
-        ModernTabPage10.Text = "ffprobe 媒体信息"
-        ModernTabPage11.Text = "ffplay 调试播放器"
-        ModernTabPage12.Text = "性能监控"
-        ModernTabPage13.Text = "集成工具"
-        ModernTabPage14.IsSeparator = True
-        ModernTabPage15.Text = "软件设置"
-        ModernTabPage16.Text = "支持者"
-        ModernTabPage17.IsSeparator = True
+        ModernTabPage1.Text = "起始页面"
+        ModernTabPage2.Text = "编码队列"
+        ModernTabPage3.IsSeparator = True
+        ModernTabPage4.Text = "准备文件"
+        ModernTabPage5.Text = "参数面板"
+        ModernTabPage6.Text = "Agent 智能体"
+        ModernTabPage7.Text = "3FUI Studios"
+        ModernTabPage8.IsSeparator = True
+        ModernTabPage9.Text = "ffprobe 媒体信息"
+        ModernTabPage10.Text = "ffplay 调试播放器"
+        ModernTabPage11.Text = "性能监控"
+        ModernTabPage12.Text = "集成工具"
+        ModernTabPage13.IsSeparator = True
+        ModernTabPage14.Text = "软件设置"
+        ModernTabPage15.Text = "支持者"
+        ModernTabPage16.IsSeparator = True
         ModernTabListControl1.Items.Add(ModernTabPage1)
         ModernTabListControl1.Items.Add(ModernTabPage2)
         ModernTabListControl1.Items.Add(ModernTabPage3)
@@ -87,7 +84,6 @@ Partial Class FormMain_v6
         ModernTabListControl1.Items.Add(ModernTabPage14)
         ModernTabListControl1.Items.Add(ModernTabPage15)
         ModernTabListControl1.Items.Add(ModernTabPage16)
-        ModernTabListControl1.Items.Add(ModernTabPage17)
         ModernTabListControl1.Location = New Point(0, 0)
         ModernTabListControl1.Name = "ModernTabListControl1"
         ModernTabListControl1.ScrollBarThumbColor = Color.FromArgb(CByte(40), CByte(200), CByte(200), CByte(200))

@@ -135,7 +135,7 @@ Public Class 开发者内置预设_v6
         M4A_HDAudio.音频参数_编码器_代号 = "aac.fdk"
         M4A_HDAudio.音频参数_质量参数名 = "-vbr"
         M4A_HDAudio.音频参数_质量值 = "5"
-        M4A_HDAudio.流控制_元数据选项 = 1
+        M4A_HDAudio.流控制_元数据选项 = 预设数据_v6.流控制元数据选项.保留元数据
         result.Add(New 预设项("FDK AAC 压制音频到 M4A", M4A_HDAudio))
 
         Dim AVIF_AOMAV1 As New 预设数据_v6

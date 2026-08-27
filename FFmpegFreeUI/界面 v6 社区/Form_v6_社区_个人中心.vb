@@ -1,6 +1,6 @@
 ﻿Public Class Form_v6_社区_个人中心
     Private Sub Form_v6_社区_个人中心_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        Me.MarkDownViewer1.Text = "3FUI Studios 是 3FUI 开发者联合群内团队建立的成果共享平台，其面向所有国内用户提供，整合了预设分享和压片成果分享，全平台纯公益经营，无任何收费项目；同时由于我们处于国内，因此审核力度将非常大。
+        Me.MDV_社区准则.Text = "3FUI Studios 是 3FUI 开发者联合群内团队建立的成果共享平台，其面向所有国内用户提供，整合了预设分享和压片成果分享，全平台纯公益经营，无任何收费项目；同时由于我们处于国内，因此审核力度将非常大。
 
 ### 社区准则
 登录即代表同意所有规则！
@@ -19,7 +19,7 @@
 + 音视频成果仅支持国内部分云盘发布，且全部由人工进行基础审核，禁止使用压缩包、改后缀、文件头数据等手段规避检查，任何试图规避检查的行为一旦发现直接封号处理
 "
 
-        Me.MarkDownViewer2.Text = "
+        Me.MDV_活动信息.Text = "
 ### 无可用活动
 当前没有正在进行的活动
 "
@@ -28,14 +28,14 @@
     Private Sub Form_v6_社区_个人中心_SizeChanged(sender As Object, e As EventArgs) Handles Me.SizeChanged
         Panel6.Width = Me.Width * 0.4
 
-        MB_登录.Height = (Panel4.Height - 10 * (Me.DeviceDpi / 96)) / 2
-        MB_登出.Height = MB_登录.Height
+        MB_登录和登出.Height = (Panel4.Height - 10 * (Me.DeviceDpi / 96)) / 2
+        MB_账户管理页面.Height = MB_登录和登出.Height
 
-        HtmlColorLabel3.Width = (ModernPanel4.Width - ModernPanel4.Padding.Left - ModernPanel4.Padding.Right - JustEmptyControl5.Width * 5) / 5
-        HtmlColorLabel4.Width = HtmlColorLabel3.Width
-        HtmlColorLabel5.Width = HtmlColorLabel3.Width
-        HtmlColorLabel6.Width = HtmlColorLabel3.Width
-        HtmlColorLabel7.Width = HtmlColorLabel3.Width
+        HCL_发布数量.Width = (ModernPanel4.Width - ModernPanel4.Padding.Left - ModernPanel4.Padding.Right - JustEmptyControl5.Width * 5) / 5
+        HCL_我的收藏.Width = HCL_发布数量.Width
+        HCL_获赞数.Width = HCL_发布数量.Width
+        HCL_获得评论.Width = HCL_发布数量.Width
+        HCL_经验值.Width = HCL_发布数量.Width
 
         MB_浏览社区内容.Width = (Panel1.Width - JustEmptyControl14.Width - JustEmptyControl11.Width) / 3
         MB_管理我的内容.Width = MB_浏览社区内容.Width

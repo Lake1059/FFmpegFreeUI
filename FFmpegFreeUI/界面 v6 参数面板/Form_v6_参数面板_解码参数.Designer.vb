@@ -47,9 +47,9 @@ Partial Class Form_v6_参数面板_解码参数
         Panel5.SuspendLayout()
         Panel1.SuspendLayout()
         SuspendLayout()
-        '
+        ' 
         ' ModernPanel1
-        '
+        ' 
         ModernPanel1.BackColor1 = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         ModernPanel1.BorderSize = 0
         ModernPanel1.Controls.Add(Panel4)
@@ -70,19 +70,19 @@ Partial Class Form_v6_参数面板_解码参数
         ModernPanel1.ScrollBarMode = LakeUI.ModernPanel.ScrollMode.Vertical
         ModernPanel1.Size = New Size(753, 623)
         ModernPanel1.TabIndex = 0
-        '
+        ' 
         ' Panel4
-        '
+        ' 
         Panel4.Controls.Add(MTB_硬件解码设备参数值)
         Panel4.Dock = DockStyle.Top
-        Panel4.Location = New Point(20, 420)
+        Panel4.Location = New Point(20, 404)
         Panel4.Name = "Panel4"
         Panel4.Padding = New Padding(0, 10, 0, 0)
         Panel4.Size = New Size(713, 42)
         Panel4.TabIndex = 24
-        '
+        ' 
         ' MTB_硬件解码设备参数值
-        '
+        ' 
         MTB_硬件解码设备参数值.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MTB_硬件解码设备参数值.BorderColor = Color.Transparent
         MTB_硬件解码设备参数值.BorderColorFocus = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
@@ -98,19 +98,19 @@ Partial Class Form_v6_参数面板_解码参数
         MTB_硬件解码设备参数值.TabIndex = 4
         MTB_硬件解码设备参数值.WaterText = "?"
         MTB_硬件解码设备参数值.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        '
+        ' 
         ' Panel3
-        '
+        ' 
         Panel3.Controls.Add(MCB_硬件解码设备参数名)
         Panel3.Dock = DockStyle.Top
-        Panel3.Location = New Point(20, 378)
+        Panel3.Location = New Point(20, 362)
         Panel3.Name = "Panel3"
         Panel3.Padding = New Padding(0, 10, 0, 0)
         Panel3.Size = New Size(713, 42)
         Panel3.TabIndex = 23
-        '
+        ' 
         ' MCB_硬件解码设备参数名
-        '
+        ' 
         MCB_硬件解码设备参数名.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_硬件解码设备参数名.BorderRadius = 10
         MCB_硬件解码设备参数名.BorderSize = 0
@@ -141,33 +141,33 @@ Partial Class Form_v6_参数面板_解码参数
         MCB_硬件解码设备参数名.ToolTipPadding = New Padding(15)
         MCB_硬件解码设备参数名.WaterText = "选择参数"
         MCB_硬件解码设备参数名.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        '
+        ' 
         ' HCL_硬件解码设备标题
-        '
+        ' 
         HCL_硬件解码设备标题.AutoSize = True
         HCL_硬件解码设备标题.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HCL_硬件解码设备标题.Dock = DockStyle.Top
         HCL_硬件解码设备标题.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        HCL_硬件解码设备标题.Location = New Point(20, 328)
+        HCL_硬件解码设备标题.Location = New Point(20, 314)
         HCL_硬件解码设备标题.Margin = New Padding(2)
         HCL_硬件解码设备标题.Name = "HCL_硬件解码设备标题"
         HCL_硬件解码设备标题.Padding = New Padding(0, 20, 0, 5)
-        HCL_硬件解码设备标题.Size = New Size(713, 50)
+        HCL_硬件解码设备标题.Size = New Size(713, 48)
         HCL_硬件解码设备标题.TabIndex = 22
         HCL_硬件解码设备标题.Text = "<span style=""font-size:13; color:Silver"">硬件加速解码设备</span>   如果安装了多张同品牌显卡可以指定卡，不一定有效"
-        '
+        ' 
         ' Panel2
-        '
+        ' 
         Panel2.Controls.Add(MCB_硬件解码输出格式)
         Panel2.Dock = DockStyle.Top
-        Panel2.Location = New Point(20, 286)
+        Panel2.Location = New Point(20, 272)
         Panel2.Name = "Panel2"
         Panel2.Padding = New Padding(0, 10, 0, 0)
         Panel2.Size = New Size(713, 42)
         Panel2.TabIndex = 21
-        '
+        ' 
         ' MCB_硬件解码输出格式
-        '
+        ' 
         MCB_硬件解码输出格式.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_硬件解码输出格式.BorderRadius = 10
         MCB_硬件解码输出格式.BorderSize = 0
@@ -187,6 +187,7 @@ Partial Class Form_v6_参数面板_解码参数
         MCB_硬件解码输出格式.Items.Add("yuv420p")
         MCB_硬件解码输出格式.Items.Add("p010")
         MCB_硬件解码输出格式.Items.Add("d3d11")
+        MCB_硬件解码输出格式.Items.Add("cuda")
         MCB_硬件解码输出格式.Location = New Point(0, 10)
         MCB_硬件解码输出格式.Margin = New Padding(2, 2, 2, 2)
         MCB_硬件解码输出格式.Name = "MCB_硬件解码输出格式"
@@ -199,47 +200,47 @@ Partial Class Form_v6_参数面板_解码参数
         MCB_硬件解码输出格式.ToolTipPadding = New Padding(15)
         MCB_硬件解码输出格式.WaterText = "-hwaccel_output_format"
         MCB_硬件解码输出格式.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        '
+        ' 
         ' HCL_解码数据格式提示
-        '
+        ' 
         HCL_解码数据格式提示.AutoSize = True
         HCL_解码数据格式提示.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HCL_解码数据格式提示.Dock = DockStyle.Top
         HCL_解码数据格式提示.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        HCL_解码数据格式提示.Location = New Point(20, 260)
+        HCL_解码数据格式提示.Location = New Point(20, 250)
         HCL_解码数据格式提示.Margin = New Padding(2)
         HCL_解码数据格式提示.Name = "HCL_解码数据格式提示"
         HCL_解码数据格式提示.Padding = New Padding(0, 0, 0, 5)
-        HCL_解码数据格式提示.Size = New Size(713, 26)
+        HCL_解码数据格式提示.Size = New Size(713, 22)
         HCL_解码数据格式提示.TabIndex = 20
         HCL_解码数据格式提示.Text = "比如 <span style=""color:CornflowerBlue"">I卡解码</span> + <span style=""color:YellowGreen"">N卡编码</span> 这样的情况，出问题再考虑！"
-        '
+        ' 
         ' HCL_解码数据格式标题
-        '
+        ' 
         HCL_解码数据格式标题.AutoSize = True
         HCL_解码数据格式标题.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HCL_解码数据格式标题.Dock = DockStyle.Top
         HCL_解码数据格式标题.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        HCL_解码数据格式标题.Location = New Point(20, 210)
+        HCL_解码数据格式标题.Location = New Point(20, 202)
         HCL_解码数据格式标题.Margin = New Padding(2)
         HCL_解码数据格式标题.Name = "HCL_解码数据格式标题"
         HCL_解码数据格式标题.Padding = New Padding(0, 20, 0, 5)
-        HCL_解码数据格式标题.Size = New Size(713, 50)
+        HCL_解码数据格式标题.Size = New Size(713, 48)
         HCL_解码数据格式标题.TabIndex = 19
         HCL_解码数据格式标题.Text = "<span style=""font-size:13; color:Silver"">解码数据格式</span>   编解码都是 CPU 不需要考虑，通常没必要指定"
-        '
+        ' 
         ' Panel5
-        '
+        ' 
         Panel5.Controls.Add(MTB_CPU解码线程数)
         Panel5.Dock = DockStyle.Top
-        Panel5.Location = New Point(20, 168)
+        Panel5.Location = New Point(20, 160)
         Panel5.Name = "Panel5"
         Panel5.Padding = New Padding(0, 10, 0, 0)
         Panel5.Size = New Size(713, 42)
         Panel5.TabIndex = 18
-        '
+        ' 
         ' MTB_CPU解码线程数
-        '
+        ' 
         MTB_CPU解码线程数.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MTB_CPU解码线程数.BorderColor = Color.Transparent
         MTB_CPU解码线程数.BorderColorFocus = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
@@ -255,33 +256,33 @@ Partial Class Form_v6_参数面板_解码参数
         MTB_CPU解码线程数.TabIndex = 4
         MTB_CPU解码线程数.WaterText = "-threads"
         MTB_CPU解码线程数.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        '
+        ' 
         ' HCL_CPU解码线程数说明
-        '
+        ' 
         HCL_CPU解码线程数说明.AutoSize = True
         HCL_CPU解码线程数说明.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HCL_CPU解码线程数说明.Dock = DockStyle.Top
         HCL_CPU解码线程数说明.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        HCL_CPU解码线程数说明.Location = New Point(20, 118)
+        HCL_CPU解码线程数说明.Location = New Point(20, 112)
         HCL_CPU解码线程数说明.Margin = New Padding(2)
         HCL_CPU解码线程数说明.Name = "HCL_CPU解码线程数说明"
         HCL_CPU解码线程数说明.Padding = New Padding(0, 20, 0, 5)
-        HCL_CPU解码线程数说明.Size = New Size(713, 50)
+        HCL_CPU解码线程数说明.Size = New Size(713, 48)
         HCL_CPU解码线程数说明.TabIndex = 17
         HCL_CPU解码线程数说明.Text = "<span style=""font-size:13; color:Silver"">CPU 解码线程数</span>   不一定有效，通常没必要指定"
-        '
+        ' 
         ' Panel1
-        '
+        ' 
         Panel1.Controls.Add(MCB_硬件加速解码方式)
         Panel1.Dock = DockStyle.Top
-        Panel1.Location = New Point(20, 76)
+        Panel1.Location = New Point(20, 70)
         Panel1.Name = "Panel1"
         Panel1.Padding = New Padding(0, 10, 0, 0)
         Panel1.Size = New Size(713, 42)
         Panel1.TabIndex = 16
-        '
+        ' 
         ' MCB_硬件加速解码方式
-        '
+        ' 
         MCB_硬件加速解码方式.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_硬件加速解码方式.BorderRadius = 10
         MCB_硬件加速解码方式.BorderSize = 0
@@ -318,23 +319,23 @@ Partial Class Form_v6_参数面板_解码参数
         MCB_硬件加速解码方式.ToolTipPadding = New Padding(15)
         MCB_硬件加速解码方式.WaterText = "-hwaccel"
         MCB_硬件加速解码方式.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        '
+        ' 
         ' HCL_硬件加速解码说明
-        '
+        ' 
         HCL_硬件加速解码说明.AutoSize = True
         HCL_硬件加速解码说明.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HCL_硬件加速解码说明.Dock = DockStyle.Top
         HCL_硬件加速解码说明.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        HCL_硬件加速解码说明.Location = New Point(20, 50)
+        HCL_硬件加速解码说明.Location = New Point(20, 48)
         HCL_硬件加速解码说明.Margin = New Padding(2)
         HCL_硬件加速解码说明.Name = "HCL_硬件加速解码说明"
         HCL_硬件加速解码说明.Padding = New Padding(0, 0, 0, 5)
-        HCL_硬件加速解码说明.Size = New Size(713, 26)
+        HCL_硬件加速解码说明.Size = New Size(713, 22)
         HCL_硬件加速解码说明.TabIndex = 15
         HCL_硬件加速解码说明.Text = resources.GetString("HCL_硬件加速解码说明.Text")
-        '
+        ' 
         ' HCL_解码器标题
-        '
+        ' 
         HCL_解码器标题.AutoSize = True
         HCL_解码器标题.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HCL_解码器标题.Dock = DockStyle.Top
@@ -343,12 +344,12 @@ Partial Class Form_v6_参数面板_解码参数
         HCL_解码器标题.Margin = New Padding(2)
         HCL_解码器标题.Name = "HCL_解码器标题"
         HCL_解码器标题.Padding = New Padding(0, 0, 0, 5)
-        HCL_解码器标题.Size = New Size(713, 30)
+        HCL_解码器标题.Size = New Size(713, 28)
         HCL_解码器标题.TabIndex = 14
         HCL_解码器标题.Text = "<span style=""font-size:13; color:Silver"">解码器</span>   本页如果不知道选什么就不要选   <span style=""color:Orange"">总有人他非要选然后跑不起来还死磕</span>"
-        '
+        ' 
         ' Form_v6_参数面板_解码参数
-        '
+        ' 
         AutoScaleDimensions = New SizeF(96F, 96F)
         AutoScaleMode = AutoScaleMode.Dpi
         BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
