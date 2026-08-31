@@ -23,38 +23,73 @@ Partial Class Form_v6_设置_功能设定
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         ModernPanel1 = New LakeUI.ModernPanel()
-        Panel8 = New Panel()
+        ModernPanel1.BackColor = Color.Transparent
+        ModernPanel1.BackColor1 = Color.Transparent
+        Panel8 = New LakeUI.ModernPanel()
+        Panel8.BackColor = Color.Transparent
+        Panel8.BackColor1 = Color.Transparent
+        Panel8.BorderSize = 0
         HtmlColorLabel8 = New LakeUI.HtmlColorLabel()
         MCB_任务失败删除文件 = New LakeUI.ModernComboBox()
-        Panel10 = New Panel()
+        Panel10 = New LakeUI.ModernPanel()
+        Panel10.BackColor = Color.Transparent
+        Panel10.BackColor1 = Color.Transparent
+        Panel10.BorderSize = 0
         HtmlColorLabel10 = New LakeUI.HtmlColorLabel()
         MCB_任务日志保留行数 = New LakeUI.ModernComboBox()
-        Panel11 = New Panel()
+        Panel11 = New LakeUI.ModernPanel()
+        Panel11.BackColor = Color.Transparent
+        Panel11.BackColor1 = Color.Transparent
+        Panel11.BorderSize = 0
         HtmlColorLabel11 = New LakeUI.HtmlColorLabel()
         MCB_任务日志性能计数器 = New LakeUI.ModernComboBox()
-        Panel9 = New Panel()
+        Panel9 = New LakeUI.ModernPanel()
+        Panel9.BackColor = Color.Transparent
+        Panel9.BackColor1 = Color.Transparent
+        Panel9.BorderSize = 0
         HtmlColorLabel9 = New LakeUI.HtmlColorLabel()
         MCB_编码队列显示最新日志行 = New LakeUI.ModernComboBox()
-        Panel7 = New Panel()
+        Panel7 = New LakeUI.ModernPanel()
+        Panel7.BackColor = Color.Transparent
+        Panel7.BackColor1 = Color.Transparent
+        Panel7.BorderSize = 0
         HtmlColorLabel7 = New LakeUI.HtmlColorLabel()
         MCB_独立参数面板自动切预设管理 = New LakeUI.ModernComboBox()
-        Panel6 = New Panel()
+        Panel6 = New LakeUI.ModernPanel()
+        Panel6.BackColor = Color.Transparent
+        Panel6.BackColor1 = Color.Transparent
+        Panel6.BorderSize = 0
         HtmlColorLabel6 = New LakeUI.HtmlColorLabel()
         MCB_任务名称混淆 = New LakeUI.ModernComboBox()
-        Panel5 = New Panel()
+        Panel5 = New LakeUI.ModernPanel()
+        Panel5.BackColor = Color.Transparent
+        Panel5.BackColor1 = Color.Transparent
+        Panel5.BorderSize = 0
         HtmlColorLabel5 = New LakeUI.HtmlColorLabel()
         MCB_是否自动重置参数面板到第一个页面 = New LakeUI.ModernComboBox()
-        Panel4 = New Panel()
+        Panel4 = New LakeUI.ModernPanel()
+        Panel4.BackColor = Color.Transparent
+        Panel4.BackColor1 = Color.Transparent
+        Panel4.BorderSize = 0
         HtmlColorLabel4 = New LakeUI.HtmlColorLabel()
         MCB_是否自动开始任务 = New LakeUI.ModernComboBox()
-        Panel3 = New Panel()
+        Panel3 = New LakeUI.ModernPanel()
+        Panel3.BackColor = Color.Transparent
+        Panel3.BackColor1 = Color.Transparent
+        Panel3.BorderSize = 0
         HtmlColorLabel3 = New LakeUI.HtmlColorLabel()
         MCB_是否启用提示音 = New LakeUI.ModernComboBox()
-        Panel1 = New Panel()
+        Panel1 = New LakeUI.ModernPanel()
+        Panel1.BackColor = Color.Transparent
+        Panel1.BackColor1 = Color.Transparent
+        Panel1.BorderSize = 0
         HtmlColorLabel2 = New LakeUI.HtmlColorLabel()
         MCB_有任务时系统状态 = New LakeUI.ModernComboBox()
         JustEmptyControl1 = New LakeUI.JustEmptyControl()
-        Panel2 = New Panel()
+        Panel2 = New LakeUI.ModernPanel()
+        Panel2.BackColor = Color.Transparent
+        Panel2.BackColor1 = Color.Transparent
+        Panel2.BorderSize = 0
         MTB_工作目录 = New LakeUI.ModernTextBox()
         JustEmptyControl2 = New LakeUI.JustEmptyControl()
         MB_浏览文件夹 = New LakeUI.ModernButton()
@@ -75,7 +110,6 @@ Partial Class Form_v6_设置_功能设定
         '
         ' ModernPanel1
         '
-        ModernPanel1.BackColor1 = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         ModernPanel1.BorderSize = 0
         ModernPanel1.Controls.Add(Panel11)
         ModernPanel1.Controls.Add(Panel10)
@@ -751,26 +785,26 @@ Partial Class Form_v6_设置_功能设定
     End Sub
 
     Friend WithEvents ModernPanel1 As LakeUI.ModernPanel
-    Friend WithEvents Panel3 As Panel
+    Friend WithEvents Panel3 As LakeUI.ModernPanel
     Friend WithEvents MCB_是否启用提示音 As LakeUI.ModernComboBox
-    Friend WithEvents Panel1 As Panel
+    Friend WithEvents Panel1 As LakeUI.ModernPanel
     Friend WithEvents MCB_有任务时系统状态 As LakeUI.ModernComboBox
-    Friend WithEvents Panel2 As Panel
-    Friend WithEvents Panel7 As Panel
+    Friend WithEvents Panel2 As LakeUI.ModernPanel
+    Friend WithEvents Panel7 As LakeUI.ModernPanel
     Friend WithEvents MCB_独立参数面板自动切预设管理 As LakeUI.ModernComboBox
-    Friend WithEvents Panel6 As Panel
+    Friend WithEvents Panel6 As LakeUI.ModernPanel
     Friend WithEvents MCB_任务名称混淆 As LakeUI.ModernComboBox
-    Friend WithEvents Panel5 As Panel
+    Friend WithEvents Panel5 As LakeUI.ModernPanel
     Friend WithEvents MCB_是否自动重置参数面板到第一个页面 As LakeUI.ModernComboBox
-    Friend WithEvents Panel4 As Panel
+    Friend WithEvents Panel4 As LakeUI.ModernPanel
     Friend WithEvents MCB_是否自动开始任务 As LakeUI.ModernComboBox
-    Friend WithEvents Panel8 As Panel
+    Friend WithEvents Panel8 As LakeUI.ModernPanel
     Friend WithEvents MCB_任务失败删除文件 As LakeUI.ModernComboBox
-    Friend WithEvents Panel10 As Panel
+    Friend WithEvents Panel10 As LakeUI.ModernPanel
     Friend WithEvents MCB_任务日志保留行数 As LakeUI.ModernComboBox
-    Friend WithEvents Panel11 As Panel
+    Friend WithEvents Panel11 As LakeUI.ModernPanel
     Friend WithEvents MCB_任务日志性能计数器 As LakeUI.ModernComboBox
-    Friend WithEvents Panel9 As Panel
+    Friend WithEvents Panel9 As LakeUI.ModernPanel
     Friend WithEvents MCB_编码队列显示最新日志行 As LakeUI.ModernComboBox
     Friend WithEvents HtmlColorLabel1 As LakeUI.HtmlColorLabel
     Friend WithEvents HtmlColorLabel10 As LakeUI.HtmlColorLabel

@@ -29,8 +29,13 @@ Partial Class Form_v6_集成工具_混流
         Dim ListColumn5 As LakeUI.UltraDetailListView.ListColumn = New LakeUI.UltraDetailListView.ListColumn()
         Dim ListColumn6 As LakeUI.UltraDetailListView.ListColumn = New LakeUI.UltraDetailListView.ListColumn()
         ModernPanel1 = New LakeUI.ModernPanel()
+        ModernPanel1.BackColor = Color.Transparent
+        ModernPanel1.BackColor1 = Color.Transparent
         UltraDetailListView1 = New LakeUI.UltraDetailListView()
-        Panel4 = New Panel()
+        Panel4 = New LakeUI.ModernPanel()
+        Panel4.BackColor = Color.Transparent
+        Panel4.BackColor1 = Color.Transparent
+        Panel4.BorderSize = 0
         MTB_字幕流索引 = New LakeUI.ModernTextBox()
         HtmlColorLabel5 = New LakeUI.HtmlColorLabel()
         MTB_音频流索引 = New LakeUI.ModernTextBox()
@@ -38,19 +43,28 @@ Partial Class Form_v6_集成工具_混流
         MTB_视频流索引 = New LakeUI.ModernTextBox()
         HtmlColorLabel3 = New LakeUI.HtmlColorLabel()
         JustEmptyControl8 = New LakeUI.JustEmptyControl()
-        Panel3 = New Panel()
+        Panel3 = New LakeUI.ModernPanel()
+        Panel3.BackColor = Color.Transparent
+        Panel3.BackColor1 = Color.Transparent
+        Panel3.BorderSize = 0
         HtmlColorLabel7 = New LakeUI.HtmlColorLabel()
         MCB_使用此文件的元数据 = New LakeUI.ModernCheckBox()
         MCB_使用此文件的章节 = New LakeUI.ModernCheckBox()
         HtmlColorLabel6 = New LakeUI.HtmlColorLabel()
         JustEmptyControl7 = New LakeUI.JustEmptyControl()
-        Panel2 = New Panel()
+        Panel2 = New LakeUI.ModernPanel()
+        Panel2.BackColor = Color.Transparent
+        Panel2.BackColor1 = Color.Transparent
+        Panel2.BorderSize = 0
         MTB_输出目标文件 = New LakeUI.ModernTextBox()
         JustEmptyControl5 = New LakeUI.JustEmptyControl()
         JustEmptyControl6 = New LakeUI.JustEmptyControl()
         MB_选择位置 = New LakeUI.ModernButton()
         MB_启动合并 = New LakeUI.ModernButton()
-        Panel1 = New Panel()
+        Panel1 = New LakeUI.ModernPanel()
+        Panel1.BackColor = Color.Transparent
+        Panel1.BackColor1 = Color.Transparent
+        Panel1.BorderSize = 0
         HtmlColorLabel2 = New LakeUI.HtmlColorLabel()
         MB_移除全部 = New LakeUI.ModernButton()
         JustEmptyControl4 = New LakeUI.JustEmptyControl()
@@ -71,7 +85,6 @@ Partial Class Form_v6_集成工具_混流
         '
         ' ModernPanel1
         '
-        ModernPanel1.BackColor1 = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         ModernPanel1.BorderSize = 0
         ModernPanel1.Controls.Add(UltraDetailListView1)
         ModernPanel1.Controls.Add(Panel4)
@@ -589,7 +602,7 @@ Partial Class Form_v6_集成工具_混流
     End Sub
 
     Friend WithEvents ModernPanel1 As LakeUI.ModernPanel
-    Friend WithEvents Panel1 As Panel
+    Friend WithEvents Panel1 As LakeUI.ModernPanel
     Friend WithEvents HtmlColorLabel2 As LakeUI.HtmlColorLabel
     Friend WithEvents MB_移除全部 As LakeUI.ModernButton
     Friend WithEvents JustEmptyControl4 As LakeUI.JustEmptyControl
@@ -601,15 +614,15 @@ Partial Class Form_v6_集成工具_混流
     Friend WithEvents JustEmptyControl1 As LakeUI.JustEmptyControl
     Friend WithEvents MB_添加文件 As LakeUI.ModernButton
     Friend WithEvents HtmlColorLabel1 As LakeUI.HtmlColorLabel
-    Friend WithEvents Panel2 As Panel
+    Friend WithEvents Panel2 As LakeUI.ModernPanel
     Friend WithEvents MTB_输出目标文件 As LakeUI.ModernTextBox
     Friend WithEvents JustEmptyControl5 As LakeUI.JustEmptyControl
     Friend WithEvents JustEmptyControl6 As LakeUI.JustEmptyControl
     Friend WithEvents MB_选择位置 As LakeUI.ModernButton
     Friend WithEvents MB_启动合并 As LakeUI.ModernButton
-    Friend WithEvents Panel4 As Panel
+    Friend WithEvents Panel4 As LakeUI.ModernPanel
     Friend WithEvents JustEmptyControl8 As LakeUI.JustEmptyControl
-    Friend WithEvents Panel3 As Panel
+    Friend WithEvents Panel3 As LakeUI.ModernPanel
     Friend WithEvents JustEmptyControl7 As LakeUI.JustEmptyControl
     Friend WithEvents UltraDetailListView1 As LakeUI.UltraDetailListView
     Friend WithEvents MTB_音频流索引 As LakeUI.ModernTextBox

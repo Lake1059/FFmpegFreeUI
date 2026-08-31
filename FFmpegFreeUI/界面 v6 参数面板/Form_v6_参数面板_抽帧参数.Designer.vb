@@ -23,28 +23,51 @@ Partial Class Form_v6_参数面板_抽帧参数
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         ModernPanel1 = New LakeUI.ModernPanel()
-        Panel7 = New Panel()
-        Panel5 = New Panel()
+        ModernPanel1.BackColor = Color.Transparent
+        ModernPanel1.BackColor1 = Color.Transparent
+        Panel7 = New LakeUI.ModernPanel()
+        Panel7.BackColor = Color.Transparent
+        Panel7.BackColor1 = Color.Transparent
+        Panel7.BorderSize = 0
+        Panel5 = New LakeUI.ModernPanel()
+        Panel5.BackColor = Color.Transparent
+        Panel5.BackColor1 = Color.Transparent
+        Panel5.BorderSize = 0
         MTB_最大变化占比 = New LakeUI.ModernTextBox()
         HCL_最大变化占比说明 = New LakeUI.HtmlColorLabel()
         HCL_最大变化占比标签 = New LakeUI.HtmlColorLabel()
-        Panel4 = New Panel()
+        Panel4 = New LakeUI.ModernPanel()
+        Panel4.BackColor = Color.Transparent
+        Panel4.BackColor1 = Color.Transparent
+        Panel4.BorderSize = 0
         MCB_低阈值 = New LakeUI.ModernComboBox()
         HCL_低阈值说明 = New LakeUI.HtmlColorLabel()
         HCL_低阈值标签 = New LakeUI.HtmlColorLabel()
-        Panel3 = New Panel()
+        Panel3 = New LakeUI.ModernPanel()
+        Panel3.BackColor = Color.Transparent
+        Panel3.BackColor1 = Color.Transparent
+        Panel3.BorderSize = 0
         MCB_高阈值 = New LakeUI.ModernComboBox()
         HCL_高阈值说明 = New LakeUI.HtmlColorLabel()
         HCL_高阈值标签 = New LakeUI.HtmlColorLabel()
         HCL_帧丢弃判定标题 = New LakeUI.HtmlColorLabel()
-        Panel6 = New Panel()
+        Panel6 = New LakeUI.ModernPanel()
+        Panel6.BackColor = Color.Transparent
+        Panel6.BackColor1 = Color.Transparent
+        Panel6.BorderSize = 0
         HCL_抽帧风险说明 = New LakeUI.HtmlColorLabel()
         HCL_抽帧风险标题 = New LakeUI.HtmlColorLabel()
-        Panel1 = New Panel()
+        Panel1 = New LakeUI.ModernPanel()
+        Panel1.BackColor = Color.Transparent
+        Panel1.BackColor1 = Color.Transparent
+        Panel1.BorderSize = 0
         MTB_连续相似要求 = New LakeUI.ModernTextBox()
         HCL_连续相似要求说明 = New LakeUI.HtmlColorLabel()
         HCL_连续相似要求标题 = New LakeUI.HtmlColorLabel()
-        Panel2 = New Panel()
+        Panel2 = New LakeUI.ModernPanel()
+        Panel2.BackColor = Color.Transparent
+        Panel2.BackColor1 = Color.Transparent
+        Panel2.BorderSize = 0
         MTB_连续丢帧数量 = New LakeUI.ModernTextBox()
         HCL_连续丢帧数量说明 = New LakeUI.HtmlColorLabel()
         HCL_连续丢帧数量标题 = New LakeUI.HtmlColorLabel()
@@ -61,7 +84,6 @@ Partial Class Form_v6_参数面板_抽帧参数
         ' 
         ' ModernPanel1
         ' 
-        ModernPanel1.BackColor1 = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         ModernPanel1.BorderSize = 0
         ModernPanel1.Controls.Add(Panel7)
         ModernPanel1.Controls.Add(Panel6)
@@ -498,27 +520,27 @@ Partial Class Form_v6_参数面板_抽帧参数
     End Sub
 
     Friend WithEvents ModernPanel1 As LakeUI.ModernPanel
-    Friend WithEvents Panel6 As Panel
-    Friend WithEvents Panel1 As Panel
+    Friend WithEvents Panel6 As LakeUI.ModernPanel
+    Friend WithEvents Panel1 As LakeUI.ModernPanel
     Friend WithEvents MTB_连续相似要求 As LakeUI.ModernTextBox
     Friend WithEvents HCL_连续相似要求说明 As LakeUI.HtmlColorLabel
     Friend WithEvents HCL_连续相似要求标题 As LakeUI.HtmlColorLabel
-    Friend WithEvents Panel2 As Panel
+    Friend WithEvents Panel2 As LakeUI.ModernPanel
     Friend WithEvents MTB_连续丢帧数量 As LakeUI.ModernTextBox
     Friend WithEvents HCL_连续丢帧数量说明 As LakeUI.HtmlColorLabel
     Friend WithEvents HCL_连续丢帧数量标题 As LakeUI.HtmlColorLabel
     Friend WithEvents MCK_抽帧总开关 As LakeUI.ModernCheckBox
-    Friend WithEvents Panel7 As Panel
-    Friend WithEvents Panel3 As Panel
+    Friend WithEvents Panel7 As LakeUI.ModernPanel
+    Friend WithEvents Panel3 As LakeUI.ModernPanel
     Friend WithEvents MCB_高阈值 As LakeUI.ModernComboBox
     Friend WithEvents HCL_高阈值说明 As LakeUI.HtmlColorLabel
     Friend WithEvents HCL_高阈值标签 As LakeUI.HtmlColorLabel
     Friend WithEvents HCL_帧丢弃判定标题 As LakeUI.HtmlColorLabel
-    Friend WithEvents Panel5 As Panel
+    Friend WithEvents Panel5 As LakeUI.ModernPanel
     Friend WithEvents MTB_最大变化占比 As LakeUI.ModernTextBox
     Friend WithEvents HCL_最大变化占比说明 As LakeUI.HtmlColorLabel
     Friend WithEvents HCL_最大变化占比标签 As LakeUI.HtmlColorLabel
-    Friend WithEvents Panel4 As Panel
+    Friend WithEvents Panel4 As LakeUI.ModernPanel
     Friend WithEvents MCB_低阈值 As LakeUI.ModernComboBox
     Friend WithEvents HCL_低阈值说明 As LakeUI.HtmlColorLabel
     Friend WithEvents HCL_低阈值标签 As LakeUI.HtmlColorLabel

@@ -24,36 +24,59 @@ Partial Class Form_v6_设置_个性化
     Private Sub InitializeComponent()
         Dim ToolTipEntry1 As LakeUI.ModernComboBox.ToolTipEntry = New LakeUI.ModernComboBox.ToolTipEntry()
         ModernPanel1 = New LakeUI.ModernPanel()
+        ModernPanel1.BackColor = Color.Transparent
+        ModernPanel1.BackColor1 = Color.Transparent
         HtmlColorLabel7 = New LakeUI.HtmlColorLabel()
-        Panel6 = New Panel()
+        Panel6 = New LakeUI.ModernPanel()
+        Panel6.BackColor = Color.Transparent
+        Panel6.BackColor1 = Color.Transparent
+        Panel6.BorderSize = 0
         MB_选择背景图 = New LakeUI.ModernButton()
-        Panel5 = New Panel()
+        Panel5 = New LakeUI.ModernPanel()
+        Panel5.BackColor = Color.Transparent
+        Panel5.BackColor1 = Color.Transparent
+        Panel5.BorderSize = 0
         MCB_噪点颗粒 = New LakeUI.ModernComboBox()
         JustEmptyControl5 = New LakeUI.JustEmptyControl()
         MCB_背景来源 = New LakeUI.ModernComboBox()
         JustEmptyControl4 = New LakeUI.JustEmptyControl()
         MCB_毛玻璃模式 = New LakeUI.ModernComboBox()
         HtmlColorLabel6 = New LakeUI.HtmlColorLabel()
-        Panel8 = New Panel()
+        Panel8 = New LakeUI.ModernPanel()
+        Panel8.BackColor = Color.Transparent
+        Panel8.BackColor1 = Color.Transparent
+        Panel8.BorderSize = 0
         MB_标题栏分割线颜色 = New LakeUI.ModernButton()
         JustEmptyControl9 = New LakeUI.JustEmptyControl()
         MCB_标题栏分割线 = New LakeUI.ModernComboBox()
-        Panel3 = New Panel()
+        Panel3 = New LakeUI.ModernPanel()
+        Panel3.BackColor = Color.Transparent
+        Panel3.BackColor1 = Color.Transparent
+        Panel3.BorderSize = 0
         MCB_边框宽度 = New LakeUI.ModernComboBox()
         JustEmptyControl8 = New LakeUI.JustEmptyControl()
         MB_分层阴影颜色 = New LakeUI.ModernButton()
         JustEmptyControl6 = New LakeUI.JustEmptyControl()
         MB_窗口边框颜色 = New LakeUI.ModernButton()
         HtmlColorLabel5 = New LakeUI.HtmlColorLabel()
-        Panel7 = New Panel()
+        Panel7 = New LakeUI.ModernPanel()
+        Panel7.BackColor = Color.Transparent
+        Panel7.BackColor1 = Color.Transparent
+        Panel7.BorderSize = 0
         MB_任务失败音效 = New LakeUI.ModernButton()
         JustEmptyControl7 = New LakeUI.JustEmptyControl()
         MB_任务完成音效 = New LakeUI.ModernButton()
-        Panel1 = New Panel()
+        Panel1 = New LakeUI.ModernPanel()
+        Panel1.BackColor = Color.Transparent
+        Panel1.BackColor1 = Color.Transparent
+        Panel1.BorderSize = 0
         MB_起始页顶栏背景图 = New LakeUI.ModernButton()
         JustEmptyControl3 = New LakeUI.JustEmptyControl()
         MB_图标 = New LakeUI.ModernButton()
-        Panel2 = New Panel()
+        Panel2 = New LakeUI.ModernPanel()
+        Panel2.BackColor = Color.Transparent
+        Panel2.BackColor1 = Color.Transparent
+        Panel2.BorderSize = 0
         MB_起始页面顶栏副标题 = New LakeUI.ModernButton()
         JustEmptyControl2 = New LakeUI.JustEmptyControl()
         MB_起始页面顶栏标题 = New LakeUI.ModernButton()
@@ -61,7 +84,10 @@ Partial Class Form_v6_设置_个性化
         MB_窗口标题文字 = New LakeUI.ModernButton()
         HtmlColorLabel3 = New LakeUI.HtmlColorLabel()
         ModernPanel2 = New LakeUI.ModernPanel()
-        Panel4 = New Panel()
+        Panel4 = New LakeUI.ModernPanel()
+        Panel4.BackColor = Color.Transparent
+        Panel4.BackColor1 = Color.Transparent
+        Panel4.BorderSize = 0
         HtmlColorLabel8 = New LakeUI.HtmlColorLabel()
         MB_前往购买 = New LakeUI.ModernButton()
         HtmlColorLabel2 = New LakeUI.HtmlColorLabel()
@@ -80,7 +106,6 @@ Partial Class Form_v6_设置_个性化
         ' 
         ' ModernPanel1
         ' 
-        ModernPanel1.BackColor1 = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         ModernPanel1.BorderSize = 0
         ModernPanel1.Controls.Add(HtmlColorLabel7)
         ModernPanel1.Controls.Add(Panel6)
@@ -756,26 +781,26 @@ Partial Class Form_v6_设置_个性化
     Friend WithEvents ModernPanel2 As LakeUI.ModernPanel
     Friend WithEvents HtmlColorLabel1 As LakeUI.HtmlColorLabel
     Friend WithEvents HtmlColorLabel2 As LakeUI.HtmlColorLabel
-    Friend WithEvents Panel4 As Panel
+    Friend WithEvents Panel4 As LakeUI.ModernPanel
     Friend WithEvents MB_前往购买 As LakeUI.ModernButton
     Friend WithEvents HtmlColorLabel3 As LakeUI.HtmlColorLabel
-    Friend WithEvents Panel2 As Panel
+    Friend WithEvents Panel2 As LakeUI.ModernPanel
     Friend WithEvents MB_起始页面顶栏副标题 As LakeUI.ModernButton
     Friend WithEvents JustEmptyControl2 As LakeUI.JustEmptyControl
     Friend WithEvents MB_起始页面顶栏标题 As LakeUI.ModernButton
     Friend WithEvents JustEmptyControl1 As LakeUI.JustEmptyControl
     Friend WithEvents MB_窗口标题文字 As LakeUI.ModernButton
     Friend WithEvents HtmlColorLabel5 As LakeUI.HtmlColorLabel
-    Friend WithEvents Panel1 As Panel
+    Friend WithEvents Panel1 As LakeUI.ModernPanel
     Friend WithEvents MB_起始页顶栏背景图 As LakeUI.ModernButton
     Friend WithEvents JustEmptyControl3 As LakeUI.JustEmptyControl
     Friend WithEvents MB_图标 As LakeUI.ModernButton
-    Friend WithEvents Panel3 As Panel
+    Friend WithEvents Panel3 As LakeUI.ModernPanel
     Friend WithEvents MB_窗口边框颜色 As LakeUI.ModernButton
-    Friend WithEvents Panel5 As Panel
+    Friend WithEvents Panel5 As LakeUI.ModernPanel
     Friend WithEvents HtmlColorLabel6 As LakeUI.HtmlColorLabel
     Friend WithEvents MCB_毛玻璃模式 As LakeUI.ModernComboBox
-    Friend WithEvents Panel6 As Panel
+    Friend WithEvents Panel6 As LakeUI.ModernPanel
     Friend WithEvents MB_选择背景图 As LakeUI.ModernButton
     Friend WithEvents MCB_噪点颗粒 As LakeUI.ModernComboBox
     Friend WithEvents JustEmptyControl5 As LakeUI.JustEmptyControl
@@ -787,11 +812,11 @@ Partial Class Form_v6_设置_个性化
     Friend WithEvents HtmlColorLabel8 As LakeUI.HtmlColorLabel
     Friend WithEvents MCB_边框宽度 As LakeUI.ModernComboBox
     Friend WithEvents JustEmptyControl8 As LakeUI.JustEmptyControl
-    Friend WithEvents Panel7 As Panel
+    Friend WithEvents Panel7 As LakeUI.ModernPanel
     Friend WithEvents MB_任务失败音效 As LakeUI.ModernButton
     Friend WithEvents JustEmptyControl7 As LakeUI.JustEmptyControl
     Friend WithEvents MB_任务完成音效 As LakeUI.ModernButton
-    Friend WithEvents Panel8 As Panel
+    Friend WithEvents Panel8 As LakeUI.ModernPanel
     Friend WithEvents MB_标题栏分割线颜色 As LakeUI.ModernButton
     Friend WithEvents JustEmptyControl9 As LakeUI.JustEmptyControl
     Friend WithEvents MCB_标题栏分割线 As LakeUI.ModernComboBox

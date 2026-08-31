@@ -23,8 +23,12 @@ Partial Class Form_v6_媒体信息
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         ModernPanel1 = New LakeUI.ModernPanel()
+        ModernPanel1.BackColor = Color.Transparent
         ModernTextBox1 = New LakeUI.ModernTextBox()
-        Panel2 = New Panel()
+        Panel2 = New LakeUI.ModernPanel()
+        Panel2.BackColor = Color.Transparent
+        Panel2.BackColor1 = Color.Transparent
+        Panel2.BorderSize = 0
         MB_打开文件 = New LakeUI.ModernButton()
         ModernPanel1.SuspendLayout()
         Panel2.SuspendLayout()
@@ -111,7 +115,7 @@ Partial Class Form_v6_媒体信息
     End Sub
 
     Friend WithEvents ModernPanel1 As LakeUI.ModernPanel
-    Friend WithEvents Panel2 As Panel
+    Friend WithEvents Panel2 As LakeUI.ModernPanel
     Friend WithEvents MB_打开文件 As LakeUI.ModernButton
     Friend WithEvents ModernTextBox1 As LakeUI.ModernTextBox
 End Class

@@ -24,8 +24,13 @@ Partial Class Form_v6_参数面板_流控制
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form_v6_参数面板_流控制))
         ModernPanel1 = New LakeUI.ModernPanel()
+        ModernPanel1.BackColor = Color.Transparent
+        ModernPanel1.BackColor1 = Color.Transparent
         HCL_流控制底部说明 = New LakeUI.HtmlColorLabel()
-        Panel7 = New Panel()
+        Panel7 = New LakeUI.ModernPanel()
+        Panel7.BackColor = Color.Transparent
+        Panel7.BackColor1 = Color.Transparent
+        Panel7.BorderSize = 0
         HCL_首个输入文件提示 = New LakeUI.HtmlColorLabel()
         MCB_附件选项 = New LakeUI.ModernComboBox()
         JustEmptyControl6 = New LakeUI.JustEmptyControl()
@@ -34,32 +39,50 @@ Partial Class Form_v6_参数面板_流控制
         MCB_元数据选项 = New LakeUI.ModernComboBox()
         HCL_元数据章节附件标题 = New LakeUI.HtmlColorLabel()
         HCL_保留附加内容提示 = New LakeUI.HtmlColorLabel()
-        Panel6 = New Panel()
+        Panel6 = New LakeUI.ModernPanel()
+        Panel6.BackColor = Color.Transparent
+        Panel6.BackColor1 = Color.Transparent
+        Panel6.BorderSize = 0
         HCL_mp4字幕格式提示 = New LakeUI.HtmlColorLabel()
         MCK_字幕转为mov_text = New LakeUI.ModernCheckBox()
         MCK_混流同名SSA字幕 = New LakeUI.ModernCheckBox()
         MCK_混流同名ASS字幕 = New LakeUI.ModernCheckBox()
         MCK_混流同名SRT字幕 = New LakeUI.ModernCheckBox()
         HCL_混流同名字幕标题 = New LakeUI.HtmlColorLabel()
-        Panel4 = New Panel()
+        Panel4 = New LakeUI.ModernPanel()
+        Panel4.BackColor = Color.Transparent
+        Panel4.BackColor1 = Color.Transparent
+        Panel4.BorderSize = 0
         HCL_可视化流选择器说明 = New LakeUI.HtmlColorLabel()
         MB_打开可视化流选择器 = New LakeUI.ModernButton()
-        Panel3 = New Panel()
+        Panel3 = New LakeUI.ModernPanel()
+        Panel3.BackColor = Color.Transparent
+        Panel3.BackColor1 = Color.Transparent
+        Panel3.BorderSize = 0
         HCL_字幕流选择格式 = New LakeUI.HtmlColorLabel()
         JustEmptyControl4 = New LakeUI.JustEmptyControl()
-        Panel2 = New Panel()
+        Panel2 = New LakeUI.ModernPanel()
+        Panel2.BackColor = Color.Transparent
+        Panel2.BackColor1 = Color.Transparent
+        Panel2.BorderSize = 0
         MCK_保留其他字幕流 = New LakeUI.ModernCheckBox()
         MCB_字幕流操作 = New LakeUI.ModernComboBox()
         JustEmptyControl3 = New LakeUI.JustEmptyControl()
         MTB_字幕流选择 = New LakeUI.ModernTextBox()
         HCL_字幕流选择说明 = New LakeUI.HtmlColorLabel()
-        Panel1 = New Panel()
+        Panel1 = New LakeUI.ModernPanel()
+        Panel1.BackColor = Color.Transparent
+        Panel1.BackColor1 = Color.Transparent
+        Panel1.BorderSize = 0
         HCL_音频流选择格式 = New LakeUI.HtmlColorLabel()
         MCK_保留其他音频流 = New LakeUI.ModernCheckBox()
         JustEmptyControl2 = New LakeUI.JustEmptyControl()
         MTB_音频流选择 = New LakeUI.ModernTextBox()
         HCL_音频流选择说明 = New LakeUI.HtmlColorLabel()
-        Panel5 = New Panel()
+        Panel5 = New LakeUI.ModernPanel()
+        Panel5.BackColor = Color.Transparent
+        Panel5.BackColor1 = Color.Transparent
+        Panel5.BorderSize = 0
         HCL_视频流选择格式 = New LakeUI.HtmlColorLabel()
         MCK_保留其他视频流 = New LakeUI.ModernCheckBox()
         JustEmptyControl1 = New LakeUI.JustEmptyControl()
@@ -77,7 +100,6 @@ Partial Class Form_v6_参数面板_流控制
         '
         ' ModernPanel1
         '
-        ModernPanel1.BackColor1 = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         ModernPanel1.BorderSize = 0
         ModernPanel1.Controls.Add(HCL_流控制底部说明)
         ModernPanel1.Controls.Add(Panel7)
@@ -788,31 +810,31 @@ Partial Class Form_v6_参数面板_流控制
 
     Friend WithEvents ModernPanel1 As LakeUI.ModernPanel
     Friend WithEvents HCL_视频流选择说明 As LakeUI.HtmlColorLabel
-    Friend WithEvents Panel5 As Panel
+    Friend WithEvents Panel5 As LakeUI.ModernPanel
     Friend WithEvents MTB_视频流选择 As LakeUI.ModernTextBox
     Friend WithEvents JustEmptyControl1 As LakeUI.JustEmptyControl
     Friend WithEvents MCK_保留其他视频流 As LakeUI.ModernCheckBox
     Friend WithEvents HCL_视频流选择格式 As LakeUI.HtmlColorLabel
-    Friend WithEvents Panel1 As Panel
+    Friend WithEvents Panel1 As LakeUI.ModernPanel
     Friend WithEvents HCL_音频流选择格式 As LakeUI.HtmlColorLabel
     Friend WithEvents MCK_保留其他音频流 As LakeUI.ModernCheckBox
     Friend WithEvents JustEmptyControl2 As LakeUI.JustEmptyControl
     Friend WithEvents MTB_音频流选择 As LakeUI.ModernTextBox
     Friend WithEvents HCL_音频流选择说明 As LakeUI.HtmlColorLabel
-    Friend WithEvents Panel2 As Panel
+    Friend WithEvents Panel2 As LakeUI.ModernPanel
     Friend WithEvents JustEmptyControl3 As LakeUI.JustEmptyControl
     Friend WithEvents MTB_字幕流选择 As LakeUI.ModernTextBox
     Friend WithEvents HCL_字幕流选择说明 As LakeUI.HtmlColorLabel
-    Friend WithEvents Panel3 As Panel
+    Friend WithEvents Panel3 As LakeUI.ModernPanel
     Friend WithEvents JustEmptyControl4 As LakeUI.JustEmptyControl
     Friend WithEvents MCB_字幕流操作 As LakeUI.ModernComboBox
     Friend WithEvents HCL_字幕流选择格式 As LakeUI.HtmlColorLabel
     Friend WithEvents MCK_保留其他字幕流 As LakeUI.ModernCheckBox
-    Friend WithEvents Panel4 As Panel
+    Friend WithEvents Panel4 As LakeUI.ModernPanel
     Friend WithEvents HCL_可视化流选择器说明 As LakeUI.HtmlColorLabel
     Friend WithEvents MB_打开可视化流选择器 As LakeUI.ModernButton
     Friend WithEvents HCL_混流同名字幕标题 As LakeUI.HtmlColorLabel
-    Friend WithEvents Panel6 As Panel
+    Friend WithEvents Panel6 As LakeUI.ModernPanel
     Friend WithEvents HCL_mp4字幕格式提示 As LakeUI.HtmlColorLabel
     Friend WithEvents MCK_字幕转为mov_text As LakeUI.ModernCheckBox
     Friend WithEvents MCK_混流同名SSA字幕 As LakeUI.ModernCheckBox
@@ -820,7 +842,7 @@ Partial Class Form_v6_参数面板_流控制
     Friend WithEvents MCK_混流同名SRT字幕 As LakeUI.ModernCheckBox
     Friend WithEvents HCL_保留附加内容提示 As LakeUI.HtmlColorLabel
     Friend WithEvents HCL_元数据章节附件标题 As LakeUI.HtmlColorLabel
-    Friend WithEvents Panel7 As Panel
+    Friend WithEvents Panel7 As LakeUI.ModernPanel
     Friend WithEvents MCB_附件选项 As LakeUI.ModernComboBox
     Friend WithEvents JustEmptyControl6 As LakeUI.JustEmptyControl
     Friend WithEvents MCB_章节选项 As LakeUI.ModernComboBox

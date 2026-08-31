@@ -25,13 +25,21 @@ Partial Class Form_v6_参数面板_质量
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form_v6_参数面板_质量))
         预制条目菜单 = New LakeUI.ModernContextMenu()
         ModernPanel1 = New LakeUI.ModernPanel()
+        ModernPanel1.BackColor = Color.Transparent
+        ModernPanel1.BackColor1 = Color.Transparent
         MTB_进阶质量控制参数 = New LakeUI.ModernTextBox()
         JustEmptyControl8 = New LakeUI.JustEmptyControl()
-        Panel3 = New Panel()
+        Panel3 = New LakeUI.ModernPanel()
+        Panel3.BackColor = Color.Transparent
+        Panel3.BackColor1 = Color.Transparent
+        Panel3.BorderSize = 0
         HCL_进阶参数空格提示 = New LakeUI.HtmlColorLabel()
         MB_插入预制条目 = New LakeUI.ModernButton()
         HCL_进阶质量控制 = New LakeUI.HtmlColorLabel()
-        Panel1 = New Panel()
+        Panel1 = New LakeUI.ModernPanel()
+        Panel1.BackColor = Color.Transparent
+        Panel1.BackColor1 = Color.Transparent
+        Panel1.BorderSize = 0
         MTB_缓冲区 = New LakeUI.ModernTextBox()
         JustEmptyControl5 = New LakeUI.JustEmptyControl()
         MTB_最高比特率 = New LakeUI.ModernTextBox()
@@ -39,14 +47,20 @@ Partial Class Form_v6_参数面板_质量
         MTB_最低比特率 = New LakeUI.ModernTextBox()
         JustEmptyControl3 = New LakeUI.JustEmptyControl()
         MTB_基础比特率 = New LakeUI.ModernTextBox()
-        Panel4 = New Panel()
+        Panel4 = New LakeUI.ModernPanel()
+        Panel4.BackColor = Color.Transparent
+        Panel4.BackColor1 = Color.Transparent
+        Panel4.BorderSize = 0
         HCL_缓冲区 = New LakeUI.HtmlColorLabel()
         HCL_最高比特率 = New LakeUI.HtmlColorLabel()
         HCL_最低比特率 = New LakeUI.HtmlColorLabel()
         HCL_基础比特率 = New LakeUI.HtmlColorLabel()
         HCL_比特率单位提示 = New LakeUI.HtmlColorLabel()
         HCL_比特率 = New LakeUI.HtmlColorLabel()
-        Panel2 = New Panel()
+        Panel2 = New LakeUI.ModernPanel()
+        Panel2.BackColor = Color.Transparent
+        Panel2.BackColor1 = Color.Transparent
+        Panel2.BorderSize = 0
         MTB_质量值 = New LakeUI.ModernTextBox()
         JustEmptyControl1 = New LakeUI.JustEmptyControl()
         MCB_质量参数名称 = New LakeUI.ModernComboBox()
@@ -83,7 +97,6 @@ Partial Class Form_v6_参数面板_质量
         ' 
         ' ModernPanel1
         ' 
-        ModernPanel1.BackColor1 = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         ModernPanel1.BorderSize = 0
         ModernPanel1.Controls.Add(MTB_进阶质量控制参数)
         ModernPanel1.Controls.Add(JustEmptyControl8)
@@ -557,7 +570,7 @@ Partial Class Form_v6_参数面板_质量
 
     Friend WithEvents ModernPanel1 As LakeUI.ModernPanel
     Friend WithEvents HCL_全局质量控制 As LakeUI.HtmlColorLabel
-    Friend WithEvents Panel2 As Panel
+    Friend WithEvents Panel2 As LakeUI.ModernPanel
     Friend WithEvents MCB_全局质量控制方式 As LakeUI.ModernComboBox
     Friend WithEvents JustEmptyControl2 As LakeUI.JustEmptyControl
     Friend WithEvents JustEmptyControl1 As LakeUI.JustEmptyControl
@@ -565,9 +578,9 @@ Partial Class Form_v6_参数面板_质量
     Friend WithEvents MTB_质量值 As LakeUI.ModernTextBox
     Friend WithEvents HCL_质量 As LakeUI.HtmlColorLabel
     Friend WithEvents HCL_比特率 As LakeUI.HtmlColorLabel
-    Friend WithEvents Panel1 As Panel
+    Friend WithEvents Panel1 As LakeUI.ModernPanel
     Friend WithEvents MTB_基础比特率 As LakeUI.ModernTextBox
-    Friend WithEvents Panel4 As Panel
+    Friend WithEvents Panel4 As LakeUI.ModernPanel
     Friend WithEvents HCL_比特率单位提示 As LakeUI.HtmlColorLabel
     Friend WithEvents MTB_缓冲区 As LakeUI.ModernTextBox
     Friend WithEvents JustEmptyControl5 As LakeUI.JustEmptyControl
@@ -580,7 +593,7 @@ Partial Class Form_v6_参数面板_质量
     Friend WithEvents HCL_最低比特率 As LakeUI.HtmlColorLabel
     Friend WithEvents HCL_基础比特率 As LakeUI.HtmlColorLabel
     Friend WithEvents HCL_进阶质量控制 As LakeUI.HtmlColorLabel
-    Friend WithEvents Panel3 As Panel
+    Friend WithEvents Panel3 As LakeUI.ModernPanel
     Friend WithEvents MB_插入预制条目 As LakeUI.ModernButton
     Friend WithEvents JustEmptyControl8 As LakeUI.JustEmptyControl
     Friend WithEvents MTB_进阶质量控制参数 As LakeUI.ModernTextBox

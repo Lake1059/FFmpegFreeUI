@@ -23,80 +23,148 @@ Partial Class Form_v6_参数面板_烧录字幕
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         ModernPanel1 = New LakeUI.ModernPanel()
-        Panel16 = New Panel()
+        ModernPanel1.BackColor = Color.Transparent
+        ModernPanel1.BackColor1 = Color.Transparent
+        Panel16 = New LakeUI.ModernPanel()
+        Panel16.BackColor = Color.Transparent
+        Panel16.BackColor1 = Color.Transparent
+        Panel16.BorderSize = 0
         MTB_自己写整个滤镜 = New LakeUI.ModernTextBox()
         HCL_自己写滤镜取代所有设置 = New LakeUI.HtmlColorLabel()
         MTB_补充样式 = New LakeUI.ModernTextBox()
         HCL_补充样式 = New LakeUI.HtmlColorLabel()
-        Panel3 = New Panel()
-        Panel22 = New Panel()
+        Panel3 = New LakeUI.ModernPanel()
+        Panel3.BackColor = Color.Transparent
+        Panel3.BackColor1 = Color.Transparent
+        Panel3.BorderSize = 0
+        Panel22 = New LakeUI.ModernPanel()
+        Panel22.BackColor = Color.Transparent
+        Panel22.BackColor1 = Color.Transparent
+        Panel22.BorderSize = 0
         MTB_行距 = New LakeUI.ModernTextBox()
         HCL_行距 = New LakeUI.HtmlColorLabel()
-        Panel23 = New Panel()
+        Panel23 = New LakeUI.ModernPanel()
+        Panel23.BackColor = Color.Transparent
+        Panel23.BackColor1 = Color.Transparent
+        Panel23.BorderSize = 0
         MTB_字距 = New LakeUI.ModernTextBox()
         HCL_字距 = New LakeUI.HtmlColorLabel()
         HCL_文字距离 = New LakeUI.HtmlColorLabel()
-        Panel21 = New Panel()
+        Panel21 = New LakeUI.ModernPanel()
+        Panel21.BackColor = Color.Transparent
+        Panel21.BackColor1 = Color.Transparent
+        Panel21.BorderSize = 0
         MTB_右边距 = New LakeUI.ModernTextBox()
         HCL_右边距 = New LakeUI.HtmlColorLabel()
-        Panel20 = New Panel()
+        Panel20 = New LakeUI.ModernPanel()
+        Panel20.BackColor = Color.Transparent
+        Panel20.BackColor1 = Color.Transparent
+        Panel20.BorderSize = 0
         MTB_左边距 = New LakeUI.ModernTextBox()
         HCL_左边距 = New LakeUI.HtmlColorLabel()
-        Panel19 = New Panel()
+        Panel19 = New LakeUI.ModernPanel()
+        Panel19.BackColor = Color.Transparent
+        Panel19.BackColor1 = Color.Transparent
+        Panel19.BorderSize = 0
         MTB_垂直边距 = New LakeUI.ModernTextBox()
         HCL_垂直边距 = New LakeUI.HtmlColorLabel()
-        Panel18 = New Panel()
+        Panel18 = New LakeUI.ModernPanel()
+        Panel18.BackColor = Color.Transparent
+        Panel18.BackColor1 = Color.Transparent
+        Panel18.BorderSize = 0
         MCB_对齐方位 = New LakeUI.ModernComboBox()
         HCL_对齐方位 = New LakeUI.HtmlColorLabel()
-        Panel2 = New Panel()
-        Panel17 = New Panel()
+        Panel2 = New LakeUI.ModernPanel()
+        Panel2.BackColor = Color.Transparent
+        Panel2.BackColor1 = Color.Transparent
+        Panel2.BorderSize = 0
+        Panel17 = New LakeUI.ModernPanel()
+        Panel17.BackColor = Color.Transparent
+        Panel17.BackColor1 = Color.Transparent
+        Panel17.BorderSize = 0
         MCB_字体文件夹路径 = New LakeUI.ModernComboBox()
         HCL_字体文件夹 = New LakeUI.HtmlColorLabel()
-        Panel15 = New Panel()
+        Panel15 = New LakeUI.ModernPanel()
+        Panel15.BackColor = Color.Transparent
+        Panel15.BackColor1 = Color.Transparent
+        Panel15.BorderSize = 0
         MB_清楚背景颜色 = New LakeUI.ModernButton()
         JustEmptyControl11 = New LakeUI.JustEmptyControl()
         MB_设置背景颜色 = New LakeUI.ModernButton()
-        Panel14 = New Panel()
+        Panel14 = New LakeUI.ModernPanel()
+        Panel14.BackColor = Color.Transparent
+        Panel14.BackColor1 = Color.Transparent
+        Panel14.BorderSize = 0
         MB_清除描边颜色 = New LakeUI.ModernButton()
         JustEmptyControl10 = New LakeUI.JustEmptyControl()
         MB_设置描边颜色 = New LakeUI.ModernButton()
-        Panel13 = New Panel()
+        Panel13 = New LakeUI.ModernPanel()
+        Panel13.BackColor = Color.Transparent
+        Panel13.BackColor1 = Color.Transparent
+        Panel13.BorderSize = 0
         MB_清除次要颜色 = New LakeUI.ModernButton()
         JustEmptyControl9 = New LakeUI.JustEmptyControl()
         MB_设置次要颜色 = New LakeUI.ModernButton()
-        Panel12 = New Panel()
+        Panel12 = New LakeUI.ModernPanel()
+        Panel12.BackColor = Color.Transparent
+        Panel12.BackColor1 = Color.Transparent
+        Panel12.BorderSize = 0
         MB_清除主要颜色 = New LakeUI.ModernButton()
         JustEmptyControl8 = New LakeUI.JustEmptyControl()
         MB_设置主要颜色 = New LakeUI.ModernButton()
         HCL_文字颜色 = New LakeUI.HtmlColorLabel()
-        Panel10 = New Panel()
+        Panel10 = New LakeUI.ModernPanel()
+        Panel10.BackColor = Color.Transparent
+        Panel10.BackColor1 = Color.Transparent
+        Panel10.BorderSize = 0
         MCB_边框类型 = New LakeUI.ModernComboBox()
         JustEmptyControl6 = New LakeUI.JustEmptyControl()
         MTB_描边宽度 = New LakeUI.ModernTextBox()
         JustEmptyControl5 = New LakeUI.JustEmptyControl()
         MTB_阴影距离 = New LakeUI.ModernTextBox()
-        Panel11 = New Panel()
+        Panel11 = New LakeUI.ModernPanel()
+        Panel11.BackColor = Color.Transparent
+        Panel11.BackColor1 = Color.Transparent
+        Panel11.BorderSize = 0
         HCL_边框类型 = New LakeUI.HtmlColorLabel()
         HCL_描边宽度 = New LakeUI.HtmlColorLabel()
         JustEmptyControl7 = New LakeUI.JustEmptyControl()
         HCL_阴影距离 = New LakeUI.HtmlColorLabel()
-        Panel9 = New Panel()
+        Panel9 = New LakeUI.ModernPanel()
+        Panel9.BackColor = Color.Transparent
+        Panel9.BackColor1 = Color.Transparent
+        Panel9.BorderSize = 0
         MB_清除基本样式 = New LakeUI.ModernButton()
         JustEmptyControl4 = New LakeUI.JustEmptyControl()
         MB_设置基本样式 = New LakeUI.ModernButton()
         HCL_字体样式 = New LakeUI.HtmlColorLabel()
-        Panel1 = New Panel()
-        Panel8 = New Panel()
+        Panel1 = New LakeUI.ModernPanel()
+        Panel1.BackColor = Color.Transparent
+        Panel1.BackColor1 = Color.Transparent
+        Panel1.BorderSize = 0
+        Panel8 = New LakeUI.ModernPanel()
+        Panel8.BackColor = Color.Transparent
+        Panel8.BackColor1 = Color.Transparent
+        Panel8.BorderSize = 0
         MTB_内嵌的流索引 = New LakeUI.ModernTextBox()
         HCL_流索引 = New LakeUI.HtmlColorLabel()
         HCL_内嵌的流配置 = New LakeUI.HtmlColorLabel()
-        Panel7 = New Panel()
+        Panel7 = New LakeUI.ModernPanel()
+        Panel7.BackColor = Color.Transparent
+        Panel7.BackColor1 = Color.Transparent
+        Panel7.BorderSize = 0
         MCB_字幕文件路径 = New LakeUI.ModernComboBox()
         HCL_字幕文件路径 = New LakeUI.HtmlColorLabel()
-        Panel6 = New Panel()
+        Panel6 = New LakeUI.ModernPanel()
+        Panel6.BackColor = Color.Transparent
+        Panel6.BackColor1 = Color.Transparent
+        Panel6.BorderSize = 0
         MTB_字幕文件多余字符 = New LakeUI.ModernTextBox()
         HCL_字幕文件名多余字符 = New LakeUI.HtmlColorLabel()
-        Panel5 = New Panel()
+        Panel5 = New LakeUI.ModernPanel()
+        Panel5.BackColor = Color.Transparent
+        Panel5.BackColor1 = Color.Transparent
+        Panel5.BorderSize = 0
         MCB_后缀优先级3 = New LakeUI.ModernComboBox()
         JustEmptyControl3 = New LakeUI.JustEmptyControl()
         MCB_后缀优先级2 = New LakeUI.ModernComboBox()
@@ -104,7 +172,10 @@ Partial Class Form_v6_参数面板_烧录字幕
         MCB_后缀优先级1 = New LakeUI.ModernComboBox()
         HCL_后缀优先级 = New LakeUI.HtmlColorLabel()
         HCL_外部来源配置 = New LakeUI.HtmlColorLabel()
-        Panel4 = New Panel()
+        Panel4 = New LakeUI.ModernPanel()
+        Panel4.BackColor = Color.Transparent
+        Panel4.BackColor1 = Color.Transparent
+        Panel4.BorderSize = 0
         MCB_字幕来源 = New LakeUI.ModernComboBox()
         JustEmptyControl1 = New LakeUI.JustEmptyControl()
         MCB_滤镜选择 = New LakeUI.ModernComboBox()
@@ -138,7 +209,6 @@ Partial Class Form_v6_参数面板_烧录字幕
         '
         ' ModernPanel1
         '
-        ModernPanel1.BackColor1 = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         ModernPanel1.BorderSize = 0
         ModernPanel1.Controls.Add(Panel16)
         ModernPanel1.Controls.Add(Panel3)
@@ -1520,85 +1590,85 @@ Partial Class Form_v6_参数面板_烧录字幕
 
     Friend WithEvents ModernPanel1 As LakeUI.ModernPanel
     Friend WithEvents MCK_烧录字幕总开关 As LakeUI.ModernCheckBox
-    Friend WithEvents Panel1 As Panel
-    Friend WithEvents Panel3 As Panel
-    Friend WithEvents Panel2 As Panel
+    Friend WithEvents Panel1 As LakeUI.ModernPanel
+    Friend WithEvents Panel3 As LakeUI.ModernPanel
+    Friend WithEvents Panel2 As LakeUI.ModernPanel
     Friend WithEvents HCL_滤镜和来源 As LakeUI.HtmlColorLabel
-    Friend WithEvents Panel4 As Panel
+    Friend WithEvents Panel4 As LakeUI.ModernPanel
     Friend WithEvents MCB_滤镜选择 As LakeUI.ModernComboBox
     Friend WithEvents JustEmptyControl1 As LakeUI.JustEmptyControl
     Friend WithEvents MCB_字幕来源 As LakeUI.ModernComboBox
     Friend WithEvents HCL_外部来源配置 As LakeUI.HtmlColorLabel
     Friend WithEvents HCL_后缀优先级 As LakeUI.HtmlColorLabel
-    Friend WithEvents Panel5 As Panel
+    Friend WithEvents Panel5 As LakeUI.ModernPanel
     Friend WithEvents MCB_后缀优先级3 As LakeUI.ModernComboBox
     Friend WithEvents JustEmptyControl3 As LakeUI.JustEmptyControl
     Friend WithEvents MCB_后缀优先级2 As LakeUI.ModernComboBox
     Friend WithEvents JustEmptyControl2 As LakeUI.JustEmptyControl
     Friend WithEvents MCB_后缀优先级1 As LakeUI.ModernComboBox
     Friend WithEvents HCL_字幕文件名多余字符 As LakeUI.HtmlColorLabel
-    Friend WithEvents Panel6 As Panel
+    Friend WithEvents Panel6 As LakeUI.ModernPanel
     Friend WithEvents MTB_字幕文件多余字符 As LakeUI.ModernTextBox
     Friend WithEvents HCL_内嵌的流配置 As LakeUI.HtmlColorLabel
-    Friend WithEvents Panel7 As Panel
+    Friend WithEvents Panel7 As LakeUI.ModernPanel
     Friend WithEvents MCB_字幕文件路径 As LakeUI.ModernComboBox
     Friend WithEvents HCL_字幕文件路径 As LakeUI.HtmlColorLabel
     Friend WithEvents HCL_字体样式 As LakeUI.HtmlColorLabel
-    Friend WithEvents Panel8 As Panel
+    Friend WithEvents Panel8 As LakeUI.ModernPanel
     Friend WithEvents MTB_内嵌的流索引 As LakeUI.ModernTextBox
     Friend WithEvents HCL_流索引 As LakeUI.HtmlColorLabel
-    Friend WithEvents Panel9 As Panel
+    Friend WithEvents Panel9 As LakeUI.ModernPanel
     Friend WithEvents MB_清除基本样式 As LakeUI.ModernButton
     Friend WithEvents JustEmptyControl4 As LakeUI.JustEmptyControl
     Friend WithEvents MB_设置基本样式 As LakeUI.ModernButton
-    Friend WithEvents Panel10 As Panel
+    Friend WithEvents Panel10 As LakeUI.ModernPanel
     Friend WithEvents JustEmptyControl5 As LakeUI.JustEmptyControl
     Friend WithEvents JustEmptyControl6 As LakeUI.JustEmptyControl
     Friend WithEvents MCB_边框类型 As LakeUI.ModernComboBox
-    Friend WithEvents Panel11 As Panel
+    Friend WithEvents Panel11 As LakeUI.ModernPanel
     Friend WithEvents HCL_阴影距离 As LakeUI.HtmlColorLabel
     Friend WithEvents HCL_描边宽度 As LakeUI.HtmlColorLabel
     Friend WithEvents HCL_边框类型 As LakeUI.HtmlColorLabel
     Friend WithEvents MTB_描边宽度 As LakeUI.ModernTextBox
     Friend WithEvents MTB_阴影距离 As LakeUI.ModernTextBox
     Friend WithEvents JustEmptyControl7 As LakeUI.JustEmptyControl
-    Friend WithEvents Panel15 As Panel
+    Friend WithEvents Panel15 As LakeUI.ModernPanel
     Friend WithEvents MB_清楚背景颜色 As LakeUI.ModernButton
     Friend WithEvents JustEmptyControl11 As LakeUI.JustEmptyControl
     Friend WithEvents MB_设置背景颜色 As LakeUI.ModernButton
-    Friend WithEvents Panel14 As Panel
+    Friend WithEvents Panel14 As LakeUI.ModernPanel
     Friend WithEvents MB_清除描边颜色 As LakeUI.ModernButton
     Friend WithEvents JustEmptyControl10 As LakeUI.JustEmptyControl
     Friend WithEvents MB_设置描边颜色 As LakeUI.ModernButton
-    Friend WithEvents Panel13 As Panel
+    Friend WithEvents Panel13 As LakeUI.ModernPanel
     Friend WithEvents MB_清除次要颜色 As LakeUI.ModernButton
     Friend WithEvents JustEmptyControl9 As LakeUI.JustEmptyControl
     Friend WithEvents MB_设置次要颜色 As LakeUI.ModernButton
-    Friend WithEvents Panel12 As Panel
+    Friend WithEvents Panel12 As LakeUI.ModernPanel
     Friend WithEvents MB_清除主要颜色 As LakeUI.ModernButton
     Friend WithEvents JustEmptyControl8 As LakeUI.JustEmptyControl
     Friend WithEvents MB_设置主要颜色 As LakeUI.ModernButton
     Friend WithEvents HCL_文字颜色 As LakeUI.HtmlColorLabel
     Friend WithEvents HCL_字体文件夹 As LakeUI.HtmlColorLabel
-    Friend WithEvents Panel16 As Panel
-    Friend WithEvents Panel17 As Panel
+    Friend WithEvents Panel16 As LakeUI.ModernPanel
+    Friend WithEvents Panel17 As LakeUI.ModernPanel
     Friend WithEvents MCB_字体文件夹路径 As LakeUI.ModernComboBox
     Friend WithEvents HCL_对齐方位 As LakeUI.HtmlColorLabel
-    Friend WithEvents Panel18 As Panel
+    Friend WithEvents Panel18 As LakeUI.ModernPanel
     Friend WithEvents MCB_对齐方位 As LakeUI.ModernComboBox
-    Friend WithEvents Panel19 As Panel
+    Friend WithEvents Panel19 As LakeUI.ModernPanel
     Friend WithEvents MTB_垂直边距 As LakeUI.ModernTextBox
     Friend WithEvents HCL_垂直边距 As LakeUI.HtmlColorLabel
-    Friend WithEvents Panel21 As Panel
+    Friend WithEvents Panel21 As LakeUI.ModernPanel
     Friend WithEvents MTB_右边距 As LakeUI.ModernTextBox
     Friend WithEvents HCL_右边距 As LakeUI.HtmlColorLabel
-    Friend WithEvents Panel20 As Panel
+    Friend WithEvents Panel20 As LakeUI.ModernPanel
     Friend WithEvents MTB_左边距 As LakeUI.ModernTextBox
     Friend WithEvents HCL_左边距 As LakeUI.HtmlColorLabel
-    Friend WithEvents Panel22 As Panel
+    Friend WithEvents Panel22 As LakeUI.ModernPanel
     Friend WithEvents MTB_行距 As LakeUI.ModernTextBox
     Friend WithEvents HCL_行距 As LakeUI.HtmlColorLabel
-    Friend WithEvents Panel23 As Panel
+    Friend WithEvents Panel23 As LakeUI.ModernPanel
     Friend WithEvents MTB_字距 As LakeUI.ModernTextBox
     Friend WithEvents HCL_字距 As LakeUI.HtmlColorLabel
     Friend WithEvents HCL_文字距离 As LakeUI.HtmlColorLabel

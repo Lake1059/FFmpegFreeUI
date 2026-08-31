@@ -25,14 +25,22 @@ Partial Class Form_v6_集成工具_合并
         Dim ListColumn1 As LakeUI.UltraDetailListView.ListColumn = New LakeUI.UltraDetailListView.ListColumn()
         Dim ListColumn2 As LakeUI.UltraDetailListView.ListColumn = New LakeUI.UltraDetailListView.ListColumn()
         ModernPanel1 = New LakeUI.ModernPanel()
+        ModernPanel1.BackColor = Color.Transparent
+        ModernPanel1.BackColor1 = Color.Transparent
         UltraDetailListView1 = New LakeUI.UltraDetailListView()
-        Panel2 = New Panel()
+        Panel2 = New LakeUI.ModernPanel()
+        Panel2.BackColor = Color.Transparent
+        Panel2.BackColor1 = Color.Transparent
+        Panel2.BorderSize = 0
         MTB_输出目标文件 = New LakeUI.ModernTextBox()
         JustEmptyControl5 = New LakeUI.JustEmptyControl()
         JustEmptyControl6 = New LakeUI.JustEmptyControl()
         MB_选择位置 = New LakeUI.ModernButton()
         MB_启动合并 = New LakeUI.ModernButton()
-        Panel1 = New Panel()
+        Panel1 = New LakeUI.ModernPanel()
+        Panel1.BackColor = Color.Transparent
+        Panel1.BackColor1 = Color.Transparent
+        Panel1.BorderSize = 0
         HtmlColorLabel2 = New LakeUI.HtmlColorLabel()
         MB_移除全部 = New LakeUI.ModernButton()
         JustEmptyControl4 = New LakeUI.JustEmptyControl()
@@ -51,7 +59,6 @@ Partial Class Form_v6_集成工具_合并
         ' 
         ' ModernPanel1
         ' 
-        ModernPanel1.BackColor1 = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         ModernPanel1.BorderSize = 0
         ModernPanel1.Controls.Add(UltraDetailListView1)
         ModernPanel1.Controls.Add(Panel2)
@@ -356,7 +363,7 @@ Partial Class Form_v6_集成工具_合并
 
     Friend WithEvents ModernPanel1 As LakeUI.ModernPanel
     Friend WithEvents HtmlColorLabel1 As LakeUI.HtmlColorLabel
-    Friend WithEvents Panel1 As Panel
+    Friend WithEvents Panel1 As LakeUI.ModernPanel
     Friend WithEvents JustEmptyControl1 As LakeUI.JustEmptyControl
     Friend WithEvents MB_添加文件 As LakeUI.ModernButton
     Friend WithEvents MB_移除全部 As LakeUI.ModernButton
@@ -366,7 +373,7 @@ Partial Class Form_v6_集成工具_合并
     Friend WithEvents MB_下移 As LakeUI.ModernButton
     Friend WithEvents JustEmptyControl2 As LakeUI.JustEmptyControl
     Friend WithEvents MB_上移 As LakeUI.ModernButton
-    Friend WithEvents Panel2 As Panel
+    Friend WithEvents Panel2 As LakeUI.ModernPanel
     Friend WithEvents MTB_输出目标文件 As LakeUI.ModernTextBox
     Friend WithEvents JustEmptyControl5 As LakeUI.JustEmptyControl
     Friend WithEvents JustEmptyControl6 As LakeUI.JustEmptyControl

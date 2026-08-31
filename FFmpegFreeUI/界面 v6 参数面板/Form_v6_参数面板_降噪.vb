@@ -63,7 +63,7 @@ Public Class Form_v6_参数面板_降噪
         重置降噪参数(Panel4, HCL_降噪参数名称4, ETB_降噪参数4)
     End Sub
 
-    Private Sub 重置降噪参数(参数面板 As Panel, 参数名称 As LakeUI.HtmlColorLabel, 参数滑块 As LakeUI.ExcellentTrackBar)
+    Private Sub 重置降噪参数(参数面板 As LakeUI.ModernPanel, 参数名称 As LakeUI.HtmlColorLabel, 参数滑块 As LakeUI.ExcellentTrackBar)
         参数面板.Visible = False
         参数名称.Text = ""
         参数滑块.Minimum = 0
@@ -75,7 +75,7 @@ Public Class Form_v6_参数面板_降噪
     End Sub
 
     Private Sub 配置降噪参数(序号 As Integer, 参数名称文本 As String, 最小值 As Double, 最大值 As Double, 默认值 As Double, Optional 小数位数 As Integer = 1, Optional 步进 As Double = 0.1)
-        Dim 参数面板 As Panel
+        Dim 参数面板 As LakeUI.ModernPanel
         Dim 参数滑块 As LakeUI.ExcellentTrackBar
         Dim 参数名称 As LakeUI.HtmlColorLabel
         Select Case 序号

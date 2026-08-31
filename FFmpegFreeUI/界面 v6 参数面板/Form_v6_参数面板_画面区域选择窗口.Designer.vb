@@ -23,9 +23,13 @@ Partial Class Form_v6_参数面板_画面区域选择窗口
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         ModernPanel1 = New LakeUI.ModernPanel()
+        ModernPanel1.BackColor = Color.Transparent
         PPB_画面区域预览 = New LakeUI.PixelPictureBox()
         JustEmptyControl5 = New LakeUI.JustEmptyControl()
-        Panel2 = New Panel()
+        Panel2 = New LakeUI.ModernPanel()
+        Panel2.BackColor = Color.Transparent
+        Panel2.BackColor1 = Color.Transparent
+        Panel2.BorderSize = 0
         MCK_居中裁剪框 = New LakeUI.ModernCheckBox()
         MCB_裁剪比例 = New LakeUI.ModernComboBox()
         JustEmptyControl4 = New LakeUI.JustEmptyControl()
@@ -279,7 +283,7 @@ Partial Class Form_v6_参数面板_画面区域选择窗口
     Friend WithEvents ModernPanel1 As LakeUI.ModernPanel
     Friend WithEvents PPB_画面区域预览 As LakeUI.PixelPictureBox
     Friend WithEvents JustEmptyControl5 As LakeUI.JustEmptyControl
-    Friend WithEvents Panel2 As Panel
+    Friend WithEvents Panel2 As LakeUI.ModernPanel
     Friend WithEvents MCK_居中裁剪框 As LakeUI.ModernCheckBox
     Friend WithEvents MCB_裁剪比例 As LakeUI.ModernComboBox
     Friend WithEvents JustEmptyControl4 As LakeUI.JustEmptyControl

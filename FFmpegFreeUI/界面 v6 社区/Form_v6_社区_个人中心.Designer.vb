@@ -1,4 +1,4 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class Form_v6_社区_个人中心
     Inherits System.Windows.Forms.Form
 
@@ -23,27 +23,39 @@ Partial Class Form_v6_社区_个人中心
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         ModernPanel1 = New LakeUI.ModernPanel()
+        ModernPanel1.BackColor = Color.Transparent
+        ModernPanel1.BackColor1 = Color.Transparent
         MDV_活动信息 = New LakeUI.MarkDownViewer()
         JustEmptyControl13 = New LakeUI.JustEmptyControl()
-        Panel5 = New Panel()
+        Panel5 = New LakeUI.ModernPanel()
+        Panel5.BackColor = Color.Transparent
+        Panel5.BackColor1 = Color.Transparent
+        Panel5.BorderSize = 0
         MB_服务器性能界面 = New LakeUI.ModernButton()
         JustEmptyControl8 = New LakeUI.JustEmptyControl()
         MB_用户账户管理 = New LakeUI.ModernButton()
         JustEmptyControl15 = New LakeUI.JustEmptyControl()
         MB_审核列表 = New LakeUI.ModernButton()
-        Panel3 = New Panel()
+        Panel3 = New LakeUI.ModernPanel()
+        Panel3.BackColor = Color.Transparent
+        Panel3.BackColor1 = Color.Transparent
+        Panel3.BorderSize = 0
         MB_查看审核进度 = New LakeUI.ModernButton()
         JustEmptyControl10 = New LakeUI.JustEmptyControl()
         MB_发布压制成果 = New LakeUI.ModernButton()
         JustEmptyControl9 = New LakeUI.JustEmptyControl()
         MB_发布预设 = New LakeUI.ModernButton()
-        Panel1 = New Panel()
+        Panel1 = New LakeUI.ModernPanel()
+        Panel1.BackColor = Color.Transparent
+        Panel1.BackColor1 = Color.Transparent
+        Panel1.BorderSize = 0
         MB_我的消息 = New LakeUI.ModernButton()
         JustEmptyControl11 = New LakeUI.JustEmptyControl()
         MB_管理我的内容 = New LakeUI.ModernButton()
         JustEmptyControl14 = New LakeUI.JustEmptyControl()
         MB_浏览社区内容 = New LakeUI.ModernButton()
         ModernPanel4 = New LakeUI.ModernPanel()
+        ModernPanel4.BackColor = Color.Transparent
         HCL_经验值 = New LakeUI.HtmlColorLabel()
         JustEmptyControl7 = New LakeUI.JustEmptyControl()
         HCL_获得评论 = New LakeUI.HtmlColorLabel()
@@ -56,16 +68,24 @@ Partial Class Form_v6_社区_个人中心
         JustEmptyControl5 = New LakeUI.JustEmptyControl()
         JustEmptyControl2 = New LakeUI.JustEmptyControl()
         ModernPanel2 = New LakeUI.ModernPanel()
+        ModernPanel2.BackColor = Color.Transparent
         HCL_账号信息显示 = New LakeUI.HtmlColorLabel()
         JustEmptyControl1 = New LakeUI.JustEmptyControl()
         MP_账户头像 = New LakeUI.ModernPanel()
-        Panel4 = New Panel()
+        Panel4 = New LakeUI.ModernPanel()
+        Panel4.BorderSize = 0
         JustEmptyControl12 = New LakeUI.JustEmptyControl()
         MB_账户管理页面 = New LakeUI.ModernButton()
         MB_登录和登出 = New LakeUI.ModernButton()
-        Panel2 = New Panel()
+        Panel2 = New LakeUI.ModernPanel()
+        Panel2.BackColor = Color.Transparent
+        Panel2.BackColor1 = Color.Transparent
+        Panel2.BorderSize = 0
         ModernButton2 = New LakeUI.ModernButton()
-        Panel6 = New Panel()
+        Panel6 = New LakeUI.ModernPanel()
+        Panel6.BackColor = Color.Transparent
+        Panel6.BackColor1 = Color.Transparent
+        Panel6.BorderSize = 0
         MDV_社区准则 = New LakeUI.MarkDownViewer()
         ModernPanel1.SuspendLayout()
         Panel5.SuspendLayout()
@@ -80,7 +100,6 @@ Partial Class Form_v6_社区_个人中心
         ' 
         ' ModernPanel1
         ' 
-        ModernPanel1.BackColor1 = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         ModernPanel1.BorderSize = 0
         ModernPanel1.Controls.Add(MDV_活动信息)
         ModernPanel1.Controls.Add(JustEmptyControl13)
@@ -607,6 +626,7 @@ Partial Class Form_v6_社区_个人中心
         ' Panel4
         ' 
         Panel4.BackColor = Color.Transparent
+        Panel4.BackColor1 = Color.Transparent
         Panel4.Controls.Add(JustEmptyControl12)
         Panel4.Controls.Add(MB_账户管理页面)
         Panel4.Controls.Add(MB_登录和登出)
@@ -753,29 +773,29 @@ Partial Class Form_v6_社区_个人中心
     Friend WithEvents HCL_我的收藏 As LakeUI.HtmlColorLabel
     Friend WithEvents JustEmptyControl3 As LakeUI.JustEmptyControl
     Friend WithEvents JustEmptyControl5 As LakeUI.JustEmptyControl
-    Friend WithEvents Panel3 As Panel
+    Friend WithEvents Panel3 As LakeUI.ModernPanel
     Friend WithEvents MB_发布预设 As LakeUI.ModernButton
     Friend WithEvents MB_发布压制成果 As LakeUI.ModernButton
     Friend WithEvents JustEmptyControl9 As LakeUI.JustEmptyControl
     Friend WithEvents MB_查看审核进度 As LakeUI.ModernButton
     Friend WithEvents JustEmptyControl10 As LakeUI.JustEmptyControl
-    Friend WithEvents Panel4 As Panel
+    Friend WithEvents Panel4 As LakeUI.ModernPanel
     Friend WithEvents JustEmptyControl12 As LakeUI.JustEmptyControl
     Friend WithEvents MB_账户管理页面 As LakeUI.ModernButton
     Friend WithEvents MB_登录和登出 As LakeUI.ModernButton
-    Friend WithEvents Panel1 As Panel
+    Friend WithEvents Panel1 As LakeUI.ModernPanel
     Friend WithEvents MB_管理我的内容 As LakeUI.ModernButton
     Friend WithEvents JustEmptyControl14 As LakeUI.JustEmptyControl
     Friend WithEvents MB_浏览社区内容 As LakeUI.ModernButton
-    Friend WithEvents Panel2 As Panel
+    Friend WithEvents Panel2 As LakeUI.ModernPanel
     Friend WithEvents ModernButton2 As LakeUI.ModernButton
-    Friend WithEvents Panel5 As Panel
+    Friend WithEvents Panel5 As LakeUI.ModernPanel
     Friend WithEvents MB_服务器性能界面 As LakeUI.ModernButton
     Friend WithEvents JustEmptyControl8 As LakeUI.JustEmptyControl
     Friend WithEvents MB_用户账户管理 As LakeUI.ModernButton
     Friend WithEvents JustEmptyControl15 As LakeUI.JustEmptyControl
     Friend WithEvents MB_审核列表 As LakeUI.ModernButton
-    Friend WithEvents Panel6 As Panel
+    Friend WithEvents Panel6 As LakeUI.ModernPanel
     Friend WithEvents MDV_社区准则 As LakeUI.MarkDownViewer
     Friend WithEvents MB_我的消息 As LakeUI.ModernButton
     Friend WithEvents JustEmptyControl11 As LakeUI.JustEmptyControl

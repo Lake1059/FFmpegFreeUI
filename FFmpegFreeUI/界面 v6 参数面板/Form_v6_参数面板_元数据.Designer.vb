@@ -25,8 +25,13 @@ Partial Class Form_v6_参数面板_元数据
         Dim ListColumn1 As LakeUI.UltraDetailListView.ListColumn = New LakeUI.UltraDetailListView.ListColumn()
         Dim ListColumn2 As LakeUI.UltraDetailListView.ListColumn = New LakeUI.UltraDetailListView.ListColumn()
         ModernPanel1 = New LakeUI.ModernPanel()
+        ModernPanel1.BackColor = Color.Transparent
+        ModernPanel1.BackColor1 = Color.Transparent
         UDLV_元数据列表 = New LakeUI.UltraDetailListView()
-        Panel1 = New Panel()
+        Panel1 = New LakeUI.ModernPanel()
+        Panel1.BackColor = Color.Transparent
+        Panel1.BackColor1 = Color.Transparent
+        Panel1.BorderSize = 0
         MB_导入元数据 = New LakeUI.ModernButton()
         JustEmptyControl4 = New LakeUI.JustEmptyControl()
         MB_导出元数据 = New LakeUI.ModernButton()
@@ -43,7 +48,6 @@ Partial Class Form_v6_参数面板_元数据
         '
         ' ModernPanel1
         '
-        ModernPanel1.BackColor1 = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         ModernPanel1.BorderSize = 0
         ModernPanel1.Controls.Add(UDLV_元数据列表)
         ModernPanel1.Controls.Add(Panel1)
@@ -270,7 +274,7 @@ Partial Class Form_v6_参数面板_元数据
 
     Friend WithEvents ModernPanel1 As LakeUI.ModernPanel
     Friend WithEvents UDLV_元数据列表 As LakeUI.UltraDetailListView
-    Friend WithEvents Panel1 As Panel
+    Friend WithEvents Panel1 As LakeUI.ModernPanel
     Friend WithEvents MB_删除所选元数据 As LakeUI.ModernButton
     Friend WithEvents JustEmptyControl1 As LakeUI.JustEmptyControl
     Friend WithEvents MCB_添加元数据预制项 As LakeUI.ModernComboBox

@@ -25,36 +25,68 @@ Partial Class Form_v6_设置_LakeUI性能选项
         Dim ToolTipEntry5 As LakeUI.ModernComboBox.ToolTipEntry = New LakeUI.ModernComboBox.ToolTipEntry()
         Dim ToolTipEntry6 As LakeUI.ModernComboBox.ToolTipEntry = New LakeUI.ModernComboBox.ToolTipEntry()
         ModernPanel1 = New LakeUI.ModernPanel()
-        Panel6 = New Panel()
+        ModernPanel1.BackColor = Color.Transparent
+        ModernPanel1.BackColor1 = Color.Transparent
+        Panel6 = New LakeUI.ModernPanel()
+        Panel6.BackColor = Color.Transparent
+        Panel6.BackColor1 = Color.Transparent
+        Panel6.BorderSize = 0
         HtmlColorLabel5 = New LakeUI.HtmlColorLabel()
         MCB_动画帧率 = New LakeUI.ModernComboBox()
         HtmlColorLabel3 = New LakeUI.HtmlColorLabel()
-        Panel3 = New Panel()
+        Panel3 = New LakeUI.ModernPanel()
+        Panel3.BackColor = Color.Transparent
+        Panel3.BackColor1 = Color.Transparent
+        Panel3.BorderSize = 0
         HtmlColorLabel9 = New LakeUI.HtmlColorLabel()
         MCB_超容器背景映射条目预算 = New LakeUI.ModernComboBox()
-        Panel11 = New Panel()
+        Panel11 = New LakeUI.ModernPanel()
+        Panel11.BackColor = Color.Transparent
+        Panel11.BackColor1 = Color.Transparent
+        Panel11.BorderSize = 0
         HtmlColorLabel10 = New LakeUI.HtmlColorLabel()
         MCB_超容器背景映射脏区策略极限 = New LakeUI.ModernComboBox()
-        Panel10 = New Panel()
+        Panel10 = New LakeUI.ModernPanel()
+        Panel10.BackColor = Color.Transparent
+        Panel10.BackColor1 = Color.Transparent
+        Panel10.BorderSize = 0
         HtmlColorLabel6 = New LakeUI.HtmlColorLabel()
         MCB_超容器背景映射源位图缓存 = New LakeUI.ModernComboBox()
-        Panel5 = New Panel()
+        Panel5 = New LakeUI.ModernPanel()
+        Panel5.BackColor = Color.Transparent
+        Panel5.BackColor1 = Color.Transparent
+        Panel5.BorderSize = 0
         HtmlColorLabel4 = New LakeUI.HtmlColorLabel()
         MCB_DW字体相关预算 = New LakeUI.ModernComboBox()
-        Panel4 = New Panel()
+        Panel4 = New LakeUI.ModernPanel()
+        Panel4.BackColor = Color.Transparent
+        Panel4.BackColor1 = Color.Transparent
+        Panel4.BorderSize = 0
         HtmlColorLabel2 = New LakeUI.HtmlColorLabel()
         MCB_D2D每对象画刷缓存数量 = New LakeUI.ModernComboBox()
-        Panel1 = New Panel()
+        Panel1 = New LakeUI.ModernPanel()
+        Panel1.BackColor = Color.Transparent
+        Panel1.BackColor1 = Color.Transparent
+        Panel1.BorderSize = 0
         HtmlColorLabel8 = New LakeUI.HtmlColorLabel()
         MCB_D2DImage缓存预算 = New LakeUI.ModernComboBox()
         HtmlColorLabel7 = New LakeUI.HtmlColorLabel()
-        Panel9 = New Panel()
+        Panel9 = New LakeUI.ModernPanel()
+        Panel9.BackColor = Color.Transparent
+        Panel9.BackColor1 = Color.Transparent
+        Panel9.BorderSize = 0
         HtmlColorLabel14 = New LakeUI.HtmlColorLabel()
         MCB_SSAA = New LakeUI.ModernComboBox()
-        Panel7 = New Panel()
+        Panel7 = New LakeUI.ModernPanel()
+        Panel7.BackColor = Color.Transparent
+        Panel7.BackColor1 = Color.Transparent
+        Panel7.BorderSize = 0
         HtmlColorLabel12 = New LakeUI.HtmlColorLabel()
         MCB_文字渲染模式 = New LakeUI.ModernComboBox()
-        Panel8 = New Panel()
+        Panel8 = New LakeUI.ModernPanel()
+        Panel8.BackColor = Color.Transparent
+        Panel8.BackColor1 = Color.Transparent
+        Panel8.BorderSize = 0
         HtmlColorLabel13 = New LakeUI.HtmlColorLabel()
         MCB_GPU抗锯齿 = New LakeUI.ModernComboBox()
         HtmlColorLabel11 = New LakeUI.HtmlColorLabel()
@@ -73,7 +105,6 @@ Partial Class Form_v6_设置_LakeUI性能选项
         ' 
         ' ModernPanel1
         ' 
-        ModernPanel1.BackColor1 = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         ModernPanel1.BorderSize = 0
         ModernPanel1.Controls.Add(Panel6)
         ModernPanel1.Controls.Add(HtmlColorLabel3)
@@ -761,36 +792,36 @@ Partial Class Form_v6_设置_LakeUI性能选项
 
     Friend WithEvents ModernPanel1 As LakeUI.ModernPanel
     Friend WithEvents HtmlColorLabel3 As LakeUI.HtmlColorLabel
-    Friend WithEvents Panel6 As Panel
+    Friend WithEvents Panel6 As LakeUI.ModernPanel
     Friend WithEvents HtmlColorLabel5 As LakeUI.HtmlColorLabel
     Friend WithEvents MCB_动画帧率 As LakeUI.ModernComboBox
     Friend WithEvents HtmlColorLabel11 As LakeUI.HtmlColorLabel
-    Friend WithEvents Panel7 As Panel
+    Friend WithEvents Panel7 As LakeUI.ModernPanel
     Friend WithEvents HtmlColorLabel12 As LakeUI.HtmlColorLabel
     Friend WithEvents MCB_文字渲染模式 As LakeUI.ModernComboBox
-    Friend WithEvents Panel8 As Panel
+    Friend WithEvents Panel8 As LakeUI.ModernPanel
     Friend WithEvents HtmlColorLabel13 As LakeUI.HtmlColorLabel
     Friend WithEvents MCB_GPU抗锯齿 As LakeUI.ModernComboBox
     Friend WithEvents HtmlColorLabel7 As LakeUI.HtmlColorLabel
-    Friend WithEvents Panel3 As Panel
+    Friend WithEvents Panel3 As LakeUI.ModernPanel
     Friend WithEvents HtmlColorLabel9 As LakeUI.HtmlColorLabel
     Friend WithEvents MCB_超容器背景映射条目预算 As LakeUI.ModernComboBox
-    Friend WithEvents Panel1 As Panel
+    Friend WithEvents Panel1 As LakeUI.ModernPanel
     Friend WithEvents HtmlColorLabel8 As LakeUI.HtmlColorLabel
     Friend WithEvents MCB_D2DImage缓存预算 As LakeUI.ModernComboBox
-    Friend WithEvents Panel9 As Panel
+    Friend WithEvents Panel9 As LakeUI.ModernPanel
     Friend WithEvents HtmlColorLabel14 As LakeUI.HtmlColorLabel
     Friend WithEvents MCB_SSAA As LakeUI.ModernComboBox
-    Friend WithEvents Panel11 As Panel
+    Friend WithEvents Panel11 As LakeUI.ModernPanel
     Friend WithEvents HtmlColorLabel10 As LakeUI.HtmlColorLabel
     Friend WithEvents MCB_超容器背景映射脏区策略极限 As LakeUI.ModernComboBox
-    Friend WithEvents Panel10 As Panel
+    Friend WithEvents Panel10 As LakeUI.ModernPanel
     Friend WithEvents HtmlColorLabel6 As LakeUI.HtmlColorLabel
     Friend WithEvents MCB_超容器背景映射源位图缓存 As LakeUI.ModernComboBox
-    Friend WithEvents Panel5 As Panel
+    Friend WithEvents Panel5 As LakeUI.ModernPanel
     Friend WithEvents HtmlColorLabel4 As LakeUI.HtmlColorLabel
     Friend WithEvents MCB_DW字体相关预算 As LakeUI.ModernComboBox
-    Friend WithEvents Panel4 As Panel
+    Friend WithEvents Panel4 As LakeUI.ModernPanel
     Friend WithEvents HtmlColorLabel2 As LakeUI.HtmlColorLabel
     Friend WithEvents MCB_D2D每对象画刷缓存数量 As LakeUI.ModernComboBox
 End Class

@@ -23,8 +23,14 @@ Partial Class Form_v6_集成工具_抽流
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         ModernPanel1 = New LakeUI.ModernPanel()
+        ModernPanel1.BackColor = Color.Transparent
+        ModernPanel1.BackColor1 = Color.Transparent
         ModernPanel2 = New LakeUI.ModernPanel()
-        Panel1 = New Panel()
+        ModernPanel2.BackColor = Color.Transparent
+        Panel1 = New LakeUI.ModernPanel()
+        Panel1.BackColor = Color.Transparent
+        Panel1.BackColor1 = Color.Transparent
+        Panel1.BorderSize = 0
         MCB_输出位置 = New LakeUI.ModernComboBox()
         JustEmptyControl2 = New LakeUI.JustEmptyControl()
         MB_提取所选 = New LakeUI.ModernButton()
@@ -39,7 +45,6 @@ Partial Class Form_v6_集成工具_抽流
         ' 
         ' ModernPanel1
         ' 
-        ModernPanel1.BackColor1 = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         ModernPanel1.BorderSize = 0
         ModernPanel1.Controls.Add(ModernPanel2)
         ModernPanel1.Controls.Add(Panel1)
@@ -212,7 +217,7 @@ Partial Class Form_v6_集成工具_抽流
 
     Friend WithEvents ModernPanel1 As LakeUI.ModernPanel
     Friend WithEvents HtmlColorLabel1 As LakeUI.HtmlColorLabel
-    Friend WithEvents Panel1 As Panel
+    Friend WithEvents Panel1 As LakeUI.ModernPanel
     Friend WithEvents MB_打开文件 As LakeUI.ModernButton
     Friend WithEvents JustEmptyControl1 As LakeUI.JustEmptyControl
     Friend WithEvents JustEmptyControl2 As LakeUI.JustEmptyControl

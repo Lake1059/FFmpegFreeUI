@@ -24,13 +24,21 @@ Partial Class Form_v6_参数面板_视频帧服务器
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form_v6_参数面板_视频帧服务器))
         ModernPanel1 = New LakeUI.ModernPanel()
-        Panel1 = New Panel()
+        ModernPanel1.BackColor = Color.Transparent
+        ModernPanel1.BackColor1 = Color.Transparent
+        Panel1 = New LakeUI.ModernPanel()
+        Panel1.BackColor = Color.Transparent
+        Panel1.BackColor1 = Color.Transparent
+        Panel1.BorderSize = 0
         MCB_VapourSynth脚本文件 = New LakeUI.ModernComboBox()
         JustEmptyControl2 = New LakeUI.JustEmptyControl()
         BS_使用VapourSynth = New LakeUI.BooleanSwitch()
         HCL_VapourSynth说明 = New LakeUI.HtmlColorLabel()
         HCL_VapourSynth标题 = New LakeUI.HtmlColorLabel()
-        Panel7 = New Panel()
+        Panel7 = New LakeUI.ModernPanel()
+        Panel7.BackColor = Color.Transparent
+        Panel7.BackColor1 = Color.Transparent
+        Panel7.BorderSize = 0
         MCB_AviSynth脚本文件 = New LakeUI.ModernComboBox()
         JustEmptyControl1 = New LakeUI.JustEmptyControl()
         BS_使用AviSynth = New LakeUI.BooleanSwitch()
@@ -45,7 +53,6 @@ Partial Class Form_v6_参数面板_视频帧服务器
         '
         ' ModernPanel1
         '
-        ModernPanel1.BackColor1 = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         ModernPanel1.BorderSize = 0
         ModernPanel1.Controls.Add(Panel1)
         ModernPanel1.Controls.Add(HCL_VapourSynth说明)
@@ -296,11 +303,11 @@ Partial Class Form_v6_参数面板_视频帧服务器
     Friend WithEvents HCL_视频帧服务器说明 As LakeUI.HtmlColorLabel
     Friend WithEvents HCL_AviSynth标题 As LakeUI.HtmlColorLabel
     Friend WithEvents HCL_AviSynth说明 As LakeUI.HtmlColorLabel
-    Friend WithEvents Panel7 As Panel
+    Friend WithEvents Panel7 As LakeUI.ModernPanel
     Friend WithEvents BS_使用AviSynth As LakeUI.BooleanSwitch
     Friend WithEvents MCB_AviSynth脚本文件 As LakeUI.ModernComboBox
     Friend WithEvents JustEmptyControl1 As LakeUI.JustEmptyControl
-    Friend WithEvents Panel1 As Panel
+    Friend WithEvents Panel1 As LakeUI.ModernPanel
     Friend WithEvents MCB_VapourSynth脚本文件 As LakeUI.ModernComboBox
     Friend WithEvents JustEmptyControl2 As LakeUI.JustEmptyControl
     Friend WithEvents BS_使用VapourSynth As LakeUI.BooleanSwitch

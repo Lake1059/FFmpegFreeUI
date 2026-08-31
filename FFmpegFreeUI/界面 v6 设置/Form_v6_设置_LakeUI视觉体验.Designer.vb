@@ -23,13 +23,21 @@ Partial Class Form_v6_设置_LakeUI视觉体验
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         ModernPanel1 = New LakeUI.ModernPanel()
-        Panel1 = New Panel()
+        ModernPanel1.BackColor = Color.Transparent
+        ModernPanel1.BackColor1 = Color.Transparent
+        Panel1 = New LakeUI.ModernPanel()
+        Panel1.BackColor = Color.Transparent
+        Panel1.BackColor1 = Color.Transparent
+        Panel1.BorderSize = 0
         HtmlColorLabel4 = New LakeUI.HtmlColorLabel()
         MCB_性能计数器 = New LakeUI.ModernComboBox()
         HtmlColorLabel6 = New LakeUI.HtmlColorLabel()
         HtmlColorLabel3 = New LakeUI.HtmlColorLabel()
         HtmlColorLabel2 = New LakeUI.HtmlColorLabel()
-        Panel2 = New Panel()
+        Panel2 = New LakeUI.ModernPanel()
+        Panel2.BackColor = Color.Transparent
+        Panel2.BackColor1 = Color.Transparent
+        Panel2.BorderSize = 0
         HtmlColorLabel7 = New LakeUI.HtmlColorLabel()
         MCB_窗口样式 = New LakeUI.ModernComboBox()
         HtmlColorLabel1 = New LakeUI.HtmlColorLabel()
@@ -41,7 +49,6 @@ Partial Class Form_v6_设置_LakeUI视觉体验
         ' 
         ' ModernPanel1
         ' 
-        ModernPanel1.BackColor1 = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         ModernPanel1.BorderSize = 0
         ModernPanel1.Controls.Add(Panel1)
         ModernPanel1.Controls.Add(HtmlColorLabel6)
@@ -254,14 +261,14 @@ Partial Class Form_v6_设置_LakeUI视觉体验
     End Sub
 
     Friend WithEvents ModernPanel1 As LakeUI.ModernPanel
-    Friend WithEvents Panel2 As Panel
+    Friend WithEvents Panel2 As LakeUI.ModernPanel
     Friend WithEvents MCB_窗口样式 As LakeUI.ModernComboBox
     Friend WithEvents HtmlColorLabel1 As LakeUI.HtmlColorLabel
     Friend WithEvents HtmlColorLabel5 As LakeUI.HtmlColorLabel
     Friend WithEvents HtmlColorLabel7 As LakeUI.HtmlColorLabel
     Friend WithEvents HtmlColorLabel3 As LakeUI.HtmlColorLabel
     Friend WithEvents HtmlColorLabel2 As LakeUI.HtmlColorLabel
-    Friend WithEvents Panel1 As Panel
+    Friend WithEvents Panel1 As LakeUI.ModernPanel
     Friend WithEvents MCB_性能计数器 As LakeUI.ModernComboBox
     Friend WithEvents HtmlColorLabel6 As LakeUI.HtmlColorLabel
     Friend WithEvents HtmlColorLabel4 As LakeUI.HtmlColorLabel

@@ -23,44 +23,85 @@ Partial Class Form_v6_集成工具_Whisper生成字幕
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         ModernPanel1 = New LakeUI.ModernPanel()
+        ModernPanel1.BackColor = Color.Transparent
+        ModernPanel1.BackColor1 = Color.Transparent
         HtmlColorLabel1 = New LakeUI.HtmlColorLabel()
-        Panel4 = New Panel()
+        Panel4 = New LakeUI.ModernPanel()
+        Panel4.BackColor = Color.Transparent
+        Panel4.BackColor1 = Color.Transparent
+        Panel4.BorderSize = 0
         HtmlColorLabel6 = New LakeUI.HtmlColorLabel()
         HtmlColorLabel5 = New LakeUI.HtmlColorLabel()
-        Panel2 = New Panel()
+        Panel2 = New LakeUI.ModernPanel()
+        Panel2.BackColor = Color.Transparent
+        Panel2.BackColor1 = Color.Transparent
+        Panel2.BorderSize = 0
         MTB_音频流索引 = New LakeUI.ModernTextBox()
         JustEmptyControl2 = New LakeUI.JustEmptyControl()
         MCB_输入文件 = New LakeUI.ModernComboBox()
-        Panel1 = New Panel()
+        Panel1 = New LakeUI.ModernPanel()
+        Panel1.BackColor = Color.Transparent
+        Panel1.BackColor1 = Color.Transparent
+        Panel1.BorderSize = 0
         MCB_选择模型文件 = New LakeUI.ModernComboBox()
         MTB_GPU设备索引 = New LakeUI.ModernTextBox()
-        Panel3 = New Panel()
+        Panel3 = New LakeUI.ModernPanel()
+        Panel3.BackColor = Color.Transparent
+        Panel3.BackColor1 = Color.Transparent
+        Panel3.BorderSize = 0
         HtmlColorLabel2 = New LakeUI.HtmlColorLabel()
         HtmlColorLabel3 = New LakeUI.HtmlColorLabel()
-        Panel5 = New Panel()
+        Panel5 = New LakeUI.ModernPanel()
+        Panel5.BackColor = Color.Transparent
+        Panel5.BackColor1 = Color.Transparent
+        Panel5.BorderSize = 0
         HtmlColorLabel7 = New LakeUI.HtmlColorLabel()
-        Panel6 = New Panel()
+        Panel6 = New LakeUI.ModernPanel()
+        Panel6.BackColor = Color.Transparent
+        Panel6.BackColor1 = Color.Transparent
+        Panel6.BorderSize = 0
         MCB_要识别的语言 = New LakeUI.ModernComboBox()
         JustEmptyControl4 = New LakeUI.JustEmptyControl()
         HtmlColorLabel4 = New LakeUI.HtmlColorLabel()
         MCB_字幕片段最大字符数 = New LakeUI.HtmlColorLabel()
         MCB_翻译成英语 = New LakeUI.ModernCheckBox()
-        Panel7 = New Panel()
-        Panel8 = New Panel()
+        Panel7 = New LakeUI.ModernPanel()
+        Panel7.BackColor = Color.Transparent
+        Panel7.BackColor1 = Color.Transparent
+        Panel7.BorderSize = 0
+        Panel8 = New LakeUI.ModernPanel()
+        Panel8.BackColor = Color.Transparent
+        Panel8.BackColor1 = Color.Transparent
+        Panel8.BorderSize = 0
         HtmlColorLabel9 = New LakeUI.HtmlColorLabel()
         HtmlColorLabel10 = New LakeUI.HtmlColorLabel()
         HtmlColorLabel11 = New LakeUI.HtmlColorLabel()
-        Panel10 = New Panel()
+        Panel10 = New LakeUI.ModernPanel()
+        Panel10.BackColor = Color.Transparent
+        Panel10.BackColor1 = Color.Transparent
+        Panel10.BorderSize = 0
         HtmlColorLabel12 = New LakeUI.HtmlColorLabel()
         MCB_VAD模型文件 = New LakeUI.ModernComboBox()
-        Panel9 = New Panel()
-        Panel11 = New Panel()
+        Panel9 = New LakeUI.ModernPanel()
+        Panel9.BackColor = Color.Transparent
+        Panel9.BackColor1 = Color.Transparent
+        Panel9.BorderSize = 0
+        Panel11 = New LakeUI.ModernPanel()
+        Panel11.BackColor = Color.Transparent
+        Panel11.BackColor1 = Color.Transparent
+        Panel11.BorderSize = 0
         JustEmptyControl7 = New LakeUI.JustEmptyControl()
         MCB_输出类型 = New LakeUI.ModernComboBox()
-        Panel12 = New Panel()
+        Panel12 = New LakeUI.ModernPanel()
+        Panel12.BackColor = Color.Transparent
+        Panel12.BackColor1 = Color.Transparent
+        Panel12.BorderSize = 0
         HtmlColorLabel14 = New LakeUI.HtmlColorLabel()
         HtmlColorLabel15 = New LakeUI.HtmlColorLabel()
-        Panel13 = New Panel()
+        Panel13 = New LakeUI.ModernPanel()
+        Panel13.BackColor = Color.Transparent
+        Panel13.BackColor1 = Color.Transparent
+        Panel13.BorderSize = 0
         MB_添加到编码队列 = New LakeUI.ModernButton()
         JustEmptyControl6 = New LakeUI.JustEmptyControl()
         MB_重置页面 = New LakeUI.ModernButton()
@@ -94,7 +135,6 @@ Partial Class Form_v6_集成工具_Whisper生成字幕
         '
         ' ModernPanel1
         '
-        ModernPanel1.BackColor1 = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         ModernPanel1.BorderSize = 0
         ModernPanel1.Controls.Add(Panel11)
         ModernPanel1.Controls.Add(Panel12)
@@ -922,43 +962,43 @@ Partial Class Form_v6_集成工具_Whisper生成字幕
 
     Friend WithEvents ModernPanel1 As LakeUI.ModernPanel
     Friend WithEvents HtmlColorLabel1 As LakeUI.HtmlColorLabel
-    Friend WithEvents Panel4 As Panel
+    Friend WithEvents Panel4 As LakeUI.ModernPanel
     Friend WithEvents HtmlColorLabel5 As LakeUI.HtmlColorLabel
     Friend WithEvents HtmlColorLabel6 As LakeUI.HtmlColorLabel
-    Friend WithEvents Panel2 As Panel
+    Friend WithEvents Panel2 As LakeUI.ModernPanel
     Friend WithEvents MCB_输入文件 As LakeUI.ModernComboBox
     Friend WithEvents JustEmptyControl2 As LakeUI.JustEmptyControl
     Friend WithEvents MTB_音频流索引 As LakeUI.ModernTextBox
-    Friend WithEvents Panel1 As Panel
+    Friend WithEvents Panel1 As LakeUI.ModernPanel
     Friend WithEvents MCB_选择模型文件 As LakeUI.ModernComboBox
     Friend WithEvents MTB_GPU设备索引 As LakeUI.ModernTextBox
-    Friend WithEvents Panel3 As Panel
+    Friend WithEvents Panel3 As LakeUI.ModernPanel
     Friend WithEvents HtmlColorLabel2 As LakeUI.HtmlColorLabel
     Friend WithEvents HtmlColorLabel3 As LakeUI.HtmlColorLabel
-    Friend WithEvents Panel6 As Panel
+    Friend WithEvents Panel6 As LakeUI.ModernPanel
     Friend WithEvents JustEmptyControl4 As LakeUI.JustEmptyControl
     Friend WithEvents MCB_要识别的语言 As LakeUI.ModernComboBox
-    Friend WithEvents Panel5 As Panel
+    Friend WithEvents Panel5 As LakeUI.ModernPanel
     Friend WithEvents HtmlColorLabel4 As LakeUI.HtmlColorLabel
     Friend WithEvents HtmlColorLabel7 As LakeUI.HtmlColorLabel
     Friend WithEvents MCB_字幕片段最大字符数 As LakeUI.HtmlColorLabel
     Friend WithEvents MCB_翻译成英语 As LakeUI.ModernCheckBox
-    Friend WithEvents Panel7 As Panel
-    Friend WithEvents Panel8 As Panel
+    Friend WithEvents Panel7 As LakeUI.ModernPanel
+    Friend WithEvents Panel8 As LakeUI.ModernPanel
     Friend WithEvents HtmlColorLabel9 As LakeUI.HtmlColorLabel
     Friend WithEvents HtmlColorLabel10 As LakeUI.HtmlColorLabel
     Friend WithEvents HtmlColorLabel11 As LakeUI.HtmlColorLabel
-    Friend WithEvents Panel10 As Panel
+    Friend WithEvents Panel10 As LakeUI.ModernPanel
     Friend WithEvents HtmlColorLabel12 As LakeUI.HtmlColorLabel
-    Friend WithEvents Panel9 As Panel
+    Friend WithEvents Panel9 As LakeUI.ModernPanel
     Friend WithEvents MCB_VAD模型文件 As LakeUI.ModernComboBox
-    Friend WithEvents Panel11 As Panel
+    Friend WithEvents Panel11 As LakeUI.ModernPanel
     Friend WithEvents JustEmptyControl7 As LakeUI.JustEmptyControl
     Friend WithEvents MCB_输出类型 As LakeUI.ModernComboBox
-    Friend WithEvents Panel12 As Panel
+    Friend WithEvents Panel12 As LakeUI.ModernPanel
     Friend WithEvents HtmlColorLabel14 As LakeUI.HtmlColorLabel
     Friend WithEvents HtmlColorLabel15 As LakeUI.HtmlColorLabel
-    Friend WithEvents Panel13 As Panel
+    Friend WithEvents Panel13 As LakeUI.ModernPanel
     Friend WithEvents MB_添加到编码队列 As LakeUI.ModernButton
     Friend WithEvents MB_重置页面 As LakeUI.ModernButton
     Friend WithEvents JustEmptyControl6 As LakeUI.JustEmptyControl

@@ -26,8 +26,13 @@ Partial Class Form_v6_参数面板_滤镜排序
         Dim ListColumn5 As LakeUI.UltraDetailListView.ListColumn = New LakeUI.UltraDetailListView.ListColumn()
         Dim ListColumn6 As LakeUI.UltraDetailListView.ListColumn = New LakeUI.UltraDetailListView.ListColumn()
         ModernPanel1 = New LakeUI.ModernPanel()
+        ModernPanel1.BackColor = Color.Transparent
+        ModernPanel1.BackColor1 = Color.Transparent
         UDLV_滤镜排序列表 = New LakeUI.UltraDetailListView()
-        Panel1 = New Panel()
+        Panel1 = New LakeUI.ModernPanel()
+        Panel1.BackColor = Color.Transparent
+        Panel1.BackColor1 = Color.Transparent
+        Panel1.BorderSize = 0
         MB_删除滤镜 = New LakeUI.ModernButton()
         JustEmptyControl2 = New LakeUI.JustEmptyControl()
         MB_添加自定义音频滤镜 = New LakeUI.ModernButton()
@@ -40,7 +45,6 @@ Partial Class Form_v6_参数面板_滤镜排序
         ' 
         ' ModernPanel1
         ' 
-        ModernPanel1.BackColor1 = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         ModernPanel1.BorderSize = 0
         ModernPanel1.Controls.Add(UDLV_滤镜排序列表)
         ModernPanel1.Controls.Add(Panel1)
@@ -196,7 +200,7 @@ Partial Class Form_v6_参数面板_滤镜排序
 
     Friend WithEvents ModernPanel1 As LakeUI.ModernPanel
     Friend WithEvents HCL_滤镜排序说明 As LakeUI.HtmlColorLabel
-    Friend WithEvents Panel1 As Panel
+    Friend WithEvents Panel1 As LakeUI.ModernPanel
     Friend WithEvents MB_删除滤镜 As LakeUI.ModernButton
     Friend WithEvents JustEmptyControl3 As LakeUI.JustEmptyControl
     Friend WithEvents JustEmptyControl1 As LakeUI.JustEmptyControl

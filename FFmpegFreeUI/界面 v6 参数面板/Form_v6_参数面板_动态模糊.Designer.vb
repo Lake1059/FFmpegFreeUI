@@ -23,16 +23,30 @@ Partial Class Form_v6_参数面板_动态模糊
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         ModernPanel1 = New LakeUI.ModernPanel()
-        Panel4 = New Panel()
+        ModernPanel1.BackColor = Color.Transparent
+        ModernPanel1.BackColor1 = Color.Transparent
+        Panel4 = New LakeUI.ModernPanel()
+        Panel4.BackColor = Color.Transparent
+        Panel4.BackColor1 = Color.Transparent
+        Panel4.BorderSize = 0
         MTB_处理哪些颜色平面 = New LakeUI.ModernTextBox()
         HCL_处理哪些颜色平面 = New LakeUI.HtmlColorLabel()
-        Panel3 = New Panel()
+        Panel3 = New LakeUI.ModernPanel()
+        Panel3.BackColor = Color.Transparent
+        Panel3.BackColor1 = Color.Transparent
+        Panel3.BorderSize = 0
         MTB_输出缩放系数 = New LakeUI.ModernTextBox()
         HCL_输出缩放系数 = New LakeUI.HtmlColorLabel()
-        Panel1 = New Panel()
+        Panel1 = New LakeUI.ModernPanel()
+        Panel1.BackColor = Color.Transparent
+        Panel1.BackColor1 = Color.Transparent
+        Panel1.BorderSize = 0
         MTB_每帧的权重 = New LakeUI.ModernTextBox()
         HCL_每帧的权重 = New LakeUI.HtmlColorLabel()
-        Panel2 = New Panel()
+        Panel2 = New LakeUI.ModernPanel()
+        Panel2.BackColor = Color.Transparent
+        Panel2.BackColor1 = Color.Transparent
+        Panel2.BorderSize = 0
         MTB_连续混合帧数 = New LakeUI.ModernTextBox()
         HCL_连续混合帧数 = New LakeUI.HtmlColorLabel()
         MCK_动态模糊总开关 = New LakeUI.ModernCheckBox()
@@ -45,7 +59,6 @@ Partial Class Form_v6_参数面板_动态模糊
         '
         ' ModernPanel1
         '
-        ModernPanel1.BackColor1 = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         ModernPanel1.BorderSize = 0
         ModernPanel1.Controls.Add(Panel4)
         ModernPanel1.Controls.Add(HCL_处理哪些颜色平面)
@@ -276,16 +289,16 @@ Partial Class Form_v6_参数面板_动态模糊
 
     Friend WithEvents ModernPanel1 As LakeUI.ModernPanel
     Friend WithEvents MCK_动态模糊总开关 As LakeUI.ModernCheckBox
-    Friend WithEvents Panel2 As Panel
+    Friend WithEvents Panel2 As LakeUI.ModernPanel
     Friend WithEvents MTB_连续混合帧数 As LakeUI.ModernTextBox
     Friend WithEvents HCL_连续混合帧数 As LakeUI.HtmlColorLabel
-    Friend WithEvents Panel4 As Panel
+    Friend WithEvents Panel4 As LakeUI.ModernPanel
     Friend WithEvents MTB_处理哪些颜色平面 As LakeUI.ModernTextBox
     Friend WithEvents HCL_处理哪些颜色平面 As LakeUI.HtmlColorLabel
-    Friend WithEvents Panel3 As Panel
+    Friend WithEvents Panel3 As LakeUI.ModernPanel
     Friend WithEvents MTB_输出缩放系数 As LakeUI.ModernTextBox
     Friend WithEvents HCL_输出缩放系数 As LakeUI.HtmlColorLabel
-    Friend WithEvents Panel1 As Panel
+    Friend WithEvents Panel1 As LakeUI.ModernPanel
     Friend WithEvents MTB_每帧的权重 As LakeUI.ModernTextBox
     Friend WithEvents HCL_每帧的权重 As LakeUI.HtmlColorLabel
 End Class

@@ -27,30 +27,56 @@ Partial Class Form_v6_参数面板_输出文件设置
         音频菜单 = New LakeUI.ModernContextMenu()
         图片菜单 = New LakeUI.ModernContextMenu()
         ModernPanel1 = New LakeUI.ModernPanel()
-        Panel7 = New Panel()
+        ModernPanel1.BackColor = Color.Transparent
+        ModernPanel1.BackColor1 = Color.Transparent
+        Panel7 = New LakeUI.ModernPanel()
+        Panel7.BackColor = Color.Transparent
+        Panel7.BackColor1 = Color.Transparent
+        Panel7.BorderSize = 0
         MCK_保留访问时间 = New LakeUI.ModernCheckBox()
         MCK_保留修改时间 = New LakeUI.ModernCheckBox()
         MCK_保留创建时间 = New LakeUI.ModernCheckBox()
         HCL_文件时间 = New LakeUI.HtmlColorLabel()
-        Panel6 = New Panel()
+        Panel6 = New LakeUI.ModernPanel()
+        Panel6.BackColor = Color.Transparent
+        Panel6.BackColor1 = Color.Transparent
+        Panel6.BorderSize = 0
         HCL_结尾文本 = New LakeUI.HtmlColorLabel()
         MTB_结尾文本 = New LakeUI.ModernTextBox()
-        Panel5 = New Panel()
+        Panel5 = New LakeUI.ModernPanel()
+        Panel5.BackColor = Color.Transparent
+        Panel5.BackColor1 = Color.Transparent
+        Panel5.BorderSize = 0
         HCL_替代文件名 = New LakeUI.HtmlColorLabel()
         MTB_替代文件名 = New LakeUI.ModernTextBox()
-        Panel4 = New Panel()
+        Panel4 = New LakeUI.ModernPanel()
+        Panel4.BackColor = Color.Transparent
+        Panel4.BackColor1 = Color.Transparent
+        Panel4.BorderSize = 0
         HCL_开头文本 = New LakeUI.HtmlColorLabel()
         MTB_开头文本 = New LakeUI.ModernTextBox()
-        Panel3 = New Panel()
+        Panel3 = New LakeUI.ModernPanel()
+        Panel3.BackColor = Color.Transparent
+        Panel3.BackColor1 = Color.Transparent
+        Panel3.BorderSize = 0
         HCL_自动命名方式 = New LakeUI.HtmlColorLabel()
         MCB_自动命名方式 = New LakeUI.ModernComboBox()
         HCL_命名方式 = New LakeUI.HtmlColorLabel()
-        Panel8 = New Panel()
+        Panel8 = New LakeUI.ModernPanel()
+        Panel8.BackColor = Color.Transparent
+        Panel8.BackColor1 = Color.Transparent
+        Panel8.BorderSize = 0
         MCB_保留子文件夹结构起始点 = New LakeUI.ModernComboBox()
         HCL_保留子文件夹结构起始点 = New LakeUI.HtmlColorLabel()
-        Panel2 = New Panel()
+        Panel2 = New LakeUI.ModernPanel()
+        Panel2.BackColor = Color.Transparent
+        Panel2.BackColor1 = Color.Transparent
+        Panel2.BorderSize = 0
         MCB_输出位置 = New LakeUI.ModernComboBox()
-        Panel1 = New Panel()
+        Panel1 = New LakeUI.ModernPanel()
+        Panel1.BackColor = Color.Transparent
+        Panel1.BackColor1 = Color.Transparent
+        Panel1.BorderSize = 0
         MCB_输出文件参数使用方法 = New LakeUI.ModernComboBox()
         JustEmptyControl2 = New LakeUI.JustEmptyControl()
         MTB_后缀 = New LakeUI.ModernTextBox()
@@ -155,7 +181,6 @@ Partial Class Form_v6_参数面板_输出文件设置
         ' 
         ' ModernPanel1
         ' 
-        ModernPanel1.BackColor1 = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         ModernPanel1.BorderSize = 0
         ModernPanel1.Controls.Add(Panel7)
         ModernPanel1.Controls.Add(HCL_文件时间)
@@ -688,21 +713,21 @@ Partial Class Form_v6_参数面板_输出文件设置
 
     Friend WithEvents ModernPanel1 As LakeUI.ModernPanel
     Friend WithEvents HCL_后缀和位置 As LakeUI.HtmlColorLabel
-    Friend WithEvents Panel1 As Panel
+    Friend WithEvents Panel1 As LakeUI.ModernPanel
     Friend WithEvents MB_选择后缀 As LakeUI.ModernButton
     Friend WithEvents MTB_后缀 As LakeUI.ModernTextBox
     Friend WithEvents JustEmptyControl1 As LakeUI.JustEmptyControl
-    Friend WithEvents Panel2 As Panel
+    Friend WithEvents Panel2 As LakeUI.ModernPanel
     Friend WithEvents HCL_命名方式 As LakeUI.HtmlColorLabel
     Friend WithEvents MCB_输出文件参数使用方法 As LakeUI.ModernComboBox
     Friend WithEvents JustEmptyControl2 As LakeUI.JustEmptyControl
-    Friend WithEvents Panel3 As Panel
+    Friend WithEvents Panel3 As LakeUI.ModernPanel
     Friend WithEvents MCB_自动命名方式 As LakeUI.ModernComboBox
-    Friend WithEvents Panel4 As Panel
+    Friend WithEvents Panel4 As LakeUI.ModernPanel
     Friend WithEvents MTB_开头文本 As LakeUI.ModernTextBox
-    Friend WithEvents Panel6 As Panel
+    Friend WithEvents Panel6 As LakeUI.ModernPanel
     Friend WithEvents MTB_结尾文本 As LakeUI.ModernTextBox
-    Friend WithEvents Panel5 As Panel
+    Friend WithEvents Panel5 As LakeUI.ModernPanel
     Friend WithEvents MTB_替代文件名 As LakeUI.ModernTextBox
     Friend WithEvents HCL_文件时间 As LakeUI.HtmlColorLabel
     Friend WithEvents MCK_保留访问时间 As LakeUI.ModernCheckBox
@@ -717,8 +742,8 @@ Partial Class Form_v6_参数面板_输出文件设置
     Friend WithEvents 视频菜单 As LakeUI.ModernContextMenu
     Friend WithEvents 音频菜单 As LakeUI.ModernContextMenu
     Friend WithEvents 图片菜单 As LakeUI.ModernContextMenu
-    Friend WithEvents Panel7 As Panel
-    Friend WithEvents Panel8 As Panel
+    Friend WithEvents Panel7 As LakeUI.ModernPanel
+    Friend WithEvents Panel8 As LakeUI.ModernPanel
     Friend WithEvents HCL_保留子文件夹结构起始点 As LakeUI.HtmlColorLabel
     Friend WithEvents MCB_保留子文件夹结构起始点 As LakeUI.ModernComboBox
 End Class

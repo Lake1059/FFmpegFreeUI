@@ -23,34 +23,57 @@ Partial Class Form_v6_参数面板_插帧参数
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         ModernPanel1 = New LakeUI.ModernPanel()
-        Panel6 = New Panel()
+        ModernPanel1.BackColor = Color.Transparent
+        ModernPanel1.BackColor1 = Color.Transparent
+        Panel6 = New LakeUI.ModernPanel()
+        Panel6.BackColor = Color.Transparent
+        Panel6.BackColor1 = Color.Transparent
+        Panel6.BorderSize = 0
         MTB_场景变化检测强度 = New LakeUI.ModernTextBox()
         JustEmptyControl2 = New LakeUI.JustEmptyControl()
         MTB_搜索范围 = New LakeUI.ModernTextBox()
         JustEmptyControl4 = New LakeUI.JustEmptyControl()
         MTB_块大小 = New LakeUI.ModernTextBox()
-        Panel7 = New Panel()
+        Panel7 = New LakeUI.ModernPanel()
+        Panel7.BackColor = Color.Transparent
+        Panel7.BackColor1 = Color.Transparent
+        Panel7.BorderSize = 0
         HCL_场景变化检测强度 = New LakeUI.HtmlColorLabel()
         HCL_搜索范围 = New LakeUI.HtmlColorLabel()
         HCL_块大小 = New LakeUI.HtmlColorLabel()
         HCL_识别设置 = New LakeUI.HtmlColorLabel()
-        Panel3 = New Panel()
+        Panel3 = New LakeUI.ModernPanel()
+        Panel3.BackColor = Color.Transparent
+        Panel3.BackColor1 = Color.Transparent
+        Panel3.BorderSize = 0
         MCK_可变块大小的运动补偿 = New LakeUI.ModernCheckBox()
         MCB_运动补偿模式 = New LakeUI.ModernComboBox()
-        Panel5 = New Panel()
+        Panel5 = New LakeUI.ModernPanel()
+        Panel5.BackColor = Color.Transparent
+        Panel5.BackColor1 = Color.Transparent
+        Panel5.BorderSize = 0
         HCL_运动补偿模式 = New LakeUI.HtmlColorLabel()
-        Panel1 = New Panel()
+        Panel1 = New LakeUI.ModernPanel()
+        Panel1.BackColor = Color.Transparent
+        Panel1.BackColor1 = Color.Transparent
+        Panel1.BorderSize = 0
         MCB_运动估计算法 = New LakeUI.ModernComboBox()
         JustEmptyControl1 = New LakeUI.JustEmptyControl()
         MCB_运动估计模式 = New LakeUI.ModernComboBox()
         JustEmptyControl3 = New LakeUI.JustEmptyControl()
         MCB_插帧模式 = New LakeUI.ModernComboBox()
-        Panel4 = New Panel()
+        Panel4 = New LakeUI.ModernPanel()
+        Panel4.BackColor = Color.Transparent
+        Panel4.BackColor1 = Color.Transparent
+        Panel4.BorderSize = 0
         HCL_运动估计算法 = New LakeUI.HtmlColorLabel()
         HCL_运动估计模式 = New LakeUI.HtmlColorLabel()
         HCL_插帧模式 = New LakeUI.HtmlColorLabel()
         HCL_算法设置 = New LakeUI.HtmlColorLabel()
-        Panel2 = New Panel()
+        Panel2 = New LakeUI.ModernPanel()
+        Panel2.BackColor = Color.Transparent
+        Panel2.BackColor1 = Color.Transparent
+        Panel2.BorderSize = 0
         MTB_目标帧率 = New LakeUI.ModernTextBox()
         HCL_目标帧率 = New LakeUI.HtmlColorLabel()
         MCK_插帧总开关 = New LakeUI.ModernCheckBox()
@@ -66,7 +89,6 @@ Partial Class Form_v6_参数面板_插帧参数
         '
         ' ModernPanel1
         '
-        ModernPanel1.BackColor1 = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         ModernPanel1.BorderSize = 0
         ModernPanel1.Controls.Add(Panel6)
         ModernPanel1.Controls.Add(Panel7)
@@ -601,12 +623,12 @@ Partial Class Form_v6_参数面板_插帧参数
 
     Friend WithEvents ModernPanel1 As LakeUI.ModernPanel
     Friend WithEvents MCK_插帧总开关 As LakeUI.ModernCheckBox
-    Friend WithEvents Panel2 As Panel
+    Friend WithEvents Panel2 As LakeUI.ModernPanel
     Friend WithEvents MTB_目标帧率 As LakeUI.ModernTextBox
     Friend WithEvents HCL_目标帧率 As LakeUI.HtmlColorLabel
-    Friend WithEvents Panel1 As Panel
+    Friend WithEvents Panel1 As LakeUI.ModernPanel
     Friend WithEvents JustEmptyControl3 As LakeUI.JustEmptyControl
-    Friend WithEvents Panel4 As Panel
+    Friend WithEvents Panel4 As LakeUI.ModernPanel
     Friend WithEvents HCL_运动估计算法 As LakeUI.HtmlColorLabel
     Friend WithEvents HCL_运动估计模式 As LakeUI.HtmlColorLabel
     Friend WithEvents HCL_插帧模式 As LakeUI.HtmlColorLabel
@@ -616,16 +638,16 @@ Partial Class Form_v6_参数面板_插帧参数
     Friend WithEvents JustEmptyControl1 As LakeUI.JustEmptyControl
     Friend WithEvents MCB_运动估计模式 As LakeUI.ModernComboBox
     Friend WithEvents HCL_识别设置 As LakeUI.HtmlColorLabel
-    Friend WithEvents Panel3 As Panel
+    Friend WithEvents Panel3 As LakeUI.ModernPanel
     Friend WithEvents MCB_运动补偿模式 As LakeUI.ModernComboBox
-    Friend WithEvents Panel5 As Panel
+    Friend WithEvents Panel5 As LakeUI.ModernPanel
     Friend WithEvents HCL_运动补偿模式 As LakeUI.HtmlColorLabel
     Friend WithEvents MCK_可变块大小的运动补偿 As LakeUI.ModernCheckBox
-    Friend WithEvents Panel7 As Panel
+    Friend WithEvents Panel7 As LakeUI.ModernPanel
     Friend WithEvents HCL_场景变化检测强度 As LakeUI.HtmlColorLabel
     Friend WithEvents HCL_搜索范围 As LakeUI.HtmlColorLabel
     Friend WithEvents HCL_块大小 As LakeUI.HtmlColorLabel
-    Friend WithEvents Panel6 As Panel
+    Friend WithEvents Panel6 As LakeUI.ModernPanel
     Friend WithEvents MTB_场景变化检测强度 As LakeUI.ModernTextBox
     Friend WithEvents JustEmptyControl2 As LakeUI.JustEmptyControl
     Friend WithEvents MTB_搜索范围 As LakeUI.ModernTextBox

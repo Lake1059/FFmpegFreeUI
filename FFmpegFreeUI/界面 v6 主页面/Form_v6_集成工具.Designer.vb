@@ -29,6 +29,7 @@ Partial Class Form_v6_集成工具
         Dim ModernTabPage5 As LakeUI.ModernTabListControl.ModernTabPage = New LakeUI.ModernTabListControl.ModernTabPage()
         Dim ModernTabPage6 As LakeUI.ModernTabListControl.ModernTabPage = New LakeUI.ModernTabListControl.ModernTabPage()
         ModernPanel1 = New LakeUI.ModernPanel()
+        ModernPanel1.BackColor = Color.Transparent
         ModernTabListControl1 = New LakeUI.ModernTabListControl()
         ModernPanel1.SuspendLayout()
         SuspendLayout()

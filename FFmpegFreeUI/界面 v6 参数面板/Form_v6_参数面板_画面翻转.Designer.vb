@@ -18,10 +18,18 @@ Partial Class Form_v6_参数面板_画面翻转
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         ModernPanel1 = New LakeUI.ModernPanel()
-        Panel2 = New Panel()
+        ModernPanel1.BackColor = Color.Transparent
+        ModernPanel1.BackColor1 = Color.Transparent
+        Panel2 = New LakeUI.ModernPanel()
+        Panel2.BackColor = Color.Transparent
+        Panel2.BackColor1 = Color.Transparent
+        Panel2.BorderSize = 0
         MCB_镜像翻转 = New LakeUI.ModernComboBox()
         HCL_镜像翻转 = New LakeUI.HtmlColorLabel()
-        Panel1 = New Panel()
+        Panel1 = New LakeUI.ModernPanel()
+        Panel1.BackColor = Color.Transparent
+        Panel1.BackColor1 = Color.Transparent
+        Panel1.BorderSize = 0
         MCB_角度翻转 = New LakeUI.ModernComboBox()
         HCL_角度翻转 = New LakeUI.HtmlColorLabel()
         MCK_画面翻转总开关 = New LakeUI.ModernCheckBox()
@@ -32,7 +40,6 @@ Partial Class Form_v6_参数面板_画面翻转
         '
         ' ModernPanel1
         '
-        ModernPanel1.BackColor1 = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         ModernPanel1.BorderSize = 0
         ModernPanel1.Controls.Add(Panel2)
         ModernPanel1.Controls.Add(HCL_镜像翻转)
@@ -201,9 +208,9 @@ Partial Class Form_v6_参数面板_画面翻转
     Friend WithEvents ModernPanel1 As LakeUI.ModernPanel
     Friend WithEvents MCK_画面翻转总开关 As LakeUI.ModernCheckBox
     Friend WithEvents HCL_角度翻转 As LakeUI.HtmlColorLabel
-    Friend WithEvents Panel1 As Panel
+    Friend WithEvents Panel1 As LakeUI.ModernPanel
     Friend WithEvents MCB_角度翻转 As LakeUI.ModernComboBox
-    Friend WithEvents Panel2 As Panel
+    Friend WithEvents Panel2 As LakeUI.ModernPanel
     Friend WithEvents MCB_镜像翻转 As LakeUI.ModernComboBox
     Friend WithEvents HCL_镜像翻转 As LakeUI.HtmlColorLabel
 End Class

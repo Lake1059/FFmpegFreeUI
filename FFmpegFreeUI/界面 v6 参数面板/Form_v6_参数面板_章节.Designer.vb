@@ -23,7 +23,10 @@ Partial Class Form_v6_参数面板_章节
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         HCL_章节说明 = New LakeUI.HtmlColorLabel()
-        Panel1 = New Panel()
+        Panel1 = New LakeUI.ModernPanel()
+        Panel1.BackColor = Color.Transparent
+        Panel1.BackColor1 = Color.Transparent
+        Panel1.BorderSize = 0
         MCB_章节文件 = New LakeUI.ModernComboBox()
         JustEmptyControl1 = New LakeUI.JustEmptyControl()
         MCB_章节来源 = New LakeUI.ModernComboBox()
@@ -31,6 +34,8 @@ Partial Class Form_v6_参数面板_章节
         MB_教程 = New LakeUI.ModernButton()
         MDV_章节教程 = New LakeUI.MarkDownViewer()
         ModernPanel1 = New LakeUI.ModernPanel()
+        ModernPanel1.BackColor = Color.Transparent
+        ModernPanel1.BackColor1 = Color.Transparent
         Panel1.SuspendLayout()
         ModernPanel1.SuspendLayout()
         SuspendLayout()
@@ -175,7 +180,6 @@ Partial Class Form_v6_参数面板_章节
         '
         ' ModernPanel1
         '
-        ModernPanel1.BackColor1 = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         ModernPanel1.BorderSize = 0
         ModernPanel1.Controls.Add(MDV_章节教程)
         ModernPanel1.Controls.Add(Panel1)
@@ -205,7 +209,7 @@ Partial Class Form_v6_参数面板_章节
     End Sub
 
     Friend WithEvents HCL_章节说明 As LakeUI.HtmlColorLabel
-    Friend WithEvents Panel1 As Panel
+    Friend WithEvents Panel1 As LakeUI.ModernPanel
     Friend WithEvents JustEmptyControl1 As LakeUI.JustEmptyControl
     Friend WithEvents MCB_章节来源 As LakeUI.ModernComboBox
     Friend WithEvents MCB_章节文件 As LakeUI.ModernComboBox

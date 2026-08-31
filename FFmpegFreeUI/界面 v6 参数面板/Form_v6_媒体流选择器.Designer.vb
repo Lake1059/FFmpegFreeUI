@@ -18,14 +18,23 @@ Partial Class Form_v6_媒体流选择器
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         ModernPanel1 = New LakeUI.ModernPanel()
+        ModernPanel1.BackColor = Color.Transparent
+        ModernPanel1.BackColor1 = Color.Transparent
         列表面板 = New LakeUI.ModernPanel()
-        顶部面板 = New Panel()
+        列表面板.BackColor = Color.Transparent
+        顶部面板 = New LakeUI.ModernPanel()
+        顶部面板.BackColor = Color.Transparent
+        顶部面板.BackColor1 = Color.Transparent
+        顶部面板.BorderSize = 0
         MB_全选字幕 = New LakeUI.ModernButton()
         JustEmptyControl2 = New LakeUI.JustEmptyControl()
         MB_全选音频 = New LakeUI.ModernButton()
         JustEmptyControl1 = New LakeUI.JustEmptyControl()
         MB_全选视频 = New LakeUI.ModernButton()
-        底部面板 = New Panel()
+        底部面板 = New LakeUI.ModernPanel()
+        底部面板.BackColor = Color.Transparent
+        底部面板.BackColor1 = Color.Transparent
+        底部面板.BorderSize = 0
         MB_确认选择 = New LakeUI.ModernButton()
         MB_重置选择 = New LakeUI.ModernButton()
         JustEmptyControl3 = New LakeUI.JustEmptyControl()
@@ -38,7 +47,6 @@ Partial Class Form_v6_媒体流选择器
         ' ModernPanel1
         '
         ModernPanel1.AllowDrop = True
-        ModernPanel1.BackColor1 = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         ModernPanel1.BorderSize = 0
         ModernPanel1.Controls.Add(列表面板)
         ModernPanel1.Controls.Add(顶部面板)
@@ -235,8 +243,8 @@ Partial Class Form_v6_媒体流选择器
     End Sub
 
     Friend WithEvents ModernPanel1 As LakeUI.ModernPanel
-    Friend WithEvents 顶部面板 As Panel
-    Friend WithEvents 底部面板 As Panel
+    Friend WithEvents 顶部面板 As LakeUI.ModernPanel
+    Friend WithEvents 底部面板 As LakeUI.ModernPanel
     Friend WithEvents 列表面板 As LakeUI.ModernPanel
     Friend WithEvents MB_全选视频 As LakeUI.ModernButton
     Friend WithEvents MB_全选音频 As LakeUI.ModernButton

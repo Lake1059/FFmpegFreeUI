@@ -22,21 +22,35 @@ Partial Class Form_v6_设置_LakeUIHDR
     '不要使用代码编辑器修改它。
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim PanelHDR启用 As Panel
+        Dim PanelHDR启用 As LakeUI.ModernPanel
         HtmlColorLabel启用 = New LakeUI.HtmlColorLabel()
         MCB_HDR启用 = New LakeUI.ModernComboBox()
         ModernPanel1 = New LakeUI.ModernPanel()
-        PanelHDR图片 = New Panel()
+        ModernPanel1.BackColor = Color.Transparent
+        ModernPanel1.BackColor1 = Color.Transparent
+        PanelHDR图片 = New LakeUI.ModernPanel()
+        PanelHDR图片.BackColor = Color.Transparent
+        PanelHDR图片.BackColor1 = Color.Transparent
+        PanelHDR图片.BorderSize = 0
         HtmlColorLabel图片 = New LakeUI.HtmlColorLabel()
         MCB_HDR图片 = New LakeUI.ModernComboBox()
-        PanelHDR矢量颜色 = New Panel()
+        PanelHDR矢量颜色 = New LakeUI.ModernPanel()
+        PanelHDR矢量颜色.BackColor = Color.Transparent
+        PanelHDR矢量颜色.BackColor1 = Color.Transparent
+        PanelHDR矢量颜色.BorderSize = 0
         HtmlColorLabel矢量颜色 = New LakeUI.HtmlColorLabel()
         MCB_HDR矢量颜色 = New LakeUI.ModernComboBox()
-        PanelHDR显示档位 = New Panel()
+        PanelHDR显示档位 = New LakeUI.ModernPanel()
+        PanelHDR显示档位.BackColor = Color.Transparent
+        PanelHDR显示档位.BackColor1 = Color.Transparent
+        PanelHDR显示档位.BorderSize = 0
         HtmlColorLabel显示档位 = New LakeUI.HtmlColorLabel()
         MCB_HDR显示档位 = New LakeUI.ModernComboBox()
         HtmlColorLabel1 = New LakeUI.HtmlColorLabel()
-        PanelHDR启用 = New Panel()
+        PanelHDR启用 = New LakeUI.ModernPanel()
+        PanelHDR启用.BackColor = Color.Transparent
+        PanelHDR启用.BackColor1 = Color.Transparent
+        PanelHDR启用.BorderSize = 0
         PanelHDR启用.SuspendLayout()
         ModernPanel1.SuspendLayout()
         PanelHDR图片.SuspendLayout()
@@ -100,7 +114,6 @@ Partial Class Form_v6_设置_LakeUIHDR
         ' 
         ' ModernPanel1
         ' 
-        ModernPanel1.BackColor1 = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         ModernPanel1.BorderSize = 0
         ModernPanel1.Controls.Add(PanelHDR图片)
         ModernPanel1.Controls.Add(PanelHDR矢量颜色)
@@ -319,16 +332,16 @@ Partial Class Form_v6_设置_LakeUIHDR
 
     Friend WithEvents ModernPanel1 As LakeUI.ModernPanel
     Friend WithEvents HtmlColorLabel1 As LakeUI.HtmlColorLabel
-    Friend WithEvents PanelHDR启用 As Panel
+    Friend WithEvents PanelHDR启用 As LakeUI.ModernPanel
     Friend WithEvents HtmlColorLabel启用 As LakeUI.HtmlColorLabel
     Friend WithEvents MCB_HDR启用 As LakeUI.ModernComboBox
-    Friend WithEvents PanelHDR显示档位 As Panel
+    Friend WithEvents PanelHDR显示档位 As LakeUI.ModernPanel
     Friend WithEvents HtmlColorLabel显示档位 As LakeUI.HtmlColorLabel
     Friend WithEvents MCB_HDR显示档位 As LakeUI.ModernComboBox
-    Friend WithEvents PanelHDR矢量颜色 As Panel
+    Friend WithEvents PanelHDR矢量颜色 As LakeUI.ModernPanel
     Friend WithEvents HtmlColorLabel矢量颜色 As LakeUI.HtmlColorLabel
     Friend WithEvents MCB_HDR矢量颜色 As LakeUI.ModernComboBox
-    Friend WithEvents PanelHDR图片 As Panel
+    Friend WithEvents PanelHDR图片 As LakeUI.ModernPanel
     Friend WithEvents HtmlColorLabel图片 As LakeUI.HtmlColorLabel
     Friend WithEvents MCB_HDR图片 As LakeUI.ModernComboBox
 End Class

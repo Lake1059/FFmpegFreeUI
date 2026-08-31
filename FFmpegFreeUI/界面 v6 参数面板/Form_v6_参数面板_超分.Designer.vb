@@ -23,8 +23,13 @@ Partial Class Form_v6_参数面板_超分
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         ModernPanel1 = New LakeUI.ModernPanel()
+        ModernPanel1.BackColor = Color.Transparent
+        ModernPanel1.BackColor1 = Color.Transparent
         MLB_超分滤镜叠加策略列表 = New LakeUI.ModernListBox()
-        Panel5 = New Panel()
+        Panel5 = New LakeUI.ModernPanel()
+        Panel5.BackColor = Color.Transparent
+        Panel5.BackColor1 = Color.Transparent
+        Panel5.BorderSize = 0
         HCL_可直接拖拽排序 = New LakeUI.HtmlColorLabel()
         MB_克隆 = New LakeUI.ModernButton()
         JustEmptyControl5 = New LakeUI.JustEmptyControl()
@@ -34,21 +39,33 @@ Partial Class Form_v6_参数面板_超分
         JustEmptyControl2 = New LakeUI.JustEmptyControl()
         MB_读取 = New LakeUI.ModernButton()
         HCL_滤镜叠加策略 = New LakeUI.HtmlColorLabel()
-        Panel3 = New Panel()
+        Panel3 = New LakeUI.ModernPanel()
+        Panel3.BackColor = Color.Transparent
+        Panel3.BackColor1 = Color.Transparent
+        Panel3.BorderSize = 0
         MCB_着色器文件路径 = New LakeUI.ModernComboBox()
         HCL_着色器 = New LakeUI.HtmlColorLabel()
-        Panel1 = New Panel()
+        Panel1 = New LakeUI.ModernPanel()
+        Panel1.BackColor = Color.Transparent
+        Panel1.BackColor1 = Color.Transparent
+        Panel1.BorderSize = 0
         MTB_抗振铃强度 = New LakeUI.ModernTextBox()
         JustEmptyControl1 = New LakeUI.JustEmptyControl()
         MCB_下采样算法 = New LakeUI.ModernComboBox()
         JustEmptyControl3 = New LakeUI.JustEmptyControl()
         MCB_上采样算法 = New LakeUI.ModernComboBox()
-        Panel4 = New Panel()
+        Panel4 = New LakeUI.ModernPanel()
+        Panel4.BackColor = Color.Transparent
+        Panel4.BackColor1 = Color.Transparent
+        Panel4.BorderSize = 0
         HCL_抗振铃强度 = New LakeUI.HtmlColorLabel()
         HCL_下采样算法 = New LakeUI.HtmlColorLabel()
         HCL_上采样算法 = New LakeUI.HtmlColorLabel()
         HCL_算法设置 = New LakeUI.HtmlColorLabel()
-        Panel2 = New Panel()
+        Panel2 = New LakeUI.ModernPanel()
+        Panel2.BackColor = Color.Transparent
+        Panel2.BackColor1 = Color.Transparent
+        Panel2.BorderSize = 0
         HCL_高度 = New LakeUI.HtmlColorLabel()
         MTB_高度 = New LakeUI.ModernTextBox()
         HCL_宽度 = New LakeUI.HtmlColorLabel()
@@ -65,7 +82,6 @@ Partial Class Form_v6_参数面板_超分
         '
         ' ModernPanel1
         '
-        ModernPanel1.BackColor1 = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         ModernPanel1.BorderSize = 0
         ModernPanel1.Controls.Add(MLB_超分滤镜叠加策略列表)
         ModernPanel1.Controls.Add(Panel5)
@@ -648,27 +664,27 @@ Partial Class Form_v6_参数面板_超分
     Friend WithEvents ModernPanel1 As LakeUI.ModernPanel
     Friend WithEvents MCK_超分总开关 As LakeUI.ModernCheckBox
     Friend WithEvents HCL_目标分辨率 As LakeUI.HtmlColorLabel
-    Friend WithEvents Panel2 As Panel
+    Friend WithEvents Panel2 As LakeUI.ModernPanel
     Friend WithEvents MTB_宽度 As LakeUI.ModernTextBox
     Friend WithEvents HCL_宽度 As LakeUI.HtmlColorLabel
     Friend WithEvents HCL_高度 As LakeUI.HtmlColorLabel
     Friend WithEvents MTB_高度 As LakeUI.ModernTextBox
     Friend WithEvents HCL_算法设置 As LakeUI.HtmlColorLabel
-    Friend WithEvents Panel1 As Panel
+    Friend WithEvents Panel1 As LakeUI.ModernPanel
     Friend WithEvents JustEmptyControl1 As LakeUI.JustEmptyControl
     Friend WithEvents MCB_下采样算法 As LakeUI.ModernComboBox
     Friend WithEvents JustEmptyControl3 As LakeUI.JustEmptyControl
     Friend WithEvents MCB_上采样算法 As LakeUI.ModernComboBox
-    Friend WithEvents Panel4 As Panel
+    Friend WithEvents Panel4 As LakeUI.ModernPanel
     Friend WithEvents HCL_抗振铃强度 As LakeUI.HtmlColorLabel
     Friend WithEvents HCL_下采样算法 As LakeUI.HtmlColorLabel
     Friend WithEvents HCL_上采样算法 As LakeUI.HtmlColorLabel
     Friend WithEvents MTB_抗振铃强度 As LakeUI.ModernTextBox
     Friend WithEvents HCL_着色器 As LakeUI.HtmlColorLabel
-    Friend WithEvents Panel3 As Panel
+    Friend WithEvents Panel3 As LakeUI.ModernPanel
     Friend WithEvents MCB_着色器文件路径 As LakeUI.ModernComboBox
     Friend WithEvents HCL_滤镜叠加策略 As LakeUI.HtmlColorLabel
-    Friend WithEvents Panel5 As Panel
+    Friend WithEvents Panel5 As LakeUI.ModernPanel
     Friend WithEvents MB_读取 As LakeUI.ModernButton
     Friend WithEvents MB_保存 As LakeUI.ModernButton
     Friend WithEvents JustEmptyControl2 As LakeUI.JustEmptyControl

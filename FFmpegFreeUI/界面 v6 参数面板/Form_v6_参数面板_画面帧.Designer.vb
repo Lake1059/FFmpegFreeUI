@@ -23,54 +23,89 @@ Partial Class Form_v6_参数面板_画面帧
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         ModernPanel1 = New LakeUI.ModernPanel()
-        Panel6 = New Panel()
+        ModernPanel1.BackColor = Color.Transparent
+        ModernPanel1.BackColor1 = Color.Transparent
+        Panel6 = New LakeUI.ModernPanel()
+        Panel6.BackColor = Color.Transparent
+        Panel6.BackColor1 = Color.Transparent
+        Panel6.BorderSize = 0
         MB_烧录字幕 = New LakeUI.ModernButton()
         HCL_画面内容标题 = New LakeUI.HtmlColorLabel()
-        Panel8 = New Panel()
+        Panel8 = New LakeUI.ModernPanel()
+        Panel8.BackColor = Color.Transparent
+        Panel8.BackColor1 = Color.Transparent
+        Panel8.BorderSize = 0
         MB_平滑断层 = New LakeUI.ModernButton()
         JustEmptyControl10 = New LakeUI.JustEmptyControl()
         MB_画面翻转 = New LakeUI.ModernButton()
         JustEmptyControl11 = New LakeUI.JustEmptyControl()
         MB_扫描方式 = New LakeUI.ModernButton()
-        Panel7 = New Panel()
+        Panel7 = New LakeUI.ModernPanel()
+        Panel7.BackColor = Color.Transparent
+        Panel7.BackColor1 = Color.Transparent
+        Panel7.BorderSize = 0
         MB_胶片颗粒 = New LakeUI.ModernButton()
         JustEmptyControl8 = New LakeUI.JustEmptyControl()
         MB_传统锐化 = New LakeUI.ModernButton()
         JustEmptyControl9 = New LakeUI.JustEmptyControl()
         MB_传统降噪 = New LakeUI.ModernButton()
-        Panel5 = New Panel()
+        Panel5 = New LakeUI.ModernPanel()
+        Panel5.BackColor = Color.Transparent
+        Panel5.BackColor1 = Color.Transparent
+        Panel5.BorderSize = 0
         MB_着色器超分 = New LakeUI.ModernButton()
         JustEmptyControl5 = New LakeUI.JustEmptyControl()
         MB_动态模糊 = New LakeUI.ModernButton()
         JustEmptyControl4 = New LakeUI.JustEmptyControl()
         MB_简易插帧 = New LakeUI.ModernButton()
         HCL_画面增强标题 = New LakeUI.HtmlColorLabel()
-        Panel3 = New Panel()
+        Panel3 = New LakeUI.ModernPanel()
+        Panel3.BackColor = Color.Transparent
+        Panel3.BackColor1 = Color.Transparent
+        Panel3.BorderSize = 0
         MB_抽帧设置 = New LakeUI.ModernButton()
         JustEmptyControl3 = New LakeUI.JustEmptyControl()
         MCB_强调帧率模式 = New LakeUI.ModernComboBox()
         JustEmptyControl13 = New LakeUI.JustEmptyControl()
         MCB_直接指定帧率 = New LakeUI.ModernComboBox()
         HCL_帧率设置标题 = New LakeUI.HtmlColorLabel()
-        Panel4 = New Panel()
+        Panel4 = New LakeUI.ModernPanel()
+        Panel4.BackColor = Color.Transparent
+        Panel4.BackColor1 = Color.Transparent
+        Panel4.BorderSize = 0
         HtmlColorLabel1 = New LakeUI.HtmlColorLabel()
         MTB_画面裁剪参数 = New LakeUI.ModernTextBox()
         JustEmptyControl1 = New LakeUI.JustEmptyControl()
         MB_画面裁剪交互 = New LakeUI.ModernButton()
-        Panel11 = New Panel()
+        Panel11 = New LakeUI.ModernPanel()
+        Panel11.BackColor = Color.Transparent
+        Panel11.BackColor1 = Color.Transparent
+        Panel11.BorderSize = 0
         JustEmptyControl12 = New LakeUI.JustEmptyControl()
-        Panel1 = New Panel()
+        Panel1 = New LakeUI.ModernPanel()
+        Panel1.BackColor = Color.Transparent
+        Panel1.BackColor1 = Color.Transparent
+        Panel1.BorderSize = 0
         MCB_指定缩放算法 = New LakeUI.ModernComboBox()
         JustEmptyControl6 = New LakeUI.JustEmptyControl()
         MCB_高度缩放 = New LakeUI.ModernComboBox()
         JustEmptyControl2 = New LakeUI.JustEmptyControl()
         MCB_宽度缩放 = New LakeUI.ModernComboBox()
-        Panel9 = New Panel()
+        Panel9 = New LakeUI.ModernPanel()
+        Panel9.BackColor = Color.Transparent
+        Panel9.BackColor1 = Color.Transparent
+        Panel9.BorderSize = 0
         HCL_缩放滤镜说明 = New LakeUI.HtmlColorLabel()
         MCB_指定缩放滤镜 = New LakeUI.ModernComboBox()
-        Panel10 = New Panel()
+        Panel10 = New LakeUI.ModernPanel()
+        Panel10.BackColor = Color.Transparent
+        Panel10.BackColor1 = Color.Transparent
+        Panel10.BorderSize = 0
         JustEmptyControl7 = New LakeUI.JustEmptyControl()
-        Panel2 = New Panel()
+        Panel2 = New LakeUI.ModernPanel()
+        Panel2.BackColor = Color.Transparent
+        Panel2.BackColor1 = Color.Transparent
+        Panel2.BorderSize = 0
         HCL_直接指定分辨率说明 = New LakeUI.HtmlColorLabel()
         MCB_直接指定分辨率 = New LakeUI.ModernComboBox()
         HCL_分辨率设置标题 = New LakeUI.HtmlColorLabel()
@@ -90,7 +125,6 @@ Partial Class Form_v6_参数面板_画面帧
         ' 
         ' ModernPanel1
         ' 
-        ModernPanel1.BackColor1 = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         ModernPanel1.BorderSize = 0
         ModernPanel1.Controls.Add(Panel6)
         ModernPanel1.Controls.Add(HCL_画面内容标题)
@@ -929,49 +963,49 @@ Partial Class Form_v6_参数面板_画面帧
     End Sub
 
     Friend WithEvents ModernPanel1 As LakeUI.ModernPanel
-    Friend WithEvents Panel2 As Panel
+    Friend WithEvents Panel2 As LakeUI.ModernPanel
     Friend WithEvents MCB_直接指定分辨率 As LakeUI.ModernComboBox
     Friend WithEvents HCL_分辨率设置标题 As LakeUI.HtmlColorLabel
-    Friend WithEvents Panel1 As Panel
+    Friend WithEvents Panel1 As LakeUI.ModernPanel
     Friend WithEvents MCB_宽度缩放 As LakeUI.ModernComboBox
-    Friend WithEvents Panel4 As Panel
+    Friend WithEvents Panel4 As LakeUI.ModernPanel
     Friend WithEvents MB_画面裁剪交互 As LakeUI.ModernButton
     Friend WithEvents MTB_画面裁剪参数 As LakeUI.ModernTextBox
     Friend WithEvents JustEmptyControl1 As LakeUI.JustEmptyControl
     Friend WithEvents MCB_高度缩放 As LakeUI.ModernComboBox
     Friend WithEvents JustEmptyControl2 As LakeUI.JustEmptyControl
     Friend WithEvents HCL_帧率设置标题 As LakeUI.HtmlColorLabel
-    Friend WithEvents Panel3 As Panel
+    Friend WithEvents Panel3 As LakeUI.ModernPanel
     Friend WithEvents MCB_直接指定帧率 As LakeUI.ModernComboBox
     Friend WithEvents MB_抽帧设置 As LakeUI.ModernButton
     Friend WithEvents JustEmptyControl3 As LakeUI.JustEmptyControl
     Friend WithEvents HCL_画面增强标题 As LakeUI.HtmlColorLabel
-    Friend WithEvents Panel5 As Panel
+    Friend WithEvents Panel5 As LakeUI.ModernPanel
     Friend WithEvents MB_着色器超分 As LakeUI.ModernButton
     Friend WithEvents JustEmptyControl5 As LakeUI.JustEmptyControl
     Friend WithEvents MB_动态模糊 As LakeUI.ModernButton
     Friend WithEvents JustEmptyControl4 As LakeUI.JustEmptyControl
     Friend WithEvents MB_简易插帧 As LakeUI.ModernButton
     Friend WithEvents HCL_画面内容标题 As LakeUI.HtmlColorLabel
-    Friend WithEvents Panel6 As Panel
+    Friend WithEvents Panel6 As LakeUI.ModernPanel
     Friend WithEvents MB_烧录字幕 As LakeUI.ModernButton
-    Friend WithEvents Panel7 As Panel
+    Friend WithEvents Panel7 As LakeUI.ModernPanel
     Friend WithEvents MB_胶片颗粒 As LakeUI.ModernButton
     Friend WithEvents JustEmptyControl8 As LakeUI.JustEmptyControl
     Friend WithEvents MB_传统锐化 As LakeUI.ModernButton
     Friend WithEvents JustEmptyControl9 As LakeUI.JustEmptyControl
     Friend WithEvents MB_传统降噪 As LakeUI.ModernButton
-    Friend WithEvents Panel8 As Panel
+    Friend WithEvents Panel8 As LakeUI.ModernPanel
     Friend WithEvents MB_平滑断层 As LakeUI.ModernButton
     Friend WithEvents JustEmptyControl10 As LakeUI.JustEmptyControl
     Friend WithEvents MB_画面翻转 As LakeUI.ModernButton
     Friend WithEvents JustEmptyControl11 As LakeUI.JustEmptyControl
     Friend WithEvents MB_扫描方式 As LakeUI.ModernButton
-    Friend WithEvents Panel9 As Panel
+    Friend WithEvents Panel9 As LakeUI.ModernPanel
     Friend WithEvents MCB_指定缩放滤镜 As LakeUI.ModernComboBox
-    Friend WithEvents Panel11 As Panel
+    Friend WithEvents Panel11 As LakeUI.ModernPanel
     Friend WithEvents JustEmptyControl12 As LakeUI.JustEmptyControl
-    Friend WithEvents Panel10 As Panel
+    Friend WithEvents Panel10 As LakeUI.ModernPanel
     Friend WithEvents JustEmptyControl7 As LakeUI.JustEmptyControl
     Friend WithEvents MCB_强调帧率模式 As LakeUI.ModernComboBox
     Friend WithEvents JustEmptyControl13 As LakeUI.JustEmptyControl

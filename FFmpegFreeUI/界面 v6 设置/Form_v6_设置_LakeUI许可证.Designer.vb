@@ -23,6 +23,8 @@ Partial Class Form_v6_设置_LakeUI许可证
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         ModernPanel1 = New LakeUI.ModernPanel()
+        ModernPanel1.BackColor = Color.Transparent
+        ModernPanel1.BackColor1 = Color.Transparent
         HtmlColorLabel2 = New LakeUI.HtmlColorLabel()
         HtmlColorLabel1 = New LakeUI.HtmlColorLabel()
         ModernPanel1.SuspendLayout()
@@ -30,7 +32,6 @@ Partial Class Form_v6_设置_LakeUI许可证
         ' 
         ' ModernPanel1
         ' 
-        ModernPanel1.BackColor1 = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         ModernPanel1.BorderSize = 0
         ModernPanel1.Controls.Add(HtmlColorLabel2)
         ModernPanel1.Controls.Add(HtmlColorLabel1)

@@ -39,11 +39,11 @@ Friend NotInheritable Class 网络功能_v6_新闻列表
     End Sub
 
     Friend Shared Sub 设置新闻列表获取失败(原因 As String)
-        Dim 错误标签 As New Label With {
+        Dim 错误标签 As New LakeUI.HtmlColorLabel With {
             .Text = 原因,
             .BackColor = Color.Transparent,
             .Dock = DockStyle.Fill,
-            .TextAlign = ContentAlignment.MiddleCenter,
+            .TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.Center,
             .AutoSize = False
         }
 

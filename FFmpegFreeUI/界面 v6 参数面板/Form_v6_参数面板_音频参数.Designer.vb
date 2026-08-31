@@ -36,30 +36,56 @@ Partial Class Form_v6_参数面板_音频参数
         Dim TrackLabel12 As LakeUI.ExcellentTrackBar.TrackLabel = New LakeUI.ExcellentTrackBar.TrackLabel()
         Dim TrackLabel13 As LakeUI.ExcellentTrackBar.TrackLabel = New LakeUI.ExcellentTrackBar.TrackLabel()
         ModernPanel1 = New LakeUI.ModernPanel()
-        Panel7 = New Panel()
-        Panel14 = New Panel()
+        ModernPanel1.BackColor = Color.Transparent
+        ModernPanel1.BackColor1 = Color.Transparent
+        Panel7 = New LakeUI.ModernPanel()
+        Panel7.BackColor = Color.Transparent
+        Panel7.BackColor1 = Color.Transparent
+        Panel7.BorderSize = 0
+        Panel14 = New LakeUI.ModernPanel()
+        Panel14.BackColor = Color.Transparent
+        Panel14.BackColor1 = Color.Transparent
+        Panel14.BorderSize = 0
         ETB_峰值电平 = New LakeUI.ExcellentTrackBar()
         MCK_启用峰值电平 = New LakeUI.ModernCheckBox()
         JustEmptyControl3 = New LakeUI.JustEmptyControl()
-        Panel11 = New Panel()
+        Panel11 = New LakeUI.ModernPanel()
+        Panel11.BackColor = Color.Transparent
+        Panel11.BackColor1 = Color.Transparent
+        Panel11.BorderSize = 0
         ETB_动态范围 = New LakeUI.ExcellentTrackBar()
         MCK_启用动态范围 = New LakeUI.ModernCheckBox()
         JustEmptyControl2 = New LakeUI.JustEmptyControl()
-        Panel10 = New Panel()
+        Panel10 = New LakeUI.ModernPanel()
+        Panel10.BackColor = Color.Transparent
+        Panel10.BackColor1 = Color.Transparent
+        Panel10.BorderSize = 0
         ETB_目标响度 = New LakeUI.ExcellentTrackBar()
         MCK_启用目标响度 = New LakeUI.ModernCheckBox()
         HCL_响度标准化 = New LakeUI.HtmlColorLabel()
-        Panel6 = New Panel()
+        Panel6 = New LakeUI.ModernPanel()
+        Panel6.BackColor = Color.Transparent
+        Panel6.BackColor1 = Color.Transparent
+        Panel6.BorderSize = 0
         HCL_声道布局 = New LakeUI.HtmlColorLabel()
         MCB_声道布局 = New LakeUI.ModernComboBox()
-        Panel5 = New Panel()
+        Panel5 = New LakeUI.ModernPanel()
+        Panel5.BackColor = Color.Transparent
+        Panel5.BackColor1 = Color.Transparent
+        Panel5.BorderSize = 0
         HCL_位深度 = New LakeUI.HtmlColorLabel()
         MCB_位深度 = New LakeUI.ModernComboBox()
-        Panel4 = New Panel()
+        Panel4 = New LakeUI.ModernPanel()
+        Panel4.BackColor = Color.Transparent
+        Panel4.BackColor1 = Color.Transparent
+        Panel4.BorderSize = 0
         HCL_采样率 = New LakeUI.HtmlColorLabel()
         MCB_采样率 = New LakeUI.ModernComboBox()
         HCL_规格 = New LakeUI.HtmlColorLabel()
-        Panel3 = New Panel()
+        Panel3 = New LakeUI.ModernPanel()
+        Panel3.BackColor = Color.Transparent
+        Panel3.BackColor1 = Color.Transparent
+        Panel3.BorderSize = 0
         MTB_质量值2 = New LakeUI.ModernTextBox()
         JustEmptyControl5 = New LakeUI.JustEmptyControl()
         MCB_质量参数名2 = New LakeUI.ModernComboBox()
@@ -67,10 +93,16 @@ Partial Class Form_v6_参数面板_音频参数
         MTB_质量值 = New LakeUI.ModernTextBox()
         JustEmptyControl1 = New LakeUI.JustEmptyControl()
         MCB_质量参数名 = New LakeUI.ModernComboBox()
-        Panel1 = New Panel()
+        Panel1 = New LakeUI.ModernPanel()
+        Panel1.BackColor = Color.Transparent
+        Panel1.BackColor1 = Color.Transparent
+        Panel1.BorderSize = 0
         MCB_比特率 = New LakeUI.ModernComboBox()
         HCL_质量 = New LakeUI.HtmlColorLabel()
-        Panel2 = New Panel()
+        Panel2 = New LakeUI.ModernPanel()
+        Panel2.BackColor = Color.Transparent
+        Panel2.BackColor1 = Color.Transparent
+        Panel2.BorderSize = 0
         MCB_音频编码器 = New LakeUI.ModernComboBox()
         HCL_音频编码器 = New LakeUI.HtmlColorLabel()
         ModernPanel1.SuspendLayout()
@@ -88,7 +120,6 @@ Partial Class Form_v6_参数面板_音频参数
         ' 
         ' ModernPanel1
         ' 
-        ModernPanel1.BackColor1 = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         ModernPanel1.BorderSize = 0
         ModernPanel1.Controls.Add(Panel7)
         ModernPanel1.Controls.Add(HCL_响度标准化)
@@ -849,34 +880,34 @@ Partial Class Form_v6_参数面板_音频参数
 
     Friend WithEvents ModernPanel1 As LakeUI.ModernPanel
     Friend WithEvents HCL_音频编码器 As LakeUI.HtmlColorLabel
-    Friend WithEvents Panel2 As Panel
+    Friend WithEvents Panel2 As LakeUI.ModernPanel
     Friend WithEvents MCB_音频编码器 As LakeUI.ModernComboBox
     Friend WithEvents HCL_质量 As LakeUI.HtmlColorLabel
-    Friend WithEvents Panel1 As Panel
+    Friend WithEvents Panel1 As LakeUI.ModernPanel
     Friend WithEvents MCB_比特率 As LakeUI.ModernComboBox
-    Friend WithEvents Panel3 As Panel
+    Friend WithEvents Panel3 As LakeUI.ModernPanel
     Friend WithEvents MCB_质量参数名 As LakeUI.ModernComboBox
     Friend WithEvents JustEmptyControl1 As LakeUI.JustEmptyControl
     Friend WithEvents HCL_规格 As LakeUI.HtmlColorLabel
     Friend WithEvents MTB_质量值 As LakeUI.ModernTextBox
-    Friend WithEvents Panel4 As Panel
+    Friend WithEvents Panel4 As LakeUI.ModernPanel
     Friend WithEvents HCL_采样率 As LakeUI.HtmlColorLabel
     Friend WithEvents MCB_采样率 As LakeUI.ModernComboBox
     Friend WithEvents HCL_响度标准化 As LakeUI.HtmlColorLabel
-    Friend WithEvents Panel6 As Panel
+    Friend WithEvents Panel6 As LakeUI.ModernPanel
     Friend WithEvents HCL_声道布局 As LakeUI.HtmlColorLabel
     Friend WithEvents MCB_声道布局 As LakeUI.ModernComboBox
-    Friend WithEvents Panel5 As Panel
+    Friend WithEvents Panel5 As LakeUI.ModernPanel
     Friend WithEvents HCL_位深度 As LakeUI.HtmlColorLabel
     Friend WithEvents MCB_位深度 As LakeUI.ModernComboBox
-    Friend WithEvents Panel7 As Panel
-    Friend WithEvents Panel10 As Panel
+    Friend WithEvents Panel7 As LakeUI.ModernPanel
+    Friend WithEvents Panel10 As LakeUI.ModernPanel
     Friend WithEvents ETB_目标响度 As LakeUI.ExcellentTrackBar
     Friend WithEvents JustEmptyControl3 As LakeUI.JustEmptyControl
-    Friend WithEvents Panel11 As Panel
+    Friend WithEvents Panel11 As LakeUI.ModernPanel
     Friend WithEvents ETB_动态范围 As LakeUI.ExcellentTrackBar
     Friend WithEvents JustEmptyControl2 As LakeUI.JustEmptyControl
-    Friend WithEvents Panel14 As Panel
+    Friend WithEvents Panel14 As LakeUI.ModernPanel
     Friend WithEvents ETB_峰值电平 As LakeUI.ExcellentTrackBar
     Friend WithEvents MCK_启用峰值电平 As LakeUI.ModernCheckBox
     Friend WithEvents MCK_启用动态范围 As LakeUI.ModernCheckBox

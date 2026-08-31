@@ -22,17 +22,31 @@ Partial Class Form_v6_参数面板_参数总览
     '不要使用代码编辑器修改它。
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Panel1 = New Panel()
+        Panel1 = New LakeUI.ModernPanel()
+        Panel1.BackColor = Color.Transparent
+        Panel1.BackColor1 = Color.Transparent
+        Panel1.BorderSize = 0
         MTB_参数总览 = New LakeUI.ModernTextBox()
-        Panel3 = New Panel()
+        Panel3 = New LakeUI.ModernPanel()
+        Panel3.BackColor = Color.Transparent
+        Panel3.BackColor1 = Color.Transparent
+        Panel3.BorderSize = 0
         MB_复制参数总览 = New LakeUI.ModernButton()
         HCL_参数总览标题 = New LakeUI.HtmlColorLabel()
-        Panel2 = New Panel()
+        Panel2 = New LakeUI.ModernPanel()
+        Panel2.BackColor = Color.Transparent
+        Panel2.BackColor1 = Color.Transparent
+        Panel2.BorderSize = 0
         MTB_命令行模板 = New LakeUI.ModernTextBox()
-        Panel70 = New Panel()
+        Panel70 = New LakeUI.ModernPanel()
+        Panel70.BackColor = Color.Transparent
+        Panel70.BackColor1 = Color.Transparent
+        Panel70.BorderSize = 0
         MB_复制命令行模板 = New LakeUI.ModernButton()
         HCL_命令行模板标题 = New LakeUI.HtmlColorLabel()
         ModernPanel1 = New LakeUI.ModernPanel()
+        ModernPanel1.BackColor = Color.Transparent
+        ModernPanel1.BackColor1 = Color.Transparent
         Panel1.SuspendLayout()
         Panel3.SuspendLayout()
         Panel2.SuspendLayout()
@@ -189,7 +203,6 @@ Partial Class Form_v6_参数面板_参数总览
         ' 
         ' ModernPanel1
         ' 
-        ModernPanel1.BackColor1 = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         ModernPanel1.BorderSize = 0
         ModernPanel1.Controls.Add(Panel2)
         ModernPanel1.Controls.Add(Panel1)
@@ -220,14 +233,14 @@ Partial Class Form_v6_参数面板_参数总览
         ResumeLayout(False)
     End Sub
 
-    Friend WithEvents Panel1 As Panel
-    Friend WithEvents Panel2 As Panel
+    Friend WithEvents Panel1 As LakeUI.ModernPanel
+    Friend WithEvents Panel2 As LakeUI.ModernPanel
     Friend WithEvents HCL_参数总览标题 As LakeUI.HtmlColorLabel
     Friend WithEvents MTB_参数总览 As LakeUI.ModernTextBox
     Friend WithEvents MTB_命令行模板 As LakeUI.ModernTextBox
     Friend WithEvents HCL_命令行模板标题 As LakeUI.HtmlColorLabel
-    Friend WithEvents Panel70 As Panel
-    Friend WithEvents Panel3 As Panel
+    Friend WithEvents Panel70 As LakeUI.ModernPanel
+    Friend WithEvents Panel3 As LakeUI.ModernPanel
     Friend WithEvents MB_复制参数总览 As LakeUI.ModernButton
     Friend WithEvents MB_复制命令行模板 As LakeUI.ModernButton
     Friend WithEvents ModernPanel1 As LakeUI.ModernPanel

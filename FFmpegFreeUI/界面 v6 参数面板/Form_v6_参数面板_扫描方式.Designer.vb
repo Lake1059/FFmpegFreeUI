@@ -18,7 +18,12 @@ Partial Class Form_v6_参数面板_扫描方式
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         ModernPanel1 = New LakeUI.ModernPanel()
-        Panel1 = New Panel()
+        ModernPanel1.BackColor = Color.Transparent
+        ModernPanel1.BackColor1 = Color.Transparent
+        Panel1 = New LakeUI.ModernPanel()
+        Panel1.BackColor = Color.Transparent
+        Panel1.BackColor1 = Color.Transparent
+        Panel1.BorderSize = 0
         MCB_扫描方式 = New LakeUI.ModernComboBox()
         MCK_扫描方式总开关 = New LakeUI.ModernCheckBox()
         ModernPanel1.SuspendLayout()
@@ -27,7 +32,6 @@ Partial Class Form_v6_参数面板_扫描方式
         '
         ' ModernPanel1
         '
-        ModernPanel1.BackColor1 = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         ModernPanel1.BorderSize = 0
         ModernPanel1.Controls.Add(Panel1)
         ModernPanel1.Controls.Add(MCK_扫描方式总开关)
@@ -131,6 +135,6 @@ Partial Class Form_v6_参数面板_扫描方式
 
     Friend WithEvents ModernPanel1 As LakeUI.ModernPanel
     Friend WithEvents MCK_扫描方式总开关 As LakeUI.ModernCheckBox
-    Friend WithEvents Panel1 As Panel
+    Friend WithEvents Panel1 As LakeUI.ModernPanel
     Friend WithEvents MCB_扫描方式 As LakeUI.ModernComboBox
 End Class

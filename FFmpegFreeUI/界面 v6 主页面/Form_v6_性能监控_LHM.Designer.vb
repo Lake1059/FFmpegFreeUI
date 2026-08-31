@@ -26,41 +26,56 @@ Partial Class Form_v6_性能监控_LHM
         ModernPanel1 = New LakeUI.ModernPanel()
         EasyStatesPanel1 = New LakeUI.EasyStatesPanel()
         JustEmptyControl9 = New LakeUI.JustEmptyControl()
-        Panel2 = New Panel()
+        Panel2 = New LakeUI.ModernPanel()
+        Panel2.BackColor = Color.Transparent
+        Panel2.BackColor1 = Color.Transparent
+        Panel2.BorderSize = 0
         ModernPanel10 = New LakeUI.ModernPanel()
+        ModernPanel10.BackColor = Color.Transparent
         RoundDashBoard9 = New LakeUI.RoundDashBoard()
         HtmlColorLabel9 = New LakeUI.HtmlColorLabel()
         JustEmptyControl8 = New LakeUI.JustEmptyControl()
         ModernPanel9 = New LakeUI.ModernPanel()
+        ModernPanel9.BackColor = Color.Transparent
         RoundDashBoard8 = New LakeUI.RoundDashBoard()
         HtmlColorLabel8 = New LakeUI.HtmlColorLabel()
         JustEmptyControl7 = New LakeUI.JustEmptyControl()
         ModernPanel8 = New LakeUI.ModernPanel()
+        ModernPanel8.BackColor = Color.Transparent
         RoundDashBoard7 = New LakeUI.RoundDashBoard()
         HtmlColorLabel7 = New LakeUI.HtmlColorLabel()
         JustEmptyControl4 = New LakeUI.JustEmptyControl()
         ModernPanel3 = New LakeUI.ModernPanel()
+        ModernPanel3.BackColor = Color.Transparent
         RoundDashBoard6 = New LakeUI.RoundDashBoard()
         HtmlColorLabel6 = New LakeUI.HtmlColorLabel()
         JustEmptyControl1 = New LakeUI.JustEmptyControl()
         ModernPanel2 = New LakeUI.ModernPanel()
+        ModernPanel2.BackColor = Color.Transparent
         RoundDashBoard5 = New LakeUI.RoundDashBoard()
         HtmlColorLabel5 = New LakeUI.HtmlColorLabel()
         JustEmptyControl5 = New LakeUI.JustEmptyControl()
-        Panel1 = New Panel()
+        Panel1 = New LakeUI.ModernPanel()
+        Panel1.BackColor = Color.Transparent
+        Panel1.BackColor1 = Color.Transparent
+        Panel1.BorderSize = 0
         ModernPanel7 = New LakeUI.ModernPanel()
+        ModernPanel7.BackColor = Color.Transparent
         RoundDashBoard4 = New LakeUI.RoundDashBoard()
         HtmlColorLabel4 = New LakeUI.HtmlColorLabel()
         JustEmptyControl6 = New LakeUI.JustEmptyControl()
         ModernPanel6 = New LakeUI.ModernPanel()
+        ModernPanel6.BackColor = Color.Transparent
         RoundDashBoard3 = New LakeUI.RoundDashBoard()
         HtmlColorLabel3 = New LakeUI.HtmlColorLabel()
         JustEmptyControl3 = New LakeUI.JustEmptyControl()
         ModernPanel5 = New LakeUI.ModernPanel()
+        ModernPanel5.BackColor = Color.Transparent
         RoundDashBoard2 = New LakeUI.RoundDashBoard()
         HtmlColorLabel2 = New LakeUI.HtmlColorLabel()
         JustEmptyControl2 = New LakeUI.JustEmptyControl()
         ModernPanel4 = New LakeUI.ModernPanel()
+        ModernPanel4.BackColor = Color.Transparent
         RoundDashBoard1 = New LakeUI.RoundDashBoard()
         HtmlColorLabel1 = New LakeUI.HtmlColorLabel()
         Timer1 = New Timer(components)
@@ -645,7 +660,7 @@ Partial Class Form_v6_性能监控_LHM
     End Sub
 
     Friend WithEvents ModernPanel1 As LakeUI.ModernPanel
-    Friend WithEvents Panel1 As Panel
+    Friend WithEvents Panel1 As LakeUI.ModernPanel
     Friend WithEvents ModernPanel7 As LakeUI.ModernPanel
     Friend WithEvents RoundDashBoard4 As LakeUI.RoundDashBoard
     Friend WithEvents HtmlColorLabel4 As LakeUI.HtmlColorLabel
@@ -661,7 +676,7 @@ Partial Class Form_v6_性能监控_LHM
     Friend WithEvents ModernPanel4 As LakeUI.ModernPanel
     Friend WithEvents RoundDashBoard1 As LakeUI.RoundDashBoard
     Friend WithEvents HtmlColorLabel1 As LakeUI.HtmlColorLabel
-    Friend WithEvents Panel2 As Panel
+    Friend WithEvents Panel2 As LakeUI.ModernPanel
     Friend WithEvents ModernPanel10 As LakeUI.ModernPanel
     Friend WithEvents RoundDashBoard9 As LakeUI.RoundDashBoard
     Friend WithEvents HtmlColorLabel9 As LakeUI.HtmlColorLabel
@@ -687,4 +702,3 @@ Partial Class Form_v6_性能监控_LHM
     Friend WithEvents Timer1 As Timer
 
 End Class
-

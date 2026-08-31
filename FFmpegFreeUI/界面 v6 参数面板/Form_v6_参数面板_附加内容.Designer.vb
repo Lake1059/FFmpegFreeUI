@@ -27,6 +27,8 @@ Partial Class Form_v6_参数面板_附加内容
         Dim ModernTab3 As LakeUI.ModernTabControl.ModernTab = New LakeUI.ModernTabControl.ModernTab()
         ModernTabControl1 = New LakeUI.ModernTabControl()
         ModernPanel1 = New LakeUI.ModernPanel()
+        ModernPanel1.BackColor = Color.Transparent
+        ModernPanel1.BackColor1 = Color.Transparent
         ModernPanel1.SuspendLayout()
         SuspendLayout()
         '
@@ -57,7 +59,6 @@ Partial Class Form_v6_参数面板_附加内容
         '
         ' ModernPanel1
         '
-        ModernPanel1.BackColor1 = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         ModernPanel1.BorderSize = 0
         ModernPanel1.Controls.Add(ModernTabControl1)
         ModernPanel1.Dock = DockStyle.Fill

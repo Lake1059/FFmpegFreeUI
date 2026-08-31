@@ -23,9 +23,14 @@ Partial Class Form_v6_调试播放器
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         ModernPanel1 = New LakeUI.ModernPanel()
+        ModernPanel1.BackColor = Color.Transparent
         ModernPanel2 = New LakeUI.ModernPanel()
+        ModernPanel2.BackColor = Color.Transparent
         HtmlColorLabel1 = New LakeUI.HtmlColorLabel()
-        Panel2 = New Panel()
+        Panel2 = New LakeUI.ModernPanel()
+        Panel2.BackColor = Color.Transparent
+        Panel2.BackColor1 = Color.Transparent
+        Panel2.BorderSize = 0
         ExcellentProgressBar1 = New LakeUI.ExcellentProgressBar()
         JustEmptyControl2 = New LakeUI.JustEmptyControl()
         MB_关闭 = New LakeUI.ModernButton()
@@ -171,7 +176,7 @@ Partial Class Form_v6_调试播放器
     End Sub
 
     Friend WithEvents ModernPanel1 As LakeUI.ModernPanel
-    Friend WithEvents Panel2 As Panel
+    Friend WithEvents Panel2 As LakeUI.ModernPanel
     Friend WithEvents MB_关闭 As LakeUI.ModernButton
     Friend WithEvents JustEmptyControl1 As LakeUI.JustEmptyControl
     Friend WithEvents MB_打开 As LakeUI.ModernButton

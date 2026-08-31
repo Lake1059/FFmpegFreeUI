@@ -29,10 +29,12 @@ Partial Class Form_v6_Agent
         Dim ToolTipEntry5 As LakeUI.ModernComboBox.ToolTipEntry = New LakeUI.ModernComboBox.ToolTipEntry()
         Dim ToolTipEntry6 As LakeUI.ModernComboBox.ToolTipEntry = New LakeUI.ModernComboBox.ToolTipEntry()
         ModernPanel1 = New LakeUI.ModernPanel()
+        ModernPanel1.BackColor = Color.Transparent
         AgentRoom1 = New LakeUI.AgentRoom()
         JustEmptyControl7 = New LakeUI.JustEmptyControl()
         ModernTextBox1 = New LakeUI.ModernTextBox()
-        Panel2 = New Panel()
+        Panel2 = New LakeUI.ModernPanel()
+        Panel2.BorderSize = 0
         MCB_模型选择 = New LakeUI.ModernComboBox()
         JustEmptyControl4 = New LakeUI.JustEmptyControl()
         MCB_推理级别 = New LakeUI.ModernComboBox()
@@ -43,21 +45,34 @@ Partial Class Form_v6_Agent
         JustEmptyControl2 = New LakeUI.JustEmptyControl()
         MCB_联网设置 = New LakeUI.ModernComboBox()
         JustEmptyControl1 = New LakeUI.JustEmptyControl()
-        Panel3 = New Panel()
+        Panel3 = New LakeUI.ModernPanel()
+        Panel3.BackColor = Color.Transparent
+        Panel3.BackColor1 = Color.Transparent
+        Panel3.BorderSize = 0
         ModernPanel2 = New LakeUI.ModernPanel()
+        ModernPanel2.BackColor = Color.Transparent
         ModernListBox1 = New LakeUI.ModernListBox()
         HtmlColorLabel2 = New LakeUI.HtmlColorLabel()
         HtmlColorLabel1 = New LakeUI.HtmlColorLabel()
         ModernListBox2 = New LakeUI.ModernListBox()
-        Panel4 = New Panel()
+        Panel4 = New LakeUI.ModernPanel()
+        Panel4.BackColor = Color.Transparent
+        Panel4.BackColor1 = Color.Transparent
+        Panel4.BorderSize = 0
         MB_删除对话 = New LakeUI.ModernButton()
         JustEmptyControl5 = New LakeUI.JustEmptyControl()
         MB_新对话 = New LakeUI.ModernButton()
-        Panel1 = New Panel()
+        Panel1 = New LakeUI.ModernPanel()
+        Panel1.BackColor = Color.Transparent
+        Panel1.BackColor1 = Color.Transparent
+        Panel1.BorderSize = 0
         MB_操作提示 = New LakeUI.ModernButton()
         JustEmptyControl6 = New LakeUI.JustEmptyControl()
         MB_重载连接 = New LakeUI.ModernButton()
-        Panel5 = New Panel()
+        Panel5 = New LakeUI.ModernPanel()
+        Panel5.BackColor = Color.Transparent
+        Panel5.BackColor1 = Color.Transparent
+        Panel5.BorderSize = 0
         MB_页面用量 = New LakeUI.ModernButton()
         ModernPanel1.SuspendLayout()
         Panel2.SuspendLayout()
@@ -151,6 +166,7 @@ Partial Class Form_v6_Agent
         ' Panel2
         ' 
         Panel2.BackColor = Color.Transparent
+        Panel2.BackColor1 = Color.Transparent
         Panel2.Controls.Add(MCB_模型选择)
         Panel2.Controls.Add(JustEmptyControl4)
         Panel2.Controls.Add(MCB_推理级别)
@@ -627,7 +643,7 @@ Partial Class Form_v6_Agent
     Friend WithEvents ModernListBox1 As LakeUI.ModernListBox
     Friend WithEvents MB_删除对话 As LakeUI.ModernButton
     Friend WithEvents ModernTextBox1 As LakeUI.ModernTextBox
-    Friend WithEvents Panel2 As Panel
+    Friend WithEvents Panel2 As LakeUI.ModernPanel
     Friend WithEvents MCB_推理级别 As LakeUI.ModernComboBox
     Friend WithEvents JustEmptyControl4 As LakeUI.JustEmptyControl
     Friend WithEvents MCB_模型选择 As LakeUI.ModernComboBox
@@ -638,10 +654,10 @@ Partial Class Form_v6_Agent
     Friend WithEvents MCB_联网设置 As LakeUI.ModernComboBox
     Friend WithEvents MB_页面用量 As LakeUI.ModernButton
     Friend WithEvents JustEmptyControl8 As LakeUI.JustEmptyControl
-    Friend WithEvents Panel3 As Panel
-    Friend WithEvents Panel4 As Panel
-    Friend WithEvents Panel5 As Panel
-    Friend WithEvents Panel1 As Panel
+    Friend WithEvents Panel3 As LakeUI.ModernPanel
+    Friend WithEvents Panel4 As LakeUI.ModernPanel
+    Friend WithEvents Panel5 As LakeUI.ModernPanel
+    Friend WithEvents Panel1 As LakeUI.ModernPanel
     Friend WithEvents MB_操作提示 As LakeUI.ModernButton
     Friend WithEvents JustEmptyControl6 As LakeUI.JustEmptyControl
     Friend WithEvents MB_重载连接 As LakeUI.ModernButton

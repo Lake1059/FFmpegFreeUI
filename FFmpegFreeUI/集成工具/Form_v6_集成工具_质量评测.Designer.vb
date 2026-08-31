@@ -28,8 +28,13 @@ Partial Class Form_v6_集成工具_质量评测
         Dim ListColumn4 As LakeUI.UltraDetailListView.ListColumn = New LakeUI.UltraDetailListView.ListColumn()
         Dim ListColumn5 As LakeUI.UltraDetailListView.ListColumn = New LakeUI.UltraDetailListView.ListColumn()
         ModernPanel1 = New LakeUI.ModernPanel()
+        ModernPanel1.BackColor = Color.Transparent
+        ModernPanel1.BackColor1 = Color.Transparent
         UltraDetailListView1 = New LakeUI.UltraDetailListView()
-        Panel6 = New Panel()
+        Panel6 = New LakeUI.ModernPanel()
+        Panel6.BackColor = Color.Transparent
+        Panel6.BackColor1 = Color.Transparent
+        Panel6.BorderSize = 0
         MB_导出记录 = New LakeUI.ModernButton()
         JustEmptyControl9 = New LakeUI.JustEmptyControl()
         JustEmptyControl8 = New LakeUI.JustEmptyControl()
@@ -44,7 +49,10 @@ Partial Class Form_v6_集成工具_质量评测
         JustEmptyControl6 = New LakeUI.JustEmptyControl()
         MB_开始评测 = New LakeUI.ModernButton()
         HtmlColorLabel8 = New LakeUI.HtmlColorLabel()
-        Panel4 = New Panel()
+        Panel4 = New LakeUI.ModernPanel()
+        Panel4.BackColor = Color.Transparent
+        Panel4.BackColor1 = Color.Transparent
+        Panel4.BorderSize = 0
         MCB_模型选择 = New LakeUI.ModernComboBox()
         JustEmptyControl2 = New LakeUI.JustEmptyControl()
         MB_刷新VMAF模型 = New LakeUI.ModernButton()
@@ -52,22 +60,34 @@ Partial Class Form_v6_集成工具_质量评测
         MCB_SubSample = New LakeUI.ModernComboBox()
         JustEmptyControl1 = New LakeUI.JustEmptyControl()
         MCB_Pooling = New LakeUI.ModernComboBox()
-        Panel5 = New Panel()
+        Panel5 = New LakeUI.ModernPanel()
+        Panel5.BackColor = Color.Transparent
+        Panel5.BackColor1 = Color.Transparent
+        Panel5.BorderSize = 0
         HtmlColorLabel9 = New LakeUI.HtmlColorLabel()
         HtmlColorLabel7 = New LakeUI.HtmlColorLabel()
         HtmlColorLabel6 = New LakeUI.HtmlColorLabel()
-        Panel3 = New Panel()
+        Panel3 = New LakeUI.ModernPanel()
+        Panel3.BackColor = Color.Transparent
+        Panel3.BackColor1 = Color.Transparent
+        Panel3.BorderSize = 0
         MCB_XPSNR = New LakeUI.ModernCheckBox()
         MCB_VMAF = New LakeUI.ModernCheckBox()
         MCB_SSIM = New LakeUI.ModernCheckBox()
         MCB_PSNR = New LakeUI.ModernCheckBox()
         HtmlColorLabel4 = New LakeUI.HtmlColorLabel()
-        Panel2 = New Panel()
+        Panel2 = New LakeUI.ModernPanel()
+        Panel2.BackColor = Color.Transparent
+        Panel2.BackColor1 = Color.Transparent
+        Panel2.BorderSize = 0
         MTB_从头开始 = New LakeUI.ModernTextBox()
         HtmlColorLabel2 = New LakeUI.HtmlColorLabel()
         MTB_评测时长 = New LakeUI.ModernTextBox()
         HtmlColorLabel3 = New LakeUI.HtmlColorLabel()
-        Panel1 = New Panel()
+        Panel1 = New LakeUI.ModernPanel()
+        Panel1.BackColor = Color.Transparent
+        Panel1.BackColor1 = Color.Transparent
+        Panel1.BorderSize = 0
         MTB_原视频文件路径 = New LakeUI.ModernTextBox()
         JustEmptyControl5 = New LakeUI.JustEmptyControl()
         MB_选择原视频 = New LakeUI.ModernButton()
@@ -83,7 +103,6 @@ Partial Class Form_v6_集成工具_质量评测
         ' 
         ' ModernPanel1
         ' 
-        ModernPanel1.BackColor1 = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         ModernPanel1.BorderSize = 0
         ModernPanel1.Controls.Add(UltraDetailListView1)
         ModernPanel1.Controls.Add(Panel6)
@@ -801,29 +820,29 @@ Partial Class Form_v6_集成工具_质量评测
 
     Friend WithEvents ModernPanel1 As LakeUI.ModernPanel
     Friend WithEvents HtmlColorLabel1 As LakeUI.HtmlColorLabel
-    Friend WithEvents Panel1 As Panel
-    Friend WithEvents Panel2 As Panel
+    Friend WithEvents Panel1 As LakeUI.ModernPanel
+    Friend WithEvents Panel2 As LakeUI.ModernPanel
     Friend WithEvents HtmlColorLabel3 As LakeUI.HtmlColorLabel
     Friend WithEvents MTB_评测时长 As LakeUI.ModernTextBox
     Friend WithEvents MTB_从头开始 As LakeUI.ModernTextBox
     Friend WithEvents HtmlColorLabel2 As LakeUI.HtmlColorLabel
-    Friend WithEvents Panel3 As Panel
+    Friend WithEvents Panel3 As LakeUI.ModernPanel
     Friend WithEvents MCB_PSNR As LakeUI.ModernCheckBox
     Friend WithEvents MCB_XPSNR As LakeUI.ModernCheckBox
     Friend WithEvents MCB_VMAF As LakeUI.ModernCheckBox
     Friend WithEvents MCB_SSIM As LakeUI.ModernCheckBox
     Friend WithEvents HtmlColorLabel4 As LakeUI.HtmlColorLabel
-    Friend WithEvents Panel4 As Panel
+    Friend WithEvents Panel4 As LakeUI.ModernPanel
     Friend WithEvents MCB_模型选择 As LakeUI.ModernComboBox
     Friend WithEvents MCB_Pooling As LakeUI.ModernComboBox
     Friend WithEvents MCB_SubSample As LakeUI.ModernComboBox
     Friend WithEvents JustEmptyControl1 As LakeUI.JustEmptyControl
-    Friend WithEvents Panel5 As Panel
+    Friend WithEvents Panel5 As LakeUI.ModernPanel
     Friend WithEvents HtmlColorLabel7 As LakeUI.HtmlColorLabel
     Friend WithEvents HtmlColorLabel6 As LakeUI.HtmlColorLabel
     Friend WithEvents HtmlColorLabel9 As LakeUI.HtmlColorLabel
     Friend WithEvents HtmlColorLabel8 As LakeUI.HtmlColorLabel
-    Friend WithEvents Panel6 As Panel
+    Friend WithEvents Panel6 As LakeUI.ModernPanel
     Friend WithEvents MB_图表窗口 As LakeUI.ModernButton
     Friend WithEvents MB_移除选中文件 As LakeUI.ModernButton
     Friend WithEvents JustEmptyControl4 As LakeUI.JustEmptyControl

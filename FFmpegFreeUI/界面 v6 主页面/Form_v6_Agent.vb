@@ -2574,7 +2574,7 @@ Public Class Form_v6_Agent
         EqualizeTwoButtons(Panel1, MB_重载连接, JustEmptyControl6)
     End Sub
 
-    Private Sub EqualizeTwoButtons(panel As Panel, leftButton As Control, gap As Control)
+    Private Sub EqualizeTwoButtons(panel As LakeUI.ModernPanel, leftButton As Control, gap As Control)
         If panel Is Nothing OrElse leftButton Is Nothing Then Return
         Dim gapWidth = If(gap Is Nothing OrElse Not gap.Visible, 0, gap.Width)
         Dim available = Math.Max(0, panel.DisplayRectangle.Width - gapWidth)

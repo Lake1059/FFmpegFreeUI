@@ -24,19 +24,36 @@ Partial Class Form_v6_参数面板_解码参数
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form_v6_参数面板_解码参数))
         ModernPanel1 = New LakeUI.ModernPanel()
-        Panel4 = New Panel()
+        ModernPanel1.BackColor = Color.Transparent
+        ModernPanel1.BackColor1 = Color.Transparent
+        Panel4 = New LakeUI.ModernPanel()
+        Panel4.BackColor = Color.Transparent
+        Panel4.BackColor1 = Color.Transparent
+        Panel4.BorderSize = 0
         MTB_硬件解码设备参数值 = New LakeUI.ModernTextBox()
-        Panel3 = New Panel()
+        Panel3 = New LakeUI.ModernPanel()
+        Panel3.BackColor = Color.Transparent
+        Panel3.BackColor1 = Color.Transparent
+        Panel3.BorderSize = 0
         MCB_硬件解码设备参数名 = New LakeUI.ModernComboBox()
         HCL_硬件解码设备标题 = New LakeUI.HtmlColorLabel()
-        Panel2 = New Panel()
+        Panel2 = New LakeUI.ModernPanel()
+        Panel2.BackColor = Color.Transparent
+        Panel2.BackColor1 = Color.Transparent
+        Panel2.BorderSize = 0
         MCB_硬件解码输出格式 = New LakeUI.ModernComboBox()
         HCL_解码数据格式提示 = New LakeUI.HtmlColorLabel()
         HCL_解码数据格式标题 = New LakeUI.HtmlColorLabel()
-        Panel5 = New Panel()
+        Panel5 = New LakeUI.ModernPanel()
+        Panel5.BackColor = Color.Transparent
+        Panel5.BackColor1 = Color.Transparent
+        Panel5.BorderSize = 0
         MTB_CPU解码线程数 = New LakeUI.ModernTextBox()
         HCL_CPU解码线程数说明 = New LakeUI.HtmlColorLabel()
-        Panel1 = New Panel()
+        Panel1 = New LakeUI.ModernPanel()
+        Panel1.BackColor = Color.Transparent
+        Panel1.BackColor1 = Color.Transparent
+        Panel1.BorderSize = 0
         MCB_硬件加速解码方式 = New LakeUI.ModernComboBox()
         HCL_硬件加速解码说明 = New LakeUI.HtmlColorLabel()
         HCL_解码器标题 = New LakeUI.HtmlColorLabel()
@@ -50,7 +67,6 @@ Partial Class Form_v6_参数面板_解码参数
         ' 
         ' ModernPanel1
         ' 
-        ModernPanel1.BackColor1 = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         ModernPanel1.BorderSize = 0
         ModernPanel1.Controls.Add(Panel4)
         ModernPanel1.Controls.Add(Panel3)
@@ -373,17 +389,17 @@ Partial Class Form_v6_参数面板_解码参数
     Friend WithEvents HCL_硬件加速解码说明 As LakeUI.HtmlColorLabel
     Friend WithEvents HCL_解码器标题 As LakeUI.HtmlColorLabel
     Friend WithEvents HCL_CPU解码线程数说明 As LakeUI.HtmlColorLabel
-    Friend WithEvents Panel1 As Panel
+    Friend WithEvents Panel1 As LakeUI.ModernPanel
     Friend WithEvents MCB_硬件加速解码方式 As LakeUI.ModernComboBox
-    Friend WithEvents Panel5 As Panel
+    Friend WithEvents Panel5 As LakeUI.ModernPanel
     Friend WithEvents MTB_CPU解码线程数 As LakeUI.ModernTextBox
     Friend WithEvents HCL_解码数据格式标题 As LakeUI.HtmlColorLabel
-    Friend WithEvents Panel2 As Panel
+    Friend WithEvents Panel2 As LakeUI.ModernPanel
     Friend WithEvents MCB_硬件解码输出格式 As LakeUI.ModernComboBox
     Friend WithEvents HCL_解码数据格式提示 As LakeUI.HtmlColorLabel
     Friend WithEvents HCL_硬件解码设备标题 As LakeUI.HtmlColorLabel
-    Friend WithEvents Panel4 As Panel
+    Friend WithEvents Panel4 As LakeUI.ModernPanel
     Friend WithEvents MTB_硬件解码设备参数值 As LakeUI.ModernTextBox
-    Friend WithEvents Panel3 As Panel
+    Friend WithEvents Panel3 As LakeUI.ModernPanel
     Friend WithEvents MCB_硬件解码设备参数名 As LakeUI.ModernComboBox
 End Class

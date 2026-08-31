@@ -18,10 +18,18 @@ Partial Class Form_v6_编码队列_任务日志
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         ModernPanel1 = New LakeUI.ModernPanel()
+        ModernPanel1.BackColor = Color.Transparent
+        ModernPanel1.BackColor1 = Color.Transparent
         ModernTextBox1 = New LakeUI.ModernTextBox()
-        Panel2 = New Panel()
+        Panel2 = New LakeUI.ModernPanel()
+        Panel2.BackColor = Color.Transparent
+        Panel2.BackColor1 = Color.Transparent
+        Panel2.BorderSize = 0
         MB_任务性能计数器 = New LakeUI.ModernButton()
-        Panel1 = New Panel()
+        Panel1 = New LakeUI.ModernPanel()
+        Panel1.BackColor = Color.Transparent
+        Panel1.BackColor1 = Color.Transparent
+        Panel1.BorderSize = 0
         ModernCheckBox1 = New LakeUI.ModernCheckBox()
         MB_复制当前视图 = New LakeUI.ModernButton()
         MCB_显示模式 = New LakeUI.ModernComboBox()
@@ -32,7 +40,6 @@ Partial Class Form_v6_编码队列_任务日志
         ' 
         ' ModernPanel1
         ' 
-        ModernPanel1.BackColor1 = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         ModernPanel1.BorderSize = 0
         ModernPanel1.Controls.Add(ModernTextBox1)
         ModernPanel1.Controls.Add(Panel2)
@@ -185,11 +192,11 @@ Partial Class Form_v6_编码队列_任务日志
     End Sub
 
     Friend WithEvents ModernPanel1 As LakeUI.ModernPanel
-    Friend WithEvents Panel1 As Panel
+    Friend WithEvents Panel1 As LakeUI.ModernPanel
     Friend WithEvents MCB_显示模式 As LakeUI.ModernComboBox
     Friend WithEvents MB_复制当前视图 As LakeUI.ModernButton
     Friend WithEvents ModernTextBox1 As LakeUI.ModernTextBox
     Friend WithEvents ModernCheckBox1 As LakeUI.ModernCheckBox
-    Friend WithEvents Panel2 As Panel
+    Friend WithEvents Panel2 As LakeUI.ModernPanel
     Friend WithEvents MB_任务性能计数器 As LakeUI.ModernButton
 End Class

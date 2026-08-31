@@ -27,33 +27,49 @@ Partial Class Form_v6_性能监控
         Dim ToolTipEntry2 As LakeUI.ModernComboBox.ToolTipEntry = New LakeUI.ModernComboBox.ToolTipEntry()
         CpuMonitor1 = New LakeUI.CpuMonitor()
         ModernPanel1 = New LakeUI.ModernPanel()
-        Panel4 = New Panel()
+        Panel4 = New LakeUI.ModernPanel()
+        Panel4.BackColor = Color.Transparent
+        Panel4.BackColor1 = Color.Transparent
+        Panel4.BorderSize = 0
         ModernPanel内置显卡监控面板 = New LakeUI.ModernPanel()
         EasyStatesPanel1 = New LakeUI.EasyStatesPanel()
         JustEmptyControl5 = New LakeUI.JustEmptyControl()
-        Panel1 = New Panel()
+        Panel1 = New LakeUI.ModernPanel()
+        Panel1.BackColor = Color.Transparent
+        Panel1.BackColor1 = Color.Transparent
+        Panel1.BorderSize = 0
         ModernPanel7 = New LakeUI.ModernPanel()
+        ModernPanel7.BackColor = Color.Transparent
         RoundDashBoard4 = New LakeUI.RoundDashBoard()
         HtmlColorLabel4 = New LakeUI.HtmlColorLabel()
         JustEmptyControl6 = New LakeUI.JustEmptyControl()
         ModernPanel6 = New LakeUI.ModernPanel()
+        ModernPanel6.BackColor = Color.Transparent
         RoundDashBoard3 = New LakeUI.RoundDashBoard()
         HtmlColorLabel3 = New LakeUI.HtmlColorLabel()
         JustEmptyControl3 = New LakeUI.JustEmptyControl()
         ModernPanel5 = New LakeUI.ModernPanel()
+        ModernPanel5.BackColor = Color.Transparent
         RoundDashBoard2 = New LakeUI.RoundDashBoard()
         HtmlColorLabel2 = New LakeUI.HtmlColorLabel()
         JustEmptyControl2 = New LakeUI.JustEmptyControl()
         ModernPanel4 = New LakeUI.ModernPanel()
+        ModernPanel4.BackColor = Color.Transparent
         RoundDashBoard1 = New LakeUI.RoundDashBoard()
         HtmlColorLabel1 = New LakeUI.HtmlColorLabel()
-        Panel3 = New Panel()
+        Panel3 = New LakeUI.ModernPanel()
+        Panel3.BackColor = Color.Transparent
+        Panel3.BackColor1 = Color.Transparent
+        Panel3.BorderSize = 0
         ModernComboBox3 = New LakeUI.ModernComboBox()
         JustEmptyControl4 = New LakeUI.JustEmptyControl()
         ModernComboBox2 = New LakeUI.ModernComboBox()
         RamMonitor1 = New LakeUI.RamMonitor()
         JustEmptyControl7 = New LakeUI.JustEmptyControl()
-        Panel2 = New Panel()
+        Panel2 = New LakeUI.ModernPanel()
+        Panel2.BackColor = Color.Transparent
+        Panel2.BackColor1 = Color.Transparent
+        Panel2.BorderSize = 0
         JustEmptyControl1 = New LakeUI.JustEmptyControl()
         ModernComboBox1 = New LakeUI.ModernComboBox()
         Timer1 = New Timer(components)
@@ -87,7 +103,7 @@ Partial Class Form_v6_性能监控
         ' 
         ' ModernPanel1
         ' 
-        ModernPanel1.BackColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
+        ModernPanel1.BackColor = Color.Transparent
         ModernPanel1.BorderSize = 0
         ModernPanel1.Controls.Add(Panel4)
         ModernPanel1.Controls.Add(RamMonitor1)
@@ -542,11 +558,11 @@ Partial Class Form_v6_性能监控
     Friend WithEvents JustEmptyControl1 As LakeUI.JustEmptyControl
     Friend WithEvents RamMonitor1 As LakeUI.RamMonitor
     Friend WithEvents ModernPanel内置显卡监控面板 As LakeUI.ModernPanel
-    Friend WithEvents Panel3 As Panel
+    Friend WithEvents Panel3 As LakeUI.ModernPanel
     Friend WithEvents ModernComboBox3 As LakeUI.ModernComboBox
     Friend WithEvents JustEmptyControl4 As LakeUI.JustEmptyControl
     Friend WithEvents ModernComboBox2 As LakeUI.ModernComboBox
-    Friend WithEvents Panel1 As Panel
+    Friend WithEvents Panel1 As LakeUI.ModernPanel
     Friend WithEvents ModernPanel4 As LakeUI.ModernPanel
     Friend WithEvents HtmlColorLabel1 As LakeUI.HtmlColorLabel
     Friend WithEvents RoundDashBoard1 As LakeUI.RoundDashBoard
@@ -565,8 +581,8 @@ Partial Class Form_v6_性能监控
     Friend WithEvents RoundDashBoard4 As LakeUI.RoundDashBoard
     Friend WithEvents HtmlColorLabel4 As LakeUI.HtmlColorLabel
     Friend WithEvents ModernPanel1 As LakeUI.ModernPanel
-    Friend WithEvents Panel2 As Panel
-    Friend WithEvents Panel4 As Panel
+    Friend WithEvents Panel2 As LakeUI.ModernPanel
+    Friend WithEvents Panel4 As LakeUI.ModernPanel
     Friend WithEvents JustEmptyControl7 As LakeUI.JustEmptyControl
     Friend WithEvents EasyStatesPanel1 As LakeUI.EasyStatesPanel
 End Class

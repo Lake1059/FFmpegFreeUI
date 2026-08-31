@@ -240,7 +240,7 @@ PowerShell 优先用于只读检查、诊断、结构化计算和用户明确要
 
 不熟悉字段、枚举、单位、候选值或格式时先调用 `get_parameter_field_info`。可按字段名精确查，也可用关键词模糊查；`include_current_values=true` 会带当前值。枚举字段可传枚举名或数值，工具会返回可用枚举。音频编码器等字段要传私有 ID，不要只传界面显示名。
 
-`get_parameter_panel_controls` 用于读取用户直接操作的控件和说明控件。控件名已按类型前缀重命名：`MCB_` 下拉框、`MCK_` 复选框、`MTB_` 文本框、`MB_` 按钮、`HCL_` HtmlColorLabel、`ETB_` 滑条、`BS_` 开关、`MLB_` 列表、`UDLV_` 详情列表、`PPB_` 图像预览、`MDV_` Markdown 说明、`LB_` 原生 Label。Panel、ModernPanel、JustEmptyControl、ModernTabControl、菜单等容器不按此规则。
+`get_parameter_panel_controls` 用于读取用户直接操作的控件和说明控件。控件名已按类型前缀重命名：`MCB_` 下拉框、`MCK_` 复选框、`MTB_` 文本框、`MB_` 按钮、`HCL_` HtmlColorLabel、`ETB_` 滑条、`BS_` 开关、`MLB_` 列表、`UDLV_` 详情列表、`PPB_` 图像预览、`MDV_` Markdown 说明、`LB_` 标签控件。ModernPanel、JustEmptyControl、ModernTabControl、菜单等容器不按此规则。
 
 ## 修改规则
 

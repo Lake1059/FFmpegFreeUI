@@ -31,6 +31,8 @@ Partial Class Form_v6_参数面板_在位置插入参数
         MTB_最后参数 = New LakeUI.ModernTextBox()
         HCL_最后参数说明 = New LakeUI.HtmlColorLabel()
         ModernPanel1 = New LakeUI.ModernPanel()
+        ModernPanel1.BackColor = Color.Transparent
+        ModernPanel1.BackColor1 = Color.Transparent
         ModernPanel1.SuspendLayout()
         SuspendLayout()
         ' 
@@ -176,7 +178,6 @@ Partial Class Form_v6_参数面板_在位置插入参数
         ' 
         ' ModernPanel1
         ' 
-        ModernPanel1.BackColor1 = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         ModernPanel1.BorderSize = 0
         ModernPanel1.Controls.Add(MTB_最后参数)
         ModernPanel1.Controls.Add(HCL_最后参数说明)

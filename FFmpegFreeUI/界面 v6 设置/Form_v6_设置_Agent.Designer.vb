@@ -24,20 +24,35 @@ Partial Class Form_v6_设置_Agent
     Private Sub InitializeComponent()
         ModernPanel1 = New LakeUI.ModernPanel()
         HtmlColorLabel4 = New LakeUI.HtmlColorLabel()
-        Panel2 = New Panel()
+        Panel2 = New LakeUI.ModernPanel()
+        Panel2.BackColor = Color.Transparent
+        Panel2.BackColor1 = Color.Transparent
+        Panel2.BorderSize = 0
         ModernComboBox1 = New LakeUI.ModernComboBox()
         HtmlColorLabel3 = New LakeUI.HtmlColorLabel()
         HtmlColorLabel2 = New LakeUI.HtmlColorLabel()
-        Panel5 = New Panel()
+        Panel5 = New LakeUI.ModernPanel()
+        Panel5.BackColor = Color.Transparent
+        Panel5.BackColor1 = Color.Transparent
+        Panel5.BorderSize = 0
         HtmlColorLabel10 = New LakeUI.HtmlColorLabel()
         MTB_附加请求Body = New LakeUI.ModernTextBox()
-        Panel4 = New Panel()
+        Panel4 = New LakeUI.ModernPanel()
+        Panel4.BackColor = Color.Transparent
+        Panel4.BackColor1 = Color.Transparent
+        Panel4.BorderSize = 0
         HtmlColorLabel9 = New LakeUI.HtmlColorLabel()
         MTB_附加请求头 = New LakeUI.ModernTextBox()
-        Panel3 = New Panel()
+        Panel3 = New LakeUI.ModernPanel()
+        Panel3.BackColor = Color.Transparent
+        Panel3.BackColor1 = Color.Transparent
+        Panel3.BorderSize = 0
         HtmlColorLabel8 = New LakeUI.HtmlColorLabel()
         MTB_APIKEY = New LakeUI.ModernTextBox()
-        Panel1 = New Panel()
+        Panel1 = New LakeUI.ModernPanel()
+        Panel1.BackColor = Color.Transparent
+        Panel1.BackColor1 = Color.Transparent
+        Panel1.BorderSize = 0
         HtmlColorLabel7 = New LakeUI.HtmlColorLabel()
         MTB_自定义地址 = New LakeUI.ModernTextBox()
         HtmlColorLabel1 = New LakeUI.HtmlColorLabel()
@@ -373,16 +388,16 @@ Partial Class Form_v6_设置_Agent
     Friend WithEvents ModernPanel1 As LakeUI.ModernPanel
     Friend WithEvents HtmlColorLabel6 As LakeUI.HtmlColorLabel
     Friend WithEvents HtmlColorLabel1 As LakeUI.HtmlColorLabel
-    Friend WithEvents Panel2 As Panel
+    Friend WithEvents Panel2 As LakeUI.ModernPanel
     Friend WithEvents ModernComboBox1 As LakeUI.ModernComboBox
-    Friend WithEvents Panel5 As Panel
+    Friend WithEvents Panel5 As LakeUI.ModernPanel
     Friend WithEvents HtmlColorLabel10 As LakeUI.HtmlColorLabel
     Friend WithEvents MTB_附加请求Body As LakeUI.ModernTextBox
-    Friend WithEvents Panel4 As Panel
+    Friend WithEvents Panel4 As LakeUI.ModernPanel
     Friend WithEvents HtmlColorLabel9 As LakeUI.HtmlColorLabel
-    Friend WithEvents Panel3 As Panel
+    Friend WithEvents Panel3 As LakeUI.ModernPanel
     Friend WithEvents HtmlColorLabel8 As LakeUI.HtmlColorLabel
-    Friend WithEvents Panel1 As Panel
+    Friend WithEvents Panel1 As LakeUI.ModernPanel
     Friend WithEvents HtmlColorLabel7 As LakeUI.HtmlColorLabel
     Friend WithEvents MTB_自定义地址 As LakeUI.ModernTextBox
     Friend WithEvents MTB_附加请求头 As LakeUI.ModernTextBox

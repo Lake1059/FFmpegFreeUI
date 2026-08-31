@@ -27,9 +27,13 @@ Partial Class Form_v6_准备文件
         Dim ListColumn3 As LakeUI.UltraDetailListView.ListColumn = New LakeUI.UltraDetailListView.ListColumn()
         Dim ListColumn4 As LakeUI.UltraDetailListView.ListColumn = New LakeUI.UltraDetailListView.ListColumn()
         ModernPanel1 = New LakeUI.ModernPanel()
+        ModernPanel1.BackColor = Color.Transparent
         UltraDetailListView1 = New LakeUI.UltraDetailListView()
         HtmlColorLabel1 = New LakeUI.HtmlColorLabel()
-        Panel1 = New Panel()
+        Panel1 = New LakeUI.ModernPanel()
+        Panel1.BackColor = Color.Transparent
+        Panel1.BackColor1 = Color.Transparent
+        Panel1.BorderSize = 0
         MCB_排序 = New LakeUI.ModernComboBox()
         JustEmptyControl5 = New LakeUI.JustEmptyControl()
         MB_移除全部 = New LakeUI.ModernButton()
@@ -297,7 +301,7 @@ Partial Class Form_v6_准备文件
     End Sub
 
     Friend WithEvents ModernPanel1 As LakeUI.ModernPanel
-    Friend WithEvents Panel1 As Panel
+    Friend WithEvents Panel1 As LakeUI.ModernPanel
     Friend WithEvents MB_添加文件夹及子目录 As LakeUI.ModernButton
     Friend WithEvents JustEmptyControl2 As LakeUI.JustEmptyControl
     Friend WithEvents MB_添加文件 As LakeUI.ModernButton

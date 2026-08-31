@@ -23,17 +23,28 @@ Partial Class Form_v6_参数面板_预设管理
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         ModernPanel1 = New LakeUI.ModernPanel()
-        Panel2 = New Panel()
+        ModernPanel1.BackColor = Color.Transparent
+        ModernPanel1.BackColor1 = Color.Transparent
+        Panel2 = New LakeUI.ModernPanel()
+        Panel2.BackColor = Color.Transparent
+        Panel2.BackColor1 = Color.Transparent
+        Panel2.BorderSize = 0
         MTB_预设命令行预览 = New LakeUI.ModernTextBox()
         JustEmptyControl2 = New LakeUI.JustEmptyControl()
         MTB_预设参数总览 = New LakeUI.ModernTextBox()
         JustEmptyControl1 = New LakeUI.JustEmptyControl()
         MLB_预设列表 = New LakeUI.ModernListBox()
-        Panel3 = New Panel()
+        Panel3 = New LakeUI.ModernPanel()
+        Panel3.BackColor = Color.Transparent
+        Panel3.BackColor1 = Color.Transparent
+        Panel3.BorderSize = 0
         MTB_预设名称 = New LakeUI.ModernTextBox()
         JustEmptyControl9 = New LakeUI.JustEmptyControl()
         MB_变更预设名称 = New LakeUI.ModernButton()
-        Panel1 = New Panel()
+        Panel1 = New LakeUI.ModernPanel()
+        Panel1.BackColor = Color.Transparent
+        Panel1.BackColor1 = Color.Transparent
+        Panel1.BorderSize = 0
         MCK_额外保存输出位置 = New LakeUI.ModernCheckBox()
         JustEmptyControl8 = New LakeUI.JustEmptyControl()
         MB_重置所有预设参数 = New LakeUI.ModernButton()
@@ -48,7 +59,10 @@ Partial Class Form_v6_参数面板_预设管理
         JustEmptyControl3 = New LakeUI.JustEmptyControl()
         MCB_预设来源 = New LakeUI.ModernComboBox()
         HCL_预设管理说明 = New LakeUI.HtmlColorLabel()
-        Panel4 = New Panel()
+        Panel4 = New LakeUI.ModernPanel()
+        Panel4.BackColor = Color.Transparent
+        Panel4.BackColor1 = Color.Transparent
+        Panel4.BorderSize = 0
         MTB_预设备注 = New LakeUI.ModernTextBox()
         JustEmptyControl10 = New LakeUI.JustEmptyControl()
         MB_变更预设备注 = New LakeUI.ModernButton()
@@ -61,7 +75,6 @@ Partial Class Form_v6_参数面板_预设管理
         ' 
         ' ModernPanel1
         ' 
-        ModernPanel1.BackColor1 = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         ModernPanel1.BorderSize = 0
         ModernPanel1.Controls.Add(Panel2)
         ModernPanel1.Controls.Add(Panel3)
@@ -500,9 +513,9 @@ Partial Class Form_v6_参数面板_预设管理
 
     Friend WithEvents ModernPanel1 As LakeUI.ModernPanel
     Friend WithEvents HCL_预设管理说明 As LakeUI.HtmlColorLabel
-    Friend WithEvents Panel1 As Panel
+    Friend WithEvents Panel1 As LakeUI.ModernPanel
     Friend WithEvents MCB_预设来源 As LakeUI.ModernComboBox
-    Friend WithEvents Panel2 As Panel
+    Friend WithEvents Panel2 As LakeUI.ModernPanel
     Friend WithEvents JustEmptyControl1 As LakeUI.JustEmptyControl
     Friend WithEvents MTB_预设命令行预览 As LakeUI.ModernTextBox
     Friend WithEvents JustEmptyControl2 As LakeUI.JustEmptyControl
@@ -520,11 +533,11 @@ Partial Class Form_v6_参数面板_预设管理
     Friend WithEvents JustEmptyControl8 As LakeUI.JustEmptyControl
     Friend WithEvents MCK_额外保存输出位置 As LakeUI.ModernCheckBox
     Friend WithEvents MLB_预设列表 As LakeUI.ModernListBox
-    Friend WithEvents Panel3 As Panel
+    Friend WithEvents Panel3 As LakeUI.ModernPanel
     Friend WithEvents MTB_预设名称 As LakeUI.ModernTextBox
     Friend WithEvents JustEmptyControl9 As LakeUI.JustEmptyControl
     Friend WithEvents MB_变更预设名称 As LakeUI.ModernButton
-    Friend WithEvents Panel4 As Panel
+    Friend WithEvents Panel4 As LakeUI.ModernPanel
     Friend WithEvents MTB_预设备注 As LakeUI.ModernTextBox
     Friend WithEvents JustEmptyControl10 As LakeUI.JustEmptyControl
     Friend WithEvents MB_变更预设备注 As LakeUI.ModernButton

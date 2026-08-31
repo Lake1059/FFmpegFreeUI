@@ -23,19 +23,33 @@ Partial Class Form_v6_参数面板_剪辑区间
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         ModernPanel1 = New LakeUI.ModernPanel()
-        Panel1 = New Panel()
+        ModernPanel1.BackColor = Color.Transparent
+        ModernPanel1.BackColor1 = Color.Transparent
+        Panel1 = New LakeUI.ModernPanel()
+        Panel1.BackColor = Color.Transparent
+        Panel1.BackColor1 = Color.Transparent
+        Panel1.BorderSize = 0
         MCB_向前解码秒数 = New LakeUI.ModernComboBox()
         HCL_向前解码 = New LakeUI.HtmlColorLabel()
-        Panel3 = New Panel()
+        Panel3 = New LakeUI.ModernPanel()
+        Panel3.BackColor = Color.Transparent
+        Panel3.BackColor1 = Color.Transparent
+        Panel3.BorderSize = 0
         MTB_出点 = New LakeUI.ModernTextBox()
         JustEmptyControl1 = New LakeUI.JustEmptyControl()
         MTB_入点 = New LakeUI.ModernTextBox()
-        Panel5 = New Panel()
+        Panel5 = New LakeUI.ModernPanel()
+        Panel5.BackColor = Color.Transparent
+        Panel5.BackColor1 = Color.Transparent
+        Panel5.BorderSize = 0
         HCL_出点 = New LakeUI.HtmlColorLabel()
         HCL_入点 = New LakeUI.HtmlColorLabel()
         HCL_剪辑时间点填写提示 = New LakeUI.HtmlColorLabel()
         HCL_时间点 = New LakeUI.HtmlColorLabel()
-        Panel2 = New Panel()
+        Panel2 = New LakeUI.ModernPanel()
+        Panel2.BackColor = Color.Transparent
+        Panel2.BackColor1 = Color.Transparent
+        Panel2.BorderSize = 0
         MCB_剪辑模式 = New LakeUI.ModernComboBox()
         HCL_剪辑重编码提示 = New LakeUI.HtmlColorLabel()
         HCL_剪辑模式 = New LakeUI.HtmlColorLabel()
@@ -48,7 +62,6 @@ Partial Class Form_v6_参数面板_剪辑区间
         '
         ' ModernPanel1
         '
-        ModernPanel1.BackColor1 = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         ModernPanel1.BorderSize = 0
         ModernPanel1.Controls.Add(Panel1)
         ModernPanel1.Controls.Add(HCL_向前解码)
@@ -339,18 +352,18 @@ Partial Class Form_v6_参数面板_剪辑区间
 
     Friend WithEvents ModernPanel1 As LakeUI.ModernPanel
     Friend WithEvents HCL_剪辑模式 As LakeUI.HtmlColorLabel
-    Friend WithEvents Panel2 As Panel
+    Friend WithEvents Panel2 As LakeUI.ModernPanel
     Friend WithEvents MCB_剪辑模式 As LakeUI.ModernComboBox
     Friend WithEvents HCL_时间点 As LakeUI.HtmlColorLabel
     Friend WithEvents HCL_剪辑时间点填写提示 As LakeUI.HtmlColorLabel
     Friend WithEvents HCL_向前解码 As LakeUI.HtmlColorLabel
-    Friend WithEvents Panel3 As Panel
+    Friend WithEvents Panel3 As LakeUI.ModernPanel
     Friend WithEvents MTB_出点 As LakeUI.ModernTextBox
     Friend WithEvents JustEmptyControl1 As LakeUI.JustEmptyControl
     Friend WithEvents MTB_入点 As LakeUI.ModernTextBox
-    Friend WithEvents Panel1 As Panel
+    Friend WithEvents Panel1 As LakeUI.ModernPanel
     Friend WithEvents MCB_向前解码秒数 As LakeUI.ModernComboBox
-    Friend WithEvents Panel5 As Panel
+    Friend WithEvents Panel5 As LakeUI.ModernPanel
     Friend WithEvents HCL_出点 As LakeUI.HtmlColorLabel
     Friend WithEvents HCL_入点 As LakeUI.HtmlColorLabel
     Friend WithEvents HCL_剪辑重编码提示 As LakeUI.HtmlColorLabel

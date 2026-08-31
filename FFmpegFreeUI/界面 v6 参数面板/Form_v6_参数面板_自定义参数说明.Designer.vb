@@ -24,6 +24,8 @@ Partial Class Form_v6_参数面板_自定义参数说明
     Private Sub InitializeComponent()
         MDV_自定义参数说明 = New LakeUI.MarkDownViewer()
         ModernPanel1 = New LakeUI.ModernPanel()
+        ModernPanel1.BackColor = Color.Transparent
+        ModernPanel1.BackColor1 = Color.Transparent
         ModernPanel1.SuspendLayout()
         SuspendLayout()
         '
@@ -50,7 +52,6 @@ Partial Class Form_v6_参数面板_自定义参数说明
         '
         ' ModernPanel1
         '
-        ModernPanel1.BackColor1 = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         ModernPanel1.BorderSize = 0
         ModernPanel1.Controls.Add(MDV_自定义参数说明)
         ModernPanel1.Dock = DockStyle.Fill

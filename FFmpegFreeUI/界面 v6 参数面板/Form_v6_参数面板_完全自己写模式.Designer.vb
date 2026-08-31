@@ -25,11 +25,16 @@ Partial Class Form_v6_参数面板_完全自己写模式
         HCL_完全自己写模式警告 = New LakeUI.HtmlColorLabel()
         MTB_完整命令行参数 = New LakeUI.ModernTextBox()
         HCL_完整命令行参数说明 = New LakeUI.HtmlColorLabel()
-        Panel5 = New Panel()
+        Panel5 = New LakeUI.ModernPanel()
+        Panel5.BackColor = Color.Transparent
+        Panel5.BackColor1 = Color.Transparent
+        Panel5.BorderSize = 0
         MB_插入输出文件占位符 = New LakeUI.ModernButton()
         JustEmptyControl1 = New LakeUI.JustEmptyControl()
         MB_插入输入文件占位符 = New LakeUI.ModernButton()
         ModernPanel1 = New LakeUI.ModernPanel()
+        ModernPanel1.BackColor = Color.Transparent
+        ModernPanel1.BackColor1 = Color.Transparent
         Panel5.SuspendLayout()
         ModernPanel1.SuspendLayout()
         SuspendLayout()
@@ -137,7 +142,6 @@ Partial Class Form_v6_参数面板_完全自己写模式
         ' 
         ' ModernPanel1
         ' 
-        ModernPanel1.BackColor1 = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         ModernPanel1.BorderSize = 0
         ModernPanel1.Controls.Add(MTB_完整命令行参数)
         ModernPanel1.Controls.Add(Panel5)
@@ -170,7 +174,7 @@ Partial Class Form_v6_参数面板_完全自己写模式
     Friend WithEvents HCL_完全自己写模式警告 As LakeUI.HtmlColorLabel
     Friend WithEvents MTB_完整命令行参数 As LakeUI.ModernTextBox
     Friend WithEvents HCL_完整命令行参数说明 As LakeUI.HtmlColorLabel
-    Friend WithEvents Panel5 As Panel
+    Friend WithEvents Panel5 As LakeUI.ModernPanel
     Friend WithEvents JustEmptyControl1 As LakeUI.JustEmptyControl
     Friend WithEvents MB_插入输出文件占位符 As LakeUI.ModernButton
     Friend WithEvents MB_插入输入文件占位符 As LakeUI.ModernButton

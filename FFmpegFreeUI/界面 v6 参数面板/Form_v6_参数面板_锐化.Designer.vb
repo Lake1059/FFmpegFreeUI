@@ -23,16 +23,30 @@ Partial Class Form_v6_参数面板_锐化
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         ModernPanel1 = New LakeUI.ModernPanel()
-        Panel3 = New Panel()
+        ModernPanel1.BackColor = Color.Transparent
+        ModernPanel1.BackColor1 = Color.Transparent
+        Panel3 = New LakeUI.ModernPanel()
+        Panel3.BackColor = Color.Transparent
+        Panel3.BackColor1 = Color.Transparent
+        Panel3.BorderSize = 0
         ETB_锐化参数3 = New LakeUI.ExcellentTrackBar()
         HCL_锐化参数名称3 = New LakeUI.HtmlColorLabel()
-        Panel2 = New Panel()
+        Panel2 = New LakeUI.ModernPanel()
+        Panel2.BackColor = Color.Transparent
+        Panel2.BackColor1 = Color.Transparent
+        Panel2.BorderSize = 0
         ETB_锐化参数2 = New LakeUI.ExcellentTrackBar()
         HCL_锐化参数名称2 = New LakeUI.HtmlColorLabel()
-        Panel1 = New Panel()
+        Panel1 = New LakeUI.ModernPanel()
+        Panel1.BackColor = Color.Transparent
+        Panel1.BackColor1 = Color.Transparent
+        Panel1.BorderSize = 0
         ETB_锐化参数1 = New LakeUI.ExcellentTrackBar()
         HCL_锐化参数名称1 = New LakeUI.HtmlColorLabel()
-        Panel5 = New Panel()
+        Panel5 = New LakeUI.ModernPanel()
+        Panel5.BackColor = Color.Transparent
+        Panel5.BackColor1 = Color.Transparent
+        Panel5.BorderSize = 0
         MCB_滤镜选择 = New LakeUI.ModernComboBox()
         MCK_锐化总开关 = New LakeUI.ModernCheckBox()
         ModernPanel1.SuspendLayout()
@@ -44,7 +58,6 @@ Partial Class Form_v6_参数面板_锐化
         '
         ' ModernPanel1
         '
-        ModernPanel1.BackColor1 = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         ModernPanel1.BorderSize = 0
         ModernPanel1.Controls.Add(Panel3)
         ModernPanel1.Controls.Add(Panel2)
@@ -288,15 +301,15 @@ Partial Class Form_v6_参数面板_锐化
 
     Friend WithEvents ModernPanel1 As LakeUI.ModernPanel
     Friend WithEvents MCK_锐化总开关 As LakeUI.ModernCheckBox
-    Friend WithEvents Panel5 As Panel
+    Friend WithEvents Panel5 As LakeUI.ModernPanel
     Friend WithEvents MCB_滤镜选择 As LakeUI.ModernComboBox
-    Friend WithEvents Panel1 As Panel
+    Friend WithEvents Panel1 As LakeUI.ModernPanel
     Friend WithEvents HCL_锐化参数名称1 As LakeUI.HtmlColorLabel
     Friend WithEvents ETB_锐化参数1 As LakeUI.ExcellentTrackBar
-    Friend WithEvents Panel3 As Panel
+    Friend WithEvents Panel3 As LakeUI.ModernPanel
     Friend WithEvents ETB_锐化参数3 As LakeUI.ExcellentTrackBar
     Friend WithEvents HCL_锐化参数名称3 As LakeUI.HtmlColorLabel
-    Friend WithEvents Panel2 As Panel
+    Friend WithEvents Panel2 As LakeUI.ModernPanel
     Friend WithEvents ETB_锐化参数2 As LakeUI.ExcellentTrackBar
     Friend WithEvents HCL_锐化参数名称2 As LakeUI.HtmlColorLabel
 End Class

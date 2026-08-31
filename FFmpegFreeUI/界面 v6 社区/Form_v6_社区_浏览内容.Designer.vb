@@ -1,4 +1,4 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
+<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class Form_v6_社区_浏览内容
     Inherits System.Windows.Forms.Form
 
@@ -27,8 +27,13 @@ Partial Class Form_v6_社区_浏览内容
         Dim ListColumn3 As LakeUI.UltraDetailListView.ListColumn = New LakeUI.UltraDetailListView.ListColumn()
         Dim ListColumn4 As LakeUI.UltraDetailListView.ListColumn = New LakeUI.UltraDetailListView.ListColumn()
         ModernPanel1 = New LakeUI.ModernPanel()
+        ModernPanel1.BackColor = Color.Transparent
+        ModernPanel1.BackColor1 = Color.Transparent
         UDLV_元数据列表 = New LakeUI.UltraDetailListView()
-        Panel1 = New Panel()
+        Panel1 = New LakeUI.ModernPanel()
+        Panel1.BackColor = Color.Transparent
+        Panel1.BackColor1 = Color.Transparent
+        Panel1.BorderSize = 0
         MTB_搜索 = New LakeUI.ModernTextBox()
         JustEmptyControl4 = New LakeUI.JustEmptyControl()
         JustEmptyControl1 = New LakeUI.JustEmptyControl()
@@ -44,7 +49,6 @@ Partial Class Form_v6_社区_浏览内容
         ' 
         ' ModernPanel1
         ' 
-        ModernPanel1.BackColor1 = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         ModernPanel1.BorderSize = 0
         ModernPanel1.Controls.Add(UDLV_元数据列表)
         ModernPanel1.Controls.Add(Panel1)
@@ -250,7 +254,7 @@ Partial Class Form_v6_社区_浏览内容
     End Sub
 
     Friend WithEvents ModernPanel1 As LakeUI.ModernPanel
-    Friend WithEvents Panel1 As Panel
+    Friend WithEvents Panel1 As LakeUI.ModernPanel
     Friend WithEvents ModernButton2 As LakeUI.ModernButton
     Friend WithEvents JustEmptyControl1 As LakeUI.JustEmptyControl
     Friend WithEvents MB_ As LakeUI.ModernButton

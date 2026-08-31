@@ -46,7 +46,7 @@ Partial Class Form_v6_编码队列
         Dim ListColumn8 As LakeUI.UltraDetailListView.ListColumn = New LakeUI.UltraDetailListView.ListColumn()
         任务菜单 = New LakeUI.ModernContextMenu()
         右键菜单 = New LakeUI.ModernContextMenu()
-        Panel1 = New Panel()
+        Panel1 = New LakeUI.ModernPanel()
         HtmlColorLabel1 = New LakeUI.HtmlColorLabel()
         ModernButton7 = New LakeUI.ModernButton()
         ModernButton6 = New LakeUI.ModernButton()
@@ -149,6 +149,9 @@ Partial Class Form_v6_编码队列
         ' 
         ' Panel1
         ' 
+        Panel1.BackColor = Color.Transparent
+        Panel1.BackColor1 = Color.Transparent
+        Panel1.BorderSize = 0
         Panel1.Controls.Add(HtmlColorLabel1)
         Panel1.Controls.Add(ModernButton7)
         Panel1.Controls.Add(ModernButton6)
@@ -433,7 +436,7 @@ Partial Class Form_v6_编码队列
         ResumeLayout(False)
     End Sub
 
-    Friend WithEvents Panel1 As Panel
+    Friend WithEvents Panel1 As LakeUI.ModernPanel
     Friend WithEvents ModernButton1 As LakeUI.ModernButton
     Friend WithEvents ModernButton3 As LakeUI.ModernButton
     Friend WithEvents ModernButton2 As LakeUI.ModernButton

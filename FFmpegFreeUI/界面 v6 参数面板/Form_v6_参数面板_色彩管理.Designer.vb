@@ -35,42 +35,83 @@ Partial Class Form_v6_参数面板_色彩管理
         Dim TrackLabel23 As LakeUI.ExcellentTrackBar.TrackLabel = New LakeUI.ExcellentTrackBar.TrackLabel()
         Dim TrackLabel24 As LakeUI.ExcellentTrackBar.TrackLabel = New LakeUI.ExcellentTrackBar.TrackLabel()
         ModernPanel1 = New LakeUI.ModernPanel()
-        Panel9 = New Panel()
-        Panel13 = New Panel()
+        ModernPanel1.BackColor = Color.Transparent
+        ModernPanel1.BackColor1 = Color.Transparent
+        Panel9 = New LakeUI.ModernPanel()
+        Panel9.BackColor = Color.Transparent
+        Panel9.BackColor1 = Color.Transparent
+        Panel9.BorderSize = 0
+        Panel13 = New LakeUI.ModernPanel()
+        Panel13.BackColor = Color.Transparent
+        Panel13.BackColor1 = Color.Transparent
+        Panel13.BorderSize = 0
         ETB_伽马 = New LakeUI.ExcellentTrackBar()
         JustEmptyControl5 = New LakeUI.JustEmptyControl()
-        Panel12 = New Panel()
+        Panel12 = New LakeUI.ModernPanel()
+        Panel12.BackColor = Color.Transparent
+        Panel12.BackColor1 = Color.Transparent
+        Panel12.BorderSize = 0
         ETB_饱和度 = New LakeUI.ExcellentTrackBar()
         JustEmptyControl3 = New LakeUI.JustEmptyControl()
-        Panel11 = New Panel()
+        Panel11 = New LakeUI.ModernPanel()
+        Panel11.BackColor = Color.Transparent
+        Panel11.BackColor1 = Color.Transparent
+        Panel11.BorderSize = 0
         ETB_对比度 = New LakeUI.ExcellentTrackBar()
         JustEmptyControl2 = New LakeUI.JustEmptyControl()
-        Panel10 = New Panel()
+        Panel10 = New LakeUI.ModernPanel()
+        Panel10.BackColor = Color.Transparent
+        Panel10.BackColor1 = Color.Transparent
+        Panel10.BorderSize = 0
         ETB_亮度 = New LakeUI.ExcellentTrackBar()
         HCL_简易调色 = New LakeUI.HtmlColorLabel()
-        Panel8 = New Panel()
+        Panel8 = New LakeUI.ModernPanel()
+        Panel8.BackColor = Color.Transparent
+        Panel8.BackColor1 = Color.Transparent
+        Panel8.BorderSize = 0
         HCL_操作方式 = New LakeUI.HtmlColorLabel()
         MCB_色彩管理_色彩空间操作方式 = New LakeUI.ModernComboBox()
-        Panel7 = New Panel()
+        Panel7 = New LakeUI.ModernPanel()
+        Panel7.BackColor = Color.Transparent
+        Panel7.BackColor1 = Color.Transparent
+        Panel7.BorderSize = 0
         HCL_色调映射算法 = New LakeUI.HtmlColorLabel()
         MCB_色彩管理_色调映射算法 = New LakeUI.ModernComboBox()
-        Panel6 = New Panel()
+        Panel6 = New LakeUI.ModernPanel()
+        Panel6.BackColor = Color.Transparent
+        Panel6.BackColor1 = Color.Transparent
+        Panel6.BorderSize = 0
         HCL_色彩范围 = New LakeUI.HtmlColorLabel()
         MCB_色彩管理_色彩范围 = New LakeUI.ModernComboBox()
-        Panel5 = New Panel()
+        Panel5 = New LakeUI.ModernPanel()
+        Panel5.BackColor = Color.Transparent
+        Panel5.BackColor1 = Color.Transparent
+        Panel5.BorderSize = 0
         HCL_传输特性 = New LakeUI.HtmlColorLabel()
         MCB_色彩管理_传输特性 = New LakeUI.ModernComboBox()
-        Panel4 = New Panel()
+        Panel4 = New LakeUI.ModernPanel()
+        Panel4.BackColor = Color.Transparent
+        Panel4.BackColor1 = Color.Transparent
+        Panel4.BorderSize = 0
         HCL_色域 = New LakeUI.HtmlColorLabel()
         MCB_色彩管理_色域 = New LakeUI.ModernComboBox()
-        Panel3 = New Panel()
+        Panel3 = New LakeUI.ModernPanel()
+        Panel3.BackColor = Color.Transparent
+        Panel3.BackColor1 = Color.Transparent
+        Panel3.BorderSize = 0
         HCL_矩阵系数 = New LakeUI.HtmlColorLabel()
         MCB_色彩管理_矩阵系数 = New LakeUI.ModernComboBox()
-        Panel1 = New Panel()
+        Panel1 = New LakeUI.ModernPanel()
+        Panel1.BackColor = Color.Transparent
+        Panel1.BackColor1 = Color.Transparent
+        Panel1.BorderSize = 0
         HCL_选择滤镜 = New LakeUI.HtmlColorLabel()
         MCB_色彩管理_选择滤镜 = New LakeUI.ModernComboBox()
         HCL_色彩空间 = New LakeUI.HtmlColorLabel()
-        Panel2 = New Panel()
+        Panel2 = New LakeUI.ModernPanel()
+        Panel2.BackColor = Color.Transparent
+        Panel2.BackColor1 = Color.Transparent
+        Panel2.BorderSize = 0
         HCL_预先转换 = New LakeUI.HtmlColorLabel()
         MCB_像素格式预先转换 = New LakeUI.ModernComboBox()
         HCL_最终输出 = New LakeUI.HtmlColorLabel()
@@ -98,7 +139,6 @@ Partial Class Form_v6_参数面板_色彩管理
         '
         ' ModernPanel1
         '
-        ModernPanel1.BackColor1 = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         ModernPanel1.BorderSize = 0
         ModernPanel1.Controls.Add(Panel9)
         ModernPanel1.Controls.Add(HCL_简易调色)
@@ -1055,44 +1095,44 @@ Partial Class Form_v6_参数面板_色彩管理
 
     Friend WithEvents ModernPanel1 As LakeUI.ModernPanel
     Friend WithEvents HCL_像素格式 As LakeUI.HtmlColorLabel
-    Friend WithEvents Panel2 As Panel
+    Friend WithEvents Panel2 As LakeUI.ModernPanel
     Friend WithEvents MCB_像素格式 As LakeUI.ModernComboBox
     Friend WithEvents HCL_最终输出 As LakeUI.HtmlColorLabel
     Friend WithEvents HCL_预先转换 As LakeUI.HtmlColorLabel
     Friend WithEvents MCB_像素格式预先转换 As LakeUI.ModernComboBox
     Friend WithEvents HCL_色彩空间 As LakeUI.HtmlColorLabel
-    Friend WithEvents Panel1 As Panel
+    Friend WithEvents Panel1 As LakeUI.ModernPanel
     Friend WithEvents HCL_选择滤镜 As LakeUI.HtmlColorLabel
     Friend WithEvents MCB_色彩管理_选择滤镜 As LakeUI.ModernComboBox
-    Friend WithEvents Panel3 As Panel
+    Friend WithEvents Panel3 As LakeUI.ModernPanel
     Friend WithEvents HCL_矩阵系数 As LakeUI.HtmlColorLabel
     Friend WithEvents MCB_色彩管理_矩阵系数 As LakeUI.ModernComboBox
-    Friend WithEvents Panel4 As Panel
+    Friend WithEvents Panel4 As LakeUI.ModernPanel
     Friend WithEvents HCL_色域 As LakeUI.HtmlColorLabel
     Friend WithEvents MCB_色彩管理_色域 As LakeUI.ModernComboBox
-    Friend WithEvents Panel5 As Panel
+    Friend WithEvents Panel5 As LakeUI.ModernPanel
     Friend WithEvents HCL_传输特性 As LakeUI.HtmlColorLabel
     Friend WithEvents MCB_色彩管理_传输特性 As LakeUI.ModernComboBox
-    Friend WithEvents Panel7 As Panel
+    Friend WithEvents Panel7 As LakeUI.ModernPanel
     Friend WithEvents HCL_色调映射算法 As LakeUI.HtmlColorLabel
     Friend WithEvents MCB_色彩管理_色调映射算法 As LakeUI.ModernComboBox
-    Friend WithEvents Panel6 As Panel
+    Friend WithEvents Panel6 As LakeUI.ModernPanel
     Friend WithEvents HCL_色彩范围 As LakeUI.HtmlColorLabel
     Friend WithEvents MCB_色彩管理_色彩范围 As LakeUI.ModernComboBox
-    Friend WithEvents Panel8 As Panel
+    Friend WithEvents Panel8 As LakeUI.ModernPanel
     Friend WithEvents HCL_操作方式 As LakeUI.HtmlColorLabel
     Friend WithEvents MCB_色彩管理_色彩空间操作方式 As LakeUI.ModernComboBox
     Friend WithEvents HCL_简易调色 As LakeUI.HtmlColorLabel
-    Friend WithEvents Panel9 As Panel
-    Friend WithEvents Panel10 As Panel
+    Friend WithEvents Panel9 As LakeUI.ModernPanel
+    Friend WithEvents Panel10 As LakeUI.ModernPanel
     Friend WithEvents ETB_亮度 As LakeUI.ExcellentTrackBar
-    Friend WithEvents Panel13 As Panel
+    Friend WithEvents Panel13 As LakeUI.ModernPanel
     Friend WithEvents ETB_伽马 As LakeUI.ExcellentTrackBar
     Friend WithEvents JustEmptyControl5 As LakeUI.JustEmptyControl
-    Friend WithEvents Panel12 As Panel
+    Friend WithEvents Panel12 As LakeUI.ModernPanel
     Friend WithEvents ETB_饱和度 As LakeUI.ExcellentTrackBar
     Friend WithEvents JustEmptyControl3 As LakeUI.JustEmptyControl
-    Friend WithEvents Panel11 As Panel
+    Friend WithEvents Panel11 As LakeUI.ModernPanel
     Friend WithEvents ETB_对比度 As LakeUI.ExcellentTrackBar
     Friend WithEvents JustEmptyControl2 As LakeUI.JustEmptyControl
     Friend WithEvents MCK_启用伽马调整 As LakeUI.ModernCheckBox

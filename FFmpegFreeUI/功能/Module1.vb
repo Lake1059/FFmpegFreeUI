@@ -250,7 +250,7 @@ Module Module1
         Dim unused = SetThreadExecutionState(EXECUTION_STATE.ES_CONTINUOUS)
     End Sub
 
-    Public Sub 根据文本设置标签高度(标签控件 As Label)
+    Public Sub 根据文本设置标签高度(标签控件 As Control)
         Using g As Graphics = 标签控件.CreateGraphics()
             Dim availableWidth As Integer = 标签控件.Width - 标签控件.Padding.Left - 标签控件.Padding.Right
             Dim size As SizeF = g.MeasureString(标签控件.Text, 标签控件.Font, availableWidth)

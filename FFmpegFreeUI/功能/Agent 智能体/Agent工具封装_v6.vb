@@ -396,7 +396,6 @@ Public NotInheritable Class Agent工具封装_v6
                TypeOf control Is ModernCheckBox OrElse
                TypeOf control Is ModernButton OrElse
                TypeOf control Is HtmlColorLabel OrElse
-               TypeOf control Is Label OrElse
                TypeOf control Is BooleanSwitch OrElse
                TypeOf control Is ExcellentTrackBar OrElse
                TypeOf control Is ModernListBox OrElse

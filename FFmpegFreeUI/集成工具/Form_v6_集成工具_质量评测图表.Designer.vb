@@ -18,9 +18,13 @@ Partial Class Form_v6_集成工具_质量评测图表
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         ModernPanel1 = New LakeUI.ModernPanel()
-        Panel2 = New Panel()
+        ModernPanel1.BackColor = Color.Transparent
+        ModernPanel1.BackColor1 = Color.Transparent
+        Panel2 = New LakeUI.ModernPanel()
+        Panel2.BorderSize = 0
         Ultra2DChart1 = New LakeUI.Ultra2DChart()
-        Panel1 = New Panel()
+        Panel1 = New LakeUI.ModernPanel()
+        Panel1.BorderSize = 0
         HtmlColorLabel1 = New LakeUI.HtmlColorLabel()
         MCB_指标选择 = New LakeUI.ModernComboBox()
         ModernPanel1.SuspendLayout()
@@ -30,7 +34,6 @@ Partial Class Form_v6_集成工具_质量评测图表
         ' 
         ' ModernPanel1
         ' 
-        ModernPanel1.BackColor1 = Color.FromArgb(CByte(24), CByte(24), CByte(24))
         ModernPanel1.BorderSize = 0
         ModernPanel1.Controls.Add(Panel2)
         ModernPanel1.Controls.Add(Panel1)
@@ -44,6 +47,7 @@ Partial Class Form_v6_集成工具_质量评测图表
         ' Panel2
         ' 
         Panel2.BackColor = Color.Transparent
+        Panel2.BackColor1 = Color.Transparent
         Panel2.Controls.Add(Ultra2DChart1)
         Panel2.Dock = DockStyle.Fill
         Panel2.Location = New Point(20, 62)
@@ -73,6 +77,7 @@ Partial Class Form_v6_集成工具_质量评测图表
         ' Panel1
         ' 
         Panel1.BackColor = Color.Transparent
+        Panel1.BackColor1 = Color.Transparent
         Panel1.Controls.Add(HtmlColorLabel1)
         Panel1.Controls.Add(MCB_指标选择)
         Panel1.Dock = DockStyle.Top
@@ -144,9 +149,9 @@ Partial Class Form_v6_集成工具_质量评测图表
     End Sub
 
     Friend WithEvents ModernPanel1 As LakeUI.ModernPanel
-    Friend WithEvents Panel1 As Panel
+    Friend WithEvents Panel1 As LakeUI.ModernPanel
     Friend WithEvents MCB_指标选择 As LakeUI.ModernComboBox
     Friend WithEvents HtmlColorLabel1 As LakeUI.HtmlColorLabel
-    Friend WithEvents Panel2 As Panel
+    Friend WithEvents Panel2 As LakeUI.ModernPanel
     Friend WithEvents Ultra2DChart1 As LakeUI.Ultra2DChart
 End Class
