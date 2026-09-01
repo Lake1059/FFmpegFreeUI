@@ -25,6 +25,10 @@ Public Class 设置_v6
     Public Property 图形DX_HDR图片映射 As Integer = 0
 
     Public Property 窗口样式 As Integer = 2
+    ''' <summary>0=跟随 Windows 应用浅/深色模式；1=始终深色。</summary>
+    Public Property 界面主题 As Integer = 0
+    ''' <summary>0=直角；1=圆角。旧配置缺少此字段时，Windows 11 默认圆角，其他系统默认直角。</summary>
+    Public Property 窗口圆角 As Integer = If(LakeUI.DwmWindowStyle.IsCornerModeSupported, 1, 0)
     Public Property 启用性能计数器 As Integer = 0
 
     Public Property 字体 As String = SystemFonts.DefaultFont.FontFamily.Name
@@ -169,6 +173,7 @@ Public Class 设置_v6
 
         Form_v6_设置_LakeUI视觉体验.MCB_窗口样式.SelectedIndex = 实例对象.窗口样式
         Form_v6_设置_LakeUI视觉体验.MCB_性能计数器.SelectedIndex = 实例对象.启用性能计数器
+        Form_v6_设置_LakeUI视觉体验.加载新增外观设置()
 
         Form_v6_设置_性能调度.MTB_处理器线程.Text = 实例对象.指定处理器核心
         Form_v6_设置_性能调度.MCB_自动开始数量.SelectedIndex = 实例对象.自动同时运行任务数量选项
