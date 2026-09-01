@@ -12,6 +12,7 @@ Partial Public Class 预设管理_v6
         {预设数据_v6.滤镜排序单片结构.标识符枚举.缩放, 110},
         {预设数据_v6.滤镜排序单片结构.标识符枚举.抽帧, 120},
         {预设数据_v6.滤镜排序单片结构.标识符枚举.插帧, 130},
+        {预设数据_v6.滤镜排序单片结构.标识符枚举.NV_FRUC, 132},
         {预设数据_v6.滤镜排序单片结构.标识符枚举.动态模糊, 140},
         {预设数据_v6.滤镜排序单片结构.标识符枚举.超分, 150},
         {预设数据_v6.滤镜排序单片结构.标识符枚举.降噪, 160},
@@ -72,6 +73,8 @@ Partial Public Class 预设管理_v6
         更新内置滤镜排序项(排序, a, 预设数据_v6.滤镜排序单片结构.标识符枚举.缩放, Not String.IsNullOrWhiteSpace(a.视频参数_分辨率) OrElse Not String.IsNullOrWhiteSpace(a.视频参数_分辨率自动计算_宽度) OrElse Not String.IsNullOrWhiteSpace(a.视频参数_分辨率自动计算_高度))
         更新内置滤镜排序项(排序, a, 预设数据_v6.滤镜排序单片结构.标识符枚举.抽帧, 抽帧参数已设置(a))
         更新内置滤镜排序项(排序, a, 预设数据_v6.滤镜排序单片结构.标识符枚举.插帧, Not String.IsNullOrWhiteSpace(a.视频参数_插帧_目标帧率))
+        Dim 启用NVFRUC = Not String.IsNullOrWhiteSpace(a.视频参数_NV_FRUC_目标帧率)
+        更新内置滤镜排序项(排序, a, 预设数据_v6.滤镜排序单片结构.标识符枚举.NV_FRUC, 启用NVFRUC)
         更新内置滤镜排序项(排序, a, 预设数据_v6.滤镜排序单片结构.标识符枚举.动态模糊, Not String.IsNullOrWhiteSpace(a.视频参数_动态模糊_连续混合帧数))
         更新内置滤镜排序项(排序, a, 预设数据_v6.滤镜排序单片结构.标识符枚举.超分, 超分单片有设置(a.视频参数_超分_直接面板) OrElse a.视频参数_超分_滤镜叠加策略组.Length > 0)
         更新内置滤镜排序项(排序, a, 预设数据_v6.滤镜排序单片结构.标识符枚举.降噪, a.视频参数_降噪_方式 <> 预设数据_v6.降噪方式.未选择)
@@ -222,6 +225,9 @@ Partial Public Class 预设管理_v6
         If Not String.IsNullOrWhiteSpace(a.视频参数_分辨率) OrElse Not String.IsNullOrWhiteSpace(a.视频参数_分辨率自动计算_宽度) OrElse Not String.IsNullOrWhiteSpace(a.视频参数_分辨率自动计算_高度) Then result.Add(预设数据_v6.滤镜排序单片结构.标识符枚举.缩放)
         If 抽帧参数已设置(a) Then result.Add(预设数据_v6.滤镜排序单片结构.标识符枚举.抽帧)
         If Not String.IsNullOrWhiteSpace(a.视频参数_插帧_目标帧率) Then result.Add(预设数据_v6.滤镜排序单片结构.标识符枚举.插帧)
+        If Not String.IsNullOrWhiteSpace(a.视频参数_NV_FRUC_目标帧率) Then
+            result.Add(预设数据_v6.滤镜排序单片结构.标识符枚举.NV_FRUC)
+        End If
         If Not String.IsNullOrWhiteSpace(a.视频参数_动态模糊_连续混合帧数) Then result.Add(预设数据_v6.滤镜排序单片结构.标识符枚举.动态模糊)
         If 超分单片有设置(a.视频参数_超分_直接面板) OrElse If(a.视频参数_超分_滤镜叠加策略组, Array.Empty(Of 预设数据_v6.超分数据单片结构)()).Length > 0 Then result.Add(预设数据_v6.滤镜排序单片结构.标识符枚举.超分)
         If a.视频参数_降噪_方式 <> 预设数据_v6.降噪方式.未选择 Then result.Add(预设数据_v6.滤镜排序单片结构.标识符枚举.降噪)
@@ -271,6 +277,10 @@ Partial Public Class 预设管理_v6
                 a.视频参数_插帧_块大小 = ""
                 a.视频参数_插帧_搜索范围 = ""
                 a.视频参数_插帧_场景变化检测强度 = ""
+            Case 预设数据_v6.滤镜排序单片结构.标识符枚举.NV_FRUC
+                a.视频参数_NV_FRUC_目标帧率 = ""
+                a.视频参数_NV_FRUC_质量和速度 = ""
+                a.视频参数_NV_FRUC_网格大小 = ""
             Case 预设数据_v6.滤镜排序单片结构.标识符枚举.动态模糊
                 a.视频参数_动态模糊_连续混合帧数 = ""
                 a.视频参数_动态模糊_每帧权重 = ""

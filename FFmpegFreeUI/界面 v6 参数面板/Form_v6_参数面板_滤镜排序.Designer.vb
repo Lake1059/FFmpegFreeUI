@@ -22,17 +22,12 @@ Partial Class Form_v6_参数面板_滤镜排序
     '不要使用代码编辑器修改它。
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim ListColumn4 As LakeUI.UltraDetailListView.ListColumn = New LakeUI.UltraDetailListView.ListColumn()
-        Dim ListColumn5 As LakeUI.UltraDetailListView.ListColumn = New LakeUI.UltraDetailListView.ListColumn()
-        Dim ListColumn6 As LakeUI.UltraDetailListView.ListColumn = New LakeUI.UltraDetailListView.ListColumn()
+        Dim ListColumn1 As LakeUI.UltraDetailListView.ListColumn = New LakeUI.UltraDetailListView.ListColumn()
+        Dim ListColumn2 As LakeUI.UltraDetailListView.ListColumn = New LakeUI.UltraDetailListView.ListColumn()
+        Dim ListColumn3 As LakeUI.UltraDetailListView.ListColumn = New LakeUI.UltraDetailListView.ListColumn()
         ModernPanel1 = New LakeUI.ModernPanel()
-        ModernPanel1.BackColor = Color.Transparent
-        ModernPanel1.BackColor1 = Color.Transparent
         UDLV_滤镜排序列表 = New LakeUI.UltraDetailListView()
         Panel1 = New LakeUI.ModernPanel()
-        Panel1.BackColor = Color.Transparent
-        Panel1.BackColor1 = Color.Transparent
-        Panel1.BorderSize = 0
         MB_删除滤镜 = New LakeUI.ModernButton()
         JustEmptyControl2 = New LakeUI.JustEmptyControl()
         MB_添加自定义音频滤镜 = New LakeUI.ModernButton()
@@ -45,6 +40,8 @@ Partial Class Form_v6_参数面板_滤镜排序
         ' 
         ' ModernPanel1
         ' 
+        ModernPanel1.BackColor = Color.Transparent
+        ModernPanel1.BackColor1 = Color.Transparent
         ModernPanel1.BorderSize = 0
         ModernPanel1.Controls.Add(UDLV_滤镜排序列表)
         ModernPanel1.Controls.Add(Panel1)
@@ -63,14 +60,17 @@ Partial Class Form_v6_参数面板_滤镜排序
         UDLV_滤镜排序列表.BackgroundColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         UDLV_滤镜排序列表.BorderRadius = 10
         UDLV_滤镜排序列表.BorderSize = 0
-        ListColumn4.Text = "标识符"
-        ListColumn4.Width = 150
-        ListColumn5.Text = "流类型"
-        ListColumn6.Text = "滤镜内容"
-        ListColumn6.Width = 450
-        UDLV_滤镜排序列表.Columns.Add(ListColumn4)
-        UDLV_滤镜排序列表.Columns.Add(ListColumn5)
-        UDLV_滤镜排序列表.Columns.Add(ListColumn6)
+        ListColumn1.Text = "标识符"
+        ListColumn1.Width = 150
+        ListColumn1.WordWrapHeightFixed = True
+        ListColumn2.Text = "流类型"
+        ListColumn2.WordWrapHeightFixed = True
+        ListColumn3.Text = "滤镜内容"
+        ListColumn3.Width = 450
+        ListColumn3.WordWrapHeightFixed = True
+        UDLV_滤镜排序列表.Columns.Add(ListColumn1)
+        UDLV_滤镜排序列表.Columns.Add(ListColumn2)
+        UDLV_滤镜排序列表.Columns.Add(ListColumn3)
         UDLV_滤镜排序列表.Dock = DockStyle.Fill
         UDLV_滤镜排序列表.DragSelectZoneWidth = 200
         UDLV_滤镜排序列表.GroupBorderColor = Color.Silver
@@ -81,7 +81,7 @@ Partial Class Form_v6_参数面板_滤镜排序
         UDLV_滤镜排序列表.ItemCornerRadius = 10
         UDLV_滤镜排序列表.ItemPadding = New Padding(10, 6, 10, 6)
         UDLV_滤镜排序列表.ItemSelectedBackColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        UDLV_滤镜排序列表.Location = New Point(20, 102)
+        UDLV_滤镜排序列表.Location = New Point(20, 100)
         UDLV_滤镜排序列表.Margin = New Padding(2, 2, 2, 2)
         UDLV_滤镜排序列表.Name = "UDLV_滤镜排序列表"
         UDLV_滤镜排序列表.ScrollBarThumbColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
@@ -89,18 +89,21 @@ Partial Class Form_v6_参数面板_滤镜排序
         UDLV_滤镜排序列表.ScrollBarTrackColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
         UDLV_滤镜排序列表.SelectionRectBorderColor = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
         UDLV_滤镜排序列表.SelectionRectFillColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        UDLV_滤镜排序列表.Size = New Size(755, 492)
+        UDLV_滤镜排序列表.Size = New Size(755, 494)
         UDLV_滤镜排序列表.TabIndex = 1
         ' 
         ' Panel1
         ' 
+        Panel1.BackColor = Color.Transparent
+        Panel1.BackColor1 = Color.Transparent
+        Panel1.BorderSize = 0
         Panel1.Controls.Add(MB_删除滤镜)
         Panel1.Controls.Add(JustEmptyControl2)
         Panel1.Controls.Add(MB_添加自定义音频滤镜)
         Panel1.Controls.Add(JustEmptyControl1)
         Panel1.Controls.Add(MB_添加自定义视频滤镜)
         Panel1.Dock = DockStyle.Top
-        Panel1.Location = New Point(20, 50)
+        Panel1.Location = New Point(20, 48)
         Panel1.Name = "Panel1"
         Panel1.Padding = New Padding(0, 10, 0, 10)
         Panel1.Size = New Size(755, 52)
@@ -177,7 +180,7 @@ Partial Class Form_v6_参数面板_滤镜排序
         HCL_滤镜排序说明.Margin = New Padding(2)
         HCL_滤镜排序说明.Name = "HCL_滤镜排序说明"
         HCL_滤镜排序说明.Padding = New Padding(0, 0, 0, 5)
-        HCL_滤镜排序说明.Size = New Size(755, 30)
+        HCL_滤镜排序说明.Size = New Size(755, 28)
         HCL_滤镜排序说明.TabIndex = 10
         HCL_滤镜排序说明.Text = "<span style=""font-size:13; color:Silver"">滤镜排序和自定义</span>   如果需要一行里写多个滤镜，使用英文逗号隔开即可"
         ' 

@@ -290,6 +290,7 @@ Partial Class Form_v6_参数面板_剪辑区间
         MCB_剪辑模式.Items.Add("精剪（空降解码，不怎么等，重编码才准）")
         MCB_剪辑模式.Items.Add("Trim 滤镜（从头解码，必须重编码，最准，可剪掉要烧的字幕）")
         MCB_剪辑模式.Items.Add("掐头去尾（额外需要 ffprobe，重编码才准）")
+        MCB_剪辑模式.Items.Add("剔除中间（保留两边并拼接，重编码才准）")
         MCB_剪辑模式.Location = New Point(0, 10)
         MCB_剪辑模式.Margin = New Padding(2, 2, 2, 2)
         MCB_剪辑模式.Name = "MCB_剪辑模式"

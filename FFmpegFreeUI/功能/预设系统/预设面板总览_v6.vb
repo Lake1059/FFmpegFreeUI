@@ -183,6 +183,12 @@ Partial Public Class 预设管理_v6
             添加总览文本行(sb, "场景变化检测强度：" & a.视频参数_插帧_场景变化检测强度)
         End If
 
+        If Not String.IsNullOrWhiteSpace(a.视频参数_NV_FRUC_目标帧率) Then
+            添加总览文本行(sb, "NVIDIA Vulkan FRUC 目标帧率：" & a.视频参数_NV_FRUC_目标帧率)
+            添加总览文本行(sb, "NVIDIA Vulkan FRUC 质量和速度：" & a.视频参数_NV_FRUC_质量和速度)
+            添加总览文本行(sb, "NVIDIA Vulkan FRUC 网格大小：" & a.视频参数_NV_FRUC_网格大小)
+        End If
+
         If Not String.IsNullOrWhiteSpace(a.视频参数_动态模糊_连续混合帧数) Then
             添加总览文本行(sb, "动态模糊连续混合帧数：" & a.视频参数_动态模糊_连续混合帧数)
             添加总览文本行(sb, "动态模糊每帧权重：" & a.视频参数_动态模糊_每帧权重)
@@ -449,6 +455,7 @@ Partial Public Class 预设管理_v6
             Case 预设数据_v6.剪辑方法.精剪空降解码 : Return "精剪 (快速响应)"
             Case 预设数据_v6.剪辑方法.Trim滤镜 : Return "Trim 滤镜"
             Case 预设数据_v6.剪辑方法.掐头去尾 : Return "掐头去尾"
+            Case 预设数据_v6.剪辑方法.剔除中间 : Return "剔除中间"
         End Select
         Return ""
     End Function
@@ -768,6 +775,7 @@ Partial Public Class 预设管理_v6
                Not String.IsNullOrWhiteSpace(a.视频参数_分辨率_裁剪滤镜参数) OrElse
                已设置(a.视频参数_抽帧_max, a.视频参数_抽帧_keep, a.视频参数_抽帧_hi, a.视频参数_抽帧_lo, a.视频参数_抽帧_frac) OrElse
                Not String.IsNullOrWhiteSpace(a.视频参数_插帧_目标帧率) OrElse
+               Not String.IsNullOrWhiteSpace(a.视频参数_NV_FRUC_目标帧率) OrElse
                Not String.IsNullOrWhiteSpace(a.视频参数_动态模糊_连续混合帧数) OrElse
                超分单片有设置(a.视频参数_超分_直接面板) OrElse
                If(a.视频参数_超分_滤镜叠加策略组, Array.Empty(Of 预设数据_v6.超分数据单片结构)()).Length > 0 OrElse
@@ -866,6 +874,8 @@ Partial Public Class 预设管理_v6
         更新排序项(排序页, a, 预设数据_v6.滤镜排序单片结构.标识符枚举.缩放, Not String.IsNullOrWhiteSpace(a.视频参数_分辨率) OrElse Not String.IsNullOrWhiteSpace(a.视频参数_分辨率自动计算_宽度) OrElse Not String.IsNullOrWhiteSpace(a.视频参数_分辨率自动计算_高度))
         更新排序项(排序页, a, 预设数据_v6.滤镜排序单片结构.标识符枚举.抽帧, 抽帧参数已设置(a))
         更新排序项(排序页, a, 预设数据_v6.滤镜排序单片结构.标识符枚举.插帧, Not String.IsNullOrWhiteSpace(a.视频参数_插帧_目标帧率))
+        Dim 启用NVFRUC = Not String.IsNullOrWhiteSpace(a.视频参数_NV_FRUC_目标帧率)
+        更新排序项(排序页, a, 预设数据_v6.滤镜排序单片结构.标识符枚举.NV_FRUC, 启用NVFRUC)
         更新排序项(排序页, a, 预设数据_v6.滤镜排序单片结构.标识符枚举.动态模糊, Not String.IsNullOrWhiteSpace(a.视频参数_动态模糊_连续混合帧数))
         更新排序项(排序页, a, 预设数据_v6.滤镜排序单片结构.标识符枚举.超分, 超分单片有设置(a.视频参数_超分_直接面板) OrElse a.视频参数_超分_滤镜叠加策略组.Length > 0)
         更新排序项(排序页, a, 预设数据_v6.滤镜排序单片结构.标识符枚举.降噪, a.视频参数_降噪_方式 <> 预设数据_v6.降噪方式.未选择)
@@ -906,7 +916,7 @@ Partial Public Class 预设管理_v6
                     .MCB_低阈值.Text = ""
                 End With
             Case 预设数据_v6.滤镜排序单片结构.标识符枚举.插帧
-                With ui.私有界面_画面帧.私有窗口_插帧参数
+                With ui.私有界面_画面帧.私有窗口_简易插帧参数
                     .MCK_插帧总开关.Checked = False
                     .MTB_目标帧率.Text = ""
                     .MCB_插帧模式.Text = ""
@@ -917,6 +927,13 @@ Partial Public Class 预设管理_v6
                     .MTB_块大小.Text = ""
                     .MTB_搜索范围.Text = ""
                     .MTB_场景变化检测强度.Text = ""
+                End With
+            Case 预设数据_v6.滤镜排序单片结构.标识符枚举.NV_FRUC
+                With ui.私有界面_画面帧.私有窗口_NV_FRUC_插帧参数
+                    .MCK_插帧总开关.Checked = False
+                    .MCB_目标帧率.Text = ""
+                    .MCB_质量和速度.Text = ""
+                    .MCB_网格大小.Text = ""
                 End With
             Case 预设数据_v6.滤镜排序单片结构.标识符枚举.动态模糊
                 With ui.私有界面_画面帧.私有窗口_动态模糊

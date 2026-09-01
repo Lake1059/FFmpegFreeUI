@@ -61,9 +61,17 @@ Public Module 界面主题_v6
         刷新主题(True)
     End Sub
 
-    ''' <summary>0=跟随 Windows 应用模式；1=始终使用深色。</summary>
+    ''' <summary>0=跟随 Windows 应用模式；1=始终使用明亮；2=始终使用暗黑。</summary>
     Public Sub 刷新主题(Optional 强制刷新 As Boolean = False)
-        Dim 浅色 = If(设置_v6.实例对象.界面主题 = 1, False, 读取Windows应用浅色模式())
+        Dim 浅色 As Boolean
+        Select Case 设置_v6.实例对象.界面主题
+            Case 1
+                浅色 = True
+            Case 2
+                浅色 = False
+            Case Else
+                浅色 = 读取Windows应用浅色模式()
+        End Select
         Dim accent = 读取Windows主题色()
         If Not 强制刷新 AndAlso 浅色 = _当前浅色 AndAlso accent.ToArgb() = _Windows主题色.ToArgb() Then Return
 

@@ -60,6 +60,16 @@ Partial Public Class 预设管理_v6
         Return "minterpolate=" & String.Join(":", opts)
     End Function
 
+    Private Shared Function 构造NVFRUC滤镜(a As 预设数据_v6) As String
+        If a Is Nothing OrElse String.IsNullOrWhiteSpace(a.视频参数_NV_FRUC_目标帧率) Then Return ""
+        Dim opts As New List(Of String) From {"fps=" & a.视频参数_NV_FRUC_目标帧率.Trim()}
+        Dim perf = If(a.视频参数_NV_FRUC_质量和速度, "").Trim().ToLowerInvariant()
+        If {"slow", "medium", "fast"}.Contains(perf) Then opts.Add("perf=" & perf)
+        Dim grid = If(a.视频参数_NV_FRUC_网格大小, "").Trim().ToLowerInvariant()
+        If {"auto", "1", "2", "4", "8"}.Contains(grid) Then opts.Add("grid=" & grid)
+        Return "fruc_vulkan=" & String.Join(":", opts)
+    End Function
+
     Private Shared Function 构造动态模糊滤镜(a As 预设数据_v6) As String
         If a.视频参数_动态模糊_连续混合帧数 = "" Then Return ""
         Dim opts As New List(Of String) From {$"frames={a.视频参数_动态模糊_连续混合帧数}"}

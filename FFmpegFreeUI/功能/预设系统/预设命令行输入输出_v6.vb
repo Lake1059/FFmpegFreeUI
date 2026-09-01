@@ -22,6 +22,8 @@ Partial Public Class 预设管理_v6
             Case 预设数据_v6.剪辑方法.掐头去尾
                 结果.需要媒体总时长 = True
                 clip.输入前 = 生成掐头去尾参数(入点, 出点, 媒体总时长, 结果)
+            Case 预设数据_v6.剪辑方法.剔除中间
+                结果.需要媒体总时长 = True
         End Select
 
         Return clip
@@ -62,18 +64,17 @@ Partial Public Class 预设管理_v6
         Dim parts As New List(Of String)
         If 入点 <> "" Then parts.Add("-ss " & 入点)
 
-        Dim durationSeconds As Double
-        If Not TryParseTimeSeconds(媒体总时长, durationSeconds) Then
-            parts.Add("-t " & 媒体总时长占位符)
-            Return String.Join(" ", parts)
+        Dim startSeconds As Double
+        Dim endSeconds As Double
+        If 出点 <> "" AndAlso TryParseTimeSeconds(出点, endSeconds) Then
+            If 入点 <> "" AndAlso TryParseTimeSeconds(入点, startSeconds) Then
+                parts.Add("-t " & FormatSeconds(Math.Max(0, endSeconds - startSeconds)))
+            Else
+                parts.Add("-t " & FormatSeconds(Math.Max(0, endSeconds)))
+            End If
+        ElseIf 出点 <> "" Then
+            parts.Add("-t " & 出点)
         End If
-
-        Dim trimHead As Double
-        Dim trimTail As Double
-        If 入点 <> "" AndAlso Not TryParseTimeSeconds(入点, trimHead) Then trimHead = 0
-        If 出点 <> "" AndAlso Not TryParseTimeSeconds(出点, trimTail) Then trimTail = 0
-        Dim keepDuration = Math.Max(0, durationSeconds - trimHead - trimTail)
-        parts.Add("-t " & FormatSeconds(keepDuration))
         Return String.Join(" ", parts)
     End Function
 

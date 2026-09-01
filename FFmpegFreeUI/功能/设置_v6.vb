@@ -25,7 +25,7 @@ Public Class 设置_v6
     Public Property 图形DX_HDR图片映射 As Integer = 0
 
     Public Property 窗口样式 As Integer = 2
-    ''' <summary>0=跟随 Windows 应用浅/深色模式；1=始终深色。</summary>
+    ''' <summary>0=跟随 Windows 应用浅/深色模式；1=始终明亮；2=始终暗黑。</summary>
     Public Property 界面主题 As Integer = 0
     ''' <summary>0=直角；1=圆角。旧配置缺少此字段时，Windows 11 默认圆角，其他系统默认直角。</summary>
     Public Property 窗口圆角 As Integer = If(LakeUI.DwmWindowStyle.IsCornerModeSupported, 1, 0)
@@ -52,6 +52,50 @@ Public Class 设置_v6
     Public Property 替代进程文件名 As String = ""
     Public Property 覆盖参数传递 As String = ""
     Public Property 转译模式 As Boolean = False
+
+    Public Shared Function 获取FFmpeg进程文件名() As String
+        Dim custom = If(实例对象?.替代进程文件名, "").Trim()
+        Return 解析工作目录进程文件(If(custom <> "", custom, "ffmpeg.exe"))
+    End Function
+
+    Public Shared Function 获取FFprobe进程文件名() As String
+        Return 获取同目录配套进程文件名("ffprobe.exe")
+    End Function
+
+    Public Shared Function 获取FFplay进程文件名() As String
+        Return 获取同目录配套进程文件名("ffplay.exe")
+    End Function
+
+    Public Shared Function 获取有效工作目录() As String
+        Dim directory = If(实例对象?.工作目录, "").Trim()
+        Return If(System.IO.Directory.Exists(directory), directory, "")
+    End Function
+
+    Private Shared Function 获取同目录配套进程文件名(defaultFileName As String) As String
+        Dim custom = If(实例对象?.替代进程文件名, "").Trim()
+        If custom <> "" Then
+            Dim customDirectory = Path.GetDirectoryName(custom)
+            If Not String.IsNullOrWhiteSpace(customDirectory) Then
+                Dim candidate = Path.Combine(customDirectory, defaultFileName)
+                If File.Exists(candidate) Then Return Path.GetFullPath(candidate)
+            End If
+        End If
+        Return 解析工作目录进程文件(defaultFileName)
+    End Function
+
+    Private Shared Function 解析工作目录进程文件(processFileName As String) As String
+        Dim value = If(processFileName, "").Trim().Trim(""""c)
+        If value = "" Then Return value
+        If Path.IsPathRooted(value) Then Return value
+
+        Dim workingDirectory = 获取有效工作目录()
+        If workingDirectory <> "" Then
+            Dim candidate = Path.Combine(workingDirectory, value)
+            If File.Exists(candidate) Then Return Path.GetFullPath(candidate)
+            If String.IsNullOrWhiteSpace(Path.GetExtension(candidate)) AndAlso File.Exists(candidate & ".exe") Then Return Path.GetFullPath(candidate & ".exe")
+        End If
+        Return value
+    End Function
 
     ''' <summary>
     ''' 0=github;1=gh-proxy.com;3=FrostLynx;4=MirrorChyan
@@ -179,7 +223,7 @@ Public Class 设置_v6
         Form_v6_设置_性能调度.MCB_自动开始数量.SelectedIndex = 实例对象.自动同时运行任务数量选项
         Form_v6_设置_性能调度.MCB_编码队列刷新速度.SelectedIndex = 实例对象.编码队列刷新速度
 
-        If FileIO.FileSystem.FileExists(实例对象.工作目录) Then
+        If Directory.Exists(实例对象.工作目录) Then
             Form_v6_设置_功能设定.MTB_工作目录.Text = 实例对象.工作目录
         Else
             Form_v6_设置_功能设定.MTB_工作目录.Text = ""

@@ -83,6 +83,9 @@ Public Class 预设数据_v6
     Public Property 视频参数_插帧_块大小 As String = ""
     Public Property 视频参数_插帧_搜索范围 As String = ""
     Public Property 视频参数_插帧_场景变化检测强度 As String = ""
+    Public Property 视频参数_NV_FRUC_目标帧率 As String = ""
+    Public Property 视频参数_NV_FRUC_质量和速度 As String = ""
+    Public Property 视频参数_NV_FRUC_网格大小 As String = ""
     '==================================================
     'tmix滤镜
     Public Property 视频参数_动态模糊_连续混合帧数 As String = ""
@@ -358,6 +361,7 @@ Public Class 预设数据_v6
             色彩转换 = 14
             调色 = 15
             像素格式预先转换 = 16
+            NV_FRUC = 18
             音频响度标准化 = 51
             音频格式转换 = 52
             音频重采样 = 53
@@ -389,6 +393,7 @@ Public Class 预设数据_v6
         精剪空降解码 = 3
         Trim滤镜 = 4
         掐头去尾 = 5 ' 需要ffprobe，然后将入点和出点作为掐头的时间和尾部截取的时间，如果无法获取到媒体时间，则终止任务
+        剔除中间 = 6 ' 保留入点之前和出点之后的内容，中间区间需要重编码
     End Enum
     Public Property 剪辑区间_方法 As 剪辑方法 = 剪辑方法.未知
     Public Property 剪辑区间_入点 As String = ""

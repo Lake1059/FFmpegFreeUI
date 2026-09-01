@@ -212,7 +212,7 @@ Public Class Form_v6_集成工具_质量评测
     Private Shared Async Function 运行FFmpeg模型查询Async(ffmpeg As String, arguments As String, timeoutValue As TimeSpan) As Task(Of 进程运行结果)
         Using process As New Process(), timeout As New CancellationTokenSource(timeoutValue)
             process.StartInfo.FileName = ffmpeg
-            process.StartInfo.WorkingDirectory = If(设置_v6.实例对象.工作目录 <> "", 设置_v6.实例对象.工作目录, "")
+            process.StartInfo.WorkingDirectory = 设置_v6.获取有效工作目录()
             process.StartInfo.Arguments = arguments
             process.StartInfo.UseShellExecute = False
             process.StartInfo.RedirectStandardOutput = True
@@ -997,7 +997,7 @@ Public Class Form_v6_集成工具_质量评测
     Private Async Function 运行FFprobeAsync(arguments As String, token As CancellationToken) As Task(Of 进程运行结果)
         Using process As New Process()
             process.StartInfo.FileName = 获取FFprobe文件名()
-            process.StartInfo.WorkingDirectory = If(设置_v6.实例对象.工作目录 <> "", 设置_v6.实例对象.工作目录, "")
+            process.StartInfo.WorkingDirectory = 设置_v6.获取有效工作目录()
             process.StartInfo.Arguments = arguments
             process.StartInfo.UseShellExecute = False
             process.StartInfo.RedirectStandardOutput = True
@@ -1024,21 +1024,7 @@ Public Class Form_v6_集成工具_质量评测
     End Function
 
     Private Shared Function 获取FFprobe文件名() As String
-        Dim custom = If(设置_v6.实例对象.替代进程文件名, "").Trim()
-        If custom <> "" Then
-            Dim fileName = Path.GetFileName(custom)
-            If fileName.Contains("ffmpeg", StringComparison.OrdinalIgnoreCase) Then
-                Dim probeName = Regex.Replace(fileName, "ffmpeg", "ffprobe", RegexOptions.IgnoreCase)
-                Dim directory = Path.GetDirectoryName(custom)
-                If Not String.IsNullOrWhiteSpace(directory) Then
-                    Dim candidate = Path.Combine(directory, probeName)
-                    If File.Exists(candidate) Then Return candidate
-                    Return "ffprobe"
-                End If
-                If 查找可执行文件(probeName) <> "" Then Return probeName
-            End If
-        End If
-        Return "ffprobe"
+        Return 设置_v6.获取FFprobe进程文件名()
     End Function
 
     Private Shared Function 查找可执行文件(fileName As String) As String
@@ -1250,7 +1236,7 @@ Public Class Form_v6_集成工具_质量评测
     End Function
 
     Private Shared Function 获取FFmpeg文件名() As String
-        Return If(设置_v6.实例对象.替代进程文件名 <> "", 设置_v6.实例对象.替代进程文件名, "ffmpeg")
+        Return 设置_v6.获取FFmpeg进程文件名()
     End Function
 
     Private Async Function 运行FFmpegAsync(arguments As String, token As CancellationToken, onLine As Action(Of String)) As Task(Of 进程运行结果)
@@ -1260,7 +1246,7 @@ Public Class Form_v6_集成工具_质量评测
         Dim output As New StringBuilder()
         Dim process As New Process()
         process.StartInfo.FileName = 获取FFmpeg文件名()
-        process.StartInfo.WorkingDirectory = If(设置_v6.实例对象.工作目录 <> "", 设置_v6.实例对象.工作目录, "")
+        process.StartInfo.WorkingDirectory = 设置_v6.获取有效工作目录()
         process.StartInfo.Arguments = arguments
         process.StartInfo.UseShellExecute = False
         process.StartInfo.RedirectStandardOutput = True

@@ -82,11 +82,14 @@ Public Class Form_v6_参数面板_画面帧
         显示窗体(私有窗口_抽帧参数, FormMain_v6)
     End Sub
 
-    Public 私有窗口_插帧参数 As New Form_v6_参数面板_插帧参数
+    Public 私有窗口_简易插帧参数 As New Form_v6_参数面板_插帧_简易
     Private Sub MB_简易插帧_Click(sender As Object, e As EventArgs) Handles MB_简易插帧.Click
-        显示窗体(私有窗口_插帧参数, FormMain_v6)
+        显示窗体(私有窗口_简易插帧参数, FormMain_v6)
     End Sub
-
+    Public 私有窗口_NV_FRUC_插帧参数 As New Form_v6_参数面板_插帧_NV_FRUC
+    Private Sub MB_NV_FRUC_插帧_Click(sender As Object, e As EventArgs) Handles MB_NV_FRUC_插帧.Click
+        显示窗体(私有窗口_NV_FRUC_插帧参数, FormMain_v6)
+    End Sub
     Public 私有窗口_烧录字幕 As New Form_v6_参数面板_烧录字幕
     Private Sub MB_烧录字幕_Click(sender As Object, e As EventArgs) Handles MB_烧录字幕.Click
         显示窗体(私有窗口_烧录字幕, FormMain_v6)
@@ -123,4 +126,6 @@ Public Class Form_v6_参数面板_画面帧
     Private Sub MB_平滑断层_Click(sender As Object, e As EventArgs) Handles MB_平滑断层.Click
         显示窗体(私有窗口_平滑断层, FormMain_v6)
     End Sub
+
+
 End Class

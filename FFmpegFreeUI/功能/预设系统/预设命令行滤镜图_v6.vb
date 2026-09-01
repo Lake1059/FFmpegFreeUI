@@ -386,6 +386,7 @@ Partial Public Class 预设管理_v6
     End Function
 
     Private Shared Function 构造Trim滤镜(a As 预设数据_v6, 音频 As Boolean) As String
+        If a.剪辑区间_方法 = 预设数据_v6.剪辑方法.剔除中间 Then Return 构造剔除中间滤镜(a, 音频)
         If a.剪辑区间_方法 <> 预设数据_v6.剪辑方法.Trim滤镜 Then Return ""
         Dim 入点 = If(a.剪辑区间_入点, "").Trim()
         Dim 出点 = If(a.剪辑区间_出点, "").Trim()
@@ -396,6 +397,23 @@ Partial Public Class 预设管理_v6
         If endValue <> "" Then opts.Add("end=" & endValue)
         If opts.Count = 0 Then Return ""
         Return If(音频, "atrim=", "trim=") & String.Join(":", opts) & If(音频, ",asetpts=PTS-STARTPTS", ",setpts=PTS-STARTPTS")
+    End Function
+
+    Private Shared Function 构造剔除中间滤镜(a As 预设数据_v6, 音频 As Boolean) As String
+        Dim 入点 = If(a.剪辑区间_入点, "").Trim()
+        Dim 出点 = If(a.剪辑区间_出点, "").Trim()
+        If 入点 = "" AndAlso 出点 = "" Then Return ""
+        Dim startValue = 转换Trim时间值(入点)
+        Dim endValue = 转换Trim时间值(出点)
+        Dim expression As String
+        If startValue <> "" AndAlso endValue <> "" Then
+            expression = $"not(between(t,{startValue},{endValue}))"
+        ElseIf startValue <> "" Then
+            expression = $"lt(t,{startValue})"
+        Else
+            expression = $"gt(t,{endValue})"
+        End If
+        Return If(音频, "aselect='" & expression & "',asetpts=N/SR/TB", "select='" & expression & "',setpts=N/FRAME_RATE/TB")
     End Function
 
     Private Shared Function 转换Trim时间值(value As String) As String

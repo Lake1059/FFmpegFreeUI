@@ -28,8 +28,8 @@ Public Class Form_v6_媒体信息
         Me.ModernTextBox1.Text = ""
         Dim FFprobeProcess As New Process
         FFprobeProcess = New Process()
-        FFprobeProcess.StartInfo.FileName = "ffprobe"
-        FFprobeProcess.StartInfo.WorkingDirectory = If(设置_v6.实例对象.工作目录 <> "", 设置_v6.实例对象.工作目录, "")
+        FFprobeProcess.StartInfo.FileName = 设置_v6.获取FFprobe进程文件名()
+        FFprobeProcess.StartInfo.WorkingDirectory = 设置_v6.获取有效工作目录()
         FFprobeProcess.StartInfo.Arguments = $"-hide_banner ""{文件路径}"""
         FFprobeProcess.StartInfo.RedirectStandardOutput = True
         FFprobeProcess.StartInfo.RedirectStandardError = True

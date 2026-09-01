@@ -66,13 +66,12 @@ Partial Public Class 预设管理_v6
     End Function
 
     Public Shared Function 获取命令行进程名(阶段 As 预设数据_v6.命令行阶段) As String
-        If 阶段 = 预设数据_v6.命令行阶段.FFprobe获取时长 Then Return "ffprobe"
+        If 阶段 = 预设数据_v6.命令行阶段.FFprobe获取时长 Then Return 格式化命令行进程名(设置_v6.获取FFprobe进程文件名())
         Return 格式化命令行进程名(获取当前FFmpeg进程文件名())
     End Function
 
     Private Shared Function 获取当前FFmpeg进程文件名() As String
-        Dim processName = If(设置_v6.实例对象?.替代进程文件名, "").Trim()
-        Return If(processName = "", "ffmpeg", processName)
+        Return 设置_v6.获取FFmpeg进程文件名()
     End Function
 
     Private Shared Function 格式化命令行进程名(value As String) As String
@@ -97,7 +96,7 @@ Partial Public Class 预设管理_v6
             Return 结果
         End If
 
-        If a.剪辑区间_方法 = 预设数据_v6.剪辑方法.掐头去尾 AndAlso String.IsNullOrWhiteSpace(媒体总时长) Then
+        If (a.剪辑区间_方法 = 预设数据_v6.剪辑方法.掐头去尾 OrElse a.剪辑区间_方法 = 预设数据_v6.剪辑方法.剔除中间) AndAlso String.IsNullOrWhiteSpace(媒体总时长) Then
             结果.Add(生成命令行(a, 输入文件, 输出文件, 预设数据_v6.命令行阶段.FFprobe获取时长, 帧服务器脚本后缀:=帧服务器脚本后缀))
         End If
 
@@ -239,6 +238,8 @@ Partial Public Class 预设管理_v6
                 Return 构造抽帧滤镜(a)
             Case 预设数据_v6.滤镜排序单片结构.标识符枚举.插帧
                 Return 构造插帧滤镜(a)
+            Case 预设数据_v6.滤镜排序单片结构.标识符枚举.NV_FRUC
+                Return 构造NVFRUC滤镜(a)
             Case 预设数据_v6.滤镜排序单片结构.标识符枚举.动态模糊
                 Return 构造动态模糊滤镜(a)
             Case 预设数据_v6.滤镜排序单片结构.标识符枚举.超分

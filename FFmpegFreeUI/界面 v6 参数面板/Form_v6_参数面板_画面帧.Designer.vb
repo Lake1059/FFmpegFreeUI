@@ -23,46 +23,31 @@ Partial Class Form_v6_参数面板_画面帧
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         ModernPanel1 = New LakeUI.ModernPanel()
-        ModernPanel1.BackColor = Color.Transparent
-        ModernPanel1.BackColor1 = Color.Transparent
         Panel6 = New LakeUI.ModernPanel()
-        Panel6.BackColor = Color.Transparent
-        Panel6.BackColor1 = Color.Transparent
-        Panel6.BorderSize = 0
         MB_烧录字幕 = New LakeUI.ModernButton()
         HCL_画面内容标题 = New LakeUI.HtmlColorLabel()
         Panel8 = New LakeUI.ModernPanel()
-        Panel8.BackColor = Color.Transparent
-        Panel8.BackColor1 = Color.Transparent
-        Panel8.BorderSize = 0
         MB_平滑断层 = New LakeUI.ModernButton()
         JustEmptyControl10 = New LakeUI.JustEmptyControl()
         MB_画面翻转 = New LakeUI.ModernButton()
         JustEmptyControl11 = New LakeUI.JustEmptyControl()
         MB_扫描方式 = New LakeUI.ModernButton()
         Panel7 = New LakeUI.ModernPanel()
-        Panel7.BackColor = Color.Transparent
-        Panel7.BackColor1 = Color.Transparent
-        Panel7.BorderSize = 0
         MB_胶片颗粒 = New LakeUI.ModernButton()
         JustEmptyControl8 = New LakeUI.JustEmptyControl()
         MB_传统锐化 = New LakeUI.ModernButton()
         JustEmptyControl9 = New LakeUI.JustEmptyControl()
         MB_传统降噪 = New LakeUI.ModernButton()
         Panel5 = New LakeUI.ModernPanel()
-        Panel5.BackColor = Color.Transparent
-        Panel5.BackColor1 = Color.Transparent
-        Panel5.BorderSize = 0
         MB_着色器超分 = New LakeUI.ModernButton()
         JustEmptyControl5 = New LakeUI.JustEmptyControl()
         MB_动态模糊 = New LakeUI.ModernButton()
+        HCL_画面增强标题 = New LakeUI.HtmlColorLabel()
+        ModernPanel2 = New LakeUI.ModernPanel()
+        MB_NV_FRUC_插帧 = New LakeUI.ModernButton()
         JustEmptyControl4 = New LakeUI.JustEmptyControl()
         MB_简易插帧 = New LakeUI.ModernButton()
-        HCL_画面增强标题 = New LakeUI.HtmlColorLabel()
         Panel3 = New LakeUI.ModernPanel()
-        Panel3.BackColor = Color.Transparent
-        Panel3.BackColor1 = Color.Transparent
-        Panel3.BorderSize = 0
         MB_抽帧设置 = New LakeUI.ModernButton()
         JustEmptyControl3 = New LakeUI.JustEmptyControl()
         MCB_强调帧率模式 = New LakeUI.ModernComboBox()
@@ -70,42 +55,24 @@ Partial Class Form_v6_参数面板_画面帧
         MCB_直接指定帧率 = New LakeUI.ModernComboBox()
         HCL_帧率设置标题 = New LakeUI.HtmlColorLabel()
         Panel4 = New LakeUI.ModernPanel()
-        Panel4.BackColor = Color.Transparent
-        Panel4.BackColor1 = Color.Transparent
-        Panel4.BorderSize = 0
         HtmlColorLabel1 = New LakeUI.HtmlColorLabel()
         MTB_画面裁剪参数 = New LakeUI.ModernTextBox()
         JustEmptyControl1 = New LakeUI.JustEmptyControl()
         MB_画面裁剪交互 = New LakeUI.ModernButton()
         Panel11 = New LakeUI.ModernPanel()
-        Panel11.BackColor = Color.Transparent
-        Panel11.BackColor1 = Color.Transparent
-        Panel11.BorderSize = 0
         JustEmptyControl12 = New LakeUI.JustEmptyControl()
         Panel1 = New LakeUI.ModernPanel()
-        Panel1.BackColor = Color.Transparent
-        Panel1.BackColor1 = Color.Transparent
-        Panel1.BorderSize = 0
         MCB_指定缩放算法 = New LakeUI.ModernComboBox()
         JustEmptyControl6 = New LakeUI.JustEmptyControl()
         MCB_高度缩放 = New LakeUI.ModernComboBox()
         JustEmptyControl2 = New LakeUI.JustEmptyControl()
         MCB_宽度缩放 = New LakeUI.ModernComboBox()
         Panel9 = New LakeUI.ModernPanel()
-        Panel9.BackColor = Color.Transparent
-        Panel9.BackColor1 = Color.Transparent
-        Panel9.BorderSize = 0
         HCL_缩放滤镜说明 = New LakeUI.HtmlColorLabel()
         MCB_指定缩放滤镜 = New LakeUI.ModernComboBox()
         Panel10 = New LakeUI.ModernPanel()
-        Panel10.BackColor = Color.Transparent
-        Panel10.BackColor1 = Color.Transparent
-        Panel10.BorderSize = 0
         JustEmptyControl7 = New LakeUI.JustEmptyControl()
         Panel2 = New LakeUI.ModernPanel()
-        Panel2.BackColor = Color.Transparent
-        Panel2.BackColor1 = Color.Transparent
-        Panel2.BorderSize = 0
         HCL_直接指定分辨率说明 = New LakeUI.HtmlColorLabel()
         MCB_直接指定分辨率 = New LakeUI.ModernComboBox()
         HCL_分辨率设置标题 = New LakeUI.HtmlColorLabel()
@@ -114,6 +81,7 @@ Partial Class Form_v6_参数面板_画面帧
         Panel8.SuspendLayout()
         Panel7.SuspendLayout()
         Panel5.SuspendLayout()
+        ModernPanel2.SuspendLayout()
         Panel3.SuspendLayout()
         Panel4.SuspendLayout()
         Panel11.SuspendLayout()
@@ -125,6 +93,8 @@ Partial Class Form_v6_参数面板_画面帧
         ' 
         ' ModernPanel1
         ' 
+        ModernPanel1.BackColor = Color.Transparent
+        ModernPanel1.BackColor1 = Color.Transparent
         ModernPanel1.BorderSize = 0
         ModernPanel1.Controls.Add(Panel6)
         ModernPanel1.Controls.Add(HCL_画面内容标题)
@@ -132,6 +102,7 @@ Partial Class Form_v6_参数面板_画面帧
         ModernPanel1.Controls.Add(Panel7)
         ModernPanel1.Controls.Add(Panel5)
         ModernPanel1.Controls.Add(HCL_画面增强标题)
+        ModernPanel1.Controls.Add(ModernPanel2)
         ModernPanel1.Controls.Add(Panel3)
         ModernPanel1.Controls.Add(HCL_帧率设置标题)
         ModernPanel1.Controls.Add(Panel4)
@@ -146,14 +117,17 @@ Partial Class Form_v6_参数面板_画面帧
         ModernPanel1.Name = "ModernPanel1"
         ModernPanel1.Padding = New Padding(20)
         ModernPanel1.ScrollBarMode = LakeUI.ModernPanel.ScrollMode.Vertical
-        ModernPanel1.Size = New Size(769, 618)
+        ModernPanel1.Size = New Size(769, 674)
         ModernPanel1.TabIndex = 0
         ' 
         ' Panel6
         ' 
+        Panel6.BackColor = Color.Transparent
+        Panel6.BackColor1 = Color.Transparent
+        Panel6.BorderSize = 0
         Panel6.Controls.Add(MB_烧录字幕)
         Panel6.Dock = DockStyle.Top
-        Panel6.Location = New Point(20, 550)
+        Panel6.Location = New Point(20, 592)
         Panel6.Name = "Panel6"
         Panel6.Padding = New Padding(0, 10, 0, 0)
         Panel6.Size = New Size(729, 42)
@@ -180,7 +154,7 @@ Partial Class Form_v6_参数面板_画面帧
         HCL_画面内容标题.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HCL_画面内容标题.Dock = DockStyle.Top
         HCL_画面内容标题.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        HCL_画面内容标题.Location = New Point(20, 502)
+        HCL_画面内容标题.Location = New Point(20, 544)
         HCL_画面内容标题.Margin = New Padding(2)
         HCL_画面内容标题.Name = "HCL_画面内容标题"
         HCL_画面内容标题.Padding = New Padding(0, 20, 0, 5)
@@ -190,13 +164,16 @@ Partial Class Form_v6_参数面板_画面帧
         ' 
         ' Panel8
         ' 
+        Panel8.BackColor = Color.Transparent
+        Panel8.BackColor1 = Color.Transparent
+        Panel8.BorderSize = 0
         Panel8.Controls.Add(MB_平滑断层)
         Panel8.Controls.Add(JustEmptyControl10)
         Panel8.Controls.Add(MB_画面翻转)
         Panel8.Controls.Add(JustEmptyControl11)
         Panel8.Controls.Add(MB_扫描方式)
         Panel8.Dock = DockStyle.Top
-        Panel8.Location = New Point(20, 460)
+        Panel8.Location = New Point(20, 502)
         Panel8.Name = "Panel8"
         Panel8.Padding = New Padding(0, 10, 0, 0)
         Panel8.Size = New Size(729, 42)
@@ -265,13 +242,16 @@ Partial Class Form_v6_参数面板_画面帧
         ' 
         ' Panel7
         ' 
+        Panel7.BackColor = Color.Transparent
+        Panel7.BackColor1 = Color.Transparent
+        Panel7.BorderSize = 0
         Panel7.Controls.Add(MB_胶片颗粒)
         Panel7.Controls.Add(JustEmptyControl8)
         Panel7.Controls.Add(MB_传统锐化)
         Panel7.Controls.Add(JustEmptyControl9)
         Panel7.Controls.Add(MB_传统降噪)
         Panel7.Dock = DockStyle.Top
-        Panel7.Location = New Point(20, 418)
+        Panel7.Location = New Point(20, 460)
         Panel7.Name = "Panel7"
         Panel7.Padding = New Padding(0, 10, 0, 0)
         Panel7.Size = New Size(729, 42)
@@ -340,13 +320,14 @@ Partial Class Form_v6_参数面板_画面帧
         ' 
         ' Panel5
         ' 
+        Panel5.BackColor = Color.Transparent
+        Panel5.BackColor1 = Color.Transparent
+        Panel5.BorderSize = 0
         Panel5.Controls.Add(MB_着色器超分)
         Panel5.Controls.Add(JustEmptyControl5)
         Panel5.Controls.Add(MB_动态模糊)
-        Panel5.Controls.Add(JustEmptyControl4)
-        Panel5.Controls.Add(MB_简易插帧)
         Panel5.Dock = DockStyle.Top
-        Panel5.Location = New Point(20, 376)
+        Panel5.Location = New Point(20, 418)
         Panel5.Name = "Panel5"
         Panel5.Padding = New Padding(0, 10, 0, 0)
         Panel5.Size = New Size(729, 42)
@@ -359,7 +340,7 @@ Partial Class Form_v6_参数面板_画面帧
         MB_着色器超分.BorderSize = 0
         MB_着色器超分.Dock = DockStyle.Left
         MB_着色器超分.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
-        MB_着色器超分.Location = New Point(320, 10)
+        MB_着色器超分.Location = New Point(160, 10)
         MB_着色器超分.Margin = New Padding(2)
         MB_着色器超分.Name = "MB_着色器超分"
         MB_着色器超分.PressedBackColor1 = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
@@ -370,7 +351,7 @@ Partial Class Form_v6_参数面板_画面帧
         ' JustEmptyControl5
         ' 
         JustEmptyControl5.Dock = DockStyle.Left
-        JustEmptyControl5.Location = New Point(310, 10)
+        JustEmptyControl5.Location = New Point(150, 10)
         JustEmptyControl5.Name = "JustEmptyControl5"
         JustEmptyControl5.Size = New Size(10, 32)
         JustEmptyControl5.TabIndex = 12
@@ -382,7 +363,7 @@ Partial Class Form_v6_参数面板_画面帧
         MB_动态模糊.BorderSize = 0
         MB_动态模糊.Dock = DockStyle.Left
         MB_动态模糊.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
-        MB_动态模糊.Location = New Point(160, 10)
+        MB_动态模糊.Location = New Point(0, 10)
         MB_动态模糊.Margin = New Padding(2)
         MB_动态模糊.Name = "MB_动态模糊"
         MB_动态模糊.PressedBackColor1 = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
@@ -390,13 +371,57 @@ Partial Class Form_v6_参数面板_画面帧
         MB_动态模糊.TabIndex = 11
         MB_动态模糊.Text = "动态模糊"
         ' 
+        ' HCL_画面增强标题
+        ' 
+        HCL_画面增强标题.AutoSize = True
+        HCL_画面增强标题.AutoSizeMode = AutoSizeMode.GrowAndShrink
+        HCL_画面增强标题.Dock = DockStyle.Top
+        HCL_画面增强标题.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
+        HCL_画面增强标题.Location = New Point(20, 370)
+        HCL_画面增强标题.Margin = New Padding(2)
+        HCL_画面增强标题.Name = "HCL_画面增强标题"
+        HCL_画面增强标题.Padding = New Padding(0, 20, 0, 5)
+        HCL_画面增强标题.Size = New Size(729, 48)
+        HCL_画面增强标题.TabIndex = 11
+        HCL_画面增强标题.Text = "<span style=""font-size:13; color:Silver"">增强</span>   专业需求请考虑行业软件或 AI 软件"
+        ' 
+        ' ModernPanel2
+        ' 
+        ModernPanel2.BackColor = Color.Transparent
+        ModernPanel2.BackColor1 = Color.Transparent
+        ModernPanel2.BorderSize = 0
+        ModernPanel2.Controls.Add(MB_NV_FRUC_插帧)
+        ModernPanel2.Controls.Add(JustEmptyControl4)
+        ModernPanel2.Controls.Add(MB_简易插帧)
+        ModernPanel2.Dock = DockStyle.Top
+        ModernPanel2.Location = New Point(20, 328)
+        ModernPanel2.Name = "ModernPanel2"
+        ModernPanel2.Padding = New Padding(0, 10, 0, 0)
+        ModernPanel2.Size = New Size(729, 42)
+        ModernPanel2.TabIndex = 20
+        ' 
+        ' MB_NV_FRUC_插帧
+        ' 
+        MB_NV_FRUC_插帧.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MB_NV_FRUC_插帧.BorderRadius = 10
+        MB_NV_FRUC_插帧.BorderSize = 0
+        MB_NV_FRUC_插帧.Dock = DockStyle.Left
+        MB_NV_FRUC_插帧.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        MB_NV_FRUC_插帧.Location = New Point(160, 10)
+        MB_NV_FRUC_插帧.Margin = New Padding(2)
+        MB_NV_FRUC_插帧.Name = "MB_NV_FRUC_插帧"
+        MB_NV_FRUC_插帧.PressedBackColor1 = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
+        MB_NV_FRUC_插帧.Size = New Size(150, 32)
+        MB_NV_FRUC_插帧.TabIndex = 10
+        MB_NV_FRUC_插帧.Text = "NV FRUC 插帧"
+        ' 
         ' JustEmptyControl4
         ' 
         JustEmptyControl4.Dock = DockStyle.Left
         JustEmptyControl4.Location = New Point(150, 10)
         JustEmptyControl4.Name = "JustEmptyControl4"
         JustEmptyControl4.Size = New Size(10, 32)
-        JustEmptyControl4.TabIndex = 9
+        JustEmptyControl4.TabIndex = 11
         ' 
         ' MB_简易插帧
         ' 
@@ -411,24 +436,13 @@ Partial Class Form_v6_参数面板_画面帧
         MB_简易插帧.PressedBackColor1 = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
         MB_简易插帧.Size = New Size(150, 32)
         MB_简易插帧.TabIndex = 10
-        MB_简易插帧.Text = "简易插帧"
-        ' 
-        ' HCL_画面增强标题
-        ' 
-        HCL_画面增强标题.AutoSize = True
-        HCL_画面增强标题.AutoSizeMode = AutoSizeMode.GrowAndShrink
-        HCL_画面增强标题.Dock = DockStyle.Top
-        HCL_画面增强标题.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        HCL_画面增强标题.Location = New Point(20, 328)
-        HCL_画面增强标题.Margin = New Padding(2)
-        HCL_画面增强标题.Name = "HCL_画面增强标题"
-        HCL_画面增强标题.Padding = New Padding(0, 20, 0, 5)
-        HCL_画面增强标题.Size = New Size(729, 48)
-        HCL_画面增强标题.TabIndex = 11
-        HCL_画面增强标题.Text = "<span style=""font-size:13; color:Silver"">增强</span>   专业需求请考虑行业软件或 AI 软件"
+        MB_简易插帧.Text = "CPU 简易插帧"
         ' 
         ' Panel3
         ' 
+        Panel3.BackColor = Color.Transparent
+        Panel3.BackColor1 = Color.Transparent
+        Panel3.BorderSize = 0
         Panel3.Controls.Add(MB_抽帧设置)
         Panel3.Controls.Add(JustEmptyControl3)
         Panel3.Controls.Add(MCB_强调帧率模式)
@@ -462,7 +476,7 @@ Partial Class Form_v6_参数面板_画面帧
         JustEmptyControl3.Location = New Point(310, 10)
         JustEmptyControl3.Name = "JustEmptyControl3"
         JustEmptyControl3.Size = New Size(10, 32)
-        JustEmptyControl3.TabIndex = 9
+        JustEmptyControl3.TabIndex = 13
         ' 
         ' MCB_强调帧率模式
         ' 
@@ -559,6 +573,9 @@ Partial Class Form_v6_参数面板_画面帧
         ' 
         ' Panel4
         ' 
+        Panel4.BackColor = Color.Transparent
+        Panel4.BackColor1 = Color.Transparent
+        Panel4.BorderSize = 0
         Panel4.Controls.Add(HtmlColorLabel1)
         Panel4.Controls.Add(MTB_画面裁剪参数)
         Panel4.Controls.Add(JustEmptyControl1)
@@ -629,6 +646,9 @@ Partial Class Form_v6_参数面板_画面帧
         ' Panel11
         ' 
         Panel11.AutoSize = True
+        Panel11.BackColor = Color.Transparent
+        Panel11.BackColor1 = Color.Transparent
+        Panel11.BorderSize = 0
         Panel11.Controls.Add(JustEmptyControl12)
         Panel11.Dock = DockStyle.Top
         Panel11.Location = New Point(20, 185)
@@ -648,6 +668,9 @@ Partial Class Form_v6_参数面板_画面帧
         ' 
         ' Panel1
         ' 
+        Panel1.BackColor = Color.Transparent
+        Panel1.BackColor1 = Color.Transparent
+        Panel1.BorderSize = 0
         Panel1.Controls.Add(MCB_指定缩放算法)
         Panel1.Controls.Add(JustEmptyControl6)
         Panel1.Controls.Add(MCB_高度缩放)
@@ -783,6 +806,9 @@ Partial Class Form_v6_参数面板_画面帧
         ' 
         ' Panel9
         ' 
+        Panel9.BackColor = Color.Transparent
+        Panel9.BackColor1 = Color.Transparent
+        Panel9.BorderSize = 0
         Panel9.Controls.Add(HCL_缩放滤镜说明)
         Panel9.Controls.Add(MCB_指定缩放滤镜)
         Panel9.Dock = DockStyle.Top
@@ -798,11 +824,11 @@ Partial Class Form_v6_参数面板_画面帧
         HCL_缩放滤镜说明.Dock = DockStyle.Fill
         HCL_缩放滤镜说明.ForeColor = Color.OliveDrab
         HCL_缩放滤镜说明.InfoIconSizeRatio = 1F
-        HCL_缩放滤镜说明.Location = New Point(200, 10)
+        HCL_缩放滤镜说明.Location = New Point(230, 10)
         HCL_缩放滤镜说明.Margin = New Padding(2)
         HCL_缩放滤镜说明.Name = "HCL_缩放滤镜说明"
         HCL_缩放滤镜说明.Padding = New Padding(10, 0, 0, 0)
-        HCL_缩放滤镜说明.Size = New Size(529, 32)
+        HCL_缩放滤镜说明.Size = New Size(499, 32)
         HCL_缩放滤镜说明.TabIndex = 13
         HCL_缩放滤镜说明.Text = "更推荐使用这里的用滤镜缩放"
         HCL_缩放滤镜说明.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
@@ -831,7 +857,7 @@ Partial Class Form_v6_参数面板_画面帧
         MCB_指定缩放滤镜.Name = "MCB_指定缩放滤镜"
         MCB_指定缩放滤镜.Padding = New Padding(10, 0, 10, 0)
         MCB_指定缩放滤镜.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        MCB_指定缩放滤镜.Size = New Size(200, 32)
+        MCB_指定缩放滤镜.Size = New Size(230, 32)
         MCB_指定缩放滤镜.TabIndex = 12
         MCB_指定缩放滤镜.ToolTipGap = -1
         MCB_指定缩放滤镜.ToolTipMaxWidth = 350
@@ -842,6 +868,9 @@ Partial Class Form_v6_参数面板_画面帧
         ' Panel10
         ' 
         Panel10.AutoSize = True
+        Panel10.BackColor = Color.Transparent
+        Panel10.BackColor1 = Color.Transparent
+        Panel10.BorderSize = 0
         Panel10.Controls.Add(JustEmptyControl7)
         Panel10.Dock = DockStyle.Top
         Panel10.Location = New Point(20, 90)
@@ -861,6 +890,9 @@ Partial Class Form_v6_参数面板_画面帧
         ' 
         ' Panel2
         ' 
+        Panel2.BackColor = Color.Transparent
+        Panel2.BackColor1 = Color.Transparent
+        Panel2.BorderSize = 0
         Panel2.Controls.Add(HCL_直接指定分辨率说明)
         Panel2.Controls.Add(MCB_直接指定分辨率)
         Panel2.Dock = DockStyle.Top
@@ -940,7 +972,7 @@ Partial Class Form_v6_参数面板_画面帧
         AutoScaleDimensions = New SizeF(96F, 96F)
         AutoScaleMode = AutoScaleMode.Dpi
         BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
-        ClientSize = New Size(769, 618)
+        ClientSize = New Size(769, 674)
         Controls.Add(ModernPanel1)
         Font = New Font("Microsoft YaHei UI", 10F)
         ForeColor = Color.Silver
@@ -952,6 +984,7 @@ Partial Class Form_v6_参数面板_画面帧
         Panel8.ResumeLayout(False)
         Panel7.ResumeLayout(False)
         Panel5.ResumeLayout(False)
+        ModernPanel2.ResumeLayout(False)
         Panel3.ResumeLayout(False)
         Panel4.ResumeLayout(False)
         Panel11.ResumeLayout(False)
@@ -978,13 +1011,11 @@ Partial Class Form_v6_参数面板_画面帧
     Friend WithEvents Panel3 As LakeUI.ModernPanel
     Friend WithEvents MCB_直接指定帧率 As LakeUI.ModernComboBox
     Friend WithEvents MB_抽帧设置 As LakeUI.ModernButton
-    Friend WithEvents JustEmptyControl3 As LakeUI.JustEmptyControl
     Friend WithEvents HCL_画面增强标题 As LakeUI.HtmlColorLabel
     Friend WithEvents Panel5 As LakeUI.ModernPanel
     Friend WithEvents MB_着色器超分 As LakeUI.ModernButton
     Friend WithEvents JustEmptyControl5 As LakeUI.JustEmptyControl
     Friend WithEvents MB_动态模糊 As LakeUI.ModernButton
-    Friend WithEvents JustEmptyControl4 As LakeUI.JustEmptyControl
     Friend WithEvents MB_简易插帧 As LakeUI.ModernButton
     Friend WithEvents HCL_画面内容标题 As LakeUI.HtmlColorLabel
     Friend WithEvents Panel6 As LakeUI.ModernPanel
@@ -1014,4 +1045,8 @@ Partial Class Form_v6_参数面板_画面帧
     Friend WithEvents HCL_缩放滤镜说明 As LakeUI.HtmlColorLabel
     Friend WithEvents HtmlColorLabel1 As LakeUI.HtmlColorLabel
     Friend WithEvents HCL_直接指定分辨率说明 As LakeUI.HtmlColorLabel
+    Friend WithEvents ModernPanel2 As LakeUI.ModernPanel
+    Friend WithEvents MB_NV_FRUC_插帧 As LakeUI.ModernButton
+    Friend WithEvents JustEmptyControl4 As LakeUI.JustEmptyControl
+    Friend WithEvents JustEmptyControl3 As LakeUI.JustEmptyControl
 End Class

@@ -100,8 +100,8 @@ Public Class Form_v6_调试播放器
         重置进度显示()
 
         ffplayProcess = New Process
-        ffplayProcess.StartInfo.FileName = "ffplay"
-        ffplayProcess.StartInfo.WorkingDirectory = If(设置_v6.实例对象.工作目录 <> "", 设置_v6.实例对象.工作目录, "")
+        ffplayProcess.StartInfo.FileName = 设置_v6.获取FFplay进程文件名()
+        ffplayProcess.StartInfo.WorkingDirectory = 设置_v6.获取有效工作目录()
         ffplayProcess.StartInfo.Arguments = $"-x {ModernPanel2.Width} -y {ModernPanel2.Height} ""{文件路径}"""
         ffplayProcess.StartInfo.UseShellExecute = False
         ffplayProcess.StartInfo.CreateNoWindow = True

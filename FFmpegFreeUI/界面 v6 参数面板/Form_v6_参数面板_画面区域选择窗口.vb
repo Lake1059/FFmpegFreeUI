@@ -50,8 +50,8 @@ Public Class Form_v6_参数面板_画面区域选择窗口
     Private Function ExtractFrameFromMedia(mediaPath As String, outputPath As String, useTimestamp As Boolean) As Boolean
         Try
             Using process As New Process()
-                process.StartInfo.FileName = "ffmpeg"
-                process.StartInfo.WorkingDirectory = If(设置_v6.实例对象.工作目录 <> "", 设置_v6.实例对象.工作目录, "")
+                process.StartInfo.FileName = 设置_v6.获取FFmpeg进程文件名()
+                process.StartInfo.WorkingDirectory = 设置_v6.获取有效工作目录()
                 process.StartInfo.UseShellExecute = False
                 process.StartInfo.CreateNoWindow = True
                 If useTimestamp Then

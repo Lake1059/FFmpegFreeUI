@@ -102,8 +102,8 @@ Public Class Form_v6_媒体流选择器
     Private Sub 开始读取(媒体文件 As String)
         Dim 输出内容 As New List(Of String)
         Using ffprobe As New Process
-            ffprobe.StartInfo.FileName = "ffprobe"
-            ffprobe.StartInfo.WorkingDirectory = If(设置_v6.实例对象.工作目录 <> "", 设置_v6.实例对象.工作目录, "")
+            ffprobe.StartInfo.FileName = 设置_v6.获取FFprobe进程文件名()
+            ffprobe.StartInfo.WorkingDirectory = 设置_v6.获取有效工作目录()
             ffprobe.StartInfo.Arguments = $"-hide_banner ""{媒体文件}"""
             ffprobe.StartInfo.RedirectStandardOutput = True
             ffprobe.StartInfo.RedirectStandardError = True

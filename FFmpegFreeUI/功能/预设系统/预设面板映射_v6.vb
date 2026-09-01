@@ -46,6 +46,9 @@ Partial Public Class 预设管理_v6
 
     Public Shared Function 获取滤镜显示名称(标识符 As 预设数据_v6.滤镜排序单片结构.标识符枚举) As String
         If 标识符 = 预设数据_v6.滤镜排序单片结构.标识符枚举.未设置 Then Return "未设置"
+        Select Case 标识符
+            Case 预设数据_v6.滤镜排序单片结构.标识符枚举.NV_FRUC : Return "NVIDIA Vulkan FRUC"
+        End Select
         Return 标识符.ToString()
     End Function
     Private Shared Function SplitTextList(value As String) As String()
@@ -341,7 +344,7 @@ Partial Public Class 预设管理_v6
             a.视频参数_帧速率 = .MCB_直接指定帧率.Text
             a.视频参数_帧速率模式 = If(.MCB_强调帧率模式.SelectedIndex = 1, "cfr", If(.MCB_强调帧率模式.SelectedIndex = 2, "vfr", ""))
             a.视频参数_分辨率_裁剪滤镜参数 = .MTB_画面裁剪参数.Text
-            储存滤镜子窗口(a, .私有窗口_抽帧参数, .私有窗口_插帧参数, .私有窗口_动态模糊, .私有窗口_着色器超分, .私有窗口_降噪, .私有窗口_锐化, .私有窗口_胶片颗粒, .私有窗口_平滑断层, .私有窗口_扫描方式, .私有窗口_画面翻转, .私有窗口_烧录字幕)
+            储存滤镜子窗口(a, .私有窗口_抽帧参数, .私有窗口_简易插帧参数, .私有窗口_NV_FRUC_插帧参数, .私有窗口_动态模糊, .私有窗口_着色器超分, .私有窗口_降噪, .私有窗口_锐化, .私有窗口_胶片颗粒, .私有窗口_平滑断层, .私有窗口_扫描方式, .私有窗口_画面翻转, .私有窗口_烧录字幕)
         End With
     End Sub
 
@@ -371,13 +374,14 @@ Partial Public Class 预设管理_v6
                     .MCB_强调帧率模式.SelectedIndex = 0
             End Select
             .MTB_画面裁剪参数.Text = a.视频参数_分辨率_裁剪滤镜参数
-            显示滤镜子窗口(a, .私有窗口_抽帧参数, .私有窗口_插帧参数, .私有窗口_动态模糊, .私有窗口_着色器超分, .私有窗口_降噪, .私有窗口_锐化, .私有窗口_胶片颗粒, .私有窗口_平滑断层, .私有窗口_扫描方式, .私有窗口_画面翻转, .私有窗口_烧录字幕)
+            显示滤镜子窗口(a, .私有窗口_抽帧参数, .私有窗口_简易插帧参数, .私有窗口_NV_FRUC_插帧参数, .私有窗口_动态模糊, .私有窗口_着色器超分, .私有窗口_降噪, .私有窗口_锐化, .私有窗口_胶片颗粒, .私有窗口_平滑断层, .私有窗口_扫描方式, .私有窗口_画面翻转, .私有窗口_烧录字幕)
         End With
     End Sub
 
     Private Shared Sub 储存滤镜子窗口(a As 预设数据_v6,
                                   抽帧 As Form_v6_参数面板_抽帧参数,
-                                  插帧 As Form_v6_参数面板_插帧参数,
+                                  插帧 As Form_v6_参数面板_插帧_简易,
+                                  NVFRUC As Form_v6_参数面板_插帧_NV_FRUC,
                                   动态模糊 As Form_v6_参数面板_动态模糊,
                                   超分 As Form_v6_参数面板_超分,
                                   降噪 As Form_v6_参数面板_降噪,
@@ -410,6 +414,16 @@ Partial Public Class 预设管理_v6
         a.视频参数_插帧_块大小 = 插帧.MTB_块大小.Text
         a.视频参数_插帧_搜索范围 = 插帧.MTB_搜索范围.Text
         a.视频参数_插帧_场景变化检测强度 = 插帧.MTB_场景变化检测强度.Text
+
+        If NVFRUC.MCK_插帧总开关.Checked Then
+            a.视频参数_NV_FRUC_目标帧率 = NVFRUC.MCB_目标帧率.Text
+            a.视频参数_NV_FRUC_质量和速度 = NVFRUC.MCB_质量和速度.Text
+            a.视频参数_NV_FRUC_网格大小 = NVFRUC.MCB_网格大小.Text
+        Else
+            a.视频参数_NV_FRUC_目标帧率 = ""
+            a.视频参数_NV_FRUC_质量和速度 = ""
+            a.视频参数_NV_FRUC_网格大小 = ""
+        End If
 
         a.视频参数_动态模糊_连续混合帧数 = If(动态模糊.MCK_动态模糊总开关.Checked, 动态模糊.MTB_连续混合帧数.Text, "")
         a.视频参数_动态模糊_每帧权重 = 动态模糊.MTB_每帧的权重.Text
@@ -509,7 +523,8 @@ Partial Public Class 预设管理_v6
 
     Private Shared Sub 显示滤镜子窗口(a As 预设数据_v6,
                                   抽帧 As Form_v6_参数面板_抽帧参数,
-                                  插帧 As Form_v6_参数面板_插帧参数,
+                                  插帧 As Form_v6_参数面板_插帧_简易,
+                                  NVFRUC As Form_v6_参数面板_插帧_NV_FRUC,
                                   动态模糊 As Form_v6_参数面板_动态模糊,
                                   超分 As Form_v6_参数面板_超分,
                                   降噪 As Form_v6_参数面板_降噪,
@@ -536,6 +551,11 @@ Partial Public Class 预设管理_v6
         插帧.MTB_块大小.Text = a.视频参数_插帧_块大小
         插帧.MTB_搜索范围.Text = a.视频参数_插帧_搜索范围
         插帧.MTB_场景变化检测强度.Text = a.视频参数_插帧_场景变化检测强度
+
+        NVFRUC.MCK_插帧总开关.Checked = a.视频参数_NV_FRUC_目标帧率 <> ""
+        设置组合框文本并尝试选中(NVFRUC.MCB_目标帧率, a.视频参数_NV_FRUC_目标帧率)
+        设置组合框文本并尝试选中(NVFRUC.MCB_质量和速度, a.视频参数_NV_FRUC_质量和速度)
+        设置组合框文本并尝试选中(NVFRUC.MCB_网格大小, a.视频参数_NV_FRUC_网格大小)
 
         动态模糊.MCK_动态模糊总开关.Checked = a.视频参数_动态模糊_连续混合帧数 <> ""
         动态模糊.MTB_连续混合帧数.Text = a.视频参数_动态模糊_连续混合帧数

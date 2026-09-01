@@ -65,7 +65,6 @@ Partial Class Form_v6_编码队列
         ' 
         ' 任务菜单
         ' 
-        任务菜单.AnimationFPS = 120
         任务菜单.BackdropBlurPasses = 2
         任务菜单.BackdropBlurRadius = 30
         任务菜单.BackdropMode = LakeUI.ModernContextMenu.BackdropModeEnum.Auto
@@ -116,7 +115,6 @@ Partial Class Form_v6_编码队列
         ' 
         ' 右键菜单
         ' 
-        右键菜单.AnimationFPS = 120
         右键菜单.BackdropBlurPasses = 2
         右键菜单.BackdropBlurRadius = 30
         右键菜单.BackdropMode = LakeUI.ModernContextMenu.BackdropModeEnum.Auto

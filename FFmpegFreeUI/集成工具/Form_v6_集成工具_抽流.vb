@@ -658,7 +658,7 @@ Public Class Form_v6_集成工具_抽流
     Private Async Function 运行进程读取输出Async(fileName As String, arguments As String, token As CancellationToken) As Task(Of 进程运行结果)
         Using process As New Process()
             process.StartInfo.FileName = fileName
-            process.StartInfo.WorkingDirectory = If(设置_v6.实例对象.工作目录 <> "", 设置_v6.实例对象.工作目录, "")
+            process.StartInfo.WorkingDirectory = 设置_v6.获取有效工作目录()
             process.StartInfo.Arguments = arguments
             process.StartInfo.UseShellExecute = False
             process.StartInfo.RedirectStandardOutput = True
@@ -691,7 +691,7 @@ Public Class Form_v6_集成工具_抽流
         Dim process As New Process()
 
         process.StartInfo.FileName = 获取FFmpeg文件名()
-        process.StartInfo.WorkingDirectory = If(设置_v6.实例对象.工作目录 <> "", 设置_v6.实例对象.工作目录, "")
+        process.StartInfo.WorkingDirectory = 设置_v6.获取有效工作目录()
         process.StartInfo.Arguments = arguments
         process.StartInfo.UseShellExecute = False
         process.StartInfo.RedirectStandardOutput = True
@@ -761,18 +761,11 @@ Public Class Form_v6_集成工具_抽流
     End Function
 
     Private Shared Function 获取FFmpeg文件名() As String
-        Return If(设置_v6.实例对象.替代进程文件名 <> "", 设置_v6.实例对象.替代进程文件名, "ffmpeg")
+        Return 设置_v6.获取FFmpeg进程文件名()
     End Function
 
     Private Shared Function 获取FFprobe文件名() As String
-        Dim ffmpeg = If(设置_v6.实例对象.替代进程文件名, "").Trim()
-        If ffmpeg = "" Then Return "ffprobe"
-        Dim fileName = Path.GetFileName(ffmpeg)
-        If fileName.IndexOf("ffmpeg", StringComparison.OrdinalIgnoreCase) < 0 Then Return "ffprobe"
-        Dim probeFileName = fileName.Replace("ffmpeg", "ffprobe", StringComparison.OrdinalIgnoreCase)
-        Dim dir = Path.GetDirectoryName(ffmpeg)
-        If dir = "" Then Return probeFileName
-        Return Path.Combine(dir, probeFileName)
+        Return 设置_v6.获取FFprobe进程文件名()
     End Function
 
     Private Shared Function 获取默认扩展名(info As 抽流流信息) As String
