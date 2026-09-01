@@ -27,11 +27,19 @@
         "Type": "link",
         "Body": "https://afdian.com/item/a98d04e8b98011f0a49952540025c377"
     },
-    {
-        "Title": "新图标征集活动",
-        "TitleColor": "yellow",
-        "SubTitle": "前往 GitHub 查看详情",
-        "Type": "link",
-        "Body": "https://github.com/Lake1059/FFmpegFreeUI#新图标征集活动"
-    }
+  {
+    "Title": "新图标征集活动",
+    "TitleColor": "yellow",
+    "SubTitle": "前往 GitHub 查看详情",
+    "Type": "link",
+    "Body": "https://github.com/Lake1059/FFmpegFreeUI#新图标征集活动"
+  },
+  {
+    "Title": "从 6.2.X 更新时对话框点击确定后卡死",
+    "TitleColor": "yellow",
+    "SubTitle": "手动运行更新器即可",
+    "Type": "msgbox",
+    "Body": "卡死的直接强行退出，去手动运行更新器，LakeUI 在换引擎，不稳定是正常的。"
+  }
+
 ]
