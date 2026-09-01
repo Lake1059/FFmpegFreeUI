@@ -1,7 +1,7 @@
 Public Class 其他初始化
 
     Public Shared Sub 执行()
-        LakeUI.MessageDialogOptions.BackdropEnabled = True
+        LakeUI.MessageDialogOptions.BackdropEnabled = Not 界面主题_v6.当前为浅色模式
         LakeUI.MessageDialogOptions.BackdropTintColor = Color.FromArgb(120, 0, 0, 0)
         LakeUI.MessageDialogOptions.BackdropBlurRadius = 30
         LakeUI.MessageDialogOptions.BackdropBlurPasses = 2

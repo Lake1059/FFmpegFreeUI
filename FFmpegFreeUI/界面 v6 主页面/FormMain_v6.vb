@@ -15,6 +15,8 @@ Public Class FormMain_v6
         UI同步上下文 = Threading.SynchronizationContext.Current
         设置_v6.启动时读取SP解锁器()
         设置_v6.启动时加载设置()
+        界面主题_v6.初始化()
+        界面主题_v6.应用窗口圆角设置()
         网络功能.启动时后台获取SPAgent端点()
 
         设置_v6.加载SP自定义图标()
