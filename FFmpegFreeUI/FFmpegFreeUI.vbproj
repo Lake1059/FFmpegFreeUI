@@ -83,7 +83,6 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resource1.resx</DependentUpon>
     </Compile>
-    <Compile Update="界面 v6 社区\Form_v6_社区_浏览内容.vb" />
   </ItemGroup>
 
   <ItemGroup>

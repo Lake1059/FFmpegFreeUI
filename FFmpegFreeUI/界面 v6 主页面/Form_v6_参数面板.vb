@@ -28,7 +28,7 @@ Public Class Form_v6_参数面板
     Public Shared ReadOnly 共享界面_画面区域选择窗口 As New Form_v6_参数面板_画面区域选择窗口
     Public 抑制自动刷新 As Boolean = False
     Private Const 参数总览页索引 As Integer = 0
-    Private Const 滤镜排序页索引 As Integer = 15
+    Private Const 滤镜排序页索引 As Integer = 14
     Private _正在刷新聚合页面 As Boolean
 
 
@@ -52,19 +52,16 @@ Public Class Form_v6_参数面板
         绑定选项卡(私有界面_质量.ModernPanel1)
         Me.ModernTabListControl1.Items(9).BoundControl = 私有界面_色彩管理
         绑定选项卡(私有界面_色彩管理.ModernPanel1)
-        Me.ModernTabListControl1.Items(10).BoundControl = 私有界面_视频帧服务器
-        私有界面_视频帧服务器.所属参数面板对象 = Me
-        绑定选项卡(私有界面_视频帧服务器.ModernPanel1)
         '==================================================
-        Me.ModernTabListControl1.Items(12).BoundControl = 私有界面_音频参数
+        Me.ModernTabListControl1.Items(11).BoundControl = 私有界面_音频参数
         绑定选项卡(私有界面_音频参数.ModernPanel1)
         '==================================================
-        Me.ModernTabListControl1.Items(14).BoundControl = 私有界面_剪辑区间
+        Me.ModernTabListControl1.Items(13).BoundControl = 私有界面_剪辑区间
         绑定选项卡(私有界面_剪辑区间.ModernPanel1)
-        Me.ModernTabListControl1.Items(15).BoundControl = 私有界面_滤镜排序
+        Me.ModernTabListControl1.Items(14).BoundControl = 私有界面_滤镜排序
         绑定选项卡(私有界面_滤镜排序.ModernPanel1)
         '==================================================
-        Me.ModernTabListControl1.Items(16).BoundControl = 私有界面_自定义参数
+        Me.ModernTabListControl1.Items(15).BoundControl = 私有界面_自定义参数
         绑定选项卡(私有界面_自定义参数.ModernPanel1)
         If SP_UnLock AndAlso 设置_v6.实例对象.窗口样式 = 2 AndAlso 设置_v6.实例对象.SP_毛玻璃模式 > 0 Then
             私有界面_自定义参数.ModernTabControl1.TabStripBackColor = Color.Transparent
@@ -83,10 +80,10 @@ Public Class Form_v6_参数面板
         Me.私有界面_自定义参数.ModernTabControl1.Items(5).BoundControl = 私有界面_完全自己写模式
         绑定选项卡(私有界面_完全自己写模式.ModernPanel1)
         '==================================================
-        Me.ModernTabListControl1.Items(17).BoundControl = 私有界面_流控制
+        Me.ModernTabListControl1.Items(16).BoundControl = 私有界面_流控制
         绑定选项卡(私有界面_流控制.ModernPanel1)
         '==================================================
-        Me.ModernTabListControl1.Items(19).BoundControl = 私有界面_附加内容
+        Me.ModernTabListControl1.Items(18).BoundControl = 私有界面_附加内容
         绑定选项卡(私有界面_附加内容.ModernPanel1)
         If SP_UnLock AndAlso 设置_v6.实例对象.窗口样式 = 2 AndAlso 设置_v6.实例对象.SP_毛玻璃模式 > 0 Then
             私有界面_附加内容.ModernTabControl1.TabStripBackColor = Color.Transparent
@@ -104,6 +101,10 @@ Public Class Form_v6_参数面板
         Me.私有界面_附加内容.ModernTabControl1.Items(2).BoundControl = 私有界面_附件
         私有界面_附件.所属参数面板对象 = Me
         绑定选项卡(私有界面_附件.ModernPanel1)
+        '==================================================
+        Me.ModernTabListControl1.Items(19).BoundControl = 私有界面_视频帧服务器
+        私有界面_视频帧服务器.所属参数面板对象 = Me
+        绑定选项卡(私有界面_视频帧服务器.ModernPanel1)
         '==================================================
         Me.ModernTabListControl1.SelectedIndex = 0
         Me.私有界面_自定义参数.ModernTabControl1.SelectedIndex = 0

@@ -80,7 +80,6 @@ Partial Class Form_v6_设置_界面显示
         MCB_窗口圆角.DropDownBackdropBlurRadius = 30
         MCB_窗口圆角.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
         MCB_窗口圆角.DropDownHoverColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
-        MCB_窗口圆角.DropDownItemHeight = 26
         MCB_窗口圆角.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
         MCB_窗口圆角.DropDownPadding = New Padding(10)
         MCB_窗口圆角.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
@@ -137,7 +136,6 @@ Partial Class Form_v6_设置_界面显示
         MCB_界面主题.DropDownBackdropBlurRadius = 30
         MCB_界面主题.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
         MCB_界面主题.DropDownHoverColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
-        MCB_界面主题.DropDownItemHeight = 26
         MCB_界面主题.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
         MCB_界面主题.DropDownPadding = New Padding(10)
         MCB_界面主题.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))

@@ -83,7 +83,6 @@ Partial Class Form_v6_参数面板
         ModernTabListControl1.Items.Add(ModernTabPage8)
         ModernTabListControl1.Items.Add(ModernTabPage9)
         ModernTabListControl1.Items.Add(ModernTabPage10)
-        ModernTabListControl1.Items.Add(ModernTabPage11)
         ModernTabListControl1.Items.Add(ModernTabPage12)
         ModernTabListControl1.Items.Add(ModernTabPage13)
         ModernTabListControl1.Items.Add(ModernTabPage14)
@@ -93,6 +92,7 @@ Partial Class Form_v6_参数面板
         ModernTabListControl1.Items.Add(ModernTabPage18)
         ModernTabListControl1.Items.Add(ModernTabPage19)
         ModernTabListControl1.Items.Add(ModernTabPage20)
+        ModernTabListControl1.Items.Add(ModernTabPage11)
         ModernTabListControl1.Location = New Point(0, 0)
         ModernTabListControl1.Name = "ModernTabListControl1"
         ModernTabListControl1.ScrollBarThumbColor = Color.FromArgb(CByte(40), CByte(200), CByte(200), CByte(200))

@@ -72,37 +72,40 @@ Public Module 界面主题_v6
             Case Else
                 浅色 = 读取Windows应用浅色模式()
         End Select
-        Dim accent = 读取Windows主题色()
-        If Not 强制刷新 AndAlso 浅色 = _当前浅色 AndAlso accent.ToArgb() = _Windows主题色.ToArgb() Then Return
+        Dim 主题色 = 读取Windows主题色()
+        If Not 强制刷新 AndAlso 浅色 = _当前浅色 AndAlso 主题色.ToArgb() = _Windows主题色.ToArgb() Then Return
 
         _当前浅色 = 浅色
-        _Windows主题色 = accent
+        _Windows主题色 = 主题色
         应用LakeUI对话框主题(浅色)
 
-        Dim forms = Application.OpenForms.Cast(Of Form).ToArray()
-        Dim mainForm = forms.OfType(Of FormMain_v6)().FirstOrDefault()
-        If mainForm IsNot Nothing Then
+        Dim 窗体列表 = Application.OpenForms.Cast(Of Form).ToArray()
+        Dim 主窗体 = 窗体列表.OfType(Of FormMain_v6)().FirstOrDefault()
+        If 主窗体 IsNot Nothing Then
             ' ThisIsYourWindow 是非可视 Component，不属于 WinForms Control 树，需要单独套用主题。
-            应用对象颜色(mainForm.ThisIsYourWindow1, 浅色)
+            应用对象颜色(主窗体.ThisIsYourWindow1, 浅色)
         End If
-        For Each form In forms
-            应用控件树(form, True)
+        For Each 窗体 In 窗体列表
+            应用控件树(窗体, True)
         Next
+
+        ' 毛玻璃透明属性是在窗体加载后设置的，不属于主题快照；主题切换后需要重新套用。
+        If 主窗体 IsNot Nothing Then 主窗体.应用毛玻璃控件设置()
     End Sub
 
     ''' <summary>根据当前设置统一应用圆角。LakeUI 特别呈现由 ThisIsYourWindow 管理，其余窗口直接使用 DWM。</summary>
     Public Sub 应用窗口圆角设置()
         Dim 支持圆角 = DwmWindowStyle.IsCornerModeSupported
-        Dim mode = If(支持圆角 AndAlso 设置_v6.实例对象.窗口圆角 = 1,
+        Dim 圆角模式 = If(支持圆角 AndAlso 设置_v6.实例对象.窗口圆角 = 1,
                       DwmWindowStyle.CornerMode.Round,
                       DwmWindowStyle.CornerMode.Square)
 
         ' LakeUI 自带的 ExMsgBox / ExInputBox / ExFloating* / ExOverlayMsgBox 都从该全局值读取，
         ' 确保后续新建弹窗与主窗口使用同一圆角策略。
-        DwmWindowStyle.PopupCornerMode = mode
+        DwmWindowStyle.PopupCornerMode = 圆角模式
 
         Try
-            FormMain_v6.ThisIsYourWindow1.WindowCornerMode = mode
+            FormMain_v6.ThisIsYourWindow1.WindowCornerMode = 圆角模式
         Catch
         End Try
 
@@ -110,7 +113,7 @@ Public Module 界面主题_v6
         For Each form In Application.OpenForms.Cast(Of Form).ToArray()
             If form.IsDisposed OrElse Not form.IsHandleCreated Then Continue For
             Try
-                DwmWindowStyle.SetCornerMode(form.Handle, mode)
+                DwmWindowStyle.SetCornerMode(form.Handle, 圆角模式)
             Catch
             End Try
         Next
@@ -143,11 +146,11 @@ Public Module 界面主题_v6
         Return SystemColors.Highlight
     End Function
 
-    Private Function 混合不透明颜色(baseColor As Color, accentColor As Color, accentRatio As Double) As Color
+    Private Function 混合不透明颜色(baseColor As Color, accentColor As Color, accentRatio As Double, Optional alpha As Integer = 255) As Color
         accentRatio = Math.Clamp(accentRatio, 0.0R, 1.0R)
         Dim baseRatio = 1.0R - accentRatio
         Return Color.FromArgb(
-            255,
+            Math.Clamp(alpha, 0, 255),
             CInt(Math.Round(baseColor.R * baseRatio + accentColor.R * accentRatio)),
             CInt(Math.Round(baseColor.G * baseRatio + accentColor.G * accentRatio)),
             CInt(Math.Round(baseColor.B * baseRatio + accentColor.B * accentRatio)))
@@ -253,10 +256,10 @@ Public Module 界面主题_v6
 
         If 设置_v6.实例对象.窗口样式 = 2 Then Return
         Try
-            Dim mode = If(DwmWindowStyle.IsCornerModeSupported AndAlso 设置_v6.实例对象.窗口圆角 = 1,
+            Dim 圆角模式 = If(DwmWindowStyle.IsCornerModeSupported AndAlso 设置_v6.实例对象.窗口圆角 = 1,
                           DwmWindowStyle.CornerMode.Round,
                           DwmWindowStyle.CornerMode.Square)
-            DwmWindowStyle.SetCornerMode(form.Handle, mode)
+            DwmWindowStyle.SetCornerMode(form.Handle, 圆角模式)
         Catch
         End Try
     End Sub
@@ -293,7 +296,7 @@ Public Module 界面主题_v6
         If TypeOf target Is HtmlColorLabel Then
             Try
                 snapshot.Html文本 = DirectCast(target, HtmlColorLabel).Text
-                snapshot.有Html颜色 = Not String.IsNullOrEmpty(snapshot.Html文本) AndAlso snapshot.Html文本.IndexOf("color:", StringComparison.OrdinalIgnoreCase) >= 0
+                snapshot.有Html颜色 = Not String.IsNullOrEmpty(snapshot.Html文本) AndAlso snapshot.Html文本.Contains("color:", StringComparison.OrdinalIgnoreCase)
             Catch
             End Try
         End If
@@ -330,24 +333,24 @@ Public Module 界面主题_v6
                 Case "TabStripBackColor"
                     Return navBack
                 Case "TabItemSelectedBackColor"
-                    Return 混合不透明颜色(navBack, _Windows主题色, 0.18R)
+                    Return 混合不透明颜色(navBack, _Windows主题色, 0.18R, original.A)
                 Case "TabItemHoverBackColor"
-                    Return 混合不透明颜色(navBack, _Windows主题色, 0.09R)
+                    Return 混合不透明颜色(navBack, _Windows主题色, 0.09R, original.A)
                 Case "IndicatorColor"
                     Return _Windows主题色
             End Select
         End If
         ' 红色关闭按钮悬停/按下状态需要保留亮色图标，不能按普通前景色反转。
-        If name.IndexOf("HoverGlyphColor", StringComparison.OrdinalIgnoreCase) >= 0 OrElse
-           name.IndexOf("PressedGlyphColor", StringComparison.OrdinalIgnoreCase) >= 0 Then Return original
+        If name.Contains("HoverGlyphColor", StringComparison.OrdinalIgnoreCase) OrElse
+           name.Contains("PressedGlyphColor", StringComparison.OrdinalIgnoreCase) Then Return original
 
         Dim maxChannel = Math.Max(original.R, Math.Max(original.G, original.B))
         Dim minChannel = Math.Min(original.R, Math.Min(original.G, original.B))
         Dim neutral = maxChannel - minChannel <= 12
         Dim gray = CInt((CInt(original.R) + CInt(original.G) + CInt(original.B)) / 3)
 
-        Dim isForeground = name.IndexOf("ForeColor", StringComparison.OrdinalIgnoreCase) >= 0 OrElse
-                           name.IndexOf("TextColor", StringComparison.OrdinalIgnoreCase) >= 0
+        Dim isForeground = name.Contains("ForeColor", StringComparison.OrdinalIgnoreCase) OrElse
+                           name.Contains("TextColor", StringComparison.OrdinalIgnoreCase)
         If isForeground Then
             Dim alpha = If(original.A < 255, Math.Max(CInt(original.A), 210), 255)
             Dim candidate As Color
@@ -367,9 +370,9 @@ Public Module 界面主题_v6
             Return 确保浅色前景对比度(candidate, 4.5R)
         End If
 
-        Dim isBorder = name.IndexOf("Border", StringComparison.OrdinalIgnoreCase) >= 0 OrElse
-                       name.IndexOf("Separator", StringComparison.OrdinalIgnoreCase) >= 0 OrElse
-                       name.IndexOf("LineColor", StringComparison.OrdinalIgnoreCase) >= 0
+        Dim isBorder = name.Contains("Border", StringComparison.OrdinalIgnoreCase) OrElse
+                       name.Contains("Separator", StringComparison.OrdinalIgnoreCase) OrElse
+                       name.Contains("LineColor", StringComparison.OrdinalIgnoreCase)
         If isBorder AndAlso neutral Then
             If original.A < 255 Then
                 Return Color.FromArgb(Math.Max(CInt(original.A), 96), 48, 48, 48)
@@ -379,7 +382,7 @@ Public Module 界面主题_v6
 
         If Not neutral Then Return original
 
-        Dim isBackground = name.IndexOf("BackColor", StringComparison.OrdinalIgnoreCase) >= 0
+        Dim isBackground = name.Contains("BackColor", StringComparison.OrdinalIgnoreCase)
         If isBackground AndAlso original.A = 255 Then
             ' 保留旧深色设计器中的语义灰阶：24=内容底，36=二/三级导航，48=一级导航。
             ' 这样任何新页面只要继续沿用原来的深色层级，就会自动得到一致的浅色层级。

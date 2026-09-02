@@ -1,6 +1,10 @@
 Imports Microsoft.WindowsAPICodePack.Dialogs
 
 Public Class Form_v6_设置_功能设定
+    Private Sub Form_v6_设置_功能设定_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        绑定路径文本框拖拽(MTB_工作目录, 路径下拉框拖拽模式.文件夹路径)
+    End Sub
+
     Private Sub MTB_工作目录_TextChanged(sender As Object, e As EventArgs) Handles MTB_工作目录.TextChanged
         设置_v6.实例对象.工作目录 = MTB_工作目录.Text
     End Sub

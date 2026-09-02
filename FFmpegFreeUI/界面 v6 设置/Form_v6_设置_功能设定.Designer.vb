@@ -711,6 +711,8 @@ Partial Class Form_v6_设置_功能设定
         MTB_工作目录.Size = New Size(612, 32)
         MTB_工作目录.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MTB_工作目录.TabIndex = 19
+        MTB_工作目录.WaterText = "工作目录，将文件或文件夹拖至此来直接获取位置"
+        MTB_工作目录.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         '
         ' JustEmptyControl2
         '

@@ -261,7 +261,6 @@ Public NotInheritable Class Agent工具封装_v6
             panel.私有界面_画面帧.私有窗口_烧录字幕,
             panel.私有界面_质量,
             panel.私有界面_色彩管理,
-            panel.私有界面_视频帧服务器,
             panel.私有界面_音频参数,
             panel.私有界面_剪辑区间,
             panel.私有界面_滤镜排序,
@@ -274,7 +273,8 @@ Public NotInheritable Class Agent工具封装_v6
             panel.私有界面_附加内容,
             panel.私有界面_元数据,
             panel.私有界面_章节,
-            panel.私有界面_附件
+            panel.私有界面_附件,
+            panel.私有界面_视频帧服务器
         }.Where(Function(x) x IsNot Nothing).Distinct().ToList()
     End Function
 

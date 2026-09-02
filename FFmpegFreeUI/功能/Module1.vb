@@ -32,7 +32,7 @@ Module Module1
                                     Select Case e1.Button
                                         Case MouseButtons.Left
                                             ReleaseCapture()
-                                            Dim unused = SendMessage(s1.FindForm().Handle, WM_NCLBUTTONDOWN, HTCAPTION, 0)
+                                            SendMessage(s1.FindForm().Handle, WM_NCLBUTTONDOWN, HTCAPTION, 0)
                                         Case MouseButtons.Right
                                             Dim form = s1.FindForm()
                                             If form Is Nothing OrElse form.FormBorderStyle <> FormBorderStyle.None Then Exit Sub
@@ -70,7 +70,13 @@ Module Module1
         Public Property 拖拽完成 As Action(Of LakeUI.ModernComboBox, String)
     End Class
 
+    Private Class 路径文本框拖拽配置
+        Public Property 模式 As 路径下拉框拖拽模式
+        Public Property 拖拽完成 As Action(Of LakeUI.ModernTextBox, String)
+    End Class
+
     Private ReadOnly 路径下拉框拖拽配置表 As New Dictionary(Of LakeUI.ModernComboBox, 路径下拉框拖拽配置)
+    Private ReadOnly 路径文本框拖拽配置表 As New Dictionary(Of LakeUI.ModernTextBox, 路径文本框拖拽配置)
 
     Public Sub 绑定路径下拉框拖拽(下拉框 As LakeUI.ModernComboBox,
                             Optional 模式 As 路径下拉框拖拽模式 = 路径下拉框拖拽模式.文件路径,
@@ -85,6 +91,21 @@ Module Module1
         AddHandler 下拉框.DragEnter, AddressOf 路径下拉框_DragEnter
         AddHandler 下拉框.DragDrop, AddressOf 路径下拉框_DragDrop
         AddHandler 下拉框.Disposed, AddressOf 路径下拉框_Disposed
+    End Sub
+
+    Public Sub 绑定路径文本框拖拽(文本框 As LakeUI.ModernTextBox,
+                            Optional 模式 As 路径下拉框拖拽模式 = 路径下拉框拖拽模式.文件路径,
+                            Optional 拖拽完成 As Action(Of LakeUI.ModernTextBox, String) = Nothing)
+        If 文本框 Is Nothing Then Exit Sub
+        文本框.AllowDrop = True
+        路径文本框拖拽配置表(文本框) = New 路径文本框拖拽配置 With {.模式 = 模式, .拖拽完成 = 拖拽完成}
+
+        RemoveHandler 文本框.DragEnter, AddressOf 路径文本框_DragEnter
+        RemoveHandler 文本框.DragDrop, AddressOf 路径文本框_DragDrop
+        RemoveHandler 文本框.Disposed, AddressOf 路径文本框_Disposed
+        AddHandler 文本框.DragEnter, AddressOf 路径文本框_DragEnter
+        AddHandler 文本框.DragDrop, AddressOf 路径文本框_DragDrop
+        AddHandler 文本框.Disposed, AddressOf 路径文本框_Disposed
     End Sub
 
     Public Function 规范化文件夹路径(路径 As String) As String
@@ -123,6 +144,28 @@ Module Module1
         配置.拖拽完成?.Invoke(combo, 路径)
     End Sub
 
+    Private Sub 路径文本框_DragEnter(sender As Object, e As DragEventArgs)
+        e.Effect = If(e.Data IsNot Nothing AndAlso e.Data.GetDataPresent(DataFormats.FileDrop), DragDropEffects.Copy, DragDropEffects.None)
+    End Sub
+
+    Private Sub 路径文本框_DragDrop(sender As Object, e As DragEventArgs)
+        Dim textBox = TryCast(sender, LakeUI.ModernTextBox)
+        If textBox Is Nothing OrElse e.Data Is Nothing Then Exit Sub
+
+        Dim files = TryCast(e.Data.GetData(DataFormats.FileDrop), String())
+        If files Is Nothing OrElse files.Length = 0 Then Exit Sub
+
+        Dim 配置 As 路径文本框拖拽配置 = Nothing
+        If Not 路径文本框拖拽配置表.TryGetValue(textBox, 配置) Then
+            配置 = New 路径文本框拖拽配置 With {.模式 = 路径下拉框拖拽模式.文件路径}
+        End If
+
+        Dim 路径 = 从拖拽数据获取路径(files(0), 配置.模式)
+        If 路径 = "" Then Exit Sub
+        textBox.Text = 路径
+        配置.拖拽完成?.Invoke(textBox, 路径)
+    End Sub
+
     Private Function 从拖拽数据获取路径(原始路径 As String, 模式 As 路径下拉框拖拽模式) As String
         Dim p = If(原始路径, "").Trim()
         If p = "" Then Return ""
@@ -141,6 +184,11 @@ Module Module1
     Private Sub 路径下拉框_Disposed(sender As Object, e As EventArgs)
         Dim combo = TryCast(sender, LakeUI.ModernComboBox)
         If combo IsNot Nothing Then 路径下拉框拖拽配置表.Remove(combo)
+    End Sub
+
+    Private Sub 路径文本框_Disposed(sender As Object, e As EventArgs)
+        Dim textBox = TryCast(sender, LakeUI.ModernTextBox)
+        If textBox IsNot Nothing Then 路径文本框拖拽配置表.Remove(textBox)
     End Sub
 
     Public 同时运行任务上限 As Integer = 1
