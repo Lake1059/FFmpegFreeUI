@@ -23,30 +23,16 @@ Partial Class Form_v6_参数面板_动态模糊
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         ModernPanel1 = New LakeUI.ModernPanel()
-        ModernPanel1.BackColor = Color.Transparent
-        ModernPanel1.BackColor1 = Color.Transparent
         Panel4 = New LakeUI.ModernPanel()
-        Panel4.BackColor = Color.Transparent
-        Panel4.BackColor1 = Color.Transparent
-        Panel4.BorderSize = 0
         MTB_处理哪些颜色平面 = New LakeUI.ModernTextBox()
         HCL_处理哪些颜色平面 = New LakeUI.HtmlColorLabel()
         Panel3 = New LakeUI.ModernPanel()
-        Panel3.BackColor = Color.Transparent
-        Panel3.BackColor1 = Color.Transparent
-        Panel3.BorderSize = 0
         MTB_输出缩放系数 = New LakeUI.ModernTextBox()
         HCL_输出缩放系数 = New LakeUI.HtmlColorLabel()
         Panel1 = New LakeUI.ModernPanel()
-        Panel1.BackColor = Color.Transparent
-        Panel1.BackColor1 = Color.Transparent
-        Panel1.BorderSize = 0
         MTB_每帧的权重 = New LakeUI.ModernTextBox()
         HCL_每帧的权重 = New LakeUI.HtmlColorLabel()
         Panel2 = New LakeUI.ModernPanel()
-        Panel2.BackColor = Color.Transparent
-        Panel2.BackColor1 = Color.Transparent
-        Panel2.BorderSize = 0
         MTB_连续混合帧数 = New LakeUI.ModernTextBox()
         HCL_连续混合帧数 = New LakeUI.HtmlColorLabel()
         MCK_动态模糊总开关 = New LakeUI.ModernCheckBox()
@@ -56,9 +42,11 @@ Partial Class Form_v6_参数面板_动态模糊
         Panel1.SuspendLayout()
         Panel2.SuspendLayout()
         SuspendLayout()
-        '
+        ' 
         ' ModernPanel1
-        '
+        ' 
+        ModernPanel1.BackColor = Color.Transparent
+        ModernPanel1.BackColor1 = Color.Transparent
         ModernPanel1.BorderSize = 0
         ModernPanel1.Controls.Add(Panel4)
         ModernPanel1.Controls.Add(HCL_处理哪些颜色平面)
@@ -75,19 +63,22 @@ Partial Class Form_v6_参数面板_动态模糊
         ModernPanel1.Padding = New Padding(20)
         ModernPanel1.Size = New Size(584, 441)
         ModernPanel1.TabIndex = 0
-        '
+        ' 
         ' Panel4
-        '
+        ' 
+        Panel4.BackColor = Color.Transparent
+        Panel4.BackColor1 = Color.Transparent
+        Panel4.BorderSize = 0
         Panel4.Controls.Add(MTB_处理哪些颜色平面)
         Panel4.Dock = DockStyle.Top
-        Panel4.Location = New Point(20, 370)
+        Panel4.Location = New Point(20, 359)
         Panel4.Name = "Panel4"
         Panel4.Padding = New Padding(0, 10, 0, 0)
         Panel4.Size = New Size(544, 42)
         Panel4.TabIndex = 34
-        '
+        ' 
         ' MTB_处理哪些颜色平面
-        '
+        ' 
         MTB_处理哪些颜色平面.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MTB_处理哪些颜色平面.BorderColor = Color.Transparent
         MTB_处理哪些颜色平面.BorderColorFocus = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
@@ -103,34 +94,37 @@ Partial Class Form_v6_参数面板_动态模糊
         MTB_处理哪些颜色平面.TabIndex = 6
         MTB_处理哪些颜色平面.WaterText = "planes="
         MTB_处理哪些颜色平面.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        '
+        ' 
         ' HCL_处理哪些颜色平面
-        '
+        ' 
         HCL_处理哪些颜色平面.AutoSize = True
         HCL_处理哪些颜色平面.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HCL_处理哪些颜色平面.Dock = DockStyle.Top
         HCL_处理哪些颜色平面.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        HCL_处理哪些颜色平面.Location = New Point(20, 325)
+        HCL_处理哪些颜色平面.Location = New Point(20, 316)
         HCL_处理哪些颜色平面.Margin = New Padding(2)
         HCL_处理哪些颜色平面.Name = "HCL_处理哪些颜色平面"
         HCL_处理哪些颜色平面.Padding = New Padding(0, 20, 0, 0)
-        HCL_处理哪些颜色平面.Size = New Size(544, 45)
+        HCL_处理哪些颜色平面.Size = New Size(544, 43)
         HCL_处理哪些颜色平面.TabIndex = 33
         HCL_处理哪些颜色平面.Text = "<span style=""font-size:13; color:Silver"">处理哪些颜色平面</span>   0~15，默认 15 处理所有平面"
         HCL_处理哪些颜色平面.ToolTipText = "1 = 只处理第 0 平面，常见是 Y / R；" & vbLf & "2 = 只处理第 1 平面，常见是 U / G" & vbLf & "；4 = 只处理第 2 平面，常见是 V / B" & vbLf & "；8 = 只处理第 3 平面，常见是 A" & vbLf & "；15 = 1+2+4+8，处理全部平面"
-        '
+        ' 
         ' Panel3
-        '
+        ' 
+        Panel3.BackColor = Color.Transparent
+        Panel3.BackColor1 = Color.Transparent
+        Panel3.BorderSize = 0
         Panel3.Controls.Add(MTB_输出缩放系数)
         Panel3.Dock = DockStyle.Top
-        Panel3.Location = New Point(20, 283)
+        Panel3.Location = New Point(20, 274)
         Panel3.Name = "Panel3"
         Panel3.Padding = New Padding(0, 10, 0, 0)
         Panel3.Size = New Size(544, 42)
         Panel3.TabIndex = 32
-        '
+        ' 
         ' MTB_输出缩放系数
-        '
+        ' 
         MTB_输出缩放系数.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MTB_输出缩放系数.BorderColor = Color.Transparent
         MTB_输出缩放系数.BorderColorFocus = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
@@ -146,33 +140,36 @@ Partial Class Form_v6_参数面板_动态模糊
         MTB_输出缩放系数.TabIndex = 6
         MTB_输出缩放系数.WaterText = "scale="
         MTB_输出缩放系数.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        '
+        ' 
         ' HCL_输出缩放系数
-        '
+        ' 
         HCL_输出缩放系数.AutoSize = True
         HCL_输出缩放系数.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HCL_输出缩放系数.Dock = DockStyle.Top
         HCL_输出缩放系数.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        HCL_输出缩放系数.Location = New Point(20, 238)
+        HCL_输出缩放系数.Location = New Point(20, 231)
         HCL_输出缩放系数.Margin = New Padding(2)
         HCL_输出缩放系数.Name = "HCL_输出缩放系数"
         HCL_输出缩放系数.Padding = New Padding(0, 20, 0, 0)
-        HCL_输出缩放系数.Size = New Size(544, 45)
+        HCL_输出缩放系数.Size = New Size(544, 43)
         HCL_输出缩放系数.TabIndex = 31
         HCL_输出缩放系数.Text = "<span style=""font-size:13; color:Silver"">输出缩放系数</span>   0~32767，默认 0 自动按权重归一化"
-        '
+        ' 
         ' Panel1
-        '
+        ' 
+        Panel1.BackColor = Color.Transparent
+        Panel1.BackColor1 = Color.Transparent
+        Panel1.BorderSize = 0
         Panel1.Controls.Add(MTB_每帧的权重)
         Panel1.Dock = DockStyle.Top
-        Panel1.Location = New Point(20, 196)
+        Panel1.Location = New Point(20, 189)
         Panel1.Name = "Panel1"
         Panel1.Padding = New Padding(0, 10, 0, 0)
         Panel1.Size = New Size(544, 42)
         Panel1.TabIndex = 30
-        '
+        ' 
         ' MTB_每帧的权重
-        '
+        ' 
         MTB_每帧的权重.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MTB_每帧的权重.BorderColor = Color.Transparent
         MTB_每帧的权重.BorderColorFocus = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
@@ -188,33 +185,36 @@ Partial Class Form_v6_参数面板_动态模糊
         MTB_每帧的权重.TabIndex = 6
         MTB_每帧的权重.WaterText = "weights="
         MTB_每帧的权重.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        '
+        ' 
         ' HCL_每帧的权重
-        '
+        ' 
         HCL_每帧的权重.AutoSize = True
         HCL_每帧的权重.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HCL_每帧的权重.Dock = DockStyle.Top
         HCL_每帧的权重.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        HCL_每帧的权重.Location = New Point(20, 131)
+        HCL_每帧的权重.Location = New Point(20, 129)
         HCL_每帧的权重.Margin = New Padding(2)
         HCL_每帧的权重.Name = "HCL_每帧的权重"
         HCL_每帧的权重.Padding = New Padding(0, 20, 0, 0)
-        HCL_每帧的权重.Size = New Size(544, 65)
+        HCL_每帧的权重.Size = New Size(544, 60)
         HCL_每帧的权重.TabIndex = 29
         HCL_每帧的权重.Text = "<span style=""font-size:13; color:Silver"">每帧的权重</span>   用空格分割每帧权重值<br>weights 数量可以少于 frames，不够的部分会重复最后一个权重"
-        '
+        ' 
         ' Panel2
-        '
+        ' 
+        Panel2.BackColor = Color.Transparent
+        Panel2.BackColor1 = Color.Transparent
+        Panel2.BorderSize = 0
         Panel2.Controls.Add(MTB_连续混合帧数)
         Panel2.Dock = DockStyle.Top
-        Panel2.Location = New Point(20, 89)
+        Panel2.Location = New Point(20, 87)
         Panel2.Name = "Panel2"
         Panel2.Padding = New Padding(0, 10, 0, 0)
         Panel2.Size = New Size(544, 42)
         Panel2.TabIndex = 28
-        '
+        ' 
         ' MTB_连续混合帧数
-        '
+        ' 
         MTB_连续混合帧数.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MTB_连续混合帧数.BorderColor = Color.Transparent
         MTB_连续混合帧数.BorderColorFocus = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
@@ -230,9 +230,9 @@ Partial Class Form_v6_参数面板_动态模糊
         MTB_连续混合帧数.TabIndex = 6
         MTB_连续混合帧数.WaterText = "frames="
         MTB_连续混合帧数.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        '
+        ' 
         ' HCL_连续混合帧数
-        '
+        ' 
         HCL_连续混合帧数.AutoSize = True
         HCL_连续混合帧数.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HCL_连续混合帧数.Dock = DockStyle.Top
@@ -241,12 +241,12 @@ Partial Class Form_v6_参数面板_动态模糊
         HCL_连续混合帧数.Margin = New Padding(2)
         HCL_连续混合帧数.Name = "HCL_连续混合帧数"
         HCL_连续混合帧数.Padding = New Padding(0, 20, 0, 0)
-        HCL_连续混合帧数.Size = New Size(544, 45)
+        HCL_连续混合帧数.Size = New Size(544, 43)
         HCL_连续混合帧数.TabIndex = 27
         HCL_连续混合帧数.Text = "<span style=""font-size:13; color:Silver"">连续混合帧数</span>   整数，1~1024，默认 3"
-        '
+        ' 
         ' MCK_动态模糊总开关
-        '
+        ' 
         MCK_动态模糊总开关.AutoSize = True
         MCK_动态模糊总开关.BoxBorderRadius = 5
         MCK_动态模糊总开关.BoxBorderSize = 0
@@ -262,9 +262,9 @@ Partial Class Form_v6_参数面板_动态模糊
         MCK_动态模糊总开关.Size = New Size(544, 24)
         MCK_动态模糊总开关.TabIndex = 26
         MCK_动态模糊总开关.Text = "动态模糊总开关 / 勾选才会启用"
-        '
+        ' 
         ' Form_v6_参数面板_动态模糊
-        '
+        ' 
         AutoScaleDimensions = New SizeF(96F, 96F)
         AutoScaleMode = AutoScaleMode.Dpi
         BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
@@ -277,6 +277,7 @@ Partial Class Form_v6_参数面板_动态模糊
         MinimumSize = New Size(600, 480)
         Name = "Form_v6_参数面板_动态模糊"
         ShowInTaskbar = False
+        StartPosition = FormStartPosition.Manual
         Text = "动态模糊"
         ModernPanel1.ResumeLayout(False)
         ModernPanel1.PerformLayout()

@@ -24,9 +24,6 @@ Partial Class Form_v6_参数面板_章节
     Private Sub InitializeComponent()
         HCL_章节说明 = New LakeUI.HtmlColorLabel()
         Panel1 = New LakeUI.ModernPanel()
-        Panel1.BackColor = Color.Transparent
-        Panel1.BackColor1 = Color.Transparent
-        Panel1.BorderSize = 0
         MCB_章节文件 = New LakeUI.ModernComboBox()
         JustEmptyControl1 = New LakeUI.JustEmptyControl()
         MCB_章节来源 = New LakeUI.ModernComboBox()
@@ -34,41 +31,43 @@ Partial Class Form_v6_参数面板_章节
         MB_教程 = New LakeUI.ModernButton()
         MDV_章节教程 = New LakeUI.MarkDownViewer()
         ModernPanel1 = New LakeUI.ModernPanel()
-        ModernPanel1.BackColor = Color.Transparent
-        ModernPanel1.BackColor1 = Color.Transparent
         Panel1.SuspendLayout()
         ModernPanel1.SuspendLayout()
         SuspendLayout()
-        '
+        ' 
         ' HCL_章节说明
-        '
+        ' 
         HCL_章节说明.AutoSize = True
         HCL_章节说明.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HCL_章节说明.Dock = DockStyle.Top
+        HCL_章节说明.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         HCL_章节说明.Location = New Point(20, 20)
         HCL_章节说明.Margin = New Padding(2)
         HCL_章节说明.Name = "HCL_章节说明"
         HCL_章节说明.Padding = New Padding(0, 0, 0, 5)
-        HCL_章节说明.Size = New Size(743, 30)
+        HCL_章节说明.Size = New Size(743, 28)
         HCL_章节说明.TabIndex = 11
-        HCL_章节说明.Text = "<span style=""font-size:13"">章节</span>   <span style=""font-size:10pt; color:Gray"">向输出文件中写入自定义章节，请自行编辑并准备好符合标准的章节文本文档</span>"
-        '
+        HCL_章节说明.Text = "<span style=""font-size:13; color:Silver"">章节</span>   <span style=""font-size:10pt; color:Gray"">向输出文件中写入自定义章节，请自行编辑并准备好符合标准的章节文本文档</span>"
+        ' 
         ' Panel1
-        '
+        ' 
+        Panel1.BackColor = Color.Transparent
+        Panel1.BackColor1 = Color.Transparent
+        Panel1.BorderSize = 0
         Panel1.Controls.Add(MCB_章节文件)
         Panel1.Controls.Add(JustEmptyControl1)
         Panel1.Controls.Add(MCB_章节来源)
         Panel1.Controls.Add(JustEmptyControl2)
         Panel1.Controls.Add(MB_教程)
         Panel1.Dock = DockStyle.Top
-        Panel1.Location = New Point(20, 50)
+        Panel1.Location = New Point(20, 48)
         Panel1.Name = "Panel1"
         Panel1.Padding = New Padding(0, 10, 0, 10)
         Panel1.Size = New Size(743, 52)
         Panel1.TabIndex = 12
-        '
+        ' 
         ' MCB_章节文件
-        '
+        ' 
         MCB_章节文件.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_章节文件.BorderRadius = 10
         MCB_章节文件.BorderSize = 0
@@ -96,17 +95,17 @@ Partial Class Form_v6_参数面板_章节
         MCB_章节文件.ToolTipPadding = New Padding(15)
         MCB_章节文件.WaterText = "选择章节文件"
         MCB_章节文件.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        '
+        ' 
         ' JustEmptyControl1
-        '
+        ' 
         JustEmptyControl1.Dock = DockStyle.Left
         JustEmptyControl1.Location = New Point(150, 10)
         JustEmptyControl1.Name = "JustEmptyControl1"
         JustEmptyControl1.Size = New Size(10, 32)
         JustEmptyControl1.TabIndex = 2
-        '
+        ' 
         ' MCB_章节来源
-        '
+        ' 
         MCB_章节来源.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_章节来源.BorderRadius = 10
         MCB_章节来源.BorderSize = 0
@@ -136,17 +135,17 @@ Partial Class Form_v6_参数面板_章节
         MCB_章节来源.ToolTipPadding = New Padding(15)
         MCB_章节来源.WaterText = "选择章节来源"
         MCB_章节来源.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        '
+        ' 
         ' JustEmptyControl2
-        '
+        ' 
         JustEmptyControl2.Dock = DockStyle.Right
         JustEmptyControl2.Location = New Point(663, 10)
         JustEmptyControl2.Name = "JustEmptyControl2"
         JustEmptyControl2.Size = New Size(10, 32)
         JustEmptyControl2.TabIndex = 17
-        '
+        ' 
         ' MB_教程
-        '
+        ' 
         MB_教程.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MB_教程.BorderRadius = 10
         MB_教程.BorderSize = 0
@@ -159,9 +158,9 @@ Partial Class Form_v6_参数面板_章节
         MB_教程.Size = New Size(70, 32)
         MB_教程.TabIndex = 18
         MB_教程.Text = "教程"
-        '
+        ' 
         ' MDV_章节教程
-        '
+        ' 
         MDV_章节教程.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MDV_章节教程.BasePath = Nothing
         MDV_章节教程.BorderRadius = 10
@@ -170,16 +169,17 @@ Partial Class Form_v6_参数面板_章节
         MDV_章节教程.ForeColor = Color.Silver
         MDV_章节教程.HorizontalRuleColor = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
         MDV_章节教程.HorizontalRuleThickness = 2
-        MDV_章节教程.Location = New Point(20, 102)
+        MDV_章节教程.Location = New Point(20, 100)
         MDV_章节教程.Name = "MDV_章节教程"
         MDV_章节教程.Padding = New Padding(20)
-        MDV_章节教程.Size = New Size(743, 507)
+        MDV_章节教程.Size = New Size(743, 509)
         MDV_章节教程.TabIndex = 13
-        MDV_章节教程.Text = ""
         MDV_章节教程.Visible = False
-        '
+        ' 
         ' ModernPanel1
-        '
+        ' 
+        ModernPanel1.BackColor = Color.Transparent
+        ModernPanel1.BackColor1 = Color.Transparent
         ModernPanel1.BorderSize = 0
         ModernPanel1.Controls.Add(MDV_章节教程)
         ModernPanel1.Controls.Add(Panel1)
@@ -190,9 +190,9 @@ Partial Class Form_v6_参数面板_章节
         ModernPanel1.Padding = New Padding(20)
         ModernPanel1.Size = New Size(783, 629)
         ModernPanel1.TabIndex = 14
-        '
+        ' 
         ' Form_v6_参数面板_章节
-        '
+        ' 
         AutoScaleDimensions = New SizeF(96F, 96F)
         AutoScaleMode = AutoScaleMode.Dpi
         BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))

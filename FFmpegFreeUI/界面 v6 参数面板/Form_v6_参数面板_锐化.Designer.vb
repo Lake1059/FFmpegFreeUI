@@ -23,30 +23,16 @@ Partial Class Form_v6_参数面板_锐化
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         ModernPanel1 = New LakeUI.ModernPanel()
-        ModernPanel1.BackColor = Color.Transparent
-        ModernPanel1.BackColor1 = Color.Transparent
         Panel3 = New LakeUI.ModernPanel()
-        Panel3.BackColor = Color.Transparent
-        Panel3.BackColor1 = Color.Transparent
-        Panel3.BorderSize = 0
         ETB_锐化参数3 = New LakeUI.ExcellentTrackBar()
         HCL_锐化参数名称3 = New LakeUI.HtmlColorLabel()
         Panel2 = New LakeUI.ModernPanel()
-        Panel2.BackColor = Color.Transparent
-        Panel2.BackColor1 = Color.Transparent
-        Panel2.BorderSize = 0
         ETB_锐化参数2 = New LakeUI.ExcellentTrackBar()
         HCL_锐化参数名称2 = New LakeUI.HtmlColorLabel()
         Panel1 = New LakeUI.ModernPanel()
-        Panel1.BackColor = Color.Transparent
-        Panel1.BackColor1 = Color.Transparent
-        Panel1.BorderSize = 0
         ETB_锐化参数1 = New LakeUI.ExcellentTrackBar()
         HCL_锐化参数名称1 = New LakeUI.HtmlColorLabel()
         Panel5 = New LakeUI.ModernPanel()
-        Panel5.BackColor = Color.Transparent
-        Panel5.BackColor1 = Color.Transparent
-        Panel5.BorderSize = 0
         MCB_滤镜选择 = New LakeUI.ModernComboBox()
         MCK_锐化总开关 = New LakeUI.ModernCheckBox()
         ModernPanel1.SuspendLayout()
@@ -55,9 +41,11 @@ Partial Class Form_v6_参数面板_锐化
         Panel1.SuspendLayout()
         Panel5.SuspendLayout()
         SuspendLayout()
-        '
+        ' 
         ' ModernPanel1
-        '
+        ' 
+        ModernPanel1.BackColor = Color.Transparent
+        ModernPanel1.BackColor1 = Color.Transparent
         ModernPanel1.BorderSize = 0
         ModernPanel1.Controls.Add(Panel3)
         ModernPanel1.Controls.Add(Panel2)
@@ -70,27 +58,30 @@ Partial Class Form_v6_参数面板_锐化
         ModernPanel1.Padding = New Padding(20)
         ModernPanel1.Size = New Size(584, 421)
         ModernPanel1.TabIndex = 0
-        '
+        ' 
         ' Panel3
-        '
+        ' 
         Panel3.AutoSize = True
+        Panel3.BackColor = Color.Transparent
+        Panel3.BackColor1 = Color.Transparent
+        Panel3.BorderSize = 0
         Panel3.Controls.Add(ETB_锐化参数3)
         Panel3.Controls.Add(HCL_锐化参数名称3)
         Panel3.Dock = DockStyle.Top
-        Panel3.Location = New Point(20, 298)
+        Panel3.Location = New Point(20, 290)
         Panel3.Name = "Panel3"
         Panel3.Padding = New Padding(0, 20, 0, 0)
-        Panel3.Size = New Size(544, 101)
+        Panel3.Size = New Size(544, 97)
         Panel3.TabIndex = 36
-        '
+        ' 
         ' ETB_锐化参数3
-        '
+        ' 
         ETB_锐化参数3.BackColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
         ETB_锐化参数3.Dock = DockStyle.Top
         ETB_锐化参数3.LabelColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ETB_锐化参数3.LabelLineColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ETB_锐化参数3.LabelLineLength = 16
-        ETB_锐化参数3.Location = New Point(0, 51)
+        ETB_锐化参数3.Location = New Point(0, 47)
         ETB_锐化参数3.Margin = New Padding(2, 2, 2, 2)
         ETB_锐化参数3.Maximum = 10R
         ETB_锐化参数3.Name = "ETB_锐化参数3"
@@ -105,9 +96,9 @@ Partial Class Form_v6_参数面板_锐化
         ETB_锐化参数3.ThumbWidth = 38
         ETB_锐化参数3.TrackColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ETB_锐化参数3.TrackFillColor = Color.Transparent
-        '
+        ' 
         ' HCL_锐化参数名称3
-        '
+        ' 
         HCL_锐化参数名称3.AutoSize = True
         HCL_锐化参数名称3.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HCL_锐化参数名称3.Dock = DockStyle.Top
@@ -115,30 +106,33 @@ Partial Class Form_v6_参数面板_锐化
         HCL_锐化参数名称3.Margin = New Padding(2)
         HCL_锐化参数名称3.Name = "HCL_锐化参数名称3"
         HCL_锐化参数名称3.Padding = New Padding(0, 0, 0, 10)
-        HCL_锐化参数名称3.Size = New Size(544, 31)
+        HCL_锐化参数名称3.Size = New Size(544, 27)
         HCL_锐化参数名称3.TabIndex = 26
         HCL_锐化参数名称3.Text = "锐化参数名称3"
-        '
+        ' 
         ' Panel2
-        '
+        ' 
         Panel2.AutoSize = True
+        Panel2.BackColor = Color.Transparent
+        Panel2.BackColor1 = Color.Transparent
+        Panel2.BorderSize = 0
         Panel2.Controls.Add(ETB_锐化参数2)
         Panel2.Controls.Add(HCL_锐化参数名称2)
         Panel2.Dock = DockStyle.Top
-        Panel2.Location = New Point(20, 197)
+        Panel2.Location = New Point(20, 193)
         Panel2.Name = "Panel2"
         Panel2.Padding = New Padding(0, 20, 0, 0)
-        Panel2.Size = New Size(544, 101)
+        Panel2.Size = New Size(544, 97)
         Panel2.TabIndex = 35
-        '
+        ' 
         ' ETB_锐化参数2
-        '
+        ' 
         ETB_锐化参数2.BackColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
         ETB_锐化参数2.Dock = DockStyle.Top
         ETB_锐化参数2.LabelColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ETB_锐化参数2.LabelLineColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ETB_锐化参数2.LabelLineLength = 16
-        ETB_锐化参数2.Location = New Point(0, 51)
+        ETB_锐化参数2.Location = New Point(0, 47)
         ETB_锐化参数2.Margin = New Padding(2, 2, 2, 2)
         ETB_锐化参数2.Maximum = 10R
         ETB_锐化参数2.Name = "ETB_锐化参数2"
@@ -153,9 +147,9 @@ Partial Class Form_v6_参数面板_锐化
         ETB_锐化参数2.ThumbWidth = 38
         ETB_锐化参数2.TrackColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ETB_锐化参数2.TrackFillColor = Color.Transparent
-        '
+        ' 
         ' HCL_锐化参数名称2
-        '
+        ' 
         HCL_锐化参数名称2.AutoSize = True
         HCL_锐化参数名称2.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HCL_锐化参数名称2.Dock = DockStyle.Top
@@ -163,30 +157,33 @@ Partial Class Form_v6_参数面板_锐化
         HCL_锐化参数名称2.Margin = New Padding(2)
         HCL_锐化参数名称2.Name = "HCL_锐化参数名称2"
         HCL_锐化参数名称2.Padding = New Padding(0, 0, 0, 10)
-        HCL_锐化参数名称2.Size = New Size(544, 31)
+        HCL_锐化参数名称2.Size = New Size(544, 27)
         HCL_锐化参数名称2.TabIndex = 26
         HCL_锐化参数名称2.Text = "锐化参数名称2"
-        '
+        ' 
         ' Panel1
-        '
+        ' 
         Panel1.AutoSize = True
+        Panel1.BackColor = Color.Transparent
+        Panel1.BackColor1 = Color.Transparent
+        Panel1.BorderSize = 0
         Panel1.Controls.Add(ETB_锐化参数1)
         Panel1.Controls.Add(HCL_锐化参数名称1)
         Panel1.Dock = DockStyle.Top
         Panel1.Location = New Point(20, 96)
         Panel1.Name = "Panel1"
         Panel1.Padding = New Padding(0, 20, 0, 0)
-        Panel1.Size = New Size(544, 101)
+        Panel1.Size = New Size(544, 97)
         Panel1.TabIndex = 34
-        '
+        ' 
         ' ETB_锐化参数1
-        '
+        ' 
         ETB_锐化参数1.BackColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
         ETB_锐化参数1.Dock = DockStyle.Top
         ETB_锐化参数1.LabelColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ETB_锐化参数1.LabelLineColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ETB_锐化参数1.LabelLineLength = 16
-        ETB_锐化参数1.Location = New Point(0, 51)
+        ETB_锐化参数1.Location = New Point(0, 47)
         ETB_锐化参数1.Margin = New Padding(2, 2, 2, 2)
         ETB_锐化参数1.Maximum = 10R
         ETB_锐化参数1.Name = "ETB_锐化参数1"
@@ -201,9 +198,9 @@ Partial Class Form_v6_参数面板_锐化
         ETB_锐化参数1.ThumbWidth = 38
         ETB_锐化参数1.TrackColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ETB_锐化参数1.TrackFillColor = Color.Transparent
-        '
+        ' 
         ' HCL_锐化参数名称1
-        '
+        ' 
         HCL_锐化参数名称1.AutoSize = True
         HCL_锐化参数名称1.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HCL_锐化参数名称1.Dock = DockStyle.Top
@@ -211,12 +208,15 @@ Partial Class Form_v6_参数面板_锐化
         HCL_锐化参数名称1.Margin = New Padding(2)
         HCL_锐化参数名称1.Name = "HCL_锐化参数名称1"
         HCL_锐化参数名称1.Padding = New Padding(0, 0, 0, 10)
-        HCL_锐化参数名称1.Size = New Size(544, 31)
+        HCL_锐化参数名称1.Size = New Size(544, 27)
         HCL_锐化参数名称1.TabIndex = 26
         HCL_锐化参数名称1.Text = "锐化参数名称1"
-        '
+        ' 
         ' Panel5
-        '
+        ' 
+        Panel5.BackColor = Color.Transparent
+        Panel5.BackColor1 = Color.Transparent
+        Panel5.BorderSize = 0
         Panel5.Controls.Add(MCB_滤镜选择)
         Panel5.Dock = DockStyle.Top
         Panel5.Location = New Point(20, 44)
@@ -224,9 +224,9 @@ Partial Class Form_v6_参数面板_锐化
         Panel5.Padding = New Padding(0, 20, 0, 0)
         Panel5.Size = New Size(544, 52)
         Panel5.TabIndex = 33
-        '
+        ' 
         ' MCB_滤镜选择
-        '
+        ' 
         MCB_滤镜选择.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_滤镜选择.BorderRadius = 10
         MCB_滤镜选择.BorderSize = 0
@@ -254,9 +254,9 @@ Partial Class Form_v6_参数面板_锐化
         MCB_滤镜选择.ToolTipMaxWidth = 350
         MCB_滤镜选择.ToolTipPadding = New Padding(15)
         MCB_滤镜选择.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        '
+        ' 
         ' MCK_锐化总开关
-        '
+        ' 
         MCK_锐化总开关.AutoSize = True
         MCK_锐化总开关.BoxBorderRadius = 5
         MCK_锐化总开关.BoxBorderSize = 0
@@ -272,9 +272,9 @@ Partial Class Form_v6_参数面板_锐化
         MCK_锐化总开关.Size = New Size(544, 24)
         MCK_锐化总开关.TabIndex = 25
         MCK_锐化总开关.Text = "锐化总开关 / 勾选才会启用"
-        '
+        ' 
         ' Form_v6_参数面板_锐化
-        '
+        ' 
         AutoScaleDimensions = New SizeF(96F, 96F)
         AutoScaleMode = AutoScaleMode.Dpi
         BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
@@ -286,6 +286,7 @@ Partial Class Form_v6_参数面板_锐化
         MinimizeBox = False
         MinimumSize = New Size(600, 460)
         Name = "Form_v6_参数面板_锐化"
+        StartPosition = FormStartPosition.Manual
         Text = "锐化"
         ModernPanel1.ResumeLayout(False)
         ModernPanel1.PerformLayout()

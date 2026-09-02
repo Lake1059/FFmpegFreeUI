@@ -23,33 +23,19 @@ Partial Class Form_v6_参数面板_剪辑区间
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         ModernPanel1 = New LakeUI.ModernPanel()
-        ModernPanel1.BackColor = Color.Transparent
-        ModernPanel1.BackColor1 = Color.Transparent
         Panel1 = New LakeUI.ModernPanel()
-        Panel1.BackColor = Color.Transparent
-        Panel1.BackColor1 = Color.Transparent
-        Panel1.BorderSize = 0
         MCB_向前解码秒数 = New LakeUI.ModernComboBox()
         HCL_向前解码 = New LakeUI.HtmlColorLabel()
         Panel3 = New LakeUI.ModernPanel()
-        Panel3.BackColor = Color.Transparent
-        Panel3.BackColor1 = Color.Transparent
-        Panel3.BorderSize = 0
         MTB_出点 = New LakeUI.ModernTextBox()
         JustEmptyControl1 = New LakeUI.JustEmptyControl()
         MTB_入点 = New LakeUI.ModernTextBox()
         Panel5 = New LakeUI.ModernPanel()
-        Panel5.BackColor = Color.Transparent
-        Panel5.BackColor1 = Color.Transparent
-        Panel5.BorderSize = 0
         HCL_出点 = New LakeUI.HtmlColorLabel()
         HCL_入点 = New LakeUI.HtmlColorLabel()
         HCL_剪辑时间点填写提示 = New LakeUI.HtmlColorLabel()
         HCL_时间点 = New LakeUI.HtmlColorLabel()
         Panel2 = New LakeUI.ModernPanel()
-        Panel2.BackColor = Color.Transparent
-        Panel2.BackColor1 = Color.Transparent
-        Panel2.BorderSize = 0
         MCB_剪辑模式 = New LakeUI.ModernComboBox()
         HCL_剪辑重编码提示 = New LakeUI.HtmlColorLabel()
         HCL_剪辑模式 = New LakeUI.HtmlColorLabel()
@@ -59,9 +45,11 @@ Partial Class Form_v6_参数面板_剪辑区间
         Panel5.SuspendLayout()
         Panel2.SuspendLayout()
         SuspendLayout()
-        '
+        ' 
         ' ModernPanel1
-        '
+        ' 
+        ModernPanel1.BackColor = Color.Transparent
+        ModernPanel1.BackColor1 = Color.Transparent
         ModernPanel1.BorderSize = 0
         ModernPanel1.Controls.Add(Panel1)
         ModernPanel1.Controls.Add(HCL_向前解码)
@@ -79,19 +67,22 @@ Partial Class Form_v6_参数面板_剪辑区间
         ModernPanel1.ScrollBarMode = LakeUI.ModernPanel.ScrollMode.Vertical
         ModernPanel1.Size = New Size(765, 599)
         ModernPanel1.TabIndex = 0
-        '
+        ' 
         ' Panel1
-        '
+        ' 
+        Panel1.BackColor = Color.Transparent
+        Panel1.BackColor1 = Color.Transparent
+        Panel1.BorderSize = 0
         Panel1.Controls.Add(MCB_向前解码秒数)
         Panel1.Dock = DockStyle.Top
-        Panel1.Location = New Point(20, 306)
+        Panel1.Location = New Point(20, 292)
         Panel1.Name = "Panel1"
         Panel1.Padding = New Padding(0, 10, 0, 0)
         Panel1.Size = New Size(725, 42)
         Panel1.TabIndex = 14
-        '
+        ' 
         ' MCB_向前解码秒数
-        '
+        ' 
         MCB_向前解码秒数.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_向前解码秒数.BorderRadius = 10
         MCB_向前解码秒数.BorderSize = 0
@@ -125,35 +116,38 @@ Partial Class Form_v6_参数面板_剪辑区间
         MCB_向前解码秒数.ToolTipPadding = New Padding(15)
         MCB_向前解码秒数.WaterText = "秒"
         MCB_向前解码秒数.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        '
+        ' 
         ' HCL_向前解码
-        '
+        ' 
         HCL_向前解码.AutoSize = True
         HCL_向前解码.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HCL_向前解码.Dock = DockStyle.Top
         HCL_向前解码.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        HCL_向前解码.Location = New Point(20, 256)
+        HCL_向前解码.Location = New Point(20, 244)
         HCL_向前解码.Margin = New Padding(2)
         HCL_向前解码.Name = "HCL_向前解码"
         HCL_向前解码.Padding = New Padding(0, 20, 0, 5)
-        HCL_向前解码.Size = New Size(725, 50)
+        HCL_向前解码.Size = New Size(725, 48)
         HCL_向前解码.TabIndex = 13
-        HCL_向前解码.Text = "<span style=""font-size:13"">向前解码</span>   <span style=""font-size:10pt; color:Gray"">仅限快速响应的精简，其他模式无效</span>"
-        '
+        HCL_向前解码.Text = "<span style=""font-size:13; color:Silver"">向前解码</span>   <span style=""font-size:10pt; color:Gray"">仅限快速响应的精简，其他模式无效</span>"
+        ' 
         ' Panel3
-        '
+        ' 
+        Panel3.BackColor = Color.Transparent
+        Panel3.BackColor1 = Color.Transparent
+        Panel3.BorderSize = 0
         Panel3.Controls.Add(MTB_出点)
         Panel3.Controls.Add(JustEmptyControl1)
         Panel3.Controls.Add(MTB_入点)
         Panel3.Dock = DockStyle.Top
-        Panel3.Location = New Point(20, 214)
+        Panel3.Location = New Point(20, 202)
         Panel3.Name = "Panel3"
         Panel3.Padding = New Padding(0, 10, 0, 0)
         Panel3.Size = New Size(725, 42)
         Panel3.TabIndex = 12
-        '
+        ' 
         ' MTB_出点
-        '
+        ' 
         MTB_出点.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MTB_出点.BorderColor = Color.Transparent
         MTB_出点.BorderColorFocus = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
@@ -164,22 +158,22 @@ Partial Class Form_v6_参数面板_剪辑区间
         MTB_出点.Margin = New Padding(2)
         MTB_出点.Name = "MTB_出点"
         MTB_出点.Padding = New Padding(10, 0, 10, 0)
-        MTB_出点.Size = New Size(150, 32)
         MTB_出点.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MTB_出点.Size = New Size(150, 32)
         MTB_出点.TabIndex = 6
         MTB_出点.WaterText = "出点"
         MTB_出点.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        '
+        ' 
         ' JustEmptyControl1
-        '
+        ' 
         JustEmptyControl1.Dock = DockStyle.Left
         JustEmptyControl1.Location = New Point(150, 10)
         JustEmptyControl1.Name = "JustEmptyControl1"
         JustEmptyControl1.Size = New Size(10, 32)
         JustEmptyControl1.TabIndex = 3
-        '
+        ' 
         ' MTB_入点
-        '
+        ' 
         MTB_入点.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MTB_入点.BorderColor = Color.Transparent
         MTB_入点.BorderColorFocus = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
@@ -190,24 +184,27 @@ Partial Class Form_v6_参数面板_剪辑区间
         MTB_入点.Margin = New Padding(2)
         MTB_入点.Name = "MTB_入点"
         MTB_入点.Padding = New Padding(10, 0, 10, 0)
-        MTB_入点.Size = New Size(150, 32)
         MTB_入点.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MTB_入点.Size = New Size(150, 32)
         MTB_入点.TabIndex = 5
         MTB_入点.WaterText = "入点"
         MTB_入点.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        '
+        ' 
         ' Panel5
-        '
+        ' 
+        Panel5.BackColor = Color.Transparent
+        Panel5.BackColor1 = Color.Transparent
+        Panel5.BorderSize = 0
         Panel5.Controls.Add(HCL_出点)
         Panel5.Controls.Add(HCL_入点)
         Panel5.Dock = DockStyle.Top
-        Panel5.Location = New Point(20, 184)
+        Panel5.Location = New Point(20, 172)
         Panel5.Name = "Panel5"
         Panel5.Size = New Size(725, 30)
         Panel5.TabIndex = 17
-        '
+        ' 
         ' HCL_出点
-        '
+        ' 
         HCL_出点.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HCL_出点.Dock = DockStyle.Left
         HCL_出点.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
@@ -218,9 +215,9 @@ Partial Class Form_v6_参数面板_剪辑区间
         HCL_出点.TabIndex = 1
         HCL_出点.Text = "出点"
         HCL_出点.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.BottomLeft
-        '
+        ' 
         ' HCL_入点
-        '
+        ' 
         HCL_入点.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HCL_入点.Dock = DockStyle.Left
         HCL_入点.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
@@ -231,46 +228,49 @@ Partial Class Form_v6_参数面板_剪辑区间
         HCL_入点.TabIndex = 0
         HCL_入点.Text = "入点"
         HCL_入点.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.BottomLeft
-        '
+        ' 
         ' HCL_剪辑时间点填写提示
-        '
+        ' 
         HCL_剪辑时间点填写提示.AutoSize = True
         HCL_剪辑时间点填写提示.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HCL_剪辑时间点填写提示.Dock = DockStyle.Top
         HCL_剪辑时间点填写提示.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        HCL_剪辑时间点填写提示.Location = New Point(20, 163)
+        HCL_剪辑时间点填写提示.Location = New Point(20, 155)
         HCL_剪辑时间点填写提示.Margin = New Padding(2)
         HCL_剪辑时间点填写提示.Name = "HCL_剪辑时间点填写提示"
-        HCL_剪辑时间点填写提示.Size = New Size(725, 21)
+        HCL_剪辑时间点填写提示.Size = New Size(725, 17)
         HCL_剪辑时间点填写提示.TabIndex = 11
         HCL_剪辑时间点填写提示.Text = "可以 <span style=""color:Gainsboro"">只写一个</span> 来表示 <span style=""color:Gainsboro"">从指定时间到末尾</span> 或 <span style=""color:Gainsboro"">从开头到指定时间</span>"
-        '
+        ' 
         ' HCL_时间点
-        '
+        ' 
         HCL_时间点.AutoSize = True
         HCL_时间点.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HCL_时间点.Dock = DockStyle.Top
         HCL_时间点.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        HCL_时间点.Location = New Point(20, 113)
+        HCL_时间点.Location = New Point(20, 107)
         HCL_时间点.Margin = New Padding(2)
         HCL_时间点.Name = "HCL_时间点"
         HCL_时间点.Padding = New Padding(0, 20, 0, 5)
-        HCL_时间点.Size = New Size(725, 50)
+        HCL_时间点.Size = New Size(725, 48)
         HCL_时间点.TabIndex = 10
         HCL_时间点.Text = "<span style=""font-size:13; color:Silver"">时间点</span>   时间格式：时:分:秒.毫秒"
-        '
+        ' 
         ' Panel2
-        '
+        ' 
+        Panel2.BackColor = Color.Transparent
+        Panel2.BackColor1 = Color.Transparent
+        Panel2.BorderSize = 0
         Panel2.Controls.Add(MCB_剪辑模式)
         Panel2.Dock = DockStyle.Top
-        Panel2.Location = New Point(20, 71)
+        Panel2.Location = New Point(20, 65)
         Panel2.Name = "Panel2"
         Panel2.Padding = New Padding(0, 10, 0, 0)
         Panel2.Size = New Size(725, 42)
         Panel2.TabIndex = 9
-        '
+        ' 
         ' MCB_剪辑模式
-        '
+        ' 
         MCB_剪辑模式.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_剪辑模式.BorderRadius = 10
         MCB_剪辑模式.BorderSize = 0
@@ -303,22 +303,22 @@ Partial Class Form_v6_参数面板_剪辑区间
         MCB_剪辑模式.ToolTipPadding = New Padding(15)
         MCB_剪辑模式.WaterText = "选择剪辑模式"
         MCB_剪辑模式.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        '
+        ' 
         ' HCL_剪辑重编码提示
-        '
+        ' 
         HCL_剪辑重编码提示.AutoSize = True
         HCL_剪辑重编码提示.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HCL_剪辑重编码提示.Dock = DockStyle.Top
         HCL_剪辑重编码提示.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        HCL_剪辑重编码提示.Location = New Point(20, 50)
+        HCL_剪辑重编码提示.Location = New Point(20, 48)
         HCL_剪辑重编码提示.Margin = New Padding(2)
         HCL_剪辑重编码提示.Name = "HCL_剪辑重编码提示"
-        HCL_剪辑重编码提示.Size = New Size(725, 21)
+        HCL_剪辑重编码提示.Size = New Size(725, 17)
         HCL_剪辑重编码提示.TabIndex = 18
         HCL_剪辑重编码提示.Text = "所有模式 <span style=""color:YellowGreen"">必须重编码才能精确到帧</span>，ffmpeg 复制流只能取关键帧"
-        '
+        ' 
         ' HCL_剪辑模式
-        '
+        ' 
         HCL_剪辑模式.AutoSize = True
         HCL_剪辑模式.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HCL_剪辑模式.Dock = DockStyle.Top
@@ -327,12 +327,12 @@ Partial Class Form_v6_参数面板_剪辑区间
         HCL_剪辑模式.Margin = New Padding(2)
         HCL_剪辑模式.Name = "HCL_剪辑模式"
         HCL_剪辑模式.Padding = New Padding(0, 0, 0, 5)
-        HCL_剪辑模式.Size = New Size(725, 30)
+        HCL_剪辑模式.Size = New Size(725, 28)
         HCL_剪辑模式.TabIndex = 8
         HCL_剪辑模式.Text = "<span style=""font-size:13; color:Silver"">剪辑模式</span>   仅供简单剪辑，高级需求去用剪辑软件"
-        '
+        ' 
         ' Form_v6_参数面板_剪辑区间
-        '
+        ' 
         AutoScaleDimensions = New SizeF(96F, 96F)
         AutoScaleMode = AutoScaleMode.Dpi
         BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
