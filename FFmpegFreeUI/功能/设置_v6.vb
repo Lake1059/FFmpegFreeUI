@@ -26,7 +26,7 @@ Public Class 设置_v6
 
     Public Property 窗口样式 As Integer = 2
     ''' <summary>0=跟随 Windows 应用浅/深色模式；1=始终明亮；2=始终暗黑。</summary>
-    Public Property 界面主题 As Integer = 0
+    Public Property 界面主题 As Integer = 2
     ''' <summary>0=直角；1=圆角。旧配置缺少此字段时，Windows 11 默认圆角，其他系统默认直角。</summary>
     Public Property 窗口圆角 As Integer = If(LakeUI.DwmWindowStyle.IsCornerModeSupported, 1, 0)
     Public Property 启用性能计数器 As Integer = 0
