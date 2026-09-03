@@ -2,6 +2,7 @@ Public Class Form_v6_参数面板_视频编码器
 
     Public 所属参数面板对象 As Form_v6_参数面板
     Private MCB_像素格式 As LakeUI.ModernComboBox
+    Private 正在切换编码器分类 As Boolean
 
     Private Sub Form_v6_参数面板_视频编码器_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         MCB_像素格式 = 获取像素格式组合框()
@@ -33,27 +34,35 @@ Public Class Form_v6_参数面板_视频编码器
     End Sub
 
     Private Sub MCB_视频编码器分类_SelectedIndexChanged(sender As Object, e As EventArgs) Handles MCB_视频编码器分类.SelectedIndexChanged
-        清空编码器()
-        清空编码器参数()
-
         Dim 编码器列表 = 视频编码器数据库_v6.获取编码器列表(MCB_视频编码器分类.Text)
-        For Each 编码器 In 编码器列表
-            MCB_具体编码器.Items.Add(编码器.名称)
-            Dim 提示 = 合成编码器提示文本(编码器)
-            If 提示 <> "" Then 添加提示(MCB_具体编码器, 编码器.名称, 提示)
-        Next
-        If MCB_具体编码器.Items.Count > 0 Then MCB_具体编码器.SelectedIndex = 0
+        Dim 保留图片质量面板 = 是否有可用图片质量设定(编码器列表.FirstOrDefault())
+
+        正在切换编码器分类 = True
+        Try
+            清空编码器()
+            清空编码器参数(保留图片质量面板)
+
+            For Each 编码器 In 编码器列表
+                MCB_具体编码器.Items.Add(编码器.名称)
+                Dim 提示 = 合成编码器提示文本(编码器)
+                If 提示 <> "" Then 添加提示(MCB_具体编码器, 编码器.名称, 提示)
+            Next
+            If MCB_具体编码器.Items.Count > 0 Then MCB_具体编码器.SelectedIndex = 0
+        Finally
+            正在切换编码器分类 = False
+        End Try
     End Sub
 
     Private Sub MCB_具体编码器_SelectedIndexChanged(sender As Object, e As EventArgs) Handles MCB_具体编码器.SelectedIndexChanged
+        If 正在切换编码器分类 AndAlso MCB_具体编码器.Text = "" Then Exit Sub
+
         刷新当前编码器参数列表()
         所属参数面板对象?.私有界面_质量?.同步当前编码器质量参数名()
     End Sub
 
     Public Sub 刷新当前编码器参数列表()
-        清空编码器参数()
-
         Dim 编码器 = 视频编码器数据库_v6.获取编码器数据(MCB_具体编码器.Text)
+        清空编码器参数(保留图片质量面板:=编码器 IsNot Nothing AndAlso 编码器.类型 = 预设数据_v6.视频编码器类型.图片)
         If 编码器 Is Nothing Then Exit Sub
 
         填充参数列表(MCB_编码预设, 编码器.编码预设)
@@ -77,7 +86,7 @@ Public Class Form_v6_参数面板_视频编码器
         MCB_具体编码器.Text = ""
     End Sub
 
-    Private Sub 清空编码器参数()
+    Private Sub 清空编码器参数(Optional 保留图片质量面板 As Boolean = False)
         清空组合框(MCB_编码预设)
         清空组合框(MCB_配置文件)
         清空组合框(MCB_场景优化)
@@ -89,10 +98,10 @@ Public Class Form_v6_参数面板_视频编码器
         MCB_场景优化.WaterText = "-tune"
         If 像素格式下拉框 IsNot Nothing Then 像素格式下拉框.WaterText = "-pix_fmt"
 
-        Panel7.Visible = False
         MTB_图片编码器质量值.Text = ""
         MTB_图片编码器质量值.WaterText = ""
         HCL_图片编码器质量值.Text = "图片编码器质量值 / 其他定制参数"
+        If Not 保留图片质量面板 Then Panel7.Visible = False
     End Sub
 
     Private Sub 清空组合框(MCB As LakeUI.ModernComboBox)
@@ -118,20 +127,21 @@ Public Class Form_v6_参数面板_视频编码器
     End Sub
 
     Private Sub 更新图片质量输入(编码器 As 视频编码器数据库_v6.视频编码器数据)
-        If 编码器.类型 <> 预设数据_v6.视频编码器类型.图片 Then Exit Sub
+        Dim 有可用质量设定 = 是否有可用图片质量设定(编码器)
+        Panel7.Visible = 有可用质量设定
+        If Not 有可用质量设定 Then Exit Sub
 
-        If 编码器.图片质量.参数名 <> "" Then
-            Panel7.Visible = True
-            MTB_图片编码器质量值.WaterText = If(编码器.图片质量.默认值 <> "", 编码器.图片质量.默认值, 编码器.图片质量.参数名)
-            HCL_图片编码器质量值.Text = $"{编码器.图片质量.参数名}：{编码器.图片质量.值范围说明}"
-            If 编码器.必要参数列表.Count > 0 Then HCL_图片编码器质量值.Text &= "；必要参数见下拉提示"
-        End If
-
-        If 编码器.必要参数列表.Count > 0 AndAlso 编码器.图片质量.参数名 = "" Then
-            Panel7.Visible = True
-            HCL_图片编码器质量值.Text = "必要/建议参数见编码器下拉提示"
-        End If
+        MTB_图片编码器质量值.WaterText = If(编码器.图片质量.默认值 <> "", 编码器.图片质量.默认值, 编码器.图片质量.参数名)
+        HCL_图片编码器质量值.Text = $"{编码器.图片质量.参数名}：{编码器.图片质量.值范围说明}"
+        If 编码器.必要参数列表.Count > 0 Then HCL_图片编码器质量值.Text &= "；必要参数见下拉提示"
     End Sub
+
+    Private Function 是否有可用图片质量设定(编码器 As 视频编码器数据库_v6.视频编码器数据) As Boolean
+        Return 编码器 IsNot Nothing AndAlso
+               编码器.类型 = 预设数据_v6.视频编码器类型.图片 AndAlso
+               编码器.图片质量 IsNot Nothing AndAlso
+               编码器.图片质量.参数名 <> ""
+    End Function
 
     Private Function 合成编码器提示文本(编码器 As 视频编码器数据库_v6.视频编码器数据) As String
         Dim 片段 As New List(Of String)

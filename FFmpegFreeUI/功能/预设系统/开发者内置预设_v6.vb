@@ -139,7 +139,7 @@ Public Class 开发者内置预设_v6
         result.Add(New 预设项("FDK AAC 压制音频到 M4A", M4A_HDAudio))
 
         Dim AVIF_AOMAV1 As New 预设数据_v6
-        AVIF_AOMAV1.预设备注 = "AVIF 是将 AV1 用于图片的超高压缩图，非常适合用它来压制你那巨量不再需要后期的图片，crf18 基本上能稳定卡 VMAF ≈ 96，如果实在追求质量可以自己改 crf12。其他几个 AV1 编码器也可以输出到 AVIF 图片，如有需要可以自行研究，这里只收录 AOM 预设，都压图片了也不差那点时间了。"
+        AVIF_AOMAV1.预设备注 = "AVIF 是将 AV1 用于图片的超高压缩图，非常适合用它来压制你那巨量不再需要后期的图片，crf18 基本上能稳定卡 VMAF ≈ 96，如果实在追求质量可以自己改 crf12。其他几个 AV1 编码器也可以输出到 AVIF 图片，如有需要可以自行研究，这里只收录 AOM 预设，都压图片了也不差那点时间了。如果压出来色彩错误，例如变红变蓝变绿，去色彩管理里设置一下像素格式。"
         AVIF_AOMAV1.输出容器 = ".avif"
         AVIF_AOMAV1.视频参数_编码器_类型 = 预设数据_v6.视频编码器类型.视频
         AVIF_AOMAV1.视频参数_编码器_分类名称 = "AV1"
@@ -150,6 +150,16 @@ Public Class 开发者内置预设_v6
         AVIF_AOMAV1.视频参数_质量控制_值 = "18"
         AVIF_AOMAV1.视频参数_质量控制_进阶参数集 = "-still-picture 1 -row-mt 1"
         result.Add(New 预设项("AVIF 高压缩图片 AOM AV1", AVIF_AOMAV1))
+
+        Dim JXL_JPEGXL As New 预设数据_v6
+        JXL_JPEGXL.预设备注 = "JPEG-XL 简称 JXL 是新一代超高压缩图，非常适合用它来达到视觉无损的超小体积压制，也支持 无损模式 和 HDR，虽然在体积上比 AVIF 稍大，但 JXL 的细节保留更出色，有损压缩能真正做到视觉无损。"
+        JXL_JPEGXL.输出容器 = ".jxl"
+        JXL_JPEGXL.视频参数_编码器_类型 = 预设数据_v6.视频编码器类型.图片
+        JXL_JPEGXL.视频参数_编码器_分类名称 = "JPEG XL"
+        JXL_JPEGXL.视频参数_编码器_具体编码 = "libjxl"
+        JXL_JPEGXL.视频参数_编码器_图片编码器质量值 = "1"
+        JXL_JPEGXL.视频参数_编码器_编码预设 = "9"
+        result.Add(New 预设项("JPEG XL 高压缩图片", JXL_JPEGXL))
 
         Dim WindowsICO As New 预设数据_v6
         WindowsICO.预设备注 = "从一张图片生成符合 Windows 使用习惯的多尺寸 ICO，内含 16、24、32、48、64、128、256 七个尺寸。小尺寸使用 BMP + BGRA 保留透明通道，256 尺寸使用 PNG + RGBA 压缩体积；非正方形输入会等比缩放并透明补边。"

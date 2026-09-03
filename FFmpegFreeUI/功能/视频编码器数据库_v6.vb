@@ -427,7 +427,7 @@ Public Class 视频编码器数据库_v6
         加入编码器(基础("libjxl", "libjxl JPEG XL 静图，使用 -distance 在无损和有损模式间切换。", "JPEG XL", 预设数据_v6.视频编码器类型.图片,
             编码预设:=参数("-effort", "编码强度：1=最快，9=最慢/压缩更充分", "7", "9", "8", "7", "6", "5", "4", "3", "2", "1"),
             像素格式:=像素("rgb24 rgba rgb48le rgba64le rgbf32le rgbaf32le gray ya8 gray16le ya16le grayf32le"),
-            图片质量:=图片质量("-distance", "最大 Butteraugli 距离：无损 0 清晰 0~15 模糊", "1"),
+            图片质量:=图片质量("-distance", "最大 Butteraugli 距离：无损 0 清晰 1~15 模糊", "1"),
             特殊参数:=特殊列表(特殊("-modular 强制 Modular 模式：0=关闭，1=开启，无损模式强制开启"), 特殊("-xyb 有损编码使用 XYB 色彩空间：0=关闭，1=开启"))))
 
         加入编码器(基础("jpegls", "JPEG-LS 无损/近无损图片。", "JPEG-LS", 预设数据_v6.视频编码器类型.图片,
