@@ -25,6 +25,7 @@ Public Module 界面主题_v6
     Private ReadOnly 浅色多级导航背景 As Color = Color.FromArgb(230, 230, 230)
     Private ReadOnly 浅色基础背景 As Color = Color.FromArgb(239, 239, 239)
     Private ReadOnly 浅色表面背景 As Color = Color.White
+    Private ReadOnly 浅色强调绿色 As Color = Color.FromArgb(0, 122, 0)
 
     <DllImport("dwmapi.dll")>
     Private Function DwmGetColorizationColor(ByRef colorization As UInteger,
@@ -46,6 +47,10 @@ Public Module 界面主题_v6
             Return _当前浅色
         End Get
     End Property
+
+    Public Function 获取当前主题前景色(original As Color) As Color
+        Return If(_当前浅色, 转换为浅色(original, "ForeColor"), original)
+    End Function
 
     ''' <summary>初始化系统主题监听，并立即将当前 Windows“应用模式”应用到已加载界面。</summary>
     Public Sub 初始化()
@@ -230,7 +235,11 @@ Public Module 界面主题_v6
 
         If 首次挂接 OrElse 强制刷新 Then
             应用对象颜色(control, _当前浅色)
-            If TypeOf control Is Form Then 应用窗体Dwm外观(DirectCast(control, Form))
+            If TypeOf control Is Form Then
+                Dim form = DirectCast(control, Form)
+                应用窗体组件颜色(form, _当前浅色)
+                应用窗体Dwm外观(form)
+            End If
             control.Invalidate()
         End If
 
@@ -242,6 +251,14 @@ Public Module 界面主题_v6
     Private Sub 控件已添加(sender As Object, e As ControlEventArgs)
         If Not _已初始化 OrElse e.Control Is Nothing Then Return
         应用控件树(e.Control, True)
+    End Sub
+
+    Private Sub 应用窗体组件颜色(form As Form, 浅色 As Boolean)
+        For Each field In form.GetType().GetFields(BindingFlags.Instance Or BindingFlags.Public Or BindingFlags.NonPublic)
+            If Not GetType(ModernContextMenu).IsAssignableFrom(field.FieldType) Then Continue For
+            Dim menu = TryCast(field.GetValue(form), ModernContextMenu)
+            If menu IsNot Nothing Then 应用对象颜色(menu, 浅色)
+        Next
     End Sub
 
     Private Sub 应用窗体Dwm外观(form As Form)
@@ -352,6 +369,7 @@ Public Module 界面主题_v6
         Dim isForeground = name.Contains("ForeColor", StringComparison.OrdinalIgnoreCase) OrElse
                            name.Contains("TextColor", StringComparison.OrdinalIgnoreCase)
         If isForeground Then
+            If original.ToArgb() = Color.YellowGreen.ToArgb() Then Return 浅色强调绿色
             Dim alpha = If(original.A < 255, Math.Max(CInt(original.A), 210), 255)
             Dim candidate As Color
             If neutral Then
@@ -472,6 +490,7 @@ Public Module 界面主题_v6
     End Function
 
     Private Sub 应用LakeUI对话框主题(浅色 As Boolean)
+        FloatingToolTipForm.BackdropEnabled = Not 浅色
         If 浅色 Then
             ExMsgBoxTheme.Current = ExMsgBoxTheme.CreateLight()
             ExInputBoxTheme.Current = ExInputBoxTheme.CreateLight()
