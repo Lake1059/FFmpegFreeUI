@@ -1533,7 +1533,7 @@ Public Class Form_v6_集成工具_质量评测
 
     Private Sub 设置运行状态(running As Boolean)
         MB_开始评测.Text = If(running, "取消评测", "开始评测")
-        MB_开始评测.ForeColor = If(running, Color.IndianRed, Color.YellowGreen)
+        MB_开始评测.ForeColor = If(running, Color.IndianRed, 界面主题_v6.获取当前主题前景色(Color.YellowGreen))
         MB_选择原视频.Enabled = Not running
         MB_移除选中文件.Enabled = Not running
         MB_移除全部文件.Enabled = Not running
@@ -1634,7 +1634,7 @@ Public Class Form_v6_集成工具_质量评测
         Next
 
         If scoredItems.Count = 1 Then
-            scoredItems(0).Item.SubItems(index).ForeColor = Color.YellowGreen
+            scoredItems(0).Item.SubItems(index).ForeColor = 界面主题_v6.获取当前主题前景色(Color.YellowGreen)
         ElseIf scoredItems.Count > 1 Then
             Dim minValue = scoredItems.Min(Function(x) x.Value)
             Dim maxValue = scoredItems.Max(Function(x) x.Value)
@@ -1642,7 +1642,7 @@ Public Class Form_v6_集成工具_质量评测
             For Each entry In scoredItems
                 Dim color As Color
                 If entry.Value.Equals(maxValue) Then
-                    color = Color.YellowGreen
+                    color = 界面主题_v6.获取当前主题前景色(Color.YellowGreen)
                 ElseIf entry.Value.Equals(minValue) Then
                     color = Color.IndianRed
                 Else
@@ -1656,12 +1656,13 @@ Public Class Form_v6_集成工具_质量评测
     End Sub
 
     Private Shared Function 获取评分渐变颜色(value As Double, minValue As Double, maxValue As Double) As Color
-        If Double.IsInfinity(value) Then Return Color.YellowGreen
+        If Double.IsInfinity(value) Then Return 界面主题_v6.获取当前主题前景色(Color.YellowGreen)
         If Double.IsInfinity(minValue) OrElse Double.IsInfinity(maxValue) OrElse maxValue <= minValue Then Return Color.Silver
         Dim ratio = Math.Max(0.0, Math.Min(1.0, (value - minValue) / (maxValue - minValue)))
-        Dim r = CInt(205 + (154 - 205) * ratio)
-        Dim g = CInt(92 + (205 - 92) * ratio)
-        Dim b = CInt(92 + (50 - 92) * ratio)
+        Dim best = 界面主题_v6.获取当前主题前景色(Color.YellowGreen)
+        Dim r = CInt(205 + (best.R - 205) * ratio)
+        Dim g = CInt(92 + (best.G - 92) * ratio)
+        Dim b = CInt(92 + (best.B - 92) * ratio)
         Return Color.FromArgb(r, g, b)
     End Function
 

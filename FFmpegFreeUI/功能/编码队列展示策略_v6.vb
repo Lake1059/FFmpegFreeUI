@@ -139,7 +139,9 @@ Public Class 旧版兼容编码队列展示策略_v6
 
         Dim text = task.最新底部日志文本.Replace(vbCr, " ").Replace(vbLf, " ").Trim()
         If text = "" Then Exit Sub
-        Dim color As Color = If(task.最新底部日志是否错误, 界面配色_v6.错误文本色, Color.FromArgb(150, 220, 220, 220))
+        Dim color As Color = If(task.最新底部日志是否错误,
+                                界面配色_v6.错误文本色,
+                                If(界面主题_v6.当前为浅色模式, Color.Black, Color.FromArgb(150, 220, 220, 220)))
         item.BottomLines.Add(New UltraDetailListView.TextLine(text, Nothing, color))
     End Sub
 

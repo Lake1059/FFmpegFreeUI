@@ -10,7 +10,7 @@ Public Class 其他初始化
         LakeUI.MessageDialogOptions.BackdropTintColor = Color.FromArgb(120, 0, 0, 0)
         LakeUI.MessageDialogOptions.BackdropBlurRadius = 30
         LakeUI.MessageDialogOptions.BackdropBlurPasses = 2
-        LakeUI.FloatingToolTipForm.BackdropEnabled = True
+        LakeUI.FloatingToolTipForm.BackdropEnabled = Not 界面主题_v6.当前为浅色模式
         LakeUI.FloatingToolTipForm.BackdropTintColor = Color.FromArgb(120, 0, 0, 0)
         LakeUI.FloatingToolTipForm.BackdropBlurRadius = 30
         LakeUI.FloatingToolTipForm.BackdropBlurPasses = 2
