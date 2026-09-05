@@ -206,15 +206,15 @@ Friend NotInheritable Class 网络功能_v6_更新源
     End Function
 
     Friend Shared Function 获取国内镜像源本体更新地址() As String
-        Return "https://fengyuan.frostlynx.work/api/public/v1/projects/FFmpegFreeUI/assets"
+        Return "https://fyhub.cn/api/public/v1/projects/FFmpegFreeUI/assets"
     End Function
 
     Private Shared Function 获取国内镜像源创建挑战地址() As String
-        Return "https://fengyuan.frostlynx.work/api/public/v2/api/challenges"
+        Return "https://fyhub.cn/api/public/v2/api/challenges"
     End Function
 
     Private Shared Function 获取国内镜像源创建授权地址() As String
-        Return "https://fengyuan.frostlynx.work/api/public/v2/api/authorizations"
+        Return "https://fyhub.cn/api/public/v2/api/authorizations"
     End Function
 
     Friend Shared Function 获取MirrorChyan本体更新地址() As String
