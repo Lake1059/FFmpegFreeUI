@@ -40,6 +40,20 @@ Public Class Form_v6_集成工具_质量评测
     End Enum
 
     Private Shared ReadOnly 全部指标 As 指标类型() = {指标类型.PSNR, 指标类型.SSIM, 指标类型.VMAF, 指标类型.XPSNR}
+    Private Shared ReadOnly Vmaf术语说明 As String = $"{vbCrLf}{vbCrLf}术语解释：HFR = 高帧率，用于约 50/60 fps、约为常见 24/30 fps 两倍的内容。H = 观看距离，测量方法是画面高度的倍数，会随着实际设备的画面在真实世界的物理高度而变化，数字越大距离越远。"
+    Private Shared ReadOnly Vmaf模型描述 As New Dictionary(Of String, String)(StringComparer.OrdinalIgnoreCase) From {
+        {"vmaf_v0.6.1", "旧普通模型"},
+        {"vmaf_v0.6.1neg", "更加严格的评测，允许负值"},
+        {"vmaf_4k_v0.6.1", "面向 4K 内容"},
+        {"vmaf_v1.0.16_3d0h", "标准 3H 观看距离，默认场景" & Vmaf术语说明},
+        {"vmaf_v1.0.16_5d0h", "较远 5H 观看距离，适用于移动端场景" & Vmaf术语说明},
+        {"vmaf_v1.0.16_1d5h_2160", "4K 分辨率 + 1.5H 盯帧级观看距离" & Vmaf术语说明},
+        {"vmaf_v1.0.16_3d0h_2160", "4K 分辨率 + 3H 消费级观看距离" & Vmaf术语说明},
+        {"vmaf_v1.0.16_hfr_3d0h", "高帧率 + 3H 观看距离" & Vmaf术语说明},
+        {"vmaf_v1.0.16_hfr_5d0h", "高帧率 + 5H 观看距离，适用于移动端场景" & Vmaf术语说明},
+        {"vmaf_v1.0.16_hfr_1d5h_2160", "4K 分辨率 + 高帧率 + 1.5H 盯帧级观看距离" & Vmaf术语说明},
+        {"vmaf_v1.0.16_hfr_3d0h_2160", "4K 分辨率 + 高帧率 + 3H 消费级观看距离" & Vmaf术语说明}
+    }
     ' 当两路像素格式不一致时，统一到常见且受全部四个滤镜支持的 10-bit 4:2:0 格式。
     ' 选择 4:2:0 而非 4:4:4 是为了让原始色度采样率不成为评分差异；同时保留 10-bit 精度。
     Private Const 统一评测像素格式 As String = "yuv420p10le"
@@ -85,7 +99,33 @@ Public Class Form_v6_集成工具_质量评测
         Public Property 汇总值 As Double = Double.NaN
     End Class
 
+    Private Class 页面状态结果
+        Public Property 成功 As Boolean
+        Public Property 汇总值 As Double
+        Public Property 每帧数据 As New List(Of Double)
+        Public Property 已处理帧数 As Integer
+        Public Property 错误信息 As String = ""
+    End Class
+    Private Class 页面状态文件
+        Public Property 文件路径 As String = ""
+        Public Property 状态 As String = "未评测"
+        Public Property 最近错误 As String = ""
+        Public Property 指标结果 As New Dictionary(Of String, 页面状态结果)
+    End Class
+    Private Class 页面状态
+        Public Property 原视频 As String = ""
+        Public Property 从头开始 As String = ""
+        Public Property 评测时长 As String = ""
+        Public Property Vmaf模型 As String = ""
+        Public Property Pooling As String = ""
+        Public Property SubSample As String = ""
+        Public Property VmafCuda As Boolean
+        Public Property 指标 As New Dictionary(Of String, Boolean)
+        Public Property 文件 As New List(Of 页面状态文件)
+    End Class
+
     Private Sub Form_v6_集成工具_质量评测_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        最后评测记录 = ""
         初始化控件()
         绑定文件拖入(Me, False)
         绑定文件拖入(ModernPanel1, False)
@@ -96,6 +136,7 @@ Public Class Form_v6_集成工具_质量评测
         调整列表交互区域()
         调整列宽()
         调整底部按钮布局()
+        恢复页面状态()
     End Sub
 
     <CodeAnalysis.SuppressMessage("Performance", "CA1861:不要将常量数组作为参数", Justification:="<挂起>")>
@@ -141,6 +182,13 @@ Public Class Form_v6_集成工具_质量评测
             MCB_模型选择.Items.Add(浏览本地模型项)
             For Each model In models
                 MCB_模型选择.Items.Add(model)
+            Next
+            MCB_模型选择.ItemToolTips.Clear()
+            For Each model In models
+                Dim description = ""
+                If Vmaf模型描述.TryGetValue(model, description) Then
+                End If
+                MCB_模型选择.ItemToolTips.Add(model, description)
             Next
             MCB_模型选择.SelectedIndex = If(models.Count > 0, 1, -1)
             If models.Count = 0 Then MCB_模型选择.Text = ""
@@ -659,6 +707,57 @@ Public Class Form_v6_集成工具_质量评测
             最后评测记录 = 当前评测记录.ToString()
             当前评测记录 = Nothing
         End SyncLock
+        ' 每轮评测结束即保存当前列表状态，与是否手动导出无关。
+        Try
+            保存页面状态()
+        Catch
+        End Try
+    End Sub
+
+    Private Sub 保存页面状态()
+        Try
+            Dim state As New 页面状态 With {.原视频 = MTB_原视频文件路径.Text, .从头开始 = MTB_从头开始.Text, .评测时长 = MTB_评测时长.Text, .Vmaf模型 = MCB_模型选择.Text, .Pooling = MCB_Pooling.Text, .SubSample = MCB_SubSample.Text, .VmafCuda = MCB_VMAF_CUDA.Checked}
+            For Each m In 全部指标 : state.指标(获取指标名称(m)) = 获取指标复选框(m).Checked : Next
+            For Each item In UltraDetailListView1.Items
+                Dim d = 获取项数据(item), sf As New 页面状态文件 With {.文件路径 = d.文件路径, .状态 = d.状态, .最近错误 = d.最近错误}
+                For Each kv In d.指标结果
+                    Dim r = kv.Value, sr As New 页面状态结果 With {.成功 = r.成功, .汇总值 = r.汇总值, .已处理帧数 = r.已处理帧数, .错误信息 = r.错误信息}
+                    SyncLock r.数据锁 : sr.每帧数据 = New List(Of Double)(r.每帧数据) : End SyncLock
+                    sf.指标结果(获取指标名称(kv.Key)) = sr
+                Next
+                state.文件.Add(sf)
+            Next
+            设置_v6.实例对象.质量评测页面状态 = JsonSerializer.Serialize(state, JsonSO)
+            设置_v6.后台保存设置()
+        Catch
+        End Try
+    End Sub
+
+    Private Sub 恢复页面状态()
+        Try
+            Dim raw = 设置_v6.实例对象?.质量评测页面状态
+            If String.IsNullOrWhiteSpace(raw) Then Exit Sub
+            Dim state = JsonSerializer.Deserialize(Of 页面状态)(raw, JsonSO)
+            If state Is Nothing Then Exit Sub
+            MTB_原视频文件路径.Text = state.原视频 : MTB_从头开始.Text = state.从头开始 : MTB_评测时长.Text = state.评测时长
+            MCB_模型选择.Text = state.Vmaf模型 : MCB_Pooling.Text = state.Pooling : MCB_SubSample.Text = state.SubSample : MCB_VMAF_CUDA.Checked = state.VmafCuda
+            For Each m In 全部指标 : If state.指标.ContainsKey(获取指标名称(m)) Then 获取指标复选框(m).Checked = state.指标(获取指标名称(m))
+            Next
+            For Each sf In state.文件
+                If Not File.Exists(sf.文件路径) Then Continue For
+                Dim item = 创建文件项(sf.文件路径), d = 获取项数据(item) : d.状态 = sf.状态 : d.最近错误 = sf.最近错误
+                For Each kv In sf.指标结果
+                    Dim m As 指标类型
+                    If [Enum].TryParse(kv.Key, m) Then
+                        Dim sr = kv.Value, r As New 指标结果数据 With {.成功 = sr.成功, .汇总值 = sr.汇总值, .已处理帧数 = sr.已处理帧数, .错误信息 = sr.错误信息, .每帧数据 = If(sr.每帧数据, New List(Of Double))}
+                        d.指标结果(m) = r : 设置指标文本(item, m, If(r.成功, 格式化分数(r.汇总值, m), "未评测"))
+                    End If
+                Next
+                UltraDetailListView1.Items.Add(item)
+            Next
+            刷新列表布局和图表()
+        Catch
+        End Try
     End Sub
 
     Private Async Function 开始评测Async(token As CancellationToken, metrics As List(Of 指标类型), itemsToRun As List(Of UltraDetailListView.ListItem), overwriteDecision As 覆盖已有成绩决策) As Task
@@ -1719,8 +1818,10 @@ Public Class Form_v6_集成工具_质量评测
             ExFloatingTip(MB_导出记录, "评测结束后才能导出记录", 1800)
             Exit Sub
         End If
-        If String.IsNullOrWhiteSpace(最后评测记录) Then
-            ExFloatingTip(MB_导出记录, "没有可导出的最后一次评测记录", 1800)
+        Dim report = 生成当前列表导出记录()
+        If String.IsNullOrWhiteSpace(report) Then report = 最后评测记录
+        If String.IsNullOrWhiteSpace(report) Then
+            ExFloatingTip(MB_导出记录, "当前文件列表没有可导出的记录", 1800)
             Exit Sub
         End If
 
@@ -1729,10 +1830,39 @@ Public Class Form_v6_集成工具_质量评测
             .FileName = $"quality_report_{DateTime.Now:yyyyMMdd_HHmmss}.txt"
         }
             If d.ShowDialog(Me) <> DialogResult.OK Then Exit Sub
-            File.WriteAllText(d.FileName, 最后评测记录, New UTF8Encoding(False))
+            File.WriteAllText(d.FileName, report, New UTF8Encoding(False))
+            最后评测记录 = report
+            保存页面状态()
+            设置_v6.后台保存设置()
             ExFloatingTip(MB_导出记录, "已导出记录", 1200)
         End Using
     End Sub
+
+    Private Function 生成当前列表导出记录() As String
+        If UltraDetailListView1 Is Nothing OrElse UltraDetailListView1.Items.Count = 0 Then Return ""
+        Dim sb As New StringBuilder()
+        sb.AppendLine("3FUI 质量评测记录")
+        sb.AppendLine($"导出时间：{DateTime.Now:yyyy-MM-dd HH:mm:ss}")
+        sb.AppendLine($"原视频：{MTB_原视频文件路径.Text.Trim()}")
+        sb.AppendLine("当前文件列表：")
+        For Each item In UltraDetailListView1.Items
+            Dim data = 获取项数据(item)
+            sb.AppendLine($"文件：{data.文件路径}")
+            sb.AppendLine($"状态：{data.状态}")
+            For Each metric In 全部指标
+                Dim result As 指标结果数据 = Nothing
+                If data.指标结果.TryGetValue(metric, result) AndAlso result IsNot Nothing AndAlso result.成功 Then
+                    sb.AppendLine($"  {获取指标名称(metric)}：{格式化分数(result.汇总值, metric)}")
+                ElseIf data.指标结果.TryGetValue(metric, result) AndAlso result IsNot Nothing AndAlso Not String.IsNullOrWhiteSpace(result.错误信息) Then
+                    sb.AppendLine($"  {获取指标名称(metric)}：失败，{result.错误信息}")
+                Else
+                    sb.AppendLine($"  {获取指标名称(metric)}：未评测")
+                End If
+            Next
+            sb.AppendLine()
+        Next
+        Return sb.ToString()
+    End Function
 
     Private Sub MB_清除选中记录_Click(sender As Object, e As EventArgs) Handles MB_清除选中记录.Click
         For Each item In UltraDetailListView1.SelectedItems

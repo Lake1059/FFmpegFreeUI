@@ -463,16 +463,21 @@ Public Class AgentLocalTools
         End Property
 
         Protected Overrides Iterator Function CreateProcessCandidates(workingDirectory As String) As IEnumerable(Of Process)
-            Dim process = CreateRedirectedProcess("powershell.exe", workingDirectory)
-            process.StartInfo.ArgumentList.Add("-NoLogo")
-            process.StartInfo.ArgumentList.Add("-NoProfile")
-            process.StartInfo.ArgumentList.Add("-NonInteractive")
-            process.StartInfo.ArgumentList.Add("-ExecutionPolicy")
-            process.StartInfo.ArgumentList.Add("Bypass")
-            process.StartInfo.ArgumentList.Add("-Command")
-            process.StartInfo.ArgumentList.Add("-")
-            process.StartInfo.EnvironmentVariables("POWERSHELL_TELEMETRY_OPTOUT") = "1"
-            Yield process
+            ' Prefer the cross-platform PowerShell (7+) executable when it is
+            ' installed and available on PATH.  Keep Windows PowerShell 5 as
+            ' a fallback so existing installations continue to work.
+            For Each executable In New String() {"pwsh.exe", "powershell.exe"}
+                Dim process = CreateRedirectedProcess(executable, workingDirectory)
+                process.StartInfo.ArgumentList.Add("-NoLogo")
+                process.StartInfo.ArgumentList.Add("-NoProfile")
+                process.StartInfo.ArgumentList.Add("-NonInteractive")
+                process.StartInfo.ArgumentList.Add("-ExecutionPolicy")
+                process.StartInfo.ArgumentList.Add("Bypass")
+                process.StartInfo.ArgumentList.Add("-Command")
+                process.StartInfo.ArgumentList.Add("-")
+                process.StartInfo.EnvironmentVariables("POWERSHELL_TELEMETRY_OPTOUT") = "1"
+                Yield process
+            Next
         End Function
 
         Protected Overrides Sub OnProcessStarted(process As Process)
@@ -733,7 +738,7 @@ Public Class AgentLocalTools
     End Function
 
     Private Shared Sub AddConsoleToolDefinitions(tools As List(Of Dictionary(Of String, Object)))
-        tools.Add(FunctionTool("run_powershell", "运行 PowerShell 命令。仅系统访问权限可用。同一次用户消息触发的 Agent 运行会复用同一个 PowerShell 进程，变量、当前位置和模块导入可在本轮多次调用之间保留；会话启动时强制标准输入、标准输出、标准错误、$OutputEncoding 和带 Encoding 参数的文本 cmdlet 使用 UTF-8；本轮响应结束、超时或任务终止时会关闭进程。若本轮首次使用，先验证 $PSVersionTable.PSVersion 和 $PSVersionTable.PSEdition，再选择兼容语法；脚本读写文本仍需显式使用 -Encoding UTF8 或 .NET UTF8Encoding。", New Dictionary(Of String, Object) From {
+        tools.Add(FunctionTool("run_powershell", "运行 PowerShell 命令。仅系统访问权限可用；优先使用 PATH 中的 PowerShell 7 (pwsh.exe)，启动失败时自动回退 Windows PowerShell 5 (powershell.exe)。同一次用户消息触发的 Agent 运行会复用同一个 PowerShell 进程，变量、当前位置和模块导入可在本轮多次调用之间保留；会话启动时强制标准输入、标准输出、标准错误、$OutputEncoding 和带 Encoding 参数的文本 cmdlet 使用 UTF-8；本轮响应结束、超时或任务终止时会关闭进程。若本轮首次使用，先验证 $PSVersionTable.PSVersion 和 $PSVersionTable.PSEdition，再选择兼容语法；脚本读写文本仍需显式使用 -Encoding UTF8 或 .NET UTF8Encoding。", New Dictionary(Of String, Object) From {
             {"command", New Dictionary(Of String, Object) From {{"type", "string"}, {"description", "要执行的 PowerShell 命令"}}},
             {"working_directory", New Dictionary(Of String, Object) From {{"type", "string"}, {"description", "可选工作目录。首次调用默认使用程序目录；后续调用默认沿用当前 PowerShell 位置。"}}},
             {"timeout_seconds", New Dictionary(Of String, Object) From {{"type", "integer"}, {"description", "可选超时时间，1-300 秒，默认 60 秒"}}}

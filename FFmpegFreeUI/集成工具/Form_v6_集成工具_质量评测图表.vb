@@ -7,6 +7,7 @@ Public Class Form_v6_集成工具_质量评测图表
 
     Private 数据提供器 As Func(Of String, Dictionary(Of String, List(Of Double))) = Nothing
     Private 分数提供器 As Func(Of String, Dictionary(Of String, String)) = Nothing
+    Private 已设置坐标指标 As String = ""
 
     Private Shared ReadOnly 系列颜色表 As Color() = {
         Color.FromArgb(230, 230, 230),
@@ -58,6 +59,9 @@ Public Class Form_v6_集成工具_质量评测图表
     Private Sub 设置数据源(dataProvider As Func(Of String, Dictionary(Of String, List(Of Double))), scoreProvider As Func(Of String, Dictionary(Of String, String)))
         数据提供器 = dataProvider
         分数提供器 = scoreProvider
+        If Ultra2DChart1 IsNot Nothing Then
+            Ultra2DChart1.LineHoverTooltipFormat = "文件：{0}" & vbLf & "第 {1} 帧 - 时间戳：{1}" & vbLf & "评测分数：{3}"
+        End If
     End Sub
 
     Private Sub 显示到主窗口中心()
@@ -101,7 +105,10 @@ Public Class Form_v6_集成工具_质量评测图表
             Ultra2DChart1.ClearData()
             Ultra2DChart1.XAxisTitle = "帧"
             Ultra2DChart1.YAxisTitle = ""
-            设置坐标范围(metric)
+            If Not String.Equals(已设置坐标指标, metric, StringComparison.OrdinalIgnoreCase) Then
+                设置坐标范围(metric)
+                已设置坐标指标 = metric
+            End If
 
             Dim maxCount = If(seriesData.Count = 0, 0, seriesData.Max(Function(x) If(x.Value Is Nothing, 0, x.Value.Count)))
             Ultra2DChart1.SetCategories(Enumerable.Range(1, maxCount).Select(Function(i) i.ToString(CultureInfo.InvariantCulture)).ToArray())
@@ -113,7 +120,7 @@ Public Class Form_v6_集成工具_质量评测图表
                     ToArray()
                 Dim series = Ultra2DChart1.AddSeries(entry.Key, Ultra2DChart.ChartSeriesTypeEnum.Line, values)
                 series.Color = 获取系列颜色(seriesIndex)
-                series.LineThickness = 2.0F
+                series.LineThickness = 1.0F
                 series.MarkerShape = Ultra2DChart.MarkerShapeEnum.None
                 series.ShowValueLabels = Ultra2DChart.SeriesValueLabelModeEnum.Hide
                 seriesIndex += 1
@@ -127,9 +134,8 @@ Public Class Form_v6_集成工具_质量评测图表
 
     Private Sub 设置坐标范围(metric As String)
         If String.Equals(metric, "SSIM", StringComparison.OrdinalIgnoreCase) Then
-            Ultra2DChart1.YAxisRangeMode = Ultra2DChart.AxisRangeModeEnum.AutoClamped
-            Ultra2DChart1.YAxisMinimum = 0
-            Ultra2DChart1.YAxisMaximum = 1
+            Ultra2DChart1.YAxisRangeMode = Ultra2DChart.AxisRangeModeEnum.Auto
+            Ultra2DChart1.YAxisIncludeZero = False
         ElseIf String.Equals(metric, "VMAF", StringComparison.OrdinalIgnoreCase) Then
             Ultra2DChart1.YAxisRangeMode = Ultra2DChart.AxisRangeModeEnum.Fixed
             Ultra2DChart1.YAxisMinimum = 0
@@ -183,7 +189,7 @@ Public Class Form_v6_集成工具_质量评测图表
             Dim value = values(i)
             If Double.IsNaN(value) OrElse Double.IsInfinity(value) Then Continue For
             If String.Equals(metric, "SSIM", StringComparison.OrdinalIgnoreCase) Then
-                Return value.ToString("0.000000", CultureInfo.InvariantCulture)
+                Return value.ToString("0.00000000", CultureInfo.InvariantCulture)
             End If
             Return value.ToString("0.000", CultureInfo.InvariantCulture)
         Next
