@@ -125,7 +125,7 @@ v6 开发者官方宣传视频：https://www.bilibili.com/video/BV1rT7E6wEK4<br>
 
 | 引用程序集                                                   | 许可证         | 作用                       |
 | ------------------------------------------------------------ | -------------- | -------------------------- |
-| [LakeUI](https://github.com/Lake1059/LakeUI)                 | MIT            | v6 界面主框架              |
+| [LakeUI](https://github.com/Lake1059/LakeUI)                 | GPL-3.0-only            | v6 界面主框架              |
 | [WindowsAPICodePack](https://github.com/contre/Windows-API-Code-Pack-1.1) | 微软软件许可证 | 提供更舒适的文件夹选择对话框 |
 | [LibreHardwareMonitorLib](https://github.com/LibreHardwareMonitor/LibreHardwareMonitor) | MPL-2.0        | 性能监控                   |
 
