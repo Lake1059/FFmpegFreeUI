@@ -1,14 +1,14 @@
-官网 https://ffmpegfreeui.top 和 https://3fui.top 短域名将于 2028 年废弃<br>主群 [1050613952](https://qm.qq.com/q/fiauAsddG8) 分群① [1070953324](https://qm.qq.com/q/nKoapm6KyW) 频道 [3fui10590000](https://pd.qq.com/s/9emex878m?b=5) KOOK [稻草的工坊](https://kook.vip/1nLQNk)
+官网 https://ffmpegfreeui.top 和 https://3fui.top 短域名将于 2028 年废弃<br>主群 [1050613952](https://qm.qq.com/q/fiauAsddG8) 分群① [1070953324](https://qm.qq.com/q/nKoapm6KyW)，频道 和 KOOK 暂无精力运营
 
 ![](https://img.shields.io/github/stars/Lake1059/FFmpegFreeUI?label=星标) ![GitHub License](https://img.shields.io/github/license/Lake1059/FFmpegFreeUI?label=许可证) ![](https://img.shields.io/github/downloads/Lake1059/FFmpegFreeUI/total?label=Github%20最新%20100%20个发行版下载量)
 
 <img src="FFmpegFreeUI\Resources\AppIcon.png" width="100" />
 
-## FFmpegFreeUI v6 - 1st Anniversary！
+## FFmpegFreeUI v6
 
 FFmpegFreeUI（简称 3FUI）是在 Windows 上的 [FFmpeg](https://ffmpeg.org) 的专业交互外壳。此，即为真理！这不是给纯小白的一键全自动软件，即便 6.0 已经大幅改善了普通人的体验，但 3FUI 仍旧面向懂基本参数的进阶编码人员，小白上手有门槛但上限无穷大，这不是一个普通的编码软件，而是一整套可扩展平台。
 
-知乎终末诗的教程：https://zhuanlan.zhihu.com/p/1943079795341623993<br>
+开发者知乎宣传：https://zhuanlan.zhihu.com/p/1979540305800892949<br>知乎终末诗的教程：https://zhuanlan.zhihu.com/p/2053530841180009271<br>
 v6 开发者官方宣传视频：https://www.bilibili.com/video/BV1rT7E6wEK4<br>
 来自 小in 的宣传视频：https://www.bilibili.com/video/BV1vZud6VEsn
 
@@ -28,7 +28,7 @@ v6 开发者官方宣传视频：https://www.bilibili.com/video/BV1rT7E6wEK4<br>
 
 ### 3FUI Agent 智能体
 
-3FUI Agent 智能体现已可用！专属于 3FUI 的副驾驶！可接入任何兼容 OpenAI SDK 的端点来使用任何模型，其能力几乎相当于半个 Codex 或 CC，不仅可以控制整个参数面板和协助管理任务，还具备完整的联网能力、访问文件系统、读取文本文件和图片、使用 Windows PowerShell 终端。对话支持中途切换模型，数据完全存于本地，并与所有模型和端点共享。对话交互也同时具备主流 AI 软件的流式展现，支持基础 MarkDown 语法，同时占用极低，完全纯本地渲染，绝无半点 Web 套壳！
+3FUI Agent 智能体现已可用！这不是陪你聊天，而是专属于 3FUI 的副驾驶，真正的核动力牛马！很多不适合人类去干的活完全可以交给 AI，可接入任何兼容 OpenAI SDK 的端点来使用任何模型，其能力几乎相当于半个 Codex 或 CC，不仅可以控制整个参数面板和协助管理任务，还具备完整的联网能力、访问文件系统、读取文本文件和图片、使用 Windows PowerShell 终端。对话支持中途切换模型，数据完全存于本地，并与所有模型和端点共享。对话交互也同时具备主流 AI 软件的流式展现，支持基础 MarkDown 语法，同时占用极低，完全纯本地渲染，绝无半点 Web 套壳！
 
 ## 新图标征集活动
 
@@ -42,7 +42,7 @@ v6 开发者官方宣传视频：https://www.bilibili.com/video/BV1rT7E6wEK4<br>
 设计要求如下：
 
 - 必须带透明通道，必须是正方形
-- 最终交付分辨率至少 64 像素边长的 PNG 或 SVG 矢量图
+- 最终交付分辨率至少 128 像素边长的 PNG 或 SVG 矢量图
 - 在 Windows 100% 缩放的桌面图标尺寸下必须细节清晰
 
 投稿方式：
@@ -50,15 +50,9 @@ v6 开发者官方宣传视频：https://www.bilibili.com/video/BV1rT7E6wEK4<br>
 - 直接加主群发到群文件的【新图标征集】文件夹
 - 在B站发动态 @湖边的稻草
 
-## 旧版交由社区维护
-
-从 3FUI 6.0 开始，旧系统已不再兼容，且性能过低的电脑体验会很差，传统 GDI+ 路线的渲染版本现已交给所有开发者，可以自行开仓库继续维护 5.3 版本，该时期的源码可以直接去该标签处下载。但请注意，早期版本使用的 SunnyUI 也是付费授权的，如果不能购买该授权，必须撤掉所属 UI 组件或者撤掉 SP 功能。
-
-如果你维护了旧版本可以直接提 PR 写在这里。
-
 ## 设计定位和特点
 
-3FUI 与 [HandBrake](https://github.com/HandBrake/HandBrake)、[ShanaEncoder](https://shana.pe.kr/shanaencoder_portable) 同坐一桌，属于常规专业级压制转换软件，尽管被 **终末诗** 评价为比菠萝刹那更专业，但在我自己看来是同一桌。与菠萝刹那不同是，3FUI 只使用 ffmpeg 来执行任务，没有内置任何编解码器，需要用户手动放置 ffmpeg 或将其添加到环境变量中，这使得 3FUI 的性能始终保持在最新水平，同时也无需在参数上频繁更新。当 ffmpeg 更新的时候，你可以直接换上去使用，而不用等待任何事情。
+3FUI 与 [HandBrake](https://github.com/HandBrake/HandBrake)、[ShanaEncoder](https://shana.pe.kr/shanaencoder_portable)、[ShutterEncoder](https://www.shutterencoder.com/) 同坐一桌，属于常规专业级压制转换软件，尽管被 **终末诗** 评价为更专业，但在我自己看来是同一桌。与市面上其他产品不同是，3FUI 只使用 ffmpeg 来执行任务，没有内置任何编解码器，需要用户手动放置 ffmpeg 或将其添加到环境变量中，这使得 3FUI 的性能始终保持在最新水平，同时也无需在参数上频繁更新。当 ffmpeg 更新的时候，你可以直接换上去使用，而不用等待任何事情。
 
 - 全自由转码，自由组合，任意自写参数
 - 专业调校的交互设计，主次分明，简洁高效
@@ -125,11 +119,10 @@ v6 开发者官方宣传视频：https://www.bilibili.com/video/BV1rT7E6wEK4<br>
 
 | 引用程序集                                                   | 许可证         | 作用                       |
 | ------------------------------------------------------------ | -------------- | -------------------------- |
-| [LakeUI](https://github.com/Lake1059/LakeUI)                 | GPL-3.0-only            | v6 界面主框架              |
+| [LakeUI](https://github.com/Lake1059/LakeUI)                 | GPL-3.0-only            | 界面主框架，版权所有         |
 | [WindowsAPICodePack](https://github.com/contre/Windows-API-Code-Pack-1.1) | 微软软件许可证 | 提供更舒适的文件夹选择对话框 |
-| [LibreHardwareMonitorLib](https://github.com/LibreHardwareMonitor/LibreHardwareMonitor) | MPL-2.0        | 性能监控                   |
-
-是的，三方库就这么点，连 Json.NET 都没用，你就说够不够轻量吧
+| [LibreHardwareMonitorLib](https://github.com/LibreHardwareMonitor/LibreHardwareMonitor) | MPL-2.0        | LHM 性能监控               |
+| [Microsoft.Agents.AI.OpenAI](https://learn.microsoft.com/zh-cn/agent-framework/) | MIT | Agent 基底框架和 OpenAI 支持 |
 
 ## 新手入门
 
@@ -142,13 +135,14 @@ v6 开发者官方宣传视频：https://www.bilibili.com/video/BV1rT7E6wEK4<br>
 - 影视飓风 | 帧率的旧事 | [BV1hp4y1f7B5](https://www.bilibili.com/video/BV1hp4y1f7B5)
 - 终末诗 | 适用于小白的视频压缩教学 | [知乎](https://zhuanlan.zhihu.com/p/1913258114746122747)  此文章包含大量测试结果总结和设置教学<br>
   新手把这篇文章看完能学会很多东西，继续往下看之前先把这个打开看！！
-- 终末诗 | 3FUI 入门教程 | [知乎](https://zhuanlan.zhihu.com/p/1943079795341623993)
+- 终末诗 | 3FUI 入门教程（v5） | [知乎](https://zhuanlan.zhihu.com/p/1943079795341623993)
+- 终末诗 | 3FUI 入门教程（v6） | [知乎](https://zhuanlan.zhihu.com/p/2053530841180009271)
 
 ### 概念科普：封装格式和编码格式
 
 这是大众的广泛误区。
 
-既然你在用 3FUI，那就必须清楚这个最基本的概念，mp4 是封装格式，不是编码格式，没有 mp4 这种编码，x264 才是编码格式，mp4 只是外面的壳子，其内部可以塞 x264\x265\av1 等等主流编码。其余以此类推，而 mkv 所支持的编码最为广泛。
+既然你在用 3FUI，那就必须清楚这个最基本的概念，mp4 是封装格式，不是编码格式，没有 mp4 这种编码，x264 才是编码格式，严格来讲 AVC/H.264 是实现标准，libx264 是CPU编码器，mp4 只是外面的壳子，其内部可以塞 x264\x265\av1 等等主流编码。其余以此类推，而 mkv 所支持的编码最为广泛。
 
 ### NVIDIA NVENC 规格
 
