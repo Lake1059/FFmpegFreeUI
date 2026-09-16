@@ -8,7 +8,6 @@ Imports LakeUI
 
 Public Class Form_v6_集成工具_质量评测
 
-    Private Const 浏览本地模型项 As String = "浏览本地模型文件 ..."
     Private Const 文件列 As Integer = 0
     Private Const PSNR列 As Integer = 1
     Private Const SSIM列 As Integer = 2
@@ -25,6 +24,11 @@ Public Class Form_v6_集成工具_质量评测
     Private 最后评测记录 As String = ""
     Private 正在选择本地模型 As Boolean = False
     Private 正在刷新Vmaf模型列表 As Boolean = False
+    Private 可用Vmaf模型 As New List(Of VmafModelDisplayItem)()
+    Private 本轮Vmaf模型 As VmafModelDisplayItem
+    Private 本轮Vmaf说明 As String = ""
+    Private 本轮Vmaf错误 As String = ""
+    Private ReadOnly 模型说明标签 As New Label With {.AutoSize = True, .Dock = DockStyle.Top, .Padding = New Padding(0, 4, 0, 4)}
 
     Private Enum 指标类型
         PSNR
@@ -72,12 +76,18 @@ Public Class Form_v6_集成工具_质量评测
         Public Property 已处理帧数 As Integer = 0
         Public Property 错误信息 As String = ""
         Public ReadOnly Property 数据锁 As New Object()
+        Public Property 实际模型 As String = ""
+        Public Property 模型说明 As String = ""
     End Class
 
     Private Class 进程运行结果
         Public Property ExitCode As Integer = -1
         Public Property Output As String = ""
-        Public Property ExecutablePath As String = ""
+    End Class
+
+    Private Class Vmaf模型查询结果
+        Public Property 模型 As New List(Of String)()
+        Public Property 支持Cuda As Boolean = False
     End Class
 
     Private Class 视频流信息
@@ -105,6 +115,8 @@ Public Class Form_v6_集成工具_质量评测
         Public Property 每帧数据 As New List(Of Double)
         Public Property 已处理帧数 As Integer
         Public Property 错误信息 As String = ""
+        Public Property 实际模型 As String = ""
+        Public Property 模型说明 As String = ""
     End Class
     Private Class 页面状态文件
         Public Property 文件路径 As String = ""
@@ -137,10 +149,19 @@ Public Class Form_v6_集成工具_质量评测
         调整列宽()
         调整底部按钮布局()
         恢复页面状态()
+        AddHandler 界面主题_v6.主题已更改, AddressOf 刷新全部评分颜色
+    End Sub
+
+    Private Sub 质量评测关闭(sender As Object, e As FormClosedEventArgs) Handles MyBase.FormClosed
+        RemoveHandler 界面主题_v6.主题已更改, AddressOf 刷新全部评分颜色
     End Sub
 
     <CodeAnalysis.SuppressMessage("Performance", "CA1861:不要将常量数组作为参数", Justification:="<挂起>")>
     Private Sub 初始化控件()
+        Panel4.Parent.Controls.Add(模型说明标签)
+        Panel4.Parent.Controls.SetChildIndex(模型说明标签, Panel4.Parent.Controls.GetChildIndex(Panel4))
+        AddHandler Panel4.Parent.SizeChanged, Sub() 模型说明标签.MaximumSize = New Size(Panel4.Width, 0)
+        模型说明标签.MaximumSize = New Size(Panel4.Width, 0)
         UltraDetailListView1.MultiSelect = True
         UltraDetailListView1.AllowDragReorder = True
         For Each column In UltraDetailListView1.Columns
@@ -161,8 +182,7 @@ Public Class Form_v6_集成工具_质量评测
             checkBox.ClickAnywhere = True
         Next
 
-        MCB_模型选择.Items.Clear()
-        MCB_模型选择.SelectedIndex = -1
+        MCB_模型选择.ReplaceDisplayItems(Nothing)
         填充下拉框(MCB_Pooling, "mean", "harmonic_mean", "min")
         填充下拉框(MCB_SubSample, "1", "2", "3", "5", "10", "15")
         绑定路径下拉框拖拽(MCB_模型选择, 路径下拉框拖拽模式.文件路径,
@@ -170,33 +190,34 @@ Public Class Form_v6_集成工具_质量评测
     End Sub
 
     Public Async Function 刷新Vmaf模型列表Async() As Task
-        If 正在刷新Vmaf模型列表 OrElse IsDisposed Then Return
+        If 正在刷新Vmaf模型列表 OrElse 正在评测 OrElse IsDisposed Then Return
         正在刷新Vmaf模型列表 = True
         MCB_模型选择.Enabled = False
         MB_刷新VMAF模型.Enabled = False
         Try
-            Dim models = Await 获取FFmpegVmaf模型列表Async()
+            Dim previousModel = MCB_模型选择.SelectedModelValue
+            Dim previousCuda = MCB_模型选择.SelectedUsesCuda
+            Dim query = Await 获取FFmpegVmaf模型列表Async()
             If IsDisposed Then Return
-
-            MCB_模型选择.Items.Clear()
-            MCB_模型选择.Items.Add(浏览本地模型项)
-            For Each model In models
-                MCB_模型选择.Items.Add(model)
-            Next
+            Dim displayItems = 构建Vmaf模型显示项(query.模型, query.支持Cuda)
+            可用Vmaf模型 = displayItems.ToList()
+            Dim previousItem = MCB_模型选择.SelectedModel
+            If previousItem IsNot Nothing AndAlso Not previousItem.IsAuto AndAlso
+               Not displayItems.Any(Function(x) x.ModelValue = previousModel AndAlso x.UseCuda = previousCuda) Then displayItems.Add(previousItem)
+            MCB_模型选择.ReplaceDisplayItems(displayItems)
             MCB_模型选择.ItemToolTips.Clear()
-            For Each model In models
+            For Each model In MCB_模型选择.Models
                 Dim description = ""
-                If Vmaf模型描述.TryGetValue(model, description) Then
-                End If
-                MCB_模型选择.ItemToolTips.Add(model, description)
+                Vmaf模型描述.TryGetValue(model.ModelValue, description)
+                MCB_模型选择.ItemToolTips.Add(model.ModelValue, If(model.IsAuto, "按原视频分辨率选择 V1；≥48 fps 优先 HFR；同档没有 V1 时回退 V0 NEG。", description))
             Next
-            MCB_模型选择.SelectedIndex = If(models.Count > 0, 1, -1)
-            If models.Count = 0 Then MCB_模型选择.Text = ""
+            Dim previousIndex = MCB_模型选择.FindModelIndex(previousModel, previousCuda)
+            MCB_模型选择.SelectedIndex = If(previousIndex >= 0, previousIndex, MCB_模型选择.FirstModelIndex)
         Finally
             正在刷新Vmaf模型列表 = False
             If Not IsDisposed Then
-                MCB_模型选择.Enabled = True
-                MB_刷新VMAF模型.Enabled = True
+                MCB_模型选择.Enabled = Not 正在评测
+                MB_刷新VMAF模型.Enabled = Not 正在评测
             End If
         End Try
     End Function
@@ -205,20 +226,161 @@ Public Class Form_v6_集成工具_质量评测
         Await 刷新Vmaf模型列表Async()
     End Sub
 
-    Private Shared Async Function 获取FFmpegVmaf模型列表Async() As Task(Of List(Of String))
+    Private Shared Async Function 获取FFmpegVmaf模型列表Async() As Task(Of Vmaf模型查询结果)
+        Dim result As New Vmaf模型查询结果()
         Try
             Dim ffmpeg = 获取FFmpeg文件名()
-            Dim helpResult = Await 运行FFmpeg模型查询Async(ffmpeg, "-hide_banner -h filter=libvmaf", TimeSpan.FromSeconds(10))
-            If helpResult.ExitCode <> 0 Then Return New List(Of String)()
+            Dim ffmpegPath = 解析可执行文件实际路径(ffmpeg)
 
-            Dim candidates = 解析FFmpegVmaf模型列表(helpResult.Output)
-            For Each model In 从FFmpeg运行库提取Vmaf模型列表(helpResult.ExecutablePath)
-                If Not candidates.Contains(model, StringComparer.OrdinalIgnoreCase) Then candidates.Add(model)
-            Next
-            Return candidates
+            ' 滤镜能力只需一次 -filters 查询；模型字符串扫描与该查询并行执行。
+            ' 这样既避免短命进程 MainModule 的时序竞争，也避免连续启动两个 -h 查询增加刷新延迟。
+            Dim filtersTask = 运行FFmpeg模型查询Async(ffmpeg, "-hide_banner -filters", TimeSpan.FromSeconds(10))
+            Dim binaryModelsTask As Task(Of List(Of String))
+            If ffmpegPath <> "" Then
+                binaryModelsTask = Task.Run(Function() 从FFmpeg运行库提取Vmaf模型列表(ffmpegPath))
+            Else
+                binaryModelsTask = Task.FromResult(New List(Of String)())
+            End If
+
+            Dim filtersResult = Await filtersTask
+            Dim binaryModels = Await binaryModelsTask
+            If Not FFmpeg滤镜列表包含(filtersResult.Output, "libvmaf") Then Return result
+
+            result.模型 = binaryModels
+            result.支持Cuda = FFmpeg滤镜列表包含(filtersResult.Output, "libvmaf_cuda")
+            Return result
         Catch
-            Return New List(Of String)()
+            Return result
         End Try
+    End Function
+
+    Private Shared Function FFmpeg滤镜列表包含(output As String, filterName As String) As Boolean
+        If String.IsNullOrWhiteSpace(output) OrElse String.IsNullOrWhiteSpace(filterName) Then Return False
+        Return Regex.IsMatch(output,
+                             $"^\s*\S+\s+{Regex.Escape(filterName)}\s+",
+                             RegexOptions.IgnoreCase Or RegexOptions.Multiline Or RegexOptions.CultureInvariant)
+    End Function
+
+    Private Shared Function 构建Vmaf模型显示项(models As IEnumerable(Of String), cudaAvailable As Boolean) As List(Of VmafModelDisplayItem)
+        Dim baseItems As New List(Of VmafModelDisplayItem)()
+        Dim seen As New HashSet(Of String)(StringComparer.OrdinalIgnoreCase)
+        If models IsNot Nothing Then
+            For Each model In models
+                Dim raw = If(model, "").Trim()
+                If raw = "" OrElse Not seen.Add(raw) Then Continue For
+                Dim item = 解析Vmaf模型显示项(raw)
+                If item IsNot Nothing Then baseItems.Add(item)
+            Next
+        End If
+
+        baseItems.Sort(AddressOf 比较Vmaf模型显示顺序)
+
+        Dim result As New List(Of VmafModelDisplayItem)()
+        For Each item In baseItems
+            result.Add(item)
+
+            ' VMAF v1 当前包含 CAMBI/SpEED 等尚无 CUDA 实现的特征提取器；
+            ' 即使 FFmpeg 编译了 libvmaf_cuda，也只为已验证兼容的 v0 NEG 模型提供 CUDA 入口。
+            If cudaAvailable AndAlso 获取Vmaf主版本(item.ModelValue) = 0 Then
+                result.Add(New VmafModelDisplayItem With {
+                    .ModelValue = item.ModelValue,
+                    .VersionLabel = item.VersionLabel,
+                    .Is4K = item.Is4K,
+                    .ViewingDistanceLabel = item.ViewingDistanceLabel,
+                    .IsHfr = item.IsHfr,
+                    .UseCuda = True
+                })
+            End If
+        Next
+        Return result
+    End Function
+
+    Private Shared Function 解析Vmaf模型显示项(model As String) As VmafModelDisplayItem
+        Dim raw = If(model, "").Trim()
+        If raw = "" Then Return Nothing
+        Dim lower = raw.ToLowerInvariant()
+
+        ' float 与 bootstrap(b) 模型属于兼容/研究分支，不进入面向普通用户的模型列表。
+        If lower.StartsWith("vmaf_float_", StringComparison.Ordinal) OrElse
+           Regex.IsMatch(lower, "^vmaf_(?:float_)?b_", RegexOptions.CultureInvariant) Then Return Nothing
+
+        Dim versionMatch = Regex.Match(lower,
+                                       "(?:^|_)v(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)(?<neg>neg)?(?:_|$)",
+                                       RegexOptions.CultureInvariant)
+        If Not versionMatch.Success Then Return Nothing
+
+        Dim major As Integer
+        If Not Integer.TryParse(versionMatch.Groups("major").Value, NumberStyles.None, CultureInfo.InvariantCulture, major) Then Return Nothing
+        Dim isNeg = versionMatch.Groups("neg").Success
+        If major = 0 AndAlso Not isNeg Then Return Nothing
+
+        Dim distanceMatch = Regex.Match(lower,
+                                        "(?:^|_)(?<whole>\d+)d(?<fraction>\d+)h(?:_|$)",
+                                        RegexOptions.CultureInvariant)
+        Dim viewingDistance = If(distanceMatch.Success, 格式化Vmaf观看距离(distanceMatch), "")
+
+        Return New VmafModelDisplayItem With {
+            .ModelValue = raw,
+            .VersionLabel = $"V{major.ToString(CultureInfo.InvariantCulture)}",
+            .Is4K = lower.Contains("_4k_", StringComparison.Ordinal) OrElse
+                    lower.Contains("_2160", StringComparison.Ordinal),
+            .ViewingDistanceLabel = viewingDistance,
+            .IsHfr = lower.Contains("_hfr_", StringComparison.Ordinal),
+            .UseCuda = False
+        }
+    End Function
+
+    Private Shared Function 格式化Vmaf观看距离(distanceMatch As Match) As String
+        Dim whole = distanceMatch.Groups("whole").Value
+        Dim fraction = distanceMatch.Groups("fraction").Value.TrimEnd("0"c)
+        If fraction = "" Then Return whole & "H"
+        Return whole & "." & fraction & "H"
+    End Function
+
+    Private Shared Function 获取Vmaf主版本(model As String) As Integer
+        Dim match = Regex.Match(If(model, ""), "(?:^|_)v(?<major>\d+)\.", RegexOptions.IgnoreCase Or RegexOptions.CultureInvariant)
+        Dim value As Integer
+        If match.Success AndAlso Integer.TryParse(match.Groups("major").Value, NumberStyles.None, CultureInfo.InvariantCulture, value) Then Return value
+        Return -1
+    End Function
+
+    Private Shared Function 比较Vmaf模型显示顺序(left As VmafModelDisplayItem, right As VmafModelDisplayItem) As Integer
+        Dim versionCompare = 获取Vmaf主版本(right.ModelValue).CompareTo(获取Vmaf主版本(left.ModelValue))
+        If versionCompare <> 0 Then Return versionCompare
+
+        Dim hfrCompare = left.IsHfr.CompareTo(right.IsHfr)
+        If hfrCompare <> 0 Then Return hfrCompare
+
+        Dim resolutionCompare = left.Is4K.CompareTo(right.Is4K)
+        If resolutionCompare <> 0 Then Return resolutionCompare
+
+        Dim distanceCompare = StringComparer.OrdinalIgnoreCase.Compare(left.ViewingDistanceLabel, right.ViewingDistanceLabel)
+        If distanceCompare <> 0 Then Return distanceCompare
+
+        Return StringComparer.OrdinalIgnoreCase.Compare(left.ModelValue, right.ModelValue)
+    End Function
+
+    Private Shared Function 解析AutoVmaf模型(items As IEnumerable(Of VmafModelDisplayItem), width As Integer, height As Integer, fps As Double, ByRef note As String) As VmafModelDisplayItem
+        If width <= 0 OrElse height <= 0 Then Throw New InvalidOperationException("无法读取原视频尺寸，不能自动选择 VMAF 模型。请检查原视频或手动选择模型。")
+        Dim is4K = Math.Max(width, height) >= 3840
+        Dim highFrameRate = Double.IsFinite(fps) AndAlso fps >= 48
+        Dim candidates = items.Where(Function(x) Not x.IsAuto AndAlso Not x.IsLocal AndAlso Not x.UseCuda AndAlso x.Is4K = is4K).ToList()
+        Dim selected = candidates.Where(Function(x) 获取Vmaf主版本(x.ModelValue) = 1 AndAlso (highFrameRate OrElse Not x.IsHfr)).
+            OrderByDescending(Function(x) highFrameRate AndAlso x.IsHfr).
+            ThenBy(Function(x) If(x.ViewingDistanceLabel = If(is4K, "1.5H", "3H"), 0, 1)).
+            ThenByDescending(Function(x) Version.Parse(Regex.Match(x.ModelValue, "\d+\.\d+\.\d+").Value)).
+            ThenBy(Function(x) x.ModelValue, StringComparer.OrdinalIgnoreCase).FirstOrDefault()
+        If selected Is Nothing Then
+            selected = candidates.Where(Function(x) 获取Vmaf主版本(x.ModelValue) = 0 AndAlso x.ModelValue.Contains("neg", StringComparison.OrdinalIgnoreCase)).
+                OrderByDescending(Function(x) Version.Parse(Regex.Match(x.ModelValue, "\d+\.\d+\.\d+").Value)).FirstOrDefault()
+        End If
+        If selected Is Nothing Then Throw New InvalidOperationException($"未找到{If(is4K, "4K", "非4K")}档适用的 V1 或 V0 NEG 模型。请刷新模型列表、更新 FFmpeg 或手动选择模型。")
+        note = $"AUTO → {selected.DisplayText}（{selected.ModelValue}）"
+        If 获取Vmaf主版本(selected.ModelValue) = 0 Then note &= "；同分辨率缺少适用 V1，已回退 V0 NEG"
+        If highFrameRate AndAlso Not selected.IsHfr Then note &= "；缺少匹配的 HFR 模型，使用普通模型"
+        If Not Double.IsFinite(fps) OrElse fps <= 0 Then note &= "；无法读取帧率，使用普通模型"
+        If Double.IsFinite(fps) AndAlso fps > 60 Then note &= "；HFR 比普通版更合理，但已超出其明确的约 50/60 fps 校准区间，结果仅供参考。"
+        Return selected
     End Function
 
     Private Shared Function 从FFmpeg运行库提取Vmaf模型列表(ffmpegPath As String) As List(Of String)
@@ -276,17 +438,12 @@ Public Class Form_v6_集成工具_质量评测
                                                             End Try
                                                         End Sub)
                 process.Start()
-                Dim executablePath = ""
-                Try
-                    If process.MainModule IsNot Nothing Then executablePath = process.MainModule.FileName
-                Catch
-                End Try
                 Dim stdoutTask = process.StandardOutput.ReadToEndAsync(timeout.Token)
                 Dim stderrTask = process.StandardError.ReadToEndAsync(timeout.Token)
                 Await process.WaitForExitAsync(timeout.Token)
                 Dim stdout = Await stdoutTask
                 Dim stderr = Await stderrTask
-                Return New 进程运行结果 With {.ExitCode = process.ExitCode, .Output = stdout & vbCrLf & stderr, .ExecutablePath = executablePath}
+                Return New 进程运行结果 With {.ExitCode = process.ExitCode, .Output = stdout & vbCrLf & stderr}
             End Using
         End Using
     End Function
@@ -318,15 +475,9 @@ Public Class Form_v6_集成工具_质量评测
         If combo.Items.Count > 0 Then combo.SelectedIndex = 0
     End Sub
 
-    Private Sub MCB_模型选择_SelectedIndexChanged(sender As Object, e As EventArgs) Handles MCB_模型选择.SelectedIndexChanged
+    Private Sub MCB_模型选择_BrowseRequested(sender As Object, e As EventArgs) Handles MCB_模型选择.BrowseRequested
         If 正在选择本地模型 OrElse 正在刷新Vmaf模型列表 Then Exit Sub
-
-        Select Case MCB_模型选择.Text.Trim()
-            Case ""
-                清空Vmaf附加选项()
-            Case 浏览本地模型项
-                选择本地Vmaf模型()
-        End Select
+        选择本地Vmaf模型()
     End Sub
 
     Private Sub 选择本地Vmaf模型()
@@ -335,8 +486,6 @@ Public Class Form_v6_集成工具_质量评测
             Using dialog As New OpenFileDialog With {.Multiselect = False, .Filter = "VMAF 模型 JSON 文件|*.json|所有文件|*.*"}
                 If dialog.ShowDialog(Me) = DialogResult.OK Then
                     添加本地Vmaf模型(dialog.FileName)
-                Else
-                    选中首个Vmaf模型()
                 End If
             End Using
         Finally
@@ -352,27 +501,20 @@ Public Class Form_v6_集成工具_质量评测
             Exit Sub
         End If
 
-        For i = 0 To MCB_模型选择.Items.Count - 1
-            If String.Equals(CStr(MCB_模型选择.Items(i)), modelPath, StringComparison.OrdinalIgnoreCase) Then
-                MCB_模型选择.SelectedIndex = i
-                Exit Sub
-            End If
-        Next
-
-        MCB_模型选择.Items.Add(modelPath)
-        MCB_模型选择.SelectedIndex = MCB_模型选择.Items.Count - 1
+        MCB_模型选择.AddDisplayItem(New VmafModelDisplayItem With {
+            .ModelValue = modelPath,
+            .IsLocal = True
+        })
     End Sub
 
     Private Sub 选中首个Vmaf模型()
-        For i = 0 To MCB_模型选择.Items.Count - 1
-            If String.Equals(CStr(MCB_模型选择.Items(i)), 浏览本地模型项, StringComparison.Ordinal) Then Continue For
-            MCB_模型选择.SelectedIndex = i
-            Exit Sub
-        Next
-
-        MCB_模型选择.SelectedIndex = -1
-        MCB_模型选择.Text = ""
-        清空Vmaf附加选项()
+        If MCB_模型选择.FirstModelIndex >= 0 Then
+            MCB_模型选择.SelectedIndex = MCB_模型选择.FirstModelIndex
+        Else
+            MCB_模型选择.SelectedIndex = -1
+            MCB_模型选择.Text = ""
+            清空Vmaf附加选项()
+        End If
     End Sub
 
     Private Shared Function 是否有效本地Vmaf模型(path As String) As Boolean
@@ -492,6 +634,7 @@ Public Class Form_v6_集成工具_质量评测
         If Not 验证评测参数() Then
             Exit Sub
         End If
+        If 正在刷新Vmaf模型列表 Then Return
 
         Dim metrics = 获取选中指标()
         Dim itemsToRun = 获取待评测项()
@@ -542,7 +685,7 @@ Public Class Form_v6_集成工具_质量评测
             Return False
         End If
         If 获取选中指标().Contains(指标类型.VMAF) Then
-            Dim selectedModel = 获取下拉框文本(MCB_模型选择, "")
+            Dim selectedModel = MCB_模型选择.SelectedModelValue
             If selectedModel.EndsWith(".json", StringComparison.OrdinalIgnoreCase) AndAlso Not 是否有效本地Vmaf模型(selectedModel) Then
                 ExFloatingTip(MCB_模型选择, "本地 VMAF 模型文件不存在或不是 JSON 文件", 2200)
                 Return False
@@ -716,12 +859,12 @@ Public Class Form_v6_集成工具_质量评测
 
     Private Sub 保存页面状态()
         Try
-            Dim state As New 页面状态 With {.原视频 = MTB_原视频文件路径.Text, .从头开始 = MTB_从头开始.Text, .评测时长 = MTB_评测时长.Text, .Vmaf模型 = MCB_模型选择.Text, .Pooling = MCB_Pooling.Text, .SubSample = MCB_SubSample.Text, .VmafCuda = MCB_VMAF_CUDA.Checked}
+            Dim state As New 页面状态 With {.原视频 = MTB_原视频文件路径.Text, .从头开始 = MTB_从头开始.Text, .评测时长 = MTB_评测时长.Text, .Vmaf模型 = MCB_模型选择.SelectedModelValue, .Pooling = MCB_Pooling.Text, .SubSample = MCB_SubSample.Text, .VmafCuda = MCB_模型选择.SelectedUsesCuda}
             For Each m In 全部指标 : state.指标(获取指标名称(m)) = 获取指标复选框(m).Checked : Next
             For Each item In UltraDetailListView1.Items
                 Dim d = 获取项数据(item), sf As New 页面状态文件 With {.文件路径 = d.文件路径, .状态 = d.状态, .最近错误 = d.最近错误}
                 For Each kv In d.指标结果
-                    Dim r = kv.Value, sr As New 页面状态结果 With {.成功 = r.成功, .汇总值 = r.汇总值, .已处理帧数 = r.已处理帧数, .错误信息 = r.错误信息}
+                    Dim r = kv.Value, sr As New 页面状态结果 With {.成功 = r.成功, .汇总值 = r.汇总值, .已处理帧数 = r.已处理帧数, .错误信息 = r.错误信息, .实际模型 = r.实际模型, .模型说明 = r.模型说明}
                     SyncLock r.数据锁 : sr.每帧数据 = New List(Of Double)(r.每帧数据) : End SyncLock
                     sf.指标结果(获取指标名称(kv.Key)) = sr
                 Next
@@ -740,7 +883,14 @@ Public Class Form_v6_集成工具_质量评测
             Dim state = JsonSerializer.Deserialize(Of 页面状态)(raw, JsonSO)
             If state Is Nothing Then Exit Sub
             MTB_原视频文件路径.Text = state.原视频 : MTB_从头开始.Text = state.从头开始 : MTB_评测时长.Text = state.评测时长
-            MCB_模型选择.Text = state.Vmaf模型 : MCB_Pooling.Text = state.Pooling : MCB_SubSample.Text = state.SubSample : MCB_VMAF_CUDA.Checked = state.VmafCuda
+            If Not String.IsNullOrWhiteSpace(state.Vmaf模型) AndAlso state.Vmaf模型 <> "AUTO" Then
+                Dim restored = 解析Vmaf模型显示项(state.Vmaf模型)
+                If restored Is Nothing Then restored = New VmafModelDisplayItem With {.ModelValue = state.Vmaf模型, .VersionLabel = state.Vmaf模型, .IsLocal = state.Vmaf模型.EndsWith(".json", StringComparison.OrdinalIgnoreCase)}
+                restored.UseCuda = state.VmafCuda AndAlso 获取Vmaf主版本(restored.ModelValue) = 0 AndAlso
+                    restored.ModelValue.Contains("neg", StringComparison.OrdinalIgnoreCase)
+                MCB_模型选择.AddDisplayItem(restored)
+            End If
+            MCB_Pooling.Text = state.Pooling : MCB_SubSample.Text = state.SubSample
             For Each m In 全部指标 : If state.指标.ContainsKey(获取指标名称(m)) Then 获取指标复选框(m).Checked = state.指标(获取指标名称(m))
             Next
             For Each sf In state.文件
@@ -749,7 +899,7 @@ Public Class Form_v6_集成工具_质量评测
                 For Each kv In sf.指标结果
                     Dim m As 指标类型
                     If [Enum].TryParse(kv.Key, m) Then
-                        Dim sr = kv.Value, r As New 指标结果数据 With {.成功 = sr.成功, .汇总值 = sr.汇总值, .已处理帧数 = sr.已处理帧数, .错误信息 = sr.错误信息, .每帧数据 = If(sr.每帧数据, New List(Of Double))}
+                        Dim sr = kv.Value, r As New 指标结果数据 With {.成功 = sr.成功, .汇总值 = sr.汇总值, .已处理帧数 = sr.已处理帧数, .错误信息 = sr.错误信息, .每帧数据 = If(sr.每帧数据, New List(Of Double)), .实际模型 = sr.实际模型, .模型说明 = sr.模型说明}
                         d.指标结果(m) = r : 设置指标文本(item, m, If(r.成功, 格式化分数(r.汇总值, m), "未评测"))
                     End If
                 Next
@@ -765,6 +915,27 @@ Public Class Form_v6_集成工具_质量评测
         Dim startTime = MTB_从头开始.Text.Trim()
         Dim duration = MTB_评测时长.Text.Trim()
         Dim referenceInfo = Await 获取视频流信息Async(reference, token)
+        本轮Vmaf模型 = MCB_模型选择.SelectedModel
+        本轮Vmaf说明 = ""
+        本轮Vmaf错误 = ""
+        If metrics.Contains(指标类型.VMAF) Then
+            Try
+                If 本轮Vmaf模型 Is Nothing Then Throw New InvalidOperationException("请选择 VMAF 模型。")
+                If 本轮Vmaf模型.IsAuto Then
+                    本轮Vmaf模型 = 解析AutoVmaf模型(可用Vmaf模型, referenceInfo.宽度, referenceInfo.高度, 解析帧率值(referenceInfo.帧率), 本轮Vmaf说明)
+                Else
+                    本轮Vmaf说明 = $"手动模型：{本轮Vmaf模型.ModelValue}{If(本轮Vmaf模型.UseCuda, " · CUDA", "") }"
+                    If 解析帧率值(referenceInfo.帧率) > 60 Then 本轮Vmaf说明 &= "；HFR 比普通版更合理，但已超出其明确的约 50/60 fps 校准区间，结果仅供参考。"
+                End If
+                模型说明标签.Text = 本轮Vmaf说明
+            Catch ex As InvalidOperationException
+                本轮Vmaf错误 = ex.Message
+                本轮Vmaf说明 = ex.Message
+                模型说明标签.Text = 本轮Vmaf错误
+            End Try
+            模型说明标签.ForeColor = 界面主题_v6.获取当前主题前景色(Color.Orange)
+            追加评测记录(模型说明标签.Text)
+        End If
         Dim overwriteExisting = overwriteDecision = 覆盖已有成绩决策.覆盖
 
         For Each item In itemsToRun
@@ -831,6 +1002,14 @@ Public Class Form_v6_集成工具_质量评测
     Private Async Function 运行单项指标Async(reference As String, distorted As String, metric As 指标类型, startTime As String, duration As String, referenceInfo As 视频流信息, distortedInfo As 视频流信息, token As CancellationToken, item As UltraDetailListView.ListItem, result As 指标结果数据) As Task(Of 指标结果数据)
         Dim tempPath = Path.Combine(Path.GetTempPath(), $"3fui_quality_{Guid.NewGuid():N}_{metric.ToString().ToLowerInvariant()}.log")
         Dim vmafPool = If(metric = 指标类型.VMAF, 获取下拉框文本(MCB_Pooling, "mean"), "")
+        If metric = 指标类型.VMAF Then
+            result.实际模型 = If(本轮Vmaf模型?.IsAuto = False, 本轮Vmaf模型.ModelValue, "")
+            result.模型说明 = 本轮Vmaf说明
+            If 本轮Vmaf错误 <> "" Then
+                result.错误信息 = 本轮Vmaf错误
+                Return result
+            End If
+        End If
         Dim arguments = 构建指标命令(reference, distorted, metric, startTime, duration, tempPath, referenceInfo, distortedInfo)
         追加评测记录("")
         追加评测记录($"文件：{distorted}")
@@ -981,7 +1160,7 @@ Public Class Form_v6_集成工具_质量评测
         Dim distortedFrameRate = 获取FFMetrics帧率参数(distortedInfo)
         Dim referenceFrameRate = 获取FFMetrics帧率参数(referenceInfo)
         Dim durationFrameRate = If(String.IsNullOrWhiteSpace(distortedFrameRate), referenceFrameRate, distortedFrameRate)
-        Dim 使用VmafCuda = metric = 指标类型.VMAF AndAlso MCB_VMAF_CUDA IsNot Nothing AndAlso MCB_VMAF_CUDA.Checked
+        Dim 使用VmafCuda = metric = 指标类型.VMAF AndAlso 本轮Vmaf模型 IsNot Nothing AndAlso 本轮Vmaf模型.UseCuda
         Dim arg As New StringBuilder("-hide_banner -nostdin -probesize 50M ")
         追加FFMetrics输入参数(arg, distorted, distortedFrameRate, 使用VmafCuda)
         追加FFMetrics输入参数(arg, reference, referenceFrameRate, 使用VmafCuda)
@@ -993,7 +1172,7 @@ Public Class Form_v6_集成工具_质量评测
         Dim finalPixelFormat = If(使用VmafCuda,
                                   获取VmafCuda像素格式(referenceInfo, distortedInfo),
                                   获取指标像素格式(referenceInfo, distortedInfo))
-        Dim model = If(metric = 指标类型.VMAF, 获取下拉框文本(MCB_模型选择, ""), "")
+        Dim model = If(metric = 指标类型.VMAF, 本轮Vmaf模型.ModelValue, "")
         Dim targetSize = 获取评测目标尺寸(metric, referenceInfo, model)
         Dim scaleDistorted = 构建视频预处理滤镜(distortedInfo, referenceInfo, targetSize.Width, targetSize.Height, finalPixelFormat, 使用VmafCuda)
         Dim scaleReference = 构建参考预处理滤镜(metric, referenceInfo, targetSize, finalPixelFormat, 使用VmafCuda)
@@ -1132,6 +1311,7 @@ Public Class Form_v6_集成工具_质量评测
 
         Dim searchDirs As New List(Of String)
         If Not String.IsNullOrWhiteSpace(Application.StartupPath) Then searchDirs.Add(Application.StartupPath)
+        searchDirs.Add(Environment.CurrentDirectory)
 
         Dim pathValue = Environment.GetEnvironmentVariable("PATH")
         If Not String.IsNullOrWhiteSpace(pathValue) Then
@@ -1336,6 +1516,27 @@ Public Class Form_v6_集成工具_质量评测
 
     Private Shared Function 获取FFmpeg文件名() As String
         Return 设置_v6.获取FFmpeg进程文件名()
+    End Function
+
+    Private Shared Function 解析可执行文件实际路径(fileName As String) As String
+        Dim value = If(fileName, "").Trim().Trim(ChrW(34))
+        If value = "" Then Return ""
+
+        Try
+            Dim hasDirectoryPart = value.IndexOf(Path.DirectorySeparatorChar) >= 0 OrElse
+                                   value.IndexOf(Path.AltDirectorySeparatorChar) >= 0
+            If Path.IsPathRooted(value) OrElse hasDirectoryPart Then
+                Dim fullPath = Path.GetFullPath(value)
+                If File.Exists(fullPath) Then Return fullPath
+                If Path.GetExtension(fullPath) = "" AndAlso File.Exists(fullPath & ".exe") Then Return fullPath & ".exe"
+                Return ""
+            End If
+
+            Return 查找可执行文件(If(Path.GetExtension(value) = "", value & ".exe", value))
+        Catch
+        End Try
+
+        Return ""
     End Function
 
     Private Async Function 运行FFmpegAsync(arguments As String, token As CancellationToken, onLine As Action(Of String)) As Task(Of 进程运行结果)
@@ -1631,6 +1832,8 @@ Public Class Form_v6_集成工具_质量评测
     End Function
 
     Private Sub 设置运行状态(running As Boolean)
+        MCB_模型选择.Enabled = Not running AndAlso Not 正在刷新Vmaf模型列表
+        MB_刷新VMAF模型.Enabled = Not running AndAlso Not 正在刷新Vmaf模型列表
         MB_开始评测.Text = If(running, "取消评测", "开始评测")
         MB_开始评测.ForeColor = If(running, Color.IndianRed, 界面主题_v6.获取当前主题前景色(Color.YellowGreen))
         MB_选择原视频.Enabled = Not running
@@ -1706,6 +1909,7 @@ Public Class Form_v6_集成工具_质量评测
     End Sub
 
     Private Sub 刷新全部评分颜色()
+        模型说明标签.ForeColor = 界面主题_v6.获取当前主题前景色(Color.Orange)
         For Each metric In 全部指标
             刷新评分颜色(metric, False)
         Next
@@ -1857,6 +2061,10 @@ Public Class Form_v6_集成工具_质量评测
                     sb.AppendLine($"  {获取指标名称(metric)}：失败，{result.错误信息}")
                 Else
                     sb.AppendLine($"  {获取指标名称(metric)}：未评测")
+                End If
+                If result IsNot Nothing AndAlso metric = 指标类型.VMAF Then
+                    If result.实际模型 <> "" Then sb.AppendLine($"  实际模型：{result.实际模型}")
+                    If result.模型说明 <> "" Then sb.AppendLine($"  模型说明：{result.模型说明}")
                 End If
             Next
             sb.AppendLine()

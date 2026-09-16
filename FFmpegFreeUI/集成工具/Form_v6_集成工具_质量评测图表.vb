@@ -8,6 +8,12 @@ Public Class Form_v6_集成工具_质量评测图表
     Private 数据提供器 As Func(Of String, Dictionary(Of String, List(Of Double))) = Nothing
     Private 分数提供器 As Func(Of String, Dictionary(Of String, String)) = Nothing
     Private 已设置坐标指标 As String = ""
+    Private Shared ReadOnly 浅色系列颜色表 As Color() = {
+        Color.FromArgb(0, 94, 184), Color.FromArgb(194, 32, 48),
+        Color.FromArgb(176, 80, 0), Color.FromArgb(132, 102, 0),
+        Color.FromArgb(0, 122, 0), Color.FromArgb(0, 118, 130),
+        Color.FromArgb(63, 77, 199), Color.FromArgb(137, 42, 176)
+    }
 
     Private Shared ReadOnly 系列颜色表 As Color() = {
         Color.FromArgb(230, 230, 230),
@@ -25,6 +31,7 @@ Public Class Form_v6_集成工具_质量评测图表
             当前窗体 = New Form_v6_集成工具_质量评测图表()
         End If
 
+        界面主题_v6.应用当前主题到窗体(当前窗体)
         当前窗体.设置数据源(dataProvider, scoreProvider)
         当前窗体.刷新图表()
         当前窗体.显示到主窗口中心()
@@ -41,6 +48,7 @@ Public Class Form_v6_集成工具_质量评测图表
     End Sub
 
     Private Sub Form_v6_集成工具_质量评测图表_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        AddHandler 界面主题_v6.主题已更改, AddressOf 刷新图表
         Try
             Icon = FormMain_v6.Icon
         Catch
@@ -54,6 +62,10 @@ Public Class Form_v6_集成工具_质量评测图表
             Catch
             End Try
         End If
+    End Sub
+
+    Private Sub 窗体关闭(sender As Object, e As FormClosedEventArgs) Handles MyBase.FormClosed
+        RemoveHandler 界面主题_v6.主题已更改, AddressOf 刷新图表
     End Sub
 
     Private Sub 设置数据源(dataProvider As Func(Of String, Dictionary(Of String, List(Of Double))), scoreProvider As Func(Of String, Dictionary(Of String, String)))
@@ -120,7 +132,7 @@ Public Class Form_v6_集成工具_质量评测图表
                     ToArray()
                 Dim series = Ultra2DChart1.AddSeries(entry.Key, Ultra2DChart.ChartSeriesTypeEnum.Line, values)
                 series.Color = 获取系列颜色(seriesIndex)
-                series.LineThickness = 1.0F
+                series.LineThickness = If(界面主题_v6.当前为浅色模式, 2.0F, 1.0F)
                 series.MarkerShape = Ultra2DChart.MarkerShapeEnum.None
                 series.ShowValueLabels = Ultra2DChart.SeriesValueLabelModeEnum.Hide
                 seriesIndex += 1
@@ -172,7 +184,8 @@ Public Class Form_v6_集成工具_质量评测图表
     End Sub
 
     Private Function 获取系列颜色(index As Integer) As Color
-        Return 系列颜色表(Math.Abs(index) Mod 系列颜色表.Length)
+        Dim palette = If(界面主题_v6.当前为浅色模式, 浅色系列颜色表, 系列颜色表)
+        Return palette(Math.Abs(index) Mod palette.Length)
     End Function
 
     Private Shared Function 颜色转Html(color As Color) As String
