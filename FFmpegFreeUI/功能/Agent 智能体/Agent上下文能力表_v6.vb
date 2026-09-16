@@ -11,14 +11,12 @@ Public NotInheritable Class Agent上下文能力表_v6
     Private Shared ReadOnly 上下文总量规则 As 上下文总量规则项() = {
         前缀("gpt-6", 600000),
         前缀("gpt-5.6", 300000),
-        前缀("gpt-5.5", 270000),
-        前缀("deepseek-v4", 1000000),
+        前缀("deepseek", 1000000),
         前缀("glm-5.2", 1000000)
     }
 
     ' 在这里维护已知上下文压缩专用模型，按优先级从高到低匹配端点模型列表。
     Private Shared ReadOnly 上下文压缩专用模型 As String() = {
-        "gpt-5.5-openai-compact",
         "gpt-5.4-openai-compact",
         "gpt-5.3-openai-compact"
     }
