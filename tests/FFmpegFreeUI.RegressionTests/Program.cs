@@ -13,6 +13,11 @@ internal static partial class Program
 
     private static async Task<int> MainAsync(string[] args)
     {
+        if (args.FirstOrDefault() == "--agent-args-fixture")
+        {
+            Console.WriteLine(JsonSerializer.Serialize(args.Skip(1)));
+            return 0;
+        }
         if (args.Contains("--output-fixture"))
         {
             for (var i = 0; i < 200; i++)
@@ -31,7 +36,7 @@ internal static partial class Program
             return 0;
         }
         if (args.Contains("--ui-preview")) { ShowThemePreview(); return 0; }
-        if (args.Length > 0 && !(args.Length == 2 && args[0] == "--ffmpeg")) return 2;
+        if (args.Length > 0 && !(args.Length == 2 && args[0] == "--ffmpeg") && !args.SequenceEqual(new[] { "--agent-only" })) return 2;
 
         var directory = Path.Combine(Path.GetTempPath(), "FFmpegFreeUI-regression-" + Guid.NewGuid().ToString("N"));
         Directory.CreateDirectory(directory);
@@ -46,6 +51,10 @@ internal static partial class Program
                 替代进程文件名 = Environment.ProcessPath!,
                 工作目录 = directory
             };
+            TestAgentConversations(directory);
+            TestAgentAudit(directory);
+            Console.WriteLine("PASS: concurrent Agent runs, stop isolation, per-conversation drafts and colors");
+            if (args.Contains("--agent-only")) { Console.WriteLine($"PASS: {checks} checks"); return 0; }
             TestPresetCopies(directory);
             TestThemeAndVmaf();
             Console.WriteLine("PASS: light/dark theme, first-load colors, VMAF AUTO and model selection");

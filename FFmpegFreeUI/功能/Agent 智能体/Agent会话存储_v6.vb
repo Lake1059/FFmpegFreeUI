@@ -40,6 +40,7 @@ Public Class AgentConversationStore
             store.MergeDiscoveredConversations(store.LoadFromConversationDirectory())
 
             store.NormalizeConversations()
+            store.RecoverInterruptedRuns()
             store.LoadContextCheckpoints()
             If store._requiresUpgradeSave Then store.Save()
         Catch
@@ -62,13 +63,13 @@ Public Class AgentConversationStore
         For Each conversation In Conversations
             Dim fileName = GetConversationFileName(conversation)
             Dim filePath = Path.Combine(_conversationDirectory, fileName)
-            WriteJsonAtomically(filePath, conversation)
+            Agent通用工具_v6.WriteJsonAtomically(filePath, conversation)
             activeConversationFiles.Add(fileName)
 
             Dim checkpoint = NormalizeCheckpoint(conversation)
             If checkpoint IsNot Nothing Then
                 Dim contextFileName = GetContextFileName(conversation.Id)
-                WriteJsonAtomically(Path.Combine(_contextDirectory, contextFileName), checkpoint)
+                Agent通用工具_v6.WriteJsonAtomically(Path.Combine(_contextDirectory, contextFileName), checkpoint)
                 activeContextFiles.Add(contextFileName)
             End If
 
@@ -82,7 +83,7 @@ Public Class AgentConversationStore
             })
         Next
 
-        WriteJsonAtomically(_indexPath, indexFile)
+        Agent通用工具_v6.WriteJsonAtomically(_indexPath, indexFile)
         If _allowOrphanCleanup Then
             RemoveOrphanFiles(_conversationDirectory, "*.json", activeConversationFiles)
             RemoveOrphanFiles(_contextDirectory, "*.context.json", activeContextFiles)
@@ -104,13 +105,17 @@ Public Class AgentConversationStore
         Dim indexFile = JsonSerializer.Deserialize(Of AgentConversationIndexFile)(IO.File.ReadAllText(_indexPath, Encoding.UTF8), JsonSO)
         Dim items = If(indexFile?.Items, New List(Of AgentConversationIndexItem))
 
-        For Each item In items.
+        For Each item In items.Where(Function(x) x IsNot Nothing).
             OrderBy(Function(x) If(x.SortOrder <= 0, Integer.MaxValue, x.SortOrder)).
             ThenByDescending(Function(x) x.UpdatedAt)
 
             Dim fileName = If(item.FileName, "").Trim()
             If fileName = "" Then fileName = SafeFileName(item.Id) & ".json"
 
+            If Path.GetFileName(fileName) <> fileName OrElse Path.IsPathRooted(fileName) Then
+                _allowOrphanCleanup = False
+                Continue For
+            End If
             Dim conversation = TryLoadConversation(Path.Combine(_conversationDirectory, fileName))
             If conversation Is Nothing Then Continue For
 
@@ -209,20 +214,59 @@ Public Class AgentConversationStore
             seenIds.Add(conversation.Id)
             conversation.Version = AgentConversationSchema.LatestVersion
             conversation.SortOrder = i + 1
-            If conversation.Messages Is Nothing Then conversation.Messages = New List(Of AgentMessageData)
+            conversation.DraftText = If(conversation.DraftText, "")
+            conversation.DraftPaths = If(conversation.DraftPaths, New List(Of String)).Where(Function(x) Not String.IsNullOrWhiteSpace(x)).Distinct(StringComparer.OrdinalIgnoreCase).ToList()
+            conversation.Messages = If(conversation.Messages, New List(Of AgentMessageData)).Where(Function(x) x IsNot Nothing).ToList()
             Dim seenMessageIds As New HashSet(Of String)(StringComparer.OrdinalIgnoreCase)
-            For Each message In conversation.Messages.Where(Function(x) x IsNot Nothing)
+            For Each message In conversation.Messages
+                message.ToolCalls = If(message.ToolCalls, New List(Of AgentToolCallInfo)).Where(Function(x) x IsNot Nothing).ToList()
                 If String.IsNullOrWhiteSpace(message.Id) OrElse seenMessageIds.Contains(message.Id) Then
                     message.Id = Guid.NewGuid().ToString("N")
                 End If
                 seenMessageIds.Add(message.Id)
             Next
-            If conversation.Turns Is Nothing Then conversation.Turns = New List(Of AgentTurnData)
-            For Each turn In conversation.Turns.Where(Function(x) x IsNot Nothing)
+            conversation.Turns = If(conversation.Turns, New List(Of AgentTurnData)).Where(Function(x) x IsNot Nothing).ToList()
+            For Each turn In conversation.Turns
                 If String.IsNullOrWhiteSpace(turn.Id) Then turn.Id = Guid.NewGuid().ToString("N")
-                If turn.Activities Is Nothing Then turn.Activities = New List(Of AgentTurnActivityData)
+                turn.Activities = If(turn.Activities, New List(Of AgentTurnActivityData)).Where(Function(x) x IsNot Nothing).ToList()
             Next
             If conversation.Usage Is Nothing Then conversation.Usage = New AgentUsageInfo
+        Next
+    End Sub
+
+    ' 仅在加载时恢复；保存其他对话时绝不能改动仍在执行的任务状态。
+    Private Sub RecoverInterruptedRuns()
+        For Each conversation In Conversations
+            For Each turn In conversation.Turns.Where(Function(x) x.State = "running")
+                turn.State = "canceled"
+                turn.CompletedAt = DateTime.Now
+                turn.StatusText = "上次运行因应用退出中断"
+                For Each activity In turn.Activities.Where(Function(x) x.State = "running")
+                    activity.State = "canceled"
+                    If activity.Kind = "tool" AndAlso activity.ResultText = "" Then activity.ResultText = turn.StatusText
+                Next
+                _requiresUpgradeSave = True
+            Next
+            ' 修复崩溃后已记录调用但没有结果的协议对，防止续聊请求被端点拒绝。
+            For i = conversation.Messages.Count - 1 To 0 Step -1
+                Dim message = conversation.Messages(i)
+                If message.Role <> "assistant" OrElse message.ToolCalls.Count = 0 Then Continue For
+                Dim insertIndex = i + 1
+                Dim completed As New HashSet(Of String)(StringComparer.Ordinal)
+                While insertIndex < conversation.Messages.Count AndAlso conversation.Messages(insertIndex).Role = "tool"
+                    completed.Add(conversation.Messages(insertIndex).ToolCallId)
+                    insertIndex += 1
+                End While
+                For Each tool In message.ToolCalls
+                    If completed.Contains(tool.Id) Then Continue For
+                    conversation.Messages.Insert(insertIndex, New AgentMessageData With {
+                        .Role = "tool", .Name = tool.Name, .ToolCallId = tool.Id,
+                        .Content = "上次运行中断，工具结果未知；请先核实实际状态，不要假设操作未执行。"
+                    })
+                    insertIndex += 1
+                    _requiresUpgradeSave = True
+                Next
+            Next
         Next
     End Sub
 
@@ -262,27 +306,12 @@ Public Class AgentConversationStore
         Dim name = If(value, "").Trim()
         If name = "" Then name = Guid.NewGuid().ToString("N")
 
-        For Each invalidChar In Path.GetInvalidFileNameChars()
-            name = name.Replace(invalidChar, "_"c)
-        Next
+        If name.IndexOfAny(Path.GetInvalidFileNameChars()) >= 0 OrElse name.EndsWith(".", StringComparison.Ordinal) OrElse name <> value Then
+            Return "conversation-" & Convert.ToHexString(System.Security.Cryptography.SHA256.HashData(Encoding.UTF8.GetBytes(If(value, ""))))
+        End If
 
         Return name
     End Function
-
-    Private Shared Sub WriteJsonAtomically(filePath As String, value As Object)
-        Dim temporaryPath = filePath & "." & Guid.NewGuid().ToString("N") & ".tmp"
-        Try
-            IO.File.WriteAllText(temporaryPath, JsonSerializer.Serialize(value, value.GetType(), JsonSO), New UTF8Encoding(False))
-            IO.File.Move(temporaryPath, filePath, True)
-        Finally
-            If IO.File.Exists(temporaryPath) Then
-                Try
-                    IO.File.Delete(temporaryPath)
-                Catch
-                End Try
-            End If
-        End Try
-    End Sub
 
     Private Shared Sub RemoveOrphanFiles(directoryPath As String,
                                          searchPattern As String,

@@ -38,7 +38,7 @@ Public NotInheritable Class AgentConversationJsonUpgrader
         conversation.Version = AgentConversationSchema.LatestVersion
         NormalizeMessageKinds(conversation, changed)
         If requiresTurnUpgrade Then UpgradeTurns(conversation, changed)
-        NormalizeSteeringRecords(conversation, changed)
+        If originalVersion < AgentConversationSchema.LatestVersion Then NormalizeSteeringRecords(conversation, changed)
 
         Return New AgentConversationUpgradeResult With {
             .Conversation = conversation,

@@ -98,7 +98,7 @@ Public Class AgentEndpointClient
 
             If lastFailure IsNot Nothing Then Return lastFailure
             Return AgentClientResult(Of List(Of AgentModelInfo)).Fail("端点没有返回模型列表。")
-        Catch ex As OperationCanceledException
+        Catch ex As OperationCanceledException When cancellationToken.IsCancellationRequested
             Throw
         Catch ex As Exception
             Return AgentClientResult(Of List(Of AgentModelInfo)).Fail(FormatExceptionMessage(ex))
@@ -111,17 +111,7 @@ Public Class AgentEndpointClient
                                                        reasoningEffort As String,
                                                        Optional cancellationToken As Threading.CancellationToken = Nothing) As Task(Of AgentChatResult)
         Await EnsureApiPrefixAsync(cancellationToken).ConfigureAwait(False)
-        Dim payload As New Dictionary(Of String, Object) From {
-            {"model", modelId},
-            {"messages", BuildChatMessages(messages)}
-        }
-
-        If Not String.IsNullOrWhiteSpace(reasoningEffort) Then payload("reasoning_effort") = reasoningEffort.Trim()
-        If tools IsNot Nothing AndAlso tools.Count > 0 Then
-            payload("tools") = tools
-            payload("tool_choice") = "auto"
-        End If
-        MergeExtraBodyIntoPayload(payload)
+        Dim payload = BuildChatPayload(modelId, messages, tools, reasoningEffort, False)
 
         Dim raw As String = ""
         Try
@@ -134,15 +124,11 @@ Public Class AgentEndpointClient
                     Return AgentChatResult.Fail(ExtractErrorMessage(raw, response), CInt(response.StatusCode), LimitRawError(raw))
                 End If
                 Dim result = ParseChatCompletionRaw(raw)
-                If ShouldRetryEmptySseAsStreaming(raw, result) Then
-                    Dim streamedResult = Await TryCreateChatCompletionStreamingAsync(modelId, messages, tools, reasoningEffort, Nothing, cancellationToken)
-                    If HasChatResultPayload(streamedResult) Then Return streamedResult
-                End If
                 result.Success = True
                 result.StatusCode = CInt(response.StatusCode)
                 Return result
             End Using
-        Catch ex As OperationCanceledException
+        Catch ex As OperationCanceledException When cancellationToken.IsCancellationRequested
             Throw
         Catch ex As Exception
             Return AgentChatResult.Fail(FormatExceptionMessage(ex), rawJson:=LimitRawError(raw))
@@ -156,19 +142,7 @@ Public Class AgentEndpointClient
                                                                 onContentDelta As Action(Of String),
                                                                 Optional cancellationToken As Threading.CancellationToken = Nothing) As Task(Of AgentChatResult)
         Await EnsureApiPrefixAsync(cancellationToken)
-        Dim payload As New Dictionary(Of String, Object) From {
-            {"model", modelId},
-            {"messages", BuildChatMessages(messages)},
-            {"stream", True},
-            {"stream_options", New Dictionary(Of String, Object) From {{"include_usage", True}}}
-        }
-
-        If Not String.IsNullOrWhiteSpace(reasoningEffort) Then payload("reasoning_effort") = reasoningEffort.Trim()
-        If tools IsNot Nothing AndAlso tools.Count > 0 Then
-            payload("tools") = tools
-            payload("tool_choice") = "auto"
-        End If
-        MergeExtraBodyIntoPayload(payload)
+        Dim payload = BuildChatPayload(modelId, messages, tools, reasoningEffort, True)
 
         Dim result As New AgentChatResult
         Dim content As New StringBuilder
@@ -176,66 +150,74 @@ Public Class AgentEndpointClient
         Dim toolCallMap As New Dictionary(Of Integer, AgentToolCallInfo)
 
         Try
-            Using request = CreateJsonRequest(HttpMethod.Post, GetChatCompletionsPath(), payload)
-                Using response = Await Http.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(False)
-                    If Not response.IsSuccessStatusCode Then
-                        Dim errorRaw = Await response.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(False)
-                        Return AgentChatResult.Fail(ExtractErrorMessage(errorRaw, response), CInt(response.StatusCode), LimitRawError(errorRaw))
-                    End If
-                    Using stream = Await response.Content.ReadAsStreamAsync(cancellationToken).ConfigureAwait(False)
-                        Using reader As New StreamReader(stream, Encoding.UTF8)
-                            Dim firstNonDataLines As New StringBuilder
-                            Dim sawDataEvent As Boolean = False
-                            While True
-                                cancellationToken.ThrowIfCancellationRequested()
-                                Dim line = Await reader.ReadLineAsync(cancellationToken).ConfigureAwait(False)
-                                If line Is Nothing Then Exit While
-                                line = line.Trim()
-                                If line = "" Then Continue While
-                                If Not line.StartsWith("data:", StringComparison.OrdinalIgnoreCase) Then
-                                    If Not sawDataEvent AndAlso firstNonDataLines.Length < 4096 Then firstNonDataLines.AppendLine(line)
-                                    Continue While
-                                End If
-
-                                Dim data = line.Substring(5).Trim()
-                                sawDataEvent = True
-                                If data = "[DONE]" Then Exit While
-                                If raw.Length < MaxStreamingRawCaptureLength Then
-                                    Dim remaining = MaxStreamingRawCaptureLength - raw.Length
-                                    If data.Length + Environment.NewLine.Length <= remaining Then
-                                        raw.AppendLine(data)
-                                    ElseIf remaining > 0 Then
-                                        raw.Append(data.AsSpan(0, Math.Min(data.Length, remaining)))
+            Using streamTimeout = Threading.CancellationTokenSource.CreateLinkedTokenSource(cancellationToken)
+                streamTimeout.CancelAfter(Http.Timeout)
+                Using request = CreateJsonRequest(HttpMethod.Post, GetChatCompletionsPath(), payload)
+                    Using response = Await Http.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, streamTimeout.Token).ConfigureAwait(False)
+                        If Not response.IsSuccessStatusCode Then
+                            Dim errorRaw = Await response.Content.ReadAsStringAsync(streamTimeout.Token).ConfigureAwait(False)
+                            Return AgentChatResult.Fail(ExtractErrorMessage(errorRaw, response), CInt(response.StatusCode), LimitRawError(errorRaw))
+                        End If
+                        Using stream = Await response.Content.ReadAsStreamAsync(streamTimeout.Token).ConfigureAwait(False)
+                            Using reader As New StreamReader(stream, Encoding.UTF8)
+                                Dim firstNonDataLines As New StringBuilder
+                                Dim sawDataEvent As Boolean = False
+                                While True
+                                    cancellationToken.ThrowIfCancellationRequested()
+                                    Dim line = Await reader.ReadLineAsync(streamTimeout.Token).ConfigureAwait(False)
+                                    If line Is Nothing Then Exit While
+                                    line = line.Trim()
+                                    If line = "" Then Continue While
+                                    If Not line.StartsWith("data:", StringComparison.OrdinalIgnoreCase) Then
+                                        If Not sawDataEvent AndAlso firstNonDataLines.Length < 4096 Then firstNonDataLines.AppendLine(line)
+                                        Continue While
                                     End If
-                                End If
 
-                                Using doc = JsonDocument.Parse(data)
-                                    AccumulateStreamingChatChunk(doc.RootElement, result, content, toolCallMap, onContentDelta)
-                                End Using
-                            End While
+                                    Dim data = line.Substring(5).Trim()
+                                    sawDataEvent = True
+                                    If data = "[DONE]" Then
+                                        If result.FinishReason = "" Then result.FinishReason = "done"
+                                        Exit While
+                                    End If
+                                    If data = "" Then Continue While
+                                    If raw.Length < MaxStreamingRawCaptureLength Then
+                                        Dim remaining = MaxStreamingRawCaptureLength - raw.Length
+                                        If data.Length + Environment.NewLine.Length <= remaining Then
+                                            raw.AppendLine(data)
+                                        ElseIf remaining > 0 Then
+                                            raw.Append(data.AsSpan(0, Math.Min(data.Length, remaining)))
+                                        End If
+                                    End If
 
-                            If Not sawDataEvent Then
-                                Dim responseText = firstNonDataLines.ToString()
-                                If IsCloudflareChallengeText(responseText) Then
-                                    Return AgentChatResult.Fail(BuildCloudflareChallengeMessage(BuildHttpStatusText(response.StatusCode), GetCloudflareRay(response, responseText)), CInt(response.StatusCode), LimitRawError(responseText))
+                                    Using doc = JsonDocument.Parse(data)
+                                        AccumulateStreamingChatChunk(doc.RootElement, result, content, toolCallMap, onContentDelta)
+                                    End Using
+                                End While
+
+                                If Not sawDataEvent Then
+                                    Dim responseText = firstNonDataLines.ToString()
+                                    If IsCloudflareChallengeText(responseText) Then
+                                        Return AgentChatResult.Fail(BuildCloudflareChallengeMessage(BuildHttpStatusText(response.StatusCode), GetCloudflareRay(response, responseText)), CInt(response.StatusCode), LimitRawError(responseText))
+                                    End If
+                                    If ContainsHtmlMarkup(responseText) OrElse String.IsNullOrWhiteSpace(responseText) Then
+                                        Return AgentChatResult.Fail(BuildHtmlResponseMessage(BuildHttpStatusText(response.StatusCode)), CInt(response.StatusCode), LimitRawError(responseText))
+                                    End If
+                                    Return AgentChatResult.Fail("端点没有返回有效的流式 JSON。", CInt(response.StatusCode), LimitRawError(responseText))
                                 End If
-                                If ContainsHtmlMarkup(responseText) OrElse String.IsNullOrWhiteSpace(responseText) Then
-                                    Return AgentChatResult.Fail(BuildHtmlResponseMessage(BuildHttpStatusText(response.StatusCode)), CInt(response.StatusCode), LimitRawError(responseText))
-                                End If
-                                Return AgentChatResult.Fail("端点没有返回有效的流式 JSON。", CInt(response.StatusCode), LimitRawError(responseText))
-                            End If
+                            End Using
                         End Using
-                    End Using
 
-                    result.Content = content.ToString()
-                    result.RawJson = raw.ToString()
-                    AddAccumulatedToolCalls(result, toolCallMap)
-                    result.Success = True
-                    result.StatusCode = CInt(response.StatusCode)
-                    Return result
+                        result.Content = content.ToString()
+                        result.RawJson = raw.ToString()
+                        AddAccumulatedToolCalls(result, toolCallMap)
+                        ValidateStreamCompletion(result)
+                        result.Success = True
+                        result.StatusCode = CInt(response.StatusCode)
+                        Return result
+                    End Using
                 End Using
             End Using
-        Catch ex As OperationCanceledException
+        Catch ex As OperationCanceledException When cancellationToken.IsCancellationRequested
             Throw
         Catch ex As Exception
             Dim failed = AgentChatResult.Fail(FormatExceptionMessage(ex))
@@ -274,7 +256,7 @@ Public Class AgentEndpointClient
                 result.StatusCode = CInt(response.StatusCode)
                 Return result
             End Using
-        Catch ex As OperationCanceledException
+        Catch ex As OperationCanceledException When cancellationToken.IsCancellationRequested
             Throw
         Catch ex As Exception
             Return AgentChatResult.Fail(FormatExceptionMessage(ex))
@@ -285,7 +267,9 @@ Public Class AgentEndpointClient
                                          relativePath As String,
                                          payload As Object,
                                          cancellationToken As Threading.CancellationToken) As Task(Of HttpResponseMessage)
-        Return Await Http.SendAsync(CreateJsonRequest(method, relativePath, payload), cancellationToken)
+        Using request = CreateJsonRequest(method, relativePath, payload)
+            Return Await Http.SendAsync(request, cancellationToken)
+        End Using
     End Function
 
     Private Async Function EnsureApiPrefixAsync(cancellationToken As Threading.CancellationToken) As Task
@@ -336,6 +320,23 @@ Public Class AgentEndpointClient
             Dim match = Regex.Match(value, "(?:^|/)(v\d+)$", RegexOptions.IgnoreCase)
             Return If(match.Success, match.Groups(1).Value.ToLowerInvariant(), "")
         End Try
+    End Function
+
+    Private Function BuildChatPayload(modelId As String, messages As IEnumerable(Of AgentMessageData),
+                                      tools As List(Of Dictionary(Of String, Object)), reasoningEffort As String,
+                                      streaming As Boolean) As Dictionary(Of String, Object)
+        Dim payload As New Dictionary(Of String, Object) From {{"model", modelId}, {"messages", BuildChatMessages(messages)}}
+        If streaming Then
+            payload("stream") = True
+            payload("stream_options") = New Dictionary(Of String, Object) From {{"include_usage", True}}
+        End If
+        If Not String.IsNullOrWhiteSpace(reasoningEffort) Then payload("reasoning_effort") = reasoningEffort.Trim()
+        If tools IsNot Nothing AndAlso tools.Count > 0 Then
+            payload("tools") = tools
+            payload("tool_choice") = "auto"
+        End If
+        MergeExtraBodyIntoPayload(payload)
+        Return payload
     End Function
 
     Private Sub MergeExtraBodyIntoPayload(payload As Dictionary(Of String, Object))
@@ -689,10 +690,6 @@ Public Class AgentEndpointClient
         Return False
     End Function
 
-    Private Shared Function ShouldRetryEmptySseAsStreaming(raw As String, result As AgentChatResult) As Boolean
-        Return IsSseRaw(raw) AndAlso Not HasChatResultPayload(result)
-    End Function
-
     Private Shared Function HasChatResultPayload(result As AgentChatResult) As Boolean
         If result Is Nothing OrElse Not result.Success Then Return False
         If Not String.IsNullOrWhiteSpace(result.Content) Then Return True
@@ -709,7 +706,11 @@ Public Class AgentEndpointClient
             If line = "" OrElse Not line.StartsWith("data:", StringComparison.OrdinalIgnoreCase) Then Continue For
 
             Dim data = line.Substring(5).Trim()
-            If data = "" OrElse data = "[DONE]" Then Continue For
+            If data = "" Then Continue For
+            If data = "[DONE]" Then
+                If result.FinishReason = "" Then result.FinishReason = "done"
+                Exit For
+            End If
 
             Using doc = JsonDocument.Parse(data)
                 AccumulateStreamingChatChunk(doc.RootElement, result, content, toolCallMap, Nothing)
@@ -718,14 +719,32 @@ Public Class AgentEndpointClient
 
         result.Content = content.ToString()
         AddAccumulatedToolCalls(result, toolCallMap)
+        ValidateStreamCompletion(result)
         Return result
     End Function
+
+    Private Shared Sub ValidateResponseRoot(root As JsonElement)
+        If root.ValueKind <> JsonValueKind.Object Then Throw New JsonException("端点响应必须为 JSON 对象。")
+        Dim errorValue As JsonElement
+        If root.TryGetProperty("error", errorValue) AndAlso errorValue.ValueKind <> JsonValueKind.Null Then
+            Throw New InvalidDataException("端点返回错误：" & Agent通用工具_v6.LimitText(errorValue.ToString(), 600))
+        End If
+    End Sub
+
+    Private Shared Sub ValidateStreamCompletion(result As AgentChatResult)
+        If result.FinishReason = "" Then Throw New IOException("流式连接在完成标志之前关闭。")
+        If Not HasChatResultPayload(result) Then Throw New InvalidDataException("端点没有返回有效的响应内容。")
+        If result.ToolCalls.Count > 0 AndAlso result.FinishReason = "length" Then
+            Throw New InvalidDataException("工具调用因输出长度限制被截断，未执行工具。")
+        End If
+    End Sub
 
     Private Shared Sub AccumulateStreamingChatChunk(root As JsonElement,
                                                     result As AgentChatResult,
                                                     content As StringBuilder,
                                                     toolCallMap As Dictionary(Of Integer, AgentToolCallInfo),
                                                     onContentDelta As Action(Of String))
+        ValidateResponseRoot(root)
         Dim usage As JsonElement
         If root.TryGetProperty("usage", usage) AndAlso usage.ValueKind = JsonValueKind.Object Then
             result.Usage = ParseUsage(root)
@@ -734,6 +753,10 @@ Public Class AgentEndpointClient
         Dim choices As JsonElement
         If Not root.TryGetProperty("choices", choices) OrElse choices.ValueKind <> JsonValueKind.Array OrElse choices.GetArrayLength() = 0 Then Return
 
+        Dim finish As JsonElement
+        If choices(0).TryGetProperty("finish_reason", finish) AndAlso finish.ValueKind = JsonValueKind.String Then
+            result.FinishReason = If(finish.GetString(), "")
+        End If
         Dim delta As JsonElement
         If choices(0).TryGetProperty("delta", delta) AndAlso delta.ValueKind = JsonValueKind.Object Then
             AccumulateChatMessageDelta(delta, content, toolCallMap, onContentDelta)
@@ -792,9 +815,10 @@ Public Class AgentEndpointClient
         Dim result As New AgentChatResult With {.RawJson = raw}
         Using doc = JsonDocument.Parse(raw)
             Dim root = doc.RootElement
+            ValidateResponseRoot(root)
             result.Usage = ParseUsage(root)
             Dim choices As JsonElement
-            If Not root.TryGetProperty("choices", choices) OrElse choices.ValueKind <> JsonValueKind.Array OrElse choices.GetArrayLength() = 0 Then Return result
+            If Not root.TryGetProperty("choices", choices) OrElse choices.ValueKind <> JsonValueKind.Array OrElse choices.GetArrayLength() = 0 Then Throw New JsonException("端点响应缺少 choices。")
             Dim message As JsonElement
             If Not choices(0).TryGetProperty("message", message) Then Return result
             Dim content As JsonElement
@@ -822,6 +846,7 @@ Public Class AgentEndpointClient
         Dim result As New AgentChatResult With {.RawJson = raw}
         Using doc = JsonDocument.Parse(raw)
             Dim root = doc.RootElement
+            ValidateResponseRoot(root)
             result.Usage = ParseUsage(root)
             Dim outputText As JsonElement
             If root.TryGetProperty("output_text", outputText) AndAlso outputText.ValueKind = JsonValueKind.String AndAlso outputText.GetString() <> "" Then

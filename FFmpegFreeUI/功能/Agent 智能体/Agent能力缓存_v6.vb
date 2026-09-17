@@ -5,7 +5,7 @@ Imports System.Text.Json
 Public Class AgentCapabilityCache
     Private Shared ReadOnly SyncRoot As New Object
     Private Shared ReadOnly DefaultReasoningEfforts As String() = {"low", "medium", "high"}
-    Private Const ReasoningEffortCacheVersion As Integer = 5
+    Private Const ReasoningEffortCacheVersion As Integer = 6
     Private Shared ReadOnly CacheDirectory As String = Path.Combine(Application.StartupPath, "Agent")
     Private Shared ReadOnly ReasoningEffortCachePath As String = Path.Combine(CacheDirectory, "ReasoningEfforts.cache.json")
     Private Shared _cacheFile As AgentReasoningEffortCacheFile = Nothing
@@ -31,26 +31,22 @@ Public Class AgentCapabilityCache
         Return ResolveReasoningEfforts(modelId, Nothing)
     End Function
 
-    Public Shared Function GetReasoningEffortsAsync(client As AgentEndpointClient,
-                                                    model As AgentModelInfo,
-                                                    Optional cancellationToken As Threading.CancellationToken = Nothing) As Task(Of List(Of String))
-        cancellationToken.ThrowIfCancellationRequested()
-        If model Is Nothing OrElse String.IsNullOrWhiteSpace(model.Id) Then Return Task.FromResult(New List(Of String))
+    Public Shared Function GetReasoningEfforts(model As AgentModelInfo, client As AgentEndpointClient) As List(Of String)
+        If model Is Nothing OrElse String.IsNullOrWhiteSpace(model.Id) Then Return New List(Of String)
         If model.ReasoningEfforts IsNot Nothing AndAlso model.ReasoningEfforts.Count > 0 Then
             Dim efforts = ResolveReasoningEfforts(model.Id, model.ReasoningEfforts)
             model.ReasoningEfforts = efforts
             SaveReasoningEfforts(client, model.Id, efforts)
-            Return Task.FromResult(efforts)
+            Return efforts
         End If
 
         Dim cached = GetCachedReasoningEfforts(client, model.Id)
         If cached.Count > 0 Then
             model.ReasoningEfforts = cached
-            Return Task.FromResult(cached)
+            Return cached
         End If
 
-        Dim result = GetDefaultReasoningEfforts(model.Id)
-        Return Task.FromResult(result)
+        Return GetDefaultReasoningEfforts(model.Id)
     End Function
 
     Public Shared Function BuildEndpointSignature(client As AgentEndpointClient) As String
@@ -90,13 +86,13 @@ Public Class AgentCapabilityCache
                     If model Is Nothing OrElse String.IsNullOrWhiteSpace(model.Id) Then Continue For
                     Dim efforts = ResolveReasoningEfforts(model.Id, Nothing)
                     model.ReasoningEfforts = efforts
-                    UpsertReasoningEffortEntry(cacheFile, model.Id, efforts)
+                    UpsertReasoningEffortEntry(cacheFile, endpointKey & ":" & model.Id, efforts)
                     hasModel = True
                 Next
             End If
 
             If Not hasModel AndAlso Not String.IsNullOrWhiteSpace(selectedModelId) Then
-                UpsertReasoningEffortEntry(cacheFile, selectedModelId.Trim(), GetDefaultReasoningEfforts(selectedModelId))
+                UpsertReasoningEffortEntry(cacheFile, endpointKey & ":" & selectedModelId.Trim(), GetDefaultReasoningEfforts(selectedModelId))
             End If
 
             If endpointKey <> "" Then MarkEndpointRefreshed(cacheFile, endpointKey)
@@ -114,7 +110,7 @@ Public Class AgentCapabilityCache
                     If model Is Nothing OrElse String.IsNullOrWhiteSpace(model.Id) Then Continue For
                     Dim efforts = ResolveReasoningEfforts(model.Id, model.ReasoningEfforts)
                     model.ReasoningEfforts = efforts
-                    UpsertReasoningEffortEntry(cacheFile, model.Id, efforts)
+                    UpsertReasoningEffortEntry(cacheFile, endpointKey & ":" & model.Id, efforts)
                 Next
             End If
             If endpointKey <> "" Then MarkEndpointRefreshed(cacheFile, endpointKey)
@@ -128,7 +124,7 @@ Public Class AgentCapabilityCache
         SyncLock SyncRoot
             Dim cacheFile = LoadCacheFile()
             Dim entry As AgentReasoningEffortModelCache = Nothing
-            cacheFile.Models.TryGetValue(modelId.Trim(), entry)
+            cacheFile.Models.TryGetValue(BuildEndpointKey(client) & ":" & modelId.Trim(), entry)
             If entry Is Nothing Then Return New List(Of String)
             Return ResolveReasoningEfforts(modelId, entry.ReasoningEfforts)
         End SyncLock
@@ -140,7 +136,7 @@ Public Class AgentCapabilityCache
 
         SyncLock SyncRoot
             Dim cacheFile = LoadCacheFile()
-            UpsertReasoningEffortEntry(cacheFile, modelId, normalized)
+            UpsertReasoningEffortEntry(cacheFile, BuildEndpointKey(client) & ":" & modelId, normalized)
             SaveCacheFile()
         End SyncLock
     End Sub
@@ -151,7 +147,7 @@ Public Class AgentCapabilityCache
         If cacheFile.Models Is Nothing Then cacheFile.Models = New Dictionary(Of String, AgentReasoningEffortModelCache)(StringComparer.OrdinalIgnoreCase)
         Dim key = modelId.Trim()
         Dim entry As AgentReasoningEffortModelCache = Nothing
-        If Not cacheFile.Models.TryGetValue(key, entry) Then
+        If Not cacheFile.Models.TryGetValue(key, entry) OrElse entry Is Nothing Then
             entry = New AgentReasoningEffortModelCache()
             cacheFile.Models(key) = entry
         End If
@@ -163,7 +159,7 @@ Public Class AgentCapabilityCache
     Private Shared Sub MarkEndpointRefreshed(cacheFile As AgentReasoningEffortCacheFile, endpointKey As String)
         If cacheFile.EndpointRefreshes Is Nothing Then cacheFile.EndpointRefreshes = New Dictionary(Of String, AgentReasoningEffortEndpointRefresh)(StringComparer.OrdinalIgnoreCase)
         Dim refresh As AgentReasoningEffortEndpointRefresh = Nothing
-        If Not cacheFile.EndpointRefreshes.TryGetValue(endpointKey, refresh) Then
+        If Not cacheFile.EndpointRefreshes.TryGetValue(endpointKey, refresh) OrElse refresh Is Nothing Then
             refresh = New AgentReasoningEffortEndpointRefresh()
             cacheFile.EndpointRefreshes(endpointKey) = refresh
         End If
@@ -192,6 +188,8 @@ Public Class AgentCapabilityCache
         _cacheFile.Version = ReasoningEffortCacheVersion
         If _cacheFile.Models Is Nothing Then _cacheFile.Models = New Dictionary(Of String, AgentReasoningEffortModelCache)(StringComparer.OrdinalIgnoreCase)
         If _cacheFile.EndpointRefreshes Is Nothing Then _cacheFile.EndpointRefreshes = New Dictionary(Of String, AgentReasoningEffortEndpointRefresh)(StringComparer.OrdinalIgnoreCase)
+        _cacheFile.Models = New Dictionary(Of String, AgentReasoningEffortModelCache)(_cacheFile.Models, StringComparer.OrdinalIgnoreCase)
+        _cacheFile.EndpointRefreshes = New Dictionary(Of String, AgentReasoningEffortEndpointRefresh)(_cacheFile.EndpointRefreshes, StringComparer.OrdinalIgnoreCase)
         _cacheLoaded = True
         Return _cacheFile
     End Function
@@ -206,7 +204,7 @@ Public Class AgentCapabilityCache
     Private Shared Sub SaveCacheFile()
         Try
             Directory.CreateDirectory(CacheDirectory)
-            IO.File.WriteAllText(ReasoningEffortCachePath, JsonSerializer.Serialize(LoadCacheFile(), JsonSO), Encoding.UTF8)
+            Agent通用工具_v6.WriteJsonAtomically(ReasoningEffortCachePath, LoadCacheFile())
         Catch
         End Try
     End Sub
@@ -229,8 +227,8 @@ Public Class AgentCapabilityCache
 
     Private Shared Function ResolveReasoningEfforts(modelId As String, efforts As IEnumerable(Of String)) As List(Of String)
         Dim result = NormalizeReasoningEfforts(efforts)
-        If result.Count = 0 Then result.AddRange(DefaultReasoningEfforts)
-
+        If result.Count > 0 Then Return result
+        result.AddRange(DefaultReasoningEfforts)
         For Each extra In GetAdditionalReasoningEfforts(modelId)
             If Not result.Any(Function(x) String.Equals(x, extra, StringComparison.OrdinalIgnoreCase)) Then result.Add(extra)
         Next

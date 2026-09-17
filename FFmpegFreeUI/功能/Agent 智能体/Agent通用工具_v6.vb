@@ -5,9 +5,26 @@ Public NotInheritable Class Agent通用工具_v6
     Private Sub New()
     End Sub
 
+    Public Shared Sub WriteJsonAtomically(filePath As String, value As Object)
+        Dim temporaryPath = filePath & "." & Guid.NewGuid().ToString("N") & ".tmp"
+        Try
+            IO.File.WriteAllText(temporaryPath, JsonSerializer.Serialize(value, value.GetType(), JsonSO), New UTF8Encoding(False))
+            IO.File.Move(temporaryPath, filePath, True)
+        Finally
+            If IO.File.Exists(temporaryPath) Then
+                Try
+                    IO.File.Delete(temporaryPath)
+                Catch
+                End Try
+            End If
+        End Try
+    End Sub
+
     Public Shared Function ParseJsonArguments(arguments As String) As JsonElement
         If String.IsNullOrWhiteSpace(arguments) Then arguments = "{}"
-        Return JsonDocument.Parse(arguments).RootElement.Clone()
+        Using doc = JsonDocument.Parse(arguments)
+            Return doc.RootElement.Clone()
+        End Using
     End Function
 
     Public Shared Function GetJsonString(root As JsonElement, name As String, Optional defaultValue As String = "") As String
@@ -39,7 +56,7 @@ Public NotInheritable Class Agent通用工具_v6
     Public Shared Function GetJsonObject(root As JsonElement, name As String) As JsonElement
         Dim value As JsonElement
         If root.ValueKind = JsonValueKind.Object AndAlso root.TryGetProperty(name, value) AndAlso value.ValueKind = JsonValueKind.Object Then Return value
-        Return JsonDocument.Parse("{}").RootElement.Clone()
+        Return ParseJsonArguments("{}")
     End Function
 
     Public Shared Function GetJsonStringArray(root As JsonElement, name As String, Optional distinct As Boolean = True) As List(Of String)
@@ -49,9 +66,11 @@ Public NotInheritable Class Agent通用工具_v6
 
         For Each item In value.EnumerateArray()
             If item.ValueKind <> JsonValueKind.String Then Continue For
-            Dim text = If(item.GetString(), "").Trim()
-            If text = "" Then Continue For
-            If distinct AndAlso result.Contains(text, StringComparer.OrdinalIgnoreCase) Then Continue For
+            Dim text = If(item.GetString(), "")
+            If distinct Then
+                text = text.Trim()
+                If text = "" OrElse result.Contains(text, StringComparer.OrdinalIgnoreCase) Then Continue For
+            End If
             result.Add(text)
         Next
         Return result
@@ -72,10 +91,10 @@ Public NotInheritable Class Agent通用工具_v6
             Return Encoding.UTF8.GetString(bytes, 3, bytes.Length - 3)
         End If
         If bytes.Length >= 2 AndAlso bytes(0) = &HFF AndAlso bytes(1) = &HFE Then
-            Return Encoding.Unicode.GetString(bytes)
+            Return Encoding.Unicode.GetString(bytes, 2, bytes.Length - 2)
         End If
         If bytes.Length >= 2 AndAlso bytes(0) = &HFE AndAlso bytes(1) = &HFF Then
-            Return Encoding.BigEndianUnicode.GetString(bytes)
+            Return Encoding.BigEndianUnicode.GetString(bytes, 2, bytes.Length - 2)
         End If
         Return Encoding.UTF8.GetString(bytes)
     End Function

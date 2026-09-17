@@ -142,14 +142,14 @@ Partial Class Form_v6_设置_界面显示
         MCB_界面主题.DropDownSelectedForeColor = Color.White
         MCB_界面主题.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
         MCB_界面主题.Items.Add("跟随 Windows")
-        MCB_界面主题.Items.Add("浅色模式")
-        MCB_界面主题.Items.Add("深色模式")
+        MCB_界面主题.Items.Add("浅色模式（由社区维护）")
+        MCB_界面主题.Items.Add("深色模式（3FUI 原生设计）")
         MCB_界面主题.Location = New Point(0, 10)
         MCB_界面主题.Margin = New Padding(2, 2, 2, 2)
         MCB_界面主题.Name = "MCB_界面主题"
         MCB_界面主题.Padding = New Padding(10, 0, 10, 0)
         MCB_界面主题.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        MCB_界面主题.Size = New Size(200, 32)
+        MCB_界面主题.Size = New Size(300, 32)
         MCB_界面主题.TabIndex = 0
         MCB_界面主题.ToolTipGap = -1
         MCB_界面主题.ToolTipMaxWidth = 350

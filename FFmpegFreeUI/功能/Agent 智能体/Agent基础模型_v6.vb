@@ -68,6 +68,7 @@ Public Class AgentTurnActivityData
     Public Property Title As String = ""
     Public Property Content As String = ""
     Public Property ToolName As String = ""
+    Public Property ToolCallId As String = ""
     Public Property Arguments As String = ""
     Public Property ResultText As String = ""
     Public Property State As String = "pending"
@@ -89,6 +90,9 @@ Public Class AgentConversationData
     Public Property Version As Integer = AgentConversationSchema.LatestVersion
     Public Property Id As String = Guid.NewGuid().ToString("N")
     Public Property Title As String = "新对话"
+    ' 草稿不属于 Messages，不参与模型上下文或用量统计。
+    Public Property DraftText As String = ""
+    Public Property DraftPaths As New List(Of String)
     Public Property CreatedAt As DateTime = DateTime.Now
     Public Property UpdatedAt As DateTime = DateTime.Now
     Public Property SortOrder As Integer = 0
@@ -173,6 +177,7 @@ Public Class AgentConversationIndexItem
 End Class
 
 Public Class AgentChatResult
+    Public Property FinishReason As String = ""
     Public Property Success As Boolean = True
     Public Property ErrorMessage As String = ""
     Public Property StatusCode As Integer = 0

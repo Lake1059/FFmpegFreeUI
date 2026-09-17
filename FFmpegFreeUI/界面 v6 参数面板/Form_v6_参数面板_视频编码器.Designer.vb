@@ -152,6 +152,9 @@ Partial Class Form_v6_参数面板_视频编码器
         HCL_编码线程数说明.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HCL_编码线程数说明.Dock = DockStyle.Fill
         HCL_编码线程数说明.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
+        HCL_编码线程数说明.InfoIconPosition = LakeUI.HtmlColorLabel.InfoIconPositionEnum.Start
+        HCL_编码线程数说明.InfoIconSizeRatio = 1F
+        HCL_编码线程数说明.InfoIconStrokeWidth = 1.5F
         HCL_编码线程数说明.Location = New Point(100, 10)
         HCL_编码线程数说明.Margin = New Padding(2)
         HCL_编码线程数说明.Name = "HCL_编码线程数说明"
@@ -160,6 +163,7 @@ Partial Class Form_v6_参数面板_视频编码器
         HCL_编码线程数说明.TabIndex = 7
         HCL_编码线程数说明.Text = "指定 NVIDIA 显卡索引号，其他卡请从系统硬件加速或驱动中设置"
         HCL_编码线程数说明.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
+        HCL_编码线程数说明.ToolTipText = "此选项仅适用于 CPU 解码 + NV 编码的组合，如果使用全流程 NV cuda 链路，无需设置此参数，在解码参数里指定硬件即可"
         ' 
         ' MTB_GPU编号
         ' 

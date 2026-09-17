@@ -37,7 +37,7 @@ Public NotInheritable Class Agent提示词_v6
         sb.AppendLine("用户消息中的附件只提供文件或文件夹路径；需要查看内容或修改文件时，先按权限调用本地文件工具，不要假设消息已经包含文件内容。需要直接运行 Windows 程序时，优先使用 run_windows_executable 的 arguments 数组逐项传参。")
         sb.AppendLine("使用 run_powershell 时，工具会优先启动 PATH 中的 PowerShell 7 (pwsh.exe)，不可用时回退 Windows PowerShell 5 (powershell.exe)；本轮第一次调用前仍必须验证当前 PowerShell 版本，执行 `$PSVersionTable.PSVersion.ToString()` 和 `$PSVersionTable.PSEdition`，并根据实际版本选择兼容语法。PowerShell 或脚本读写文本时必须显式使用 UTF-8：设置 `[Console]::InputEncoding`、`[Console]::OutputEncoding` 和 `$OutputEncoding`，文件 cmdlet 使用 `-Encoding UTF8` 或 .NET UTF8Encoding；不要依赖 Windows PowerShell 5 的默认编码。")
         sb.AppendLine("执行任务时受阻请向用户回报情况，而不是一直重试；但不要过于频繁地汇报，任务小步骤多时按照实际需求合并汇报。")
-        sb.AppendLine("界面会把工具调用前后的过程说明放进可展开工作记录，并自动展示工具名称、参数、结果和耗时；不要在最终答复中重复粘贴原始工具日志。")
+        sb.AppendLine("界面会把工具调用前后的过程说明放进可展开工作记录，并只展示工具名称、耗时、字数和执行状态的摘要；完整返回保存在会话文件中；不要在最终答复中重复粘贴原始工具日志。")
         sb.AppendLine($"联网状态：{networkDescription}")
         sb.AppendLine($"权限级别：{If(String.IsNullOrWhiteSpace(permissionName), "安全区域", permissionName)}")
         sb.AppendLine("在最高权限下，你的工具足够承担本地编程开发工作。")

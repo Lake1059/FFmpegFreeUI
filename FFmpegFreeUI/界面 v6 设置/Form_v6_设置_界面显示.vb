@@ -8,7 +8,6 @@ Public Class Form_v6_设置_界面显示
             If LakeUI.DwmWindowStyle.IsCornerModeSupported Then
                 MCB_窗口圆角.Enabled = True
                 MCB_窗口圆角.SelectedIndex = Math.Clamp(设置_v6.实例对象.窗口圆角, 0, 1)
-                HtmlColorLabel3.Text = "<span style=""font-size:13; color:Silver"">窗口圆角</span>   Windows 11 默认圆角；可在此切回直角，修改后即时生效"
             Else
                 设置_v6.实例对象.窗口圆角 = 0
                 MCB_窗口圆角.SelectedIndex = 0
@@ -21,8 +20,6 @@ Public Class Form_v6_设置_界面显示
     End Sub
 
     Private Sub Form_v6_设置_界面显示_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        MCB_界面主题.Size = MCB_全局字体.Size
-        MCB_窗口圆角.Size = MCB_全局字体.Size
         Dim topPadding = CInt(Math.Round(20.0R * DeviceDpi / 96.0R))
         HtmlColorLabel2.Padding = New Padding(0, topPadding, 0, 0)
         HtmlColorLabel3.Padding = New Padding(0, topPadding, 0, 0)

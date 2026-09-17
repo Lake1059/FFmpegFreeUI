@@ -40,12 +40,15 @@ Partial Class Form_v6_参数面板_解码参数
         MCB_硬件加速解码方式 = New LakeUI.ModernComboBox()
         HCL_硬件加速解码说明 = New LakeUI.HtmlColorLabel()
         HCL_解码器标题 = New LakeUI.HtmlColorLabel()
+        ModernPanel2 = New LakeUI.ModernPanel()
+        MB_查看当前系统的显卡索引 = New LakeUI.ModernButton()
         ModernPanel1.SuspendLayout()
         Panel4.SuspendLayout()
         Panel3.SuspendLayout()
         Panel2.SuspendLayout()
         Panel5.SuspendLayout()
         Panel1.SuspendLayout()
+        ModernPanel2.SuspendLayout()
         SuspendLayout()
         ' 
         ' ModernPanel1
@@ -53,6 +56,7 @@ Partial Class Form_v6_参数面板_解码参数
         ModernPanel1.BackColor = Color.Transparent
         ModernPanel1.BackColor1 = Color.Transparent
         ModernPanel1.BorderSize = 0
+        ModernPanel1.Controls.Add(ModernPanel2)
         ModernPanel1.Controls.Add(Panel4)
         ModernPanel1.Controls.Add(Panel3)
         ModernPanel1.Controls.Add(HCL_硬件解码设备标题)
@@ -362,6 +366,34 @@ Partial Class Form_v6_参数面板_解码参数
         HCL_解码器标题.TabIndex = 14
         HCL_解码器标题.Text = "<span style=""font-size:13; color:Silver"">解码器</span>   本页如果不知道选什么就不要选   <span style=""color:Orange"">总有人他非要选然后跑不起来还死磕</span>"
         ' 
+        ' ModernPanel2
+        ' 
+        ModernPanel2.BackColor = Color.Transparent
+        ModernPanel2.BackColor1 = Color.Transparent
+        ModernPanel2.BorderSize = 0
+        ModernPanel2.Controls.Add(MB_查看当前系统的显卡索引)
+        ModernPanel2.Dock = DockStyle.Top
+        ModernPanel2.Location = New Point(20, 426)
+        ModernPanel2.Name = "ModernPanel2"
+        ModernPanel2.Padding = New Padding(0, 10, 0, 0)
+        ModernPanel2.Size = New Size(713, 42)
+        ModernPanel2.TabIndex = 25
+        ' 
+        ' MB_查看当前系统的显卡索引
+        ' 
+        MB_查看当前系统的显卡索引.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MB_查看当前系统的显卡索引.BorderRadius = 10
+        MB_查看当前系统的显卡索引.BorderSize = 0
+        MB_查看当前系统的显卡索引.Dock = DockStyle.Left
+        MB_查看当前系统的显卡索引.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        MB_查看当前系统的显卡索引.Location = New Point(0, 10)
+        MB_查看当前系统的显卡索引.Margin = New Padding(2)
+        MB_查看当前系统的显卡索引.Name = "MB_查看当前系统的显卡索引"
+        MB_查看当前系统的显卡索引.PressedBackColor1 = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
+        MB_查看当前系统的显卡索引.Size = New Size(220, 32)
+        MB_查看当前系统的显卡索引.TabIndex = 1
+        MB_查看当前系统的显卡索引.Text = "查看当前系统的显卡索引"
+        ' 
         ' Form_v6_参数面板_解码参数
         ' 
         AutoScaleDimensions = New SizeF(96F, 96F)
@@ -380,6 +412,7 @@ Partial Class Form_v6_参数面板_解码参数
         Panel2.ResumeLayout(False)
         Panel5.ResumeLayout(False)
         Panel1.ResumeLayout(False)
+        ModernPanel2.ResumeLayout(False)
         ResumeLayout(False)
     End Sub
 
@@ -400,4 +433,6 @@ Partial Class Form_v6_参数面板_解码参数
     Friend WithEvents MTB_硬件解码设备参数值 As LakeUI.ModernTextBox
     Friend WithEvents Panel3 As LakeUI.ModernPanel
     Friend WithEvents MCB_硬件解码设备参数名 As LakeUI.ModernComboBox
+    Friend WithEvents ModernPanel2 As LakeUI.ModernPanel
+    Friend WithEvents MB_查看当前系统的显卡索引 As LakeUI.ModernButton
 End Class

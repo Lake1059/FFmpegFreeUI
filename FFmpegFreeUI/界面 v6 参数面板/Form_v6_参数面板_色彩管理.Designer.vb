@@ -959,6 +959,8 @@ Partial Class Form_v6_参数面板_色彩管理
         ' 
         HCL_预先转换.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HCL_预先转换.Dock = DockStyle.Fill
+        HCL_预先转换.InfoIconSizeRatio = 1F
+        HCL_预先转换.InfoIconStrokeWidth = 1.5F
         HCL_预先转换.Location = New Point(500, 10)
         HCL_预先转换.Margin = New Padding(2)
         HCL_预先转换.Name = "HCL_预先转换"
@@ -967,6 +969,7 @@ Partial Class Form_v6_参数面板_色彩管理
         HCL_预先转换.TabIndex = 3
         HCL_预先转换.Text = "预先转换（<span style=""color:MediumPurple"">默认排在所有滤镜最前</span>）"
         HCL_预先转换.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
+        HCL_预先转换.ToolTipText = "一般没有必要设置预先转换，除非你正在进行对滤镜效果有严格要求的编码任务"
         ' 
         ' MCB_像素格式预先转换
         ' 
@@ -1009,6 +1012,8 @@ Partial Class Form_v6_参数面板_色彩管理
         ' 
         HCL_最终输出.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HCL_最终输出.Dock = DockStyle.Left
+        HCL_最终输出.InfoIconSizeRatio = 1F
+        HCL_最终输出.InfoIconStrokeWidth = 1.5F
         HCL_最终输出.Location = New Point(175, 10)
         HCL_最终输出.Margin = New Padding(2)
         HCL_最终输出.Name = "HCL_最终输出"
@@ -1017,6 +1022,7 @@ Partial Class Form_v6_参数面板_色彩管理
         HCL_最终输出.TabIndex = 1
         HCL_最终输出.Text = "最终输出"
         HCL_最终输出.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
+        HCL_最终输出.ToolTipText = "此功能需要 CPU 参与，如果你正在使用 NV cuda 全链路，则不能设置此参数，否则会报错，改用滤镜：scale_cuda=format=p010le 或该驱动支持的其他像素格式"
         ' 
         ' MCB_像素格式
         ' 
