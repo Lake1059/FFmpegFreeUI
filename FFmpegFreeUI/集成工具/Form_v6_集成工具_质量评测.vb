@@ -28,7 +28,7 @@ Public Class Form_v6_集成工具_质量评测
     Private 本轮Vmaf模型 As VmafModelDisplayItem
     Private 本轮Vmaf说明 As String = ""
     Private 本轮Vmaf错误 As String = ""
-    Private ReadOnly 模型说明标签 As New Label With {.AutoSize = True, .Dock = DockStyle.Top, .Padding = New Padding(0, 4, 0, 4)}
+    Private ReadOnly 模型说明标签 As New Label With {.AutoSize = True, .Dock = DockStyle.Top, .Padding = New Padding(0, 4, 0, 4), .Visible = False}
 
     Private Enum 指标类型
         PSNR
@@ -158,6 +158,7 @@ Public Class Form_v6_集成工具_质量评测
 
     <CodeAnalysis.SuppressMessage("Performance", "CA1861:不要将常量数组作为参数", Justification:="<挂起>")>
     Private Sub 初始化控件()
+        AddHandler 模型说明标签.TextChanged, Sub() 模型说明标签.Visible = Not String.IsNullOrWhiteSpace(模型说明标签.Text)
         Panel4.Parent.Controls.Add(模型说明标签)
         Panel4.Parent.Controls.SetChildIndex(模型说明标签, Panel4.Parent.Controls.GetChildIndex(Panel4))
         AddHandler Panel4.Parent.SizeChanged, Sub() 模型说明标签.MaximumSize = New Size(Panel4.Width, 0)
@@ -206,10 +207,14 @@ Public Class Form_v6_集成工具_质量评测
                Not displayItems.Any(Function(x) x.ModelValue = previousModel AndAlso x.UseCuda = previousCuda) Then displayItems.Add(previousItem)
             MCB_模型选择.ReplaceDisplayItems(displayItems)
             MCB_模型选择.ItemToolTips.Clear()
-            For Each model In MCB_模型选择.Models
-                Dim description = ""
-                Vmaf模型描述.TryGetValue(model.ModelValue, description)
-                MCB_模型选择.ItemToolTips.Add(model.ModelValue, If(model.IsAuto, "按原视频分辨率选择 V1；≥48 fps 优先 HFR；同档没有 V1 时回退 V0 NEG。", description))
+            For Each group In MCB_模型选择.Models.GroupBy(Function(model) model.DisplayText)
+                Dim descriptions = group.Select(Function(model)
+                                                    If model.IsAuto Then Return "按原视频分辨率选择 V1；≥48 fps 优先 HFR；同档没有 V1 时回退 V0 NEG。"
+                                                    Dim description = ""
+                                                    Vmaf模型描述.TryGetValue(model.ModelValue, description)
+                                                    Return description
+                                                End Function)
+                MCB_模型选择.ItemToolTips.Add(group.Key, String.Join(vbCrLf, descriptions.Where(Function(value) Not String.IsNullOrWhiteSpace(value)).Distinct()))
             Next
             Dim previousIndex = MCB_模型选择.FindModelIndex(previousModel, previousCuda)
             MCB_模型选择.SelectedIndex = If(previousIndex >= 0, previousIndex, MCB_模型选择.FirstModelIndex)
@@ -883,13 +888,8 @@ Public Class Form_v6_集成工具_质量评测
             Dim state = JsonSerializer.Deserialize(Of 页面状态)(raw, JsonSO)
             If state Is Nothing Then Exit Sub
             MTB_原视频文件路径.Text = state.原视频 : MTB_从头开始.Text = state.从头开始 : MTB_评测时长.Text = state.评测时长
-            If Not String.IsNullOrWhiteSpace(state.Vmaf模型) AndAlso state.Vmaf模型 <> "AUTO" Then
-                Dim restored = 解析Vmaf模型显示项(state.Vmaf模型)
-                If restored Is Nothing Then restored = New VmafModelDisplayItem With {.ModelValue = state.Vmaf模型, .VersionLabel = state.Vmaf模型, .IsLocal = state.Vmaf模型.EndsWith(".json", StringComparison.OrdinalIgnoreCase)}
-                restored.UseCuda = state.VmafCuda AndAlso 获取Vmaf主版本(restored.ModelValue) = 0 AndAlso
-                    restored.ModelValue.Contains("neg", StringComparison.OrdinalIgnoreCase)
-                MCB_模型选择.AddDisplayItem(restored)
-            End If
+            ' 每次打开页面均使用 AUTO；旧设置中的具体模型不能覆盖默认值。
+            MCB_模型选择.SelectedIndex = MCB_模型选择.FirstModelIndex
             MCB_Pooling.Text = state.Pooling : MCB_SubSample.Text = state.SubSample
             For Each m In 全部指标 : If state.指标.ContainsKey(获取指标名称(m)) Then 获取指标复选框(m).Checked = state.指标(获取指标名称(m))
             Next
@@ -911,6 +911,7 @@ Public Class Form_v6_集成工具_质量评测
     End Sub
 
     Private Async Function 开始评测Async(token As CancellationToken, metrics As List(Of 指标类型), itemsToRun As List(Of UltraDetailListView.ListItem), overwriteDecision As 覆盖已有成绩决策) As Task
+        模型说明标签.Text = ""
         Dim reference = MTB_原视频文件路径.Text.Trim()
         Dim startTime = MTB_从头开始.Text.Trim()
         Dim duration = MTB_评测时长.Text.Trim()

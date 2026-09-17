@@ -101,7 +101,7 @@ Public Class VmafModelComboBox
                 For Each item In itemsToShow
                     If item Is Nothing OrElse item.IsAuto Then Continue For
                     _displayItems.Add(item)
-                    Items.Add(item.ModelValue)
+                    Items.Add(item.DisplayText)
                 Next
             End If
 
@@ -125,7 +125,7 @@ Public Class VmafModelComboBox
         End If
 
         _displayItems.Add(item)
-        Items.Add(item.ModelValue)
+        Items.Add(item.DisplayText)
         Dim comboIndex = _displayItems.Count
         If selectItem Then SelectedIndex = comboIndex
         Return comboIndex
