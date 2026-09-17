@@ -28,7 +28,6 @@ Public Class Form_v6_集成工具_质量评测
     Private 本轮Vmaf模型 As VmafModelDisplayItem
     Private 本轮Vmaf说明 As String = ""
     Private 本轮Vmaf错误 As String = ""
-    Private ReadOnly 模型说明标签 As New Label With {.AutoSize = True, .Dock = DockStyle.Top, .Padding = New Padding(0, 4, 0, 4), .Visible = False}
 
     Private Enum 指标类型
         PSNR
@@ -158,11 +157,6 @@ Public Class Form_v6_集成工具_质量评测
 
     <CodeAnalysis.SuppressMessage("Performance", "CA1861:不要将常量数组作为参数", Justification:="<挂起>")>
     Private Sub 初始化控件()
-        AddHandler 模型说明标签.TextChanged, Sub() 模型说明标签.Visible = Not String.IsNullOrWhiteSpace(模型说明标签.Text)
-        Panel4.Parent.Controls.Add(模型说明标签)
-        Panel4.Parent.Controls.SetChildIndex(模型说明标签, Panel4.Parent.Controls.GetChildIndex(Panel4))
-        AddHandler Panel4.Parent.SizeChanged, Sub() 模型说明标签.MaximumSize = New Size(Panel4.Width, 0)
-        模型说明标签.MaximumSize = New Size(Panel4.Width, 0)
         UltraDetailListView1.MultiSelect = True
         UltraDetailListView1.AllowDragReorder = True
         For Each column In UltraDetailListView1.Columns
@@ -911,7 +905,6 @@ Public Class Form_v6_集成工具_质量评测
     End Sub
 
     Private Async Function 开始评测Async(token As CancellationToken, metrics As List(Of 指标类型), itemsToRun As List(Of UltraDetailListView.ListItem), overwriteDecision As 覆盖已有成绩决策) As Task
-        模型说明标签.Text = ""
         Dim reference = MTB_原视频文件路径.Text.Trim()
         Dim startTime = MTB_从头开始.Text.Trim()
         Dim duration = MTB_评测时长.Text.Trim()
@@ -928,14 +921,11 @@ Public Class Form_v6_集成工具_质量评测
                     本轮Vmaf说明 = $"手动模型：{本轮Vmaf模型.ModelValue}{If(本轮Vmaf模型.UseCuda, " · CUDA", "") }"
                     If 解析帧率值(referenceInfo.帧率) > 60 Then 本轮Vmaf说明 &= "；HFR 比普通版更合理，但已超出其明确的约 50/60 fps 校准区间，结果仅供参考。"
                 End If
-                模型说明标签.Text = 本轮Vmaf说明
             Catch ex As InvalidOperationException
                 本轮Vmaf错误 = ex.Message
                 本轮Vmaf说明 = ex.Message
-                模型说明标签.Text = 本轮Vmaf错误
             End Try
-            模型说明标签.ForeColor = 界面主题_v6.获取当前主题前景色(Color.Orange)
-            追加评测记录(模型说明标签.Text)
+            追加评测记录(本轮Vmaf说明)
         End If
         Dim overwriteExisting = overwriteDecision = 覆盖已有成绩决策.覆盖
 
@@ -1910,7 +1900,6 @@ Public Class Form_v6_集成工具_质量评测
     End Sub
 
     Private Sub 刷新全部评分颜色()
-        模型说明标签.ForeColor = 界面主题_v6.获取当前主题前景色(Color.Orange)
         For Each metric In 全部指标
             刷新评分颜色(metric, False)
         Next
