@@ -42,11 +42,19 @@ internal static partial class Program
         using var combo = new VmafModelComboBox();
         combo.ReplaceDisplayItems(models);
         Check(combo.SelectedModelValue == "AUTO" && combo.SelectedIndex == 1, "AUTO must be first/default model");
+        Check(combo.Text == "AUTO" && combo.Items.Skip(1).SequenceEqual(combo.Models.Select(item => item.DisplayText)), "Combo text must use friendly names instead of raw model IDs");
+        foreach (var model in models)
+        {
+            combo.SelectedIndex = combo.FindModelIndex(model.ModelValue, model.UseCuda);
+            Check(combo.Text == model.DisplayText && combo.SelectedModelValue == model.ModelValue && combo.SelectedUsesCuda == model.UseCuda, "Friendly text must preserve model and CUDA identity");
+        }
+        combo.SelectedIndex = combo.FirstModelIndex;
         var browseCount = 0;
         combo.BrowseRequested += (_, _) => browseCount++;
         combo.SelectedIndex = 0;
         Check(browseCount == 1 && combo.SelectedModelValue == "AUTO", "Cancelled browse lost AUTO");
         combo.AddDisplayItem(new() { ModelValue = @"C:\model.json", IsLocal = true });
+        Check(combo.Text == "本地 · model.json", "Local model display must not expose the full path");
         combo.SelectedIndex = 0;
         Check(combo.SelectedModelValue == @"C:\model.json", "Browse lost explicit local model");
         foreach (var size in new[] { (3840, 2160), (3840, 1600), (2160, 3840), (7680, 4320) })
@@ -196,7 +204,7 @@ internal static partial class Program
         var previous = 设置_v6.实例对象.质量评测页面状态;
         try
         {
-            foreach (var model in new[] { "AUTO", "vmaf_v0.6.1", "vmaf_v0.6.1neg", @"C:\local.json" })
+            foreach (var model in new[] { "", "AUTO", "vmaf_v0.6.1", "vmaf_v0.6.1neg", "vmaf_v1.0.16_3d0h", @"C:\local.json" })
             {
                 设置_v6.实例对象.质量评测页面状态 = System.Text.Json.JsonSerializer.Serialize(new {
                     Vmaf模型 = model, VmafCuda = model == "vmaf_v0.6.1neg", Pooling = "mean", SubSample = "1",
@@ -208,14 +216,14 @@ internal static partial class Program
                 Invoke(page, "初始化控件");
                 Invoke(page, "恢复页面状态");
                 var combo = (VmafModelComboBox)page.Controls.Find("MCB_模型选择", true).Single();
-                Check(combo.SelectedModelValue == model, "Restore explicit model or AUTO");
-                Check(combo.SelectedUsesCuda == (model == "vmaf_v0.6.1neg"), "Restore explicit CUDA");
-                Check(combo.SelectedModel.IsLocal == model.EndsWith(".json"), "Legacy model name must not become a local path");
+                Check(combo.SelectedModelValue == "AUTO" && combo.Text == "AUTO", "Opening page must use AUTO regardless of saved model");
+                Check(!combo.SelectedUsesCuda && combo.SelectedModel.IsAuto, "Opening page must not restore manual CUDA/local choices");
+                Check(combo.Models.Count == 1, "Legacy model names must not be inserted into the selector");
                 var report = (string)Invoke(page, "生成当前列表导出记录")!;
                 Check(report.Contains("实际模型：vmaf_v1.0.16_hfr_3d0h") && report.Contains("超出校准区间"), "Export actual model and warning");
                 Invoke(page, "保存页面状态");
                 using var saved = System.Text.Json.JsonDocument.Parse(设置_v6.实例对象.质量评测页面状态);
-                Check(saved.RootElement.GetProperty("Vmaf模型").GetString() == model, "Persist model value instead of badges");
+                Check(saved.RootElement.GetProperty("Vmaf模型").GetString() == "AUTO", "Save the current AUTO choice");
                 Check(saved.RootElement.GetProperty("文件")[0].GetProperty("指标结果").GetProperty("VMAF").GetProperty("实际模型").GetString() == "vmaf_v1.0.16_hfr_3d0h", "Persist actual result model");
             }
             设置_v6.实例对象.质量评测页面状态 = System.Text.Json.JsonSerializer.Serialize(new {
@@ -225,8 +233,30 @@ internal static partial class Program
             Invoke(legacyV1Cuda, "初始化控件");
             Invoke(legacyV1Cuda, "恢复页面状态");
             Check(!((VmafModelComboBox)legacyV1Cuda.Controls.Find("MCB_模型选择", true).Single()).SelectedUsesCuda, "Legacy V1 CUDA state must be rejected");
+            TestModelNoteLayout();
         }
         finally { 设置_v6.实例对象.质量评测页面状态 = previous; }
+    }
+
+    private static void TestModelNoteLayout()
+    {
+        using var page = new Form_v6_集成工具_质量评测();
+        Invoke(page, "初始化控件");
+        var note = (Label)typeof(Form_v6_集成工具_质量评测).GetField("模型说明标签", PrivateInstance)!.GetValue(page)!;
+        var modelRow = page.Controls.Find("Panel4", true).Single();
+        var heading = page.Controls.Find("HtmlColorLabel8", true).Single();
+        // A visible, handle-free parent exercises docking without opening a window or loading settings.
+        using var host = new Panel { Size = page.ClientSize };
+        host.Controls.Add(note.Parent!);
+        host.PerformLayout();
+        note.Parent!.PerformLayout();
+        Check(!note.Visible && heading.Top == modelRow.Bottom, "Empty model note must not reserve a blank row");
+        note.Text = "AUTO warning";
+        note.Parent.PerformLayout();
+        Check(note.Visible && heading.Top == modelRow.Bottom + note.Height, "Nonempty model note remains visible above the list");
+        note.Text = "";
+        note.Parent.PerformLayout();
+        Check(!note.Visible && heading.Top == modelRow.Bottom, "Clearing a stale note must reclaim its row");
     }
 
     private static async Task TestRealVmaf(string directory, string ffmpegPath, string input)
