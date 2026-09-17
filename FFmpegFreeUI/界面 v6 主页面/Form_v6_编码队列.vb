@@ -31,6 +31,7 @@ Public Class Form_v6_编码队列
         AddHandler 编码队列_v6.队列已变化, AddressOf 队列已变化
         AddHandler 编码队列_v6.任务已更新, AddressOf 任务已更新
         AddHandler 编码队列_v6.任务需立即刷新, AddressOf 请求立即刷新
+        AddHandler 界面主题_v6.主题已更改, AddressOf 刷新整表
         刷新整表()
         队列刷新计时器.Start()
         请求校准编码队列列宽()
@@ -52,6 +53,7 @@ Public Class Form_v6_编码队列
         RemoveHandler 编码队列_v6.队列已变化, AddressOf 队列已变化
         RemoveHandler 编码队列_v6.任务已更新, AddressOf 任务已更新
         RemoveHandler 编码队列_v6.任务需立即刷新, AddressOf 请求立即刷新
+        RemoveHandler 界面主题_v6.主题已更改, AddressOf 刷新整表
         队列刷新计时器.Stop()
         队列刷新计时器.Dispose()
         列宽调整计时器.Stop()
@@ -330,7 +332,7 @@ Public Class Form_v6_编码队列
             Dim task = 编码队列_v6.根据ID获取任务(id)
             If task Is Nothing Then Continue For
             Dim form As New Form_v6_编码队列_查看参数(task)
-            form.Show(Me)
+            显示窗体(form, Me)
         Next
     End Sub
 
@@ -431,7 +433,7 @@ Public Class Form_v6_编码队列
                 打开输出文件(task)
             Case 编码任务状态_v6.未处理
                 Dim form As New Form_v6_编码队列_查看参数(task)
-                form.Show(Me)
+                显示窗体(form, Me)
             Case Else
                 Form_v6_编码队列_任务日志.打开或激活(Me, New String() {id})
         End Select

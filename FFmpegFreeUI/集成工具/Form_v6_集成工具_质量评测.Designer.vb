@@ -53,10 +53,10 @@ Partial Class Form_v6_集成工具_质量评测
         Panel4.BackColor = Color.Transparent
         Panel4.BackColor1 = Color.Transparent
         Panel4.BorderSize = 0
-        MCB_模型选择 = New LakeUI.ModernComboBox()
+        MCB_模型选择 = New VmafModelComboBox()
         JustEmptyControl2 = New LakeUI.JustEmptyControl()
         MB_刷新VMAF模型 = New LakeUI.ModernButton()
-        MCB_VMAF_CUDA = New LakeUI.ModernCheckBox()
+        JustEmptyControl10 = New LakeUI.JustEmptyControl()
         MCB_SubSample = New LakeUI.ModernComboBox()
         JustEmptyControl1 = New LakeUI.JustEmptyControl()
         MCB_Pooling = New LakeUI.ModernComboBox()
@@ -359,7 +359,7 @@ Partial Class Form_v6_集成工具_质量评测
         Panel4.Controls.Add(MCB_模型选择)
         Panel4.Controls.Add(JustEmptyControl2)
         Panel4.Controls.Add(MB_刷新VMAF模型)
-        Panel4.Controls.Add(MCB_VMAF_CUDA)
+        Panel4.Controls.Add(JustEmptyControl10)
         Panel4.Controls.Add(MCB_SubSample)
         Panel4.Controls.Add(JustEmptyControl1)
         Panel4.Controls.Add(MCB_Pooling)
@@ -385,15 +385,14 @@ Partial Class Form_v6_集成工具_质量评测
         MCB_模型选择.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_模型选择.DropDownSelectedForeColor = Color.White
         MCB_模型选择.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
-        MCB_模型选择.Items.Add("")
-        MCB_模型选择.Items.Add("浏览本地模型文件 ...")
         MCB_模型选择.Location = New Point(70, 10)
         MCB_模型选择.Margin = New Padding(2, 2, 2, 2)
-        MCB_模型选择.MaxDropDownItems = 12
+        MCB_模型选择.DropDownItemHeight = 36
+        MCB_模型选择.MaxDropDownItems = 14
         MCB_模型选择.Name = "MCB_模型选择"
         MCB_模型选择.Padding = New Padding(10, 0, 10, 0)
         MCB_模型选择.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        MCB_模型选择.Size = New Size(300, 32)
+        MCB_模型选择.Size = New Size(387, 32)
         MCB_模型选择.TabIndex = 6
         MCB_模型选择.ToolTipGap = -1
         MCB_模型选择.ToolTipMaxWidth = 350
@@ -422,27 +421,17 @@ Partial Class Form_v6_集成工具_质量评测
         MB_刷新VMAF模型.Size = New Size(60, 32)
         MB_刷新VMAF模型.TabIndex = 22
         MB_刷新VMAF模型.Text = "刷新"
+        '
+        ' JustEmptyControl10
         ' 
-        ' MCB_VMAF_CUDA
-        ' 
-        MCB_VMAF_CUDA.AutoSize = True
-        MCB_VMAF_CUDA.BoxBorderRadius = 5
-        MCB_VMAF_CUDA.BoxBorderSize = 0
-        MCB_VMAF_CUDA.BoxCheckedBackColor = Color.OliveDrab
-        MCB_VMAF_CUDA.BoxInnerPadding = 6
-        MCB_VMAF_CUDA.BoxSize = 22
-        MCB_VMAF_CUDA.BoxTextSpacing = 10
-        MCB_VMAF_CUDA.BoxUncheckedBackColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        MCB_VMAF_CUDA.Dock = DockStyle.Right
-        MCB_VMAF_CUDA.Location = New Point(370, 10)
-        MCB_VMAF_CUDA.Name = "MCB_VMAF_CUDA"
-        MCB_VMAF_CUDA.Padding = New Padding(10, 0, 15, 0)
-        MCB_VMAF_CUDA.Size = New Size(97, 32)
-        MCB_VMAF_CUDA.TabIndex = 21
-        MCB_VMAF_CUDA.Text = "CUDA"
+        JustEmptyControl10.Dock = DockStyle.Right
+        JustEmptyControl10.Location = New Point(457, 10)
+        JustEmptyControl10.Name = "JustEmptyControl10"
+        JustEmptyControl10.Size = New Size(10, 32)
+        JustEmptyControl10.TabIndex = 24
         ' 
         ' MCB_SubSample
-        ' 
+        '
         MCB_SubSample.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_SubSample.BorderRadius = 10
         MCB_SubSample.BorderSize = 0
@@ -527,10 +516,10 @@ Partial Class Form_v6_集成工具_质量评测
         HtmlColorLabel9.TabIndex = 0
         HtmlColorLabel9.Text = "<span style=""font-size:11; color:Silver"">选择 VMAF 模型</span>"
         HtmlColorLabel9.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.BottomLeft
-        HtmlColorLabel9.ToolTipText = "NVIDIA 用户可用 CUDA 模式，建议将 FFmpeg 升级到 9.0 及以上版本，CUDA 评测模式仅支持 420-8bit 和 444-16bit，程序将根据测试文件组合优先选择高精度格式，已知问题：可能只能使用 0.6.1 的模型！"
+        HtmlColorLabel9.ToolTipText = "模型按 V1/V0、4K、观看距离、HFR、CUDA 分类显示。带 CUDA 胶囊的条目使用 libvmaf_cuda；当前 VMAF v1 的部分特征尚无 CUDA 实现，因此仅对兼容的 v0 NEG 模型提供 CUDA 条目。"
         ' 
         ' HtmlColorLabel7
-        ' 
+        '
         HtmlColorLabel7.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel7.Dock = DockStyle.Right
         HtmlColorLabel7.Location = New Point(467, 0)
@@ -833,7 +822,7 @@ Partial Class Form_v6_集成工具_质量评测
     Friend WithEvents MCB_SSIM As LakeUI.ModernCheckBox
     Friend WithEvents HtmlColorLabel4 As LakeUI.HtmlColorLabel
     Friend WithEvents Panel4 As LakeUI.ModernPanel
-    Friend WithEvents MCB_模型选择 As LakeUI.ModernComboBox
+    Friend WithEvents MCB_模型选择 As VmafModelComboBox
     Friend WithEvents MCB_Pooling As LakeUI.ModernComboBox
     Friend WithEvents MCB_SubSample As LakeUI.ModernComboBox
     Friend WithEvents JustEmptyControl1 As LakeUI.JustEmptyControl
@@ -860,7 +849,7 @@ Partial Class Form_v6_集成工具_质量评测
     Friend WithEvents MB_导出记录 As LakeUI.ModernButton
     Friend WithEvents JustEmptyControl9 As LakeUI.JustEmptyControl
     Friend WithEvents JustEmptyControl8 As LakeUI.JustEmptyControl
-    Friend WithEvents MCB_VMAF_CUDA As LakeUI.ModernCheckBox
     Friend WithEvents JustEmptyControl2 As LakeUI.JustEmptyControl
+    Friend WithEvents JustEmptyControl10 As LakeUI.JustEmptyControl
     Friend WithEvents MB_刷新VMAF模型 As LakeUI.ModernButton
 End Class

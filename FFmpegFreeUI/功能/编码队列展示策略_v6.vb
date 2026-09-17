@@ -68,6 +68,14 @@ Public Class 旧版兼容编码队列展示策略_v6
     End Function
 
     Private Shared Function 状态颜色(status As 编码任务状态_v6) As Color
+        If 界面主题_v6.当前为浅色模式 Then
+            Select Case status
+                Case 编码任务状态_v6.正在处理, 编码任务状态_v6.已完成 : Return Color.FromArgb(0, 122, 0)
+                Case 编码任务状态_v6.已暂停 : Return Color.FromArgb(155, 96, 0)
+                Case 编码任务状态_v6.已停止, 编码任务状态_v6.错误 : Return Color.FromArgb(190, 32, 40)
+                Case Else : Return Color.Black
+            End Select
+        End If
         Select Case status
             Case 编码任务状态_v6.未处理 : Return Color.Silver
             Case 编码任务状态_v6.正在处理 : Return Color.YellowGreen
@@ -98,13 +106,13 @@ Public Class 旧版兼容编码队列展示策略_v6
                 item.SubItems(4).Text = sizeText
             End If
             Dim comparisonInputSize = If(inputSize > 0, inputSize, task.输入文件大小)
-            If 输出大小超过输入(comparisonInputSize, outputSize) Then item.SubItems(4).ForeColor = 界面配色_v6.错误文本色
+            If 输出大小超过输入(comparisonInputSize, outputSize) Then item.SubItems(4).ForeColor = 状态颜色(编码任务状态_v6.错误)
             Exit Sub
         End If
 
         If task.进度.输出大小KB > 0 Then
             item.SubItems(4).Text = 编码进度_v6.格式化大小KB(task.进度.输出大小KB)
-            If 输出大小超过输入(task.输入文件大小, CDbl(task.进度.输出大小KB) * 1024.0R) Then item.SubItems(4).ForeColor = 界面配色_v6.错误文本色
+            If 输出大小超过输入(task.输入文件大小, CDbl(task.进度.输出大小KB) * 1024.0R) Then item.SubItems(4).ForeColor = 状态颜色(编码任务状态_v6.错误)
         Else
             item.SubItems(4).Text = ""
         End If
@@ -112,9 +120,9 @@ Public Class 旧版兼容编码队列展示策略_v6
 
     Private Shared Sub 设置进行中大小颜色(task As 编码任务_v6, item As UltraDetailListView.ListItem)
         If 输出大小超过输入(task.输入文件大小, CDbl(task.进度.输出大小KB) * 1024.0R) Then
-            item.SubItems(4).ForeColor = 界面配色_v6.错误文本色
+            item.SubItems(4).ForeColor = 状态颜色(编码任务状态_v6.错误)
         ElseIf 预估输出大小过大(task) Then
-            item.SubItems(4).ForeColor = 预估大小警告色
+            item.SubItems(4).ForeColor = If(界面主题_v6.当前为浅色模式, 状态颜色(编码任务状态_v6.已暂停), 预估大小警告色)
         End If
     End Sub
 
@@ -140,7 +148,7 @@ Public Class 旧版兼容编码队列展示策略_v6
         Dim text = task.最新底部日志文本.Replace(vbCr, " ").Replace(vbLf, " ").Trim()
         If text = "" Then Exit Sub
         Dim color As Color = If(task.最新底部日志是否错误,
-                                界面配色_v6.错误文本色,
+                                状态颜色(编码任务状态_v6.错误),
                                 If(界面主题_v6.当前为浅色模式, Color.Black, Color.FromArgb(150, 220, 220, 220)))
         item.BottomLines.Add(New UltraDetailListView.TextLine(text, Nothing, color))
     End Sub

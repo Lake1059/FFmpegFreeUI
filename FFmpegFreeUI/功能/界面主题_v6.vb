@@ -20,10 +20,11 @@ Public Module 界面主题_v6
         "ExOverlayBackdropForm", "ExOverlayMsgBoxHostForm", "ExOverlayMsgBoxForm"
     }
     ' 浅色层级直接对应旧深色主题的 48/36/24 三层结构：一级导航、二/三级导航、内容区。
-    ' 数值保持克制，避免浅色模式回到接近纯白的一整片，同时所有多级页面共享同一语义层级。
-    Private ReadOnly 浅色一级导航背景 As Color = Color.FromArgb(222, 222, 222)
-    Private ReadOnly 浅色多级导航背景 As Color = Color.FromArgb(230, 230, 230)
-    Private ReadOnly 浅色基础背景 As Color = Color.FromArgb(239, 239, 239)
+    Private ReadOnly 浅色一级导航背景 As Color = Color.FromArgb(220, 234, 247)
+    Private ReadOnly 浅色多级导航背景 As Color = Color.FromArgb(236, 243, 250)
+    Private ReadOnly 浅色基础背景 As Color = Color.White
+    Private ReadOnly 浅色控件背景 As Color = Color.FromArgb(241, 247, 252)
+    Private ReadOnly 浅色悬停背景 As Color = Color.FromArgb(223, 237, 247)
     Private ReadOnly 浅色表面背景 As Color = Color.White
     Private ReadOnly 浅色强调绿色 As Color = Color.FromArgb(0, 122, 0)
     Private ReadOnly 浅色强调橙色 As Color = Color.FromArgb(145, 58, 0)
@@ -36,11 +37,13 @@ Public Module 界面主题_v6
     Private _已初始化 As Boolean
     Private _当前浅色 As Boolean
     Private _Windows主题色 As Color = SystemColors.Highlight
+    Public Event 主题已更改()
 
     Private NotInheritable Class 控件主题快照
         Public ReadOnly 颜色 As New Dictionary(Of PropertyInfo, Color)
         Public Property Html文本 As String
         Public Property 有Html颜色 As Boolean
+        Public Property 上次Html文本 As String
     End Class
 
     Public ReadOnly Property 当前为浅色模式 As Boolean
@@ -103,6 +106,7 @@ Public Module 界面主题_v6
 
         ' 毛玻璃透明属性是在窗体加载后设置的，不属于主题快照；主题切换后需要重新套用。
         If 主窗体 IsNot Nothing Then 主窗体.应用毛玻璃控件设置()
+        RaiseEvent 主题已更改()
     End Sub
 
     ''' <summary>根据当前设置统一应用圆角。LakeUI 特别呈现由 ThisIsYourWindow 管理，其余窗口直接使用 DWM。</summary>
@@ -158,23 +162,12 @@ Public Module 界面主题_v6
         Return SystemColors.Highlight
     End Function
 
-    Private Function 混合不透明颜色(baseColor As Color, accentColor As Color, accentRatio As Double, Optional alpha As Integer = 255) As Color
-        accentRatio = Math.Clamp(accentRatio, 0.0R, 1.0R)
-        Dim baseRatio = 1.0R - accentRatio
-        Return Color.FromArgb(
-            Math.Clamp(alpha, 0, 255),
-            CInt(Math.Round(baseColor.R * baseRatio + accentColor.R * accentRatio)),
-            CInt(Math.Round(baseColor.G * baseRatio + accentColor.G * accentRatio)),
-            CInt(Math.Round(baseColor.B * baseRatio + accentColor.B * accentRatio)))
-    End Function
-
     Private Function 获取浅色导航背景(target As Object) As Color
         Dim stripColor As Color = Color.Empty
-        If TypeOf target Is ModernTabListControl Then
-            stripColor = DirectCast(target, ModernTabListControl).TabStripBackColor
-        ElseIf TypeOf target Is ModernTabControl Then
-            stripColor = DirectCast(target, ModernTabControl).TabStripBackColor
-        End If
+        Dim snapshot = 获取或创建快照(target)
+        For Each pair In snapshot.颜色
+            If pair.Key.Name = "TabStripBackColor" Then stripColor = pair.Value : Exit For
+        Next
 
         If stripColor.ToArgb() = 浅色一级导航背景.ToArgb() Then Return 浅色一级导航背景
         If stripColor.ToArgb() = 浅色多级导航背景.ToArgb() Then Return 浅色多级导航背景
@@ -235,6 +228,8 @@ Public Module 界面主题_v6
         If 首次挂接 Then
             已挂接控件表.Add(control, 挂接标记)
             AddHandler control.ControlAdded, AddressOf 控件已添加
+            ' Load 中的 Attach/动态控件初始化可能覆盖背景；在首次绘制前再应用一次。
+            If TypeOf control Is Form Then AddHandler DirectCast(control, Form).Load, AddressOf 窗体加载完成
         ElseIf Not 强制刷新 Then
             ' 已挂接的树会通过 ControlAdded 捕获新增子控件；空闲扫描无需反复遍历整棵 UI 树。
             Return
@@ -258,6 +253,10 @@ Public Module 界面主题_v6
     Private Sub 控件已添加(sender As Object, e As ControlEventArgs)
         If Not _已初始化 OrElse e.Control Is Nothing Then Return
         应用控件树(e.Control, True)
+    End Sub
+
+    Private Sub 窗体加载完成(sender As Object, e As EventArgs)
+        应用控件树(DirectCast(sender, Form), True)
     End Sub
 
     Private Sub 应用窗体组件颜色(form As Form, 浅色 As Boolean)
@@ -292,14 +291,39 @@ Public Module 界面主题_v6
         Dim snapshot = 获取或创建快照(target)
         For Each pair In snapshot.颜色
             Try
-                pair.Key.SetValue(target, If(浅色, 转换为浅色(pair.Value, pair.Key.Name, target), pair.Value))
+                Dim color = If(浅色, 转换为浅色(pair.Value, pair.Key.Name, target), pair.Value)
+                If 浅色 AndAlso SP_UnLock AndAlso 设置_v6.实例对象.窗口样式 = 2 AndAlso 设置_v6.实例对象.SP_毛玻璃模式 > 0 Then
+                    Dim name = pair.Key.Name
+                    If (TypeOf target Is ModernTabListControl OrElse TypeOf target Is ModernTabControl) AndAlso
+                       (name = "TabStripBackColor" OrElse name = "ContentBackColor") Then
+                        color = Color.Transparent
+                    ElseIf name.Contains("BackColor", StringComparison.OrdinalIgnoreCase) OrElse
+                           name.Contains("BackgroundColor", StringComparison.OrdinalIgnoreCase) OrElse
+                           name = "OverlayColor" OrElse name = "SelectionColor" OrElse
+                           name = "DropDownSelectedColor" OrElse name = "DropDownHoverColor" Then
+                        ' 保留原有透明通道；原本不透明的表面在毛玻璃模式下使用半透明底色。
+                        color = Color.FromArgb(Math.Min(CInt(pair.Value.A), 120), color.R, color.G, color.B)
+                    End If
+                End If
+                ' 详情提示需要独立的阅读表面，不能套用普通控件的低 Alpha 背景。
+                If 浅色 AndAlso pair.Key.Name.Contains("ToolTip", StringComparison.OrdinalIgnoreCase) AndAlso
+                   (pair.Key.Name.Contains("BackColor", StringComparison.OrdinalIgnoreCase) OrElse
+                    pair.Key.Name.Contains("BackgroundColor", StringComparison.OrdinalIgnoreCase)) Then
+                    color = Color.FromArgb(220, 255, 255, 255)
+                End If
+                pair.Key.SetValue(target, color)
             Catch
             End Try
         Next
 
         If snapshot.有Html颜色 AndAlso TypeOf target Is HtmlColorLabel Then
             Try
-                DirectCast(target, HtmlColorLabel).Text = If(浅色, 转换Html为浅色(snapshot.Html文本), snapshot.Html文本)
+                Dim label = DirectCast(target, HtmlColorLabel)
+                ' 动态计数/图表说明由其数据源刷新，不能用初始快照覆盖新内容。
+                If label.Text = snapshot.Html文本 OrElse label.Text = snapshot.上次Html文本 Then
+                    label.Text = If(浅色, 转换Html为浅色(snapshot.Html文本), snapshot.Html文本)
+                    snapshot.上次Html文本 = label.Text
+                End If
             Catch
             End Try
         End If
@@ -348,11 +372,17 @@ Public Module 界面主题_v6
     End Function
 
     Private Function 转换为浅色(original As Color, propertyName As String, Optional target As Object = Nothing, Optional 最低对比度 As Double = 4.5R) As Color
-        If original.IsEmpty OrElse original.A = 0 Then Return original
-
         Dim name = If(propertyName, String.Empty)
+        If TypeOf target Is ThisIsYourWindow AndAlso (name = "CaptionBackColor" OrElse name = "CaptionInactiveBackColor") Then Return 浅色一级导航背景
+        If name = "OverlayColor" AndAlso TypeOf target Is ModernPanel Then
+            Dim panel = DirectCast(target, ModernPanel)
+            If TypeOf panel.FindForm() Is Form_v6_起始页面 AndAlso
+               (panel.Name = "ModernPanel4" OrElse panel.Name = "ModernPanel5" OrElse panel.Name = "MP_新闻列表") Then
+                Return Color.FromArgb(original.A, 236, 243, 250)
+            End If
+        End If
 
-        ' 所有 TabList / TabControl 共用同一套层级：根导航 #DEDEDE，二/三级导航 #E6E6E6，内容区 #EFEFEF。
+        ' 所有 TabList / TabControl 共用蓝白层级与固定青色选中标记。
         ' 不依赖具体页面名称，因此参数面板、设置、集成工具以及后续新增的多级菜单都会保持一致。
         If TypeOf target Is ModernTabListControl OrElse TypeOf target Is ModernTabControl Then
             Dim navBack = 获取浅色导航背景(target)
@@ -362,13 +392,22 @@ Public Module 界面主题_v6
                 Case "TabStripBackColor"
                     Return navBack
                 Case "TabItemSelectedBackColor"
-                    Return 混合不透明颜色(navBack, _Windows主题色, 0.18R, original.A)
+                    Return Color.FromArgb(200, 227, 232)
                 Case "TabItemHoverBackColor"
-                    Return 混合不透明颜色(navBack, _Windows主题色, 0.09R, original.A)
+                    Return 浅色悬停背景
                 Case "IndicatorColor"
-                    Return _Windows主题色
+                    Return Color.FromArgb(15, 124, 140)
             End Select
         End If
+        If TypeOf target Is Ultra2DChart Then
+            Select Case name
+                Case "PlotBackColor" : Return Color.White
+                Case "GridLineColor" : Return Color.FromArgb(210, 224, 236)
+                Case "PlotBorderColor", "AxisLineColor" : Return Color.FromArgb(104, 128, 150)
+                Case "AxisTitleColor", "AxisLabelColor" : Return Color.Black
+            End Select
+        End If
+        If original.IsEmpty OrElse original.A = 0 Then Return original
         ' 红色关闭按钮悬停/按下状态需要保留亮色图标，不能按普通前景色反转。
         If name.Contains("HoverGlyphColor", StringComparison.OrdinalIgnoreCase) OrElse
            name.Contains("PressedGlyphColor", StringComparison.OrdinalIgnoreCase) Then Return original
@@ -413,7 +452,12 @@ Public Module 界面主题_v6
 
         If Not neutral Then Return original
 
-        Dim isBackground = name.Contains("BackColor", StringComparison.OrdinalIgnoreCase)
+        Dim isBackground = name.Contains("BackColor", StringComparison.OrdinalIgnoreCase) OrElse
+                           name.Contains("BackgroundColor", StringComparison.OrdinalIgnoreCase)
+        If neutral AndAlso (isBackground OrElse name = "SelectionColor" OrElse name = "DropDownSelectedColor" OrElse name = "DropDownHoverColor") Then
+            If name.Contains("Hover", StringComparison.OrdinalIgnoreCase) OrElse name.Contains("Pressed", StringComparison.OrdinalIgnoreCase) Then Return 浅色悬停背景
+            If original.A < 255 Then Return 浅色控件背景
+        End If
         If isBackground AndAlso original.A = 255 Then
             ' 保留旧深色设计器中的语义灰阶：24=内容底，36=二/三级导航，48=一级导航。
             ' 这样任何新页面只要继续沿用原来的深色层级，就会自动得到一致的浅色层级。
@@ -421,8 +465,8 @@ Public Module 界面主题_v6
             If gray >= 20 AndAlso gray <= 28 Then Return 浅色基础背景
             If gray >= 32 AndAlso gray <= 40 Then Return 浅色多级导航背景
             If gray >= 44 AndAlso gray <= 50 Then Return 浅色一级导航背景
-            If gray <= 72 Then Return 浅色基础背景
-            If gray < 112 Then Return Color.FromArgb(234, 234, 234)
+            If gray <= 72 Then Return 浅色控件背景
+            If gray < 112 Then Return 浅色悬停背景
             If gray >= 160 Then Return Color.FromArgb(original.A, gray, gray, gray)
         End If
 

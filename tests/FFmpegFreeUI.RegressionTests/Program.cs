@@ -3,13 +3,15 @@ using System.Reflection;
 using System.Text.Json;
 using FFmpegFreeUI;
 
-internal static class Program
+internal static partial class Program
 {
     private static int checks;
     private static readonly BindingFlags PrivateInstance = BindingFlags.Instance | BindingFlags.NonPublic;
 
     [STAThread]
-    private static async Task<int> Main(string[] args)
+    private static int Main(string[] args) => MainAsync(args).GetAwaiter().GetResult();
+
+    private static async Task<int> MainAsync(string[] args)
     {
         if (args.Contains("--output-fixture"))
         {
@@ -28,6 +30,7 @@ internal static class Program
             await Task.Delay(TimeSpan.FromSeconds(30));
             return 0;
         }
+        if (args.Contains("--ui-preview")) { ShowThemePreview(); return 0; }
         if (args.Length > 0 && !(args.Length == 2 && args[0] == "--ffmpeg")) return 2;
 
         var directory = Path.Combine(Path.GetTempPath(), "FFmpegFreeUI-regression-" + Guid.NewGuid().ToString("N"));
@@ -44,6 +47,8 @@ internal static class Program
                 工作目录 = directory
             };
             TestPresetCopies(directory);
+            TestThemeAndVmaf();
+            Console.WriteLine("PASS: light/dark theme, first-load colors, VMAF AUTO and model selection");
             Console.WriteLine("PASS: preset isolation and atomic persistence");
             TestQueueOperations(directory);
             Console.WriteLine("PASS: queue ordering, task lifecycle guards, and naming");
@@ -447,6 +452,7 @@ internal static class Program
         Check(exitCode == 0 && step.输出缓存.Count == 1, "Real FFprobe must retain its final duration line");
         var duration = double.Parse(step.输出缓存.Single(), System.Globalization.CultureInfo.InvariantCulture);
         Check(duration > 0 && duration < 1, "Preset output must be shorter than the original media");
+        await TestRealVmaf(directory, ffmpegPath, input);
         编码队列_v6.移除任务([generate.ID, encode.ID]);
     }
 

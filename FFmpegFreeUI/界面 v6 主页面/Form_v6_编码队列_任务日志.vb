@@ -51,6 +51,7 @@ Public Class Form_v6_编码队列_任务日志
             AddHandler 当前实例.FormClosed, Sub() 当前实例 = Nothing
         End If
         当前实例.同步选择(selectedIds)
+        界面主题_v6.应用当前主题到窗体(当前实例)
         If 当前实例.Visible Then
             当前实例.Activate()
         Else
