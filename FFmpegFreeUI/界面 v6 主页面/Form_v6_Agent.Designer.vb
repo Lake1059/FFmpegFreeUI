@@ -29,12 +29,10 @@ Partial Class Form_v6_Agent
         Dim ToolTipEntry5 As LakeUI.ModernComboBox.ToolTipEntry = New LakeUI.ModernComboBox.ToolTipEntry()
         Dim ToolTipEntry6 As LakeUI.ModernComboBox.ToolTipEntry = New LakeUI.ModernComboBox.ToolTipEntry()
         ModernPanel1 = New LakeUI.ModernPanel()
-        ModernPanel1.BackColor = Color.Transparent
         AgentRoom1 = New LakeUI.AgentRoom()
         JustEmptyControl7 = New LakeUI.JustEmptyControl()
         ModernTextBox1 = New LakeUI.ModernTextBox()
         Panel2 = New LakeUI.ModernPanel()
-        Panel2.BorderSize = 0
         MCB_模型选择 = New LakeUI.ModernComboBox()
         JustEmptyControl4 = New LakeUI.JustEmptyControl()
         MCB_推理级别 = New LakeUI.ModernComboBox()
@@ -46,33 +44,20 @@ Partial Class Form_v6_Agent
         MCB_联网设置 = New LakeUI.ModernComboBox()
         JustEmptyControl1 = New LakeUI.JustEmptyControl()
         Panel3 = New LakeUI.ModernPanel()
-        Panel3.BackColor = Color.Transparent
-        Panel3.BackColor1 = Color.Transparent
-        Panel3.BorderSize = 0
         ModernPanel2 = New LakeUI.ModernPanel()
-        ModernPanel2.BackColor = Color.Transparent
         ModernListBox1 = New LakeUI.ModernListBox()
         HtmlColorLabel2 = New LakeUI.HtmlColorLabel()
         HtmlColorLabel1 = New LakeUI.HtmlColorLabel()
         ModernListBox2 = New LakeUI.ModernListBox()
         Panel4 = New LakeUI.ModernPanel()
-        Panel4.BackColor = Color.Transparent
-        Panel4.BackColor1 = Color.Transparent
-        Panel4.BorderSize = 0
         MB_删除对话 = New LakeUI.ModernButton()
         JustEmptyControl5 = New LakeUI.JustEmptyControl()
         MB_新对话 = New LakeUI.ModernButton()
         Panel1 = New LakeUI.ModernPanel()
-        Panel1.BackColor = Color.Transparent
-        Panel1.BackColor1 = Color.Transparent
-        Panel1.BorderSize = 0
         MB_操作提示 = New LakeUI.ModernButton()
         JustEmptyControl6 = New LakeUI.JustEmptyControl()
         MB_重载连接 = New LakeUI.ModernButton()
         Panel5 = New LakeUI.ModernPanel()
-        Panel5.BackColor = Color.Transparent
-        Panel5.BackColor1 = Color.Transparent
-        Panel5.BorderSize = 0
         MB_页面用量 = New LakeUI.ModernButton()
         ModernPanel1.SuspendLayout()
         Panel2.SuspendLayout()
@@ -85,6 +70,7 @@ Partial Class Form_v6_Agent
         ' 
         ' ModernPanel1
         ' 
+        ModernPanel1.BackColor = Color.Transparent
         ModernPanel1.BorderSize = 0
         ModernPanel1.Controls.Add(AgentRoom1)
         ModernPanel1.Controls.Add(JustEmptyControl7)
@@ -168,6 +154,7 @@ Partial Class Form_v6_Agent
         ' 
         Panel2.BackColor = Color.Transparent
         Panel2.BackColor1 = Color.Transparent
+        Panel2.BorderSize = 0
         Panel2.Controls.Add(MCB_模型选择)
         Panel2.Controls.Add(JustEmptyControl4)
         Panel2.Controls.Add(MCB_推理级别)
@@ -378,6 +365,9 @@ Partial Class Form_v6_Agent
         ' 
         ' Panel3
         ' 
+        Panel3.BackColor = Color.Transparent
+        Panel3.BackColor1 = Color.Transparent
+        Panel3.BorderSize = 0
         Panel3.Controls.Add(ModernPanel2)
         Panel3.Controls.Add(HtmlColorLabel1)
         Panel3.Controls.Add(ModernListBox2)
@@ -392,6 +382,7 @@ Partial Class Form_v6_Agent
         ' 
         ' ModernPanel2
         ' 
+        ModernPanel2.BackColor = Color.Transparent
         ModernPanel2.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernPanel2.BorderRadius = 10
         ModernPanel2.BorderSize = 0
@@ -479,6 +470,9 @@ Partial Class Form_v6_Agent
         ' 
         ' Panel4
         ' 
+        Panel4.BackColor = Color.Transparent
+        Panel4.BackColor1 = Color.Transparent
+        Panel4.BorderSize = 0
         Panel4.Controls.Add(MB_删除对话)
         Panel4.Controls.Add(JustEmptyControl5)
         Panel4.Controls.Add(MB_新对话)
@@ -534,6 +528,9 @@ Partial Class Form_v6_Agent
         ' 
         ' Panel1
         ' 
+        Panel1.BackColor = Color.Transparent
+        Panel1.BackColor1 = Color.Transparent
+        Panel1.BorderSize = 0
         Panel1.Controls.Add(MB_操作提示)
         Panel1.Controls.Add(JustEmptyControl6)
         Panel1.Controls.Add(MB_重载连接)
@@ -588,6 +585,9 @@ Partial Class Form_v6_Agent
         ' 
         ' Panel5
         ' 
+        Panel5.BackColor = Color.Transparent
+        Panel5.BackColor1 = Color.Transparent
+        Panel5.BorderSize = 0
         Panel5.Controls.Add(MB_页面用量)
         Panel5.Dock = DockStyle.Bottom
         Panel5.Location = New Point(0, 604)
