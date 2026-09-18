@@ -138,7 +138,8 @@ Partial Class FormMain_v6
         ThisIsYourWindow1.CaptionInactiveBackColor = Color.FromArgb(CByte(48), CByte(48), CByte(48))
         ThisIsYourWindow1.CaptionPadding = New Padding(5)
         ThisIsYourWindow1.CloseButtonGlyphColor = Color.FromArgb(CByte(200), CByte(200), CByte(200))
-        ThisIsYourWindow1.IconSize = 26
+        ThisIsYourWindow1.IconPadding = New Padding(4, 0, 0, 0)
+        ThisIsYourWindow1.IconSize = 24
         ThisIsYourWindow1.LayerShadowResizeFullArea = True
         ThisIsYourWindow1.ShadowMode = LakeUI.ThisIsYourWindow.ShadowModeEnum.Layer
         ThisIsYourWindow1.TitleAlign = LakeUI.ThisIsYourWindow.TitleAlignEnum.Center
