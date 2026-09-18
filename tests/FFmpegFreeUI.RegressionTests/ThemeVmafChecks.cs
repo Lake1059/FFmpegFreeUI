@@ -233,30 +233,22 @@ internal static partial class Program
             Invoke(legacyV1Cuda, "初始化控件");
             Invoke(legacyV1Cuda, "恢复页面状态");
             Check(!((VmafModelComboBox)legacyV1Cuda.Controls.Find("MCB_模型选择", true).Single()).SelectedUsesCuda, "Legacy V1 CUDA state must be rejected");
-            TestModelNoteLayout();
+            TestModelDetailRowRemoved();
         }
         finally { 设置_v6.实例对象.质量评测页面状态 = previous; }
     }
 
-    private static void TestModelNoteLayout()
+    private static void TestModelDetailRowRemoved()
     {
         using var page = new Form_v6_集成工具_质量评测();
         Invoke(page, "初始化控件");
-        var note = (Label)typeof(Form_v6_集成工具_质量评测).GetField("模型说明标签", PrivateInstance)!.GetValue(page)!;
         var modelRow = page.Controls.Find("Panel4", true).Single();
         var heading = page.Controls.Find("HtmlColorLabel8", true).Single();
-        // A visible, handle-free parent exercises docking without opening a window or loading settings.
         using var host = new Panel { Size = page.ClientSize };
-        host.Controls.Add(note.Parent!);
+        host.Controls.Add(modelRow.Parent!);
         host.PerformLayout();
-        note.Parent!.PerformLayout();
-        Check(!note.Visible && heading.Top == modelRow.Bottom, "Empty model note must not reserve a blank row");
-        note.Text = "AUTO warning";
-        note.Parent.PerformLayout();
-        Check(note.Visible && heading.Top == modelRow.Bottom + note.Height, "Nonempty model note remains visible above the list");
-        note.Text = "";
-        note.Parent.PerformLayout();
-        Check(!note.Visible && heading.Top == modelRow.Bottom, "Clearing a stale note must reclaim its row");
+        modelRow.Parent!.PerformLayout();
+        Check(heading.Top == modelRow.Bottom, "VMAF model selection must not render an AUTO detail row");
     }
 
     private static async Task TestRealVmaf(string directory, string ffmpegPath, string input)
