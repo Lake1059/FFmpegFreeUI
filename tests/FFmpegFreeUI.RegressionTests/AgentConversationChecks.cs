@@ -157,16 +157,21 @@ internal static partial class Program
             var activityB = b.Turns.Last().Activities.Last(x => x.Kind == "tool");
             Check(activityA.State == "error" && activityB.State == "completed", "Concurrent tool outcomes belong to their own turns");
             Check(activityA.ResultText == fullReturn && activityA.ResultText.Length > 16000, "Full tool output survives in saved activity");
-            Check(!room.Items.Any(x => x.Text.Contains("secret-") || x.Text.Contains("退出码 7")), "Background tool results and raw arguments stay out of selected room");
+            Check(!room.Items.Any(x => x.Text.Contains("secret-A") || x.Text.Contains("退出码 7")), "Background tool details stay out of selected room");
+            Check(room.Items.Any(x => x.Text.Contains("secret-B")), "Selected tool arguments are visible");
             Check(room.Items.Any(x => x.Text.Contains("退出码 0")), "Selected tool summary displays its own exit code");
+            Check(room.Items.Last().Text == room.FindItem(b.Turns.Last().Id).Title, "Latest overview mirrors active turn header at bottom");
             Select(a);
             Check(room.Items.Any(x => x.Text.Contains("reply-A-")) && !room.Items.Any(x => x.Text.Contains("reply-B-")), "Switching restores the correct active response");
             Check(room.Items.Count(x => x.Text.Contains("thinking-A")) == 1, "Returning to active thinking must not duplicate it");
+            Check(room.Items.Any(x => x.Text.Contains("secret-A")) && !room.Items.Any(x => x.Text.Contains("secret-B")), "Switching restores only selected tool arguments");
+            Check(room.Items.Last().Text == room.FindItem(a.Turns.Last().Id).Title, "Switching restores bottom overview for selected turn");
 
             // Cancel A while B is still waiting for its endpoint; B's token and stream must survive.
             Invoke(form, "RequestStopAgentTask");
             PumpAgentUntil(() => taskA.IsCompleted, "Selected run must cancel");
             taskA.GetAwaiter().GetResult();
+            Check(room.Items.Last().Text == room.FindItem(a.Turns.Last().Id).Title && room.Items.Last().Text.Contains("已停止"), "Bottom overview retains final stopped status");
             Check(!AgentMember<CancellationTokenSource>(runB, "RequestCts").IsCancellationRequested && !taskB.IsCompleted,
                 "Stopping A must not cancel or finish B");
             Check(RowColor(a) == list.ForeColor && RowColor(b) == green, "Finished row resets without changing active row");

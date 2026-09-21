@@ -338,13 +338,22 @@ Public Class 编码队列_v6
     End Function
 
     Private Shared Function 同步预设任务核心(idSet As HashSet(Of String), 预设数据 As 预设数据_v6) As 预设同步结果
-        Dim result As New 预设同步结果
-        If 预设数据 Is Nothing Then Return result
-        If idSet IsNot Nothing AndAlso idSet.Count = 0 Then Return result
+        If 预设数据 Is Nothing Then Return New 预设同步结果
         Dim clonePreset = 预设管理_v6.创建预设克隆工厂(预设数据)
+        Return 修改预设任务核心(idSet, Function(task) clonePreset())
+    End Function
+
+    Public Shared Function 修改指定未处理预设任务(ids As IEnumerable(Of String), transform As Func(Of 编码任务_v6, 预设数据_v6)) As 预设同步结果
+        Return 修改预设任务核心(New HashSet(Of String)(If(ids, Array.Empty(Of String)()), StringComparer.OrdinalIgnoreCase), transform)
+    End Function
+
+    Private Shared Function 修改预设任务核心(idSet As HashSet(Of String), transform As Func(Of 编码任务_v6, 预设数据_v6)) As 预设同步结果
+        Dim result As New 预设同步结果
+        If idSet IsNot Nothing AndAlso idSet.Count = 0 Then Return result
 
         Dim changed As New List(Of 编码任务_v6)
         SyncLock 队列锁
+            Dim prepared As New Dictionary(Of 编码任务_v6, 预设数据_v6)
             For Each task In 队列项目
                 If idSet IsNot Nothing AndAlso Not idSet.Contains(task.ID) Then Continue For
 
@@ -358,7 +367,12 @@ Public Class 编码队列_v6
                     Continue For
                 End If
 
-                task.预设数据 = clonePreset()
+                prepared.Add(task, transform(task))
+            Next
+            ' 先验证所有副本，避免后续目标校验失败造成部分写入。
+            For Each entry In prepared
+                Dim task = entry.Key
+                task.预设数据 = entry.Value
                 If task.输出文件由自动命名生成 Then
                     task.输出文件 = ""
                     task.输出文件由自动命名生成 = False

@@ -89,10 +89,56 @@ Partial Public Class AgentLocalTools
         Return JsonSerializer.Serialize(payload, ToolJsonOptions)
     End Function
 
-    Private Shared Function SyncParameterPanelToQueue() As String
-        Dim preset = 预设管理_v6.从面板创建预设(Form_v6_参数面板)
-        Dim queueSync = 编码队列_v6.同步未处理预设任务(preset)
-        Return BuildQueueSyncSummary(queueSync)
+    Private Shared Function BuildQueuePresetProperties(patch As Boolean) As Dictionary(Of String, Object)
+        Dim properties As New Dictionary(Of String, Object) From {
+            {"id", New Dictionary(Of String, Object) From {{"type", "string"}, {"description", "任务 ID，优先使用稳定 ID"}}},
+            {"ids", New Dictionary(Of String, Object) From {{"type", "array"}, {"items", New Dictionary(Of String, Object) From {{"type", "string"}}}}},
+            {"index", New Dictionary(Of String, Object) From {{"type", "integer"}, {"description", "从 1 开始的队列序号"}}},
+            {"indexes", New Dictionary(Of String, Object) From {{"type", "array"}, {"items", New Dictionary(Of String, Object) From {{"type", "integer"}}}}}
+        }
+        If patch Then properties.Add("changes", New Dictionary(Of String, Object) From {{"type", "object"}, {"description", "非空对象；键为预设数据_v6 顶层属性名，只修改传入字段。数组和对象字段须传完整字段值。"}})
+        Return properties
+    End Function
+
+    Private Shared Function SyncParameterPanelToQueue(args As JsonElement, Optional patch As Boolean = False) As String
+        Dim resolution = ResolveQueueTarget(args, 编码队列_v6.获取队列快照(), False)
+        If resolution.RequestedAll Then resolution.Errors.Add("必须指定 id/ids/index/indexes，不支持 target=all")
+        If resolution.MissingIds.Count > 0 OrElse resolution.MissingIndexes.Count > 0 Then resolution.Errors.Add("部分目标不存在，未修改任何任务")
+        Dim changes As JsonElement
+        If patch Then
+            If Not args.TryGetProperty("changes", changes) OrElse changes.ValueKind <> JsonValueKind.Object Then
+                resolution.Errors.Add("必须提供非空 changes 对象")
+            ElseIf Not changes.EnumerateObject().Any() Then
+                resolution.Errors.Add("changes 不能为空")
+            End If
+        End If
+        Dim items As New List(Of Dictionary(Of String, Object))
+        Dim payload As New Dictionary(Of String, Object) From {{"success", False}, {"tasks", items}, {"updated_count", 0}}
+        If resolution.Errors.Count > 0 Then
+            AddQueueDiagnostics(payload, resolution)
+            Return JsonSerializer.Serialize(payload, ToolJsonOptions)
+        End If
+        Dim panelPreset = If(patch, Nothing, 预设管理_v6.从面板创建预设(Form_v6_参数面板))
+        Dim result = 编码队列_v6.修改指定未处理预设任务(resolution.Tasks.Select(Function(t) t.ID),
+            Function(task)
+                Dim before = task.预设数据
+                Dim updated = ClonePresetData(If(patch, before, panelPreset))
+                If patch Then
+                    ApplyTopLevelChanges(updated, changes)
+                    If HasJsonProperty(changes, NameOf(预设数据_v6.滤镜排序系统)) Then 预设管理_v6.应用Agent滤镜排序请求(updated, before)
+                End If
+                items.Add(New Dictionary(Of String, Object) From {
+                    {"id", task.ID},
+                    {"effective_changed_fields", BuildChangedFieldList(before, updated)}
+                })
+                Return updated
+            End Function)
+        payload("success") = True
+        payload("updated_count") = result.已更新
+        payload("skipped_command_count") = result.已跳过非预设任务
+        payload("skipped_started_count") = result.已跳过不可修改任务
+        payload("message") = BuildQueueSyncSummary(result)
+        Return JsonSerializer.Serialize(payload, ToolJsonOptions)
     End Function
 
     Private Shared Function BuildQueueSyncSummary(result As 编码队列_v6.预设同步结果) As String

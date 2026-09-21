@@ -1,14 +1,38 @@
-Imports System.Text
-Imports System.IO
-Imports LakeUI
+﻿Imports System.Text
 
 Partial Public Class Form_v6_Agent
     Private _statusItem As LakeUI.AgentRoom.ChatItem = Nothing
+    Private _latestTurnOverviewItem As LakeUI.AgentRoom.ChatItem = Nothing
+
+    Private Sub RefreshLatestTurnOverview()
+        If _current Is Nothing Then Return
+        Dim turn = GetConversationRuntime(_current).ActiveTurn
+        If turn Is Nothing Then turn = _current.Turns?.LastOrDefault()
+        If turn Is Nothing Then Return
+        Dim summary = FormatTurnHeader(turn)
+        Dim header = AgentRoom1.FindItem(turn.Id)
+        If header IsNot Nothing Then header.Title = summary
+        If _latestTurnOverviewItem Is Nothing OrElse Not AgentRoom1.Items.Contains(_latestTurnOverviewItem) Then
+            _latestTurnOverviewItem = AgentRoom1.AddCard(summary)
+        Else
+            _latestTurnOverviewItem.Text = summary
+            If AgentRoom1.Items.IndexOf(_latestTurnOverviewItem) <> AgentRoom1.Items.Count - 1 Then
+                AgentRoom1.Items.Remove(_latestTurnOverviewItem)
+                AgentRoom1.Items.Add(_latestTurnOverviewItem)
+            End If
+        End If
+    End Sub
+
+    Private Sub FollowLatestWithOverview()
+        RefreshLatestTurnOverview()
+        AgentRoom1.FollowLatestIfPinned()
+    End Sub
 
     Private Sub RenderCurrentConversation(Optional scrollToBottom As Boolean = True)
         Dim run = GetConversationRuntime(_current)
         AgentRoom1.Clear()
         _statusItem = Nothing
+        _latestTurnOverviewItem = Nothing
         run.ActiveTurnItem = Nothing
         run.ActiveResponseItem = Nothing
         run.ActiveThinkingItem = Nothing
@@ -38,6 +62,7 @@ Partial Public Class Form_v6_Agent
             End Select
         Next
         RenderActiveRunOverlay()
+        RefreshLatestTurnOverview()
         UpdateSendButtonState()
         If scrollToBottom Then AgentRoom1.ScrollToBottom()
     End Sub
@@ -93,7 +118,7 @@ Partial Public Class Form_v6_Agent
         Dim toolCount = If(turn.Activities, New List(Of AgentTurnActivityData)).
             Where(Function(x) x IsNot Nothing AndAlso String.Equals(x.Kind, "tool", StringComparison.OrdinalIgnoreCase)).
             Count()
-        Dim suffix = If(toolCount > 0, $" · {toolCount} 次工具调用", "")
+        Dim suffix = $" · {toolCount} 次工具调用"
         Select Case If(turn.State, "").ToLowerInvariant()
             Case "running"
                 Dim status = CompactSingleLine(If(String.IsNullOrWhiteSpace(turn.StatusText), "正在工作", turn.StatusText), 34)
@@ -104,21 +129,6 @@ Partial Public Class Form_v6_Agent
                 Return $"运行失败 · {FormatElapsedMilliseconds(elapsed.TotalMilliseconds)}{suffix}"
             Case Else
                 Return $"已工作 {FormatElapsedMilliseconds(elapsed.TotalMilliseconds)}{suffix}"
-        End Select
-    End Function
-
-    Private Function FormatToolActivityTitle(activity As AgentTurnActivityData) As String
-        Dim name = CompactSingleLine(GetToolDisplayName(activity?.ToolName), 42)
-        If IsToolActivityError(activity) Then Return name & " · " & GetToolExecutionStatus(activity)
-        Select Case If(activity?.State, "").ToLowerInvariant()
-            Case "running"
-                Return name & " · 正在执行"
-            Case "error"
-                Return name & " · 失败"
-            Case "canceled"
-                Return name & " · 已取消"
-            Case Else
-                Return name & " · " & FormatElapsedMilliseconds(If(activity?.ElapsedMilliseconds, 0))
         End Select
     End Function
 
@@ -134,11 +144,12 @@ Partial Public Class Form_v6_Agent
 
     Private Function FormatToolActivityDetails(activity As AgentTurnActivityData) As String
         If activity Is Nothing Then Return ""
-        Dim elapsed = If(activity.ElapsedMilliseconds < 0, "—", FormatElapsedMilliseconds(activity.ElapsedMilliseconds))
-        Return $"{CompactSingleLine(GetToolDisplayName(activity.ToolName), 80)} · 耗时 {elapsed} · {If(activity.ResultText, "").Length} 字 · {GetToolExecutionStatus(activity)}"
+        Dim elapsed = FormatElapsedMilliseconds(GetToolElapsedMilliseconds(activity))
+        Return $"{GetToolDisplayName(activity.ToolName)} ({activity.ToolName}) · 耗时 {elapsed} · {If(activity.ResultText, "").Length} 字 · {GetToolExecutionStatus(activity)}" &
+            vbCrLf & "参数：" & If(String.IsNullOrWhiteSpace(activity.Arguments), "（无）", activity.Arguments)
     End Function
 
-    ' 只提取完成标志，不将参数或返回正文传入控件及其复制内容。
+    ' 返回正文只提取完成标志；参数在记录详情中完整显示。
     Private Function GetToolExecutionStatus(activity As AgentTurnActivityData) As String
         Select Case If(activity?.State, "").ToLowerInvariant()
             Case "running" : Return "正在执行"
@@ -186,25 +197,27 @@ Partial Public Class Form_v6_Agent
 
     Private Function FormatToolGroupTitle(activities As IReadOnlyList(Of AgentTurnActivityData)) As String
         If activities Is Nothing OrElse activities.Count = 0 Then Return "工具调用"
-        If activities.Count = 1 Then Return FormatToolActivityTitle(activities(0))
-
         Dim runningActivity = activities.LastOrDefault(Function(x) String.Equals(x?.State, "running", StringComparison.OrdinalIgnoreCase))
-        If runningActivity IsNot Nothing Then
-            Dim currentName = CompactSingleLine(GetToolDisplayName(runningActivity.ToolName), 34)
-            Return $"{currentName} · 正在执行 · 共 {activities.Count} 次"
-        End If
+        Dim currentName = If(runningActivity Is Nothing, "无", GetToolDisplayName(runningActivity.ToolName))
+        Dim currentElapsed = If(runningActivity Is Nothing, "—", FormatElapsedMilliseconds(GetToolElapsedMilliseconds(runningActivity)))
         Dim errorCount = activities.Where(Function(x) IsToolActivityError(x)).Count()
-        If errorCount > 0 Then Return $"{activities.Count} 次工具调用 · {errorCount} 项失败"
         Dim canceledCount = activities.Where(Function(x) String.Equals(x?.State, "canceled", StringComparison.OrdinalIgnoreCase)).Count()
-        If canceledCount > 0 Then Return $"{activities.Count} 次工具调用 · {canceledCount} 项已取消"
+        Dim elapsed = activities.Sum(Function(x) GetToolElapsedMilliseconds(x))
+        Dim currentPrefix = If(runningActivity Is Nothing, "", $"当前调用：{currentName} · 正在执行：{currentElapsed} · ")
+        Return currentPrefix & $"总耗时 {FormatElapsedMilliseconds(elapsed)} · 共 {activities.Count} 次 · 错误 {errorCount} 次" & If(canceledCount > 0, $" · 取消 {canceledCount} 次", "")
+    End Function
 
-        Dim elapsed = activities.Sum(Function(x) Math.Max(0, If(x?.ElapsedMilliseconds, 0)))
-        Return $"{activities.Count} 次工具调用 · {FormatElapsedMilliseconds(elapsed)}"
+    Private Function GetToolElapsedMilliseconds(activity As AgentTurnActivityData) As Double
+        If activity Is Nothing Then Return 0
+        If String.Equals(activity.State, "running", StringComparison.OrdinalIgnoreCase) Then
+            Return Math.Max(0, (DateTime.Now - activity.CreatedAt).TotalMilliseconds)
+        End If
+        Return Math.Max(0, activity.ElapsedMilliseconds)
     End Function
 
     Private Function FormatToolGroupDetails(activities As IReadOnlyList(Of AgentTurnActivityData)) As String
         If activities Is Nothing OrElse activities.Count = 0 Then Return ""
-        Return String.Join(Environment.NewLine, activities.Where(Function(x) x IsNot Nothing).Select(Function(x) FormatToolActivityDetails(x)))
+        Return String.Join(vbCrLf, activities.Where(Function(x) x IsNot Nothing).Select(Function(activity, index) $"#{index + 1}  {FormatToolActivityDetails(activity)}"))
     End Function
 
     Private Function GetConsecutiveToolActivities(conversation As AgentConversationData, activity As AgentTurnActivityData) As List(Of AgentTurnActivityData)
@@ -278,7 +291,7 @@ Partial Public Class Form_v6_Agent
         run.ActiveTurnItem.Title = FormatTurnHeader(run.ActiveTurn)
         run.ActiveTurnItem.IsRunning = String.Equals(run.ActiveTurn.State, "running", StringComparison.OrdinalIgnoreCase)
         run.ActiveTurnItem.IsError = String.Equals(run.ActiveTurn.State, "error", StringComparison.OrdinalIgnoreCase)
-        If IsConversationSelected(conversation) Then AgentRoom1.FollowLatestIfPinned()
+        If IsConversationSelected(conversation) Then FollowLatestWithOverview()
     End Sub
 
     Private Function GetToolDisplayName(toolName As String) As String
@@ -297,6 +310,8 @@ Partial Public Class Form_v6_Agent
                 Return "控制队列任务"
             Case "sync_parameter_panel_to_queue"
                 Return "同步参数到队列"
+            Case "patch_queue_task_presets"
+                Return "修改任务预设选项"
             Case "get_ui_tabs"
                 Return "读取选项卡"
             Case "switch_ui_tab"
@@ -394,7 +409,7 @@ Partial Public Class Form_v6_Agent
         Else
             _statusItem.Text = content
         End If
-        AgentRoom1.FollowLatestIfPinned()
+        FollowLatestWithOverview()
     End Sub
 
     Private Sub ShowRunStatus(conversation As AgentConversationData, text As String, Optional keepRecord As Boolean = False)
@@ -406,14 +421,14 @@ Partial Public Class Form_v6_Agent
             UpdateActiveRunOverviewCard(conversation)
             If keepRecord AndAlso IsConversationSelected(conversation) Then
                 AgentRoom1.AddCard(content)
-                If IsConversationSelected(conversation) Then AgentRoom1.FollowLatestIfPinned()
+                If IsConversationSelected(conversation) Then FollowLatestWithOverview()
             End If
             Return
         End If
 
         If Not IsConversationSelected(conversation) Then Return
         AgentRoom1.AddCard(content)
-        If IsConversationSelected(conversation) Then AgentRoom1.FollowLatestIfPinned()
+        If IsConversationSelected(conversation) Then FollowLatestWithOverview()
     End Sub
 
     Private Sub ShowActiveThinking(conversation As AgentConversationData)
@@ -426,7 +441,7 @@ Partial Public Class Form_v6_Agent
         Else
             run.ActiveThinkingItem.Text = "正在思考..."
         End If
-        If IsConversationSelected(conversation) Then AgentRoom1.FollowLatestIfPinned()
+        If IsConversationSelected(conversation) Then FollowLatestWithOverview()
     End Sub
 
     Private Sub BeginThinkingTextStream(conversation As AgentConversationData)
@@ -457,7 +472,7 @@ Partial Public Class Form_v6_Agent
         Else
             run.ActiveThinkingItem.Text = run.ActiveThinkingActivity.Content
         End If
-        If IsConversationSelected(conversation) Then AgentRoom1.FollowLatestIfPinned()
+        If IsConversationSelected(conversation) Then FollowLatestWithOverview()
     End Sub
 
     Private Sub CompleteThinkingText(conversation As AgentConversationData)
@@ -544,7 +559,7 @@ Partial Public Class Form_v6_Agent
                 AgentRoom1.Items.Remove(run.ActiveResponseItem)
             End If
             run.ActiveResponseItem = Nothing
-            If IsConversationSelected(conversation) Then AgentRoom1.FollowLatestIfPinned()
+            If IsConversationSelected(conversation) Then FollowLatestWithOverview()
             Return
         End If
 
@@ -553,7 +568,7 @@ Partial Public Class Form_v6_Agent
         Else
             run.ActiveResponseItem.Text = run.ActiveResponseText
         End If
-        If IsConversationSelected(conversation) Then AgentRoom1.FollowLatestIfPinned()
+        If IsConversationSelected(conversation) Then FollowLatestWithOverview()
     End Sub
 
     Private Sub AppendRunResponseText(conversation As AgentConversationData,
@@ -581,7 +596,7 @@ Partial Public Class Form_v6_Agent
         Else
             AgentRoom1.AppendToItem(run.ActiveResponseItem, appendedText)
         End If
-        If IsConversationSelected(conversation) Then AgentRoom1.FollowLatestIfPinned()
+        If IsConversationSelected(conversation) Then FollowLatestWithOverview()
     End Sub
 
     Private Sub AppendRunResponseDelta(conversation As AgentConversationData, delta As String)
@@ -639,7 +654,7 @@ Partial Public Class Form_v6_Agent
 
         run.ActiveResponseItem = Nothing
         ReplaceActiveResponseText(conversation, "正在思考...")
-        If IsConversationSelected(conversation) Then AgentRoom1.FollowLatestIfPinned()
+        If IsConversationSelected(conversation) Then FollowLatestWithOverview()
     End Sub
 
     Private Function BeginToolActivity(conversation As AgentConversationData,

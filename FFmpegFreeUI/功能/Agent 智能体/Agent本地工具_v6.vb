@@ -67,7 +67,8 @@ Partial Public Class AgentLocalTools
                 {"target", New Dictionary(Of String, Object) From {{"type", "string"}, {"description", "all/全部 表示控制全部任务"}}},
                 {"detail", New Dictionary(Of String, Object) From {{"type", "boolean"}, {"description", "返回控制前后详情，默认 false"}}}
             }, {"action"}))
-            tools.Add(FunctionTool("sync_parameter_panel_to_queue", "将当前参数面板预设同步到编码队列中尚未开始的预设任务。只有用户明确要求同步队列时才能调用。", New Dictionary(Of String, Object)))
+            tools.Add(FunctionTool("sync_parameter_panel_to_queue", "用当前参数面板完整覆盖指定未处理任务的预设快照。必须传 id/ids/index/indexes，不支持全部目标。局部修改使用 patch_queue_task_presets。", BuildQueuePresetProperties(False)))
+            tools.Add(FunctionTool("patch_queue_task_presets", "只修改指定未处理任务快照的 changes 字段，保留各任务其他选项，不修改参数面板。字段名用 get_parameter_field_info 查询；滤镜排序须传完整列表，删除内置滤镜会清空对应参数。", BuildQueuePresetProperties(True), {"changes"}))
             tools.Add(FunctionTool("get_ui_tabs", "读取 3FUI 主页面、参数面板、集成工具或嵌套页的选项卡列表和当前选中项。", New Dictionary(Of String, Object) From {
                 {"scope", New Dictionary(Of String, Object) From {{"type", "string"}, {"description", "main、parameter、integrated、settings、custom_parameters、attachments"}}}
             }))
@@ -269,7 +270,10 @@ Partial Public Class AgentLocalTools
                     Return ControlQueueTasks(args)
                 Case "sync_parameter_panel_to_queue"
                     If permissionLevel < PermissionEnvironment Then Return "权限不足：需要环境控制"
-                    Return SyncParameterPanelToQueue()
+                    Return SyncParameterPanelToQueue(args)
+                Case "patch_queue_task_presets"
+                    If permissionLevel < PermissionEnvironment Then Return "权限不足：需要环境控制"
+                    Return SyncParameterPanelToQueue(args, True)
                 Case "get_ui_tabs"
                     If permissionLevel < PermissionEnvironment Then Return "权限不足：需要环境控制"
                     Return Agent工具封装_v6.获取选项卡(Agent通用工具_v6.GetJsonString(args, "scope"))

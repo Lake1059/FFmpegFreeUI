@@ -1,5 +1,3 @@
-Imports System.Text
-Imports System.IO
 Imports LakeUI
 
 Partial Public Class Form_v6_Agent
@@ -74,11 +72,10 @@ Partial Public Class Form_v6_Agent
                 MCB_推理级别.Items.Clear()
                 MCB_推理级别.Items.AddRange(efforts)
 
-                Dim selected = If(_current?.ReasoningEffort, 设置_v6.实例对象.Agent推理级别)
+                Dim selected = GetPreferredReasoningEffort()
                 Dim index = efforts.FindIndex(Function(x) String.Equals(x, selected, StringComparison.OrdinalIgnoreCase))
                 If index < 0 AndAlso efforts.Count > 0 Then index = Math.Min(1, efforts.Count - 1)
                 If index >= 0 Then MCB_推理级别.SelectedIndex = index
-                设置_v6.实例对象.Agent推理级别 = If(MCB_推理级别.SelectedItem, "")
             End If
 
             _modelEndpointSignature = currentSignature
@@ -246,11 +243,10 @@ Partial Public Class Form_v6_Agent
             Dim efforts = AgentCapabilityCache.GetReasoningEfforts(model, CreateClient())
             MCB_推理级别.Items.AddRange(efforts)
 
-            Dim selected = If(_current?.ReasoningEffort, 设置_v6.实例对象.Agent推理级别)
+            Dim selected = GetPreferredReasoningEffort()
             Dim index = efforts.FindIndex(Function(x) String.Equals(x, selected, StringComparison.OrdinalIgnoreCase))
             If index < 0 AndAlso efforts.Count > 0 Then index = 0
             If index >= 0 Then MCB_推理级别.SelectedIndex = index
-            设置_v6.实例对象.Agent推理级别 = If(MCB_推理级别.SelectedItem, "")
             If model.ReasoningEfforts IsNot Nothing AndAlso model.ReasoningEfforts.Count > 0 Then
                 ShowStatus("推理级别已就绪：" & String.Join("、", efforts))
             Else
@@ -272,10 +268,17 @@ Partial Public Class Form_v6_Agent
         RefreshReasoningEfforts()
     End Sub
 
+    Private Function GetPreferredReasoningEffort() As String
+        ' 与其他隐藏设置一样沿用上次选择；模型临时不支持时不覆盖偏好。
+        If Not String.IsNullOrWhiteSpace(设置_v6.实例对象.Agent推理级别) Then Return 设置_v6.实例对象.Agent推理级别
+        Return If(_current?.ReasoningEffort, "")
+    End Function
+
     Private Sub MCB_推理级别_SelectedIndexChanged(sender As Object, e As EventArgs) Handles MCB_推理级别.SelectedIndexChanged
-        If _loading Then Return
+        If _loading OrElse MCB_推理级别.SelectedIndex < 0 Then Return
         设置_v6.实例对象.Agent推理级别 = If(MCB_推理级别.SelectedItem, "")
         If _current IsNot Nothing AndAlso Not GetConversationRuntime(_current).Busy Then _current.ReasoningEffort = 设置_v6.实例对象.Agent推理级别
+        ScheduleDraftSave()
     End Sub
 
     Private Sub MCB_联网设置_SelectedIndexChanged(sender As Object, e As EventArgs) Handles MCB_联网设置.SelectedIndexChanged

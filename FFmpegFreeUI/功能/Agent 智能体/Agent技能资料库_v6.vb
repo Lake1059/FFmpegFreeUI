@@ -1,4 +1,4 @@
-Imports System.Text.Json
+﻿Imports System.Text.Json
 
 Public NotInheritable Class Agent技能资料库_v6
     Private Sub New()
@@ -135,7 +135,7 @@ Agent 面向用户时既是聊天助手，也是 3FUI 控制器。不要把自�
 
 参数面板不是直接拼命令。3FUI 先把各页控件结构化为 `预设数据_v6`，再由 `预设管理_v6` 把预设数据转成命令行、总览或重新显示到面板。准备文件页可选；准备文件入队或文件直接拖入编码队列时，都会以当前参数面板为每个文件生成任务。
 
-队列任务持有入队时的独立预设副本。任务入队后，再修改当前参数面板不会影响已入队任务。只有用户明确要求把当前面板同步到队列时，才调用 `sync_parameter_panel_to_queue`，而且它只同步尚未开始的预设任务。
+队列任务持有入队时的独立预设副本。任务入队后，再修改当前参数面板不会影响已入队任务。只有用户明确要求把当前面板同步到队列时，才调用 `sync_parameter_panel_to_queue`，必须用 id/ids/index/indexes 指定任务，不支持 target=all；它只同步尚未开始的预设任务。局部修改队列快照用 `patch_queue_task_presets`。
 
 ## 页面生命周期
 
@@ -349,7 +349,9 @@ CRF、CQP、VBR、CBR、TPE 分支不同。NVENC 的 CQP/VBR/CBR 和 AMF 的 CQP
 
 队列摘要、日志和控制结果仅在非空时返回 `missing_ids`、`missing_indexes`、`errors`，缺省表示没有对应问题；空 `tasks`、日志数组、控制前后数组仍保留。返回 JSON 使用紧凑格式，不改变字段类型、日志顺序、分页和权限行为。
 
-`sync_parameter_panel_to_queue` 只能在用户明确要求同步队列时调用，且只同步未开始的预设任务。它不会修改已经开始、暂停、完成、出错或纯命令行任务。
+`sync_parameter_panel_to_queue` 用当前参数面板完整覆盖指定任务快照。必须传 `id/ids` 或 1-based `index/indexes`，优先使用稳定 ID；不允许缺省目标或 `target=all`。只更新未处理且未执行的预设任务，跳过其他状态和纯命令行任务。任何目标不存在时整批不修改。
+
+`patch_queue_task_presets` 使用相同的指定任务参数，传非空 `changes` 对象，只修改各任务自己的预设快照中列出的顶层字段，保留其他字段，不修改当前参数面板。例如将 ids 指定为目标任务 ID 列表，在 changes 中将 视频参数_编码器_编码预设 设为 slow。先用 `get_parameter_field_info` 查询准确字段名和类型；用 `get_queue_summary` 的 `include_preset_json=true` 读取目标快照。数组和对象字段须提供该字段完整值；滤镜排序必须传完整列表，删除内置滤镜会清空对应参数。返回 updated_count、跳过数量以及各已更新任务的 id 和 effective_changed_fields。
 
 ## 集成工具
 

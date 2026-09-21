@@ -176,8 +176,10 @@ Partial Public Class Form_v6_Agent
         HideActiveThinking(conversation)
         For Each activity In If(run.ActiveTurn.Activities, New List(Of AgentTurnActivityData))
             If activity Is Nothing OrElse Not String.Equals(activity.State, "running", StringComparison.OrdinalIgnoreCase) Then Continue For
+            activity.ElapsedMilliseconds = Math.Max(0, (DateTime.Now - activity.CreatedAt).TotalMilliseconds)
             activity.State = If(String.Equals(state, "canceled", StringComparison.OrdinalIgnoreCase), "canceled", "error")
             If String.IsNullOrWhiteSpace(activity.ResultText) Then activity.ResultText = If(statusText, "运行已结束")
+            If activity.Kind = "tool" Then RefreshToolActivity(conversation, activity)
         Next
         run.ActiveTurn.State = If(state, "completed")
         run.ActiveTurn.CompletedAt = DateTime.Now
@@ -188,7 +190,7 @@ Partial Public Class Form_v6_Agent
             run.ActiveTurnItem.IsError = String.Equals(run.ActiveTurn.State, "error", StringComparison.OrdinalIgnoreCase)
             run.ActiveTurnItem.IsExpanded = False
         End If
-        If IsConversationSelected(conversation) Then AgentRoom1.FollowLatestIfPinned()
+        If IsConversationSelected(conversation) Then FollowLatestWithOverview()
     End Sub
 
     Private Async Function RunAgentLoopAsync(conversation As AgentConversationData,

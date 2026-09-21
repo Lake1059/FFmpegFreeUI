@@ -53,6 +53,8 @@ internal static partial class Program
             };
             TestAgentConversations(directory);
             TestAgentAudit(directory);
+            TestAgentPresentation(directory);
+            TestQueuePresetTools(directory);
             Console.WriteLine("PASS: concurrent Agent runs, stop isolation, per-conversation drafts and colors");
             if (args.Contains("--agent-only")) { Console.WriteLine($"PASS: {checks} checks"); return 0; }
             TestPresetCopies(directory);

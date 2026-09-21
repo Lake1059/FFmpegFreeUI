@@ -175,13 +175,15 @@ Public Class Form_v6_编码队列
     Private Sub 更新标题(items As List(Of 编码任务_v6))
         Dim running As Integer = 0
         Dim errors As Integer = 0
+        Dim completed As Integer = 0
         For Each task In items
             If task.状态 = 编码任务状态_v6.正在处理 OrElse task.状态 = 编码任务状态_v6.已暂停 Then running += 1
             If task.状态 = 编码任务状态_v6.错误 Then errors += 1
+            If task.状态 = 编码任务状态_v6.已完成 Then completed += 1
         Next
         Dim 标签颜色 = System.Drawing.ColorTranslator.ToHtml(界面主题_v6.获取当前主题前景色(Color.DarkGray))
         HtmlColorLabel1.Text =
-            $"<span style=""color:{标签颜色}"">总数 </span><span style=""font-size:14pt; font-weight:bold; color:CornflowerBlue"">{items.Count}</span>" &
+            $"<span style=""color:{标签颜色}"">数量 </span><span style=""font-size:14pt; font-weight:bold; color:CornflowerBlue"">{completed}/{items.Count}</span>" &
             $"   <span style=""color:{标签颜色}"">运行 </span><span style=""font-size:14pt; font-weight:bold; color:YellowGreen"">{running}</span>" &
             $"   <span style=""color:{标签颜色}"">错误 </span><span style=""font-size:14pt; font-weight:bold; color:{界面配色_v6.错误文本色Html}"">{errors}</span>"
     End Sub

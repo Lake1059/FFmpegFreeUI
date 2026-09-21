@@ -127,6 +127,14 @@ Partial Public Class Form_v6_Agent
     End Sub
 
     Private Sub ActiveRunElapsedTimer_Tick(sender As Object, e As EventArgs)
+        Dim turn = GetConversationRuntime(_current).ActiveTurn
+        If turn IsNot Nothing Then
+            For Each activity In turn.Activities.Where(Function(x) x IsNot Nothing AndAlso x.Kind = "tool" AndAlso x.State = "running")
+                Dim group = GetConsecutiveToolActivities(_current, activity)
+                Dim item = AgentRoom1.FindItem(group(0).Id)
+                If item IsNot Nothing Then item.Title = FormatToolGroupTitle(group)
+            Next
+        End If
         UpdateActiveRunOverviewCard(_current)
         If Not _conversationRuntimes.Values.Any(Function(x) x.Busy) Then _activeRunElapsedTimer.Stop()
     End Sub
