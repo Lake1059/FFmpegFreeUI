@@ -8,6 +8,7 @@ Public Class Form_v6_参数面板_音频参数
     Private Sub 初始化音频编码器下拉框()
         Dim 当前文本 = MCB_音频编码器.Text
         MCB_音频编码器.Items.Clear()
+        MCB_音频编码器.Items.Add("")
 
         For Each 编码器 In 音频编码器数据库_v6.全部编码器
             MCB_音频编码器.Items.Add(编码器.显示名称)

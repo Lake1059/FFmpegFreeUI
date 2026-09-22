@@ -30,6 +30,7 @@ internal static partial class Program
 
     private static void TestThemeAndVmaf()
     {
+        TestAudioEncoderCombo();
         var models = Models();
         var published = (List<VmafModelDisplayItem>)StaticQuality("构建Vmaf模型显示项", new[] {
             "vmaf_v1.0.16_3d0h", "vmaf_v1.0.16_hfr_3d0h", "vmaf_v1.0.16_1d5h_2160",
@@ -120,6 +121,18 @@ internal static partial class Program
         finally { 设置_v6.实例对象.界面主题 = previousTheme; 界面主题_v6.刷新主题(true); }
     }
 
+    private static void TestAudioEncoderCombo()
+    {
+        using var form = new Form_v6_参数面板_音频参数();
+        var combo = (ModernComboBox)form.Controls.Find("MCB_音频编码器", true).Single();
+        Invoke(form, "初始化音频编码器下拉框");
+        Check(combo.SelectedIndex == 0 && combo.Items[0]?.ToString() == "", "Audio encoder combo must start with a blank item");
+        Check(combo.Items.Count > 1 && combo.Items[1]?.ToString() == "复制流", "Audio encoder ordering must follow the blank item");
+        combo.Text = "AAC";
+        Invoke(form, "初始化音频编码器下拉框");
+        Check(combo.Text == "AAC" && combo.SelectedIndex > 0, "Audio encoder selection must survive reinitialization");
+    }
+
     private static void TestThemeBorders()
     {
         using var form = new Form();
@@ -128,7 +141,7 @@ internal static partial class Program
         using var layout = new ModernPanel { BackColor = Color.Transparent, BackColor1 = Color.Transparent, BorderSize = 0 };
         using var card = new ModernPanel { BackColor1 = Color.FromArgb(40, 220, 220, 220), BorderSize = 0 };
         using var button = new ModernButton { BorderSize = 0, BorderColor = Color.Transparent };
-        using var text = new ModernTextBox { BorderSize = 0 };
+        using var text = new ModernTextBox { BorderSize = 0, LineNumberBackColor = Color.FromArgb(40, 220, 220, 220) };
         using var list = new ModernListBox { BorderSize = 0 };
         using var detail = new UltraDetailListView { BorderSize = 0 };
         using var box = new ModernCheckBox { BoxBorderSize = 0 };
@@ -156,6 +169,7 @@ internal static partial class Program
             界面主题_v6.应用当前主题到窗体(form);
             Check(primary.TabStripBackColor.A == 0 && secondary.TabStripBackColor.A == 0, "All navigation levels remain transparent in glass mode");
             Check(new[] { button.BackColor1.A, text.BackColor1.A, list.BackColor1.A, card.BackColor1.A }.All(alpha => alpha < 255), "Glass mode control backgrounds retain alpha");
+            Check(text.LineNumberBackColor == Color.FromArgb(100, 220, 234, 247), "Light line-number gutter must remain visibly blue while matching the overview's translucent feel");
             界面主题_v6.应用当前主题到窗体(form);
             Check(secondary.TabStripBackColor.A == 0, "Theme reapplication must not make navigation opaque");
             Check(tipLabel.ToolTipBackColor == Color.FromArgb(220, 255, 255, 255), "Detail tooltip uses readable white independent of glass alpha");
@@ -190,6 +204,7 @@ internal static partial class Program
             界面主题_v6.刷新主题(true);
             界面主题_v6.应用当前主题到窗体(form);
             Check(button.BorderSize == 0 && card.BorderSize == 0 && text.BorderSize == 0 && list.BorderSize == 0 && detail.BorderSize == 0 && box.BoxBorderSize == 0 && warning.BorderSize == 2, "Dark border widths restored");
+            Check(text.LineNumberBackColor == Color.FromArgb(40, 220, 220, 220), "Dark line-number gutter must restore its original ARGB");
             Check(button.BorderColor == Color.Transparent, "Dark border color restored");
             Check(tipLabel.ToolTipBackColor == Color.FromArgb(50, 50, 50), "Dark tooltip background restored");
             界面主题_v6.应用当前主题到窗体(home);
