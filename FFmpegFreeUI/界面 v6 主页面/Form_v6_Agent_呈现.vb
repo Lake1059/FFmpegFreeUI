@@ -203,8 +203,8 @@ Partial Public Class Form_v6_Agent
         Dim errorCount = activities.Where(Function(x) IsToolActivityError(x)).Count()
         Dim canceledCount = activities.Where(Function(x) String.Equals(x?.State, "canceled", StringComparison.OrdinalIgnoreCase)).Count()
         Dim elapsed = activities.Sum(Function(x) GetToolElapsedMilliseconds(x))
-        Dim currentPrefix = If(runningActivity Is Nothing, "", $"当前调用：{currentName} · 正在执行：{currentElapsed} · ")
-        Return currentPrefix & $"总耗时 {FormatElapsedMilliseconds(elapsed)} · 共 {activities.Count} 次 · 错误 {errorCount} 次" & If(canceledCount > 0, $" · 取消 {canceledCount} 次", "")
+        Dim currentPrefix = If(runningActivity Is Nothing, "", $"正在执行：{currentName} {currentElapsed} · ")
+        Return currentPrefix & $"总耗时 {FormatElapsedMilliseconds(elapsed)} · 共 {activities.Count} 次" & If(errorCount > 0, $" · 错误 {errorCount} 次", "") & If(canceledCount > 0, $" · 取消 {canceledCount} 次", "")
     End Function
 
     Private Function GetToolElapsedMilliseconds(activity As AgentTurnActivityData) As Double

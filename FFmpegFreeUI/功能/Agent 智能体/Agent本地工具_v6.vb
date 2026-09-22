@@ -85,7 +85,7 @@ Partial Public Class AgentLocalTools
             tools.Add(FunctionTool("get_integrated_tool_state", "读取集成工具页面中合并、混流或抽流的当前状态。", New Dictionary(Of String, Object) From {
                 {"tool", New Dictionary(Of String, Object) From {{"type", "string"}, {"description", "merge/合并、mux/混流、extract/抽流"}}}
             }, {"tool"}))
-            tools.Add(FunctionTool("configure_integrated_tool", "配置集成工具页面。合并使用 files/output/mode；混流 files 可为对象数组；抽流使用 file/output_location/selected_streams。", New Dictionary(Of String, Object) From {
+            tools.Add(FunctionTool("configure_integrated_tool", "配置集成工具页面。合并使用 files/output/mode；混流 files 可为对象数组，并可用 default_video/default_audio/default_subtitle 指定默认轨道；抽流使用 file/output_location/selected_streams。", New Dictionary(Of String, Object) From {
                 {"tool", New Dictionary(Of String, Object) From {{"type", "string"}}},
                 {"payload", New Dictionary(Of String, Object) From {{"type", "object"}, {"additionalProperties", True}}}
             }, {"tool", "payload"}))

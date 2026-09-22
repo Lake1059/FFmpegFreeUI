@@ -200,7 +200,7 @@ PowerShell 优先用于只读检查、诊断、结构化计算和用户明确要
 - `get_ui_tabs` / `switch_ui_tab`：读取或切换主页面、参数面板、集成工具、设置和嵌套页。控件未初始化或用户要求切换页面时使用。
 - `get_prepare_files` / `set_prepare_files` / `submit_prepare_files_to_queue`：操作准备文件页。`set_prepare_files` 的 `mode` 为 `append`、`replace` 或 `clear`；它与对话附件列表不是同一功能。
 - `get_integrated_tool_state`：读取 `merge`、`mux` 或 `extract` 的当前配置和状态，配置或运行前先调用。
-- `configure_integrated_tool`：配置集成工具。`merge` 使用必填 `files` 字符串数组，可选 `output` 和 `mode`（`replace`、`append`、`clear`）；`mux` 的 `files` 是对象数组，每项至少有 `path`，可包含 `video`、`audio`、`subtitle`、`chapters`、`metadata`，另有 `output`、`mode`；`extract` 使用必填 `file`，可选 `output_location` 和 `selected_streams`。
+- `configure_integrated_tool`：配置集成工具。`merge` 使用必填 `files` 字符串数组，可选 `output` 和 `mode`（`replace`、`append`、`clear`）；`mux` 的 `files` 是对象数组，每项至少有 `path`，可包含 `video`、`audio`、`subtitle`、`chapters`、`metadata`，另有 `output`、`mode`，以及可选的 `default_video`、`default_audio`、`default_subtitle`（值使用状态中的 `文件索引:类型:流索引`）；`extract` 使用必填 `file`，可选 `output_location` 和 `selected_streams`。
 - `run_integrated_tool`：运行当前集成工具配置。合并和混流会加入编码队列，抽流直接执行；抽流一次配置后只运行一次。抽流可在 payload 中传 `force_auto_name`（默认 `true`）。
 - `get_system_hardware`：读取处理器、内存和显卡概要，只用于辅助建议，不能代替实际编码器可用性检查。
 - `get_parameter_panel_controls`：扫描用户可见控件和说明控件；需要定位控件名、候选项或页面文案时使用，不用它替代结构化参数状态。
@@ -357,7 +357,7 @@ CRF、CQP、VBR、CBR、TPE 分支不同。NVENC 的 CQP/VBR/CBR 和 AMF 的 CQP
 
 集成工具包括合并、混流、抽流。质量评测和字幕生成当前不可由 Agent 操作。合并和混流配置后加入编码队列执行；抽流在页面直接执行。涉及流索引、章节、元数据、输出位置或选择流时，先用 `get_integrated_tool_state` 读状态，再配置和运行。
 
-合并工具通常按文件列表和输出路径工作。混流工具的 `files` 可以是对象数组；每项至少有 `path`，可选 `video`、`audio`、`subtitle` 文本，以及 `chapters`、`metadata` 布尔开关。不要向混流 payload 添加页面未支持的语言、标题或默认轨字段。
+合并工具通常按文件列表和输出路径工作。混流工具的 `files` 可以是对象数组；每项至少有 `path`，可选 `video`、`audio`、`subtitle` 文本，以及 `chapters`、`metadata` 布尔开关。混流还支持 `default_video`、`default_audio`、`default_subtitle`，用于从当前映射流中指定输出默认轨道；值使用 `get_integrated_tool_state` 返回的 `文件索引:类型:流索引`，省略字段会保留页面已有选择。
 
 抽流页的单文件多流批量提取、流选择和防重复执行规则见 `stream-extraction`。
 

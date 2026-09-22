@@ -17,7 +17,7 @@ Public Class 开发者内置预设_v6
         Dim result As New List(Of 预设项)
 
         Dim RTX50_AV1 As New 预设数据_v6
-        RTX50_AV1.预设备注 = "老黄 AV1 常规模式标准答案，参考 VMAF = 95~96，最推荐 RTX50 全系使用。此预设仅包含视频参数！"
+        RTX50_AV1.预设备注 = "老黄 AV1 常规模式标准答案，最推荐 RTX50 全系使用。此预设仅包含视频参数！"
         RTX50_AV1.解码参数_解码器 = "cuda"
         RTX50_AV1.视频参数_编码器_类型 = 预设数据_v6.视频编码器类型.视频
         RTX50_AV1.视频参数_编码器_分类名称 = "AV1"
@@ -30,7 +30,7 @@ Public Class 开发者内置预设_v6
         result.Add(New 预设项("RTX50 AV1", RTX50_AV1))
 
         Dim RTX50_AV1_UHQ_EX As New 预设数据_v6
-        RTX50_AV1_UHQ_EX.预设备注 = "老黄 AV1 UHQ + 复杂度全开，个人存储用显卡压片最优解，50系戈门御用参数，参考 VMAF = 94~95，最推荐 RTX50 全系使用。此预设仅包含视频参数！"
+        RTX50_AV1_UHQ_EX.预设备注 = "老黄 AV1 UHQ + 复杂度全开，个人存储用显卡压片最优解，50系戈门御用参数，最推荐 RTX50 全系使用。注意对于画面细节巨量的场景请自行按照需求缩小质量值。此预设仅包含视频参数！"
         RTX50_AV1_UHQ_EX.解码参数_解码器 = "cuda"
         RTX50_AV1_UHQ_EX.视频参数_编码器_类型 = 预设数据_v6.视频编码器类型.视频
         RTX50_AV1_UHQ_EX.视频参数_编码器_分类名称 = "AV1"
@@ -60,7 +60,7 @@ Public Class 开发者内置预设_v6
         result.Add(New 预设项("NV SDK 13.1 AV1 层次化B帧树", NVSDK131_AV1_Hierarchical_BFrames))
 
         Dim RTX50_HEVC_UHQ As New 预设数据_v6
-        RTX50_HEVC_UHQ.预设备注 = "老黄 HEVC UHQ 满分答案，参考 VMAF = 95~96，最推荐 RTX50 全系使用，压缩度大概能摸到 x265 medium 水平。此预设仅包含视频参数！"
+        RTX50_HEVC_UHQ.预设备注 = "老黄 HEVC UHQ 满分答案，最推荐 RTX50 全系使用，压缩度大概能摸到 x265 medium 水平。此预设仅包含视频参数！"
         RTX50_HEVC_UHQ.解码参数_解码器 = "cuda"
         RTX50_HEVC_UHQ.视频参数_编码器_类型 = 预设数据_v6.视频编码器类型.视频
         RTX50_HEVC_UHQ.视频参数_编码器_分类名称 = "H.265/HEVC"
@@ -74,20 +74,20 @@ Public Class 开发者内置预设_v6
         result.Add(New 预设项("RTX50 HEVC UHQ", RTX50_HEVC_UHQ))
 
         Dim SVTAV1HDR_CRF36 As New 预设数据_v6
-        SVTAV1HDR_CRF36.预设备注 = "采用 HDR 分支的 libsvtav1，可能与常规的分支有些许差别。注意在编码高分辨率视频时会占用大量内存，4K 通常建议 32GB 及以上内存条。此预设仅包含视频参数！"
+        SVTAV1HDR_CRF36.预设备注 = "CPU 压制 AV1 推荐策略，注意在编码高分辨率视频时会占用大量内存，4K 通常建议 32GB 及以上内存条。此预设仅包含视频参数！"
         SVTAV1HDR_CRF36.视频参数_编码器_类型 = 预设数据_v6.视频编码器类型.视频
         SVTAV1HDR_CRF36.视频参数_编码器_分类名称 = "AV1"
         SVTAV1HDR_CRF36.视频参数_编码器_具体编码 = "libsvtav1"
         SVTAV1HDR_CRF36.视频参数_编码器_编码预设 = "6"
         SVTAV1HDR_CRF36.视频参数_比特率_控制方式 = 预设数据_v6.视频全局质量控制方式.CRF
         SVTAV1HDR_CRF36.视频参数_质量控制_参数名 = "crf"
-        SVTAV1HDR_CRF36.视频参数_质量控制_值 = "36"
-        SVTAV1HDR_CRF36.视频参数_质量控制_进阶参数集 = "-svtav1-params tune=0:keyint=10s:enable-variance-boost=1:variance-boost-strength=1:film-grain=4:sharpness=1:ac-bias=1:lp=4"
+        SVTAV1HDR_CRF36.视频参数_质量控制_值 = "38"
+        SVTAV1HDR_CRF36.视频参数_质量控制_进阶参数集 = "-svtav1-params tune=0:keyint=321:enable-variance-boost=1:variance-boost-strength=1:film-grain=5:sharpness=1:ac-bias=1:lp=4"
         SVTAV1HDR_CRF36.视频参数_色彩管理_像素格式 = "yuv420p10le"
         result.Add(New 预设项("SVT-AV1-HDR 适用平衡点", SVTAV1HDR_CRF36))
 
         Dim X265_Slow As New 预设数据_v6
-        X265_Slow.预设备注 = "x265 默认推荐质量，选用 slow 预设可直接作为普通人的最终压制方案，参考 VMAF ≈ 95。此预设仅包含视频参数！"
+        X265_Slow.预设备注 = "x265 默认推荐质量，选用 slow 预设可直接作为普通人的最终压制方案。注意对于画面细节巨量的场景请自行按照需求缩小质量值。此预设仅包含视频参数！"
         X265_Slow.视频参数_编码器_类型 = 预设数据_v6.视频编码器类型.视频
         X265_Slow.视频参数_编码器_分类名称 = "H.265/HEVC"
         X265_Slow.视频参数_编码器_具体编码 = "libx265"
@@ -99,7 +99,7 @@ Public Class 开发者内置预设_v6
         result.Add(New 预设项("x265 默认推荐最终压制方案", X265_Slow))
 
         Dim X264_Slower As New 预设数据_v6
-        X264_Slower.预设备注 = "x264 默认推荐质量，考虑到 264 较为过时，所以选用 slower 预设，参考 VMAF ≈ 95。此预设仅包含视频参数！"
+        X264_Slower.预设备注 = "x264 默认推荐质量，考虑到 264 较为过时，所以选用 slower 预设。注意对于画面细节巨量的场景请自行按照需求缩小质量值。此预设仅包含视频参数！"
         X264_Slower.视频参数_编码器_类型 = 预设数据_v6.视频编码器类型.视频
         X264_Slower.视频参数_编码器_分类名称 = "H.264/AVC"
         X264_Slower.视频参数_编码器_具体编码 = "libx264"

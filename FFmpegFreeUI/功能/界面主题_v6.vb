@@ -297,6 +297,9 @@ Public Module 界面主题_v6
                     If (TypeOf target Is ModernTabListControl OrElse TypeOf target Is ModernTabControl) AndAlso
                        (name = "TabStripBackColor" OrElse name = "ContentBackColor") Then
                         color = Color.Transparent
+                    ElseIf TypeOf target Is ModernTextBox AndAlso name = "LineNumberBackColor" Then
+                        ' 行号栏保持明显的浅蓝层级，但透明度接近参数总览的半透明表面。
+                        color = Color.FromArgb(100, color.R, color.G, color.B)
                     ElseIf name.Contains("BackColor", StringComparison.OrdinalIgnoreCase) OrElse
                            name.Contains("BackgroundColor", StringComparison.OrdinalIgnoreCase) OrElse
                            name = "OverlayColor" OrElse name = "SelectionColor" OrElse
@@ -374,6 +377,9 @@ Public Module 界面主题_v6
     Private Function 转换为浅色(original As Color, propertyName As String, Optional target As Object = Nothing, Optional 最低对比度 As Double = 4.5R) As Color
         Dim name = If(propertyName, String.Empty)
         If TypeOf target Is ThisIsYourWindow AndAlso (name = "CaptionBackColor" OrElse name = "CaptionInactiveBackColor") Then Return 浅色一级导航背景
+        If TypeOf target Is ModernTextBox AndAlso name = "LineNumberBackColor" Then
+            Return Color.FromArgb(100, 浅色一级导航背景.R, 浅色一级导航背景.G, 浅色一级导航背景.B)
+        End If
         If name = "OverlayColor" AndAlso TypeOf target Is ModernPanel Then
             Dim panel = DirectCast(target, ModernPanel)
             If TypeOf panel.FindForm() Is Form_v6_起始页面 AndAlso

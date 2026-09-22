@@ -66,7 +66,13 @@ Public NotInheritable Class Agent工具封装_v6
                 Dim specs = Json混流文件规格(payload)
                 Dim output = Agent通用工具_v6.GetJsonString(payload, "output")
                 Dim mode = Agent通用工具_v6.GetJsonString(payload, "mode", "replace")
-                Return UI(Function() Form_v6_集成工具_混流.Agent配置(specs, output, mode))
+                Dim defaultVideo = Agent通用工具_v6.GetJsonString(payload, "default_video", Nothing)
+                If defaultVideo Is Nothing Then defaultVideo = Agent通用工具_v6.GetJsonString(payload, "default_video_track", Nothing)
+                Dim defaultAudio = Agent通用工具_v6.GetJsonString(payload, "default_audio", Nothing)
+                If defaultAudio Is Nothing Then defaultAudio = Agent通用工具_v6.GetJsonString(payload, "default_audio_track", Nothing)
+                Dim defaultSubtitle = Agent通用工具_v6.GetJsonString(payload, "default_subtitle", Nothing)
+                If defaultSubtitle Is Nothing Then defaultSubtitle = Agent通用工具_v6.GetJsonString(payload, "default_subtitle_track", Nothing)
+                Return UI(Function() Form_v6_集成工具_混流.Agent配置(specs, output, mode, defaultVideo, defaultAudio, defaultSubtitle))
             Case "extract"
                 Dim file = Agent通用工具_v6.GetJsonString(payload, "file")
                 Dim outputLocation As String = Nothing

@@ -14,6 +14,22 @@ Public Class Form_v6_集成工具_混流
     Private Const 使用此 As String = "使用此"
 
     Private 正在同步控件 As Boolean = False
+    Private 正在刷新默认流选项 As Boolean = False
+
+    Private NotInheritable Class 默认流选项
+        Public Property 类型 As String
+        Public Property 输出索引 As Integer
+        Public Property 来源项 As UltraDetailListView.ListItem
+        Public Property 来源流索引 As String
+        Public Property 显示文本 As String
+    End Class
+
+    Private NotInheritable Class 默认流下拉框定义
+        Public Property 下拉框 As ModernComboBox
+        Public Property 类型 As String
+    End Class
+
+    Private ReadOnly 默认流选项表 As New Dictionary(Of ModernComboBox, List(Of 默认流选项))
 
     Private Sub Form_v6_集成工具_混流_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         初始化列表()
@@ -21,6 +37,14 @@ Public Class Form_v6_集成工具_混流
         绑定输出文件拖入(MTB_输出目标文件)
         调整列表交互区域()
         调整列宽()
+    End Sub
+
+    Private Sub Form_v6_集成工具_混流_Activated(sender As Object, e As EventArgs) Handles MyBase.Activated
+        ' 可视化流选择器会直接写回列表项文本，列表本身未必产生文本变更事件；
+        ' 页面重新获得焦点时主动同步默认轨道选项。
+        If UltraDetailListView1 Is Nothing Then Return
+        更新文件索引号()
+        更新默认流选项()
     End Sub
 
     Private Sub 初始化列表()
@@ -31,6 +55,8 @@ Public Class Form_v6_集成工具_混流
         Next
         MCB_使用此文件的章节.ClickAnywhere = True
         MCB_使用此文件的元数据.ClickAnywhere = True
+        更新文件索引号()
+        更新默认流选项()
     End Sub
 
     Private Sub 绑定文件拖入(target As Control)
@@ -123,6 +149,8 @@ Public Class Form_v6_集成工具_混流
             UltraDetailListView1.EndUpdate()
         End Try
 
+        更新文件索引号()
+        更新默认流选项()
         If UltraDetailListView1.Items.Count > 0 Then UltraDetailListView1.SelectedIndex = UltraDetailListView1.Items.Count - 1
         调整列宽()
     End Sub
@@ -136,18 +164,33 @@ Public Class Form_v6_集成工具_混流
             {"chapters", 获取子项文本(item, 章节列) = 使用此},
             {"metadata", 获取子项文本(item, 元数据列) = 使用此}
         }).Cast(Of Object).ToList()
+        Dim defaultVideo = 获取默认流文本(MCB_设定默认的视频轨)
+        Dim defaultAudio = 获取默认流文本(MCB_设定默认的音频轨)
+        Dim defaultSubtitle = 获取默认流文本(MCB_设定默认的字幕轨)
         Return New Dictionary(Of String, Object) From {
             {"files", files},
-            {"output", MTB_输出目标文件.Text}
+            {"output", MTB_输出目标文件.Text},
+            {"default_video", defaultVideo},
+            {"default_audio", defaultAudio},
+            {"default_subtitle", defaultSubtitle},
+            {"default_video_track", defaultVideo},
+            {"default_audio_track", defaultAudio},
+            {"default_subtitle_track", defaultSubtitle}
         }
     End Function
 
-    Public Function Agent配置(fileSpecs As IEnumerable(Of Dictionary(Of String, Object)), output As String, mode As String) As String
+    Public Function Agent配置(fileSpecs As IEnumerable(Of Dictionary(Of String, Object)),
+                              output As String,
+                              mode As String,
+                              Optional defaultVideo As String = Nothing,
+                              Optional defaultAudio As String = Nothing,
+                              Optional defaultSubtitle As String = Nothing) As String
         Select Case If(mode, "").Trim().ToLowerInvariant()
             Case "replace", "替换"
                 UltraDetailListView1.Items.Clear()
             Case "clear", "清空"
                 UltraDetailListView1.Items.Clear()
+                更新默认流选项()
                 同步属性面板()
                 调整列宽()
                 Return "混流工具：已清空"
@@ -169,6 +212,11 @@ Public Class Form_v6_集成工具_混流
         End If
 
         If output IsNot Nothing Then MTB_输出目标文件.Text = output
+        更新文件索引号()
+        更新默认流选项()
+        If defaultVideo IsNot Nothing Then 设置默认流文本(MCB_设定默认的视频轨, defaultVideo)
+        If defaultAudio IsNot Nothing Then 设置默认流文本(MCB_设定默认的音频轨, defaultAudio)
+        If defaultSubtitle IsNot Nothing Then 设置默认流文本(MCB_设定默认的字幕轨, defaultSubtitle)
         同步属性面板()
         调整列宽()
         Return $"混流工具：{UltraDetailListView1.Items.Count} 个输入，输出 {MTB_输出目标文件.Text}"
@@ -214,6 +262,193 @@ Public Class Form_v6_集成工具_混流
         Return ""
     End Function
 
+    Private Function 获取默认流文本(combo As ModernComboBox) As String
+        If combo Is Nothing Then Return ""
+        Return If(combo.Text, "").Trim()
+    End Function
+
+    Private Sub 设置默认流文本(combo As ModernComboBox, value As String)
+        If combo Is Nothing Then Return
+        Dim wanted = If(value, "").Trim()
+        If wanted = "" Then
+            combo.SelectedIndex = -1
+            Return
+        End If
+
+        Dim options As List(Of 默认流选项) = Nothing
+        If Not 默认流选项表.TryGetValue(combo, options) OrElse options Is Nothing Then
+            combo.Text = wanted
+            Return
+        End If
+
+        Dim numericIndex As Integer
+        If Integer.TryParse(wanted, numericIndex) Then
+            If numericIndex >= 0 AndAlso numericIndex < options.Count Then
+                combo.SelectedIndex = numericIndex
+            Else
+                combo.Text = wanted
+            End If
+            Return
+        End If
+
+        Dim index = options.FindIndex(Function(x) String.Equals(x.显示文本, wanted, StringComparison.OrdinalIgnoreCase) OrElse
+                                                  String.Equals(x.来源流索引, wanted, StringComparison.OrdinalIgnoreCase))
+        If index >= 0 Then
+            combo.SelectedIndex = index
+        Else
+            combo.Text = wanted
+        End If
+    End Sub
+
+    Private Function 捕获默认流选项() As Dictionary(Of ModernComboBox, 默认流选项)
+        Dim result As New Dictionary(Of ModernComboBox, 默认流选项)
+        For Each combo In 默认流下拉框()
+            Dim target = 获取默认流目标(combo, 默认流类型(combo))
+            If target IsNot Nothing Then result(combo) = target
+        Next
+        Return result
+    End Function
+
+    Private Function 默认流下拉框() As IEnumerable(Of ModernComboBox)
+        Return New ModernComboBox() {
+            MCB_设定默认的视频轨,
+            MCB_设定默认的音频轨,
+            MCB_设定默认的字幕轨
+        }
+    End Function
+
+    Private Function 默认流类型(combo As ModernComboBox) As String
+        If combo Is MCB_设定默认的视频轨 Then Return "v"
+        If combo Is MCB_设定默认的音频轨 Then Return "a"
+        If combo Is MCB_设定默认的字幕轨 Then Return "s"
+        Return ""
+    End Function
+
+    Private Function 默认流列(kind As String) As Integer
+        Select Case If(kind, "").ToLowerInvariant()
+            Case "v" : Return 视频列
+            Case "a" : Return 音频列
+            Case "s" : Return 字幕列
+        End Select
+        Return -1
+    End Function
+
+    Private Function 构建默认流选项(kind As String) As List(Of 默认流选项)
+        Dim result As New List(Of 默认流选项)
+        Dim columnIndex = 默认流列(kind)
+        If columnIndex < 0 Then Return result
+
+        Dim outputIndex = 0
+        For itemIndex = 0 To UltraDetailListView1.Items.Count - 1
+            Dim item = UltraDetailListView1.Items(itemIndex)
+            For Each token In 切分流索引(获取子项文本(item, columnIndex))
+                Dim parsed = 解析流索引(token)
+                If parsed.局部流索引 = "" Then Continue For
+
+                ' 每一行代表一个输入文件；即使用户输入了简写，也把下拉框显示为
+                ' 与流选择器一致的完整文件索引:类型:流索引格式。
+                Dim display = $"{itemIndex}:{kind}:{parsed.局部流索引}"
+                result.Add(New 默认流选项 With {
+                    .类型 = kind,
+                    .输出索引 = outputIndex,
+                    .来源项 = item,
+                    .来源流索引 = parsed.局部流索引,
+                    .显示文本 = display
+                })
+                outputIndex += 1
+            Next
+        Next
+        Return result
+    End Function
+
+    Private Sub 更新默认流选项(Optional oldSelections As Dictionary(Of ModernComboBox, 默认流选项) = Nothing)
+        If 正在刷新默认流选项 Then Return
+        正在刷新默认流选项 = True
+        Try
+            Dim previous = If(oldSelections, 捕获默认流选项())
+            Dim definitions = New 默认流下拉框定义() {
+                New 默认流下拉框定义 With {.下拉框 = MCB_设定默认的视频轨, .类型 = "v"},
+                New 默认流下拉框定义 With {.下拉框 = MCB_设定默认的音频轨, .类型 = "a"},
+                New 默认流下拉框定义 With {.下拉框 = MCB_设定默认的字幕轨, .类型 = "s"}
+            }
+
+            For Each definition In definitions
+                Dim combo = definition.下拉框
+                Dim kind = definition.类型
+                Dim options = 构建默认流选项(kind)
+                默认流选项表(combo) = options
+                combo.Items.Clear()
+                For Each 流选项 In options
+                    combo.Items.Add(流选项.显示文本)
+                Next
+
+                Dim selectedIndex = -1
+                Dim oldOption As 默认流选项 = Nothing
+                If previous IsNot Nothing Then previous.TryGetValue(combo, oldOption)
+                If oldOption IsNot Nothing Then
+                    selectedIndex = options.FindIndex(Function(x) Object.ReferenceEquals(x.来源项, oldOption.来源项) AndAlso
+                                                               String.Equals(x.来源流索引, oldOption.来源流索引, StringComparison.Ordinal) AndAlso
+                                                               String.Equals(x.类型, oldOption.类型, StringComparison.OrdinalIgnoreCase))
+                End If
+                combo.SelectedIndex = selectedIndex
+            Next
+        Finally
+            正在刷新默认流选项 = False
+        End Try
+    End Sub
+
+    Private Function 获取默认流目标(combo As ModernComboBox, kind As String) As 默认流选项
+        If combo Is Nothing OrElse kind = "" Then Return Nothing
+        Dim options As List(Of 默认流选项) = Nothing
+        If 默认流选项表.TryGetValue(combo, options) AndAlso options IsNot Nothing AndAlso
+           combo.SelectedIndex >= 0 AndAlso combo.SelectedIndex < options.Count Then
+            Return options(combo.SelectedIndex)
+        End If
+
+        Dim text = If(combo.Text, "").Trim()
+        If text = "" Then Return Nothing
+
+        Dim outputIndex As Integer
+        If Integer.TryParse(text, outputIndex) AndAlso outputIndex >= 0 Then
+            Return New 默认流选项 With {.类型 = kind, .输出索引 = outputIndex}
+        End If
+
+        Dim parsed = 解析流索引(text)
+        If parsed.局部流索引 = "" Then Return Nothing
+        If options Is Nothing Then Return Nothing
+        For Each 流选项 In options
+            If String.Equals(流选项.显示文本, text, StringComparison.OrdinalIgnoreCase) OrElse
+               String.Equals(流选项.来源流索引, parsed.局部流索引, StringComparison.Ordinal) Then
+                Return 流选项
+            End If
+        Next
+        Return Nothing
+    End Function
+
+    Private Sub 更新文件索引号()
+        For itemIndex = 0 To UltraDetailListView1.Items.Count - 1
+            Dim item = UltraDetailListView1.Items(itemIndex)
+            更新流索引列(item, 视频列, itemIndex)
+            更新流索引列(item, 音频列, itemIndex)
+            更新流索引列(item, 字幕列, itemIndex)
+        Next
+    End Sub
+
+    Private Sub 更新流索引列(item As UltraDetailListView.ListItem, columnIndex As Integer, fileIndex As Integer)
+        If item Is Nothing OrElse item.SubItems.Count <= columnIndex Then Return
+        Dim original = item.SubItems(columnIndex).Text
+        Dim updated As New List(Of String)
+        For Each token In 切分流索引(original)
+            Dim match = Regex.Match(token, "^(?<input>\d+):(?<kind>[vas]):(?<stream>\d+)$", RegexOptions.CultureInvariant Or RegexOptions.IgnoreCase)
+            If match.Success Then
+                updated.Add($"{fileIndex}:{match.Groups("kind").Value.ToLowerInvariant()}:{match.Groups("stream").Value}")
+            Else
+                updated.Add(token)
+            End If
+        Next
+        item.SubItems(columnIndex).Text = String.Join(",", updated)
+    End Sub
+
     Private Sub MB_添加文件_Click(sender As Object, e As EventArgs) Handles MB_添加文件.Click
         Using d As New OpenFileDialog With {.Multiselect = True, .Filter = "所有文件|*.*"}
             If d.ShowDialog(Me) = DialogResult.OK Then 添加文件(d.FileNames)
@@ -255,6 +490,9 @@ Public Class Form_v6_集成工具_混流
         Finally
             UltraDetailListView1.EndUpdate()
         End Try
+        Dim oldDefaults = 捕获默认流选项()
+        更新文件索引号()
+        更新默认流选项(oldDefaults)
         同步属性面板()
     End Sub
 
@@ -273,6 +511,8 @@ Public Class Form_v6_集成工具_混流
         Finally
             UltraDetailListView1.EndUpdate()
         End Try
+        更新文件索引号()
+        更新默认流选项()
         同步属性面板()
         调整列宽()
     End Sub
@@ -280,6 +520,7 @@ Public Class Form_v6_集成工具_混流
     Private Sub MB_移除全部_Click(sender As Object, e As EventArgs) Handles MB_移除全部.Click
         If UltraDetailListView1.Items.Count = 0 Then Exit Sub
         UltraDetailListView1.Items.Clear()
+        更新默认流选项()
         同步属性面板()
         调整列宽()
     End Sub
@@ -300,7 +541,7 @@ Public Class Form_v6_集成工具_混流
         Dim index = UltraDetailListView1.Items.IndexOf(item)
         If index < 0 Then Exit Sub
 
-        显示窗体(New Form_v6_媒体流选择器(
+        Dim selector = New Form_v6_媒体流选择器(
             要读取的媒体文件:=获取项路径(item),
             视频流文本目标对象:=item.SubItems(视频列),
             音频流文本目标对象:=item.SubItems(音频列),
@@ -308,7 +549,14 @@ Public Class Form_v6_集成工具_混流
             文件索引:=index.ToString(),
             视频流已选:=item.SubItems(视频列).Text,
             音频流已选:=item.SubItems(音频列).Text,
-            字幕流已选:=item.SubItems(字幕列).Text), FormMain_v6)
+            字幕流已选:=item.SubItems(字幕列).Text)
+        AddHandler selector.FormClosed, Sub()
+                                      更新文件索引号()
+                                      更新默认流选项()
+                                      同步属性面板()
+                                      调整列宽()
+                                  End Sub
+        显示窗体(selector, FormMain_v6)
     End Sub
 
     Private Sub 同步属性面板()
@@ -357,6 +605,7 @@ Public Class Form_v6_集成工具_混流
         Dim item = UltraDetailListView1.SelectedItems(0)
         If item.SubItems.Count <= columnIndex Then Exit Sub
         item.SubItems(columnIndex).Text = If(value, "").Trim()
+        更新默认流选项()
         调整列宽()
     End Sub
 
@@ -384,10 +633,13 @@ Public Class Form_v6_集成工具_混流
         Finally
             UltraDetailListView1.EndUpdate()
         End Try
+        更新默认流选项()
         调整列宽()
     End Sub
 
     Private Sub MB_启动合并_Click(sender As Object, e As EventArgs) Handles MB_启动合并.Click
+        更新文件索引号()
+        更新默认流选项()
         If Not 验证任务参数() Then Exit Sub
 
         Dim arg As New StringBuilder("-hide_banner -nostdin ")
@@ -396,11 +648,20 @@ Public Class Form_v6_集成工具_混流
         Next
 
         Dim mapCount As Integer = 0
+        Dim mapCounts As New Dictionary(Of String, Integer)(StringComparer.OrdinalIgnoreCase) From {
+            {"v", 0},
+            {"a", 0},
+            {"s", 0}
+        }
         For i = 0 To UltraDetailListView1.Items.Count - 1
             Dim item = UltraDetailListView1.Items(i)
-            mapCount += 追加流映射(arg, i, "v", 获取子项文本(item, 视频列))
-            mapCount += 追加流映射(arg, i, "a", 获取子项文本(item, 音频列))
-            mapCount += 追加流映射(arg, i, "s", 获取子项文本(item, 字幕列))
+            Dim videoCount = 追加流映射(arg, i, "v", 获取子项文本(item, 视频列))
+            Dim audioCount = 追加流映射(arg, i, "a", 获取子项文本(item, 音频列))
+            Dim subtitleCount = 追加流映射(arg, i, "s", 获取子项文本(item, 字幕列))
+            mapCounts("v") += videoCount
+            mapCounts("a") += audioCount
+            mapCounts("s") += subtitleCount
+            mapCount += videoCount + audioCount + subtitleCount
 
             If 获取子项文本(item, 章节列) = 使用此 Then arg.Append("-map_chapters ").Append(i).Append(" ")
             If 获取子项文本(item, 元数据列) = 使用此 Then arg.Append("-map_metadata ").Append(i).Append(" ")
@@ -411,12 +672,26 @@ Public Class Form_v6_集成工具_混流
             Exit Sub
         End If
 
+        追加默认流设置(arg, "v", MCB_设定默认的视频轨, mapCounts("v"))
+        追加默认流设置(arg, "a", MCB_设定默认的音频轨, mapCounts("a"))
+        追加默认流设置(arg, "s", MCB_设定默认的字幕轨, mapCounts("s"))
+
         Dim output = MTB_输出目标文件.Text.Trim()
         arg.Append("-c copy ").Append(引用参数(output)).Append(" -y")
 
         插件管理.使用命令行添加任务到编码队列(arg.ToString(), $"混流任务 {Now:HHmmss}", output, 获取项路径(UltraDetailListView1.Items(0)))
         FormMain_v6.ModernTabListControl1.SelectedIndex = 2
         ExFloatingTip(MB_启动合并, "已添加到编码队列", 1200)
+    End Sub
+
+    Private Sub 追加默认流设置(arg As StringBuilder, kind As String, combo As ModernComboBox, mappedCount As Integer)
+        If arg Is Nothing OrElse combo Is Nothing OrElse mappedCount <= 0 Then Return
+        Dim target = 获取默认流目标(combo, kind)
+        If target Is Nothing OrElse target.输出索引 < 0 OrElse target.输出索引 >= mappedCount Then Return
+
+        ' 先清除该类型从输入文件继承的默认标记，再把用户指定的输出流设为默认。
+        arg.Append("-disposition:").Append(kind).Append(" 0 ")
+        arg.Append("-disposition:").Append(kind).Append(":").Append(target.输出索引).Append(" default ")
     End Sub
 
     Private Function 验证任务参数() As Boolean
@@ -520,6 +795,9 @@ Public Class Form_v6_集成工具_混流
     End Sub
 
     Private Sub UltraDetailListView1_ItemOrderChanged(sender As Object, e As EventArgs) Handles UltraDetailListView1.ItemOrderChanged
+        Dim oldDefaults = 捕获默认流选项()
+        更新文件索引号()
+        更新默认流选项(oldDefaults)
         同步属性面板()
         调整列宽()
     End Sub
