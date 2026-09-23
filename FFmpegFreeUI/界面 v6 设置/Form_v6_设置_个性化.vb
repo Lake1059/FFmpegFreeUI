@@ -66,12 +66,7 @@ Public Class Form_v6_设置_个性化
         Dim a As New ModernColorDialog With {.SelectedColor = FormMain_v6.ThisIsYourWindow1.BorderColor, .Icon = FormMain_v6.Icon}
         FormMain_v6.ThisIsYourWindow1.Attach(a)
         If a.ShowDialog(FormMain_v6) = DialogResult.OK Then
-            设置_v6.实例对象.SP_窗口边框颜色_A = a.SelectedColor.A
-            设置_v6.实例对象.SP_窗口边框颜色_R = a.SelectedColor.R
-            设置_v6.实例对象.SP_窗口边框颜色_G = a.SelectedColor.G
-            设置_v6.实例对象.SP_窗口边框颜色_B = a.SelectedColor.B
-            FormMain_v6.ThisIsYourWindow1.BorderColor = a.SelectedColor
-            FormMain_v6.ThisIsYourWindow1.BorderInactiveColor = a.SelectedColor
+            设置_v6.设置SP窗口边框颜色(a.SelectedColor)
         End If
     End Sub
 
@@ -79,18 +74,13 @@ Public Class Form_v6_设置_个性化
         Dim a As New ModernColorDialog With {.SelectedColor = FormMain_v6.ThisIsYourWindow1.LayerShadowColor, .Icon = FormMain_v6.Icon}
         FormMain_v6.ThisIsYourWindow1.Attach(a)
         If a.ShowDialog(FormMain_v6) = DialogResult.OK Then
-            设置_v6.实例对象.SP_分层阴影颜色_A = a.SelectedColor.A
-            设置_v6.实例对象.SP_分层阴影颜色_R = a.SelectedColor.R
-            设置_v6.实例对象.SP_分层阴影颜色_G = a.SelectedColor.G
-            设置_v6.实例对象.SP_分层阴影颜色_B = a.SelectedColor.B
-            FormMain_v6.ThisIsYourWindow1.LayerShadowColor = a.SelectedColor
+            设置_v6.设置SP分层阴影颜色(a.SelectedColor)
         End If
     End Sub
 
     Private Sub MCB_边框宽度_SelectedIndexChanged(sender As Object, e As EventArgs) Handles MCB_边框宽度.SelectedIndexChanged
         If Not SP_UnLock Then Exit Sub
-        设置_v6.实例对象.SP_边框宽度 = MCB_边框宽度.SelectedIndex
-        FormMain_v6.ThisIsYourWindow1.BorderSize = MCB_边框宽度.SelectedIndex
+        设置_v6.设置SP边框宽度(MCB_边框宽度.SelectedIndex)
     End Sub
 
     Private Sub MCB_标题栏分割线_SelectedIndexChanged(sender As Object, e As EventArgs) Handles MCB_标题栏分割线.SelectedIndexChanged
@@ -103,67 +93,30 @@ Public Class Form_v6_设置_个性化
         Dim a As New ModernColorDialog With {.SelectedColor = FormMain_v6.ThisIsYourWindow1.CaptionBottomLineColor, .Icon = FormMain_v6.Icon}
         FormMain_v6.ThisIsYourWindow1.Attach(a)
         If a.ShowDialog(FormMain_v6) = DialogResult.OK Then
-            设置_v6.实例对象.SP_标题栏分割线颜色_A = a.SelectedColor.A
-            设置_v6.实例对象.SP_标题栏分割线颜色_R = a.SelectedColor.R
-            设置_v6.实例对象.SP_标题栏分割线颜色_G = a.SelectedColor.G
-            设置_v6.实例对象.SP_标题栏分割线颜色_B = a.SelectedColor.B
-            FormMain_v6.ThisIsYourWindow1.CaptionBottomLineColor = a.SelectedColor
+            设置_v6.设置SP标题栏分割线颜色(a.SelectedColor)
         End If
     End Sub
 
     Private Sub MCB_毛玻璃模式_SelectedIndexChanged(sender As Object, e As EventArgs) Handles MCB_毛玻璃模式.SelectedIndexChanged
         If Not SP_UnLock Then Exit Sub
-        设置_v6.实例对象.SP_毛玻璃模式 = MCB_毛玻璃模式.SelectedIndex
-        Select Case 设置_v6.实例对象.SP_毛玻璃模式
-            Case 0
-                FormMain_v6.ThisIsYourWindow1.BackdropMode = ThisIsYourWindow.BackdropModeEnum.None
-                设置_v6.清除SP自有背景图()
-                FormMain_v6.ThisIsYourWindow1.BackdropNoiseOpacity = 0
-                MCB_背景来源.SelectedIndex = -1
-                MCB_噪点颗粒.SelectedIndex = -1
-                MCB_背景来源.Enabled = False
-                MCB_噪点颗粒.Enabled = False
-            Case 1
-                FormMain_v6.ThisIsYourWindow1.BackdropBlurPasses = 0
-                MCB_背景来源.Enabled = True
-                MCB_噪点颗粒.Enabled = True
-            Case 2
-                FormMain_v6.ThisIsYourWindow1.BackdropBlurPasses = 1
-                FormMain_v6.ThisIsYourWindow1.BackdropBlurRadius = 10
-                MCB_背景来源.Enabled = True
-                MCB_噪点颗粒.Enabled = True
-            Case 3
-                FormMain_v6.ThisIsYourWindow1.BackdropBlurPasses = 3
-                FormMain_v6.ThisIsYourWindow1.BackdropBlurRadius = 24
-                MCB_背景来源.Enabled = True
-                MCB_噪点颗粒.Enabled = True
-        End Select
+        设置_v6.设置SP毛玻璃模式(MCB_毛玻璃模式.SelectedIndex)
+        Dim 可设置玻璃 = MCB_毛玻璃模式.SelectedIndex > 0
+        If Not 可设置玻璃 Then
+            MCB_背景来源.SelectedIndex = -1
+            MCB_噪点颗粒.SelectedIndex = -1
+        End If
+        MCB_背景来源.Enabled = 可设置玻璃
+        MCB_噪点颗粒.Enabled = 可设置玻璃
     End Sub
 
     Private Sub MCB_背景来源_SelectedIndexChanged(sender As Object, e As EventArgs) Handles MCB_背景来源.SelectedIndexChanged
         If Not SP_UnLock Then Exit Sub
-        设置_v6.实例对象.SP_毛玻璃背景来源 = MCB_背景来源.SelectedIndex
-        Select Case 设置_v6.实例对象.SP_毛玻璃背景来源
-            Case 0
-                FormMain_v6.ThisIsYourWindow1.BackdropMode = ThisIsYourWindow.BackdropModeEnum.Image
-                设置_v6.加载SP自定义背景图()
-            Case 1
-                FormMain_v6.ThisIsYourWindow1.BackdropMode = ThisIsYourWindow.BackdropModeEnum.Auto
-                设置_v6.清除SP自有背景图()
-        End Select
+        设置_v6.设置SP毛玻璃背景来源(MCB_背景来源.SelectedIndex)
     End Sub
 
     Private Sub MCB_噪点颗粒_SelectedIndexChanged(sender As Object, e As EventArgs) Handles MCB_噪点颗粒.SelectedIndexChanged
         If Not SP_UnLock Then Exit Sub
-        设置_v6.实例对象.SP_毛玻璃噪点颗粒 = MCB_噪点颗粒.SelectedIndex
-        Select Case MCB_噪点颗粒.SelectedIndex
-            Case 0
-                FormMain_v6.ThisIsYourWindow1.BackdropNoiseOpacity = 0
-            Case 1
-                FormMain_v6.ThisIsYourWindow1.BackdropNoiseOpacity = 18
-            Case 2
-                FormMain_v6.ThisIsYourWindow1.BackdropNoiseOpacity = 36
-        End Select
+        设置_v6.设置SP毛玻璃噪点(MCB_噪点颗粒.SelectedIndex)
     End Sub
 
     Private Sub MB_选择背景图_Click(sender As Object, e As EventArgs) Handles MB_选择背景图.Click

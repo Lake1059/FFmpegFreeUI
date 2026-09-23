@@ -9,7 +9,7 @@ Public Class Form_v6_设置_界面显示
                 MCB_窗口圆角.Enabled = True
                 MCB_窗口圆角.SelectedIndex = Math.Clamp(设置_v6.实例对象.窗口圆角, 0, 1)
             Else
-                设置_v6.实例对象.窗口圆角 = 0
+                设置_v6.设置窗口圆角(0)
                 MCB_窗口圆角.SelectedIndex = 0
                 MCB_窗口圆角.Enabled = False
                 HtmlColorLabel3.Text = "<span style=""font-size:13; color:Silver"">窗口圆角</span>   当前系统不支持，需要 Windows 11 Build 22000 或更高版本"
@@ -33,13 +33,11 @@ Public Class Form_v6_设置_界面显示
 
     Private Sub MCB_界面主题_SelectedIndexChanged(sender As Object, e As EventArgs) Handles MCB_界面主题.SelectedIndexChanged
         If _正在加载新增外观设置 OrElse MCB_界面主题.SelectedIndex < 0 Then Return
-        设置_v6.实例对象.界面主题 = MCB_界面主题.SelectedIndex
-        界面主题_v6.刷新主题(True)
+        设置_v6.设置界面主题(MCB_界面主题.SelectedIndex)
     End Sub
 
     Private Sub MCB_窗口圆角_SelectedIndexChanged(sender As Object, e As EventArgs) Handles MCB_窗口圆角.SelectedIndexChanged
         If _正在加载新增外观设置 OrElse MCB_窗口圆角.SelectedIndex < 0 Then Return
-        设置_v6.实例对象.窗口圆角 = If(LakeUI.DwmWindowStyle.IsCornerModeSupported, MCB_窗口圆角.SelectedIndex, 0)
-        界面主题_v6.应用窗口圆角设置()
+        设置_v6.设置窗口圆角(MCB_窗口圆角.SelectedIndex)
     End Sub
 End Class

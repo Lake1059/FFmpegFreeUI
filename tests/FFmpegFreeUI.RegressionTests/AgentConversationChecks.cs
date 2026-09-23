@@ -34,6 +34,14 @@ internal static partial class Program
 
     private static void TestAgentConversations(string directory)
     {
+        var indexOnlyPath = Path.Combine(directory, "agent-index-only");
+        Directory.CreateDirectory(indexOnlyPath);
+        File.WriteAllText(Path.Combine(indexOnlyPath, "Conversations.index.json"),
+            "{\"Items\":[{\"Id\":\"unloaded\",\"Title\":\"History\",\"SortOrder\":1,\"FileName\":\"missing.json\"}]}");
+        var indexed = AgentConversationStore.ReadConversationIndex(indexOnlyPath);
+        Check(indexed.Count == 1 && indexed[0].Id == "unloaded" && indexed[0].Title == "History",
+            "Conversation titles load from the index without opening conversation files");
+
         using var endpoint = new AgentStreamFixture();
         var settings = 设置_v6.实例对象;
         var oldEndpoint = settings.AgentEndPoint;

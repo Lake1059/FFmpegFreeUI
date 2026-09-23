@@ -27,9 +27,7 @@ Public Class Form_v6_设置_功能设定
     End Sub
 
     Private Sub MCB_是否自动开始任务_SelectedIndexChanged(sender As Object, e As EventArgs) Handles MCB_是否自动开始任务.SelectedIndexChanged
-        If MCB_是否自动开始任务.SelectedIndex < 0 Then Exit Sub
-        设置_v6.实例对象.自动开始任务选项 = MCB_是否自动开始任务.SelectedIndex
-        编码队列_v6.应用自动开始任务设置(MCB_是否自动开始任务.SelectedIndex = 0)
+        设置_v6.设置自动开始任务(MCB_是否自动开始任务.SelectedIndex)
     End Sub
 
     Private Sub MCB_是否自动重置参数面板到第一个页面_SelectedIndexChanged(sender As Object, e As EventArgs) Handles MCB_是否自动重置参数面板到第一个页面.SelectedIndexChanged
@@ -49,18 +47,15 @@ Public Class Form_v6_设置_功能设定
     End Sub
 
     Private Sub MCB_编码队列显示最新日志行_SelectedIndexChanged(sender As Object, e As EventArgs) Handles MCB_编码队列显示最新日志行.SelectedIndexChanged
-        设置_v6.实例对象.编码队列显示最新日志行 = MCB_编码队列显示最新日志行.SelectedIndex
-        编码队列_v6.刷新显示()
+        设置_v6.设置队列最新日志(MCB_编码队列显示最新日志行.SelectedIndex)
     End Sub
 
     Private Sub MCB_任务日志保留行数_SelectedIndexChanged(sender As Object, e As EventArgs) Handles MCB_任务日志保留行数.SelectedIndexChanged
-        设置_v6.实例对象.任务日志保留行数选项 = MCB_任务日志保留行数.SelectedIndex
-        编码队列_v6.刷新显示()
+        设置_v6.设置任务日志保留行数(MCB_任务日志保留行数.SelectedIndex)
     End Sub
 
     Private Sub MCB_任务日志性能计数器_SelectedIndexChanged(sender As Object, e As EventArgs) Handles MCB_任务日志性能计数器.SelectedIndexChanged
-        设置_v6.实例对象.任务日志性能计数器 = MCB_任务日志性能计数器.SelectedIndex
-        Form_v6_编码队列_任务日志.刷新任务性能计数器设置()
+        设置_v6.设置任务日志性能计数器(MCB_任务日志性能计数器.SelectedIndex)
     End Sub
 
 End Class

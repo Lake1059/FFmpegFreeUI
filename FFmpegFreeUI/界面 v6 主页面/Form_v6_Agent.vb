@@ -14,18 +14,20 @@ Partial Public Class Form_v6_Agent
     Private Sub Form_v6_Agent_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         _loading = True
         Try
-            ModernListBox1.AllowDragReorder = True
+            ModernListBox1.AllowDragReorder = False
             ModernListBox1.TabStop = True
             InitializeSubmittedFileList()
             ApplyAgentButtonPanelLayout()
             If MCB_联网设置.SelectedIndex < 0 Then MCB_联网设置.SelectedIndex = Math.Min(Math.Max(AgentNetworkMode.Normalize(设置_v6.实例对象.Agent联网设置), 0), MCB_联网设置.Items.Count - 1)
             If MCB_权限控制.SelectedIndex < 0 Then MCB_权限控制.SelectedIndex = Math.Min(Math.Max(设置_v6.实例对象.Agent权限级别, 0), MCB_权限控制.Items.Count - 1)
 
-            _store = AgentConversationStore.Load()
-            _current = _store.EnsureConversation()
+            _orderedConversations = AgentConversationStore.ReadConversationIndex().
+                Select(Function(item) New AgentConversationData With {
+                    .Id = item.Id, .Title = item.Title, .CreatedAt = item.CreatedAt,
+                    .UpdatedAt = item.UpdatedAt, .SortOrder = item.SortOrder
+                }).ToList()
             RefreshConversationList()
-            RestoreCurrentDraft()
-            RenderCurrentConversation()
+            UpdateSendButtonState()
             UpdateUsageButton()
         Finally
             _loading = False
@@ -33,9 +35,12 @@ Partial Public Class Form_v6_Agent
     End Sub
 
     Private Sub RefreshConversationList()
-        If _closing OrElse IsDisposed OrElse _store Is Nothing Then Return
-        NormalizeConversationOrder()
-        _orderedConversations = _store.Conversations.
+        If _closing OrElse IsDisposed Then Return
+        If _store IsNot Nothing Then
+            NormalizeConversationOrder()
+            _orderedConversations = _store.Conversations
+        End If
+        _orderedConversations = _orderedConversations.
             OrderBy(Function(x) If(x.SortOrder <= 0, Integer.MaxValue, x.SortOrder)).
             ThenByDescending(Function(x) x.UpdatedAt).
             ToList()
@@ -47,11 +52,18 @@ Partial Public Class Form_v6_Agent
             ModernListBox1.Items.AddRange(_orderedConversations.Select(Function(x) FormatConversationTitle(x)))
 
             Dim index = _orderedConversations.FindIndex(Function(x) _current IsNot Nothing AndAlso x.Id = _current.Id)
-            If index >= 0 Then ModernListBox1.SelectedIndex = index
+            ModernListBox1.SelectedIndex = index
         Finally
             _loading = oldLoading
             _refreshingConversationList = False
         End Try
+    End Sub
+
+    Private Sub EnsureStoreLoaded()
+        If _store IsNot Nothing Then Return
+        _store = AgentConversationStore.Load()
+        ModernListBox1.AllowDragReorder = True
+        RefreshConversationList()
     End Sub
 
     Private Sub NormalizeConversationOrder()
@@ -155,6 +167,7 @@ Partial Public Class Form_v6_Agent
     End Sub
 
     Private Sub MB_新对话_Click(sender As Object, e As EventArgs) Handles MB_新对话.Click
+        EnsureStoreLoaded()
         CaptureCurrentDraft()
         _current = CreateConversationFromCurrentSettings()
         RestoreCurrentDraft()
@@ -492,6 +505,7 @@ Partial Public Class Form_v6_Agent
     End Sub
 
     Private Sub CommitUserMessage(text As String, Optional rerenderConversation As Boolean = False)
+        EnsureStoreLoaded()
         If _current Is Nothing Then _current = CreateConversationFromCurrentSettings()
         ApplyConversationSnapshot()
         AppendUserMessage(text, BuildSubmittedFilesContext())
@@ -589,10 +603,15 @@ Partial Public Class Form_v6_Agent
         If _refreshingConversationList Then Return
         Dim index = ModernListBox1.SelectedIndex
         If index < 0 OrElse index >= _orderedConversations.Count Then Return
-        If ReferenceEquals(_current, _orderedConversations(index)) Then Return
+        Dim selectedId = _orderedConversations(index).Id
+        EnsureStoreLoaded()
+        Dim selectedConversation = _orderedConversations.FirstOrDefault(Function(x) x.Id = selectedId)
+        If selectedConversation Is Nothing Then Return
+        If ReferenceEquals(_current, selectedConversation) Then Return
         CaptureCurrentDraft()
-        _current = _orderedConversations(index)
+        _current = selectedConversation
         RestoreCurrentDraft()
+        RefreshConversationList()
         RenderCurrentConversation()
         UpdateUsageButton()
     End Sub

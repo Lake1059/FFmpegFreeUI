@@ -30,6 +30,7 @@ internal static partial class Program
 
     private static void TestThemeAndVmaf()
     {
+        TestSettingsRenderingOptions();
         var models = Models();
         var published = (List<VmafModelDisplayItem>)StaticQuality("构建Vmaf模型显示项", new[] {
             "vmaf_v1.0.16_3d0h", "vmaf_v1.0.16_hfr_3d0h", "vmaf_v1.0.16_1d5h_2160",
@@ -118,6 +119,40 @@ internal static partial class Program
             Check(graph.Series[0].LineThickness == 1 && graph.Series[0].Color == Color.FromArgb(230, 230, 230), "Dark chart unchanged");
         }
         finally { 设置_v6.实例对象.界面主题 = previousTheme; 界面主题_v6.刷新主题(true); }
+    }
+
+    private static void TestSettingsRenderingOptions()
+    {
+        var settings = 设置_v6.实例对象;
+        var oldAntialias = settings.图形DX抗锯齿;
+        var oldBudget = settings.图形DX_GPU缓存总预算;
+        var oldHdr = (settings.图形DX_HDR启用, settings.图形DX_HDR显示档位,
+            settings.图形DX_HDR矢量颜色映射, settings.图形DX_HDR图片映射);
+        try
+        {
+            设置_v6.设置图形性能选项(设置_v6.图形性能选项.抗锯齿, 1);
+            Check(settings.图形DX抗锯齿 == 1 && LakeUI.GlobalOptions.GlobalAntialiasMode == Vortice.Direct2D1.AntialiasMode.Aliased,
+                "Antialias preference and runtime must agree");
+            设置_v6.设置图形性能选项(设置_v6.图形性能选项.GPU缓存, 4);
+            Check(settings.图形DX_GPU缓存总预算 == 4 && LakeUI.GlobalOptions.GpuCacheBudgetBytes == 512L * 1024 * 1024,
+                "GPU cache preference and runtime must agree");
+            设置_v6.设置图形性能选项(设置_v6.图形性能选项.GPU缓存, -1);
+            Check(settings.图形DX_GPU缓存总预算 == 4, "Unselected performance combo must not overwrite preference");
+            设置_v6.设置HDR选项(1, 99, 1, 0);
+            Check(settings.图形DX_HDR显示档位 == 2 && LakeUI.GlobalOptions.HDR.Profile == LakeUI.GlobalOptions.HdrOutputProfile.HDR400,
+                "Invalid HDR profile must use the default");
+            Check(LakeUI.GlobalOptions.HDR.Enabled && !LakeUI.GlobalOptions.HDR.MapVectorColors && LakeUI.GlobalOptions.HDR.MapImages,
+                "HDR preference and runtime must agree");
+        }
+        finally
+        {
+            settings.图形DX抗锯齿 = oldAntialias;
+            settings.图形DX_GPU缓存总预算 = oldBudget;
+            (settings.图形DX_HDR启用, settings.图形DX_HDR显示档位,
+                settings.图形DX_HDR矢量颜色映射, settings.图形DX_HDR图片映射) = oldHdr;
+            设置_v6.应用图形性能设置();
+            设置_v6.应用HDR设置();
+        }
     }
 
     private static void TestThemeBorders()

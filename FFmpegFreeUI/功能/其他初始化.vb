@@ -3,21 +3,6 @@ Imports System.IO
 Imports System.Reflection
 Imports LakeUI
 
-Public Class 其他初始化
-
-    Public Shared Sub 执行()
-        LakeUI.MessageDialogOptions.BackdropEnabled = Not 界面主题_v6.当前为浅色模式
-        LakeUI.MessageDialogOptions.BackdropTintColor = Color.FromArgb(120, 0, 0, 0)
-        LakeUI.MessageDialogOptions.BackdropBlurRadius = 30
-        LakeUI.MessageDialogOptions.BackdropBlurPasses = 2
-        LakeUI.FloatingToolTipForm.BackdropEnabled = Not 界面主题_v6.当前为浅色模式
-        LakeUI.FloatingToolTipForm.BackdropTintColor = Color.FromArgb(120, 0, 0, 0)
-        LakeUI.FloatingToolTipForm.BackdropBlurRadius = 30
-        LakeUI.FloatingToolTipForm.BackdropBlurPasses = 2
-    End Sub
-
-End Class
-
 Partial Public Class FormMain_v6
     Private Sub 绑定主页面选项卡()
         Dim 页面绑定 As (索引 As Integer, 页面 As Control, 面板 As ModernPanel)() = {

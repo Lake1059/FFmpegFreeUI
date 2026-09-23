@@ -14,8 +14,7 @@ Public Class FormMain_v6
         UI同步上下文 = Threading.SynchronizationContext.Current
         设置_v6.启动时读取SP解锁器()
         设置_v6.启动时加载设置()
-        界面主题_v6.初始化()
-        界面主题_v6.应用窗口圆角设置()
+        设置_v6.初始化界面外观()
         网络功能.启动时后台获取SPAgent端点()
 
         设置_v6.加载SP自定义图标()
@@ -26,7 +25,6 @@ Public Class FormMain_v6
 
         ModernTabListControl1.SelectedIndex = 0
         ModernTextBox1.Parent = ModernTabListControl1
-        其他初始化.执行()
         插件管理.启动时加载插件()
         If 设置_v6.实例对象.是否监听端口 Then 端口监听_v6.启动客户端()
     End Sub

@@ -157,6 +157,33 @@ Public Class 设置_v6
     Public Property SP_毛玻璃背景来源 As Integer = -1
     Public Property SP_毛玻璃噪点颗粒 As Integer = -1
 
+    Private Shared ReadOnly HDR档位选项 As LakeUI.GlobalOptions.HdrOutputProfile() = {
+        LakeUI.GlobalOptions.HdrOutputProfile.HDR200, LakeUI.GlobalOptions.HdrOutputProfile.HDR300,
+        LakeUI.GlobalOptions.HdrOutputProfile.HDR400, LakeUI.GlobalOptions.HdrOutputProfile.HDR500,
+        LakeUI.GlobalOptions.HdrOutputProfile.HDR600, LakeUI.GlobalOptions.HdrOutputProfile.HDR700,
+        LakeUI.GlobalOptions.HdrOutputProfile.HDR800, LakeUI.GlobalOptions.HdrOutputProfile.HDR900,
+        LakeUI.GlobalOptions.HdrOutputProfile.HDR1000
+    }
+    Private Shared ReadOnly GPU缓存预算选项MiB As Long() = {0L, 64L, 128L, 256L, 512L, 1024L, 2048L, 4096L, 8192L}
+    Private Shared ReadOnly CPU缓存预算选项MiB As Long() = {0L, 32L, 64L, 96L, 128L, 256L, 512L, 1024L, 2048L}
+    Private Shared ReadOnly 缓存条目选项 As Integer() = {0, 8, 16, 32, 64, 128, 256, 512, 1024}
+    Private Shared ReadOnly 字体缓存条目选项 As Integer() = {0, 32, 64, 128, 256, 512, 1024}
+    Private Shared ReadOnly 背景穿透脏区数量选项 As Integer() = {4, 4, 4, 8, 8, 8, 16, 16, 16}
+    Private Shared ReadOnly 背景穿透完整重采阈值选项 As Single() = {0.4F, 0.6F, 0.8F, 0.4F, 0.6F, 0.8F, 0.4F, 0.6F, 0.8F}
+    Private Shared ReadOnly SSAA缓存分桶粒度选项 As Integer() = {32, 64, 96, 128, 192, 256, 384, 512, 1024}
+
+    Public Enum 图形性能选项
+        抗锯齿
+        文字渲染
+        超采样
+        GPU缓存
+        画刷缓存
+        字体缓存
+        CPU缓存
+        背景脏区
+        超采样缓存
+    End Enum
+
     Public Property 是否询问标记_下载服务器选择 As Boolean = False
     Public Property 自定义视频编码器列表 As New List(Of String)
     ''' <summary>质量评测页面完整工作状态。</summary>
@@ -164,6 +191,213 @@ Public Class 设置_v6
 
     Private Shared ReadOnly 设置文件路径 As String = Path.Combine(Application.StartupPath, "Settings.json")
     Private Shared ReadOnly 设置文件写入锁 As New Object()
+
+    Public Shared Sub 设置界面主题(index As Integer)
+        If index < 0 OrElse index > 2 Then Return
+        If 实例对象.界面主题 = index Then Return
+        实例对象.界面主题 = index
+        界面主题_v6.刷新主题(True)
+    End Sub
+
+    Public Shared Sub 设置窗口圆角(index As Integer)
+        If index < 0 OrElse index > 1 Then Return
+        Dim 选择 = If(LakeUI.DwmWindowStyle.IsCornerModeSupported, index, 0)
+        If 实例对象.窗口圆角 = 选择 Then Return
+        实例对象.窗口圆角 = 选择
+        界面主题_v6.应用窗口圆角设置()
+    End Sub
+
+    Public Shared Sub 设置HDR选项(启用 As Integer, 显示档位 As Integer, 矢量颜色 As Integer, 图片 As Integer)
+        实例对象.图形DX_HDR启用 = Math.Clamp(启用, 0, 1)
+        实例对象.图形DX_HDR显示档位 = If(显示档位 < 0 OrElse 显示档位 >= HDR档位选项.Length, 2, 显示档位)
+        实例对象.图形DX_HDR矢量颜色映射 = Math.Clamp(矢量颜色, 0, 1)
+        实例对象.图形DX_HDR图片映射 = Math.Clamp(图片, 0, 1)
+        应用HDR设置()
+    End Sub
+
+    Public Shared Sub 应用HDR设置()
+        LakeUI.GlobalOptions.HDR.Enabled = 实例对象.图形DX_HDR启用 = 1
+        Dim 档位 = 实例对象.图形DX_HDR显示档位
+        LakeUI.GlobalOptions.HDR.Profile = HDR档位选项(If(档位 < 0 OrElse 档位 >= HDR档位选项.Length, 2, 档位))
+        LakeUI.GlobalOptions.HDR.MapVectorColors = 实例对象.图形DX_HDR矢量颜色映射 <> 1
+        LakeUI.GlobalOptions.HDR.MapImages = 实例对象.图形DX_HDR图片映射 <> 1
+        For Each openForm As Form In Application.OpenForms
+            openForm.Invalidate(True)
+        Next
+    End Sub
+
+    Public Shared Sub 设置图形性能选项(选项 As 图形性能选项, index As Integer)
+        If index < 0 Then Return
+        Select Case 选项
+            Case 图形性能选项.抗锯齿 : 实例对象.图形DX抗锯齿 = index
+            Case 图形性能选项.文字渲染 : 实例对象.图形DX文字渲染模式 = index
+            Case 图形性能选项.超采样 : 实例对象.图形DX_SSAA = index
+            Case 图形性能选项.GPU缓存 : 实例对象.图形DX_GPU缓存总预算 = index
+            Case 图形性能选项.画刷缓存 : 实例对象.图形DX画刷缓存条目上限 = index
+            Case 图形性能选项.字体缓存 : 实例对象.图形DW字体缓存条目上限 = index
+            Case 图形性能选项.CPU缓存 : 实例对象.图形DX_CPU位图缓存总预算 = index
+            Case 图形性能选项.背景脏区 : 实例对象.图形DX背景穿透脏区策略 = index
+            Case 图形性能选项.超采样缓存 : 实例对象.图形DX_SSAA缓存分桶粒度 = index
+            Case Else : Return
+        End Select
+        应用图形性能设置()
+    End Sub
+
+    Public Shared Sub 应用图形性能设置()
+        LakeUI.GlobalOptions.GlobalAntialiasMode = If(实例对象.图形DX抗锯齿 = 1,
+            Vortice.Direct2D1.AntialiasMode.Aliased, Vortice.Direct2D1.AntialiasMode.PerPrimitive)
+        Select Case 实例对象.图形DX文字渲染模式
+            Case 1 : LakeUI.GlobalOptions.GlobalTextQuality = LakeUI.GlobalOptions.TextQualityMode.Grayscale
+            Case 2 : LakeUI.GlobalOptions.GlobalTextQuality = LakeUI.GlobalOptions.TextQualityMode.Aliased
+            Case 3 : LakeUI.GlobalOptions.GlobalTextQuality = LakeUI.GlobalOptions.TextQualityMode.Outline
+            Case Else : LakeUI.GlobalOptions.GlobalTextQuality = LakeUI.GlobalOptions.TextQualityMode.ClearType
+        End Select
+        Select Case 实例对象.图形DX_SSAA
+            Case 1 : LakeUI.GlobalOptions.GlobalSSAA = LakeUI.GlobalOptions.SuperSamplingScaleEnum.x2
+            Case 2 : LakeUI.GlobalOptions.GlobalSSAA = LakeUI.GlobalOptions.SuperSamplingScaleEnum.x3
+            Case 3 : LakeUI.GlobalOptions.GlobalSSAA = LakeUI.GlobalOptions.SuperSamplingScaleEnum.x4
+            Case Else : LakeUI.GlobalOptions.GlobalSSAA = LakeUI.GlobalOptions.SuperSamplingScaleEnum.OFF
+        End Select
+        LakeUI.GlobalOptions.GpuCacheBudgetBytes = GPU缓存预算选项MiB(Math.Clamp(实例对象.图形DX_GPU缓存总预算, 0, GPU缓存预算选项MiB.Length - 1)) * 1024L * 1024L
+        LakeUI.GlobalOptions.CpuCacheBudgetBytes = CPU缓存预算选项MiB(Math.Clamp(实例对象.图形DX_CPU位图缓存总预算, 0, CPU缓存预算选项MiB.Length - 1)) * 1024L * 1024L
+        LakeUI.GlobalOptions.BrushCacheLimit = 缓存条目选项(Math.Clamp(实例对象.图形DX画刷缓存条目上限, 0, 缓存条目选项.Length - 1))
+        Dim 字体上限 = 字体缓存条目选项(Math.Clamp(实例对象.图形DW字体缓存条目上限, 0, 字体缓存条目选项.Length - 1))
+        LakeUI.GlobalOptions.TextFormatCacheLimit = 字体上限
+        LakeUI.GlobalOptions.FontResolveCacheLimit = 字体上限
+        Dim 脏区索引 = Math.Clamp(实例对象.图形DX背景穿透脏区策略, 0, 背景穿透脏区数量选项.Length - 1)
+        LakeUI.GlobalOptions.BackgroundDirtyRectLimit = 背景穿透脏区数量选项(脏区索引)
+        LakeUI.GlobalOptions.BackgroundFullDirtyRatio = 背景穿透完整重采阈值选项(脏区索引)
+        LakeUI.GlobalOptions.SsaaBucketSize = SSAA缓存分桶粒度选项(Math.Clamp(实例对象.图形DX_SSAA缓存分桶粒度, 0, SSAA缓存分桶粒度选项.Length - 1))
+    End Sub
+
+    Public Shared Sub 初始化界面外观()
+        应用图形性能设置()
+        应用HDR设置()
+        界面主题_v6.初始化()
+        界面主题_v6.应用窗口圆角设置()
+        LakeUI.MessageDialogOptions.BackdropTintColor = Color.FromArgb(120, 0, 0, 0)
+        LakeUI.MessageDialogOptions.BackdropBlurRadius = 30
+        LakeUI.MessageDialogOptions.BackdropBlurPasses = 2
+        LakeUI.FloatingToolTipForm.BackdropTintColor = Color.FromArgb(120, 0, 0, 0)
+        LakeUI.FloatingToolTipForm.BackdropBlurRadius = 30
+        LakeUI.FloatingToolTipForm.BackdropBlurPasses = 2
+    End Sub
+
+    Public Shared Sub 设置SP窗口边框颜色(颜色 As Color)
+        实例对象.SP_窗口边框颜色_A = 颜色.A
+        实例对象.SP_窗口边框颜色_R = 颜色.R
+        实例对象.SP_窗口边框颜色_G = 颜色.G
+        实例对象.SP_窗口边框颜色_B = 颜色.B
+        FormMain_v6.ThisIsYourWindow1.BorderColor = 颜色
+        FormMain_v6.ThisIsYourWindow1.BorderInactiveColor = 颜色
+    End Sub
+
+    Public Shared Sub 设置SP分层阴影颜色(颜色 As Color)
+        实例对象.SP_分层阴影颜色_A = 颜色.A
+        实例对象.SP_分层阴影颜色_R = 颜色.R
+        实例对象.SP_分层阴影颜色_G = 颜色.G
+        实例对象.SP_分层阴影颜色_B = 颜色.B
+        FormMain_v6.ThisIsYourWindow1.LayerShadowColor = 颜色
+    End Sub
+
+    Public Shared Sub 设置SP标题栏分割线颜色(颜色 As Color)
+        实例对象.SP_标题栏分割线颜色_A = 颜色.A
+        实例对象.SP_标题栏分割线颜色_R = 颜色.R
+        实例对象.SP_标题栏分割线颜色_G = 颜色.G
+        实例对象.SP_标题栏分割线颜色_B = 颜色.B
+        FormMain_v6.ThisIsYourWindow1.CaptionBottomLineColor = 颜色
+    End Sub
+
+    Public Shared Sub 设置SP边框宽度(index As Integer)
+        If Not SP_UnLock OrElse index < 0 Then Return
+        实例对象.SP_边框宽度 = index
+        FormMain_v6.ThisIsYourWindow1.BorderSize = index
+    End Sub
+
+    Public Shared Sub 设置SP毛玻璃模式(index As Integer)
+        If Not SP_UnLock OrElse index < 0 Then Return
+        实例对象.SP_毛玻璃模式 = index
+        Select Case index
+            Case 0
+                FormMain_v6.ThisIsYourWindow1.BackdropMode = LakeUI.ThisIsYourWindow.BackdropModeEnum.None
+                清除SP自有背景图()
+                FormMain_v6.ThisIsYourWindow1.BackdropNoiseOpacity = 0
+            Case 1 : FormMain_v6.ThisIsYourWindow1.BackdropBlurPasses = 0
+            Case 2
+                FormMain_v6.ThisIsYourWindow1.BackdropBlurPasses = 1
+                FormMain_v6.ThisIsYourWindow1.BackdropBlurRadius = 10
+            Case 3
+                FormMain_v6.ThisIsYourWindow1.BackdropBlurPasses = 3
+                FormMain_v6.ThisIsYourWindow1.BackdropBlurRadius = 24
+        End Select
+    End Sub
+
+    Public Shared Sub 设置SP毛玻璃背景来源(index As Integer)
+        If Not SP_UnLock Then Return
+        实例对象.SP_毛玻璃背景来源 = index
+        Select Case index
+            Case 0
+                FormMain_v6.ThisIsYourWindow1.BackdropMode = LakeUI.ThisIsYourWindow.BackdropModeEnum.Image
+                加载SP自定义背景图()
+            Case 1
+                FormMain_v6.ThisIsYourWindow1.BackdropMode = LakeUI.ThisIsYourWindow.BackdropModeEnum.Auto
+                清除SP自有背景图()
+        End Select
+    End Sub
+
+    Public Shared Sub 设置SP毛玻璃噪点(index As Integer)
+        If Not SP_UnLock Then Return
+        实例对象.SP_毛玻璃噪点颗粒 = index
+        Select Case index
+            Case 0 : FormMain_v6.ThisIsYourWindow1.BackdropNoiseOpacity = 0
+            Case 1 : FormMain_v6.ThisIsYourWindow1.BackdropNoiseOpacity = 18
+            Case 2 : FormMain_v6.ThisIsYourWindow1.BackdropNoiseOpacity = 36
+        End Select
+    End Sub
+
+    Public Shared Sub 设置自动开始任务(index As Integer)
+        If index < 0 Then Return
+        实例对象.自动开始任务选项 = index
+        编码队列_v6.应用自动开始任务设置(index = 0)
+    End Sub
+
+    Public Shared Sub 设置队列最新日志(index As Integer)
+        If index < 0 Then Return
+        实例对象.编码队列显示最新日志行 = index
+        编码队列_v6.刷新显示()
+    End Sub
+
+    Public Shared Sub 设置任务日志保留行数(index As Integer)
+        If index < 0 Then Return
+        实例对象.任务日志保留行数选项 = index
+        编码队列_v6.刷新显示()
+    End Sub
+
+    Public Shared Sub 设置任务日志性能计数器(index As Integer)
+        If index < 0 Then Return
+        实例对象.任务日志性能计数器 = index
+        Form_v6_编码队列_任务日志.刷新任务性能计数器设置()
+    End Sub
+
+    Public Shared Sub 设置自动同时运行任务数量(index As Integer)
+        If index < 0 Then Return
+        实例对象.自动同时运行任务数量选项 = index
+        编码队列_v6.请求调度()
+    End Sub
+
+    Public Shared Sub 设置远程监听(启用 As Boolean)
+        实例对象.是否监听端口 = 启用
+        If 启用 Then
+            端口监听_v6.启动客户端()
+        Else
+            端口监听_v6.停止客户端()
+        End If
+    End Sub
+
+    Public Shared Sub 设置远程监听端口(端口 As String)
+        实例对象.监听的端口 = 端口
+        If 实例对象.是否监听端口 AndAlso 端口监听_v6.是否正在运行 Then 端口监听_v6.重启客户端()
+    End Sub
 
     Public Shared Sub 退出时保存设置()
         Try

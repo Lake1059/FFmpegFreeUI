@@ -49,6 +49,19 @@ Public Class AgentConversationStore
         Return store
     End Function
 
+    Public Shared Function ReadConversationIndex(Optional storeDirectory As String = Nothing) As List(Of AgentConversationIndexItem)
+        Dim store As New AgentConversationStore(storeDirectory)
+        Try
+            If Not IO.File.Exists(store._indexPath) Then Return New List(Of AgentConversationIndexItem)
+            Dim indexFile = JsonSerializer.Deserialize(Of AgentConversationIndexFile)(IO.File.ReadAllText(store._indexPath, Encoding.UTF8), JsonSO)
+            Return If(indexFile?.Items, New List(Of AgentConversationIndexItem)).
+                Where(Function(item) item IsNot Nothing AndAlso Not String.IsNullOrWhiteSpace(item.Id)).
+                ToList()
+        Catch
+            Return New List(Of AgentConversationIndexItem)
+        End Try
+    End Function
+
     Public Sub Save()
         Directory.CreateDirectory(_storeDirectory)
         Directory.CreateDirectory(_conversationDirectory)

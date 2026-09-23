@@ -183,7 +183,7 @@ Public Module 界面主题_v6
     End Function
 
     Private Sub 系统首选项已更改(sender As Object, e As UserPreferenceChangedEventArgs)
-        If Not _已初始化 OrElse 设置_v6.实例对象.界面主题 <> 0 Then Return
+        If Not _已初始化 Then Return
         界面线程执行(
             Sub(state)
                 If _已初始化 Then 刷新主题(False)
