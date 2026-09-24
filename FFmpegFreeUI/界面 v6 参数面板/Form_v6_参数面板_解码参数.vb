@@ -25,7 +25,7 @@ Public Class Form_v6_参数面板_解码参数
                                         结果.AppendLine()
                                         结果.AppendLine("CUDA：-hwaccel cuda、-hwaccel_device N 或 -init_hw_device cuda:N")
                                         结果.AppendLine("D3D11VA：-hwaccel d3d11va -hwaccel_device N")
-                                        结果.Append("不同 API 的索引不能混用，也不保证与任务管理器或 nvidia-smi 一致。Vulkan、QSV、OpenCL 的设备编号需单独确认。")
+                                        结果.Append("ffmpeg 使用的 GPU 索引号与 nvidia-smi 等驱动工具不一致！")
                                         Return 结果.ToString()
                                     End Function)
             If IsDisposed OrElse Disposing Then Return

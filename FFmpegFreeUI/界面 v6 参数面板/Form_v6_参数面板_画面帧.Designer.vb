@@ -592,7 +592,6 @@ Partial Class Form_v6_参数面板_画面帧
         HtmlColorLabel1.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel1.Dock = DockStyle.Fill
         HtmlColorLabel1.ForeColor = Color.MediumPurple
-        HtmlColorLabel1.InfoIconSizeRatio = 1F
         HtmlColorLabel1.Location = New Point(310, 10)
         HtmlColorLabel1.Margin = New Padding(2)
         HtmlColorLabel1.Name = "HtmlColorLabel1"
@@ -823,7 +822,6 @@ Partial Class Form_v6_参数面板_画面帧
         HCL_缩放滤镜说明.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HCL_缩放滤镜说明.Dock = DockStyle.Fill
         HCL_缩放滤镜说明.ForeColor = Color.OliveDrab
-        HCL_缩放滤镜说明.InfoIconSizeRatio = 1F
         HCL_缩放滤镜说明.Location = New Point(230, 10)
         HCL_缩放滤镜说明.Margin = New Padding(2)
         HCL_缩放滤镜说明.Name = "HCL_缩放滤镜说明"
@@ -832,7 +830,7 @@ Partial Class Form_v6_参数面板_画面帧
         HCL_缩放滤镜说明.TabIndex = 13
         HCL_缩放滤镜说明.Text = "更推荐使用这里的用滤镜缩放"
         HCL_缩放滤镜说明.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
-        HCL_缩放滤镜说明.ToolTipText = "宽度和高度可以只写一个来表示另一个按照原视频比例自动进行缩放"
+        HCL_缩放滤镜说明.ToolTipText = "宽度和高度可以只写一个来表示另一个按照原视频比例自动进行缩放，不选滤镜就是用 CPU 滤镜；cuda 滤镜需要进专门的流程，直接设置跑不起来"
         ' 
         ' MCB_指定缩放滤镜
         ' 
@@ -907,7 +905,6 @@ Partial Class Form_v6_参数面板_画面帧
         HCL_直接指定分辨率说明.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HCL_直接指定分辨率说明.Dock = DockStyle.Fill
         HCL_直接指定分辨率说明.ForeColor = Color.Goldenrod
-        HCL_直接指定分辨率说明.InfoIconSizeRatio = 1F
         HCL_直接指定分辨率说明.Location = New Point(150, 10)
         HCL_直接指定分辨率说明.Margin = New Padding(2)
         HCL_直接指定分辨率说明.Name = "HCL_直接指定分辨率说明"

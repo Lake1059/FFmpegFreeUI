@@ -23,30 +23,16 @@ Partial Class Form_v6_参数面板_参数总览
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Panel1 = New LakeUI.ModernPanel()
-        Panel1.BackColor = Color.Transparent
-        Panel1.BackColor1 = Color.Transparent
-        Panel1.BorderSize = 0
         MTB_参数总览 = New LakeUI.ModernTextBox()
         Panel3 = New LakeUI.ModernPanel()
-        Panel3.BackColor = Color.Transparent
-        Panel3.BackColor1 = Color.Transparent
-        Panel3.BorderSize = 0
         MB_复制参数总览 = New LakeUI.ModernButton()
         HCL_参数总览标题 = New LakeUI.HtmlColorLabel()
         Panel2 = New LakeUI.ModernPanel()
-        Panel2.BackColor = Color.Transparent
-        Panel2.BackColor1 = Color.Transparent
-        Panel2.BorderSize = 0
         MTB_命令行模板 = New LakeUI.ModernTextBox()
         Panel70 = New LakeUI.ModernPanel()
-        Panel70.BackColor = Color.Transparent
-        Panel70.BackColor1 = Color.Transparent
-        Panel70.BorderSize = 0
         MB_复制命令行模板 = New LakeUI.ModernButton()
         HCL_命令行模板标题 = New LakeUI.HtmlColorLabel()
         ModernPanel1 = New LakeUI.ModernPanel()
-        ModernPanel1.BackColor = Color.Transparent
-        ModernPanel1.BackColor1 = Color.Transparent
         Panel1.SuspendLayout()
         Panel3.SuspendLayout()
         Panel2.SuspendLayout()
@@ -56,6 +42,9 @@ Partial Class Form_v6_参数面板_参数总览
         ' 
         ' Panel1
         ' 
+        Panel1.BackColor = Color.Transparent
+        Panel1.BackColor1 = Color.Transparent
+        Panel1.BorderSize = 0
         Panel1.Controls.Add(MTB_参数总览)
         Panel1.Controls.Add(Panel3)
         Panel1.Controls.Add(HCL_参数总览标题)
@@ -78,7 +67,7 @@ Partial Class Form_v6_参数面板_参数总览
         MTB_参数总览.LineHeight = 20
         MTB_参数总览.LineNumberBackColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MTB_参数总览.LineNumberForeColor = Color.Silver
-        MTB_参数总览.Location = New Point(20, 60)
+        MTB_参数总览.Location = New Point(20, 58)
         MTB_参数总览.Margin = New Padding(2)
         MTB_参数总览.MultiLine = True
         MTB_参数总览.Name = "MTB_参数总览"
@@ -86,11 +75,14 @@ Partial Class Form_v6_参数面板_参数总览
         MTB_参数总览.ReadOnly = True
         MTB_参数总览.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MTB_参数总览.ShowLineNumbers = True
-        MTB_参数总览.Size = New Size(340, 481)
+        MTB_参数总览.Size = New Size(340, 483)
         MTB_参数总览.TabIndex = 1
         ' 
         ' Panel3
         ' 
+        Panel3.BackColor = Color.Transparent
+        Panel3.BackColor1 = Color.Transparent
+        Panel3.BorderSize = 0
         Panel3.Controls.Add(MB_复制参数总览)
         Panel3.Dock = DockStyle.Bottom
         Panel3.Location = New Point(20, 541)
@@ -124,13 +116,16 @@ Partial Class Form_v6_参数面板_参数总览
         HCL_参数总览标题.Margin = New Padding(2)
         HCL_参数总览标题.Name = "HCL_参数总览标题"
         HCL_参数总览标题.Padding = New Padding(0, 0, 0, 15)
-        HCL_参数总览标题.Size = New Size(340, 40)
+        HCL_参数总览标题.Size = New Size(340, 38)
         HCL_参数总览标题.TabIndex = 0
         HCL_参数总览标题.Text = "参数总览"
         HCL_参数总览标题.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.Center
         ' 
         ' Panel2
         ' 
+        Panel2.BackColor = Color.Transparent
+        Panel2.BackColor1 = Color.Transparent
+        Panel2.BorderSize = 0
         Panel2.Controls.Add(MTB_命令行模板)
         Panel2.Controls.Add(Panel70)
         Panel2.Controls.Add(HCL_命令行模板标题)
@@ -151,18 +146,21 @@ Partial Class Form_v6_参数面板_参数总览
         MTB_命令行模板.Dock = DockStyle.Fill
         MTB_命令行模板.Font = New Font("Microsoft YaHei UI", 11F)
         MTB_命令行模板.LineHeight = 20
-        MTB_命令行模板.Location = New Point(10, 60)
+        MTB_命令行模板.Location = New Point(10, 58)
         MTB_命令行模板.Margin = New Padding(2)
         MTB_命令行模板.MultiLine = True
         MTB_命令行模板.Name = "MTB_命令行模板"
         MTB_命令行模板.Padding = New Padding(10, 8, 10, 8)
         MTB_命令行模板.ReadOnly = True
         MTB_命令行模板.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        MTB_命令行模板.Size = New Size(362, 481)
+        MTB_命令行模板.Size = New Size(362, 483)
         MTB_命令行模板.TabIndex = 3
         ' 
         ' Panel70
         ' 
+        Panel70.BackColor = Color.Transparent
+        Panel70.BackColor1 = Color.Transparent
+        Panel70.BorderSize = 0
         Panel70.Controls.Add(MB_复制命令行模板)
         Panel70.Dock = DockStyle.Bottom
         Panel70.Location = New Point(10, 541)
@@ -196,13 +194,15 @@ Partial Class Form_v6_参数面板_参数总览
         HCL_命令行模板标题.Margin = New Padding(2)
         HCL_命令行模板标题.Name = "HCL_命令行模板标题"
         HCL_命令行模板标题.Padding = New Padding(0, 0, 0, 15)
-        HCL_命令行模板标题.Size = New Size(362, 40)
+        HCL_命令行模板标题.Size = New Size(362, 38)
         HCL_命令行模板标题.TabIndex = 2
         HCL_命令行模板标题.Text = "命令行模板"
         HCL_命令行模板标题.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.Center
         ' 
         ' ModernPanel1
         ' 
+        ModernPanel1.BackColor = Color.Transparent
+        ModernPanel1.BackColor1 = Color.Transparent
         ModernPanel1.BorderSize = 0
         ModernPanel1.Controls.Add(Panel2)
         ModernPanel1.Controls.Add(Panel1)

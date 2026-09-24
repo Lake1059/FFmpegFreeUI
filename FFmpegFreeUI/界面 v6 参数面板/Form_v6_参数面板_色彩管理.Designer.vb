@@ -22,18 +22,18 @@ Partial Class Form_v6_参数面板_色彩管理
     '不要使用代码编辑器修改它。
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim TrackLabel1 As LakeUI.ExcellentTrackBar.TrackLabel = New LakeUI.ExcellentTrackBar.TrackLabel()
-        Dim TrackLabel2 As LakeUI.ExcellentTrackBar.TrackLabel = New LakeUI.ExcellentTrackBar.TrackLabel()
-        Dim TrackLabel3 As LakeUI.ExcellentTrackBar.TrackLabel = New LakeUI.ExcellentTrackBar.TrackLabel()
-        Dim TrackLabel4 As LakeUI.ExcellentTrackBar.TrackLabel = New LakeUI.ExcellentTrackBar.TrackLabel()
-        Dim TrackLabel5 As LakeUI.ExcellentTrackBar.TrackLabel = New LakeUI.ExcellentTrackBar.TrackLabel()
-        Dim TrackLabel6 As LakeUI.ExcellentTrackBar.TrackLabel = New LakeUI.ExcellentTrackBar.TrackLabel()
-        Dim TrackLabel7 As LakeUI.ExcellentTrackBar.TrackLabel = New LakeUI.ExcellentTrackBar.TrackLabel()
-        Dim TrackLabel8 As LakeUI.ExcellentTrackBar.TrackLabel = New LakeUI.ExcellentTrackBar.TrackLabel()
-        Dim TrackLabel9 As LakeUI.ExcellentTrackBar.TrackLabel = New LakeUI.ExcellentTrackBar.TrackLabel()
-        Dim TrackLabel10 As LakeUI.ExcellentTrackBar.TrackLabel = New LakeUI.ExcellentTrackBar.TrackLabel()
-        Dim TrackLabel11 As LakeUI.ExcellentTrackBar.TrackLabel = New LakeUI.ExcellentTrackBar.TrackLabel()
-        Dim TrackLabel12 As LakeUI.ExcellentTrackBar.TrackLabel = New LakeUI.ExcellentTrackBar.TrackLabel()
+        Dim TrackLabel13 As LakeUI.ExcellentTrackBar.TrackLabel = New LakeUI.ExcellentTrackBar.TrackLabel()
+        Dim TrackLabel14 As LakeUI.ExcellentTrackBar.TrackLabel = New LakeUI.ExcellentTrackBar.TrackLabel()
+        Dim TrackLabel15 As LakeUI.ExcellentTrackBar.TrackLabel = New LakeUI.ExcellentTrackBar.TrackLabel()
+        Dim TrackLabel16 As LakeUI.ExcellentTrackBar.TrackLabel = New LakeUI.ExcellentTrackBar.TrackLabel()
+        Dim TrackLabel17 As LakeUI.ExcellentTrackBar.TrackLabel = New LakeUI.ExcellentTrackBar.TrackLabel()
+        Dim TrackLabel18 As LakeUI.ExcellentTrackBar.TrackLabel = New LakeUI.ExcellentTrackBar.TrackLabel()
+        Dim TrackLabel19 As LakeUI.ExcellentTrackBar.TrackLabel = New LakeUI.ExcellentTrackBar.TrackLabel()
+        Dim TrackLabel20 As LakeUI.ExcellentTrackBar.TrackLabel = New LakeUI.ExcellentTrackBar.TrackLabel()
+        Dim TrackLabel21 As LakeUI.ExcellentTrackBar.TrackLabel = New LakeUI.ExcellentTrackBar.TrackLabel()
+        Dim TrackLabel22 As LakeUI.ExcellentTrackBar.TrackLabel = New LakeUI.ExcellentTrackBar.TrackLabel()
+        Dim TrackLabel23 As LakeUI.ExcellentTrackBar.TrackLabel = New LakeUI.ExcellentTrackBar.TrackLabel()
+        Dim TrackLabel24 As LakeUI.ExcellentTrackBar.TrackLabel = New LakeUI.ExcellentTrackBar.TrackLabel()
         ModernPanel1 = New LakeUI.ModernPanel()
         Panel9 = New LakeUI.ModernPanel()
         Panel13 = New LakeUI.ModernPanel()
@@ -159,17 +159,17 @@ Partial Class Form_v6_参数面板_色彩管理
         ETB_伽马.LabelColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ETB_伽马.LabelLineColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ETB_伽马.LabelLineLength = 20
-        TrackLabel1.Position = 10R
-        TrackLabel1.Side = LakeUI.ExcellentTrackBar.LabelSideEnum.TopOrLeft
-        TrackLabel1.Text = "最亮"
-        TrackLabel2.Position = 1R
-        TrackLabel2.Text = "原点"
-        TrackLabel3.Position = 0.10000000149011612R
-        TrackLabel3.Side = LakeUI.ExcellentTrackBar.LabelSideEnum.TopOrLeft
-        TrackLabel3.Text = "最暗"
-        ETB_伽马.Labels.Add(TrackLabel1)
-        ETB_伽马.Labels.Add(TrackLabel2)
-        ETB_伽马.Labels.Add(TrackLabel3)
+        TrackLabel13.Position = 10R
+        TrackLabel13.Side = LakeUI.ExcellentTrackBar.LabelSideEnum.TopOrLeft
+        TrackLabel13.Text = "最亮"
+        TrackLabel14.Position = 1R
+        TrackLabel14.Text = "原点"
+        TrackLabel15.Position = 0.10000000149011612R
+        TrackLabel15.Side = LakeUI.ExcellentTrackBar.LabelSideEnum.TopOrLeft
+        TrackLabel15.Text = "最暗"
+        ETB_伽马.Labels.Add(TrackLabel13)
+        ETB_伽马.Labels.Add(TrackLabel14)
+        ETB_伽马.Labels.Add(TrackLabel15)
         ETB_伽马.LargeChange = 0.1R
         ETB_伽马.Location = New Point(0, 0)
         ETB_伽马.Margin = New Padding(2, 2, 2, 2)
@@ -240,16 +240,16 @@ Partial Class Form_v6_参数面板_色彩管理
         ETB_饱和度.LabelColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ETB_饱和度.LabelLineColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ETB_饱和度.LabelLineLength = 20
-        TrackLabel4.Position = 3R
-        TrackLabel4.Side = LakeUI.ExcellentTrackBar.LabelSideEnum.TopOrLeft
-        TrackLabel4.Text = "最高"
-        TrackLabel5.Position = 1R
-        TrackLabel5.Text = "原点"
-        TrackLabel6.Side = LakeUI.ExcellentTrackBar.LabelSideEnum.TopOrLeft
-        TrackLabel6.Text = "最低"
-        ETB_饱和度.Labels.Add(TrackLabel4)
-        ETB_饱和度.Labels.Add(TrackLabel5)
-        ETB_饱和度.Labels.Add(TrackLabel6)
+        TrackLabel16.Position = 3R
+        TrackLabel16.Side = LakeUI.ExcellentTrackBar.LabelSideEnum.TopOrLeft
+        TrackLabel16.Text = "最高"
+        TrackLabel17.Position = 1R
+        TrackLabel17.Text = "原点"
+        TrackLabel18.Side = LakeUI.ExcellentTrackBar.LabelSideEnum.TopOrLeft
+        TrackLabel18.Text = "最低"
+        ETB_饱和度.Labels.Add(TrackLabel16)
+        ETB_饱和度.Labels.Add(TrackLabel17)
+        ETB_饱和度.Labels.Add(TrackLabel18)
         ETB_饱和度.LargeChange = 0.1R
         ETB_饱和度.Location = New Point(0, 0)
         ETB_饱和度.Margin = New Padding(2, 2, 2, 2)
@@ -319,16 +319,16 @@ Partial Class Form_v6_参数面板_色彩管理
         ETB_对比度.LabelColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ETB_对比度.LabelLineColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ETB_对比度.LabelLineLength = 20
-        TrackLabel7.Position = 2R
-        TrackLabel7.Side = LakeUI.ExcellentTrackBar.LabelSideEnum.TopOrLeft
-        TrackLabel7.Text = "最高"
-        TrackLabel8.Position = 1R
-        TrackLabel8.Text = "原点"
-        TrackLabel9.Side = LakeUI.ExcellentTrackBar.LabelSideEnum.TopOrLeft
-        TrackLabel9.Text = "最低"
-        ETB_对比度.Labels.Add(TrackLabel7)
-        ETB_对比度.Labels.Add(TrackLabel8)
-        ETB_对比度.Labels.Add(TrackLabel9)
+        TrackLabel19.Position = 2R
+        TrackLabel19.Side = LakeUI.ExcellentTrackBar.LabelSideEnum.TopOrLeft
+        TrackLabel19.Text = "最高"
+        TrackLabel20.Position = 1R
+        TrackLabel20.Text = "原点"
+        TrackLabel21.Side = LakeUI.ExcellentTrackBar.LabelSideEnum.TopOrLeft
+        TrackLabel21.Text = "最低"
+        ETB_对比度.Labels.Add(TrackLabel19)
+        ETB_对比度.Labels.Add(TrackLabel20)
+        ETB_对比度.Labels.Add(TrackLabel21)
         ETB_对比度.LargeChange = 0.1R
         ETB_对比度.Location = New Point(0, 0)
         ETB_对比度.Margin = New Padding(2, 2, 2, 2)
@@ -398,16 +398,16 @@ Partial Class Form_v6_参数面板_色彩管理
         ETB_亮度.LabelColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ETB_亮度.LabelLineColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ETB_亮度.LabelLineLength = 20
-        TrackLabel10.Position = 1R
-        TrackLabel10.Side = LakeUI.ExcellentTrackBar.LabelSideEnum.TopOrLeft
-        TrackLabel10.Text = "最亮"
-        TrackLabel11.Text = "原点"
-        TrackLabel12.Position = -1R
-        TrackLabel12.Side = LakeUI.ExcellentTrackBar.LabelSideEnum.TopOrLeft
-        TrackLabel12.Text = "最暗"
-        ETB_亮度.Labels.Add(TrackLabel10)
-        ETB_亮度.Labels.Add(TrackLabel11)
-        ETB_亮度.Labels.Add(TrackLabel12)
+        TrackLabel22.Position = 1R
+        TrackLabel22.Side = LakeUI.ExcellentTrackBar.LabelSideEnum.TopOrLeft
+        TrackLabel22.Text = "最亮"
+        TrackLabel23.Text = "原点"
+        TrackLabel24.Position = -1R
+        TrackLabel24.Side = LakeUI.ExcellentTrackBar.LabelSideEnum.TopOrLeft
+        TrackLabel24.Text = "最暗"
+        ETB_亮度.Labels.Add(TrackLabel22)
+        ETB_亮度.Labels.Add(TrackLabel23)
+        ETB_亮度.Labels.Add(TrackLabel24)
         ETB_亮度.LargeChange = 0.1R
         ETB_亮度.Location = New Point(0, 0)
         ETB_亮度.Margin = New Padding(2, 2, 2, 2)
@@ -931,13 +931,15 @@ Partial Class Form_v6_参数面板_色彩管理
         HCL_色彩空间.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HCL_色彩空间.Dock = DockStyle.Top
         HCL_色彩空间.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
+        HCL_色彩空间.InfoIconSizeRatio = 0.8F
         HCL_色彩空间.Location = New Point(20, 85)
         HCL_色彩空间.Margin = New Padding(2)
         HCL_色彩空间.Name = "HCL_色彩空间"
         HCL_色彩空间.Padding = New Padding(0, 20, 0, 0)
         HCL_色彩空间.Size = New Size(802, 43)
         HCL_色彩空间.TabIndex = 8
-        HCL_色彩空间.Text = "<span style=""font-size:13; color:Silver"">色彩空间</span>   在此处转换色彩空间；先选用哪个滤镜，再配置，最后选方式"
+        HCL_色彩空间.Text = "<span style=""font-size:13; color:Silver"">色彩空间</span>   在此处转换色彩空间，如果不转换色彩就不要设置"
+        HCL_色彩空间.ToolTipText = "选择滤镜、色彩配置（空的条目会自动沿用）、操作方式，必须同时配置才会生效"
         ' 
         ' Panel2
         ' 
@@ -959,17 +961,15 @@ Partial Class Form_v6_参数面板_色彩管理
         ' 
         HCL_预先转换.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HCL_预先转换.Dock = DockStyle.Fill
-        HCL_预先转换.InfoIconSizeRatio = 1F
-        HCL_预先转换.InfoIconStrokeWidth = 1.5F
         HCL_预先转换.Location = New Point(500, 10)
         HCL_预先转换.Margin = New Padding(2)
         HCL_预先转换.Name = "HCL_预先转换"
         HCL_预先转换.Padding = New Padding(10, 0, 0, 0)
         HCL_预先转换.Size = New Size(302, 32)
         HCL_预先转换.TabIndex = 3
-        HCL_预先转换.Text = "预先转换（<span style=""color:MediumPurple"">默认排在所有滤镜最前</span>）"
+        HCL_预先转换.Text = "预先转换"
         HCL_预先转换.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
-        HCL_预先转换.ToolTipText = "一般没有必要设置预先转换，除非你正在进行对滤镜效果有严格要求的编码任务"
+        HCL_预先转换.ToolTipText = "一般没有必要设置预先转换，除非你正在进行对滤镜效果有严格要求的编码任务，此滤镜默认会放在最前的位置"
         ' 
         ' MCB_像素格式预先转换
         ' 
@@ -1012,8 +1012,6 @@ Partial Class Form_v6_参数面板_色彩管理
         ' 
         HCL_最终输出.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HCL_最终输出.Dock = DockStyle.Left
-        HCL_最终输出.InfoIconSizeRatio = 1F
-        HCL_最终输出.InfoIconStrokeWidth = 1.5F
         HCL_最终输出.Location = New Point(175, 10)
         HCL_最终输出.Margin = New Padding(2)
         HCL_最终输出.Name = "HCL_最终输出"

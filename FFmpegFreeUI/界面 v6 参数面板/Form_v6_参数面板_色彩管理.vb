@@ -5,15 +5,6 @@ Public Class Form_v6_参数面板_色彩管理
     End Sub
 
     Private Sub 初始化下拉框浮动提示()
-        设置下拉框浮动提示(MCB_像素格式预先转换, {
-            New LakeUI.ModernComboBox.ToolTipEntry With {.ItemText = "yuv420p", .ToolTipText = "YUV 4:2:0 8-bit 平面格式，兼容性最好。SDR 常用；HDR 会损失精度，不推荐作为 HDR 中间格式。"},
-            New LakeUI.ModernComboBox.ToolTipEntry With {.ItemText = "yuv420p10le", .ToolTipText = "YUV 4:2:0 10-bit 平面格式，HDR10/PQ 和 HLG 常用，软件编码器兼容性较好。"},
-            New LakeUI.ModernComboBox.ToolTipEntry With {.ItemText = "yuv422p", .ToolTipText = "YUV 4:2:2 8-bit 平面格式，保留更多色度采样，常用于采集或中间流程。"},
-            New LakeUI.ModernComboBox.ToolTipEntry With {.ItemText = "yuv422p10le", .ToolTipText = "YUV 4:2:2 10-bit 平面格式，适合高质量中间流程或支持 4:2:2 的专业编码。"},
-            New LakeUI.ModernComboBox.ToolTipEntry With {.ItemText = "yuv444p", .ToolTipText = "YUV 4:4:4 8-bit 平面格式，不做色度抽样，文件和码率压力更大。"},
-            New LakeUI.ModernComboBox.ToolTipEntry With {.ItemText = "yuv444p10le", .ToolTipText = "YUV 4:4:4 10-bit 平面格式，高质量中间流程使用；编码器和播放器兼容性要求更高。"},
-            New LakeUI.ModernComboBox.ToolTipEntry With {.ItemText = "p010le", .ToolTipText = "10-bit 4:2:0 半平面格式，常见于硬件编码器和 HDR 工作流，如 NVENC、QSV、AMF。"}
-        })
 
         设置下拉框浮动提示(MCB_色彩管理_选择滤镜, {
             New LakeUI.ModernComboBox.ToolTipEntry With {.ItemText = "zscale", .ToolTipText = "基于 zimg 的 CPU 滤镜，可做矩阵、原色、传输特性和范围转换。适合稳定的标准色彩转换。"},
