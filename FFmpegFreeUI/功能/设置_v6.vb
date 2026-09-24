@@ -186,7 +186,7 @@ Public Class 设置_v6
 
     Public Property 是否询问标记_下载服务器选择 As Boolean = False
     Public Property 自定义视频编码器列表 As New List(Of String)
-    ''' <summary>质量评测页面跨启动设置；不保存原视频、对比文件和跑分结果。</summary>
+    ''' <summary>质量评测页面完整工作状态。</summary>
     Public Property 质量评测页面状态 As String = ""
 
     Private Shared ReadOnly 设置文件路径 As String = Path.Combine(Application.StartupPath, "Settings.json")
