@@ -242,7 +242,10 @@ internal static partial class Program
             foreach (var model in new[] { "", "AUTO", "vmaf_v0.6.1", "vmaf_v0.6.1neg", "vmaf_v1.0.16_3d0h", @"C:\local.json" })
             {
                 设置_v6.实例对象.质量评测页面状态 = System.Text.Json.JsonSerializer.Serialize(new {
-                    Vmaf模型 = model, VmafCuda = model == "vmaf_v0.6.1neg", Pooling = "mean", SubSample = "1",
+                    原视频 = Environment.ProcessPath,
+                    从头开始 = "00:00:05", 评测时长 = "00:00:10",
+                    Vmaf模型 = model, VmafCuda = model == "vmaf_v0.6.1neg", Pooling = "harmonic_mean", SubSample = "5",
+                    指标 = new Dictionary<string, bool> { ["PSNR"] = false, ["SSIM"] = true, ["VMAF"] = true, ["XPSNR"] = false },
                     文件 = new[] { new { 文件路径 = Environment.ProcessPath, 状态 = "完成", 指标结果 = new Dictionary<string, object> {
                         ["VMAF"] = new { 成功 = true, 汇总值 = 90d, 每帧数据 = new[] { 80d, 100d }, 实际模型 = "vmaf_v1.0.16_hfr_3d0h", 模型说明 = "120 fps 超出校准区间，结果仅供参考" }
                     } } }
@@ -254,12 +257,44 @@ internal static partial class Program
                 Check(combo.SelectedModelValue == "AUTO" && combo.Text == "AUTO", "Opening page must use AUTO regardless of saved model");
                 Check(!combo.SelectedUsesCuda && combo.SelectedModel.IsAuto, "Opening page must not restore manual CUDA/local choices");
                 Check(combo.Models.Count == 1, "Legacy model names must not be inserted into the selector");
+                Check(page.Controls.Find("MTB_从头开始", true).Single().Text == "00:00:05" &&
+                    page.Controls.Find("MTB_评测时长", true).Single().Text == "00:00:10", "Restore time preferences");
+                Check(page.Controls.Find("MCB_Pooling", true).Single().Text == "harmonic_mean" &&
+                    page.Controls.Find("MCB_SubSample", true).Single().Text == "5", "Restore VMAF preferences");
+                Check(!((ModernCheckBox)page.Controls.Find("MCB_PSNR", true).Single()).Checked &&
+                    !((ModernCheckBox)page.Controls.Find("MCB_XPSNR", true).Single()).Checked, "Restore selected metrics");
+
+                var original = page.Controls.Find("MTB_原视频文件路径", true).Single();
+                var list = (UltraDetailListView)page.Controls.Find("UltraDetailListView1", true).Single();
+                Check(original.Text == "", "Opening page must not restore the previous reference video");
+                Check(list.Items.Count == 0, "Opening page must not restore previous comparison files or scores");
+
+                var item = (UltraDetailListView.ListItem)Invoke(page, "创建文件项", Environment.ProcessPath!)!;
+                list.Items.Add(item);
+                var data = Invoke(page, "获取项数据", item)!;
+                data.GetType().GetProperty("状态")!.SetValue(data, "完成");
+                var metricType = typeof(Form_v6_集成工具_质量评测).GetNestedType("指标类型", BindingFlags.NonPublic)!;
+                var resultType = typeof(Form_v6_集成工具_质量评测).GetNestedType("指标结果数据", BindingFlags.NonPublic)!;
+                var result = Activator.CreateInstance(resultType)!;
+                resultType.GetProperty("成功")!.SetValue(result, true);
+                resultType.GetProperty("汇总值")!.SetValue(result, 90d);
+                resultType.GetProperty("实际模型")!.SetValue(result, "vmaf_v1.0.16_hfr_3d0h");
+                resultType.GetProperty("模型说明")!.SetValue(result, "120 fps 超出校准区间，结果仅供参考");
+                ((System.Collections.IDictionary)data.GetType().GetProperty("指标结果")!.GetValue(data)!).Add(Enum.Parse(metricType, "VMAF"), result);
                 var report = (string)Invoke(page, "生成当前列表导出记录")!;
                 Check(report.Contains("实际模型：vmaf_v1.0.16_hfr_3d0h") && report.Contains("超出校准区间"), "Export actual model and warning");
                 Invoke(page, "保存页面状态");
                 using var saved = System.Text.Json.JsonDocument.Parse(设置_v6.实例对象.质量评测页面状态);
                 Check(saved.RootElement.GetProperty("Vmaf模型").GetString() == "AUTO", "Save the current AUTO choice");
-                Check(saved.RootElement.GetProperty("文件")[0].GetProperty("指标结果").GetProperty("VMAF").GetProperty("实际模型").GetString() == "vmaf_v1.0.16_hfr_3d0h", "Persist actual result model");
+                Check(saved.RootElement.GetProperty("从头开始").GetString() == "00:00:05" &&
+                    saved.RootElement.GetProperty("评测时长").GetString() == "00:00:10", "Save time preferences");
+                Check(saved.RootElement.GetProperty("Pooling").GetString() == "harmonic_mean" &&
+                    saved.RootElement.GetProperty("SubSample").GetString() == "5" &&
+                    !saved.RootElement.GetProperty("VmafCuda").GetBoolean(), "Save VMAF preferences");
+                Check(!saved.RootElement.GetProperty("指标").GetProperty("PSNR").GetBoolean() &&
+                    !saved.RootElement.GetProperty("指标").GetProperty("XPSNR").GetBoolean(), "Save selected metrics");
+                Check(!saved.RootElement.TryGetProperty("原视频", out _), "Saved quality settings must not persist the reference video");
+                Check(!saved.RootElement.TryGetProperty("文件", out _), "Saved quality settings must not persist comparison files or scores");
             }
             设置_v6.实例对象.质量评测页面状态 = System.Text.Json.JsonSerializer.Serialize(new {
                 Vmaf模型 = "vmaf_v1.0.16_3d0h", VmafCuda = true, Pooling = "mean", SubSample = "1"

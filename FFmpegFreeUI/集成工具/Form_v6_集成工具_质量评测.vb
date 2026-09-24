@@ -108,23 +108,7 @@ Public Class Form_v6_集成工具_质量评测
         Public Property 汇总值 As Double = Double.NaN
     End Class
 
-    Private Class 页面状态结果
-        Public Property 成功 As Boolean
-        Public Property 汇总值 As Double
-        Public Property 每帧数据 As New List(Of Double)
-        Public Property 已处理帧数 As Integer
-        Public Property 错误信息 As String = ""
-        Public Property 实际模型 As String = ""
-        Public Property 模型说明 As String = ""
-    End Class
-    Private Class 页面状态文件
-        Public Property 文件路径 As String = ""
-        Public Property 状态 As String = "未评测"
-        Public Property 最近错误 As String = ""
-        Public Property 指标结果 As New Dictionary(Of String, 页面状态结果)
-    End Class
     Private Class 页面状态
-        Public Property 原视频 As String = ""
         Public Property 从头开始 As String = ""
         Public Property 评测时长 As String = ""
         Public Property Vmaf模型 As String = ""
@@ -132,7 +116,6 @@ Public Class Form_v6_集成工具_质量评测
         Public Property SubSample As String = ""
         Public Property VmafCuda As Boolean
         Public Property 指标 As New Dictionary(Of String, Boolean)
-        Public Property 文件 As New List(Of 页面状态文件)
     End Class
 
     Private Sub Form_v6_集成工具_质量评测_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -858,17 +841,8 @@ Public Class Form_v6_集成工具_质量评测
 
     Private Sub 保存页面状态()
         Try
-            Dim state As New 页面状态 With {.原视频 = MTB_原视频文件路径.Text, .从头开始 = MTB_从头开始.Text, .评测时长 = MTB_评测时长.Text, .Vmaf模型 = MCB_模型选择.SelectedModelValue, .Pooling = MCB_Pooling.Text, .SubSample = MCB_SubSample.Text, .VmafCuda = MCB_模型选择.SelectedUsesCuda}
+            Dim state As New 页面状态 With {.从头开始 = MTB_从头开始.Text, .评测时长 = MTB_评测时长.Text, .Vmaf模型 = MCB_模型选择.SelectedModelValue, .Pooling = MCB_Pooling.Text, .SubSample = MCB_SubSample.Text, .VmafCuda = MCB_模型选择.SelectedUsesCuda}
             For Each m In 全部指标 : state.指标(获取指标名称(m)) = 获取指标复选框(m).Checked : Next
-            For Each item In UltraDetailListView1.Items
-                Dim d = 获取项数据(item), sf As New 页面状态文件 With {.文件路径 = d.文件路径, .状态 = d.状态, .最近错误 = d.最近错误}
-                For Each kv In d.指标结果
-                    Dim r = kv.Value, sr As New 页面状态结果 With {.成功 = r.成功, .汇总值 = r.汇总值, .已处理帧数 = r.已处理帧数, .错误信息 = r.错误信息, .实际模型 = r.实际模型, .模型说明 = r.模型说明}
-                    SyncLock r.数据锁 : sr.每帧数据 = New List(Of Double)(r.每帧数据) : End SyncLock
-                    sf.指标结果(获取指标名称(kv.Key)) = sr
-                Next
-                state.文件.Add(sf)
-            Next
             设置_v6.实例对象.质量评测页面状态 = JsonSerializer.Serialize(state, JsonSO)
             设置_v6.后台保存设置()
         Catch
@@ -881,23 +855,11 @@ Public Class Form_v6_集成工具_质量评测
             If String.IsNullOrWhiteSpace(raw) Then Exit Sub
             Dim state = JsonSerializer.Deserialize(Of 页面状态)(raw, JsonSO)
             If state Is Nothing Then Exit Sub
-            MTB_原视频文件路径.Text = state.原视频 : MTB_从头开始.Text = state.从头开始 : MTB_评测时长.Text = state.评测时长
+            MTB_从头开始.Text = state.从头开始 : MTB_评测时长.Text = state.评测时长
             ' 每次打开页面均使用 AUTO；旧设置中的具体模型不能覆盖默认值。
             MCB_模型选择.SelectedIndex = MCB_模型选择.FirstModelIndex
             MCB_Pooling.Text = state.Pooling : MCB_SubSample.Text = state.SubSample
             For Each m In 全部指标 : If state.指标.ContainsKey(获取指标名称(m)) Then 获取指标复选框(m).Checked = state.指标(获取指标名称(m))
-            Next
-            For Each sf In state.文件
-                If Not File.Exists(sf.文件路径) Then Continue For
-                Dim item = 创建文件项(sf.文件路径), d = 获取项数据(item) : d.状态 = sf.状态 : d.最近错误 = sf.最近错误
-                For Each kv In sf.指标结果
-                    Dim m As 指标类型
-                    If [Enum].TryParse(kv.Key, m) Then
-                        Dim sr = kv.Value, r As New 指标结果数据 With {.成功 = sr.成功, .汇总值 = sr.汇总值, .已处理帧数 = sr.已处理帧数, .错误信息 = sr.错误信息, .每帧数据 = If(sr.每帧数据, New List(Of Double)), .实际模型 = sr.实际模型, .模型说明 = sr.模型说明}
-                        d.指标结果(m) = r : 设置指标文本(item, m, If(r.成功, 格式化分数(r.汇总值, m), "未评测"))
-                    End If
-                Next
-                UltraDetailListView1.Items.Add(item)
             Next
             刷新列表布局和图表()
         Catch
