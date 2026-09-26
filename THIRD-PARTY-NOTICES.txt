@@ -1,0 +1,79 @@
+3FUI (FFmpegFreeUI) 第三方许可声明
+==================================
+
+本文件列出 3FUI 随发布物一并分发的第三方组件及其许可条款。
+
+根目录 LICENSE.txt 的 MIT 许可只覆盖 3FUI 自身的源代码，不覆盖下列组件。
+下列组件各自保留原始许可，再分发本软件时必须同时保留它们的许可声明。
+
+范围：FFmpegFreeUI.vbproj 声明的 7 个直接引用的 NuGet 包，以及以 LakeUI.dll
+形式打进发布物的渲染框架 LakeUI。不含 NuGet 传递依赖，传递依赖的许可随各自
+的包分发。
+
+
+LakeUI
+------
+  许可证    GPL-3.0-only
+  作用      界面主框架，DirectX 渲染
+  源码仓库  https://github.com/Lake1059/LakeUI
+  许可全文  https://github.com/Lake1059/LakeUI/blob/master/LICENSE.txt
+  备注      著作权由 LakeUI 作者保留。3FUI 的 MIT 许可不覆盖 LakeUI，对
+            LakeUI 的使用与再分发按 GPL-3.0-only 执行。
+
+Microsoft-WindowsAPICodePack-Shell 1.1.5
+----------------------------------------
+  许可证    Microsoft Software License Terms（微软软件许可证）
+  作用      提供更舒适的文件夹选择对话框
+  源码仓库  https://github.com/contre/Windows-API-Code-Pack-1.1
+  许可全文  https://github.com/contre/Windows-API-Code-Pack-1.1/blob/main/LICENSE
+  包页面    https://www.nuget.org/packages/Microsoft-WindowsAPICodePack-Shell/1.1.5
+  备注      该包在 NuGet 上没有标准 SPDX 许可标识，条款以上述 LICENSE 为准。
+
+LibreHardwareMonitorLib 0.9.6
+-----------------------------
+  许可证    MPL-2.0
+  作用      硬件传感器与性能监控
+  源码仓库  https://github.com/LibreHardwareMonitor/LibreHardwareMonitor
+  许可全文  https://github.com/LibreHardwareMonitor/LibreHardwareMonitor/blob/master/LICENSE
+  包页面    https://www.nuget.org/packages/LibreHardwareMonitorLib/0.9.6
+  备注      按 MPL-2.0 第 3.3 条，以可执行形式分发时须告知接收者如何取得
+            覆盖源码的副本：完整源码可从上述源码仓库获取。
+
+Microsoft.Agents.AI.OpenAI 1.21.0
+---------------------------------
+  许可证    MIT
+  作用      Agent 基底框架与 OpenAI 端点支持
+  源码仓库  https://github.com/microsoft/agent-framework
+  许可全文  https://github.com/microsoft/agent-framework/blob/main/LICENSE
+  包页面    https://www.nuget.org/packages/Microsoft.Agents.AI.OpenAI/1.21.0
+
+System.Management 10.0.12
+-------------------------
+  许可证    MIT
+  作用      通过 WMI 读取 CPU、内存、显卡信息
+  源码仓库  https://github.com/dotnet/runtime/tree/main/src/libraries/System.Management
+  许可全文  https://github.com/dotnet/runtime/blob/main/LICENSE.TXT
+  包页面    https://www.nuget.org/packages/System.Management/10.0.12
+
+Vortice.Direct2D1 3.8.3
+Vortice.Direct3D11 3.8.3
+Vortice.DirectComposition 3.8.3
+--------------------------------
+  许可证    MIT
+  作用      Direct2D1 / Direct3D11 / DirectComposition 的 DirectX 互操作绑定
+  源码仓库  https://github.com/amerkoleci/Vortice.Windows
+  许可全文  https://github.com/amerkoleci/Vortice.Windows/blob/main/LICENSE
+  包页面    https://www.nuget.org/packages/Vortice.Direct2D1/3.8.3
+            https://www.nuget.org/packages/Vortice.Direct3D11/3.8.3
+            https://www.nuget.org/packages/Vortice.DirectComposition/3.8.3
+
+
+许可标识说明
+------------
+标为 MIT 与 MPL-2.0 的条款全文见 SPDX：
+  MIT     https://spdx.org/licenses/MIT.html
+  MPL-2.0 https://spdx.org/licenses/MPL-2.0.html
+各包声明的许可标识以 nuget.org 上对应版本的包页面为准。
+
+版本号与许可标识核对日期：2026-09-26，对照 main 分支 30e7406 的
+FFmpegFreeUI.vbproj 中 PackageReference 的声明。

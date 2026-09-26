@@ -123,6 +123,7 @@ Potplayer播放器的配置教程：https://www1.arxchem.top/docs/8-lav-madvr-po
 ## 许可和引用
 
 - 3FUI 使用 MIT 开源许可，可以自由地使用和分发此软件
+- MIT 只覆盖 3FUI 自身的代码，不覆盖下表的第三方组件：LakeUI 另行按 GPL-3.0-only 授权，其余组件按各自条款分发，全文见 [THIRD-PARTY-NOTICES.txt](THIRD-PARTY-NOTICES.txt)
 - 仅在 GitHub 开源，在其他平台看到的源代码都不是本人！
 
 | 引用程序集                                                   | 许可证         | 作用                       |
@@ -131,6 +132,8 @@ Potplayer播放器的配置教程：https://www1.arxchem.top/docs/8-lav-madvr-po
 | [WindowsAPICodePack](https://github.com/contre/Windows-API-Code-Pack-1.1) | 微软软件许可证 | 提供更舒适的文件夹选择对话框 |
 | [LibreHardwareMonitorLib](https://github.com/LibreHardwareMonitor/LibreHardwareMonitor) | MPL-2.0        | LHM 性能监控               |
 | [Microsoft.Agents.AI.OpenAI](https://learn.microsoft.com/zh-cn/agent-framework/) | MIT | Agent 基底框架和 OpenAI 支持 |
+| [System.Management](https://github.com/dotnet/runtime/tree/main/src/libraries/System.Management) | MIT | 通过 WMI 读取 CPU / 内存 / 显卡信息 |
+| [Vortice.Direct2D1 / Direct3D11 / DirectComposition](https://github.com/amerkoleci/Vortice.Windows) | MIT | DirectX 互操作绑定，渲染器的底层支撑 |
 
 ## 新手入门
 
