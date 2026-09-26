@@ -25,34 +25,19 @@ Partial Class Form_v6_设置_Agent
         ModernPanel1 = New LakeUI.ModernPanel()
         HtmlColorLabel4 = New LakeUI.HtmlColorLabel()
         Panel2 = New LakeUI.ModernPanel()
-        Panel2.BackColor = Color.Transparent
-        Panel2.BackColor1 = Color.Transparent
-        Panel2.BorderSize = 0
         ModernComboBox1 = New LakeUI.ModernComboBox()
         HtmlColorLabel3 = New LakeUI.HtmlColorLabel()
         HtmlColorLabel2 = New LakeUI.HtmlColorLabel()
         Panel5 = New LakeUI.ModernPanel()
-        Panel5.BackColor = Color.Transparent
-        Panel5.BackColor1 = Color.Transparent
-        Panel5.BorderSize = 0
         HtmlColorLabel10 = New LakeUI.HtmlColorLabel()
         MTB_附加请求Body = New LakeUI.ModernTextBox()
         Panel4 = New LakeUI.ModernPanel()
-        Panel4.BackColor = Color.Transparent
-        Panel4.BackColor1 = Color.Transparent
-        Panel4.BorderSize = 0
         HtmlColorLabel9 = New LakeUI.HtmlColorLabel()
         MTB_附加请求头 = New LakeUI.ModernTextBox()
         Panel3 = New LakeUI.ModernPanel()
-        Panel3.BackColor = Color.Transparent
-        Panel3.BackColor1 = Color.Transparent
-        Panel3.BorderSize = 0
         HtmlColorLabel8 = New LakeUI.HtmlColorLabel()
         MTB_APIKEY = New LakeUI.ModernTextBox()
         Panel1 = New LakeUI.ModernPanel()
-        Panel1.BackColor = Color.Transparent
-        Panel1.BackColor1 = Color.Transparent
-        Panel1.BorderSize = 0
         HtmlColorLabel7 = New LakeUI.HtmlColorLabel()
         MTB_自定义地址 = New LakeUI.ModernTextBox()
         HtmlColorLabel1 = New LakeUI.HtmlColorLabel()
@@ -64,9 +49,9 @@ Partial Class Form_v6_设置_Agent
         Panel3.SuspendLayout()
         Panel1.SuspendLayout()
         SuspendLayout()
-        '
+        ' 
         ' ModernPanel1
-        '
+        ' 
         ModernPanel1.BackColor = Color.Transparent
         ModernPanel1.BackColor1 = Color.Transparent
         ModernPanel1.BorderSize = 0
@@ -86,33 +71,37 @@ Partial Class Form_v6_设置_Agent
         ModernPanel1.Padding = New Padding(20)
         ModernPanel1.Size = New Size(809, 591)
         ModernPanel1.TabIndex = 0
-        '
+        ' 
         ' HtmlColorLabel4
-        '
+        ' 
         HtmlColorLabel4.AutoSize = True
         HtmlColorLabel4.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel4.Dock = DockStyle.Top
         HtmlColorLabel4.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        HtmlColorLabel4.Location = New Point(20, 329)
+        HtmlColorLabel4.LineSpacing = 3
+        HtmlColorLabel4.Location = New Point(20, 441)
         HtmlColorLabel4.Margin = New Padding(2)
         HtmlColorLabel4.Name = "HtmlColorLabel4"
         HtmlColorLabel4.Padding = New Padding(0, 20, 0, 0)
-        HtmlColorLabel4.Size = New Size(769, 65)
+        HtmlColorLabel4.Size = New Size(769, 63)
         HtmlColorLabel4.TabIndex = 36
         HtmlColorLabel4.Text = "<span style=""font-size:13; color:Silver"">免责声明</span>   开发者不承担任何 AI 导致的任何损失<br>使用即代表同意此条款"
-        '
+        ' 
         ' Panel2
-        '
+        ' 
+        Panel2.BackColor = Color.Transparent
+        Panel2.BackColor1 = Color.Transparent
+        Panel2.BorderSize = 0
         Panel2.Controls.Add(ModernComboBox1)
         Panel2.Dock = DockStyle.Top
-        Panel2.Location = New Point(20, 287)
+        Panel2.Location = New Point(20, 399)
         Panel2.Name = "Panel2"
         Panel2.Padding = New Padding(0, 10, 0, 0)
         Panel2.Size = New Size(769, 42)
         Panel2.TabIndex = 27
-        '
+        ' 
         ' ModernComboBox1
-        '
+        ' 
         ModernComboBox1.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernComboBox1.BorderRadius = 10
         ModernComboBox1.BorderSize = 0
@@ -138,48 +127,51 @@ Partial Class Form_v6_设置_Agent
         ModernComboBox1.ToolTipMaxWidth = 350
         ModernComboBox1.ToolTipPadding = New Padding(15)
         ModernComboBox1.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        '
+        ' 
         ' HtmlColorLabel3
-        '
+        ' 
         HtmlColorLabel3.AutoSize = True
         HtmlColorLabel3.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel3.Dock = DockStyle.Top
         HtmlColorLabel3.ForeColor = Color.IndianRed
-        HtmlColorLabel3.Location = New Point(20, 261)
+        HtmlColorLabel3.Location = New Point(20, 377)
         HtmlColorLabel3.Margin = New Padding(2)
         HtmlColorLabel3.Name = "HtmlColorLabel3"
         HtmlColorLabel3.Padding = New Padding(0, 5, 0, 0)
-        HtmlColorLabel3.Size = New Size(769, 26)
+        HtmlColorLabel3.Size = New Size(769, 22)
         HtmlColorLabel3.TabIndex = 35
         HtmlColorLabel3.Text = "将会严格监控用量，随时拉闸，滥用（包括偷渡检测）将直接封禁公网 IP"
-        '
+        ' 
         ' HtmlColorLabel2
-        '
+        ' 
         HtmlColorLabel2.AutoSize = True
         HtmlColorLabel2.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel2.Dock = DockStyle.Top
         HtmlColorLabel2.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        HtmlColorLabel2.Location = New Point(20, 216)
+        HtmlColorLabel2.Location = New Point(20, 334)
         HtmlColorLabel2.Margin = New Padding(2)
         HtmlColorLabel2.Name = "HtmlColorLabel2"
         HtmlColorLabel2.Padding = New Padding(0, 20, 0, 0)
-        HtmlColorLabel2.Size = New Size(769, 45)
+        HtmlColorLabel2.Size = New Size(769, 43)
         HtmlColorLabel2.TabIndex = 31
         HtmlColorLabel2.Text = "<span style=""font-size:13; color:Silver"">SP 用户专属端点</span>   开发者可能会提供一些便宜量大的端点供 SP 用户免费使用"
-        '
+        ' 
         ' Panel5
-        '
+        ' 
+        Panel5.BackColor = Color.Transparent
+        Panel5.BackColor1 = Color.Transparent
+        Panel5.BorderSize = 0
         Panel5.Controls.Add(HtmlColorLabel10)
         Panel5.Controls.Add(MTB_附加请求Body)
         Panel5.Dock = DockStyle.Top
-        Panel5.Location = New Point(20, 216)
+        Panel5.Location = New Point(20, 252)
         Panel5.Name = "Panel5"
         Panel5.Padding = New Padding(0, 10, 0, 0)
         Panel5.Size = New Size(769, 82)
         Panel5.TabIndex = 37
-        '
+        ' 
         ' HtmlColorLabel10
-        '
+        ' 
         HtmlColorLabel10.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel10.Dock = DockStyle.Fill
         HtmlColorLabel10.Location = New Point(400, 10)
@@ -191,9 +183,9 @@ Partial Class Form_v6_设置_Agent
         HtmlColorLabel10.Text = "附加请求 Body (extra_body)"
         HtmlColorLabel10.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
         HtmlColorLabel10.ToolTipText = "格式：JSON 对象，会合并到 chat/completions 请求体顶层。例如：{""thinking"":{""type"":""enabled""}}"
-        '
+        ' 
         ' MTB_附加请求Body
-        '
+        ' 
         MTB_附加请求Body.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MTB_附加请求Body.BorderColor = Color.Transparent
         MTB_附加请求Body.BorderColorFocus = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
@@ -211,20 +203,23 @@ Partial Class Form_v6_设置_Agent
         MTB_附加请求Body.TabIndex = 19
         MTB_附加请求Body.WaterText = "{""thinking"":{""type"":""enabled""}}"
         MTB_附加请求Body.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        '
+        ' 
         ' Panel4
-        '
+        ' 
+        Panel4.BackColor = Color.Transparent
+        Panel4.BackColor1 = Color.Transparent
+        Panel4.BorderSize = 0
         Panel4.Controls.Add(HtmlColorLabel9)
         Panel4.Controls.Add(MTB_附加请求头)
         Panel4.Dock = DockStyle.Top
-        Panel4.Location = New Point(20, 174)
+        Panel4.Location = New Point(20, 170)
         Panel4.Name = "Panel4"
         Panel4.Padding = New Padding(0, 10, 0, 0)
         Panel4.Size = New Size(769, 82)
         Panel4.TabIndex = 30
-        '
+        ' 
         ' HtmlColorLabel9
-        '
+        ' 
         HtmlColorLabel9.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel9.Dock = DockStyle.Fill
         HtmlColorLabel9.Location = New Point(400, 10)
@@ -236,9 +231,9 @@ Partial Class Form_v6_设置_Agent
         HtmlColorLabel9.Text = "附加请求头"
         HtmlColorLabel9.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
         HtmlColorLabel9.ToolTipText = "格式：每行一个请求头，写作 名称: 值。例如：HTTP-Referer: https://example.com"
-        '
+        ' 
         ' MTB_附加请求头
-        '
+        ' 
         MTB_附加请求头.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MTB_附加请求头.BorderColor = Color.Transparent
         MTB_附加请求头.BorderColorFocus = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
@@ -256,20 +251,23 @@ Partial Class Form_v6_设置_Agent
         MTB_附加请求头.TabIndex = 19
         MTB_附加请求头.WaterText = "Header-Name: value"
         MTB_附加请求头.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        '
+        ' 
         ' Panel3
-        '
+        ' 
+        Panel3.BackColor = Color.Transparent
+        Panel3.BackColor1 = Color.Transparent
+        Panel3.BorderSize = 0
         Panel3.Controls.Add(HtmlColorLabel8)
         Panel3.Controls.Add(MTB_APIKEY)
         Panel3.Dock = DockStyle.Top
-        Panel3.Location = New Point(20, 132)
+        Panel3.Location = New Point(20, 128)
         Panel3.Name = "Panel3"
         Panel3.Padding = New Padding(0, 10, 0, 0)
         Panel3.Size = New Size(769, 42)
         Panel3.TabIndex = 29
-        '
+        ' 
         ' HtmlColorLabel8
-        '
+        ' 
         HtmlColorLabel8.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel8.Dock = DockStyle.Fill
         HtmlColorLabel8.Location = New Point(400, 10)
@@ -280,9 +278,9 @@ Partial Class Form_v6_设置_Agent
         HtmlColorLabel8.TabIndex = 18
         HtmlColorLabel8.Text = "API KEY"
         HtmlColorLabel8.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
-        '
+        ' 
         ' MTB_APIKEY
-        '
+        ' 
         MTB_APIKEY.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MTB_APIKEY.BorderColor = Color.Transparent
         MTB_APIKEY.BorderColorFocus = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
@@ -296,20 +294,23 @@ Partial Class Form_v6_设置_Agent
         MTB_APIKEY.Size = New Size(400, 32)
         MTB_APIKEY.TabIndex = 19
         MTB_APIKEY.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        '
+        ' 
         ' Panel1
-        '
+        ' 
+        Panel1.BackColor = Color.Transparent
+        Panel1.BackColor1 = Color.Transparent
+        Panel1.BorderSize = 0
         Panel1.Controls.Add(HtmlColorLabel7)
         Panel1.Controls.Add(MTB_自定义地址)
         Panel1.Dock = DockStyle.Top
-        Panel1.Location = New Point(20, 90)
+        Panel1.Location = New Point(20, 86)
         Panel1.Name = "Panel1"
         Panel1.Padding = New Padding(0, 10, 0, 0)
         Panel1.Size = New Size(769, 42)
         Panel1.TabIndex = 28
-        '
+        ' 
         ' HtmlColorLabel7
-        '
+        ' 
         HtmlColorLabel7.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel7.Dock = DockStyle.Fill
         HtmlColorLabel7.Location = New Point(400, 10)
@@ -320,9 +321,9 @@ Partial Class Form_v6_设置_Agent
         HtmlColorLabel7.TabIndex = 17
         HtmlColorLabel7.Text = "自定义地址"
         HtmlColorLabel7.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
-        '
+        ' 
         ' MTB_自定义地址
-        '
+        ' 
         MTB_自定义地址.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MTB_自定义地址.BorderColor = Color.Transparent
         MTB_自定义地址.BorderColorFocus = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
@@ -336,22 +337,22 @@ Partial Class Form_v6_设置_Agent
         MTB_自定义地址.Size = New Size(400, 32)
         MTB_自定义地址.TabIndex = 18
         MTB_自定义地址.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        '
+        ' 
         ' HtmlColorLabel1
-        '
+        ' 
         HtmlColorLabel1.AutoSize = True
         HtmlColorLabel1.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel1.Dock = DockStyle.Top
         HtmlColorLabel1.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        HtmlColorLabel1.Location = New Point(20, 65)
+        HtmlColorLabel1.Location = New Point(20, 63)
         HtmlColorLabel1.Margin = New Padding(2)
         HtmlColorLabel1.Name = "HtmlColorLabel1"
-        HtmlColorLabel1.Size = New Size(769, 25)
+        HtmlColorLabel1.Size = New Size(769, 23)
         HtmlColorLabel1.TabIndex = 26
         HtmlColorLabel1.Text = "<span style=""font-size:13; color:Silver"">自定义端点</span>   仅支持 OpenAI 兼容接口；支持连接到本地"
-        '
+        ' 
         ' HtmlColorLabel6
-        '
+        ' 
         HtmlColorLabel6.AutoSize = True
         HtmlColorLabel6.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel6.Dock = DockStyle.Top
@@ -360,12 +361,12 @@ Partial Class Form_v6_设置_Agent
         HtmlColorLabel6.Margin = New Padding(2)
         HtmlColorLabel6.Name = "HtmlColorLabel6"
         HtmlColorLabel6.Padding = New Padding(0, 0, 0, 20)
-        HtmlColorLabel6.Size = New Size(769, 45)
+        HtmlColorLabel6.Size = New Size(769, 43)
         HtmlColorLabel6.TabIndex = 25
         HtmlColorLabel6.Text = "<span style=""font-size:13; color:Silver"">3FUI Agent</span>   专属于 3FUI 的副驾驶！不止聊天，AI 可以操作参数面板并使用 3FUI 文档"
-        '
+        ' 
         ' Form_v6_设置_Agent
-        '
+        ' 
         AutoScaleDimensions = New SizeF(96F, 96F)
         AutoScaleMode = AutoScaleMode.Dpi
         BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))

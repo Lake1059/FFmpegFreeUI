@@ -43,7 +43,6 @@ Public Class 编码队列_v6
     End Property
     Private Shared ReadOnly 队列锁 As New Object
     Private Shared 调度中 As Boolean = False
-    Private Shared 自动调度已暂停 As Boolean = False
     Private Shared 完成提示待播放 As Boolean = False
     Private Shared 完成提示待调度结束检查 As Boolean = False
     Private Shared 全部任务已完成是否有错误 As Boolean = False
@@ -233,7 +232,6 @@ Public Class 编码队列_v6
         Dim changed As New List(Of 编码任务_v6)
 
         SyncLock 队列锁
-            自动调度已暂停 = True
             For Each task In 队列项目
                 If task.状态 = 编码任务状态_v6.未处理 AndAlso task.允许自动启动 Then
                     task.允许自动启动 = False
@@ -245,9 +243,13 @@ Public Class 编码队列_v6
         End SyncLock
 
         广播任务更新(changed)
-        For Each task In stopping
-            task.停止()
-        Next
+        Try
+            For Each task In stopping
+                task.停止()
+            Next
+        Finally
+            禁用已停止任务自动启动(stopping)
+        End Try
     End Sub
 
     Public Shared Function 添加预设任务(输入文件 As String, 预设数据 As 预设数据_v6, Optional 任务名称 As String = "", Optional 输出文件 As String = "") As 编码任务_v6
@@ -413,7 +415,6 @@ Public Class 编码队列_v6
                     starting.Add(New KeyValuePair(Of 编码任务_v6, Long)(task, 执行标识))
                 End If
             Next
-            If starting.Count > 0 Then 自动调度已暂停 = False
         End SyncLock
 
         广播任务更新(starting.Select(Function(x) x.Key))
@@ -440,24 +441,26 @@ Public Class 编码队列_v6
         Dim stopping = 获取指定任务(ids).Where(Function(task) task.可停止).ToList()
         If stopping.Count = 0 Then Exit Sub
 
-        Dim 可能停止执行中任务 = stopping.Any(Function(task) task.正在执行)
-        If 可能停止执行中任务 Then
-            SyncLock 队列锁
-                自动调度已暂停 = True
-            End SyncLock
-        End If
+        Try
+            For Each task In stopping
+                task.停止并报告是否停止执行()
+            Next
+        Finally
+            禁用已停止任务自动启动(stopping)
+        End Try
+    End Sub
 
-        Dim 已停止执行中任务 As Boolean = False
-        For Each task In stopping
-            If task.停止并报告是否停止执行() Then 已停止执行中任务 = True
-        Next
-
-        If 可能停止执行中任务 AndAlso Not 已停止执行中任务 Then
-            SyncLock 队列锁
-                自动调度已暂停 = False
-            End SyncLock
-            请求调度()
-        End If
+    Private Shared Sub 禁用已停止任务自动启动(tasks As IEnumerable(Of 编码任务_v6))
+        Dim changed As New List(Of 编码任务_v6)
+        SyncLock 队列锁
+            For Each task In If(tasks, Array.Empty(Of 编码任务_v6)())
+                If task.状态 = 编码任务状态_v6.已停止 AndAlso task.允许自动启动 Then
+                    task.允许自动启动 = False
+                    changed.Add(task)
+                End If
+            Next
+        End SyncLock
+        广播任务更新(changed)
     End Sub
 
     Public Shared Sub 取消自动开始任务(ids As IEnumerable(Of String))
@@ -527,9 +530,6 @@ Public Class 编码队列_v6
 
         广播任务更新(changed)
         If 自动开始 Then
-            SyncLock 队列锁
-                自动调度已暂停 = False
-            End SyncLock
             请求调度()
         End If
     End Sub
@@ -588,7 +588,6 @@ Public Class 编码队列_v6
     Public Shared Sub 请求调度(Optional 允许完成提示检查 As Boolean = False)
         SyncLock 队列锁
             If 允许完成提示检查 Then 完成提示待调度结束检查 = True
-            If 自动调度已暂停 Then Exit Sub
             If 调度中 Then Exit Sub
             调度中 = True
         End SyncLock
@@ -601,7 +600,7 @@ Public Class 编码队列_v6
                          SyncLock 队列锁
                              调度中 = False
                              Dim running = 队列项目.Where(Function(x) 是否进行中任务(x) OrElse x.正在执行).Count()
-                             shouldRunAgain = Not 自动调度已暂停 AndAlso running < 获取并发上限() AndAlso 队列项目.Any(Function(x) x.状态 = 编码任务状态_v6.未处理 AndAlso x.允许自动启动 AndAlso Not x.正在执行)
+                             shouldRunAgain = running < 获取并发上限() AndAlso 队列项目.Any(Function(x) x.状态 = 编码任务状态_v6.未处理 AndAlso x.允许自动启动 AndAlso Not x.正在执行)
                              shouldCheckCompletion = 完成提示待调度结束检查
                              If Not shouldRunAgain Then 完成提示待调度结束检查 = False
                          End SyncLock
@@ -619,7 +618,6 @@ Public Class 编码队列_v6
             Dim nextTask As 编码任务_v6 = Nothing
             Dim 执行标识 As Long = 0
             SyncLock 队列锁
-                If 自动调度已暂停 Then Exit Do
                 Dim running = 队列项目.Where(Function(x) 是否进行中任务(x) OrElse x.正在执行).Count()
                 If running >= 获取并发上限() Then Exit Do
                 nextTask = 队列项目.FirstOrDefault(Function(x) x.状态 = 编码任务状态_v6.未处理 AndAlso x.允许自动启动 AndAlso Not x.正在执行)
@@ -639,9 +637,10 @@ Public Class 编码队列_v6
                                      Try
                                          Await task.开始Async(执行标识)
                                      Finally
-                                         task.结束执行()
+                                         Dim 已手动停止 = task.结束执行()
                                          通知任务更新(task)
-                                         请求调度(True)
+                                         ' 手动停止不推进队列；自然结束（包括失败）仍会触发后续自动调度。
+                                         If Not 已手动停止 Then 请求调度(True)
                                      End Try
                                  End Function)
     End Sub
