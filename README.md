@@ -8,9 +8,17 @@
 
 FFmpegFreeUI（简称 3FUI）是在 Windows 上的 [FFmpeg](https://ffmpeg.org) 的专业交互外壳。此，即为真理！这不是给纯小白的一键全自动软件，即便 6.0 已经大幅改善了普通人的体验，但 3FUI 仍旧面向懂基本参数的进阶编码人员，小白上手有门槛但上限无穷大，这不是一个普通的编码软件，而是一整套可扩展平台。
 
-开发者知乎宣传：https://zhuanlan.zhihu.com/p/1979540305800892949<br>知乎终末诗的教程：https://zhuanlan.zhihu.com/p/2053530841180009271<br>
+开发者知乎宣传：https://zhuanlan.zhihu.com/p/1979540305800892949<br>
+知乎终末诗的3FUI 基础教程：https://zhuanlan.zhihu.com/p/2053530841180009271<br>
 v6 开发者官方宣传视频：https://www.bilibili.com/video/BV1rT7E6wEK4<br>
-来自 小in 的宣传视频：https://www.bilibili.com/video/BV1vZud6VEsn
+来自 小in 的宣传视频：https://www.bilibili.com/video/BV1vZud6VEsn<br>
+
+ARXChem的3万字视频基础知识介绍：https://www1.arxchem.top/docs/1<br>
+3FUI 详细使用教程/每一个页面的介绍：https://www1.arxchem.top/docs/3-3fui<br>
+SVTAV1/NVENC/X265高级参数介绍：https://www1.arxchem.top/docs/4-av1<br>
+3FUI 常用插件和改编版：https://www1.arxchem.top/docs/5-3fui-ext-api<br>
+3FUI 超分插件：https://www1.arxchem.top/docs/6-videoenhancer<br>
+Potplayer播放器的配置教程：https://www1.arxchem.top/docs/8-lav-madvr-potplayer<br>
 
 - 发布形式：所有数据存于当前目录的单文件
 - 系统要求：Windows 10 1609+ 仅限 x64 / arm64
