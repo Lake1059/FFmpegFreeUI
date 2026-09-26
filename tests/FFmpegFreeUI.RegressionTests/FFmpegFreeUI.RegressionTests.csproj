@@ -1,14 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
     <TargetFramework>net10.0-windows10.0.26100.0</TargetFramework>
     <UseWindowsForms>true</UseWindowsForms>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-    <LakeUIAssembly Condition="'$(LakeUIAssembly)' == ''">..\..\..\LakeUI\LakeUI\bin\Debug\net10.0-windows10.0.17763.0\LakeUI.dll</LakeUIAssembly>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="../../FFmpegFreeUI/FFmpegFreeUI.vbproj" />
-    <Reference Include="LakeUI"><HintPath>$(LakeUIAssembly)</HintPath></Reference>
   </ItemGroup>
 </Project>
