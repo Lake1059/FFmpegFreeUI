@@ -913,7 +913,7 @@ Partial Class Form_v6_参数面板_画面帧
         HCL_直接指定分辨率说明.TabIndex = 14
         HCL_直接指定分辨率说明.Text = "批量任务通常不使用直接指定的方式"
         HCL_直接指定分辨率说明.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
-        HCL_直接指定分辨率说明.ToolTipText = "更建议用滤镜去缩放"
+        HCL_直接指定分辨率说明.ToolTipText = "更建议用滤镜去缩放。有人把这里与下面的滤镜缩放同时设置，你觉得那会变成什么呢！Oh~MAN!"
         ' 
         ' MCB_直接指定分辨率
         ' 

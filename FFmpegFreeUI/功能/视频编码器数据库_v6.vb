@@ -84,13 +84,13 @@ Public Class 视频编码器数据库_v6
         加入分类(预设数据_v6.视频编码器类型.视频, "复制流", "不重编码，保留原视频；修复封装或元数据问题时适用。图片流也属于视频流。", "copy")
         加入分类(预设数据_v6.视频编码器类型.视频, "AV2", "等待 FFmpeg 添加支持。", "av2", "avmenc")
         加入分类(预设数据_v6.视频编码器类型.视频, "H.266/VVC", "目前仅 libvvenc，默秒全，国家电网战略合作伙伴。", "libvvenc")
-        加入分类(预设数据_v6.视频编码器类型.视频, "AV1", "当前适合个人存储的高压缩编码；建议优先考虑 NVIDIA 和 Intel。", "libaom-av1", "libsvtav1", "av1_nvenc", "av1_qsv", "av1_amf", "av1_d3d12va", "librav1e", "av1_vulkan")
-        加入分类(预设数据_v6.视频编码器类型.视频, "H.265/HEVC", "目前主流编码，要对外发布优先考虑。", "libx265", "hevc_nvenc", "hevc_qsv", "hevc_amf", "hevc_d3d12va", "hevc_vulkan", "libkvazaar", "libsvt_hevc")
-        加入分类(预设数据_v6.视频编码器类型.视频, "H.264/AVC", "建议仅作为旧设备兼容备选，优先考虑 HEVC。", "libx264", "libx264rgb", "libopenh264", "h264_nvenc", "h264_qsv", "h264_amf", "h264_d3d12va", "h264_vulkan")
-        加入分类(预设数据_v6.视频编码器类型.视频, "ProRes", "高码率剪辑中间格式，不适合最终存储。", "prores_ks", "prores_aw")
+        加入分类(预设数据_v6.视频编码器类型.视频, "AV1", "当前适合个人存储的高压缩编码；建议优先考虑 NVIDIA 和 Intel。", "libaom-av1", "libsvtav1", "av1_nvenc", "av1_qsv", "av1_amf", "av1_d3d12va", "av1_mf", "librav1e", "av1_vulkan")
+        加入分类(预设数据_v6.视频编码器类型.视频, "H.265/HEVC", "目前主流编码，要对外发布优先考虑。", "libx265", "hevc_nvenc", "hevc_qsv", "hevc_amf", "hevc_d3d12va", "hevc_mf", "hevc_vulkan", "libkvazaar", "libsvt_hevc")
+        加入分类(预设数据_v6.视频编码器类型.视频, "H.264/AVC", "建议仅作为旧设备兼容备选，优先考虑 HEVC。", "libx264", "libx264rgb", "libopenh264", "h264_nvenc", "h264_qsv", "h264_amf", "h264_d3d12va", "h264_mf", "h264_vulkan")
+        加入分类(预设数据_v6.视频编码器类型.视频, "ProRes", "高码率剪辑中间格式，不适合最终存储。", "prores_ks", "prores_aw", "prores_ks_vulkan")
         加入分类(预设数据_v6.视频编码器类型.视频, "VP9 # VP8", "Google 视频格式。", "libvpx-vp9", "libsvt_vp9", "vp9_qsv", "libvpx")
         加入分类(预设数据_v6.视频编码器类型.视频, "FFv1", "博物馆级别无损存档格式。", "ffv1 -level 3", "ffv1 -level 1", "ffv1_vulkan")
-        加入分类(预设数据_v6.视频编码器类型.视频, "其他现代编码", "较新或生态较弱的编码。", "libxeve", "libxavs", "libxavs2", "libuavs3e", "liboapv")
+        加入分类(预设数据_v6.视频编码器类型.视频, "其他现代编码", "较新或生态较弱的编码。", "libxeve", "libxavs", "libxavs2", "libuavs3e", "liboapv", "apv_vulkan", "pdv")
         加入分类(预设数据_v6.视频编码器类型.视频, "老旧编码", "仅用于旧设备。", "mpeg4", "libxvid", "rv20", "rv10", "wmv2", "wmv1")
         加入分类(预设数据_v6.视频编码器类型.视频, "禁用", "不输出视频流。", "-vn")
         加入分类(预设数据_v6.视频编码器类型.视频, "自定义", "在配置文件中定义；重启后生效。手动编辑前请退出程序。")
@@ -103,7 +103,7 @@ Public Class 视频编码器数据库_v6
         加入分类(预设数据_v6.视频编码器类型.图片, "GIF", "调色板动图；建议启用调色板滤镜。", "gif")
         加入分类(预设数据_v6.视频编码器类型.图片, "BMP", "未压缩位图，体积大、兼容性好。", "bmp")
         加入分类(预设数据_v6.视频编码器类型.图片, "OpenJPEG", "JPEG 2000，适合归档和影院规范。", "libopenjpeg")
-        加入分类(预设数据_v6.视频编码器类型.图片, "JPEG XL", "新一代有损/无损图片。", "libjxl")
+        加入分类(预设数据_v6.视频编码器类型.图片, "JPEG XL", "新一代有损/无损图片。", "libjxl", "libjxl_anim")
         加入分类(预设数据_v6.视频编码器类型.图片, "JPEG LS", "无损或近无损图片。", "jpegls")
         加入分类(预设数据_v6.视频编码器类型.图片, "SVT JPEG XS", "需要含 libsvtjpegxs 的 FFmpeg。", "libsvtjpegxs")
         加入分类(预设数据_v6.视频编码器类型.图片, "HDR (Radiance RGBE)", "Radiance RGBE HDR 图片。", "hdr")
@@ -135,7 +135,7 @@ Public Class 视频编码器数据库_v6
             支持二次编码:=True))
 
         加入编码器(基础("libsvtav1", "SVT-AV1 软件编码，速度与压缩效率均衡。", "AV1", 预设数据_v6.视频编码器类型.视频,
-            编码预设:=参数("-preset", "-2 自动；0 最慢 ~ 13 最快", "6", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13"),
+            编码预设:=参数("-preset", "-2 自动；0 最慢 ~ 13 最快", "6", "-2", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13"),
             配置文件:=参数("-profile:v", "main/high/professional", "", "main", "high", "professional"),
             像素格式:=像素("yuv420p yuv420p10le"),
             特殊参数:=特殊列表(特殊("-crf 恒定质量：0~63；越低越清晰"), 特殊("-qp 固定 QP：0~63；越低越清晰"), 特殊("-svtav1-params SVT-AV1 原生参数：key=value:key=value")),
@@ -144,7 +144,7 @@ Public Class 视频编码器数据库_v6
         加入编码器(基础("av1_nvenc", "NVIDIA NVENC AV1 硬件编码。", "AV1", 预设数据_v6.视频编码器类型.视频,
             编码预设:=参数("-preset", "p7 最慢最好 ~ p1 最快", "p7", "p7", "p6", "p5", "p4", "p3", "p2", "p1"),
             场景优化:=参数("-tune", "hq/uhq/ll/ull/lossless", "", "hq", "uhq", "ll", "ull", "lossless"),
-            像素格式:=像素("yuv420p nv12 p010le yuv444p p016le nv16 p210le p216le yuv444p10msble yuv444p16le bgr0 bgra rgb0 rgba x2rgb10le x2bgr10le gbrp gbrp10msble gbrp16le cuda d3d11"),
+            像素格式:=像素("yuv420p nv12 p010le yuv444p p012le nv24 p016le nv16 p210le p212le p216le yuv444p10msble yuv444p12msble yuv444p16le p410le p412le p416le bgr0 bgra rgb0 rgba x2rgb10le x2bgr10le gbrp gbrp10msble gbrp16le cuda cuarray d3d11"),
             特殊参数:=合并特殊列表(特殊列表(特殊("-gpu GPU：-2=list 列出设备，-1=any 自动，0 起为编号")), NVENC质量参数("0=自动；1~63，越低越清晰", "-1=自动；0~255，越低越清晰")),
             视觉体积均衡点:="RTX 50 参考：标准 cq 36；UHQ cq 38；极简内容可试 cq 42。",
             无损模式说明:="使用 -tune lossless；也可用 -rc constqp -qp 0，取决于硬件和驱动。"))
@@ -166,6 +166,10 @@ Public Class 视频编码器数据库_v6
         加入编码器(基础("av1_d3d12va", "D3D12VA AV1 硬件编码器占位项。", "AV1", 预设数据_v6.视频编码器类型.视频,
             配置文件:=参数("-profile:v", "main/high/professional", "", "main", "high", "professional"),
             像素格式:=像素("d3d12")))
+
+        加入编码器(基础("av1_mf", "Windows Media Foundation AV1 编码。", "AV1", 预设数据_v6.视频编码器类型.视频,
+            像素格式:=像素("nv12 yuv420p d3d11"),
+            特殊参数:=MediaFoundation参数()))
 
         加入编码器(基础("librav1e", "rav1e AV1 软件编码。", "AV1", 预设数据_v6.视频编码器类型.视频,
             编码预设:=参数("-speed", "0 最慢 ~ 10 最快", "", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"),
@@ -194,7 +198,7 @@ Public Class 视频编码器数据库_v6
             编码预设:=参数("-preset", "p7 最慢最好 ~ p1 最快；lossless/losslesshp 为无损模式", "p7", "p7", "p6", "p5", "p4", "p3", "p2", "p1", "lossless", "losslesshp"),
             配置文件:=参数("-profile:v", "main/main10/rext", "", "main", "main10", "rext"),
             场景优化:=参数("-tune", "hq/uhq/ll/ull/lossless", "", "hq", "uhq", "ll", "ull", "lossless"),
-            像素格式:=像素("yuv420p nv12 p010le yuv444p p016le nv16 p210le p216le yuv444p10msble yuv444p16le bgr0 bgra rgb0 rgba x2rgb10le x2bgr10le gbrp gbrp10msble gbrp16le cuda d3d11"),
+            像素格式:=像素("yuv420p nv12 p010le yuv444p p012le nv24 p016le nv16 p210le p212le p216le yuv444p10msble yuv444p12msble yuv444p16le p410le p412le p416le bgr0 bgra rgb0 rgba x2rgb10le x2bgr10le gbrp gbrp10msble gbrp16le cuda cuarray d3d11"),
             特殊参数:=合并特殊列表(特殊列表(特殊("-gpu GPU：-2=list 列出设备，-1=any 自动，0 起为编号"), 特殊("-tier HEVC 层级：main/high")), NVENC质量参数("0=自动；1~51，越低越清晰", "-1=自动；0~51，越低越清晰")),
             视觉体积均衡点:="RTX 50 参考：标准 cq 26；UHQ cq 28。",
             无损模式说明:="使用 -tune lossless 或 -preset lossless/losslesshp；也可用 -rc constqp -qp 0。"))
@@ -217,6 +221,10 @@ Public Class 视频编码器数据库_v6
             配置文件:=参数("-profile:v", "main/main10", "", "main", "main10"),
             像素格式:=像素("d3d12"),
             特殊参数:=D3D12VA质量参数("0~52；越低越清晰")))
+
+        加入编码器(基础("hevc_mf", "Windows Media Foundation HEVC 编码。", "H.265/HEVC", 预设数据_v6.视频编码器类型.视频,
+            像素格式:=像素("nv12 yuv420p d3d11"),
+            特殊参数:=MediaFoundation参数()))
 
         加入编码器(基础("hevc_vulkan", "Vulkan HEVC 硬件编码。", "H.265/HEVC", 预设数据_v6.视频编码器类型.视频,
             编码预设:=参数("-quality", "5 最慢 ~ 0 最快", "", "5", "4", "3", "2", "1", "0"),
@@ -265,7 +273,7 @@ Public Class 视频编码器数据库_v6
             编码预设:=参数("-preset", "p7 最慢最好 ~ p1 最快；lossless/losslesshp 为无损模式", "p7", "p7", "p6", "p5", "p4", "p3", "p2", "p1", "lossless", "losslesshp"),
             配置文件:=参数("-profile:v", "baseline/main/high/high10/high422/high444p", "", "baseline", "main", "high", "high10", "high422", "high444p"),
             场景优化:=参数("-tune", "hq/ll/ull/lossless", "", "hq", "ll", "ull", "lossless"),
-            像素格式:=像素("yuv420p nv12 p010le yuv444p p016le nv16 p210le p216le yuv444p10msble yuv444p16le bgr0 bgra rgb0 rgba x2rgb10le x2bgr10le gbrp gbrp10msble gbrp16le cuda d3d11"),
+            像素格式:=像素("yuv420p nv12 p010le yuv444p p012le nv24 p016le nv16 p210le p212le p216le yuv444p10msble yuv444p12msble yuv444p16le p410le p412le p416le bgr0 bgra rgb0 rgba x2rgb10le x2bgr10le gbrp gbrp10msble gbrp16le cuda cuarray d3d11"),
             特殊参数:=合并特殊列表(特殊列表(特殊("-gpu GPU：-2=list 列出设备，-1=any 自动，0 起为编号")), NVENC质量参数("0=自动；1~51，越低越清晰", "-1=自动；0~51，越低越清晰")),
             无损模式说明:="使用 -tune lossless 或 -preset lossless/losslesshp；也可用 -rc constqp -qp 0。"))
 
@@ -288,6 +296,10 @@ Public Class 视频编码器数据库_v6
             像素格式:=像素("d3d12"),
             特殊参数:=合并特殊列表(D3D12VA质量参数("0~52；越低越清晰"), 特殊列表(特殊("-coder 熵编码：cabac=压缩更好、解码更重，cavlc=兼容且简单")))))
 
+        加入编码器(基础("h264_mf", "Windows Media Foundation H.264 编码。", "H.264/AVC", 预设数据_v6.视频编码器类型.视频,
+            像素格式:=像素("nv12 yuv420p d3d11"),
+            特殊参数:=MediaFoundation参数()))
+
         加入编码器(基础("h264_vulkan", "Vulkan H.264 硬件编码。", "H.264/AVC", 预设数据_v6.视频编码器类型.视频,
             编码预设:=参数("-quality", "5 最慢 ~ 0 最快", "", "5", "4", "3", "2", "1", "0"),
             配置文件:=参数("-profile:v", "constrained_baseline/main/high/high444p", "", "constrained_baseline", "main", "high", "high444p"),
@@ -303,6 +315,11 @@ Public Class 视频编码器数据库_v6
 
         加入编码器(基础("prores_aw", "Apple ProRes，功能较简。", "ProRes", 预设数据_v6.视频编码器类型.视频,
             像素格式:=像素("yuv422p10le yuv444p10le yuva444p10le")))
+
+        加入编码器(基础("prores_ks_vulkan", "Vulkan ProRes 编码。", "ProRes", 预设数据_v6.视频编码器类型.视频,
+            配置文件:=参数("-profile:v", "auto/proxy/lt/standard/hq/4444/4444xq", "", "auto", "proxy", "lt", "standard", "hq", "4444", "4444xq"),
+            像素格式:=像素("vulkan"),
+            特殊参数:=特殊列表(特殊("-mbs_per_slice 每片宏块数：1~8"), 特殊("-bits_per_mb 每宏块目标位数：0~8192"), 特殊("-alpha_bits Alpha 位数：0~16"), 特殊("-async_depth 并行深度：1 起"))))
 
         加入编码器(基础("libvpx-vp9", "libvpx VP9 软件编码器；速度由 -cpu-used 控制。", "VP9 # VP8", 预设数据_v6.视频编码器类型.视频,
             编码预设:=参数("-cpu-used", "-8 最慢 ~ 8 最快", "", "0", "1", "2", "3", "4", "5", "6", "7", "8"),
@@ -376,6 +393,14 @@ Public Class 视频编码器数据库_v6
             特殊参数:=特殊列表(特殊("-qp QP：0~63，越低越清晰"), 特殊("-oapv-params APV 原生参数：key=value:key=value")),
             无损模式说明:="不支持；最低量化可用 -qp 0。"))
 
+        加入编码器(基础("apv_vulkan", "Vulkan APV 编码。", "其他现代编码", 预设数据_v6.视频编码器类型.视频,
+            像素格式:=像素("vulkan"),
+            特殊参数:=特殊列表(特殊("-qp 亮度量化：0~255；越低越清晰"), 特殊("-qp_chroma 色度量化：0=同亮度，1~255"), 特殊("-qmatrix 量化矩阵：flat/hevc"), 特殊("-tile_width 图块宽度：0=自动，1~32 宏块"), 特殊("-tile_height 图块高度：0=自动，1~16 宏块"), 特殊("-async_depth 并行深度：1 起"))))
+
+        加入编码器(基础("pdv", "Playdate 视频编码。", "其他现代编码", 预设数据_v6.视频编码器类型.视频,
+            像素格式:=像素("monob"),
+            特殊参数:=特殊列表(特殊("-strict 实验性编码器：-2"))))
+
         For Each 名称 In New String() {"mpeg4", "libxvid", "rv20", "rv10", "wmv2", "wmv1"}
             加入编码器(基础(名称, "旧式编码器，仅用于旧设备兼容。", "老旧编码", 预设数据_v6.视频编码器类型.视频,
                 像素格式:=像素("yuv420p")))
@@ -419,12 +444,18 @@ Public Class 视频编码器数据库_v6
             像素格式:=像素("bgra bgr24 rgb565le rgb555le rgb444le rgb8 bgr8 rgb4_byte bgr4_byte gray pal8 monob")))
 
         加入编码器(基础("libopenjpeg", "OpenJPEG JPEG 2000。", "OpenJPEG", 预设数据_v6.视频编码器类型.图片,
-            像素格式:=像素("rgb24 rgba rgb48le rgba64le gbrp gbrp9le gbrp10le gbrp12le gbrp14le gbrp16le gray ya8 gray16le ya16le gray10le gray12le gray14le yuv420p yuv422p yuva420p yuv440p yuv444p yuva422p yuv411p yuv410p yuva444p yuv420p10le yuv422p10le yuv444p10le yuv420p12le yuv422p12le yuv444p12le xyz12le"),
+            像素格式:=像素("rgb24 rgba rgb48le rgba64le gbrp gbrp9le gbrp10le gbrp12le gbrp14le gbrp16le gray ya8 gray16le ya16le gray10le gray12le gray14le yuv420p yuv422p yuva420p yuv440p yuv444p yuva422p yuv411p yuv410p yuva444p yuv420p9le yuv422p9le yuv444p9le yuva420p9le yuva422p9le yuva444p9le yuv420p10le yuv422p10le yuv444p10le yuva420p10le yuva422p10le yuva444p10le yuv420p12le yuv422p12le yuv444p12le yuv420p14le yuv422p14le yuv444p14le yuv420p16le yuv422p16le yuv444p16le yuva420p16le yuva422p16le yuva444p16le xyz12le"),
             图片质量:=图片质量("-q:v", "质量：0.0=有损最大，1.0=无损", ""),
             配置文件:=参数("-profile:v", "jpeg2000/cinema2k/cinema4k", "", "jpeg2000", "cinema2k", "cinema4k"),
             特殊参数:=特殊列表(特殊("-format 封装：j2k=裸码流，jp2=JP2 文件"), 特殊("-irreversible 小波：0=可逆/无损，1=不可逆/有损"))))
 
         加入编码器(基础("libjxl", "libjxl JPEG XL 静图，使用 -distance 在无损和有损模式间切换。", "JPEG XL", 预设数据_v6.视频编码器类型.图片,
+            编码预设:=参数("-effort", "编码强度：1=最快，9=最慢/压缩更充分", "7", "9", "8", "7", "6", "5", "4", "3", "2", "1"),
+            像素格式:=像素("rgb24 rgba rgb48le rgba64le rgbf32le rgbaf32le gray ya8 gray16le ya16le grayf32le"),
+            图片质量:=图片质量("-distance", "最大 Butteraugli 距离：无损 0 清晰 1~15 模糊", "1"),
+            特殊参数:=特殊列表(特殊("-modular 强制 Modular 模式：0=关闭，1=开启，无损模式强制开启"), 特殊("-xyb 有损编码使用 XYB 色彩空间：0=关闭，1=开启"))))
+
+        加入编码器(基础("libjxl_anim", "libjxl JPEG XL 动图。", "JPEG XL", 预设数据_v6.视频编码器类型.图片,
             编码预设:=参数("-effort", "编码强度：1=最快，9=最慢/压缩更充分", "7", "9", "8", "7", "6", "5", "4", "3", "2", "1"),
             像素格式:=像素("rgb24 rgba rgb48le rgba64le rgbf32le rgbaf32le gray ya8 gray16le ya16le grayf32le"),
             图片质量:=图片质量("-distance", "最大 Butteraugli 距离：无损 0 清晰 1~15 模糊", "1"),
@@ -694,6 +725,14 @@ Public Class 视频编码器数据库_v6
             特殊("-quality 质量/速度取舍：0 起；越高通常越慢、搜索越充分"),
             特殊("-rc_mode 码率模式：CQP=固定 QP，CBR=固定码率，VBR=目标码率；可用值取决于驱动"),
             特殊("-qp 固定 QP（配合 CQP）：" & qp范围))
+    End Function
+
+    Private Shared Function MediaFoundation参数() As List(Of 编码器特殊参数数据)
+        Return 特殊列表(
+            特殊("-rate_control 码率模式：default/cbr/pc_vbr/u_vbr/quality/ld_vbr/g_vbr/gld_vbr"),
+            特殊("-scenario 场景：default/display_remoting/video_conference/archive/live_streaming/camera_record/display_remoting_with_feature_map"),
+            特殊("-quality 质量：-1=自动，0~100"),
+            特殊("-hw_encoding 强制硬件编码：0/1"))
     End Function
 
     Private Shared Function 拆分空格列表(值 As String) As List(Of String)

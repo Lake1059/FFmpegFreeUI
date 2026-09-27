@@ -939,7 +939,7 @@ Partial Class Form_v6_参数面板_色彩管理
         HCL_色彩空间.Size = New Size(802, 43)
         HCL_色彩空间.TabIndex = 8
         HCL_色彩空间.Text = "<span style=""font-size:13; color:Silver"">色彩空间</span>   在此处转换色彩空间，如果不转换色彩就不要设置"
-        HCL_色彩空间.ToolTipText = "选择滤镜、色彩配置（空的条目会自动沿用）、操作方式，必须同时配置才会生效"
+        HCL_色彩空间.ToolTipText = "选择滤镜、色彩配置（空的条目会自动沿用）、操作方式，必须同时配置才会生效。答应我xd，不转色彩就不要设置好吗，多浪费电啊。"
         ' 
         ' Panel2
         ' 
@@ -1063,6 +1063,7 @@ Partial Class Form_v6_参数面板_色彩管理
         HCL_像素格式.Size = New Size(802, 23)
         HCL_像素格式.TabIndex = 6
         HCL_像素格式.Text = "<span style=""font-size:13; color:Silver"">像素格式</span>   指定像素如何存储，下拉选项跟随选择的具体编码器"
+        HCL_像素格式.ToolTipText = "以前没见过这个？那恭喜你发现了真正的位深是怎么控制的。"
         ' 
         ' Form_v6_参数面板_色彩管理
         ' 

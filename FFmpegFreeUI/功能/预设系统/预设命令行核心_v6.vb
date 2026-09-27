@@ -1,3 +1,6 @@
+Imports System.IO
+Imports System.Text
+
 Partial Public Class 预设管理_v6
 
     Private Shared ReadOnly separator As String() = {","}
@@ -273,5 +276,35 @@ Partial Public Class 预设管理_v6
         End Select
         Return ""
     End Function
+
+
+
+    Private Shared Function 生成二次编码日志路径(输入文件 As String, 输出文件 As String) As String
+        Dim source = 应用转译模式路径(If(输入文件, "").Trim())
+        Dim target = 应用转译模式路径(If(输出文件, "").Trim())
+        Dim token = 短路径哈希(source & "|" & target)
+        If source = "" OrElse (source.StartsWith("<"c) AndAlso source.EndsWith(">"c)) Then Return $"3fui-v6-passlog-{token}"
+
+        Dim dir = 获取路径目录保持分隔符(source)
+        If String.IsNullOrWhiteSpace(dir) Then dir = Environment.CurrentDirectory
+        Dim baseName = 获取路径文件名不含扩展名保持分隔符(source)
+        If String.IsNullOrWhiteSpace(baseName) Then baseName = "input"
+        Return 合并路径保持分隔符(dir, $"3fui-v6-passlog-{清理二次编码日志文件名(baseName)}-{token}", source)
+    End Function
+
+    Private Shared Function 短路径哈希(value As String) As String
+        Dim bytes = System.Security.Cryptography.SHA256.HashData(Encoding.UTF8.GetBytes(If(value, "")))
+        Return Convert.ToHexString(bytes, 0, 6).ToLowerInvariant()
+    End Function
+
+    Private Shared Function 清理二次编码日志文件名(value As String) As String
+        Dim result = If(value, "").Trim()
+        For Each c In Path.GetInvalidFileNameChars()
+            result = result.Replace(c, "_"c)
+        Next
+        If result = "" Then result = "input"
+        Return result
+    End Function
+
 
 End Class

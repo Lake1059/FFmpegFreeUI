@@ -25,21 +25,13 @@ Partial Class Form_v6_参数面板_质量
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form_v6_参数面板_质量))
         预制条目菜单 = New LakeUI.ModernContextMenu()
         ModernPanel1 = New LakeUI.ModernPanel()
-        ModernPanel1.BackColor = Color.Transparent
-        ModernPanel1.BackColor1 = Color.Transparent
         MTB_进阶质量控制参数 = New LakeUI.ModernTextBox()
         JustEmptyControl8 = New LakeUI.JustEmptyControl()
         Panel3 = New LakeUI.ModernPanel()
-        Panel3.BackColor = Color.Transparent
-        Panel3.BackColor1 = Color.Transparent
-        Panel3.BorderSize = 0
         HCL_进阶参数空格提示 = New LakeUI.HtmlColorLabel()
         MB_插入预制条目 = New LakeUI.ModernButton()
         HCL_进阶质量控制 = New LakeUI.HtmlColorLabel()
         Panel1 = New LakeUI.ModernPanel()
-        Panel1.BackColor = Color.Transparent
-        Panel1.BackColor1 = Color.Transparent
-        Panel1.BorderSize = 0
         MTB_缓冲区 = New LakeUI.ModernTextBox()
         JustEmptyControl5 = New LakeUI.JustEmptyControl()
         MTB_最高比特率 = New LakeUI.ModernTextBox()
@@ -48,9 +40,6 @@ Partial Class Form_v6_参数面板_质量
         JustEmptyControl3 = New LakeUI.JustEmptyControl()
         MTB_基础比特率 = New LakeUI.ModernTextBox()
         Panel4 = New LakeUI.ModernPanel()
-        Panel4.BackColor = Color.Transparent
-        Panel4.BackColor1 = Color.Transparent
-        Panel4.BorderSize = 0
         HCL_缓冲区 = New LakeUI.HtmlColorLabel()
         HCL_最高比特率 = New LakeUI.HtmlColorLabel()
         HCL_最低比特率 = New LakeUI.HtmlColorLabel()
@@ -58,9 +47,6 @@ Partial Class Form_v6_参数面板_质量
         HCL_比特率单位提示 = New LakeUI.HtmlColorLabel()
         HCL_比特率 = New LakeUI.HtmlColorLabel()
         Panel2 = New LakeUI.ModernPanel()
-        Panel2.BackColor = Color.Transparent
-        Panel2.BackColor1 = Color.Transparent
-        Panel2.BorderSize = 0
         MTB_质量值 = New LakeUI.ModernTextBox()
         JustEmptyControl1 = New LakeUI.JustEmptyControl()
         MCB_质量参数名称 = New LakeUI.ModernComboBox()
@@ -97,6 +83,8 @@ Partial Class Form_v6_参数面板_质量
         ' 
         ' ModernPanel1
         ' 
+        ModernPanel1.BackColor = Color.Transparent
+        ModernPanel1.BackColor1 = Color.Transparent
         ModernPanel1.BorderSize = 0
         ModernPanel1.Controls.Add(MTB_进阶质量控制参数)
         ModernPanel1.Controls.Add(JustEmptyControl8)
@@ -127,14 +115,14 @@ Partial Class Form_v6_参数面板_质量
         MTB_进阶质量控制参数.Dock = DockStyle.Fill
         MTB_进阶质量控制参数.LineNumberBackColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MTB_进阶质量控制参数.LineNumberForeColor = Color.Silver
-        MTB_进阶质量控制参数.Location = New Point(20, 378)
+        MTB_进阶质量控制参数.Location = New Point(20, 354)
         MTB_进阶质量控制参数.Margin = New Padding(2)
         MTB_进阶质量控制参数.MultiLine = True
         MTB_进阶质量控制参数.Name = "MTB_进阶质量控制参数"
         MTB_进阶质量控制参数.Padding = New Padding(10, 8, 10, 8)
         MTB_进阶质量控制参数.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MTB_进阶质量控制参数.ShowLineNumbers = True
-        MTB_进阶质量控制参数.Size = New Size(807, 278)
+        MTB_进阶质量控制参数.Size = New Size(807, 302)
         MTB_进阶质量控制参数.TabIndex = 17
         MTB_进阶质量控制参数.WaterText = "如果要写滤镜，请用滤镜排序功能，现在强制使用滤镜图，单独写必报错"
         MTB_进阶质量控制参数.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
@@ -142,17 +130,20 @@ Partial Class Form_v6_参数面板_质量
         ' JustEmptyControl8
         ' 
         JustEmptyControl8.Dock = DockStyle.Top
-        JustEmptyControl8.Location = New Point(20, 368)
+        JustEmptyControl8.Location = New Point(20, 344)
         JustEmptyControl8.Name = "JustEmptyControl8"
         JustEmptyControl8.Size = New Size(807, 10)
         JustEmptyControl8.TabIndex = 16
         ' 
         ' Panel3
         ' 
+        Panel3.BackColor = Color.Transparent
+        Panel3.BackColor1 = Color.Transparent
+        Panel3.BorderSize = 0
         Panel3.Controls.Add(HCL_进阶参数空格提示)
         Panel3.Controls.Add(MB_插入预制条目)
         Panel3.Dock = DockStyle.Top
-        Panel3.Location = New Point(20, 326)
+        Panel3.Location = New Point(20, 302)
         Panel3.Name = "Panel3"
         Panel3.Padding = New Padding(0, 10, 0, 0)
         Panel3.Size = New Size(807, 42)
@@ -194,16 +185,19 @@ Partial Class Form_v6_参数面板_质量
         HCL_进阶质量控制.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HCL_进阶质量控制.Dock = DockStyle.Top
         HCL_进阶质量控制.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        HCL_进阶质量控制.Location = New Point(20, 277)
+        HCL_进阶质量控制.Location = New Point(20, 259)
         HCL_进阶质量控制.Margin = New Padding(2)
         HCL_进阶质量控制.Name = "HCL_进阶质量控制"
-        HCL_进阶质量控制.Padding = New Padding(0, 20, 0, 5)
-        HCL_进阶质量控制.Size = New Size(807, 49)
+        HCL_进阶质量控制.Padding = New Padding(0, 20, 0, 0)
+        HCL_进阶质量控制.Size = New Size(807, 43)
         HCL_进阶质量控制.TabIndex = 12
-        HCL_进阶质量控制.Text = "<span style=""font-size:13; color:Silver"">进阶质量控制</span>   可以将编码器内部小参写在这里"
+        HCL_进阶质量控制.Text = "<span style=""font-size:13; color:Silver"">进阶质量控制</span>   可以将编码器内部小参写在这里；不要在这里写滤镜！"
         ' 
         ' Panel1
         ' 
+        Panel1.BackColor = Color.Transparent
+        Panel1.BackColor1 = Color.Transparent
+        Panel1.BorderSize = 0
         Panel1.Controls.Add(MTB_缓冲区)
         Panel1.Controls.Add(JustEmptyControl5)
         Panel1.Controls.Add(MTB_最高比特率)
@@ -212,10 +206,10 @@ Partial Class Form_v6_参数面板_质量
         Panel1.Controls.Add(JustEmptyControl3)
         Panel1.Controls.Add(MTB_基础比特率)
         Panel1.Dock = DockStyle.Top
-        Panel1.Location = New Point(20, 235)
+        Panel1.Location = New Point(20, 219)
         Panel1.Name = "Panel1"
-        Panel1.Padding = New Padding(0, 10, 0, 0)
-        Panel1.Size = New Size(807, 42)
+        Panel1.Padding = New Padding(0, 8, 0, 0)
+        Panel1.Size = New Size(807, 40)
         Panel1.TabIndex = 10
         ' 
         ' MTB_缓冲区
@@ -226,7 +220,7 @@ Partial Class Form_v6_参数面板_质量
         MTB_缓冲区.BorderRadius = 10
         MTB_缓冲区.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
         MTB_缓冲区.Dock = DockStyle.Left
-        MTB_缓冲区.Location = New Point(405, 10)
+        MTB_缓冲区.Location = New Point(405, 8)
         MTB_缓冲区.Margin = New Padding(2)
         MTB_缓冲区.Name = "MTB_缓冲区"
         MTB_缓冲区.Padding = New Padding(10, 0, 10, 0)
@@ -239,7 +233,7 @@ Partial Class Form_v6_参数面板_质量
         ' JustEmptyControl5
         ' 
         JustEmptyControl5.Dock = DockStyle.Left
-        JustEmptyControl5.Location = New Point(395, 10)
+        JustEmptyControl5.Location = New Point(395, 8)
         JustEmptyControl5.Name = "JustEmptyControl5"
         JustEmptyControl5.Size = New Size(10, 32)
         JustEmptyControl5.TabIndex = 18
@@ -252,7 +246,7 @@ Partial Class Form_v6_参数面板_质量
         MTB_最高比特率.BorderRadius = 10
         MTB_最高比特率.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
         MTB_最高比特率.Dock = DockStyle.Left
-        MTB_最高比特率.Location = New Point(270, 10)
+        MTB_最高比特率.Location = New Point(270, 8)
         MTB_最高比特率.Margin = New Padding(2)
         MTB_最高比特率.Name = "MTB_最高比特率"
         MTB_最高比特率.Padding = New Padding(10, 0, 10, 0)
@@ -265,7 +259,7 @@ Partial Class Form_v6_参数面板_质量
         ' JustEmptyControl4
         ' 
         JustEmptyControl4.Dock = DockStyle.Left
-        JustEmptyControl4.Location = New Point(260, 10)
+        JustEmptyControl4.Location = New Point(260, 8)
         JustEmptyControl4.Name = "JustEmptyControl4"
         JustEmptyControl4.Size = New Size(10, 32)
         JustEmptyControl4.TabIndex = 16
@@ -278,7 +272,7 @@ Partial Class Form_v6_参数面板_质量
         MTB_最低比特率.BorderRadius = 10
         MTB_最低比特率.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
         MTB_最低比特率.Dock = DockStyle.Left
-        MTB_最低比特率.Location = New Point(135, 10)
+        MTB_最低比特率.Location = New Point(135, 8)
         MTB_最低比特率.Margin = New Padding(2)
         MTB_最低比特率.Name = "MTB_最低比特率"
         MTB_最低比特率.Padding = New Padding(10, 0, 10, 0)
@@ -291,7 +285,7 @@ Partial Class Form_v6_参数面板_质量
         ' JustEmptyControl3
         ' 
         JustEmptyControl3.Dock = DockStyle.Left
-        JustEmptyControl3.Location = New Point(125, 10)
+        JustEmptyControl3.Location = New Point(125, 8)
         JustEmptyControl3.Name = "JustEmptyControl3"
         JustEmptyControl3.Size = New Size(10, 32)
         JustEmptyControl3.TabIndex = 14
@@ -304,7 +298,7 @@ Partial Class Form_v6_参数面板_质量
         MTB_基础比特率.BorderRadius = 10
         MTB_基础比特率.CaretColor = Color.FromArgb(CByte(220), CByte(220), CByte(220))
         MTB_基础比特率.Dock = DockStyle.Left
-        MTB_基础比特率.Location = New Point(0, 10)
+        MTB_基础比特率.Location = New Point(0, 8)
         MTB_基础比特率.Margin = New Padding(2)
         MTB_基础比特率.Name = "MTB_基础比特率"
         MTB_基础比特率.Padding = New Padding(10, 0, 10, 0)
@@ -316,12 +310,15 @@ Partial Class Form_v6_参数面板_质量
         ' 
         ' Panel4
         ' 
+        Panel4.BackColor = Color.Transparent
+        Panel4.BackColor1 = Color.Transparent
+        Panel4.BorderSize = 0
         Panel4.Controls.Add(HCL_缓冲区)
         Panel4.Controls.Add(HCL_最高比特率)
         Panel4.Controls.Add(HCL_最低比特率)
         Panel4.Controls.Add(HCL_基础比特率)
         Panel4.Dock = DockStyle.Top
-        Panel4.Location = New Point(20, 205)
+        Panel4.Location = New Point(20, 189)
         Panel4.Name = "Panel4"
         Panel4.Size = New Size(807, 30)
         Panel4.TabIndex = 9
@@ -377,6 +374,7 @@ Partial Class Form_v6_参数面板_质量
         HCL_基础比特率.TabIndex = 0
         HCL_基础比特率.Text = "基础比特率"
         HCL_基础比特率.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.BottomLeft
+        HCL_基础比特率.ToolTipText = "与任何质量控制不兼容！目标比特率是过时的思维！不要把那啥工具箱的惯性思维带到这来，小心群友压力你。"
         ' 
         ' HCL_比特率单位提示
         ' 
@@ -384,10 +382,10 @@ Partial Class Form_v6_参数面板_质量
         HCL_比特率单位提示.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HCL_比特率单位提示.Dock = DockStyle.Top
         HCL_比特率单位提示.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        HCL_比特率单位提示.Location = New Point(20, 185)
+        HCL_比特率单位提示.Location = New Point(20, 172)
         HCL_比特率单位提示.Margin = New Padding(2)
         HCL_比特率单位提示.Name = "HCL_比特率单位提示"
-        HCL_比特率单位提示.Size = New Size(807, 20)
+        HCL_比特率单位提示.Size = New Size(807, 17)
         HCL_比特率单位提示.TabIndex = 11
         HCL_比特率单位提示.Text = "注意带上单位，推荐使用 <span style=""color:Gainsboro"">k</span>（kbps），例如 5000k，其他还有 <span style=""color:Gainsboro"">M</span>（mbps，可能要大写）"
         ' 
@@ -397,23 +395,30 @@ Partial Class Form_v6_参数面板_质量
         HCL_比特率.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HCL_比特率.Dock = DockStyle.Top
         HCL_比特率.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        HCL_比特率.Location = New Point(20, 136)
+        HCL_比特率.InfoIconSizeRatio = 0.9F
+        HCL_比特率.InfoIconStrokeWidth = 2F
+        HCL_比特率.InfoIconTextGap = 7
+        HCL_比特率.Location = New Point(20, 124)
         HCL_比特率.Margin = New Padding(2)
         HCL_比特率.Name = "HCL_比特率"
         HCL_比特率.Padding = New Padding(0, 20, 0, 5)
-        HCL_比特率.Size = New Size(807, 49)
+        HCL_比特率.Size = New Size(807, 48)
         HCL_比特率.TabIndex = 8
         HCL_比特率.Text = "<span style=""font-size:13; color:Silver"">比特率</span>   传统的转码直接写比特率，范围和缓冲区可配合全局质量控制"
+        HCL_比特率.ToolTipText = "追求质量又追求体积的压制只使用全局质量控制，如果你在设置比特率就说明质量不重要。单纯设置比特率是过时的思路，如果你要求质量那么就请走出历史包袱和惯性思维，不要让群友来给你强行传教。"
         ' 
         ' Panel2
         ' 
+        Panel2.BackColor = Color.Transparent
+        Panel2.BackColor1 = Color.Transparent
+        Panel2.BorderSize = 0
         Panel2.Controls.Add(MTB_质量值)
         Panel2.Controls.Add(JustEmptyControl1)
         Panel2.Controls.Add(MCB_质量参数名称)
         Panel2.Controls.Add(JustEmptyControl2)
         Panel2.Controls.Add(MCB_全局质量控制方式)
         Panel2.Dock = DockStyle.Top
-        Panel2.Location = New Point(20, 94)
+        Panel2.Location = New Point(20, 82)
         Panel2.Name = "Panel2"
         Panel2.Padding = New Padding(0, 10, 0, 0)
         Panel2.Size = New Size(807, 42)
@@ -526,13 +531,15 @@ Partial Class Form_v6_参数面板_质量
         HCL_质量.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HCL_质量.Dock = DockStyle.Top
         HCL_质量.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        HCL_质量.Location = New Point(20, 49)
+        HCL_质量.InfoIconColor = Color.DarkKhaki
+        HCL_质量.InfoIconTextGap = 5
+        HCL_质量.Location = New Point(20, 48)
         HCL_质量.Margin = New Padding(2)
         HCL_质量.Name = "HCL_质量"
-        HCL_质量.Padding = New Padding(0, 0, 0, 5)
-        HCL_质量.Size = New Size(807, 45)
+        HCL_质量.Size = New Size(807, 34)
         HCL_质量.TabIndex = 7
         HCL_质量.Text = resources.GetString("HCL_质量.Text")
+        HCL_质量.ToolTipText = "看到了你还选错？别不信，根据人工大数据统计，真的有大量的人看到这儿写的还依旧选错，MAN~ what can i say？但是话又说回来，vvenc 还真不支持 crf，那只能用通用的 qp 了。"
         ' 
         ' HCL_全局质量控制
         ' 
@@ -543,7 +550,7 @@ Partial Class Form_v6_参数面板_质量
         HCL_全局质量控制.Margin = New Padding(2)
         HCL_全局质量控制.Name = "HCL_全局质量控制"
         HCL_全局质量控制.Padding = New Padding(0, 0, 0, 5)
-        HCL_全局质量控制.Size = New Size(807, 29)
+        HCL_全局质量控制.Size = New Size(807, 28)
         HCL_全局质量控制.TabIndex = 5
         HCL_全局质量控制.Text = "<span style=""font-size:13; color:Silver"">全局质量控制</span>   <span style=""font-size:10pt; color:Goldenrod"">常规压制仅需在此设置全局质量即可满足需求</span>"
         ' 

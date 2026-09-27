@@ -103,13 +103,13 @@ Public Class 音频编码器数据库_v6
 
         加入编码器(基础("aac.native", "AAC", "aac", "FFmpeg 原生 AAC；如果正在使用自编译版本或未来新版本，可能默认就是 NMR 算法。",
             质量参数:=参数列表(参数("-q:a", "可变质量：0.1~2.0 常用；越高越清晰、体积越大"), 参数("-b:a", "目标码率：如 128k/192k/320k")),
-            特殊参数:=参数列表(参数("-aac_coder", "nmr/twoloop/fast", "编码算法：nmr=默认，twoloop=旧版质量优先，fast=旧版速度优先"), 参数("-aac_ms", "auto/0/1", "M/S 立体声：auto=自动，0=关闭，1=强制"), 参数("-aac_is", "auto/0/1", "强度立体声：auto=自动"), 参数("-aac_pns", "0/1", "感知噪声替代，低码率时可能有益"), 参数("-aac_tns", "0/1", "时域噪声整形"), 参数("-aac_pce", "0/1", "写入 PCE 声道配置")),
+            特殊参数:=参数列表(参数("-aac_coder", "nmr/twoloop/fast", "编码算法：nmr=默认，twoloop=旧版质量优先，fast=旧版速度优先"), 参数("-aac_nmr_speed", "0~4", "NMR 搜索速度：0=最慢且质量最高，4=最快"), 参数("-aac_ms", "auto/0/1", "M/S 立体声：auto=自动，0=关闭，1=强制"), 参数("-aac_is", "auto/0/1", "强度立体声：auto=自动"), 参数("-aac_pns", "0/1", "感知噪声替代，低码率时可能有益"), 参数("-aac_tns", "0/1", "时域噪声整形"), 参数("-aac_pce", "0/1", "写入 PCE 声道配置"), 参数("-aac_allow_71wide", "0/1", "允许 7.1(wide) 声道布局不使用 PCE")),
             支持说明:="输入：fltp；采样率：7.35~96 kHz 的标准 AAC 档位。"))
 
         加入编码器(基础("aac.nmr", "NMR AAC", "aac", "原生 AAC 的 NMR 模式，不是独立编码器，要使用此算法需要更新到 FFmpeg 9.0。",
             默认附加参数:=参数列表(参数("-aac_coder", "nmr", "固定使用 NMR", 默认值:="nmr")),
             质量参数:=参数列表(参数("-q:a", "可变质量：0.1~2.0 常用；越高越清晰、体积越大"), 参数("-b:a", "目标码率：如 96k/128k/192k/320k")),
-            特殊参数:=参数列表(参数("-aac_nmr_speed", "0~4", "NMR 搜索速度：0=最慢且质量最高，4=最快"), 参数("-aac_ms", "auto/0/1", "M/S 立体声：auto=自动，0=关闭，1=强制"), 参数("-aac_is", "auto/0/1", "强度立体声：auto=自动"), 参数("-aac_pns", "0/1", "感知噪声替代，低码率时可能有益"), 参数("-aac_tns", "0/1", "时域噪声整形"), 参数("-aac_pce", "0/1", "写入 PCE 声道配置")),
+            特殊参数:=参数列表(参数("-aac_nmr_speed", "0~4", "NMR 搜索速度：0=最慢且质量最高，4=最快"), 参数("-aac_ms", "auto/0/1", "M/S 立体声：auto=自动，0=关闭，1=强制"), 参数("-aac_is", "auto/0/1", "强度立体声：auto=自动"), 参数("-aac_pns", "0/1", "感知噪声替代，低码率时可能有益"), 参数("-aac_tns", "0/1", "时域噪声整形"), 参数("-aac_pce", "0/1", "写入 PCE 声道配置"), 参数("-aac_allow_71wide", "0/1", "允许 7.1(wide) 声道布局不使用 PCE")),
             支持说明:="输入：fltp；采样率：7.35~96 kHz 的标准 AAC 档位。",
             旧版命令文本:="nmraac|aac -aac_coder nmr|aac -aac_coder:a nmr"))
 
@@ -137,10 +137,18 @@ Public Class 音频编码器数据库_v6
             特殊参数:=AudioToolbox参数(),
             支持说明:="输入：s16/u8；声道：mono 至 7.1 等布局。"))
 
+        加入编码器(基础("aac.mediafoundation", "Media Foundation AAC", "aac_mf", "Windows Media Foundation AAC 编码器。",
+            质量参数:=参数列表(参数("-b:a", "目标码率：如 128k/192k/256k")),
+            支持说明:="输入：s16；实际编码能力由系统 Media Foundation 组件决定。"))
+
         加入编码器(基础("mp3.lame", "LAME MP3", "libmp3lame", "MP3 已无法满足音质佬的有损高音质，建议考虑 AAC。",
             质量参数:=参数列表(参数("-q:a", "可变质量：0=最高，9=最低；常用 0~4"), 参数("-b:a", "目标码率：如 128k/192k/320k")),
             特殊参数:=参数列表(参数("-abr", "0/1", "平均码率：设为 1 后配合 -b:a"), 参数("-joint_stereo", "0/1", "联合立体声，适合中低码率"), 参数("-reservoir", "0/1", "启用比特储备，允许帧间分配码率")),
             支持说明:="输入：s16p/fltp/s32p；采样率：8~48 kHz；mono/stereo。"))
+
+        加入编码器(基础("mp3.mediafoundation", "Media Foundation MP3", "mp3_mf", "Windows Media Foundation MP3 编码器。",
+            质量参数:=参数列表(参数("-b:a", "目标码率：如 128k/192k/320k")),
+            支持说明:="输入：s16；实际编码能力由系统 Media Foundation 组件决定。"))
 
         加入编码器(基础("opus.libopus", "Opus", "libopus", "现代网络音频编码，在有损小体积音频中质量最高，需要注意目标设备和应用是否支持，如果要编码超过立体声的声道需要显式声明。",
             质量参数:=参数列表(参数("-b:a", "目标码率：语音 24k~64k；音乐 96k~256k；最高约 512k")),
@@ -181,6 +189,10 @@ Public Class 音频编码器数据库_v6
             质量参数:=参数列表(参数("-b:a", "固定码率：192k~640k，最高 640k")),
             特殊参数:=参数列表(参数("-dialnorm", "-31~-1 dB", "对白归一化；常用 -31，不主动衰减"), 参数("-dmix_mode", "notindicated/ltrt/loro/dplii", "立体声下混：ltrt=Lt/Rt，loro=Lo/Ro，dplii=Pro Logic II"), 参数("-dsur_mode", "notindicated/on/off", "Dolby Surround 标记"), 参数("-stereo_rematrixing", "0/1", "立体声重矩阵，通常保持开启")),
             支持说明:="输入：fltp；采样率：32/44.1/48 kHz；声道：mono 至 5.1。"))
+
+        加入编码器(基础("ac3.mediafoundation", "Media Foundation AC-3", "ac3_mf", "Windows Media Foundation AC-3 编码器。",
+            质量参数:=参数列表(参数("-b:a", "目标码率：如 192k/384k/640k")),
+            支持说明:="输入和能力由系统 Media Foundation 组件决定。"))
 
         加入编码器(基础("eac3.native", "ATSC A/52B (EAC3)", "eac3", "E-AC-3，AC-3 的扩展格式，适合流媒体和高码率。",
             质量参数:=参数列表(参数("-b:a", "固定码率：常用 384k~1536k；更高值取决于封装和播放器")),
