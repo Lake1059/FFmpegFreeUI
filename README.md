@@ -9,16 +9,14 @@
 FFmpegFreeUI（简称 3FUI）是在 Windows 上的 [FFmpeg](https://ffmpeg.org) 的专业交互外壳。此，即为真理！这不是给纯小白的一键全自动软件，即便 6.0 已经大幅改善了普通人的体验，但 3FUI 仍旧面向懂基本参数的进阶编码人员，小白上手有门槛但上限无穷大，这不是一个普通的编码软件，而是一整套可扩展平台。
 
 开发者知乎宣传：https://zhuanlan.zhihu.com/p/1979540305800892949<br>
-知乎终末诗的3FUI 基础教程：https://zhuanlan.zhihu.com/p/2053530841180009271<br>
+知乎终末诗的 3FUI 基础教程：https://zhuanlan.zhihu.com/p/2053530841180009271<br>
 v6 开发者官方宣传视频：https://www.bilibili.com/video/BV1rT7E6wEK4<br>
 来自 小in 的宣传视频：https://www.bilibili.com/video/BV1vZud6VEsn<br>
 
 ARXChem的3万字视频基础知识介绍：https://www1.arxchem.top/docs/1<br>
 3FUI 详细使用教程/每一个页面的介绍：https://www1.arxchem.top/docs/3-3fui<br>
-SVTAV1/NVENC/X265高级参数介绍：https://www1.arxchem.top/docs/4-av1<br>
 3FUI 常用插件和改编版：https://www1.arxchem.top/docs/5-3fui-ext-api<br>
 3FUI 超分插件：https://www1.arxchem.top/docs/6-videoenhancer<br>
-Potplayer播放器的配置教程：https://www1.arxchem.top/docs/8-lav-madvr-potplayer<br>
 
 - 发布形式：所有数据存于当前目录的单文件
 - 系统要求：Windows 10 1609+ 仅限 x64 / arm64
@@ -123,6 +121,7 @@ Potplayer播放器的配置教程：https://www1.arxchem.top/docs/8-lav-madvr-po
 ## 许可和引用
 
 - 3FUI 使用 MIT 开源许可，可以自由地使用和分发此软件
+- MIT 只覆盖 3FUI 自身的代码，不覆盖下表的第三方组件：LakeUI 另行按 GPL-3.0-only 授权，其余组件按各自条款分发，全文见 [THIRD-PARTY-NOTICES.txt](THIRD-PARTY-NOTICES.txt)
 - 仅在 GitHub 开源，在其他平台看到的源代码都不是本人！
 
 | 引用程序集                                                   | 许可证         | 作用                       |
@@ -131,6 +130,8 @@ Potplayer播放器的配置教程：https://www1.arxchem.top/docs/8-lav-madvr-po
 | [WindowsAPICodePack](https://github.com/contre/Windows-API-Code-Pack-1.1) | 微软软件许可证 | 提供更舒适的文件夹选择对话框 |
 | [LibreHardwareMonitorLib](https://github.com/LibreHardwareMonitor/LibreHardwareMonitor) | MPL-2.0        | LHM 性能监控               |
 | [Microsoft.Agents.AI.OpenAI](https://learn.microsoft.com/zh-cn/agent-framework/) | MIT | Agent 基底框架和 OpenAI 支持 |
+| [System.Management](https://github.com/dotnet/runtime/tree/main/src/libraries/System.Management) | MIT | 通过 WMI 读取 CPU / 内存 / 显卡信息 |
+| [Vortice.Direct2D1 / Direct3D11 / DirectComposition](https://github.com/amerkoleci/Vortice.Windows) | MIT | DirectX 互操作绑定，渲染器的底层支撑 |
 
 ## 新手入门
 
