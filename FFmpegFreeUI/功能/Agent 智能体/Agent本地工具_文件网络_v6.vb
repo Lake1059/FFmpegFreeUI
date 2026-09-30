@@ -239,14 +239,20 @@ Partial Public Class AgentLocalTools
         Return JsonSerializer.Serialize(New Dictionary(Of String, Object) From {{"success", True}, {"path", System.IO.Path.GetFullPath(path)}, {"replacements", If(replaceAll, count, 1)}, {"result", result}}, JsonSO)
     End Function
 
-    Private Shared Function ListDirectory(path As String, recursive As Boolean, maxItems As Integer) As String
+    Private Shared Function ListDirectory(path As String,
+                                          recursive As Boolean,
+                                          cancellationToken As Threading.CancellationToken) As String
+        cancellationToken.ThrowIfCancellationRequested()
         If String.IsNullOrWhiteSpace(path) Then Return "缺少 path"
         If Not Directory.Exists(path) Then Return "目录不存在"
         Dim dir As New DirectoryInfo(path)
-        Dim safeLimit = Math.Min(Math.Max(maxItems, 1), 5000)
         Dim options As New EnumerationOptions With {.RecurseSubdirectories = recursive, .IgnoreInaccessible = True, .AttributesToSkip = FileAttributes.ReparsePoint}
-        Dim items = dir.EnumerateFileSystemInfos("*", options).
-            Take(safeLimit).
+        Dim entries As New List(Of FileSystemInfo)
+        For Each entry In dir.EnumerateFileSystemInfos("*", options)
+            cancellationToken.ThrowIfCancellationRequested()
+            entries.Add(entry)
+        Next
+        Dim items = entries.
             OrderByDescending(Function(x) TypeOf x Is DirectoryInfo).
             ThenBy(Function(x) x.Name, StringComparer.CurrentCultureIgnoreCase).
             Select(Function(x) New Dictionary(Of String, Object) From {
@@ -255,6 +261,7 @@ Partial Public Class AgentLocalTools
                 {"type", If(TypeOf x Is DirectoryInfo, "directory", "file")},
                 {"size", If(TypeOf x Is FileInfo, DirectCast(x, FileInfo).Length, 0)}
             }).ToList()
+        cancellationToken.ThrowIfCancellationRequested()
         Return JsonSerializer.Serialize(items, JsonSO)
     End Function
 

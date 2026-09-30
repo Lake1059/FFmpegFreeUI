@@ -177,6 +177,15 @@ Partial Public Class Form_v6_Agent
     End Sub
 
     Private Function CreateConversationFromCurrentSettings() As AgentConversationData
+        ' 页面初次打开时尚未绑定当前会话，文本框和附件会暂存在控件/临时草稿中。
+        ' 创建首个会话时必须把这份草稿带入新会话，否则只附带文件的消息会在发送前丢失附件。
+        Dim carryDraftText = ""
+        Dim carryDraftPaths As New List(Of String)
+        If _current Is Nothing Then
+            carryDraftText = If(ModernTextBox1?.Text, "")
+            carryDraftPaths.AddRange(_emptyDraftPaths)
+        End If
+
         If _store IsNot Nothing Then
             For Each storedConversation In _store.Conversations
                 storedConversation.SortOrder += 1
@@ -187,9 +196,12 @@ Partial Public Class Form_v6_Agent
             .ModelId = If(MCB_模型选择.SelectedItem, 设置_v6.实例对象.AgentModelId),
             .ReasoningEffort = If(MCB_推理级别.SelectedItem, 设置_v6.实例对象.Agent推理级别),
             .NetworkMode = GetSelectedNetworkMode(),
-            .PermissionLevel = Math.Max(0, MCB_权限控制.SelectedIndex)
+            .PermissionLevel = Math.Max(0, MCB_权限控制.SelectedIndex),
+            .DraftText = carryDraftText,
+            .DraftPaths = carryDraftPaths
         }
         _store.Conversations.Add(newConversation)
+        If _current Is Nothing Then _emptyDraftPaths.Clear()
         Return newConversation
     End Function
 

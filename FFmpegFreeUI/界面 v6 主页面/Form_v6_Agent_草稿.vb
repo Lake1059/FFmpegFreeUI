@@ -56,6 +56,9 @@ Partial Public Class Form_v6_Agent
 
 
     Private Sub RestoreCurrentDraft()
+        ' 临时草稿只用于页面尚未绑定会话的短暂阶段；切换到已有会话时丢弃未归属的临时附件，
+        ' 避免它们在之后创建会话时误附到另一条对话。
+        If _current IsNot Nothing AndAlso _emptyDraftPaths.Count > 0 Then _emptyDraftPaths.Clear()
         _restoringDraft = True
         Dim undoLimit = ModernTextBox1.MaxUndoCount
         Try
@@ -74,6 +77,14 @@ Partial Public Class Form_v6_Agent
 
     Private Sub AddSubmittedFiles(paths As IEnumerable(Of String))
         If paths Is Nothing Then Return
+
+        ' 首次拖入文件时可能还没有选中会话。立即建立会话，让附件始终归属于明确的草稿，
+        ' 同时保留 CreateConversationFromCurrentSettings 中对旧临时草稿的迁移兜底。
+        If _current Is Nothing Then
+            EnsureStoreLoaded()
+            _current = CreateConversationFromCurrentSettings()
+            RestoreCurrentDraft()
+        End If
 
         For Each pathValue In NormalizeSubmittedPaths(paths)
             If _pendingFiles.Any(Function(x) String.Equals(x, pathValue, StringComparison.OrdinalIgnoreCase)) Then Continue For

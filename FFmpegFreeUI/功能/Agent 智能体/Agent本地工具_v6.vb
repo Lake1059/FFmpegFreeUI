@@ -171,10 +171,9 @@ Partial Public Class AgentLocalTools
                 {"replace_all", New Dictionary(Of String, Object) From {{"type", "boolean"}}},
                 {"expected_replacements", New Dictionary(Of String, Object) From {{"type", "integer"}}}
             }, {"path", "old_text", "new_text"}))
-            tools.Add(FunctionTool("list_directory", "列举本地目录，支持递归和条数上限。仅系统访问权限可用。", New Dictionary(Of String, Object) From {
+            tools.Add(FunctionTool("list_directory", "列举本地目录，支持递归。返回目录中的全部可访问条目；仅系统访问权限可用。", New Dictionary(Of String, Object) From {
                 {"path", New Dictionary(Of String, Object) From {{"type", "string"}}},
-                {"recursive", New Dictionary(Of String, Object) From {{"type", "boolean"}}},
-                {"max_items", New Dictionary(Of String, Object) From {{"type", "integer"}}}
+                {"recursive", New Dictionary(Of String, Object) From {{"type", "boolean"}}}
             }, {"path"}))
             tools.Add(FunctionTool("create_directory", "创建本地目录（包含不存在的父目录）。仅系统访问权限可用。", New Dictionary(Of String, Object) From {
                 {"path", New Dictionary(Of String, Object) From {{"type", "string"}}}
@@ -294,10 +293,14 @@ Partial Public Class AgentLocalTools
                     Return Agent工具封装_v6.获取集成工具状态(Agent通用工具_v6.GetJsonString(args, "tool"))
                 Case "configure_integrated_tool"
                     If permissionLevel < PermissionEnvironment Then Return "权限不足：需要环境控制"
-                    Return Await Agent工具封装_v6.配置集成工具Async(Agent通用工具_v6.GetJsonString(args, "tool"), Agent通用工具_v6.GetJsonObject(args, "payload"))
+                    Return Await Agent工具封装_v6.配置集成工具Async(Agent通用工具_v6.GetJsonString(args, "tool"),
+                                                                    Agent通用工具_v6.GetJsonObject(args, "payload"),
+                                                                    cancellationToken)
                 Case "run_integrated_tool"
                     If permissionLevel < PermissionEnvironment Then Return "权限不足：需要环境控制"
-                    Return Await Agent工具封装_v6.运行集成工具Async(Agent通用工具_v6.GetJsonString(args, "tool"), Agent通用工具_v6.GetJsonObject(args, "payload"))
+                    Return Await Agent工具封装_v6.运行集成工具Async(Agent通用工具_v6.GetJsonString(args, "tool"),
+                                                                Agent通用工具_v6.GetJsonObject(args, "payload"),
+                                                                cancellationToken)
                 Case "get_system_hardware"
                     If permissionLevel < PermissionEnvironment Then Return "权限不足：需要环境控制"
                     Return Agent工具封装_v6.获取系统硬件()
@@ -368,7 +371,7 @@ Partial Public Class AgentLocalTools
                     If permissionLevel < PermissionSystem Then Return "权限不足：需要系统访问"
                     Return ListDirectory(Agent通用工具_v6.GetJsonString(args, "path"),
                                          Agent通用工具_v6.GetJsonBoolean(args, "recursive", False),
-                                         Agent通用工具_v6.GetJsonInteger(args, "max_items", 200))
+                                         cancellationToken)
                 Case "create_directory"
                     If permissionLevel < PermissionSystem Then Return "权限不足：需要系统访问"
                     Return CreateDirectory(Agent通用工具_v6.GetJsonString(args, "path"))

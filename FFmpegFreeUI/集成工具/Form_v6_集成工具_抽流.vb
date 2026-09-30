@@ -152,7 +152,9 @@ Public Class Form_v6_集成工具_抽流
         显示提示("打开或拖入媒体文件后选择要提取的流", Color.Silver)
     End Sub
 
-    Private Async Function 打开媒体文件Async(file As String) As Task
+    Private Async Function 打开媒体文件Async(file As String,
+                                         Optional cancellationToken As CancellationToken = Nothing) As Task
+        cancellationToken.ThrowIfCancellationRequested()
         If 正在运行 Then Exit Function
         If String.IsNullOrWhiteSpace(file) OrElse Not IO.File.Exists(file) Then
             ExFloatingTip(MB_打开文件, "文件不存在", 1800)
@@ -166,7 +168,7 @@ Public Class Form_v6_集成工具_抽流
         MB_提取所选.Text = "读取中"
 
         Try
-            Dim result = Await 运行进程读取输出Async(获取FFprobe文件名(), 构建FFprobe参数(file), CancellationToken.None)
+            Dim result = Await 运行进程读取输出Async(获取FFprobe文件名(), 构建FFprobe参数(file), cancellationToken)
             If result.ExitCode <> 0 Then Throw New InvalidOperationException(If(result.Output.Trim() = "", "ffprobe 读取失败", result.Output.Trim()))
             解析FFprobeJson(result.Output)
             呈现流列表()
@@ -211,8 +213,13 @@ Public Class Form_v6_集成工具_抽流
         }
     End Function
 
-    Public Async Function Agent配置Async(file As String, outputLocation As String, selectedStreams As IEnumerable(Of String)) As Task(Of String)
-        If Not String.IsNullOrWhiteSpace(file) Then Await 打开媒体文件Async(file)
+    Public Async Function Agent配置Async(file As String,
+                                         outputLocation As String,
+                                         selectedStreams As IEnumerable(Of String),
+                                         Optional cancellationToken As CancellationToken = Nothing) As Task(Of String)
+        cancellationToken.ThrowIfCancellationRequested()
+        If Not String.IsNullOrWhiteSpace(file) Then Await 打开媒体文件Async(file, cancellationToken)
+        cancellationToken.ThrowIfCancellationRequested()
         If outputLocation IsNot Nothing Then MCB_输出位置.Text = outputLocation
 
         Dim requested = If(selectedStreams, Enumerable.Empty(Of String)()).
@@ -221,6 +228,7 @@ Public Class Form_v6_集成工具_抽流
             ToList()
         If selectedStreams IsNot Nothing Then
             For Each info In 流列表
+                cancellationToken.ThrowIfCancellationRequested()
                 If info.复选框 Is Nothing Then Continue For
                 info.复选框.Checked = requested.Any(Function(x) Agent匹配流选择(x, info))
             Next
@@ -229,8 +237,9 @@ Public Class Form_v6_集成工具_抽流
         Return $"抽流工具：{Path.GetFileName(当前文件)}，已选 {流列表.Where(Function(x) x.复选框 IsNot Nothing AndAlso x.复选框.Checked).Count()} / {流列表.Count} 个流"
     End Function
 
-    Public Async Function Agent运行Async(Optional forceAutoName As Boolean = True) As Task(Of String)
-        Return Await 提取所选Async(forceAutoName)
+    Public Async Function Agent运行Async(Optional forceAutoName As Boolean = True,
+                                         Optional cancellationToken As CancellationToken = Nothing) As Task(Of String)
+        Return Await 提取所选Async(forceAutoName, cancellationToken)
     End Function
 
     Private Function Agent匹配流选择(value As String, info As 抽流流信息) As Boolean
@@ -436,7 +445,9 @@ Public Class Form_v6_集成工具_抽流
         Await 提取所选Async(e.Button = MouseButtons.Right)
     End Sub
 
-    Private Async Function 提取所选Async(强制自动命名 As Boolean) As Task(Of String)
+    Private Async Function 提取所选Async(强制自动命名 As Boolean,
+                                         Optional 外部取消令牌 As CancellationToken = Nothing) As Task(Of String)
+        外部取消令牌.ThrowIfCancellationRequested()
         If 当前文件 = "" OrElse Not File.Exists(当前文件) Then
             ExFloatingTip(MB_打开文件, "请先打开媒体文件", 1800)
             Return "抽流失败：请先打开存在的媒体文件"
@@ -462,11 +473,12 @@ Public Class Form_v6_集成工具_抽流
             Return "抽流失败：输出文件不能覆盖源文件"
         End If
 
-        取消令牌源 = New CancellationTokenSource()
+        Dim 本次取消令牌源 = CancellationTokenSource.CreateLinkedTokenSource(外部取消令牌)
+        取消令牌源 = 本次取消令牌源
         设置运行状态(True)
 
         Try
-            Await 运行提取Async(selected, 输出表, 取消令牌源.Token)
+            Await 运行提取Async(selected, 输出表, 本次取消令牌源.Token)
             设置提取进度(100)
             ExFloatingTip(MB_提取所选, $"已提取 {selected.Count} 个流", 1600)
             Return JsonSerializer.Serialize(New Dictionary(Of String, Object) From {
@@ -483,8 +495,8 @@ Public Class Form_v6_集成工具_抽流
             ExFloatingTip(MB_提取所选, "提取失败：" & ex.Message, 2600)
             Return "抽流失败：" & ex.Message
         Finally
-            取消令牌源?.Dispose()
-            取消令牌源 = Nothing
+            If Object.ReferenceEquals(取消令牌源, 本次取消令牌源) Then 取消令牌源 = Nothing
+            本次取消令牌源.Dispose()
             设置运行状态(False)
         End Try
     End Function

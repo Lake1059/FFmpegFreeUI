@@ -55,7 +55,10 @@ Public NotInheritable Class Agent工具封装_v6
         Return JsonSerializer.Serialize(payload, JsonSO)
     End Function
 
-    Public Shared Async Function 配置集成工具Async(tool As String, payload As JsonElement) As Task(Of String)
+    Public Shared Async Function 配置集成工具Async(tool As String,
+                                                  payload As JsonElement,
+                                                  Optional cancellationToken As Threading.CancellationToken = Nothing) As Task(Of String)
+        cancellationToken.ThrowIfCancellationRequested()
         Select Case 规范集成工具名(tool)
             Case "merge"
                 Dim files = Agent通用工具_v6.GetJsonStringArray(payload, "files", False)
@@ -85,13 +88,16 @@ Public NotInheritable Class Agent工具封装_v6
                 If payload.ValueKind = JsonValueKind.Object AndAlso payload.TryGetProperty("selected_streams", selectedStreamsElement) Then
                     selectedStreams = Agent通用工具_v6.GetJsonStringArray(payload, "selected_streams", False)
                 End If
-                Return Await UIAsync(Function() Form_v6_集成工具_抽流.Agent配置Async(file, outputLocation, selectedStreams))
+                Return Await UIAsync(Function() Form_v6_集成工具_抽流.Agent配置Async(file, outputLocation, selectedStreams, cancellationToken), cancellationToken)
             Case Else
                 Return "未知集成工具：" & tool
         End Select
     End Function
 
-    Public Shared Async Function 运行集成工具Async(tool As String, payload As JsonElement) As Task(Of String)
+    Public Shared Async Function 运行集成工具Async(tool As String,
+                                                payload As JsonElement,
+                                                Optional cancellationToken As Threading.CancellationToken = Nothing) As Task(Of String)
+        cancellationToken.ThrowIfCancellationRequested()
         Select Case 规范集成工具名(tool)
             Case "merge"
                 Return UI(Function() Form_v6_集成工具_合并.Agent运行())
@@ -99,7 +105,7 @@ Public NotInheritable Class Agent工具封装_v6
                 Return UI(Function() Form_v6_集成工具_混流.Agent运行())
             Case "extract"
                 Dim forceAutoName = Agent通用工具_v6.GetJsonBoolean(payload, "force_auto_name", True)
-                Return Await UIAsync(Function() Form_v6_集成工具_抽流.Agent运行Async(forceAutoName))
+                Return Await UIAsync(Function() Form_v6_集成工具_抽流.Agent运行Async(forceAutoName, cancellationToken), cancellationToken)
             Case Else
                 Return "未知集成工具：" & tool
         End Select
@@ -507,18 +513,30 @@ Public NotInheritable Class Agent工具封装_v6
         Return func()
     End Function
 
-    Private Shared Function UIAsync(Of T)(func As Func(Of Task(Of T))) As Task(Of T)
+    Private Shared Function UIAsync(Of T)(func As Func(Of Task(Of T)),
+                                          Optional cancellationToken As Threading.CancellationToken = Nothing) As Task(Of T)
+        cancellationToken.ThrowIfCancellationRequested()
         If FormMain_v6 IsNot Nothing AndAlso FormMain_v6.IsHandleCreated AndAlso FormMain_v6.InvokeRequired Then
             Dim tcs As New TaskCompletionSource(Of T)(TaskCreationOptions.RunContinuationsAsynchronously)
-            FormMain_v6.BeginInvoke(Async Sub()
-                                        Try
-                                            tcs.SetResult(Await func())
-                                        Catch ex As Exception
-                                            tcs.SetException(ex)
-                                        End Try
-                                    End Sub)
-            Return tcs.Task
+            Try
+                FormMain_v6.BeginInvoke(Async Sub()
+                                            Try
+                                                tcs.TrySetResult(Await func())
+                                            Catch ex As Exception
+                                                tcs.TrySetException(ex)
+                                            End Try
+                                        End Sub)
+            Catch ex As Exception
+                tcs.TrySetException(ex)
+            End Try
+            Return AwaitTaskWithCancellationAsync(tcs.Task, cancellationToken)
         End If
-        Return func()
+        Return AwaitTaskWithCancellationAsync(func(), cancellationToken)
+    End Function
+
+    Private Shared Async Function AwaitTaskWithCancellationAsync(Of T)(task As Task(Of T),
+                                                                        cancellationToken As Threading.CancellationToken) As Task(Of T)
+        If Not cancellationToken.CanBeCanceled Then Return Await task
+        Return Await task.WaitAsync(cancellationToken)
     End Function
 End Class

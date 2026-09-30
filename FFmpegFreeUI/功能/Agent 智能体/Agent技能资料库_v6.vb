@@ -167,7 +167,7 @@ Agent 面向用户时既是聊天助手，也是 3FUI 控制器。不要把自�
 
 ## 本地文件和图片
 
-系统访问权限下，`read_local_text_file` 支持按行读取和字符上限，`write_local_text_file` 使用原子替换写入，`apply_local_text_patch` 可对代码执行精确文本补丁；`list_directory` 支持递归和条数上限，另有创建、复制、移动和需明确确认的回收站删除工具。`get_image_info` 只返回元数据，不返回 base64。对话框待提交文件只显示路径，Agent 应按需调用本地文件工具读取。
+系统访问权限下，`read_local_text_file` 支持按行读取和字符上限，`write_local_text_file` 使用原子替换写入，`apply_local_text_patch` 可对代码执行精确文本补丁；`list_directory` 支持递归并返回全部可访问条目，另有创建、复制、移动和需明确确认的回收站删除工具。`get_image_info` 只返回元数据，不返回 base64。对话框待提交文件只显示路径，Agent 应按需调用本地文件工具读取。
 
 准备文件页和集成工具里的路径操作属于 3FUI 环境控制，不等于任意文件系统操作。即使系统访问开放，也要尊重用户意图，不要主动读取无关私人文件。
 
@@ -221,7 +221,7 @@ PowerShell 优先用于只读检查、诊断、结构化计算和用户明确要
 - `read_local_text_file`：必填 `path`，支持 `start_line`、`line_count`、`max_chars`；大文件按片段读取。
 - `write_local_text_file`：必填 `path`、`content`，用原子替换写入文本，可选 `encoding`（`utf-8`、`utf-8-bom`、`utf-16`）和 `create_directories`。
 - `apply_local_text_patch`：必填 `path`、`old_text`、`new_text`，对代码执行精确修改；默认要求唯一匹配，可用 `replace_all` 或 `expected_replacements` 明确匹配次数。
-- `list_directory`：必填 `path`，列出目录，支持 `recursive` 和 `max_items`。
+- `list_directory`：必填 `path`，列出目录中的全部可访问条目，支持 `recursive`。
 - `create_directory`：必填 `path`，创建目录（已存在时返回现状）。`copy_local_file` 和 `move_local_path` 必填 `source`、`destination`，可选 `overwrite`，默认不覆盖目标。
 - `delete_local_path`：必须传 `confirm=true`，文件和目录优先进入回收站；执行前再次确认路径和用户意图。
 - `get_image_info`：读取图片尺寸、格式和大小，不返回 Base64。
