@@ -35,7 +35,6 @@ Public Class Form_v6_集成工具_混流
         初始化列表()
         绑定文件拖入(UltraDetailListView1)
         绑定输出文件拖入(MTB_输出目标文件)
-        调整列表交互区域()
         调整列宽()
     End Sub
 
@@ -803,12 +802,7 @@ Public Class Form_v6_集成工具_混流
     End Sub
 
     Private Sub UltraDetailListView1_SizeChanged(sender As Object, e As EventArgs) Handles UltraDetailListView1.SizeChanged
-        调整列表交互区域()
         调整列宽()
-    End Sub
-
-    Private Sub 调整列表交互区域()
-        UltraDetailListView1.DragSelectZoneWidth = Math.Max(0, UltraDetailListView1.Size.Width \ 2)
     End Sub
 
     Private Sub 调整列宽()

@@ -119,7 +119,7 @@ Partial Class Form_v6_集成工具_混流
         UltraDetailListView1.Columns.Add(ListColumn5)
         UltraDetailListView1.Columns.Add(ListColumn6)
         UltraDetailListView1.Dock = DockStyle.Fill
-        UltraDetailListView1.DragSelectZoneWidth = 200
+        UltraDetailListView1.DragSelectZoneRatio = 0.5F
         UltraDetailListView1.GroupBorderColor = Color.Silver
         UltraDetailListView1.GroupHeight = 35
         UltraDetailListView1.HeaderBackColor = Color.Transparent

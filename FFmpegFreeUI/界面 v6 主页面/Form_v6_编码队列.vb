@@ -25,7 +25,6 @@ Public Class Form_v6_编码队列
         UltraDetailListView1.Items.Clear()
         UltraDetailListView1.AllowDrop = True
         UltraDetailListView1.AllowDragReorder = True
-        调整列表交互区域()
         调整顶部按钮组居中()
         绑定菜单事件()
         AddHandler 编码队列_v6.队列已变化, AddressOf 队列已变化
@@ -490,13 +489,7 @@ Public Class Form_v6_编码队列
     End Sub
 
     Private Sub UltraDetailListView1_SizeChanged(sender As Object, e As EventArgs) Handles UltraDetailListView1.SizeChanged
-        调整列表交互区域()
         请求校准编码队列列宽()
-    End Sub
-
-    Private Sub 调整列表交互区域()
-        If UltraDetailListView1 Is Nothing Then Exit Sub
-        UltraDetailListView1.DragSelectZoneWidth = Math.Max(0, UltraDetailListView1.Size.Width \ 2)
     End Sub
 
     Private Sub UltraDetailListView1_DpiChangedAfterParent(sender As Object, e As EventArgs) Handles UltraDetailListView1.DpiChangedAfterParent

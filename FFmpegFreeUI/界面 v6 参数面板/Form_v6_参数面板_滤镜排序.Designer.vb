@@ -72,7 +72,7 @@ Partial Class Form_v6_参数面板_滤镜排序
         UDLV_滤镜排序列表.Columns.Add(ListColumn2)
         UDLV_滤镜排序列表.Columns.Add(ListColumn3)
         UDLV_滤镜排序列表.Dock = DockStyle.Fill
-        UDLV_滤镜排序列表.DragSelectZoneWidth = 200
+        UDLV_滤镜排序列表.DragSelectZoneRatio = 0.5F
         UDLV_滤镜排序列表.GroupBorderColor = Color.Silver
         UDLV_滤镜排序列表.GroupHeight = 35
         UDLV_滤镜排序列表.HeaderBackColor = Color.Transparent

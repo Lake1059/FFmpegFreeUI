@@ -78,6 +78,7 @@ Partial Class Form_v6_准备文件
         UltraDetailListView1.Columns.Add(ListColumn3)
         UltraDetailListView1.Columns.Add(ListColumn4)
         UltraDetailListView1.Dock = DockStyle.Fill
+        UltraDetailListView1.DragSelectZoneRatio = 0.5F
         UltraDetailListView1.GroupBackColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
         UltraDetailListView1.GroupForeColor = Color.Gainsboro
         UltraDetailListView1.GroupHeight = 40

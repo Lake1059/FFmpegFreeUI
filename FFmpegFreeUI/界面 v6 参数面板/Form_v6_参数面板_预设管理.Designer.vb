@@ -156,6 +156,7 @@ Partial Class Form_v6_参数面板_预设管理
         ' MLB_预设列表
         ' 
         MLB_预设列表.AllowDragReorder = True
+        MLB_预设列表.DragSelectZoneRatio = 0.5F
         MLB_预设列表.AnimationDuration = 300
         MLB_预设列表.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MLB_预设列表.BorderRadius = 10

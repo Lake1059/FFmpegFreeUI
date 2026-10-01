@@ -75,7 +75,7 @@ Partial Class Form_v6_社区_浏览内容
         UDLV_元数据列表.Columns.Add(ListColumn3)
         UDLV_元数据列表.Columns.Add(ListColumn4)
         UDLV_元数据列表.Dock = DockStyle.Fill
-        UDLV_元数据列表.DragSelectZoneWidth = 100
+        UDLV_元数据列表.DragSelectZoneRatio = 0.5F
         UDLV_元数据列表.GroupBorderColor = Color.Silver
         UDLV_元数据列表.GroupHeight = 35
         UDLV_元数据列表.HeaderBackColor = Color.Transparent

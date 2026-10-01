@@ -108,7 +108,7 @@ Partial Class Form_v6_参数面板_超分
         MLB_超分滤镜叠加策略列表.BorderRadius = 10
         MLB_超分滤镜叠加策略列表.BorderSize = 0
         MLB_超分滤镜叠加策略列表.Dock = DockStyle.Fill
-        MLB_超分滤镜叠加策略列表.DragSelectZoneWidth = 200
+        MLB_超分滤镜叠加策略列表.DragSelectZoneRatio = 0.5F
         MLB_超分滤镜叠加策略列表.ItemHoverColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
         MLB_超分滤镜叠加策略列表.ItemPaddingLeft = 8
         MLB_超分滤镜叠加策略列表.Items.Add("默认策略")

@@ -144,7 +144,6 @@ Public Class Form_v6_集成工具_质量评测
         绑定文件拖入(MTB_原视频文件路径, True)
         绑定文件拖入(UltraDetailListView1, False)
         绑定文件拖入(Panel6, False)
-        调整列表交互区域()
         调整列宽()
         调整底部按钮布局()
         恢复页面状态()
@@ -2174,7 +2173,6 @@ Public Class Form_v6_集成工具_质量评测
     End Sub
 
     Private Sub UltraDetailListView1_SizeChanged(sender As Object, e As EventArgs) Handles UltraDetailListView1.SizeChanged
-        调整列表交互区域()
         调整列宽()
     End Sub
 
@@ -2245,10 +2243,6 @@ Public Class Form_v6_集成工具_质量评测
         Finally
             Panel6.ResumeLayout()
         End Try
-    End Sub
-
-    Private Sub 调整列表交互区域()
-        UltraDetailListView1.DragSelectZoneWidth = Math.Max(0, UltraDetailListView1.Size.Width \ 2)
     End Sub
 
     Private Sub 调整列宽()

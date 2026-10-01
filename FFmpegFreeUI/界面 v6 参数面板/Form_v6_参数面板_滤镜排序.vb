@@ -33,7 +33,6 @@ Public Class Form_v6_参数面板_滤镜排序
 
     Private Sub Form_v6_参数面板_滤镜排序_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         UDLV_滤镜排序列表.MultiSelect = True
-        调整列表交互区域()
         If UDLV_滤镜排序列表.Columns.Count = 3 Then
             UDLV_滤镜排序列表.Columns(0).AllowLabelEdit = False
             UDLV_滤镜排序列表.Columns(1).AllowLabelEdit = False
@@ -296,7 +295,6 @@ Public Class Form_v6_参数面板_滤镜排序
     End Sub
 
     Private Sub UltraDetailListView1_SizeChanged(sender As Object, e As EventArgs) Handles UDLV_滤镜排序列表.SizeChanged
-        调整列表交互区域()
         校准列表列宽()
     End Sub
 
@@ -350,11 +348,6 @@ Public Class Form_v6_参数面板_滤镜排序
         If item IsNot Nothing AndAlso item.滤镜目标流类型 = 预设数据_v6.滤镜排序单片结构.流类型.音频 Then Return 1
         Return 0
     End Function
-
-    Private Sub 调整列表交互区域()
-        If UDLV_滤镜排序列表 Is Nothing Then Exit Sub
-        UDLV_滤镜排序列表.DragSelectZoneWidth = Math.Max(0, UDLV_滤镜排序列表.Size.Width \ 2)
-    End Sub
 
     Private Sub 校准列表列宽()
         If UDLV_滤镜排序列表 Is Nothing OrElse UDLV_滤镜排序列表.Columns.Count < 3 Then Exit Sub

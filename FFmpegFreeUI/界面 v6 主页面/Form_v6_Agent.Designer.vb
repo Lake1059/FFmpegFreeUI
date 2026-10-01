@@ -398,6 +398,7 @@ Partial Class Form_v6_Agent
         ' ModernListBox1
         ' 
         ModernListBox1.AllowDragReorder = True
+        ModernListBox1.DragSelectZoneRatio = 0.5F
         ModernListBox1.BackColor = Color.Transparent
         ModernListBox1.BackColor1 = Color.Transparent
         ModernListBox1.BorderSize = 0
@@ -454,6 +455,7 @@ Partial Class Form_v6_Agent
         ' ModernListBox2
         ' 
         ModernListBox2.AllowDragReorder = True
+        ModernListBox2.DragSelectZoneRatio = 0.5F
         ModernListBox2.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ModernListBox2.BorderRadius = 10
         ModernListBox2.BorderSize = 0

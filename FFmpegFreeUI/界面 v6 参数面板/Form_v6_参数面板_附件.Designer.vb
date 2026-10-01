@@ -71,7 +71,7 @@ Partial Class Form_v6_参数面板_附件
         UDLV_附件列表.Columns.Add(ListColumn1)
         UDLV_附件列表.Columns.Add(ListColumn2)
         UDLV_附件列表.Dock = DockStyle.Fill
-        UDLV_附件列表.DragSelectZoneWidth = 100
+        UDLV_附件列表.DragSelectZoneRatio = 0.5F
         UDLV_附件列表.GroupBorderColor = Color.Silver
         UDLV_附件列表.GroupHeight = 35
         UDLV_附件列表.HeaderBackColor = Color.Transparent
