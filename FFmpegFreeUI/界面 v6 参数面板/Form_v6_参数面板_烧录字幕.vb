@@ -89,6 +89,17 @@ Public Class Form_v6_参数面板_烧录字幕
         End If
     End Sub
 
+    Private Sub Form_v6_参数面板_烧录字幕_Shown(sender As Object, e As EventArgs) Handles Me.Shown
+        If Not FormMain_v6.ThisIsYourWindow1.AttachedForms.Count > 0 Then
+            Panel1.Width = 320 * DPI()
+            MCB_滤镜选择.Width = (Panel1.Width - JustEmptyControl1.Width) * 0.5
+            MCB_后缀优先级1.Width = (Panel1.Width - JustEmptyControl2.Width - JustEmptyControl3.Width) / 3
+            MCB_后缀优先级2.Width = MCB_后缀优先级1.Width
+            Panel2.Width = 350 * DPI()
+            Panel3.Width = 150 * DPI()
+        End If
+    End Sub
+
     Private Sub Form_v6_参数面板_烧录字幕_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
         e.Cancel = True
         Me.Hide()
@@ -334,5 +345,6 @@ Public Class Form_v6_参数面板_烧录字幕
             _正在选择路径 = False
         End Try
     End Sub
+
 
 End Class
