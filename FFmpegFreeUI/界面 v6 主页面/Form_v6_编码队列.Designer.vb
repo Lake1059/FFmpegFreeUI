@@ -390,12 +390,13 @@ Partial Class Form_v6_编码队列
         UltraDetailListView1.HeaderBorderColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         UltraDetailListView1.HeaderBorderWidth = 2
         UltraDetailListView1.HeaderForeColor = Color.DarkGray
-        UltraDetailListView1.HeaderHeight = 36
+        UltraDetailListView1.HeaderHeight = 40
         UltraDetailListView1.ItemCornerRadius = 10
         UltraDetailListView1.ItemPadding = New Padding(10, 5, 5, 5)
         UltraDetailListView1.ItemSelectedBackColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         UltraDetailListView1.Location = New Point(0, 55)
         UltraDetailListView1.Margin = New Padding(2, 2, 2, 2)
+        UltraDetailListView1.MoreIndicatorColor = Color.FromArgb(CByte(120), CByte(220), CByte(220), CByte(220))
         UltraDetailListView1.Name = "UltraDetailListView1"
         UltraDetailListView1.Padding = New Padding(10, 0, 10, 10)
         UltraDetailListView1.ScrollBarThumbColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))

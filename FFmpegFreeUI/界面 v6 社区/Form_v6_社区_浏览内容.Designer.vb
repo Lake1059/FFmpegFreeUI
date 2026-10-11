@@ -86,6 +86,7 @@ Partial Class Form_v6_社区_浏览内容
         UDLV_元数据列表.Location = New Point(20, 62)
         UDLV_元数据列表.Margin = New Padding(2, 2, 2, 2)
         UDLV_元数据列表.Name = "UDLV_元数据列表"
+        UDLV_元数据列表.Padding = New Padding(10, 0, 10, 10)
         UDLV_元数据列表.SelectionRectFillColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         UDLV_元数据列表.SelectionRectBorderColor = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
         UDLV_元数据列表.Size = New Size(762, 513)

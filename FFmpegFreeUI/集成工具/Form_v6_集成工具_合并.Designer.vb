@@ -96,7 +96,7 @@ Partial Class Form_v6_集成工具_合并
         UltraDetailListView1.Location = New Point(20, 97)
         UltraDetailListView1.Margin = New Padding(2, 2, 2, 2)
         UltraDetailListView1.Name = "UltraDetailListView1"
-        UltraDetailListView1.Padding = New Padding(5, 0, 5, 5)
+        UltraDetailListView1.Padding = New Padding(10, 0, 10, 10)
         UltraDetailListView1.ScrollBarThumbColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         UltraDetailListView1.ScrollBarThumbHoverColor = Color.FromArgb(CByte(120), CByte(220), CByte(220), CByte(220))
         UltraDetailListView1.ScrollBarTrackColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))

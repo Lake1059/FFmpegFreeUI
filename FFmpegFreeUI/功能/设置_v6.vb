@@ -382,7 +382,6 @@ Public Class 设置_v6
     Public Shared Sub 设置自动同时运行任务数量(index As Integer)
         If index < 0 Then Return
         实例对象.自动同时运行任务数量选项 = index
-        编码队列_v6.请求调度()
     End Sub
 
     Public Shared Sub 设置远程监听(启用 As Boolean)

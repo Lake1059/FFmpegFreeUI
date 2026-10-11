@@ -28,13 +28,8 @@ Partial Class Form_v6_集成工具_质量评测
         Dim ListColumn4 As LakeUI.UltraDetailListView.ListColumn = New LakeUI.UltraDetailListView.ListColumn()
         Dim ListColumn5 As LakeUI.UltraDetailListView.ListColumn = New LakeUI.UltraDetailListView.ListColumn()
         ModernPanel1 = New LakeUI.ModernPanel()
-        ModernPanel1.BackColor = Color.Transparent
-        ModernPanel1.BackColor1 = Color.Transparent
         UltraDetailListView1 = New LakeUI.UltraDetailListView()
         Panel6 = New LakeUI.ModernPanel()
-        Panel6.BackColor = Color.Transparent
-        Panel6.BackColor1 = Color.Transparent
-        Panel6.BorderSize = 0
         MB_导出记录 = New LakeUI.ModernButton()
         JustEmptyControl9 = New LakeUI.JustEmptyControl()
         JustEmptyControl8 = New LakeUI.JustEmptyControl()
@@ -50,9 +45,6 @@ Partial Class Form_v6_集成工具_质量评测
         MB_开始评测 = New LakeUI.ModernButton()
         HtmlColorLabel8 = New LakeUI.HtmlColorLabel()
         Panel4 = New LakeUI.ModernPanel()
-        Panel4.BackColor = Color.Transparent
-        Panel4.BackColor1 = Color.Transparent
-        Panel4.BorderSize = 0
         MCB_模型选择 = New VmafModelComboBox()
         JustEmptyControl2 = New LakeUI.JustEmptyControl()
         MB_刷新VMAF模型 = New LakeUI.ModernButton()
@@ -61,33 +53,21 @@ Partial Class Form_v6_集成工具_质量评测
         JustEmptyControl1 = New LakeUI.JustEmptyControl()
         MCB_Pooling = New LakeUI.ModernComboBox()
         Panel5 = New LakeUI.ModernPanel()
-        Panel5.BackColor = Color.Transparent
-        Panel5.BackColor1 = Color.Transparent
-        Panel5.BorderSize = 0
         HtmlColorLabel9 = New LakeUI.HtmlColorLabel()
         HtmlColorLabel7 = New LakeUI.HtmlColorLabel()
         HtmlColorLabel6 = New LakeUI.HtmlColorLabel()
         Panel3 = New LakeUI.ModernPanel()
-        Panel3.BackColor = Color.Transparent
-        Panel3.BackColor1 = Color.Transparent
-        Panel3.BorderSize = 0
         MCB_XPSNR = New LakeUI.ModernCheckBox()
         MCB_VMAF = New LakeUI.ModernCheckBox()
         MCB_SSIM = New LakeUI.ModernCheckBox()
         MCB_PSNR = New LakeUI.ModernCheckBox()
         HtmlColorLabel4 = New LakeUI.HtmlColorLabel()
         Panel2 = New LakeUI.ModernPanel()
-        Panel2.BackColor = Color.Transparent
-        Panel2.BackColor1 = Color.Transparent
-        Panel2.BorderSize = 0
         MTB_从头开始 = New LakeUI.ModernTextBox()
         HtmlColorLabel2 = New LakeUI.HtmlColorLabel()
         MTB_评测时长 = New LakeUI.ModernTextBox()
         HtmlColorLabel3 = New LakeUI.HtmlColorLabel()
         Panel1 = New LakeUI.ModernPanel()
-        Panel1.BackColor = Color.Transparent
-        Panel1.BackColor1 = Color.Transparent
-        Panel1.BorderSize = 0
         MTB_原视频文件路径 = New LakeUI.ModernTextBox()
         JustEmptyControl5 = New LakeUI.JustEmptyControl()
         MB_选择原视频 = New LakeUI.ModernButton()
@@ -103,6 +83,8 @@ Partial Class Form_v6_集成工具_质量评测
         ' 
         ' ModernPanel1
         ' 
+        ModernPanel1.BackColor = Color.Transparent
+        ModernPanel1.BackColor1 = Color.Transparent
         ModernPanel1.BorderSize = 0
         ModernPanel1.Controls.Add(UltraDetailListView1)
         ModernPanel1.Controls.Add(Panel6)
@@ -147,13 +129,14 @@ Partial Class Form_v6_集成工具_质量评测
         UltraDetailListView1.GroupHeight = 35
         UltraDetailListView1.HeaderBackColor = Color.Transparent
         UltraDetailListView1.HeaderBorderColor = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
+        UltraDetailListView1.HeaderHeight = 40
         UltraDetailListView1.ItemCornerRadius = 10
         UltraDetailListView1.ItemPadding = New Padding(10, 5, 10, 5)
         UltraDetailListView1.ItemSelectedBackColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         UltraDetailListView1.Location = New Point(20, 279)
         UltraDetailListView1.Margin = New Padding(2, 2, 2, 2)
         UltraDetailListView1.Name = "UltraDetailListView1"
-        UltraDetailListView1.Padding = New Padding(5, 0, 5, 5)
+        UltraDetailListView1.Padding = New Padding(10, 0, 10, 10)
         UltraDetailListView1.ScrollBarThumbColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         UltraDetailListView1.ScrollBarThumbHoverColor = Color.FromArgb(CByte(120), CByte(220), CByte(220), CByte(220))
         UltraDetailListView1.ScrollBarTrackColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
@@ -164,6 +147,9 @@ Partial Class Form_v6_集成工具_质量评测
         ' 
         ' Panel6
         ' 
+        Panel6.BackColor = Color.Transparent
+        Panel6.BackColor1 = Color.Transparent
+        Panel6.BorderSize = 0
         Panel6.Controls.Add(MB_导出记录)
         Panel6.Controls.Add(JustEmptyControl9)
         Panel6.Controls.Add(JustEmptyControl8)
@@ -356,6 +342,9 @@ Partial Class Form_v6_集成工具_质量评测
         ' 
         ' Panel4
         ' 
+        Panel4.BackColor = Color.Transparent
+        Panel4.BackColor1 = Color.Transparent
+        Panel4.BorderSize = 0
         Panel4.Controls.Add(MCB_模型选择)
         Panel4.Controls.Add(JustEmptyControl2)
         Panel4.Controls.Add(MB_刷新VMAF模型)
@@ -380,6 +369,7 @@ Partial Class Form_v6_集成工具_质量评测
         MCB_模型选择.DropDownBackdropBlurRadius = 30
         MCB_模型选择.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
         MCB_模型选择.DropDownHoverColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
+        MCB_模型选择.DropDownItemHeight = 36
         MCB_模型选择.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
         MCB_模型选择.DropDownPadding = New Padding(10)
         MCB_模型选择.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
@@ -387,7 +377,6 @@ Partial Class Form_v6_集成工具_质量评测
         MCB_模型选择.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
         MCB_模型选择.Location = New Point(70, 10)
         MCB_模型选择.Margin = New Padding(2, 2, 2, 2)
-        MCB_模型选择.DropDownItemHeight = 36
         MCB_模型选择.MaxDropDownItems = 14
         MCB_模型选择.Name = "MCB_模型选择"
         MCB_模型选择.Padding = New Padding(10, 0, 10, 0)
@@ -421,7 +410,7 @@ Partial Class Form_v6_集成工具_质量评测
         MB_刷新VMAF模型.Size = New Size(60, 32)
         MB_刷新VMAF模型.TabIndex = 22
         MB_刷新VMAF模型.Text = "刷新"
-        '
+        ' 
         ' JustEmptyControl10
         ' 
         JustEmptyControl10.Dock = DockStyle.Right
@@ -431,7 +420,7 @@ Partial Class Form_v6_集成工具_质量评测
         JustEmptyControl10.TabIndex = 24
         ' 
         ' MCB_SubSample
-        '
+        ' 
         MCB_SubSample.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_SubSample.BorderRadius = 10
         MCB_SubSample.BorderSize = 0
@@ -494,6 +483,9 @@ Partial Class Form_v6_集成工具_质量评测
         ' 
         ' Panel5
         ' 
+        Panel5.BackColor = Color.Transparent
+        Panel5.BackColor1 = Color.Transparent
+        Panel5.BorderSize = 0
         Panel5.Controls.Add(HtmlColorLabel9)
         Panel5.Controls.Add(HtmlColorLabel7)
         Panel5.Controls.Add(HtmlColorLabel6)
@@ -519,7 +511,7 @@ Partial Class Form_v6_集成工具_质量评测
         HtmlColorLabel9.ToolTipText = "模型按 V1/V0、4K、观看距离、HFR、CUDA 分类显示。带 CUDA 胶囊的条目使用 libvmaf_cuda；当前 VMAF v1 的部分特征尚无 CUDA 实现，因此仅对兼容的 v0 NEG 模型提供 CUDA 条目。"
         ' 
         ' HtmlColorLabel7
-        '
+        ' 
         HtmlColorLabel7.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel7.Dock = DockStyle.Right
         HtmlColorLabel7.Location = New Point(467, 0)
@@ -544,6 +536,9 @@ Partial Class Form_v6_集成工具_质量评测
         ' 
         ' Panel3
         ' 
+        Panel3.BackColor = Color.Transparent
+        Panel3.BackColor1 = Color.Transparent
+        Panel3.BorderSize = 0
         Panel3.Controls.Add(MCB_XPSNR)
         Panel3.Controls.Add(MCB_VMAF)
         Panel3.Controls.Add(MCB_SSIM)
@@ -645,6 +640,9 @@ Partial Class Form_v6_集成工具_质量评测
         ' 
         ' Panel2
         ' 
+        Panel2.BackColor = Color.Transparent
+        Panel2.BackColor1 = Color.Transparent
+        Panel2.BorderSize = 0
         Panel2.Controls.Add(MTB_从头开始)
         Panel2.Controls.Add(HtmlColorLabel2)
         Panel2.Controls.Add(MTB_评测时长)
@@ -719,6 +717,9 @@ Partial Class Form_v6_集成工具_质量评测
         ' 
         ' Panel1
         ' 
+        Panel1.BackColor = Color.Transparent
+        Panel1.BackColor1 = Color.Transparent
+        Panel1.BorderSize = 0
         Panel1.Controls.Add(MTB_原视频文件路径)
         Panel1.Controls.Add(JustEmptyControl5)
         Panel1.Controls.Add(MB_选择原视频)
@@ -798,7 +799,6 @@ Partial Class Form_v6_集成工具_质量评测
         ModernPanel1.PerformLayout()
         Panel6.ResumeLayout(False)
         Panel4.ResumeLayout(False)
-        Panel4.PerformLayout()
         Panel5.ResumeLayout(False)
         Panel3.ResumeLayout(False)
         Panel3.PerformLayout()

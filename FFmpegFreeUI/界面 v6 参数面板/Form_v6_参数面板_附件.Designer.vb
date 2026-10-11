@@ -82,6 +82,7 @@ Partial Class Form_v6_参数面板_附件
         UDLV_附件列表.Location = New Point(20, 95)
         UDLV_附件列表.Margin = New Padding(2, 2, 2, 2)
         UDLV_附件列表.Name = "UDLV_附件列表"
+        UDLV_附件列表.Padding = New Padding(10, 0, 10, 10)
         UDLV_附件列表.SelectionRectBorderColor = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
         UDLV_附件列表.SelectionRectFillColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         UDLV_附件列表.Size = New Size(727, 455)

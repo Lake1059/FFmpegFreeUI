@@ -22,31 +22,28 @@ Partial Class Form_v6_集成工具_抽流
     '不要使用代码编辑器修改它。
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Dim ListColumn1 As LakeUI.UltraDetailListView.ListColumn = New LakeUI.UltraDetailListView.ListColumn()
         ModernPanel1 = New LakeUI.ModernPanel()
-        ModernPanel1.BackColor = Color.Transparent
-        ModernPanel1.BackColor1 = Color.Transparent
-        ModernPanel2 = New LakeUI.ModernPanel()
-        ModernPanel2.BackColor = Color.Transparent
+        UltraDetailListView1 = New LakeUI.UltraDetailListView()
         Panel1 = New LakeUI.ModernPanel()
-        Panel1.BackColor = Color.Transparent
-        Panel1.BackColor1 = Color.Transparent
-        Panel1.BorderSize = 0
         MCB_输出位置 = New LakeUI.ModernComboBox()
+        JustEmptyControl3 = New LakeUI.JustEmptyControl()
+        MB_清除页面 = New LakeUI.ModernButton()
         JustEmptyControl2 = New LakeUI.JustEmptyControl()
         MB_提取所选 = New LakeUI.ModernButton()
         JustEmptyControl1 = New LakeUI.JustEmptyControl()
         MB_打开文件 = New LakeUI.ModernButton()
         HtmlColorLabel1 = New LakeUI.HtmlColorLabel()
-        JustEmptyControl3 = New LakeUI.JustEmptyControl()
-        MB_清除页面 = New LakeUI.ModernButton()
         ModernPanel1.SuspendLayout()
         Panel1.SuspendLayout()
         SuspendLayout()
         ' 
         ' ModernPanel1
         ' 
+        ModernPanel1.BackColor = Color.Transparent
+        ModernPanel1.BackColor1 = Color.Transparent
         ModernPanel1.BorderSize = 0
-        ModernPanel1.Controls.Add(ModernPanel2)
+        ModernPanel1.Controls.Add(UltraDetailListView1)
         ModernPanel1.Controls.Add(Panel1)
         ModernPanel1.Controls.Add(HtmlColorLabel1)
         ModernPanel1.Dock = DockStyle.Fill
@@ -56,20 +53,46 @@ Partial Class Form_v6_集成工具_抽流
         ModernPanel1.Size = New Size(871, 595)
         ModernPanel1.TabIndex = 0
         ' 
-        ' ModernPanel2
+        ' UltraDetailListView1
         ' 
-        ModernPanel2.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        ModernPanel2.BorderRadius = 10
-        ModernPanel2.BorderSize = 0
-        ModernPanel2.Dock = DockStyle.Fill
-        ModernPanel2.Location = New Point(20, 97)
-        ModernPanel2.Name = "ModernPanel2"
-        ModernPanel2.Padding = New Padding(10)
-        ModernPanel2.Size = New Size(831, 478)
-        ModernPanel2.TabIndex = 6
+        UltraDetailListView1.BackgroundColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        UltraDetailListView1.BorderRadius = 10
+        UltraDetailListView1.BorderSize = 0
+        ListColumn1.Width = 500
+        UltraDetailListView1.Columns.Add(ListColumn1)
+        UltraDetailListView1.Dock = DockStyle.Fill
+        UltraDetailListView1.DragSelectZoneRatio = 1F
+        UltraDetailListView1.GroupBackColor = Color.Transparent
+        UltraDetailListView1.GroupBorderColor = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
+        UltraDetailListView1.GroupForeColor = Color.Gainsboro
+        UltraDetailListView1.GroupHeight = 35
+        UltraDetailListView1.HeaderBackColor = Color.Transparent
+        UltraDetailListView1.HeaderBorderColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        UltraDetailListView1.HeaderBorderWidth = 2
+        UltraDetailListView1.HeaderForeColor = Color.DarkGray
+        UltraDetailListView1.HeaderHeight = 40
+        UltraDetailListView1.HeaderVisible = False
+        UltraDetailListView1.ItemCornerRadius = 10
+        UltraDetailListView1.ItemPadding = New Padding(10, 5, 5, 5)
+        UltraDetailListView1.ItemSelectedBackColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        UltraDetailListView1.Location = New Point(20, 95)
+        UltraDetailListView1.Margin = New Padding(2, 2, 2, 2)
+        UltraDetailListView1.MoreIndicatorColor = Color.FromArgb(CByte(120), CByte(220), CByte(220), CByte(220))
+        UltraDetailListView1.Name = "UltraDetailListView1"
+        UltraDetailListView1.Padding = New Padding(10, 0, 10, 10)
+        UltraDetailListView1.ScrollBarThumbColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        UltraDetailListView1.ScrollBarThumbHoverColor = Color.FromArgb(CByte(120), CByte(220), CByte(220), CByte(220))
+        UltraDetailListView1.ScrollBarTrackColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
+        UltraDetailListView1.SelectionRectBorderColor = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
+        UltraDetailListView1.SelectionRectFillColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        UltraDetailListView1.Size = New Size(831, 480)
+        UltraDetailListView1.TabIndex = 6
         ' 
         ' Panel1
         ' 
+        Panel1.BackColor = Color.Transparent
+        Panel1.BackColor1 = Color.Transparent
+        Panel1.BorderSize = 0
         Panel1.Controls.Add(MCB_输出位置)
         Panel1.Controls.Add(JustEmptyControl3)
         Panel1.Controls.Add(MB_清除页面)
@@ -78,7 +101,7 @@ Partial Class Form_v6_集成工具_抽流
         Panel1.Controls.Add(JustEmptyControl1)
         Panel1.Controls.Add(MB_打开文件)
         Panel1.Dock = DockStyle.Top
-        Panel1.Location = New Point(20, 45)
+        Panel1.Location = New Point(20, 43)
         Panel1.Name = "Panel1"
         Panel1.Padding = New Padding(0, 10, 0, 10)
         Panel1.Size = New Size(831, 52)
@@ -113,6 +136,29 @@ Partial Class Form_v6_集成工具_抽流
         MCB_输出位置.ToolTipPadding = New Padding(15)
         MCB_输出位置.WaterText = "输出位置，将文件或文件夹拖至此来直接获取位置"
         MCB_输出位置.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
+        ' 
+        ' JustEmptyControl3
+        ' 
+        JustEmptyControl3.Dock = DockStyle.Left
+        JustEmptyControl3.Location = New Point(320, 10)
+        JustEmptyControl3.Name = "JustEmptyControl3"
+        JustEmptyControl3.Size = New Size(10, 32)
+        JustEmptyControl3.TabIndex = 9
+        ' 
+        ' MB_清除页面
+        ' 
+        MB_清除页面.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MB_清除页面.BorderRadius = 10
+        MB_清除页面.BorderSize = 0
+        MB_清除页面.Dock = DockStyle.Left
+        MB_清除页面.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        MB_清除页面.Location = New Point(220, 10)
+        MB_清除页面.Margin = New Padding(2)
+        MB_清除页面.Name = "MB_清除页面"
+        MB_清除页面.PressedBackColor1 = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
+        MB_清除页面.Size = New Size(100, 32)
+        MB_清除页面.TabIndex = 8
+        MB_清除页面.Text = "清除页面"
         ' 
         ' JustEmptyControl2
         ' 
@@ -171,32 +217,9 @@ Partial Class Form_v6_集成工具_抽流
         HtmlColorLabel1.Location = New Point(20, 20)
         HtmlColorLabel1.Margin = New Padding(2)
         HtmlColorLabel1.Name = "HtmlColorLabel1"
-        HtmlColorLabel1.Size = New Size(831, 25)
+        HtmlColorLabel1.Size = New Size(831, 23)
         HtmlColorLabel1.TabIndex = 4
         HtmlColorLabel1.Text = "<span style=""font-size:13; color:Silver"">将指定的流单独输出到文件</span>   多选时自动命名；单选时用左键点提取是打开另存为，右键是自动命名"
-        ' 
-        ' JustEmptyControl3
-        ' 
-        JustEmptyControl3.Dock = DockStyle.Left
-        JustEmptyControl3.Location = New Point(320, 10)
-        JustEmptyControl3.Name = "JustEmptyControl3"
-        JustEmptyControl3.Size = New Size(10, 32)
-        JustEmptyControl3.TabIndex = 9
-        ' 
-        ' MB_清除页面
-        ' 
-        MB_清除页面.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        MB_清除页面.BorderRadius = 10
-        MB_清除页面.BorderSize = 0
-        MB_清除页面.Dock = DockStyle.Left
-        MB_清除页面.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
-        MB_清除页面.Location = New Point(220, 10)
-        MB_清除页面.Margin = New Padding(2)
-        MB_清除页面.Name = "MB_清除页面"
-        MB_清除页面.PressedBackColor1 = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
-        MB_清除页面.Size = New Size(100, 32)
-        MB_清除页面.TabIndex = 8
-        MB_清除页面.Text = "清除页面"
         ' 
         ' Form_v6_集成工具_抽流
         ' 
@@ -223,7 +246,7 @@ Partial Class Form_v6_集成工具_抽流
     Friend WithEvents JustEmptyControl2 As LakeUI.JustEmptyControl
     Friend WithEvents MB_提取所选 As LakeUI.ModernButton
     Friend WithEvents MCB_输出位置 As LakeUI.ModernComboBox
-    Friend WithEvents ModernPanel2 As LakeUI.ModernPanel
     Friend WithEvents JustEmptyControl3 As LakeUI.JustEmptyControl
     Friend WithEvents MB_清除页面 As LakeUI.ModernButton
+    Friend WithEvents UltraDetailListView1 As LakeUI.UltraDetailListView
 End Class

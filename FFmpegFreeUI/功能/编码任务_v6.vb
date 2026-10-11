@@ -84,6 +84,8 @@ Public Class 编码任务_v6
     Private ReadOnly 状态锁 As New Object
     Private ReadOnly 输出锁 As New Object
     Private 正在执行标记 As Boolean = False
+    Private 已实际开始标记 As Boolean = False
+    Private 启动准备异常 As Exception
     Private 当前执行已请求停止 As Boolean = False
     Private 执行版本 As Long = 0
     Private ReadOnly 日志锁 As New Object
@@ -149,10 +151,29 @@ Public Class 编码任务_v6
         End Get
     End Property
 
+    Public ReadOnly Property 已实际开始 As Boolean
+        Get
+            SyncLock 状态锁
+                Return 已实际开始标记
+            End SyncLock
+        End Get
+    End Property
+
+    Friend ReadOnly Property 可自动开始 As Boolean
+        Get
+            SyncLock 状态锁
+                Return 允许自动启动 AndAlso Not 已实际开始标记 AndAlso Not 正在执行标记 AndAlso
+                       (状态 = 编码任务状态_v6.未处理 OrElse 状态 = 编码任务状态_v6.已停止)
+            End SyncLock
+        End Get
+    End Property
+
     Friend Function 开始执行() As Long
         SyncLock 状态锁
             If 正在执行标记 OrElse 状态 <> 编码任务状态_v6.未处理 Then Return 0
             正在执行标记 = True
+            已实际开始标记 = True
+            启动准备异常 = Nothing
             当前执行已请求停止 = False
             手动停止 = False
             状态 = 编码任务状态_v6.正在处理
@@ -165,10 +186,22 @@ Public Class 编码任务_v6
         SyncLock 状态锁
             Dim result = 当前执行已请求停止
             正在执行标记 = False
+            ' 停止清理结束后，才允许下一次自动调度按队列顺序重启。
+            If result Then 已实际开始标记 = False
             当前执行已请求停止 = False
             Return result
         End SyncLock
     End Function
+
+    Friend Sub 准备启动输出文件(Optional 保留已分配输出 As Boolean = False)
+        If 保留已分配输出 AndAlso Not String.IsNullOrWhiteSpace(输出文件) Then Exit Sub
+        Try
+            编码队列_v6.为任务保留输出文件(Me)
+        Catch ex As Exception
+            ' 交给执行流程统一记录失败、清理资源并推进队列。
+            启动准备异常 = ex
+        End Try
+    End Sub
 
     Private Function 是当前执行(执行标识 As Long) As Boolean
         SyncLock 状态锁
@@ -345,7 +378,7 @@ Public Class 编码任务_v6
             进度 = New 编码进度_v6
             任务耗时计时器.Restart()
             追加日志($"[3FUI] 任务开始：{If(任务名称 <> "", 任务名称, Path.GetFileName(输入文件))}", 编码任务日志类别_v6.系统, Nothing, False, False)
-            编码队列_v6.为任务保留输出文件(Me)
+            If 启动准备异常 IsNot Nothing Then Throw 启动准备异常
             准备输入输出与步骤()
             If Not 是当前执行(执行标识) Then Exit Try
             设定系统状态_v6()
@@ -656,6 +689,7 @@ Public Class 编码任务_v6
                 If Not 可停止 Then Return False
                 stoppedExecution = 正在执行标记
                 If stoppedExecution Then 当前执行已请求停止 = True
+                If Not stoppedExecution Then 已实际开始标记 = False
                 手动停止 = True
                 状态 = 编码任务状态_v6.已停止
                 process = 当前进程
@@ -672,14 +706,18 @@ Public Class 编码任务_v6
         End Try
     End Function
 
-    Public Sub 重置()
+    Public Sub 重置(Optional 保留已分配输出 As Boolean = False)
         SyncLock 状态锁
             If Not 可重置 Then Exit Sub
             释放资源()
-            If 输出文件由自动命名生成 Then 输出文件 = ""
-            输出文件由自动命名生成 = False
+            If Not 保留已分配输出 Then
+                If 输出文件由自动命名生成 Then 输出文件 = ""
+                输出文件由自动命名生成 = False
+            End If
             当前步骤索引 = -1
             手动停止 = False
+            已实际开始标记 = False
+            启动准备异常 = Nothing
             清空日志(False)
             步骤.Clear()
             进度 = New 编码进度_v6

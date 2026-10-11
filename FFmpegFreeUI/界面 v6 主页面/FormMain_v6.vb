@@ -1,5 +1,3 @@
-Imports System.ComponentModel
-Imports System.IO
 Imports LakeUI
 
 Public Class FormMain_v6
@@ -15,7 +13,7 @@ Public Class FormMain_v6
         设置_v6.启动时读取SP解锁器()
         设置_v6.启动时加载设置()
         设置_v6.初始化界面外观()
-        网络功能.启动时后台获取SPAgent端点()
+        '网络功能.启动时后台获取SPAgent端点()
 
         设置_v6.加载SP自定义图标()
         设置_v6.加载SP自定义起始页顶栏背景图()

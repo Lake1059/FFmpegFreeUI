@@ -1,8 +1,8 @@
-Imports System.Text
+﻿Imports System.Text
 Imports System.IO
 Imports LakeUI
 
-Partial Public Class Form_v6_Agent
+Partial Friend Class Agent页面控制器_v6
     Private Const ContextSummaryLimitTokens As Integer = 12000
     Private Const ContextAutoCompactRatio As Double = 0.9
     Private Const MaxContextCompactionPasses As Integer = 32
@@ -384,7 +384,7 @@ Partial Public Class Form_v6_Agent
         usage.LastRequestModelId = If(modelId, "")
     End Sub
 
-    Private Sub MB_页面用量_Click(sender As Object, e As EventArgs) Handles MB_页面用量.Click
+    Friend Sub MB_页面用量_Click(sender As Object, e As EventArgs)
         Dim currentUsage = If(_current?.Usage, New AgentUsageInfo)
         Dim currentContextTokens = Math.Max(0, currentUsage.LastRequestInputTokens)
         Dim contextWindowTokens = GetUsageContextWindowTokens(currentUsage)

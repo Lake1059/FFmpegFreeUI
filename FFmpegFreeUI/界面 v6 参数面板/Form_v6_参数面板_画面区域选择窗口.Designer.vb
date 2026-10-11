@@ -6,8 +6,12 @@ Partial Class Form_v6_参数面板_画面区域选择窗口
     <System.Diagnostics.DebuggerNonUserCode()> _
     Protected Overrides Sub Dispose(ByVal 正在释放 As Boolean)
         Try
-            If 正在释放 AndAlso 组件容器 IsNot Nothing Then
-                组件容器.Dispose()
+            If 正在释放 Then
+                Try
+                    释放窗口资源()
+                Finally
+                    组件容器?.Dispose()
+                End Try
             End If
         Finally
             MyBase.Dispose(正在释放)
@@ -59,12 +63,15 @@ Partial Class Form_v6_参数面板_画面区域选择窗口
         ' 
         ' PPB_画面区域预览
         ' 
-        PPB_画面区域预览.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        PPB_画面区域预览.BackColor1 = Color.Transparent
         PPB_画面区域预览.BorderSize = 0
         PPB_画面区域预览.Dock = DockStyle.Fill
-        PPB_画面区域预览.Location = New Point(20, 111)
+        PPB_画面区域预览.Location = New Point(20, 106)
         PPB_画面区域预览.Name = "PPB_画面区域预览"
-        PPB_画面区域预览.Size = New Size(732, 457)
+        PPB_画面区域预览.ScrollBarThumbColor = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
+        PPB_画面区域预览.ScrollBarThumbHoverColor = Color.FromArgb(CByte(120), CByte(220), CByte(220), CByte(220))
+        PPB_画面区域预览.ScrollBarTrackColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
+        PPB_画面区域预览.Size = New Size(732, 462)
         PPB_画面区域预览.TabIndex = 19
         ' 
         ' 间隔_预览区
@@ -72,7 +79,7 @@ Partial Class Form_v6_参数面板_画面区域选择窗口
         间隔_预览区.Dock = DockStyle.Top
         间隔_预览区.Location = New Point(20, 96)
         间隔_预览区.Name = "间隔_预览区"
-        间隔_预览区.Size = New Size(732, 15)
+        间隔_预览区.Size = New Size(732, 10)
         间隔_预览区.TabIndex = 18
         ' 
         ' 面板_操作栏

@@ -9,7 +9,7 @@ Public Class Form_v6_集成工具
             (1, Form_v6_集成工具_混流, Form_v6_集成工具_混流.ModernPanel1),
             (2, Form_v6_集成工具_抽流, Form_v6_集成工具_抽流.ModernPanel1),
             (4, Form_v6_集成工具_质量评测, Form_v6_集成工具_质量评测.ModernPanel1),
-            (5, Form_v6_集成工具_Whisper生成字幕, Form_v6_集成工具_Whisper生成字幕.ModernPanel1)
+            (8, Form_v6_集成工具_Whisper生成字幕, Form_v6_集成工具_Whisper生成字幕.ModernPanel1)
         }
         For Each 绑定项 In 页面绑定
             ModernTabListControl1.Items(绑定项.索引).BoundControl = 绑定项.页面

@@ -35,7 +35,7 @@ Public Class Form_v6_参数面板_画面区域选择窗口
 
     Private Sub 完成裁剪(事件来源 As Object, 事件参数 As EventArgs) Handles MB_完成.Click
         If 目标控件 IsNot Nothing Then 目标控件.Text = MTB_裁剪参数.Text
-        关闭窗体流程()
+        Me.Close()
     End Sub
 
     Private Function 选择媒体文件() As String
@@ -139,26 +139,39 @@ Public Class Form_v6_参数面板_画面区域选择窗口
         End Try
     End Sub
 
-    Private Sub 窗口关闭(事件来源 As Object, 事件参数 As FormClosingEventArgs) Handles Me.FormClosing
-        事件参数.Cancel = True
-        关闭窗体流程()
+    Protected Overrides Sub OnFormClosing(事件参数 As FormClosingEventArgs)
+        MyBase.OnFormClosing(事件参数)
+        If 事件参数.Cancel Then Return
+
+        Dim 返回窗口 = 目标控件?.FindForm()
+        释放窗口资源()
+        If 事件参数.CloseReason = CloseReason.UserClosing AndAlso 返回窗口 IsNot Nothing AndAlso Not 返回窗口.IsDisposed Then
+            返回窗口.Focus()
+        End If
     End Sub
 
-    Private Sub 关闭窗体流程()
-        目标控件?.FindForm?.Focus()
+    Private Sub 释放窗口资源()
         目标控件 = Nothing
         清空预览图像()
-        Me.Text = ""
-        Me.Hide()
+        ' 不再取消关闭或隐藏复用；控件、窗口句柄和 LakeUI 合成器由 Dispose 完整释放。
     End Sub
 
     Private Sub 设置预览图像(图像 As Image)
-        清空预览图像()
-        预览图像 = 图像
-        预览图像源 = New PixelPictureTiledSource(图像.Width, 图像.Height,
-            Function(图块请求, 取消令牌) 提供预览图块(图像, 图块请求, 取消令牌), encoding:=预览色彩编码)
-        PPB_画面区域预览.Source = 预览图像源
-        应用裁剪文本到框选(False)
+        Try
+            清空预览图像()
+            预览图像 = 图像
+            预览图像源 = New PixelPictureTiledSource(图像.Width, 图像.Height,
+                Function(图块请求, 取消令牌) 提供预览图块(图像, 图块请求, 取消令牌), encoding:=预览色彩编码)
+            PPB_画面区域预览.Source = 预览图像源
+            应用裁剪文本到框选(False)
+        Catch
+            If ReferenceEquals(预览图像, 图像) Then
+                清空预览图像()
+            Else
+                图像.Dispose()
+            End If
+            Throw
+        End Try
     End Sub
 
     Private Shared Function 提供预览图块(图像 As Image, 图块请求 As PixelPictureTileRequest, 取消令牌 As CancellationToken) As Task(Of PixelPictureTile)
@@ -204,25 +217,37 @@ Public Class Form_v6_参数面板_画面区域选择窗口
     End Function
 
     Private Sub 清空预览图像()
+        Dim 原同步状态 = 正在同步框选文本
         正在同步框选文本 = True
         Try
-            PPB_画面区域预览.Source = Nothing
-            释放预览图像源()
-            PPB_画面区域预览.ClearSelection()
+            If PPB_画面区域预览 IsNot Nothing AndAlso Not PPB_画面区域预览.IsDisposed Then
+                PPB_画面区域预览.Source = Nothing
+                PPB_画面区域预览.ClearSelection()
+            End If
         Finally
-            正在同步框选文本 = False
+            Try
+                释放预览图像源()
+            Finally
+                正在同步框选文本 = 原同步状态
+            End Try
         End Try
     End Sub
 
-    Private Sub 释放预览图像源() Handles Me.Disposed
-        预览图像源?.Dispose()
+    Private Sub 释放预览图像源()
+        Dim 图像源 = 预览图像源
+        Dim 图像 = 预览图像
         预览图像源 = Nothing
-        If 预览图像 IsNot Nothing Then
-            SyncLock 预览图像
-                预览图像.Dispose()
-            End SyncLock
-            预览图像 = Nothing
-        End If
+        预览图像 = Nothing
+        Try
+            ' 先取消后台图块请求并清空 CPU 缓存，再与正在读取原图的请求互斥释放。
+            图像源?.Dispose()
+        Finally
+            If 图像 IsNot Nothing Then
+                SyncLock 图像
+                    图像.Dispose()
+                End SyncLock
+            End If
+        End Try
     End Sub
 
     Private Function 尝试直接加载图像(文件路径 As String, ByRef 图像 As Image) As Boolean
@@ -235,6 +260,7 @@ Public Class Form_v6_参数面板_画面区域选择窗口
             End Using
             Return True
         Catch
+            图像?.Dispose()
             图像 = Nothing
             Return False
         End Try

@@ -37,6 +37,7 @@ Public Class 字体控制
 
         SetControlFont(设置_v6.实例对象.字体, Form_v6_Agent, , True)
 
+        SetControlFont(设置_v6.实例对象.字体, Form_v6_社区_敬请期待, , True)
         SetControlFont(设置_v6.实例对象.字体, Form_v6_社区_个人中心, , True)
         SetControlFont(设置_v6.实例对象.字体, Form_v6_社区_浏览内容, , True)
 

@@ -5,7 +5,14 @@ Public Class Form_v6_集成工具_质量评测图表
 
     Private Shared 当前窗体 As Form_v6_集成工具_质量评测图表 = Nothing
 
-    Private 数据提供器 As Func(Of String, Dictionary(Of String, List(Of Double))) = Nothing
+    Public Class 图表序列数据
+        Public Property 每帧数据 As New List(Of Double)
+        Public Property 每帧帧号 As New List(Of Integer)
+        Public Property 评测帧率 As Double
+        Public Property 评测起始秒数 As Double
+    End Class
+
+    Private 数据提供器 As Func(Of String, Dictionary(Of String, 图表序列数据)) = Nothing
     Private 分数提供器 As Func(Of String, Dictionary(Of String, String)) = Nothing
     Private 已设置坐标指标 As String = ""
     Private Shared ReadOnly 浅色系列颜色表 As Color() = {
@@ -26,7 +33,7 @@ Public Class Form_v6_集成工具_质量评测图表
         Color.FromArgb(170, 103, 224)
     }
 
-    Public Shared Sub 显示(owner As Form, dataProvider As Func(Of String, Dictionary(Of String, List(Of Double))), scoreProvider As Func(Of String, Dictionary(Of String, String)))
+    Public Shared Sub 显示(owner As Form, dataProvider As Func(Of String, Dictionary(Of String, 图表序列数据)), scoreProvider As Func(Of String, Dictionary(Of String, String)))
         If 当前窗体 Is Nothing OrElse 当前窗体.IsDisposed Then
             当前窗体 = New Form_v6_集成工具_质量评测图表()
         End If
@@ -68,13 +75,30 @@ Public Class Form_v6_集成工具_质量评测图表
         RemoveHandler 界面主题_v6.主题已更改, AddressOf 刷新图表
     End Sub
 
-    Private Sub 设置数据源(dataProvider As Func(Of String, Dictionary(Of String, List(Of Double))), scoreProvider As Func(Of String, Dictionary(Of String, String)))
+    Private Sub 设置数据源(dataProvider As Func(Of String, Dictionary(Of String, 图表序列数据)), scoreProvider As Func(Of String, Dictionary(Of String, String)))
         数据提供器 = dataProvider
         分数提供器 = scoreProvider
         If Ultra2DChart1 IsNot Nothing Then
-            Ultra2DChart1.LineHoverTooltipFormat = "文件：{0}" & vbLf & "第 {1} 帧 - 时间戳：{1}" & vbLf & "评测分数：{3}"
+            Ultra2DChart1.LineHoverTooltipFormatter = AddressOf 格式化帧提示
         End If
     End Sub
+
+    Private Function 格式化帧提示(series As Ultra2DChart.ChartSeries, categoryIndex As Integer, value As Double) As String
+        Dim data = TryCast(series.Tag, 图表序列数据)
+        If data Is Nothing OrElse categoryIndex < 0 OrElse categoryIndex >= series.Points.Count Then Return Nothing
+        Dim frameNumber = CInt(series.Points(categoryIndex).Tag)
+        Dim timestamp = 格式化帧时间戳(frameNumber, data.评测帧率, data.评测起始秒数)
+        Dim scoreFormat = If(String.Equals(获取当前指标(), "SSIM", StringComparison.OrdinalIgnoreCase), "0.00000000", "0.000")
+        Return $"文件：{series.Name}{vbLf}第 {frameNumber + 1} 帧 - 时间戳：{timestamp}{vbLf}评测分数：{value.ToString(scoreFormat, CultureInfo.InvariantCulture)}"
+    End Function
+
+    Private Shared Function 格式化帧时间戳(frameNumber As Integer, frameRate As Double, startSeconds As Double) As String
+        If Not Double.IsFinite(frameRate) OrElse frameRate <= 0 OrElse Not Double.IsFinite(startSeconds) Then Return "未知"
+        Dim seconds = Math.Max(0, startSeconds) + Math.Max(0, frameNumber) / frameRate
+        If Not Double.IsFinite(seconds) OrElse seconds >= TimeSpan.MaxValue.TotalSeconds Then Return "未知"
+        Dim timestamp = TimeSpan.FromMilliseconds(Math.Round(seconds * 1000, MidpointRounding.AwayFromZero))
+        Return $"{CLng(Math.Floor(timestamp.TotalHours)):00}:{timestamp.Minutes:00}:{timestamp.Seconds:00}.{timestamp.Milliseconds:000}"
+    End Function
 
     Private Sub 显示到主窗口中心()
         Dim basis As Form = FormMain_v6
@@ -110,7 +134,7 @@ Public Class Form_v6_集成工具_质量评测图表
     Private Sub 刷新图表()
         If Ultra2DChart1 Is Nothing OrElse Ultra2DChart1.IsDisposed Then Exit Sub
         Dim metric = 获取当前指标()
-        Dim seriesData = If(数据提供器?.Invoke(metric), New Dictionary(Of String, List(Of Double))(StringComparer.CurrentCultureIgnoreCase))
+        Dim seriesData = If(数据提供器?.Invoke(metric), New Dictionary(Of String, 图表序列数据)(StringComparer.CurrentCultureIgnoreCase))
 
         Ultra2DChart1.BeginUpdate()
         Try
@@ -122,15 +146,26 @@ Public Class Form_v6_集成工具_质量评测图表
                 已设置坐标指标 = metric
             End If
 
-            Dim maxCount = If(seriesData.Count = 0, 0, seriesData.Max(Function(x) If(x.Value Is Nothing, 0, x.Value.Count)))
-            Ultra2DChart1.SetCategories(Enumerable.Range(1, maxCount).Select(Function(i) i.ToString(CultureInfo.InvariantCulture)).ToArray())
+            ' 按实际帧号合并分类；不同子采样间隔的成绩仍在同一帧上对齐。
+            Dim frameNumbers = seriesData.Values.Where(Function(data) data IsNot Nothing).
+                SelectMany(Function(data) data.每帧帧号).Distinct().OrderBy(Function(i) i).ToArray()
+            Dim categoryIndices = frameNumbers.Select(Function(frame, index) (Frame:=frame, Index:=index)).
+                ToDictionary(Function(pair) pair.Frame, Function(pair) pair.Index)
+            Ultra2DChart1.SetCategories(frameNumbers.Select(Function(i) (i + 1).ToString(CultureInfo.InvariantCulture)).ToArray())
 
             Dim seriesIndex = 0
             For Each entry In seriesData
-                Dim values = Enumerable.Range(0, maxCount).
-                    Select(Function(i) If(entry.Value IsNot Nothing AndAlso i < entry.Value.Count, 转换图表值(entry.Value(i)), Double.NaN)).
-                    ToArray()
+                If entry.Value Is Nothing Then Continue For
+                Dim values = Enumerable.Repeat(Double.NaN, frameNumbers.Length).ToArray()
+                For i = 0 To Math.Min(entry.Value.每帧数据.Count, entry.Value.每帧帧号.Count) - 1
+                    values(categoryIndices(entry.Value.每帧帧号(i))) = 转换图表值(entry.Value.每帧数据(i))
+                Next
                 Dim series = Ultra2DChart1.AddSeries(entry.Key, Ultra2DChart.ChartSeriesTypeEnum.Line, values)
+                series.Tag = entry.Value
+                series.ConnectMissingValues = True
+                For i = 0 To frameNumbers.Length - 1
+                    series.Points(i).Tag = frameNumbers(i)
+                Next
                 series.Color = 获取系列颜色(seriesIndex)
                 series.LineThickness = If(界面主题_v6.当前为浅色模式, 2.0F, 1.0F)
                 series.MarkerShape = Ultra2DChart.MarkerShapeEnum.None
@@ -157,7 +192,7 @@ Public Class Form_v6_集成工具_质量评测图表
         End If
     End Sub
 
-    Private Sub 更新状态(metric As String, seriesData As Dictionary(Of String, List(Of Double)))
+    Private Sub 更新状态(metric As String, seriesData As Dictionary(Of String, 图表序列数据))
         If HtmlColorLabel1 Is Nothing OrElse HtmlColorLabel1.IsDisposed Then Exit Sub
         If seriesData Is Nothing OrElse seriesData.Count = 0 Then
             HtmlColorLabel1.Text = "暂无帧级数据"
@@ -170,7 +205,7 @@ Public Class Form_v6_集成工具_质量评测图表
         For Each entry In seriesData
             Dim scoreText As String = Nothing
             If Not scores.TryGetValue(entry.Key, scoreText) OrElse String.IsNullOrWhiteSpace(scoreText) Then
-                scoreText = 格式化最后图表值(metric, entry.Value)
+                scoreText = 格式化最后图表值(metric, entry.Value?.每帧数据)
             End If
 
             If Not String.IsNullOrWhiteSpace(scoreText) Then

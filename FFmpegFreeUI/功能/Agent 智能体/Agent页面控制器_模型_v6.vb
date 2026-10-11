@@ -1,6 +1,6 @@
-Imports LakeUI
+﻿Imports LakeUI
 
-Partial Public Class Form_v6_Agent
+Partial Friend Class Agent页面控制器_v6
     Private _models As New List(Of AgentModelInfo)
     Private _modelEndpointSignature As String = ""
     Private _refreshingModels As Boolean = False
@@ -12,18 +12,18 @@ Partial Public Class Form_v6_Agent
     End Function
 
     Private Function GetSelectedNetworkMode() As Integer
-        Return AgentNetworkMode.Normalize(Math.Max(0, MCB_联网设置.SelectedIndex))
+        Return AgentNetworkMode.Normalize(Math.Max(0, _view.MCB_联网设置.SelectedIndex))
     End Function
 
-    Public Async Sub 请求刷新模型列表()
+    Friend Async Function 请求刷新模型列表() As Task
         If Not _agentPageActivated Then Return
         Await RefreshModelsIfEndpointChangedAsync(True)
-    End Sub
+    End Function
 
-    Public Async Sub 检查并刷新模型列表()
+    Friend Async Function 检查并刷新模型列表() As Task
         _agentPageActivated = True
         Await RefreshModelsIfEndpointChangedAsync(False)
-    End Sub
+    End Function
 
     Private Function ShouldRetryReasoningRefresh(errorMessage As String, Optional modelId As String = "") As Boolean
         Dim detail = If(String.IsNullOrWhiteSpace(errorMessage), "未知错误", errorMessage)
@@ -59,23 +59,23 @@ Partial Public Class Form_v6_Agent
 
             If fallbackModels.Count > 0 Then
                 _models = fallbackModels
-                MCB_模型选择.Items.Clear()
-                MCB_模型选择.Items.AddRange(_models.Select(Function(x) x.Id))
+                _view.MCB_模型选择.Items.Clear()
+                _view.MCB_模型选择.Items.AddRange(_models.Select(Function(x) x.Id))
 
                 Dim index = _models.FindIndex(Function(x) String.Equals(x.Id, selectedModel, StringComparison.OrdinalIgnoreCase))
                 If index < 0 Then index = 0
-                MCB_模型选择.SelectedIndex = index
-                设置_v6.实例对象.AgentModelId = If(MCB_模型选择.SelectedItem, "")
+                _view.MCB_模型选择.SelectedIndex = index
+                设置_v6.实例对象.AgentModelId = If(_view.MCB_模型选择.SelectedItem, "")
                 RefreshReasoningEfforts()
             Else
                 Dim efforts = AgentCapabilityCache.GetDefaultReasoningEfforts(selectedModel)
-                MCB_推理级别.Items.Clear()
-                MCB_推理级别.Items.AddRange(efforts)
+                _view.MCB_推理级别.Items.Clear()
+                _view.MCB_推理级别.Items.AddRange(efforts)
 
                 Dim selected = GetPreferredReasoningEffort()
                 Dim index = efforts.FindIndex(Function(x) String.Equals(x, selected, StringComparison.OrdinalIgnoreCase))
                 If index < 0 AndAlso efforts.Count > 0 Then index = Math.Min(1, efforts.Count - 1)
-                If index >= 0 Then MCB_推理级别.SelectedIndex = index
+                If index >= 0 Then _view.MCB_推理级别.SelectedIndex = index
             End If
 
             _modelEndpointSignature = currentSignature
@@ -121,7 +121,7 @@ Partial Public Class Form_v6_Agent
 
         _refreshingModels = True
         Dim oldLoading = _loading
-        Dim selectedModel = If(MCB_模型选择.SelectedItem, 设置_v6.实例对象.AgentModelId)
+        Dim selectedModel = If(_view.MCB_模型选择.SelectedItem, 设置_v6.实例对象.AgentModelId)
         Dim client As AgentEndpointClient = Nothing
         Dim useDefaultAfterCatch As Boolean = False
         _loading = True
@@ -132,26 +132,26 @@ Partial Public Class Form_v6_Agent
             If String.IsNullOrWhiteSpace(client.Endpoint) Then
                 _modelEndpointSignature = actualSignature
                 ShowStatus("请先在 Agent 设置中选择或填写端点。", True)
-                ExFloatingTip(MCB_模型选择, "请先选择或填写 Agent 端点", 1800)
+                ExFloatingTip(_view.MCB_模型选择, "请先选择或填写 Agent 端点", 1800)
                 Return
             End If
 
             Dim customModelResult = Agent自定义模型配置_v6.加载(client)
             If customModelResult.ErrorMessage <> "" Then
-                ExFloatingTip(MCB_模型选择, $"{Agent自定义模型配置_v6.配置文件名} 无效：{customModelResult.ErrorMessage}", 3600)
+                ExFloatingTip(_view.MCB_模型选择, $"{Agent自定义模型配置_v6.配置文件名} 无效：{customModelResult.ErrorMessage}", 3600)
             End If
 
             ShowStatus("正在连接端点并获取模型列表")
-            MCB_模型选择.Items.Clear()
-            MCB_模型选择.Text = ""
-            MCB_模型选择.WaterText = "正在获取模型"
+            _view.MCB_模型选择.Items.Clear()
+            _view.MCB_模型选择.Text = ""
+            _view.MCB_模型选择.WaterText = "正在获取模型"
             Dim modelResult As AgentClientResult(Of List(Of AgentModelInfo))
             Dim endpointModelError As String = ""
             Do
                 _loading = oldLoading
                 modelResult = Await client.TryGetModelsAsync()
                 _loading = True
-                If _closing OrElse IsDisposed Then Return
+                If _closing OrElse _view.IsDisposed Then Return
                 If modelResult.Success Then Exit Do
 
                 If customModelResult.Models.Count > 0 Then
@@ -160,7 +160,7 @@ Partial Public Class Form_v6_Agent
                 End If
 
                 ShowStatus("获取模型列表失败：" & modelResult.ErrorMessage, True)
-                ExFloatingTip(MCB_模型选择, modelResult.ErrorMessage, 2600)
+                ExFloatingTip(_view.MCB_模型选择, modelResult.ErrorMessage, 2600)
                 If Not allowReasoningFallback Then Return
                 If ShouldRetryReasoningRefresh(modelResult.ErrorMessage, selectedModel) Then
                     ShowStatus("正在重新连接端点并获取模型列表")
@@ -178,24 +178,24 @@ Partial Public Class Form_v6_Agent
             Dim endpointModels = If(modelResult.Success, modelResult.Value, New List(Of AgentModelInfo))
             _models = Agent自定义模型配置_v6.合并模型(endpointModels, customModelResult.Models)
             AgentCapabilityCache.ImportReasoningEfforts(client, _models)
-            MCB_模型选择.Items.AddRange(_models.Select(Function(x) x.Id))
+            _view.MCB_模型选择.Items.AddRange(_models.Select(Function(x) x.Id))
 
             If _models.Count = 0 Then
                 ShowStatus("端点没有返回可用模型。", True)
-                ExFloatingTip(MCB_模型选择, "端点没有返回可用模型", 1800)
+                ExFloatingTip(_view.MCB_模型选择, "端点没有返回可用模型", 1800)
                 Return
             End If
 
             Dim selected = If(String.IsNullOrWhiteSpace(_current?.ModelId), 设置_v6.实例对象.AgentModelId, _current.ModelId)
             Dim index = _models.FindIndex(Function(x) String.Equals(x.Id, selected, StringComparison.OrdinalIgnoreCase))
             If index < 0 Then index = 0
-            MCB_模型选择.SelectedIndex = index
-            设置_v6.实例对象.AgentModelId = If(MCB_模型选择.SelectedItem, "")
+            _view.MCB_模型选择.SelectedIndex = index
+            设置_v6.实例对象.AgentModelId = If(_view.MCB_模型选择.SelectedItem, "")
             RefreshReasoningEfforts()
             _modelEndpointSignature = expectedSignature
             If endpointModelError <> "" Then
                 ShowStatus($"端点模型列表不可用，已加载 {_models.Count} 个自定义模型", True)
-                ExFloatingTip(MCB_模型选择, endpointModelError, 2600)
+                ExFloatingTip(_view.MCB_模型选择, endpointModelError, 2600)
             ElseIf customModelResult.ErrorMessage <> "" Then
                 ShowStatus($"模型列表已刷新：{_models.Count} 个模型；{Agent自定义模型配置_v6.配置文件名} 无效", True)
             ElseIf customModelResult.Models.Count > 0 Then
@@ -205,7 +205,7 @@ Partial Public Class Form_v6_Agent
             End If
         Catch ex As Exception
             ShowStatus("获取模型列表失败：" & ex.Message, True)
-            ExFloatingTip(MCB_模型选择, ex.Message, 2600)
+            ExFloatingTip(_view.MCB_模型选择, ex.Message, 2600)
             If allowReasoningFallback Then
                 If ShouldRetryReasoningRefresh(ex.Message, selectedModel) Then
                     _pendingModelRefresh = True
@@ -216,7 +216,7 @@ Partial Public Class Form_v6_Agent
         Finally
             _loading = oldLoading
             _refreshingModels = False
-            MCB_模型选择.WaterText = "模型选择"
+            _view.MCB_模型选择.WaterText = "模型选择"
             UpdateSendButtonState()
         End Try
 
@@ -231,22 +231,22 @@ Partial Public Class Form_v6_Agent
     End Function
 
     Private Sub RefreshReasoningEfforts()
-        If MCB_模型选择.SelectedIndex < 0 OrElse MCB_模型选择.SelectedIndex >= _models.Count Then Return
+        If _view.MCB_模型选择.SelectedIndex < 0 OrElse _view.MCB_模型选择.SelectedIndex >= _models.Count Then Return
         Dim oldLoading = _loading
         _loading = True
         Try
-            Dim model = _models(MCB_模型选择.SelectedIndex)
-            MCB_推理级别.Items.Clear()
-            MCB_推理级别.Text = ""
-            MCB_推理级别.WaterText = "正在读取"
+            Dim model = _models(_view.MCB_模型选择.SelectedIndex)
+            _view.MCB_推理级别.Items.Clear()
+            _view.MCB_推理级别.Text = ""
+            _view.MCB_推理级别.WaterText = "正在读取"
             ShowStatus("正在读取推理级别：" & model.Id)
             Dim efforts = AgentCapabilityCache.GetReasoningEfforts(model, CreateClient())
-            MCB_推理级别.Items.AddRange(efforts)
+            _view.MCB_推理级别.Items.AddRange(efforts)
 
             Dim selected = GetPreferredReasoningEffort()
             Dim index = efforts.FindIndex(Function(x) String.Equals(x, selected, StringComparison.OrdinalIgnoreCase))
             If index < 0 AndAlso efforts.Count > 0 Then index = 0
-            If index >= 0 Then MCB_推理级别.SelectedIndex = index
+            If index >= 0 Then _view.MCB_推理级别.SelectedIndex = index
             If model.ReasoningEfforts IsNot Nothing AndAlso model.ReasoningEfforts.Count > 0 Then
                 ShowStatus("推理级别已就绪：" & String.Join("、", efforts))
             Else
@@ -254,16 +254,16 @@ Partial Public Class Form_v6_Agent
             End If
         Catch ex As Exception
             ShowStatus("读取推理级别失败：" & ex.Message, True)
-            ExFloatingTip(MCB_推理级别, ex.Message, 2600)
+            ExFloatingTip(_view.MCB_推理级别, ex.Message, 2600)
         Finally
             _loading = oldLoading
-            MCB_推理级别.WaterText = "推理级别"
+            _view.MCB_推理级别.WaterText = "推理级别"
         End Try
     End Sub
 
-    Private Sub MCB_模型选择_SelectedIndexChanged(sender As Object, e As EventArgs) Handles MCB_模型选择.SelectedIndexChanged
-        If _loading OrElse MCB_模型选择.SelectedIndex < 0 Then Return
-        设置_v6.实例对象.AgentModelId = If(MCB_模型选择.SelectedItem, "")
+    Friend Sub MCB_模型选择_SelectedIndexChanged(sender As Object, e As EventArgs)
+        If _loading OrElse _view.MCB_模型选择.SelectedIndex < 0 Then Return
+        设置_v6.实例对象.AgentModelId = If(_view.MCB_模型选择.SelectedItem, "")
         If _current IsNot Nothing AndAlso Not GetConversationRuntime(_current).Busy Then _current.ModelId = 设置_v6.实例对象.AgentModelId
         RefreshReasoningEfforts()
     End Sub
@@ -274,26 +274,26 @@ Partial Public Class Form_v6_Agent
         Return If(_current?.ReasoningEffort, "")
     End Function
 
-    Private Sub MCB_推理级别_SelectedIndexChanged(sender As Object, e As EventArgs) Handles MCB_推理级别.SelectedIndexChanged
-        If _loading OrElse MCB_推理级别.SelectedIndex < 0 Then Return
-        设置_v6.实例对象.Agent推理级别 = If(MCB_推理级别.SelectedItem, "")
+    Friend Sub MCB_推理级别_SelectedIndexChanged(sender As Object, e As EventArgs)
+        If _loading OrElse _view.MCB_推理级别.SelectedIndex < 0 Then Return
+        设置_v6.实例对象.Agent推理级别 = If(_view.MCB_推理级别.SelectedItem, "")
         If _current IsNot Nothing AndAlso Not GetConversationRuntime(_current).Busy Then _current.ReasoningEffort = 设置_v6.实例对象.Agent推理级别
         ScheduleDraftSave()
     End Sub
 
-    Private Sub MCB_联网设置_SelectedIndexChanged(sender As Object, e As EventArgs) Handles MCB_联网设置.SelectedIndexChanged
+    Friend Sub MCB_联网设置_SelectedIndexChanged(sender As Object, e As EventArgs)
         If _loading Then Return
         设置_v6.实例对象.Agent联网设置 = GetSelectedNetworkMode()
         If _current IsNot Nothing AndAlso Not GetConversationRuntime(_current).Busy Then _current.NetworkMode = 设置_v6.实例对象.Agent联网设置
     End Sub
 
-    Private Sub MCB_权限控制_SelectedIndexChanged(sender As Object, e As EventArgs) Handles MCB_权限控制.SelectedIndexChanged
+    Friend Sub MCB_权限控制_SelectedIndexChanged(sender As Object, e As EventArgs)
         If _loading Then Return
-        设置_v6.实例对象.Agent权限级别 = Math.Max(0, MCB_权限控制.SelectedIndex)
+        设置_v6.实例对象.Agent权限级别 = Math.Max(0, _view.MCB_权限控制.SelectedIndex)
         If _current IsNot Nothing AndAlso Not GetConversationRuntime(_current).Busy Then _current.PermissionLevel = 设置_v6.实例对象.Agent权限级别
     End Sub
 
-    Private Async Sub MB_重载连接_Click(sender As Object, e As EventArgs) Handles MB_重载连接.Click
+    Friend Async Function MB_重载连接_Click(sender As Object, e As EventArgs) As Task
         Await RefreshModelsIfEndpointChangedAsync(True)
-    End Sub
+    End Function
 End Class

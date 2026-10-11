@@ -23,14 +23,9 @@ Partial Class Form_v6_调试播放器
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         ModernPanel1 = New LakeUI.ModernPanel()
-        ModernPanel1.BackColor = Color.Transparent
         ModernPanel2 = New LakeUI.ModernPanel()
-        ModernPanel2.BackColor = Color.Transparent
         HtmlColorLabel1 = New LakeUI.HtmlColorLabel()
         Panel2 = New LakeUI.ModernPanel()
-        Panel2.BackColor = Color.Transparent
-        Panel2.BackColor1 = Color.Transparent
-        Panel2.BorderSize = 0
         ExcellentProgressBar1 = New LakeUI.ExcellentProgressBar()
         JustEmptyControl2 = New LakeUI.JustEmptyControl()
         MB_关闭 = New LakeUI.ModernButton()
@@ -43,6 +38,7 @@ Partial Class Form_v6_调试播放器
         ' 
         ' ModernPanel1
         ' 
+        ModernPanel1.BackColor = Color.Transparent
         ModernPanel1.BorderSize = 0
         ModernPanel1.Controls.Add(ModernPanel2)
         ModernPanel1.Controls.Add(Panel2)
@@ -56,6 +52,7 @@ Partial Class Form_v6_调试播放器
         ' ModernPanel2
         ' 
         ModernPanel2.AllowDrop = True
+        ModernPanel2.BackColor = Color.Transparent
         ModernPanel2.BackColor1 = Color.Transparent
         ModernPanel2.BorderSize = 0
         ModernPanel2.Controls.Add(HtmlColorLabel1)
@@ -84,6 +81,9 @@ Partial Class Form_v6_调试播放器
         ' 
         ' Panel2
         ' 
+        Panel2.BackColor = Color.Transparent
+        Panel2.BackColor1 = Color.Transparent
+        Panel2.BorderSize = 0
         Panel2.Controls.Add(ExcellentProgressBar1)
         Panel2.Controls.Add(JustEmptyControl2)
         Panel2.Controls.Add(MB_关闭)
@@ -98,6 +98,7 @@ Partial Class Form_v6_调试播放器
         ' 
         ' ExcellentProgressBar1
         ' 
+        ExcellentProgressBar1.BackColor1 = Color.Transparent
         ExcellentProgressBar1.BorderRadius = 10
         ExcellentProgressBar1.Dock = DockStyle.Fill
         ExcellentProgressBar1.FillColor = Color.FromArgb(CByte(180), CByte(107), CByte(142), CByte(35))
@@ -109,7 +110,6 @@ Partial Class Form_v6_调试播放器
         ExcellentProgressBar1.Padding = New Padding(3)
         ExcellentProgressBar1.Size = New Size(629, 32)
         ExcellentProgressBar1.TabIndex = 0
-        ExcellentProgressBar1.TextPadding = New Padding(0)
         ExcellentProgressBar1.TrackColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         ' 
         ' JustEmptyControl2

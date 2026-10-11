@@ -12,9 +12,9 @@ Public Class Form_v6_媒体流选择器
     Private 音频全选 As Boolean
     Private 字幕全选 As Boolean
 
-    Private ReadOnly 视频复选框 As New List(Of ModernCheckBox)
-    Private ReadOnly 音频复选框 As New List(Of ModernCheckBox)
-    Private ReadOnly 字幕复选框 As New List(Of ModernCheckBox)
+    Private ReadOnly 视频列表项 As New List(Of UltraDetailListView.ListItem)
+    Private ReadOnly 音频列表项 As New List(Of UltraDetailListView.ListItem)
+    Private ReadOnly 字幕列表项 As New List(Of UltraDetailListView.ListItem)
     Private ReadOnly 初始媒体文件 As String
 
     Public Sub New(Optional 要读取的媒体文件 As String = "",
@@ -36,7 +36,10 @@ Public Class Form_v6_媒体流选择器
         解析已选(字幕流已选, "s", 字幕已选, 字幕全选)
         绑定文件拖入(Me)
         绑定文件拖入(ModernPanel1)
-        绑定文件拖入(列表面板)
+        UltraDetailListView1.MultiSelect = True
+        UltraDetailListView1.AllowDragReorder = False
+        UltraDetailListView1.BottomLinesSpacing = 3
+        绑定文件拖入(UltraDetailListView1)
         绑定文件拖入(顶部面板)
         绑定文件拖入(底部面板)
         绑定文件拖入(MB_全选视频)
@@ -46,6 +49,7 @@ Public Class Form_v6_媒体流选择器
         绑定文件拖入(MB_重置选择)
         绑定文件拖入(MB_确认选择)
         AddHandler Shown, Sub()
+                              调整列宽()
                               If 初始媒体文件 <> "" Then 开始读取(初始媒体文件)
                           End Sub
     End Sub
@@ -76,15 +80,15 @@ Public Class Form_v6_媒体流选择器
     End Sub
 
     Private Sub MB_全选视频_Click(sender As Object, e As EventArgs) Handles MB_全选视频.Click
-        设置全部(视频复选框, True)
+        设置全部(视频列表项, True)
     End Sub
 
     Private Sub MB_全选音频_Click(sender As Object, e As EventArgs) Handles MB_全选音频.Click
-        设置全部(音频复选框, True)
+        设置全部(音频列表项, True)
     End Sub
 
     Private Sub MB_全选字幕_Click(sender As Object, e As EventArgs) Handles MB_全选字幕.Click
-        设置全部(字幕复选框, True)
+        设置全部(字幕列表项, True)
     End Sub
 
     Private Sub MB_打开文件_Click(sender As Object, e As EventArgs) Handles MB_打开文件.Click
@@ -92,7 +96,7 @@ Public Class Form_v6_媒体流选择器
     End Sub
 
     Private Sub MB_重置选择_Click(sender As Object, e As EventArgs) Handles MB_重置选择.Click
-        设置全部(视频复选框.Concat(音频复选框).Concat(字幕复选框), False)
+        设置全部(视频列表项.Concat(音频列表项).Concat(字幕列表项), False)
     End Sub
 
     Private Sub MB_确认选择_Click(sender As Object, e As EventArgs) Handles MB_确认选择.Click
@@ -122,124 +126,104 @@ Public Class Form_v6_媒体流选择器
             ffprobe.WaitForExit()
         End Using
 
-        列表面板.Controls.Clear()
-        视频复选框.Clear()
-        音频复选框.Clear()
-        字幕复选框.Clear()
-        Dim 列表控件 As New List(Of Control)
-
-        If 输出内容.Count = 0 Then
-            列表控件.Add(创建说明("ffprobe 未输出任何信息", Color.IndianRed))
-            呈现列表控件(列表控件)
-            Exit Sub
-        End If
-
-        Dim info = 媒体信息解析器.解析(输出内容)
-        添加分组(列表控件, "视频流")
-        For i = 0 To info.视频流.Count - 1
-            Dim s = info.视频流(i)
-            Dim text = $"{文件索引}:v:{i}  {If(s.流语言 <> "", "[" & s.流语言 & "] ", "")}{s.编码器}"
-            If s.分辨率 <> "" Then text &= " | " & s.分辨率
-            If s.帧率 <> "" Then text &= " | " & s.帧率
-            If s.比特率 <> "" Then text &= " | " & s.比特率
-            添加流复选框(列表控件, 视频复选框, text, s.元数据标题, i, 视频全选 OrElse 视频已选.Contains(i), Color.CornflowerBlue)
-        Next
-
-        添加分组(列表控件, "音频流")
-        For i = 0 To info.音频流.Count - 1
-            Dim s = info.音频流(i)
-            Dim text = $"{文件索引}:a:{i}  {If(s.流语言 <> "", "[" & s.流语言 & "] ", "")}{s.编码器}"
-            If s.声道布局 <> "" Then text &= " | " & s.声道布局
-            If s.采样率 <> "" Then text &= " | " & s.采样率
-            If s.比特率 <> "" Then text &= " | " & s.比特率
-            添加流复选框(列表控件, 音频复选框, text, s.元数据标题, i, 音频全选 OrElse 音频已选.Contains(i), Color.MediumPurple)
-        Next
-
-        添加分组(列表控件, "字幕流")
-        For i = 0 To info.字幕流.Count - 1
-            Dim s = info.字幕流(i)
-            Dim text = $"{文件索引}:s:{i}  {If(s.流语言 <> "", "[" & s.流语言 & "] ", "")}{s.编码器}"
-            添加流复选框(列表控件, 字幕复选框, text, s.元数据标题, i, 字幕全选 OrElse 字幕已选.Contains(i), Color.OliveDrab)
-        Next
-
-        呈现列表控件(列表控件)
-    End Sub
-
-    Private Sub 添加分组(目标控件 As List(Of Control), text As String)
-        目标控件.Add(创建说明(text, Color.Silver, 13.0F, True))
-    End Sub
-
-    Private Function 创建说明(text As String, color As Color, Optional size As Single = 10.0F, Optional 作为标题 As Boolean = False) As HtmlColorLabel
-        Dim htmlColor = ColorTranslator.ToHtml(color)
-        Return New HtmlColorLabel With {
-            .AutoSize = True,
-            .AutoSizeMode = AutoSizeMode.GrowAndShrink,
-            .AllowDrop = True,
-            .Dock = DockStyle.Top,
-            .ForeColor = Color.FromArgb(120, 255, 255, 255),
-            .Margin = New Padding(2),
-            .Padding = If(作为标题, New Padding(0, 10, 0, 10), New Padding(0, 0, 0, 10)),
-            .Text = $"<span style=""font-size:{CInt(size)}; color:{htmlColor}"">{text}</span>"
-        }
-    End Function
-
-    Private Sub 添加流复选框(目标控件 As List(Of Control), list As List(Of ModernCheckBox), text As String, subText As String, index As Integer, checked As Boolean, Optional 选中颜色 As Color = Nothing)
-        If 选中颜色.IsEmpty Then 选中颜色 = ForeColor
-        Dim cb As New ModernCheckBox With {
-            .AllowDrop = True,
-            .AutoSize = True,
-            .Text = text,
-            .SubText = subText,
-            .SubTextForeColor = Color.FromArgb(120, 255, 255, 255),
-            .MainSubTextSpacing = 3,
-            .Tag = index,
-            .Checked = checked,
-            .ClickAnywhere = True,
-            .BoxBorderRadius = 5,
-            .BoxBorderSize = 0,
-            .BoxCheckedBackColor = 选中颜色,
-            .BoxUncheckedBackColor = Color.FromArgb(40, 220, 220, 220),
-            .BoxInnerPadding = 6,
-            .BoxSize = 22,
-            .BoxTextSpacing = 10,
-            .Dock = DockStyle.Top,
-            .Padding = New Padding(0, 0, 0, 10)
-        }
-        绑定文件拖入(cb)
-        list.Add(cb)
-        目标控件.Add(cb)
-    End Sub
-
-    Private Sub 呈现列表控件(控件列表 As List(Of Control))
-        列表面板.SuspendLayout()
+        视频列表项.Clear()
+        音频列表项.Clear()
+        字幕列表项.Clear()
+        UltraDetailListView1.BeginUpdate()
         Try
-            列表面板.Controls.Clear()
-            For i = 控件列表.Count - 1 To 0 Step -1
-                绑定文件拖入(控件列表(i))
-                列表面板.Controls.Add(控件列表(i))
+            UltraDetailListView1.Items.Clear()
+            UltraDetailListView1.Groups.Clear()
+
+            If 输出内容.Count = 0 Then
+                UltraDetailListView1.Items.Add(New UltraDetailListView.ListItem(
+                    New UltraDetailListView.ListSubItem("ffprobe 未输出任何信息") With {.ForeColor = Color.IndianRed}))
+                Exit Sub
+            End If
+
+            Dim info = 媒体信息解析器.解析(输出内容)
+            添加分组("视频流", Color.CornflowerBlue)
+            For i = 0 To info.视频流.Count - 1
+                Dim s = info.视频流(i)
+                Dim text = $"{文件索引}:v:{i}  {If(s.流语言 <> "", "[" & s.流语言 & "] ", "")}{s.编码器}"
+                If s.分辨率 <> "" Then text &= " | " & s.分辨率
+                If s.帧率 <> "" Then text &= " | " & s.帧率
+                If s.比特率 <> "" Then text &= " | " & s.比特率
+                添加流列表项(视频列表项, "视频流", text, s.元数据标题, i, 视频全选 OrElse 视频已选.Contains(i))
             Next
+
+            添加分组("音频流", Color.MediumPurple)
+            For i = 0 To info.音频流.Count - 1
+                Dim s = info.音频流(i)
+                Dim text = $"{文件索引}:a:{i}  {If(s.流语言 <> "", "[" & s.流语言 & "] ", "")}{s.编码器}"
+                If s.声道布局 <> "" Then text &= " | " & s.声道布局
+                If s.采样率 <> "" Then text &= " | " & s.采样率
+                If s.比特率 <> "" Then text &= " | " & s.比特率
+                添加流列表项(音频列表项, "音频流", text, s.元数据标题, i, 音频全选 OrElse 音频已选.Contains(i))
+            Next
+
+            添加分组("字幕流", Color.OliveDrab)
+            For i = 0 To info.字幕流.Count - 1
+                Dim s = info.字幕流(i)
+                Dim text = $"{文件索引}:s:{i}  {If(s.流语言 <> "", "[" & s.流语言 & "] ", "")}{s.编码器}"
+                添加流列表项(字幕列表项, "字幕流", text, s.元数据标题, i, 字幕全选 OrElse 字幕已选.Contains(i))
+            Next
+
         Finally
-            列表面板.ResumeLayout(False)
-            列表面板.PerformLayout()
+            UltraDetailListView1.EndUpdate()
+            调整列宽()
         End Try
     End Sub
 
-    Private Sub 设置全部(items As IEnumerable(Of ModernCheckBox), checked As Boolean)
-        For Each cb In items
-            cb.Checked = checked
-        Next
+    Private Sub 添加分组(text As String, color As Color)
+        UltraDetailListView1.Groups.Add(New UltraDetailListView.ListGroup(text) With {.ForeColor = color})
+    End Sub
+
+    Private Sub 添加流列表项(list As List(Of UltraDetailListView.ListItem), groupName As String, text As String, subText As String, index As Integer, selected As Boolean)
+        Dim item As New UltraDetailListView.ListItem(New UltraDetailListView.ListSubItem(text)) With {
+            .GroupName = groupName,
+            .Tag = index,
+            .Selected = selected
+        }
+        If subText <> "" Then item.BottomLines.Add(New UltraDetailListView.TextLine(subText, Nothing, Color.FromArgb(120, 255, 255, 255)))
+        list.Add(item)
+        UltraDetailListView1.Items.Add(item)
+    End Sub
+
+    Private Sub 设置全部(items As IEnumerable(Of UltraDetailListView.ListItem), selected As Boolean)
+        UltraDetailListView1.BeginUpdate()
+        Try
+            For Each item In items
+                item.Selected = selected
+            Next
+        Finally
+            UltraDetailListView1.EndUpdate()
+        End Try
+    End Sub
+
+    Private Sub UltraDetailListView1_布局变化(sender As Object, e As EventArgs) Handles UltraDetailListView1.SizeChanged, UltraDetailListView1.PaddingChanged, UltraDetailListView1.DpiChangedAfterParent
+        调整列宽()
+    End Sub
+
+    Private Sub 调整列宽()
+        If UltraDetailListView1.Columns.Count = 0 OrElse UltraDetailListView1.ClientSize.Width <= 0 Then Exit Sub
+        Dim dpi = CSng(UltraDetailListView1.DeviceDpi) / 96.0F
+        Dim scrollBarWidth = CInt(UltraDetailListView1.ScrollBarWidth * dpi)
+        ' 列表项右缘与滚动条之间保留 10 个逻辑像素，避免选中背景和内容紧贴滚动条。
+        Dim scrollBarGap = CInt(10 * dpi)
+        Dim available = UltraDetailListView1.ClientSize.Width - UltraDetailListView1.Padding.Horizontal - scrollBarWidth - D3D_ScrollBarRenderer.Margin - scrollBarGap
+        UltraDetailListView1.Columns(0).Width = Math.Max(1, available)
     End Sub
 
     Private Sub 确认_Click(sender As Object, e As EventArgs)
-        写回(视频目标, 视频复选框, "v")
-        写回(音频目标, 音频复选框, "a")
-        写回(字幕目标, 字幕复选框, "s")
+        写回(视频目标, 视频列表项, "v")
+        写回(音频目标, 音频列表项, "a")
+        写回(字幕目标, 字幕列表项, "s")
         Close()
     End Sub
 
-    Private Sub 写回(target As Object, items As List(Of ModernCheckBox), kind As String)
+    Private Sub 写回(target As Object, items As List(Of UltraDetailListView.ListItem), kind As String)
         If target Is Nothing Then Exit Sub
-        target.Text = String.Join(",", items.Where(Function(x) x.Checked).Select(Function(x) $"{文件索引}:{kind}:{CInt(x.Tag)}"))
+        target.Text = String.Join(",", items.Where(Function(x) x.Selected).Select(Function(x) $"{文件索引}:{kind}:{CInt(x.Tag)}"))
     End Sub
 
     Private Sub 解析已选(value As String, kind As String, target As HashSet(Of Integer), ByRef allSelected As Boolean)

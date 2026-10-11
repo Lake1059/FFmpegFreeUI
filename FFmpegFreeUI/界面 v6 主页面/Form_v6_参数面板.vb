@@ -25,7 +25,22 @@ Public Class Form_v6_参数面板
     Public 私有界面_章节 As New Form_v6_参数面板_章节
     Public 私有界面_附件 As New Form_v6_参数面板_附件
 
-    Public Shared ReadOnly 共享界面_画面区域选择窗口 As New Form_v6_参数面板_画面区域选择窗口
+    Private Shared _共享界面_画面区域选择窗口 As Form_v6_参数面板_画面区域选择窗口
+
+    Public Shared ReadOnly Property 共享界面_画面区域选择窗口 As Form_v6_参数面板_画面区域选择窗口
+        Get
+            If _共享界面_画面区域选择窗口 Is Nothing OrElse _共享界面_画面区域选择窗口.IsDisposed Then
+                _共享界面_画面区域选择窗口 = New Form_v6_参数面板_画面区域选择窗口()
+                AddHandler _共享界面_画面区域选择窗口.Disposed, AddressOf 画面区域选择窗口释放
+            End If
+            Return _共享界面_画面区域选择窗口
+        End Get
+    End Property
+
+    Private Shared Sub 画面区域选择窗口释放(sender As Object, e As EventArgs)
+        RemoveHandler DirectCast(sender, Form).Disposed, AddressOf 画面区域选择窗口释放
+        If ReferenceEquals(_共享界面_画面区域选择窗口, sender) Then _共享界面_画面区域选择窗口 = Nothing
+    End Sub
     Public 抑制自动刷新 As Boolean = False
     Private Const 参数总览页索引 As Integer = 0
     Private Const 滤镜排序页索引 As Integer = 14
@@ -130,13 +145,14 @@ Public Class Form_v6_参数面板
     End Sub
 
     Public Shared Sub 弹出画面区域选择窗口(完成按钮返回的控件 As Control, 标题栏 As String)
-        If 共享界面_画面区域选择窗口.目标控件 IsNot Nothing Then
+        Dim 窗口 = 共享界面_画面区域选择窗口
+        If 窗口.目标控件 IsNot Nothing Then
             ExFloatingTip("画面区域选择窗口正在使用中，请关闭后再试，为了节约性能这个窗口只能打开一个", 3000)
             Exit Sub
         End If
-        共享界面_画面区域选择窗口.目标控件 = 完成按钮返回的控件
-        共享界面_画面区域选择窗口.Text = 标题栏
-        显示窗体(共享界面_画面区域选择窗口, FormMain_v6)
+        窗口.目标控件 = 完成按钮返回的控件
+        窗口.Text = 标题栏
+        显示窗体(窗口, FormMain_v6)
     End Sub
 
     Public Sub 请求刷新参数状态()

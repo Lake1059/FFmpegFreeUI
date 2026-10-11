@@ -55,6 +55,10 @@ Partial Class Form_v6_集成工具_混流
         MB_添加文件 = New LakeUI.ModernButton()
         HtmlColorLabel1 = New LakeUI.HtmlColorLabel()
         ModernPanel2 = New LakeUI.ModernPanel()
+        MCB_设定默认的字幕轨 = New LakeUI.ModernComboBox()
+        JustEmptyControl11 = New LakeUI.JustEmptyControl()
+        MCB_设定默认的音频轨 = New LakeUI.ModernComboBox()
+        JustEmptyControl10 = New LakeUI.JustEmptyControl()
         MCB_设定默认的视频轨 = New LakeUI.ModernComboBox()
         HtmlColorLabel7 = New LakeUI.HtmlColorLabel()
         Panel2 = New LakeUI.ModernPanel()
@@ -63,10 +67,6 @@ Partial Class Form_v6_集成工具_混流
         JustEmptyControl6 = New LakeUI.JustEmptyControl()
         MB_选择位置 = New LakeUI.ModernButton()
         MB_启动合并 = New LakeUI.ModernButton()
-        JustEmptyControl10 = New LakeUI.JustEmptyControl()
-        JustEmptyControl11 = New LakeUI.JustEmptyControl()
-        MCB_设定默认的音频轨 = New LakeUI.ModernComboBox()
-        MCB_设定默认的字幕轨 = New LakeUI.ModernComboBox()
         ModernPanel1.SuspendLayout()
         Panel4.SuspendLayout()
         Panel3.SuspendLayout()
@@ -131,7 +131,7 @@ Partial Class Form_v6_集成工具_混流
         UltraDetailListView1.Location = New Point(20, 95)
         UltraDetailListView1.Margin = New Padding(2, 2, 2, 2)
         UltraDetailListView1.Name = "UltraDetailListView1"
-        UltraDetailListView1.Padding = New Padding(5, 0, 5, 5)
+        UltraDetailListView1.Padding = New Padding(10, 0, 10, 10)
         UltraDetailListView1.ScrollBarThumbColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         UltraDetailListView1.ScrollBarThumbHoverColor = Color.FromArgb(CByte(120), CByte(220), CByte(220), CByte(220))
         UltraDetailListView1.ScrollBarTrackColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
@@ -489,6 +489,78 @@ Partial Class Form_v6_集成工具_混流
         ModernPanel2.Size = New Size(801, 32)
         ModernPanel2.TabIndex = 9
         ' 
+        ' MCB_设定默认的字幕轨
+        ' 
+        MCB_设定默认的字幕轨.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MCB_设定默认的字幕轨.BorderRadius = 10
+        MCB_设定默认的字幕轨.BorderSize = 0
+        MCB_设定默认的字幕轨.Dock = DockStyle.Left
+        MCB_设定默认的字幕轨.DropDownBackdropBlurPasses = 2
+        MCB_设定默认的字幕轨.DropDownBackdropBlurRadius = 30
+        MCB_设定默认的字幕轨.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
+        MCB_设定默认的字幕轨.DropDownHoverColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
+        MCB_设定默认的字幕轨.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
+        MCB_设定默认的字幕轨.DropDownPadding = New Padding(10)
+        MCB_设定默认的字幕轨.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MCB_设定默认的字幕轨.DropDownSelectedForeColor = Color.White
+        MCB_设定默认的字幕轨.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        MCB_设定默认的字幕轨.Location = New Point(540, 0)
+        MCB_设定默认的字幕轨.Margin = New Padding(2, 2, 2, 2)
+        MCB_设定默认的字幕轨.Name = "MCB_设定默认的字幕轨"
+        MCB_设定默认的字幕轨.Padding = New Padding(10, 0, 10, 0)
+        MCB_设定默认的字幕轨.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MCB_设定默认的字幕轨.Size = New Size(200, 32)
+        MCB_设定默认的字幕轨.TabIndex = 21
+        MCB_设定默认的字幕轨.ToolTipGap = -1
+        MCB_设定默认的字幕轨.ToolTipMaxWidth = 350
+        MCB_设定默认的字幕轨.ToolTipPadding = New Padding(15)
+        MCB_设定默认的字幕轨.WaterText = "设定默认的字幕轨"
+        MCB_设定默认的字幕轨.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
+        ' 
+        ' JustEmptyControl11
+        ' 
+        JustEmptyControl11.Dock = DockStyle.Left
+        JustEmptyControl11.Location = New Point(530, 0)
+        JustEmptyControl11.Name = "JustEmptyControl11"
+        JustEmptyControl11.Size = New Size(10, 32)
+        JustEmptyControl11.TabIndex = 20
+        ' 
+        ' MCB_设定默认的音频轨
+        ' 
+        MCB_设定默认的音频轨.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MCB_设定默认的音频轨.BorderRadius = 10
+        MCB_设定默认的音频轨.BorderSize = 0
+        MCB_设定默认的音频轨.Dock = DockStyle.Left
+        MCB_设定默认的音频轨.DropDownBackdropBlurPasses = 2
+        MCB_设定默认的音频轨.DropDownBackdropBlurRadius = 30
+        MCB_设定默认的音频轨.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
+        MCB_设定默认的音频轨.DropDownHoverColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
+        MCB_设定默认的音频轨.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
+        MCB_设定默认的音频轨.DropDownPadding = New Padding(10)
+        MCB_设定默认的音频轨.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MCB_设定默认的音频轨.DropDownSelectedForeColor = Color.White
+        MCB_设定默认的音频轨.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        MCB_设定默认的音频轨.Location = New Point(330, 0)
+        MCB_设定默认的音频轨.Margin = New Padding(2, 2, 2, 2)
+        MCB_设定默认的音频轨.Name = "MCB_设定默认的音频轨"
+        MCB_设定默认的音频轨.Padding = New Padding(10, 0, 10, 0)
+        MCB_设定默认的音频轨.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MCB_设定默认的音频轨.Size = New Size(200, 32)
+        MCB_设定默认的音频轨.TabIndex = 19
+        MCB_设定默认的音频轨.ToolTipGap = -1
+        MCB_设定默认的音频轨.ToolTipMaxWidth = 350
+        MCB_设定默认的音频轨.ToolTipPadding = New Padding(15)
+        MCB_设定默认的音频轨.WaterText = "设定默认的音频轨"
+        MCB_设定默认的音频轨.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
+        ' 
+        ' JustEmptyControl10
+        ' 
+        JustEmptyControl10.Dock = DockStyle.Left
+        JustEmptyControl10.Location = New Point(320, 0)
+        JustEmptyControl10.Name = "JustEmptyControl10"
+        JustEmptyControl10.Size = New Size(10, 32)
+        JustEmptyControl10.TabIndex = 18
+        ' 
         ' MCB_设定默认的视频轨
         ' 
         MCB_设定默认的视频轨.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
@@ -612,78 +684,6 @@ Partial Class Form_v6_集成工具_混流
         MB_启动合并.Size = New Size(110, 32)
         MB_启动合并.TabIndex = 5
         MB_启动合并.Text = "启动混流"
-        ' 
-        ' JustEmptyControl10
-        ' 
-        JustEmptyControl10.Dock = DockStyle.Left
-        JustEmptyControl10.Location = New Point(320, 0)
-        JustEmptyControl10.Name = "JustEmptyControl10"
-        JustEmptyControl10.Size = New Size(10, 32)
-        JustEmptyControl10.TabIndex = 18
-        ' 
-        ' JustEmptyControl11
-        ' 
-        JustEmptyControl11.Dock = DockStyle.Left
-        JustEmptyControl11.Location = New Point(530, 0)
-        JustEmptyControl11.Name = "JustEmptyControl11"
-        JustEmptyControl11.Size = New Size(10, 32)
-        JustEmptyControl11.TabIndex = 20
-        ' 
-        ' MCB_设定默认的音频轨
-        ' 
-        MCB_设定默认的音频轨.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        MCB_设定默认的音频轨.BorderRadius = 10
-        MCB_设定默认的音频轨.BorderSize = 0
-        MCB_设定默认的音频轨.Dock = DockStyle.Left
-        MCB_设定默认的音频轨.DropDownBackdropBlurPasses = 2
-        MCB_设定默认的音频轨.DropDownBackdropBlurRadius = 30
-        MCB_设定默认的音频轨.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
-        MCB_设定默认的音频轨.DropDownHoverColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
-        MCB_设定默认的音频轨.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
-        MCB_设定默认的音频轨.DropDownPadding = New Padding(10)
-        MCB_设定默认的音频轨.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        MCB_设定默认的音频轨.DropDownSelectedForeColor = Color.White
-        MCB_设定默认的音频轨.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
-        MCB_设定默认的音频轨.Location = New Point(330, 0)
-        MCB_设定默认的音频轨.Margin = New Padding(2, 2, 2, 2)
-        MCB_设定默认的音频轨.Name = "MCB_设定默认的音频轨"
-        MCB_设定默认的音频轨.Padding = New Padding(10, 0, 10, 0)
-        MCB_设定默认的音频轨.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        MCB_设定默认的音频轨.Size = New Size(200, 32)
-        MCB_设定默认的音频轨.TabIndex = 19
-        MCB_设定默认的音频轨.ToolTipGap = -1
-        MCB_设定默认的音频轨.ToolTipMaxWidth = 350
-        MCB_设定默认的音频轨.ToolTipPadding = New Padding(15)
-        MCB_设定默认的音频轨.WaterText = "设定默认的音频轨"
-        MCB_设定默认的音频轨.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        ' 
-        ' MCB_设定默认的字幕轨
-        ' 
-        MCB_设定默认的字幕轨.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        MCB_设定默认的字幕轨.BorderRadius = 10
-        MCB_设定默认的字幕轨.BorderSize = 0
-        MCB_设定默认的字幕轨.Dock = DockStyle.Left
-        MCB_设定默认的字幕轨.DropDownBackdropBlurPasses = 2
-        MCB_设定默认的字幕轨.DropDownBackdropBlurRadius = 30
-        MCB_设定默认的字幕轨.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
-        MCB_设定默认的字幕轨.DropDownHoverColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
-        MCB_设定默认的字幕轨.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
-        MCB_设定默认的字幕轨.DropDownPadding = New Padding(10)
-        MCB_设定默认的字幕轨.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        MCB_设定默认的字幕轨.DropDownSelectedForeColor = Color.White
-        MCB_设定默认的字幕轨.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
-        MCB_设定默认的字幕轨.Location = New Point(540, 0)
-        MCB_设定默认的字幕轨.Margin = New Padding(2, 2, 2, 2)
-        MCB_设定默认的字幕轨.Name = "MCB_设定默认的字幕轨"
-        MCB_设定默认的字幕轨.Padding = New Padding(10, 0, 10, 0)
-        MCB_设定默认的字幕轨.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        MCB_设定默认的字幕轨.Size = New Size(200, 32)
-        MCB_设定默认的字幕轨.TabIndex = 21
-        MCB_设定默认的字幕轨.ToolTipGap = -1
-        MCB_设定默认的字幕轨.ToolTipMaxWidth = 350
-        MCB_设定默认的字幕轨.ToolTipPadding = New Padding(15)
-        MCB_设定默认的字幕轨.WaterText = "设定默认的字幕轨"
-        MCB_设定默认的字幕轨.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ' 
         ' Form_v6_集成工具_混流
         ' 

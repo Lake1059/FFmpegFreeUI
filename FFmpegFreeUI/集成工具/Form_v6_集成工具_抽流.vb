@@ -38,7 +38,7 @@ Public Class Form_v6_集成工具_抽流
         Public Property 副文本 As String = ""
         Public Property 默认扩展名 As String = "bin"
         Public Property FFprobe信息 As JsonElement
-        Public Property 复选框 As ModernCheckBox
+        Public Property 列表项 As UltraDetailListView.ListItem
     End Class
 
     Private Class 进程运行结果
@@ -70,13 +70,16 @@ Public Class Form_v6_集成工具_抽流
     }
 
     Private Sub Form_v6_集成工具_抽流_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        ModernPanel2.ScrollBarMode = ModernPanel.ScrollMode.Vertical
+        UltraDetailListView1.MultiSelect = True
+        UltraDetailListView1.AllowDragReorder = False
+        UltraDetailListView1.BottomLinesSpacing = 3
+        调整列宽()
         MCB_输出位置.SelectedIndex = 0
         绑定路径下拉框拖拽(MCB_输出位置, 路径下拉框拖拽模式.文件夹路径)
         绑定文件拖入(Me)
         绑定文件拖入(ModernPanel1)
         绑定文件拖入(Panel1)
-        绑定文件拖入(ModernPanel2)
+        绑定文件拖入(UltraDetailListView1)
         绑定文件拖入(MB_打开文件)
         绑定文件拖入(MB_提取所选)
         绑定文件拖入(MB_清除页面)
@@ -116,7 +119,7 @@ Public Class Form_v6_集成工具_抽流
                     result.AddRange(Directory.GetFiles(raw, "*", SearchOption.TopDirectoryOnly).OrderBy(Function(x) x, StringComparer.CurrentCultureIgnoreCase))
                 End If
             Catch ex As Exception
-                ExFloatingTip(ModernPanel2, $"读取路径失败：{ex.Message}", 2200)
+                ExFloatingTip(UltraDetailListView1, $"读取路径失败：{ex.Message}", 2200)
             End Try
         Next
         Return result
@@ -194,7 +197,7 @@ Public Class Form_v6_集成工具_抽流
             {"attachment_filename", x.附件文件名},
             {"attachment_mime_type", x.附件MimeType},
             {"extension", x.默认扩展名},
-            {"selected", x.复选框 IsNot Nothing AndAlso x.复选框.Checked},
+            {"selected", x.列表项 IsNot Nothing AndAlso x.列表项.Selected},
             {"text", x.主文本},
             {"sub_text", x.副文本},
             {"ffprobe", x.FFprobe信息}
@@ -227,14 +230,19 @@ Public Class Form_v6_集成工具_抽流
             Where(Function(x) x <> "").
             ToList()
         If selectedStreams IsNot Nothing Then
-            For Each info In 流列表
-                cancellationToken.ThrowIfCancellationRequested()
-                If info.复选框 Is Nothing Then Continue For
-                info.复选框.Checked = requested.Any(Function(x) Agent匹配流选择(x, info))
-            Next
+            UltraDetailListView1.BeginUpdate()
+            Try
+                For Each info In 流列表
+                    cancellationToken.ThrowIfCancellationRequested()
+                    If info.列表项 Is Nothing Then Continue For
+                    info.列表项.Selected = requested.Any(Function(x) Agent匹配流选择(x, info))
+                Next
+            Finally
+                UltraDetailListView1.EndUpdate()
+            End Try
         End If
 
-        Return $"抽流工具：{Path.GetFileName(当前文件)}，已选 {流列表.Where(Function(x) x.复选框 IsNot Nothing AndAlso x.复选框.Checked).Count()} / {流列表.Count} 个流"
+        Return $"抽流工具：{Path.GetFileName(当前文件)}，已选 {流列表.Where(Function(x) x.列表项 IsNot Nothing AndAlso x.列表项.Selected).Count()} / {流列表.Count} 个流"
     End Function
 
     Public Async Function Agent运行Async(Optional forceAutoName As Boolean = True,
@@ -352,88 +360,71 @@ Public Class Form_v6_集成工具_抽流
     End Function
 
     Private Sub 呈现流列表()
-        Dim 控件列表 As New List(Of Control)
-
         If 流列表.Count = 0 Then
-            控件列表.Add(创建说明("未发现可提取的视频、音频、字幕或附件流", Color.IndianRed))
-            呈现控件(控件列表)
+            显示提示("未发现可提取的视频、音频、字幕或附件流", Color.IndianRed)
             Exit Sub
         End If
 
-        控件列表.Add(创建说明(Path.GetFileName(当前文件), Color.Silver, 13.0F, True))
-        添加分组(控件列表, "视频流", 抽流流类型.视频)
-        添加分组(控件列表, "音频流", 抽流流类型.音频)
-        添加分组(控件列表, "字幕流", 抽流流类型.字幕)
-        添加分组(控件列表, "附件流", 抽流流类型.附件)
-        呈现控件(控件列表)
-    End Sub
-
-    Private Sub 添加分组(控件列表 As List(Of Control), 标题 As String, 类型 As 抽流流类型)
-        Dim items = 流列表.Where(Function(x) x.类型 = 类型).ToList()
-        If items.Count = 0 Then Exit Sub
-        控件列表.Add(创建说明(标题, 获取类型颜色(类型), 12.0F, True))
-        For Each info In items
-            控件列表.Add(创建流复选框(info))
-        Next
-    End Sub
-
-    Private Function 创建说明(text As String, color As Color, Optional size As Single = 10.0F, Optional 作为标题 As Boolean = False) As HtmlColorLabel
-        Return New HtmlColorLabel With {
-            .AutoSize = True,
-            .AutoSizeMode = AutoSizeMode.GrowAndShrink,
-            .AllowDrop = True,
-            .Dock = DockStyle.Top,
-            .ForeColor = Color.FromArgb(120, 255, 255, 255),
-            .BackColor = Color.Transparent,
-            .Margin = New Padding(2),
-            .Padding = New Padding(0, 0, 0, 10),
-            .Text = $"<span style=""font-size:{CInt(size)}; color:{ColorTranslator.ToHtml(color)}"">{转义Html(text)}</span>"
-        }
-    End Function
-
-    Private Function 创建流复选框(info As 抽流流信息) As ModernCheckBox
-        Dim cb As New ModernCheckBox With {
-            .AllowDrop = True,
-            .AutoSize = True,
-            .Text = info.主文本,
-            .SubText = info.副文本,
-            .SubTextForeColor = Color.FromArgb(120, 255, 255, 255),
-            .BackColor = Color.Transparent,
-            .MainSubTextSpacing = 3,
-            .Tag = info,
-            .Checked = False,
-            .ClickAnywhere = True,
-            .BoxBorderRadius = 5,
-            .BoxBorderSize = 0,
-            .BoxCheckedBackColor = 获取类型颜色(info.类型),
-            .BoxUncheckedBackColor = Color.FromArgb(40, 220, 220, 220),
-            .BoxInnerPadding = 6,
-            .BoxSize = 22,
-            .BoxTextSpacing = 10,
-            .Dock = DockStyle.Top,
-            .Padding = New Padding(0, 0, 0, 10)
-        }
-        info.复选框 = cb
-        绑定文件拖入(cb)
-        Return cb
-    End Function
-
-    Private Sub 呈现控件(控件列表 As List(Of Control))
-        ModernPanel2.SuspendLayout()
+        UltraDetailListView1.BeginUpdate()
         Try
-            ModernPanel2.Controls.Clear()
-            For i = 控件列表.Count - 1 To 0 Step -1
-                绑定文件拖入(控件列表(i))
-                ModernPanel2.Controls.Add(控件列表(i))
-            Next
+            UltraDetailListView1.Items.Clear()
+            UltraDetailListView1.Groups.Clear()
+            UltraDetailListView1.Items.Add(创建说明(Path.GetFileName(当前文件), Color.Silver))
+            添加分组("视频流", 抽流流类型.视频)
+            添加分组("音频流", 抽流流类型.音频)
+            添加分组("字幕流", 抽流流类型.字幕)
+            添加分组("附件流", 抽流流类型.附件)
         Finally
-            ModernPanel2.ResumeLayout(False)
-            ModernPanel2.PerformLayout()
+            UltraDetailListView1.EndUpdate()
+            调整列宽()
         End Try
     End Sub
 
+    Private Sub 添加分组(标题 As String, 类型 As 抽流流类型)
+        Dim items = 流列表.Where(Function(x) x.类型 = 类型).ToList()
+        If items.Count = 0 Then Exit Sub
+        UltraDetailListView1.Groups.Add(New UltraDetailListView.ListGroup(标题) With {.ForeColor = 获取类型颜色(类型)})
+        For Each info In items
+            Dim item = 创建流列表项(info, 标题)
+            info.列表项 = item
+            UltraDetailListView1.Items.Add(item)
+        Next
+    End Sub
+
+    Private Function 创建说明(text As String, color As Color) As UltraDetailListView.ListItem
+        Return New UltraDetailListView.ListItem(New UltraDetailListView.ListSubItem(text) With {.ForeColor = color})
+    End Function
+
+    Private Function 创建流列表项(info As 抽流流信息, groupName As String) As UltraDetailListView.ListItem
+        Dim item As New UltraDetailListView.ListItem(New UltraDetailListView.ListSubItem(info.主文本)) With {
+            .GroupName = groupName,
+            .Tag = info,
+            .Selected = False
+        }
+        If info.副文本 <> "" Then item.BottomLines.Add(New UltraDetailListView.TextLine(info.副文本, Nothing, Color.FromArgb(120, 255, 255, 255)))
+        Return item
+    End Function
+
     Private Sub 显示提示(text As String, color As Color)
-        呈现控件(New List(Of Control) From {创建说明(text, color, 10.0F, False)})
+        UltraDetailListView1.BeginUpdate()
+        Try
+            UltraDetailListView1.Items.Clear()
+            UltraDetailListView1.Groups.Clear()
+            UltraDetailListView1.Items.Add(创建说明(text, color))
+        Finally
+            UltraDetailListView1.EndUpdate()
+            调整列宽()
+        End Try
+    End Sub
+
+    Private Sub UltraDetailListView1_布局变化(sender As Object, e As EventArgs) Handles UltraDetailListView1.SizeChanged, UltraDetailListView1.PaddingChanged, UltraDetailListView1.DpiChangedAfterParent
+        调整列宽()
+    End Sub
+
+    Private Sub 调整列宽()
+        If UltraDetailListView1.Columns.Count = 0 OrElse UltraDetailListView1.ClientSize.Width <= 0 Then Exit Sub
+        Dim available = UltraDetailListView1.ClientSize.Width - UltraDetailListView1.Padding.Horizontal
+        UltraDetailListView1.Columns(0).Width = Math.Max(1, available)
     End Sub
 
     Private Async Sub MB_提取所选_MouseUp(sender As Object, e As MouseEventArgs) Handles MB_提取所选.MouseUp
@@ -453,9 +444,9 @@ Public Class Form_v6_集成工具_抽流
             Return "抽流失败：请先打开存在的媒体文件"
         End If
 
-        Dim selected = 流列表.Where(Function(x) x.复选框 IsNot Nothing AndAlso x.复选框.Checked).ToList()
+        Dim selected = 流列表.Where(Function(x) x.列表项 IsNot Nothing AndAlso x.列表项.Selected).ToList()
         If selected.Count = 0 Then
-            ExFloatingTip(ModernPanel2, "请选择要提取的流", 1800)
+            ExFloatingTip(UltraDetailListView1, "请选择要提取的流", 1800)
             Return "抽流失败：未选择任何流"
         End If
 
@@ -636,9 +627,7 @@ Public Class Form_v6_集成工具_抽流
         MB_打开文件.Enabled = Not running
         MB_清除页面.Enabled = Not running
         MCB_输出位置.Enabled = Not running
-        For Each info In 流列表
-            If info.复选框 IsNot Nothing Then info.复选框.Enabled = Not running
-        Next
+        UltraDetailListView1.Enabled = Not running
     End Sub
 
     Private Sub 设置提取进度(percent As Double)
@@ -916,10 +905,6 @@ Public Class Form_v6_集成工具_抽流
             value = value.Replace(ch, "_"c)
         Next
         Return value.Trim()
-    End Function
-
-    Private Shared Function 转义Html(text As String) As String
-        Return If(text, "").Replace("&", "&amp;").Replace("<", "&lt;").Replace(">", "&gt;").Replace("""", "&quot;")
     End Function
 
     Private Shared Function 引用参数(value As String) As String

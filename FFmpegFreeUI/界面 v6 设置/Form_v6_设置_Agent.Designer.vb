@@ -79,13 +79,13 @@ Partial Class Form_v6_设置_Agent
         HtmlColorLabel4.Dock = DockStyle.Top
         HtmlColorLabel4.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         HtmlColorLabel4.LineSpacing = 3
-        HtmlColorLabel4.Location = New Point(20, 441)
+        HtmlColorLabel4.Location = New Point(20, 481)
         HtmlColorLabel4.Margin = New Padding(2)
         HtmlColorLabel4.Name = "HtmlColorLabel4"
         HtmlColorLabel4.Padding = New Padding(0, 20, 0, 0)
         HtmlColorLabel4.Size = New Size(769, 63)
         HtmlColorLabel4.TabIndex = 36
-        HtmlColorLabel4.Text = "<span style=""font-size:13; color:Silver"">免责声明</span>   开发者不承担任何 AI 导致的任何损失<br>使用即代表同意此条款"
+        HtmlColorLabel4.Text = "<span style=""font-size:13; color:Silver"">免责声明</span>   开发者不承担任何 AI 导致的任何损失，使用即代表同意此条款<br>进行任何危险工作前请务必手动备份，不建议使用任何小模型，因为未必是向 Agent 提供的"
         ' 
         ' Panel2
         ' 
@@ -94,7 +94,7 @@ Partial Class Form_v6_设置_Agent
         Panel2.BorderSize = 0
         Panel2.Controls.Add(ModernComboBox1)
         Panel2.Dock = DockStyle.Top
-        Panel2.Location = New Point(20, 399)
+        Panel2.Location = New Point(20, 439)
         Panel2.Name = "Panel2"
         Panel2.Padding = New Padding(0, 10, 0, 0)
         Panel2.Size = New Size(769, 42)
@@ -134,7 +134,7 @@ Partial Class Form_v6_设置_Agent
         HtmlColorLabel3.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel3.Dock = DockStyle.Top
         HtmlColorLabel3.ForeColor = Color.IndianRed
-        HtmlColorLabel3.Location = New Point(20, 377)
+        HtmlColorLabel3.Location = New Point(20, 417)
         HtmlColorLabel3.Margin = New Padding(2)
         HtmlColorLabel3.Name = "HtmlColorLabel3"
         HtmlColorLabel3.Padding = New Padding(0, 5, 0, 0)
@@ -148,7 +148,7 @@ Partial Class Form_v6_设置_Agent
         HtmlColorLabel2.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel2.Dock = DockStyle.Top
         HtmlColorLabel2.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        HtmlColorLabel2.Location = New Point(20, 334)
+        HtmlColorLabel2.Location = New Point(20, 374)
         HtmlColorLabel2.Margin = New Padding(2)
         HtmlColorLabel2.Name = "HtmlColorLabel2"
         HtmlColorLabel2.Padding = New Padding(0, 20, 0, 0)
@@ -164,7 +164,7 @@ Partial Class Form_v6_设置_Agent
         Panel5.Controls.Add(HtmlColorLabel10)
         Panel5.Controls.Add(MTB_附加请求Body)
         Panel5.Dock = DockStyle.Top
-        Panel5.Location = New Point(20, 252)
+        Panel5.Location = New Point(20, 292)
         Panel5.Name = "Panel5"
         Panel5.Padding = New Padding(0, 10, 0, 0)
         Panel5.Size = New Size(769, 82)
@@ -212,7 +212,7 @@ Partial Class Form_v6_设置_Agent
         Panel4.Controls.Add(HtmlColorLabel9)
         Panel4.Controls.Add(MTB_附加请求头)
         Panel4.Dock = DockStyle.Top
-        Panel4.Location = New Point(20, 170)
+        Panel4.Location = New Point(20, 210)
         Panel4.Name = "Panel4"
         Panel4.Padding = New Padding(0, 10, 0, 0)
         Panel4.Size = New Size(769, 82)
@@ -260,7 +260,7 @@ Partial Class Form_v6_设置_Agent
         Panel3.Controls.Add(HtmlColorLabel8)
         Panel3.Controls.Add(MTB_APIKEY)
         Panel3.Dock = DockStyle.Top
-        Panel3.Location = New Point(20, 128)
+        Panel3.Location = New Point(20, 168)
         Panel3.Name = "Panel3"
         Panel3.Padding = New Padding(0, 10, 0, 0)
         Panel3.Size = New Size(769, 42)
@@ -303,7 +303,7 @@ Partial Class Form_v6_设置_Agent
         Panel1.Controls.Add(HtmlColorLabel7)
         Panel1.Controls.Add(MTB_自定义地址)
         Panel1.Dock = DockStyle.Top
-        Panel1.Location = New Point(20, 86)
+        Panel1.Location = New Point(20, 126)
         Panel1.Name = "Panel1"
         Panel1.Padding = New Padding(0, 10, 0, 0)
         Panel1.Size = New Size(769, 42)
@@ -344,7 +344,7 @@ Partial Class Form_v6_设置_Agent
         HtmlColorLabel1.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel1.Dock = DockStyle.Top
         HtmlColorLabel1.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        HtmlColorLabel1.Location = New Point(20, 63)
+        HtmlColorLabel1.Location = New Point(20, 103)
         HtmlColorLabel1.Margin = New Padding(2)
         HtmlColorLabel1.Name = "HtmlColorLabel1"
         HtmlColorLabel1.Size = New Size(769, 23)
@@ -357,13 +357,14 @@ Partial Class Form_v6_设置_Agent
         HtmlColorLabel6.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel6.Dock = DockStyle.Top
         HtmlColorLabel6.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
+        HtmlColorLabel6.LineSpacing = 3
         HtmlColorLabel6.Location = New Point(20, 20)
         HtmlColorLabel6.Margin = New Padding(2)
         HtmlColorLabel6.Name = "HtmlColorLabel6"
         HtmlColorLabel6.Padding = New Padding(0, 0, 0, 20)
-        HtmlColorLabel6.Size = New Size(769, 43)
+        HtmlColorLabel6.Size = New Size(769, 83)
         HtmlColorLabel6.TabIndex = 25
-        HtmlColorLabel6.Text = "<span style=""font-size:13; color:Silver"">3FUI Agent</span>   专属于 3FUI 的副驾驶！不止聊天，AI 可以操作参数面板并使用 3FUI 文档"
+        HtmlColorLabel6.Text = "<span style=""font-size:13; color:Silver"">3FUI Agent</span>   专属于 3FUI 的副驾驶！不止聊天，AI 可以操作 3FUI 的绝大多数区域<br>不适合人类去干的活直接让 AI 去干，给 Agent 提供的工具是编程开发级别的，研究工作亦可胜任<br>要自定义模型的上下文长度、推理级别，请参阅 GitHub README 中对应章节"
         ' 
         ' Form_v6_设置_Agent
         ' 
