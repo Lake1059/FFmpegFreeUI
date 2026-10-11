@@ -28,14 +28,17 @@ Partial Class Form_v6_集成工具
         Dim ModernTabPage4 As LakeUI.ModernTabListControl.ModernTabPage = New LakeUI.ModernTabListControl.ModernTabPage()
         Dim ModernTabPage5 As LakeUI.ModernTabListControl.ModernTabPage = New LakeUI.ModernTabListControl.ModernTabPage()
         Dim ModernTabPage6 As LakeUI.ModernTabListControl.ModernTabPage = New LakeUI.ModernTabListControl.ModernTabPage()
+        Dim ModernTabPage7 As LakeUI.ModernTabListControl.ModernTabPage = New LakeUI.ModernTabListControl.ModernTabPage()
+        Dim ModernTabPage8 As LakeUI.ModernTabListControl.ModernTabPage = New LakeUI.ModernTabListControl.ModernTabPage()
+        Dim ModernTabPage9 As LakeUI.ModernTabListControl.ModernTabPage = New LakeUI.ModernTabListControl.ModernTabPage()
         ModernPanel1 = New LakeUI.ModernPanel()
-        ModernPanel1.BackColor = Color.Transparent
         ModernTabListControl1 = New LakeUI.ModernTabListControl()
         ModernPanel1.SuspendLayout()
         SuspendLayout()
-        '
+        ' 
         ' ModernPanel1
-        '
+        ' 
+        ModernPanel1.BackColor = Color.Transparent
         ModernPanel1.BorderSize = 0
         ModernPanel1.Controls.Add(ModernTabListControl1)
         ModernPanel1.Dock = DockStyle.Fill
@@ -43,9 +46,9 @@ Partial Class Form_v6_集成工具
         ModernPanel1.Name = "ModernPanel1"
         ModernPanel1.Size = New Size(848, 579)
         ModernPanel1.TabIndex = 3
-        '
+        ' 
         ' ModernTabListControl1
-        '
+        ' 
         ModernTabListControl1.AnimationDuration = 0
         ModernTabListControl1.BackColor = Color.Transparent
         ModernTabListControl1.Dock = DockStyle.Fill
@@ -54,13 +57,19 @@ Partial Class Form_v6_集成工具
         ModernTabPage3.Text = "抽流（取出纯流）"
         ModernTabPage4.IsSeparator = True
         ModernTabPage5.Text = "质量评测"
-        ModernTabPage6.Text = "Whisper 字幕生成"
+        ModernTabPage6.Text = "（敬请期待）"
+        ModernTabPage7.Text = "（敬请期待）"
+        ModernTabPage8.IsSeparator = True
+        ModernTabPage9.Text = "Whisper 字幕生成"
         ModernTabListControl1.Items.Add(ModernTabPage1)
         ModernTabListControl1.Items.Add(ModernTabPage2)
         ModernTabListControl1.Items.Add(ModernTabPage3)
         ModernTabListControl1.Items.Add(ModernTabPage4)
         ModernTabListControl1.Items.Add(ModernTabPage5)
         ModernTabListControl1.Items.Add(ModernTabPage6)
+        ModernTabListControl1.Items.Add(ModernTabPage7)
+        ModernTabListControl1.Items.Add(ModernTabPage8)
+        ModernTabListControl1.Items.Add(ModernTabPage9)
         ModernTabListControl1.Location = New Point(0, 0)
         ModernTabListControl1.Name = "ModernTabListControl1"
         ModernTabListControl1.ScrollBarThumbColor = Color.FromArgb(CByte(40), CByte(200), CByte(200), CByte(200))
@@ -76,9 +85,9 @@ Partial Class Form_v6_集成工具
         ModernTabListControl1.TabItemSpacing = 0
         ModernTabListControl1.TabStripBackColor = Color.FromArgb(CByte(36), CByte(36), CByte(36))
         ModernTabListControl1.TabStripWidth = 210
-        '
+        ' 
         ' Form_v6_集成工具
-        '
+        ' 
         AutoScaleDimensions = New SizeF(96F, 96F)
         AutoScaleMode = AutoScaleMode.Dpi
         BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))

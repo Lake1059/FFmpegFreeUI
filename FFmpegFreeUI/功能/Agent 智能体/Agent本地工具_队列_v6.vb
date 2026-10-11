@@ -1,10 +1,4 @@
-Imports System.Drawing.Imaging
-Imports System.IO
-Imports System.Net
-Imports System.Net.Http
-Imports System.Text
 Imports System.Text.Json
-Imports System.Text.RegularExpressions
 
 Partial Public Class AgentLocalTools
     Private Class QueueTargetResolution
@@ -95,6 +89,9 @@ Partial Public Class AgentLocalTools
         Dim detail = Agent通用工具_v6.GetJsonBoolean(args, "detail", False)
         If resolution.MissingIds.Count > 0 OrElse resolution.MissingIndexes.Count > 0 Then
             resolution.Errors.Add("部分目标不存在，未执行队列修改；请确认全部目标后重试")
+        End If
+        If action = "start" AndAlso (resolution.RequestedAll OrElse resolution.Tasks.Count <> 1) Then
+            resolution.Errors.Add("start 单次调用只能启动一个指定任务，不支持 target=all；请用 id 或 index 指定一个任务，多任务需分别调用")
         End If
         Dim ids = resolution.Tasks.Select(Function(t) t.ID).ToList()
         Dim beforeItems = resolution.Tasks.
@@ -241,7 +238,7 @@ Partial Public Class AgentLocalTools
         item("can_start") = task.状态 = 编码任务状态_v6.未处理
         item("can_pause") = task.状态 = 编码任务状态_v6.正在处理
         item("can_resume") = task.状态 = 编码任务状态_v6.已暂停
-        item("can_stop") = task.可停止 OrElse (task.状态 = 编码任务状态_v6.未处理 AndAlso task.允许自动启动)
+        item("can_stop") = task.可停止 OrElse task.可自动开始
         item("can_remove") = task.可移除
         item("can_reset") = task.可重置
         item("can_sort") = task.可排序
@@ -453,7 +450,7 @@ Partial Public Class AgentLocalTools
             Case "resume"
                 Return task.状态 = 编码任务状态_v6.已暂停
             Case "stop"
-                Return task.可停止 OrElse (task.状态 = 编码任务状态_v6.未处理 AndAlso task.允许自动启动)
+                Return task.可停止 OrElse task.可自动开始
             Case "remove"
                 Return task.可移除
             Case "reset"

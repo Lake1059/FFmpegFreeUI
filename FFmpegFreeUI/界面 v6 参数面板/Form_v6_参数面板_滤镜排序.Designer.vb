@@ -74,22 +74,23 @@ Partial Class Form_v6_参数面板_滤镜排序
         UDLV_滤镜排序列表.Dock = DockStyle.Fill
         UDLV_滤镜排序列表.DragSelectZoneRatio = 0.5F
         UDLV_滤镜排序列表.GroupBorderColor = Color.Silver
-        UDLV_滤镜排序列表.GroupHeight = 35
+        UDLV_滤镜排序列表.GroupHeight = 38
         UDLV_滤镜排序列表.HeaderBackColor = Color.Transparent
         UDLV_滤镜排序列表.HeaderBorderColor = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
         UDLV_滤镜排序列表.HeaderHeight = 40
         UDLV_滤镜排序列表.ItemCornerRadius = 10
         UDLV_滤镜排序列表.ItemPadding = New Padding(10, 6, 10, 6)
         UDLV_滤镜排序列表.ItemSelectedBackColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        UDLV_滤镜排序列表.Location = New Point(20, 100)
+        UDLV_滤镜排序列表.Location = New Point(20, 95)
         UDLV_滤镜排序列表.Margin = New Padding(2, 2, 2, 2)
         UDLV_滤镜排序列表.Name = "UDLV_滤镜排序列表"
+        UDLV_滤镜排序列表.Padding = New Padding(10, 0, 10, 10)
         UDLV_滤镜排序列表.ScrollBarThumbColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         UDLV_滤镜排序列表.ScrollBarThumbHoverColor = Color.FromArgb(CByte(120), CByte(220), CByte(220), CByte(220))
         UDLV_滤镜排序列表.ScrollBarTrackColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
         UDLV_滤镜排序列表.SelectionRectBorderColor = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
         UDLV_滤镜排序列表.SelectionRectFillColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        UDLV_滤镜排序列表.Size = New Size(755, 494)
+        UDLV_滤镜排序列表.Size = New Size(755, 499)
         UDLV_滤镜排序列表.TabIndex = 1
         ' 
         ' Panel1
@@ -103,7 +104,7 @@ Partial Class Form_v6_参数面板_滤镜排序
         Panel1.Controls.Add(JustEmptyControl1)
         Panel1.Controls.Add(MB_添加自定义视频滤镜)
         Panel1.Dock = DockStyle.Top
-        Panel1.Location = New Point(20, 48)
+        Panel1.Location = New Point(20, 43)
         Panel1.Name = "Panel1"
         Panel1.Padding = New Padding(0, 10, 0, 10)
         Panel1.Size = New Size(755, 52)
@@ -179,8 +180,7 @@ Partial Class Form_v6_参数面板_滤镜排序
         HCL_滤镜排序说明.Location = New Point(20, 20)
         HCL_滤镜排序说明.Margin = New Padding(2)
         HCL_滤镜排序说明.Name = "HCL_滤镜排序说明"
-        HCL_滤镜排序说明.Padding = New Padding(0, 0, 0, 5)
-        HCL_滤镜排序说明.Size = New Size(755, 28)
+        HCL_滤镜排序说明.Size = New Size(755, 23)
         HCL_滤镜排序说明.TabIndex = 10
         HCL_滤镜排序说明.Text = "<span style=""font-size:13; color:Silver"">滤镜排序和自定义</span>   添加后双击内容来编辑；如果要一行里写多个滤镜，使用英文逗号隔开即可"
         ' 

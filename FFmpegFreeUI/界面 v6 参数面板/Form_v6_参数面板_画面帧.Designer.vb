@@ -822,11 +822,11 @@ Partial Class Form_v6_参数面板_画面帧
         HCL_缩放滤镜说明.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HCL_缩放滤镜说明.Dock = DockStyle.Fill
         HCL_缩放滤镜说明.ForeColor = Color.OliveDrab
-        HCL_缩放滤镜说明.Location = New Point(230, 10)
+        HCL_缩放滤镜说明.Location = New Point(310, 10)
         HCL_缩放滤镜说明.Margin = New Padding(2)
         HCL_缩放滤镜说明.Name = "HCL_缩放滤镜说明"
         HCL_缩放滤镜说明.Padding = New Padding(10, 0, 0, 0)
-        HCL_缩放滤镜说明.Size = New Size(499, 32)
+        HCL_缩放滤镜说明.Size = New Size(419, 32)
         HCL_缩放滤镜说明.TabIndex = 13
         HCL_缩放滤镜说明.Text = "更推荐使用这里的用滤镜缩放"
         HCL_缩放滤镜说明.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
@@ -855,7 +855,7 @@ Partial Class Form_v6_参数面板_画面帧
         MCB_指定缩放滤镜.Name = "MCB_指定缩放滤镜"
         MCB_指定缩放滤镜.Padding = New Padding(10, 0, 10, 0)
         MCB_指定缩放滤镜.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        MCB_指定缩放滤镜.Size = New Size(230, 32)
+        MCB_指定缩放滤镜.Size = New Size(310, 32)
         MCB_指定缩放滤镜.TabIndex = 12
         MCB_指定缩放滤镜.ToolTipGap = -1
         MCB_指定缩放滤镜.ToolTipMaxWidth = 350

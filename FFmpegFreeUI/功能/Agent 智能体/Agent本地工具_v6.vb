@@ -1,10 +1,4 @@
-Imports System.Drawing.Imaging
-Imports System.IO
-Imports System.Net
-Imports System.Net.Http
-Imports System.Text
 Imports System.Text.Json
-Imports System.Text.RegularExpressions
 
 Partial Public Class AgentLocalTools
     Public Const PermissionSafe As Integer = 0
@@ -58,13 +52,13 @@ Partial Public Class AgentLocalTools
                 {"modes", New Dictionary(Of String, Object) From {{"type", "array"}, {"items", New Dictionary(Of String, Object) From {{"type", "string"}}}, {"description", "多个日志档位；可传 all_modes 返回四档"}}},
                 {"log_limit", New Dictionary(Of String, Object) From {{"type", "integer"}, {"description", "每个任务每档返回的最新日志条数，1-200，默认 20"}}}
             }))
-            tools.Add(FunctionTool("control_queue_tasks", "控制 3FUI 编码队列任务。action 支持 start/pause/resume/stop/remove/reset；用 id/ids 或 1-based index/indexes 指定任务，或 target=all 控制全部任务。停止或移除全部只应在用户明确要求时使用。", New Dictionary(Of String, Object) From {
-                {"action", New Dictionary(Of String, Object) From {{"type", "string"}, {"description", "start、pause、resume、stop、remove、reset"}}},
+            tools.Add(FunctionTool("control_queue_tasks", "控制 3FUI 编码队列任务。action=start 每次只能启动一个指定任务，用 id 或 1-based index 指定；不支持启动全部，不会自动补满并发数量。其他 action 支持 pause/resume/stop/remove/reset，可用 id/ids 或 index/indexes 指定任务，或 target=all 控制全部任务。停止或移除全部只应在用户明确要求时使用。", New Dictionary(Of String, Object) From {
+                {"action", New Dictionary(Of String, Object) From {{"type", "string"}, {"description", "start（单次仅一个指定任务，不触发自动补满）、pause、resume、stop、remove、reset"}}},
                 {"id", New Dictionary(Of String, Object) From {{"type", "string"}, {"description", "单个任务 ID"}}},
                 {"ids", New Dictionary(Of String, Object) From {{"type", "array"}, {"items", New Dictionary(Of String, Object) From {{"type", "string"}}}, {"description", "任务 ID 列表"}}},
                 {"index", New Dictionary(Of String, Object) From {{"type", "integer"}, {"description", "队列中的 1-based 序号"}}},
                 {"indexes", New Dictionary(Of String, Object) From {{"type", "array"}, {"items", New Dictionary(Of String, Object) From {{"type", "integer"}}}, {"description", "队列中的 1-based 序号列表"}}},
-                {"target", New Dictionary(Of String, Object) From {{"type", "string"}, {"description", "all/全部 表示控制全部任务"}}},
+                {"target", New Dictionary(Of String, Object) From {{"type", "string"}, {"description", "all/全部 表示控制全部任务；action=start 不支持全部目标"}}},
                 {"detail", New Dictionary(Of String, Object) From {{"type", "boolean"}, {"description", "返回控制前后详情，默认 false"}}}
             }, {"action"}))
             tools.Add(FunctionTool("sync_parameter_panel_to_queue", "用当前参数面板完整覆盖指定未处理任务的预设快照。必须传 id/ids/index/indexes，不支持全部目标。局部修改使用 patch_queue_task_presets。", BuildQueuePresetProperties(False)))
@@ -216,6 +210,7 @@ Partial Public Class AgentLocalTools
         Return ""
     End Function
 
+    <CodeAnalysis.SuppressMessage("Performance", "CA1861:不要将常量数组作为参数", Justification:="<挂起>")>
     Private Shared Sub AddConsoleToolDefinitions(tools As List(Of Dictionary(Of String, Object)))
         tools.Add(FunctionTool("run_powershell", "运行 PowerShell 命令。仅系统访问权限可用；优先使用 PATH 中的 PowerShell 7 (pwsh.exe)，启动失败时自动回退 Windows PowerShell 5 (powershell.exe)。同一次用户消息触发的 Agent 运行会复用同一个 PowerShell 进程，变量、当前位置和模块导入可在本轮多次调用之间保留；会话启动时强制标准输入、标准输出、标准错误、$OutputEncoding 和带 Encoding 参数的文本 cmdlet 使用 UTF-8；本轮响应结束、超时或任务终止时会关闭进程。若本轮首次使用，先验证 $PSVersionTable.PSVersion 和 $PSVersionTable.PSEdition，再选择兼容语法；脚本读写文本仍需显式使用 -Encoding UTF8 或 .NET UTF8Encoding。", New Dictionary(Of String, Object) From {
             {"command", New Dictionary(Of String, Object) From {{"type", "string"}, {"description", "要执行的 PowerShell 命令"}}},
@@ -419,7 +414,7 @@ Partial Public Class AgentLocalTools
             errorMessage = "工具参数必须是 JSON 对象。原始参数：" & Agent通用工具_v6.LimitText(raw, 4000)
             Return BuildEmptyJsonElement()
         Catch ex As Exception
-            If rawArgumentProperty <> "" AndAlso Not raw.TrimStart().StartsWith("{", StringComparison.Ordinal) AndAlso Not raw.TrimStart().StartsWith("[", StringComparison.Ordinal) Then
+            If rawArgumentProperty <> "" AndAlso Not raw.TrimStart().StartsWith("{"c) AndAlso Not raw.TrimStart().StartsWith("["c) Then
                 Return NormalizeToolArguments(callInfo, rawArgumentProperty, raw)
             End If
 

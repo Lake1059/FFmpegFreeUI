@@ -45,8 +45,8 @@ Public Class Form_v6_集成工具_质量评测
     Private Shared ReadOnly 全部指标 As 指标类型() = {指标类型.PSNR, 指标类型.SSIM, 指标类型.VMAF, 指标类型.XPSNR}
     Private Shared ReadOnly Vmaf术语说明 As String = $"{vbCrLf}{vbCrLf}术语解释：HFR = 高帧率，用于约 50/60 fps、约为常见 24/30 fps 两倍的内容。H = 观看距离，测量方法是画面高度的倍数，会随着实际设备的画面在真实世界的物理高度而变化，数字越大距离越远。"
     Private Shared ReadOnly Vmaf模型描述 As New Dictionary(Of String, String)(StringComparer.OrdinalIgnoreCase) From {
-        {"vmaf_v0.6.1", "旧普通模型"},
         {"vmaf_v0.6.1neg", "更加严格的评测，允许负值"},
+        {"vmaf_v0.6.1", "旧普通模型"},
         {"vmaf_4k_v0.6.1", "面向 4K 内容"},
         {"vmaf_v1.0.16_3d0h", "标准 3H 观看距离，默认场景" & Vmaf术语说明},
         {"vmaf_v1.0.16_5d0h", "较远 5H 观看距离，适用于移动端场景" & Vmaf术语说明},
@@ -72,6 +72,11 @@ Public Class Form_v6_集成工具_质量评测
         Public Property 成功 As Boolean = False
         Public Property 汇总值 As Double = Double.NaN
         Public Property 每帧数据 As New List(Of Double)
+        ' 帧号为评测片段内的零基索引；VMAF 子采样时不连续。
+        Public Property 每帧帧号 As New List(Of Integer)
+        Public Property 评测帧率 As Double = 0
+        Public Property 评测起始秒数 As Double = 0
+        Public Property 帧间隔 As Integer = 1
         Public Property 已处理帧数 As Integer = 0
         Public Property 错误信息 As String = ""
         Public ReadOnly Property 数据锁 As New Object()
@@ -103,7 +108,7 @@ Public Class Form_v6_集成工具_质量评测
 
     Private Class 图表条目
         Public Property 文件名 As String = ""
-        Public Property 每帧数据 As New List(Of Double)
+        Public Property 序列 As New Form_v6_集成工具_质量评测图表.图表序列数据
         Public Property 成功 As Boolean = False
         Public Property 汇总值 As Double = Double.NaN
     End Class
@@ -112,6 +117,10 @@ Public Class Form_v6_集成工具_质量评测
         Public Property 成功 As Boolean
         Public Property 汇总值 As Double
         Public Property 每帧数据 As New List(Of Double)
+        Public Property 每帧帧号 As New List(Of Integer)
+        Public Property 评测帧率 As Double = 0
+        Public Property 评测起始秒数 As Double = 0
+        Public Property 帧间隔 As Integer = 0
         Public Property 已处理帧数 As Integer
         Public Property 错误信息 As String = ""
         Public Property 实际模型 As String = ""
@@ -863,7 +872,13 @@ Public Class Form_v6_集成工具_质量评测
                 Dim d = 获取项数据(item), sf As New 页面状态文件 With {.文件路径 = d.文件路径, .状态 = d.状态, .最近错误 = d.最近错误}
                 For Each kv In d.指标结果
                     Dim r = kv.Value, sr As New 页面状态结果 With {.成功 = r.成功, .汇总值 = r.汇总值, .已处理帧数 = r.已处理帧数, .错误信息 = r.错误信息, .实际模型 = r.实际模型, .模型说明 = r.模型说明}
-                    SyncLock r.数据锁 : sr.每帧数据 = New List(Of Double)(r.每帧数据) : End SyncLock
+                    SyncLock r.数据锁
+                        sr.每帧数据 = New List(Of Double)(r.每帧数据)
+                        sr.每帧帧号 = New List(Of Integer)(r.每帧帧号)
+                        sr.评测帧率 = r.评测帧率
+                        sr.评测起始秒数 = r.评测起始秒数
+                        sr.帧间隔 = r.帧间隔
+                    End SyncLock
                     sf.指标结果(获取指标名称(kv.Key)) = sr
                 Next
                 state.文件.Add(sf)
@@ -893,6 +908,10 @@ Public Class Form_v6_集成工具_质量评测
                     Dim m As 指标类型
                     If [Enum].TryParse(kv.Key, m) Then
                         Dim sr = kv.Value, r As New 指标结果数据 With {.成功 = sr.成功, .汇总值 = sr.汇总值, .已处理帧数 = sr.已处理帧数, .错误信息 = sr.错误信息, .每帧数据 = If(sr.每帧数据, New List(Of Double)), .实际模型 = sr.实际模型, .模型说明 = sr.模型说明}
+                        r.每帧帧号 = If(sr.每帧帧号, New List(Of Integer))
+                        r.评测帧率 = sr.评测帧率
+                        r.评测起始秒数 = sr.评测起始秒数
+                        r.帧间隔 = If(sr.帧间隔 > 0, sr.帧间隔, If(m = 指标类型.VMAF, 获取Vmaf帧间隔(state.SubSample), 1))
                         d.指标结果(m) = r : 设置指标文本(item, m, If(r.成功, 格式化分数(r.汇总值, m), "未评测"))
                     End If
                 Next
@@ -990,6 +1009,11 @@ Public Class Form_v6_集成工具_质量评测
     End Function
 
     Private Async Function 运行单项指标Async(reference As String, distorted As String, metric As 指标类型, startTime As String, duration As String, referenceInfo As 视频流信息, distortedInfo As 视频流信息, token As CancellationToken, item As UltraDetailListView.ListItem, result As 指标结果数据) As Task(Of 指标结果数据)
+        ' 使用实际传给 FFmpeg 的帧率，并将元数据绑定到成绩，避免修改控件后旧图表随之变化。
+        Dim primaryInfo = If(metric = 指标类型.XPSNR, referenceInfo, distortedInfo)
+        result.评测帧率 = 解析帧率值(获取FFMetrics帧率参数(primaryInfo))
+        result.评测起始秒数 = 获取评测起始秒数(startTime, result.评测帧率)
+        result.帧间隔 = If(metric = 指标类型.VMAF, 获取Vmaf帧间隔(获取下拉框文本(MCB_SubSample, "0")), 1)
         Dim tempPath = Path.Combine(Path.GetTempPath(), $"3fui_quality_{Guid.NewGuid():N}_{metric.ToString().ToLowerInvariant()}.log")
         Dim vmafPool = If(metric = 指标类型.VMAF, 获取下拉框文本(MCB_Pooling, "mean"), "")
         If metric = 指标类型.VMAF Then
@@ -1025,7 +1049,7 @@ Public Class Form_v6_集成工具_质量评测
             ElseIf processResult.ExitCode <> 0 Then
                 result.错误信息 = 提取错误信息(processResult.Output)
             Else
-                Dim parsed = 解析指标结果(metric, tempPath, processResult.Output, vmafPool)
+                Dim parsed = 解析指标结果(metric, tempPath, processResult.Output, vmafPool, result.帧间隔)
                 If Not parsed.成功 AndAlso String.IsNullOrWhiteSpace(parsed.错误信息) Then parsed.错误信息 = "未能解析评测结果"
                 覆盖指标结果(result, parsed)
             End If
@@ -1069,7 +1093,9 @@ Public Class Form_v6_集成工具_质量评测
             target.成功 = source.成功
             target.汇总值 = source.汇总值
             target.每帧数据 = New List(Of Double)(source.每帧数据)
-            target.已处理帧数 = Math.Max(source.已处理帧数, target.每帧数据.Count)
+            target.每帧帧号 = New List(Of Integer)(source.每帧帧号)
+            Dim lastFrameCount = If(target.每帧帧号.Count = 0, target.每帧数据.Count, target.每帧帧号.Max() + 1)
+            target.已处理帧数 = Math.Max(target.已处理帧数, Math.Max(source.已处理帧数, lastFrameCount))
             target.错误信息 = source.错误信息
         End SyncLock
     End Sub
@@ -1082,6 +1108,7 @@ Public Class Form_v6_集成工具_质量评测
                     If parsed.每帧数据.Count > 0 Then
                         SyncLock result.数据锁
                             result.每帧数据 = New List(Of Double)(parsed.每帧数据)
+                            result.每帧帧号 = New List(Of Integer)(parsed.每帧帧号)
                             result.已处理帧数 = Math.Max(result.已处理帧数, result.每帧数据.Count)
                         End SyncLock
                         更新运行中显示(item, metric, result)
@@ -1210,6 +1237,12 @@ Public Class Form_v6_集成工具_质量评测
         Dim value As Integer
         If Not Integer.TryParse(If(subsample, "").Trim(), NumberStyles.Integer, CultureInfo.InvariantCulture, value) OrElse value <= 0 Then Return ""
         Return $":n_subsample={value.ToString(CultureInfo.InvariantCulture)}"
+    End Function
+
+    Private Shared Function 获取Vmaf帧间隔(subsample As String) As Integer
+        Dim value As Integer
+        If Integer.TryParse(If(subsample, "").Trim(), NumberStyles.Integer, CultureInfo.InvariantCulture, value) AndAlso value > 0 Then Return value
+        Return 1
     End Function
 
     Private Shared Function 构建Vmaf模型参数(model As String) As String
@@ -1357,6 +1390,13 @@ Public Class Form_v6_集成工具_质量评测
         Dim frameRate = 解析帧率值(frameRateText)
         If seconds <= 0 OrElse frameRate <= 0 Then Return 0
         Return Math.Max(1, CInt(Math.Ceiling(seconds * frameRate)))
+    End Function
+
+    Private Shared Function 获取评测起始秒数(startTime As String, frameRate As Double) As Double
+        Dim seconds = 解析秒数(startTime)
+        If Not Double.IsFinite(frameRate) OrElse frameRate <= 0 Then Return seconds
+        ' trim 保留时间戳不小于开始时间的首帧；开始时间落在两帧之间时向后一帧对齐。
+        Return Math.Ceiling(seconds * frameRate - 0.000000001) / frameRate
     End Function
 
     Private Shared Function 解析秒数(value As String) As Double
@@ -1604,7 +1644,7 @@ Public Class Form_v6_集成工具_质量评测
         End Using
     End Function
 
-    Private Function 解析指标结果(metric As 指标类型, tempPath As String, output As String, vmafPool As String) As 指标结果数据
+    Private Function 解析指标结果(metric As 指标类型, tempPath As String, output As String, vmafPool As String, Optional frameStep As Integer = 1) As 指标结果数据
         Select Case metric
             Case 指标类型.PSNR
                 Return 解析键值Stats(指标类型.PSNR, tempPath, output, "psnr_avg", "average:")
@@ -1613,7 +1653,7 @@ Public Class Form_v6_集成工具_质量评测
             Case 指标类型.XPSNR
                 Return 解析XpsnrStats(tempPath, output)
             Case 指标类型.VMAF
-                Return 解析VMAFJson(tempPath, vmafPool)
+                Return 解析VMAFJson(tempPath, vmafPool, frameStep)
             Case Else
                 Return New 指标结果数据 With {.错误信息 = "未知评测项目"}
         End Select
@@ -1624,6 +1664,8 @@ Public Class Form_v6_集成工具_质量评测
         If File.Exists(path) Then
             For Each line In File.ReadLines(path)
                 Dim value = 提取键值(line, frameKey)
+                If Double.IsNaN(value) Then Continue For
+                result.每帧帧号.Add(获取Stats帧号(line, result.每帧数据.Count))
                 添加规范化帧值(result.每帧数据, metric, value)
             Next
         End If
@@ -1638,6 +1680,8 @@ Public Class Form_v6_集成工具_质量评测
         If File.Exists(path) Then
             For Each line In File.ReadLines(path)
                 Dim value = 提取Xpsnr帧值(line)
+                If Double.IsNaN(value) Then Continue For
+                result.每帧帧号.Add(获取Stats帧号(line, result.每帧数据.Count))
                 添加规范化帧值(result.每帧数据, 指标类型.XPSNR, value)
             Next
         End If
@@ -1647,7 +1691,14 @@ Public Class Form_v6_集成工具_质量评测
         Return result
     End Function
 
-    Private Function 解析VMAFJson(path As String, pool As String) As 指标结果数据
+    Private Shared Function 获取Stats帧号(line As String, fallback As Integer) As Integer
+        Dim match = Regex.Match(line, "\bn\s*:\s*(\d+)", RegexOptions.CultureInvariant)
+        Dim number As Integer
+        If match.Success AndAlso Integer.TryParse(match.Groups(1).Value, NumberStyles.Integer, CultureInfo.InvariantCulture, number) AndAlso number > 0 Then Return number - 1
+        Return fallback
+    End Function
+
+    Private Function 解析VMAFJson(path As String, pool As String, Optional frameStep As Integer = 1) As 指标结果数据
         Dim result As New 指标结果数据()
         If Not File.Exists(path) Then
             result.错误信息 = "VMAF 日志文件不存在"
@@ -1658,12 +1709,21 @@ Public Class Form_v6_集成工具_质量评测
             Dim root = doc.RootElement
             Dim frames As JsonElement
             If root.TryGetProperty("frames", frames) Then
+                Dim sampleIndex = 0
                 For Each frame In frames.EnumerateArray()
                     Dim metrics As JsonElement
                     If frame.TryGetProperty("metrics", metrics) Then
                         Dim value = 获取Json数字(metrics, "vmaf")
-                        添加规范化帧值(result.每帧数据, 指标类型.VMAF, value)
+                        If Not Double.IsNaN(value) Then
+                            Dim frameNumber = sampleIndex * Math.Max(1, frameStep)
+                            Dim frameNum As JsonElement
+                            Dim loggedFrameNumber As Integer
+                            If frame.TryGetProperty("frameNum", frameNum) AndAlso frameNum.ValueKind = JsonValueKind.Number AndAlso frameNum.TryGetInt32(loggedFrameNumber) AndAlso loggedFrameNumber >= 0 Then frameNumber = loggedFrameNumber
+                            result.每帧帧号.Add(frameNumber)
+                            添加规范化帧值(result.每帧数据, 指标类型.VMAF, value)
+                        End If
                     End If
+                    sampleIndex += 1
                 Next
             End If
 
@@ -2294,11 +2354,11 @@ Public Class Form_v6_集成工具_质量评测
         Form_v6_集成工具_质量评测图表.刷新当前图表()
     End Sub
 
-    Private Function 获取图表序列(metricName As String) As Dictionary(Of String, List(Of Double))
-        Dim result As New Dictionary(Of String, List(Of Double))(StringComparer.CurrentCultureIgnoreCase)
+    Private Function 获取图表序列(metricName As String) As Dictionary(Of String, Form_v6_集成工具_质量评测图表.图表序列数据)
+        Dim result As New Dictionary(Of String, Form_v6_集成工具_质量评测图表.图表序列数据)(StringComparer.CurrentCultureIgnoreCase)
         For Each entry In 获取图表条目(解析图表指标(metricName))
-            If entry.每帧数据.Count = 0 Then Continue For
-            result(entry.文件名) = entry.每帧数据
+            If entry.序列.每帧数据.Count = 0 Then Continue For
+            result(entry.文件名) = entry.序列
         Next
         Return result
     End Function
@@ -2322,7 +2382,12 @@ Public Class Form_v6_集成工具_质量评测
             If Not data.指标结果.TryGetValue(metric, metricResult) Then Continue For
             Dim entry As New 图表条目 With {.文件名 = 获取唯一图表文件名(data.文件路径, nameCounts)}
             SyncLock metricResult.数据锁
-                entry.每帧数据 = New List(Of Double)(metricResult.每帧数据)
+                entry.序列.每帧数据 = New List(Of Double)(metricResult.每帧数据)
+                entry.序列.每帧帧号 = If(metricResult.每帧帧号.Count = metricResult.每帧数据.Count,
+                                      New List(Of Integer)(metricResult.每帧帧号),
+                                      Enumerable.Range(0, metricResult.每帧数据.Count).Select(Function(i) i * metricResult.帧间隔).ToList())
+                entry.序列.评测帧率 = metricResult.评测帧率
+                entry.序列.评测起始秒数 = metricResult.评测起始秒数
                 entry.成功 = metricResult.成功
                 entry.汇总值 = metricResult.汇总值
             End SyncLock

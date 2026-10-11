@@ -1,6 +1,6 @@
 ﻿Imports System.Text
 
-Partial Public Class Form_v6_Agent
+Partial Friend Class Agent页面控制器_v6
     Private _statusItem As LakeUI.AgentRoom.ChatItem = Nothing
     Private _latestTurnOverviewItem As LakeUI.AgentRoom.ChatItem = Nothing
 
@@ -10,27 +10,27 @@ Partial Public Class Form_v6_Agent
         If turn Is Nothing Then turn = _current.Turns?.LastOrDefault()
         If turn Is Nothing Then Return
         Dim summary = FormatTurnHeader(turn)
-        Dim header = AgentRoom1.FindItem(turn.Id)
+        Dim header = _view.AgentRoom1.FindItem(turn.Id)
         If header IsNot Nothing Then header.Title = summary
-        If _latestTurnOverviewItem Is Nothing OrElse Not AgentRoom1.Items.Contains(_latestTurnOverviewItem) Then
-            _latestTurnOverviewItem = AgentRoom1.AddCard(summary)
+        If _latestTurnOverviewItem Is Nothing OrElse Not _view.AgentRoom1.Items.Contains(_latestTurnOverviewItem) Then
+            _latestTurnOverviewItem = _view.AgentRoom1.AddCard(summary)
         Else
             _latestTurnOverviewItem.Text = summary
-            If AgentRoom1.Items.IndexOf(_latestTurnOverviewItem) <> AgentRoom1.Items.Count - 1 Then
-                AgentRoom1.Items.Remove(_latestTurnOverviewItem)
-                AgentRoom1.Items.Add(_latestTurnOverviewItem)
+            If _view.AgentRoom1.Items.IndexOf(_latestTurnOverviewItem) <> _view.AgentRoom1.Items.Count - 1 Then
+                _view.AgentRoom1.Items.Remove(_latestTurnOverviewItem)
+                _view.AgentRoom1.Items.Add(_latestTurnOverviewItem)
             End If
         End If
     End Sub
 
     Private Sub FollowLatestWithOverview()
         RefreshLatestTurnOverview()
-        AgentRoom1.FollowLatestIfPinned()
+        _view.AgentRoom1.FollowLatestIfPinned()
     End Sub
 
     Private Sub RenderCurrentConversation(Optional scrollToBottom As Boolean = True)
         Dim run = GetConversationRuntime(_current)
-        AgentRoom1.Clear()
+        _view.AgentRoom1.Clear()
         _statusItem = Nothing
         _latestTurnOverviewItem = Nothing
         run.ActiveTurnItem = Nothing
@@ -49,12 +49,12 @@ Partial Public Class Form_v6_Agent
             Select Case message.Role
                 Case "user"
                     If String.Equals(message.Name, AgentConversationSchema.SteeringMessageName, StringComparison.OrdinalIgnoreCase) Then Continue For
-                    AgentRoom1.AddUserMessage(message.Content)
+                    _view.AgentRoom1.AddUserMessage(message.Content)
                     Dim turn As AgentTurnData = Nothing
                     If turnsByUserMessage.TryGetValue(message.Id, turn) Then RenderTurnRecord(turn)
                 Case "assistant"
                     If String.Equals(message.Name, AgentConversationSchema.ActivityMessageName, StringComparison.OrdinalIgnoreCase) Then Continue For
-                    If Not String.IsNullOrWhiteSpace(message.Content) Then AgentRoom1.AddAssistantMessage(message.Content)
+                    If Not String.IsNullOrWhiteSpace(message.Content) Then _view.AgentRoom1.AddAssistantMessage(message.Content)
                 Case "tool"
                     ' 工具过程由 Turns 中的展示记录承载。
                 Case "card"
@@ -64,7 +64,7 @@ Partial Public Class Form_v6_Agent
         RenderActiveRunOverlay()
         RefreshLatestTurnOverview()
         UpdateSendButtonState()
-        If scrollToBottom Then AgentRoom1.ScrollToBottom()
+        If scrollToBottom Then _view.AgentRoom1.ScrollToBottom()
     End Sub
 
     Private Sub RenderTurnRecord(turn As AgentTurnData)
@@ -72,7 +72,7 @@ Partial Public Class Form_v6_Agent
         If turn Is Nothing Then Return
         Dim isActive = ReferenceEquals(turn, run.ActiveTurn)
         Dim expanded = isActive OrElse Not String.Equals(turn.State, "completed", StringComparison.OrdinalIgnoreCase)
-        Dim header = AgentRoom1.AddTurnHeader(turn.Id, FormatTurnHeader(turn), expanded)
+        Dim header = _view.AgentRoom1.AddTurnHeader(turn.Id, FormatTurnHeader(turn), expanded)
         If isActive Then run.ActiveTurnItem = header
 
         Dim activities = If(turn.Activities, New List(Of AgentTurnActivityData))
@@ -84,11 +84,11 @@ Partial Public Class Form_v6_Agent
             Select Case If(activity.Kind, "").ToLowerInvariant()
                 Case "assistant"
                     If Not String.IsNullOrWhiteSpace(activity.Content) Then
-                        AgentRoom1.AddAssistantActivity(turn.Id, activity.Content, activity.Id)
+                        _view.AgentRoom1.AddAssistantActivity(turn.Id, activity.Content, activity.Id)
                     End If
                 Case "guidance"
                     If Not String.IsNullOrWhiteSpace(activity.Content) Then
-                        AgentRoom1.AddUserMessage(activity.Content)
+                        _view.AgentRoom1.AddUserMessage(activity.Content)
                     End If
                 Case "tool"
                     Dim toolActivities As New List(Of AgentTurnActivityData) From {activity}
@@ -98,7 +98,7 @@ Partial Public Class Form_v6_Agent
                         toolActivities.Add(activities(activityIndex))
                         activityIndex += 1
                     End While
-                    Dim item = AgentRoom1.AddToolCall(
+                    Dim item = _view.AgentRoom1.AddToolCall(
                         turn.Id,
                         FormatToolGroupTitle(toolActivities),
                         FormatToolGroupDetails(toolActivities),
@@ -257,7 +257,7 @@ Partial Public Class Form_v6_Agent
 
     Private Sub AddStoredCard(message As AgentMessageData)
         If message Is Nothing OrElse String.IsNullOrWhiteSpace(message.Content) Then Return
-        AgentRoom1.AddCard(message.Content)
+        _view.AgentRoom1.AddCard(message.Content)
     End Sub
 
     Private Function IsRunResponsePlaceholder(text As String) As Boolean
@@ -284,8 +284,8 @@ Partial Public Class Form_v6_Agent
         If Not ReferenceEquals(conversation, run.ActiveRunConversation) Then Return
         If Not IsConversationSelected(conversation) Then Return
         If run.ActiveTurn Is Nothing Then Return
-        If run.ActiveTurnItem Is Nothing OrElse Not AgentRoom1.Items.Contains(run.ActiveTurnItem) Then
-            run.ActiveTurnItem = AgentRoom1.FindItem(run.ActiveTurn.Id)
+        If run.ActiveTurnItem Is Nothing OrElse Not _view.AgentRoom1.Items.Contains(run.ActiveTurnItem) Then
+            run.ActiveTurnItem = _view.AgentRoom1.FindItem(run.ActiveTurn.Id)
         End If
         If run.ActiveTurnItem Is Nothing Then Return
         run.ActiveTurnItem.Title = FormatTurnHeader(run.ActiveTurn)
@@ -374,37 +374,37 @@ Partial Public Class Form_v6_Agent
     End Function
 
     Private Sub UpdateUsageButton()
-        If _closing OrElse IsDisposed Then Return
+        If _closing OrElse _view.IsDisposed Then Return
         Dim currentUsage = If(_current?.Usage, New AgentUsageInfo)
         Dim currentContextTokens = Math.Max(0, currentUsage.LastRequestInputTokens)
         Dim contextWindowTokens = GetUsageContextWindowTokens(currentUsage)
-        MB_页面用量.Text = $"{FormatContextPercent(currentUsage)} | {currentContextTokens} / {contextWindowTokens}"
+        _view.MB_页面用量.Text = $"{FormatContextPercent(currentUsage)} | {currentContextTokens} / {contextWindowTokens}"
     End Sub
 
     Private Sub UpdateSendButtonState()
-        If _closing OrElse IsDisposed Then Return
+        If _closing OrElse _view.IsDisposed Then Return
         Dim run = GetConversationRuntime(_current)
         If run.Busy AndAlso IsConversationSelected(run.ActiveRunConversation) Then
             If run.RequestCts IsNot Nothing AndAlso run.RequestCts.IsCancellationRequested Then
-                MB_发送.Text = "停止中"
-            ElseIf Not String.IsNullOrWhiteSpace(ModernTextBox1.Text) OrElse _pendingFiles.Count > 0 Then
-                MB_发送.Text = "调整方向"
+                _view.MB_发送.Text = "停止中"
+            ElseIf Not String.IsNullOrWhiteSpace(_view.ModernTextBox1.Text) OrElse _pendingFiles.Count > 0 Then
+                _view.MB_发送.Text = "调整方向"
             Else
-                MB_发送.Text = "停止"
+                _view.MB_发送.Text = "停止"
             End If
         Else
-            MB_发送.Text = "发送"
+            _view.MB_发送.Text = "发送"
         End If
-        MB_发送.Enabled = Not run.Busy OrElse Not If(run.RequestCts?.IsCancellationRequested, False)
-        MCB_模型选择.Enabled = Not _refreshingModels
-        MCB_推理级别.Enabled = MCB_模型选择.Enabled
-        MCB_联网设置.Enabled = True
-        MCB_权限控制.Enabled = True
+        _view.MB_发送.Enabled = Not run.Busy OrElse Not If(run.RequestCts?.IsCancellationRequested, False)
+        _view.MCB_模型选择.Enabled = Not _refreshingModels
+        _view.MCB_推理级别.Enabled = _view.MCB_模型选择.Enabled
+        _view.MCB_联网设置.Enabled = True
+        _view.MCB_权限控制.Enabled = True
     End Sub
 
     Private Sub ShowStatus(text As String, Optional keepRecord As Boolean = False)
         Dim content = $"状态 {DateTime.Now:HH:mm:ss}{vbCrLf}{If(text, "").Trim()}"
-        If keepRecord OrElse _statusItem Is Nothing OrElse Not AgentRoom1.Items.Contains(_statusItem) Then
+        If keepRecord OrElse _statusItem Is Nothing OrElse Not _view.AgentRoom1.Items.Contains(_statusItem) Then
             _statusItem = AddCardBeforeActiveResponse(content)
         Else
             _statusItem.Text = content
@@ -420,14 +420,14 @@ Partial Public Class Form_v6_Agent
             If run.ActiveTurn IsNot Nothing Then run.ActiveTurn.StatusText = content
             UpdateActiveRunOverviewCard(conversation)
             If keepRecord AndAlso IsConversationSelected(conversation) Then
-                AgentRoom1.AddCard(content)
+                _view.AgentRoom1.AddCard(content)
                 If IsConversationSelected(conversation) Then FollowLatestWithOverview()
             End If
             Return
         End If
 
         If Not IsConversationSelected(conversation) Then Return
-        AgentRoom1.AddCard(content)
+        _view.AgentRoom1.AddCard(content)
         If IsConversationSelected(conversation) Then FollowLatestWithOverview()
     End Sub
 
@@ -436,8 +436,8 @@ Partial Public Class Form_v6_Agent
         If Not ReferenceEquals(conversation, run.ActiveRunConversation) OrElse
            Not IsConversationSelected(conversation) OrElse
            run.ActiveTurn Is Nothing Then Return
-        If run.ActiveThinkingItem Is Nothing OrElse Not AgentRoom1.Items.Contains(run.ActiveThinkingItem) Then
-            run.ActiveThinkingItem = AgentRoom1.AddAssistantActivity(run.ActiveTurn.Id, "正在思考...")
+        If run.ActiveThinkingItem Is Nothing OrElse Not _view.AgentRoom1.Items.Contains(run.ActiveThinkingItem) Then
+            run.ActiveThinkingItem = _view.AgentRoom1.AddAssistantActivity(run.ActiveTurn.Id, "正在思考...")
         Else
             run.ActiveThinkingItem.Text = "正在思考..."
         End If
@@ -467,8 +467,8 @@ Partial Public Class Form_v6_Agent
         run.ActiveThinkingActivity.Content = run.ActiveThinkingTextBuilder.ToString()
 
         If Not IsConversationSelected(conversation) Then Return
-        If run.ActiveThinkingItem Is Nothing OrElse Not AgentRoom1.Items.Contains(run.ActiveThinkingItem) Then
-            run.ActiveThinkingItem = AgentRoom1.AddAssistantActivity(run.ActiveTurn.Id, run.ActiveThinkingActivity.Content, run.ActiveThinkingActivity.Id)
+        If run.ActiveThinkingItem Is Nothing OrElse Not _view.AgentRoom1.Items.Contains(run.ActiveThinkingItem) Then
+            run.ActiveThinkingItem = _view.AgentRoom1.AddAssistantActivity(run.ActiveTurn.Id, run.ActiveThinkingActivity.Content, run.ActiveThinkingActivity.Id)
         Else
             run.ActiveThinkingItem.Text = run.ActiveThinkingActivity.Content
         End If
@@ -524,8 +524,8 @@ Partial Public Class Form_v6_Agent
             run.ActiveThinkingItem = Nothing
             Return
         End If
-        If run.ActiveThinkingItem IsNot Nothing AndAlso AgentRoom1.Items.Contains(run.ActiveThinkingItem) Then
-            AgentRoom1.Items.Remove(run.ActiveThinkingItem)
+        If run.ActiveThinkingItem IsNot Nothing AndAlso _view.AgentRoom1.Items.Contains(run.ActiveThinkingItem) Then
+            _view.AgentRoom1.Items.Remove(run.ActiveThinkingItem)
         End If
         run.ActiveThinkingItem = Nothing
         run.ActiveThinkingActivity = Nothing
@@ -536,17 +536,17 @@ Partial Public Class Form_v6_Agent
         Dim run = GetConversationRuntime(_current)
         Dim item As New LakeUI.AgentRoom.ChatItem(LakeUI.AgentRoom.ChatItemKind.Card, content)
         Dim anchor = run.ActiveResponseItem
-        Dim insertIndex = If(anchor Is Nothing, -1, AgentRoom1.Items.IndexOf(anchor))
+        Dim insertIndex = If(anchor Is Nothing, -1, _view.AgentRoom1.Items.IndexOf(anchor))
         If insertIndex >= 0 Then
-            AgentRoom1.Items.Insert(insertIndex, item)
+            _view.AgentRoom1.Items.Insert(insertIndex, item)
         Else
-            AgentRoom1.Items.Add(item)
+            _view.AgentRoom1.Items.Add(item)
         End If
         Return item
     End Function
 
     Private Function IsConversationSelected(conversation As AgentConversationData) As Boolean
-        Return Not _closing AndAlso Not IsDisposed AndAlso conversation IsNot Nothing AndAlso _current IsNot Nothing AndAlso String.Equals(conversation.Id, _current.Id, StringComparison.OrdinalIgnoreCase)
+        Return Not _closing AndAlso Not _view.IsDisposed AndAlso conversation IsNot Nothing AndAlso _current IsNot Nothing AndAlso String.Equals(conversation.Id, _current.Id, StringComparison.OrdinalIgnoreCase)
     End Function
 
     Private Sub SetRunResponseText(conversation As AgentConversationData, text As String)
@@ -555,16 +555,16 @@ Partial Public Class Form_v6_Agent
         If Not IsConversationSelected(conversation) Then Return
 
         If IsRunResponsePlaceholder(run.ActiveResponseText) Then
-            If run.ActiveResponseItem IsNot Nothing AndAlso AgentRoom1.Items.Contains(run.ActiveResponseItem) Then
-                AgentRoom1.Items.Remove(run.ActiveResponseItem)
+            If run.ActiveResponseItem IsNot Nothing AndAlso _view.AgentRoom1.Items.Contains(run.ActiveResponseItem) Then
+                _view.AgentRoom1.Items.Remove(run.ActiveResponseItem)
             End If
             run.ActiveResponseItem = Nothing
             If IsConversationSelected(conversation) Then FollowLatestWithOverview()
             Return
         End If
 
-        If run.ActiveResponseItem Is Nothing OrElse Not AgentRoom1.Items.Contains(run.ActiveResponseItem) Then
-            run.ActiveResponseItem = AgentRoom1.AddAssistantMessage(run.ActiveResponseText)
+        If run.ActiveResponseItem Is Nothing OrElse Not _view.AgentRoom1.Items.Contains(run.ActiveResponseItem) Then
+            run.ActiveResponseItem = _view.AgentRoom1.AddAssistantMessage(run.ActiveResponseText)
         Else
             run.ActiveResponseItem.Text = run.ActiveResponseText
         End If
@@ -591,10 +591,10 @@ Partial Public Class Form_v6_Agent
         run.ActiveResponseTextDirty = True
         If Not IsConversationSelected(conversation) Then Return
 
-        If run.ActiveResponseItem Is Nothing OrElse Not AgentRoom1.Items.Contains(run.ActiveResponseItem) Then
-            run.ActiveResponseItem = AgentRoom1.AddAssistantMessage(GetActiveResponseTextSnapshot(conversation))
+        If run.ActiveResponseItem Is Nothing OrElse Not _view.AgentRoom1.Items.Contains(run.ActiveResponseItem) Then
+            run.ActiveResponseItem = _view.AgentRoom1.AddAssistantMessage(GetActiveResponseTextSnapshot(conversation))
         Else
-            AgentRoom1.AppendToItem(run.ActiveResponseItem, appendedText)
+            _view.AgentRoom1.AppendToItem(run.ActiveResponseItem, appendedText)
         End If
         If IsConversationSelected(conversation) Then FollowLatestWithOverview()
     End Sub
@@ -614,10 +614,10 @@ Partial Public Class Form_v6_Agent
         Dim currentText = GetActiveResponseTextSnapshot(conversation).Trim()
         If ReferenceEquals(conversation, run.ActiveRunConversation) AndAlso
            run.ActiveResponseItem IsNot Nothing AndAlso
-           AgentRoom1.Items.Contains(run.ActiveResponseItem) AndAlso
+           _view.AgentRoom1.Items.Contains(run.ActiveResponseItem) AndAlso
            String.Equals(currentText, finalText, StringComparison.Ordinal) Then
             ReplaceActiveResponseText(conversation, finalText)
-            AgentRoom1.CompleteStreamingMessage(run.ActiveResponseItem)
+            _view.AgentRoom1.CompleteStreamingMessage(run.ActiveResponseItem)
             Return
         End If
         SetRunResponseText(conversation, finalText)
@@ -639,17 +639,17 @@ Partial Public Class Form_v6_Agent
             run.ActiveTurn.Activities.Add(activity)
 
             If IsConversationSelected(conversation) Then
-                If run.ActiveResponseItem IsNot Nothing AndAlso AgentRoom1.Items.Contains(run.ActiveResponseItem) Then
-                    AgentRoom1.CompleteStreamingMessage(run.ActiveResponseItem)
+                If run.ActiveResponseItem IsNot Nothing AndAlso _view.AgentRoom1.Items.Contains(run.ActiveResponseItem) Then
+                    _view.AgentRoom1.CompleteStreamingMessage(run.ActiveResponseItem)
                     run.ActiveResponseItem.Kind = LakeUI.AgentRoom.ChatItemKind.AssistantActivity
                     run.ActiveResponseItem.Key = activity.Id
                     run.ActiveResponseItem.ParentTurnId = run.ActiveTurn.Id
                 Else
-                    AgentRoom1.AddAssistantActivity(run.ActiveTurn.Id, activityText, activity.Id)
+                    _view.AgentRoom1.AddAssistantActivity(run.ActiveTurn.Id, activityText, activity.Id)
                 End If
             End If
-        ElseIf run.ActiveResponseItem IsNot Nothing AndAlso AgentRoom1.Items.Contains(run.ActiveResponseItem) Then
-            AgentRoom1.Items.Remove(run.ActiveResponseItem)
+        ElseIf run.ActiveResponseItem IsNot Nothing AndAlso _view.AgentRoom1.Items.Contains(run.ActiveResponseItem) Then
+            _view.AgentRoom1.Items.Remove(run.ActiveResponseItem)
         End If
 
         run.ActiveResponseItem = Nothing
@@ -687,9 +687,9 @@ Partial Public Class Form_v6_Agent
         If Not IsConversationSelected(conversation) Then Return
         Dim group = GetConsecutiveToolActivities(conversation, activity)
         If group.Count = 0 Then Return
-        Dim item = AgentRoom1.FindItem(group(0).Id)
+        Dim item = _view.AgentRoom1.FindItem(group(0).Id)
         If item Is Nothing Then
-            item = AgentRoom1.AddToolCall(GetConversationRuntime(conversation).ActiveTurn.Id,
+            item = _view.AgentRoom1.AddToolCall(GetConversationRuntime(conversation).ActiveTurn.Id,
                                          FormatToolGroupTitle(group), FormatToolGroupDetails(group), group(0).Id,
                                          expanded:=False)
         End If
@@ -717,16 +717,16 @@ Partial Public Class Form_v6_Agent
     Private Sub RenderActiveRunOverlay()
         Dim run = GetConversationRuntime(_current)
         run.ActiveResponseItem = Nothing
-        run.ActiveThinkingItem = If(run.ActiveThinkingActivity Is Nothing, Nothing, AgentRoom1.FindItem(run.ActiveThinkingActivity.Id))
+        run.ActiveThinkingItem = If(run.ActiveThinkingActivity Is Nothing, Nothing, _view.AgentRoom1.FindItem(run.ActiveThinkingActivity.Id))
         If run.ActiveRunConversation Is Nothing OrElse Not IsConversationSelected(run.ActiveRunConversation) Then Return
 
         If run.ActiveTurn IsNot Nothing Then
-            run.ActiveTurnItem = AgentRoom1.FindItem(run.ActiveTurn.Id)
+            run.ActiveTurnItem = _view.AgentRoom1.FindItem(run.ActiveTurn.Id)
             If run.ActiveTurnItem IsNot Nothing Then run.ActiveTurnItem.IsExpanded = True
         End If
         Dim responseText = GetActiveResponseTextSnapshot(_current)
         If Not IsRunResponsePlaceholder(responseText) Then
-            run.ActiveResponseItem = AgentRoom1.AddAssistantMessage(responseText)
+            run.ActiveResponseItem = _view.AgentRoom1.AddAssistantMessage(responseText)
         ElseIf run.ActiveThinkingItem Is Nothing AndAlso run.ActiveRunStatusText.StartsWith("正在思考", StringComparison.Ordinal) Then
             ShowActiveThinking(run.ActiveRunConversation)
         End If

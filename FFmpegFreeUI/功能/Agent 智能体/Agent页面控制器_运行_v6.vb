@@ -1,8 +1,8 @@
-Imports System.Text
+﻿Imports System.Text
 Imports System.IO
 Imports LakeUI
 
-Partial Public Class Form_v6_Agent
+Partial Friend Class Agent页面控制器_v6
     Private Const StreamFlushIntervalMs As Integer = 80
     Private Const StreamFlushCharacters As Integer = 384
     Private Const MaxConsecutiveUpstreamFailures As Integer = 5
@@ -95,13 +95,13 @@ Partial Public Class Form_v6_Agent
         If String.IsNullOrWhiteSpace(runConversation.ModelId) Then
             If IsConversationSelected(runConversation) Then
                 ShowStatus("请先选择模型。", True)
-                ExFloatingTip(MCB_模型选择, "请先选择模型", 1600)
+                ExFloatingTip(_view.MCB_模型选择, "请先选择模型", 1600)
             End If
             Return
         End If
 
         run.Busy = True
-        MB_发送.Enabled = True
+        _view.MB_发送.Enabled = True
         Dim localCts As New Threading.CancellationTokenSource()
         run.RequestCts = localCts
         run.ActiveRunConversation = runConversation
@@ -120,9 +120,9 @@ Partial Public Class Form_v6_Agent
         UpdateSendButtonState()
         If IsConversationSelected(runConversation) Then
             If run.ActiveTurn IsNot Nothing Then
-                run.ActiveTurnItem = AgentRoom1.FindItem(run.ActiveTurn.Id)
+                run.ActiveTurnItem = _view.AgentRoom1.FindItem(run.ActiveTurn.Id)
                 If run.ActiveTurnItem Is Nothing Then
-                    run.ActiveTurnItem = AgentRoom1.AddTurnHeader(run.ActiveTurn.Id, FormatTurnHeader(run.ActiveTurn), expanded:=True)
+                    run.ActiveTurnItem = _view.AgentRoom1.AddTurnHeader(run.ActiveTurn.Id, FormatTurnHeader(run.ActiveTurn), expanded:=True)
                 Else
                     run.ActiveTurnItem.IsExpanded = True
                 End If
@@ -148,7 +148,7 @@ Partial Public Class Form_v6_Agent
             SetRunResponseText(runConversation, "请求失败：" & ex.Message)
             AppendRunConversationMessage(runConversation, New AgentMessageData With {.Role = "assistant", .Content = GetActiveResponseTextSnapshot(conversation)})
             FinishActiveTurn(conversation, "error", ex.Message)
-            If IsConversationSelected(conversation) Then ExFloatingTip(MB_发送, ex.Message, 2600)
+            If IsConversationSelected(conversation) Then ExFloatingTip(_view.MB_发送, ex.Message, 2600)
         Finally
             run.RequestCts = Nothing
             localCts.Dispose()
@@ -165,7 +165,7 @@ Partial Public Class Form_v6_Agent
         If Not run.Busy Then Return
         If run.RequestCts IsNot Nothing AndAlso Not run.RequestCts.IsCancellationRequested Then
             run.RequestCts.Cancel()
-            MB_发送.Text = "停止中"
+            _view.MB_发送.Text = "停止中"
             ShowRunStatus(run.ActiveRunConversation, "正在停止当前任务")
         End If
     End Sub
@@ -184,7 +184,7 @@ Partial Public Class Form_v6_Agent
         run.ActiveTurn.State = If(state, "completed")
         run.ActiveTurn.CompletedAt = DateTime.Now
         If Not String.IsNullOrWhiteSpace(statusText) Then run.ActiveTurn.StatusText = statusText.Trim()
-        If run.ActiveTurnItem IsNot Nothing AndAlso AgentRoom1.Items.Contains(run.ActiveTurnItem) Then
+        If run.ActiveTurnItem IsNot Nothing AndAlso _view.AgentRoom1.Items.Contains(run.ActiveTurnItem) Then
             run.ActiveTurnItem.Title = FormatTurnHeader(run.ActiveTurn)
             run.ActiveTurnItem.IsRunning = False
             run.ActiveTurnItem.IsError = String.Equals(run.ActiveTurn.State, "error", StringComparison.OrdinalIgnoreCase)
@@ -219,7 +219,7 @@ Partial Public Class Form_v6_Agent
                     AppendRunConversationMessage(conversation, New AgentMessageData With {.Role = "assistant", .Content = errorText})
                     ShowRunStatus(conversation, errorText, True)
                     FinishActiveTurn(conversation, "error", result.ErrorMessage)
-                    If IsConversationSelected(conversation) Then ExFloatingTip(MB_发送, result.ErrorMessage, 2600)
+                    If IsConversationSelected(conversation) Then ExFloatingTip(_view.MB_发送, result.ErrorMessage, 2600)
                     Exit Function
                 End If
                 AddUsage(conversation, result.Usage, modelId)

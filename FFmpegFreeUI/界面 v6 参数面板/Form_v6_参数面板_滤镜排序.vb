@@ -294,7 +294,7 @@ Public Class Form_v6_参数面板_滤镜排序
         校准列表列宽()
     End Sub
 
-    Private Sub UltraDetailListView1_SizeChanged(sender As Object, e As EventArgs) Handles UDLV_滤镜排序列表.SizeChanged
+    Private Sub UltraDetailListView1_布局变化(sender As Object, e As EventArgs) Handles UDLV_滤镜排序列表.SizeChanged, UDLV_滤镜排序列表.PaddingChanged, UDLV_滤镜排序列表.DpiChangedAfterParent
         校准列表列宽()
     End Sub
 
@@ -352,14 +352,17 @@ Public Class Form_v6_参数面板_滤镜排序
     Private Sub 校准列表列宽()
         If UDLV_滤镜排序列表 Is Nothing OrElse UDLV_滤镜排序列表.Columns.Count < 3 Then Exit Sub
 
-        Dim 可用宽度 = UDLV_滤镜排序列表.ClientSize.Width
-        If 可用宽度 <= 0 Then 可用宽度 = UDLV_滤镜排序列表.Width
-        If 可用宽度 <= 0 Then Exit Sub
+        Dim dpi = CSng(UDLV_滤镜排序列表.DeviceDpi) / 96.0F
+        Dim 边框宽度 = CInt(UDLV_滤镜排序列表.BorderSize * dpi)
+        Dim 滚动条内缩 = Math.Max(边框宽度, CInt(UDLV_滤镜排序列表.BorderRadius * dpi) \ 2)
+        Dim 滚动条占位 = CInt(UDLV_滤镜排序列表.ScrollBarWidth * dpi) + 滚动条内缩 - 边框宽度 + D3D_ScrollBarRenderer.Margin
+        ' 按 LakeUI 的边框、Padding 和滚动条布局预留空间，避免滚动条出现时覆盖最右列。
+        Dim 可用宽度 = UDLV_滤镜排序列表.ClientSize.Width - UDLV_滤镜排序列表.Padding.Horizontal - 边框宽度 * 2 - 滚动条占位
+        If 可用宽度 < 3 Then Exit Sub
 
-        可用宽度 = Math.Max(0, 可用宽度 - CInt(24 * DeviceDpi / 96.0))
-        Dim 标识符列宽 = Math.Min(CInt(220 * DeviceDpi / 96.0), Math.Max(CInt(130 * DeviceDpi / 96.0), CInt(可用宽度 * 0.22)))
-        Dim 流类型列宽 = Math.Min(CInt(120 * DeviceDpi / 96.0), Math.Max(CInt(80 * DeviceDpi / 96.0), CInt(可用宽度 * 0.12)))
-        Dim 内容列宽 = Math.Max(CInt(240 * DeviceDpi / 96.0), 可用宽度 - 标识符列宽 - 流类型列宽)
+        Dim 标识符列宽 = Math.Min(可用宽度 \ 2, Math.Min(CInt(220 * dpi), Math.Max(CInt(130 * dpi), CInt(可用宽度 * 0.22))))
+        Dim 流类型列宽 = Math.Min((可用宽度 - 标识符列宽) \ 2, Math.Min(CInt(120 * dpi), Math.Max(CInt(80 * dpi), CInt(可用宽度 * 0.12))))
+        Dim 内容列宽 = 可用宽度 - 标识符列宽 - 流类型列宽
 
         UDLV_滤镜排序列表.Columns(0).Width = 标识符列宽
         UDLV_滤镜排序列表.Columns(1).Width = 流类型列宽

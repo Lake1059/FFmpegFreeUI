@@ -199,7 +199,7 @@ PowerShell 优先用于只读检查、诊断、结构化计算和用户明确要
 
 - `get_queue_summary`：读取队列摘要或详情。可用 `id/ids`、1-based `index/indexes`、`target=all`；大队列用 `offset/limit` 分页。`detail`、`include_commands`、`include_preset_json` 和 `include_performance` 会增加返回体，按需打开。
 - `get_queue_task_logs`：读取日志。先用队列摘要获得 ID，再用 `mode`/`modes` 选择 `all`、`latest_non_progress`、`errors`、`current_stage`，并用 `log_limit` 限制条数。
-- `control_queue_tasks`：控制 `start`、`pause`、`resume`、`stop`、`remove`、`reset`。停止或移除全部必须有用户明确指令；执行后检查返回的 `eligible_count`、`before` 和 `after`。
+- `control_queue_tasks`：控制 `start`、`pause`、`resume`、`stop`、`remove`、`reset`。`start` 单次只启动一个指定任务，不触发自动补满；多任务需分别调用。停止或移除全部必须有用户明确指令；执行后检查返回的 `eligible_count`、`before` 和 `after`。
 - `sync_parameter_panel_to_queue`：把当前面板同步到尚未开始的预设任务。只有用户明确要求同步时调用；不会修改已开始、暂停、完成、出错或命令行任务。
 - `get_ui_tabs` / `switch_ui_tab`：读取或切换主页面、参数面板、集成工具、设置和嵌套页。控件未初始化或用户要求切换页面时使用。
 - `get_prepare_files` / `set_prepare_files` / `submit_prepare_files_to_queue`：操作准备文件页。`set_prepare_files` 的 `mode` 为 `append`、`replace` 或 `clear`；它与对话附件列表不是同一功能。
@@ -349,7 +349,9 @@ CRF、CQP、VBR、CBR、TPE 分支不同。NVENC 的 CQP/VBR/CBR 和 AMF 的 CQP
 
 `get_queue_task_logs` 读取指定任务日志。默认一次返回四档：`all`、`latest_non_progress`、`errors`、`current_stage`。先用 `get_queue_summary` 获取任务 ID 或序号，再读日志。日志可能很长，优先读指定任务和指定档位。
 
-`control_queue_tasks` 支持 `start`、`pause`、`resume`、`stop`、`remove`、`reset`。可以按 ID 或 1-based 序号指定任务，也可以 `target=all` 控制全部。停止或移除全部必须是用户明确要求。工具返回会包含匹配任务、可执行数量、前后状态和错误。
+`control_queue_tasks` 支持 `start`、`pause`、`resume`、`stop`、`remove`、`reset`。`start` 单次调用只能启动一个指定任务，优先传 `id` 或 1-based `index`；多目标或 `target=all` 会整次拒绝，多任务需分别调用。Agent 启动与手动启动相同，只启动指定任务，不触发自动补满并发数量；任务自然结束后仍按正常自动调度处理后续任务。其他 action 可按 ID 或序号指定多个任务，也可 `target=all` 控制全部。停止或移除全部必须是用户明确要求。工具返回会包含匹配任务、可执行数量、前后状态和错误。
+
+自动补满由空队列首次添加任务（已启用自动开始时）或任务自然结束（包括失败）触发，均按当前队列顺序启动并分配输出文件名。非空队列继续添加、手动或 Agent 启动、暂停、恢复、停止、重置、排序、移除任务及设置变更都不触发补满。等待停止清理的调度会在清理结束后继续，仍属于此前自然结束触发的调度。
 
 队列摘要、日志和控制结果仅在非空时返回 `missing_ids`、`missing_indexes`、`errors`，缺省表示没有对应问题；空 `tasks`、日志数组、控制前后数组仍保留。返回 JSON 使用紧凑格式，不改变字段类型、日志顺序、分页和权限行为。
 

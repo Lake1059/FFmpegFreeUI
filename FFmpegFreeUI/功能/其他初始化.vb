@@ -6,13 +6,18 @@ Imports LakeUI
 Partial Public Class FormMain_v6
     Private Sub 绑定主页面选项卡()
         Dim 页面绑定 As (索引 As Integer, 页面 As Control, 面板 As ModernPanel)() = {
-            (0, Form_v6_起始页面, Form_v6_起始页面.ModernPanel1), (1, Form_v6_编码队列, Form_v6_编码队列.ModernPanel1),
-            (3, Form_v6_准备文件, Form_v6_准备文件.ModernPanel1), (4, Form_v6_参数面板, Form_v6_参数面板.ModernPanel1),
-            (5, Form_v6_Agent, Form_v6_Agent.ModernPanel1), (8, Form_v6_媒体信息, Form_v6_媒体信息.ModernPanel1),
-            (9, Form_v6_调试播放器, Form_v6_调试播放器.ModernPanel1), (10, Form_v6_性能监控, Form_v6_性能监控.ModernPanel1),
-            (11, Form_v6_集成工具, Form_v6_集成工具.ModernPanel1), (13, Form_v6_设置, Form_v6_设置.ModernPanel1),
-            (14, Form_v6_支持者, Form_v6_支持者.ModernPanel1)
-        }
+            (0, Form_v6_起始页面, Form_v6_起始页面.ModernPanel1),
+            (1, Form_v6_编码队列, Form_v6_编码队列.ModernPanel1),
+            (3, Form_v6_准备文件, Form_v6_准备文件.ModernPanel1),
+            (4, Form_v6_参数面板, Form_v6_参数面板.ModernPanel1),
+            (5, Form_v6_Agent, Form_v6_Agent.ModernPanel1),
+            (6, Form_v6_社区_敬请期待, Form_v6_社区_敬请期待.ModernPanel1),
+            (8, Form_v6_媒体信息, Form_v6_媒体信息.ModernPanel1),
+            (9, Form_v6_调试播放器, Form_v6_调试播放器.ModernPanel1),
+            (10, Form_v6_性能监控, Form_v6_性能监控.ModernPanel1),
+            (11, Form_v6_集成工具, Form_v6_集成工具.ModernPanel1),
+            (13, Form_v6_设置, Form_v6_设置.ModernPanel1),
+            (14, Form_v6_支持者, Form_v6_支持者.ModernPanel1)}
         For Each 绑定项 In 页面绑定
             ModernTabListControl1.Items(绑定项.索引).BoundControl = 绑定项.页面
             绑定选项卡(绑定项.面板)
