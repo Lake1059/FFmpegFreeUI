@@ -12,6 +12,7 @@ Public Class Form_v6_集成工具_抽流
     Private ReadOnly 流列表 As New List(Of 抽流流信息)
     Private ReadOnly 进程锁 As New Object()
     Private 当前文件 As String = ""
+    Private 页面状态 As String = ""
     Private 当前总时长 As TimeSpan = TimeSpan.Zero
     Private 当前进程 As Process = Nothing
     Private 取消令牌源 As CancellationTokenSource = Nothing
@@ -70,9 +71,6 @@ Public Class Form_v6_集成工具_抽流
     }
 
     Private Sub Form_v6_集成工具_抽流_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        UltraDetailListView1.MultiSelect = True
-        UltraDetailListView1.AllowDragReorder = False
-        UltraDetailListView1.BottomLinesSpacing = 3
         调整列宽()
         MCB_输出位置.SelectedIndex = 0
         绑定路径下拉框拖拽(MCB_输出位置, 路径下拉框拖拽模式.文件夹路径)
@@ -83,7 +81,7 @@ Public Class Form_v6_集成工具_抽流
         绑定文件拖入(MB_打开文件)
         绑定文件拖入(MB_提取所选)
         绑定文件拖入(MB_清除页面)
-        显示提示("打开或拖入媒体文件后选择要提取的流", Color.Silver)
+        更新列表状态("打开或拖入媒体文件后勾选要提取的流")
     End Sub
 
     Private Sub 绑定文件拖入(target As Control)
@@ -152,7 +150,7 @@ Public Class Form_v6_集成工具_抽流
 
         MB_提取所选.Text = 提取按钮默认文本
         MB_提取所选.ForeColor = Color.YellowGreen
-        显示提示("打开或拖入媒体文件后选择要提取的流", Color.Silver)
+        更新列表状态("打开或拖入媒体文件后勾选要提取的流")
     End Sub
 
     Private Async Function 打开媒体文件Async(file As String,
@@ -167,7 +165,7 @@ Public Class Form_v6_集成工具_抽流
         当前文件 = file
         当前总时长 = TimeSpan.Zero
         流列表.Clear()
-        显示提示("正在读取媒体流 ...", Color.CornflowerBlue)
+        更新列表状态("正在读取媒体流 ...")
         MB_提取所选.Text = "读取中"
 
         Try
@@ -179,7 +177,7 @@ Public Class Form_v6_集成工具_抽流
             当前文件 = ""
             当前总时长 = TimeSpan.Zero
             流列表.Clear()
-            显示提示("读取失败：" & ex.Message, Color.IndianRed)
+            更新列表状态("读取失败：" & ex.Message)
         Finally
             MB_提取所选.Text = 提取按钮默认文本
         End Try
@@ -197,7 +195,7 @@ Public Class Form_v6_集成工具_抽流
             {"attachment_filename", x.附件文件名},
             {"attachment_mime_type", x.附件MimeType},
             {"extension", x.默认扩展名},
-            {"selected", x.列表项 IsNot Nothing AndAlso x.列表项.Selected},
+            {"selected", x.列表项 IsNot Nothing AndAlso x.列表项.Checked},
             {"text", x.主文本},
             {"sub_text", x.副文本},
             {"ffprobe", x.FFprobe信息}
@@ -212,6 +210,7 @@ Public Class Form_v6_集成工具_抽流
             {"run_button_text", MB_提取所选.Text},
             {"input_button_text", MB_打开文件.Text},
             {"page_hint", HtmlColorLabel1.Text},
+            {"page_status", 页面状态},
             {"streams", streams}
         }
     End Function
@@ -235,14 +234,14 @@ Public Class Form_v6_集成工具_抽流
                 For Each info In 流列表
                     cancellationToken.ThrowIfCancellationRequested()
                     If info.列表项 Is Nothing Then Continue For
-                    info.列表项.Selected = requested.Any(Function(x) Agent匹配流选择(x, info))
+                    info.列表项.Checked = requested.Any(Function(x) Agent匹配流选择(x, info))
                 Next
             Finally
                 UltraDetailListView1.EndUpdate()
             End Try
         End If
 
-        Return $"抽流工具：{Path.GetFileName(当前文件)}，已选 {流列表.Where(Function(x) x.列表项 IsNot Nothing AndAlso x.列表项.Selected).Count()} / {流列表.Count} 个流"
+        Return $"抽流工具：{Path.GetFileName(当前文件)}，已勾选 {流列表.Where(Function(x) x.列表项 IsNot Nothing AndAlso x.列表项.Checked).Count()} / {流列表.Count} 个流"
     End Function
 
     Public Async Function Agent运行Async(Optional forceAutoName As Boolean = True,
@@ -361,15 +360,15 @@ Public Class Form_v6_集成工具_抽流
 
     Private Sub 呈现流列表()
         If 流列表.Count = 0 Then
-            显示提示("未发现可提取的视频、音频、字幕或附件流", Color.IndianRed)
+            更新列表状态("未发现可提取的视频、音频、字幕或附件流")
             Exit Sub
         End If
 
+        页面状态 = $"已读取 {流列表.Count} 个流"
         UltraDetailListView1.BeginUpdate()
         Try
             UltraDetailListView1.Items.Clear()
             UltraDetailListView1.Groups.Clear()
-            UltraDetailListView1.Items.Add(创建说明(Path.GetFileName(当前文件), Color.Silver))
             添加分组("视频流", 抽流流类型.视频)
             添加分组("音频流", 抽流流类型.音频)
             添加分组("字幕流", 抽流流类型.字幕)
@@ -383,7 +382,13 @@ Public Class Form_v6_集成工具_抽流
     Private Sub 添加分组(标题 As String, 类型 As 抽流流类型)
         Dim items = 流列表.Where(Function(x) x.类型 = 类型).ToList()
         If items.Count = 0 Then Exit Sub
-        UltraDetailListView1.Groups.Add(New UltraDetailListView.ListGroup(标题) With {.ForeColor = 获取类型颜色(类型)})
+        Dim color = 获取类型颜色(类型)
+        UltraDetailListView1.Groups.Add(New UltraDetailListView.ListGroup(标题) With {
+            .ForeColor = color,
+            .CheckBoxCheckedBackColor = color,
+            .CheckBoxHoverCheckedBackColor = color,
+            .CheckBoxPressedCheckedBackColor = color
+        })
         For Each info In items
             Dim item = 创建流列表项(info, 标题)
             info.列表项 = item
@@ -391,26 +396,22 @@ Public Class Form_v6_集成工具_抽流
         Next
     End Sub
 
-    Private Function 创建说明(text As String, color As Color) As UltraDetailListView.ListItem
-        Return New UltraDetailListView.ListItem(New UltraDetailListView.ListSubItem(text) With {.ForeColor = color})
-    End Function
-
     Private Function 创建流列表项(info As 抽流流信息, groupName As String) As UltraDetailListView.ListItem
         Dim item As New UltraDetailListView.ListItem(New UltraDetailListView.ListSubItem(info.主文本)) With {
             .GroupName = groupName,
             .Tag = info,
-            .Selected = False
+            .Checked = False
         }
         If info.副文本 <> "" Then item.BottomLines.Add(New UltraDetailListView.TextLine(info.副文本, Nothing, Color.FromArgb(120, 255, 255, 255)))
         Return item
     End Function
 
-    Private Sub 显示提示(text As String, color As Color)
+    Private Sub 更新列表状态(text As String)
+        页面状态 = text
         UltraDetailListView1.BeginUpdate()
         Try
             UltraDetailListView1.Items.Clear()
             UltraDetailListView1.Groups.Clear()
-            UltraDetailListView1.Items.Add(创建说明(text, color))
         Finally
             UltraDetailListView1.EndUpdate()
             调整列宽()
@@ -421,9 +422,46 @@ Public Class Form_v6_集成工具_抽流
         调整列宽()
     End Sub
 
+    Private Sub UltraDetailListView1_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs) Handles UltraDetailListView1.PreviewKeyDown
+        ' 将勾选快捷键作为列表输入，避免 Enter 触发按钮、Tab 切换焦点。
+        If e.Modifiers <> Keys.None Then Exit Sub
+        Select Case e.KeyCode
+            Case Keys.Enter, Keys.Oemplus, Keys.Add, Keys.Tab, Keys.Delete, Keys.OemMinus, Keys.Subtract
+                e.IsInputKey = True
+        End Select
+    End Sub
+
+    Private Sub UltraDetailListView1_KeyDown(sender As Object, e As KeyEventArgs) Handles UltraDetailListView1.KeyDown
+        If e.Modifiers <> Keys.None Then Exit Sub
+        Select Case e.KeyCode
+            Case Keys.Enter, Keys.Oemplus, Keys.Add, Keys.Tab, Keys.Delete, Keys.OemMinus, Keys.Subtract
+                UltraDetailListView1.BeginUpdate()
+                Try
+                    For Each info In 流列表.Where(Function(x) x.列表项 IsNot Nothing AndAlso x.列表项.Selected)
+                        Select Case e.KeyCode
+                            Case Keys.Tab
+                                info.列表项.Checked = Not info.列表项.Checked
+                            Case Keys.Enter, Keys.Oemplus, Keys.Add
+                                info.列表项.Checked = True
+                            Case Else
+                                info.列表项.Checked = False
+                        End Select
+                    Next
+                Finally
+                    UltraDetailListView1.EndUpdate()
+                End Try
+                e.Handled = True
+                e.SuppressKeyPress = True
+        End Select
+    End Sub
+
     Private Sub 调整列宽()
         If UltraDetailListView1.Columns.Count = 0 OrElse UltraDetailListView1.ClientSize.Width <= 0 Then Exit Sub
-        Dim available = UltraDetailListView1.ClientSize.Width - UltraDetailListView1.Padding.Horizontal
+        Dim dpi = CSng(UltraDetailListView1.DeviceDpi) / 96.0F
+        Dim borderWidth = CInt(UltraDetailListView1.BorderSize * dpi)
+        Dim scrollBarInset = Math.Max(borderWidth, CInt(UltraDetailListView1.BorderRadius * dpi) \ 2)
+        Dim scrollBarReserved = CInt(UltraDetailListView1.ScrollBarWidth * dpi) + scrollBarInset - borderWidth + D3D_ScrollBarRenderer.Margin
+        Dim available = UltraDetailListView1.ClientSize.Width - UltraDetailListView1.Padding.Horizontal - borderWidth * 2 - scrollBarReserved
         UltraDetailListView1.Columns(0).Width = Math.Max(1, available)
     End Sub
 
@@ -444,10 +482,10 @@ Public Class Form_v6_集成工具_抽流
             Return "抽流失败：请先打开存在的媒体文件"
         End If
 
-        Dim selected = 流列表.Where(Function(x) x.列表项 IsNot Nothing AndAlso x.列表项.Selected).ToList()
+        Dim selected = 流列表.Where(Function(x) x.列表项 IsNot Nothing AndAlso x.列表项.Checked).ToList()
         If selected.Count = 0 Then
-            ExFloatingTip(UltraDetailListView1, "请选择要提取的流", 1800)
-            Return "抽流失败：未选择任何流"
+            ExFloatingTip(UltraDetailListView1, "请勾选要提取的流", 1800)
+            Return "抽流失败：未勾选任何流"
         End If
 
         Dim outputDir = 获取输出目录()

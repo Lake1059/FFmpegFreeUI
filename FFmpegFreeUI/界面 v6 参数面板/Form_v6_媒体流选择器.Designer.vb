@@ -54,8 +54,16 @@ Partial Class Form_v6_媒体流选择器
         ' 
         ' UltraDetailListView1
         ' 
+        UltraDetailListView1.AnimationDuration = 300
         UltraDetailListView1.BackgroundColor = Color.Transparent
         UltraDetailListView1.BorderSize = 0
+        UltraDetailListView1.BottomLinesSpacing = 3
+        UltraDetailListView1.CheckBoxBorderRadius = 3
+        UltraDetailListView1.CheckBoxBorderSize = 0
+        UltraDetailListView1.CheckBoxInnerPadding = 5
+        UltraDetailListView1.CheckBoxSize = 20
+        UltraDetailListView1.CheckBoxUncheckedBackColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        UltraDetailListView1.CheckBoxVisible = True
         ListColumn1.Width = 500
         UltraDetailListView1.Columns.Add(ListColumn1)
         UltraDetailListView1.Dock = DockStyle.Fill
@@ -250,7 +258,6 @@ Partial Class Form_v6_媒体流选择器
         ForeColor = Color.Silver
         MinimumSize = New Size(640, 360)
         Name = "Form_v6_媒体流选择器"
-        ShowIcon = False
         ShowInTaskbar = False
         StartPosition = FormStartPosition.Manual
         Text = "v6 媒体流选择器"

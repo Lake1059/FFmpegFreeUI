@@ -395,8 +395,6 @@ Partial Class Form_v6_参数面板_质量
         HCL_比特率.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HCL_比特率.Dock = DockStyle.Top
         HCL_比特率.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        HCL_比特率.InfoIconSizeRatio = 0.9F
-        HCL_比特率.InfoIconStrokeWidth = 2F
         HCL_比特率.InfoIconTextGap = 7
         HCL_比特率.Location = New Point(20, 124)
         HCL_比特率.Margin = New Padding(2)

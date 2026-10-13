@@ -36,9 +36,6 @@ Public Class Form_v6_媒体流选择器
         解析已选(字幕流已选, "s", 字幕已选, 字幕全选)
         绑定文件拖入(Me)
         绑定文件拖入(ModernPanel1)
-        UltraDetailListView1.MultiSelect = True
-        UltraDetailListView1.AllowDragReorder = False
-        UltraDetailListView1.BottomLinesSpacing = 3
         绑定文件拖入(UltraDetailListView1)
         绑定文件拖入(顶部面板)
         绑定文件拖入(底部面板)
@@ -175,29 +172,67 @@ Public Class Form_v6_媒体流选择器
     End Sub
 
     Private Sub 添加分组(text As String, color As Color)
-        UltraDetailListView1.Groups.Add(New UltraDetailListView.ListGroup(text) With {.ForeColor = color})
+        UltraDetailListView1.Groups.Add(New UltraDetailListView.ListGroup(text) With {
+            .ForeColor = color,
+            .CheckBoxCheckedBackColor = color,
+            .CheckBoxHoverCheckedBackColor = color,
+            .CheckBoxPressedCheckedBackColor = color
+        })
     End Sub
 
-    Private Sub 添加流列表项(list As List(Of UltraDetailListView.ListItem), groupName As String, text As String, subText As String, index As Integer, selected As Boolean)
+    Private Sub 添加流列表项(list As List(Of UltraDetailListView.ListItem), groupName As String, text As String, subText As String, index As Integer, isChecked As Boolean)
         Dim item As New UltraDetailListView.ListItem(New UltraDetailListView.ListSubItem(text)) With {
             .GroupName = groupName,
             .Tag = index,
-            .Selected = selected
+            .Checked = isChecked
         }
         If subText <> "" Then item.BottomLines.Add(New UltraDetailListView.TextLine(subText, Nothing, Color.FromArgb(120, 255, 255, 255)))
         list.Add(item)
         UltraDetailListView1.Items.Add(item)
     End Sub
 
-    Private Sub 设置全部(items As IEnumerable(Of UltraDetailListView.ListItem), selected As Boolean)
+    Private Sub 设置全部(items As IEnumerable(Of UltraDetailListView.ListItem), isChecked As Boolean)
         UltraDetailListView1.BeginUpdate()
         Try
             For Each item In items
-                item.Selected = selected
+                item.Checked = isChecked
             Next
         Finally
             UltraDetailListView1.EndUpdate()
         End Try
+    End Sub
+
+    Private Sub UltraDetailListView1_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs) Handles UltraDetailListView1.PreviewKeyDown
+        ' 将勾选快捷键作为列表输入，避免 Enter 触发按钮、Tab 切换焦点。
+        If e.Modifiers <> Keys.None Then Exit Sub
+        Select Case e.KeyCode
+            Case Keys.Enter, Keys.Oemplus, Keys.Add, Keys.Tab, Keys.Delete, Keys.OemMinus, Keys.Subtract
+                e.IsInputKey = True
+        End Select
+    End Sub
+
+    Private Sub UltraDetailListView1_KeyDown(sender As Object, e As KeyEventArgs) Handles UltraDetailListView1.KeyDown
+        If e.Modifiers <> Keys.None Then Exit Sub
+        Select Case e.KeyCode
+            Case Keys.Enter, Keys.Oemplus, Keys.Add, Keys.Tab, Keys.Delete, Keys.OemMinus, Keys.Subtract
+                UltraDetailListView1.BeginUpdate()
+                Try
+                    For Each item In 视频列表项.Concat(音频列表项).Concat(字幕列表项).Where(Function(x) x.Selected)
+                        Select Case e.KeyCode
+                            Case Keys.Tab
+                                item.Checked = Not item.Checked
+                            Case Keys.Enter, Keys.Oemplus, Keys.Add
+                                item.Checked = True
+                            Case Else
+                                item.Checked = False
+                        End Select
+                    Next
+                Finally
+                    UltraDetailListView1.EndUpdate()
+                End Try
+                e.Handled = True
+                e.SuppressKeyPress = True
+        End Select
     End Sub
 
     Private Sub UltraDetailListView1_布局变化(sender As Object, e As EventArgs) Handles UltraDetailListView1.SizeChanged, UltraDetailListView1.PaddingChanged, UltraDetailListView1.DpiChangedAfterParent
@@ -223,7 +258,7 @@ Public Class Form_v6_媒体流选择器
 
     Private Sub 写回(target As Object, items As List(Of UltraDetailListView.ListItem), kind As String)
         If target Is Nothing Then Exit Sub
-        target.Text = String.Join(",", items.Where(Function(x) x.Selected).Select(Function(x) $"{文件索引}:{kind}:{CInt(x.Tag)}"))
+        target.Text = String.Join(",", items.Where(Function(x) x.Checked).Select(Function(x) $"{文件索引}:{kind}:{CInt(x.Tag)}"))
     End Sub
 
     Private Sub 解析已选(value As String, kind As String, target As HashSet(Of Integer), ByRef allSelected As Boolean)

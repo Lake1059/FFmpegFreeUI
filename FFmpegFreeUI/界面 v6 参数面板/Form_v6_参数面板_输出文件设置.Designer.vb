@@ -27,56 +27,30 @@ Partial Class Form_v6_参数面板_输出文件设置
         音频菜单 = New LakeUI.ModernContextMenu()
         图片菜单 = New LakeUI.ModernContextMenu()
         ModernPanel1 = New LakeUI.ModernPanel()
-        ModernPanel1.BackColor = Color.Transparent
-        ModernPanel1.BackColor1 = Color.Transparent
         Panel7 = New LakeUI.ModernPanel()
-        Panel7.BackColor = Color.Transparent
-        Panel7.BackColor1 = Color.Transparent
-        Panel7.BorderSize = 0
         MCK_保留访问时间 = New LakeUI.ModernCheckBox()
         MCK_保留修改时间 = New LakeUI.ModernCheckBox()
         MCK_保留创建时间 = New LakeUI.ModernCheckBox()
         HCL_文件时间 = New LakeUI.HtmlColorLabel()
         Panel6 = New LakeUI.ModernPanel()
-        Panel6.BackColor = Color.Transparent
-        Panel6.BackColor1 = Color.Transparent
-        Panel6.BorderSize = 0
         HCL_结尾文本 = New LakeUI.HtmlColorLabel()
         MTB_结尾文本 = New LakeUI.ModernTextBox()
         Panel5 = New LakeUI.ModernPanel()
-        Panel5.BackColor = Color.Transparent
-        Panel5.BackColor1 = Color.Transparent
-        Panel5.BorderSize = 0
         HCL_替代文件名 = New LakeUI.HtmlColorLabel()
         MTB_替代文件名 = New LakeUI.ModernTextBox()
         Panel4 = New LakeUI.ModernPanel()
-        Panel4.BackColor = Color.Transparent
-        Panel4.BackColor1 = Color.Transparent
-        Panel4.BorderSize = 0
         HCL_开头文本 = New LakeUI.HtmlColorLabel()
         MTB_开头文本 = New LakeUI.ModernTextBox()
         Panel3 = New LakeUI.ModernPanel()
-        Panel3.BackColor = Color.Transparent
-        Panel3.BackColor1 = Color.Transparent
-        Panel3.BorderSize = 0
         HCL_自动命名方式 = New LakeUI.HtmlColorLabel()
         MCB_自动命名方式 = New LakeUI.ModernComboBox()
         HCL_命名方式 = New LakeUI.HtmlColorLabel()
         Panel8 = New LakeUI.ModernPanel()
-        Panel8.BackColor = Color.Transparent
-        Panel8.BackColor1 = Color.Transparent
-        Panel8.BorderSize = 0
         MCB_保留子文件夹结构起始点 = New LakeUI.ModernComboBox()
         HCL_保留子文件夹结构起始点 = New LakeUI.HtmlColorLabel()
         Panel2 = New LakeUI.ModernPanel()
-        Panel2.BackColor = Color.Transparent
-        Panel2.BackColor1 = Color.Transparent
-        Panel2.BorderSize = 0
         MCB_输出位置 = New LakeUI.ModernComboBox()
         Panel1 = New LakeUI.ModernPanel()
-        Panel1.BackColor = Color.Transparent
-        Panel1.BackColor1 = Color.Transparent
-        Panel1.BorderSize = 0
         MCB_输出文件参数使用方法 = New LakeUI.ModernComboBox()
         JustEmptyControl2 = New LakeUI.JustEmptyControl()
         MTB_后缀 = New LakeUI.ModernTextBox()
@@ -96,6 +70,7 @@ Partial Class Form_v6_参数面板_输出文件设置
         ' 
         ' 后缀菜单
         ' 
+        后缀菜单.AnimationFPS = 120
         后缀菜单.BackdropBlurPasses = 2
         后缀菜单.BackdropBlurRadius = 30
         后缀菜单.BackdropMode = LakeUI.ModernContextMenu.BackdropModeEnum.Auto
@@ -103,7 +78,6 @@ Partial Class Form_v6_参数面板_输出文件设置
         后缀菜单.BackdropTintColor = Color.FromArgb(CByte(40), CByte(0), CByte(0), CByte(0))
         后缀菜单.BorderColor = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
         后缀菜单.DescriptionFont = New Font("Microsoft YaHei UI", 9F)
-        后缀菜单.AnimationFPS = 120
         后缀菜单.HoverBackColor = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
         后缀菜单.HoverRadius = 5
         后缀菜单.IconSize = 0
@@ -118,6 +92,7 @@ Partial Class Form_v6_参数面板_输出文件设置
         ' 
         ' 视频菜单
         ' 
+        视频菜单.AnimationFPS = 120
         视频菜单.BackdropBlurPasses = 2
         视频菜单.BackdropBlurRadius = 30
         视频菜单.BackdropMode = LakeUI.ModernContextMenu.BackdropModeEnum.Auto
@@ -125,7 +100,6 @@ Partial Class Form_v6_参数面板_输出文件设置
         视频菜单.BackdropTintColor = Color.FromArgb(CByte(40), CByte(0), CByte(0), CByte(0))
         视频菜单.BorderColor = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
         视频菜单.DescriptionFont = New Font("Microsoft YaHei UI", 9F)
-        视频菜单.AnimationFPS = 120
         视频菜单.HoverBackColor = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
         视频菜单.HoverRadius = 5
         视频菜单.IconSize = 0
@@ -139,6 +113,7 @@ Partial Class Form_v6_参数面板_输出文件设置
         ' 
         ' 音频菜单
         ' 
+        音频菜单.AnimationFPS = 120
         音频菜单.BackdropBlurPasses = 2
         音频菜单.BackdropBlurRadius = 30
         音频菜单.BackdropMode = LakeUI.ModernContextMenu.BackdropModeEnum.Auto
@@ -146,7 +121,6 @@ Partial Class Form_v6_参数面板_输出文件设置
         音频菜单.BackdropTintColor = Color.FromArgb(CByte(40), CByte(0), CByte(0), CByte(0))
         音频菜单.BorderColor = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
         音频菜单.DescriptionFont = New Font("Microsoft YaHei UI", 9F)
-        音频菜单.AnimationFPS = 120
         音频菜单.HoverBackColor = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
         音频菜单.HoverRadius = 5
         音频菜单.IconSize = 0
@@ -160,6 +134,7 @@ Partial Class Form_v6_参数面板_输出文件设置
         ' 
         ' 图片菜单
         ' 
+        图片菜单.AnimationFPS = 120
         图片菜单.BackdropBlurPasses = 2
         图片菜单.BackdropBlurRadius = 30
         图片菜单.BackdropMode = LakeUI.ModernContextMenu.BackdropModeEnum.Auto
@@ -167,7 +142,6 @@ Partial Class Form_v6_参数面板_输出文件设置
         图片菜单.BackdropTintColor = Color.FromArgb(CByte(40), CByte(0), CByte(0), CByte(0))
         图片菜单.BorderColor = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
         图片菜单.DescriptionFont = New Font("Microsoft YaHei UI", 9F)
-        图片菜单.AnimationFPS = 120
         图片菜单.HoverBackColor = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
         图片菜单.HoverRadius = 5
         图片菜单.IconSize = 0
@@ -181,6 +155,8 @@ Partial Class Form_v6_参数面板_输出文件设置
         ' 
         ' ModernPanel1
         ' 
+        ModernPanel1.BackColor = Color.Transparent
+        ModernPanel1.BackColor1 = Color.Transparent
         ModernPanel1.BorderSize = 0
         ModernPanel1.Controls.Add(Panel7)
         ModernPanel1.Controls.Add(HCL_文件时间)
@@ -203,11 +179,14 @@ Partial Class Form_v6_参数面板_输出文件设置
         ' 
         ' Panel7
         ' 
+        Panel7.BackColor = Color.Transparent
+        Panel7.BackColor1 = Color.Transparent
+        Panel7.BorderSize = 0
         Panel7.Controls.Add(MCK_保留访问时间)
         Panel7.Controls.Add(MCK_保留修改时间)
         Panel7.Controls.Add(MCK_保留创建时间)
         Panel7.Dock = DockStyle.Top
-        Panel7.Location = New Point(20, 465)
+        Panel7.Location = New Point(20, 455)
         Panel7.Name = "Panel7"
         Panel7.Padding = New Padding(0, 10, 0, 0)
         Panel7.Size = New Size(660, 42)
@@ -273,20 +252,23 @@ Partial Class Form_v6_参数面板_输出文件设置
         HCL_文件时间.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HCL_文件时间.Dock = DockStyle.Top
         HCL_文件时间.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        HCL_文件时间.Location = New Point(20, 420)
+        HCL_文件时间.Location = New Point(20, 412)
         HCL_文件时间.Margin = New Padding(2)
         HCL_文件时间.Name = "HCL_文件时间"
         HCL_文件时间.Padding = New Padding(0, 20, 0, 0)
-        HCL_文件时间.Size = New Size(660, 45)
+        HCL_文件时间.Size = New Size(660, 43)
         HCL_文件时间.TabIndex = 8
         HCL_文件时间.Text = "<span style=""font-size:13; color:Silver"">文件时间</span>   这些功能在任务结束时由 3FUI 处理，与 ffmpeg 无关"
         ' 
         ' Panel6
         ' 
+        Panel6.BackColor = Color.Transparent
+        Panel6.BackColor1 = Color.Transparent
+        Panel6.BorderSize = 0
         Panel6.Controls.Add(HCL_结尾文本)
         Panel6.Controls.Add(MTB_结尾文本)
         Panel6.Dock = DockStyle.Top
-        Panel6.Location = New Point(20, 378)
+        Panel6.Location = New Point(20, 370)
         Panel6.Name = "Panel6"
         Panel6.Padding = New Padding(0, 10, 0, 0)
         Panel6.Size = New Size(660, 42)
@@ -326,10 +308,13 @@ Partial Class Form_v6_参数面板_输出文件设置
         ' 
         ' Panel5
         ' 
+        Panel5.BackColor = Color.Transparent
+        Panel5.BackColor1 = Color.Transparent
+        Panel5.BorderSize = 0
         Panel5.Controls.Add(HCL_替代文件名)
         Panel5.Controls.Add(MTB_替代文件名)
         Panel5.Dock = DockStyle.Top
-        Panel5.Location = New Point(20, 336)
+        Panel5.Location = New Point(20, 328)
         Panel5.Name = "Panel5"
         Panel5.Padding = New Padding(0, 10, 0, 0)
         Panel5.Size = New Size(660, 42)
@@ -369,10 +354,13 @@ Partial Class Form_v6_参数面板_输出文件设置
         ' 
         ' Panel4
         ' 
+        Panel4.BackColor = Color.Transparent
+        Panel4.BackColor1 = Color.Transparent
+        Panel4.BorderSize = 0
         Panel4.Controls.Add(HCL_开头文本)
         Panel4.Controls.Add(MTB_开头文本)
         Panel4.Dock = DockStyle.Top
-        Panel4.Location = New Point(20, 294)
+        Panel4.Location = New Point(20, 286)
         Panel4.Name = "Panel4"
         Panel4.Padding = New Padding(0, 10, 0, 0)
         Panel4.Size = New Size(660, 42)
@@ -412,10 +400,13 @@ Partial Class Form_v6_参数面板_输出文件设置
         ' 
         ' Panel3
         ' 
+        Panel3.BackColor = Color.Transparent
+        Panel3.BackColor1 = Color.Transparent
+        Panel3.BorderSize = 0
         Panel3.Controls.Add(HCL_自动命名方式)
         Panel3.Controls.Add(MCB_自动命名方式)
         Panel3.Dock = DockStyle.Top
-        Panel3.Location = New Point(20, 252)
+        Panel3.Location = New Point(20, 244)
         Panel3.Name = "Panel3"
         Panel3.Padding = New Padding(0, 10, 0, 0)
         Panel3.Size = New Size(660, 42)
@@ -480,19 +471,22 @@ Partial Class Form_v6_参数面板_输出文件设置
         HCL_命名方式.AutoSize = True
         HCL_命名方式.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HCL_命名方式.Dock = DockStyle.Top
-        HCL_命名方式.Location = New Point(20, 207)
+        HCL_命名方式.Location = New Point(20, 201)
         HCL_命名方式.Margin = New Padding(2)
         HCL_命名方式.Name = "HCL_命名方式"
         HCL_命名方式.Padding = New Padding(0, 20, 0, 0)
-        HCL_命名方式.Size = New Size(660, 45)
+        HCL_命名方式.Size = New Size(660, 43)
         HCL_命名方式.TabIndex = 3
         HCL_命名方式.Text = "<span style=""font-size:13"">命名方式</span>   <span style=""color:IndianRed"">新手请保持附加时间戳的自动命名以避免重大损失！</span>"
         ' 
         ' Panel8
         ' 
+        Panel8.BackColor = Color.Transparent
+        Panel8.BackColor1 = Color.Transparent
+        Panel8.BorderSize = 0
         Panel8.Controls.Add(MCB_保留子文件夹结构起始点)
         Panel8.Dock = DockStyle.Top
-        Panel8.Location = New Point(20, 165)
+        Panel8.Location = New Point(20, 159)
         Panel8.Name = "Panel8"
         Panel8.Padding = New Padding(0, 10, 0, 0)
         Panel8.Size = New Size(660, 42)
@@ -524,7 +518,7 @@ Partial Class Form_v6_参数面板_输出文件设置
         MCB_保留子文件夹结构起始点.ToolTipGap = -1
         MCB_保留子文件夹结构起始点.ToolTipMaxWidth = 350
         MCB_保留子文件夹结构起始点.ToolTipPadding = New Padding(15)
-        MCB_保留子文件夹结构起始点.WaterText = "保留子文件夹结构起始点"
+        MCB_保留子文件夹结构起始点.WaterText = "保留子文件夹结构起始点，输入文件目录的一部分"
         MCB_保留子文件夹结构起始点.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ' 
         ' HCL_保留子文件夹结构起始点
@@ -532,19 +526,22 @@ Partial Class Form_v6_参数面板_输出文件设置
         HCL_保留子文件夹结构起始点.AutoSize = True
         HCL_保留子文件夹结构起始点.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HCL_保留子文件夹结构起始点.Dock = DockStyle.Top
-        HCL_保留子文件夹结构起始点.Location = New Point(20, 129)
+        HCL_保留子文件夹结构起始点.Location = New Point(20, 127)
         HCL_保留子文件夹结构起始点.Margin = New Padding(2)
         HCL_保留子文件夹结构起始点.Name = "HCL_保留子文件夹结构起始点"
         HCL_保留子文件夹结构起始点.Padding = New Padding(0, 15, 0, 0)
-        HCL_保留子文件夹结构起始点.Size = New Size(660, 36)
+        HCL_保留子文件夹结构起始点.Size = New Size(660, 32)
         HCL_保留子文件夹结构起始点.TabIndex = 16
         HCL_保留子文件夹结构起始点.Text = "要保留子文件夹结构时设置起始点（从根目录开始）右键点击清空"
         ' 
         ' Panel2
         ' 
+        Panel2.BackColor = Color.Transparent
+        Panel2.BackColor1 = Color.Transparent
+        Panel2.BorderSize = 0
         Panel2.Controls.Add(MCB_输出位置)
         Panel2.Dock = DockStyle.Top
-        Panel2.Location = New Point(20, 87)
+        Panel2.Location = New Point(20, 85)
         Panel2.Name = "Panel2"
         Panel2.Padding = New Padding(0, 10, 0, 0)
         Panel2.Size = New Size(660, 42)
@@ -571,24 +568,28 @@ Partial Class Form_v6_参数面板_输出文件设置
         MCB_输出位置.Margin = New Padding(2, 2, 2, 2)
         MCB_输出位置.Name = "MCB_输出位置"
         MCB_输出位置.Padding = New Padding(10, 0, 10, 0)
+        MCB_输出位置.PrefixGap = 10
+        MCB_输出位置.PrefixText = "输出目录"
         MCB_输出位置.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_输出位置.Size = New Size(660, 32)
         MCB_输出位置.TabIndex = 6
         MCB_输出位置.ToolTipGap = -1
         MCB_输出位置.ToolTipMaxWidth = 350
         MCB_输出位置.ToolTipPadding = New Padding(15)
-        MCB_输出位置.WaterText = "输出位置，将文件或文件夹拖至此来直接获取位置"
         MCB_输出位置.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ' 
         ' Panel1
         ' 
+        Panel1.BackColor = Color.Transparent
+        Panel1.BackColor1 = Color.Transparent
+        Panel1.BorderSize = 0
         Panel1.Controls.Add(MCB_输出文件参数使用方法)
         Panel1.Controls.Add(JustEmptyControl2)
         Panel1.Controls.Add(MTB_后缀)
         Panel1.Controls.Add(JustEmptyControl1)
         Panel1.Controls.Add(MB_选择后缀)
         Panel1.Dock = DockStyle.Top
-        Panel1.Location = New Point(20, 45)
+        Panel1.Location = New Point(20, 43)
         Panel1.Name = "Panel1"
         Panel1.Padding = New Padding(0, 10, 0, 0)
         Panel1.Size = New Size(660, 42)
@@ -616,13 +617,14 @@ Partial Class Form_v6_参数面板_输出文件设置
         MCB_输出文件参数使用方法.Margin = New Padding(2, 2, 2, 2)
         MCB_输出文件参数使用方法.Name = "MCB_输出文件参数使用方法"
         MCB_输出文件参数使用方法.Padding = New Padding(10, 0, 10, 0)
+        MCB_输出文件参数使用方法.PrefixGap = 10
+        MCB_输出文件参数使用方法.PrefixText = "输出模式"
         MCB_输出文件参数使用方法.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_输出文件参数使用方法.Size = New Size(440, 32)
         MCB_输出文件参数使用方法.TabIndex = 5
         MCB_输出文件参数使用方法.ToolTipGap = -1
         MCB_输出文件参数使用方法.ToolTipMaxWidth = 350
         MCB_输出文件参数使用方法.ToolTipPadding = New Padding(15)
-        MCB_输出文件参数使用方法.WaterText = "输出文件参数使用方法"
         MCB_输出文件参数使用方法.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ' 
         ' JustEmptyControl2
@@ -683,7 +685,7 @@ Partial Class Form_v6_参数面板_输出文件设置
         HCL_后缀和位置.Location = New Point(20, 20)
         HCL_后缀和位置.Margin = New Padding(2)
         HCL_后缀和位置.Name = "HCL_后缀和位置"
-        HCL_后缀和位置.Size = New Size(660, 25)
+        HCL_后缀和位置.Size = New Size(660, 23)
         HCL_后缀和位置.TabIndex = 0
         HCL_后缀和位置.Text = "<span style=""font-size:13; color:Silver"">后缀和位置</span>   输出目录默认不会保存到预设中，需要额外打开保存开关"
         ' 
