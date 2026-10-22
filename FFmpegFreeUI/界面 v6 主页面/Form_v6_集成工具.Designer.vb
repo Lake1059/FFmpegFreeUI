@@ -57,7 +57,7 @@ Partial Class Form_v6_集成工具
         ModernTabPage3.Text = "抽流（取出纯流）"
         ModernTabPage4.IsSeparator = True
         ModernTabPage5.Text = "质量评测"
-        ModernTabPage6.Text = "（敬请期待）"
+        ModernTabPage6.Text = "比特率可视化"
         ModernTabPage7.Text = "（敬请期待）"
         ModernTabPage8.IsSeparator = True
         ModernTabPage9.Text = "Whisper 字幕生成"

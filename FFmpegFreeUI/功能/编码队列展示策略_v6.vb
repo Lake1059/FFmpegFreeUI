@@ -161,8 +161,9 @@ Public Class 旧版兼容编码队列展示策略_v6
 
     Private Shared Function 格式化旧版耗时(elapsed As TimeSpan) As String
         Dim parts As New List(Of String)
-        If elapsed.Hours > 0 Then parts.Add($"{elapsed.Hours} 时")
-        If elapsed.Minutes > 0 OrElse parts.Count > 0 Then parts.Add($"{elapsed.Minutes} 分")
+        If elapsed.Days > 0 Then parts.Add($"{elapsed.Days} 天")
+        If elapsed.Hours > 0 OrElse elapsed.Days > 0 Then parts.Add($"{elapsed.Hours} 时")
+        If elapsed.Minutes > 0 OrElse elapsed.Hours > 0 OrElse elapsed.Days > 0 Then parts.Add($"{elapsed.Minutes} 分")
         parts.Add($"{elapsed.Seconds} 秒")
         Return String.Join(" ", parts)
     End Function

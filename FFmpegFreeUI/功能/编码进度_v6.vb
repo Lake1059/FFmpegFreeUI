@@ -215,12 +215,15 @@ Public Class 编码进度_v6
     Public Shared Function 格式化秒(value As Double) As String
         If Double.IsNaN(value) OrElse Double.IsInfinity(value) OrElse value < 0 Then Return ""
         Dim safeValue = Math.Min(value, TimeSpan.MaxValue.TotalSeconds)
-        Dim h = CLng(Math.Floor(safeValue / 3600.0R))
-        Dim m = CLng(Math.Floor((safeValue - h * 3600.0R) / 60.0R))
-        Dim s = CLng(Math.Floor(safeValue - h * 3600.0R - m * 60.0R))
+        Dim totalHours = CLng(Math.Floor(safeValue / 3600.0R))
+        Dim d = totalHours \ 24
+        Dim h = totalHours Mod 24
+        Dim m = CLng(Math.Floor((safeValue - totalHours * 3600.0R) / 60.0R))
+        Dim s = CLng(Math.Floor(safeValue - totalHours * 3600.0R - m * 60.0R))
         Dim parts As New List(Of String)
-        If h > 0 Then parts.Add($"{h}h")
-        If m > 0 OrElse h > 0 Then parts.Add($"{m}m")
+        If d > 0 Then parts.Add($"{d}d")
+        If h > 0 OrElse d > 0 Then parts.Add($"{h}h")
+        If m > 0 OrElse h > 0 OrElse d > 0 Then parts.Add($"{m}m")
         parts.Add($"{s}s")
         Return String.Join("", parts)
     End Function

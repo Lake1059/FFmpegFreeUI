@@ -50,6 +50,7 @@ Public Class 字体控制
         SetControlFont(设置_v6.实例对象.字体, Form_v6_集成工具_混流, , True)
         SetControlFont(设置_v6.实例对象.字体, Form_v6_集成工具_抽流, , True)
         SetControlFont(设置_v6.实例对象.字体, Form_v6_集成工具_质量评测, , True)
+        SetControlFont(设置_v6.实例对象.字体, Form_v6_集成工具_比特率可视化, , True)
         SetControlFont(设置_v6.实例对象.字体, Form_v6_集成工具_Whisper生成字幕, , True)
 
         SetControlFont(设置_v6.实例对象.字体, Form_v6_设置, , True)
