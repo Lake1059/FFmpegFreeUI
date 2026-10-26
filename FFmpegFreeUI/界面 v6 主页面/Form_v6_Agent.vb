@@ -1,6 +1,8 @@
 ﻿Imports LakeUI
 
 Public Class Form_v6_Agent
+    Public Shared Event 正在推理任务数量已变化()
+
     Private _controller As Agent页面控制器_v6
 
     Private ReadOnly Property AgentController As Agent页面控制器_v6
@@ -77,6 +79,14 @@ Public Class Form_v6_Agent
 
     Public Async Sub 检查并刷新模型列表()
         Await AgentController.检查并刷新模型列表()
+    End Sub
+
+    Public Function 获取正在推理任务数量() As Integer
+        Return AgentController.获取正在推理任务数量()
+    End Function
+
+    Friend Sub 通知正在推理任务数量已变化()
+        RaiseEvent 正在推理任务数量已变化()
     End Sub
 
     Private Sub MCB_模型选择_SelectedIndexChanged(sender As Object, e As EventArgs) Handles MCB_模型选择.SelectedIndexChanged

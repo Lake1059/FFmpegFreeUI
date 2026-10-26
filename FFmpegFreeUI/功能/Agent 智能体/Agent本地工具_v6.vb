@@ -117,11 +117,12 @@ Partial Public Class AgentLocalTools
                     {"query", New Dictionary(Of String, Object) From {{"type", "string"}, {"description", "要搜索的问题"}}}
                 }, {"query"}))
             Case AgentNetworkMode.Local
-                tools.Add(FunctionTool("web_search", "联网搜索。由你选择搜索引擎，并使用 engine_url 指定完整的搜索 URL，或使用 {query} 作为查询词占位符，例如 https://www.google.com/search?q={query}。", New Dictionary(Of String, Object) From {
+                tools.Add(FunctionTool("web_search", "联网搜索。由你选择搜索引擎，并使用 engine_url 指定完整的搜索 URL，或使用 {query} 作为查询词占位符，例如 https://www.google.com/search?q={query}。默认自动使用系统代理；若目标网络需要直连，可传 use_proxy=false。", New Dictionary(Of String, Object) From {
                     {"query", New Dictionary(Of String, Object) From {{"type", "string"}, {"description", "要搜索的问题"}}},
-                    {"engine_url", New Dictionary(Of String, Object) From {{"type", "string"}, {"description", "自行选择的 HTTP/HTTPS 搜索引擎 URL。必须是已包含查询词的完整 URL，或使用 {query} 占位符。"}}}
+                    {"engine_url", New Dictionary(Of String, Object) From {{"type", "string"}, {"description", "自行选择的 HTTP/HTTPS 搜索引擎 URL。必须是已包含查询词的完整 URL，或使用 {query} 占位符。"}}},
+                    {"use_proxy", New Dictionary(Of String, Object) From {{"type", "boolean"}, {"description", "是否使用系统代理，默认 true；仅在判断直连更合适时设为 false。"}}}
                 }, {"query", "engine_url"}))
-                tools.Add(FunctionTool("fetch_url", "读取指定 URL 的文本或 JSON。请求由 3FUI 在本机发起；可按需填写 User-Agent、Referer、Cookie、自定义请求头、请求方法和请求体。", New Dictionary(Of String, Object) From {
+                tools.Add(FunctionTool("fetch_url", "读取指定 URL 的文本或 JSON。请求由 3FUI 在本机发起，默认自动使用系统代理；可按需填写 User-Agent、Referer、Cookie、自定义请求头、请求方法和请求体。若目标网络需要直连，可传 use_proxy=false。", New Dictionary(Of String, Object) From {
                     {"url", New Dictionary(Of String, Object) From {{"type", "string"}}},
                     {"method", New Dictionary(Of String, Object) From {{"type", "string"}, {"description", "GET、POST、PUT、PATCH、DELETE 等 HTTP 方法，默认 GET"}}},
                     {"headers", New Dictionary(Of String, Object) From {{"type", "object"}, {"additionalProperties", New Dictionary(Of String, Object) From {{"type", "string"}}}}},
@@ -130,9 +131,10 @@ Partial Public Class AgentLocalTools
                     {"cookies", New Dictionary(Of String, Object) From {{"type", "string"}}},
                     {"body", New Dictionary(Of String, Object) From {{"type", "string"}}},
                     {"response_format", New Dictionary(Of String, Object) From {{"type", "string"}, {"description", "auto、text、json、raw；默认 auto"}}},
-                    {"max_chars", New Dictionary(Of String, Object) From {{"type", "integer"}, {"description", "响应文本最大字符数，1-200000，默认 12000"}}}
+                    {"max_chars", New Dictionary(Of String, Object) From {{"type", "integer"}, {"description", "响应文本最大字符数，1-200000，默认 12000"}}},
+                    {"use_proxy", New Dictionary(Of String, Object) From {{"type", "boolean"}, {"description", "是否使用系统代理，默认 true；仅在判断直连更合适时设为 false。"}}}
                 }, {"url"}))
-                tools.Add(FunctionTool("http_request", "发起通用 HTTP 请求并返回状态码、响应头、内容类型和响应体摘要。用于 API、JSON、XML 或需要自定义身份标识的站点。", New Dictionary(Of String, Object) From {
+                tools.Add(FunctionTool("http_request", "发起通用 HTTP 请求并返回状态码、响应头、内容类型和响应体摘要。默认自动使用系统代理；用于 API、JSON、XML 或需要自定义身份标识的站点。若目标网络需要直连，可传 use_proxy=false。", New Dictionary(Of String, Object) From {
                     {"url", New Dictionary(Of String, Object) From {{"type", "string"}}},
                     {"method", New Dictionary(Of String, Object) From {{"type", "string"}}},
                     {"headers", New Dictionary(Of String, Object) From {{"type", "object"}, {"additionalProperties", New Dictionary(Of String, Object) From {{"type", "string"}}}}},
@@ -141,7 +143,8 @@ Partial Public Class AgentLocalTools
                     {"cookies", New Dictionary(Of String, Object) From {{"type", "string"}}},
                     {"body", New Dictionary(Of String, Object) From {{"type", "string"}}},
                     {"response_format", New Dictionary(Of String, Object) From {{"type", "string"}}},
-                    {"max_chars", New Dictionary(Of String, Object) From {{"type", "integer"}}}
+                    {"max_chars", New Dictionary(Of String, Object) From {{"type", "integer"}}},
+                    {"use_proxy", New Dictionary(Of String, Object) From {{"type", "boolean"}, {"description", "是否使用系统代理，默认 true；仅在判断直连更合适时设为 false。"}}}
                 }, {"url"}))
         End Select
 
@@ -318,7 +321,7 @@ Partial Public Class AgentLocalTools
                     Return Agent工具封装_v6.保存参数预设(Agent通用工具_v6.GetJsonString(args, "source"), Agent通用工具_v6.GetJsonString(args, "name"), Agent通用工具_v6.GetJsonString(args, "preset_json"), Agent通用工具_v6.GetJsonString(args, "note"), saveOutputLocation)
                 Case "web_search"
                     If Not AgentNetworkMode.IsEnabled(networkMode) Then Return "联网已禁用"
-                    Return Await WebSearchAsync(Agent通用工具_v6.GetJsonString(args, "query"), Agent通用工具_v6.GetJsonString(args, "engine_url"), networkMode, endpointClient, modelId, reasoningEffort, cancellationToken)
+                    Return Await WebSearchAsync(Agent通用工具_v6.GetJsonString(args, "query"), Agent通用工具_v6.GetJsonString(args, "engine_url"), networkMode, endpointClient, modelId, reasoningEffort, Agent通用工具_v6.GetJsonBoolean(args, "use_proxy", True), cancellationToken)
                 Case "fetch_url"
                     If Not AgentNetworkMode.IsEnabled(networkMode) Then Return "联网已禁用"
                     If AgentNetworkMode.Normalize(networkMode) <> AgentNetworkMode.Local Then Return "当前联网模式不允许本地网页请求"
@@ -330,7 +333,8 @@ Partial Public Class AgentLocalTools
                                                Agent通用工具_v6.GetJsonString(args, "cookies"),
                                                Agent通用工具_v6.GetJsonString(args, "body"),
                                                Agent通用工具_v6.GetJsonInteger(args, "max_chars", 12000),
-                                               Agent通用工具_v6.GetJsonString(args, "response_format", "auto"), False)
+                                               Agent通用工具_v6.GetJsonString(args, "response_format", "auto"), False,
+                                               Agent通用工具_v6.GetJsonBoolean(args, "use_proxy", True))
                 Case "http_request"
                     If Not AgentNetworkMode.IsEnabled(networkMode) Then Return "联网已禁用"
                     If AgentNetworkMode.Normalize(networkMode) <> AgentNetworkMode.Local Then Return "当前联网模式不允许本地 HTTP 请求"
@@ -342,7 +346,8 @@ Partial Public Class AgentLocalTools
                                                Agent通用工具_v6.GetJsonString(args, "cookies"),
                                                Agent通用工具_v6.GetJsonString(args, "body"),
                                                Agent通用工具_v6.GetJsonInteger(args, "max_chars", 20000),
-                                               Agent通用工具_v6.GetJsonString(args, "response_format", "auto"), True)
+                                               Agent通用工具_v6.GetJsonString(args, "response_format", "auto"), True,
+                                               Agent通用工具_v6.GetJsonBoolean(args, "use_proxy", True))
                 Case "read_local_text_file"
                     If permissionLevel < PermissionSystem Then Return "权限不足：需要系统访问"
                     Return ReadLocalTextFile(Agent通用工具_v6.GetJsonString(args, "path"),

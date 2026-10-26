@@ -13,6 +13,7 @@ Partial Public Class AgentLocalTools
                                                  endpointClient As AgentEndpointClient,
                                                  modelId As String,
                                                  reasoningEffort As String,
+                                                 useProxy As Boolean,
                                                  cancellationToken As Threading.CancellationToken) As Task(Of String)
         If String.IsNullOrWhiteSpace(query) Then Return "缺少 query"
 
@@ -28,7 +29,7 @@ Partial Public Class AgentLocalTools
                 Return "端点联网失败：" & response.ErrorMessage
 
             Case AgentNetworkMode.Local
-                Return Await LocalWebSearchAsync(query, engineUrl, cancellationToken)
+                Return Await LocalWebSearchAsync(query, engineUrl, useProxy, cancellationToken)
 
             Case Else
                 Return "联网已禁用。"
@@ -37,6 +38,7 @@ Partial Public Class AgentLocalTools
 
     Private Shared Async Function LocalWebSearchAsync(query As String,
                                                       engineUrl As String,
+                                                      useProxy As Boolean,
                                                       cancellationToken As Threading.CancellationToken) As Task(Of String)
         Dim url = BuildSearchUrl(query, engineUrl)
         If url = "" Then Return "缺少 engine_url。请提供包含查询词的完整搜索 URL，或使用 {query} 占位符。"
@@ -49,7 +51,7 @@ Partial Public Class AgentLocalTools
         End If
 
         cancellationToken.ThrowIfCancellationRequested()
-        Dim result = Await FetchUrlAsync(uri.AbsoluteUri, cancellationToken)
+        Dim result = Await FetchUrlAsync(uri.AbsoluteUri, cancellationToken, useProxy:=useProxy)
         If Not IsFetchFailure(result) Then Return $"搜索来源：{uri.Host}{vbCrLf}{result}"
         Return $"本地联网搜索失败：{uri.Host}：{Agent通用工具_v6.LimitText(result, 300)}"
     End Function
@@ -92,7 +94,8 @@ Partial Public Class AgentLocalTools
                                                 Optional body As String = "",
                                                 Optional maxChars As Integer = 12000,
                                                 Optional responseFormat As String = "auto",
-                                                Optional includeMetadata As Boolean = False) As Task(Of String)
+                                                Optional includeMetadata As Boolean = False,
+                                                Optional useProxy As Boolean = True) As Task(Of String)
         If String.IsNullOrWhiteSpace(url) Then Return "缺少 url"
         Dim uri As Uri = Nothing
         If Not Uri.TryCreate(url, UriKind.Absolute, uri) OrElse
@@ -101,9 +104,9 @@ Partial Public Class AgentLocalTools
         Dim normalizedMethod = If(methodName, "GET").Trim().ToUpperInvariant()
         If normalizedMethod = "" Then normalizedMethod = "GET"
         Dim safeMaxChars = Math.Min(Math.Max(If(maxChars <= 0, 12000, maxChars), 1), 200000)
-        Using http As New HttpClient With {.Timeout = TimeSpan.FromSeconds(45)},
-              deadline = Threading.CancellationTokenSource.CreateLinkedTokenSource(cancellationToken)
-            deadline.CancelAfter(http.Timeout)
+        Dim http = Agent网络连接_v6.获取客户端(useProxy)
+        Using deadline = Threading.CancellationTokenSource.CreateLinkedTokenSource(cancellationToken)
+            deadline.CancelAfter(TimeSpan.FromSeconds(45))
             Dim requestMethod As New HttpMethod(normalizedMethod)
             Using request As New HttpRequestMessage(requestMethod, uri)
                 Dim defaultAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36 Edg/148.0.0.0"

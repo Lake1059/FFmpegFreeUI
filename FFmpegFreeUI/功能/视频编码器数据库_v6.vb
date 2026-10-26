@@ -437,8 +437,15 @@ Public Class 视频编码器数据库_v6
 
         加入编码器(基础("gif", "GIF 调色板动图。", "GIF", 预设数据_v6.视频编码器类型.图片,
             像素格式:=像素("rgb8 bgr8 rgb4_byte bgr4_byte gray pal8"),
-            图片质量:=图片质量("调色板滤镜", "启用：palettegen/paletteuse", ""),
-            必要参数:=特殊列表(特殊("-loop 循环次数：-1=不循环，0=无限，必要"), 特殊("palettegen/paletteuse 调色板滤镜，建议启用，必要"))))
+            必要参数:=特殊列表(
+                特殊("-loop 循环次数：默认 -1=不循环，0=无限"),
+                特殊("传统调色板滤镜：palettegen/paletteuse，已不推荐"),
+                特殊("每帧 FCC 晶格调色板滤镜：latticepal 从 FFmpeg 9.1 开始可用："),
+                特殊("    density：每个颜色轴的晶格步数，1~255，默认 20；alpha=1 时上限为 64"),
+                特殊("    max_colors：最大调色板颜色数，2~256，默认 256"),
+                特殊("    alpha：是否在四维晶格中同时量化 alpha 通道，默认 0/false=关闭，1/true=开启"),
+                特殊("    refine：精化方式，默认 none/0=不精化，full/1=使用最终调色板重新扩散整帧误差，residual/2=仅扩散被移除颜色的残差，batched/3=按几何批次交替移除颜色与重新扩散误差"),
+                特殊("    dither：抖动方式，默认 floyd_steinberg，none/0=无抖动，bayer/1=8×8 Bayer 有序抖动，blue_noise/2=空隙聚类蓝噪声抖动，floyd_steinberg/3=Floyd-Steinberg 误差扩散"))))
 
         加入编码器(基础("bmp", "BMP 未压缩位图。", "BMP", 预设数据_v6.视频编码器类型.图片,
             像素格式:=像素("bgra bgr24 rgb565le rgb555le rgb444le rgb8 bgr8 rgb4_byte bgr4_byte gray pal8 monob")))
@@ -735,6 +742,7 @@ Public Class 视频编码器数据库_v6
             特殊("-hw_encoding 强制硬件编码：0/1"))
     End Function
 
+    <CodeAnalysis.SuppressMessage("Performance", "CA1861:不要将常量数组作为参数", Justification:="<挂起>")>
     Private Shared Function 拆分空格列表(值 As String) As List(Of String)
         If String.IsNullOrWhiteSpace(值) Then Return New List(Of String)
         Return 值.Split({" "c}, StringSplitOptions.RemoveEmptyEntries).ToList()

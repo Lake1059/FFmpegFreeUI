@@ -6,7 +6,6 @@ Imports System.Text.Json
 Imports System.Text.RegularExpressions
 
 Public Class AgentEndpointClient
-    Private Shared ReadOnly Http As New HttpClient With {.Timeout = TimeSpan.FromSeconds(90)}
     Private Const MaxErrorMessageLength As Integer = 600
     Private Const MaxRawErrorLength As Integer = 32768
     Private Const MaxStreamingRawCaptureLength As Integer = 65536
@@ -151,9 +150,9 @@ Public Class AgentEndpointClient
 
         Try
             Using streamTimeout = Threading.CancellationTokenSource.CreateLinkedTokenSource(cancellationToken)
-                streamTimeout.CancelAfter(Http.Timeout)
+                streamTimeout.CancelAfter(TimeSpan.FromSeconds(90))
                 Using request = CreateJsonRequest(HttpMethod.Post, GetChatCompletionsPath(), payload)
-                    Using response = Await Http.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, streamTimeout.Token).ConfigureAwait(False)
+                    Using response = Await Agent网络连接_v6.获取客户端(True).SendAsync(request, HttpCompletionOption.ResponseHeadersRead, streamTimeout.Token).ConfigureAwait(False)
                         If Not response.IsSuccessStatusCode Then
                             Dim errorRaw = Await response.Content.ReadAsStringAsync(streamTimeout.Token).ConfigureAwait(False)
                             Return AgentChatResult.Fail(ExtractErrorMessage(errorRaw, response), CInt(response.StatusCode), LimitRawError(errorRaw))
@@ -268,7 +267,7 @@ Public Class AgentEndpointClient
                                          payload As Object,
                                          cancellationToken As Threading.CancellationToken) As Task(Of HttpResponseMessage)
         Using request = CreateJsonRequest(method, relativePath, payload)
-            Return Await Http.SendAsync(request, cancellationToken)
+            Return Await Agent网络连接_v6.获取客户端(True).SendAsync(request, cancellationToken)
         End Using
     End Function
 

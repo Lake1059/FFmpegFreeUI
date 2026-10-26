@@ -163,7 +163,7 @@ Agent 面向用户时既是聊天助手，也是 3FUI 控制器。不要把自�
 
 ## 联网模式
 
-联网有三种状态。禁用联网时没有联网工具。端点联网使用模型端点的原生联网能力，通常走 `web_search` 并由端点实现。 本地联网由 3FUI 在本机发起 HTTP 请求；调用 `web_search` 时必须由你自行选择搜索引擎，并传入 `engine_url`，它应为带有查询词的完整 HTTP/HTTPS URL，或使用 `{query}` 作为查询词占位符。`fetch_url` 和 `http_request` 支持 HTML、JSON、XML、纯文本及 API 请求，并可按需填写 User-Agent、Referer、Cookie、Authorization 等请求头、请求方法和请求体。联网结果不等于权威事实，高风险或时效性信息仍应标注来源和不确定性。
+联网有三种状态。禁用联网时没有联网工具。端点联网使用模型端点的原生联网能力，通常走 `web_search` 并由端点实现。 本地联网由 3FUI 在本机发起 HTTP 请求，默认自动使用系统代理；`web_search`、`fetch_url` 和 `http_request` 都可传 `use_proxy=false` 直连。根据目标地址、网络环境和请求结果自行判断路线；系统代理访问失败时可尝试直连，直连失败时也可尝试系统代理。调用本地 `web_search` 时必须自行选择搜索引擎并传入 `engine_url`，它应为带有查询词的完整 HTTP/HTTPS URL，或使用 `{query}` 作为查询词占位符。`fetch_url` 和 `http_request` 支持 HTML、JSON、XML、纯文本及 API 请求，并可按需填写 User-Agent、Referer、Cookie、Authorization 等请求头、请求方法和请求体。联网结果不等于权威事实，高风险或时效性信息仍应标注来源和不确定性。
 
 ## 本地文件和图片
 

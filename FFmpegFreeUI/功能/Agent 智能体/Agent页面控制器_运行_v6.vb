@@ -86,6 +86,10 @@ Partial Friend Class Agent页面控制器_v6
         Return runtime
     End Function
 
+    Friend Function 获取正在推理任务数量() As Integer
+        Return _conversationRuntimes.Values.Where(Function(runtime) runtime IsNot Nothing AndAlso runtime.Busy).Count()
+    End Function
+
     Private Async Function StartAgentRunAsync(Optional conversation As AgentConversationData = Nothing) As Task
         conversation = If(conversation, _current)
         Dim run = GetConversationRuntime(conversation)
@@ -101,6 +105,7 @@ Partial Friend Class Agent页面控制器_v6
         End If
 
         run.Busy = True
+        _view.通知正在推理任务数量已变化()
         _view.MB_发送.Enabled = True
         Dim localCts As New Threading.CancellationTokenSource()
         run.RequestCts = localCts
@@ -153,6 +158,7 @@ Partial Friend Class Agent页面控制器_v6
             run.RequestCts = Nothing
             localCts.Dispose()
             run.Busy = False
+            _view.通知正在推理任务数量已变化()
             ClearActiveRunState(conversation)
             run.PendingSteeringMessages.Clear()
             UpdateSendButtonState()

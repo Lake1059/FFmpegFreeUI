@@ -118,6 +118,11 @@ Public Class 音频编码器数据库_v6
             特殊参数:=参数列表(参数("-afterburner", "0/1", "质量后处理，默认 1"), 参数("-signaling", "default/implicit/explicit_sbr/explicit_hierarchical", "SBR/PS 信令：default=自动，implicit=兼容，explicit_sbr=显式 SBR，explicit_hierarchical=分层"), 参数("-latm", "0/1", "输出 LATM/LOAS"), 参数("-frame_length", "-1/1024", "AAC 帧长：-1=自动")),
             支持说明:="输入：s16；采样率：8~96 kHz；声道：mono 至 7.1 等布局。"))
 
+        加入编码器(基础("aac.fdk.xhe", "FDK xHE-AAC", "libfdk_xhe_aac", "Fraunhofer FDK xHE-AAC；需要含 libfdk_xhe_aac 的 FFmpeg。",
+            质量参数:=参数列表(参数("-vbr", "VBR 模式：-1=默认；0~6"), 参数("-b:a", "目标码率：如 32k/64k/96k/128k")),
+            特殊参数:=参数列表(参数("-live_loudness_level", "-31~-10 LUFS", "实时编码目标响度，默认 -24 LUFS"), 参数("-rap_interval", "时长，如 1s/2s", "随机访问点间隔，默认 -0.000001 秒"), 参数("-stream_id", "-1/0~65535", "同一自适应集内的流唯一 ID，默认 -1")),
+            支持说明:="输入：flt；采样率：44.1/48 kHz；声道：mono/stereo。"))
+
         加入编码器(基础("aac.fdk.he", "FDK AAC HE", "libfdk_aac", "HE-AAC，适合低码率 mono/stereo。",
             默认附加参数:=参数列表(参数("-profile:a", "aac_he", "固定为 HE-AAC", 默认值:="aac_he")),
             质量参数:=参数列表(参数("-vbr", "质量模式：0=关闭；1~5，越高越清晰、体积越大"), 参数("-b:a", "目标码率：低码率常用 24k~96k")),

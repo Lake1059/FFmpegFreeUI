@@ -18,7 +18,7 @@ Public Class Form_v6_集成工具
         Next
 
         If SP_UnLock AndAlso 设置_v6.实例对象.窗口样式 = 2 AndAlso 设置_v6.实例对象.SP_毛玻璃模式 > 0 Then
-            For Each 绑定项 In 页面绑定.Take(4)
+            For Each 绑定项 In 页面绑定
                 绑定项.面板.Padding = New Padding(10, 20, 20, 20)
             Next
         End If

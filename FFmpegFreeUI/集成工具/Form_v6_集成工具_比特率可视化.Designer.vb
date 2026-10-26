@@ -22,13 +22,13 @@ Partial Class Form_v6_集成工具_比特率可视化
     '不要使用代码编辑器修改它。
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim ListColumn8 As LakeUI.UltraDetailListView.ListColumn = New LakeUI.UltraDetailListView.ListColumn()
-        Dim ListColumn9 As LakeUI.UltraDetailListView.ListColumn = New LakeUI.UltraDetailListView.ListColumn()
-        Dim ListColumn10 As LakeUI.UltraDetailListView.ListColumn = New LakeUI.UltraDetailListView.ListColumn()
-        Dim ListColumn11 As LakeUI.UltraDetailListView.ListColumn = New LakeUI.UltraDetailListView.ListColumn()
-        Dim ListColumn12 As LakeUI.UltraDetailListView.ListColumn = New LakeUI.UltraDetailListView.ListColumn()
-        Dim ListColumn13 As LakeUI.UltraDetailListView.ListColumn = New LakeUI.UltraDetailListView.ListColumn()
-        Dim ListColumn14 As LakeUI.UltraDetailListView.ListColumn = New LakeUI.UltraDetailListView.ListColumn()
+        Dim ListColumn1 As LakeUI.UltraDetailListView.ListColumn = New LakeUI.UltraDetailListView.ListColumn()
+        Dim ListColumn2 As LakeUI.UltraDetailListView.ListColumn = New LakeUI.UltraDetailListView.ListColumn()
+        Dim ListColumn3 As LakeUI.UltraDetailListView.ListColumn = New LakeUI.UltraDetailListView.ListColumn()
+        Dim ListColumn4 As LakeUI.UltraDetailListView.ListColumn = New LakeUI.UltraDetailListView.ListColumn()
+        Dim ListColumn5 As LakeUI.UltraDetailListView.ListColumn = New LakeUI.UltraDetailListView.ListColumn()
+        Dim ListColumn6 As LakeUI.UltraDetailListView.ListColumn = New LakeUI.UltraDetailListView.ListColumn()
+        Dim ListColumn7 As LakeUI.UltraDetailListView.ListColumn = New LakeUI.UltraDetailListView.ListColumn()
         ModernPanel1 = New LakeUI.ModernPanel()
         Ultra2DChart1 = New LakeUI.Ultra2DChart()
         ModernPanel2 = New LakeUI.ModernPanel()
@@ -85,7 +85,7 @@ Partial Class Form_v6_集成工具_比特率可视化
         Ultra2DChart1.GridLineColor = Color.FromArgb(CByte(42), CByte(42), CByte(42))
         Ultra2DChart1.Location = New Point(20, 267)
         Ultra2DChart1.Name = "Ultra2DChart1"
-        Ultra2DChart1.Palette.AddRange(New Color() {Color.FromArgb(CByte(68), CByte(114), CByte(196)), Color.FromArgb(CByte(237), CByte(125), CByte(49)), Color.FromArgb(CByte(165), CByte(165), CByte(165)), Color.FromArgb(CByte(255), CByte(192), CByte(0)), Color.FromArgb(CByte(91), CByte(155), CByte(213)), Color.FromArgb(CByte(112), CByte(173), CByte(71)), Color.FromArgb(CByte(38), CByte(68), CByte(120)), Color.FromArgb(CByte(158), CByte(72), CByte(14)), Color.FromArgb(CByte(68), CByte(114), CByte(196)), Color.FromArgb(CByte(237), CByte(125), CByte(49)), Color.FromArgb(CByte(165), CByte(165), CByte(165)), Color.FromArgb(CByte(255), CByte(192), CByte(0)), Color.FromArgb(CByte(91), CByte(155), CByte(213)), Color.FromArgb(CByte(112), CByte(173), CByte(71)), Color.FromArgb(CByte(38), CByte(68), CByte(120)), Color.FromArgb(CByte(158), CByte(72), CByte(14)), Color.FromArgb(CByte(68), CByte(114), CByte(196)), Color.FromArgb(CByte(237), CByte(125), CByte(49)), Color.FromArgb(CByte(165), CByte(165), CByte(165)), Color.FromArgb(CByte(255), CByte(192), CByte(0)), Color.FromArgb(CByte(91), CByte(155), CByte(213)), Color.FromArgb(CByte(112), CByte(173), CByte(71)), Color.FromArgb(CByte(38), CByte(68), CByte(120)), Color.FromArgb(CByte(158), CByte(72), CByte(14)), Color.FromArgb(CByte(68), CByte(114), CByte(196)), Color.FromArgb(CByte(237), CByte(125), CByte(49)), Color.FromArgb(CByte(165), CByte(165), CByte(165)), Color.FromArgb(CByte(255), CByte(192), CByte(0)), Color.FromArgb(CByte(91), CByte(155), CByte(213)), Color.FromArgb(CByte(112), CByte(173), CByte(71)), Color.FromArgb(CByte(38), CByte(68), CByte(120)), Color.FromArgb(CByte(158), CByte(72), CByte(14)), Color.FromArgb(CByte(68), CByte(114), CByte(196)), Color.FromArgb(CByte(237), CByte(125), CByte(49)), Color.FromArgb(CByte(165), CByte(165), CByte(165)), Color.FromArgb(CByte(255), CByte(192), CByte(0)), Color.FromArgb(CByte(91), CByte(155), CByte(213)), Color.FromArgb(CByte(112), CByte(173), CByte(71)), Color.FromArgb(CByte(38), CByte(68), CByte(120)), Color.FromArgb(CByte(158), CByte(72), CByte(14)), Color.FromArgb(CByte(68), CByte(114), CByte(196)), Color.FromArgb(CByte(237), CByte(125), CByte(49)), Color.FromArgb(CByte(165), CByte(165), CByte(165)), Color.FromArgb(CByte(255), CByte(192), CByte(0)), Color.FromArgb(CByte(91), CByte(155), CByte(213)), Color.FromArgb(CByte(112), CByte(173), CByte(71)), Color.FromArgb(CByte(38), CByte(68), CByte(120)), Color.FromArgb(CByte(158), CByte(72), CByte(14)), Color.FromArgb(CByte(68), CByte(114), CByte(196)), Color.FromArgb(CByte(237), CByte(125), CByte(49)), Color.FromArgb(CByte(165), CByte(165), CByte(165)), Color.FromArgb(CByte(255), CByte(192), CByte(0)), Color.FromArgb(CByte(91), CByte(155), CByte(213)), Color.FromArgb(CByte(112), CByte(173), CByte(71)), Color.FromArgb(CByte(38), CByte(68), CByte(120)), Color.FromArgb(CByte(158), CByte(72), CByte(14)), Color.FromArgb(CByte(68), CByte(114), CByte(196)), Color.FromArgb(CByte(237), CByte(125), CByte(49)), Color.FromArgb(CByte(165), CByte(165), CByte(165)), Color.FromArgb(CByte(255), CByte(192), CByte(0)), Color.FromArgb(CByte(91), CByte(155), CByte(213)), Color.FromArgb(CByte(112), CByte(173), CByte(71)), Color.FromArgb(CByte(38), CByte(68), CByte(120)), Color.FromArgb(CByte(158), CByte(72), CByte(14)), Color.FromArgb(CByte(68), CByte(114), CByte(196)), Color.FromArgb(CByte(237), CByte(125), CByte(49)), Color.FromArgb(CByte(165), CByte(165), CByte(165)), Color.FromArgb(CByte(255), CByte(192), CByte(0)), Color.FromArgb(CByte(91), CByte(155), CByte(213)), Color.FromArgb(CByte(112), CByte(173), CByte(71)), Color.FromArgb(CByte(38), CByte(68), CByte(120)), Color.FromArgb(CByte(158), CByte(72), CByte(14))})
+        Ultra2DChart1.Palette.AddRange(New Color() {Color.FromArgb(CByte(68), CByte(114), CByte(196)), Color.FromArgb(CByte(237), CByte(125), CByte(49)), Color.FromArgb(CByte(165), CByte(165), CByte(165)), Color.FromArgb(CByte(255), CByte(192), CByte(0)), Color.FromArgb(CByte(91), CByte(155), CByte(213)), Color.FromArgb(CByte(112), CByte(173), CByte(71)), Color.FromArgb(CByte(38), CByte(68), CByte(120)), Color.FromArgb(CByte(158), CByte(72), CByte(14)), Color.FromArgb(CByte(68), CByte(114), CByte(196)), Color.FromArgb(CByte(237), CByte(125), CByte(49)), Color.FromArgb(CByte(165), CByte(165), CByte(165)), Color.FromArgb(CByte(255), CByte(192), CByte(0)), Color.FromArgb(CByte(91), CByte(155), CByte(213)), Color.FromArgb(CByte(112), CByte(173), CByte(71)), Color.FromArgb(CByte(38), CByte(68), CByte(120)), Color.FromArgb(CByte(158), CByte(72), CByte(14)), Color.FromArgb(CByte(68), CByte(114), CByte(196)), Color.FromArgb(CByte(237), CByte(125), CByte(49)), Color.FromArgb(CByte(165), CByte(165), CByte(165)), Color.FromArgb(CByte(255), CByte(192), CByte(0)), Color.FromArgb(CByte(91), CByte(155), CByte(213)), Color.FromArgb(CByte(112), CByte(173), CByte(71)), Color.FromArgb(CByte(38), CByte(68), CByte(120)), Color.FromArgb(CByte(158), CByte(72), CByte(14)), Color.FromArgb(CByte(68), CByte(114), CByte(196)), Color.FromArgb(CByte(237), CByte(125), CByte(49)), Color.FromArgb(CByte(165), CByte(165), CByte(165)), Color.FromArgb(CByte(255), CByte(192), CByte(0)), Color.FromArgb(CByte(91), CByte(155), CByte(213)), Color.FromArgb(CByte(112), CByte(173), CByte(71)), Color.FromArgb(CByte(38), CByte(68), CByte(120)), Color.FromArgb(CByte(158), CByte(72), CByte(14)), Color.FromArgb(CByte(68), CByte(114), CByte(196)), Color.FromArgb(CByte(237), CByte(125), CByte(49)), Color.FromArgb(CByte(165), CByte(165), CByte(165)), Color.FromArgb(CByte(255), CByte(192), CByte(0)), Color.FromArgb(CByte(91), CByte(155), CByte(213)), Color.FromArgb(CByte(112), CByte(173), CByte(71)), Color.FromArgb(CByte(38), CByte(68), CByte(120)), Color.FromArgb(CByte(158), CByte(72), CByte(14)), Color.FromArgb(CByte(68), CByte(114), CByte(196)), Color.FromArgb(CByte(237), CByte(125), CByte(49)), Color.FromArgb(CByte(165), CByte(165), CByte(165)), Color.FromArgb(CByte(255), CByte(192), CByte(0)), Color.FromArgb(CByte(91), CByte(155), CByte(213)), Color.FromArgb(CByte(112), CByte(173), CByte(71)), Color.FromArgb(CByte(38), CByte(68), CByte(120)), Color.FromArgb(CByte(158), CByte(72), CByte(14)), Color.FromArgb(CByte(68), CByte(114), CByte(196)), Color.FromArgb(CByte(237), CByte(125), CByte(49)), Color.FromArgb(CByte(165), CByte(165), CByte(165)), Color.FromArgb(CByte(255), CByte(192), CByte(0)), Color.FromArgb(CByte(91), CByte(155), CByte(213)), Color.FromArgb(CByte(112), CByte(173), CByte(71)), Color.FromArgb(CByte(38), CByte(68), CByte(120)), Color.FromArgb(CByte(158), CByte(72), CByte(14)), Color.FromArgb(CByte(68), CByte(114), CByte(196)), Color.FromArgb(CByte(237), CByte(125), CByte(49)), Color.FromArgb(CByte(165), CByte(165), CByte(165)), Color.FromArgb(CByte(255), CByte(192), CByte(0)), Color.FromArgb(CByte(91), CByte(155), CByte(213)), Color.FromArgb(CByte(112), CByte(173), CByte(71)), Color.FromArgb(CByte(38), CByte(68), CByte(120)), Color.FromArgb(CByte(158), CByte(72), CByte(14)), Color.FromArgb(CByte(68), CByte(114), CByte(196)), Color.FromArgb(CByte(237), CByte(125), CByte(49)), Color.FromArgb(CByte(165), CByte(165), CByte(165)), Color.FromArgb(CByte(255), CByte(192), CByte(0)), Color.FromArgb(CByte(91), CByte(155), CByte(213)), Color.FromArgb(CByte(112), CByte(173), CByte(71)), Color.FromArgb(CByte(38), CByte(68), CByte(120)), Color.FromArgb(CByte(158), CByte(72), CByte(14)), Color.FromArgb(CByte(68), CByte(114), CByte(196)), Color.FromArgb(CByte(237), CByte(125), CByte(49)), Color.FromArgb(CByte(165), CByte(165), CByte(165)), Color.FromArgb(CByte(255), CByte(192), CByte(0)), Color.FromArgb(CByte(91), CByte(155), CByte(213)), Color.FromArgb(CByte(112), CByte(173), CByte(71)), Color.FromArgb(CByte(38), CByte(68), CByte(120)), Color.FromArgb(CByte(158), CByte(72), CByte(14))})
         Ultra2DChart1.PlotBackColor = Color.FromArgb(CByte(80), CByte(0), CByte(0), CByte(0))
         Ultra2DChart1.PlotBorderColor = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
         Ultra2DChart1.ShowLineHoverCrosshair = True
@@ -267,22 +267,22 @@ Partial Class Form_v6_集成工具_比特率可视化
         UltraDetailListView1.BackgroundColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         UltraDetailListView1.BorderRadius = 10
         UltraDetailListView1.BorderSize = 0
-        ListColumn8.Text = "文件"
-        ListColumn8.Width = 200
-        ListColumn9.Text = "选择流"
-        ListColumn9.Width = 80
-        ListColumn10.Text = "时长"
-        ListColumn11.Text = "总帧数"
-        ListColumn12.Text = "平均码率"
-        ListColumn13.Text = "最低码率"
-        ListColumn14.Text = "最高码率"
-        UltraDetailListView1.Columns.Add(ListColumn8)
-        UltraDetailListView1.Columns.Add(ListColumn9)
-        UltraDetailListView1.Columns.Add(ListColumn10)
-        UltraDetailListView1.Columns.Add(ListColumn11)
-        UltraDetailListView1.Columns.Add(ListColumn12)
-        UltraDetailListView1.Columns.Add(ListColumn13)
-        UltraDetailListView1.Columns.Add(ListColumn14)
+        ListColumn1.Text = "文件"
+        ListColumn1.Width = 200
+        ListColumn2.Text = "选择流"
+        ListColumn2.Width = 80
+        ListColumn3.Text = "时长"
+        ListColumn4.Text = "总帧数"
+        ListColumn5.Text = "平均码率"
+        ListColumn6.Text = "最低码率"
+        ListColumn7.Text = "最高码率"
+        UltraDetailListView1.Columns.Add(ListColumn1)
+        UltraDetailListView1.Columns.Add(ListColumn2)
+        UltraDetailListView1.Columns.Add(ListColumn3)
+        UltraDetailListView1.Columns.Add(ListColumn4)
+        UltraDetailListView1.Columns.Add(ListColumn5)
+        UltraDetailListView1.Columns.Add(ListColumn6)
+        UltraDetailListView1.Columns.Add(ListColumn7)
         UltraDetailListView1.Dock = DockStyle.Top
         UltraDetailListView1.DragSelectZoneRatio = 0.5F
         UltraDetailListView1.GroupBorderColor = Color.Silver
