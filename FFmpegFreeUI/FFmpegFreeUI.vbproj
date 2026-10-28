@@ -45,6 +45,9 @@
 
   <ItemGroup>
     <Content Include="ico.ico" />
+    <EmbeddedResource Include="AgentDefaults\**\*">
+      <LogicalName>AgentDefaults/%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
+    </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>
@@ -64,9 +67,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="LakeUI">
+    <Reference Include="LakeUI" Condition="Exists('$(LakeUIAssembly)')">
       <HintPath>$(LakeUIAssembly)</HintPath>
     </Reference>
+    <PackageReference Include="LakeUI" Version="5.116" Condition="!Exists('$(LakeUIAssembly)')" />
   </ItemGroup>
 
   <ItemGroup>

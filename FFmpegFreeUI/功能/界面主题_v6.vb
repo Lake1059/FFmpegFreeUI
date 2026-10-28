@@ -217,9 +217,10 @@ Public Module 界面主题_v6
         If control Is Nothing OrElse control.IsDisposed Then Return
 
         ' LakeUI 自带消息窗在创建时已经消费 Ex*Theme.Current；再次套用“深色→浅色”转换会
-        ' 把已经是白色的弹窗反转回黑色，并把黑色遮罩反转成白色。此类顶层窗体完全交给 LakeUI 主题处理。
+        ' 把已经是白色的弹窗反转回黑色，并把黑色遮罩反转成白色。表面交给 LakeUI，只统一选中色。
         If 属于LakeUI自带弹窗(control) Then
             If TypeOf control Is Form Then 应用窗体Dwm外观(DirectCast(control, Form))
+            应用弹窗选中色(control)
             Return
         End If
 
@@ -247,6 +248,23 @@ Public Module 界面主题_v6
 
         For Each child As Control In control.Controls
             应用控件树(child, 强制刷新)
+        Next
+    End Sub
+
+    Private Sub 应用弹窗选中色(control As Control)
+        Dim color = 界面配色_v6.获取选中背景(_当前浅色)
+        For Each prop In 获取颜色属性(control.GetType())
+            If Not 是选中背景属性(prop.Name) Then Continue For
+            Try
+                If DirectCast(prop.GetValue(control), Color).ToArgb() <> color.ToArgb() Then
+                    prop.SetValue(control, color)
+                    control.Invalidate()
+                End If
+            Catch
+            End Try
+        Next
+        For Each child As Control In control.Controls
+            应用弹窗选中色(child)
         Next
     End Sub
 
@@ -291,8 +309,10 @@ Public Module 界面主题_v6
         Dim snapshot = 获取或创建快照(target)
         For Each pair In snapshot.颜色
             Try
-                Dim color = If(浅色, 转换为浅色(pair.Value, pair.Key.Name, target), pair.Value)
-                If 浅色 AndAlso SP_UnLock AndAlso 设置_v6.实例对象.窗口样式 = 2 AndAlso 设置_v6.实例对象.SP_毛玻璃模式 > 0 Then
+                Dim 是选中背景 = 是选中背景属性(pair.Key.Name)
+                Dim color = If(是选中背景, 界面配色_v6.获取选中背景(浅色),
+                               If(浅色, 转换为浅色(pair.Value, pair.Key.Name, target), pair.Value))
+                If Not 是选中背景 AndAlso 浅色 AndAlso SP_UnLock AndAlso 设置_v6.实例对象.窗口样式 = 2 AndAlso 设置_v6.实例对象.SP_毛玻璃模式 > 0 Then
                     Dim name = pair.Key.Name
                     If (TypeOf target Is ModernTabListControl OrElse TypeOf target Is ModernTabControl) AndAlso
                        (name = "TabStripBackColor" OrElse name = "ContentBackColor") Then
@@ -374,9 +394,46 @@ Public Module 界面主题_v6
             End Function)
     End Function
 
+    Friend Function 是选中背景属性(name As String) As Boolean
+        Select Case name
+            Case "SelectionColor", "SelectionBackColor", "SelectedBackColor", "SelectedItemBackColor",
+                 "ItemSelectedColor", "ItemSelectedBackColor", "ItemInactiveSelectedBackColor", "TabItemSelectedBackColor",
+                 "DropDownSelectedColor", "InactiveSelectionColor", "SelectedNodeBackColor",
+                 "SelectedDialogueBackColor", "MenuSelectedColor"
+                Return True
+            Case Else
+                Return False
+        End Select
+    End Function
+
     Private Function 转换为浅色(original As Color, propertyName As String, Optional target As Object = Nothing, Optional 最低对比度 As Double = 4.5R) As Color
         Dim name = If(propertyName, String.Empty)
-        If TypeOf target Is ThisIsYourWindow AndAlso (name = "CaptionBackColor" OrElse name = "CaptionInactiveBackColor") Then Return 浅色一级导航背景
+        If 是选中背景属性(name) Then Return 界面配色_v6.浅色选中背景
+        If TypeOf target Is ThisIsYourWindow Then
+            Select Case name
+                Case "CaptionBackColor", "CaptionInactiveBackColor"
+                    Return 浅色一级导航背景
+                Case "CaptionButtonGlyphColor", "CaptionButtonHoverGlyphColor", "CaptionButtonPressedGlyphColor"
+                    Return Color.FromArgb(55, 55, 55)
+                Case "CaptionButtonHoverBackColor"
+                    Return Color.FromArgb(195, 213, 230)
+                Case "CaptionButtonPressedBackColor"
+                    Return Color.FromArgb(180, 201, 222)
+            End Select
+        End If
+        Dim control = TryCast(target, Control)
+        If control IsNot Nothing AndAlso TypeOf control.FindForm() Is Form_v6_设置_LakeUI许可证 Then
+            If control.Name = "MB_前往购买许可证" Then
+                Select Case name
+                    Case "BackColor1" : Return Color.FromArgb(226, 218, 250)
+                    Case "HoverBackColor1" : Return Color.FromArgb(214, 203, 245)
+                    Case "PressedBackColor1" : Return Color.FromArgb(203, 188, 241)
+                    Case "ForeColor", "HoverForeColor", "PressedForeColor" : Return Color.FromArgb(55, 55, 55)
+                End Select
+            ElseIf control.Name = "HtmlColorLabel3" AndAlso name = "ForeColor" Then
+                Return Color.FromArgb(128, 99, 180)
+            End If
+        End If
         If TypeOf target Is ModernTextBox AndAlso name = "LineNumberBackColor" Then
             Return Color.FromArgb(100, 浅色一级导航背景.R, 浅色一级导航背景.G, 浅色一级导航背景.B)
         End If
@@ -397,8 +454,6 @@ Public Module 界面主题_v6
                     Return 浅色基础背景
                 Case "TabStripBackColor"
                     Return navBack
-                Case "TabItemSelectedBackColor"
-                    Return Color.FromArgb(200, 227, 232)
                 Case "TabItemHoverBackColor"
                     Return 浅色悬停背景
                 Case "IndicatorColor"

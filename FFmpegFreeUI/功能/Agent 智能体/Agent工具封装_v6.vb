@@ -114,6 +114,9 @@ Public NotInheritable Class Agent工具封装_v6
     Public Shared Function 获取系统硬件() As String
         Dim payload As New Dictionary(Of String, Object) From {
             {"processor", 获取处理器名称()},
+            {"processor_count", Environment.ProcessorCount},
+            {"logical_processor_count", Environment.ProcessorCount},
+            {"physical_core_count", 获取物理核心数量()},
             {"memory", 获取内存信息()},
             {"gpus", 获取显卡名称列表()}
         }
@@ -459,6 +462,21 @@ Public NotInheritable Class Agent工具封装_v6
             End If
         Next
         Return result
+    End Function
+
+    Private Shared Function 获取物理核心数量() As Integer
+        Try
+            Dim total As Integer = 0
+            Using searcher As New ManagementObjectSearcher("SELECT NumberOfCores FROM Win32_Processor")
+                For Each item As ManagementObject In searcher.Get()
+                    Dim count As Integer
+                    If Integer.TryParse(If(item("NumberOfCores"), "0").ToString(), count) Then total += count
+                Next
+            End Using
+            Return total
+        Catch
+            Return 0
+        End Try
     End Function
 
     Private Shared Function 获取处理器名称() As String

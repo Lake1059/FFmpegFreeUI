@@ -51,6 +51,11 @@ Namespace My
                 FormMain_v6.FormBorderStyle = FormBorderStyle.None
                 FormMain_v6.WindowState = FormWindowState.Maximized
             End If
+            Try
+                Agent文件管理_v6.安装内置文件()
+            Catch ex As Exception
+                Debug.WriteLine("Agent 内置文件安装失败：" & ex.Message)
+            End Try
             启动参数响应_v6.保存首次启动参数(e.CommandLine)
         End Sub
 

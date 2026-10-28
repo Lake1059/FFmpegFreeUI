@@ -377,7 +377,7 @@ Partial Class Form_v6_集成工具_质量评测
         MCB_模型选择.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
         MCB_模型选择.Location = New Point(70, 10)
         MCB_模型选择.Margin = New Padding(2, 2, 2, 2)
-        MCB_模型选择.MaxDropDownItems = 14
+        MCB_模型选择.MaxDropDownItems = 12
         MCB_模型选择.Name = "MCB_模型选择"
         MCB_模型选择.Padding = New Padding(10, 0, 10, 0)
         MCB_模型选择.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
@@ -508,7 +508,7 @@ Partial Class Form_v6_集成工具_质量评测
         HtmlColorLabel9.TabIndex = 0
         HtmlColorLabel9.Text = "<span style=""font-size:11; color:Silver"">选择 VMAF 模型</span>"
         HtmlColorLabel9.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.BottomLeft
-        HtmlColorLabel9.ToolTipText = "模型按 V1/V0、4K、观看距离、HFR、CUDA 分类显示。带 CUDA 胶囊的条目使用 libvmaf_cuda；当前 VMAF v1 的部分特征尚无 CUDA 实现，因此仅对兼容的 v0 NEG 模型提供 CUDA 条目。"
+        HtmlColorLabel9.ToolTipText = "模型按 V1/V0、4K、观看距离、HFR、HDR、CUDA 分类显示。带 CUDA 胶囊的条目使用 libvmaf_cuda；当前 VMAF v1 的部分特征尚无 CUDA 实现，因此仅对兼容的 v0 NEG 模型提供 CUDA 条目。"
         ' 
         ' HtmlColorLabel7
         ' 

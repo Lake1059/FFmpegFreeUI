@@ -6,6 +6,9 @@ Public NotInheritable Class VmafModelDisplayItem
     Public Property Is4K As Boolean = False
     Public Property ViewingDistanceLabel As String = ""
     Public Property IsHfr As Boolean = False
+    Public Property IsHdr As Boolean = False
+    ' 运行库中检测到模型名称，不等于已经验证完整评分链；官方目录补充项为 False。
+    Public Property IsRuntimeDetected As Boolean = True
     Public Property UseCuda As Boolean = False
     Public Property IsLocal As Boolean = False
     Public Property IsAuto As Boolean = False
@@ -23,6 +26,7 @@ Public NotInheritable Class VmafModelDisplayItem
             If Is4K Then parts.Add("4K")
             If Not String.IsNullOrWhiteSpace(ViewingDistanceLabel) Then parts.Add(ViewingDistanceLabel)
             If IsHfr Then parts.Add("HFR")
+            If IsHdr Then parts.Add("HDR")
             If UseCuda Then parts.Add("CUDA")
             Return String.Join(" · ", parts)
         End Get
@@ -42,6 +46,7 @@ Public Class VmafModelComboBox
     Private Const 分辨率胶囊宽度逻辑值 As Single = 42.0F
     Private Const 观看距离胶囊宽度逻辑值 As Single = 52.0F
     Private Const Hfr胶囊宽度逻辑值 As Single = 48.0F
+    Private Const Hdr胶囊宽度逻辑值 As Single = 48.0F
     Private Const Cuda胶囊宽度逻辑值 As Single = 58.0F
     Private Const 胶囊高度逻辑值 As Single = 24.0F
 
@@ -186,6 +191,7 @@ Public Class VmafModelComboBox
         If item.Is4K Then DrawSelectionCapsule(context, "4K", 分辨率胶囊宽度逻辑值 * scale, x, y, capsuleHeight, rightLimit, gap, textColor, capsuleColor)
         If Not String.IsNullOrWhiteSpace(item.ViewingDistanceLabel) Then DrawSelectionCapsule(context, item.ViewingDistanceLabel, 观看距离胶囊宽度逻辑值 * scale, x, y, capsuleHeight, rightLimit, gap, textColor, capsuleColor)
         If item.IsHfr Then DrawSelectionCapsule(context, "HFR", Hfr胶囊宽度逻辑值 * scale, x, y, capsuleHeight, rightLimit, gap, textColor, capsuleColor)
+        If item.IsHdr Then DrawSelectionCapsule(context, "HDR", Hdr胶囊宽度逻辑值 * scale, x, y, capsuleHeight, rightLimit, gap, textColor, capsuleColor)
         If item.UseCuda Then DrawSelectionCapsule(context, "CUDA", Cuda胶囊宽度逻辑值 * scale, x, y, capsuleHeight, rightLimit, gap, textColor, capsuleColor)
         Return True
     End Function
@@ -213,6 +219,7 @@ Public Class VmafModelComboBox
         DrawDropDownCapsuleSlot(context, If(item.Is4K, "4K", ""), 分辨率胶囊宽度逻辑值 * scale, x, y, capsuleHeight, gap, textColor, capsuleColor)
         DrawDropDownCapsuleSlot(context, item.ViewingDistanceLabel, 观看距离胶囊宽度逻辑值 * scale, x, y, capsuleHeight, gap, textColor, capsuleColor)
         DrawDropDownCapsuleSlot(context, If(item.IsHfr, "HFR", ""), Hfr胶囊宽度逻辑值 * scale, x, y, capsuleHeight, gap, textColor, capsuleColor)
+        DrawDropDownCapsuleSlot(context, If(item.IsHdr, "HDR", ""), Hdr胶囊宽度逻辑值 * scale, x, y, capsuleHeight, gap, textColor, capsuleColor)
         DrawDropDownCapsuleSlot(context, If(item.UseCuda, "CUDA", ""), Cuda胶囊宽度逻辑值 * scale, x, y, capsuleHeight, gap, textColor, capsuleColor)
         Return True
     End Function
