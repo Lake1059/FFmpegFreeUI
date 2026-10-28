@@ -20,24 +20,35 @@ internal static class Program
             return LicensePreview.Run(args[1]);
         if (args.Length >= 3 && args[0] == "--preview-vmaf")
             return VmafPreview.Run(args[1], args[2], args.Length > 3 && args[3] == "dark");
-        var root = Path.GetFullPath(args.Length > 0 ? args[0] : ".");
-        Work = Path.Combine(root, "artifacts", "ui-vmaf-20261029", "tests", DateTime.Now.ToString("yyyyMMdd-HHmmss-fff"));
+        if (args.Length >= 3 && args[0] == "--preview-capsules")
+            return VmafPreview.Run(args[1], args[2], args.Length > 3 && args[3] == "dark", true);
+        var capsulesOnly = args.Length > 0 && args[0] == "--capsule-only";
+        var rootIndex = capsulesOnly ? 1 : 0;
+        var root = Path.GetFullPath(args.Length > rootIndex ? args[rootIndex] : ".");
+        Work = Path.Combine(root, "artifacts", "ui-vmaf-20261029", capsulesOnly ? "capsule-tests" : "tests", DateTime.Now.ToString("yyyyMMdd-HHmmss-fff"));
         Directory.CreateDirectory(Work);
         var previous = 设置_v6.实例对象;
         设置_v6.实例对象 = new 设置_v6();
         try
         {
-            Check("主题：文字、下拉、列表和导航使用同一选中色", ThemeRoundTrip);
-            Check("标题栏：浅色保持深色图标、背景变深且保留红色关闭", CaptionColors);
-            Check("弹窗：统一输入选中色且不二次转换浅色背景", PopupSelection);
-            Check("界面：HDR 提示、十二行下拉与许可证浅紫色", UiRefinements);
-            Check("模型：HDR、HFR、分辨率、距离与 CUDA 分类", ModelParsing);
-            Check("模型界面：旧版提示、非 NEG 分组、选择保护与双色胶囊", ModelPresentation);
-            Check("HDR 目录：旧引擎仍显示八项且不伪装为已检测", ModelCatalog);
-            Check("HDR 目录：未检测项不进入 AUTO，手动评测前明确提示", ModelAvailability);
-            Check("AUTO：HDR/SDR、1080/4K、24/48/60/120 fps 与缺模型回退", AutoModels);
-            Check("HDR：PQ/HLG 判定与缺失颜色标记拒绝", HdrMetadata);
-            Check("模型扫描：识别 hdr_vmaf 前缀", BinaryModelScan);
+            if (capsulesOnly)
+            {
+                Check("模型界面：布局、距离配色与胶囊保护", ModelPresentation);
+            }
+            else
+            {
+                Check("主题：文字、下拉、列表和导航使用同一选中色", ThemeRoundTrip);
+                Check("标题栏：浅色保持深色图标、背景变深且保留红色关闭", CaptionColors);
+                Check("弹窗：统一输入选中色且不二次转换浅色背景", PopupSelection);
+                Check("界面：HDR 提示、十二行下拉与许可证浅紫色", UiRefinements);
+                Check("模型：HDR、HFR、分辨率、距离与 CUDA 分类", ModelParsing);
+                Check("模型界面：旧版提示、非 NEG 分组、选择保护与双色胶囊", ModelPresentation);
+                Check("HDR 目录：旧引擎仍显示八项且不伪装为已检测", ModelCatalog);
+                Check("HDR 目录：未检测项不进入 AUTO，手动评测前明确提示", ModelAvailability);
+                Check("AUTO：HDR/SDR、1080/4K、24/48/60/120 fps 与缺模型回退", AutoModels);
+                Check("HDR：PQ/HLG 判定与缺失颜色标记拒绝", HdrMetadata);
+                Check("模型扫描：识别 hdr_vmaf 前缀", BinaryModelScan);
+            }
         }
         finally
         {
@@ -152,7 +163,7 @@ internal static class Program
         var combo = (VmafModelComboBox)quality.Controls.Find("MCB_模型选择", true).Single();
         var help = (HtmlColorLabel)quality.Controls.Find("HtmlColorLabel9", true).Single();
         Require(combo.MaxDropDownItems == 12, "模型下拉不是十二行");
-        Require(combo.ToolTipMaxWidth == 343, "模型提示未保持参考图的统一宽度");
+        Require(combo.ToolTipMaxWidth == 320, "模型提示未按最新要求略微缩窄");
         Require(help.ToolTipText.Contains("HFR、HDR、CUDA"), "模型说明中 HDR 未排在 CUDA 前");
         using var license = new Form_v6_设置_LakeUI许可证();
         var button = (ModernButton)license.Controls.Find("MB_前往购买许可证", true).Single();
@@ -261,6 +272,26 @@ internal static class Program
         }
         var merged = (float)comboType.GetField("非Neg胶囊宽度逻辑值", BindingFlags.Static | BindingFlags.NonPublic)!.GetRawConstantValue()!;
         Require(merged == 160f, "非 NEG 胶囊没有保持三列合并的宽度");
+        var capsuleHeight = (float)comboType.GetField("胶囊高度逻辑值", BindingFlags.Static | BindingFlags.NonPublic)!.GetRawConstantValue()!;
+        Require(capsuleHeight == 22f, "胶囊高度未轻微缩小");
+        using var quality = new Form_v6_集成工具_质量评测();
+        var sample = quality.Controls.Find("MCB_SubSample", true).Single();
+        var pooling = quality.Controls.Find("MCB_Pooling", true).Single();
+        var models = (VmafModelComboBox)quality.Controls.Find("MCB_模型选择", true).Single();
+        Require(Math.Abs(sample.Width / (double)pooling.Width - 132.0 / 150) <= 1.0 / pooling.Width, "SubSample 没有按最新要求缩窄");
+        Require(models.DropDownItemHeight == 32 && (models.DropDownItemHeight - capsuleHeight) / 2 == 5f, "下拉行上下间距未轻微缩小");
+        foreach (var light in new[] { true, false })
+        {
+            var previousBrightness = -1f;
+            foreach (var distance in new[] { "1.5H", "3H", "5H" })
+            {
+                var kind = Invoke(comboType, "获取观看距离胶囊类别", distance)!;
+                var colors = ((Color Background, Color Foreground))Invoke(comboType, "获取胶囊配色", kind, light)!;
+                Require(colors.Background.GetBrightness() > previousBrightness, "观看距离没有按 1.5H、3H、5H 由深到浅区分");
+                Require(colors.Background.GetHue() is > 260 and < 300, "观看距离没有维持紫色系");
+                previousBrightness = colors.Background.GetBrightness();
+            }
+        }
     }
 
     private static List<VmafModelDisplayItem> Catalog(IEnumerable<string>? models) =>

@@ -59,7 +59,7 @@ Public Class VmafModelComboBox
     Private Const Hfr胶囊宽度逻辑值 As Single = 48.0F
     Private Const Hdr胶囊宽度逻辑值 As Single = 48.0F
     Private Const Cuda胶囊宽度逻辑值 As Single = 58.0F
-    Private Const 胶囊高度逻辑值 As Single = 24.0F
+    Private Const 胶囊高度逻辑值 As Single = 22.0F
     Private Const 非Neg胶囊宽度逻辑值 As Single = 观看距离胶囊宽度逻辑值 + Hfr胶囊宽度逻辑值 + Hdr胶囊宽度逻辑值 + 胶囊间距逻辑值 * 2
 
     Private Enum 胶囊类别
@@ -71,27 +71,33 @@ Public Class VmafModelComboBox
         Hdr
         Cuda
         非Neg
+        观看距离近
+        观看距离远
     End Enum
 
     Private Shared ReadOnly 浅色胶囊配色 As (背景 As Color, 文字 As Color)() = {
         (ColorTranslator.FromHtml("#DCEBFA"), ColorTranslator.FromHtml("#27598A")),
         (ColorTranslator.FromHtml("#E4E7EB"), ColorTranslator.FromHtml("#536174")),
         (ColorTranslator.FromHtml("#D9EFEC"), ColorTranslator.FromHtml("#22665F")),
-        (ColorTranslator.FromHtml("#ECE3F7"), ColorTranslator.FromHtml("#66478C")),
+        (ColorTranslator.FromHtml("#E5D5F2"), ColorTranslator.FromHtml("#61417D")),
         (ColorTranslator.FromHtml("#FBEACD"), ColorTranslator.FromHtml("#805815")),
         (ColorTranslator.FromHtml("#F7DEEB"), ColorTranslator.FromHtml("#8C3E65")),
         (ColorTranslator.FromHtml("#E3EFD9"), ColorTranslator.FromHtml("#426B28")),
-        (ColorTranslator.FromHtml("#F9E0DA"), ColorTranslator.FromHtml("#924333"))
+        (ColorTranslator.FromHtml("#F9E0DA"), ColorTranslator.FromHtml("#924333")),
+        (ColorTranslator.FromHtml("#DCC6EE"), ColorTranslator.FromHtml("#50306F")),
+        (ColorTranslator.FromHtml("#F2E9FA"), ColorTranslator.FromHtml("#6D5285"))
     }
     Private Shared ReadOnly 深色胶囊配色 As (背景 As Color, 文字 As Color)() = {
         (ColorTranslator.FromHtml("#263C55"), ColorTranslator.FromHtml("#C7DEFF")),
         (ColorTranslator.FromHtml("#3A414B"), ColorTranslator.FromHtml("#DEE3EB")),
         (ColorTranslator.FromHtml("#25473F"), ColorTranslator.FromHtml("#BDE8DE")),
-        (ColorTranslator.FromHtml("#433450"), ColorTranslator.FromHtml("#E3CFF7")),
+        (ColorTranslator.FromHtml("#5A436D"), ColorTranslator.FromHtml("#F0DFFD")),
         (ColorTranslator.FromHtml("#503D22"), ColorTranslator.FromHtml("#F5D69B")),
         (ColorTranslator.FromHtml("#503043"), ColorTranslator.FromHtml("#F3C9DF")),
         (ColorTranslator.FromHtml("#344A2A"), ColorTranslator.FromHtml("#D2E9BE")),
-        (ColorTranslator.FromHtml("#56362F"), ColorTranslator.FromHtml("#FFD6C9"))
+        (ColorTranslator.FromHtml("#56362F"), ColorTranslator.FromHtml("#FFD6C9")),
+        (ColorTranslator.FromHtml("#4B375A"), ColorTranslator.FromHtml("#E7D2FA")),
+        (ColorTranslator.FromHtml("#755C89"), ColorTranslator.FromHtml("#F9EEFF"))
     }
 
     Public Event BrowseRequested As EventHandler
@@ -145,7 +151,7 @@ Public Class VmafModelComboBox
         If _正在定位提示 OrElse tip.IsDisposed OrElse popup.IsDisposed Then Return
         _正在定位提示 = True
         Try
-            Dim area = Screen.FromControl(Me).WorkingArea
+            Dim area = 获取模型提示可见区域(tip)
             Dim gap = CInt(Math.Round(ToolTipGap * DpiScale(), MidpointRounding.AwayFromZero))
             Dim right = popup.Right + gap
             Dim left = popup.Left - gap - tip.Width
@@ -160,6 +166,16 @@ Public Class VmafModelComboBox
             _正在定位提示 = False
         End Try
     End Sub
+
+    Private Function 获取模型提示可见区域(tip As Form) As Rectangle
+        Dim area = Screen.FromControl(Me).WorkingArea
+        Dim host = TryCast(TopLevelControl, Form)
+        If host Is Nothing OrElse host.IsDisposed Then Return area
+        Dim visible = Rectangle.Intersect(area, host.RectangleToScreen(host.ClientRectangle))
+        ' 优先留在主窗口内；窗口小到容纳不下提示时，仍以显示器工作区为边界。
+        If visible.Width >= tip.Width AndAlso visible.Height >= tip.Height Then Return visible
+        Return area
+    End Function
 
     Public ReadOnly Property SelectedModel As VmafModelDisplayItem
         Get
@@ -348,7 +364,7 @@ Public Class VmafModelComboBox
         If item.IsNonNeg Then
             DrawSelectionCapsule(context, "非neg模型", 非Neg胶囊宽度逻辑值 * scale, x, y, capsuleHeight, rightLimit, gap, textColor, 胶囊类别.非Neg)
         Else
-            If Not String.IsNullOrWhiteSpace(item.ViewingDistanceLabel) Then DrawSelectionCapsule(context, item.ViewingDistanceLabel, 观看距离胶囊宽度逻辑值 * scale, x, y, capsuleHeight, rightLimit, gap, textColor, 胶囊类别.观看距离)
+            If Not String.IsNullOrWhiteSpace(item.ViewingDistanceLabel) Then DrawSelectionCapsule(context, item.ViewingDistanceLabel, 观看距离胶囊宽度逻辑值 * scale, x, y, capsuleHeight, rightLimit, gap, textColor, 获取观看距离胶囊类别(item.ViewingDistanceLabel))
             If item.IsHfr Then DrawSelectionCapsule(context, "HFR", Hfr胶囊宽度逻辑值 * scale, x, y, capsuleHeight, rightLimit, gap, textColor, 胶囊类别.Hfr)
             If item.IsHdr Then DrawSelectionCapsule(context, "HDR", Hdr胶囊宽度逻辑值 * scale, x, y, capsuleHeight, rightLimit, gap, textColor, 胶囊类别.Hdr)
         End If
@@ -378,7 +394,7 @@ Public Class VmafModelComboBox
         If item.IsNonNeg Then
             DrawDropDownCapsuleSlot(context, "非neg模型", 非Neg胶囊宽度逻辑值 * scale, x, y, capsuleHeight, gap, textColor, 胶囊类别.非Neg)
         Else
-            DrawDropDownCapsuleSlot(context, item.ViewingDistanceLabel, 观看距离胶囊宽度逻辑值 * scale, x, y, capsuleHeight, gap, textColor, 胶囊类别.观看距离)
+            DrawDropDownCapsuleSlot(context, item.ViewingDistanceLabel, 观看距离胶囊宽度逻辑值 * scale, x, y, capsuleHeight, gap, textColor, 获取观看距离胶囊类别(item.ViewingDistanceLabel))
             DrawDropDownCapsuleSlot(context, If(item.IsHfr, "HFR", ""), Hfr胶囊宽度逻辑值 * scale, x, y, capsuleHeight, gap, textColor, 胶囊类别.Hfr)
             DrawDropDownCapsuleSlot(context, If(item.IsHdr, "HDR", ""), Hdr胶囊宽度逻辑值 * scale, x, y, capsuleHeight, gap, textColor, 胶囊类别.Hdr)
         End If
@@ -428,6 +444,17 @@ Public Class VmafModelComboBox
                          Vortice.DirectWrite.TextAlignment.Center,
                          Vortice.DirectWrite.ParagraphAlignment.Center)
     End Sub
+
+    Private Shared Function 获取观看距离胶囊类别(distance As String) As 胶囊类别
+        Select Case If(distance, "").ToUpperInvariant()
+            Case "1.5H"
+                Return 胶囊类别.观看距离近
+            Case "5H"
+                Return 胶囊类别.观看距离远
+            Case Else
+                Return 胶囊类别.观看距离
+        End Select
+    End Function
 
     Private Shared Function 获取胶囊配色(kind As 胶囊类别, 浅色 As Boolean) As (背景 As Color, 文字 As Color)
         Return If(浅色, 浅色胶囊配色, 深色胶囊配色)(CInt(kind))

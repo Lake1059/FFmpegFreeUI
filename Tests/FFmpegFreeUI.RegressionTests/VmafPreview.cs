@@ -12,7 +12,7 @@ internal static class VmafPreview
     [DllImport("user32.dll")]
     private static extern bool PrintWindow(IntPtr hwnd, IntPtr dc, uint flags);
 
-    internal static void Capture(Form form, string path)
+    internal static void Capture(Form form, string path, Control? region = null)
     {
         using var bitmap = new Bitmap(form.Width, form.Height);
         using var graphics = Graphics.FromImage(bitmap);
@@ -22,7 +22,35 @@ internal static class VmafPreview
             if (!PrintWindow(form.Handle, dc, 2)) throw new InvalidOperationException("无法捕获本次预览窗口。");
         }
         finally { graphics.ReleaseHdc(dc); }
-        bitmap.Save(path, System.Drawing.Imaging.ImageFormat.Png);
+        if (region is null)
+            bitmap.Save(path, System.Drawing.Imaging.ImageFormat.Png);
+        else
+        {
+            var location = region.PointToScreen(Point.Empty);
+            var rect = new Rectangle(location.X - form.Left, location.Y - form.Top, region.Width, region.Height);
+            using var cropped = bitmap.Clone(rect, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+            cropped.Save(path, System.Drawing.Imaging.ImageFormat.Png);
+        }
+    }
+
+    private static void CapturePopupStack(Form host, Form popup, Form tip, string path)
+    {
+        using var canvas = new Bitmap(host.Width, host.Height);
+        using var destination = Graphics.FromImage(canvas);
+        // 只组合本次隔离窗口，不抓取桌面或其他程序。
+        foreach (var form in new[] { host, popup, tip })
+        {
+            using var bitmap = new Bitmap(form.Width, form.Height);
+            using var graphics = Graphics.FromImage(bitmap);
+            var dc = graphics.GetHdc();
+            try
+            {
+                if (!PrintWindow(form.Handle, dc, 2)) throw new InvalidOperationException("无法捕获本次弹层。");
+            }
+            finally { graphics.ReleaseHdc(dc); }
+            destination.DrawImageUnscaled(bitmap, form.Left - host.Left, form.Top - host.Top);
+        }
+        canvas.Save(path, System.Drawing.Imaging.ImageFormat.Png);
     }
 
     private static void HoverModel(VmafModelComboBox combo, Form popup, int index)
@@ -53,12 +81,83 @@ internal static class VmafPreview
         var measured = layout.Metrics;
         if (measured.Width > textRect.Width + 1 || measured.Height > textRect.Height + 1)
             throw new InvalidOperationException($"提示文字超出实际内容区域：测量={measured.Width}×{measured.Height}，文本区域={textRect}，窗体={tip.Size}，DPI={tip.DeviceDpi}。");
+        var owner = (Control)popup.GetType().GetField("_owner", flags)!.GetValue(popup)!;
+        var area = Screen.FromControl(owner).WorkingArea;
+        if (owner.TopLevelControl is Form host)
+        {
+            var visible = Rectangle.Intersect(area, host.RectangleToScreen(host.ClientRectangle));
+            if (visible.Width >= tip.Width && visible.Height >= tip.Height) area = visible;
+        }
+        if (!area.Contains(tip.Bounds))
+            throw new InvalidOperationException($"模型提示越过可见边界：提示={tip.Bounds}，边界={area}。");
         return tip;
     }
 
-    public static int Run(string root, string ffmpeg, bool dark)
+    private static async Task CheckCapsuleRefinements(Form window, VmafModelComboBox combo, string output, bool dark)
     {
-        var output = Path.Combine(Path.GetFullPath(root), "artifacts", "ui-vmaf-20261029", "ui-catalog", DateTime.Now.ToString("yyyyMMdd-HHmmss-fff"));
+        var scale = combo.DeviceDpi / 96.0;
+        var sample = window.Controls.Find("MCB_SubSample", true).Single();
+        var pooling = window.Controls.Find("MCB_Pooling", true).Single();
+        var sampleLabel = window.Controls.Find("HtmlColorLabel7", true).Single();
+        if (Math.Abs(sample.Width - 132 * scale) > 1 || Math.Abs(pooling.Width - 150 * scale) > 1)
+            throw new InvalidOperationException("SubSample 或 Pooling 的实际宽度不符。");
+        if (sample.PointToScreen(Point.Empty).X != sampleLabel.PointToScreen(Point.Empty).X)
+            throw new InvalidOperationException("SubSample 标题与输入框没有保持对齐。");
+        combo.SelectedIndex = combo.FindModelIndex("vmaf_4k_v0.6.1", true);
+        if (combo.SelectedModel is not { IsNonNeg: true, Is4K: true, UseCuda: true })
+            throw new InvalidOperationException("未选中最后一个非 NEG 4K CUDA 模型。");
+        var selections = new List<object>();
+        var green = ColorTranslator.FromHtml(dark ? "#344A2A" : "#E3EFD9");
+        foreach (var logicalWidth in new[] { 370, 373, 405 })
+        {
+            var width = (int)Math.Round(logicalWidth * scale, MidpointRounding.AwayFromZero);
+            window.Width += width - combo.Width;
+            window.PerformLayout();
+            await Task.Delay(160);
+            if (Math.Abs(combo.Width - width) > 1) throw new InvalidOperationException("模型框未按实际窗口布局调整宽度。");
+            var file = "selected-4k-nonneg-cuda-" + logicalWidth + ".png";
+            Capture(window, Path.Combine(output, file), combo);
+            using var image = new Bitmap(Path.Combine(output, file));
+            var greenPixels = 0;
+            for (var y = 0; y < image.Height; y++)
+            for (var x = 0; x < image.Width; x++)
+            {
+                var pixel = image.GetPixel(x, y);
+                if (Math.Abs(pixel.R - green.R) <= 2 && Math.Abs(pixel.G - green.G) <= 2 && Math.Abs(pixel.B - green.B) <= 2) greenPixels++;
+            }
+            if (greenPixels < 100) throw new InvalidOperationException($"模型框 {combo.Width}px 时实际截图中 CUDA 胶囊缺失。");
+            selections.Add(new { logical_width = logicalWidth, width = combo.Width, height = combo.Height, cuda_background_pixels = greenPixels, screenshot = file });
+        }
+        combo.SelectedIndex = combo.FindModelIndex("hdr_vmaf_v1.1.8_3d0h", false);
+        combo.DroppedDown = true;
+        await Task.Delay(300);
+        var popup = (Form?)typeof(LakeUI.ModernComboBox).GetField("_dropDownForm", BindingFlags.Instance | BindingFlags.NonPublic)!.GetValue(combo);
+        if (popup is null || !popup.Visible || combo.MaxDropDownItems != 12 || combo.DropDownItemHeight != 32)
+            throw new InvalidOperationException("缩小行距后的下拉没有正确显示。");
+        Capture(popup, Path.Combine(output, "distance-purples.png"));
+        var comboType = typeof(VmafModelComboBox);
+        var palette = new List<object>();
+        foreach (var distance in new[] { "1.5H", "3H", "5H" })
+        {
+            var kind = comboType.GetMethod("获取观看距离胶囊类别", BindingFlags.Static | BindingFlags.NonPublic)!.Invoke(null, [distance])!;
+            var colors = ((Color Background, Color Foreground))comboType.GetMethod("获取胶囊配色", BindingFlags.Static | BindingFlags.NonPublic)!.Invoke(null, [kind, !dark])!;
+            palette.Add(new { distance, background = ColorTranslator.ToHtml(colors.Background), foreground = ColorTranslator.ToHtml(colors.Foreground) });
+        }
+        File.WriteAllText(Path.Combine(output, "capsules.json"), JsonSerializer.Serialize(new
+        {
+            time = DateTimeOffset.Now, dark, dpi = combo.DeviceDpi,
+            subsample_width = sample.Width, pooling_width = pooling.Width,
+            nonneg_logical_width = 160, capsule_logical_height = 22,
+            row_logical_height = combo.DropDownItemHeight, max_visible_rows = combo.MaxDropDownItems,
+            popup_width = popup.Width, popup_height = popup.Height, selections, palette
+        }, new JsonSerializerOptions { WriteIndented = true }), new UTF8Encoding(false));
+        combo.DroppedDown = false;
+        Console.WriteLine($"胶囊实测通过：深色={dark}；DPI={combo.DeviceDpi}；三种宽度 CUDA 均可见；证据={output}");
+    }
+
+    public static int Run(string root, string ffmpeg, bool dark, bool capsulesOnly = false)
+    {
+        var output = Path.Combine(Path.GetFullPath(root), "artifacts", "ui-vmaf-20261029", capsulesOnly ? "capsule-preview" : "ui-catalog", DateTime.Now.ToString("yyyyMMdd-HHmmss-fff"));
         Directory.CreateDirectory(output);
         Application.SetHighDpiMode(HighDpiMode.PerMonitorV2);
         Application.EnableVisualStyles();
@@ -80,6 +179,12 @@ internal static class VmafPreview
                 await page.刷新Vmaf模型列表Async();
                 界面主题_v6.应用当前主题到窗体(window);
                 var combo = (VmafModelComboBox)page.Controls.Find("MCB_模型选择", true).Single();
+                if (capsulesOnly)
+                {
+                    await CheckCapsuleRefinements(window, combo, output, dark);
+                    window.Close();
+                    return;
+                }
                 combo.SelectedIndex = combo.FindModelIndex("hdr_vmaf_v1.1.8_hfr_1d5h_2160", false);
                 var snapshot = new
                 {
@@ -175,13 +280,15 @@ internal static class VmafPreview
                 HoverModel(combo, popup, sdrIndex);
                 await Task.Delay(100);
                 CheckTip(popup, expectedWidth);
-                var area = Screen.FromControl(combo).WorkingArea;
+                var screenArea = Screen.FromControl(combo).WorkingArea;
+                var area = Rectangle.Intersect(screenArea, window.RectangleToScreen(window.ClientRectangle));
                 var placements = new List<object>();
                 foreach (var (name, side, x, expectLeft) in new[]
                 {
-                    ("right-edge", LakeUI.ModernComboBox.ToolTipSideEnum.Right, area.Right - popup.Width - 8, true),
-                    ("left-edge", LakeUI.ModernComboBox.ToolTipSideEnum.Left, area.Left + 8, false),
-                    ("prefer-left", LakeUI.ModernComboBox.ToolTipSideEnum.Left, area.Right - popup.Width - 8, true)
+                    ("window-right-edge", LakeUI.ModernComboBox.ToolTipSideEnum.Right, area.Right - popup.Width - 8, true),
+                    ("window-left-edge", LakeUI.ModernComboBox.ToolTipSideEnum.Left, area.Left + 8, false),
+                    ("prefer-left", LakeUI.ModernComboBox.ToolTipSideEnum.Left, area.Right - popup.Width - 8, true),
+                    ("right-fits", LakeUI.ModernComboBox.ToolTipSideEnum.Right, area.Right - popup.Width - expectedWidth - 8, false)
                 })
                 {
                     combo.ToolTipSide = side;
@@ -193,7 +300,12 @@ internal static class VmafPreview
                     var expectedX = expectLeft ? popup.Left - gap - tip.Width : popup.Right + gap;
                     if (!area.Contains(tip.Bounds) || tip.Left != expectedX)
                         throw new InvalidOperationException("固定宽度提示的翻转或屏幕边缘定位错误：" + name);
-                    placements.Add(new { name, tip.Left, tip.Top, tip.Width, tip.Height, expected_x = expectedX });
+                    placements.Add(new { name, tip.Left, tip.Top, tip.Width, tip.Height, expected_x = expectedX, fits_host = area.Contains(tip.Bounds), fits_screen = screenArea.Contains(tip.Bounds) });
+                    if (name is "window-right-edge" or "right-fits")
+                    {
+                        Capture(tip, Path.Combine(output, "tooltip-" + name + ".png"));
+                        CapturePopupStack(window, popup, tip, Path.Combine(output, name + ".png"));
+                    }
                 }
                 var beforeWarningClick = combo.SelectedIndex;
                 HoverModel(combo, popup, header);
@@ -208,6 +320,8 @@ internal static class VmafPreview
                 {
                     fixed_logical_width = combo.ToolTipMaxWidth,
                     expected_pixel_width = expectedWidth,
+                    host_visible_area = area,
+                    screen_working_area = screenArea,
                     hdr_support_note = true,
                     nonneg_count = combo.Models.Count(x => x.IsNonNeg),
                     nonneg_header = combo.Items[header],
