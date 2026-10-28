@@ -2,6 +2,8 @@ Imports System.Reflection
 Imports LakeUI
 
 Public NotInheritable Class VmafModelDisplayItem
+    Public Const NonNegHeaderText As String = "下列模型是非neg模型，强烈不推荐"
+
     Public Property ModelValue As String = ""
     Public Property VersionLabel As String = ""
     Public Property Is4K As Boolean = False
@@ -13,9 +15,13 @@ Public NotInheritable Class VmafModelDisplayItem
     Public Property UseCuda As Boolean = False
     Public Property IsLocal As Boolean = False
     Public Property IsAuto As Boolean = False
+    Public Property IsNonNeg As Boolean = False
+    Public Property IsSectionHeader As Boolean = False
+    Public Property IsCudaAvailable As Boolean = True
 
     Public ReadOnly Property DisplayText As String
         Get
+            If IsSectionHeader Then Return NonNegHeaderText
             If IsAuto Then Return "AUTO"
             If IsLocal Then
                 Dim fileName = System.IO.Path.GetFileName(ModelValue)
@@ -25,9 +31,13 @@ Public NotInheritable Class VmafModelDisplayItem
             Dim parts As New List(Of String)()
             If Not String.IsNullOrWhiteSpace(VersionLabel) Then parts.Add(VersionLabel)
             If Is4K Then parts.Add("4K")
-            If Not String.IsNullOrWhiteSpace(ViewingDistanceLabel) Then parts.Add(ViewingDistanceLabel)
-            If IsHfr Then parts.Add("HFR")
-            If IsHdr Then parts.Add("HDR")
+            If IsNonNeg Then
+                parts.Add("非neg模型")
+            Else
+                If Not String.IsNullOrWhiteSpace(ViewingDistanceLabel) Then parts.Add(ViewingDistanceLabel)
+                If IsHfr Then parts.Add("HFR")
+                If IsHdr Then parts.Add("HDR")
+            End If
             If UseCuda Then parts.Add("CUDA")
             Return String.Join(" · ", parts)
         End Get
@@ -50,6 +60,39 @@ Public Class VmafModelComboBox
     Private Const Hdr胶囊宽度逻辑值 As Single = 48.0F
     Private Const Cuda胶囊宽度逻辑值 As Single = 58.0F
     Private Const 胶囊高度逻辑值 As Single = 24.0F
+    Private Const 非Neg胶囊宽度逻辑值 As Single = 观看距离胶囊宽度逻辑值 + Hfr胶囊宽度逻辑值 + Hdr胶囊宽度逻辑值 + 胶囊间距逻辑值 * 2
+
+    Private Enum 胶囊类别
+        版本
+        旧版
+        分辨率
+        观看距离
+        Hfr
+        Hdr
+        Cuda
+        非Neg
+    End Enum
+
+    Private Shared ReadOnly 浅色胶囊配色 As (背景 As Color, 文字 As Color)() = {
+        (ColorTranslator.FromHtml("#DCEBFA"), ColorTranslator.FromHtml("#27598A")),
+        (ColorTranslator.FromHtml("#E4E7EB"), ColorTranslator.FromHtml("#536174")),
+        (ColorTranslator.FromHtml("#D9EFEC"), ColorTranslator.FromHtml("#22665F")),
+        (ColorTranslator.FromHtml("#ECE3F7"), ColorTranslator.FromHtml("#66478C")),
+        (ColorTranslator.FromHtml("#FBEACD"), ColorTranslator.FromHtml("#805815")),
+        (ColorTranslator.FromHtml("#F7DEEB"), ColorTranslator.FromHtml("#8C3E65")),
+        (ColorTranslator.FromHtml("#E3EFD9"), ColorTranslator.FromHtml("#426B28")),
+        (ColorTranslator.FromHtml("#F9E0DA"), ColorTranslator.FromHtml("#924333"))
+    }
+    Private Shared ReadOnly 深色胶囊配色 As (背景 As Color, 文字 As Color)() = {
+        (ColorTranslator.FromHtml("#263C55"), ColorTranslator.FromHtml("#C7DEFF")),
+        (ColorTranslator.FromHtml("#3A414B"), ColorTranslator.FromHtml("#DEE3EB")),
+        (ColorTranslator.FromHtml("#25473F"), ColorTranslator.FromHtml("#BDE8DE")),
+        (ColorTranslator.FromHtml("#433450"), ColorTranslator.FromHtml("#E3CFF7")),
+        (ColorTranslator.FromHtml("#503D22"), ColorTranslator.FromHtml("#F5D69B")),
+        (ColorTranslator.FromHtml("#503043"), ColorTranslator.FromHtml("#F3C9DF")),
+        (ColorTranslator.FromHtml("#344A2A"), ColorTranslator.FromHtml("#D2E9BE")),
+        (ColorTranslator.FromHtml("#56362F"), ColorTranslator.FromHtml("#FFD6C9"))
+    }
 
     Public Event BrowseRequested As EventHandler
 
@@ -70,6 +113,7 @@ Public Class VmafModelComboBox
     Public Sub New()
         MyBase.New()
         AddHandler SelectedIndexChanged, AddressOf 处理模型选择变化
+        AddHandler TextChanged, AddressOf 记录有效模型选择
         AddHandler DropDownOpened, AddressOf 准备模型提示
     End Sub
 
@@ -121,7 +165,7 @@ Public Class VmafModelComboBox
         Get
             Dim modelIndex = SelectedIndex - 1
             If modelIndex < 0 OrElse modelIndex >= _displayItems.Count Then Return Nothing
-            Return _displayItems(modelIndex)
+            Return If(_displayItems(modelIndex).IsSectionHeader, Nothing, _displayItems(modelIndex))
         End Get
     End Property
 
@@ -144,6 +188,8 @@ Public Class VmafModelComboBox
     End Property
 
     Public Sub ReplaceDisplayItems(itemsToShow As IEnumerable(Of VmafModelDisplayItem))
+        Dim displayItems = If(itemsToShow, Enumerable.Empty(Of VmafModelDisplayItem)()).
+            Where(Function(item) item IsNot Nothing AndAlso Not item.IsAuto AndAlso Not item.IsSectionHeader).ToList()
         _updatingItems = True
         Try
             _displayItems.Clear()
@@ -151,13 +197,9 @@ Public Class VmafModelComboBox
             Items.Add(浏览本地模型文本)
             AddDisplayItem(New VmafModelDisplayItem With {.ModelValue = "AUTO", .VersionLabel = "AUTO", .IsAuto = True}, False)
 
-            If itemsToShow IsNot Nothing Then
-                For Each item In itemsToShow
-                    If item Is Nothing OrElse item.IsAuto Then Continue For
-                    _displayItems.Add(item)
-                    Items.Add(item.DisplayText)
-                Next
-            End If
+            For Each item In displayItems.Where(Function(value) Not value.IsNonNeg).Concat(displayItems.Where(Function(value) value.IsNonNeg))
+                AddDisplayItem(item, False)
+            Next
 
             SelectedIndex = -1
             Text = ""
@@ -169,7 +211,7 @@ Public Class VmafModelComboBox
     End Sub
 
     Public Function AddDisplayItem(item As VmafModelDisplayItem, Optional selectItem As Boolean = True) As Integer
-        If item Is Nothing Then Return -1
+        If item Is Nothing OrElse item.IsSectionHeader Then Return -1
         EnsureBrowseItem()
 
         Dim existing = FindModelIndex(item.ModelValue, item.UseCuda)
@@ -178,17 +220,38 @@ Public Class VmafModelComboBox
             Return existing
         End If
 
-        _displayItems.Add(item)
-        Items.Add(item.DisplayText)
-        Dim comboIndex = _displayItems.Count
-        If selectItem Then SelectedIndex = comboIndex
+        Dim previous = SelectedModel
+        Dim wasUpdating = _updatingItems
+        Dim comboIndex As Integer
+        _updatingItems = True
+        Try
+            Dim headerIndex = _displayItems.FindIndex(Function(value) value.IsSectionHeader)
+            If item.IsNonNeg AndAlso headerIndex < 0 Then
+                Dim header As New VmafModelDisplayItem With {.IsSectionHeader = True}
+                _displayItems.Add(header)
+                Items.Add(header.DisplayText)
+                headerIndex = _displayItems.Count - 1
+            End If
+            Dim insertIndex = If(Not item.IsNonNeg AndAlso headerIndex >= 0, headerIndex, _displayItems.Count)
+            _displayItems.Insert(insertIndex, item)
+            Items.Insert(insertIndex + 1, item.DisplayText)
+            comboIndex = insertIndex + 1
+            If selectItem Then
+                SelectedIndex = comboIndex
+            ElseIf previous IsNot Nothing Then
+                SelectedIndex = FindModelIndex(previous.ModelValue, previous.UseCuda)
+            End If
+        Finally
+            _updatingItems = wasUpdating
+        End Try
+        If Not wasUpdating AndAlso SelectedModel IsNot Nothing Then _lastModelIndex = SelectedIndex
         Return comboIndex
     End Function
 
     Public Function FindModelIndex(modelValue As String, useCuda As Boolean) As Integer
         For i = 0 To _displayItems.Count - 1
             Dim item = _displayItems(i)
-            If item.UseCuda = useCuda AndAlso
+            If Not item.IsSectionHeader AndAlso item.UseCuda = useCuda AndAlso
                String.Equals(item.ModelValue, modelValue, StringComparison.OrdinalIgnoreCase) Then
                 Return i + 1
             End If
@@ -201,8 +264,54 @@ Public Class VmafModelComboBox
         Items.Add(浏览本地模型文本)
     End Sub
 
+    Private Function 是分组提示行(index As Integer) As Boolean
+        Return index > 0 AndAlso index <= _displayItems.Count AndAlso _displayItems(index - 1).IsSectionHeader
+    End Function
+
+    Private Sub 记录有效模型选择(sender As Object, e As EventArgs)
+        If _updatingItems OrElse _handlingBrowse Then Return
+        If 是分组提示行(SelectedIndex) Then
+            ' LakeUI 在下拉关闭后才触发选择事件；先阻止说明行成为当前模型。
+            _handlingBrowse = True
+            Try
+                SelectedIndex = If(_lastModelIndex > 0 AndAlso _lastModelIndex < Items.Count, _lastModelIndex, FirstModelIndex)
+            Finally
+                _handlingBrowse = False
+            End Try
+        ElseIf SelectedIndex > 0 Then
+            _lastModelIndex = SelectedIndex
+        End If
+    End Sub
+
+    Protected Overrides Sub OnKeyDown(e As KeyEventArgs)
+        If DroppedDown AndAlso (e.KeyCode = Keys.Up OrElse e.KeyCode = Keys.Down) Then
+            Dim direction = If(e.KeyCode = Keys.Down, 1, -1)
+            If 是分组提示行(SelectedIndex + direction) Then
+                SelectedIndex += direction * 2
+                e.Handled = True
+                Return
+            End If
+        End If
+        MyBase.OnKeyDown(e)
+    End Sub
+
+    Protected Overrides Sub OnMouseWheel(e As MouseEventArgs)
+        If Not DroppedDown AndAlso e.Delta <> 0 Then
+            Dim direction = If(e.Delta < 0, 1, -1)
+            If 是分组提示行(SelectedIndex + direction) Then
+                SelectedIndex += direction * 2
+                Return
+            End If
+        End If
+        MyBase.OnMouseWheel(e)
+    End Sub
+
     Private Sub 处理模型选择变化(sender As Object, e As EventArgs)
         If _updatingItems OrElse _handlingBrowse Then Return
+        If 是分组提示行(SelectedIndex) Then
+            记录有效模型选择(sender, e)
+            Return
+        End If
 
         If SelectedIndex > 0 Then
             _lastModelIndex = SelectedIndex
@@ -234,14 +343,16 @@ Public Class VmafModelComboBox
         Dim capsuleHeight = Math.Min(胶囊高度逻辑值 * scale, Math.Max(1.0F, bounds.Height - 8.0F * scale))
         Dim y = bounds.Y + (bounds.Height - capsuleHeight) / 2.0F
         Dim textColor = If(Enabled, ForeColor, Color.FromArgb(150, ForeColor))
-        Dim capsuleColor = Color.FromArgb(If(Enabled, 42, 26), textColor.R, textColor.G, textColor.B)
-
-        DrawSelectionCapsule(context, item.VersionLabel, 版本胶囊宽度逻辑值 * scale, x, y, capsuleHeight, rightLimit, gap, textColor, capsuleColor)
-        If item.Is4K Then DrawSelectionCapsule(context, "4K", 分辨率胶囊宽度逻辑值 * scale, x, y, capsuleHeight, rightLimit, gap, textColor, capsuleColor)
-        If Not String.IsNullOrWhiteSpace(item.ViewingDistanceLabel) Then DrawSelectionCapsule(context, item.ViewingDistanceLabel, 观看距离胶囊宽度逻辑值 * scale, x, y, capsuleHeight, rightLimit, gap, textColor, capsuleColor)
-        If item.IsHfr Then DrawSelectionCapsule(context, "HFR", Hfr胶囊宽度逻辑值 * scale, x, y, capsuleHeight, rightLimit, gap, textColor, capsuleColor)
-        If item.IsHdr Then DrawSelectionCapsule(context, "HDR", Hdr胶囊宽度逻辑值 * scale, x, y, capsuleHeight, rightLimit, gap, textColor, capsuleColor)
-        If item.UseCuda Then DrawSelectionCapsule(context, "CUDA", Cuda胶囊宽度逻辑值 * scale, x, y, capsuleHeight, rightLimit, gap, textColor, capsuleColor)
+        DrawSelectionCapsule(context, item.VersionLabel, 版本胶囊宽度逻辑值 * scale, x, y, capsuleHeight, rightLimit, gap, textColor, If(item.VersionLabel = "V0", 胶囊类别.旧版, 胶囊类别.版本))
+        If item.Is4K Then DrawSelectionCapsule(context, "4K", 分辨率胶囊宽度逻辑值 * scale, x, y, capsuleHeight, rightLimit, gap, textColor, 胶囊类别.分辨率)
+        If item.IsNonNeg Then
+            DrawSelectionCapsule(context, "非neg模型", 非Neg胶囊宽度逻辑值 * scale, x, y, capsuleHeight, rightLimit, gap, textColor, 胶囊类别.非Neg)
+        Else
+            If Not String.IsNullOrWhiteSpace(item.ViewingDistanceLabel) Then DrawSelectionCapsule(context, item.ViewingDistanceLabel, 观看距离胶囊宽度逻辑值 * scale, x, y, capsuleHeight, rightLimit, gap, textColor, 胶囊类别.观看距离)
+            If item.IsHfr Then DrawSelectionCapsule(context, "HFR", Hfr胶囊宽度逻辑值 * scale, x, y, capsuleHeight, rightLimit, gap, textColor, 胶囊类别.Hfr)
+            If item.IsHdr Then DrawSelectionCapsule(context, "HDR", Hdr胶囊宽度逻辑值 * scale, x, y, capsuleHeight, rightLimit, gap, textColor, 胶囊类别.Hdr)
+        End If
+        If item.UseCuda Then DrawSelectionCapsule(context, "CUDA", Cuda胶囊宽度逻辑值 * scale, x, y, capsuleHeight, rightLimit, gap, textColor, 胶囊类别.Cuda)
         Return True
     End Function
 
@@ -254,22 +365,24 @@ Public Class VmafModelComboBox
         Dim modelIndex = itemIndex - 1
         If modelIndex < 0 OrElse modelIndex >= _displayItems.Count Then Return False
         Dim item = _displayItems(modelIndex)
-        If item.IsLocal OrElse item.IsAuto OrElse item.VersionLabel.StartsWith("vmaf_", StringComparison.OrdinalIgnoreCase) Then Return False
+        If item.IsLocal OrElse item.IsAuto OrElse item.IsSectionHeader OrElse item.VersionLabel.StartsWith("vmaf_", StringComparison.OrdinalIgnoreCase) Then Return False
 
         Dim scale = DpiScale()
         Dim gap = 胶囊间距逻辑值 * scale
         Dim x = itemRect.X + DropDownPadding.Left + 4.0F
         Dim capsuleHeight = Math.Min(胶囊高度逻辑值 * scale, Math.Max(1.0F, itemRect.Height - 10.0F * scale))
         Dim y = itemRect.Y + (itemRect.Height - capsuleHeight) / 2.0F
-        Dim capsuleColor = Color.FromArgb(42, textColor.R, textColor.G, textColor.B)
-
-        ' 每一分类使用固定列宽；即使该分类为空也保留列位，因此纵向严格对齐。
-        DrawDropDownCapsuleSlot(context, item.VersionLabel, 版本胶囊宽度逻辑值 * scale, x, y, capsuleHeight, gap, textColor, capsuleColor)
-        DrawDropDownCapsuleSlot(context, If(item.Is4K, "4K", ""), 分辨率胶囊宽度逻辑值 * scale, x, y, capsuleHeight, gap, textColor, capsuleColor)
-        DrawDropDownCapsuleSlot(context, item.ViewingDistanceLabel, 观看距离胶囊宽度逻辑值 * scale, x, y, capsuleHeight, gap, textColor, capsuleColor)
-        DrawDropDownCapsuleSlot(context, If(item.IsHfr, "HFR", ""), Hfr胶囊宽度逻辑值 * scale, x, y, capsuleHeight, gap, textColor, capsuleColor)
-        DrawDropDownCapsuleSlot(context, If(item.IsHdr, "HDR", ""), Hdr胶囊宽度逻辑值 * scale, x, y, capsuleHeight, gap, textColor, capsuleColor)
-        DrawDropDownCapsuleSlot(context, If(item.UseCuda, "CUDA", ""), Cuda胶囊宽度逻辑值 * scale, x, y, capsuleHeight, gap, textColor, capsuleColor)
+        ' 每一分类使用固定列宽；非 NEG 合并距离/HFR/HDR 三列，CUDA 的列位不变。
+        DrawDropDownCapsuleSlot(context, item.VersionLabel, 版本胶囊宽度逻辑值 * scale, x, y, capsuleHeight, gap, textColor, If(item.VersionLabel = "V0", 胶囊类别.旧版, 胶囊类别.版本))
+        DrawDropDownCapsuleSlot(context, If(item.Is4K, "4K", ""), 分辨率胶囊宽度逻辑值 * scale, x, y, capsuleHeight, gap, textColor, 胶囊类别.分辨率)
+        If item.IsNonNeg Then
+            DrawDropDownCapsuleSlot(context, "非neg模型", 非Neg胶囊宽度逻辑值 * scale, x, y, capsuleHeight, gap, textColor, 胶囊类别.非Neg)
+        Else
+            DrawDropDownCapsuleSlot(context, item.ViewingDistanceLabel, 观看距离胶囊宽度逻辑值 * scale, x, y, capsuleHeight, gap, textColor, 胶囊类别.观看距离)
+            DrawDropDownCapsuleSlot(context, If(item.IsHfr, "HFR", ""), Hfr胶囊宽度逻辑值 * scale, x, y, capsuleHeight, gap, textColor, 胶囊类别.Hfr)
+            DrawDropDownCapsuleSlot(context, If(item.IsHdr, "HDR", ""), Hdr胶囊宽度逻辑值 * scale, x, y, capsuleHeight, gap, textColor, 胶囊类别.Hdr)
+        End If
+        DrawDropDownCapsuleSlot(context, If(item.UseCuda, "CUDA", ""), Cuda胶囊宽度逻辑值 * scale, x, y, capsuleHeight, gap, textColor, 胶囊类别.Cuda)
         Return True
     End Function
 
@@ -282,9 +395,9 @@ Public Class VmafModelComboBox
                                      rightLimit As Single,
                                      gap As Single,
                                      textColor As Color,
-                                     capsuleColor As Color)
+                                     kind As 胶囊类别)
         If String.IsNullOrWhiteSpace(text) OrElse x + width > rightLimit Then Return
-        DrawCapsule(context, text, New RectangleF(x, y, width, height), textColor, capsuleColor)
+        DrawCapsule(context, text, New RectangleF(x, y, width, height), textColor, kind)
         x += width + gap
     End Sub
 
@@ -296,9 +409,9 @@ Public Class VmafModelComboBox
                                         height As Single,
                                         gap As Single,
                                         textColor As Color,
-                                        capsuleColor As Color)
+                                        kind As 胶囊类别)
         If Not String.IsNullOrWhiteSpace(text) Then
-            DrawCapsule(context, text, New RectangleF(x, y, width, height), textColor, capsuleColor)
+            DrawCapsule(context, text, New RectangleF(x, y, width, height), textColor, kind)
         End If
         x += width + gap
     End Sub
@@ -307,12 +420,18 @@ Public Class VmafModelComboBox
                             text As String,
                             rect As RectangleF,
                             textColor As Color,
-                            capsuleColor As Color)
-        context.FillRoundedRectangle(rect, rect.Height / 2.0F, capsuleColor)
-        context.DrawText(text, Font, textColor, rect,
+                            kind As 胶囊类别)
+        Dim colors = 获取胶囊配色(kind, textColor.GetBrightness() < 0.5F)
+        Dim foreground = If(Enabled, colors.文字, Color.FromArgb(150, colors.文字))
+        context.FillRoundedRectangle(rect, rect.Height / 2.0F, colors.背景)
+        context.DrawText(text, Font, foreground, rect,
                          Vortice.DirectWrite.TextAlignment.Center,
                          Vortice.DirectWrite.ParagraphAlignment.Center)
     End Sub
+
+    Private Shared Function 获取胶囊配色(kind As 胶囊类别, 浅色 As Boolean) As (背景 As Color, 文字 As Color)
+        Return If(浅色, 浅色胶囊配色, 深色胶囊配色)(CInt(kind))
+    End Function
 
     Private Function DpiScale() As Single
         Return Math.Max(1.0F, DeviceDpi / 96.0F)

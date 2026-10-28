@@ -58,7 +58,7 @@ internal static class VmafPreview
 
     public static int Run(string root, string ffmpeg, bool dark)
     {
-        var output = Path.Combine(Path.GetFullPath(root), "artifacts", "ui-vmaf-20261028", "ui-catalog", DateTime.Now.ToString("yyyyMMdd-HHmmss-fff"));
+        var output = Path.Combine(Path.GetFullPath(root), "artifacts", "ui-vmaf-20261029", "ui-catalog", DateTime.Now.ToString("yyyyMMdd-HHmmss-fff"));
         Directory.CreateDirectory(output);
         Application.SetHighDpiMode(HighDpiMode.PerMonitorV2);
         Application.EnableVisualStyles();
@@ -89,7 +89,7 @@ internal static class VmafPreview
                     dark,
                     dpi = window.DeviceDpi,
                     hdr_count = combo.Models.Count(x => x.IsHdr),
-                    models = combo.Models.Select(x => new { x.ModelValue, x.DisplayText, x.IsHdr, x.IsRuntimeDetected, x.UseCuda }),
+                    models = combo.Models.Select(x => new { x.ModelValue, x.DisplayText, x.IsHdr, x.IsNonNeg, x.IsSectionHeader, x.IsRuntimeDetected, x.IsCudaAvailable, x.UseCuda }),
                     selected_tooltip = combo.ItemToolTips.Single(x => x.ItemText == combo.SelectedModel!.DisplayText).ToolTipText
                 };
                 File.WriteAllText(Path.Combine(output, "models.json"), JsonSerializer.Serialize(snapshot, new JsonSerializerOptions { WriteIndented = true, Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping }), new UTF8Encoding(false));
@@ -128,15 +128,31 @@ internal static class VmafPreview
                     [("AUTO", false)] = "auto",
                     [("vmaf_v1.0.16_hfr_3d0h_2160", false)] = "sdr",
                     [("hdr_vmaf_v1.1.8_hfr_3d0h_2160", false)] = "hdr",
+                    [("hdr_vmaf_v1.1.8_3d0h", false)] = "hdr-default",
                     [("vmaf_v0.6.1neg", false)] = "v0",
                     [("vmaf_v0.6.1neg", true)] = "v0-cuda",
-                    [("vmaf_v0.6.1", false)] = "v0-plain"
+                    [("vmaf_v0.6.1", false)] = "v0-plain",
+                    [("vmaf_4k_v0.6.1", true)] = "v0-plain-4k-cuda"
                 };
                 var sdrIndex = combo.FindModelIndex("vmaf_v1.0.16_hfr_3d0h_2160", false);
                 var hdrIndex = combo.FindModelIndex("hdr_vmaf_v1.1.8_hfr_3d0h_2160", false);
                 string TipText(int index) => combo.ItemToolTips.Single(x => x.ItemText == combo.Models[index - 1].DisplayText).ToolTipText;
-                if (sdrIndex < 0 || hdrIndex < 0 || TipText(sdrIndex) != TipText(hdrIndex))
-                    throw new InvalidOperationException("HDR 与同分类 SDR 提示文案不一致。");
+                if (sdrIndex < 0 || hdrIndex < 0) throw new InvalidOperationException("缺少 SDR/HDR 对照模型。");
+                var sdrText = TipText(sdrIndex);
+                if (TipText(hdrIndex) != sdrText.Insert(sdrText.IndexOf("\r\n\r\n", StringComparison.Ordinal), "，支持 HDR"))
+                    throw new InvalidOperationException("HDR 简介未正确补充支持 HDR。");
+                var header = combo.Models.ToList().FindIndex(x => x.IsSectionHeader) + 1;
+                if (header != combo.Items.Count - 5 || combo.Models.Count(x => x.IsNonNeg) != 4 || combo.Items[header] != VmafModelDisplayItem.NonNegHeaderText)
+                    throw new InvalidOperationException("非 NEG 分组没有追加为底部五行。");
+                combo.SelectedIndex = header - 1;
+                var keyDown = typeof(VmafModelComboBox).GetMethod("OnKeyDown", BindingFlags.Instance | BindingFlags.NonPublic)!;
+                keyDown.Invoke(combo, [new KeyEventArgs(Keys.Down)]);
+                if (combo.SelectedIndex != header + 1) throw new InvalidOperationException("向下按键未跳过警示行。");
+                keyDown.Invoke(combo, [new KeyEventArgs(Keys.Up)]);
+                if (combo.SelectedIndex != header - 1) throw new InvalidOperationException("向上按键未跳过警示行。");
+                HoverModel(combo, popup, combo.Items.Count - 1);
+                await Task.Delay(120);
+                Capture(popup, Path.Combine(output, "dropdown-legacy-nonneg.png"));
                 for (var index = 1; index < combo.Items.Count; index++)
                 {
                     var model = combo.Models[index - 1];
@@ -147,7 +163,9 @@ internal static class VmafPreview
                     var tip = CheckTip(popup, expectedWidth);
                     if (representatives.TryGetValue((model.ModelValue, model.UseCuda), out var name))
                         Capture(tip, Path.Combine(output, "tooltip-" + name + ".png"));
-                    tooltips.Add(new { model = model.ModelValue, model.UseCuda, text, width = tip.Width, height = tip.Height, dpi = tip.DeviceDpi });
+                    if (model.VersionLabel == "V0" && !model.IsNonNeg && text != "旧模型，不推荐")
+                        throw new InvalidOperationException("旧 V0 提示没有统一。");
+                    tooltips.Add(new { model = model.ModelValue, model.IsNonNeg, model.UseCuda, text, width = tip.Width, height = tip.Height, dpi = tip.DeviceDpi });
                 }
                 if (tooltips.Count == 0) throw new InvalidOperationException("没有实际检查任何模型提示。");
                 popup.GetType().GetMethod("OnMouseWheel", BindingFlags.Instance | BindingFlags.NonPublic)!
@@ -177,11 +195,24 @@ internal static class VmafPreview
                         throw new InvalidOperationException("固定宽度提示的翻转或屏幕边缘定位错误：" + name);
                     placements.Add(new { name, tip.Left, tip.Top, tip.Width, tip.Height, expected_x = expectedX });
                 }
+                var beforeWarningClick = combo.SelectedIndex;
+                HoverModel(combo, popup, header);
+                var headerRect = (RectangleF)popup.GetType().GetMethod("GetItemRect", BindingFlags.Instance | BindingFlags.NonPublic)!.Invoke(popup, [header])!;
+                var click = new MouseEventArgs(MouseButtons.Left, 1, 10, (int)(headerRect.Top + headerRect.Height / 2), 0);
+                popup.GetType().GetMethod("OnMouseDown", BindingFlags.Instance | BindingFlags.NonPublic)!.Invoke(popup, [click]);
+                popup.GetType().GetMethod("OnMouseUp", BindingFlags.Instance | BindingFlags.NonPublic)!.Invoke(popup, [click]);
+                await Task.Delay(250);
+                if (combo.SelectedIndex != beforeWarningClick || combo.SelectedModel is null || combo.SelectedModel.IsSectionHeader)
+                    throw new InvalidOperationException("点击警示行改变了实际选中模型。");
                 File.WriteAllText(Path.Combine(output, "tooltips.json"), JsonSerializer.Serialize(new
                 {
                     fixed_logical_width = combo.ToolTipMaxWidth,
                     expected_pixel_width = expectedWidth,
-                    hdr_matches_sdr = true,
+                    hdr_support_note = true,
+                    nonneg_count = combo.Models.Count(x => x.IsNonNeg),
+                    nonneg_header = combo.Items[header],
+                    keyboard_skips_header = true,
+                    warning_click_preserves_selection = true,
                     recreated_after_scroll = true,
                     placements,
                     tooltips

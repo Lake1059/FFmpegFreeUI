@@ -45,9 +45,6 @@ Public Class Form_v6_集成工具_质量评测
     Private Shared ReadOnly 全部指标 As 指标类型() = {指标类型.PSNR, 指标类型.SSIM, 指标类型.VMAF, 指标类型.XPSNR}
     Private Shared ReadOnly Vmaf术语说明 As String = $"{vbCrLf}{vbCrLf}术语解释：HFR = 高帧率，用于约 50/60 fps、约为常见 24/30 fps 两倍的内容。H = 观看距离，测量方法是画面高度的倍数，会随着实际设备的画面在真实世界的物理高度而变化，数字越大距离越远。"
     Private Shared ReadOnly Vmaf模型描述 As New Dictionary(Of String, String)(StringComparer.OrdinalIgnoreCase) From {
-        {"vmaf_v0.6.1neg", "更加严格的评测，允许负值"},
-        {"vmaf_v0.6.1", "旧普通模型"},
-        {"vmaf_4k_v0.6.1", "面向 4K 内容"},
         {"vmaf_v1.0.16_3d0h", "标准 3H 观看距离，默认场景" & Vmaf术语说明},
         {"vmaf_v1.0.16_5d0h", "较远 5H 观看距离，适用于移动端场景" & Vmaf术语说明},
         {"vmaf_v1.0.16_1d5h_2160", "4K 分辨率 + 1.5H 盯帧级观看距离" & Vmaf术语说明},
@@ -67,6 +64,7 @@ Public Class Form_v6_集成工具_质量评测
         "hdr_vmaf_v1.1.8_hfr_1d5h_2160",
         "hdr_vmaf_v1.1.8_hfr_3d0h_2160"
     }
+    Private Shared ReadOnly 旧版非NegVmaf模型 As String() = {"vmaf_v0.6.1", "vmaf_4k_v0.6.1"}
     ' 当两路像素格式不一致时，统一到常见且受全部四个滤镜支持的 10-bit 4:2:0 格式。
     ' 选择 4:2:0 而非 4:4:4 是为了让原始色度采样率不成为评分差异；同时保留 10-bit 精度。
     Private Const 统一评测像素格式 As String = "yuv420p10le"
@@ -249,20 +247,26 @@ Public Class Form_v6_集成工具_质量评测
     Private Shared Function 获取Vmaf模型说明(model As VmafModelDisplayItem) As String
         If model.IsLocal Then Return $"本地 VMAF 模型：{model.ModelValue}。是否兼容由 FFmpeg 实际加载结果确定；本地文件存在不代表引擎已经支持。"
         If model.IsAuto Then Return "按原视频 PQ/HLG 标记优先选择运行库已检测到的 HDR 模型，缺少时回退 SDR 并警告；按分辨率选择 V1，≥48 fps 优先 HFR，同档没有 V1 时回退 V0 NEG。"
+        If model.IsSectionHeader Then Return ""
+        If 获取Vmaf主版本(model.ModelValue) = 0 Then Return If(model.IsNonNeg, "旧模型，不推荐；非neg模型，强烈不推荐", "旧模型，不推荐")
         Dim description = ""
         If model.IsHdr Then
             ' 仅复用相同分类的 SDR 提示文案，不改变实际评测模型。
             Dim descriptionKey = Regex.Replace(model.ModelValue.Substring(4), "^vmaf_v\d+\.\d+\.\d+", "vmaf_v1.0.16", RegexOptions.IgnoreCase Or RegexOptions.CultureInvariant)
-            If Vmaf模型描述.TryGetValue(descriptionKey, description) Then Return description
-            Return Vmaf术语说明.Trim()
+            If Vmaf模型描述.TryGetValue(descriptionKey, description) Then Return description.Replace(Vmaf术语说明, "，支持 HDR" & Vmaf术语说明, StringComparison.Ordinal)
+            Return "支持 HDR" & Vmaf术语说明
         End If
         Vmaf模型描述.TryGetValue(model.ModelValue, description)
         Return description
     End Function
 
     Private Shared Sub 检查Vmaf模型可用性(model As VmafModelDisplayItem)
-        If model Is Nothing OrElse model.IsAuto OrElse model.IsLocal OrElse model.IsRuntimeDetected Then Return
-        Throw New InvalidOperationException($"当前 FFmpeg 运行库未检测到模型 {model.ModelValue}。此选项来自官方 HDR 模型目录，不代表当前引擎已经支持。请更新具备新 HDR 模型及完整颜色信息传递能力的 FFmpeg/libvmaf 后刷新，或浏览兼容的本地 JSON 模型。")
+        If model Is Nothing OrElse model.IsAuto OrElse model.IsLocal Then Return
+        If model.IsSectionHeader Then Throw New InvalidOperationException("分组说明不是可评测的模型。")
+        If model.UseCuda AndAlso Not model.IsCudaAvailable Then Throw New InvalidOperationException("当前 FFmpeg 未检测到 libvmaf_cuda 滤镜，无法使用此 CUDA 选项。请选择普通项或更换支持该滤镜的 FFmpeg 后刷新。")
+        If model.IsRuntimeDetected Then Return
+        If model.IsHdr Then Throw New InvalidOperationException($"当前 FFmpeg 运行库未检测到模型 {model.ModelValue}。此选项来自官方 HDR 模型目录，不代表当前引擎已经支持。请更新具备新 HDR 模型及完整颜色信息传递能力的 FFmpeg/libvmaf 后刷新，或浏览兼容的本地 JSON 模型。")
+        Throw New InvalidOperationException($"当前 FFmpeg 运行库未检测到模型 {model.ModelValue}。请刷新模型列表或浏览兼容的本地 JSON 模型；目录可见不代表当前引擎已经支持。")
     End Sub
 
     Private Async Sub MB_刷新VMAF模型_Click(sender As Object, e As EventArgs) Handles MB_刷新VMAF模型.Click
@@ -317,7 +321,7 @@ Public Class Form_v6_集成工具_质量评测
         End If
 
         ' 官方目录与运行库扫描分开：旧 FFmpeg 也显示 HDR 胶囊，但不能把目录项当成已安装模型。
-        For Each model In 官方HdrVmaf模型
+        For Each model In 官方HdrVmaf模型.Concat(旧版非NegVmaf模型)
             If Not seen.Add(model) Then Continue For
             Dim item = 解析Vmaf模型显示项(model)
             item.IsRuntimeDetected = False
@@ -329,15 +333,18 @@ Public Class Form_v6_集成工具_质量评测
         For Each item In baseItems
             result.Add(item)
 
-            ' VMAF v1 当前包含 CAMBI/SpEED 等尚无 CUDA 实现的特征提取器；
-            ' 即使 FFmpeg 编译了 libvmaf_cuda，也只为已验证兼容的 v0 NEG 模型提供 CUDA 入口。
-            If cudaAvailable AndAlso Not item.IsHdr AndAlso 获取Vmaf主版本(item.ModelValue) = 0 Then
+            ' V1 的 CAMBI/SpEED 等特征尚无 CUDA 实现。非 NEG 组始终展示四项，
+            ' 缺少 CUDA 滤镜时只保留目录入口，开始评测前明确拦截。
+            If Not item.IsHdr AndAlso 获取Vmaf主版本(item.ModelValue) = 0 AndAlso (cudaAvailable OrElse item.IsNonNeg) Then
                 result.Add(New VmafModelDisplayItem With {
                     .ModelValue = item.ModelValue,
                     .VersionLabel = item.VersionLabel,
                     .Is4K = item.Is4K,
                     .ViewingDistanceLabel = item.ViewingDistanceLabel,
                     .IsHfr = item.IsHfr,
+                    .IsNonNeg = item.IsNonNeg,
+                    .IsRuntimeDetected = item.IsRuntimeDetected,
+                    .IsCudaAvailable = cudaAvailable,
                     .UseCuda = True
                 })
             End If
@@ -363,7 +370,7 @@ Public Class Form_v6_集成工具_质量评测
         Dim major As Integer
         If Not Integer.TryParse(versionMatch.Groups("major").Value, NumberStyles.None, CultureInfo.InvariantCulture, major) Then Return Nothing
         Dim isNeg = versionMatch.Groups("neg").Success
-        If major = 0 AndAlso Not isNeg Then Return Nothing
+        Dim isNonNeg = major = 0 AndAlso Not isNeg
 
         Dim distanceMatch = Regex.Match(lower,
                                         "(?:^|_)(?<whole>\d+)d(?<fraction>\d+)h(?:_|$)",
@@ -378,6 +385,7 @@ Public Class Form_v6_集成工具_质量评测
             .ViewingDistanceLabel = viewingDistance,
             .IsHfr = lower.Contains("_hfr_", StringComparison.Ordinal),
             .IsHdr = lower.StartsWith("hdr_vmaf_", StringComparison.Ordinal),
+            .IsNonNeg = isNonNeg,
             .UseCuda = False
         }
     End Function
@@ -397,6 +405,8 @@ Public Class Form_v6_集成工具_质量评测
     End Function
 
     Private Shared Function 比较Vmaf模型显示顺序(left As VmafModelDisplayItem, right As VmafModelDisplayItem) As Integer
+        Dim nonNegCompare = left.IsNonNeg.CompareTo(right.IsNonNeg)
+        If nonNegCompare <> 0 Then Return nonNegCompare
         Dim versionCompare = 获取Vmaf主版本(right.ModelValue).CompareTo(获取Vmaf主版本(left.ModelValue))
         If versionCompare <> 0 Then Return versionCompare
 
@@ -420,7 +430,7 @@ Public Class Form_v6_集成工具_质量评测
         Dim is4K = Math.Max(width, height) >= 3840
         Dim highFrameRate = Double.IsFinite(fps) AndAlso fps >= 48
         Dim candidates = If(items, Enumerable.Empty(Of VmafModelDisplayItem)()).
-            Where(Function(x) Not x.IsAuto AndAlso Not x.IsLocal AndAlso Not x.UseCuda AndAlso x.IsRuntimeDetected AndAlso x.Is4K = is4K).ToList()
+            Where(Function(x) Not x.IsAuto AndAlso Not x.IsLocal AndAlso Not x.IsSectionHeader AndAlso Not x.IsNonNeg AndAlso Not x.UseCuda AndAlso x.IsRuntimeDetected AndAlso x.Is4K = is4K).ToList()
         Dim selected As VmafModelDisplayItem = Nothing
         If isHdr Then selected = 选择同档Vmaf模型(candidates.Where(Function(x) x.IsHdr), is4K, highFrameRate)
         If selected Is Nothing Then selected = 选择同档Vmaf模型(candidates.Where(Function(x) Not x.IsHdr), is4K, highFrameRate)

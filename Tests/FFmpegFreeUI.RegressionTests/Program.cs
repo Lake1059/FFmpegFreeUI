@@ -21,7 +21,7 @@ internal static class Program
         if (args.Length >= 3 && args[0] == "--preview-vmaf")
             return VmafPreview.Run(args[1], args[2], args.Length > 3 && args[3] == "dark");
         var root = Path.GetFullPath(args.Length > 0 ? args[0] : ".");
-        Work = Path.Combine(root, "artifacts", "ui-vmaf-20261028", "tests", DateTime.Now.ToString("yyyyMMdd-HHmmss-fff"));
+        Work = Path.Combine(root, "artifacts", "ui-vmaf-20261029", "tests", DateTime.Now.ToString("yyyyMMdd-HHmmss-fff"));
         Directory.CreateDirectory(Work);
         var previous = 设置_v6.实例对象;
         设置_v6.实例对象 = new 设置_v6();
@@ -32,6 +32,7 @@ internal static class Program
             Check("弹窗：统一输入选中色且不二次转换浅色背景", PopupSelection);
             Check("界面：HDR 提示、十二行下拉与许可证浅紫色", UiRefinements);
             Check("模型：HDR、HFR、分辨率、距离与 CUDA 分类", ModelParsing);
+            Check("模型界面：旧版提示、非 NEG 分组、选择保护与双色胶囊", ModelPresentation);
             Check("HDR 目录：旧引擎仍显示八项且不伪装为已检测", ModelCatalog);
             Check("HDR 目录：未检测项不进入 AUTO，手动评测前明确提示", ModelAvailability);
             Check("AUTO：HDR/SDR、1080/4K、24/48/60/120 fps 与缺模型回退", AutoModels);
@@ -188,13 +189,78 @@ internal static class Program
         var item = Parse("hdr_vmaf_v1.1.8_hfr_1d5h_2160");
         Require(item.IsHdr && item.IsHfr && item.Is4K && item.ViewingDistanceLabel == "1.5H", "HDR 标签解析错误");
         Require(item.DisplayText == "V1 · 4K · 1.5H · HFR · HDR", "胶囊标签顺序错误");
-        foreach (var invalid in new[] { "vmaf_v0.6.1", "vmaf_float_v1.0.16_3d0h", "hdr_vmaf_float_v1.1.8_3d0h", "vmaf_b_v1.0.16" })
+        Require(Parse("vmaf_v0.6.1").IsNonNeg && Parse("vmaf_4k_v0.6.1").IsNonNeg && Parse("vmaf_4k_v0.6.1").Is4K, "非 NEG 旧模型未正确分类");
+        foreach (var invalid in new[] { "vmaf_float_v1.0.16_3d0h", "hdr_vmaf_float_v1.1.8_3d0h", "vmaf_b_v1.0.16" })
             Require(Invoke(Quality, "解析Vmaf模型显示项", invalid) == null, "研究模型未过滤：" + invalid);
         var entries = (List<VmafModelDisplayItem>)Invoke(Quality, "构建Vmaf模型显示项", Models().Select(x => x.ModelValue), true)!;
         Require(entries.Where(x => x.UseCuda).All(x => !x.IsHdr && x.VersionLabel == "V0"), "为不兼容的 HDR/V1 开放了 CUDA");
         using var combo = new VmafModelComboBox();
         combo.ReplaceDisplayItems(entries);
         Require(combo.SelectedModel!.IsAuto, "默认项不是 AUTO");
+    }
+
+    private static void ModelPresentation()
+    {
+        var catalog = Catalog(Models().Select(x => x.ModelValue).Concat(["vmaf_v0.6.1", "vmaf_4k_v0.6.1"]));
+        var oldNeg = catalog.Where(x => x.VersionLabel == "V0" && !x.IsNonNeg).ToArray();
+        Require(oldNeg.Length == 4 && oldNeg.All(x => (string)Invoke(Quality, "获取Vmaf模型说明", x)! == "旧模型，不推荐"), "四项旧 V0/NEG 提示不一致");
+        Require(((string)Invoke(Quality, "获取Vmaf模型说明", Parse("hdr_vmaf_v1.1.8_3d0h"))!).StartsWith("标准 3H 观看距离，默认场景，支持 HDR\r\n\r\n", StringComparison.Ordinal), "默认 HDR 简介缺少支持 HDR");
+        using var combo = new VmafModelComboBox();
+        combo.ReplaceDisplayItems(catalog);
+        var headerModelIndex = combo.Models.ToList().FindIndex(x => x.IsSectionHeader);
+        var header = headerModelIndex + 1;
+        Require(header > 1 && header == combo.Items.Count - 5 && combo.Items[header] == VmafModelDisplayItem.NonNegHeaderText, "警示行不是底部五行的首行");
+        var nonNeg = combo.Models.Skip(headerModelIndex + 1).ToArray();
+        Require(nonNeg.Length == 4 && nonNeg.All(x => x.IsNonNeg), "非 NEG 选项不是四项");
+        Require(nonNeg.Select(x => (x.Is4K, x.UseCuda)).SequenceEqual(new[] { (false, false), (false, true), (true, false), (true, true) }), "非 NEG 普通/CUDA/4K/4K CUDA 顺序错误");
+        Require(nonNeg.All(x => x.DisplayText.Contains("非neg模型") && !x.DisplayText.Contains("3H") && !x.DisplayText.Contains("HFR") && !x.DisplayText.Contains("HDR")), "非 NEG 没有合并分类标签");
+        var selected = header - 1;
+        combo.SelectedIndex = selected;
+        var browseCount = 0;
+        combo.BrowseRequested += (_, _) => browseCount++;
+        combo.SelectedIndex = header;
+        Require(combo.SelectedIndex == selected && combo.SelectedModel is { IsSectionHeader: false } && browseCount == 0, "说明行被选为模型或触发了浏览");
+        combo.Text = VmafModelDisplayItem.NonNegHeaderText;
+        combo.SelectedIndex = header;
+        Require(combo.SelectedIndex == selected && combo.SelectedModel is { IsSectionHeader: false }, "文本未变化时说明行绕过了选择保护");
+        var wheel = typeof(VmafModelComboBox).GetMethod("OnMouseWheel", BindingFlags.Instance | BindingFlags.NonPublic)!;
+        wheel.Invoke(combo, [new MouseEventArgs(MouseButtons.None, 0, 10, 10, -120)]);
+        Require(combo.SelectedIndex == header + 1 && combo.SelectedModel!.IsNonNeg, "向下滚轮没有跳过说明行");
+        wheel.Invoke(combo, [new MouseEventArgs(MouseButtons.None, 0, 10, 10, 120)]);
+        Require(combo.SelectedIndex == selected, "向上滚轮没有跳过说明行");
+        combo.SelectedIndex = combo.FindModelIndex("vmaf_4k_v0.6.1", true);
+        combo.AddDisplayItem(new VmafModelDisplayItem { IsLocal = true, ModelValue = Path.Combine(Work, "layout-local.json") }, false);
+        Require(combo.SelectedModel is { IsNonNeg: true, Is4K: true, UseCuda: true } && combo.Models[^5].IsSectionHeader, "添加本地模型破坏了选中映射或底部非 NEG 分组");
+        combo.ReplaceDisplayItems(combo.Models);
+        Require(combo.Models.Count(x => x.IsSectionHeader) == 1 && combo.Models.Count(x => x.IsNonNeg) == 4 && combo.SelectedModel!.IsAuto, "刷新丢失模型、产生重复标题或丢失默认 AUTO");
+        Throws<InvalidOperationException>(() => Auto(nonNeg, 1920, 1080, 24, false));
+        Throws<InvalidOperationException>(() => Auto(nonNeg, 3840, 2160, 24, false));
+        var unavailable = (List<VmafModelDisplayItem>)Invoke(Quality, "构建Vmaf模型显示项", null, false)!;
+        Require(unavailable.Count(x => x.IsNonNeg) == 4 && unavailable.Where(x => x.IsNonNeg).All(x => !x.IsRuntimeDetected), "非 NEG 目录缺项或把目录项当成已检测");
+        foreach (var model in unavailable.Where(x => x.IsNonNeg))
+        {
+            Throws<InvalidOperationException>(() => Invoke(Quality, "检查Vmaf模型可用性", model));
+            if (model.UseCuda)
+            {
+                Require(!model.IsCudaAvailable, "缺 CUDA 时未记录滤镜不可用");
+                model.IsRuntimeDetected = true;
+                Throws<InvalidOperationException>(() => Invoke(Quality, "检查Vmaf模型可用性", model));
+            }
+        }
+        var comboType = typeof(VmafModelComboBox);
+        var kinds = Enum.GetValues(comboType.GetNestedType("胶囊类别", BindingFlags.NonPublic)!);
+        foreach (var light in new[] { true, false })
+        {
+            var backgrounds = new HashSet<int>();
+            foreach (var kind in kinds)
+            {
+                var colors = ((Color Background, Color Foreground))Invoke(comboType, "获取胶囊配色", kind!, light)!;
+                Require(colors.Background.A == 255 && backgrounds.Add(colors.Background.ToArgb()), "胶囊底色未按类别区分");
+                Require((double)Invoke(typeof(界面主题_v6), "计算对比度", colors.Foreground, colors.Background)! >= 4.5, "胶囊文字与底色对比度不足");
+            }
+        }
+        var merged = (float)comboType.GetField("非Neg胶囊宽度逻辑值", BindingFlags.Static | BindingFlags.NonPublic)!.GetRawConstantValue()!;
+        Require(merged == 160f, "非 NEG 胶囊没有保持三列合并的宽度");
     }
 
     private static List<VmafModelDisplayItem> Catalog(IEnumerable<string>? models) =>
@@ -207,7 +273,7 @@ internal static class Program
         var hdr = catalog.Where(x => x.IsHdr).ToArray();
         Require(hdr.Length == 8 && hdr.All(x => !x.IsRuntimeDetected && !x.UseCuda), "旧引擎丢失 HDR 目录或把它当成已安装");
         Require(hdr.Count(x => x.IsHfr) == 4 && hdr.Count(x => x.Is4K) == 4, "HDR 普通/HFR/4K 项目不全");
-        Require(Catalog(null).Count == 8, "没有 FFmpeg 时初始目录仍应可见");
+        Require(Catalog(null).Count == 12, "没有 FFmpeg 时仍应显示八项 HDR 与四项非 NEG 目录");
         var detected = hdr[0].ModelValue;
         var refreshed = Catalog(sdr.Concat([detected, detected.ToUpperInvariant()]));
         Require(refreshed.Count(x => x.IsHdr) == 8, "刷新后官方 HDR 项重复");
@@ -234,7 +300,8 @@ internal static class Program
             var description = (string)Invoke(Quality, "获取Vmaf模型说明", item)!;
             var sdr = Parse(item.ModelValue.Replace("hdr_vmaf_v1.1.8", "vmaf_v1.0.16", StringComparison.Ordinal));
             var sdrDescription = (string)Invoke(Quality, "获取Vmaf模型说明", sdr)!;
-            Require(description == sdrDescription && description.Contains("术语解释：HFR") && description.Contains("H = 观看距离"), "HDR 提示未与相同分类的 SDR 文案一致");
+            var terms = sdrDescription.IndexOf("\r\n\r\n", StringComparison.Ordinal);
+            Require(terms > 0 && description == sdrDescription.Insert(terms, "，支持 HDR") && description.Contains("术语解释：HFR") && description.Contains("H = 观看距离"), "HDR 简介未在分类说明后补充支持 HDR，或术语内容被改变");
             Require(!description.Contains(item.ModelValue) && !description.Contains("FFmpeg") && !description.Contains("AUTO") && !description.Contains("zimg") && !description.Contains("未检测到") && !description.Contains("官方模型目录"), "HDR 提示仍包含模型状态或引擎要求");
         }
         Throws<InvalidOperationException>(() => Invoke(Quality, "检查Vmaf模型可用性", missing));

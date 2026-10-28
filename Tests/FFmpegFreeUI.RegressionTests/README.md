@@ -2,7 +2,7 @@
 
 这是无额外测试框架依赖的 Windows/.NET 10 控制台入口，直接引用主项目；失败返回非零退出码。仅覆盖当前 PR 保留的 UI/VMAF 改动，不代表整个应用全量回归。
 
-## 十项定向检查
+## 十一项定向检查
 
 在仓库根目录运行：
 
@@ -10,9 +10,11 @@
 dotnet run --project Tests/FFmpegFreeUI.RegressionTests/FFmpegFreeUI.RegressionTests.csproj --configuration Release -- E:\Code\CS\FFmpegFreeUI
 ```
 
-覆盖公共选中色和主题往返、普通标题按钮与关闭按钮、LakeUI 输入弹窗、许可证浅紫/对比度、HDR 描述顺序、十二行配置、模型分类、官方八项 HDR 目录、未检测项隔离、AUTO 矩阵与回退、模型刷新状态及二进制前缀。
+覆盖公共选中色和主题往返、普通标题按钮与关闭按钮、LakeUI 输入弹窗、许可证浅紫/对比度、HDR 描述顺序与支持说明、十二行配置、模型分类、官方八项 HDR 目录、未检测项隔离、AUTO 矩阵与回退、模型刷新状态及二进制前缀。
 
-输入参数为当前仓库绝对路径。结果和最小二进制扫描样例位于 `artifacts/ui-vmaf-20261028/tests/<时间>/`；不读取或修改用户安装目录的配置。此前的技能、文件安装、编码预设、权限和批次并行测试已从该入口移除。
+本轮新增模型界面检查：四项旧 V0/NEG 提示、底部非 NEG 警示行及四项顺序、分组三列合并宽度、标题不可选、滚轮跨标题、本地项插入/刷新后的索引与分组、AUTO 排除非 NEG、未检测模型/缺 CUDA 滤镜拦截，以及浅/深色各八种胶囊的独立配色与至少 4.5:1 文字对比度。
+
+输入参数为当前仓库绝对路径。结果和最小二进制扫描样例位于 `artifacts/ui-vmaf-20261029/tests/<时间>/`；不读取或修改用户安装目录的配置。此前的技能、文件安装、编码预设、权限和批次并行测试已从该入口移除。
 
 ## 实际质量评测页面
 
@@ -20,7 +22,13 @@ dotnet run --project Tests/FFmpegFreeUI.RegressionTests/FFmpegFreeUI.RegressionT
 dotnet run --project Tests/FFmpegFreeUI.RegressionTests/FFmpegFreeUI.RegressionTests.csproj --configuration Release -- --preview-vmaf E:\Code\CS\FFmpegFreeUI D:\DevTools\Cli\FFmpeg\ffmpeg.exe
 ```
 
-独立进程运行主项目真实质量评测窗体，使用临时设置和指定 FFmpeg，不操作用户实例。最后附加 `dark` 检查深色。入口选中并展开 HDR 项，单独捕获下拉顶层窗口为 `dropdown.png`，在 `models.json` / `display.json` 记录目录、检测状态、DPI、尺寸和十二行高度，完成后自动关闭。未展开、六列宽度不足或行数不符均不算通过。入口还通过真实 MouseMove 事件逐项显示所有有说明的模型提示，检查固定像素宽度、实际文字区域、滚轮关闭后重建，以及左右翻转和屏幕底部定位。保存 `tooltips.json` 与 AUTO、SDR、HDR、V0/NEG/CUDA 代表项截图。HDR 与同分类 SDR 文案相同；所有提示固定为 343 逻辑像素（150% 下 515 像素），不随文案长短缩宽，高度仍按文字换行计算。此适配局限于 VMAF 控件，复用 LakeUI 5.116 原提示窗；升级库或覆盖本地 DLL 时需重新运行该预览。
+独立进程运行主项目真实质量评测窗体，使用临时设置和指定 FFmpeg，不操作用户实例。最后附加 `dark` 检查深色。结果位于 `artifacts/ui-vmaf-20261029/ui-catalog/<时间>/`，完成后自动关闭。
+
+- `dropdown.png`、`dropdown-legacy-nonneg.png`：分别捕获下拉顶层窗口的 HDR 区和底部分组，显示彩色胶囊、旧 V0 四项、警示行与非 NEG 四项。
+- `models.json`、`display.json`：目录、检测状态、CUDA 滤镜可用性、分组标记、DPI、尺寸和十二行高度。未展开、六列宽度不足或行数不符均不算通过。
+- `tooltips.json` 与代表项 PNG：通过 MouseMove 事件逐项生成提示，检查固定像素宽度、可见文字区域、滚轮关闭后重建、左右翻转及屏幕底部定位；同时验证按键跳过警示行和鼠标点击警示行不会改变选中模型。
+
+HDR 简介在原分类说明后补充“支持 HDR”，HFR/H 术语段落仍与 SDR 相同；旧 V0/NEG 提示统一为“旧模型，不推荐”。所有提示固定为 343 逻辑像素（150% 下 515 像素），不随文案长短缩宽，高度按换行计算。此适配局限于 VMAF 控件，复用 LakeUI 5.116 原提示窗；升级库或覆盖本地 DLL 时需重新运行预览。
 
 ## 许可证页面
 
@@ -28,6 +36,6 @@ dotnet run --project Tests/FFmpegFreeUI.RegressionTests/FFmpegFreeUI.RegressionT
 dotnet run --project Tests/FFmpegFreeUI.RegressionTests/FFmpegFreeUI.RegressionTests.csproj --configuration Release -- --preview-license E:\Code\CS\FFmpegFreeUI
 ```
 
-结果位于同一工作根的 `ui-license/<时间>/`，包含浅色页面截图与实际颜色；不点击购买或其他外链。
+许可证预览仍保存到历史工作根 `artifacts/ui-vmaf-20261028/ui-license/<时间>/`，包含浅色页面截图与实际颜色；不点击购买或其他外链。本轮未修改许可证/公共主题源码，可复用对应原始记录，不将其称为本轮重新打开页面。
 
-逻辑检查、页面显示、不同系统显示缩放和真实 HDR 评分是不同验证。目录显示及检测到模型名称都不等于 FFmpeg 已支持新 HDR 模型；评分能力必须用正确引擎和真实媒体单独确认。
+逻辑检查、页面显示、不同系统显示缩放和真实评分是不同验证。目录显示及检测到模型名称都不等于 FFmpeg 已支持相应模型；评分能力必须用正确引擎和真实媒体单独确认。
