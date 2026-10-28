@@ -39,13 +39,13 @@ LibreHardwareMonitorLib 0.9.6
   备注      按 MPL-2.0 第 3.3 条，以可执行形式分发时须告知接收者如何取得
             覆盖源码的副本：完整源码可从上述源码仓库获取。
 
-Microsoft.Agents.AI.OpenAI 1.24.0
+Microsoft.Agents.AI.OpenAI 1.21.0
 ---------------------------------
   许可证    MIT
   作用      Agent 基底框架与 OpenAI 端点支持
   源码仓库  https://github.com/microsoft/agent-framework
   许可全文  https://github.com/microsoft/agent-framework/blob/main/LICENSE
-  包页面    https://www.nuget.org/packages/Microsoft.Agents.AI.OpenAI/1.24.0
+  包页面    https://www.nuget.org/packages/Microsoft.Agents.AI.OpenAI/1.21.0
 
 System.Management 10.0.12
 -------------------------
@@ -76,5 +76,5 @@ Vortice.DirectComposition 3.8.3
 各包声明的许可标识以 nuget.org 上对应版本的包页面为准。
 
 许可标识原核对日期：2026-09-26，对照 main 分支 30e7406。
-2026-10-28 按当前 FFmpegFreeUI.vbproj 更新发布依赖版本：LakeUI 5.116、
-Microsoft.Agents.AI.OpenAI 1.24.0；其他固定直接依赖版本保持不变。
+2026-10-28 补充 LakeUI 5.116 固定 NuGet 回退的发布说明；
+其他组件条目保持本次 PR 基线内容。

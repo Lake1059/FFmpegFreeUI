@@ -10,7 +10,7 @@ internal static class LicensePreview
 {
     public static int Run(string root)
     {
-        var output = Path.Combine(Path.GetFullPath(root), "artifacts", "ui-vmaf-agent-20261028", "ui-license", DateTime.Now.ToString("yyyyMMdd-HHmmss-fff"));
+        var output = Path.Combine(Path.GetFullPath(root), "artifacts", "ui-vmaf-20261028", "ui-license", DateTime.Now.ToString("yyyyMMdd-HHmmss-fff"));
         Directory.CreateDirectory(output);
         Application.SetHighDpiMode(HighDpiMode.PerMonitorV2);
         Application.EnableVisualStyles();

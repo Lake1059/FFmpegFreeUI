@@ -45,9 +45,6 @@
 
   <ItemGroup>
     <Content Include="ico.ico" />
-    <EmbeddedResource Include="AgentDefaults\**\*">
-      <LogicalName>AgentDefaults/%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
-    </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>

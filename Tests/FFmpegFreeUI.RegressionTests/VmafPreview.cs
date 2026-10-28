@@ -27,7 +27,7 @@ internal static class VmafPreview
 
     public static int Run(string root, string ffmpeg, bool dark)
     {
-        var output = Path.Combine(Path.GetFullPath(root), "artifacts", "ui-vmaf-agent-20261028", "ui-catalog", DateTime.Now.ToString("yyyyMMdd-HHmmss-fff"));
+        var output = Path.Combine(Path.GetFullPath(root), "artifacts", "ui-vmaf-20261028", "ui-catalog", DateTime.Now.ToString("yyyyMMdd-HHmmss-fff"));
         Directory.CreateDirectory(output);
         Application.SetHighDpiMode(HighDpiMode.PerMonitorV2);
         Application.EnableVisualStyles();

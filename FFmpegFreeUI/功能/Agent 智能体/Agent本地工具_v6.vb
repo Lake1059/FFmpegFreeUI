@@ -10,9 +10,9 @@ Partial Public Class AgentLocalTools
     <CodeAnalysis.SuppressMessage("Performance", "CA1861:不要将常量数组作为参数", Justification:="<挂起>")>
     Public Shared Function BuildToolDefinitions(permissionLevel As Integer, networkMode As Integer) As List(Of Dictionary(Of String, Object))
         Dim tools As New List(Of Dictionary(Of String, Object)) From {
-            FunctionTool("list_agent_skills", "列出程序目录 Agent/skills 内当前可用的技能与 reference，包括内置和用户编辑或添加的技能。涉及应用操作或编码推荐时先查看索引，再按需读取。", New Dictionary(Of String, Object)),
-            FunctionTool("read_agent_skill_reference", "读取 Agent/skills 中指定技能的当前磁盘内容。只读取与当前任务相关的 SKILL.md 或 reference；用户修改立即生效，不支持读取目录之外的文件。", New Dictionary(Of String, Object) From {
-            {"skill", New Dictionary(Of String, Object) From {{"type", "string"}, {"description", "skill 目录名，默认 ffmpegfreeui；也可为 nvidia-video、avif-aom、audio-nmr-aac 或用户新增技能"}}},
+            FunctionTool("list_agent_skills", "列出 3FUI Agent 内置 skill 资料库及可按需读取的 reference。遇到 3FUI 环境机制、工具行为、参数面板、命令生成、队列、预设、联网权限或编码推荐问题时先用它查看索引。", New Dictionary(Of String, Object)),
+            FunctionTool("read_agent_skill_reference", "读取 3FUI Agent 内置 skill 资料库中的指定 reference。只读取与当前任务相关的章节，避免一次加载全部资料。", New Dictionary(Of String, Object) From {
+            {"skill", New Dictionary(Of String, Object) From {{"type", "string"}, {"description", "skill 名称，默认 ffmpegfreeui"}}},
             {"reference", New Dictionary(Of String, Object) From {{"type", "string"}, {"description", "reference 名称，例如 SKILL.md 或 references/parameter-panel.md"}}}
         }, {"reference"}),
             FunctionTool("get_parameter_panel_state", "读取当前参数面板，默认仅返回 overview。需要命令验证或完整预设时按需开启对应 include_*；关闭全部选项会报错。", BuildParameterResultProperties(True, False)),
@@ -87,11 +87,7 @@ Partial Public Class AgentLocalTools
                 {"tool", New Dictionary(Of String, Object) From {{"type", "string"}}},
                 {"payload", New Dictionary(Of String, Object) From {{"type", "object"}, {"additionalProperties", True}}}
             }, {"tool"}))
-            tools.Add(FunctionTool("get_system_hardware", "读取系统硬件概要：处理器名称、可用逻辑处理器数、物理核心数、内存、显卡名称。", New Dictionary(Of String, Object)))
-            tools.Add(FunctionTool("configure_avif_parallelism", "仅为单线程 AOM AVIF 批次配置临时并行上限，按可用 CPU 数和文件数计算；不改变全局并发、不启动任务。有其他活动或自动启动任务时拒绝。", New Dictionary(Of String, Object) From {
-                {"file_count", New Dictionary(Of String, Object) From {{"type", "integer"}, {"description", "本次明确要求编码为 AVIF 的图片数量，必须大于零"}}},
-                {"max_parallel", New Dictionary(Of String, Object) From {{"type", "integer"}, {"description", "可选的资源保护上限；0 为按 CPU 自动，仍不超过文件数"}}}
-            }, {"file_count"}))
+            tools.Add(FunctionTool("get_system_hardware", "读取系统硬件概要：处理器名称、内存、显卡名称。", New Dictionary(Of String, Object)))
             tools.Add(FunctionTool("get_parameter_panel_controls", "读取参数面板上的用户直接操作控件和说明控件，包括控件名、类型、文本、当前值、候选项等。", New Dictionary(Of String, Object) From {
                 {"query", New Dictionary(Of String, Object) From {{"type", "string"}, {"description", "可选控件名或文本关键词，例如 MCB_视频编码器分类、MCB_输出位置、HCL_质量"}}}
             }))
@@ -306,13 +302,6 @@ Partial Public Class AgentLocalTools
                 Case "get_system_hardware"
                     If permissionLevel < PermissionEnvironment Then Return "权限不足：需要环境控制"
                     Return Agent工具封装_v6.获取系统硬件()
-                Case "configure_avif_parallelism"
-                    If permissionLevel < PermissionEnvironment Then Return "权限不足：需要环境控制"
-                    Dim limit = 编码队列_v6.配置AVIF批次并行(Agent通用工具_v6.GetJsonInteger(args, "file_count", 0), Agent通用工具_v6.GetJsonInteger(args, "max_parallel", 0))
-                    Return JsonSerializer.Serialize(New Dictionary(Of String, Object) From {
-                        {"success", True}, {"parallel_limit", limit}, {"processor_count", Environment.ProcessorCount},
-                        {"scope", "单线程 AOM AVIF 批次；批次结束后恢复普通队列上限"}, {"started_tasks", 0}, {"global_setting_changed", False}
-                    }, JsonSO)
                 Case "get_parameter_panel_controls"
                     If permissionLevel < PermissionEnvironment Then Return "权限不足：需要环境控制"
                     Return Agent工具封装_v6.获取参数面板控件信息(Agent通用工具_v6.GetJsonString(args, "query"))

@@ -48,7 +48,6 @@ Public Class 编码队列_v6
     Private Shared 完成提示待播放 As Boolean = False
     Private Shared 完成提示待调度结束检查 As Boolean = False
     Private Shared 全部任务已完成是否有错误 As Boolean = False
-    Private Shared AVIF批次并行上限 As Integer = 0
     Private Const 未处理任务缓存文件名 As String = "QueuePendingTasks_v6.json"
     Private Shared ReadOnly FFmpeg状态进度输出正则 As New Regex("^\s*(?:frame|size)\s*=\s*\S+.*\b(?:time|bitrate|speed)\s*=", RegexOptions.Compiled Or RegexOptions.IgnoreCase)
     Private Shared ReadOnly FFmpegProgress键值输出正则 As New Regex("^\s*(?:frame|fps|stream_\d+_\d+_q|bitrate|total_size|out_time(?:_ms|_us)?|dup_frames|drop_frames|speed|progress)\s*=", RegexOptions.Compiled Or RegexOptions.IgnoreCase)
@@ -653,7 +652,6 @@ Public Class 编码队列_v6
                                              Dim 已手动停止 = task.结束执行()
                                              shouldSchedule = Not 已手动停止 OrElse 等待停止清理的任务 Is task
                                              If 等待停止清理的任务 Is task Then 等待停止清理的任务 = Nothing
-                                             If Not 队列项目.Any(Function(x) 是单线程AVIF任务(x) AndAlso (是否进行中任务(x) OrElse x.正在执行 OrElse x.可自动开始)) Then AVIF批次并行上限 = 0
                                          End SyncLock
                                          通知任务更新(task)
                                          ' 停止本身不推进队列；只恢复此前等待清理的调度请求。
@@ -662,34 +660,7 @@ Public Class 编码队列_v6
                                  End Function)
     End Sub
 
-    Public Shared Function 配置AVIF批次并行(fileCount As Integer, Optional maxParallel As Integer = 0) As Integer
-        If fileCount < 1 OrElse maxParallel < 0 Then Throw New ArgumentException("AVIF 文件数量必须大于零，并行限制不能为负数。")
-        SyncLock 队列锁
-            If 队列项目.Any(Function(x) (是否进行中任务(x) OrElse x.正在执行 OrElse x.可自动开始) AndAlso Not 是单线程AVIF任务(x)) Then
-                Throw New InvalidOperationException("队列中存在其他正在运行或可自动启动的任务，不能为 AVIF 批次提高并行度。请先处理这些任务。")
-            End If
-            Dim limit = Math.Min(fileCount, Environment.ProcessorCount)
-            If maxParallel > 0 Then limit = Math.Min(limit, maxParallel)
-            AVIF批次并行上限 = Math.Max(1, limit)
-            Return AVIF批次并行上限
-        End SyncLock
-    End Function
-
-    Private Shared Function 是单线程AVIF任务(task As 编码任务_v6) As Boolean
-        Dim preset = task.预设数据
-        Return preset IsNot Nothing AndAlso
-               String.Equals(preset.输出容器, ".avif", StringComparison.OrdinalIgnoreCase) AndAlso
-               String.Equals(preset.视频参数_编码器_具体编码, "libaom-av1", StringComparison.OrdinalIgnoreCase) AndAlso
-               preset.视频参数_编码器_threads = "1" AndAlso preset.解码参数_CPU解码线程数 = "1" AndAlso
-               Regex.IsMatch(If(preset.自定义参数_开头参数, ""), "(?:^|\s)-filter_threads\s+1(?:\s|$)", RegexOptions.CultureInvariant)
-    End Function
-
     Private Shared Function 获取并发上限() As Integer
-        ' AVIF 使用批次级临时上限，不改变用户的全局设置，也不放大视频或其他任务的并发。
-        If AVIF批次并行上限 > 0 Then
-            Dim pending = 队列项目.Where(Function(x) 是否进行中任务(x) OrElse x.正在执行 OrElse x.可自动开始).ToList()
-            If pending.Count > 0 AndAlso pending.All(AddressOf 是单线程AVIF任务) Then Return AVIF批次并行上限
-        End If
         Dim n = 设置_v6.实例对象.自动同时运行任务数量选项 + 1
         Return Math.Min(Math.Max(n, 1), 10)
     End Function
