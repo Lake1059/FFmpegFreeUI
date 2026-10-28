@@ -151,6 +151,7 @@ internal static class Program
         var combo = (VmafModelComboBox)quality.Controls.Find("MCB_模型选择", true).Single();
         var help = (HtmlColorLabel)quality.Controls.Find("HtmlColorLabel9", true).Single();
         Require(combo.MaxDropDownItems == 12, "模型下拉不是十二行");
+        Require(combo.ToolTipMaxWidth == 343, "模型提示未保持参考图的统一宽度");
         Require(help.ToolTipText.Contains("HFR、HDR、CUDA"), "模型说明中 HDR 未排在 CUDA 前");
         using var license = new Form_v6_设置_LakeUI许可证();
         var button = (ModernButton)license.Controls.Find("MB_前往购买许可证", true).Single();
@@ -225,8 +226,17 @@ internal static class Program
         var fallback = Auto(catalog, 1920, 1080, 60, true);
         Require(!fallback.Model.IsHdr && fallback.Note.Contains("回退 SDR"), "AUTO 使用了未检测到的 HDR 目录项");
         var missing = catalog.First(x => x.IsHdr);
-        var description = (string)Invoke(Quality, "获取Vmaf模型说明", missing)!;
-        Require(description.Contains("未检测到") && description.Contains("官方模型目录"), "缺少模型来源和当前引擎状态说明");
+        foreach (var detected in new[] { false, true })
+        foreach (var model in catalog.Where(x => x.IsHdr))
+        {
+            var item = Parse(model.ModelValue);
+            item.IsRuntimeDetected = detected;
+            var description = (string)Invoke(Quality, "获取Vmaf模型说明", item)!;
+            var sdr = Parse(item.ModelValue.Replace("hdr_vmaf_v1.1.8", "vmaf_v1.0.16", StringComparison.Ordinal));
+            var sdrDescription = (string)Invoke(Quality, "获取Vmaf模型说明", sdr)!;
+            Require(description == sdrDescription && description.Contains("术语解释：HFR") && description.Contains("H = 观看距离"), "HDR 提示未与相同分类的 SDR 文案一致");
+            Require(!description.Contains(item.ModelValue) && !description.Contains("FFmpeg") && !description.Contains("AUTO") && !description.Contains("zimg") && !description.Contains("未检测到") && !description.Contains("官方模型目录"), "HDR 提示仍包含模型状态或引擎要求");
+        }
         Throws<InvalidOperationException>(() => Invoke(Quality, "检查Vmaf模型可用性", missing));
         Invoke(Quality, "检查Vmaf模型可用性", Parse(missing.ModelValue));
         Invoke(Quality, "检查Vmaf模型可用性", new VmafModelDisplayItem { IsLocal = true, IsHdr = true, IsRuntimeDetected = false });

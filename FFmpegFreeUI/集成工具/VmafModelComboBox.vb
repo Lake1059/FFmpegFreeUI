@@ -1,3 +1,4 @@
+Imports System.Reflection
 Imports LakeUI
 
 Public NotInheritable Class VmafModelDisplayItem
@@ -34,8 +35,8 @@ Public NotInheritable Class VmafModelDisplayItem
 End Class
 
 ''' <summary>
-''' VMAF 专用 ModernComboBox。弹层、Overlay 定位、滚动、悬停、选中状态和输入处理全部复用 LakeUI，
-''' 本类只负责把模型分类绘制成胶囊，并处理“浏览本地模型”这一特殊项。
+''' VMAF 专用 ModernComboBox。下拉弹层、滚动、悬停、选中状态和输入处理复用 LakeUI，
+''' 本类负责模型胶囊、本地模型入口及提示窗固定宽度适配。
 ''' </summary>
 Public Class VmafModelComboBox
     Inherits ModernComboBox
@@ -56,6 +57,9 @@ Public Class VmafModelComboBox
     Private _updatingItems As Boolean = False
     Private _handlingBrowse As Boolean = False
     Private _lastModelIndex As Integer = -1
+    Private _正在定位提示 As Boolean
+    Private Shared ReadOnly 下拉窗体字段 As FieldInfo = GetType(ModernComboBox).GetField("_dropDownForm", BindingFlags.Instance Or BindingFlags.NonPublic)
+    Private Shared ReadOnly 提示窗体字段 As FieldInfo = 下拉窗体字段?.FieldType.GetField("_tipForm", BindingFlags.Instance Or BindingFlags.NonPublic)
 
     Public ReadOnly Property Models As IReadOnlyList(Of VmafModelDisplayItem)
         Get
@@ -66,6 +70,51 @@ Public Class VmafModelComboBox
     Public Sub New()
         MyBase.New()
         AddHandler SelectedIndexChanged, AddressOf 处理模型选择变化
+        AddHandler DropDownOpened, AddressOf 准备模型提示
+    End Sub
+
+    Private Sub 准备模型提示(sender As Object, e As EventArgs)
+        Dim popup = TryCast(下拉窗体字段?.GetValue(Me), Form)
+        If popup Is Nothing OrElse 提示窗体字段 Is Nothing Then Return
+        AddHandler popup.MouseMove, Sub(s, args) 准备固定宽度提示(popup)
+        准备固定宽度提示(popup)
+    End Sub
+
+    Private Sub 准备固定宽度提示(popup As Form)
+        If popup.IsDisposed Then Return
+        Dim tip = TryCast(提示窗体字段.GetValue(popup), FloatingToolTipForm)
+        If tip Is Nothing OrElse tip.IsDisposed Then
+            ' LakeUI 5.116 没有固定宽度选项，复用原提示窗，仅预设其尺寸约束。
+            tip = New FloatingToolTipForm(Me)
+            提示窗体字段.SetValue(popup, tip)
+            AddHandler tip.LocationChanged, Sub(s, args) 定位模型提示(tip, popup)
+            AddHandler tip.SizeChanged, Sub(s, args) 定位模型提示(tip, popup)
+        End If
+        Dim handle = tip.Handle
+        Dim width = CInt(Math.Round(ToolTipMaxWidth * DpiScale(), MidpointRounding.AwayFromZero))
+        tip.MinimumSize = New Size(width, 1)
+        ' 只固定宽度，高度仍由 LakeUI 按换行计算；0 会被最小高度钳制。
+        tip.MaximumSize = New Size(width, Integer.MaxValue)
+    End Sub
+
+    Private Sub 定位模型提示(tip As Form, popup As Form)
+        If _正在定位提示 OrElse tip.IsDisposed OrElse popup.IsDisposed Then Return
+        _正在定位提示 = True
+        Try
+            Dim area = Screen.FromControl(Me).WorkingArea
+            Dim gap = CInt(Math.Round(ToolTipGap * DpiScale(), MidpointRounding.AwayFromZero))
+            Dim right = popup.Right + gap
+            Dim left = popup.Left - gap - tip.Width
+            Dim x = If(ToolTipSide = ModernComboBox.ToolTipSideEnum.Left, left, right)
+            If x < area.Left Then x = right
+            If x + tip.Width > area.Right Then x = left
+            x = Math.Clamp(x, area.Left, Math.Max(area.Left, area.Right - tip.Width))
+            Dim y = Math.Clamp(tip.Top, area.Top, Math.Max(area.Top, area.Bottom - tip.Height))
+            Dim location As New Point(x, y)
+            If tip.Location <> location Then tip.Location = location
+        Finally
+            _正在定位提示 = False
+        End Try
     End Sub
 
     Public ReadOnly Property SelectedModel As VmafModelDisplayItem

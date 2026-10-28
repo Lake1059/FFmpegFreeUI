@@ -20,7 +20,7 @@ dotnet run --project Tests/FFmpegFreeUI.RegressionTests/FFmpegFreeUI.RegressionT
 dotnet run --project Tests/FFmpegFreeUI.RegressionTests/FFmpegFreeUI.RegressionTests.csproj --configuration Release -- --preview-vmaf E:\Code\CS\FFmpegFreeUI D:\DevTools\Cli\FFmpeg\ffmpeg.exe
 ```
 
-独立进程运行主项目真实质量评测窗体，使用临时设置和指定 FFmpeg，不操作用户实例。最后附加 `dark` 检查深色。入口选中并展开 HDR 项，单独捕获下拉顶层窗口为 `dropdown.png`，在 `models.json` / `display.json` 记录目录、检测状态、DPI、尺寸和十二行高度，完成后自动关闭。未展开、六列宽度不足或行数不符均不算通过。
+独立进程运行主项目真实质量评测窗体，使用临时设置和指定 FFmpeg，不操作用户实例。最后附加 `dark` 检查深色。入口选中并展开 HDR 项，单独捕获下拉顶层窗口为 `dropdown.png`，在 `models.json` / `display.json` 记录目录、检测状态、DPI、尺寸和十二行高度，完成后自动关闭。未展开、六列宽度不足或行数不符均不算通过。入口还通过真实 MouseMove 事件逐项显示所有有说明的模型提示，检查固定像素宽度、实际文字区域、滚轮关闭后重建，以及左右翻转和屏幕底部定位。保存 `tooltips.json` 与 AUTO、SDR、HDR、V0/NEG/CUDA 代表项截图。HDR 与同分类 SDR 文案相同；所有提示固定为 343 逻辑像素（150% 下 515 像素），不随文案长短缩宽，高度仍按文字换行计算。此适配局限于 VMAF 控件，复用 LakeUI 5.116 原提示窗；升级库或覆盖本地 DLL 时需重新运行该预览。
 
 ## 许可证页面
 

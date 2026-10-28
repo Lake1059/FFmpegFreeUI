@@ -249,13 +249,13 @@ Public Class Form_v6_集成工具_质量评测
     Private Shared Function 获取Vmaf模型说明(model As VmafModelDisplayItem) As String
         If model.IsLocal Then Return $"本地 VMAF 模型：{model.ModelValue}。是否兼容由 FFmpeg 实际加载结果确定；本地文件存在不代表引擎已经支持。"
         If model.IsAuto Then Return "按原视频 PQ/HLG 标记优先选择运行库已检测到的 HDR 模型，缺少时回退 SDR 并警告；按分辨率选择 V1，≥48 fps 优先 HFR，同档没有 V1 时回退 V0 NEG。"
-        If model.IsHdr Then
-            Dim status = If(model.IsRuntimeDetected,
-                            "运行库中已检测到模型名称；实际评分仍以 FFmpeg 执行结果为准。",
-                            "当前 FFmpeg 运行库未检测到此模型；该项来自官方模型目录，AUTO 不会选用，手动评测前会提示更新引擎或使用兼容的本地 JSON。")
-            Return $"HDR VMAF：{model.ModelValue}。{status}需要支持 HDR 模型、完整颜色信息传递和 zimg 的 FFmpeg/libvmaf。" & Vmaf术语说明
-        End If
         Dim description = ""
+        If model.IsHdr Then
+            ' 仅复用相同分类的 SDR 提示文案，不改变实际评测模型。
+            Dim descriptionKey = Regex.Replace(model.ModelValue.Substring(4), "^vmaf_v\d+\.\d+\.\d+", "vmaf_v1.0.16", RegexOptions.IgnoreCase Or RegexOptions.CultureInvariant)
+            If Vmaf模型描述.TryGetValue(descriptionKey, description) Then Return description
+            Return Vmaf术语说明.Trim()
+        End If
         Vmaf模型描述.TryGetValue(model.ModelValue, description)
         Return description
     End Function

@@ -384,7 +384,7 @@ Partial Class Form_v6_集成工具_质量评测
         MCB_模型选择.Size = New Size(387, 32)
         MCB_模型选择.TabIndex = 6
         MCB_模型选择.ToolTipGap = -1
-        MCB_模型选择.ToolTipMaxWidth = 350
+        MCB_模型选择.ToolTipMaxWidth = 343
         MCB_模型选择.ToolTipPadding = New Padding(15)
         MCB_模型选择.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ' 
