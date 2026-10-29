@@ -19,6 +19,7 @@ Public Class FormMain_v6
         设置_v6.加载SP自定义起始页顶栏背景图()
         设置_v6.加载SP自定义背景图()
         绑定主页面选项卡()
+        Form_v6_参数面板.初始化默认参数()
         AddHandler 编码队列_v6.队列已变化, AddressOf 请求刷新任务数量选项卡
         AddHandler 编码队列_v6.任务已更新, AddressOf 编码任务已更新
         AddHandler Form_v6_Agent.正在推理任务数量已变化, AddressOf 请求刷新任务数量选项卡

@@ -28,6 +28,28 @@ Public Module 界面主题_v6
     Private ReadOnly 浅色表面背景 As Color = Color.White
     Private ReadOnly 浅色强调绿色 As Color = Color.FromArgb(0, 122, 0)
     Private ReadOnly 浅色强调橙色 As Color = Color.FromArgb(145, 58, 0)
+    ' 固定属性色集中维护；特殊条件和通用颜色转换分别在后续规则中处理。
+    Private ReadOnly 窗口浅色属性 As New Dictionary(Of String, Color)(StringComparer.Ordinal) From {
+        {"CaptionBackColor", 浅色一级导航背景}, {"CaptionInactiveBackColor", 浅色一级导航背景},
+        {"CaptionButtonGlyphColor", Color.FromArgb(55, 55, 55)}, {"CaptionButtonHoverGlyphColor", Color.FromArgb(55, 55, 55)},
+        {"CaptionButtonPressedGlyphColor", Color.FromArgb(55, 55, 55)}, {"CaptionButtonHoverBackColor", Color.FromArgb(195, 213, 230)},
+        {"CaptionButtonPressedBackColor", Color.FromArgb(180, 201, 222)}
+    }
+    Private ReadOnly 图表浅色属性 As New Dictionary(Of String, Color)(StringComparer.Ordinal) From {
+        {"PlotBackColor", Color.White}, {"GridLineColor", Color.FromArgb(210, 224, 236)},
+        {"PlotBorderColor", Color.FromArgb(104, 128, 150)}, {"AxisLineColor", Color.FromArgb(104, 128, 150)},
+        {"AxisTitleColor", Color.Black}, {"AxisLabelColor", Color.Black}
+    }
+    Private ReadOnly 许可证按钮浅色属性 As New Dictionary(Of String, Color)(StringComparer.Ordinal) From {
+        {"BackColor1", Color.FromArgb(226, 218, 250)}, {"HoverBackColor1", Color.FromArgb(214, 203, 245)},
+        {"PressedBackColor1", Color.FromArgb(203, 188, 241)}, {"ForeColor", Color.FromArgb(55, 55, 55)},
+        {"HoverForeColor", Color.FromArgb(55, 55, 55)}, {"PressedForeColor", Color.FromArgb(55, 55, 55)}
+    }
+    Private ReadOnly 统一选中背景属性 As New HashSet(Of String)(StringComparer.Ordinal) From {
+        "SelectionColor", "SelectionBackColor", "SelectedBackColor", "SelectedItemBackColor",
+        "ItemSelectedColor", "ItemSelectedBackColor", "ItemInactiveSelectedBackColor", "InactiveSelectionColor",
+        "SelectedNodeBackColor", "SelectedDialogueBackColor", "MenuSelectedColor"
+    }
 
     <DllImport("dwmapi.dll")>
     Private Function DwmGetColorizationColor(ByRef colorization As UInteger,
@@ -309,32 +331,7 @@ Public Module 界面主题_v6
         Dim snapshot = 获取或创建快照(target)
         For Each pair In snapshot.颜色
             Try
-                Dim 是选中背景 = 是选中背景属性(pair.Key.Name)
-                Dim color = If(是选中背景, 界面配色_v6.获取选中背景(浅色),
-                               If(浅色, 转换为浅色(pair.Value, pair.Key.Name, target), pair.Value))
-                If Not 是选中背景 AndAlso 浅色 AndAlso SP_UnLock AndAlso 设置_v6.实例对象.窗口样式 = 2 AndAlso 设置_v6.实例对象.SP_毛玻璃模式 > 0 Then
-                    Dim name = pair.Key.Name
-                    If (TypeOf target Is ModernTabListControl OrElse TypeOf target Is ModernTabControl) AndAlso
-                       (name = "TabStripBackColor" OrElse name = "ContentBackColor") Then
-                        color = Color.Transparent
-                    ElseIf TypeOf target Is ModernTextBox AndAlso name = "LineNumberBackColor" Then
-                        ' 行号栏保持明显的浅蓝层级，但透明度接近参数总览的半透明表面。
-                        color = Color.FromArgb(100, color.R, color.G, color.B)
-                    ElseIf name.Contains("BackColor", StringComparison.OrdinalIgnoreCase) OrElse
-                           name.Contains("BackgroundColor", StringComparison.OrdinalIgnoreCase) OrElse
-                           name = "OverlayColor" OrElse name = "SelectionColor" OrElse
-                           name = "DropDownSelectedColor" OrElse name = "DropDownHoverColor" Then
-                        ' 保留原有透明通道；原本不透明的表面在毛玻璃模式下使用半透明底色。
-                        color = Color.FromArgb(Math.Min(CInt(pair.Value.A), 120), color.R, color.G, color.B)
-                    End If
-                End If
-                ' 详情提示需要独立的阅读表面，不能套用普通控件的低 Alpha 背景。
-                If 浅色 AndAlso pair.Key.Name.Contains("ToolTip", StringComparison.OrdinalIgnoreCase) AndAlso
-                   (pair.Key.Name.Contains("BackColor", StringComparison.OrdinalIgnoreCase) OrElse
-                    pair.Key.Name.Contains("BackgroundColor", StringComparison.OrdinalIgnoreCase)) Then
-                    color = Color.FromArgb(220, 255, 255, 255)
-                End If
-                pair.Key.SetValue(target, color)
+                pair.Key.SetValue(target, 解析主题颜色(target, pair.Key.Name, pair.Value, 浅色))
             Catch
             End Try
         Next
@@ -356,6 +353,37 @@ Public Module 界面主题_v6
             If textBox.EnableSyntaxHighlight AndAlso textBox.SyntaxHighlighter IsNot Nothing Then textBox.SyntaxHighlighter = textBox.SyntaxHighlighter
         End If
     End Sub
+
+    ' 优先级：选中色/浅色映射 -> 毛玻璃透明度 -> 提示框阅读表面。
+    Private Function 解析主题颜色(target As Object, name As String, original As Color, 浅色 As Boolean) As Color
+        Dim 统一选中 = 是选中背景属性(name)
+        Dim color = If(统一选中, 界面配色_v6.获取选中背景(浅色),
+                       If(浅色, 转换为浅色(original, name, target), original))
+        If 浅色 AndAlso Not 统一选中 AndAlso SP_UnLock AndAlso
+           设置_v6.实例对象.窗口样式 = 2 AndAlso 设置_v6.实例对象.SP_毛玻璃模式 > 0 Then
+            color = 应用毛玻璃颜色(target, name, original, color)
+        End If
+        If 浅色 AndAlso name.Contains("ToolTip", StringComparison.OrdinalIgnoreCase) AndAlso 是背景属性(name) Then
+            Return Color.FromArgb(220, 255, 255, 255)
+        End If
+        Return color
+    End Function
+
+    Private Function 应用毛玻璃颜色(target As Object, name As String, original As Color, color As Color) As Color
+        If (TypeOf target Is ModernTabListControl OrElse TypeOf target Is ModernTabControl) AndAlso
+           (name = "TabStripBackColor" OrElse name = "ContentBackColor") Then Return Color.Transparent
+        If TypeOf target Is ModernTextBox AndAlso name = "LineNumberBackColor" Then Return Color.FromArgb(100, color)
+        If 是背景属性(name) OrElse name = "OverlayColor" OrElse name = "SelectionColor" OrElse
+           name = "DropDownSelectedColor" OrElse name = "DropDownHoverColor" Then
+            Return Color.FromArgb(Math.Min(CInt(original.A), 120), color)
+        End If
+        Return color
+    End Function
+
+    Private Function 是背景属性(name As String) As Boolean
+        Return name.Contains("BackColor", StringComparison.OrdinalIgnoreCase) OrElse
+               name.Contains("BackgroundColor", StringComparison.OrdinalIgnoreCase)
+    End Function
 
     Private Function 获取或创建快照(target As Object) As 控件主题快照
         Dim existing As 控件主题快照 = Nothing
@@ -395,41 +423,21 @@ Public Module 界面主题_v6
     End Function
 
     Friend Function 是选中背景属性(name As String) As Boolean
-        Select Case name
-            Case "SelectionColor", "SelectionBackColor", "SelectedBackColor", "SelectedItemBackColor",
-                 "ItemSelectedColor", "ItemSelectedBackColor", "ItemInactiveSelectedBackColor", "TabItemSelectedBackColor",
-                 "DropDownSelectedColor", "InactiveSelectionColor", "SelectedNodeBackColor",
-                 "SelectedDialogueBackColor", "MenuSelectedColor"
-                Return True
-            Case Else
-                Return False
-        End Select
+        Return name IsNot Nothing AndAlso 统一选中背景属性.Contains(name)
     End Function
 
     Private Function 转换为浅色(original As Color, propertyName As String, Optional target As Object = Nothing, Optional 最低对比度 As Double = 4.5R) As Color
         Dim name = If(propertyName, String.Empty)
         If 是选中背景属性(name) Then Return 界面配色_v6.浅色选中背景
-        If TypeOf target Is ThisIsYourWindow Then
-            Select Case name
-                Case "CaptionBackColor", "CaptionInactiveBackColor"
-                    Return 浅色一级导航背景
-                Case "CaptionButtonGlyphColor", "CaptionButtonHoverGlyphColor", "CaptionButtonPressedGlyphColor"
-                    Return Color.FromArgb(55, 55, 55)
-                Case "CaptionButtonHoverBackColor"
-                    Return Color.FromArgb(195, 213, 230)
-                Case "CaptionButtonPressedBackColor"
-                    Return Color.FromArgb(180, 201, 222)
-            End Select
+        If name = "TabItemSelectedBackColor" OrElse name = "DropDownSelectedColor" Then
+            Return Color.FromArgb(original.A, 界面配色_v6.浅色选中背景)
         End If
+        Dim fixedColor As Color
+        If TypeOf target Is ThisIsYourWindow AndAlso 窗口浅色属性.TryGetValue(name, fixedColor) Then Return fixedColor
         Dim control = TryCast(target, Control)
         If control IsNot Nothing AndAlso TypeOf control.FindForm() Is Form_v6_设置_LakeUI许可证 Then
             If control.Name = "MB_前往购买许可证" Then
-                Select Case name
-                    Case "BackColor1" : Return Color.FromArgb(226, 218, 250)
-                    Case "HoverBackColor1" : Return Color.FromArgb(214, 203, 245)
-                    Case "PressedBackColor1" : Return Color.FromArgb(203, 188, 241)
-                    Case "ForeColor", "HoverForeColor", "PressedForeColor" : Return Color.FromArgb(55, 55, 55)
-                End Select
+                If 许可证按钮浅色属性.TryGetValue(name, fixedColor) Then Return fixedColor
             ElseIf control.Name = "HtmlColorLabel3" AndAlso name = "ForeColor" Then
                 Return Color.FromArgb(128, 99, 180)
             End If
@@ -460,14 +468,7 @@ Public Module 界面主题_v6
                     Return Color.FromArgb(15, 124, 140)
             End Select
         End If
-        If TypeOf target Is Ultra2DChart Then
-            Select Case name
-                Case "PlotBackColor" : Return Color.White
-                Case "GridLineColor" : Return Color.FromArgb(210, 224, 236)
-                Case "PlotBorderColor", "AxisLineColor" : Return Color.FromArgb(104, 128, 150)
-                Case "AxisTitleColor", "AxisLabelColor" : Return Color.Black
-            End Select
-        End If
+        If TypeOf target Is Ultra2DChart AndAlso 图表浅色属性.TryGetValue(name, fixedColor) Then Return fixedColor
         If original.IsEmpty OrElse original.A = 0 Then Return original
         ' 红色关闭按钮悬停/按下状态需要保留亮色图标，不能按普通前景色反转。
         If name.Contains("HoverGlyphColor", StringComparison.OrdinalIgnoreCase) OrElse
@@ -513,8 +514,7 @@ Public Module 界面主题_v6
 
         If Not neutral Then Return original
 
-        Dim isBackground = name.Contains("BackColor", StringComparison.OrdinalIgnoreCase) OrElse
-                           name.Contains("BackgroundColor", StringComparison.OrdinalIgnoreCase)
+        Dim isBackground = 是背景属性(name)
         If neutral AndAlso (isBackground OrElse name = "SelectionColor" OrElse name = "DropDownSelectedColor" OrElse name = "DropDownHoverColor") Then
             If name.Contains("Hover", StringComparison.OrdinalIgnoreCase) OrElse name.Contains("Pressed", StringComparison.OrdinalIgnoreCase) Then Return 浅色悬停背景
             If original.A < 255 Then Return 浅色控件背景
