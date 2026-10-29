@@ -278,7 +278,9 @@ Public Module 界面主题_v6
         For Each prop In 获取颜色属性(control.GetType())
             If Not 是选中背景属性(prop.Name) Then Continue For
             Try
-                If DirectCast(prop.GetValue(control), Color).ToArgb() <> color.ToArgb() Then
+                Dim original = DirectCast(prop.GetValue(control), Color)
+                If original.A < 255 Then Continue For
+                If original.ToArgb() <> color.ToArgb() Then
                     prop.SetValue(control, color)
                     control.Invalidate()
                 End If
@@ -357,7 +359,7 @@ Public Module 界面主题_v6
     ' 优先级：选中色/浅色映射 -> 毛玻璃透明度 -> 提示框阅读表面。
     Private Function 解析主题颜色(target As Object, name As String, original As Color, 浅色 As Boolean) As Color
         Dim 统一选中 = 是选中背景属性(name)
-        Dim color = If(统一选中, 界面配色_v6.获取选中背景(浅色),
+        Dim color = If(统一选中 AndAlso original.A = 255, 界面配色_v6.获取选中背景(浅色),
                        If(浅色, 转换为浅色(original, name, target), original))
         If 浅色 AndAlso Not 统一选中 AndAlso SP_UnLock AndAlso
            设置_v6.实例对象.窗口样式 = 2 AndAlso 设置_v6.实例对象.SP_毛玻璃模式 > 0 Then
@@ -428,8 +430,7 @@ Public Module 界面主题_v6
 
     Private Function 转换为浅色(original As Color, propertyName As String, Optional target As Object = Nothing, Optional 最低对比度 As Double = 4.5R) As Color
         Dim name = If(propertyName, String.Empty)
-        If 是选中背景属性(name) Then Return 界面配色_v6.浅色选中背景
-        If name = "TabItemSelectedBackColor" OrElse name = "DropDownSelectedColor" Then
+        If 是选中背景属性(name) OrElse name = "TabItemSelectedBackColor" OrElse name = "DropDownSelectedColor" Then
             Return Color.FromArgb(original.A, 界面配色_v6.浅色选中背景)
         End If
         Dim fixedColor As Color

@@ -439,7 +439,7 @@ Public Class VmafModelComboBox
                             kind As 胶囊类别)
         Dim colors = 获取胶囊配色(kind, textColor.GetBrightness() < 0.5F)
         Dim foreground = If(Enabled, colors.文字, Color.FromArgb(150, colors.文字))
-        context.FillRoundedRectangle(rect, rect.Height / 2.0F, colors.背景)
+        context.FillRoundedRectangle(rect, rect.Height / 2.0F, Color.FromArgb(180, colors.背景))
         context.DrawText(text, Font, foreground, rect,
                          Vortice.DirectWrite.TextAlignment.Center,
                          Vortice.DirectWrite.ParagraphAlignment.Center)
