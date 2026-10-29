@@ -369,7 +369,7 @@ Partial Class Form_v6_集成工具_质量评测
         MCB_模型选择.DropDownBackdropBlurRadius = 30
         MCB_模型选择.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
         MCB_模型选择.DropDownHoverColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
-        MCB_模型选择.DropDownItemHeight = 36
+        MCB_模型选择.DropDownItemHeight = 32
         MCB_模型选择.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
         MCB_模型选择.DropDownPadding = New Padding(10)
         MCB_模型选择.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
@@ -377,14 +377,14 @@ Partial Class Form_v6_集成工具_质量评测
         MCB_模型选择.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
         MCB_模型选择.Location = New Point(70, 10)
         MCB_模型选择.Margin = New Padding(2, 2, 2, 2)
-        MCB_模型选择.MaxDropDownItems = 14
+        MCB_模型选择.MaxDropDownItems = 12
         MCB_模型选择.Name = "MCB_模型选择"
         MCB_模型选择.Padding = New Padding(10, 0, 10, 0)
         MCB_模型选择.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        MCB_模型选择.Size = New Size(387, 32)
+        MCB_模型选择.Size = New Size(405, 32)
         MCB_模型选择.TabIndex = 6
         MCB_模型选择.ToolTipGap = -1
-        MCB_模型选择.ToolTipMaxWidth = 350
+        MCB_模型选择.ToolTipMaxWidth = 320
         MCB_模型选择.ToolTipPadding = New Padding(15)
         MCB_模型选择.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ' 
@@ -414,7 +414,7 @@ Partial Class Form_v6_集成工具_质量评测
         ' JustEmptyControl10
         ' 
         JustEmptyControl10.Dock = DockStyle.Right
-        JustEmptyControl10.Location = New Point(457, 10)
+        JustEmptyControl10.Location = New Point(475, 10)
         JustEmptyControl10.Name = "JustEmptyControl10"
         JustEmptyControl10.Size = New Size(10, 32)
         JustEmptyControl10.TabIndex = 24
@@ -434,12 +434,12 @@ Partial Class Form_v6_集成工具_质量评测
         MCB_SubSample.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_SubSample.DropDownSelectedForeColor = Color.White
         MCB_SubSample.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
-        MCB_SubSample.Location = New Point(467, 10)
+        MCB_SubSample.Location = New Point(485, 10)
         MCB_SubSample.Margin = New Padding(2, 2, 2, 2)
         MCB_SubSample.Name = "MCB_SubSample"
         MCB_SubSample.Padding = New Padding(10, 0, 10, 0)
         MCB_SubSample.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        MCB_SubSample.Size = New Size(150, 32)
+        MCB_SubSample.Size = New Size(132, 32)
         MCB_SubSample.TabIndex = 20
         MCB_SubSample.ToolTipGap = -1
         MCB_SubSample.ToolTipMaxWidth = 350
@@ -504,20 +504,20 @@ Partial Class Form_v6_集成工具_质量评测
         HtmlColorLabel9.Location = New Point(0, 0)
         HtmlColorLabel9.Margin = New Padding(2)
         HtmlColorLabel9.Name = "HtmlColorLabel9"
-        HtmlColorLabel9.Size = New Size(467, 25)
+        HtmlColorLabel9.Size = New Size(485, 25)
         HtmlColorLabel9.TabIndex = 0
         HtmlColorLabel9.Text = "<span style=""font-size:11; color:Silver"">选择 VMAF 模型</span>"
         HtmlColorLabel9.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.BottomLeft
-        HtmlColorLabel9.ToolTipText = "模型按 V1/V0、4K、观看距离、HFR、CUDA 分类显示。带 CUDA 胶囊的条目使用 libvmaf_cuda；当前 VMAF v1 的部分特征尚无 CUDA 实现，因此仅对兼容的 v0 NEG 模型提供 CUDA 条目。"
+        HtmlColorLabel9.ToolTipText = "模型按 V1/V0、4K、观看距离、HFR、HDR、CUDA 分类显示。带 CUDA 胶囊的条目使用 libvmaf_cuda；当前 VMAF v1 的部分特征尚无 CUDA 实现，因此仅对兼容的 v0 NEG 模型提供 CUDA 条目。"
         ' 
         ' HtmlColorLabel7
         ' 
         HtmlColorLabel7.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel7.Dock = DockStyle.Right
-        HtmlColorLabel7.Location = New Point(467, 0)
+        HtmlColorLabel7.Location = New Point(485, 0)
         HtmlColorLabel7.Margin = New Padding(2)
         HtmlColorLabel7.Name = "HtmlColorLabel7"
-        HtmlColorLabel7.Size = New Size(160, 25)
+        HtmlColorLabel7.Size = New Size(142, 25)
         HtmlColorLabel7.TabIndex = 2
         HtmlColorLabel7.Text = "SubSample"
         HtmlColorLabel7.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.BottomLeft
