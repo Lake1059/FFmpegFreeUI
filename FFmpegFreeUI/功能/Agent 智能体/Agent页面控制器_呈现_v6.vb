@@ -3,6 +3,13 @@
 Partial Friend Class Agent页面控制器_v6
     Private _statusItem As LakeUI.AgentRoom.ChatItem = Nothing
     Private _latestTurnOverviewItem As LakeUI.AgentRoom.ChatItem = Nothing
+    Private _lastStreamOverviewTick As Long
+    Private NotInheritable Class ToolExecutionStatusCacheEntry
+        Public State As String
+        Public ResultText As String
+        Public Status As String
+    End Class
+    Private ReadOnly _toolStatusCache As New System.Runtime.CompilerServices.ConditionalWeakTable(Of AgentTurnActivityData, ToolExecutionStatusCacheEntry)
 
     Private Sub RefreshLatestTurnOverview()
         If _current Is Nothing Then Return
@@ -17,20 +24,24 @@ Partial Friend Class Agent页面控制器_v6
         Else
             _latestTurnOverviewItem.Text = summary
             If _view.AgentRoom1.Items.IndexOf(_latestTurnOverviewItem) <> _view.AgentRoom1.Items.Count - 1 Then
-                _view.AgentRoom1.Items.Remove(_latestTurnOverviewItem)
-                _view.AgentRoom1.Items.Add(_latestTurnOverviewItem)
+                _view.AgentRoom1.MoveItem(_latestTurnOverviewItem, _view.AgentRoom1.Items.Count - 1)
             End If
         End If
     End Sub
 
-    Private Sub FollowLatestWithOverview()
-        RefreshLatestTurnOverview()
+    Private Sub FollowLatestWithOverview(Optional streaming As Boolean = False)
+        Dim now = Environment.TickCount64
+        If Not streaming OrElse _latestTurnOverviewItem Is Nothing OrElse now - _lastStreamOverviewTick >= 250 Then
+            RefreshLatestTurnOverview()
+            _lastStreamOverviewTick = now
+        End If
         _view.AgentRoom1.FollowLatestIfPinned()
     End Sub
 
     Private Sub RenderCurrentConversation(Optional scrollToBottom As Boolean = True)
         Dim run = GetConversationRuntime(_current)
         _view.AgentRoom1.Clear()
+        _userInputCoordinator?.NotifyContextChanged()
         _statusItem = Nothing
         _latestTurnOverviewItem = Nothing
         run.ActiveTurnItem = Nothing
@@ -151,6 +162,20 @@ Partial Friend Class Agent页面控制器_v6
 
     ' 返回正文只提取完成标志；参数在记录详情中完整显示。
     Private Function GetToolExecutionStatus(activity As AgentTurnActivityData) As String
+        If activity Is Nothing Then Return "已返回"
+        Dim cached As ToolExecutionStatusCacheEntry = Nothing
+        If _toolStatusCache.TryGetValue(activity, cached) AndAlso
+           String.Equals(cached.State, activity.State, StringComparison.Ordinal) AndAlso
+           String.Equals(cached.ResultText, activity.ResultText, StringComparison.Ordinal) Then Return cached.Status
+        Dim status = GetToolExecutionStatusUncached(activity)
+        _toolStatusCache.Remove(activity)
+        _toolStatusCache.Add(activity, New ToolExecutionStatusCacheEntry With {
+            .State = activity.State, .ResultText = activity.ResultText, .Status = status
+        })
+        Return status
+    End Function
+
+    Private Function GetToolExecutionStatusUncached(activity As AgentTurnActivityData) As String
         Select Case If(activity?.State, "").ToLowerInvariant()
             Case "running" : Return "正在执行"
             Case "pending" : Return "等待执行"
@@ -298,6 +323,12 @@ Partial Friend Class Agent页面控制器_v6
         Select Case If(toolName, "").Trim()
             Case "get_parameter_panel_state"
                 Return "读取参数面板"
+            Case "ask_user"
+                Return "询问用户选择"
+            Case "search_local_files"
+                Return "搜索本地文件"
+            Case "search_local_text"
+                Return "搜索本地文本"
             Case "get_parameter_field_info"
                 Return "查询参数字段"
             Case "apply_parameter_panel_patch"
@@ -469,10 +500,13 @@ Partial Friend Class Agent页面控制器_v6
         If Not IsConversationSelected(conversation) Then Return
         If run.ActiveThinkingItem Is Nothing OrElse Not _view.AgentRoom1.Items.Contains(run.ActiveThinkingItem) Then
             run.ActiveThinkingItem = _view.AgentRoom1.AddAssistantActivity(run.ActiveTurn.Id, run.ActiveThinkingActivity.Content, run.ActiveThinkingActivity.Id)
-        Else
+        ElseIf Not String.Equals(run.ActiveThinkingItem.Key, run.ActiveThinkingActivity.Id, StringComparison.Ordinal) Then
+            run.ActiveThinkingItem.Key = run.ActiveThinkingActivity.Id
             run.ActiveThinkingItem.Text = run.ActiveThinkingActivity.Content
+        Else
+            _view.AgentRoom1.AppendToItem(run.ActiveThinkingItem, text)
         End If
-        If IsConversationSelected(conversation) Then FollowLatestWithOverview()
+        If IsConversationSelected(conversation) Then FollowLatestWithOverview(streaming:=True)
     End Sub
 
     Private Sub CompleteThinkingText(conversation As AgentConversationData)
@@ -482,6 +516,7 @@ Partial Friend Class Agent页面控制器_v6
         If String.IsNullOrWhiteSpace(run.ActiveThinkingActivity.Content) Then
             HideActiveThinking(conversation)
         Else
+            If run.ActiveThinkingItem IsNot Nothing Then _view.AgentRoom1.CompleteStreamingMessage(run.ActiveThinkingItem)
             run.ActiveThinkingItem = Nothing
         End If
     End Sub
@@ -521,6 +556,7 @@ Partial Friend Class Agent页面控制器_v6
         Dim run = GetConversationRuntime(conversation)
         If run.ActiveThinkingActivity IsNot Nothing AndAlso Not String.IsNullOrWhiteSpace(run.ActiveThinkingActivity.Content) Then
             run.ActiveThinkingActivity.State = "completed"
+            If run.ActiveThinkingItem IsNot Nothing Then _view.AgentRoom1.CompleteStreamingMessage(run.ActiveThinkingItem)
             run.ActiveThinkingItem = Nothing
             Return
         End If
@@ -596,7 +632,7 @@ Partial Friend Class Agent页面控制器_v6
         Else
             _view.AgentRoom1.AppendToItem(run.ActiveResponseItem, appendedText)
         End If
-        If IsConversationSelected(conversation) Then FollowLatestWithOverview()
+        If IsConversationSelected(conversation) Then FollowLatestWithOverview(streaming:=True)
     End Sub
 
     Private Sub AppendRunResponseDelta(conversation As AgentConversationData, delta As String)

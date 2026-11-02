@@ -183,23 +183,50 @@ Partial Public Class AgentLocalTools
     Private Shared Function ReadLocalTextFile(path As String,
                                               startLine As Integer,
                                               lineCount As Integer,
-                                              maxChars As Integer) As String
+                                              maxChars As Integer,
+                                              Optional includeLineNumbers As Boolean = False,
+                                              Optional cancellationToken As Threading.CancellationToken = Nothing) As String
+        cancellationToken.ThrowIfCancellationRequested()
         If String.IsNullOrWhiteSpace(path) Then Return "缺少 path"
         If Not File.Exists(path) Then Return "文件不存在"
         Dim info As New FileInfo(path)
         If info.Length > 8 * 1024 * 1024 Then Return "文件超过 8 MiB 限制"
         Dim text = Agent通用工具_v6.DecodeTextBytes(File.ReadAllBytes(path))
         Dim first = Math.Max(startLine, 1)
-        If first > 1 OrElse lineCount > 0 Then
-            Dim lines = text.Replace(vbCrLf, vbLf).Replace(vbCr, vbLf).Split(ControlChars.Lf)
-            Dim skip = Math.Min(first - 1, lines.Length)
-            Dim take = If(lineCount <= 0, Math.Min(10000, lines.Length - skip), Math.Min(Math.Max(lineCount, 0), 10000))
-            text = String.Join(vbCrLf, lines.Skip(skip).Take(take))
-        End If
-        Return Agent通用工具_v6.LimitText(text, Math.Min(Math.Max(maxChars, 1), 200000), "...[truncated]")
+        Dim take = If(lineCount <= 0, 10000, Math.Min(lineCount, 10000))
+        Dim limit = Math.Min(Math.Max(maxChars, 1), 200000)
+        Dim result As New StringBuilder()
+        Dim truncated As Boolean
+        Using reader As New StringReader(text)
+            Dim number As Integer = 0
+            Dim returned As Integer = 0
+            Do
+                cancellationToken.ThrowIfCancellationRequested()
+                Dim line = reader.ReadLine()
+                If line Is Nothing Then Exit Do
+                number += 1
+                If number < first Then Continue Do
+                If returned >= take Then
+                    truncated = True
+                    Exit Do
+                End If
+                If returned > 0 Then result.Append(vbCrLf)
+                If includeLineNumbers Then result.Append(number).Append(": ")
+                result.Append(line)
+                returned += 1
+                If result.Length > limit Then
+                    truncated = True
+                    Exit Do
+                End If
+            Loop
+        End Using
+        If truncated Then result.Append("...[truncated]")
+        Return Agent通用工具_v6.LimitText(result.ToString(), limit, "...[truncated]")
     End Function
 
-    Private Shared Function WriteLocalTextFile(path As String, content As String, encodingName As String, createDirectories As Boolean) As String
+    Private Shared Function WriteLocalTextFile(path As String, content As String, encodingName As String, createDirectories As Boolean,
+                                               Optional cancellationToken As Threading.CancellationToken = Nothing) As String
+        cancellationToken.ThrowIfCancellationRequested()
         If String.IsNullOrWhiteSpace(path) Then Return "缺少 path"
         Dim fullPath = System.IO.Path.GetFullPath(path)
         Dim parent = System.IO.Path.GetDirectoryName(fullPath)
@@ -209,11 +236,15 @@ Partial Public Class AgentLocalTools
         Select Case If(encodingName, "utf-8").Trim().ToLowerInvariant()
             Case "utf-16", "unicode" : encoding = Encoding.Unicode
             Case "utf-8-bom", "utf8-bom" : encoding = New UTF8Encoding(True)
+            Case "utf-16be" : encoding = Encoding.BigEndianUnicode
+            Case "utf-32" : encoding = Encoding.UTF32
+            Case "utf-32be" : encoding = New UTF32Encoding(True, True)
             Case Else : encoding = New UTF8Encoding(False)
         End Select
         Dim tempPath = fullPath & ".3fui-tmp-" & Guid.NewGuid().ToString("N")
         Try
             File.WriteAllText(tempPath, If(content, ""), encoding)
+            cancellationToken.ThrowIfCancellationRequested()
             File.Move(tempPath, fullPath, True)
             Return JsonSerializer.Serialize(New Dictionary(Of String, Object) From {{"success", True}, {"path", fullPath}, {"bytes", New FileInfo(fullPath).Length}}, JsonSO)
         Finally
@@ -221,14 +252,38 @@ Partial Public Class AgentLocalTools
         End Try
     End Function
 
-    Private Shared Function ApplyLocalTextPatch(path As String, oldText As String, newText As String, replaceAll As Boolean, expectedReplacements As Integer) As String
+    Private Shared Function ApplyLocalTextPatch(path As String, oldText As String, newText As String, replaceAll As Boolean, expectedReplacements As Integer,
+                                                Optional cancellationToken As Threading.CancellationToken = Nothing) As String
+        cancellationToken.ThrowIfCancellationRequested()
         If String.IsNullOrWhiteSpace(path) Then Return "缺少 path"
         If Not File.Exists(path) Then Return "文件不存在"
         If String.IsNullOrEmpty(oldText) Then Return "old_text 不能为空"
-        Dim original = Agent通用工具_v6.DecodeTextBytes(File.ReadAllBytes(path))
+        If New FileInfo(path).Length > 8L * 1024 * 1024 Then Return "补丁未应用：文件超过 8 MiB 限制"
+        Dim bytes = File.ReadAllBytes(path)
+        Dim encodingName = "utf-8"
+        If bytes.Length >= 4 AndAlso bytes(0) = &HFF AndAlso bytes(1) = &HFE AndAlso bytes(2) = 0 AndAlso bytes(3) = 0 Then
+            encodingName = "utf-32"
+        ElseIf bytes.Length >= 4 AndAlso bytes(0) = 0 AndAlso bytes(1) = 0 AndAlso bytes(2) = &HFE AndAlso bytes(3) = &HFF Then
+            encodingName = "utf-32be"
+        ElseIf bytes.Length >= 3 AndAlso bytes(0) = &HEF AndAlso bytes(1) = &HBB AndAlso bytes(2) = &HBF Then
+            encodingName = "utf-8-bom"
+        ElseIf bytes.Length >= 2 AndAlso bytes(0) = &HFF AndAlso bytes(1) = &HFE Then
+            encodingName = "utf-16"
+        ElseIf bytes.Length >= 2 AndAlso bytes(0) = &HFE AndAlso bytes(1) = &HFF Then
+            encodingName = "utf-16be"
+        Else
+            Try
+                ' 无 BOM 的旧编码不能通过有损解码再覆盖写回。
+                Dim validatedLength = New UTF8Encoding(False, True).GetCharCount(bytes)
+            Catch ex As DecoderFallbackException
+                Return "补丁未应用：文件不是有效的 UTF-8，且没有可识别的 Unicode BOM"
+            End Try
+        End If
+        Dim original = Agent通用工具_v6.DecodeTextBytes(bytes)
         Dim count = 0
         Dim searchStart = 0
         While searchStart <= original.Length - oldText.Length
+            cancellationToken.ThrowIfCancellationRequested()
             Dim found = original.IndexOf(oldText, searchStart, StringComparison.Ordinal)
             If found < 0 Then Exit While
             count += 1
@@ -238,34 +293,63 @@ Partial Public Class AgentLocalTools
         If count = 0 Then Return "补丁未应用：找不到完全匹配的 old_text"
         If Not replaceAll AndAlso count > 1 Then Return "补丁未应用：old_text 匹配多次，请提供更大上下文或传 replace_all=true"
         Dim updated = original.Replace(oldText, If(newText, ""), StringComparison.Ordinal)
-        Dim result = WriteLocalTextFile(path, updated, "utf-8", False)
+        Dim result = WriteLocalTextFile(path, updated, encodingName, False, cancellationToken)
         Return JsonSerializer.Serialize(New Dictionary(Of String, Object) From {{"success", True}, {"path", System.IO.Path.GetFullPath(path)}, {"replacements", If(replaceAll, count, 1)}, {"result", result}}, JsonSO)
     End Function
 
     Private Shared Function ListDirectory(path As String,
                                           recursive As Boolean,
-                                          cancellationToken As Threading.CancellationToken) As String
+                                          cancellationToken As Threading.CancellationToken,
+                                          Optional offset As Integer = 0,
+                                          Optional limit As Integer = 200,
+                                          Optional pattern As String = "*") As String
         cancellationToken.ThrowIfCancellationRequested()
         If String.IsNullOrWhiteSpace(path) Then Return "缺少 path"
         If Not Directory.Exists(path) Then Return "目录不存在"
         Dim dir As New DirectoryInfo(path)
         Dim options As New EnumerationOptions With {.RecurseSubdirectories = recursive, .IgnoreInaccessible = True, .AttributesToSkip = FileAttributes.ReparsePoint}
+        offset = Math.Max(0, offset)
+        limit = Math.Clamp(limit, 1, 1000)
+        If String.IsNullOrWhiteSpace(pattern) Then pattern = "*"
         Dim entries As New List(Of FileSystemInfo)
-        For Each entry In dir.EnumerateFileSystemInfos("*", options)
+        Dim skipped As Integer
+        Dim hasMore As Boolean
+        For Each entry In dir.EnumerateFileSystemInfos(pattern, options)
             cancellationToken.ThrowIfCancellationRequested()
+            If skipped < offset Then
+                skipped += 1
+                Continue For
+            End If
+            If entries.Count >= limit Then
+                hasMore = True
+                Exit For
+            End If
             entries.Add(entry)
         Next
         Dim items = entries.
-            OrderByDescending(Function(x) TypeOf x Is DirectoryInfo).
-            ThenBy(Function(x) x.Name, StringComparer.CurrentCultureIgnoreCase).
             Select(Function(x) New Dictionary(Of String, Object) From {
                 {"name", x.Name},
                 {"path", x.FullName},
                 {"type", If(TypeOf x Is DirectoryInfo, "directory", "file")},
                 {"size", If(TypeOf x Is FileInfo, DirectCast(x, FileInfo).Length, 0)}
             }).ToList()
+        ' 留出模型上下文的单次工具返回预算；翻页位置以实际返回数量为准。
+        Dim pageSize As Integer
+        Dim responseSize = JsonSerializer.Serialize(New With {.path = dir.FullName, .offset = offset, .limit = limit,
+            .has_more = True, .next_offset = CLng(offset) + limit, .entries = Array.Empty(Of Object)()}, ToolJsonOptions).Length + 64
+        For Each item In items
+            Dim itemSize = JsonSerializer.Serialize(item, ToolJsonOptions).Length + 1
+            If pageSize > 0 AndAlso responseSize + itemSize > 12000 Then Exit For
+            responseSize += itemSize
+            pageSize += 1
+        Next
+        If pageSize < items.Count Then
+            items.RemoveRange(pageSize, items.Count - pageSize)
+            hasMore = True
+        End If
         cancellationToken.ThrowIfCancellationRequested()
-        Return JsonSerializer.Serialize(items, JsonSO)
+        Return JsonSerializer.Serialize(New With {.path = dir.FullName, .entries = items, .offset = offset, .limit = limit,
+            .has_more = hasMore, .next_offset = If(hasMore, CType(offset + items.Count, Integer?), Nothing)}, ToolJsonOptions)
     End Function
 
     Private Shared Function CreateDirectory(path As String) As String

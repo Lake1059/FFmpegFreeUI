@@ -22,6 +22,11 @@ Partial Friend Class Agent页面控制器_v6
     Friend Sub Form_v6_Agent_Load(sender As Object, e As EventArgs)
         _loading = True
         Try
+            Try
+                Agent自定义内容_v6.初始化()
+            Catch ex As Exception
+                ShowStatus("初始化 Agent 自定义内容失败：" & ex.Message, True)
+            End Try
             _view.ModernListBox1.AllowDragReorder = False
             _view.ModernListBox1.TabStop = True
             InitializeSubmittedFileList()
@@ -99,7 +104,7 @@ Partial Friend Class Agent页面控制器_v6
         Dim title = If(conversation.Title, "").Trim()
         If title = "" Then title = "新对话"
         If title.Length > 28 Then title = String.Concat(title.AsSpan(0, 28), "...")
-        Return $"{title}  {conversation.UpdatedAt:MM-dd HH:mm}"
+        Return If(_userInputCoordinator IsNot Nothing AndAlso _userInputCoordinator.HasPending(conversation.Id), "[待选择] ", "") & $"{title}  {conversation.UpdatedAt:MM-dd HH:mm}"
     End Function
 
     Friend Sub ModernListBox1_ItemForeColorNeeded(sender As Object, e As ModernListBox.ItemForeColorEventArgs)
@@ -123,6 +128,7 @@ Partial Friend Class Agent页面控制器_v6
 
     Friend Sub Form_v6_Agent_Disposed(sender As Object, e As EventArgs)
         _closing = True
+        _userInputCoordinator?.Dispose()
         ' 嵌入主窗口时可能直接 Dispose，不一定触发 FormClosing。
         Try
             _store?.Save()
@@ -674,7 +680,7 @@ Partial Friend Class Agent页面控制器_v6
     End Sub
 
     Friend Sub MB_操作提示_Click(sender As Object, e As EventArgs)
-        ExOverlayMsgBox(FormMain_v6, $"{vbCrLf}【文本框快捷键】{vbCrLf}【常规】按 Enter 发送，按 Shift + Enter 换行{vbCrLf}【重新推理】发送空信息可触发重试推理{vbCrLf}【撤回重发】按 Alt + Enter 用当前内容替换最新一次你的内容并重新开始推理{vbCrLf}【单纯撤回】按 Ctrl + Delete 删除最新一轮对话并将用户消息复制到剪贴板{vbCrLf}{vbCrLf}【关于上下文限制和推理级别】{vbCrLf}【*】几乎没有端点会返回模型的上下文限制和推理级别列表{vbCrLf}【*】因此 3FUI 使用兜底策略在本地建立静态数据{vbCrLf}【*】如果你希望对某个模型增加上下文或是增加推理级别可以提 issue{vbCrLf}【*】但我不会把上下文给的太高，这会浪费token，除非该模型特别便宜",, "Agent 操作提示")
+        ExOverlayMsgBox(FormMain_v6, $"{vbCrLf}【文本框快捷键】{vbCrLf}【常规】按 Enter 发送，按 Shift + Enter 换行{vbCrLf}【重新推理】发送空信息可触发重试推理{vbCrLf}【撤回重发】按 Alt + Enter 用当前内容替换最新一次你的内容并重新开始推理{vbCrLf}【单纯撤回】按 Ctrl + Delete 删除最新一轮对话并将用户消息复制到剪贴板{vbCrLf}{vbCrLf}【自定义系统提示词和技能】{vbCrLf}【*】Agent 初始化时自动创建 Agent/SystemPrompt.md 和 Agent/Skills 文件夹{vbCrLf}【*】提示词文件有有效内容时完整替换默认提示词，清空即可恢复；下一次请求生效{vbCrLf}【*】将技能 md 文件或含 SKILL.md 的技能目录放入 Skills，AI 可通过技能接口按需读取{vbCrLf}{vbCrLf}【关于上下文限制和推理级别】{vbCrLf}【*】端点未提供模型能力时，3FUI 使用本地兜底数据{vbCrLf}【*】可编辑 Agent/CustomModels.json 自定义模型、推理级别和上下文总量，之后点击重载连接{vbCrLf}【*】配置格式和技能示例见项目 README 的 Agent 自定义设置章节",, "Agent 操作提示")
     End Sub
 
     Friend Sub AgentButtonLayoutChanged(sender As Object, e As EventArgs)

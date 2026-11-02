@@ -32,25 +32,31 @@ Partial Friend Class Agent页面控制器_v6
                                                      modelId As String,
                                                      tools As List(Of Dictionary(Of String, Object)),
                                                      cancellationToken As Threading.CancellationToken) As Task(Of List(Of AgentMessageData))
+        ' 同一请求的预算和正文使用同一份提示词快照；下一轮会重新读取用户文件。
+        Dim systemText = Agent提示词_v6.构建系统提示词(
+            AgentNetworkMode.Normalize(conversation.NetworkMode), GetPermissionLevelDisplayName(conversation.PermissionLevel))
         Dim conversationMessages = GetRequestConversationMessages(conversation)
-        Dim plan = BuildContextCompressionPlan(conversation, conversationMessages, tools)
+        Dim plan = BuildContextCompressionPlan(conversation, conversationMessages, tools, systemText)
         Dim pass = 0
         While plan.RequiresCompaction AndAlso pass < MaxContextCompactionPasses
             cancellationToken.ThrowIfCancellationRequested()
             pass += 1
             If Not Await EnsureContextSummaryAsync(client, conversation, conversationMessages, modelId, plan, cancellationToken) Then Exit While
-            plan = BuildContextCompressionPlan(conversation, conversationMessages, tools)
+            ' 压缩等待期间用户可能追加了调整方向，必须纳入预算后再发送。
+            conversationMessages = GetRequestConversationMessages(conversation)
+            plan = BuildContextCompressionPlan(conversation, conversationMessages, tools, systemText)
         End While
 
-        plan = BuildContextCompressionPlan(conversation, conversationMessages, tools)
+        conversationMessages = GetRequestConversationMessages(conversation)
+        plan = BuildContextCompressionPlan(conversation, conversationMessages, tools, systemText)
         If plan.CurrentRequestTokens > plan.AutoCompactTokenLimit Then
             Throw New InvalidOperationException(
                 $"上下文约 {plan.CurrentRequestTokens} tokens，超过当前安全请求上限 {plan.AutoCompactTokenLimit} tokens，且自动压缩未能继续。请减少历史记录或更换上下文更大的模型。")
         End If
 
         conversationMessages = BuildCompressedConversationMessages(conversation, conversationMessages)
-
-        Return BuildRequestMessagesWithSystem(conversation, conversationMessages)
+        conversationMessages.Insert(0, New AgentMessageData With {.Role = "system", .Content = systemText})
+        Return conversationMessages
     End Function
 
     Private Function GetRequestConversationMessages(conversation As AgentConversationData) As List(Of AgentMessageData)
@@ -62,7 +68,8 @@ Partial Friend Class Agent页面控制器_v6
 
     Private Function BuildContextCompressionPlan(conversation As AgentConversationData,
                                                  messages As List(Of AgentMessageData),
-                                                 tools As List(Of Dictionary(Of String, Object))) As ContextCompressionPlan
+                                                 tools As List(Of Dictionary(Of String, Object)),
+                                                 systemText As String) As ContextCompressionPlan
         Dim contextWindowTokens = ResolveContextWindowTokens(If(conversation?.ModelId, ""))
         Dim completionReserveTokens = Math.Min(8192,
             Math.Max(ContextMinimumCompletionReserveTokens, CInt(Math.Ceiling(contextWindowTokens * 0.06))))
@@ -74,9 +81,7 @@ Partial Friend Class Agent页面控制器_v6
             .SummaryBudgetTokens = summaryBudgetTokens
         }
 
-        Dim systemTokens = EstimateRequestTokenCount(Agent提示词_v6.构建系统提示词(
-            AgentNetworkMode.Normalize(conversation.NetworkMode),
-            GetPermissionLevelDisplayName(conversation.PermissionLevel)))
+        Dim systemTokens = EstimateRequestTokenCount(systemText)
         Dim fixedRequestTokens = systemTokens + toolDefinitionTokens + completionReserveTokens + ContextRequestEnvelopeReserveTokens
         If messages Is Nothing OrElse messages.Count = 0 Then
             plan.CurrentRequestTokens = fixedRequestTokens
@@ -251,19 +256,6 @@ Partial Friend Class Agent页面控制器_v6
               String.Equals(If(messages(result + 1).Role, ""), "tool", StringComparison.OrdinalIgnoreCase)
             result -= 1
         End While
-        Return result
-    End Function
-
-    Private Function BuildRequestMessagesWithSystem(conversation As AgentConversationData,
-                                                    conversationMessages As List(Of AgentMessageData)) As List(Of AgentMessageData)
-        Dim systemText = Agent提示词_v6.构建系统提示词(
-            AgentNetworkMode.Normalize(conversation.NetworkMode),
-            GetPermissionLevelDisplayName(conversation.PermissionLevel))
-
-        Dim result As New List(Of AgentMessageData) From {
-            New AgentMessageData With {.Role = "system", .Content = systemText}
-        }
-        result.AddRange(If(conversationMessages, New List(Of AgentMessageData)))
         Return result
     End Function
 

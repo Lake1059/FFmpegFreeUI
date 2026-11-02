@@ -102,23 +102,24 @@ Partial Friend Class Agent页面控制器_v6
             Not dailyReasoningRefreshDue AndAlso
             String.Equals(signature, _modelEndpointSignature, StringComparison.Ordinal) Then Return
 
-        Await RefreshModelsAsync(signature, force OrElse dailyReasoningRefreshDue)
+        Await RefreshModelsAsync(force OrElse dailyReasoningRefreshDue)
     End Function
 
-    Private Async Function RefreshModelsAsync(Optional expectedSignature As String = Nothing,
-                                              Optional allowReasoningFallback As Boolean = False) As Task
+    Private Async Function RefreshModelsAsync(allowReasoningFallback As Boolean) As Task
         If _refreshingModels Then
             _pendingModelRefresh = True
             Return
         End If
+        ' Core 内的提前返回仍须处理等待中的重载请求。
+        Do
+            _pendingModelRefresh = False
+            Await RefreshModelsCoreAsync(allowReasoningFallback)
+            If _closing OrElse _view.IsDisposed Then Return
+            allowReasoningFallback = True
+        Loop While _pendingModelRefresh
+    End Function
 
-        Try
-            If expectedSignature Is Nothing Then expectedSignature = AgentCapabilityCache.BuildEndpointSignature(CreateClient())
-        Catch ex As Exception
-            ShowStatus("Agent 端点配置无效：" & ex.Message, True)
-            Return
-        End Try
-
+    Private Async Function RefreshModelsCoreAsync(allowReasoningFallback As Boolean) As Task
         _refreshingModels = True
         Dim oldLoading = _loading
         Dim selectedModel = If(_view.MCB_模型选择.SelectedItem, 设置_v6.实例对象.AgentModelId)
@@ -127,10 +128,9 @@ Partial Friend Class Agent页面控制器_v6
         _loading = True
         Try
             client = CreateClient()
-            Dim actualSignature = AgentCapabilityCache.BuildEndpointSignature(client)
-            expectedSignature = actualSignature
+            Dim expectedSignature = AgentCapabilityCache.BuildEndpointSignature(client)
             If String.IsNullOrWhiteSpace(client.Endpoint) Then
-                _modelEndpointSignature = actualSignature
+                _modelEndpointSignature = expectedSignature
                 ShowStatus("请先在 Agent 设置中选择或填写端点。", True)
                 ExFloatingTip(_view.MCB_模型选择, "请先选择或填写 Agent 端点", 1800)
                 Return
@@ -152,6 +152,10 @@ Partial Friend Class Agent页面控制器_v6
                 modelResult = Await client.TryGetModelsAsync()
                 _loading = True
                 If _closing OrElse _view.IsDisposed Then Return
+                If Not String.Equals(expectedSignature, AgentCapabilityCache.BuildEndpointSignature(CreateClient()), StringComparison.Ordinal) Then
+                    _pendingModelRefresh = True
+                    Return
+                End If
                 If modelResult.Success Then Exit Do
 
                 If customModelResult.Models.Count > 0 Then
@@ -170,11 +174,6 @@ Partial Friend Class Agent页面控制器_v6
                 UseDefaultReasoningEffortsAfterRefreshFailure(client, selectedModel)
                 Return
             Loop
-            If Not String.Equals(expectedSignature, AgentCapabilityCache.BuildEndpointSignature(CreateClient()), StringComparison.Ordinal) Then
-                _pendingModelRefresh = True
-                Return
-            End If
-
             Dim endpointModels = If(modelResult.Success, modelResult.Value, New List(Of AgentModelInfo))
             _models = Agent自定义模型配置_v6.合并模型(endpointModels, customModelResult.Models)
             AgentCapabilityCache.ImportReasoningEfforts(client, _models)
@@ -216,18 +215,16 @@ Partial Friend Class Agent页面控制器_v6
         Finally
             _loading = oldLoading
             _refreshingModels = False
-            _view.MCB_模型选择.WaterText = "模型选择"
-            UpdateSendButtonState()
+            If Not _closing AndAlso Not _view.IsDisposed Then
+                _view.MCB_模型选择.WaterText = "模型选择"
+                UpdateSendButtonState()
+            End If
         End Try
 
         If useDefaultAfterCatch Then
             UseDefaultReasoningEffortsAfterRefreshFailure(client, selectedModel)
         End If
 
-        If _pendingModelRefresh Then
-            _pendingModelRefresh = False
-            Await RefreshModelsIfEndpointChangedAsync(True)
-        End If
     End Function
 
     Private Sub RefreshReasoningEfforts()

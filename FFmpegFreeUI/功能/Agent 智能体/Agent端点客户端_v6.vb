@@ -163,6 +163,8 @@ Public Class AgentEndpointClient
                                 Dim sawDataEvent As Boolean = False
                                 While True
                                     cancellationToken.ThrowIfCancellationRequested()
+                                    ' 限制无数据等待时间，允许持续输出的长推理超过 90 秒。
+                                    streamTimeout.CancelAfter(TimeSpan.FromSeconds(90))
                                     Dim line = Await reader.ReadLineAsync(streamTimeout.Token).ConfigureAwait(False)
                                     If line Is Nothing Then Exit While
                                     line = line.Trim()
@@ -209,7 +211,7 @@ Public Class AgentEndpointClient
                         result.Content = content.ToString()
                         result.RawJson = raw.ToString()
                         AddAccumulatedToolCalls(result, toolCallMap)
-                        ValidateStreamCompletion(result)
+                        ValidateChatResult(result, True)
                         result.Success = True
                         result.StatusCode = CInt(response.StatusCode)
                         Return result
@@ -718,7 +720,7 @@ Public Class AgentEndpointClient
 
         result.Content = content.ToString()
         AddAccumulatedToolCalls(result, toolCallMap)
-        ValidateStreamCompletion(result)
+        ValidateChatResult(result, True)
         Return result
     End Function
 
@@ -730,8 +732,8 @@ Public Class AgentEndpointClient
         End If
     End Sub
 
-    Private Shared Sub ValidateStreamCompletion(result As AgentChatResult)
-        If result.FinishReason = "" Then Throw New IOException("流式连接在完成标志之前关闭。")
+    Private Shared Sub ValidateChatResult(result As AgentChatResult, Optional streaming As Boolean = False)
+        If streaming AndAlso result.FinishReason = "" Then Throw New IOException("流式连接在完成标志之前关闭。")
         If Not HasChatResultPayload(result) Then Throw New InvalidDataException("端点没有返回有效的响应内容。")
         If result.ToolCalls.Count > 0 AndAlso result.FinishReason = "length" Then
             Throw New InvalidDataException("工具调用因输出长度限制被截断，未执行工具。")
@@ -819,7 +821,11 @@ Public Class AgentEndpointClient
             Dim choices As JsonElement
             If Not root.TryGetProperty("choices", choices) OrElse choices.ValueKind <> JsonValueKind.Array OrElse choices.GetArrayLength() = 0 Then Throw New JsonException("端点响应缺少 choices。")
             Dim message As JsonElement
-            If Not choices(0).TryGetProperty("message", message) Then Return result
+            If Not choices(0).TryGetProperty("message", message) OrElse message.ValueKind <> JsonValueKind.Object Then
+                Throw New JsonException("端点响应缺少有效的 message。")
+            End If
+            Dim finish As JsonElement
+            If choices(0).TryGetProperty("finish_reason", finish) AndAlso finish.ValueKind = JsonValueKind.String Then result.FinishReason = If(finish.GetString(), "")
             Dim content As JsonElement
             If message.TryGetProperty("content", content) AndAlso content.ValueKind = JsonValueKind.String Then result.Content = content.GetString()
             Dim toolCalls As JsonElement
@@ -829,7 +835,7 @@ Public Class AgentEndpointClient
                     Dim v As JsonElement
                     If callItem.TryGetProperty("id", v) AndAlso v.ValueKind = JsonValueKind.String Then callInfo.Id = v.GetString()
                     Dim fn As JsonElement
-                    If callItem.TryGetProperty("function", fn) Then
+                    If callItem.TryGetProperty("function", fn) AndAlso fn.ValueKind = JsonValueKind.Object Then
                         If fn.TryGetProperty("name", v) AndAlso v.ValueKind = JsonValueKind.String Then callInfo.Name = v.GetString()
                         If fn.TryGetProperty("arguments", v) AndAlso v.ValueKind = JsonValueKind.String Then callInfo.Arguments = v.GetString()
                     End If
@@ -837,6 +843,7 @@ Public Class AgentEndpointClient
                     If callInfo.Name <> "" Then result.ToolCalls.Add(callInfo)
                 Next
             End If
+            ValidateChatResult(result)
         End Using
         Return result
     End Function

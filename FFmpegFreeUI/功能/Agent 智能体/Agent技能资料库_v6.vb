@@ -1,28 +1,51 @@
 ﻿Imports System.Text.Json
 
-Public NotInheritable Class Agent技能资料库_v6
+Partial Public NotInheritable Class Agent技能资料库_v6
     Private Sub New()
     End Sub
 
     <CodeAnalysis.SuppressMessage("Performance", "CA1861:不要将常量数组作为参数", Justification:="<挂起>")>
-    Public Shared Function 列出技能() As String
+    Public Shared Function 列出技能(Optional offset As Integer = 0, Optional limit As Integer = 10) As String
         Dim references = 获取引用元数据()
-        Dim payload As New Dictionary(Of String, Object) From {
-            {"skills", New Object() {
+        Dim skills As New List(Of Dictionary(Of String, Object)) From {
                 New Dictionary(Of String, Object) From {
                     {"name", "ffmpegfreeui"},
+                    {"source", "builtin"},
                     {"aliases", New String() {"3fui", "ffmpeg-free-ui", "ffmpegfreeui"}},
                     {"description", "3FUI Agent 的内置资料库。用于了解 FFmpegFreeUI 环境机制、参数面板、命令生成、滤镜流控制、队列、集成工具、预设、文件上下文、联网权限、编码推荐和杜比视界编码。"},
                     {"usage", "当用户的问题涉及 3FUI 的具体操作、工具行为、字段含义、编码推荐或安全边界时，按需读取相关 reference；不要一次读取无关章节。"},
                     {"references", references}
-                }
-            }}
+                }}
+        Dim errors As New List(Of String)
+        skills.AddRange(获取用户技能元数据(errors))
+        offset = Math.Max(0, offset)
+        limit = Math.Clamp(limit, 1, 10)
+        Dim page = skills.Skip(offset).Take(limit).ToList()
+        Dim hasMore = CLng(offset) + page.Count < skills.Count
+        Dim payload As New Dictionary(Of String, Object) From {
+            {"skills", page},
+            {"total", skills.Count},
+            {"has_more", hasMore},
+            {"next_offset", If(hasMore, CObj(offset + page.Count), Nothing)},
+            {"errors", errors.Take(10).ToList()}
         }
+        ' JSON 本身也必须落在工具上下文预算内，不能截成无法解析的半个索引。
+        While page.Count > 1 AndAlso JsonSerializer.Serialize(payload, JsonSO).Length > 12000
+            page.RemoveAt(page.Count - 1)
+            payload("has_more") = True
+            payload("next_offset") = offset + page.Count
+        End While
         Return JsonSerializer.Serialize(payload, JsonSO)
     End Function
 
-    Public Shared Function 读取资料(skillName As String, referenceName As String) As String
-        If Not 是3FUISkill(skillName) Then Return "未知 skill：" & If(skillName, "") & "。可用 skill：ffmpegfreeui。"
+    Public Shared Function 读取资料(skillName As String, referenceName As String,
+                                  Optional startLine As Integer = 1, Optional lineCount As Integer = 100,
+                                  Optional startColumn As Integer = 1) As String
+        If Not 是3FUISkill(skillName) Then Return 读取用户技能(skillName, referenceName, startLine, lineCount, startColumn)
+        Return 分页技能文本(读取内置资料(referenceName), startLine, lineCount, startColumn)
+    End Function
+
+    Private Shared Function 读取内置资料(referenceName As String) As String
 
         Select Case 规范化引用名(referenceName)
             Case "", "skill", "overview"
@@ -104,6 +127,7 @@ description: 3FUI Agent 的内置资料库。用于了解 FFmpegFreeUI 环境机
 # FFmpegFreeUI Agent Skill
 
 读取方式：先用 `list_agent_skills` 查看索引，再用 `read_agent_skill_reference` 读取 `skill=ffmpegfreeui` 的相关 reference。除非用户的问题覆盖多个领域，不要一次读取所有章节。
+索引还包含 `Agent/Skills` 内用户编写的单文件或目录技能，skill 名称为 `custom/...`；若任务与其说明相关，按需读取对应入口。列表返回 `has_more=true` 时使用 `next_offset` 继续；读取返回未完提示时使用 `start_line`、`line_count`、`start_column` 继续，不要把首页当作全文。
 
 核心原则：
 - 3FUI Agent 运行在 FFmpegFreeUI 进程内，能聊天，也能通过工具读写参数面板、队列、准备文件、集成工具、预设、文件系统、联网和 PowerShell，具体取决于权限。
@@ -157,7 +181,7 @@ Agent 面向用户时既是聊天助手，也是 3FUI 控制器。不要把自�
 
 ## 权限等级
 
-3FUI Agent 的工具按权限开放。`安全区域` 可使用参数面板读取、字段查询和补丁修改，以及内置 skill 资料库读取。`环境访问` 增加页面切换、队列摘要、队列日志、队列控制、同步参数到队列、准备文件页、集成工具、硬件概要、参数预设和控件文本。`系统访问` 再增加本地文件读取、原子写入、精确文本补丁、目录和路径操作、图片信息、PowerShell 以及直接运行 Windows 可执行文件。
+3FUI Agent 的工具按权限开放。`安全区域` 可使用参数面板读取、字段查询和补丁修改，以及内置 skill 与 Agent/Skills 内用户技能读取。技能接口仅可读取技能范围内的 Markdown，不提供其他本地文件访问权限。`环境访问` 增加页面切换、队列摘要、队列日志、队列控制、同步参数到队列、准备文件页、集成工具、硬件概要、参数预设和控件文本。`系统访问` 再增加本地文件读取、原子写入、精确文本补丁、目录和路径操作、图片信息、PowerShell 以及直接运行 Windows 可执行文件。
 
 不要绕过权限。工具返回权限不足时，应告诉用户当前权限不够，并说明需要切换到哪一级权限。
 
@@ -216,16 +240,28 @@ PowerShell 优先用于只读检查、诊断、结构化计算和用户明确要
 - `fetch_url`：读取网页、JSON、XML 或纯文本。可传 `method`、`headers`、`user_agent`、`referer`、`cookies`、`body`、`response_format`、`max_chars`。
 - `http_request`：通用本地 HTTP 请求，返回 `status_code`、响应头、`content_type` 和响应体摘要。API 请求优先用它，并通过 `headers` 填写 `Authorization` 等身份标识。模型可以根据用户提供的站点要求选择 User-Agent、Referer、Cookie 和请求头，但不得凭空编造登录凭据或绕过访问控制。
 
+## 询问用户（所有权限可用）
+
+- `ask_user` 在推理中途向用户询问一个需要明确选择的问题。必填 `question` 和 `options`；每项含唯一 `id`、精简 `label` 和可选详细 `description`。
+- **LakeUI 对话框不适合展示过多按钮和过长按钮文本。** 每次仅提供 2-3 个选项，按钮 `label` 最多 12 字符、单行；将选项的详细解释、影响和取舍写入正文 `question` 或 `description`，不要把整段解释塞进按钮。`question` 最多 600 字符，每项 `description` 最多 200 字符；复杂问题拆成多次询问。
+- 返回 `status=selected` 才能采用 `option_id`；`unanswered`（关闭、暂不选择、超时）或 `unavailable` 均表示未取得选择，绝不能作为同意或自动选默认项。不要无意义地重复弹窗；必要选择缺失时说明等待用户决定。
+- 对话框非模态，不占用 Agent 页面布局。每次只展示一个当前会话的问题；切换会话会暂时关闭原问题的窗口，原问题仍等待，返回该会话后恢复；其他会话的问题显示为待选择。
+- `timeout_seconds` 是包含后台排队的总等待时间，30-1800 秒、默认 600 秒；超时不代选。停止任务、关闭页面时解除等待并关闭问题窗，不继续执行后续工具。
+- 用户等待期间没有模型 HTTP 请求占用连接；答案进入所属会话的工具结果并保存后才发下一次模型请求。此后网络中断沿用现有重试流程，不因重试重新弹出已经回答的问题。
+
 ## 系统访问工具
 
-- `read_local_text_file`：必填 `path`，支持 `start_line`、`line_count`、`max_chars`；大文件按片段读取。
+- `search_local_files`：按文件名通配符或相对路径 glob（如 `**/*.srt`）查找文件；必填 `path`，可选 `pattern`、`recursive`（默认 true）、`include_hidden`、`exclude_directories`。默认排除 `.git`、`.vs`、`bin`、`obj`、`node_modules`，不跟随链接。
+- `search_local_text`：按行搜索 UTF-8 或带 BOM 的 Unicode 文本；必填 `path`、`query`，支持上述文件筛选以及 `regex`、`case_sensitive`、`context_lines`（0-5），返回路径、原文件行号、列号和上下文。每行返回一次，单行片段最多 400 字符。跳过二进制、不可解码和大于 8 MiB 的文件。
+- 两种搜索均支持 `offset`、`limit`（默认 50，最大 200）、`timeout_seconds`（默认 10，最大 30）。分页沿用原条件并传 `next_offset`；响应控制在约 12000 字符。检查 `stop_reason`：`page_limit` 可翻页，`timeout`、`regex_timeout`、`scan_limit`、`byte_limit` 表示只得到了部分结果，应缩小目录/文件筛选范围。目录或文件变化可能影响分页。
+- `read_local_text_file`：必填 `path`，支持 `start_line`、`line_count`、`max_chars`、`include_line_numbers`；最多读取 10000 行、200000 字符，文件不超过 8 MiB；大文件按片段读取。
 - `write_local_text_file`：必填 `path`、`content`，用原子替换写入文本，可选 `encoding`（`utf-8`、`utf-8-bom`、`utf-16`）和 `create_directories`。
 - `apply_local_text_patch`：必填 `path`、`old_text`、`new_text`，对代码执行精确修改；默认要求唯一匹配，可用 `replace_all` 或 `expected_replacements` 明确匹配次数。
-- `list_directory`：必填 `path`，列出目录中的全部可访问条目，支持 `recursive`。
+- `list_directory`：必填 `path`，支持 `recursive`、`pattern`（如 `*.mkv`）、`offset`、`limit`（默认 200，最大 1000）；约 12000 字符的返回预算可能提前结束一页。返回 `entries`、`has_more`、`next_offset`；有后续页时沿用路径和筛选条件，以 `next_offset` 继续。文件系统枚举顺序不保证排序，翻页期间目录变化可能影响结果。
 - `create_directory`：必填 `path`，创建目录（已存在时返回现状）。`copy_local_file` 和 `move_local_path` 必填 `source`、`destination`，可选 `overwrite`，默认不覆盖目标。
 - `delete_local_path`：必须传 `confirm=true`，文件和目录优先进入回收站；执行前再次确认路径和用户意图。
 - `get_image_info`：读取图片尺寸、格式和大小，不返回 Base64。
-- `run_powershell`：复用本轮 PowerShell 会话，适合诊断和用户明确要求的命令；参数为 `command`、可选 `working_directory` 和 `timeout_seconds`。首次调用前先验证 `$PSVersionTable`；脚本必须显式使用 UTF-8 设置。
+- `run_powershell`：复用本轮 PowerShell 会话，适合诊断和用户明确要求的命令；参数为 `command`、可选 `working_directory`、`timeout_seconds`、`max_output_chars`（stdout/stderr 分别限额，默认 12000，最大 200000）。返回 `success`、`exit_code`、超时状态及两个输出流的截断标志。首次调用前先验证 `$PSVersionTable`；脚本必须显式使用 UTF-8 设置。
 - `run_windows_executable`：直接运行 Windows 可执行文件。参数为 `executable`、`arguments` 数组，可选 `working_directory`、`stdin`、`timeout_seconds`、`max_output_chars`；返回 `exit_code`、`stdout`、`stderr`、`timed_out`。参数逐项传递，不要把整条命令拼成一个字符串。
 
 所有系统访问工具都要求 `系统访问` 权限。删除、覆盖、批量修改、运行未知程序或带副作用的网络请求必须先确认用户意图。"

@@ -34,6 +34,7 @@ Partial Public Class AgentLocalTools
         Private _reportedWorkingDirectory As String = ""
         Private _lastWorkingDirectory As String = ""
         Private _processFileName As String = ""
+        Private _maxOutputCharacters As Integer = MaxCapturedOutputCharacters
         Private _disposed As Boolean = False
 
         Protected MustOverride ReadOnly Property DisplayName As String
@@ -57,6 +58,7 @@ Partial Public Class AgentLocalTools
 
             Dim timeoutSeconds = GetJsonIntegerValue(args, "timeout_seconds", DefaultTimeoutSeconds)
             timeoutSeconds = Math.Min(Math.Max(timeoutSeconds, 1), 300)
+            Dim maxOutputCharacters = Math.Clamp(GetJsonIntegerValue(args, "max_output_chars", MaxCapturedOutputCharacters), 1, 200000)
 
             Await _gate.WaitAsync(cancellationToken)
             Try
@@ -80,6 +82,7 @@ Partial Public Class AgentLocalTools
                     _stderrEndMarker = stderrEndMarker
                     _stdoutEndTcs = stdoutEndTcs
                     _stderrEndTcs = stderrEndTcs
+                    _maxOutputCharacters = maxOutputCharacters
                     _reportedExitCode = -1
                     _reportedWorkingDirectory = ""
                 End SyncLock
@@ -144,10 +147,14 @@ Partial Public Class AgentLocalTools
 
                 If operationFailure IsNot Nothing Then Throw New InvalidOperationException(DisplayName & " execution failed: " & operationFailure.Message, operationFailure)
 
-                stdout = LimitSessionText(stdout, MaxCapturedOutputCharacters)
-                stderr = LimitSessionText(stderr, MaxCapturedOutputCharacters)
+                Dim stdoutTruncated = stdout.Length > maxOutputCharacters
+                Dim stderrTruncated = stderr.Length > maxOutputCharacters
+                stdout = LimitSessionText(stdout, maxOutputCharacters)
+                stderr = LimitSessionText(stderr, maxOutputCharacters)
 
                 Dim result = BuildResultPayload(inputText, workingDirectory, timeoutSeconds, timedOut, exitCode, CLng(sw.Elapsed.TotalMilliseconds), stdout, stderr)
+                result("stdout_truncated") = stdoutTruncated
+                result("stderr_truncated") = stderrTruncated
                 Return JsonSerializer.Serialize(result, JsonSO)
             Finally
                 _gate.Release()
@@ -173,6 +180,7 @@ Partial Public Class AgentLocalTools
                                                           stdout As String,
                                                           stderr As String) As Dictionary(Of String, Object)
             Dim result As New Dictionary(Of String, Object) From {
+                {"success", Not timedOut AndAlso exitCode = 0},
                 {InputPropertyNames(0), inputText},
                 {"working_directory", workingDirectory},
                 {"timeout_seconds", timeoutSeconds},
@@ -309,9 +317,13 @@ Partial Public Class AgentLocalTools
             Return text.Substring(0, maxLength) & "...[truncated]"
         End Function
 
-        Private Shared Sub AppendCapturedLine(builder As StringBuilder, line As String)
-            Dim remaining = MaxCapturedOutputCharacters + 1 - builder.Length
-            If remaining > 0 Then builder.Append((line & Environment.NewLine).AsSpan(0, Math.Min(remaining, line.Length + Environment.NewLine.Length)))
+        Private Sub AppendCapturedLine(builder As StringBuilder, line As String)
+            Dim remaining = _maxOutputCharacters + 1 - builder.Length
+            If remaining <= 0 Then Return
+            Dim take = Math.Min(remaining, line.Length)
+            builder.Append(line.AsSpan(0, take))
+            remaining -= take
+            If remaining > 0 Then builder.Append(Environment.NewLine.AsSpan(0, Math.Min(remaining, Environment.NewLine.Length)))
         End Sub
 
         Private Sub OnOutputDataReceived(sender As Object, e As DataReceivedEventArgs)

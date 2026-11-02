@@ -87,6 +87,12 @@ Public NotInheritable Class Agent通用工具_v6
 
     Public Shared Function DecodeTextBytes(bytes As Byte()) As String
         If bytes Is Nothing OrElse bytes.Length = 0 Then Return ""
+        If bytes.Length >= 4 AndAlso bytes(0) = &HFF AndAlso bytes(1) = &HFE AndAlso bytes(2) = 0 AndAlso bytes(3) = 0 Then
+            Return Encoding.UTF32.GetString(bytes, 4, bytes.Length - 4)
+        End If
+        If bytes.Length >= 4 AndAlso bytes(0) = 0 AndAlso bytes(1) = 0 AndAlso bytes(2) = &HFE AndAlso bytes(3) = &HFF Then
+            Return New UTF32Encoding(True, True).GetString(bytes, 4, bytes.Length - 4)
+        End If
         If bytes.Length >= 3 AndAlso bytes(0) = &HEF AndAlso bytes(1) = &HBB AndAlso bytes(2) = &HBF Then
             Return Encoding.UTF8.GetString(bytes, 3, bytes.Length - 3)
         End If

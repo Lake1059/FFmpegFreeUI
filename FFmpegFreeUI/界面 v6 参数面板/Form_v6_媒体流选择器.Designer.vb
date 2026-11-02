@@ -5,11 +5,16 @@ Partial Class Form_v6_媒体流选择器
     <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
-            If disposing AndAlso components IsNot Nothing Then
-                components.Dispose()
+            If disposing Then
+                释放选择器资源()
+                components?.Dispose()
             End If
         Finally
-            MyBase.Dispose(disposing)
+            Try
+                MyBase.Dispose(disposing)
+            Finally
+                If disposing Then 释放自有字体()
+            End Try
         End Try
     End Sub
 

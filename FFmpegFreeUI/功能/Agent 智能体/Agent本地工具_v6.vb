@@ -10,10 +10,16 @@ Partial Public Class AgentLocalTools
     <CodeAnalysis.SuppressMessage("Performance", "CA1861:不要将常量数组作为参数", Justification:="<挂起>")>
     Public Shared Function BuildToolDefinitions(permissionLevel As Integer, networkMode As Integer) As List(Of Dictionary(Of String, Object))
         Dim tools As New List(Of Dictionary(Of String, Object)) From {
-            FunctionTool("list_agent_skills", "列出 3FUI Agent 内置 skill 资料库及可按需读取的 reference。遇到 3FUI 环境机制、工具行为、参数面板、命令生成、队列、预设、联网权限或编码推荐问题时先用它查看索引。", New Dictionary(Of String, Object)),
-            FunctionTool("read_agent_skill_reference", "读取 3FUI Agent 内置 skill 资料库中的指定 reference。只读取与当前任务相关的章节，避免一次加载全部资料。", New Dictionary(Of String, Object) From {
+            FunctionTool("list_agent_skills", "列出内置资料库与 Agent/Skills 中的用户技能（含名称、说明和入口），任务可能有对应技能时先查看索引。has_more=true 时用 next_offset 继续。", New Dictionary(Of String, Object) From {
+            {"offset", New Dictionary(Of String, Object) From {{"type", "integer"}, {"description", "分页偏移，默认 0"}}},
+            {"limit", New Dictionary(Of String, Object) From {{"type", "integer"}, {"description", "每页数量，1-10，默认 10"}}}
+        }),
+            FunctionTool("read_agent_skill_reference", "读取内置或用户 skill 的指定 Markdown reference。使用 list_agent_skills 返回的 skill 名称；按需读取。返回未完时按提示继续分页。", New Dictionary(Of String, Object) From {
             {"skill", New Dictionary(Of String, Object) From {{"type", "string"}, {"description", "skill 名称，默认 ffmpegfreeui"}}},
-            {"reference", New Dictionary(Of String, Object) From {{"type", "string"}, {"description", "reference 名称，例如 SKILL.md 或 references/parameter-panel.md"}}}
+            {"reference", New Dictionary(Of String, Object) From {{"type", "string"}, {"description", "入口为 SKILL.md；目录技能可用 references/example.md 等相对路径"}}},
+            {"start_line", New Dictionary(Of String, Object) From {{"type", "integer"}, {"description", "起始行，1-based，默认 1"}}},
+            {"line_count", New Dictionary(Of String, Object) From {{"type", "integer"}, {"description", "最多行数，1-500，默认 100"}}},
+            {"start_column", New Dictionary(Of String, Object) From {{"type", "integer"}, {"description", "起始行内的字符位置，1-based，长行分页时使用，默认 1"}}}
         }, {"reference"}),
             FunctionTool("get_parameter_panel_state", "读取当前参数面板，默认仅返回 overview。需要命令验证或完整预设时按需开启对应 include_*；关闭全部选项会报错。", BuildParameterResultProperties(True, False)),
             FunctionTool("get_parameter_field_info", "按字段名或关键词查询参数面板字段的类型、当前值、候选值和格式规则。填写不熟悉的参数前优先调用，避免猜字段值。", New Dictionary(Of String, Object) From {
@@ -149,28 +155,33 @@ Partial Public Class AgentLocalTools
         End Select
 
         If permissionLevel >= PermissionSystem Then
+            AddSearchToolDefinitions(tools)
             tools.Add(FunctionTool("read_local_text_file", "读取本地文本文件。仅系统访问权限可用，支持按行读取，避免把大文件一次性放入上下文。", New Dictionary(Of String, Object) From {
                 {"path", New Dictionary(Of String, Object) From {{"type", "string"}}},
                 {"start_line", New Dictionary(Of String, Object) From {{"type", "integer"}, {"description", "1-based 起始行，默认 1"}}},
                 {"line_count", New Dictionary(Of String, Object) From {{"type", "integer"}, {"description", "最多读取行数，默认读取到文件末尾，最多 10000 行"}}},
-                {"max_chars", New Dictionary(Of String, Object) From {{"type", "integer"}, {"description", "最大返回字符数，1-200000，默认 20000"}}}
+                {"max_chars", New Dictionary(Of String, Object) From {{"type", "integer"}, {"description", "最大返回字符数，1-200000，默认 20000"}}},
+                {"include_line_numbers", New Dictionary(Of String, Object) From {{"type", "boolean"}, {"description", "为每行添加原文件行号，默认 false；便于定位和补丁"}}}
             }, {"path"}))
             tools.Add(FunctionTool("write_local_text_file", "写入本地文本文件，使用临时文件替换保证写入过程不会留下半截文件；必要时可创建父目录。仅系统访问权限可用。", New Dictionary(Of String, Object) From {
                 {"path", New Dictionary(Of String, Object) From {{"type", "string"}}},
                 {"content", New Dictionary(Of String, Object) From {{"type", "string"}}},
-                {"encoding", New Dictionary(Of String, Object) From {{"type", "string"}, {"description", "utf-8、utf-8-bom、utf-16，默认 utf-8"}}},
+                {"encoding", New Dictionary(Of String, Object) From {{"type", "string"}, {"description", "utf-8、utf-8-bom、utf-16、utf-16be、utf-32、utf-32be，默认 utf-8"}}},
                 {"create_directories", New Dictionary(Of String, Object) From {{"type", "boolean"}}}
             }, {"path", "content"}))
-            tools.Add(FunctionTool("apply_local_text_patch", "对本地文本文件执行精确 old_text 到 new_text 替换，默认要求恰好匹配一次；用于安全编辑代码而不需要传输 Base64。", New Dictionary(Of String, Object) From {
+            tools.Add(FunctionTool("apply_local_text_patch", "对本地文本文件执行精确 old_text 到 new_text 替换，默认要求恰好匹配一次；保留 Unicode BOM 和编码；拒绝无 BOM 的非 UTF-8 文件。文件限制 8 MiB。", New Dictionary(Of String, Object) From {
                 {"path", New Dictionary(Of String, Object) From {{"type", "string"}}},
                 {"old_text", New Dictionary(Of String, Object) From {{"type", "string"}}},
                 {"new_text", New Dictionary(Of String, Object) From {{"type", "string"}}},
                 {"replace_all", New Dictionary(Of String, Object) From {{"type", "boolean"}}},
                 {"expected_replacements", New Dictionary(Of String, Object) From {{"type", "integer"}}}
             }, {"path", "old_text", "new_text"}))
-            tools.Add(FunctionTool("list_directory", "列举本地目录，支持递归。返回目录中的全部可访问条目；仅系统访问权限可用。", New Dictionary(Of String, Object) From {
+            tools.Add(FunctionTool("list_directory", "分页列举本地目录，支持递归和文件名通配符。返回 entries、has_more、next_offset；按文件系统枚举顺序翻页，翻页期间目录变化可能影响结果。仅系统访问权限可用。", New Dictionary(Of String, Object) From {
                 {"path", New Dictionary(Of String, Object) From {{"type", "string"}}},
-                {"recursive", New Dictionary(Of String, Object) From {{"type", "boolean"}}}
+                {"recursive", New Dictionary(Of String, Object) From {{"type", "boolean"}}},
+                {"offset", New Dictionary(Of String, Object) From {{"type", "integer"}, {"description", "跳过的匹配条目数，默认 0"}}},
+                {"limit", New Dictionary(Of String, Object) From {{"type", "integer"}, {"description", "每页最多条目数，1-1000，默认 200；约 12000 字符的返回预算可能提前结束一页，以 next_offset 继续"}}},
+                {"pattern", New Dictionary(Of String, Object) From {{"type", "string"}, {"description", "文件名通配符，例如 *.mkv；默认 *"}}}
             }, {"path"}))
             tools.Add(FunctionTool("create_directory", "创建本地目录（包含不存在的父目录）。仅系统访问权限可用。", New Dictionary(Of String, Object) From {
                 {"path", New Dictionary(Of String, Object) From {{"type", "string"}}}
@@ -195,6 +206,15 @@ Partial Public Class AgentLocalTools
             AddConsoleToolDefinitions(tools)
         End If
 
+        tools.Add(FunctionTool("ask_user", "推理中询问用户一个需要明确选择的问题。LakeUI 对话框只适合 2-3 个短按钮；详细解释写在 question/description 中，label 最多 12 字符。返回 status=selected 和 option_id；关闭、超时或未选择返回 unanswered，绝不能视为同意或擅自选默认项。", New Dictionary(Of String, Object) From {
+            {"question", New Dictionary(Of String, Object) From {{"type", "string"}, {"maxLength", 600}}},
+            {"options", New Dictionary(Of String, Object) From {{"type", "array"}, {"minItems", 2}, {"maxItems", 3}, {"items", New Dictionary(Of String, Object) From {{"type", "object"}, {"properties", New Dictionary(Of String, Object) From {
+                {"id", New Dictionary(Of String, Object) From {{"type", "string"}, {"maxLength", 40}}},
+                {"label", New Dictionary(Of String, Object) From {{"type", "string"}, {"maxLength", 12}, {"description", "精简按钮文本，不放长解释"}}},
+                {"description", New Dictionary(Of String, Object) From {{"type", "string"}, {"maxLength", 200}, {"description", "显示在正文中的详细解释"}}}
+            }}, {"required", New String() {"id", "label"}}}}}},
+            {"timeout_seconds", New Dictionary(Of String, Object) From {{"type", "integer"}, {"description", "30-1800 秒，默认 600；超时不代选"}}}
+        }, {"question", "options"}))
         Return tools.
             Where(Function(tool) tool IsNot Nothing).
             GroupBy(Function(tool) GetToolName(tool), StringComparer.OrdinalIgnoreCase).
@@ -218,7 +238,8 @@ Partial Public Class AgentLocalTools
         tools.Add(FunctionTool("run_powershell", "运行 PowerShell 命令。仅系统访问权限可用；优先使用 PATH 中的 PowerShell 7 (pwsh.exe)，启动失败时自动回退 Windows PowerShell 5 (powershell.exe)。同一次用户消息触发的 Agent 运行会复用同一个 PowerShell 进程，变量、当前位置和模块导入可在本轮多次调用之间保留；会话启动时强制标准输入、标准输出、标准错误、$OutputEncoding 和带 Encoding 参数的文本 cmdlet 使用 UTF-8；本轮响应结束、超时或任务终止时会关闭进程。若本轮首次使用，先验证 $PSVersionTable.PSVersion 和 $PSVersionTable.PSEdition，再选择兼容语法；脚本读写文本仍需显式使用 -Encoding UTF8 或 .NET UTF8Encoding。", New Dictionary(Of String, Object) From {
             {"command", New Dictionary(Of String, Object) From {{"type", "string"}, {"description", "要执行的 PowerShell 命令"}}},
             {"working_directory", New Dictionary(Of String, Object) From {{"type", "string"}, {"description", "可选工作目录。首次调用默认使用程序目录；后续调用默认沿用当前 PowerShell 位置。"}}},
-            {"timeout_seconds", New Dictionary(Of String, Object) From {{"type", "integer"}, {"description", "可选超时时间，1-300 秒，默认 60 秒"}}}
+            {"timeout_seconds", New Dictionary(Of String, Object) From {{"type", "integer"}, {"description", "可选超时时间，1-300 秒，默认 60 秒"}}},
+            {"max_output_chars", New Dictionary(Of String, Object) From {{"type", "integer"}, {"description", "stdout/stderr 各自返回字符数，1-200000，默认 12000；超出部分仍会排空，返回截断标记"}}}
         }, {"command"}))
         tools.Add(FunctionTool("run_windows_executable", "直接运行 Windows 可执行文件并传递参数。仅系统访问权限可用；参数使用数组逐项传递，不经过 shell 拼接。返回 exit_code、stdout、stderr 和超时状态。", New Dictionary(Of String, Object) From {
             {"executable", New Dictionary(Of String, Object) From {{"type", "string"}, {"description", "可执行文件路径或 PATH 中的程序名，例如 ffmpeg.exe"}}},
@@ -237,7 +258,8 @@ Partial Public Class AgentLocalTools
                                               modelId As String,
                                               reasoningEffort As String,
                                               Optional powerShellSession As PowerShellRunSession = Nothing,
-                                              Optional cancellationToken As Threading.CancellationToken = Nothing) As Task(Of String)
+                                              Optional cancellationToken As Threading.CancellationToken = Nothing,
+                                              Optional askUser As Func(Of JsonElement, Threading.CancellationToken, Task(Of String)) = Nothing) As Task(Of String)
         Try
             cancellationToken.ThrowIfCancellationRequested()
             If callInfo Is Nothing Then Return "工具执行失败：缺少工具调用"
@@ -246,10 +268,16 @@ Partial Public Class AgentLocalTools
             If argumentParseError <> "" Then Return argumentParseError
 
             Select Case callInfo?.Name
+                Case "ask_user"
+                    If askUser Is Nothing Then Return "{""status"":""unavailable"",""reason"":""没有可交互的 Agent 窗口""}"
+                    Return Await askUser(args, cancellationToken)
                 Case "list_agent_skills"
-                    Return Agent技能资料库_v6.列出技能()
+                    Return Agent技能资料库_v6.列出技能(Agent通用工具_v6.GetJsonInteger(args, "offset", 0), Agent通用工具_v6.GetJsonInteger(args, "limit", 10))
                 Case "read_agent_skill_reference"
-                    Return Agent技能资料库_v6.读取资料(Agent通用工具_v6.GetJsonString(args, "skill", "ffmpegfreeui"), Agent通用工具_v6.GetJsonString(args, "reference"))
+                    Return Agent技能资料库_v6.读取资料(
+                        Agent通用工具_v6.GetJsonString(args, "skill", "ffmpegfreeui"), Agent通用工具_v6.GetJsonString(args, "reference"),
+                        Agent通用工具_v6.GetJsonInteger(args, "start_line", 1), Agent通用工具_v6.GetJsonInteger(args, "line_count", 100),
+                        Agent通用工具_v6.GetJsonInteger(args, "start_column", 1))
                 Case "get_parameter_panel_state"
                     Return GetParameterPanelState(args)
                 Case "get_parameter_field_info"
@@ -350,28 +378,36 @@ Partial Public Class AgentLocalTools
                                                Agent通用工具_v6.GetJsonBoolean(args, "use_proxy", True))
                 Case "read_local_text_file"
                     If permissionLevel < PermissionSystem Then Return "权限不足：需要系统访问"
-                    Return ReadLocalTextFile(Agent通用工具_v6.GetJsonString(args, "path"),
+                    Return Await Task.Run(Function() ReadLocalTextFile(Agent通用工具_v6.GetJsonString(args, "path"),
                                              Agent通用工具_v6.GetJsonInteger(args, "start_line", 1),
                                              Agent通用工具_v6.GetJsonInteger(args, "line_count", 0),
-                                             Agent通用工具_v6.GetJsonInteger(args, "max_chars", 20000))
+                                             Agent通用工具_v6.GetJsonInteger(args, "max_chars", 20000),
+                                             Agent通用工具_v6.GetJsonBoolean(args, "include_line_numbers", False), cancellationToken), cancellationToken)
                 Case "write_local_text_file"
                     If permissionLevel < PermissionSystem Then Return "权限不足：需要系统访问"
-                    Return WriteLocalTextFile(Agent通用工具_v6.GetJsonString(args, "path"),
+                    Return Await Task.Run(Function() WriteLocalTextFile(Agent通用工具_v6.GetJsonString(args, "path"),
                                               Agent通用工具_v6.GetJsonString(args, "content"),
                                               Agent通用工具_v6.GetJsonString(args, "encoding", "utf-8"),
-                                              Agent通用工具_v6.GetJsonBoolean(args, "create_directories", False))
+                                              Agent通用工具_v6.GetJsonBoolean(args, "create_directories", False), cancellationToken), cancellationToken)
                 Case "apply_local_text_patch"
                     If permissionLevel < PermissionSystem Then Return "权限不足：需要系统访问"
-                    Return ApplyLocalTextPatch(Agent通用工具_v6.GetJsonString(args, "path"),
+                    Return Await Task.Run(Function() ApplyLocalTextPatch(Agent通用工具_v6.GetJsonString(args, "path"),
                                                Agent通用工具_v6.GetJsonString(args, "old_text"),
                                                Agent通用工具_v6.GetJsonString(args, "new_text"),
                                                Agent通用工具_v6.GetJsonBoolean(args, "replace_all", False),
-                                               Agent通用工具_v6.GetJsonInteger(args, "expected_replacements", 0))
+                                               Agent通用工具_v6.GetJsonInteger(args, "expected_replacements", 0), cancellationToken), cancellationToken)
                 Case "list_directory"
                     If permissionLevel < PermissionSystem Then Return "权限不足：需要系统访问"
-                    Return ListDirectory(Agent通用工具_v6.GetJsonString(args, "path"),
+                    Return Await Task.Run(Function() ListDirectory(Agent通用工具_v6.GetJsonString(args, "path"),
                                          Agent通用工具_v6.GetJsonBoolean(args, "recursive", False),
-                                         cancellationToken)
+                                         cancellationToken,
+                                         Agent通用工具_v6.GetJsonInteger(args, "offset", 0),
+                                         Agent通用工具_v6.GetJsonInteger(args, "limit", 200),
+                                         Agent通用工具_v6.GetJsonString(args, "pattern", "*")), cancellationToken)
+                Case "search_local_files", "search_local_text"
+                    If permissionLevel < PermissionSystem Then Return "权限不足：需要系统访问"
+                    Return Await Task.Run(Function() SearchLocalFiles(args,
+                        String.Equals(callInfo.Name, "search_local_text", StringComparison.OrdinalIgnoreCase), cancellationToken), cancellationToken)
                 Case "create_directory"
                     If permissionLevel < PermissionSystem Then Return "权限不足：需要系统访问"
                     Return CreateDirectory(Agent通用工具_v6.GetJsonString(args, "path"))

@@ -1,9 +1,17 @@
 Imports LakeUI
 
 Public Class Form_v6_媒体流选择器
-    Private ReadOnly 视频目标 As Object
-    Private ReadOnly 音频目标 As Object
-    Private ReadOnly 字幕目标 As Object
+    Private 视频目标 As Object
+    Private 音频目标 As Object
+    Private 字幕目标 As Object
+    Private 读取取消源 As Threading.CancellationTokenSource
+    Private 读取进程 As Process
+    Private 读取任务 As Task
+    Private 正在关闭 As Boolean
+    Private 资源已释放 As Boolean
+    Private 窗口样式 As ThisIsYourWindow
+    Private ReadOnly 拖入控件 As New List(Of Control)
+    Private ReadOnly 自有字体 As New Dictionary(Of (Single, FontStyle), Font)
     Private ReadOnly 文件索引 As String
     Private ReadOnly 视频已选 As New HashSet(Of Integer)
     Private ReadOnly 音频已选 As New HashSet(Of Integer)
@@ -45,10 +53,12 @@ Public Class Form_v6_媒体流选择器
         绑定文件拖入(MB_打开文件)
         绑定文件拖入(MB_重置选择)
         绑定文件拖入(MB_确认选择)
-        AddHandler Shown, Sub()
-                              调整列宽()
-                              If 初始媒体文件 <> "" Then 开始读取(初始媒体文件)
-                          End Sub
+    End Sub
+
+    Protected Overrides Sub OnShown(e As EventArgs)
+        MyBase.OnShown(e)
+        调整列宽()
+        If 初始媒体文件 <> "" Then 开始读取(初始媒体文件)
     End Sub
 
     Private Sub 绑定文件拖入(target As Control)
@@ -57,6 +67,7 @@ Public Class Form_v6_媒体流选择器
         RemoveHandler target.DragDrop, AddressOf 文件放下事件
         AddHandler target.DragEnter, AddressOf 文件拖入事件
         AddHandler target.DragDrop, AddressOf 文件放下事件
+        If Not 拖入控件.Contains(target) Then 拖入控件.Add(target)
     End Sub
 
     Private Sub 文件拖入事件(sender As Object, e As DragEventArgs)
@@ -101,27 +112,96 @@ Public Class Form_v6_媒体流选择器
     End Sub
 
     Private Sub 开始读取(媒体文件 As String)
-        Dim 输出内容 As New List(Of String)
-        Using ffprobe As New Process
-            ffprobe.StartInfo.FileName = 设置_v6.获取FFprobe进程文件名()
-            ffprobe.StartInfo.WorkingDirectory = 设置_v6.获取有效工作目录()
-            ffprobe.StartInfo.Arguments = $"-hide_banner ""{媒体文件}"""
-            ffprobe.StartInfo.RedirectStandardOutput = True
-            ffprobe.StartInfo.RedirectStandardError = True
-            ffprobe.StartInfo.StandardOutputEncoding = System.Text.Encoding.UTF8
-            ffprobe.StartInfo.StandardErrorEncoding = System.Text.Encoding.UTF8
-            ffprobe.StartInfo.CreateNoWindow = True
-            AddHandler ffprobe.OutputDataReceived, Sub(sender, e)
-                                                       If e.Data IsNot Nothing Then 输出内容.Add(e.Data)
-                                                   End Sub
-            AddHandler ffprobe.ErrorDataReceived, Sub(sender, e)
-                                                      If e.Data IsNot Nothing Then 输出内容.Add(e.Data)
-                                                  End Sub
-            ffprobe.Start()
-            ffprobe.BeginOutputReadLine()
-            ffprobe.BeginErrorReadLine()
-            ffprobe.WaitForExit()
+        If 正在关闭 OrElse IsDisposed OrElse Disposing Then Return
+        取消读取()
+        Dim cancellation As New Threading.CancellationTokenSource(TimeSpan.FromSeconds(30))
+        读取取消源 = cancellation
+        MB_确认选择.Enabled = False
+        显示流信息(New List(Of String))
+        UltraDetailListView1.Items(0).SubItems(0).Text = "正在读取媒体流…"
+        读取任务 = 读取媒体Async(媒体文件, cancellation)
+    End Sub
+
+    Private Async Function 读取媒体Async(媒体文件 As String, cancellation As Threading.CancellationTokenSource) As Task
+        Using cancellationLifetime = cancellation, ffprobe As New Process
+            Try
+                ffprobe.StartInfo = New ProcessStartInfo With {
+                    .FileName = 设置_v6.获取FFprobe进程文件名(),
+                    .WorkingDirectory = 设置_v6.获取有效工作目录(),
+                    .UseShellExecute = False, .CreateNoWindow = True,
+                    .RedirectStandardOutput = True, .RedirectStandardError = True,
+                    .StandardOutputEncoding = System.Text.Encoding.UTF8,
+                    .StandardErrorEncoding = System.Text.Encoding.UTF8
+                }
+                ffprobe.StartInfo.ArgumentList.Add("-hide_banner")
+                ffprobe.StartInfo.ArgumentList.Add(媒体文件)
+                读取进程 = ffprobe
+                cancellation.Token.ThrowIfCancellationRequested()
+                ffprobe.Start()
+                Dim stdout = 读取探测输出Async(ffprobe.StandardOutput, cancellation.Token)
+                Dim stderr = 读取探测输出Async(ffprobe.StandardError, cancellation.Token)
+                Await Task.WhenAll(stdout, stderr, ffprobe.WaitForExitAsync(cancellation.Token)).WaitAsync(cancellation.Token)
+                If Not 可应用读取结果(cancellation) Then Return
+                If ffprobe.ExitCode <> 0 Then
+                    显示读取失败("读取媒体流失败：" & Agent通用工具_v6.LimitText(stderr.Result.Trim(), 300))
+                    Return
+                End If
+                Dim lines = (stderr.Result & vbLf & stdout.Result).Split({vbCrLf, vbLf, vbCr}, StringSplitOptions.RemoveEmptyEntries).ToList()
+                显示流信息(lines)
+            Catch ex As OperationCanceledException When cancellation.IsCancellationRequested
+                If 可应用读取结果(cancellation, True) Then 显示读取失败("读取媒体流超时")
+            Catch ex As Exception
+                If 可应用读取结果(cancellation) Then 显示读取失败("读取媒体流失败：" & ex.Message)
+            Finally
+                终止进程(ffprobe)
+                If ReferenceEquals(读取进程, ffprobe) Then 读取进程 = Nothing
+                If ReferenceEquals(读取取消源, cancellation) Then
+                    读取取消源 = Nothing
+                    If Not 正在关闭 AndAlso Not IsDisposed AndAlso Not Disposing Then MB_确认选择.Enabled = True
+                End If
+            End Try
         End Using
+    End Function
+
+    Private Function 可应用读取结果(cancellation As Threading.CancellationTokenSource, Optional allowTimeout As Boolean = False) As Boolean
+        Return Not 正在关闭 AndAlso Not IsDisposed AndAlso Not Disposing AndAlso
+            ReferenceEquals(读取取消源, cancellation) AndAlso (allowTimeout OrElse Not cancellation.IsCancellationRequested)
+    End Function
+
+    Private Shared Async Function 读取探测输出Async(reader As IO.StreamReader, cancellationToken As Threading.CancellationToken) As Task(Of String)
+        Dim output As New Text.StringBuilder()
+        Dim buffer(4095) As Char
+        Do
+            Dim count = Await reader.ReadAsync(buffer.AsMemory(), cancellationToken).ConfigureAwait(False)
+            If count = 0 Then Return output.ToString()
+            Dim take = Math.Min(count, Math.Max(0, 1024 * 1024 - output.Length))
+            output.Append(buffer, 0, take)
+        Loop
+    End Function
+
+    Private Shared Sub 终止进程(process As Process)
+        If process Is Nothing Then Return
+        Try
+            If Not process.HasExited Then process.Kill(True)
+        Catch ex As InvalidOperationException
+        Catch ex As ComponentModel.Win32Exception
+        End Try
+    End Sub
+
+    Private Sub 取消读取()
+        Dim cancellation = 读取取消源
+        读取取消源 = Nothing
+        cancellation?.Cancel()
+        终止进程(读取进程)
+        读取进程 = Nothing
+    End Sub
+
+    Private Sub 显示读取失败(message As String)
+        显示流信息(New List(Of String))
+        UltraDetailListView1.Items(0).SubItems(0).Text = message
+    End Sub
+
+    Private Sub 显示流信息(输出内容 As List(Of String))
 
         视频列表项.Clear()
         音频列表项.Clear()
@@ -164,6 +244,9 @@ Public Class Form_v6_媒体流选择器
                 Dim text = $"{文件索引}:s:{i}  {If(s.流语言 <> "", "[" & s.流语言 & "] ", "")}{s.编码器}"
                 添加流列表项(字幕列表项, "字幕流", text, s.元数据标题, i, 字幕全选 OrElse 字幕已选.Contains(i))
             Next
+            If UltraDetailListView1.Items.Count = 0 Then
+                UltraDetailListView1.Items.Add(New UltraDetailListView.ListItem(New UltraDetailListView.ListSubItem("未找到可选择的媒体流")))
+            End If
 
         Finally
             UltraDetailListView1.EndUpdate()
@@ -209,6 +292,11 @@ Public Class Form_v6_媒体流选择器
             Case Keys.Enter, Keys.Oemplus, Keys.Add, Keys.Tab, Keys.Delete, Keys.OemMinus, Keys.Subtract
                 e.IsInputKey = True
         End Select
+    End Sub
+
+    Private Sub UltraDetailListView1_ItemDoubleClick(sender As Object, e As UltraDetailListView.ListItemEventArgs) Handles UltraDetailListView1.ItemDoubleClick
+        If e?.Item Is Nothing OrElse e.Item.Tag Is Nothing OrElse 正在关闭 Then Return
+        e.Item.Checked = Not e.Item.Checked
     End Sub
 
     Private Sub UltraDetailListView1_KeyDown(sender As Object, e As KeyEventArgs) Handles UltraDetailListView1.KeyDown
@@ -277,12 +365,69 @@ Public Class Form_v6_媒体流选择器
 
     Private Sub Form_v6_媒体流选择器_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.Icon = FormMain_v6.Icon
-        SetControlFont(设置_v6.实例对象.字体, Me, , True)
+        设置选择器字体(Me, 设置_v6.实例对象.字体)
         If FormMain_v6.ThisIsYourWindow1.AttachedForms.Count > 0 Then
-            FormMain_v6.ThisIsYourWindow1.Attach(Me)
+            窗口样式 = FormMain_v6.ThisIsYourWindow1
+            窗口样式.Attach(Me)
             ModernPanel1.BackColor = Color.Transparent
             ModernPanel1.BackColor1 = Color.Transparent
         End If
+    End Sub
+
+    Private Sub 设置选择器字体(control As Control, fontName As String)
+        Dim key = (control.Font.Size, control.Font.Style)
+        Dim ownedFont As Font = Nothing
+        If Not 自有字体.TryGetValue(key, ownedFont) Then
+            ownedFont = New Font(fontName, key.Size, key.Style)
+            自有字体.Add(key, ownedFont)
+        End If
+        control.Font = ownedFont
+        control.GetType().GetProperty("AnimationFPS")?.SetValue(control, 设置_v6.实例对象.图形动画帧率)
+        control.GetType().GetProperty("DropDownAnimationFPS")?.SetValue(control, 设置_v6.实例对象.图形动画帧率)
+        For Each child As Control In control.Controls
+            设置选择器字体(child, fontName)
+        Next
+    End Sub
+
+    Protected Overrides Sub OnFormClosed(e As FormClosedEventArgs)
+        正在关闭 = True
+        取消读取()
+        MyBase.OnFormClosed(e)
+    End Sub
+
+    Private Sub 释放选择器资源()
+        If 资源已释放 Then Return
+        资源已释放 = True
+        正在关闭 = True
+        取消读取()
+        读取任务 = Nothing
+        窗口样式?.Detach(Me)
+        窗口样式 = Nothing
+        For Each target In 拖入控件
+            RemoveHandler target.DragEnter, AddressOf 文件拖入事件
+            RemoveHandler target.DragDrop, AddressOf 文件放下事件
+        Next
+        拖入控件.Clear()
+        If UltraDetailListView1 IsNot Nothing Then
+            UltraDetailListView1.Items.Clear()
+            UltraDetailListView1.Groups.Clear()
+        End If
+        视频列表项.Clear()
+        音频列表项.Clear()
+        字幕列表项.Clear()
+        视频已选.Clear()
+        音频已选.Clear()
+        字幕已选.Clear()
+        视频目标 = Nothing
+        音频目标 = Nothing
+        字幕目标 = Nothing
+    End Sub
+
+    Private Sub 释放自有字体()
+        For Each ownedFont As Font In 自有字体.Values
+            ownedFont.Dispose()
+        Next
+        自有字体.Clear()
     End Sub
 
     Private Class 媒体信息解析器

@@ -6,8 +6,9 @@ Public NotInheritable Class Agent提示词_v6
 
     Public Shared ReadOnly Property 内置技能索引 As String
         Get
-            Return "内置 skill 资料库：
+            Return "可用 skill 资料库：
 - `ffmpegfreeui`：3FUI Agent 环境机制、权限联网、参数面板、命令生成、滤镜流控制、队列、集成工具、预设、文件上下文和编码推荐。
+- `custom/...`：用户放在 Agent/Skills 中的技能 Markdown 文件，通过 `list_agent_skills` 获取名称、说明与入口。用户任务可能有对应技能时先查看索引，再用 `read_agent_skill_reference` 按需读取，长文件使用 start_line/line_count 分页。
 
 使用规则：
 1. 常规闲聊不需要读取资料库。
@@ -18,6 +19,9 @@ Public NotInheritable Class Agent提示词_v6
     End Property
 
     Public Shared Function 构建系统提示词(networkMode As Integer, permissionName As String) As String
+        Dim customPrompt = Agent自定义内容_v6.读取系统提示词()
+        If customPrompt <> "" Then Return customPrompt
+
         Dim normalizedNetworkMode = AgentNetworkMode.Normalize(networkMode)
         Dim networkDescription As String
         Select Case normalizedNetworkMode
@@ -37,6 +41,7 @@ Public NotInheritable Class Agent提示词_v6
         sb.AppendLine("用户消息中的附件只提供文件或文件夹路径；需要查看内容或修改文件时，先按权限调用本地文件工具，不要假设消息已经包含文件内容。需要直接运行 Windows 程序时，优先使用 run_windows_executable 的 arguments 数组逐项传参。")
         sb.AppendLine("使用 run_powershell 时，工具会优先启动 PATH 中的 PowerShell 7 (pwsh.exe)，不可用时回退 Windows PowerShell 5 (powershell.exe)；本轮第一次调用前仍必须验证当前 PowerShell 版本，执行 `$PSVersionTable.PSVersion.ToString()` 和 `$PSVersionTable.PSEdition`，并根据实际版本选择兼容语法。PowerShell 或脚本读写文本时必须显式使用 UTF-8：设置 `[Console]::InputEncoding`、`[Console]::OutputEncoding` 和 `$OutputEncoding`，文件 cmdlet 使用 `-Encoding UTF8` 或 .NET UTF8Encoding；不要依赖 Windows PowerShell 5 的默认编码。")
         sb.AppendLine("执行任务时受阻请向用户回报情况，而不是一直重试；但不要过于频繁地汇报，任务小步骤多时按照实际需求合并汇报。")
+        sb.AppendLine("当用户的明确选择会改变执行结果时，可调用 ask_user；LakeUI 询问对话框不适合过多按钮或长按钮文字，每次提供 2-3 个选项，按钮 label 用最多 12 字的精简文本，详细解释放在 question 或 description 正文中。返回 unanswered/unavailable 表示没有取得选择，不能当作同意、不能猜默认答案，也不能在没有新信息时反复弹出同一问题。")
         sb.AppendLine("界面会把工具调用前后的过程说明放进可展开工作记录，并只展示工具名称、耗时、字数和执行状态的摘要；完整返回保存在会话文件中；不要在最终答复中重复粘贴原始工具日志。")
         sb.AppendLine($"联网状态：{networkDescription}")
         sb.AppendLine($"权限级别：{If(String.IsNullOrWhiteSpace(permissionName), "安全区域", permissionName)}")

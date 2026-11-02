@@ -282,7 +282,8 @@ Partial Friend Class Agent页面控制器_v6
                         modelId,
                         reasoning,
                         powerShellSession,
-                        cancellationToken)
+                        cancellationToken,
+                        Function(args, token) AskUserAsync(conversation, args, token))
                     ' 工具本身可能是同步桥接（例如参数面板或集成工具）。
                     ' 用户停止后即使该桥接刚刚返回，也不能再把结果写回上下文或继续执行同批调用。
                     cancellationToken.ThrowIfCancellationRequested()
