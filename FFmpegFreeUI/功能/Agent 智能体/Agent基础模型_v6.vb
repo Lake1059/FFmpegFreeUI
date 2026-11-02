@@ -103,8 +103,22 @@ Public Class AgentConversationData
     Public Property Messages As New List(Of AgentMessageData)
     Public Property Turns As New List(Of AgentTurnData)
     Public Property Usage As New AgentUsageInfo
+    Public Property PendingQuestion As AgentPendingQuestionData
     <System.Text.Json.Serialization.JsonIgnore>
     Public Property ContextCheckpoint As AgentContextCheckpointData
+End Class
+
+Public Class AgentPendingQuestionData
+    Public Property ToolCallId As String = ""
+    Public Property TurnId As String = ""
+    Public Property Question As String = ""
+    Public Property Options As New List(Of AgentQuestionOptionData)
+End Class
+
+Public Class AgentQuestionOptionData
+    Public Property Id As String = ""
+    Public Property Label As String = ""
+    Public Property Description As String = ""
 End Class
 
 Public NotInheritable Class AgentConversationSchema
@@ -174,6 +188,7 @@ Public Class AgentConversationIndexItem
     Public Property UpdatedAt As DateTime = DateTime.Now
     Public Property SortOrder As Integer = 0
     Public Property FileName As String = ""
+    Public Property HasPendingQuestion As Boolean
 End Class
 
 Public Class AgentChatResult

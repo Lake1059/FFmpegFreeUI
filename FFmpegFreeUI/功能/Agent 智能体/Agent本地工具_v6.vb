@@ -206,14 +206,13 @@ Partial Public Class AgentLocalTools
             AddConsoleToolDefinitions(tools)
         End If
 
-        tools.Add(FunctionTool("ask_user", "推理中询问用户一个需要明确选择的问题。LakeUI 对话框只适合 2-3 个短按钮；详细解释写在 question/description 中，label 最多 12 字符。返回 status=selected 和 option_id；关闭、超时或未选择返回 unanswered，绝不能视为同意或擅自选默认项。", New Dictionary(Of String, Object) From {
-            {"question", New Dictionary(Of String, Object) From {{"type", "string"}, {"maxLength", 600}}},
-            {"options", New Dictionary(Of String, Object) From {{"type", "array"}, {"minItems", 2}, {"maxItems", 3}, {"items", New Dictionary(Of String, Object) From {{"type", "object"}, {"properties", New Dictionary(Of String, Object) From {
-                {"id", New Dictionary(Of String, Object) From {{"type", "string"}, {"maxLength", 40}}},
-                {"label", New Dictionary(Of String, Object) From {{"type", "string"}, {"maxLength", 12}, {"description", "精简按钮文本，不放长解释"}}},
-                {"description", New Dictionary(Of String, Object) From {{"type", "string"}, {"maxLength", 200}, {"description", "显示在正文中的详细解释"}}}
-            }}, {"required", New String() {"id", "label"}}}}}},
-            {"timeout_seconds", New Dictionary(Of String, Object) From {{"type", "integer"}, {"description", "30-1800 秒，默认 600；超时不代选"}}}
+        tools.Add(FunctionTool("ask_user", "询问用户并暂停本轮推理，问题保存到会话且不会超时；用户选择后恢复，取消后等待补充。同批后续工具不会执行。建议按钮不超过 6 个、label 不超过 8 字，question 不超过 600 字；详细解释写在 question/description 中，这些仅为建议。返回 status=selected 和 option_id 才表示选择；unanswered/unavailable 不表示同意，禁止代选或无意义地重复弹窗。", New Dictionary(Of String, Object) From {
+            {"question", New Dictionary(Of String, Object) From {{"type", "string"}}},
+            {"options", New Dictionary(Of String, Object) From {{"type", "array"}, {"minItems", 2}, {"items", New Dictionary(Of String, Object) From {{"type", "object"}, {"properties", New Dictionary(Of String, Object) From {
+                {"id", New Dictionary(Of String, Object) From {{"type", "string"}}},
+                {"label", New Dictionary(Of String, Object) From {{"type", "string"}, {"description", "建议使用简短的单行按钮文本，不放长解释"}}},
+                {"description", New Dictionary(Of String, Object) From {{"type", "string"}, {"description", "显示在正文中的详细解释"}}}
+            }}, {"required", New String() {"id", "label"}}}}}}
         }, {"question", "options"}))
         Return tools.
             Where(Function(tool) tool IsNot Nothing).
@@ -258,8 +257,7 @@ Partial Public Class AgentLocalTools
                                               modelId As String,
                                               reasoningEffort As String,
                                               Optional powerShellSession As PowerShellRunSession = Nothing,
-                                              Optional cancellationToken As Threading.CancellationToken = Nothing,
-                                              Optional askUser As Func(Of JsonElement, Threading.CancellationToken, Task(Of String)) = Nothing) As Task(Of String)
+                                              Optional cancellationToken As Threading.CancellationToken = Nothing) As Task(Of String)
         Try
             cancellationToken.ThrowIfCancellationRequested()
             If callInfo Is Nothing Then Return "工具执行失败：缺少工具调用"
@@ -269,8 +267,7 @@ Partial Public Class AgentLocalTools
 
             Select Case callInfo?.Name
                 Case "ask_user"
-                    If askUser Is Nothing Then Return "{""status"":""unavailable"",""reason"":""没有可交互的 Agent 窗口""}"
-                    Return Await askUser(args, cancellationToken)
+                    Return "{""status"":""unavailable"",""reason"":""询问须由 Agent 会话控制器暂停并保存""}"
                 Case "list_agent_skills"
                     Return Agent技能资料库_v6.列出技能(Agent通用工具_v6.GetJsonInteger(args, "offset", 0), Agent通用工具_v6.GetJsonInteger(args, "limit", 10))
                 Case "read_agent_skill_reference"

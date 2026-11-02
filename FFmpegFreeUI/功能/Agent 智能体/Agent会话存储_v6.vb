@@ -92,7 +92,8 @@ Public Class AgentConversationStore
                 .CreatedAt = conversation.CreatedAt,
                 .UpdatedAt = conversation.UpdatedAt,
                 .SortOrder = conversation.SortOrder,
-                .FileName = fileName
+                .FileName = fileName,
+                .HasPendingQuestion = conversation.PendingQuestion IsNot Nothing
             })
         Next
 
@@ -250,6 +251,17 @@ Public Class AgentConversationStore
     ' 仅在加载时恢复；保存其他对话时绝不能改动仍在执行的任务状态。
     Private Sub RecoverInterruptedRuns()
         For Each conversation In Conversations
+            Dim question = conversation.PendingQuestion
+            If question IsNot Nothing Then
+                question.Options = If(question.Options, New List(Of AgentQuestionOptionData)).Where(Function(item) item IsNot Nothing).ToList()
+                If String.IsNullOrWhiteSpace(question.Question) OrElse String.IsNullOrWhiteSpace(question.ToolCallId) OrElse question.Options.Count < 2 OrElse
+                   Not conversation.Messages.Any(Function(message) message.Role = "assistant" AndAlso
+                       message.ToolCalls.Any(Function(callInfo) callInfo.Name = "ask_user" AndAlso callInfo.Id = question.ToolCallId)) OrElse
+                   conversation.Messages.Any(Function(message) message.Role = "tool" AndAlso message.ToolCallId = question.ToolCallId) Then
+                    conversation.PendingQuestion = Nothing
+                    _requiresUpgradeSave = True
+                End If
+            End If
             For Each turn In conversation.Turns.Where(Function(x) x.State = "running")
                 turn.State = "canceled"
                 turn.CompletedAt = DateTime.Now
@@ -260,6 +272,15 @@ Public Class AgentConversationStore
                 Next
                 _requiresUpgradeSave = True
             Next
+            If conversation.PendingQuestion IsNot Nothing Then
+                Dim waitingTurn = conversation.Turns.FirstOrDefault(Function(turn) turn.Id = conversation.PendingQuestion.TurnId)
+                If waitingTurn IsNot Nothing Then
+                    waitingTurn.State = "waiting"
+                    waitingTurn.StatusText = "等待用户选择"
+                    Dim waitingActivity = waitingTurn.Activities.FirstOrDefault(Function(activity) activity.ToolCallId = conversation.PendingQuestion.ToolCallId)
+                    If waitingActivity IsNot Nothing Then waitingActivity.State = "waiting"
+                End If
+            End If
             ' 修复崩溃后已记录调用但没有结果的协议对，防止续聊请求被端点拒绝。
             For i = conversation.Messages.Count - 1 To 0 Step -1
                 Dim message = conversation.Messages(i)
@@ -272,6 +293,8 @@ Public Class AgentConversationStore
                 End While
                 For Each tool In message.ToolCalls
                     If completed.Contains(tool.Id) Then Continue For
+                    If conversation.PendingQuestion IsNot Nothing AndAlso tool.Name = "ask_user" AndAlso
+                       tool.Id = conversation.PendingQuestion.ToolCallId Then Continue For
                     conversation.Messages.Insert(insertIndex, New AgentMessageData With {
                         .Role = "tool", .Name = tool.Name, .ToolCallId = tool.Id,
                         .Content = "上次运行中断，工具结果未知；请先核实实际状态，不要假设操作未执行。"

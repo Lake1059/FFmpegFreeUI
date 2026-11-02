@@ -37,7 +37,8 @@ Partial Friend Class Agent页面控制器_v6
             _orderedConversations = AgentConversationStore.ReadConversationIndex().
                 Select(Function(item) New AgentConversationData With {
                     .Id = item.Id, .Title = item.Title, .CreatedAt = item.CreatedAt,
-                    .UpdatedAt = item.UpdatedAt, .SortOrder = item.SortOrder
+                    .UpdatedAt = item.UpdatedAt, .SortOrder = item.SortOrder,
+                    .PendingQuestion = If(item.HasPendingQuestion, New AgentPendingQuestionData, Nothing)
                 }).ToList()
             RefreshConversationList()
             UpdateSendButtonState()
@@ -104,7 +105,7 @@ Partial Friend Class Agent页面控制器_v6
         Dim title = If(conversation.Title, "").Trim()
         If title = "" Then title = "新对话"
         If title.Length > 28 Then title = String.Concat(title.AsSpan(0, 28), "...")
-        Return If(_userInputCoordinator IsNot Nothing AndAlso _userInputCoordinator.HasPending(conversation.Id), "[待选择] ", "") & $"{title}  {conversation.UpdatedAt:MM-dd HH:mm}"
+        Return If(conversation.PendingQuestion IsNot Nothing, "[待选择] ", "") & $"{title}  {conversation.UpdatedAt:MM-dd HH:mm}"
     End Function
 
     Friend Sub ModernListBox1_ItemForeColorNeeded(sender As Object, e As ModernListBox.ItemForeColorEventArgs)
@@ -298,6 +299,10 @@ Partial Friend Class Agent页面控制器_v6
         Dim text = _view.ModernTextBox1.Text.Trim()
         If text = "" AndAlso _pendingFiles.Count > 0 Then text = "已提交以下文件或文件夹。"
         If text = "" Then
+            If _current?.PendingQuestion IsNot Nothing Then
+                ShowPendingQuestion(True)
+                Return
+            End If
             Await RetryLatestUserTurnAsync()
             Return
         End If
@@ -352,6 +357,7 @@ Partial Friend Class Agent页面控制器_v6
                     If Not String.IsNullOrWhiteSpace(fileContext) Then replacementContent &= vbCrLf & vbCrLf & fileContext.Trim()
                     RemoveConversationMessagesFrom(userIndex + 1)
                     latestUserMessage.Content = replacementContent
+                    ResolvePendingQuestion(_current, "{""status"":""unanswered"",""reason"":""用户修改了补充说明，请根据最新用户消息继续。""}")
                     For Each turn In If(_current.Turns, New List(Of AgentTurnData))
                         Dim guidance = turn?.Activities?.FirstOrDefault(
                             Function(x) x IsNot Nothing AndAlso
@@ -450,6 +456,10 @@ Partial Friend Class Agent页面控制器_v6
             Next
         End If
         If startIndex < _current.Messages.Count Then _current.Messages.RemoveRange(startIndex, _current.Messages.Count - startIndex)
+        If _current.PendingQuestion IsNot Nothing AndAlso Not _current.Messages.Any(
+            Function(message) message.ToolCalls.Any(Function(callInfo) callInfo.Id = _current.PendingQuestion.ToolCallId)) Then
+            _current.PendingQuestion = Nothing
+        End If
         If _current.Turns IsNot Nothing AndAlso affectedUserIds.Count > 0 Then
             _current.Turns.RemoveAll(Function(x) x IsNot Nothing AndAlso affectedUserIds.Contains(x.UserMessageId))
         End If
@@ -533,6 +543,7 @@ Partial Friend Class Agent页面控制器_v6
     Private Sub CommitUserMessage(text As String, Optional rerenderConversation As Boolean = False)
         EnsureStoreLoaded()
         If _current Is Nothing Then _current = CreateConversationFromCurrentSettings()
+        ResolvePendingQuestion(_current, "{""status"":""unanswered"",""reason"":""用户选择直接补充说明，请根据最新用户消息继续。""}")
         ApplyConversationSnapshot()
         AppendUserMessage(text, BuildSubmittedFilesContext())
         _view.ModernTextBox1.Text = ""

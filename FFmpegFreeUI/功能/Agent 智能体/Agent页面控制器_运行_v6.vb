@@ -96,6 +96,10 @@ Partial Friend Class Agent页面控制器_v6
         If run.Busy Then Return
         Dim runConversation = conversation
         If runConversation Is Nothing Then Return
+        If runConversation.PendingQuestion IsNot Nothing Then
+            If IsConversationSelected(runConversation) Then ShowPendingQuestion(True)
+            Return
+        End If
         If String.IsNullOrWhiteSpace(runConversation.ModelId) Then
             If IsConversationSelected(runConversation) Then
                 ShowStatus("请先选择模型。", True)
@@ -141,6 +145,7 @@ Partial Friend Class Agent页面控制器_v6
 
             Await RunAgentLoopAsync(runConversation, localCts.Token)
         Catch ex As OperationCanceledException When localCts.IsCancellationRequested
+            ResolvePendingQuestion(runConversation, "{""status"":""unanswered"",""reason"":""任务已取消""}")
             CompleteInterruptedToolBatch(runConversation, "工具调用已取消，未返回结果。", "canceled")
             Dim canceledText = BuildCanceledResponseText(GetActiveResponseTextSnapshot(conversation))
             SetRunResponseText(runConversation, canceledText)
@@ -148,6 +153,7 @@ Partial Friend Class Agent页面控制器_v6
             ShowRunStatus(runConversation, "已停止当前任务")
             FinishActiveTurn(conversation, "canceled", "已停止")
         Catch ex As Exception
+            ResolvePendingQuestion(runConversation, "{""status"":""unanswered"",""reason"":""运行发生错误，询问已取消""}")
             CompleteInterruptedToolBatch(runConversation, "工具调用因运行异常中止：" & ex.Message, "error")
             ShowRunStatus(runConversation, "系统故障：请求失败：" & ex.Message, True)
             SetRunResponseText(runConversation, "请求失败：" & ex.Message)
@@ -163,6 +169,10 @@ Partial Friend Class Agent页面控制器_v6
             run.PendingSteeringMessages.Clear()
             UpdateSendButtonState()
             SaveConversation(runConversation)
+            If conversation.PendingQuestion IsNot Nothing Then
+                If IsConversationSelected(conversation) Then RenderCurrentConversation()
+                ShowPendingQuestion()
+            End If
         End Try
     End Function
 
@@ -272,9 +282,44 @@ Partial Friend Class Agent页面控制器_v6
                     cancellationToken.ThrowIfCancellationRequested()
                     Dim activity = BeginToolActivity(conversation, callInfo)
 
+                    Dim questionError As String = Nothing
+                    If callInfo.Name = "ask_user" Then
+                        Dim question = AgentUserInputCoordinator.CreateQuestion(callInfo, run.ActiveTurn.Id, questionError)
+                        If question IsNot Nothing Then
+                            conversation.PendingQuestion = question
+                            activity.State = "waiting"
+                            activity.ElapsedMilliseconds = 0
+                            activity.ResultText = "推理已暂停，等待用户选择或补充说明。"
+                            RefreshToolActivity(conversation, activity)
+                            ' 询问之后的同批工具不能在用户决定前执行；恢复后由模型重新判断。
+                            For Each deferred In result.ToolCalls.SkipWhile(Function(item) Not ReferenceEquals(item, callInfo)).Skip(1)
+                                Dim deferredResult = "{""status"":""skipped"",""reason"":""等待用户回答询问，未执行；用户回应后请重新判断是否调用。""}"
+                                Dim deferredActivity = BeginToolActivity(conversation, deferred)
+                                CompleteToolActivity(conversation, deferredActivity, deferredResult, 0, False)
+                                deferredActivity.State = "skipped"
+                                RefreshToolActivity(conversation, deferredActivity)
+                                AppendRunConversationMessage(conversation, New AgentMessageData With {
+                                    .Role = "tool", .Name = deferred.Name, .ToolCallId = deferred.Id, .Content = deferredResult
+                                })
+                            Next
+                            If run.PendingSteeringMessages.Count > 0 Then
+                                ResolvePendingQuestion(conversation, "{""status"":""unanswered"",""reason"":""用户已追加说明，请根据最新用户消息继续。""}")
+                                ConsumePendingSteeringMessages(messages, conversation)
+                                Exit For
+                            End If
+                            FinishActiveTurn(conversation, "waiting", "等待用户选择")
+                            SaveConversation(conversation)
+                            Exit Function
+                        End If
+                    End If
+
                     Dim toolTimer = System.Diagnostics.Stopwatch.StartNew()
                     ShowRunStatus(conversation, "正在调用工具：" & callInfo.Name)
-                    Dim toolResult = Await AgentLocalTools.ExecuteAsync(
+                    Dim toolResult As String
+                    If questionError IsNot Nothing Then
+                        toolResult = questionError
+                    Else
+                        toolResult = Await AgentLocalTools.ExecuteAsync(
                         callInfo,
                         permissionLevel,
                         networkMode,
@@ -282,8 +327,8 @@ Partial Friend Class Agent页面控制器_v6
                         modelId,
                         reasoning,
                         powerShellSession,
-                        cancellationToken,
-                        Function(args, token) AskUserAsync(conversation, args, token))
+                        cancellationToken)
+                    End If
                     ' 工具本身可能是同步桥接（例如参数面板或集成工具）。
                     ' 用户停止后即使该桥接刚刚返回，也不能再把结果写回上下文或继续执行同批调用。
                     cancellationToken.ThrowIfCancellationRequested()

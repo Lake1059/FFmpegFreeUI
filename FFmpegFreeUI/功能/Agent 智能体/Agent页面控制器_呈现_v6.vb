@@ -41,7 +41,7 @@ Partial Friend Class Agent页面控制器_v6
     Private Sub RenderCurrentConversation(Optional scrollToBottom As Boolean = True)
         Dim run = GetConversationRuntime(_current)
         _view.AgentRoom1.Clear()
-        _userInputCoordinator?.NotifyContextChanged()
+        ShowPendingQuestion()
         _statusItem = Nothing
         _latestTurnOverviewItem = Nothing
         run.ActiveTurnItem = Nothing
@@ -73,6 +73,15 @@ Partial Friend Class Agent页面控制器_v6
             End Select
         Next
         RenderActiveRunOverlay()
+        If _current.PendingQuestion IsNot Nothing Then
+            Dim prompt As New StringBuilder("等待你的选择（推理已暂停）")
+            prompt.AppendLine().AppendLine(_current.PendingQuestion.Question)
+            For Each item In _current.PendingQuestion.Options
+                prompt.AppendLine(item.Label & If(item.Description = "", "", "：" & item.Description))
+            Next
+            prompt.Append("点击‘选择’可重新打开问题，也可以直接输入补充说明并发送。")
+            _view.AgentRoom1.AddCard(prompt.ToString())
+        End If
         RefreshLatestTurnOverview()
         UpdateSendButtonState()
         If scrollToBottom Then _view.AgentRoom1.ScrollToBottom()
@@ -131,6 +140,8 @@ Partial Friend Class Agent页面控制器_v6
             Count()
         Dim suffix = $" · {toolCount} 次工具调用"
         Select Case If(turn.State, "").ToLowerInvariant()
+            Case "waiting"
+                Return $"等待用户选择 · {FormatElapsedMilliseconds(elapsed.TotalMilliseconds)}{suffix}"
             Case "running"
                 Dim status = CompactSingleLine(If(String.IsNullOrWhiteSpace(turn.StatusText), "正在工作", turn.StatusText), 34)
                 Return $"{status} · {FormatElapsedMilliseconds(elapsed.TotalMilliseconds)}{suffix}"
@@ -179,6 +190,8 @@ Partial Friend Class Agent页面控制器_v6
         Select Case If(activity?.State, "").ToLowerInvariant()
             Case "running" : Return "正在执行"
             Case "pending" : Return "等待执行"
+            Case "waiting" : Return "等待用户选择"
+            Case "skipped" : Return "未执行"
             Case "canceled" : Return "已取消"
         End Select
         Dim failed = String.Equals(activity?.State, "error", StringComparison.OrdinalIgnoreCase)
@@ -424,7 +437,8 @@ Partial Friend Class Agent页面控制器_v6
                 _view.MB_发送.Text = "停止"
             End If
         Else
-            _view.MB_发送.Text = "发送"
+            _view.MB_发送.Text = If(_current?.PendingQuestion IsNot Nothing AndAlso
+                String.IsNullOrWhiteSpace(_view.ModernTextBox1.Text) AndAlso _pendingFiles.Count = 0, "选择", "发送")
         End If
         _view.MB_发送.Enabled = Not run.Busy OrElse Not If(run.RequestCts?.IsCancellationRequested, False)
         _view.MCB_模型选择.Enabled = Not _refreshingModels
