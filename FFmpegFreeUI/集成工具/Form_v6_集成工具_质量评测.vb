@@ -1,5 +1,6 @@
 Imports System.Globalization
 Imports System.IO
+Imports System.Reflection
 Imports System.Text
 Imports System.Text.Json
 Imports System.Text.RegularExpressions
@@ -13,6 +14,7 @@ Public Class Form_v6_集成工具_质量评测
     Private Const SSIM列 As Integer = 2
     Private Const VMAF列 As Integer = 3
     Private Const XPSNR列 As Integer = 4
+    Private Const Vmaf检查结果提示最大宽度 As Integer = 520
 
     Private ReadOnly 进程锁 As New Object()
     Private 当前进程 As Process = Nothing
@@ -64,7 +66,9 @@ Public Class Form_v6_集成工具_质量评测
         "hdr_vmaf_v1.1.8_hfr_1d5h_2160",
         "hdr_vmaf_v1.1.8_hfr_3d0h_2160"
     }
-    Private Shared ReadOnly 旧版非NegVmaf模型 As String() = {"vmaf_v0.6.1", "vmaf_4k_v0.6.1"}
+    Private Shared ReadOnly Vmaf简介白名单 As New HashSet(Of String)(
+        Vmaf模型描述.Keys.Concat(官方HdrVmaf模型).
+            Concat({"vmaf_v0.6.1neg", "vmaf_4k_v0.6.1neg"}), StringComparer.OrdinalIgnoreCase)
     ' 当两路像素格式不一致时，统一到常见且受全部四个滤镜支持的 10-bit 4:2:0 格式。
     ' 选择 4:2:0 而非 4:4:4 是为了让原始色度采样率不成为评分差异；同时保留 10-bit 精度。
     Private Const 统一评测像素格式 As String = "yuv420p10le"
@@ -100,6 +104,7 @@ Public Class Form_v6_集成工具_质量评测
     Private Class Vmaf模型查询结果
         Public Property 模型 As New List(Of String)()
         Public Property 支持Cuda As Boolean = False
+        Public Property 错误信息 As String = ""
     End Class
 
     Private Class 视频流信息
@@ -202,7 +207,7 @@ Public Class Form_v6_集成工具_质量评测
                          Sub(combo, path) 添加本地Vmaf模型(path))
     End Sub
 
-    Public Async Function 刷新Vmaf模型列表Async() As Task
+    Public Async Function 刷新Vmaf模型列表Async(Optional 检查其他模型 As Boolean = False) As Task
         If 正在刷新Vmaf模型列表 OrElse 正在评测 OrElse IsDisposed Then Return
         正在刷新Vmaf模型列表 = True
         MCB_模型选择.Enabled = False
@@ -212,20 +217,87 @@ Public Class Form_v6_集成工具_质量评测
             Dim previousCuda = MCB_模型选择.SelectedUsesCuda
             Dim query = Await 获取FFmpegVmaf模型列表Async()
             If IsDisposed Then Return
+            If 检查其他模型 AndAlso query.错误信息 <> "" Then
+                ExFloatingTip(MCB_模型选择, $"检查其他 VMAF 模型失败：{query.错误信息}", 3000)
+                Return
+            End If
+
             Dim displayItems = 构建Vmaf模型显示项(query.模型, query.支持Cuda)
             可用Vmaf模型 = displayItems.ToList()
+            Dim otherCount = 0
+            If 检查其他模型 Then
+                For Each model In 获取其他Vmaf候选模型(query.模型, displayItems)
+                    If IsDisposed Then Return
+                    If Not Await 验证其他Vmaf模型Async(model) Then Continue For
+                    displayItems.Add(New VmafModelDisplayItem With {
+                        .ModelValue = model,
+                        .IsOtherModel = True,
+                        .IsHdr = model.StartsWith("hdr_", StringComparison.OrdinalIgnoreCase)
+                    })
+                    otherCount += 1
+                Next
+                If IsDisposed Then Return
+            End If
+
             Dim previousItem = MCB_模型选择.SelectedModel
             保留本地Vmaf模型(displayItems, previousItem)
             MCB_模型选择.ReplaceDisplayItems(displayItems)
             更新Vmaf模型提示()
             Dim previousIndex = MCB_模型选择.FindModelIndex(previousModel, previousCuda)
             MCB_模型选择.SelectedIndex = If(previousIndex >= 0, previousIndex, MCB_模型选择.FirstModelIndex)
+            If 检查其他模型 Then
+                显示Vmaf模型检查结果提示(If(otherCount > 0,
+                                  $"已找到 {otherCount} 个其他 VMAF 模型，已添加到检查入口下方",
+                                  "未检测到可用的其他 VMAF 模型"))
+            End If
+        Catch ex As Exception When 检查其他模型
+            If Not IsDisposed Then ExFloatingTip(MCB_模型选择, $"检查其他 VMAF 模型失败：{ex.Message}", 3000)
         Finally
             正在刷新Vmaf模型列表 = False
             If Not IsDisposed Then
                 MCB_模型选择.Enabled = Not 正在评测
                 MB_刷新VMAF模型.Enabled = Not 正在评测
             End If
+        End Try
+    End Function
+
+    Private Sub 显示Vmaf模型检查结果提示(message As String)
+        Dim tip As Form = Nothing
+        Try
+            Dim flags = BindingFlags.Instance Or BindingFlags.Public Or BindingFlags.NonPublic
+            Dim theme = DirectCast(GetType(Object).GetMethod("MemberwiseClone", BindingFlags.Instance Or BindingFlags.NonPublic).
+                                  Invoke(ExFloatingTipTheme.Current, Nothing), ExFloatingTipTheme)
+            theme.MaxWidth = Math.Max(theme.MaxWidth, Vmaf检查结果提示最大宽度)
+
+            ' LakeUI 5.117 的快捷函数仅支持全局主题，单独创建实例以保持其他提示不变。
+            Dim tipType = GetType(ExFloatingTipTheme).Assembly.GetType("LakeUI.ExFloatingTipForm", True)
+            tip = DirectCast(Activator.CreateInstance(tipType, flags, Nothing,
+                             New Object() {message, theme, MCB_模型选择, 3000}, CultureInfo.InvariantCulture), Form)
+            tipType.GetMethod("ShowFloating", flags).Invoke(tip, Nothing)
+        Catch
+            tip?.Dispose()
+            ExFloatingTip(MCB_模型选择, message, 3000)
+        End Try
+    End Sub
+
+    Private Shared Function 获取其他Vmaf候选模型(models As IEnumerable(Of String), listedItems As IEnumerable(Of VmafModelDisplayItem)) As List(Of String)
+        Dim listed = New HashSet(Of String)(If(listedItems, Enumerable.Empty(Of VmafModelDisplayItem)()).
+                                           Where(Function(item) item IsNot Nothing).
+                                           Select(Function(item) item.ModelValue), StringComparer.OrdinalIgnoreCase)
+        Return If(models, Enumerable.Empty(Of String)()).Select(Function(model) If(model, "").Trim()).
+            Where(Function(model) model <> "" AndAlso Not listed.Contains(model)).
+            Distinct(StringComparer.OrdinalIgnoreCase).
+            OrderBy(Function(model) model, StringComparer.OrdinalIgnoreCase).ToList()
+    End Function
+
+    Private Shared Async Function 验证其他Vmaf模型Async(model As String) As Task(Of Boolean)
+        ' 二进制中的名称可能只是残留字符串；用合成画面确认普通 libvmaf 能实际加载，不读取用户视频。
+        Dim arguments = $"-nostdin -hide_banner -v error -f lavfi -i color=c=gray:s=192x192:r=1:d=1 -filter_complex ""[0:v]split=2[dist][ref];[dist][ref]libvmaf=model=version={model}:n_threads=1"" -frames:v 1 -f null -"
+        Try
+            Dim result = Await 运行FFmpeg模型查询Async(获取FFmpeg文件名(), arguments, TimeSpan.FromSeconds(10))
+            Return result.ExitCode = 0
+        Catch
+            Return False
         End Try
     End Function
 
@@ -239,16 +311,18 @@ Public Class Form_v6_集成工具_质量评测
     Private Sub 更新Vmaf模型提示()
         MCB_模型选择.ItemToolTips.Clear()
         For Each group In MCB_模型选择.Models.GroupBy(Function(model) model.DisplayText)
-            Dim descriptions = group.Select(AddressOf 获取Vmaf模型说明)
-            MCB_模型选择.ItemToolTips.Add(group.Key, String.Join(vbCrLf, descriptions.Where(Function(value) Not String.IsNullOrWhiteSpace(value)).Distinct()))
+            Dim descriptions = group.Select(AddressOf 获取Vmaf模型说明).ToList()
+            ' 提示按显示文本索引；混有非白名单的同名项时不共用简介。
+            If descriptions.Any(Function(value) String.IsNullOrWhiteSpace(value)) Then Continue For
+            MCB_模型选择.ItemToolTips.Add(group.Key, String.Join(vbCrLf, descriptions.Distinct()))
         Next
     End Sub
 
     Private Shared Function 获取Vmaf模型说明(model As VmafModelDisplayItem) As String
-        If model.IsLocal Then Return $"本地 VMAF 模型：{model.ModelValue}。是否兼容由 FFmpeg 实际加载结果确定；本地文件存在不代表引擎已经支持。"
+        If model Is Nothing OrElse model.IsCheckOtherModels OrElse model.IsOtherModel OrElse model.IsLocal Then Return ""
         If model.IsAuto Then Return "按原视频 PQ/HLG 标记优先选择运行库已检测到的 HDR 模型，缺少时回退 SDR 并警告；按分辨率选择 V1，≥48 fps 优先 HFR，同档没有 V1 时回退 V0 NEG。"
-        If model.IsSectionHeader Then Return ""
-        If 获取Vmaf主版本(model.ModelValue) = 0 Then Return If(model.IsNonNeg, "旧模型，不推荐；非neg模型，强烈不推荐", "旧模型，不推荐")
+        If Not Vmaf简介白名单.Contains(model.ModelValue) Then Return ""
+        If 获取Vmaf主版本(model.ModelValue) = 0 Then Return "旧模型，不推荐"
         Dim description = ""
         If model.IsHdr Then
             ' 仅复用相同分类的 SDR 提示文案，不改变实际评测模型。
@@ -262,7 +336,6 @@ Public Class Form_v6_集成工具_质量评测
 
     Private Shared Sub 检查Vmaf模型可用性(model As VmafModelDisplayItem)
         If model Is Nothing OrElse model.IsAuto OrElse model.IsLocal Then Return
-        If model.IsSectionHeader Then Throw New InvalidOperationException("分组说明不是可评测的模型。")
         If model.UseCuda AndAlso Not model.IsCudaAvailable Then Throw New InvalidOperationException("当前 FFmpeg 未检测到 libvmaf_cuda 滤镜，无法使用此 CUDA 选项。请选择普通项或更换支持该滤镜的 FFmpeg 后刷新。")
         If model.IsRuntimeDetected Then Return
         If model.IsHdr Then Throw New InvalidOperationException($"当前 FFmpeg 运行库未检测到模型 {model.ModelValue}。此选项来自官方 HDR 模型目录，不代表当前引擎已经支持。请更新具备新 HDR 模型及完整颜色信息传递能力的 FFmpeg/libvmaf 后刷新，或浏览兼容的本地 JSON 模型。")
@@ -270,7 +343,7 @@ Public Class Form_v6_集成工具_质量评测
     End Sub
 
     Private Async Sub MB_刷新VMAF模型_Click(sender As Object, e As EventArgs) Handles MB_刷新VMAF模型.Click
-        Await 刷新Vmaf模型列表Async()
+        Await 刷新Vmaf模型列表Async(True)
     End Sub
 
     Private Shared Async Function 获取FFmpegVmaf模型列表Async() As Task(Of Vmaf模型查询结果)
@@ -291,12 +364,21 @@ Public Class Form_v6_集成工具_质量评测
 
             Dim filtersResult = Await filtersTask
             Dim binaryModels = Await binaryModelsTask
-            If Not FFmpeg滤镜列表包含(filtersResult.Output, "libvmaf") Then Return result
+            If filtersResult.ExitCode <> 0 Then
+                result.错误信息 = $"FFmpeg 滤镜查询失败（退出码 {filtersResult.ExitCode}）"
+                Return result
+            End If
+            If Not FFmpeg滤镜列表包含(filtersResult.Output, "libvmaf") Then
+                result.错误信息 = "当前 FFmpeg 不支持 libvmaf 滤镜"
+                Return result
+            End If
+            If ffmpegPath = "" Then result.错误信息 = "无法定位当前 FFmpeg 的实际文件，不能检查内置模型"
 
             result.模型 = binaryModels
             result.支持Cuda = FFmpeg滤镜列表包含(filtersResult.Output, "libvmaf_cuda")
             Return result
-        Catch
+        Catch ex As Exception
+            result.错误信息 = ex.Message
             Return result
         End Try
     End Function
@@ -316,12 +398,13 @@ Public Class Form_v6_集成工具_质量评测
                 Dim raw = If(model, "").Trim()
                 If raw = "" OrElse Not seen.Add(raw) Then Continue For
                 Dim item = 解析Vmaf模型显示项(raw)
-                If item IsNot Nothing Then baseItems.Add(item)
+                ' 非 NEG 模型仅在手动检查通过后，作为其他模型按原名显示。
+                If item IsNot Nothing AndAlso Not item.IsNonNeg Then baseItems.Add(item)
             Next
         End If
 
         ' 官方目录与运行库扫描分开：旧 FFmpeg 也显示 HDR 胶囊，但不能把目录项当成已安装模型。
-        For Each model In 官方HdrVmaf模型.Concat(旧版非NegVmaf模型)
+        For Each model In 官方HdrVmaf模型
             If Not seen.Add(model) Then Continue For
             Dim item = 解析Vmaf模型显示项(model)
             item.IsRuntimeDetected = False
@@ -333,9 +416,8 @@ Public Class Form_v6_集成工具_质量评测
         For Each item In baseItems
             result.Add(item)
 
-            ' V1 的 CAMBI/SpEED 等特征尚无 CUDA 实现。非 NEG 组始终展示四项，
-            ' 缺少 CUDA 滤镜时只保留目录入口，开始评测前明确拦截。
-            If Not item.IsHdr AndAlso 获取Vmaf主版本(item.ModelValue) = 0 AndAlso (cudaAvailable OrElse item.IsNonNeg) Then
+            ' V1 的 CAMBI/SpEED 等特征尚无 CUDA 实现；仅为受支持的 V0 NEG 提供 CUDA 项。
+            If Not item.IsHdr AndAlso 获取Vmaf主版本(item.ModelValue) = 0 AndAlso cudaAvailable Then
                 result.Add(New VmafModelDisplayItem With {
                     .ModelValue = item.ModelValue,
                     .VersionLabel = item.VersionLabel,
@@ -405,8 +487,6 @@ Public Class Form_v6_集成工具_质量评测
     End Function
 
     Private Shared Function 比较Vmaf模型显示顺序(left As VmafModelDisplayItem, right As VmafModelDisplayItem) As Integer
-        Dim nonNegCompare = left.IsNonNeg.CompareTo(right.IsNonNeg)
-        If nonNegCompare <> 0 Then Return nonNegCompare
         Dim versionCompare = 获取Vmaf主版本(right.ModelValue).CompareTo(获取Vmaf主版本(left.ModelValue))
         If versionCompare <> 0 Then Return versionCompare
 
@@ -430,7 +510,7 @@ Public Class Form_v6_集成工具_质量评测
         Dim is4K = Math.Max(width, height) >= 3840
         Dim highFrameRate = Double.IsFinite(fps) AndAlso fps >= 48
         Dim candidates = If(items, Enumerable.Empty(Of VmafModelDisplayItem)()).
-            Where(Function(x) Not x.IsAuto AndAlso Not x.IsLocal AndAlso Not x.IsSectionHeader AndAlso Not x.IsNonNeg AndAlso Not x.UseCuda AndAlso x.IsRuntimeDetected AndAlso x.Is4K = is4K).ToList()
+            Where(Function(x) Not x.IsAuto AndAlso Not x.IsLocal AndAlso Not x.IsCheckOtherModels AndAlso Not x.IsOtherModel AndAlso Not x.IsNonNeg AndAlso Not x.UseCuda AndAlso x.IsRuntimeDetected AndAlso x.Is4K = is4K).ToList()
         Dim selected As VmafModelDisplayItem = Nothing
         If isHdr Then selected = 选择同档Vmaf模型(candidates.Where(Function(x) x.IsHdr), is4K, highFrameRate)
         If selected Is Nothing Then selected = 选择同档Vmaf模型(candidates.Where(Function(x) Not x.IsHdr), is4K, highFrameRate)
@@ -554,6 +634,11 @@ Public Class Form_v6_集成工具_质量评测
             combo.Items.Add(value)
         Next
         If combo.Items.Count > 0 Then combo.SelectedIndex = 0
+    End Sub
+
+    Private Async Sub MCB_模型选择_CheckOtherModelsRequested(sender As Object, e As EventArgs) Handles MCB_模型选择.CheckOtherModelsRequested
+        If 正在选择本地模型 Then Return
+        Await 刷新Vmaf模型列表Async(True)
     End Sub
 
     Private Sub MCB_模型选择_BrowseRequested(sender As Object, e As EventArgs) Handles MCB_模型选择.BrowseRequested
