@@ -18,7 +18,13 @@ Public NotInheritable Class VmafModelDisplayItem
     Public Property IsNonNeg As Boolean = False
     Public Property IsCheckOtherModels As Boolean = False
     Public Property IsOtherModel As Boolean = False
-    Public Property IsCudaAvailable As Boolean = True
+
+    Public ReadOnly Property UsesCapsules As Boolean
+        Get
+            Return Not (IsLocal OrElse IsAuto OrElse IsOtherModel OrElse IsNonNeg OrElse IsCheckOtherModels OrElse
+                        VersionLabel.StartsWith("vmaf_", StringComparison.OrdinalIgnoreCase))
+        End Get
+    End Property
 
     Public ReadOnly Property DisplayText As String
         Get
@@ -42,10 +48,6 @@ Public NotInheritable Class VmafModelDisplayItem
     End Property
 End Class
 
-''' <summary>
-''' VMAF 专用 ModernComboBox。下拉弹层、滚动、悬停、选中状态和输入处理复用 LakeUI，
-''' 本类负责模型胶囊、本地模型与其他模型检查入口及提示窗固定宽度适配。
-''' </summary>
 Public Class VmafModelComboBox
     Inherits ModernComboBox
 
@@ -121,8 +123,13 @@ Public Class VmafModelComboBox
     Private Sub 准备模型提示(sender As Object, e As EventArgs)
         Dim popup = TryCast(下拉窗体字段?.GetValue(Me), Form)
         If popup Is Nothing OrElse 提示窗体字段 Is Nothing Then Return
-        AddHandler popup.MouseMove, Sub(s, args) 准备固定宽度提示(popup)
+        RemoveHandler popup.MouseMove, AddressOf 下拉模型鼠标移动
+        AddHandler popup.MouseMove, AddressOf 下拉模型鼠标移动
         准备固定宽度提示(popup)
+    End Sub
+
+    Private Sub 下拉模型鼠标移动(sender As Object, e As MouseEventArgs)
+        准备固定宽度提示(DirectCast(sender, Form))
     End Sub
 
     Private Sub 准备固定宽度提示(popup As Form)
@@ -135,6 +142,7 @@ Public Class VmafModelComboBox
             AddHandler tip.LocationChanged, Sub(s, args) 定位模型提示(tip, popup)
             AddHandler tip.SizeChanged, Sub(s, args) 定位模型提示(tip, popup)
         End If
+        ' 提前创建隐藏提示窗的句柄，使尺寸约束在首次显示前生效。
         Dim handle = tip.Handle
         Dim width = CInt(Math.Round(ToolTipMaxWidth * DpiScale(), MidpointRounding.AwayFromZero))
         tip.MinimumSize = New Size(width, 1)
@@ -210,8 +218,7 @@ Public Class VmafModelComboBox
             Items.Add(浏览本地模型文本)
             AddDisplayItem(New VmafModelDisplayItem With {.ModelValue = "AUTO", .VersionLabel = "AUTO", .IsAuto = True}, False)
 
-            For Each item In displayItems.Where(Function(value) Not value.IsOtherModel AndAlso Not value.IsNonNeg).
-                Concat(displayItems.Where(Function(value) value.IsOtherModel OrElse value.IsNonNeg))
+            For Each item In displayItems.OrderBy(Function(value) value.IsOtherModel OrElse value.IsNonNeg)
                 AddDisplayItem(item, False)
             Next
 
@@ -345,7 +352,7 @@ Public Class VmafModelComboBox
     Protected Overrides Function RenderCustomSelectionContentGpu(context As D3D_PaintContext,
                                                                   bounds As RectangleF) As Boolean
         Dim item = SelectedModel
-        If item Is Nothing OrElse item.IsLocal OrElse item.IsAuto OrElse item.IsOtherModel OrElse item.IsNonNeg OrElse item.IsCheckOtherModels OrElse item.VersionLabel.StartsWith("vmaf_", StringComparison.OrdinalIgnoreCase) Then Return False
+        If item Is Nothing OrElse Not item.UsesCapsules Then Return False
 
         Dim scale = DpiScale()
         Dim gap = 胶囊间距逻辑值 * scale
@@ -372,14 +379,13 @@ Public Class VmafModelComboBox
         Dim modelIndex = itemIndex - 1
         If modelIndex < 0 OrElse modelIndex >= _displayItems.Count Then Return False
         Dim item = _displayItems(modelIndex)
-        If item.IsLocal OrElse item.IsAuto OrElse item.IsOtherModel OrElse item.IsNonNeg OrElse item.IsCheckOtherModels OrElse item.VersionLabel.StartsWith("vmaf_", StringComparison.OrdinalIgnoreCase) Then Return False
+        If Not item.UsesCapsules Then Return False
 
         Dim scale = DpiScale()
         Dim gap = 胶囊间距逻辑值 * scale
         Dim x = itemRect.X + DropDownPadding.Left + 4.0F
         Dim capsuleHeight = Math.Min(胶囊高度逻辑值 * scale, Math.Max(1.0F, itemRect.Height - 10.0F * scale))
         Dim y = itemRect.Y + (itemRect.Height - capsuleHeight) / 2.0F
-        ' 每一分类使用固定列宽，CUDA 的列位不变。
         DrawDropDownCapsuleSlot(context, item.VersionLabel, 版本胶囊宽度逻辑值 * scale, x, y, capsuleHeight, gap, textColor, If(item.VersionLabel = "V0", 胶囊类别.旧版, 胶囊类别.版本))
         DrawDropDownCapsuleSlot(context, If(item.Is4K, "4K", ""), 分辨率胶囊宽度逻辑值 * scale, x, y, capsuleHeight, gap, textColor, 胶囊类别.分辨率)
         DrawDropDownCapsuleSlot(context, item.ViewingDistanceLabel, 观看距离胶囊宽度逻辑值 * scale, x, y, capsuleHeight, gap, textColor, 获取观看距离胶囊类别(item.ViewingDistanceLabel))

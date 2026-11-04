@@ -1,4 +1,4 @@
-<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class Form_v6_参数面板_输出文件设置
     Inherits System.Windows.Forms.Form
 
@@ -50,6 +50,8 @@ Partial Class Form_v6_参数面板_输出文件设置
         HCL_保留子文件夹结构起始点 = New LakeUI.HtmlColorLabel()
         Panel2 = New LakeUI.ModernPanel()
         MCB_输出位置 = New LakeUI.ModernComboBox()
+        ModernPanel2 = New LakeUI.ModernPanel()
+        MCK_MP4索引前置 = New LakeUI.ModernCheckBox()
         Panel1 = New LakeUI.ModernPanel()
         MCB_输出文件参数使用方法 = New LakeUI.ModernComboBox()
         JustEmptyControl2 = New LakeUI.JustEmptyControl()
@@ -65,6 +67,7 @@ Partial Class Form_v6_参数面板_输出文件设置
         Panel3.SuspendLayout()
         Panel8.SuspendLayout()
         Panel2.SuspendLayout()
+        ModernPanel2.SuspendLayout()
         Panel1.SuspendLayout()
         SuspendLayout()
         ' 
@@ -168,6 +171,7 @@ Partial Class Form_v6_参数面板_输出文件设置
         ModernPanel1.Controls.Add(Panel8)
         ModernPanel1.Controls.Add(HCL_保留子文件夹结构起始点)
         ModernPanel1.Controls.Add(Panel2)
+        ModernPanel1.Controls.Add(ModernPanel2)
         ModernPanel1.Controls.Add(Panel1)
         ModernPanel1.Controls.Add(HCL_后缀和位置)
         ModernPanel1.Dock = DockStyle.Fill
@@ -186,10 +190,10 @@ Partial Class Form_v6_参数面板_输出文件设置
         Panel7.Controls.Add(MCK_保留修改时间)
         Panel7.Controls.Add(MCK_保留创建时间)
         Panel7.Dock = DockStyle.Top
-        Panel7.Location = New Point(20, 455)
+        Panel7.Location = New Point(20, 487)
         Panel7.Name = "Panel7"
         Panel7.Padding = New Padding(0, 10, 0, 0)
-        Panel7.Size = New Size(660, 42)
+        Panel7.Size = New Size(660, 32)
         Panel7.TabIndex = 15
         ' 
         ' MCK_保留访问时间
@@ -205,8 +209,7 @@ Partial Class Form_v6_参数面板_输出文件设置
         MCK_保留访问时间.Dock = DockStyle.Left
         MCK_保留访问时间.Location = New Point(300, 10)
         MCK_保留访问时间.Name = "MCK_保留访问时间"
-        MCK_保留访问时间.Padding = New Padding(0, 5, 0, 5)
-        MCK_保留访问时间.Size = New Size(150, 32)
+        MCK_保留访问时间.Size = New Size(150, 22)
         MCK_保留访问时间.TabIndex = 14
         MCK_保留访问时间.Text = "保留访问时间"
         ' 
@@ -223,8 +226,7 @@ Partial Class Form_v6_参数面板_输出文件设置
         MCK_保留修改时间.Dock = DockStyle.Left
         MCK_保留修改时间.Location = New Point(150, 10)
         MCK_保留修改时间.Name = "MCK_保留修改时间"
-        MCK_保留修改时间.Padding = New Padding(0, 5, 0, 5)
-        MCK_保留修改时间.Size = New Size(150, 32)
+        MCK_保留修改时间.Size = New Size(150, 22)
         MCK_保留修改时间.TabIndex = 13
         MCK_保留修改时间.Text = "保留修改时间"
         ' 
@@ -241,8 +243,7 @@ Partial Class Form_v6_参数面板_输出文件设置
         MCK_保留创建时间.Dock = DockStyle.Left
         MCK_保留创建时间.Location = New Point(0, 10)
         MCK_保留创建时间.Name = "MCK_保留创建时间"
-        MCK_保留创建时间.Padding = New Padding(0, 5, 0, 5)
-        MCK_保留创建时间.Size = New Size(150, 32)
+        MCK_保留创建时间.Size = New Size(150, 22)
         MCK_保留创建时间.TabIndex = 12
         MCK_保留创建时间.Text = "保留创建时间"
         ' 
@@ -252,7 +253,7 @@ Partial Class Form_v6_参数面板_输出文件设置
         HCL_文件时间.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HCL_文件时间.Dock = DockStyle.Top
         HCL_文件时间.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        HCL_文件时间.Location = New Point(20, 412)
+        HCL_文件时间.Location = New Point(20, 444)
         HCL_文件时间.Margin = New Padding(2)
         HCL_文件时间.Name = "HCL_文件时间"
         HCL_文件时间.Padding = New Padding(0, 20, 0, 0)
@@ -268,7 +269,7 @@ Partial Class Form_v6_参数面板_输出文件设置
         Panel6.Controls.Add(HCL_结尾文本)
         Panel6.Controls.Add(MTB_结尾文本)
         Panel6.Dock = DockStyle.Top
-        Panel6.Location = New Point(20, 370)
+        Panel6.Location = New Point(20, 402)
         Panel6.Name = "Panel6"
         Panel6.Padding = New Padding(0, 10, 0, 0)
         Panel6.Size = New Size(660, 42)
@@ -314,7 +315,7 @@ Partial Class Form_v6_参数面板_输出文件设置
         Panel5.Controls.Add(HCL_替代文件名)
         Panel5.Controls.Add(MTB_替代文件名)
         Panel5.Dock = DockStyle.Top
-        Panel5.Location = New Point(20, 328)
+        Panel5.Location = New Point(20, 360)
         Panel5.Name = "Panel5"
         Panel5.Padding = New Padding(0, 10, 0, 0)
         Panel5.Size = New Size(660, 42)
@@ -360,7 +361,7 @@ Partial Class Form_v6_参数面板_输出文件设置
         Panel4.Controls.Add(HCL_开头文本)
         Panel4.Controls.Add(MTB_开头文本)
         Panel4.Dock = DockStyle.Top
-        Panel4.Location = New Point(20, 286)
+        Panel4.Location = New Point(20, 318)
         Panel4.Name = "Panel4"
         Panel4.Padding = New Padding(0, 10, 0, 0)
         Panel4.Size = New Size(660, 42)
@@ -406,7 +407,7 @@ Partial Class Form_v6_参数面板_输出文件设置
         Panel3.Controls.Add(HCL_自动命名方式)
         Panel3.Controls.Add(MCB_自动命名方式)
         Panel3.Dock = DockStyle.Top
-        Panel3.Location = New Point(20, 244)
+        Panel3.Location = New Point(20, 276)
         Panel3.Name = "Panel3"
         Panel3.Padding = New Padding(0, 10, 0, 0)
         Panel3.Size = New Size(660, 42)
@@ -471,7 +472,7 @@ Partial Class Form_v6_参数面板_输出文件设置
         HCL_命名方式.AutoSize = True
         HCL_命名方式.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HCL_命名方式.Dock = DockStyle.Top
-        HCL_命名方式.Location = New Point(20, 201)
+        HCL_命名方式.Location = New Point(20, 233)
         HCL_命名方式.Margin = New Padding(2)
         HCL_命名方式.Name = "HCL_命名方式"
         HCL_命名方式.Padding = New Padding(0, 20, 0, 0)
@@ -486,7 +487,7 @@ Partial Class Form_v6_参数面板_输出文件设置
         Panel8.BorderSize = 0
         Panel8.Controls.Add(MCB_保留子文件夹结构起始点)
         Panel8.Dock = DockStyle.Top
-        Panel8.Location = New Point(20, 159)
+        Panel8.Location = New Point(20, 191)
         Panel8.Name = "Panel8"
         Panel8.Padding = New Padding(0, 10, 0, 0)
         Panel8.Size = New Size(660, 42)
@@ -526,7 +527,7 @@ Partial Class Form_v6_参数面板_输出文件设置
         HCL_保留子文件夹结构起始点.AutoSize = True
         HCL_保留子文件夹结构起始点.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HCL_保留子文件夹结构起始点.Dock = DockStyle.Top
-        HCL_保留子文件夹结构起始点.Location = New Point(20, 127)
+        HCL_保留子文件夹结构起始点.Location = New Point(20, 159)
         HCL_保留子文件夹结构起始点.Margin = New Padding(2)
         HCL_保留子文件夹结构起始点.Name = "HCL_保留子文件夹结构起始点"
         HCL_保留子文件夹结构起始点.Padding = New Padding(0, 15, 0, 0)
@@ -541,7 +542,7 @@ Partial Class Form_v6_参数面板_输出文件设置
         Panel2.BorderSize = 0
         Panel2.Controls.Add(MCB_输出位置)
         Panel2.Dock = DockStyle.Top
-        Panel2.Location = New Point(20, 85)
+        Panel2.Location = New Point(20, 117)
         Panel2.Name = "Panel2"
         Panel2.Padding = New Padding(0, 10, 0, 0)
         Panel2.Size = New Size(660, 42)
@@ -568,6 +569,7 @@ Partial Class Form_v6_参数面板_输出文件设置
         MCB_输出位置.Margin = New Padding(2, 2, 2, 2)
         MCB_输出位置.Name = "MCB_输出位置"
         MCB_输出位置.Padding = New Padding(10, 0, 10, 0)
+        MCB_输出位置.PrefixForeColor = Color.Orange
         MCB_输出位置.PrefixGap = 10
         MCB_输出位置.PrefixText = "输出目录"
         MCB_输出位置.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
@@ -577,6 +579,38 @@ Partial Class Form_v6_参数面板_输出文件设置
         MCB_输出位置.ToolTipMaxWidth = 350
         MCB_输出位置.ToolTipPadding = New Padding(15)
         MCB_输出位置.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
+        ' 
+        ' ModernPanel2
+        ' 
+        ModernPanel2.BackColor = Color.Transparent
+        ModernPanel2.BackColor1 = Color.Transparent
+        ModernPanel2.BorderSize = 0
+        ModernPanel2.Controls.Add(MCK_MP4索引前置)
+        ModernPanel2.Dock = DockStyle.Top
+        ModernPanel2.Location = New Point(20, 85)
+        ModernPanel2.Name = "ModernPanel2"
+        ModernPanel2.Padding = New Padding(0, 10, 0, 0)
+        ModernPanel2.Size = New Size(660, 32)
+        ModernPanel2.TabIndex = 18
+        ' 
+        ' MCK_MP4索引前置
+        ' 
+        MCK_MP4索引前置.AutoSize = True
+        MCK_MP4索引前置.BoxBorderRadius = 5
+        MCK_MP4索引前置.BoxBorderSize = 0
+        MCK_MP4索引前置.BoxCheckedBackColor = Color.OliveDrab
+        MCK_MP4索引前置.BoxInnerPadding = 6
+        MCK_MP4索引前置.BoxSize = 22
+        MCK_MP4索引前置.BoxTextSpacing = 10
+        MCK_MP4索引前置.BoxUncheckedBackColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MCK_MP4索引前置.ClickAnywhere = True
+        MCK_MP4索引前置.Dock = DockStyle.Left
+        MCK_MP4索引前置.Enabled = False
+        MCK_MP4索引前置.Location = New Point(0, 10)
+        MCK_MP4索引前置.Name = "MCK_MP4索引前置"
+        MCK_MP4索引前置.Size = New Size(193, 22)
+        MCK_MP4索引前置.TabIndex = 12
+        MCK_MP4索引前置.Text = "MP4 索引前置 / 快速启动"
         ' 
         ' Panel1
         ' 
@@ -617,6 +651,7 @@ Partial Class Form_v6_参数面板_输出文件设置
         MCB_输出文件参数使用方法.Margin = New Padding(2, 2, 2, 2)
         MCB_输出文件参数使用方法.Name = "MCB_输出文件参数使用方法"
         MCB_输出文件参数使用方法.Padding = New Padding(10, 0, 10, 0)
+        MCB_输出文件参数使用方法.PrefixForeColor = Color.Orange
         MCB_输出文件参数使用方法.PrefixGap = 10
         MCB_输出文件参数使用方法.PrefixText = "输出模式"
         MCB_输出文件参数使用方法.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
@@ -709,6 +744,8 @@ Partial Class Form_v6_参数面板_输出文件设置
         Panel3.ResumeLayout(False)
         Panel8.ResumeLayout(False)
         Panel2.ResumeLayout(False)
+        ModernPanel2.ResumeLayout(False)
+        ModernPanel2.PerformLayout()
         Panel1.ResumeLayout(False)
         ResumeLayout(False)
     End Sub
@@ -748,4 +785,6 @@ Partial Class Form_v6_参数面板_输出文件设置
     Friend WithEvents Panel8 As LakeUI.ModernPanel
     Friend WithEvents HCL_保留子文件夹结构起始点 As LakeUI.HtmlColorLabel
     Friend WithEvents MCB_保留子文件夹结构起始点 As LakeUI.ModernComboBox
+    Friend WithEvents ModernPanel2 As LakeUI.ModernPanel
+    Friend WithEvents MCK_MP4索引前置 As LakeUI.ModernCheckBox
 End Class

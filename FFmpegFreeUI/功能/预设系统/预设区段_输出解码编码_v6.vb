@@ -132,6 +132,7 @@ Partial Public Class 预设管理_v6
         With ui.私有界面_输出文件设置
             a.输出容器 = .MTB_后缀.Text
             a.输出_输出文件参数使用方法 = SelectedIndexToEnum(Of 预设数据_v6.输出文件参数使用方法)(Math.Max(0, .MCB_输出文件参数使用方法.SelectedIndex))
+            a.输出_MP4索引前置 = .MCK_MP4索引前置.Checked
             a.输出_自动命名选项 = SelectedIndexToEnum(Of 预设数据_v6.自动命名选项)(Math.Max(0, .MCB_自动命名方式.SelectedIndex))
             a.输出命名_开头文本 = .MTB_开头文本.Text
             a.输出命名_替代文本 = .MTB_替代文件名.Text
@@ -159,6 +160,7 @@ Partial Public Class 预设管理_v6
         With ui.私有界面_输出文件设置
             .MTB_后缀.Text = a.输出容器
             .MCB_输出文件参数使用方法.SelectedIndex = EnumToIndex(a.输出_输出文件参数使用方法)
+            .MCK_MP4索引前置.Checked = a.输出_MP4索引前置
             .MCB_自动命名方式.SelectedIndex = EnumToIndex(a.输出_自动命名选项)
             .MTB_开头文本.Text = a.输出命名_开头文本
             .MTB_替代文件名.Text = a.输出命名_替代文本

@@ -39,8 +39,7 @@ Public NotInheritable Class Agent自定义内容_v6
         If Not File.Exists(系统提示词路径) Then 初始化()
         ' 读取失败应明确报错，不能静默发送与用户预期不同的系统提示词。
         Dim content = File.ReadAllText(系统提示词路径, Encoding.UTF8)
-        If Not 有有效字符(content) Then Return ""
-        Return content
+        Return If(有有效字符(content), content, "")
     End Function
 
     Private Shared Function 有有效字符(content As String) As Boolean

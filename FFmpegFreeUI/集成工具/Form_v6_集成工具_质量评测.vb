@@ -239,8 +239,7 @@ Public Class Form_v6_集成工具_质量评测
                 If IsDisposed Then Return
             End If
 
-            Dim previousItem = MCB_模型选择.SelectedModel
-            保留本地Vmaf模型(displayItems, previousItem)
+            保留本地Vmaf模型(displayItems, MCB_模型选择.SelectedModel)
             MCB_模型选择.ReplaceDisplayItems(displayItems)
             更新Vmaf模型提示()
             Dim previousIndex = MCB_模型选择.FindModelIndex(previousModel, previousCuda)
@@ -336,7 +335,6 @@ Public Class Form_v6_集成工具_质量评测
 
     Private Shared Sub 检查Vmaf模型可用性(model As VmafModelDisplayItem)
         If model Is Nothing OrElse model.IsAuto OrElse model.IsLocal Then Return
-        If model.UseCuda AndAlso Not model.IsCudaAvailable Then Throw New InvalidOperationException("当前 FFmpeg 未检测到 libvmaf_cuda 滤镜，无法使用此 CUDA 选项。请选择普通项或更换支持该滤镜的 FFmpeg 后刷新。")
         If model.IsRuntimeDetected Then Return
         If model.IsHdr Then Throw New InvalidOperationException($"当前 FFmpeg 运行库未检测到模型 {model.ModelValue}。此选项来自官方 HDR 模型目录，不代表当前引擎已经支持。请更新具备新 HDR 模型及完整颜色信息传递能力的 FFmpeg/libvmaf 后刷新，或浏览兼容的本地 JSON 模型。")
         Throw New InvalidOperationException($"当前 FFmpeg 运行库未检测到模型 {model.ModelValue}。请刷新模型列表或浏览兼容的本地 JSON 模型；目录可见不代表当前引擎已经支持。")
@@ -424,9 +422,7 @@ Public Class Form_v6_集成工具_质量评测
                     .Is4K = item.Is4K,
                     .ViewingDistanceLabel = item.ViewingDistanceLabel,
                     .IsHfr = item.IsHfr,
-                    .IsNonNeg = item.IsNonNeg,
                     .IsRuntimeDetected = item.IsRuntimeDetected,
-                    .IsCudaAvailable = cudaAvailable,
                     .UseCuda = True
                 })
             End If
@@ -451,24 +447,19 @@ Public Class Form_v6_集成工具_质量评测
 
         Dim major As Integer
         If Not Integer.TryParse(versionMatch.Groups("major").Value, NumberStyles.None, CultureInfo.InvariantCulture, major) Then Return Nothing
-        Dim isNeg = versionMatch.Groups("neg").Success
-        Dim isNonNeg = major = 0 AndAlso Not isNeg
-
         Dim distanceMatch = Regex.Match(lower,
                                         "(?:^|_)(?<whole>\d+)d(?<fraction>\d+)h(?:_|$)",
                                         RegexOptions.CultureInvariant)
-        Dim viewingDistance = If(distanceMatch.Success, 格式化Vmaf观看距离(distanceMatch), "")
 
         Return New VmafModelDisplayItem With {
             .ModelValue = raw,
             .VersionLabel = $"V{major.ToString(CultureInfo.InvariantCulture)}",
             .Is4K = lower.Contains("_4k_", StringComparison.Ordinal) OrElse
                     lower.Contains("_2160", StringComparison.Ordinal),
-            .ViewingDistanceLabel = viewingDistance,
+            .ViewingDistanceLabel = If(distanceMatch.Success, 格式化Vmaf观看距离(distanceMatch), ""),
             .IsHfr = lower.Contains("_hfr_", StringComparison.Ordinal),
             .IsHdr = lower.StartsWith("hdr_vmaf_", StringComparison.Ordinal),
-            .IsNonNeg = isNonNeg,
-            .UseCuda = False
+            .IsNonNeg = major = 0 AndAlso Not versionMatch.Groups("neg").Success
         }
     End Function
 

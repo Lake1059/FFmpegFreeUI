@@ -274,7 +274,8 @@ Partial Public Class AgentLocalTools
         Else
             Try
                 ' 无 BOM 的旧编码不能通过有损解码再覆盖写回。
-                Dim validatedLength = New UTF8Encoding(False, True).GetCharCount(bytes)
+                Dim strictUtf8 As New UTF8Encoding(False, True)
+                strictUtf8.GetCharCount(bytes)
             Catch ex As DecoderFallbackException
                 Return "补丁未应用：文件不是有效的 UTF-8，且没有可识别的 Unicode BOM"
             End Try

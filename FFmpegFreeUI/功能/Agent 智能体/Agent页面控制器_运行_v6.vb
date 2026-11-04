@@ -320,14 +320,14 @@ Partial Friend Class Agent页面控制器_v6
                         toolResult = questionError
                     Else
                         toolResult = Await AgentLocalTools.ExecuteAsync(
-                        callInfo,
-                        permissionLevel,
-                        networkMode,
-                        client,
-                        modelId,
-                        reasoning,
-                        powerShellSession,
-                        cancellationToken)
+                            callInfo,
+                            permissionLevel,
+                            networkMode,
+                            client,
+                            modelId,
+                            reasoning,
+                            powerShellSession,
+                            cancellationToken)
                     End If
                     ' 工具本身可能是同步桥接（例如参数面板或集成工具）。
                     ' 用户停止后即使该桥接刚刚返回，也不能再把结果写回上下文或继续执行同批调用。

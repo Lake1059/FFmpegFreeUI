@@ -76,8 +76,7 @@ Friend NotInheritable Class AgentUserInputCoordinator
         Dim prompt As New StringBuilder()
         prompt.AppendLine("会话：" & conversation.Title).AppendLine().AppendLine(question.Question).AppendLine()
         Dim buttons As New List(Of ExMsgBoxButton)
-        For Each optionValue In question.Options
-            Dim choice = optionValue
+        For Each choice In question.Options
             prompt.AppendLine(choice.Label & If(choice.Description = "", "", "：" & choice.Description))
             buttons.Add(New ExMsgBoxButton(choice.Label, False,
                 Function(e)
@@ -103,7 +102,7 @@ Friend NotInheritable Class AgentUserInputCoordinator
             _dialog = CreateExMsgBox(prompt.ToString(), buttons, "Agent 需要你的选择", _owner.FindForm(), MsgBoxStyle.Question)
             AddHandler _dialog.FormClosed, AddressOf DialogClosed
             _dialog.Show(_owner.FindForm())
-        Catch ex As Exception
+        Catch
             _hiddenQuestion = question
             CloseDialog()
         End Try

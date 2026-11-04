@@ -6,7 +6,6 @@ Public Class Form_v6_媒体流选择器
     Private 字幕目标 As Object
     Private 读取取消源 As Threading.CancellationTokenSource
     Private 读取进程 As Process
-    Private 读取任务 As Task
     Private 正在关闭 As Boolean
     Private 资源已释放 As Boolean
     Private 窗口样式 As ThisIsYourWindow
@@ -62,12 +61,11 @@ Public Class Form_v6_媒体流选择器
     End Sub
 
     Private Sub 绑定文件拖入(target As Control)
+        If 拖入控件.Contains(target) Then Return
         target.AllowDrop = True
-        RemoveHandler target.DragEnter, AddressOf 文件拖入事件
-        RemoveHandler target.DragDrop, AddressOf 文件放下事件
         AddHandler target.DragEnter, AddressOf 文件拖入事件
         AddHandler target.DragDrop, AddressOf 文件放下事件
-        If Not 拖入控件.Contains(target) Then 拖入控件.Add(target)
+        拖入控件.Add(target)
     End Sub
 
     Private Sub 文件拖入事件(sender As Object, e As DragEventArgs)
@@ -81,7 +79,7 @@ Public Class Form_v6_媒体流选择器
         开始读取(files(0))
     End Sub
 
-    Private Sub 打开_Click(sender As Object, e As EventArgs)
+    Private Sub MB_打开文件_Click(sender As Object, e As EventArgs) Handles MB_打开文件.Click
         Using d As New OpenFileDialog With {.Multiselect = False}
             If d.ShowDialog(Me) = DialogResult.OK Then 开始读取(d.FileName)
         End Using
@@ -99,27 +97,18 @@ Public Class Form_v6_媒体流选择器
         设置全部(字幕列表项, True)
     End Sub
 
-    Private Sub MB_打开文件_Click(sender As Object, e As EventArgs) Handles MB_打开文件.Click
-        打开_Click(sender, e)
-    End Sub
-
     Private Sub MB_重置选择_Click(sender As Object, e As EventArgs) Handles MB_重置选择.Click
         设置全部(视频列表项.Concat(音频列表项).Concat(字幕列表项), False)
     End Sub
 
-    Private Sub MB_确认选择_Click(sender As Object, e As EventArgs) Handles MB_确认选择.Click
-        确认_Click(sender, e)
-    End Sub
-
-    Private Sub 开始读取(媒体文件 As String)
+    Private Async Sub 开始读取(媒体文件 As String)
         If 正在关闭 OrElse IsDisposed OrElse Disposing Then Return
         取消读取()
         Dim cancellation As New Threading.CancellationTokenSource(TimeSpan.FromSeconds(30))
         读取取消源 = cancellation
         MB_确认选择.Enabled = False
-        显示流信息(New List(Of String))
-        UltraDetailListView1.Items(0).SubItems(0).Text = "正在读取媒体流…"
-        读取任务 = 读取媒体Async(媒体文件, cancellation)
+        显示读取提示("正在读取媒体流…")
+        Await 读取媒体Async(媒体文件, cancellation)
     End Sub
 
     Private Async Function 读取媒体Async(媒体文件 As String, cancellation As Threading.CancellationTokenSource) As Task
@@ -143,15 +132,15 @@ Public Class Form_v6_媒体流选择器
                 Await Task.WhenAll(stdout, stderr, ffprobe.WaitForExitAsync(cancellation.Token)).WaitAsync(cancellation.Token)
                 If Not 可应用读取结果(cancellation) Then Return
                 If ffprobe.ExitCode <> 0 Then
-                    显示读取失败("读取媒体流失败：" & Agent通用工具_v6.LimitText(stderr.Result.Trim(), 300))
+                    显示读取提示("读取媒体流失败：" & Agent通用工具_v6.LimitText(stderr.Result.Trim(), 300))
                     Return
                 End If
                 Dim lines = (stderr.Result & vbLf & stdout.Result).Split({vbCrLf, vbLf, vbCr}, StringSplitOptions.RemoveEmptyEntries).ToList()
                 显示流信息(lines)
             Catch ex As OperationCanceledException When cancellation.IsCancellationRequested
-                If 可应用读取结果(cancellation, True) Then 显示读取失败("读取媒体流超时")
+                If 可应用读取结果(cancellation, True) Then 显示读取提示("读取媒体流超时")
             Catch ex As Exception
-                If 可应用读取结果(cancellation) Then 显示读取失败("读取媒体流失败：" & ex.Message)
+                If 可应用读取结果(cancellation) Then 显示读取提示("读取媒体流失败：" & ex.Message)
             Finally
                 终止进程(ffprobe)
                 If ReferenceEquals(读取进程, ffprobe) Then 读取进程 = Nothing
@@ -196,13 +185,12 @@ Public Class Form_v6_媒体流选择器
         读取进程 = Nothing
     End Sub
 
-    Private Sub 显示读取失败(message As String)
+    Private Sub 显示读取提示(message As String)
         显示流信息(New List(Of String))
         UltraDetailListView1.Items(0).SubItems(0).Text = message
     End Sub
 
     Private Sub 显示流信息(输出内容 As List(Of String))
-
         视频列表项.Clear()
         音频列表项.Clear()
         字幕列表项.Clear()
@@ -337,7 +325,7 @@ Public Class Form_v6_媒体流选择器
         UltraDetailListView1.Columns(0).Width = Math.Max(1, available)
     End Sub
 
-    Private Sub 确认_Click(sender As Object, e As EventArgs)
+    Private Sub MB_确认选择_Click(sender As Object, e As EventArgs) Handles MB_确认选择.Click
         写回(视频目标, 视频列表项, "v")
         写回(音频目标, 音频列表项, "a")
         写回(字幕目标, 字幕列表项, "s")
@@ -400,7 +388,6 @@ Public Class Form_v6_媒体流选择器
         资源已释放 = True
         正在关闭 = True
         取消读取()
-        读取任务 = Nothing
         窗口样式?.Detach(Me)
         窗口样式 = Nothing
         For Each target In 拖入控件

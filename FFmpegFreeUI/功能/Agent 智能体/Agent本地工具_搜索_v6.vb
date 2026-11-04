@@ -156,7 +156,7 @@ Partial Public Class AgentLocalTools
                                 If read = 0 Then Exit Do
                                 If capture.Length + read > SearchFileSizeLimit Then Exit Do
                                 capture.Write(buffer, 0, read)
-                            Loop While capture.Length <= SearchFileSizeLimit
+                            Loop
                             If stream.Position > SearchFileSizeLimit Then
                                 oversized += 1
                                 Continue For
@@ -164,10 +164,6 @@ Partial Public Class AgentLocalTools
                             bytes = capture.ToArray()
                         End Using
                         bytesScanned += bytes.LongLength
-                        If bytes.LongLength > SearchFileSizeLimit Then
-                            oversized += 1
-                            Continue For
-                        End If
                         text = DecodeSearchText(bytes)
                         If text.Contains(ChrW(0)) Then
                             unreadable += 1

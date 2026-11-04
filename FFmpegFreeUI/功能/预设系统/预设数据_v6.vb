@@ -13,6 +13,7 @@ Public Class 预设数据_v6
         声明丢弃输出 = 2
     End Enum
     Public Property 输出_输出文件参数使用方法 As 输出文件参数使用方法 = 输出文件参数使用方法.正常使用
+    Public Property 输出_MP4索引前置 As Boolean = False
     Public Property 输出目录 As String = ""
     Enum 自动命名选项
         不使用自动命名 = 0

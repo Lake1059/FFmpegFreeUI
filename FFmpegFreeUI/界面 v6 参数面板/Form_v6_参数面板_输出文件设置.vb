@@ -145,6 +145,11 @@ Public Class Form_v6_参数面板_输出文件设置
         If MCB_输出文件参数使用方法.SelectedIndex < 0 Then MCB_输出文件参数使用方法.SelectedIndex = 0
     End Sub
 
+    Private Sub 更新MP4索引前置可用状态(sender As Object, e As EventArgs) Handles MyBase.Load, MTB_后缀.TextChanged
+        If MCK_MP4索引前置 Is Nothing Then Exit Sub
+        MCK_MP4索引前置.Enabled = If(MTB_后缀.Text, "").Trim().ToLowerInvariant() = ".mp4"
+    End Sub
+
     Private Sub MCB_输出位置_SelectedIndexChanged(sender As Object, e As EventArgs) Handles MCB_输出位置.SelectedIndexChanged
         If 正在选择输出位置 Then Exit Sub
         If MCB_输出位置.SelectedIndex = 1 Then
