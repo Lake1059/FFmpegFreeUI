@@ -232,14 +232,16 @@ Public Class Form_v6_集成工具_混流
     End Sub
 
     Private Shared Function 获取字典文本(spec As Dictionary(Of String, Object), key As String) As String
-        If spec Is Nothing OrElse Not spec.ContainsKey(key) OrElse spec(key) Is Nothing Then Return ""
-        Return spec(key).ToString()
+        Dim value As Object = Nothing
+        If spec Is Nothing OrElse Not spec.TryGetValue(key, value) OrElse value Is Nothing Then Return ""
+        Return value.ToString()
     End Function
 
     Private Shared Function 获取字典布尔(spec As Dictionary(Of String, Object), key As String) As Boolean
-        If spec Is Nothing OrElse Not spec.ContainsKey(key) OrElse spec(key) Is Nothing Then Return False
-        If TypeOf spec(key) Is Boolean Then Return CBool(spec(key))
-        Dim text = spec(key).ToString()
+        Dim value As Object = Nothing
+        If spec Is Nothing OrElse Not spec.TryGetValue(key, value) OrElse value Is Nothing Then Return False
+        If TypeOf value Is Boolean Then Return CBool(value)
+        Dim text = value.ToString()
         Return String.Equals(text, "true", StringComparison.OrdinalIgnoreCase) OrElse text = "1" OrElse text = "是"
     End Function
 

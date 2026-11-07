@@ -20,6 +20,8 @@ Public Class Form_v6_集成工具_质量评测
     Private 当前进程 As Process = Nothing
     Private 取消令牌源 As CancellationTokenSource = Nothing
     Private 正在评测 As Boolean = False
+    Private 页面状态保存计时器 As System.Windows.Forms.Timer
+    Private 页面宿主窗体 As Form
     Private 最后动态图表刷新Tick As Long = 0
     Private ReadOnly 评测记录锁 As New Object()
     Private 当前评测记录 As StringBuilder = Nothing
@@ -168,12 +170,24 @@ Public Class Form_v6_集成工具_质量评测
         绑定文件拖入(Panel6, False)
         调整列宽()
         调整底部按钮布局()
+        Dim parentControl = Parent
+        While parentControl IsNot Nothing
+            If TypeOf parentControl Is Form Then 页面宿主窗体 = DirectCast(parentControl, Form)
+            parentControl = parentControl.Parent
+        End While
+        If 页面宿主窗体 IsNot Nothing Then
+            AddHandler 页面宿主窗体.FormClosing, AddressOf 页面宿主窗体_FormClosing
+        End If
         恢复页面状态()
         AddHandler 界面主题_v6.主题已更改, AddressOf 刷新全部评分颜色
     End Sub
 
     Private Sub 质量评测关闭(sender As Object, e As FormClosedEventArgs) Handles MyBase.FormClosed
         RemoveHandler 界面主题_v6.主题已更改, AddressOf 刷新全部评分颜色
+        If 页面宿主窗体 IsNot Nothing Then
+            RemoveHandler 页面宿主窗体.FormClosing, AddressOf 页面宿主窗体_FormClosing
+            页面宿主窗体 = Nothing
+        End If
     End Sub
 
     <CodeAnalysis.SuppressMessage("Performance", "CA1861:不要将常量数组作为参数", Justification:="<挂起>")>
@@ -743,10 +757,13 @@ Public Class Form_v6_集成工具_质量评测
         Dim fileList = files.Where(Function(x) Not String.IsNullOrWhiteSpace(x) AndAlso File.Exists(x)).ToList()
         If fileList.Count = 0 Then Exit Sub
 
+        Dim existingPaths = New HashSet(Of String)(
+            UltraDetailListView1.Items.Select(Function(item) 获取项数据(item).文件路径),
+            StringComparer.OrdinalIgnoreCase)
         UltraDetailListView1.BeginUpdate()
         Try
             For Each file In fileList
-                If UltraDetailListView1.Items.Any(Function(item) String.Equals(获取项数据(item).文件路径, file, StringComparison.OrdinalIgnoreCase)) Then Continue For
+                If Not existingPaths.Add(file) Then Continue For
                 UltraDetailListView1.Items.Add(创建文件项(file))
             Next
         Finally
@@ -1009,31 +1026,85 @@ Public Class Form_v6_集成工具_质量评测
             当前评测记录 = Nothing
         End SyncLock
         ' 每轮评测结束即保存当前列表状态，与是否手动导出无关。
-        Try
-            保存页面状态()
-        Catch
-        End Try
+        保存页面状态()
+    End Sub
+
+    Private Sub 原视频路径已更改(sender As Object, e As EventArgs) Handles MTB_原视频文件路径.TextChanged
+        If 页面状态保存计时器 Is Nothing Then
+            页面状态保存计时器 = New System.Windows.Forms.Timer With {.Interval = 600}
+            AddHandler 页面状态保存计时器.Tick, AddressOf 页面状态保存计时器_Tick
+        End If
+
+        页面状态保存计时器.Stop()
+        页面状态保存计时器.Start()
+    End Sub
+
+    Private Sub 页面状态保存计时器_Tick(sender As Object, e As EventArgs)
+        页面状态保存计时器.Stop()
+        保存页面状态()
+    End Sub
+
+    Private Sub 页面宿主窗体_FormClosing(sender As Object, e As FormClosingEventArgs)
+        保存待处理页面状态()
+    End Sub
+
+    Private Sub 保存待处理页面状态()
+        If 页面状态保存计时器 Is Nothing OrElse Not 页面状态保存计时器.Enabled Then Return
+        页面状态保存计时器.Stop()
+        保存页面状态()
     End Sub
 
     Private Sub 保存页面状态()
         Try
-            Dim state As New 页面状态 With {.原视频 = MTB_原视频文件路径.Text, .从头开始 = MTB_从头开始.Text, .评测时长 = MTB_评测时长.Text, .Vmaf模型 = MCB_模型选择.SelectedModelValue, .Pooling = MCB_Pooling.Text, .SubSample = MCB_SubSample.Text, .VmafCuda = MCB_模型选择.SelectedUsesCuda}
-            For Each m In 全部指标 : state.指标(获取指标名称(m)) = 获取指标复选框(m).Checked : Next
-            For Each item In UltraDetailListView1.Items
-                Dim d = 获取项数据(item), sf As New 页面状态文件 With {.文件路径 = d.文件路径, .状态 = d.状态, .最近错误 = d.最近错误}
-                For Each kv In d.指标结果
-                    Dim r = kv.Value, sr As New 页面状态结果 With {.成功 = r.成功, .汇总值 = r.汇总值, .已处理帧数 = r.已处理帧数, .错误信息 = r.错误信息, .实际模型 = r.实际模型, .模型说明 = r.模型说明}
-                    SyncLock r.数据锁
-                        sr.每帧数据 = New List(Of Double)(r.每帧数据)
-                        sr.每帧帧号 = New List(Of Integer)(r.每帧帧号)
-                        sr.评测帧率 = r.评测帧率
-                        sr.评测起始秒数 = r.评测起始秒数
-                        sr.帧间隔 = r.帧间隔
-                    End SyncLock
-                    sf.指标结果(获取指标名称(kv.Key)) = sr
-                Next
-                state.文件.Add(sf)
+            Dim state As New 页面状态 With {
+                .原视频 = MTB_原视频文件路径.Text,
+                .从头开始 = MTB_从头开始.Text,
+                .评测时长 = MTB_评测时长.Text,
+                .Vmaf模型 = MCB_模型选择.SelectedModelValue,
+                .Pooling = MCB_Pooling.Text,
+                .SubSample = MCB_SubSample.Text,
+                .VmafCuda = MCB_模型选择.SelectedUsesCuda
+            }
+
+            For Each metric In 全部指标
+                state.指标(获取指标名称(metric)) = 获取指标复选框(metric).Checked
             Next
+
+            For Each item In UltraDetailListView1.Items
+                Dim data = 获取项数据(item)
+                Dim savedFile As New 页面状态文件 With {
+                    .文件路径 = data.文件路径,
+                    .状态 = data.状态,
+                    .最近错误 = data.最近错误
+                }
+
+                For Each entry In data.指标结果
+                    Dim result = entry.Value
+                    If result Is Nothing Then Continue For
+
+                    Dim savedResult As New 页面状态结果 With {
+                        .成功 = result.成功,
+                        .汇总值 = result.汇总值,
+                        .已处理帧数 = result.已处理帧数,
+                        .错误信息 = result.错误信息,
+                        .实际模型 = result.实际模型,
+                        .模型说明 = result.模型说明
+                    }
+
+                    SyncLock result.数据锁
+                        savedResult.每帧数据 = If(result.每帧数据 Is Nothing, New List(Of Double), New List(Of Double)(result.每帧数据))
+                        savedResult.每帧帧号 = If(result.每帧帧号 Is Nothing, New List(Of Integer), New List(Of Integer)(result.每帧帧号))
+                        savedResult.评测帧率 = result.评测帧率
+                        savedResult.评测起始秒数 = result.评测起始秒数
+                        savedResult.帧间隔 = result.帧间隔
+                    End SyncLock
+
+                    savedFile.指标结果(获取指标名称(entry.Key)) = savedResult
+                Next
+
+                state.文件.Add(savedFile)
+            Next
+
             设置_v6.实例对象.质量评测页面状态 = JsonSerializer.Serialize(state, JsonSO)
             设置_v6.后台保存设置()
         Catch
@@ -1046,26 +1117,52 @@ Public Class Form_v6_集成工具_质量评测
             If String.IsNullOrWhiteSpace(raw) Then Exit Sub
             Dim state = JsonSerializer.Deserialize(Of 页面状态)(raw, JsonSO)
             If state Is Nothing Then Exit Sub
-            MTB_原视频文件路径.Text = state.原视频 : MTB_从头开始.Text = state.从头开始 : MTB_评测时长.Text = state.评测时长
+            MTB_原视频文件路径.Text = state.原视频
+            MTB_从头开始.Text = state.从头开始
+            MTB_评测时长.Text = state.评测时长
             ' 每次打开页面均使用 AUTO；旧设置中的具体模型不能覆盖默认值。
             MCB_模型选择.SelectedIndex = MCB_模型选择.FirstModelIndex
-            MCB_Pooling.Text = state.Pooling : MCB_SubSample.Text = state.SubSample
-            For Each m In 全部指标 : If state.指标.ContainsKey(获取指标名称(m)) Then 获取指标复选框(m).Checked = state.指标(获取指标名称(m))
+            MCB_Pooling.Text = state.Pooling
+            MCB_SubSample.Text = state.SubSample
+            For Each metric In 全部指标
+                Dim isChecked As Boolean
+                If state.指标 IsNot Nothing AndAlso state.指标.TryGetValue(获取指标名称(metric), isChecked) Then
+                    获取指标复选框(metric).Checked = isChecked
+                End If
             Next
-            For Each sf In state.文件
-                If Not File.Exists(sf.文件路径) Then Continue For
-                Dim item = 创建文件项(sf.文件路径), d = 获取项数据(item) : d.状态 = sf.状态 : d.最近错误 = sf.最近错误
-                For Each kv In sf.指标结果
-                    Dim m As 指标类型
-                    If [Enum].TryParse(kv.Key, m) Then
-                        Dim sr = kv.Value, r As New 指标结果数据 With {.成功 = sr.成功, .汇总值 = sr.汇总值, .已处理帧数 = sr.已处理帧数, .错误信息 = sr.错误信息, .每帧数据 = If(sr.每帧数据, New List(Of Double)), .实际模型 = sr.实际模型, .模型说明 = sr.模型说明}
-                        r.每帧帧号 = If(sr.每帧帧号, New List(Of Integer))
-                        r.评测帧率 = sr.评测帧率
-                        r.评测起始秒数 = sr.评测起始秒数
-                        r.帧间隔 = If(sr.帧间隔 > 0, sr.帧间隔, If(m = 指标类型.VMAF, 获取Vmaf帧间隔(state.SubSample), 1))
-                        d.指标结果(m) = r : 设置指标文本(item, m, If(r.成功, 格式化分数(r.汇总值, m), "未评测"))
-                    End If
+            For Each savedFile In If(state.文件, New List(Of 页面状态文件))
+                If savedFile Is Nothing OrElse Not File.Exists(savedFile.文件路径) Then Continue For
+
+                Dim item = 创建文件项(savedFile.文件路径)
+                Dim data = 获取项数据(item)
+                data.状态 = savedFile.状态
+                data.最近错误 = savedFile.最近错误
+
+                For Each entry In If(savedFile.指标结果, New Dictionary(Of String, 页面状态结果))
+                    Dim metric As 指标类型
+                    If entry.Value Is Nothing OrElse Not [Enum].TryParse(entry.Key, metric) Then Continue For
+
+                    Dim savedResult = entry.Value
+                    Dim result As New 指标结果数据 With {
+                        .成功 = savedResult.成功,
+                        .汇总值 = savedResult.汇总值,
+                        .已处理帧数 = savedResult.已处理帧数,
+                        .错误信息 = savedResult.错误信息,
+                        .每帧数据 = If(savedResult.每帧数据, New List(Of Double)),
+                        .实际模型 = savedResult.实际模型,
+                        .模型说明 = savedResult.模型说明,
+                        .每帧帧号 = If(savedResult.每帧帧号, New List(Of Integer)),
+                        .评测帧率 = savedResult.评测帧率,
+                        .评测起始秒数 = savedResult.评测起始秒数,
+                        .帧间隔 = If(savedResult.帧间隔 > 0,
+                                     savedResult.帧间隔,
+                                     If(metric = 指标类型.VMAF, 获取Vmaf帧间隔(state.SubSample), 1))
+                    }
+
+                    data.指标结果(metric) = result
+                    设置指标文本(item, metric, If(result.成功, 格式化分数(result.汇总值, metric), "未评测"))
                 Next
+
                 UltraDetailListView1.Items.Add(item)
             Next
             刷新列表布局和图表()
@@ -2252,7 +2349,6 @@ Public Class Form_v6_集成工具_质量评测
             File.WriteAllText(d.FileName, report, New UTF8Encoding(False))
             最后评测记录 = report
             保存页面状态()
-            设置_v6.后台保存设置()
             ExFloatingTip(MB_导出记录, "已导出记录", 1200)
         End Using
     End Sub
@@ -2596,6 +2692,11 @@ Public Class Form_v6_集成工具_质量评测
     End Function
 
     Private Sub Form_v6_集成工具_质量评测_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
+        If 页面状态保存计时器 IsNot Nothing Then
+            保存待处理页面状态()
+            页面状态保存计时器.Dispose()
+            页面状态保存计时器 = Nothing
+        End If
         取消当前评测()
         Form_v6_集成工具_质量评测图表.关闭当前图表()
     End Sub

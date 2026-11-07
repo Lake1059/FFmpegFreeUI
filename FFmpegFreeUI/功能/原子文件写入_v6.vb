@@ -13,7 +13,12 @@ Friend NotInheritable Class 原子文件写入_v6
             File.WriteAllText(temporary, 内容, New UTF8Encoding(False))
             File.Move(temporary, target, True)
         Finally
-            If File.Exists(temporary) Then File.Delete(temporary)
+            If File.Exists(temporary) Then
+                Try
+                    File.Delete(temporary)
+                Catch
+                End Try
+            End If
         End Try
     End Sub
 End Class

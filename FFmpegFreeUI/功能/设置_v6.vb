@@ -412,13 +412,7 @@ Public Class 设置_v6
 
     Private Shared Sub 保存设置到文件()
         SyncLock 设置文件写入锁
-            Dim 临时文件路径 = 设置文件路径 & ".tmp"
-            Try
-                File.WriteAllText(临时文件路径, JsonSerializer.Serialize(实例对象, JsonSO), New UTF8Encoding(False))
-                File.Move(临时文件路径, 设置文件路径, True)
-            Finally
-                If File.Exists(临时文件路径) Then File.Delete(临时文件路径)
-            End Try
+            原子文件写入_v6.写入文本(设置文件路径, JsonSerializer.Serialize(实例对象, JsonSO))
         End SyncLock
     End Sub
 
@@ -495,7 +489,6 @@ Public Class 设置_v6
         Form_v6_设置_Agent.刷新SPAgent端点列表()
         Form_v6_Agent.MCB_联网设置.SelectedIndex = Math.Min(Math.Max(AgentNetworkMode.Normalize(实例对象.Agent联网设置), 0), Math.Max(0, Form_v6_Agent.MCB_联网设置.Items.Count - 1))
         Form_v6_Agent.MCB_权限控制.SelectedIndex = Math.Min(Math.Max(实例对象.Agent权限级别, 0), Math.Max(0, Form_v6_Agent.MCB_权限控制.Items.Count - 1))
-
         Dim 字体列表 As New List(Of String)
         For Each 字体 As FontFamily In FontFamily.Families
             字体列表.Add(字体.Name)
@@ -546,7 +539,6 @@ Public Class 设置_v6
         Form_v6_设置_个性化.MCB_毛玻璃模式.SelectedIndex = 实例对象.SP_毛玻璃模式
         Form_v6_设置_个性化.MCB_背景来源.SelectedIndex = 实例对象.SP_毛玻璃背景来源
         Form_v6_设置_个性化.MCB_噪点颗粒.SelectedIndex = 实例对象.SP_毛玻璃噪点颗粒
-
     End Sub
 
     Private Shared Sub 设置组合框选中索引(combo As LakeUI.ModernComboBox, index As Integer, Optional fallback As Integer = 0)

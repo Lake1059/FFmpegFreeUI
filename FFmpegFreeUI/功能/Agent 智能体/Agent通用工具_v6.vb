@@ -6,18 +6,8 @@ Public NotInheritable Class Agent通用工具_v6
     End Sub
 
     Public Shared Sub WriteJsonAtomically(filePath As String, value As Object)
-        Dim temporaryPath = filePath & "." & Guid.NewGuid().ToString("N") & ".tmp"
-        Try
-            IO.File.WriteAllText(temporaryPath, JsonSerializer.Serialize(value, value.GetType(), JsonSO), New UTF8Encoding(False))
-            IO.File.Move(temporaryPath, filePath, True)
-        Finally
-            If IO.File.Exists(temporaryPath) Then
-                Try
-                    IO.File.Delete(temporaryPath)
-                Catch
-                End Try
-            End If
-        End Try
+        ArgumentNullException.ThrowIfNull(value)
+        原子文件写入_v6.写入文本(filePath, JsonSerializer.Serialize(value, value.GetType(), JsonSO))
     End Sub
 
     Public Shared Function ParseJsonArguments(arguments As String) As JsonElement

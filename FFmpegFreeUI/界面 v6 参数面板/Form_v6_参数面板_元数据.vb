@@ -58,7 +58,8 @@ Public Class Form_v6_参数面板_元数据
     Private Sub 添加字段(displayText As String)
         Dim key = If(displayText, "").Trim()
         If key = "" Then Exit Sub
-        Dim field = If(字段映射.ContainsKey(key), 字段映射(key), key)
+        Dim field As String = Nothing
+        If Not 字段映射.TryGetValue(key, field) Then field = key
         添加列表项(field, "")
         通知参数面板刷新()
     End Sub

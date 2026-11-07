@@ -28,7 +28,9 @@ Public Class FormMain_v6
 
         ModernTabListControl1.SelectedIndex = 0
         ModernTextBox1.Parent = ModernTabListControl1
-        插件管理.启动时加载插件()
+        If System.IO.Directory.Exists(System.IO.Path.Combine(Application.StartupPath, "Plugin")) Then
+            插件管理.启动时加载插件()
+        End If
         If 设置_v6.实例对象.是否监听端口 Then 端口监听_v6.启动客户端()
     End Sub
 
@@ -52,7 +54,7 @@ Public Class FormMain_v6
             PrecisionTimer1.Start()
         End If
 
-        检查并询问加载未处理任务缓存()
+        If 编码队列_v6.存在未处理任务缓存() Then 检查并询问加载未处理任务缓存()
         用户使用统计_v6.启动时后台检查(Me)
     End Sub
 

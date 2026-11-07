@@ -128,7 +128,10 @@ Partial Public Class AgentLocalTools
                    Not String.Equals(normalizedMethod, "HEAD", StringComparison.OrdinalIgnoreCase) AndAlso
                    body IsNot Nothing AndAlso body <> "" Then
                     Dim contentType = "application/json"
-                    If headers IsNot Nothing AndAlso headers.ContainsKey("Content-Type") Then contentType = headers("Content-Type")
+                    Dim configuredContentType As String = Nothing
+                    If headers IsNot Nothing AndAlso headers.TryGetValue("Content-Type", configuredContentType) Then
+                        contentType = configuredContentType
+                    End If
                     request.Content = New StringContent(body, Encoding.UTF8, contentType)
                 End If
 
