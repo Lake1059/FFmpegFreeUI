@@ -20,7 +20,8 @@ ARXChem的3万字视频基础知识介绍：https://www1.arxchem.top/docs/1<br>
 
 - 发布形式：所有数据存于当前目录的单文件
 - 系统要求：Windows 10 1609+ 仅限 x64 / arm64
-- 运行环境：.NET 10（不自带，需安装到系统，可由更新器自动下载安装）
+- 运行环境：.NET 11 (v6.5+)，旧版本是 .NET 10
+  - 不自带，需安装到系统，可由更新器自动下载安装
 - 基底框架：WinForms
 - 交互呈现：[LakeUI](https://github.com/Lake1059/LakeUI) 自主维护的基于 DirectX 的渲染引擎
 - 硬件要求：渲染器需要支持 D3D11 的显卡

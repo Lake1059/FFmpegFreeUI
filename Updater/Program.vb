@@ -127,7 +127,7 @@ Module Program
     Private Async Function 下载主程序(程序目录 As String) As Task(Of Boolean)
         输出章节("下载主程序")
         If Not Await 确保主程序运行环境(程序目录) Then
-            输出错误(".NET 10 Desktop Runtime 未准备就绪，无法运行下载后的 FFmpegFreeUI。")
+            输出错误(".NET 11 Desktop Runtime 未准备就绪，无法运行下载后的 FFmpegFreeUI。")
             Return False
         End If
 
@@ -396,8 +396,8 @@ Module Program
             Dim 百分比 = 剩余 * 100.0R / 等待秒数
             Dim 提示 = $"  {生成进度条(百分比)} 请选择（剩余 {剩余,2} 秒，直接回车=启动）"
             写入覆盖行(提示, ConsoleColor.Green)
-            Dim 截止 = Environment.TickCount + 1000
-            Do While Environment.TickCount < 截止
+            Dim 截止 = Environment.TickCount64 + 1000
+            Do While Environment.TickCount64 < 截止
                 Try
                     If Console.KeyAvailable Then
                         Dim k = Console.ReadKey(True).Key
@@ -448,52 +448,52 @@ Module Program
         End If
 
         输出信息($"系统架构：{架构}")
-        Return Await 确保DotNet10WindowsDesktop运行库(目标目录, 架构)
+        Return Await 确保DotNet11WindowsDesktop运行库(目标目录, 架构)
     End Function
 
-    Private Async Function 确保DotNet10WindowsDesktop运行库(目标目录 As String, 架构 As String) As Task(Of Boolean)
+    Private Async Function 确保DotNet11WindowsDesktop运行库(目标目录 As String, 架构 As String) As Task(Of Boolean)
         If 已跳过DotNet运行库检查 Then
-            输出警告("已跳过 .NET 10 Desktop Runtime 检查，将继续更新流程。")
+            输出警告("已跳过 .NET 11 Desktop Runtime 检查，将继续更新流程。")
             Return True
         End If
 
-        If 检查DotNet10WindowsDesktop运行库(架构) Then Return True
+        If 检查DotNet11WindowsDesktop运行库(架构) Then Return True
 
-        输出警告("未检测到 .NET 10 Desktop Runtime。")
-        If Not 询问是否安装DotNet10WindowsDesktop运行库() Then
+        输出警告("未检测到 .NET 11 Desktop Runtime。")
+        If Not 询问是否安装DotNet11WindowsDesktop运行库() Then
             已跳过DotNet运行库检查 = True
-            输出警告("已跳过 .NET 10 Desktop Runtime 的安装与后续检查，将继续更新流程。")
+            输出警告("已跳过 .NET 11 Desktop Runtime 的安装与后续检查，将继续更新流程。")
             Return True
         End If
 
-        Dim 安装器路径 = Path.Combine(目标目录, $"windowsdesktop-runtime-10.0-win-{架构}.exe")
-        Dim 下载地址 = 获取DotNet10WindowsDesktop运行库下载地址(架构)
+        Dim 安装器路径 = Path.Combine(目标目录, $"windowsdesktop-runtime-11.0-win-{架构}.exe")
+        Dim 下载地址 = 获取DotNet11WindowsDesktop运行库下载地址(架构)
         If String.IsNullOrEmpty(下载地址) Then
-            输出错误($"当前架构 {架构} 没有可用的 .NET 10 Desktop Runtime 下载地址。")
+            输出错误($"当前架构 {架构} 没有可用的 .NET 11 Desktop Runtime 下载地址。")
             Return False
         End If
 
-        If Not Await 下载DotNet10WindowsDesktop运行库安装器(下载地址, 安装器路径) Then Return False
-        If Not 静默安装DotNet10WindowsDesktop运行库(安装器路径) Then Return False
+        If Not Await 下载DotNet11WindowsDesktop运行库安装器(下载地址, 安装器路径) Then Return False
+        If Not 静默安装DotNet11WindowsDesktop运行库(安装器路径) Then Return False
 
-        输出信息("正在复检 .NET 10 Desktop Runtime ...")
-        If 检查DotNet10WindowsDesktop运行库(架构) Then Return True
+        输出信息("正在复检 .NET 11 Desktop Runtime ...")
+        If 检查DotNet11WindowsDesktop运行库(架构) Then Return True
 
-        输出错误("安装结束后仍未检测到 .NET 10 Desktop Runtime。")
+        输出错误("安装结束后仍未检测到 .NET 11 Desktop Runtime。")
         Return False
     End Function
 
     ' 询问是否安装：Y=安装，N/回车/超时(10s)=跳过
-    Private Function 询问是否安装DotNet10WindowsDesktop运行库() As Boolean
+    Private Function 询问是否安装DotNet11WindowsDesktop运行库() As Boolean
         Const 等待秒数 As Integer = 10
-        输出信息("是否下载并安装 .NET 10 Desktop Runtime？  [Y]=安装   [N]=跳过 (默认)")
+        输出信息("是否下载并安装 .NET 11 Desktop Runtime？  [Y]=安装   [N]=跳过 (默认)")
         输出警告($"超时 {等待秒数} 秒未操作将跳过运行库安装并继续更新。")
         For 剩余 = 等待秒数 To 1 Step -1
             Dim 百分比 = 剩余 * 100.0R / 等待秒数
             Dim 提示 = $"  {生成进度条(百分比)} 请选择（剩余 {剩余,2} 秒，直接回车=跳过）"
             写入覆盖行(提示, ConsoleColor.Yellow)
-            Dim 截止 = Environment.TickCount + 1000
-            Do While Environment.TickCount < 截止
+            Dim 截止 = Environment.TickCount64 + 1000
+            Do While Environment.TickCount64 < 截止
                 Try
                     If Console.KeyAvailable Then
                         Dim k = Console.ReadKey(True).Key
@@ -512,20 +512,20 @@ Module Program
             Loop
         Next
         Console.WriteLine()
-        输出警告("超时未操作，已跳过 .NET 10 Desktop Runtime 安装。")
+        输出警告("超时未操作，已跳过 .NET 11 Desktop Runtime 安装。")
         Return False
     End Function
 
-    Private Function 获取DotNet10WindowsDesktop运行库下载地址(架构 As String) As String
+    Private Function 获取DotNet11WindowsDesktop运行库下载地址(架构 As String) As String
         Select Case 架构
             Case "x64", "arm64"
-                Return $"https://aka.ms/dotnet/10.0/windowsdesktop-runtime-win-{架构}.exe"
+                Return $"https://aka.ms/dotnet/11.0/windowsdesktop-runtime-win-{架构}.exe"
             Case Else
                 Return ""
         End Select
     End Function
 
-    Private Async Function 下载DotNet10WindowsDesktop运行库安装器(下载地址 As String, 保存路径 As String) As Task(Of Boolean)
+    Private Async Function 下载DotNet11WindowsDesktop运行库安装器(下载地址 As String, 保存路径 As String) As Task(Of Boolean)
         Try
             If File.Exists(保存路径) Then File.Delete(保存路径)
         Catch ex As Exception
@@ -533,7 +533,7 @@ Module Program
             Return False
         End Try
 
-        输出信息("正在下载 .NET 10 Desktop Runtime 安装器 ...")
+        输出信息("正在下载 .NET 11 Desktop Runtime 安装器 ...")
         Dim 完成源 As New TaskCompletionSource(Of Boolean)(TaskCreationOptions.RunContinuationsAsynchronously)
         Dim 下载器 As New LakeUI.DownloadFile With {.Url = 下载地址, .SavePath = 保存路径, .ThreadCount = 8}
         AddHandler 下载器.ProgressChanged,
@@ -545,13 +545,13 @@ Module Program
         AddHandler 下载器.DownloadCompleted,
             Sub(s, e)
                 Console.WriteLine()
-                输出成功(".NET 10 Desktop Runtime 安装器下载完成。")
+                输出成功(".NET 11 Desktop Runtime 安装器下载完成。")
                 完成源.TrySetResult(True)
             End Sub
         AddHandler 下载器.DownloadFailed,
             Sub(s, e)
                 Console.WriteLine()
-                输出错误($".NET 10 Desktop Runtime 安装器下载失败：{e.Message}")
+                输出错误($".NET 11 Desktop Runtime 安装器下载失败：{e.Message}")
                 完成源.TrySetResult(False)
             End Sub
 
@@ -559,15 +559,15 @@ Module Program
             Await 下载器.StartAsync()
         Catch ex As Exception
             Console.WriteLine()
-            输出错误($".NET 10 Desktop Runtime 下载过程出现异常：{ex.Message}")
+            输出错误($".NET 11 Desktop Runtime 下载过程出现异常：{ex.Message}")
             Return False
         End Try
 
         Return Await 完成源.Task
     End Function
 
-    Private Function 静默安装DotNet10WindowsDesktop运行库(安装器路径 As String) As Boolean
-        输出信息("正在静默安装 .NET 10 Desktop Runtime ...")
+    Private Function 静默安装DotNet11WindowsDesktop运行库(安装器路径 As String) As Boolean
+        输出信息("正在静默安装 .NET 11 Desktop Runtime ...")
         Try
             Dim psi As New ProcessStartInfo With {
                 .FileName = 安装器路径,
@@ -577,41 +577,41 @@ Module Program
             }
             Using p = Process.Start(psi)
                 If p Is Nothing Then
-                    输出错误("无法启动 .NET 10 Desktop Runtime 安装器。")
+                    输出错误("无法启动 .NET 11 Desktop Runtime 安装器。")
                     Return False
                 End If
 
                 p.WaitForExit()
                 Select Case p.ExitCode
                     Case 0
-                        输出成功(".NET 10 Desktop Runtime 静默安装完成。")
+                        输出成功(".NET 11 Desktop Runtime 静默安装完成。")
                         Return True
                     Case 3010, 1641
-                        输出成功(".NET 10 Desktop Runtime 静默安装完成，需要重启系统后完全生效。")
+                        输出成功(".NET 11 Desktop Runtime 静默安装完成，需要重启系统后完全生效。")
                         Return True
                     Case Else
-                        输出错误($".NET 10 Desktop Runtime 安装失败，退出代码：{p.ExitCode}")
+                        输出错误($".NET 11 Desktop Runtime 安装失败，退出代码：{p.ExitCode}")
                         Return False
                 End Select
             End Using
         Catch ex As Exception
-            输出错误($".NET 10 Desktop Runtime 静默安装启动失败：{ex.Message}")
+            输出错误($".NET 11 Desktop Runtime 静默安装启动失败：{ex.Message}")
             Return False
         End Try
     End Function
 
-    Private Function 检查DotNet10WindowsDesktop运行库(架构 As String) As Boolean
-        输出信息("正在检查 .NET 10 Desktop Runtime ...")
+    Private Function 检查DotNet11WindowsDesktop运行库(架构 As String) As Boolean
+        输出信息("正在检查 .NET 11 Desktop Runtime ...")
 
-        If DotNet命令包含DotNet10WindowsDesktop运行库() Then
-            输出成功("已通过 dotnet --list-runtimes 检测到 .NET 10 Desktop Runtime。")
+        If DotNet命令包含DotNet11WindowsDesktop运行库() Then
+            输出成功("已通过 dotnet --list-runtimes 检测到 .NET 11 Desktop Runtime。")
             Return True
         End If
 
         Return False
     End Function
 
-    Private Function DotNet命令包含DotNet10WindowsDesktop运行库() As Boolean
+    Private Function DotNet命令包含DotNet11WindowsDesktop运行库() As Boolean
         Try
             Dim psi As New ProcessStartInfo With {
                 .FileName = "dotnet",
@@ -626,7 +626,7 @@ Module Program
                 Dim 已找到 As Boolean = False
                 Do Until p.StandardOutput.EndOfStream
                     Dim line = p.StandardOutput.ReadLine()
-                    If DotNet运行库行是WindowsDesktop10(line) Then
+                    If DotNet运行库行是WindowsDesktop11(line) Then
                         已找到 = True
                     End If
                 Loop
@@ -646,18 +646,18 @@ Module Program
         End Try
     End Function
 
-    Private Function DotNet运行库行是WindowsDesktop10(line As String) As Boolean
+    Private Function DotNet运行库行是WindowsDesktop11(line As String) As Boolean
         If String.IsNullOrWhiteSpace(line) OrElse Not line.StartsWith("Microsoft.WindowsDesktop.App ", StringComparison.OrdinalIgnoreCase) Then Return False
 
         Dim parts = line.Split(" "c, StringSplitOptions.RemoveEmptyEntries)
-        Return parts.Length >= 2 AndAlso 是DotNet10版本(parts(1))
+        Return parts.Length >= 2 AndAlso 是DotNet11版本(parts(1))
     End Function
 
-    Private Function 是DotNet10版本(版本文本 As String) As Boolean
+    Private Function 是DotNet11版本(版本文本 As String) As Boolean
         If String.IsNullOrWhiteSpace(版本文本) Then Return False
         Dim 版本主体 = 版本文本.Split("-"c)(0)
         Dim version As Version = Nothing
-        Return Version.TryParse(版本主体, version) AndAlso version.Major >= 10
+        Return Version.TryParse(版本主体, version) AndAlso version.Major >= 11
     End Function
 
     '======================================================================
