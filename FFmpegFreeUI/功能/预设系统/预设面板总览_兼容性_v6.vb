@@ -23,12 +23,19 @@ Partial Public Class 预设管理_v6
 
     Private Shared Sub 设置参数总览文本(MTB As ModernTextBox, 文本 As String)
         If MTB Is Nothing Then Exit Sub
-        MTB.Clear()
-        Dim 内容 = If(文本, "").Trim()
-        If 内容 = "" Then 内容 = "未设置参数"
-        For Each line In 内容.Replace(vbCrLf, vbLf).Replace(vbCr, vbLf).Split({vbLf}, StringSplitOptions.None)
-            MTB.AppendLine(line, 获取参数总览行颜色(line))
-        Next
+        Dim oldPreserveScrollPosition = MTB.PreserveScrollPosition
+        MTB.PreserveScrollPosition = True
+        Try
+            MTB.Clear()
+            Dim 内容 = If(文本, "").Trim()
+            If 内容 = "" Then 内容 = "未设置参数"
+            For Each line In 内容.Replace(vbCrLf, vbLf).Replace(vbCr, vbLf).Split({vbLf}, StringSplitOptions.None)
+                MTB.AppendLine(line, 获取参数总览行颜色(line))
+            Next
+        Finally
+            MTB.PreserveScrollPosition = oldPreserveScrollPosition
+            MTB.ScrollToTop()
+        End Try
     End Sub
 
     Private Shared Function 获取参数总览行颜色(文本 As String) As Color

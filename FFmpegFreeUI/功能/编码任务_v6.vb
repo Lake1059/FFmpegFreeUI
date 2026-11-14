@@ -54,7 +54,7 @@ Public Class 编码任务日志快照_v6
 End Class
 
 Public Class 编码任务_v6
-    Public ReadOnly Property ID As String = Guid.NewGuid().ToString("N")
+    Public Property ID As String = Guid.NewGuid().ToString("N")
     Public Property 任务名称 As String = ""
     Public Property 输入文件 As String = ""
     Public Property 输出文件 As String = ""
@@ -77,6 +77,16 @@ Public Class 编码任务_v6
     Public Property VapourSynthCachePath As String = ""
     Public Property 最新底部日志文本 As String = ""
     Public Property 最新底部日志是否错误 As Boolean = False
+    Public Property 恢复进程ID As Integer
+    Public Property 恢复进程仍在运行 As Boolean
+    Public Property 进程启动时间Utc As DateTime
+    Public Property 已保存耗时 As TimeSpan
+    Public Property 恢复输出大小KB As Long
+    Public ReadOnly Property 总耗时 As TimeSpan
+        Get
+            Return 已保存耗时 + 任务耗时计时器.Elapsed
+        End Get
+    End Property
     Public Property 日志版本号 As Long = 0
     Public Property 日志结构版本号 As Long = 0
 
@@ -135,13 +145,40 @@ Public Class 编码任务_v6
         Get
             Try
                 Dim process = 当前进程
-                If process Is Nothing OrElse process.HasExited Then Return 0
+                If process Is Nothing Then
+                    If 恢复进程仍在运行 OrElse 状态 = 编码任务状态_v6.正在处理 OrElse 状态 = 编码任务状态_v6.已暂停 Then Return 恢复进程ID
+                    Return 0
+                End If
+                If process.HasExited Then Return 0
                 Return process.Id
             Catch
                 Return 0
             End Try
         End Get
     End Property
+
+    Friend Function 检查恢复进程() As Boolean
+        If 恢复进程ID <= 0 Then
+            恢复进程仍在运行 = False
+            Return False
+        End If
+        Try
+            Using recoveredProcess As Process = Process.GetProcessById(恢复进程ID)
+                If Not recoveredProcess.HasExited Then
+                    恢复进程仍在运行 = True
+                    Return True
+                End If
+            End Using
+        Catch ex As ArgumentException
+        Catch ex As InvalidOperationException
+        Catch ex As ComponentModel.Win32Exception
+            Throw New IOException("无法检查恢复任务的进程身份：" & 恢复进程ID, ex)
+        End Try
+        恢复进程仍在运行 = False
+        恢复进程ID = 0
+        状态 = 编码任务状态_v6.已停止
+        Return False
+    End Function
 
     Public ReadOnly Property 正在执行 As Boolean
         Get
@@ -376,6 +413,7 @@ Public Class 编码任务_v6
         Try
             清空日志(False)
             进度 = New 编码进度_v6
+            已保存耗时 = TimeSpan.Zero
             任务耗时计时器.Restart()
             追加日志($"[3FUI] 任务开始：{If(任务名称 <> "", 任务名称, Path.GetFileName(输入文件))}", 编码任务日志类别_v6.系统, Nothing, False, False)
             If 启动准备异常 IsNot Nothing Then Throw 启动准备异常
@@ -531,10 +569,13 @@ Public Class 编码任务_v6
                 process.Start()
                 当前进程 = process
                 processId = process.Id
+                恢复进程ID = processId
+                进程启动时间Utc = process.StartTime.ToUniversalTime()
             End SyncLock
             process.BeginOutputReadLine()
             process.BeginErrorReadLine()
             编码队列_v6.通知任务更新(Me)
+            编码队列_v6.立即保存队列()
             If 设置_v6.实例对象.指定处理器核心 <> "" Then
                 Try
                     process.ProcessorAffinity = GetAffinityMask(设置_v6.实例对象.指定处理器核心.Split(","c).Select(Function(s) s.Trim()).Where(Function(s) Integer.TryParse(s, Nothing)).Select(Function(s) Integer.Parse(s)).ToArray())
@@ -636,8 +677,8 @@ Public Class 编码任务_v6
         Try
             Dim changed As Boolean = False
             SyncLock 状态锁
-                If 状态 = 编码任务状态_v6.正在处理 AndAlso 当前进程 IsNot Nothing AndAlso Not 当前进程.HasExited Then
-                    If NtSuspendProcess(当前进程.Handle) = 0 Then
+                If 状态 = 编码任务状态_v6.正在处理 AndAlso (当前进程 IsNot Nothing OrElse 恢复进程仍在运行) Then
+                    If 执行恢复进程控制(Function(process) NtSuspendProcess(process.Handle)) Then
                         状态 = 编码任务状态_v6.已暂停
                         任务耗时计时器.Stop()
                         changed = True
@@ -658,8 +699,8 @@ Public Class 编码任务_v6
         Try
             Dim changed As Boolean = False
             SyncLock 状态锁
-                If 状态 = 编码任务状态_v6.已暂停 AndAlso 当前进程 IsNot Nothing AndAlso Not 当前进程.HasExited Then
-                    If NtResumeProcess(当前进程.Handle) = 0 Then
+                If 状态 = 编码任务状态_v6.已暂停 AndAlso (当前进程 IsNot Nothing OrElse 恢复进程仍在运行) Then
+                    If 执行恢复进程控制(Function(process) NtResumeProcess(process.Handle)) Then
                         状态 = 编码任务状态_v6.正在处理
                         任务耗时计时器.Start()
                         changed = True
@@ -677,6 +718,15 @@ Public Class 编码任务_v6
         End Try
     End Sub
 
+    Private Function 执行恢复进程控制(control As Func(Of Process, Integer)) As Boolean
+        If 当前进程 IsNot Nothing Then Return Not 当前进程.HasExited AndAlso control(当前进程) = 0
+        If Not 恢复进程仍在运行 OrElse 恢复进程ID <= 0 Then Return False
+        Using recoveredProcess As Process = Process.GetProcessById(恢复进程ID)
+            If recoveredProcess.HasExited Then Return False
+            Return control(recoveredProcess) = 0
+        End Using
+    End Function
+
     Public Sub 停止()
         停止并报告是否停止执行()
     End Sub
@@ -689,6 +739,13 @@ Public Class 编码任务_v6
                 If Not 可停止 Then Return False
                 stoppedExecution = 正在执行标记
                 If stoppedExecution Then 当前执行已请求停止 = True
+                If 恢复进程仍在运行 Then
+                    Using recoveredProcess = Process.GetProcessById(恢复进程ID)
+                        If Not recoveredProcess.HasExited Then recoveredProcess.Kill(True)
+                    End Using
+                    恢复进程仍在运行 = False
+                    恢复进程ID = 0
+                End If
                 If Not stoppedExecution Then 已实际开始标记 = False
                 手动停止 = True
                 状态 = 编码任务状态_v6.已停止
@@ -724,6 +781,10 @@ Public Class 编码任务_v6
             输入文件大小 = 0
             媒体总时长 = ""
             任务耗时计时器.Reset()
+            已保存耗时 = TimeSpan.Zero
+            恢复输出大小KB = 0
+            恢复进程ID = 0
+            恢复进程仍在运行 = False
             状态 = 编码任务状态_v6.未处理
         End SyncLock
     End Sub

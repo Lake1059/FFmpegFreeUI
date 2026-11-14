@@ -3,7 +3,7 @@ Imports System.IO
 Imports System.Text
 Imports System.Text.RegularExpressions
 
-Public Class 编码队列_v6
+Partial Public Class 编码队列_v6
 
     Public Class 预设同步结果
         Public Property 已更新 As Integer
@@ -293,6 +293,7 @@ Public Class 编码队列_v6
             触发插件事件("task.added", task)
         Next
         RaiseEvent 队列已变化()
+        请求保存队列()
         If 应启动空闲队列 Then 请求自动调度()
         Return added
     End Function
@@ -312,6 +313,7 @@ Public Class 编码队列_v6
         End SyncLock
         触发插件事件("task.added", task)
         RaiseEvent 队列已变化()
+        请求保存队列()
         If 应启动空闲队列 Then 请求自动调度()
         Return task
     End Function
@@ -708,11 +710,13 @@ Public Class 编码队列_v6
             hasChanges = True
         Next
         If hasChanges Then RaiseEvent 任务需立即刷新()
+        If hasChanges Then 请求保存队列()
     End Sub
 
     Friend Shared Sub 通知任务更新(task As 编码任务_v6, Optional 立即刷新 As Boolean = True)
         RaiseEvent 任务已更新(task)
         If 立即刷新 Then RaiseEvent 任务需立即刷新()
+        请求保存队列()
     End Sub
 
     Friend Shared Sub 触发插件事件(事件名称 As String, task As 编码任务_v6, Optional 日志 As 编码任务日志条目_v6 = Nothing)

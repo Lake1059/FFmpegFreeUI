@@ -147,6 +147,15 @@ Partial Public Class FormMain_v6
             BeginInvoke(Sub() Close())
             Return
         End If
+        Try
+            编码队列_v6.立即保存队列()
+        Catch 异常 As Exception
+            If ExOverlayMsgBox(Me, "保存编码队列失败：" & 异常.Message & vbCrLf & "仍要退出吗？", MsgBoxStyle.YesNo Or MsgBoxStyle.Critical, "队列保存失败") <> MsgBoxResult.Yes Then
+                事件参数.Cancel = True
+                退出确认已完成 = False
+                Return
+            End If
+        End Try
         If 退出时清除所有任务 AndAlso 编码队列_v6.获取进行中任务数量() > 0 Then 编码队列_v6.停止所有进行中任务()
         端口监听_v6.停止客户端()
         设置_v6.退出时保存设置()
@@ -154,52 +163,19 @@ Partial Public Class FormMain_v6
         If Form_v6_调试播放器.ffplayHandle <> IntPtr.Zero Then Form_v6_调试播放器.停止()
     End Sub
 
-    <CodeAnalysis.SuppressMessage("Performance", "CA1861:不要将常量数组作为参数", Justification:="<挂起>")>
     Private Function 确认退出方式(更新器路径 As String, 事件参数 As CancelEventArgs) As Boolean
         退出时启动更新器 = UpdateAvailable AndAlso FileIO.FileSystem.FileExists(更新器路径)
         If UpdateAvailable AndAlso Not 退出时启动更新器 AndAlso ExOverlayMsgBox(Me, "程序目录下没有更新器，这是意外情况，仍旧退出？", MsgBoxStyle.YesNo) <> MsgBoxResult.Yes Then 事件参数.Cancel = True : Return False
         Dim 进行中任务数量 = 编码队列_v6.获取进行中任务数量()
-        Dim 未处理任务数量 = 编码队列_v6.获取未处理任务数量()
-        退出时清除所有任务 = True
-        If 进行中任务数量 > 0 OrElse 未处理任务数量 > 0 Then
-            Dim 提示内容 As New List(Of String)
-            If 进行中任务数量 > 0 Then 提示内容.Add($"当前仍有 {进行中任务数量} 个任务正在处理、暂停或等待自动开始。")
-            If 未处理任务数量 > 0 Then 提示内容.Add($"当前可保留的未执行任务有 {未处理任务数量} 个。")
-            提示内容.Add("请选择退出方式。")
-            Select Case ExOverlayMsgBox(Me, String.Join(vbCrLf, 提示内容), {"保留未执行的任务并退出", "清除所有任务然后退出", "取消退出操作"}, "确认退出", MsgBoxStyle.Question, 2)
-                Case 0
-                    Try
-                        编码队列_v6.保存未处理任务缓存()
-                        退出时清除所有任务 = False
-                    Catch 异常 As Exception
-                        ExOverlayMsgBox(Me, "保存未执行任务失败：" & 异常.Message, MsgBoxStyle.Critical, "无法退出")
-                        事件参数.Cancel = True : Return False
-                    End Try
-                Case 1
-                    编码队列_v6.删除未处理任务缓存()
-                Case Else
-                    事件参数.Cancel = True : Return False
-            End Select
+        退出时清除所有任务 = False
+        If 进行中任务数量 > 0 Then
+            If ExOverlayMsgBox(Me, $"当前仍有 {进行中任务数量} 个任务正在运行或暂停。确认退出吗？重启后队列会自动恢复，但无法重新连接这些进程的输入输出。", MsgBoxStyle.YesNo Or MsgBoxStyle.Question, "确认退出") <> MsgBoxResult.Yes Then
+                事件参数.Cancel = True
+                Return False
+            End If
         End If
         退出确认已完成 = True
         Return True
     End Function
 
-    <CodeAnalysis.SuppressMessage("Performance", "CA1861:不要将常量数组作为参数", Justification:="退出恢复按钮由对话框 API 要求数组")>
-    Private Sub 检查并询问加载未处理任务缓存()
-        If Not 编码队列_v6.存在未处理任务缓存() Then Return
-        Dim 任务数量 = 编码队列_v6.读取未处理任务缓存任务数量()
-        If 任务数量 <= 0 Then 编码队列_v6.删除未处理任务缓存() : Return
-        Dim 选择结果 = ExOverlayMsgBox(Me, $"检测到上次退出时保留了 {任务数量} 个未执行任务。是否加载到编码队列？", {"加载", "不加载"}, "恢复未执行任务", MsgBoxStyle.Question, 0)
-        If 选择结果 = 0 Then
-            Try
-                Dim 已恢复数量 = 编码队列_v6.加载未处理任务缓存()
-                If 已恢复数量 > 0 Then ExFloatingTip(Me, $"已加载 {已恢复数量} 个未执行任务", 1800)
-            Catch 异常 As Exception
-                ExOverlayMsgBox(Me, "加载未执行任务失败：" & 异常.Message, MsgBoxStyle.Critical, "恢复失败")
-            End Try
-        Else
-            编码队列_v6.删除未处理任务缓存()
-        End If
-    End Sub
 End Class

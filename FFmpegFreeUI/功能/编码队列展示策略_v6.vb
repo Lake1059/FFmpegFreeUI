@@ -22,6 +22,14 @@ Public Class 旧版兼容编码队列展示策略_v6
         item.SubItems(5).Text = task.进度.质量文本
         item.SubItems(6).Text = task.进度.比特率文本
         item.SubItems(7).Text = 默认时间文本(task)
+        If task.恢复进程仍在运行 Then
+            item.SubItems(2).Text = ""
+            item.SubItems(3).Text = ""
+            item.SubItems(4).Text = If(task.恢复输出大小KB > 0, 编码进度_v6.格式化大小KB(task.恢复输出大小KB) & " 断开", "断开")
+            item.SubItems(5).Text = ""
+            item.SubItems(6).Text = ""
+            item.SubItems(7).Text = 编码进度_v6.格式化秒(task.总耗时.TotalSeconds) & " 断开"
+        End If
 
         Dim rowColor = 状态颜色(task.状态)
         设置整行颜色(item, rowColor)
@@ -34,7 +42,7 @@ Public Class 旧版兼容编码队列展示策略_v6
                 item.SubItems(2).Text = "100%"
                 设置完成输出大小(task, item)
                 item.SubItems(5).Text = ""
-                item.SubItems(7).Text = "耗时 " & 格式化旧版耗时(task.任务耗时计时器.Elapsed)
+                item.SubItems(7).Text = "耗时 " & 格式化旧版耗时(task.总耗时)
 
             Case 编码任务状态_v6.已停止, 编码任务状态_v6.错误
                 item.SubItems(5).Text = ""
@@ -88,7 +96,7 @@ Public Class 旧版兼容编码队列展示策略_v6
 
     Private Shared Function 默认时间文本(task As 编码任务_v6) As String
         If task.状态 = 编码任务状态_v6.未处理 Then Return ""
-        Dim elapsedText = 编码进度_v6.格式化秒(task.任务耗时计时器.Elapsed.TotalSeconds)
+        Dim elapsedText = 编码进度_v6.格式化秒(task.总耗时.TotalSeconds)
         If task.状态 = 编码任务状态_v6.正在处理 AndAlso task.进度.时间文本 <> "" Then Return $"{task.进度.时间文本} - {elapsedText}"
         Return elapsedText
     End Function
@@ -141,6 +149,10 @@ Public Class 旧版兼容编码队列展示策略_v6
 
     Private Shared Sub 应用底部日志行(task As 编码任务_v6, item As UltraDetailListView.ListItem)
         item.BottomLines.Clear()
+        If task.恢复进程仍在运行 Then
+            item.BottomLines.Add(New UltraDetailListView.TextLine("任务还在运行，请耐心等待完成，系统不允许重连进程", Nothing, 状态颜色(task.状态)))
+            Return
+        End If
         If 设置_v6.实例对象.编码队列显示最新日志行 <> 0 Then Exit Sub
         If Not 应显示底部日志(task.状态) Then Exit Sub
         If String.IsNullOrWhiteSpace(task.最新底部日志文本) Then Exit Sub

@@ -274,12 +274,17 @@ Public Module 界面主题_v6
     End Sub
 
     Private Sub 应用弹窗选中色(control As Control)
-        Dim color = 界面配色_v6.获取选中背景(_当前浅色)
         For Each prop In 获取颜色属性(control.GetType())
-            If Not 是选中背景属性(prop.Name) Then Continue For
             Try
                 Dim original = DirectCast(prop.GetValue(control), Color)
-                If original.A < 255 Then Continue For
+                Dim color As Color
+                If 是文本选中属性(prop.Name) OrElse 是AgentRoom文本选中属性(control, prop.Name) Then
+                    color = 界面配色_v6.获取文本选中背景(_当前浅色)
+                ElseIf 是选中背景属性(prop.Name) AndAlso original.A = 255 Then
+                    color = 界面配色_v6.获取选中背景(_当前浅色)
+                Else
+                    Continue For
+                End If
                 If original.ToArgb() <> color.ToArgb() Then
                     prop.SetValue(control, color)
                     control.Invalidate()
@@ -338,6 +343,12 @@ Public Module 界面主题_v6
             End Try
         Next
 
+        If TypeOf target Is UltraDetailListView Then
+            For Each child As Control In DirectCast(target, Control).Controls
+                应用控件树(child, True)
+            Next
+        End If
+
         If snapshot.有Html颜色 AndAlso TypeOf target Is HtmlColorLabel Then
             Try
                 Dim label = DirectCast(target, HtmlColorLabel)
@@ -358,11 +369,12 @@ Public Module 界面主题_v6
 
     ' 优先级：选中色/浅色映射 -> 毛玻璃透明度 -> 提示框阅读表面。
     Private Function 解析主题颜色(target As Object, name As String, original As Color, 浅色 As Boolean) As Color
+        If 是文本选中属性(name) OrElse 是AgentRoom文本选中属性(target, name) Then Return 界面配色_v6.获取文本选中背景(浅色)
         Dim 统一选中 = 是选中背景属性(name)
         Dim color = If(统一选中 AndAlso original.A = 255, 界面配色_v6.获取选中背景(浅色),
                        If(浅色, 转换为浅色(original, name, target), original))
         If 浅色 AndAlso Not 统一选中 AndAlso SP_UnLock AndAlso
-           设置_v6.实例对象.窗口样式 = 2 AndAlso 设置_v6.实例对象.SP_毛玻璃模式 > 0 Then
+           设置_v6.实例对象.窗口样式 = 2 Andalso 设置_v6.实例对象.SP_毛玻璃模式 > 0 Then
             color = 应用毛玻璃颜色(target, name, original, color)
         End If
         If 浅色 AndAlso name.Contains("ToolTip", StringComparison.OrdinalIgnoreCase) AndAlso 是背景属性(name) Then
@@ -428,8 +440,17 @@ Public Module 界面主题_v6
         Return name IsNot Nothing AndAlso 统一选中背景属性.Contains(name)
     End Function
 
+    Private Function 是文本选中属性(name As String) As Boolean
+        Return String.Equals(name, "SelectionColor", StringComparison.Ordinal)
+    End Function
+
+    Private Function 是AgentRoom文本选中属性(target As Object, name As String) As Boolean
+        Return TypeOf target Is AgentRoom AndAlso String.Equals(name, "SelectionBackColor", StringComparison.Ordinal)
+    End Function
+
     Private Function 转换为浅色(original As Color, propertyName As String, Optional target As Object = Nothing, Optional 最低对比度 As Double = 4.5R) As Color
         Dim name = If(propertyName, String.Empty)
+        If 是文本选中属性(name) OrElse 是AgentRoom文本选中属性(target, name) Then Return 界面配色_v6.获取文本选中背景(True)
         If 是选中背景属性(name) OrElse name = "TabItemSelectedBackColor" OrElse name = "DropDownSelectedColor" Then
             Return Color.FromArgb(original.A, 界面配色_v6.浅色选中背景)
         End If

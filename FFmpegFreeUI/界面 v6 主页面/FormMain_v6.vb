@@ -54,7 +54,11 @@ Public Class FormMain_v6
             PrecisionTimer1.Start()
         End If
 
-        If 编码队列_v6.存在未处理任务缓存() Then 检查并询问加载未处理任务缓存()
+        Try
+            编码队列_v6.恢复持久化队列()
+        Catch 异常 As Exception
+            ExOverlayMsgBox(Me, "恢复编码队列失败：" & 异常.Message, MsgBoxStyle.Critical, "恢复失败")
+        End Try
         用户使用统计_v6.启动时后台检查(Me)
     End Sub
 
