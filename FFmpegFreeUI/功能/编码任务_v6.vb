@@ -62,6 +62,7 @@ Public Class 编码任务_v6
     Public Property 预设数据 As 预设数据_v6
     Public Property 命令行 As String = ""
     Public Property 状态 As 编码任务状态_v6 = 编码任务状态_v6.未处理
+    Public Property 完成后自动调度队列 As Boolean = True
     Public Property 步骤 As New List(Of 编码步骤_v6)
     Public Property 当前步骤索引 As Integer = -1
     Public Property 允许自动启动 As Boolean = 设置_v6.实例对象.自动开始任务选项 = 0

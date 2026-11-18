@@ -680,7 +680,7 @@ Public Class Form_v6_集成工具_混流
         Dim output = MTB_输出目标文件.Text.Trim()
         arg.Append("-c copy ").Append(引用参数(output)).Append(" -y")
 
-        插件管理.使用命令行添加任务到编码队列(arg.ToString(), $"混流任务 {Now:HHmmss}", output, 获取项路径(UltraDetailListView1.Items(0)))
+        编码队列_v6.添加命令行任务(arg.ToString(), $"混流任务 {Now:HHmmss}", output, 获取项路径(UltraDetailListView1.Items(0)), 参与自动调度:=False)
         FormMain_v6.ModernTabListControl1.SelectedIndex = 2
         ExFloatingTip(MB_启动合并, "已添加到编码队列", 1200)
     End Sub

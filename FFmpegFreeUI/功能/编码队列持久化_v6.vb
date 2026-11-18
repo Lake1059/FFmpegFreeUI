@@ -19,6 +19,7 @@ Partial Public Class 编码队列_v6
         Public Property 预设数据 As 预设数据_v6
         Public Property 命令行 As String
         Public Property 状态 As 编码任务状态_v6
+        Public Property 完成后自动调度队列 As Boolean = True
         Public Property 步骤 As List(Of 编码步骤快照_v6)
         Public Property 当前步骤索引 As Integer
         Public Property 允许自动启动 As Boolean
@@ -53,6 +54,8 @@ Partial Public Class 编码队列_v6
     Private Shared 持久化定时器 As System.Threading.Timer
     Private Shared 持久化待处理 As Integer
     Private Shared 正在恢复队列 As Boolean
+    Private Shared ReadOnly 恢复监视器锁 As New Object
+    Private Shared ReadOnly 恢复进程监视器集合 As New List(Of System.Threading.Timer)
 
     Public Shared Sub 请求保存队列()
         If 正在恢复队列 Then Return
@@ -88,6 +91,7 @@ Partial Public Class 编码队列_v6
                         .输出文件由自动命名生成 = task.输出文件由自动命名生成,
                         .预设数据 = If(task.预设数据 Is Nothing, Nothing, 克隆预设(task.预设数据)),
                         .命令行 = task.命令行, .状态 = task.状态,
+                        .完成后自动调度队列 = task.完成后自动调度队列,
                         .步骤 = task.步骤.Select(Function(stepItem) New 编码步骤快照_v6 With {
                             .阶段 = stepItem.阶段, .显示名称 = stepItem.显示名称, .命令行 = stepItem.命令行,
                             .实际执行文件名 = stepItem.实际执行文件名, .实际执行参数 = stepItem.实际执行参数,
@@ -125,6 +129,7 @@ Partial Public Class 编码队列_v6
                 .输出文件由自动命名生成 = item.输出文件由自动命名生成,
                 .预设数据 = If(item.预设数据 Is Nothing, Nothing, 克隆预设(item.预设数据)),
                 .命令行 = If(item.命令行, ""), .状态 = item.状态,
+                .完成后自动调度队列 = item.完成后自动调度队列,
                 .步骤 = item.步骤.Select(Function(stepItem) New 编码步骤_v6 With {
                     .阶段 = stepItem.阶段, .显示名称 = If(stepItem.显示名称, ""), .命令行 = If(stepItem.命令行, ""),
                     .实际执行文件名 = If(stepItem.实际执行文件名, ""), .实际执行参数 = If(stepItem.实际执行参数, ""),
@@ -163,20 +168,38 @@ Partial Public Class 编码队列_v6
         End Try
         Dim count = restored.Count
         If restored.Any(Function(task) task.恢复进程仍在运行) Then
-            Dim watcher As New System.Threading.Timer(Sub(state)
-                                                          Dim changed As Boolean = False
-                                                          For Each task In restored.Where(Function(candidate) candidate.恢复进程仍在运行)
-                                                              If Not task.检查恢复进程() Then
-                                                                  changed = True
-                                                                  RaiseEvent 任务已更新(task)
-                                                              End If
-                                                          Next
-                                                          If changed Then
-                                                              立即保存队列()
-                                                              请求自动调度()
-                                                          End If
-                                                          If Not restored.Any(Function(task) task.恢复进程仍在运行) Then DirectCast(state, System.Threading.Timer).Dispose()
-                                                      End Sub, Nothing, 1000, 2000)
+            Dim watcher As System.Threading.Timer = Nothing
+            watcher = New System.Threading.Timer(Sub(state)
+                                                     Try
+                                                         Dim changed As Boolean = False
+                                                         For Each task In restored.Where(Function(candidate) candidate.恢复进程仍在运行)
+                                                             Try
+                                                                 If Not task.检查恢复进程() Then
+                                                                     changed = True
+                                                                     RaiseEvent 任务已更新(task)
+                                                                 End If
+                                                             Catch ex As IOException
+                                                                 task.追加日志("[3FUI] 检查恢复进程失败：" & ex.Message, 编码任务日志类别_v6.错误, Nothing, True)
+                                                             End Try
+                                                         Next
+                                                         If changed Then
+                                                             立即保存队列()
+                                                             请求自动调度()
+                                                         End If
+                                                     Catch ex As Exception
+                                                         ' Recovery runs on a thread-pool timer; isolate failures from the UI process.
+                                                     Finally
+                                                         If Not restored.Any(Function(task) task.恢复进程仍在运行) Then
+                                                             SyncLock 恢复监视器锁
+                                                                 恢复进程监视器集合.Remove(watcher)
+                                                             End SyncLock
+                                                             watcher.Dispose()
+                                                         End If
+                                                     End Try
+                                                 End Sub, Nothing, 1000, 2000)
+            SyncLock 恢复监视器锁
+                恢复进程监视器集合.Add(watcher)
+            End SyncLock
         End If
         删除未处理任务缓存()
         请求保存队列()

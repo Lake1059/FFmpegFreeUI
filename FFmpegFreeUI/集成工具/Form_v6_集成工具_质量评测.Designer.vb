@@ -72,6 +72,8 @@ Partial Class Form_v6_集成工具_质量评测
         JustEmptyControl5 = New LakeUI.JustEmptyControl()
         MB_选择原视频 = New LakeUI.ModernButton()
         HtmlColorLabel1 = New LakeUI.HtmlColorLabel()
+        JustEmptyControl11 = New LakeUI.JustEmptyControl()
+        MB_添加对比视频 = New LakeUI.ModernButton()
         ModernPanel1.SuspendLayout()
         Panel6.SuspendLayout()
         Panel4.SuspendLayout()
@@ -721,6 +723,8 @@ Partial Class Form_v6_集成工具_质量评测
         Panel1.BackColor1 = Color.Transparent
         Panel1.BorderSize = 0
         Panel1.Controls.Add(MTB_原视频文件路径)
+        Panel1.Controls.Add(JustEmptyControl11)
+        Panel1.Controls.Add(MB_添加对比视频)
         Panel1.Controls.Add(JustEmptyControl5)
         Panel1.Controls.Add(MB_选择原视频)
         Panel1.Dock = DockStyle.Top
@@ -743,7 +747,7 @@ Partial Class Form_v6_集成工具_质量评测
         MTB_原视频文件路径.Name = "MTB_原视频文件路径"
         MTB_原视频文件路径.Padding = New Padding(10, 0, 10, 0)
         MTB_原视频文件路径.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        MTB_原视频文件路径.Size = New Size(647, 32)
+        MTB_原视频文件路径.Size = New Size(517, 32)
         MTB_原视频文件路径.TabIndex = 14
         MTB_原视频文件路径.WaterText = "原视频文件路径"
         MTB_原视频文件路径.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
@@ -783,6 +787,29 @@ Partial Class Form_v6_集成工具_质量评测
         HtmlColorLabel1.Size = New Size(777, 23)
         HtmlColorLabel1.TabIndex = 4
         HtmlColorLabel1.Text = "<span style=""font-size:13; color:Silver"">简易质量评测</span>   任何一种评测标准都不是万能的，请以人眼视觉感受为准"
+        ' 
+        ' JustEmptyControl11
+        ' 
+        JustEmptyControl11.Dock = DockStyle.Right
+        JustEmptyControl11.Location = New Point(647, 10)
+        JustEmptyControl11.Name = "JustEmptyControl11"
+        JustEmptyControl11.Size = New Size(10, 32)
+        JustEmptyControl11.TabIndex = 18
+        ' 
+        ' MB_添加对比视频
+        ' 
+        MB_添加对比视频.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MB_添加对比视频.BorderRadius = 10
+        MB_添加对比视频.BorderSize = 0
+        MB_添加对比视频.Dock = DockStyle.Right
+        MB_添加对比视频.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        MB_添加对比视频.Location = New Point(657, 10)
+        MB_添加对比视频.Margin = New Padding(2)
+        MB_添加对比视频.Name = "MB_添加对比视频"
+        MB_添加对比视频.PressedBackColor1 = Color.FromArgb(CByte(80), CByte(220), CByte(220), CByte(220))
+        MB_添加对比视频.Size = New Size(120, 32)
+        MB_添加对比视频.TabIndex = 17
+        MB_添加对比视频.Text = "添加对比视频"
         ' 
         ' Form_v6_集成工具_质量评测
         ' 
@@ -852,4 +879,6 @@ Partial Class Form_v6_集成工具_质量评测
     Friend WithEvents JustEmptyControl2 As LakeUI.JustEmptyControl
     Friend WithEvents JustEmptyControl10 As LakeUI.JustEmptyControl
     Friend WithEvents MB_刷新VMAF模型 As LakeUI.ModernButton
+    Friend WithEvents JustEmptyControl11 As LakeUI.JustEmptyControl
+    Friend WithEvents MB_添加对比视频 As LakeUI.ModernButton
 End Class

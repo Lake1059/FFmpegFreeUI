@@ -282,8 +282,10 @@ Partial Public Class 编码队列_v6
         Next
         If added.Count = 0 Then Return added
         Dim 应启动空闲队列 As Boolean
+        Dim 新任务起始索引 As Integer
         SyncLock 队列锁
             应启动空闲队列 = Not 队列项目.Any(Function(task) 是否进行中任务(task) OrElse task.正在执行) AndAlso added.Any(Function(task) task.允许自动启动)
+            新任务起始索引 = 队列项目.Count
             队列项目.AddRange(added)
             For Each task In added
                 任务索引.Add(task.ID, task)
@@ -294,27 +296,31 @@ Partial Public Class 编码队列_v6
         Next
         RaiseEvent 队列已变化()
         请求保存队列()
-        If 应启动空闲队列 Then 请求自动调度()
+        If 应启动空闲队列 Then 请求自动调度(新任务起始索引)
         Return added
     End Function
 
-    Public Shared Function 添加命令行任务(命令行 As String, 任务名称 As String, 输出文件 As String, Optional 输入文件 As String = "") As 编码任务_v6
+    Public Shared Function 添加命令行任务(命令行 As String, 任务名称 As String, 输出文件 As String, Optional 输入文件 As String = "", Optional 参与自动调度 As Boolean = True) As 编码任务_v6
         Dim task As New 编码任务_v6 With {
             .输入文件 = 输入文件,
             .输出文件 = 输出文件,
             .任务名称 = 应用任务名称混淆(If(String.IsNullOrWhiteSpace(任务名称), If(String.IsNullOrWhiteSpace(输入文件), "命令行任务", Path.GetFileName(输入文件)), 任务名称)),
-            .命令行 = 命令行
+            .命令行 = 命令行,
+            .允许自动启动 = 参与自动调度 AndAlso 设置_v6.实例对象.自动开始任务选项 = 0,
+            .完成后自动调度队列 = 参与自动调度
         }
         Dim 应启动空闲队列 As Boolean
+        Dim 新任务起始索引 As Integer
         SyncLock 队列锁
             应启动空闲队列 = Not 队列项目.Any(Function(item) 是否进行中任务(item) OrElse item.正在执行) AndAlso task.允许自动启动
+            新任务起始索引 = 队列项目.Count
             队列项目.Add(task)
             任务索引.Add(task.ID, task)
         End SyncLock
         触发插件事件("task.added", task)
         RaiseEvent 队列已变化()
         请求保存队列()
-        If 应启动空闲队列 Then 请求自动调度()
+        If 应启动空闲队列 Then 请求自动调度(新任务起始索引)
         Return task
     End Function
 
@@ -666,7 +672,7 @@ Partial Public Class 编码队列_v6
                                          SyncLock 队列锁
                                              已手动停止 = task.结束执行()
                                              Dim wasWaitingForCleanup = 等待停止清理的任务 Is task
-                                             shouldSchedule = Not 已手动停止 OrElse wasWaitingForCleanup
+                                             shouldSchedule = (Not 已手动停止 OrElse wasWaitingForCleanup) AndAlso task.完成后自动调度队列
                                              If wasWaitingForCleanup Then
                                                  完成任务起始索引 = 等待停止清理后调度起始索引
                                                  等待停止清理的任务 = Nothing

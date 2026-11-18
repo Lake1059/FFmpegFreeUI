@@ -240,7 +240,7 @@ Public Class Form_v6_集成工具_合并
         Dim output = MTB_输出目标文件.Text.Trim()
         Dim arg = $"-hide_banner -nostdin -f concat -safe 0 -i {引用参数(清单文件路径)} -c copy {引用参数(output)} -y"
 
-        插件管理.使用命令行添加任务到编码队列(arg, $"合并任务 {Now:HHmmss}", output, inputFiles.FirstOrDefault())
+        编码队列_v6.添加命令行任务(arg, $"合并任务 {Now:HHmmss}", output, inputFiles.FirstOrDefault(), 参与自动调度:=False)
         FormMain_v6.ModernTabListControl1.SelectedIndex = 2
         ExFloatingTip(MB_启动合并, "已添加到编码队列", 1200)
     End Sub

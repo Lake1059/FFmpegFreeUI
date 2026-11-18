@@ -801,6 +801,12 @@ Public Class Form_v6_集成工具_质量评测
         End Using
     End Sub
 
+    Private Sub MB_添加对比视频_Click(sender As Object, e As EventArgs) Handles MB_添加对比视频.Click
+        Using d As New OpenFileDialog With {.Multiselect = True, .Filter = "所有文件|*.*"}
+            If d.ShowDialog(Me) = DialogResult.OK Then 添加文件(d.FileNames)
+        End Using
+    End Sub
+
     Private Async Sub MB_开始评测_Click(sender As Object, e As EventArgs) Handles MB_开始评测.Click
         If 正在评测 Then
             取消当前评测()
