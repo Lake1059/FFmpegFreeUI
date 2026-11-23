@@ -1,11 +1,11 @@
 Imports System.IO
 Imports System.Reflection
-Imports System.Text
 Imports System.Text.Json
 Public Class 设置_v6
 
     Public Shared Property 实例对象 As New 设置_v6
 
+    Public Property 图形DX版本 As Integer = 0
     Public Property 图形DX抗锯齿 As Integer = 0
     Public Property 图形DX文字渲染模式 As Integer = 0
     Public Property 图形DX_SSAA As Integer = 0
@@ -185,6 +185,7 @@ Public Class 设置_v6
     End Enum
 
     Public Property 是否询问标记_下载服务器选择 As Boolean = False
+    Public Property 不再提示列表 As New List(Of String)
     Public Property 自定义视频编码器列表 As New List(Of String)
     ''' <summary>质量评测页面完整工作状态。</summary>
     Public Property 质量评测页面状态 As String = ""
@@ -410,13 +411,21 @@ Public Class 设置_v6
         保存设置到文件()
     End Sub
 
+    Friend Shared Sub 保存不再提示选择(提示标识 As String)
+        SyncLock 设置文件写入锁
+            Dim 列表 = 实例对象.不再提示列表
+            If Not 列表.Contains(提示标识) Then 列表.Add(提示标识)
+        End SyncLock
+        退出时保存设置()
+    End Sub
+
     Private Shared Sub 保存设置到文件()
         SyncLock 设置文件写入锁
             原子文件写入_v6.写入文本(设置文件路径, JsonSerializer.Serialize(实例对象, JsonSO))
         End SyncLock
     End Sub
 
-    Public Shared Sub 启动时加载设置()
+    Friend Shared Sub 启动时加载设置文件()
         If Not FileIO.FileSystem.FileExists(设置文件路径) Then
             If FontFamily.Families.Any(Function(f) f.Name = "微软雅黑") Then
                 实例对象.字体 = "微软雅黑"
@@ -425,8 +434,18 @@ Public Class 设置_v6
         Else
             Dim 设置文本 = FileIO.FileSystem.ReadAllText(设置文件路径)
             实例对象 = JsonSerializer.Deserialize(Of 设置_v6)(设置文本)
+            If 实例对象.不再提示列表 Is Nothing Then 实例对象.不再提示列表 = New List(Of String)
             迁移旧设置字段(设置文本)
         End If
+    End Sub
+
+    Friend Shared Sub 启动时选择图形后端()
+        Dim 后端 = If(实例对象.图形DX版本 = 1, LakeUI.RenderBackend.Direct3D12, LakeUI.RenderBackend.Direct3D11)
+        LakeUI.GlobalOptions.SetRenderBackendAsync(后端).GetAwaiter().GetResult()
+    End Sub
+
+    Public Shared Sub 启动时加载设置()
+        Form_v6_设置_LakeUI性能选项.同步DX版本()
         设置组合框选中索引(Form_v6_设置_LakeUI性能选项.MCB_GPU抗锯齿, 实例对象.图形DX抗锯齿, 0)
         设置组合框选中索引(Form_v6_设置_LakeUI性能选项.MCB_文字渲染模式, 实例对象.图形DX文字渲染模式, 0)
         设置组合框选中索引(Form_v6_设置_LakeUI性能选项.MCB_SSAA, 实例对象.图形DX_SSAA, 0)
@@ -565,6 +584,14 @@ Public Class 设置_v6
         Try
             Using doc = JsonDocument.Parse(设置文本)
                 Dim root = doc.RootElement
+
+                Dim 旧提示记录 As JsonElement
+                If Not root.TryGetProperty(NameOf(不再提示列表), Nothing) AndAlso
+                   root.TryGetProperty("不再提示记录", 旧提示记录) AndAlso 旧提示记录.ValueKind = JsonValueKind.Object Then
+                    实例对象.不再提示列表 = 旧提示记录.EnumerateObject().
+                        Where(Function(记录) 记录.Value.ValueKind = JsonValueKind.True).
+                        Select(Function(记录) 记录.Name).ToList()
+                End If
 
                 Dim textValue As String = ""
                 If String.IsNullOrWhiteSpace(实例对象.SP_窗口标题文字) AndAlso 读取文本(root, "个性化_窗口标题栏", textValue) Then 实例对象.SP_窗口标题文字 = textValue

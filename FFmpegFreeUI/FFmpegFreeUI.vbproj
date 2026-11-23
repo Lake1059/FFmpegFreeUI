@@ -13,16 +13,17 @@
     <!--<EnableCompressionInSingleFile>True</EnableCompressionInSingleFile>-->
     <Authors>1059 Studio</Authors>
 	<Company>1059 Studio</Company>
-	<AssemblyVersion>6.5.2</AssemblyVersion>
-	<FileVersion>6.5.2</FileVersion>
-	<Version>6.5.2</Version>
+	<AssemblyVersion>6.6.0</AssemblyVersion>
+	<FileVersion>6.6.0</FileVersion>
+	<Version>6.6.0</Version>
     <SupportedOSPlatformVersion>10.0.17763.0</SupportedOSPlatformVersion>
     <ApplicationIcon>ico.ico</ApplicationIcon>
     <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
     <Title>FFmpegFreeUI</Title>
     <ApplicationHighDpiMode>PerMonitorV2</ApplicationHighDpiMode>
     <ForceDesignerDpiUnaware>true</ForceDesignerDpiUnaware>
-    <LakeUIAssembly Condition="'$(LakeUIAssembly)' == ''">..\..\LakeUI\LakeUI\bin\Debug\net11.0-windows10.0.17763.0\LakeUI.dll</LakeUIAssembly>
+    <LakeUIProject>..\..\LakeUI\LakeUI\LakeUI.vbproj</LakeUIProject>
+	<LakeUIDesignerBackend>DX11</LakeUIDesignerBackend>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -65,7 +66,9 @@
     <Reference Include="LakeUI" Condition="Exists('$(LakeUIAssembly)')">
       <HintPath>$(LakeUIAssembly)</HintPath>
     </Reference>
-    <PackageReference Include="LakeUI" Version="5.116" Condition="!Exists('$(LakeUIAssembly)')" />
+    <PackageReference Include="Vortice.Direct3D12" Version="3.8.3" Condition="Exists('$(LakeUIAssembly)')" />
+    <ProjectReference Include="$(LakeUIProject)" Condition="!Exists('$(LakeUIAssembly)') And Exists('$(LakeUIProject)')" />
+    <PackageReference Include="LakeUI" Version="5.501" Condition="!Exists('$(LakeUIAssembly)') And !Exists('$(LakeUIProject)')" />
   </ItemGroup>
 
   <ItemGroup>

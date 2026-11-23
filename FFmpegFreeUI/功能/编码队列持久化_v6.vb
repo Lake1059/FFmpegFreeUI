@@ -1,12 +1,15 @@
 Imports System.IO
 Imports System.Text
 Imports System.Text.Json
+Imports System.Text.Json.Serialization
 Imports System.Threading
 
 Partial Public Class 编码队列_v6
     Private Class 队列持久化文件_v6
+        <JsonRequired>
         Public Property 版本 As Integer = 1
         Public Property 保存时间 As DateTime
+        <JsonRequired>
         Public Property 任务 As New List(Of 编码任务快照_v6)
     End Class
 
@@ -50,6 +53,7 @@ Partial Public Class 编码队列_v6
     End Class
 
     Private Shared ReadOnly 持久化路径 As String = Path.Combine(Application.StartupPath, "QueueTasks.json")
+    Private Shared ReadOnly 持久化备份路径 As String = 持久化路径 & ".bak"
     Private Shared ReadOnly 持久化写入锁 As New Object
     Private Shared 持久化定时器 As System.Threading.Timer
     Private Shared 持久化待处理 As Integer
@@ -76,7 +80,11 @@ Partial Public Class 编码队列_v6
     End Sub
 
     Private Shared Sub 持久化计时到期(state As Object)
-        保存队列快照()
+        Try
+            保存队列快照()
+        Catch ex As Exception When TypeOf ex Is IOException OrElse TypeOf ex Is UnauthorizedAccessException
+            Trace.TraceWarning("自动保存编码队列失败：" & ex.Message)
+        End Try
     End Sub
 
     Private Shared Sub 保存队列快照()
@@ -109,18 +117,56 @@ Partial Public Class 编码队列_v6
                 Next
             End SyncLock
             If snapshot.任务.Count = 0 Then
-                If File.Exists(持久化路径) Then File.Delete(持久化路径)
+                ' 先删除备份，避免清空后的队列从旧备份恢复。
+                File.Delete(持久化备份路径)
+                File.Delete(持久化路径)
                 Return
             End If
-            原子文件写入_v6.写入文本(持久化路径, JsonSerializer.Serialize(snapshot, JsonSO))
+            Dim json = JsonSerializer.Serialize(snapshot, JsonSO)
+            原子文件写入_v6.写入文本(持久化路径, json, 刷新到磁盘:=True)
+            原子文件写入_v6.写入文本(持久化备份路径, json, 刷新到磁盘:=True)
         End SyncLock
     End Sub
 
+    Private Shared Function 尝试读取队列快照(文件路径 As String, 读取错误 As List(Of String)) As 队列持久化文件_v6
+        Try
+            Dim json = File.ReadAllText(文件路径, Encoding.UTF8)
+            ' 只清理 JSON 边界的空字节和空白，正文仍由反序列化器完整校验。
+            json = json.Trim(ChrW(0), " "c, ChrW(9), ChrW(10), ChrW(13))
+            If json.Length = 0 Then Throw New InvalidDataException("队列文件为空或仅包含空字节")
+            Dim snapshot = JsonSerializer.Deserialize(Of 队列持久化文件_v6)(json, JsonSO)
+            If snapshot Is Nothing OrElse snapshot.版本 <> 1 OrElse snapshot.任务 Is Nothing Then
+                Throw New InvalidDataException("队列持久化文件格式或版本不受支持")
+            End If
+            Dim ids As New HashSet(Of String)(StringComparer.Ordinal)
+            For Each item In snapshot.任务
+                If item Is Nothing OrElse String.IsNullOrWhiteSpace(item.ID) OrElse Not ids.Add(item.ID) OrElse
+                   item.步骤 Is Nothing OrElse item.步骤.Any(Function(stepItem) stepItem Is Nothing) Then
+                    Throw New InvalidDataException("队列持久化文件包含无效任务或重复的任务 ID")
+                End If
+            Next
+            Return snapshot
+        Catch ex As FileNotFoundException
+            Return Nothing
+        Catch ex As Exception When TypeOf ex Is JsonException OrElse TypeOf ex Is InvalidDataException
+            ' 保留原始数据，避免退出或下次保存时覆盖损坏文件。
+            Dim 归档路径 = 文件路径 & ".corrupt-" & Guid.NewGuid().ToString("N")
+            File.Move(文件路径, 归档路径)
+            读取错误.Add($"{ex.Message}{vbCrLf}原文件已保留在 {归档路径}")
+            Return Nothing
+        End Try
+    End Function
+
     Public Shared Function 恢复持久化队列() As Integer
-        If Not File.Exists(持久化路径) Then Return 迁移旧未处理任务缓存()
-        Dim snapshot = JsonSerializer.Deserialize(Of 队列持久化文件_v6)(File.ReadAllText(持久化路径, Encoding.UTF8), JsonSO)
-        If snapshot Is Nothing OrElse snapshot.版本 <> 1 OrElse snapshot.任务 Is Nothing Then
-            Throw New InvalidDataException("队列持久化文件格式或版本不受支持")
+        Dim snapshot As 队列持久化文件_v6
+        Dim 读取错误 As New List(Of String)
+        SyncLock 持久化写入锁
+            snapshot = 尝试读取队列快照(持久化路径, 读取错误)
+            If snapshot Is Nothing Then snapshot = 尝试读取队列快照(持久化备份路径, 读取错误)
+        End SyncLock
+        If snapshot Is Nothing Then
+            If 读取错误.Count > 0 Then Throw New InvalidDataException(String.Join(vbCrLf, 读取错误))
+            Return 迁移旧未处理任务缓存()
         End If
         Dim restored As New List(Of 编码任务_v6)
         For Each item In snapshot.任务

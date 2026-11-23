@@ -47,6 +47,8 @@ Namespace My
                     "不要直接在桌面、下载目录或缓存目录运行")
                 End
             End If
+            设置_v6.启动时加载设置文件()
+            设置_v6.启动时选择图形后端()
             If e.CommandLine.Contains("fullscreen") Then
                 FormMain_v6.FormBorderStyle = FormBorderStyle.None
                 FormMain_v6.WindowState = FormWindowState.Maximized

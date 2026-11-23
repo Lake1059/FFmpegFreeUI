@@ -22,74 +22,43 @@ Partial Class Form_v6_设置_LakeUI性能选项
     '不要使用代码编辑器修改它。
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim ToolTipEntry5 As LakeUI.ModernComboBox.ToolTipEntry = New LakeUI.ModernComboBox.ToolTipEntry()
-        Dim ToolTipEntry6 As LakeUI.ModernComboBox.ToolTipEntry = New LakeUI.ModernComboBox.ToolTipEntry()
+        Dim ToolTipEntry1 As LakeUI.ModernComboBox.ToolTipEntry = New LakeUI.ModernComboBox.ToolTipEntry()
+        Dim ToolTipEntry2 As LakeUI.ModernComboBox.ToolTipEntry = New LakeUI.ModernComboBox.ToolTipEntry()
         ModernPanel1 = New LakeUI.ModernPanel()
-        ModernPanel1.BackColor = Color.Transparent
-        ModernPanel1.BackColor1 = Color.Transparent
         Panel6 = New LakeUI.ModernPanel()
-        Panel6.BackColor = Color.Transparent
-        Panel6.BackColor1 = Color.Transparent
-        Panel6.BorderSize = 0
         HtmlColorLabel5 = New LakeUI.HtmlColorLabel()
         MCB_动画帧率 = New LakeUI.ModernComboBox()
         HtmlColorLabel3 = New LakeUI.HtmlColorLabel()
         Panel3 = New LakeUI.ModernPanel()
-        Panel3.BackColor = Color.Transparent
-        Panel3.BackColor1 = Color.Transparent
-        Panel3.BorderSize = 0
         HtmlColorLabel9 = New LakeUI.HtmlColorLabel()
         MCB_超容器背景映射条目预算 = New LakeUI.ModernComboBox()
         Panel11 = New LakeUI.ModernPanel()
-        Panel11.BackColor = Color.Transparent
-        Panel11.BackColor1 = Color.Transparent
-        Panel11.BorderSize = 0
         HtmlColorLabel10 = New LakeUI.HtmlColorLabel()
         MCB_超容器背景映射脏区策略极限 = New LakeUI.ModernComboBox()
         Panel10 = New LakeUI.ModernPanel()
-        Panel10.BackColor = Color.Transparent
-        Panel10.BackColor1 = Color.Transparent
-        Panel10.BorderSize = 0
         HtmlColorLabel6 = New LakeUI.HtmlColorLabel()
         MCB_超容器背景映射源位图缓存 = New LakeUI.ModernComboBox()
         Panel5 = New LakeUI.ModernPanel()
-        Panel5.BackColor = Color.Transparent
-        Panel5.BackColor1 = Color.Transparent
-        Panel5.BorderSize = 0
         HtmlColorLabel4 = New LakeUI.HtmlColorLabel()
         MCB_DW字体相关预算 = New LakeUI.ModernComboBox()
         Panel4 = New LakeUI.ModernPanel()
-        Panel4.BackColor = Color.Transparent
-        Panel4.BackColor1 = Color.Transparent
-        Panel4.BorderSize = 0
         HtmlColorLabel2 = New LakeUI.HtmlColorLabel()
         MCB_D2D每对象画刷缓存数量 = New LakeUI.ModernComboBox()
         Panel1 = New LakeUI.ModernPanel()
-        Panel1.BackColor = Color.Transparent
-        Panel1.BackColor1 = Color.Transparent
-        Panel1.BorderSize = 0
         HtmlColorLabel8 = New LakeUI.HtmlColorLabel()
         MCB_D2DImage缓存预算 = New LakeUI.ModernComboBox()
         HtmlColorLabel7 = New LakeUI.HtmlColorLabel()
-        Panel9 = New LakeUI.ModernPanel()
-        Panel9.BackColor = Color.Transparent
-        Panel9.BackColor1 = Color.Transparent
-        Panel9.BorderSize = 0
-        HtmlColorLabel14 = New LakeUI.HtmlColorLabel()
-        MCB_SSAA = New LakeUI.ModernComboBox()
-        Panel7 = New LakeUI.ModernPanel()
-        Panel7.BackColor = Color.Transparent
-        Panel7.BackColor1 = Color.Transparent
-        Panel7.BorderSize = 0
-        HtmlColorLabel12 = New LakeUI.HtmlColorLabel()
-        MCB_文字渲染模式 = New LakeUI.ModernComboBox()
         Panel8 = New LakeUI.ModernPanel()
-        Panel8.BackColor = Color.Transparent
-        Panel8.BackColor1 = Color.Transparent
-        Panel8.BorderSize = 0
-        HtmlColorLabel13 = New LakeUI.HtmlColorLabel()
+        MCB_SSAA = New LakeUI.ModernComboBox()
+        JustEmptyControl2 = New LakeUI.JustEmptyControl()
+        MCB_文字渲染模式 = New LakeUI.ModernComboBox()
+        JustEmptyControl1 = New LakeUI.JustEmptyControl()
         MCB_GPU抗锯齿 = New LakeUI.ModernComboBox()
         HtmlColorLabel11 = New LakeUI.HtmlColorLabel()
+        ModernPanel2 = New LakeUI.ModernPanel()
+        HtmlColorLabel1 = New LakeUI.HtmlColorLabel()
+        MCB_DX版本 = New LakeUI.ModernComboBox()
+        HtmlColorLabel15 = New LakeUI.HtmlColorLabel()
         ModernPanel1.SuspendLayout()
         Panel6.SuspendLayout()
         Panel3.SuspendLayout()
@@ -98,13 +67,14 @@ Partial Class Form_v6_设置_LakeUI性能选项
         Panel5.SuspendLayout()
         Panel4.SuspendLayout()
         Panel1.SuspendLayout()
-        Panel9.SuspendLayout()
-        Panel7.SuspendLayout()
         Panel8.SuspendLayout()
+        ModernPanel2.SuspendLayout()
         SuspendLayout()
         ' 
         ' ModernPanel1
         ' 
+        ModernPanel1.BackColor = Color.Transparent
+        ModernPanel1.BackColor1 = Color.Transparent
         ModernPanel1.BorderSize = 0
         ModernPanel1.Controls.Add(Panel6)
         ModernPanel1.Controls.Add(HtmlColorLabel3)
@@ -115,24 +85,27 @@ Partial Class Form_v6_设置_LakeUI性能选项
         ModernPanel1.Controls.Add(Panel4)
         ModernPanel1.Controls.Add(Panel1)
         ModernPanel1.Controls.Add(HtmlColorLabel7)
-        ModernPanel1.Controls.Add(Panel9)
-        ModernPanel1.Controls.Add(Panel7)
         ModernPanel1.Controls.Add(Panel8)
         ModernPanel1.Controls.Add(HtmlColorLabel11)
+        ModernPanel1.Controls.Add(ModernPanel2)
+        ModernPanel1.Controls.Add(HtmlColorLabel15)
         ModernPanel1.Dock = DockStyle.Fill
         ModernPanel1.Location = New Point(0, 0)
         ModernPanel1.Name = "ModernPanel1"
         ModernPanel1.Padding = New Padding(20)
         ModernPanel1.ScrollBarMode = LakeUI.ModernPanel.ScrollMode.Vertical
-        ModernPanel1.Size = New Size(769, 641)
+        ModernPanel1.Size = New Size(769, 683)
         ModernPanel1.TabIndex = 0
         ' 
         ' Panel6
         ' 
+        Panel6.BackColor = Color.Transparent
+        Panel6.BackColor1 = Color.Transparent
+        Panel6.BorderSize = 0
         Panel6.Controls.Add(HtmlColorLabel5)
         Panel6.Controls.Add(MCB_动画帧率)
         Panel6.Dock = DockStyle.Top
-        Panel6.Location = New Point(20, 513)
+        Panel6.Location = New Point(20, 508)
         Panel6.Name = "Panel6"
         Panel6.Padding = New Padding(0, 10, 0, 0)
         Panel6.Size = New Size(729, 42)
@@ -193,20 +166,23 @@ Partial Class Form_v6_设置_LakeUI性能选项
         HtmlColorLabel3.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel3.Dock = DockStyle.Top
         HtmlColorLabel3.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        HtmlColorLabel3.Location = New Point(20, 468)
+        HtmlColorLabel3.Location = New Point(20, 465)
         HtmlColorLabel3.Margin = New Padding(2)
         HtmlColorLabel3.Name = "HtmlColorLabel3"
         HtmlColorLabel3.Padding = New Padding(0, 20, 0, 0)
-        HtmlColorLabel3.Size = New Size(729, 45)
+        HtmlColorLabel3.Size = New Size(729, 43)
         HtmlColorLabel3.TabIndex = 22
         HtmlColorLabel3.Text = "<span style=""font-size:13; color:Silver"">动画帧率</span>   帧率属性的更新与字体更新绑定，动一下字体或者重启来应用"
         ' 
         ' Panel3
         ' 
+        Panel3.BackColor = Color.Transparent
+        Panel3.BackColor1 = Color.Transparent
+        Panel3.BorderSize = 0
         Panel3.Controls.Add(HtmlColorLabel9)
         Panel3.Controls.Add(MCB_超容器背景映射条目预算)
         Panel3.Dock = DockStyle.Top
-        Panel3.Location = New Point(20, 426)
+        Panel3.Location = New Point(20, 423)
         Panel3.Name = "Panel3"
         Panel3.Padding = New Padding(0, 10, 0, 0)
         Panel3.Size = New Size(729, 42)
@@ -264,10 +240,13 @@ Partial Class Form_v6_设置_LakeUI性能选项
         ' 
         ' Panel11
         ' 
+        Panel11.BackColor = Color.Transparent
+        Panel11.BackColor1 = Color.Transparent
+        Panel11.BorderSize = 0
         Panel11.Controls.Add(HtmlColorLabel10)
         Panel11.Controls.Add(MCB_超容器背景映射脏区策略极限)
         Panel11.Dock = DockStyle.Top
-        Panel11.Location = New Point(20, 384)
+        Panel11.Location = New Point(20, 381)
         Panel11.Name = "Panel11"
         Panel11.Padding = New Padding(0, 10, 0, 0)
         Panel11.Size = New Size(729, 42)
@@ -325,10 +304,13 @@ Partial Class Form_v6_设置_LakeUI性能选项
         ' 
         ' Panel10
         ' 
+        Panel10.BackColor = Color.Transparent
+        Panel10.BackColor1 = Color.Transparent
+        Panel10.BorderSize = 0
         Panel10.Controls.Add(HtmlColorLabel6)
         Panel10.Controls.Add(MCB_超容器背景映射源位图缓存)
         Panel10.Dock = DockStyle.Top
-        Panel10.Location = New Point(20, 342)
+        Panel10.Location = New Point(20, 339)
         Panel10.Name = "Panel10"
         Panel10.Padding = New Padding(0, 10, 0, 0)
         Panel10.Size = New Size(729, 42)
@@ -386,10 +368,13 @@ Partial Class Form_v6_设置_LakeUI性能选项
         ' 
         ' Panel5
         ' 
+        Panel5.BackColor = Color.Transparent
+        Panel5.BackColor1 = Color.Transparent
+        Panel5.BorderSize = 0
         Panel5.Controls.Add(HtmlColorLabel4)
         Panel5.Controls.Add(MCB_DW字体相关预算)
         Panel5.Dock = DockStyle.Top
-        Panel5.Location = New Point(20, 300)
+        Panel5.Location = New Point(20, 297)
         Panel5.Name = "Panel5"
         Panel5.Padding = New Padding(0, 10, 0, 0)
         Panel5.Size = New Size(729, 42)
@@ -445,10 +430,13 @@ Partial Class Form_v6_设置_LakeUI性能选项
         ' 
         ' Panel4
         ' 
+        Panel4.BackColor = Color.Transparent
+        Panel4.BackColor1 = Color.Transparent
+        Panel4.BorderSize = 0
         Panel4.Controls.Add(HtmlColorLabel2)
         Panel4.Controls.Add(MCB_D2D每对象画刷缓存数量)
         Panel4.Dock = DockStyle.Top
-        Panel4.Location = New Point(20, 258)
+        Panel4.Location = New Point(20, 255)
         Panel4.Name = "Panel4"
         Panel4.Padding = New Padding(0, 10, 0, 0)
         Panel4.Size = New Size(729, 42)
@@ -506,10 +494,13 @@ Partial Class Form_v6_设置_LakeUI性能选项
         ' 
         ' Panel1
         ' 
+        Panel1.BackColor = Color.Transparent
+        Panel1.BackColor1 = Color.Transparent
+        Panel1.BorderSize = 0
         Panel1.Controls.Add(HtmlColorLabel8)
         Panel1.Controls.Add(MCB_D2DImage缓存预算)
         Panel1.Dock = DockStyle.Top
-        Panel1.Location = New Point(20, 216)
+        Panel1.Location = New Point(20, 213)
         Panel1.Name = "Panel1"
         Panel1.Padding = New Padding(0, 10, 0, 0)
         Panel1.Size = New Size(729, 42)
@@ -571,38 +562,30 @@ Partial Class Form_v6_设置_LakeUI性能选项
         HtmlColorLabel7.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel7.Dock = DockStyle.Top
         HtmlColorLabel7.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        HtmlColorLabel7.Location = New Point(20, 171)
+        HtmlColorLabel7.Location = New Point(20, 170)
         HtmlColorLabel7.Margin = New Padding(2)
         HtmlColorLabel7.Name = "HtmlColorLabel7"
         HtmlColorLabel7.Padding = New Padding(0, 20, 0, 0)
-        HtmlColorLabel7.Size = New Size(729, 45)
+        HtmlColorLabel7.Size = New Size(729, 43)
         HtmlColorLabel7.TabIndex = 29
         HtmlColorLabel7.Text = "<span style=""font-size:13; color:Silver"">渲染缓存预算</span>   这些选项按进程总量约束缓存占用"
         ' 
-        ' Panel9
+        ' Panel8
         ' 
-        Panel9.Controls.Add(HtmlColorLabel14)
-        Panel9.Controls.Add(MCB_SSAA)
-        Panel9.Dock = DockStyle.Top
-        Panel9.Location = New Point(20, 129)
-        Panel9.Name = "Panel9"
-        Panel9.Padding = New Padding(0, 10, 0, 0)
-        Panel9.Size = New Size(729, 42)
-        Panel9.TabIndex = 34
-        ' 
-        ' HtmlColorLabel14
-        ' 
-        HtmlColorLabel14.AutoSizeMode = AutoSizeMode.GrowAndShrink
-        HtmlColorLabel14.Dock = DockStyle.Fill
-        HtmlColorLabel14.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        HtmlColorLabel14.Location = New Point(200, 10)
-        HtmlColorLabel14.Margin = New Padding(2)
-        HtmlColorLabel14.Name = "HtmlColorLabel14"
-        HtmlColorLabel14.Padding = New Padding(10, 0, 0, 0)
-        HtmlColorLabel14.Size = New Size(529, 32)
-        HtmlColorLabel14.TabIndex = 18
-        HtmlColorLabel14.Text = "<span style=""color:Silver"">SSAA 超采样抗锯齿</span>   性能消耗指数级增加，通常没必要使用"
-        HtmlColorLabel14.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
+        Panel8.BackColor = Color.Transparent
+        Panel8.BackColor1 = Color.Transparent
+        Panel8.BorderSize = 0
+        Panel8.Controls.Add(MCB_SSAA)
+        Panel8.Controls.Add(JustEmptyControl2)
+        Panel8.Controls.Add(MCB_文字渲染模式)
+        Panel8.Controls.Add(JustEmptyControl1)
+        Panel8.Controls.Add(MCB_GPU抗锯齿)
+        Panel8.Dock = DockStyle.Top
+        Panel8.Location = New Point(20, 128)
+        Panel8.Name = "Panel8"
+        Panel8.Padding = New Padding(0, 10, 0, 0)
+        Panel8.Size = New Size(729, 42)
+        Panel8.TabIndex = 26
         ' 
         ' MCB_SSAA
         ' 
@@ -619,49 +602,35 @@ Partial Class Form_v6_设置_LakeUI性能选项
         MCB_SSAA.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_SSAA.DropDownSelectedForeColor = Color.White
         MCB_SSAA.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
-        MCB_SSAA.Items.Add("保持控件独立设定")
+        MCB_SSAA.Items.Add("x1 / 独立")
         MCB_SSAA.Items.Add("x2")
         MCB_SSAA.Items.Add("x3")
         MCB_SSAA.Items.Add("x4")
-        ToolTipEntry5.ItemText = "矢量几何 (试验选项)"
-        ToolTipEntry5.ToolTipText = "矢量几何 Outline 是仿制 MacType 的超高质量绘制模式，彻底避开 Windows 的 GASP表 和 TrueType hinting 字节码，让不想安装三方软件的用户也能体验到 Web 甚至 macOS 的文字效果，其效果由开发者定制，如有不适请及时切换到其他模式"
-        MCB_SSAA.ItemToolTips.AddRange(New LakeUI.ModernComboBox.ToolTipEntry() {ToolTipEntry5})
-        MCB_SSAA.Location = New Point(0, 10)
+        ToolTipEntry1.ItemText = "矢量几何 (试验选项)"
+        ToolTipEntry1.ToolTipText = "矢量几何 Outline 是仿制 MacType 的超高质量绘制模式，彻底避开 Windows 的 GASP表 和 TrueType hinting 字节码，让不想安装三方软件的用户也能体验到 Web 甚至 macOS 的文字效果，其效果由开发者定制，如有不适请及时切换到其他模式"
+        MCB_SSAA.ItemToolTips.AddRange(New LakeUI.ModernComboBox.ToolTipEntry() {ToolTipEntry1})
+        MCB_SSAA.Location = New Point(370, 10)
         MCB_SSAA.Margin = New Padding(2, 2, 2, 2)
         MCB_SSAA.Name = "MCB_SSAA"
         MCB_SSAA.Padding = New Padding(10, 0, 10, 0)
+        MCB_SSAA.PrefixForeColor = Color.Tomato
+        MCB_SSAA.PrefixGap = 10
+        MCB_SSAA.PrefixText = "SSAA"
         MCB_SSAA.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        MCB_SSAA.Size = New Size(200, 32)
-        MCB_SSAA.TabIndex = 0
+        MCB_SSAA.Size = New Size(150, 32)
+        MCB_SSAA.TabIndex = 9
         MCB_SSAA.ToolTipGap = -1
         MCB_SSAA.ToolTipMaxWidth = 350
         MCB_SSAA.ToolTipPadding = New Padding(15)
         MCB_SSAA.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ' 
-        ' Panel7
+        ' JustEmptyControl2
         ' 
-        Panel7.Controls.Add(HtmlColorLabel12)
-        Panel7.Controls.Add(MCB_文字渲染模式)
-        Panel7.Dock = DockStyle.Top
-        Panel7.Location = New Point(20, 87)
-        Panel7.Name = "Panel7"
-        Panel7.Padding = New Padding(0, 10, 0, 0)
-        Panel7.Size = New Size(729, 42)
-        Panel7.TabIndex = 27
-        ' 
-        ' HtmlColorLabel12
-        ' 
-        HtmlColorLabel12.AutoSizeMode = AutoSizeMode.GrowAndShrink
-        HtmlColorLabel12.Dock = DockStyle.Fill
-        HtmlColorLabel12.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        HtmlColorLabel12.Location = New Point(200, 10)
-        HtmlColorLabel12.Margin = New Padding(2)
-        HtmlColorLabel12.Name = "HtmlColorLabel12"
-        HtmlColorLabel12.Padding = New Padding(10, 0, 0, 0)
-        HtmlColorLabel12.Size = New Size(529, 32)
-        HtmlColorLabel12.TabIndex = 18
-        HtmlColorLabel12.Text = "<span style=""color:Silver"">文字渲染模式</span>   ClearType 模式支持 MacType 这类软件"
-        HtmlColorLabel12.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
+        JustEmptyControl2.Dock = DockStyle.Left
+        JustEmptyControl2.Location = New Point(360, 10)
+        JustEmptyControl2.Name = "JustEmptyControl2"
+        JustEmptyControl2.Size = New Size(10, 32)
+        JustEmptyControl2.TabIndex = 8
         ' 
         ' MCB_文字渲染模式
         ' 
@@ -678,49 +647,35 @@ Partial Class Form_v6_设置_LakeUI性能选项
         MCB_文字渲染模式.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_文字渲染模式.DropDownSelectedForeColor = Color.White
         MCB_文字渲染模式.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
-        MCB_文字渲染模式.Items.Add("ClearType 默认推荐")
+        MCB_文字渲染模式.Items.Add("ClearType")
         MCB_文字渲染模式.Items.Add("灰度抗锯齿")
         MCB_文字渲染模式.Items.Add("禁用抗锯齿")
-        MCB_文字渲染模式.Items.Add("矢量几何 (试验选项)")
-        ToolTipEntry6.ItemText = "矢量几何 (试验选项)"
-        ToolTipEntry6.ToolTipText = "矢量几何 Outline 是仿制 MacType 的超高质量绘制模式，彻底避开 Windows 的 GASP表 和 TrueType hinting 字节码，让不想安装三方软件的用户也能体验到 Web 甚至 macOS 的文字效果，其效果由开发者定制，如有不适请及时切换到其他模式"
-        MCB_文字渲染模式.ItemToolTips.AddRange(New LakeUI.ModernComboBox.ToolTipEntry() {ToolTipEntry6})
-        MCB_文字渲染模式.Location = New Point(0, 10)
+        MCB_文字渲染模式.Items.Add("矢量几何")
+        ToolTipEntry2.ItemText = "矢量几何 (试验选项)"
+        ToolTipEntry2.ToolTipText = "矢量几何 Outline 是仿制 MacType 的超高质量绘制模式，彻底避开 Windows 的 GASP表 和 TrueType hinting 字节码，让不想安装三方软件的用户也能体验到 Web 甚至 macOS 的文字效果，其效果由开发者定制，如有不适请及时切换到其他模式"
+        MCB_文字渲染模式.ItemToolTips.AddRange(New LakeUI.ModernComboBox.ToolTipEntry() {ToolTipEntry2})
+        MCB_文字渲染模式.Location = New Point(160, 10)
         MCB_文字渲染模式.Margin = New Padding(2, 2, 2, 2)
         MCB_文字渲染模式.Name = "MCB_文字渲染模式"
         MCB_文字渲染模式.Padding = New Padding(10, 0, 10, 0)
+        MCB_文字渲染模式.PrefixForeColor = Color.YellowGreen
+        MCB_文字渲染模式.PrefixGap = 10
+        MCB_文字渲染模式.PrefixText = "文字渲染"
         MCB_文字渲染模式.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_文字渲染模式.Size = New Size(200, 32)
-        MCB_文字渲染模式.TabIndex = 0
+        MCB_文字渲染模式.TabIndex = 7
         MCB_文字渲染模式.ToolTipGap = -1
         MCB_文字渲染模式.ToolTipMaxWidth = 350
         MCB_文字渲染模式.ToolTipPadding = New Padding(15)
         MCB_文字渲染模式.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
         ' 
-        ' Panel8
+        ' JustEmptyControl1
         ' 
-        Panel8.Controls.Add(HtmlColorLabel13)
-        Panel8.Controls.Add(MCB_GPU抗锯齿)
-        Panel8.Dock = DockStyle.Top
-        Panel8.Location = New Point(20, 45)
-        Panel8.Name = "Panel8"
-        Panel8.Padding = New Padding(0, 10, 0, 0)
-        Panel8.Size = New Size(729, 42)
-        Panel8.TabIndex = 26
-        ' 
-        ' HtmlColorLabel13
-        ' 
-        HtmlColorLabel13.AutoSizeMode = AutoSizeMode.GrowAndShrink
-        HtmlColorLabel13.Dock = DockStyle.Fill
-        HtmlColorLabel13.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        HtmlColorLabel13.Location = New Point(200, 10)
-        HtmlColorLabel13.Margin = New Padding(2)
-        HtmlColorLabel13.Name = "HtmlColorLabel13"
-        HtmlColorLabel13.Padding = New Padding(10, 0, 0, 0)
-        HtmlColorLabel13.Size = New Size(529, 32)
-        HtmlColorLabel13.TabIndex = 17
-        HtmlColorLabel13.Text = "<span style=""color:Silver"">GPU 抗锯齿</span>   建议开启，或者你可能喜欢曲线锯齿"
-        HtmlColorLabel13.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
+        JustEmptyControl1.Dock = DockStyle.Left
+        JustEmptyControl1.Location = New Point(150, 10)
+        JustEmptyControl1.Name = "JustEmptyControl1"
+        JustEmptyControl1.Size = New Size(10, 32)
+        JustEmptyControl1.TabIndex = 6
         ' 
         ' MCB_GPU抗锯齿
         ' 
@@ -737,14 +692,17 @@ Partial Class Form_v6_设置_LakeUI性能选项
         MCB_GPU抗锯齿.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
         MCB_GPU抗锯齿.DropDownSelectedForeColor = Color.White
         MCB_GPU抗锯齿.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
-        MCB_GPU抗锯齿.Items.Add("启用抗锯齿")
-        MCB_GPU抗锯齿.Items.Add("禁用抗锯齿")
+        MCB_GPU抗锯齿.Items.Add("启用")
+        MCB_GPU抗锯齿.Items.Add("禁用")
         MCB_GPU抗锯齿.Location = New Point(0, 10)
         MCB_GPU抗锯齿.Margin = New Padding(2, 2, 2, 2)
         MCB_GPU抗锯齿.Name = "MCB_GPU抗锯齿"
         MCB_GPU抗锯齿.Padding = New Padding(10, 0, 10, 0)
+        MCB_GPU抗锯齿.PrefixForeColor = Color.Orange
+        MCB_GPU抗锯齿.PrefixGap = 10
+        MCB_GPU抗锯齿.PrefixText = "抗锯齿"
         MCB_GPU抗锯齿.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
-        MCB_GPU抗锯齿.Size = New Size(200, 32)
+        MCB_GPU抗锯齿.Size = New Size(150, 32)
         MCB_GPU抗锯齿.TabIndex = 0
         MCB_GPU抗锯齿.ToolTipGap = -1
         MCB_GPU抗锯齿.ToolTipMaxWidth = 350
@@ -757,19 +715,90 @@ Partial Class Form_v6_设置_LakeUI性能选项
         HtmlColorLabel11.AutoSizeMode = AutoSizeMode.GrowAndShrink
         HtmlColorLabel11.Dock = DockStyle.Top
         HtmlColorLabel11.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
-        HtmlColorLabel11.Location = New Point(20, 20)
+        HtmlColorLabel11.Location = New Point(20, 85)
         HtmlColorLabel11.Margin = New Padding(2)
         HtmlColorLabel11.Name = "HtmlColorLabel11"
-        HtmlColorLabel11.Size = New Size(729, 25)
+        HtmlColorLabel11.Padding = New Padding(0, 20, 0, 0)
+        HtmlColorLabel11.Size = New Size(729, 43)
         HtmlColorLabel11.TabIndex = 25
-        HtmlColorLabel11.Text = "<span style=""font-size:13; color:Silver"">LakeUI DirectX 图形质量</span>   由 Vortice 提供支持"
+        HtmlColorLabel11.Text = "<span style=""font-size:13; color:Silver"">图形质量</span>   直接影响全局效果"
+        ' 
+        ' ModernPanel2
+        ' 
+        ModernPanel2.BackColor = Color.Transparent
+        ModernPanel2.BackColor1 = Color.Transparent
+        ModernPanel2.BorderSize = 0
+        ModernPanel2.Controls.Add(HtmlColorLabel1)
+        ModernPanel2.Controls.Add(MCB_DX版本)
+        ModernPanel2.Dock = DockStyle.Top
+        ModernPanel2.Location = New Point(20, 43)
+        ModernPanel2.Name = "ModernPanel2"
+        ModernPanel2.Padding = New Padding(0, 10, 0, 0)
+        ModernPanel2.Size = New Size(729, 42)
+        ModernPanel2.TabIndex = 41
+        ' 
+        ' HtmlColorLabel1
+        ' 
+        HtmlColorLabel1.AutoSizeMode = AutoSizeMode.GrowAndShrink
+        HtmlColorLabel1.Dock = DockStyle.Fill
+        HtmlColorLabel1.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
+        HtmlColorLabel1.Location = New Point(200, 10)
+        HtmlColorLabel1.Margin = New Padding(2)
+        HtmlColorLabel1.Name = "HtmlColorLabel1"
+        HtmlColorLabel1.Padding = New Padding(10, 0, 0, 0)
+        HtmlColorLabel1.Size = New Size(529, 32)
+        HtmlColorLabel1.TabIndex = 17
+        HtmlColorLabel1.Text = "DX12 较难优化，可能存在性能问题或质量瑕疵"
+        HtmlColorLabel1.TextAlign = LakeUI.HtmlColorLabel.TextAlignEnum.MiddleLeft
+        ' 
+        ' MCB_DX版本
+        ' 
+        MCB_DX版本.BackColor1 = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MCB_DX版本.BorderRadius = 10
+        MCB_DX版本.BorderSize = 0
+        MCB_DX版本.Dock = DockStyle.Left
+        MCB_DX版本.DropDownBackdropBlurPasses = 2
+        MCB_DX版本.DropDownBackdropBlurRadius = 30
+        MCB_DX版本.DropDownBackdropMode = LakeUI.PopupBackdropMode.Auto
+        MCB_DX版本.DropDownHoverColor = Color.FromArgb(CByte(20), CByte(220), CByte(220), CByte(220))
+        MCB_DX版本.DropDownMode = LakeUI.ModernComboBox.DropDownDisplayMode.Overlay
+        MCB_DX版本.DropDownPadding = New Padding(10)
+        MCB_DX版本.DropDownSelectedColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MCB_DX版本.DropDownSelectedForeColor = Color.White
+        MCB_DX版本.HoverBackColor1 = Color.FromArgb(CByte(60), CByte(220), CByte(220), CByte(220))
+        MCB_DX版本.Items.Add("DirectX 11")
+        MCB_DX版本.Items.Add("DirectX 12")
+        MCB_DX版本.Location = New Point(0, 10)
+        MCB_DX版本.Margin = New Padding(2, 2, 2, 2)
+        MCB_DX版本.Name = "MCB_DX版本"
+        MCB_DX版本.Padding = New Padding(10, 0, 10, 0)
+        MCB_DX版本.SelectionColor = Color.FromArgb(CByte(40), CByte(220), CByte(220), CByte(220))
+        MCB_DX版本.Size = New Size(200, 32)
+        MCB_DX版本.TabIndex = 0
+        MCB_DX版本.ToolTipGap = -1
+        MCB_DX版本.ToolTipMaxWidth = 350
+        MCB_DX版本.ToolTipPadding = New Padding(15)
+        MCB_DX版本.WaterTextForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
+        ' 
+        ' HtmlColorLabel15
+        ' 
+        HtmlColorLabel15.AutoSize = True
+        HtmlColorLabel15.AutoSizeMode = AutoSizeMode.GrowAndShrink
+        HtmlColorLabel15.Dock = DockStyle.Top
+        HtmlColorLabel15.ForeColor = Color.FromArgb(CByte(120), CByte(255), CByte(255), CByte(255))
+        HtmlColorLabel15.Location = New Point(20, 20)
+        HtmlColorLabel15.Margin = New Padding(2)
+        HtmlColorLabel15.Name = "HtmlColorLabel15"
+        HtmlColorLabel15.Size = New Size(729, 23)
+        HtmlColorLabel15.TabIndex = 40
+        HtmlColorLabel15.Text = "<span style=""font-size:13; color:Silver"">LakeUI DirectX 渲染引擎 API</span>   切换后将立即重载"
         ' 
         ' Form_v6_设置_LakeUI性能选项
         ' 
         AutoScaleDimensions = New SizeF(96F, 96F)
         AutoScaleMode = AutoScaleMode.Dpi
         BackColor = Color.FromArgb(CByte(24), CByte(24), CByte(24))
-        ClientSize = New Size(769, 641)
+        ClientSize = New Size(769, 683)
         Controls.Add(ModernPanel1)
         Font = New Font("Microsoft YaHei UI", 10F)
         ForeColor = Color.Silver
@@ -784,9 +813,8 @@ Partial Class Form_v6_设置_LakeUI性能选项
         Panel5.ResumeLayout(False)
         Panel4.ResumeLayout(False)
         Panel1.ResumeLayout(False)
-        Panel9.ResumeLayout(False)
-        Panel7.ResumeLayout(False)
         Panel8.ResumeLayout(False)
+        ModernPanel2.ResumeLayout(False)
         ResumeLayout(False)
     End Sub
 
@@ -796,11 +824,7 @@ Partial Class Form_v6_设置_LakeUI性能选项
     Friend WithEvents HtmlColorLabel5 As LakeUI.HtmlColorLabel
     Friend WithEvents MCB_动画帧率 As LakeUI.ModernComboBox
     Friend WithEvents HtmlColorLabel11 As LakeUI.HtmlColorLabel
-    Friend WithEvents Panel7 As LakeUI.ModernPanel
-    Friend WithEvents HtmlColorLabel12 As LakeUI.HtmlColorLabel
-    Friend WithEvents MCB_文字渲染模式 As LakeUI.ModernComboBox
     Friend WithEvents Panel8 As LakeUI.ModernPanel
-    Friend WithEvents HtmlColorLabel13 As LakeUI.HtmlColorLabel
     Friend WithEvents MCB_GPU抗锯齿 As LakeUI.ModernComboBox
     Friend WithEvents HtmlColorLabel7 As LakeUI.HtmlColorLabel
     Friend WithEvents Panel3 As LakeUI.ModernPanel
@@ -809,9 +833,6 @@ Partial Class Form_v6_设置_LakeUI性能选项
     Friend WithEvents Panel1 As LakeUI.ModernPanel
     Friend WithEvents HtmlColorLabel8 As LakeUI.HtmlColorLabel
     Friend WithEvents MCB_D2DImage缓存预算 As LakeUI.ModernComboBox
-    Friend WithEvents Panel9 As LakeUI.ModernPanel
-    Friend WithEvents HtmlColorLabel14 As LakeUI.HtmlColorLabel
-    Friend WithEvents MCB_SSAA As LakeUI.ModernComboBox
     Friend WithEvents Panel11 As LakeUI.ModernPanel
     Friend WithEvents HtmlColorLabel10 As LakeUI.HtmlColorLabel
     Friend WithEvents MCB_超容器背景映射脏区策略极限 As LakeUI.ModernComboBox
@@ -824,4 +845,12 @@ Partial Class Form_v6_设置_LakeUI性能选项
     Friend WithEvents Panel4 As LakeUI.ModernPanel
     Friend WithEvents HtmlColorLabel2 As LakeUI.HtmlColorLabel
     Friend WithEvents MCB_D2D每对象画刷缓存数量 As LakeUI.ModernComboBox
+    Friend WithEvents ModernPanel2 As LakeUI.ModernPanel
+    Friend WithEvents HtmlColorLabel1 As LakeUI.HtmlColorLabel
+    Friend WithEvents MCB_DX版本 As LakeUI.ModernComboBox
+    Friend WithEvents HtmlColorLabel15 As LakeUI.HtmlColorLabel
+    Friend WithEvents MCB_SSAA As LakeUI.ModernComboBox
+    Friend WithEvents JustEmptyControl2 As LakeUI.JustEmptyControl
+    Friend WithEvents MCB_文字渲染模式 As LakeUI.ModernComboBox
+    Friend WithEvents JustEmptyControl1 As LakeUI.JustEmptyControl
 End Class

@@ -14,6 +14,7 @@ Public Class Form_v6_编码队列
     Private 上次列宽有效总宽度 As Integer = -1
     Private 上次列宽Dpi As Single = -1
     Private 正在刷新列表 As Boolean = False
+    Private 正在定位输出 As Boolean
     Private ReadOnly 刷新锁 As New Object
     Private ReadOnly 待刷新任务 As New Dictionary(Of String, 编码任务_v6)(StringComparer.Ordinal)
     Private 待刷新整表 As Boolean
@@ -145,7 +146,6 @@ Public Class Form_v6_编码队列
             UltraDetailListView1.EndUpdate()
             正在刷新列表 = False
         End Try
-        Form_v6_编码队列_任务日志.同步队列选择(获取选中任务ID())
     End Sub
 
     Private Function 创建任务行(task As 编码任务_v6) As UltraDetailListView.ListItem
@@ -168,6 +168,13 @@ Public Class Form_v6_编码队列
         Return UltraDetailListView1.SelectedItems.
             Select(Function(item) TryCast(item.Tag, String)).
             Where(Function(id) Not String.IsNullOrWhiteSpace(id)).
+            ToList()
+    End Function
+
+    Private Function 获取选中任务() As List(Of 编码任务_v6)
+        Return 获取选中任务ID().
+            Select(AddressOf 编码队列_v6.根据ID获取任务).
+            Where(Function(task) task IsNot Nothing).
             ToList()
     End Function
 
@@ -228,17 +235,22 @@ Public Class Form_v6_编码队列
     End Sub
 
     Private Sub 复制选中任务命令行()
-        Dim lines As New List(Of String)
-        For Each id In 获取选中任务ID()
-            Dim task = 编码队列_v6.根据ID获取任务(id)
-            If task Is Nothing Then Continue For
-            Dim commandText = 编码队列_v6.获取任务实际命令行文本(task)
-            If commandText <> "" Then lines.Add(commandText)
-        Next
-        If lines.Count > 0 Then
-            Clipboard.SetText(String.Join(vbCrLf & vbCrLf, lines))
-            ExFloatingTip(ModernButton8, "已复制命令行", 1200)
+        Dim tasks = 获取选中任务()
+        If tasks.Count = 0 Then
+            ExFloatingTip(UltraDetailListView1, "请先选择任务", 1200)
+            Return
         End If
+
+        Dim commands = tasks.Select(AddressOf 编码队列_v6.获取任务实际命令行文本).
+            Where(Function(command) Not String.IsNullOrWhiteSpace(command)).
+            ToArray()
+        If commands.Length = 0 Then
+            ExFloatingTip(UltraDetailListView1, "没有可复制的命令行", 1200)
+            Return
+        End If
+
+        Clipboard.SetText(String.Join(vbCrLf, commands))
+        ExFloatingTip(UltraDetailListView1, $"已复制 {commands.Length} 个任务的命令行", 1200)
     End Sub
 
     Private Sub 将任务参数覆盖到参数面板()
@@ -277,37 +289,73 @@ Public Class Form_v6_编码队列
         End If
     End Sub
 
-    Private Sub 定位输出()
-        Dim ids = 获取选中任务ID()
-        If ids.Count <> 1 Then Exit Sub
-        Dim task = 编码队列_v6.根据ID获取任务(ids(0))
-        If task Is Nothing Then Exit Sub
-
-        If task.状态 <> 编码任务状态_v6.未处理 AndAlso File.Exists(task.输出文件) Then
-            在资源管理器中定位(task.输出文件)
-            Exit Sub
+    Private Async Sub 定位输出()
+        If 正在定位输出 Then Return
+        Dim tasks = 获取选中任务()
+        If tasks.Count = 0 Then
+            ExFloatingTip(UltraDetailListView1, "请先选择任务", 1200)
+            Return
         End If
 
-        If Not File.Exists(task.输入文件) Then
-            ExMsgBox(Me, "没有可定位的输出文件，输入文件也不存在。", MsgBoxStyle.Information, "定位输出")
-            Exit Sub
-        End If
+        Dim candidates = tasks.Select(Function(task) (
+            未开始:=task.状态 = 编码任务状态_v6.未处理,
+            输出文件:=task.输出文件,
+            输入文件:=task.输入文件)).ToArray()
+        正在定位输出 = True
+        Try
+            Dim files = Await Task.Run(
+                Function()
+                    Dim outputs As New List(Of String)
+                    Dim inputs As New List(Of String)
+                    Dim missingCount = 0
+                    For Each candidate In candidates
+                        If Not candidate.未开始 AndAlso File.Exists(candidate.输出文件) Then
+                            outputs.Add(candidate.输出文件)
+                        ElseIf File.Exists(candidate.输入文件) Then
+                            inputs.Add(candidate.输入文件)
+                        Else
+                            missingCount += 1
+                        End If
+                    Next
+                    Return (输出:=outputs, 输入:=inputs, 无可定位文件数:=missingCount)
+                End Function)
+            If IsDisposed OrElse Disposing Then Return
 
-        Dim prompt = If(task.状态 = 编码任务状态_v6.未处理,
-                        "任务尚未开始，没有可定位的输出文件。是否改为定位输入文件？",
-                        "没有找到输出文件。是否改为定位输入文件？")
-        If ExMsgBox(Me, prompt, MsgBoxStyle.YesNo Or MsgBoxStyle.Question, "定位输出") = MsgBoxResult.Yes Then
-            在资源管理器中定位(task.输入文件)
-        End If
-    End Sub
+            If files.输出.Count + files.输入.Count = 0 Then
+                ExMsgBox(Me, "没有可定位的输出文件，输入文件也不存在。", MsgBoxStyle.Information, "定位输出")
+                Return
+            End If
 
-    Private Shared Sub 在资源管理器中定位(filePath As String)
-        Dim startInfo As New ProcessStartInfo With {
-            .FileName = "explorer.exe",
-            .Arguments = "/select,""" & Path.GetFullPath(filePath) & """",
-            .UseShellExecute = True
-        }
-        Process.Start(startInfo)
+            Dim missingMessage = If(files.无可定位文件数 = 0, "", $"另有 {files.无可定位文件数} 个任务没有可定位的文件。")
+            If files.输入.Count > 0 Then
+                Dim prompt As String
+                If candidates.Length = 1 Then
+                    prompt = If(candidates(0).未开始,
+                                "任务尚未开始，没有可定位的输出文件。是否改为定位输入文件？",
+                                "没有找到输出文件。是否改为定位输入文件？")
+                Else
+                    prompt = $"有 {files.输入.Count} 个任务没有可定位的输出文件。是否一并定位这些任务的输入文件？"
+                    If missingMessage <> "" Then prompt &= vbCrLf & missingMessage
+                End If
+                If ExMsgBox(Me, prompt, MsgBoxStyle.YesNo Or MsgBoxStyle.Question, "定位输出") = MsgBoxResult.Yes Then
+                    files.输出.AddRange(files.输入)
+                End If
+            ElseIf missingMessage <> "" Then
+                ExFloatingTip(UltraDetailListView1, missingMessage, 1800)
+            End If
+
+            If files.输出.Count = 0 OrElse IsDisposed OrElse Disposing Then Return
+            Dim failures = Await 资源管理器_v6.定位文件Async(files.输出)
+            If failures.Count > 0 AndAlso Not IsDisposed AndAlso Not Disposing Then
+                Dim details = String.Join(vbCrLf, failures.Take(5))
+                If failures.Count > 5 Then details &= vbCrLf & $"另有 {failures.Count - 5} 个文件或目录定位失败。"
+                ExMsgBox(Me, "无法在资源管理器中定位以下文件或目录：" & vbCrLf & details, MsgBoxStyle.Exclamation, "定位输出")
+            End If
+        Catch ex As Exception
+            If Not IsDisposed AndAlso Not Disposing Then ExMsgBox(Me, "定位输出失败：" & ex.Message, MsgBoxStyle.Exclamation, "定位输出")
+        Finally
+            正在定位输出 = False
+        End Try
     End Sub
 
     Private Sub 打开输出文件(task As 编码任务_v6)
@@ -319,22 +367,21 @@ Public Class Form_v6_编码队列
     End Sub
 
     Private Sub 打开任务日志()
-        Form_v6_编码队列_任务日志.打开或激活(Me, 获取选中任务ID())
+        Dim tasks = 获取选中任务()
+        If tasks.Count = 0 Then
+            ExFloatingTip(UltraDetailListView1, "请先选择任务", 1200)
+            Return
+        End If
+        Form_v6_编码队列_任务日志.打开或激活(Me, tasks)
     End Sub
 
     Private Sub 查看任务参数()
-        Dim ids = 获取选中任务ID()
-        If ids.Count = 0 Then
+        Dim tasks = 获取选中任务()
+        If tasks.Count = 0 Then
             ExFloatingTip(UltraDetailListView1, "请先选择任务", 1200)
-            Exit Sub
+            Return
         End If
-
-        For Each id In ids
-            Dim task = 编码队列_v6.根据ID获取任务(id)
-            If task Is Nothing Then Continue For
-            Dim form As New Form_v6_编码队列_查看参数(task)
-            显示窗体(form, Me)
-        Next
+        Form_v6_编码队列_查看参数.打开或激活(Me, tasks)
     End Sub
 
     Private Sub 开始选中任务()
@@ -411,12 +458,12 @@ Public Class Form_v6_编码队列
     End Sub
 
     Private Sub UltraDetailListView1_MouseUp(sender As Object, e As MouseEventArgs) Handles UltraDetailListView1.MouseUp
-        If e.Button = MouseButtons.Right Then 右键菜单.Show(UltraDetailListView1, e.X, e.Y)
-    End Sub
-
-    Private Sub UltraDetailListView1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles UltraDetailListView1.SelectedIndexChanged
-        If 正在刷新列表 Then Exit Sub
-        Form_v6_编码队列_任务日志.同步队列选择(获取选中任务ID())
+        If e.Button <> MouseButtons.Right Then Return
+        Dim item = UltraDetailListView1.GetItemAt(e.X, e.Y)
+        If item IsNot Nothing AndAlso Not item.Selected Then
+            UltraDetailListView1.SelectedIndex = UltraDetailListView1.HitTest(e.X, e.Y)
+        End If
+        右键菜单.Show(UltraDetailListView1, e.X, e.Y)
     End Sub
 
     Private Sub UltraDetailListView1_ItemDoubleClick(sender As Object, e As UltraDetailListView.ListItemEventArgs) Handles UltraDetailListView1.ItemDoubleClick
@@ -433,10 +480,9 @@ Public Class Form_v6_编码队列
             Case 编码任务状态_v6.已完成
                 打开输出文件(task)
             Case 编码任务状态_v6.未处理
-                Dim form As New Form_v6_编码队列_查看参数(task)
-                显示窗体(form, Me)
+                Form_v6_编码队列_查看参数.打开或激活(Me, {task})
             Case Else
-                Form_v6_编码队列_任务日志.打开或激活(Me, New String() {id})
+                Form_v6_编码队列_任务日志.打开或激活(Me, {task})
         End Select
     End Sub
 

@@ -7,8 +7,10 @@ Public Class FormMain_v6
     Private 退出时启动更新器 As Boolean
     Private 退出里程碑检查进行中 As Boolean
     Private 退出里程碑检查已完成 As Boolean
+    Private 首帧显示准备 As Task(Of Boolean)
 
     Private Sub FormMain_v6_Load(发送者 As Object, 事件参数 As EventArgs) Handles Me.Load
+        首帧显示准备 = GlobalOptions.DeferWindowDisplayUntilFirstFrameAsync(Me, fallbackToDx11:=True)
         UI同步上下文 = Threading.SynchronizationContext.Current
         设置_v6.启动时读取SP解锁器()
         设置_v6.启动时加载设置()
@@ -40,9 +42,18 @@ Public Class FormMain_v6
         RemoveHandler Form_v6_Agent.正在推理任务数量已变化, AddressOf 请求刷新任务数量选项卡
     End Sub
 
-    Private Sub FormMain_v6_Shown(发送者 As Object, 事件参数 As EventArgs) Handles Me.Shown
+    <CodeAnalysis.SuppressMessage("Performance", "CA1861:不要将常量数组作为参数", Justification:="<挂起>")>
+    Private Async Sub FormMain_v6_Shown(发送者 As Object, 事件参数 As EventArgs) Handles Me.Shown
+        Await 首帧显示准备
+        If IsDisposed OrElse Not Visible Then Return
+        Form_v6_设置_LakeUI性能选项.同步DX版本()
         ModernTabListControl1.Focus()
-        Application.DoEvents()
+        ' 启动参数可能添加任务并触发保存，先读取上次的队列快照。
+        Try
+            编码队列_v6.恢复持久化队列()
+        Catch 异常 As Exception
+            ExOverlayMsgBox(Me, "恢复编码队列失败：" & 异常.Message, MsgBoxStyle.Critical, "恢复失败")
+        End Try
         启动参数响应_v6.处理首次启动参数()
         询问国内更新服务器()
         网络功能.检查软件本体更新()
@@ -54,12 +65,10 @@ Public Class FormMain_v6
             PrecisionTimer1.Start()
         End If
 
-        Try
-            编码队列_v6.恢复持久化队列()
-        Catch 异常 As Exception
-            ExOverlayMsgBox(Me, "恢复编码队列失败：" & 异常.Message, MsgBoxStyle.Critical, "恢复失败")
-        End Try
         用户使用统计_v6.启动时后台检查(Me)
+
+        If 设置_v6.实例对象.不再提示列表.Contains("LakeUI.DX12Available") Then Return
+        If ExOverlayMsgBox(Me, $"{vbCrLf}如需切换至 DX12 渲染模式，可前往 LakeUI 性能选项中切换{vbCrLf}默认继续使用 DX11", {"稍后再说", "不再提示"}, "LakeUI DirectX 12 现已可用",, 1) = 1 Then 设置_v6.保存不再提示选择("LakeUI.DX12Available")
     End Sub
 
     Private Sub ModernTabListControl1_SelectedIndexChanged(发送者 As Object, 事件参数 As EventArgs) Handles ModernTabListControl1.SelectedIndexChanged

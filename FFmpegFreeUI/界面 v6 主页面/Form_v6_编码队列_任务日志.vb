@@ -1,7 +1,8 @@
 Imports System.Text
 
 Public Class Form_v6_编码队列_任务日志
-    Private Shared 当前实例 As Form_v6_编码队列_任务日志
+    Private Shared ReadOnly 任务窗口 As New 编码队列任务窗口组_v6(Of Form_v6_编码队列_任务日志)(
+        Function(task) New Form_v6_编码队列_任务日志(task))
 
     Private 当前任务ID As String = ""
     Private 当前显示模式 As 编码任务日志显示模式_v6 = 编码任务日志显示模式_v6.最新输出不含进度
@@ -45,32 +46,24 @@ Public Class Form_v6_编码队列_任务日志
         End Property
     End Class
 
-    Public Shared Sub 打开或激活(owner As IWin32Window, selectedIds As IEnumerable(Of String))
-        If 当前实例 Is Nothing OrElse 当前实例.IsDisposed Then
-            当前实例 = New Form_v6_编码队列_任务日志()
-            AddHandler 当前实例.FormClosed, Sub() 当前实例 = Nothing
-        End If
-        当前实例.同步选择(selectedIds)
-        界面主题_v6.应用当前主题到窗体(当前实例)
-        If 当前实例.Visible Then
-            当前实例.Activate()
-        Else
-            当前实例.居中到v6主窗口()
-            当前实例.Show(owner)
-        End If
+    Public Sub New()
+        Me.New(Nothing)
     End Sub
 
-    Public Shared Sub 同步队列选择(selectedIds As IEnumerable(Of String))
-        If 当前实例 Is Nothing OrElse 当前实例.IsDisposed Then Exit Sub
-        当前实例.同步选择(selectedIds)
+    Private Sub New(task As 编码任务_v6)
+        InitializeComponent()
+        当前任务ID = If(task?.ID, "")
+        If task IsNot Nothing Then 更新标题与状态(获取任务显示名称(task), 0)
+    End Sub
+
+    Friend Shared Sub 打开或激活(owner As Form, tasks As IEnumerable(Of 编码任务_v6))
+        任务窗口.打开或激活(owner, tasks)
     End Sub
 
     Public Shared Sub 刷新任务性能计数器设置()
-        If 当前实例 Is Nothing OrElse 当前实例.IsDisposed Then Exit Sub
-        当前实例.UI执行(Sub()
-                      Dim task = If(当前实例.当前任务ID = "", Nothing, 编码队列_v6.根据ID获取任务(当前实例.当前任务ID))
-                      当前实例.更新任务性能计数器(task)
-                  End Sub)
+        For Each window In 任务窗口.获取已打开窗口()
+            window.UI执行(AddressOf window.刷新任务性能计数器)
+        Next
     End Sub
 
     Private Sub Form_v6_编码队列_任务日志_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -81,7 +74,6 @@ Public Class Form_v6_编码队列_任务日志
             ModernPanel1.BackColor = Color.Transparent
             ModernPanel1.BackColor1 = Color.Transparent
         End If
-        BeginInvoke(Sub() 居中到v6主窗口())
         ModernTextBox1.SyntaxHighlighter = FFmpeg输出语法高亮器_v6.默认实例
         ModernTextBox1.EnableSyntaxHighlight = True
         ModernTextBox1.MaxUndoCount = 0
@@ -94,14 +86,11 @@ Public Class Form_v6_编码队列_任务日志
         AddHandler 编码队列_v6.队列已变化, AddressOf 队列已变化
         窗体已加载 = True
         刷新计时器.Start()
-        If 当前任务ID = "" Then
-            刷新空状态("未选择任务")
-        Else
-            刷新当前任务(True)
-        End If
+        刷新当前任务(True)
     End Sub
 
-    Private Sub Form_v6_编码队列_任务日志_FormClosed(sender As Object, e As FormClosedEventArgs) Handles MyBase.FormClosed
+    Private Sub Form_v6_编码队列_任务日志_Disposed(sender As Object, e As EventArgs) Handles MyBase.Disposed
+        窗体已加载 = False
         RemoveHandler 编码队列_v6.任务已更新, AddressOf 任务已更新
         RemoveHandler 编码队列_v6.队列已变化, AddressOf 队列已变化
         RemoveHandler 刷新计时器.Tick, AddressOf 刷新计时器_Tick
@@ -122,8 +111,9 @@ Public Class Form_v6_编码队列_任务日志
 
     Private Sub 队列已变化()
         UI执行(Sub()
-                 If 当前任务ID <> "" AndAlso 编码队列_v6.根据ID获取任务(当前任务ID) Is Nothing Then
-                     刷新空状态("任务已移除")
+                 If 当前任务ID = "" Then Exit Sub
+                 If 编码队列_v6.根据ID获取任务(当前任务ID) Is Nothing Then
+                     显示任务已移除()
                  Else
                      请求刷新当前任务(False)
                  End If
@@ -161,46 +151,15 @@ Public Class Form_v6_编码队列_任务日志
         刷新当前任务(forceReload)
     End Sub
 
-    Public Sub 同步选择(selectedIds As IEnumerable(Of String))
-        UI执行(Sub()
-                 Dim ids = If(selectedIds, Array.Empty(Of String)()).Where(Function(x) Not String.IsNullOrWhiteSpace(x)).Distinct().ToList()
-                 If ids.Count <> 1 Then
-                     刷新空状态(If(ids.Count = 0, "未选择任务", "多选时不显示任务日志"))
-                     Exit Sub
-                 End If
-
-                 Dim task = 编码队列_v6.根据ID获取任务(ids(0))
-                 If task Is Nothing Then
-                     刷新空状态("任务已移除")
-                     Exit Sub
-                 End If
-
-                 If 当前任务ID <> task.ID Then
-                     当前任务ID = task.ID
-                     重置已显示日志状态()
-                     If 窗体已加载 Then
-                         ModernTextBox1.Clear()
-                         更新标题与状态(获取任务显示名称(task), 0)
-                         刷新当前任务(True)
-                     End If
-                 Else
-                     If 窗体已加载 Then 刷新当前任务(False)
-                 End If
-             End Sub)
-    End Sub
-
-    Private Sub 刷新空状态(message As String)
+    Private Sub 显示任务已移除()
         当前任务ID = ""
-        重置已显示日志状态()
-        当前阶段名 = ""
         待刷新当前任务 = False
         待强制重载 = False
         刷新计时器.Stop()
         日志刷新令牌 += 1
         取消当前日志刷新()
-        ModernTextBox1.Clear()
-        Text = "编码队列任务日志"
-        更新任务性能计数器(Nothing)
+        Text &= "（任务已移除）"
+        刷新任务性能计数器()
     End Sub
 
     Private Sub 刷新当前任务(forceReload As Boolean)
@@ -208,7 +167,7 @@ Public Class Form_v6_编码队列_任务日志
 
         Dim task = 编码队列_v6.根据ID获取任务(当前任务ID)
         If task Is Nothing Then
-            刷新空状态("任务已移除")
+            显示任务已移除()
             Exit Sub
         End If
         更新任务性能计数器(task)
@@ -396,14 +355,6 @@ Public Class Form_v6_编码队列_任务日志
         日志刷新取消源 = Nothing
     End Sub
 
-    Private Sub 重置已显示日志状态()
-        已显示日志版本号 = 0
-        已显示最小序号 = 0
-        已显示最大序号 = 0
-        已显示行数 = 0
-        已显示日志结构版本号 = 0
-    End Sub
-
     Private Shared Function 获取日志条目显示文本(entry As 编码任务日志条目_v6) As String
         Return If(entry?.文本, "").Replace(vbCr, "").Replace(vbLf, "")
     End Function
@@ -423,18 +374,21 @@ Public Class Form_v6_编码队列_任务日志
     Private Sub 应用任务性能计数器可见性()
         Dim visible = 设置_v6.实例对象.任务日志性能计数器 = 0
         Panel2.Visible = visible
-        If visible Then
+        If visible AndAlso 当前任务ID <> "" Then
             If Not 性能计数器刷新计时器.Enabled Then 性能计数器刷新计时器.Start()
         Else
             性能计数器刷新计时器.Stop()
             释放当前性能计数器()
-            MB_任务性能计数器.Text = ""
+            MB_任务性能计数器.Text = If(visible, "当前任务没有活动进程", "")
         End If
     End Sub
 
     Private Sub 性能计数器刷新计时器_Tick(sender As Object, e As EventArgs)
-        Dim task = If(当前任务ID = "", Nothing, 编码队列_v6.根据ID获取任务(当前任务ID))
-        更新任务性能计数器(task)
+        刷新任务性能计数器()
+    End Sub
+
+    Private Sub 刷新任务性能计数器()
+        更新任务性能计数器(编码队列_v6.根据ID获取任务(当前任务ID))
     End Sub
 
     Private Sub 更新任务性能计数器(task As 编码任务_v6)
@@ -487,27 +441,6 @@ Public Class Form_v6_编码队列_任务日志
         Return IO.Path.GetFileName(task.输入文件)
     End Function
 
-    Private Sub 居中到v6主窗口()
-        Try
-            Dim mainForm As Form = FormMain_v6
-            Dim baseBounds As Rectangle
-            If mainForm IsNot Nothing AndAlso Not mainForm.IsDisposed AndAlso mainForm.Visible AndAlso mainForm.WindowState <> FormWindowState.Minimized Then
-                baseBounds = mainForm.Bounds
-            Else
-                baseBounds = Screen.FromPoint(Cursor.Position).WorkingArea
-            End If
-
-            Dim screenArea = Screen.FromRectangle(baseBounds).WorkingArea
-            Dim x = baseBounds.Left + CInt(Math.Round((baseBounds.Width - Width) / 2.0))
-            Dim y = baseBounds.Top + CInt(Math.Round((baseBounds.Height - Height) / 2.0))
-            x = Math.Max(screenArea.Left, Math.Min(x, screenArea.Right - Width))
-            y = Math.Max(screenArea.Top, Math.Min(y, screenArea.Bottom - Height))
-            StartPosition = FormStartPosition.Manual
-            Location = New Point(x, y)
-        Catch
-        End Try
-    End Sub
-
     Private Function 获取当前显示模式() As 编码任务日志显示模式_v6
         Select Case MCB_显示模式.SelectedIndex
             Case 1 : Return 编码任务日志显示模式_v6.最新输出不含进度
@@ -520,7 +453,6 @@ Public Class Form_v6_编码队列_任务日志
     Private Sub MCB_显示模式_SelectedIndexChanged(sender As Object, e As EventArgs) Handles MCB_显示模式.SelectedIndexChanged
         待刷新当前任务 = False
         待强制重载 = False
-        刷新计时器.Stop()
         刷新当前任务(True)
     End Sub
 

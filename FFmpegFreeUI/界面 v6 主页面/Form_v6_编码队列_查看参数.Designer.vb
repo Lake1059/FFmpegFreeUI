@@ -23,27 +23,13 @@ Partial Class Form_v6_编码队列_查看参数
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         ModernPanel1 = New LakeUI.ModernPanel()
-        ModernPanel1.BackColor = Color.Transparent
-        ModernPanel1.BackColor1 = Color.Transparent
         Panel2 = New LakeUI.ModernPanel()
-        Panel2.BackColor = Color.Transparent
-        Panel2.BackColor1 = Color.Transparent
-        Panel2.BorderSize = 0
         MTB_命令行模板 = New LakeUI.ModernTextBox()
         Panel70 = New LakeUI.ModernPanel()
-        Panel70.BackColor = Color.Transparent
-        Panel70.BackColor1 = Color.Transparent
-        Panel70.BorderSize = 0
         MB_复制命令行模板 = New LakeUI.ModernButton()
         Panel1 = New LakeUI.ModernPanel()
-        Panel1.BackColor = Color.Transparent
-        Panel1.BackColor1 = Color.Transparent
-        Panel1.BorderSize = 0
         MTB_参数总览 = New LakeUI.ModernTextBox()
         Panel3 = New LakeUI.ModernPanel()
-        Panel3.BackColor = Color.Transparent
-        Panel3.BackColor1 = Color.Transparent
-        Panel3.BorderSize = 0
         MB_复制参数总览 = New LakeUI.ModernButton()
         ModernPanel1.SuspendLayout()
         Panel2.SuspendLayout()
@@ -54,6 +40,8 @@ Partial Class Form_v6_编码队列_查看参数
         ' 
         ' ModernPanel1
         ' 
+        ModernPanel1.BackColor = Color.Transparent
+        ModernPanel1.BackColor1 = Color.Transparent
         ModernPanel1.BorderSize = 0
         ModernPanel1.Controls.Add(Panel2)
         ModernPanel1.Controls.Add(Panel1)
@@ -65,6 +53,9 @@ Partial Class Form_v6_编码队列_查看参数
         ' 
         ' Panel2
         ' 
+        Panel2.BackColor = Color.Transparent
+        Panel2.BackColor1 = Color.Transparent
+        Panel2.BorderSize = 0
         Panel2.Controls.Add(MTB_命令行模板)
         Panel2.Controls.Add(Panel70)
         Panel2.Dock = DockStyle.Fill
@@ -96,6 +87,9 @@ Partial Class Form_v6_编码队列_查看参数
         ' 
         ' Panel70
         ' 
+        Panel70.BackColor = Color.Transparent
+        Panel70.BackColor1 = Color.Transparent
+        Panel70.BorderSize = 0
         Panel70.Controls.Add(MB_复制命令行模板)
         Panel70.Dock = DockStyle.Bottom
         Panel70.Location = New Point(5, 485)
@@ -121,6 +115,9 @@ Partial Class Form_v6_编码队列_查看参数
         ' 
         ' Panel1
         ' 
+        Panel1.BackColor = Color.Transparent
+        Panel1.BackColor1 = Color.Transparent
+        Panel1.BorderSize = 0
         Panel1.Controls.Add(MTB_参数总览)
         Panel1.Controls.Add(Panel3)
         Panel1.Dock = DockStyle.Left
@@ -155,6 +152,9 @@ Partial Class Form_v6_编码队列_查看参数
         ' 
         ' Panel3
         ' 
+        Panel3.BackColor = Color.Transparent
+        Panel3.BackColor1 = Color.Transparent
+        Panel3.BorderSize = 0
         Panel3.Controls.Add(MB_复制参数总览)
         Panel3.Dock = DockStyle.Bottom
         Panel3.Location = New Point(10, 485)
@@ -188,6 +188,7 @@ Partial Class Form_v6_编码队列_查看参数
         Font = New Font("Microsoft YaHei UI", 10F)
         ForeColor = Color.Silver
         Name = "Form_v6_编码队列_查看参数"
+        StartPosition = FormStartPosition.Manual
         Text = "查看任务参数"
         ModernPanel1.ResumeLayout(False)
         Panel2.ResumeLayout(False)
