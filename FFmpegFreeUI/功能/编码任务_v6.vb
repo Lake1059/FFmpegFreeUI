@@ -200,8 +200,8 @@ Public Class 编码任务_v6
     Friend ReadOnly Property 可自动开始 As Boolean
         Get
             SyncLock 状态锁
-                Return 允许自动启动 AndAlso Not 已实际开始标记 AndAlso Not 正在执行标记 AndAlso
-                       (状态 = 编码任务状态_v6.未处理 OrElse 状态 = 编码任务状态_v6.已停止)
+                Return 状态 = 编码任务状态_v6.未处理 AndAlso 允许自动启动 AndAlso
+                       Not 已实际开始标记 AndAlso Not 正在执行标记
             End SyncLock
         End Get
     End Property
@@ -224,15 +224,13 @@ Public Class 编码任务_v6
         SyncLock 状态锁
             Dim result = 当前执行已请求停止
             正在执行标记 = False
-            ' 停止清理结束后，才允许下一次自动调度按队列顺序重启。
             If result Then 已实际开始标记 = False
             当前执行已请求停止 = False
             Return result
         End SyncLock
     End Function
 
-    Friend Sub 准备启动输出文件(Optional 保留已分配输出 As Boolean = False)
-        If 保留已分配输出 AndAlso Not String.IsNullOrWhiteSpace(输出文件) Then Exit Sub
+    Friend Sub 准备启动输出文件()
         Try
             编码队列_v6.为任务保留输出文件(Me)
         Catch ex As Exception
@@ -774,6 +772,7 @@ Public Class 编码任务_v6
             End If
             当前步骤索引 = -1
             手动停止 = False
+            允许自动启动 = 允许自动启动 AndAlso 设置_v6.实例对象.自动开始任务选项 = 0
             已实际开始标记 = False
             启动准备异常 = Nothing
             清空日志(False)

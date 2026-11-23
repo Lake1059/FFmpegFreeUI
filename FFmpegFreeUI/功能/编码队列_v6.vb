@@ -44,8 +44,7 @@ Partial Public Class 编码队列_v6
     Private Shared ReadOnly 队列锁 As New Object
     Private Shared 调度中 As Boolean = False
     Private Shared ReadOnly 自动调度起始索引队列 As New Queue(Of Integer)
-    Private Shared 等待停止清理的任务 As 编码任务_v6
-    Private Shared 等待停止清理后调度起始索引 As Integer
+    Private Shared 等待停止清理后调度起始索引 As Integer?
     Private Shared 完成提示待播放 As Boolean = False
     Private Shared 完成提示待调度结束检查 As Boolean = False
     Private Shared 全部任务已完成是否有错误 As Boolean = False
@@ -432,12 +431,11 @@ Partial Public Class 编码队列_v6
     End Sub
 
     ' 调用方持有队列锁，确保状态和输出文件名在派发后台执行前按队列顺序确定。
-    Private Shared Function 准备任务执行(task As 编码任务_v6, Optional 自动重启 As Boolean = False) As Long
-        If 自动重启 Then task.重置(保留已分配输出:=True)
+    Private Shared Function 准备任务执行(task As 编码任务_v6) As Long
         Dim 执行标识 = task.开始执行()
         If 执行标识 = 0 Then Return 0
         标记任务已实际启动()
-        task.准备启动输出文件(保留已分配输出:=自动重启)
+        task.准备启动输出文件()
         Return 执行标识
     End Function
 
@@ -474,7 +472,7 @@ Partial Public Class 编码队列_v6
         Dim changed As New List(Of 编码任务_v6)
         SyncLock 队列锁
             For Each task In 获取指定任务(ids)
-                If (task.状态 = 编码任务状态_v6.未处理 OrElse task.状态 = 编码任务状态_v6.已停止) AndAlso task.允许自动启动 Then
+                If task.状态 = 编码任务状态_v6.未处理 AndAlso task.允许自动启动 Then
                     task.允许自动启动 = False
                     changed.Add(task)
                 End If
@@ -527,7 +525,7 @@ Partial Public Class 编码队列_v6
         Dim changed As New List(Of 编码任务_v6)
         SyncLock 队列锁
             For Each task In 队列项目
-                If (task.状态 = 编码任务状态_v6.未处理 OrElse task.状态 = 编码任务状态_v6.已停止) AndAlso task.允许自动启动 <> 自动开始 Then
+                If task.状态 = 编码任务状态_v6.未处理 AndAlso task.允许自动启动 <> 自动开始 Then
                     task.允许自动启动 = 自动开始
                     changed.Add(task)
                 End If
@@ -587,7 +585,7 @@ Partial Public Class 编码队列_v6
         RaiseEvent 队列已变化()
     End Sub
 
-    ' 仅由空闲队列添加可自动启动任务、任务自然结束及其等待停止清理的后续流程请求。
+    ' 由空闲队列添加任务、任务自然结束、恢复的旧进程退出及等待停止清理的后续流程请求。
     Private Shared Sub 请求自动调度(Optional 起始索引 As Integer = 0)
         SyncLock 队列锁
             完成提示待调度结束检查 = True
@@ -629,34 +627,30 @@ Partial Public Class 编码队列_v6
         Dim starting As New List(Of (任务 As 编码任务_v6, 执行标识 As Long))
         SyncLock 队列锁
             Dim slots = 获取并发上限() - 队列项目.Where(Function(x) 是否进行中任务(x) OrElse x.正在执行).Count()
-            等待停止清理的任务 = Nothing
-            If slots <= 0 Then
-                等待停止清理的任务 = 队列项目.Skip(Math.Min(起始索引, 队列项目.Count)).Concat(队列项目.Take(Math.Min(起始索引, 队列项目.Count))).FirstOrDefault(Function(x) x.允许自动启动 AndAlso x.状态 = 编码任务状态_v6.已停止 AndAlso x.正在执行)
-                If 等待停止清理的任务 IsNot Nothing Then 等待停止清理后调度起始索引 = 起始索引
-                Exit Sub
-            End If
             ' 优先扫描完成任务之后的队列；只有并发位仍有空缺时才回绕到前段。
+            Dim scanStart = Math.Min(起始索引, 队列项目.Count)
             For pass = 0 To 1
-                Dim rangeStart = If(pass = 0, Math.Min(起始索引, 队列项目.Count), 0)
-                Dim rangeEnd = If(pass = 0, 队列项目.Count, Math.Min(起始索引, 队列项目.Count))
-                If pass = 1 AndAlso starting.Count >= slots Then Exit For
+                If starting.Count >= slots Then Exit For
+                Dim rangeStart = If(pass = 0, scanStart, 0)
+                Dim rangeEnd = If(pass = 0, 队列项目.Count, scanStart)
                 For i = rangeStart To rangeEnd - 1
-                    Dim nextTask = 队列项目(i)
                     If starting.Count >= slots Then Exit For
-                    If nextTask.允许自动启动 AndAlso nextTask.状态 = 编码任务状态_v6.已停止 AndAlso nextTask.正在执行 Then
-                        ' 自然结束触发的调度不能越过扫描方向上尚未完成停止清理的任务。
-                        等待停止清理的任务 = nextTask
-                        等待停止清理后调度起始索引 = 起始索引
-                        Exit For
-                    End If
+                    Dim nextTask = 队列项目(i)
                     If Not nextTask.可自动开始 Then Continue For
-                    Dim restarting = nextTask.状态 = 编码任务状态_v6.已停止
-                    Dim 执行标识 = 准备任务执行(nextTask, restarting)
+                    Dim 执行标识 = 准备任务执行(nextTask)
                     If 执行标识 = 0 Then Continue For
                     starting.Add((nextTask, 执行标识))
                 Next
-                If 等待停止清理的任务 IsNot Nothing Then Exit For
             Next
+
+            ' 并发位释放后补启动待处理任务，或在本轮没有启动任务时重新检查完成提示。
+            Dim 并发位满且仍有待启动任务 = starting.Count >= slots AndAlso 队列项目.Any(Function(x) x.可自动开始)
+            If (并发位满且仍有待启动任务 OrElse starting.Count = 0) AndAlso
+               队列项目.Any(Function(x) x.状态 = 编码任务状态_v6.已停止 AndAlso x.正在执行) Then
+                等待停止清理后调度起始索引 = 起始索引
+            Else
+                等待停止清理后调度起始索引 = Nothing
+            End If
         End SyncLock
         启动已准备任务(starting)
     End Sub
@@ -666,25 +660,18 @@ Partial Public Class 编码队列_v6
                                      Try
                                          Await task.开始Async(执行标识)
                                      Finally
-                                         Dim shouldSchedule As Boolean
-                                         Dim 已手动停止 As Boolean
-                                         Dim 完成任务起始索引 As Integer = 0
+                                         Dim 调度起始索引 As Integer?
                                          SyncLock 队列锁
-                                             已手动停止 = task.结束执行()
-                                             Dim wasWaitingForCleanup = 等待停止清理的任务 Is task
-                                             shouldSchedule = (Not 已手动停止 OrElse wasWaitingForCleanup) AndAlso task.完成后自动调度队列
-                                             If wasWaitingForCleanup Then
-                                                 完成任务起始索引 = 等待停止清理后调度起始索引
-                                                 等待停止清理的任务 = Nothing
-                                             End If
-                                             If Not 已手动停止 Then
-                                                 Dim completedIndex = 队列项目.IndexOf(task)
-                                                 If completedIndex >= 0 Then 完成任务起始索引 = completedIndex
+                                             If task.结束执行() Then
+                                                 ' 继续先前因并发位不足而等待停止清理的调度。
+                                                 调度起始索引 = 等待停止清理后调度起始索引
+                                                 等待停止清理后调度起始索引 = Nothing
+                                             ElseIf task.完成后自动调度队列 Then
+                                                 调度起始索引 = Math.Max(0, 队列项目.IndexOf(task))
                                              End If
                                          End SyncLock
                                          通知任务更新(task)
-                                         ' 停止本身不推进队列；只恢复此前等待清理的调度请求。
-                                         If shouldSchedule Then 请求自动调度(完成任务起始索引)
+                                         If 调度起始索引.HasValue Then 请求自动调度(调度起始索引.Value)
                                      End Try
                                  End Function)
     End Sub
@@ -751,7 +738,7 @@ Partial Public Class 编码队列_v6
                 全部任务已完成是否有错误 = False
                 Exit Sub
             End If
-            If 队列项目.Any(Function(x) x.状态 = 编码任务状态_v6.未处理 OrElse 是否进行中任务(x) OrElse x.正在执行 OrElse x.可自动开始) Then Exit Sub
+            If 队列项目.Any(Function(x) x.状态 = 编码任务状态_v6.未处理 OrElse 是否进行中任务(x) OrElse x.正在执行) Then Exit Sub
             shouldPlay = True
             hasError = 全部任务已完成是否有错误 OrElse 队列项目.Any(Function(x) x.状态 = 编码任务状态_v6.错误)
             完成提示待播放 = False
