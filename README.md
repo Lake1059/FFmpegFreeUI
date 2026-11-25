@@ -1,12 +1,34 @@
-官网 https://ffmpegfreeui.top 和 https://3fui.top 短域名将于 2028 年废弃<br>主群 [1050613952](https://qm.qq.com/q/fiauAsddG8) 分群① [1070953324](https://qm.qq.com/q/nKoapm6KyW)，频道 和 KOOK 暂无精力运营
+官网 https://ffmpegfreeui.top 另有短域名将于 2028 年废弃<br>主群 [1050613952](https://qm.qq.com/q/fiauAsddG8) 分群① [1070953324](https://qm.qq.com/q/nKoapm6KyW)，频道 和 KOOK 暂无精力运营
 
 ![](https://img.shields.io/github/stars/Lake1059/FFmpegFreeUI?label=星标) ![GitHub License](https://img.shields.io/github/license/Lake1059/FFmpegFreeUI?label=许可证) ![](https://img.shields.io/github/downloads/Lake1059/FFmpegFreeUI/total?label=Github%20最新%20100%20个发行版下载量)
 
 <img src="FFmpegFreeUI\Resources\AppIcon.png" width="100" />
 
-## FFmpegFreeUI v6
+## FFmpegFreeUI
 
-FFmpegFreeUI（简称 3FUI）是在 Windows 上的 [FFmpeg](https://ffmpeg.org) 的专业交互外壳。此，即为真理！这不是给纯小白的一键全自动软件，即便 6.0 已经大幅改善了普通人的体验，但 3FUI 仍旧面向懂基本参数的进阶编码人员，小白上手有门槛但上限无穷大，这不是一个普通的编码软件，而是一整套可扩展平台。
+FFmpegFreeUI（简称 3FUI）是 [FFmpeg](https://ffmpeg.org) 在 Windows 上的专业交互外壳。这不是给小白的一键全自动软件，3FUI 服务于 **所有追求明确参数 + 现代 UI 交互的进阶编码压制用户**，是市面上极其独特的产品方向，也是国内市场的空缺部分。这不仅仅是 FFmpeg 的 GUI，而是一整套可扩展平台和生态。
+
+| 3FUI 生态产品                                                | 承载需求                                                     |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| **FFmpegFreeUI / 3FUI**<br>*编码压制工作站*                  | 可执行所有一次性任务 + Agent 辅助操控<br>附带简易混流 / 合并 / 抽流 / 质量评测 |
+| [**FFF.Player / 3FP**](https://github.com/Lake1059/FFF_Project)<br>*自主内核播放器* | 全球顶级色彩精准 + 纯粹本地播放体验<br>特效字幕 / B站弹幕 / 真实HDR / 独占直通 / 广色域 / 全景 |
+| [**FFF.Recorder / 3FR**](https://github.com/Lake1059/FFF_Project)<br>*屏幕录制* | 简单易用 + 专业质量参数的屏幕录制<br>可做临时游戏录制平替    |
+
+快速了解 3FUI 的基本信息：
+
+- 发布形式：所有数据存于当前目录的单文件
+- 系统要求：Windows 10 1609+ 仅限 x64 / arm64
+- 运行环境：.NET 11 (v6.5+)，之前的版本是 .NET 10
+  - 不自带，需安装到系统，可由更新器自动下载安装
+- 基底框架：WinForms
+  - 不要嫌老，戈门是十年老兵，这是艺术，不是堆料
+  - 戈门告诉你怎么用传统框架做得比主流框架还现代
+- 交互呈现：[LakeUI](https://github.com/Lake1059/LakeUI) 自主维护的基于 DirectX 的渲染引擎
+- 硬件要求：渲染器需要支持 DirectX 11 的显卡
+  - DirectX 12 模式需要较新的显卡
+- 收费情况：所有生产力功能免费 + 个性化功能收费
+
+3FUI 是专为国内环境设计的，语言只有简体中文，不计划任何多语言功能，如有其他语言需求可自行开仓库维护所有字符串，并在 MIT 许可范围内行使所有权利。
 
 开发者知乎宣传：https://zhuanlan.zhihu.com/p/1979540305800892949<br>
 知乎终末诗的 3FUI 基础教程：https://zhuanlan.zhihu.com/p/2053530841180009271<br>
@@ -18,24 +40,35 @@ ARXChem的3万字视频基础知识介绍：https://www1.arxchem.top/docs/1<br>
 3FUI 常用插件和改编版：https://www1.arxchem.top/docs/5-3fui-ext-api<br>
 3FUI 超分插件：https://www1.arxchem.top/docs/6-videoenhancer<br>
 
-- 发布形式：所有数据存于当前目录的单文件
-- 系统要求：Windows 10 1609+ 仅限 x64 / arm64
-- 运行环境：.NET 11 (v6.5+)，旧版本是 .NET 10
-  - 不自带，需安装到系统，可由更新器自动下载安装
-- 基底框架：WinForms
-- 交互呈现：[LakeUI](https://github.com/Lake1059/LakeUI) 自主维护的基于 DirectX 的渲染引擎
-- 硬件要求：渲染器需要支持 D3D11 的显卡
-- 收费情况：所有生产力功能免费 + 个性化功能收费
+| 其他开发者 3F 生态产品                                       | 承载需求                                                     | 作者       |
+| ------------------------------------------------------------ | ------------------------------------------------------------ | ---------- |
+| [**3FCompare / 3FC**](https://github.com/luoye-cpu/3FCompare)<br>*更好的 ICAT 盯帧对比软件* | [NVIDIA ICAT](https://www.nvidia.cn/geforce/technologies/icat/) 的上位替代<br>全编码支持 + 更好的同步和色彩 | luoye-cpu  |
+| [**VS Renderer / VSR**](https://github.com/user-Wing/VS-Renderer-GUI)<br>*VapourSynth 滤镜实时预览* | 面向高性能设备的 VS 实时工作台<br>多路同步对比 + 自定义着色器 | user-Wing  |
+| [**VS Player / VSP**](https://github.com/user-Wing/VS-Renderer-GUI)<br>*另一种 3FP 播放器* | “3FP 社区版” & “3FP 主流技术栈版”<br>另一种发展方向的 3FP，小功能更多 | user-Wing  |
+| [**FFmpeg Command Forge**](https://github.com/CialloKing/FFmpeg-Command-Forge)<br>*Web 端 FFmpeg 命令行生成器* | 3FUI 跨平台体验装                                            | CialloKing |
 
-3FUI 是专为国内环境设计的，语言只有简体中文，不计划任何多语言功能，如有其他语言需求可自行开仓库维护所有字符串，并在 MIT 许可范围内行使所有权利。
+### [LakeUI](https://github.com/Lake1059/LakeUI) 交互组件库
 
-### LakeUI 控件集
+买不到好用的怎么办？那就自己造！你 LakeUI 是全球 WinForms UI 最严厉的父亲，全球首个在 WinForms 上使用 DirectX 技术进行全量 GPU 渲染的高刷控件库：并行百帧动画、真实毛玻璃、超容器背景映射、矢量几何文字、超级采样抗锯齿、即时全量热重载，小作坊下料就是猛到爆炸。
 
 3FUI 是 LakeUI 的招牌宣传作品，如果你也想在 WinForms 上制作这样的风格界面，欢迎试用 LakeUI，该产品像 .NET 原生控件一样简单易用，同时价格也非常亲民。也欢迎看看华丽的 [LakeUI 官网](https://lakeui.top/)。
 
 ### 3FUI Agent 智能体
 
-3FUI Agent 智能体现已可用！这不是陪你聊天，而是专属于 3FUI 的副驾驶，真正的核动力牛马！很多不适合人类去干的活完全可以交给 AI，可接入任何兼容 OpenAI SDK 的端点来使用任何模型，其能力几乎相当于半个 Codex 或 CC，不仅可以控制整个参数面板和协助管理任务，还具备完整的联网能力、访问文件系统、读取文本文件和图片、使用 Windows PowerShell 终端。对话支持中途切换模型，数据完全存于本地，并与所有模型和端点共享。对话交互也同时具备主流 AI 软件的流式展现，支持基础 MarkDown 语法，同时占用极低，完全纯本地渲染，绝无半点 Web 套壳！
+什么叫生产队的核动力驴啊（战术后仰.gif）
+
+- 一个微型且基础功能齐全的 AI 客户端，占用极低
+- 把不适合人类去干的活交给 AI，不要老是来问什么什么怎么写
+- 可接入任何兼容 OpenAI SDK 的端点来使用任何模型
+- AI 能看到你所有的任务和参数面板，并从更高的维度替你操作
+  - 包括你看不见的任务内部数据
+- 3FUI 提供了超绝工具
+  - AI 能自己决定使用什么搜索引擎、工具是否走代理、自己填网络参数
+  - 连续使用 PowerShell 终端
+  - 编程开发级的读写工具
+  - 你可以自定义模型的上下文和推理级别列表
+  - 你还可以提供 Skill 技能
+- 呈现来自你性能炸裂的 LakeUI 纯本地渲染 MarkDown
 
 ## 新图标征集活动
 
@@ -130,9 +163,8 @@ ARXChem的3万字视频基础知识介绍：https://www1.arxchem.top/docs/1<br>
 | [LakeUI](https://github.com/Lake1059/LakeUI)                 | GPL-3.0-only            | 界面主框架，版权所有         |
 | [WindowsAPICodePack](https://github.com/contre/Windows-API-Code-Pack-1.1) | 微软软件许可证 | 提供更舒适的文件夹选择对话框 |
 | [LibreHardwareMonitorLib](https://github.com/LibreHardwareMonitor/LibreHardwareMonitor) | MPL-2.0        | LHM 性能监控               |
-| [Microsoft.Agents.AI.OpenAI](https://learn.microsoft.com/zh-cn/agent-framework/) | MIT | Agent 基底框架和 OpenAI 支持 |
 | [System.Management](https://github.com/dotnet/runtime/tree/main/src/libraries/System.Management) | MIT | 通过 WMI 读取 CPU / 内存 / 显卡信息 |
-| [Vortice.Direct2D1 / Direct3D11 / DirectComposition](https://github.com/amerkoleci/Vortice.Windows) | MIT | DirectX 互操作绑定，渲染器的底层支撑 |
+| [Vortice.Direct2D1 / Direct3D11 / Direct3D12 / DirectComposition](https://github.com/amerkoleci/Vortice.Windows) | MIT | DirectX 互操作绑定，渲染器的底层支撑 |
 
 ## 新手入门
 

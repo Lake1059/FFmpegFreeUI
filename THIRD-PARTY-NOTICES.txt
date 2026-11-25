@@ -39,14 +39,6 @@ LibreHardwareMonitorLib 0.9.6
   备注      按 MPL-2.0 第 3.3 条，以可执行形式分发时须告知接收者如何取得
             覆盖源码的副本：完整源码可从上述源码仓库获取。
 
-Microsoft.Agents.AI.OpenAI 1.21.0
----------------------------------
-  许可证    MIT
-  作用      Agent 基底框架与 OpenAI 端点支持
-  源码仓库  https://github.com/microsoft/agent-framework
-  许可全文  https://github.com/microsoft/agent-framework/blob/main/LICENSE
-  包页面    https://www.nuget.org/packages/Microsoft.Agents.AI.OpenAI/1.21.0
-
 System.Management 10.0.12
 -------------------------
   许可证    MIT
@@ -57,14 +49,16 @@ System.Management 10.0.12
 
 Vortice.Direct2D1 3.8.3
 Vortice.Direct3D11 3.8.3
+Vortice.Direct3D12 3.8.3
 Vortice.DirectComposition 3.8.3
 --------------------------------
   许可证    MIT
-  作用      Direct2D1 / Direct3D11 / DirectComposition 的 DirectX 互操作绑定
+  作用      Direct2D1 / Direct3D11 / Direct3D12 / DirectComposition 的 DirectX 互操作绑定
   源码仓库  https://github.com/amerkoleci/Vortice.Windows
   许可全文  https://github.com/amerkoleci/Vortice.Windows/blob/main/LICENSE
   包页面    https://www.nuget.org/packages/Vortice.Direct2D1/3.8.3
             https://www.nuget.org/packages/Vortice.Direct3D11/3.8.3
+            https://www.nuget.org/packages/Vortice.Direct3D12/3.8.3
             https://www.nuget.org/packages/Vortice.DirectComposition/3.8.3
 
 
