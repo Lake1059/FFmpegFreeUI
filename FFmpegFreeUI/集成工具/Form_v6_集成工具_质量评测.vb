@@ -15,6 +15,7 @@ Public Class Form_v6_集成工具_质量评测
     Private Const VMAF列 As Integer = 3
     Private Const XPSNR列 As Integer = 4
     Private Const Vmaf检查结果提示最大宽度 As Integer = 520
+    Private Const Vmaf非Hdr源错误 As String = "HDR模型但是是非HDR源"
 
     Private ReadOnly 进程锁 As New Object()
     Private 当前进程 As Process = Nothing
@@ -549,6 +550,11 @@ Public Class Form_v6_集成工具_质量评测
         End Select
     End Function
 
+    Private Shared Function 是已探测非Hdr源(info As 视频流信息) As Boolean
+        ' 没有读到视频流时不能判为非 HDR；交由后续命令构建报错。
+        Return info IsNot Nothing AndAlso info.宽度 > 0 AndAlso info.高度 > 0 AndAlso Not 是Hdr视频(info)
+    End Function
+
     Private Shared Function 从FFmpeg运行库提取Vmaf模型列表(ffmpegPath As String) As List(Of String)
         Dim result As New List(Of String)()
         If String.IsNullOrWhiteSpace(ffmpegPath) OrElse Not File.Exists(ffmpegPath) Then Return result
@@ -1010,13 +1016,8 @@ Public Class Form_v6_集成工具_质量评测
             追加评测记录($"状态：{data.状态}")
             For Each metric In metrics
                 Dim result As 指标结果数据 = Nothing
-                If data.指标结果.TryGetValue(metric, result) AndAlso result IsNot Nothing AndAlso result.成功 Then
-                    追加评测记录($"  {获取指标名称(metric)}：{格式化分数(result.汇总值, metric)}")
-                ElseIf data.指标结果.TryGetValue(metric, result) AndAlso result IsNot Nothing AndAlso Not String.IsNullOrWhiteSpace(result.错误信息) Then
-                    追加评测记录($"  {获取指标名称(metric)}：失败，{result.错误信息}")
-                Else
-                    追加评测记录($"  {获取指标名称(metric)}：未评测")
-                End If
+                data.指标结果.TryGetValue(metric, result)
+                追加评测记录($"  {获取指标名称(metric)}：{格式化指标记录(metric, result)}")
             Next
         Next
     End Sub
@@ -1088,9 +1089,10 @@ Public Class Form_v6_集成工具_质量评测
                     Dim result = entry.Value
                     If result Is Nothing Then Continue For
 
+                    ' 未成功的结果没有可保存的分数，避免 NaN 阻断错误记录的序列化。
                     Dim savedResult As New 页面状态结果 With {
                         .成功 = result.成功,
-                        .汇总值 = result.汇总值,
+                        .汇总值 = If(result.成功, result.汇总值, 0.0),
                         .已处理帧数 = result.已处理帧数,
                         .错误信息 = result.错误信息,
                         .实际模型 = result.实际模型,
@@ -1151,7 +1153,7 @@ Public Class Form_v6_集成工具_质量评测
                     Dim savedResult = entry.Value
                     Dim result As New 指标结果数据 With {
                         .成功 = savedResult.成功,
-                        .汇总值 = savedResult.汇总值,
+                        .汇总值 = If(savedResult.成功, savedResult.汇总值, Double.NaN),
                         .已处理帧数 = savedResult.已处理帧数,
                         .错误信息 = savedResult.错误信息,
                         .每帧数据 = If(savedResult.每帧数据, New List(Of Double)),
@@ -1166,7 +1168,7 @@ Public Class Form_v6_集成工具_质量评测
                     }
 
                     data.指标结果(metric) = result
-                    设置指标文本(item, metric, If(result.成功, 格式化分数(result.汇总值, metric), "未评测"))
+                    设置指标文本(item, metric, 获取指标文本(metric, result, "未评测"))
                 Next
 
                 UltraDetailListView1.Items.Add(item)
@@ -1181,11 +1183,13 @@ Public Class Form_v6_集成工具_质量评测
         Dim startTime = MTB_从头开始.Text.Trim()
         Dim duration = MTB_评测时长.Text.Trim()
         Dim referenceInfo = Await 获取视频流信息Async(reference, token)
-        本轮Vmaf模型 = MCB_模型选择.SelectedModel
+        本轮Vmaf模型 = Nothing
         本轮Vmaf说明 = ""
         本轮Vmaf错误 = ""
         If metrics.Contains(指标类型.VMAF) Then
             Try
+                token.ThrowIfCancellationRequested()
+                本轮Vmaf模型 = MCB_模型选择.SelectedModel
                 If 本轮Vmaf模型 Is Nothing Then Throw New InvalidOperationException("请选择 VMAF 模型。")
                 If 本轮Vmaf模型.IsAuto Then
                     本轮Vmaf模型 = 解析AutoVmaf模型(可用Vmaf模型, referenceInfo.宽度, referenceInfo.高度, 解析帧率值(referenceInfo.帧率), 本轮Vmaf说明, 是Hdr视频(referenceInfo))
@@ -1194,9 +1198,11 @@ Public Class Form_v6_集成工具_质量评测
                     If 解析帧率值(referenceInfo.帧率) > 60 Then 本轮Vmaf说明 &= "；HFR 比普通版更合理，但已超出其明确的约 50/60 fps 校准区间，结果仅供参考。"
                 End If
                 检查Vmaf模型可用性(本轮Vmaf模型)
-            Catch ex As InvalidOperationException
-                本轮Vmaf错误 = ex.Message
-                本轮Vmaf说明 = ex.Message
+            Catch ex As OperationCanceledException When token.IsCancellationRequested
+                Throw
+            Catch ex As Exception
+                本轮Vmaf错误 = $"VMAF 模型准备失败：{ex.Message}"
+                本轮Vmaf说明 = 本轮Vmaf错误
             End Try
             追加评测记录(本轮Vmaf说明)
         End If
@@ -1237,12 +1243,8 @@ Public Class Form_v6_集成工具_质量评测
                 data.指标结果(metric) = result
                 刷新图表()
                 Await 运行单项指标Async(reference, data.文件路径, metric, startTime, duration, referenceInfo, distortedInfo, token, item, result)
-                If result.成功 Then
-                    设置指标文本(item, metric, 格式化分数(result.汇总值, metric))
-                Else
-                    data.最近错误 = result.错误信息
-                    设置指标文本(item, metric, "失败")
-                End If
+                If Not result.成功 Then data.最近错误 = result.错误信息
+                设置指标文本(item, metric, 获取指标文本(metric, result, "失败"))
                 刷新评分颜色(metric)
                 调整列宽()
                 刷新图表()
@@ -1264,31 +1266,37 @@ Public Class Form_v6_集成工具_质量评测
     End Function
 
     Private Async Function 运行单项指标Async(reference As String, distorted As String, metric As 指标类型, startTime As String, duration As String, referenceInfo As 视频流信息, distortedInfo As 视频流信息, token As CancellationToken, item As UltraDetailListView.ListItem, result As 指标结果数据) As Task(Of 指标结果数据)
-        ' 使用实际传给 FFmpeg 的帧率，并将元数据绑定到成绩，避免修改控件后旧图表随之变化。
-        Dim primaryInfo = If(metric = 指标类型.XPSNR, referenceInfo, distortedInfo)
-        result.评测帧率 = 解析帧率值(获取FFMetrics帧率参数(primaryInfo))
-        result.评测起始秒数 = 获取评测起始秒数(startTime, result.评测帧率)
-        result.帧间隔 = If(metric = 指标类型.VMAF, 获取Vmaf帧间隔(获取下拉框文本(MCB_SubSample, "0")), 1)
-        Dim tempPath = Path.Combine(Path.GetTempPath(), $"3fui_quality_{Guid.NewGuid():N}_{metric.ToString().ToLowerInvariant()}.log")
-        Dim vmafPool = If(metric = 指标类型.VMAF, 获取下拉框文本(MCB_Pooling, "mean"), "")
-        If metric = 指标类型.VMAF Then
-            result.实际模型 = If(本轮Vmaf模型?.IsAuto = False, 本轮Vmaf模型.ModelValue, "")
-            result.模型说明 = 本轮Vmaf说明
-            If 本轮Vmaf错误 <> "" Then
-                result.错误信息 = 本轮Vmaf错误
-                Return result
-            End If
-        End If
-        Dim arguments = 构建指标命令(reference, distorted, metric, startTime, duration, tempPath, referenceInfo, distortedInfo)
         追加评测记录("")
         追加评测记录($"文件：{distorted}")
         追加评测记录($"项目：{获取指标名称(metric)}")
-        追加评测记录($"命令行：{获取FFmpeg文件名()} {arguments}")
-        追加评测记录("FFmpeg 输出：")
+        Dim tempPath As String = Nothing
         Dim pollCts As CancellationTokenSource = Nothing
         Dim pollTask As Task = Task.CompletedTask
         Dim canceledException As OperationCanceledException = Nothing
         Try
+            token.ThrowIfCancellationRequested()
+            ' 使用实际传给 FFmpeg 的帧率，并将元数据绑定到成绩，避免修改控件后旧图表随之变化。
+            Dim primaryInfo = If(metric = 指标类型.XPSNR, referenceInfo, distortedInfo)
+            result.评测帧率 = 解析帧率值(获取FFMetrics帧率参数(primaryInfo))
+            result.评测起始秒数 = 获取评测起始秒数(startTime, result.评测帧率)
+            result.帧间隔 = If(metric = 指标类型.VMAF, 获取Vmaf帧间隔(获取下拉框文本(MCB_SubSample, "0")), 1)
+            If metric = 指标类型.VMAF Then
+                result.实际模型 = If(本轮Vmaf模型?.IsAuto = False, 本轮Vmaf模型.ModelValue, "")
+                result.模型说明 = 本轮Vmaf说明
+                result.错误信息 = If(本轮Vmaf模型?.IsHdr = True AndAlso
+                                     (是已探测非Hdr源(referenceInfo) OrElse 是已探测非Hdr源(distortedInfo)),
+                                     Vmaf非Hdr源错误, 本轮Vmaf错误)
+                If result.错误信息 <> "" Then
+                    追加评测记录($"本项结果：{格式化指标记录(metric, result, "失败")}")
+                    Return result
+                End If
+            End If
+
+            tempPath = Path.Combine(Path.GetTempPath(), $"3fui_quality_{Guid.NewGuid():N}_{metric.ToString().ToLowerInvariant()}.log")
+            Dim vmafPool = If(metric = 指标类型.VMAF, 获取下拉框文本(MCB_Pooling, "mean"), "")
+            Dim arguments = 构建指标命令(reference, distorted, metric, startTime, duration, tempPath, referenceInfo, distortedInfo)
+            追加评测记录($"命令行：{获取FFmpeg文件名()} {arguments}")
+            追加评测记录("FFmpeg 输出：")
             If metric <> 指标类型.VMAF Then
                 pollCts = CancellationTokenSource.CreateLinkedTokenSource(token)
                 pollTask = 轮询Stats文件Async(tempPath, metric, item, result, pollCts.Token)
@@ -1299,23 +1307,16 @@ Public Class Form_v6_集成工具_质量评测
                     追加FFmpeg输出记录(line)
                     处理FFmpeg实时输出(line, metric, item, result)
                 End Sub)
-            If token.IsCancellationRequested Then
-                result.错误信息 = "已取消"
-            ElseIf processResult.ExitCode <> 0 Then
+            token.ThrowIfCancellationRequested()
+            If processResult.ExitCode <> 0 Then
                 result.错误信息 = 提取错误信息(processResult.Output)
             Else
                 Dim parsed = 解析指标结果(metric, tempPath, processResult.Output, vmafPool, result.帧间隔)
                 If Not parsed.成功 AndAlso String.IsNullOrWhiteSpace(parsed.错误信息) Then parsed.错误信息 = "未能解析评测结果"
                 覆盖指标结果(result, parsed)
             End If
-            If result.成功 Then
-                追加评测记录($"本项结果：{格式化分数(result.汇总值, metric)}")
-            ElseIf Not String.IsNullOrWhiteSpace(result.错误信息) Then
-                追加评测记录($"本项结果：失败，{result.错误信息}")
-            Else
-                追加评测记录("本项结果：失败")
-            End If
-        Catch ex As OperationCanceledException
+            追加评测记录($"本项结果：{格式化指标记录(metric, result, "失败")}")
+        Catch ex As OperationCanceledException When token.IsCancellationRequested
             result.错误信息 = "已取消"
             追加评测记录("本项结果：已取消")
             canceledException = ex
@@ -1332,13 +1333,13 @@ Public Class Form_v6_集成工具_质量评测
         End Try
 
         If pollCts IsNot Nothing Then pollCts.Dispose()
-        If canceledException IsNot Nothing Then Throw canceledException
 
         Try
             If File.Exists(tempPath) Then File.Delete(tempPath)
         Catch
         End Try
 
+        If canceledException IsNot Nothing Then Throw canceledException
         Return result
     End Function
 
@@ -2220,12 +2221,23 @@ Public Class Form_v6_集成工具_质量评测
     Private Sub 恢复指标文本(item As UltraDetailListView.ListItem, metric As 指标类型)
         Dim data = 获取项数据(item)
         Dim result As 指标结果数据 = Nothing
-        If data.指标结果.TryGetValue(metric, result) AndAlso result IsNot Nothing AndAlso result.成功 Then
-            设置指标文本(item, metric, 格式化分数(result.汇总值, metric))
-        Else
-            设置指标文本(item, metric, "未评测")
-        End If
+        data.指标结果.TryGetValue(metric, result)
+        设置指标文本(item, metric, 获取指标文本(metric, result, "未评测"))
     End Sub
+
+    Private Shared Function 获取指标文本(metric As 指标类型, result As 指标结果数据, fallback As String) As String
+        If result Is Nothing Then Return fallback
+        If result.成功 Then Return 格式化分数(result.汇总值, metric)
+        If metric = 指标类型.VMAF AndAlso String.Equals(result.错误信息, Vmaf非Hdr源错误, StringComparison.Ordinal) Then Return "非HDR"
+        Return fallback
+    End Function
+
+    Private Shared Function 格式化指标记录(metric As 指标类型, result As 指标结果数据, Optional fallback As String = "未评测") As String
+        If result IsNot Nothing AndAlso Not result.成功 AndAlso Not String.IsNullOrWhiteSpace(result.错误信息) Then
+            Return $"{获取指标文本(metric, result, "失败")}，{result.错误信息}"
+        End If
+        Return 获取指标文本(metric, result, fallback)
+    End Function
 
     Private Sub 刷新全部评分颜色()
         For Each metric In 全部指标
@@ -2372,13 +2384,8 @@ Public Class Form_v6_集成工具_质量评测
             sb.AppendLine($"状态：{data.状态}")
             For Each metric In 全部指标
                 Dim result As 指标结果数据 = Nothing
-                If data.指标结果.TryGetValue(metric, result) AndAlso result IsNot Nothing AndAlso result.成功 Then
-                    sb.AppendLine($"  {获取指标名称(metric)}：{格式化分数(result.汇总值, metric)}")
-                ElseIf data.指标结果.TryGetValue(metric, result) AndAlso result IsNot Nothing AndAlso Not String.IsNullOrWhiteSpace(result.错误信息) Then
-                    sb.AppendLine($"  {获取指标名称(metric)}：失败，{result.错误信息}")
-                Else
-                    sb.AppendLine($"  {获取指标名称(metric)}：未评测")
-                End If
+                data.指标结果.TryGetValue(metric, result)
+                sb.AppendLine($"  {获取指标名称(metric)}：{格式化指标记录(metric, result)}")
                 If result IsNot Nothing AndAlso metric = 指标类型.VMAF Then
                     If result.实际模型 <> "" Then sb.AppendLine($"  实际模型：{result.实际模型}")
                     If result.模型说明 <> "" Then sb.AppendLine($"  模型说明：{result.模型说明}")
