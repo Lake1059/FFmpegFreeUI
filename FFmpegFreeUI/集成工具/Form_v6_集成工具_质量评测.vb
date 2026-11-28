@@ -16,6 +16,7 @@ Public Class Form_v6_集成工具_质量评测
     Private Const XPSNR列 As Integer = 4
     Private Const Vmaf检查结果提示最大宽度 As Integer = 520
     Private Const Vmaf非Hdr源错误 As String = "HDR模型但是是非HDR源"
+    Private Const Vmaf奇数边错误 As String = "存在奇数边，且原视频宽、高不是所有对比视频对应宽、高的整数倍"
 
     Private ReadOnly 进程锁 As New Object()
     Private 当前进程 As Process = Nothing
@@ -150,8 +151,6 @@ Public Class Form_v6_集成工具_质量评测
     End Class
     Private Class 页面状态
         Public Property 原视频 As String = ""
-        Public Property 从头开始 As String = ""
-        Public Property 评测时长 As String = ""
         Public Property Vmaf模型 As String = ""
         Public Property Pooling As String = ""
         Public Property SubSample As String = ""
@@ -550,9 +549,16 @@ Public Class Form_v6_集成工具_质量评测
         End Select
     End Function
 
+    Private Shared Function 有视频尺寸(info As 视频流信息) As Boolean
+        Return info IsNot Nothing AndAlso info.宽度 > 0 AndAlso info.高度 > 0
+    End Function
+
+    Private Shared Function 有奇数边(info As 视频流信息) As Boolean
+        Return info.宽度 Mod 2 <> 0 OrElse info.高度 Mod 2 <> 0
+    End Function
+
     Private Shared Function 是已探测非Hdr源(info As 视频流信息) As Boolean
-        ' 没有读到视频流时不能判为非 HDR；交由后续命令构建报错。
-        Return info IsNot Nothing AndAlso info.宽度 > 0 AndAlso info.高度 > 0 AndAlso Not 是Hdr视频(info)
+        Return 有视频尺寸(info) AndAlso Not 是Hdr视频(info)
     End Function
 
     Private Shared Function 从FFmpeg运行库提取Vmaf模型列表(ffmpegPath As String) As List(Of String)
@@ -893,7 +899,7 @@ Public Class Form_v6_集成工具_质量评测
     Private Function 验证时间文本(value As String, label As String, target As Control) As Boolean
         Dim text = If(value, "").Trim()
         If text = "" Then Return True
-        Dim seconds As Double
+        Dim seconds As Decimal
         If 尝试解析时间秒数(text, seconds) Then Return True
         ExFloatingTip(target, $"{label}格式无效，可填写秒数、分:秒 或 时:分:秒", 2200)
         Return False
@@ -981,8 +987,6 @@ Public Class Form_v6_集成工具_质量评测
         sb.AppendLine($"开始时间：{DateTime.Now:yyyy-MM-dd HH:mm:ss}")
         sb.AppendLine($"原视频：{MTB_原视频文件路径.Text.Trim()}")
         sb.AppendLine($"评测项目：{String.Join(", ", metrics.Select(Function(metric) 获取指标名称(metric)))}")
-        sb.AppendLine($"开始时间参数：{If(String.IsNullOrWhiteSpace(MTB_从头开始.Text), "未设置", MTB_从头开始.Text.Trim())}")
-        sb.AppendLine($"评测长度参数：{If(String.IsNullOrWhiteSpace(MTB_评测时长.Text), "完整全片", MTB_评测时长.Text.Trim())}")
         sb.AppendLine("待评测文件：")
         For Each item In items
             sb.AppendLine($"  {获取项数据(item).文件路径}")
@@ -1065,8 +1069,6 @@ Public Class Form_v6_集成工具_质量评测
         Try
             Dim state As New 页面状态 With {
                 .原视频 = MTB_原视频文件路径.Text,
-                .从头开始 = MTB_从头开始.Text,
-                .评测时长 = MTB_评测时长.Text,
                 .Vmaf模型 = MCB_模型选择.SelectedModelValue,
                 .Pooling = MCB_Pooling.Text,
                 .SubSample = MCB_SubSample.Text,
@@ -1126,8 +1128,6 @@ Public Class Form_v6_集成工具_质量评测
             Dim state = JsonSerializer.Deserialize(Of 页面状态)(raw, JsonSO)
             If state Is Nothing Then Exit Sub
             MTB_原视频文件路径.Text = state.原视频
-            MTB_从头开始.Text = state.从头开始
-            MTB_评测时长.Text = state.评测时长
             ' 每次打开页面均使用 AUTO；旧设置中的具体模型不能覆盖默认值。
             MCB_模型选择.SelectedIndex = MCB_模型选择.FirstModelIndex
             MCB_Pooling.Text = state.Pooling
@@ -1218,13 +1218,28 @@ Public Class Form_v6_集成工具_质量评测
         Next
         刷新全部评分颜色()
 
-        For Each item In itemsToRun.ToArray()
+        Dim 对比视频流 As New Dictionary(Of UltraDetailListView.ListItem, 视频流信息)()
+        Dim 允许奇数边 = False
+        If metrics.Contains(指标类型.VMAF) Then
+            For Each item In itemsToRun
+                token.ThrowIfCancellationRequested()
+                对比视频流(item) = Await 获取视频流信息Async(获取项数据(item).文件路径, token)
+            Next
+            允许奇数边 = 有视频尺寸(referenceInfo) AndAlso
+                对比视频流.Values.All(Function(info) 有视频尺寸(info) AndAlso
+                    referenceInfo.宽度 Mod info.宽度 = 0 AndAlso referenceInfo.高度 Mod info.高度 = 0)
+        End If
+
+        For Each item In itemsToRun
             token.ThrowIfCancellationRequested()
             Dim data = 获取项数据(item)
             data.状态 = "处理中"
             data.最近错误 = ""
             刷新列表项显示()
-            Dim distortedInfo = Await 获取视频流信息Async(data.文件路径, token)
+            Dim distortedInfo As 视频流信息 = Nothing
+            If Not 对比视频流.TryGetValue(item, distortedInfo) Then
+                distortedInfo = Await 获取视频流信息Async(data.文件路径, token)
+            End If
 
             For Each metric In metrics
                 token.ThrowIfCancellationRequested()
@@ -1242,7 +1257,7 @@ Public Class Form_v6_集成工具_质量评测
                 Dim result As New 指标结果数据()
                 data.指标结果(metric) = result
                 刷新图表()
-                Await 运行单项指标Async(reference, data.文件路径, metric, startTime, duration, referenceInfo, distortedInfo, token, item, result)
+                Await 运行单项指标Async(reference, data.文件路径, metric, startTime, duration, referenceInfo, distortedInfo, token, item, result, 允许奇数边)
                 If Not result.成功 Then data.最近错误 = result.错误信息
                 设置指标文本(item, metric, 获取指标文本(metric, result, "失败"))
                 刷新评分颜色(metric)
@@ -1265,17 +1280,12 @@ Public Class Form_v6_集成工具_质量评测
         刷新全部评分颜色()
     End Function
 
-    Private Async Function 运行单项指标Async(reference As String, distorted As String, metric As 指标类型, startTime As String, duration As String, referenceInfo As 视频流信息, distortedInfo As 视频流信息, token As CancellationToken, item As UltraDetailListView.ListItem, result As 指标结果数据) As Task(Of 指标结果数据)
+    Private Async Function 运行单项指标Async(reference As String, distorted As String, metric As 指标类型, startTime As String, duration As String, referenceInfo As 视频流信息, distortedInfo As 视频流信息, token As CancellationToken, item As UltraDetailListView.ListItem, result As 指标结果数据, 允许奇数边 As Boolean) As Task(Of 指标结果数据)
         追加评测记录("")
         追加评测记录($"文件：{distorted}")
         追加评测记录($"项目：{获取指标名称(metric)}")
-        Dim tempPath As String = Nothing
-        Dim pollCts As CancellationTokenSource = Nothing
-        Dim pollTask As Task = Task.CompletedTask
-        Dim canceledException As OperationCanceledException = Nothing
         Try
             token.ThrowIfCancellationRequested()
-            ' 使用实际传给 FFmpeg 的帧率，并将元数据绑定到成绩，避免修改控件后旧图表随之变化。
             Dim primaryInfo = If(metric = 指标类型.XPSNR, referenceInfo, distortedInfo)
             result.评测帧率 = 解析帧率值(获取FFMetrics帧率参数(primaryInfo))
             result.评测起始秒数 = 获取评测起始秒数(startTime, result.评测帧率)
@@ -1283,64 +1293,86 @@ Public Class Form_v6_集成工具_质量评测
             If metric = 指标类型.VMAF Then
                 result.实际模型 = If(本轮Vmaf模型?.IsAuto = False, 本轮Vmaf模型.ModelValue, "")
                 result.模型说明 = 本轮Vmaf说明
-                result.错误信息 = If(本轮Vmaf模型?.IsHdr = True AndAlso
-                                     (是已探测非Hdr源(referenceInfo) OrElse 是已探测非Hdr源(distortedInfo)),
-                                     Vmaf非Hdr源错误, 本轮Vmaf错误)
+                If Not 有视频尺寸(referenceInfo) OrElse Not 有视频尺寸(distortedInfo) Then
+                    result.错误信息 = "无法读取原视频或对比视频的尺寸，不能进行 VMAF 对齐"
+                ElseIf Not 允许奇数边 AndAlso (有奇数边(referenceInfo) OrElse 有奇数边(distortedInfo)) Then
+                    result.错误信息 = Vmaf奇数边错误
+                Else
+                    result.错误信息 = If(本轮Vmaf模型?.IsHdr = True AndAlso
+                                         (是已探测非Hdr源(referenceInfo) OrElse 是已探测非Hdr源(distortedInfo)),
+                                         Vmaf非Hdr源错误, 本轮Vmaf错误)
+                End If
                 If result.错误信息 <> "" Then
                     追加评测记录($"本项结果：{格式化指标记录(metric, result, "失败")}")
                     Return result
                 End If
             End If
 
-            tempPath = Path.Combine(Path.GetTempPath(), $"3fui_quality_{Guid.NewGuid():N}_{metric.ToString().ToLowerInvariant()}.log")
             Dim vmafPool = If(metric = 指标类型.VMAF, 获取下拉框文本(MCB_Pooling, "mean"), "")
-            Dim arguments = 构建指标命令(reference, distorted, metric, startTime, duration, tempPath, referenceInfo, distortedInfo)
-            追加评测记录($"命令行：{获取FFmpeg文件名()} {arguments}")
-            追加评测记录("FFmpeg 输出：")
-            If metric <> 指标类型.VMAF Then
-                pollCts = CancellationTokenSource.CreateLinkedTokenSource(token)
-                pollTask = 轮询Stats文件Async(tempPath, metric, item, result, pollCts.Token)
-            End If
-
-            Dim processResult = Await 运行FFmpegAsync(arguments, token,
-                Sub(line)
-                    追加FFmpeg输出记录(line)
-                    处理FFmpeg实时输出(line, metric, item, result)
-                End Sub)
-            token.ThrowIfCancellationRequested()
-            If processResult.ExitCode <> 0 Then
-                result.错误信息 = 提取错误信息(processResult.Output)
-            Else
-                Dim parsed = 解析指标结果(metric, tempPath, processResult.Output, vmafPool, result.帧间隔)
-                If Not parsed.成功 AndAlso String.IsNullOrWhiteSpace(parsed.错误信息) Then parsed.错误信息 = "未能解析评测结果"
-                覆盖指标结果(result, parsed)
-            End If
+            For Each 优先硬解 In {True, False}
+                token.ThrowIfCancellationRequested()
+                Dim tempPath = Path.Combine(Path.GetTempPath(), $"3fui_quality_{Guid.NewGuid():N}_{metric.ToString().ToLowerInvariant()}.log")
+                Try
+                    Dim arguments = 构建指标命令(reference, distorted, metric, startTime, duration, tempPath, referenceInfo, distortedInfo, 优先硬解)
+                    If startTime = "" AndAlso duration = "" Then
+                        追加评测记录($"命令行：{获取FFmpeg文件名()} {arguments}")
+                    End If
+                    追加评测记录("FFmpeg 输出：")
+                    Dim processResult = Await 运行指标进程Async(arguments, tempPath, metric, item, result, token)
+                    token.ThrowIfCancellationRequested()
+                    If processResult.ExitCode <> 0 Then
+                        If 优先硬解 Then
+                            追加评测记录("优先硬解的尝试失败，使用软件解码重试本项")
+                            SyncLock result.数据锁
+                                result.每帧数据.Clear()
+                                result.每帧帧号.Clear()
+                                result.已处理帧数 = 0
+                            End SyncLock
+                            Continue For
+                        End If
+                        result.错误信息 = 提取错误信息(processResult.Output)
+                    Else
+                        Dim parsed = 解析指标结果(metric, tempPath, processResult.Output, vmafPool, result.帧间隔)
+                        If Not parsed.成功 AndAlso String.IsNullOrWhiteSpace(parsed.错误信息) Then parsed.错误信息 = "未能解析评测结果"
+                        覆盖指标结果(result, parsed)
+                    End If
+                    Exit For
+                Finally
+                    Try
+                        File.Delete(tempPath)
+                    Catch
+                    End Try
+                End Try
+            Next
             追加评测记录($"本项结果：{格式化指标记录(metric, result, "失败")}")
         Catch ex As OperationCanceledException When token.IsCancellationRequested
             result.错误信息 = "已取消"
             追加评测记录("本项结果：已取消")
-            canceledException = ex
+            Throw
         Catch ex As Exception
             result.错误信息 = ex.Message
             追加评测记录($"本项结果：失败，{ex.Message}")
-        Finally
-            If pollCts IsNot Nothing Then pollCts.Cancel()
         End Try
-
-        Try
-            Await pollTask
-        Catch
-        End Try
-
-        If pollCts IsNot Nothing Then pollCts.Dispose()
-
-        Try
-            If File.Exists(tempPath) Then File.Delete(tempPath)
-        Catch
-        End Try
-
-        If canceledException IsNot Nothing Then Throw canceledException
         Return result
+    End Function
+
+    Private Async Function 运行指标进程Async(arguments As String, tempPath As String, metric As 指标类型, item As UltraDetailListView.ListItem, result As 指标结果数据, token As CancellationToken) As Task(Of 进程运行结果)
+        Using pollCts = If(metric = 指标类型.VMAF, Nothing, CancellationTokenSource.CreateLinkedTokenSource(token))
+            Dim pollTask = If(pollCts Is Nothing, Task.CompletedTask, 轮询Stats文件Async(tempPath, metric, item, result, pollCts.Token))
+            Dim processTask = 运行FFmpegAsync(arguments, token,
+                Sub(line)
+                    追加FFmpeg输出记录(line)
+                    处理FFmpeg实时输出(line, metric, item, result)
+                End Sub)
+            ' 即使进程失败或取消，也要等统计轮询停止后才清理文件或开始下一次。
+            Await Task.WhenAny(processTask)
+            pollCts?.Cancel()
+            Try
+                Await pollTask
+            Catch ex As OperationCanceledException
+            End Try
+            Return Await processTask
+        End Using
     End Function
 
     Private Sub 覆盖指标结果(target As 指标结果数据, source As 指标结果数据)
@@ -1429,14 +1461,18 @@ Public Class Form_v6_集成工具_质量评测
         Return 0
     End Function
 
-    Private Function 构建指标命令(reference As String, distorted As String, metric As 指标类型, startTime As String, duration As String, tempPath As String, referenceInfo As 视频流信息, distortedInfo As 视频流信息) As String
+    Private Function 构建指标命令(reference As String, distorted As String, metric As 指标类型, startTime As String, duration As String, tempPath As String, referenceInfo As 视频流信息, distortedInfo As 视频流信息, 优先硬解 As Boolean) As String
         Dim distortedFrameRate = 获取FFMetrics帧率参数(distortedInfo)
         Dim referenceFrameRate = 获取FFMetrics帧率参数(referenceInfo)
         Dim durationFrameRate = If(String.IsNullOrWhiteSpace(distortedFrameRate), referenceFrameRate, distortedFrameRate)
         Dim 使用VmafCuda = metric = 指标类型.VMAF AndAlso 本轮Vmaf模型 IsNot Nothing AndAlso 本轮Vmaf模型.UseCuda
+        Dim startPts = CLng(Decimal.Ceiling(解析秒数(startTime) * 1000000D))
+        Dim seekTime = If(startPts > 0, (CDec(startPts) / 1000000D).ToString("0.######", CultureInfo.InvariantCulture), "")
         Dim arg As New StringBuilder("-hide_banner -nostdin -probesize 50M ")
-        追加FFMetrics输入参数(arg, distorted, distortedFrameRate, 使用VmafCuda)
-        追加FFMetrics输入参数(arg, reference, referenceFrameRate, 使用VmafCuda)
+        If seekTime <> "" Then arg.Append("-copyts -start_at_zero ")
+        If 使用VmafCuda Then arg.Append("-init_hw_device cuda=vmaf:0 -filter_hw_device vmaf ")
+        追加FFMetrics输入参数(arg, distorted, distortedFrameRate, seekTime, 优先硬解)
+        追加FFMetrics输入参数(arg, reference, referenceFrameRate, seekTime, 优先硬解)
 
         Dim frameLimit = 获取FFMetrics帧数限制(duration, durationFrameRate)
         If frameLimit > 0 Then arg.Append("-frames:v ").Append(frameLimit.ToString(CultureInfo.InvariantCulture)).Append(" "c)
@@ -1446,16 +1482,28 @@ Public Class Form_v6_集成工具_质量评测
                                   获取VmafCuda像素格式(referenceInfo, distortedInfo),
                                   获取指标像素格式(referenceInfo, distortedInfo))
         Dim model = If(metric = 指标类型.VMAF, 本轮Vmaf模型.ModelValue, "")
-        Dim targetSize = 获取评测目标尺寸(metric, referenceInfo, model)
-        Dim scaleDistorted = 构建视频预处理滤镜(distortedInfo, referenceInfo, targetSize.Width, targetSize.Height, finalPixelFormat, 使用VmafCuda)
-        Dim scaleReference = 构建参考预处理滤镜(metric, referenceInfo, targetSize, finalPixelFormat, 使用VmafCuda)
-        If metric = 指标类型.VMAF AndAlso 本轮Vmaf模型.IsHdr Then
-            scaleDistorted &= 构建Hdr色彩标记(distortedInfo)
-            scaleReference &= 构建Hdr色彩标记(referenceInfo)
+        Dim scaleDistorted As String
+        Dim scaleReference As String
+        If metric = 指标类型.VMAF Then
+            Dim preprocessing = 构建Vmaf预处理滤镜(referenceInfo, distortedInfo, finalPixelFormat, 使用VmafCuda)
+            scaleDistorted = preprocessing.Distorted
+            scaleReference = preprocessing.Reference
+            If 本轮Vmaf模型.IsHdr Then
+                scaleDistorted &= 构建Hdr色彩标记(distortedInfo)
+                scaleReference &= 构建Hdr色彩标记(referenceInfo)
+            End If
+            If 使用VmafCuda Then
+                scaleDistorted &= ",hwupload"
+                scaleReference &= ",hwupload"
+            End If
+        Else
+            scaleDistorted = 构建视频预处理滤镜(distortedInfo, referenceInfo.宽度, referenceInfo.高度, finalPixelFormat)
+            scaleReference = 构建像素格式滤镜(finalPixelFormat)
         End If
-        Dim trim = 构建FFMetrics剪辑滤镜(startTime)
-        Dim dist = $"[0:v]{trim}settb=AVTB,setpts=PTS-STARTPTS{scaleDistorted}[dist];"
-        Dim ref = $"[1:v]{trim}settb=AVTB,setpts=PTS-STARTPTS{scaleReference}[ref];"
+        ' 在原始相对 PTS 上裁掉关键帧预滚，首帧可以恰好等于所选时间。
+        Dim trim = If(startPts > 0, $"trim=start_pts={startPts.ToString(CultureInfo.InvariantCulture)},", "")
+        Dim dist = $"[0:v]settb=AVTB,{trim}setpts=PTS-STARTPTS{scaleDistorted}[dist];"
+        Dim ref = $"[1:v]settb=AVTB,{trim}setpts=PTS-STARTPTS{scaleReference}[ref];"
         Select Case metric
             Case 指标类型.PSNR
                 filter = $"{dist}{ref}[dist][ref]psnr=eof_action=endall:stats_file={引用过滤器参数(tempPath)}"
@@ -1481,17 +1529,15 @@ Public Class Form_v6_集成工具_质量评测
         Return arg.ToString()
     End Function
 
-    Private Shared Sub 追加FFMetrics输入参数(arg As StringBuilder, file As String, inputFrameRate As String, Optional 使用Cuda As Boolean = False)
-        If 使用Cuda Then arg.Append("-hwaccel cuda -hwaccel_output_format cuda ")
-        If Not String.IsNullOrWhiteSpace(inputFrameRate) Then arg.Append("-r ").Append(引用参数(inputFrameRate.Trim())).Append(" "c)
+    Private Shared Sub 追加FFMetrics输入参数(arg As StringBuilder, file As String, inputFrameRate As String, seekTime As String, 优先硬解 As Boolean)
+        arg.Append(If(优先硬解, "-hwaccel auto ", "-hwaccel none "))
+        If seekTime <> "" Then
+            arg.Append("-ss ").Append(seekTime).Append(" -noaccurate_seek ")
+        ElseIf Not String.IsNullOrWhiteSpace(inputFrameRate) Then
+            arg.Append("-r ").Append(引用参数(inputFrameRate.Trim())).Append(" "c)
+        End If
         arg.Append("-i ").Append(引用参数(file)).Append(" "c)
     End Sub
-
-    Private Shared Function 构建FFMetrics剪辑滤镜(startTime As String) As String
-        Dim seekTime = 格式化FFmpeg时间参数(startTime)
-        If String.IsNullOrWhiteSpace(seekTime) OrElse seekTime = "0" Then Return ""
-        Return $"trim=start={seekTime},"
-    End Function
 
     Private Shared Function 构建Vmaf子采样参数(subsample As String) As String
         Dim value As Integer
@@ -1631,11 +1677,11 @@ Public Class Form_v6_集成工具_质量评测
                pixelFormatValue.Contains("16", StringComparison.OrdinalIgnoreCase) OrElse
                pixelFormatValue.Contains("p010", StringComparison.OrdinalIgnoreCase) OrElse
                pixelFormatValue.Contains("p016", StringComparison.OrdinalIgnoreCase) Then
-                Return "yuv444p16"
+                Return "yuv444p16le"
             End If
         Next
 
-        ' libvmaf_cuda accepts yuv420p and yuv444p16 CUDA frames only.
+        ' libvmaf_cuda 只接受 yuv420p 或 yuv444p16 的 CUDA 帧。
         Return "yuv420p"
     End Function
 
@@ -1659,47 +1705,26 @@ Public Class Form_v6_集成工具_质量评测
         Return Math.Ceiling(seconds * frameRate - 0.000000001) / frameRate
     End Function
 
-    Private Shared Function 解析秒数(value As String) As Double
-        Dim text = If(value, "").Trim()
-        If text = "" Then Return 0
-        Dim seconds As Double
-        If 尝试解析时间秒数(text, seconds) Then Return Math.Max(0, seconds)
-        Return 0
+    Private Shared Function 解析秒数(value As String) As Decimal
+        Dim seconds As Decimal
+        Return If(尝试解析时间秒数(value, seconds), seconds, 0D)
     End Function
 
-    Private Shared Function 格式化FFmpeg时间参数(value As String) As String
-        Dim seconds As Double
-        If Not 尝试解析时间秒数(value, seconds) Then Return ""
-        Return seconds.ToString("0.###", CultureInfo.InvariantCulture)
-    End Function
-
-    Private Shared Function 尝试解析时间秒数(text As String, ByRef seconds As Double) As Boolean
-        seconds = 0
+    Private Shared Function 尝试解析时间秒数(text As String, ByRef seconds As Decimal) As Boolean
+        Dim maxSeconds = Long.MaxValue / 1000000D
+        seconds = 0D
         text = If(text, "").Trim()
         If text = "" Then Return False
 
-        Dim number As Double
-        If Double.TryParse(text, NumberStyles.Float, CultureInfo.InvariantCulture, number) Then
-            If number < 0 Then Return False
-            seconds = number
-            Return True
-        End If
-
         Dim parts = text.Split(":"c)
-        If parts.Length <> 2 AndAlso parts.Length <> 3 Then Return False
-
-        Dim values As New List(Of Double)
+        If parts.Length > 3 Then Return False
+        ' 直接解析十进制秒数，避免二进制浮点误差使取整后的截止点跳过边界帧。
         For Each part In parts
-            Dim value As Double
-            If Not Double.TryParse(part.Trim(), NumberStyles.Float, CultureInfo.InvariantCulture, value) OrElse value < 0 Then Return False
-            values.Add(value)
+            Dim value As Decimal
+            If Not Decimal.TryParse(part, NumberStyles.Float, CultureInfo.InvariantCulture, value) OrElse value < 0 OrElse value > maxSeconds Then Return False
+            seconds = seconds * 60D + value
+            If seconds > maxSeconds Then Return False
         Next
-
-        If parts.Length = 2 Then
-            seconds = values(0) * 60 + values(1)
-        Else
-            seconds = values(0) * 3600 + values(1) * 60 + values(2)
-        End If
         Return True
     End Function
 
@@ -1718,28 +1743,6 @@ Public Class Form_v6_集成工具_质量评测
         Dim result As Double
         If Double.TryParse(text, NumberStyles.Float, CultureInfo.InvariantCulture, result) Then Return result
         Return 0
-    End Function
-
-    Private Shared Function 获取评测目标尺寸(metric As 指标类型, referenceInfo As 视频流信息, model As String) As Size
-        If metric = 指标类型.VMAF Then
-            Dim modelSize = 获取Vmaf模型尺寸(model)
-            If modelSize.Width > 0 AndAlso modelSize.Height > 0 AndAlso Vmaf需要缩放到模型尺寸(referenceInfo, modelSize) Then Return modelSize
-        End If
-        Return New Size(If(referenceInfo Is Nothing, 0, referenceInfo.宽度), If(referenceInfo Is Nothing, 0, referenceInfo.高度))
-    End Function
-
-    Private Shared Function 获取Vmaf模型尺寸(model As String) As Size
-        Dim text = model.ToLowerInvariant()
-        If text.Contains("4k") OrElse text.Contains("2160") Then Return New Size(3840, 2160)
-        Return New Size(1920, 1080)
-    End Function
-
-    Private Shared Function Vmaf需要缩放到模型尺寸(referenceInfo As 视频流信息, modelSize As Size) As Boolean
-        If referenceInfo Is Nothing OrElse referenceInfo.宽度 <= 0 OrElse referenceInfo.高度 <= 0 Then Return True
-        If modelSize.Width <= 0 OrElse modelSize.Height <= 0 Then Return False
-        Dim widthDiff = Math.Abs(referenceInfo.宽度 - modelSize.Width) / CDbl(modelSize.Width)
-        Dim heightDiff = Math.Abs(referenceInfo.高度 - modelSize.Height) / CDbl(modelSize.Height)
-        Return widthDiff > 0.1 OrElse heightDiff > 0.1
     End Function
 
     Private Shared Function 清理像素格式(value As String) As String
@@ -1764,31 +1767,39 @@ Public Class Form_v6_集成工具_质量评测
         Return text
     End Function
 
-    Private Shared Function 构建参考预处理滤镜(metric As 指标类型, referenceInfo As 视频流信息, targetSize As Size, pixelFormat As String, Optional 使用Cuda As Boolean = False) As String
-        If metric = 指标类型.VMAF Then Return 构建视频预处理滤镜(referenceInfo, referenceInfo, targetSize.Width, targetSize.Height, pixelFormat, 使用Cuda)
-        Return 构建像素格式滤镜(pixelFormat)
+    Private Shared Function 构建Vmaf预处理滤镜(referenceInfo As 视频流信息, distortedInfo As 视频流信息, pixelFormat As String, 使用Cuda As Boolean) As (Distorted As String, Reference As String)
+        Dim distortedWidth = distortedInfo.宽度
+        Dim distortedHeight = distortedInfo.高度
+        If distortedWidth <> referenceInfo.宽度 AndAlso distortedHeight <> referenceInfo.高度 Then
+            distortedHeight = Math.Max(1, CInt(Math.Round(CDbl(distortedHeight) * referenceInfo.宽度 / distortedWidth, MidpointRounding.AwayFromZero)))
+            distortedWidth = referenceInfo.宽度
+        End If
+
+        Dim width = Math.Max(referenceInfo.宽度, distortedWidth)
+        Dim height = Math.Max(referenceInfo.高度, distortedHeight)
+        ' 奇数尺寸或奇数补边偏移不能让 4:2:0 的色度对齐改写位置或画布。
+        If 有奇数边(referenceInfo) OrElse distortedWidth Mod 2 <> 0 OrElse distortedHeight Mod 2 <> 0 OrElse
+            Math.Abs(referenceInfo.宽度 - distortedWidth) Mod 4 <> 0 OrElse Math.Abs(referenceInfo.高度 - distortedHeight) Mod 4 <> 0 Then
+            Dim depthMatch = Regex.Match(If(pixelFormat = "", referenceInfo.像素格式, pixelFormat), "(?:p|gray)(9|10|12|14|16)(?:le|be)$", RegexOptions.CultureInvariant)
+            Dim depth As Integer
+            Integer.TryParse(depthMatch.Groups(1).Value, depth)
+            pixelFormat = If(使用Cuda OrElse depth > 12, "yuv444p16le", If(depth > 10, "yuv444p12le", If(depth > 8, "yuv444p10le", "yuv444p")))
+        End If
+
+        Dim distorted = 构建视频预处理滤镜(distortedInfo, distortedWidth, distortedHeight, pixelFormat) & 构建补边滤镜(distortedWidth, distortedHeight, width, height)
+        Dim reference = 构建像素格式滤镜(pixelFormat) & 构建补边滤镜(referenceInfo.宽度, referenceInfo.高度, width, height)
+        Return (distorted, reference)
     End Function
 
-    Private Shared Function 构建视频预处理滤镜(sourceInfo As 视频流信息, referenceInfo As 视频流信息, targetWidth As Integer, targetHeight As Integer, pixelFormat As String, Optional 使用Cuda As Boolean = False) As String
-        Dim hasScale = targetWidth > 0 AndAlso targetHeight > 0 AndAlso
-                       (sourceInfo Is Nothing OrElse sourceInfo.宽度 <= 0 OrElse sourceInfo.高度 <= 0 OrElse
-                        sourceInfo.宽度 <> targetWidth OrElse sourceInfo.高度 <> targetHeight)
-        Dim cleanPixelFormat = 清理像素格式(pixelFormat)
+    Private Shared Function 构建补边滤镜(sourceWidth As Integer, sourceHeight As Integer, width As Integer, height As Integer) As String
+        If sourceWidth = width AndAlso sourceHeight = height Then Return ""
+        Return $",pad={width}:{height}:{(width - sourceWidth) \ 2}:{(height - sourceHeight) \ 2}:color=black"
+    End Function
 
-        Dim filter As New StringBuilder()
-        If 使用Cuda Then
-            If hasScale Then
-                filter.Append($",scale_cuda=w={targetWidth}:h={targetHeight}:interp_algo=bicubic")
-            ElseIf cleanPixelFormat <> "" Then
-                ' scale_cuda also performs the required CUDA-frame pixel-format conversion.
-                filter.Append($",scale_cuda=w=iw:h=ih:format={cleanPixelFormat}:passthrough=0")
-            End If
-            If hasScale AndAlso cleanPixelFormat <> "" Then filter.Append($":format={cleanPixelFormat}")
-        Else
-            If hasScale Then filter.Append($",scale={targetWidth}:{targetHeight}:flags=bicubic")
-            filter.Append(构建像素格式滤镜(pixelFormat))
-        End If
-        Return filter.ToString()
+    Private Shared Function 构建视频预处理滤镜(sourceInfo As 视频流信息, targetWidth As Integer, targetHeight As Integer, pixelFormat As String) As String
+        Dim hasScale = targetWidth > 0 AndAlso targetHeight > 0 AndAlso
+                       (sourceInfo Is Nothing OrElse sourceInfo.宽度 <> targetWidth OrElse sourceInfo.高度 <> targetHeight)
+        Return If(hasScale, $",scale={targetWidth}:{targetHeight}:flags=bicubic", "") & 构建像素格式滤镜(pixelFormat)
     End Function
 
     Private Shared Function 构建Hdr色彩标记(info As 视频流信息) As String
@@ -2225,18 +2236,21 @@ Public Class Form_v6_集成工具_质量评测
         设置指标文本(item, metric, 获取指标文本(metric, result, "未评测"))
     End Sub
 
-    Private Shared Function 获取指标文本(metric As 指标类型, result As 指标结果数据, fallback As String) As String
+    Private Shared Function 获取指标文本(metric As 指标类型, result As 指标结果数据, fallback As String, Optional 用于日志 As Boolean = False) As String
         If result Is Nothing Then Return fallback
         If result.成功 Then Return 格式化分数(result.汇总值, metric)
-        If metric = 指标类型.VMAF AndAlso String.Equals(result.错误信息, Vmaf非Hdr源错误, StringComparison.Ordinal) Then Return "非HDR"
+        If metric = 指标类型.VMAF Then
+            If String.Equals(result.错误信息, Vmaf非Hdr源错误, StringComparison.Ordinal) Then Return "非HDR"
+            If Not 用于日志 AndAlso String.Equals(result.错误信息, Vmaf奇数边错误, StringComparison.Ordinal) Then Return "ERROR"
+        End If
         Return fallback
     End Function
 
     Private Shared Function 格式化指标记录(metric As 指标类型, result As 指标结果数据, Optional fallback As String = "未评测") As String
         If result IsNot Nothing AndAlso Not result.成功 AndAlso Not String.IsNullOrWhiteSpace(result.错误信息) Then
-            Return $"{获取指标文本(metric, result, "失败")}，{result.错误信息}"
+            Return $"{获取指标文本(metric, result, "失败", 用于日志:=True)}，{result.错误信息}"
         End If
-        Return 获取指标文本(metric, result, fallback)
+        Return 获取指标文本(metric, result, fallback, 用于日志:=True)
     End Function
 
     Private Sub 刷新全部评分颜色()
